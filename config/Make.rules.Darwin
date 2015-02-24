@@ -1,0 +1,114 @@
+# **********************************************************************
+#
+# Copyright (c) 2003-2014 ZeroC, Inc. All rights reserved.
+#
+# This copy of Ice is licensed to you under the terms described in the
+# ICE_LICENSE file included in this distribution.
+#
+# **********************************************************************
+
+#
+# This file is included by Make.rules when uname is Darwin.
+#
+
+OSX_TARGET_MIN_SDK_VERSION = 10.9
+
+CXX			= xcrun clang++
+
+CPPFLAGS		+= -pthread -fvisibility=hidden
+CXXFLAGS		+= -Wall -Werror -mmacosx-version-min=$(OSX_TARGET_MIN_SDK_VERSION)
+
+#
+# By default we build x86_64 binaries.
+#
+ifeq ($(CXXARCHFLAGS),)
+CXXARCHFLAGS    := -arch x86_64
+endif
+
+ifeq ($(OPTIMIZE),yes)
+     CXXFLAGS		:= $(CXXARCHFLAGS) -O2 -DNDEBUG $(CXXFLAGS)
+else
+     CXXFLAGS		:= $(CXXARCHFLAGS) -g $(CXXFLAGS)
+endif
+
+#
+# On OS X, always build with C++11 support enabled unless we
+# explicitly set it to no (possibly to test binary compatibility).
+#
+ifneq ($(CPP11), no)
+    CPPFLAGS += --std=c++11
+endif
+
+#
+# C++ run-time libraries, necessary for linking some shared libraries.
+#
+CXXLIBS		=
+
+#
+# If embedded_runpath is not set to yes we do not add
+# an rpath dir.
+#
+ifeq ($(embedded_runpath),yes)
+    LOADER_PATH = @loader_path
+
+    #
+    # If embedded_runpath_prefix is set it has preference
+    #
+    ifneq ($(embedded_runpath_prefix),)
+        RPATH_DIR = $(embedded_runpath_prefix)
+    endif
+
+    ifeq ($(RPATH_DIR),)
+        ifdef ice_src_dist
+            RPATH_DIR = @loader_path/$(libdir)
+        else
+            RPATH_DIR = $(ice_dir)/$(libsubdir)
+        endif
+    endif
+
+    #
+    # Clear rpath setting when doing a system install
+    #
+    ifeq ($(ice_dir),/usr)
+        RPATH_DIR =
+    endif
+
+    ifneq ($(RPATH_DIR),)
+        LDEXEFLAGS		= -Wl,-rpath,$(RPATH_DIR)
+    endif
+endif
+
+ifdef ice_src_dist
+rpathlink		= -Wl,-rpath,$(1)
+endif
+
+mklib 			= libtool -static -o $(1) $(2)
+mkshlib			= $(CXX)  -dynamiclib $(LDFLAGS) -o $(1) -install_name @rpath/$(2) $(3) $(4)
+
+BASELIBS		= -lIceUtil
+LIBS			= -lIce $(BASELIBS)
+
+ICONV_LIB		= -liconv
+
+ICEUTIL_OS_LIBS         =
+ICE_OS_LIBS             = -ldl
+
+SSL_OS_LIBS             = -framework Security -framework CoreFoundation
+
+PLATFORM_HAS_READLINE   := yes
+
+ifeq ($(THIRDPARTY_HOME),)
+THIRDPARTY_HOME = /Library/Developer/Ice-$(VERSION)-ThirdParty
+endif
+
+ifeq ($(DB_HOME),)
+    ifneq ($(wildcard $(THIRDPARTY_HOME)/$(libsubdir)/libdb_cxx.dylib),)
+        DB_HOME = $(THIRDPARTY_HOME)
+    endif
+endif
+
+ifeq ($(MCPP_HOME),)
+    ifneq ($(wildcard $(THIRDPARTY_HOME)/$(libsubdir)/libmcpp.a),)
+        MCPP_HOME = $(THIRDPARTY_HOME)
+    endif
+endif

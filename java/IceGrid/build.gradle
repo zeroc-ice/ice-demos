@@ -1,0 +1,34 @@
+['icebox', 'simple'].each {
+ 	def name = it
+	project(":demoIceGrid${it.capitalize()}") {
+		slice {
+			java {
+				include = ["${projectDir}", "${sliceDir}"]
+				srcDir = '.'
+			}
+		}
+
+		sourceSets {
+			main {
+				java {
+					srcDir '.'
+				}
+			}
+		}
+
+		dependencies {
+			compile localDependency("ice")
+			compile localDependency("icebox")
+			compile localDependency("icegrid")
+			if (!useLocalOnly) {
+				runtime "org.apache.tools:bzip2:1.0"
+			}
+		}
+
+		// Don't create the default jar.
+		jar.enabled = false
+
+		demoJar("client")
+		demoJar("server")
+	}
+}
