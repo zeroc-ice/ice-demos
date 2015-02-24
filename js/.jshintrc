@@ -1,0 +1,14 @@
+{
+    "node": true,
+    "undef": true,
+    "evil": true,
+    "globals":
+    {
+        "WebSocket" : false,
+        "window": false,
+        "navigator": false,
+        "escape" : false,
+        "unescape": false
+    },
+    "predef": ["-Promise"]
+}
