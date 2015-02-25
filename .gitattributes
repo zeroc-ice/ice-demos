@@ -1,0 +1,12 @@
+* text=auto
+
+# The test files from the unicode tests must be lf only.
+*.utf16be text eol=lf
+*.utf16le text eol=lf
+*.utf32be text eol=lf
+*.utf32le text eol=lf
+*.utf8 text eol=lf
+
+*.sln text eol=crlf
+*.vbproj text eol=crlf
+*.csproj text eol=crlf
