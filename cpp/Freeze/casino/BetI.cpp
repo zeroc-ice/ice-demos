@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2014 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 //
 // This copy of Ice is licensed to you under the terms described in the
 // ICE_LICENSE file included in this distribution.
@@ -93,11 +93,11 @@ BetI::BetI()
 {
 }
 
-BetI::BetI(int amount, Ice::Long closeTime, const CasinoStore::PersistentBankPrx& bank,
+BetI::BetI(int amnt, Ice::Long clseTime, const CasinoStore::PersistentBankPrx& bank,
            const Freeze::TransactionalEvictorPtr& evictor, int bankEdge)
 {
-    this->amount = amount;
-    this->closeTime = closeTime;
+    amount = amnt;
+    closeTime = clseTime;
     init(evictor, bankEdge);
     potentialWinners.push_back(bank);
 }

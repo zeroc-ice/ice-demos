@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2014 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 //
 // This copy of Ice is licensed to you under the terms described in the
 // ICE_LICENSE file included in this distribution.
@@ -131,7 +131,8 @@ public class Client extends Ice.Application
                 }
                 else if(line.equals("f"))
                 {
-                    communicator().flushBatchRequests();
+                    batchOneway.ice_flushBatchRequests();
+                    batchDatagram.ice_flushBatchRequests();
                 }
                 else if(line.equals("T"))
                 {
@@ -236,4 +237,3 @@ public class Client extends Ice.Application
         System.exit(status);
     }
 }
-

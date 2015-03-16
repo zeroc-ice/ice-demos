@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2014 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 //
 // This copy of Ice is licensed to you under the terms described in the
 // ICE_LICENSE file included in this distribution.
@@ -21,11 +21,14 @@ class RegistryPluginI : public Ice::Plugin
 public:
 
     RegistryPluginI(const Ice::CommunicatorPtr&);
-    
+
     virtual void initialize();
     virtual void destroy();
 
 private:
+
+    // Required to prevent compiler warnings with MSVC++
+    RegistryPluginI& operator=(const RegistryPluginI&);
 
     const Ice::CommunicatorPtr _communicator;
 };
@@ -81,9 +84,9 @@ ReplicaGroupFilterI::ReplicaGroupFilterI(const IceGrid::RegistryPluginFacadePtr&
 }
 
 Ice::StringSeq
-ReplicaGroupFilterI::filter(const string& /* replicaGroupId */, 
-                            const Ice::StringSeq& adapters, 
-                            const Ice::ConnectionPtr&, 
+ReplicaGroupFilterI::filter(const string& /* replicaGroupId */,
+                            const Ice::StringSeq& adapters,
+                            const Ice::ConnectionPtr&,
                             const Ice::Context& ctx)
 {
     Ice::Context::const_iterator p = ctx.find("currency");
@@ -101,11 +104,11 @@ ReplicaGroupFilterI::filter(const string& /* replicaGroupId */,
     // context.
     //
     Ice::StringSeq filteredAdapters;
-    for(Ice::StringSeq::const_iterator p = adapters.begin(); p != adapters.end(); ++p)
+    for(Ice::StringSeq::const_iterator q = adapters.begin(); q != adapters.end(); ++q)
     {
-        if(_facade->getPropertyForAdapter(*p, "Currencies").find(currency) != string::npos)
+        if(_facade->getPropertyForAdapter(*q, "Currencies").find(currency) != string::npos)
         {
-            filteredAdapters.push_back(*p);
+            filteredAdapters.push_back(*q);
         }
     }
     return filteredAdapters;

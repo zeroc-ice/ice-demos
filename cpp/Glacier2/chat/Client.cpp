@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2014 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 //
 // This copy of Ice is licensed to you under the terms described in the
 // ICE_LICENSE file included in this distribution.
@@ -50,28 +50,28 @@ public:
         Glacier2::Application(Ice::NoSignalHandling)
     {
     }
-    
+
     virtual Glacier2::SessionPrx
     createSession()
     {
-        ChatSessionPrx session;
-        while(true)
+        ChatSessionPrx sess;
+        while(!sess)
         {
             cout << "This demo accepts any user-id / password combination.\n";
-            
+
             string id;
             cout << "user id: " << flush;
             getline(cin, id);
             id = trim(id);
-            
+
             string pw;
             cout << "password: " << flush;
             getline(cin, pw);
             pw = trim(pw);
-            
+
             try
             {
-                session = ChatSessionPrx::uncheckedCast(router()->createSession(id, pw));
+                sess = ChatSessionPrx::uncheckedCast(router()->createSession(id, pw));
                 break;
             }
             catch(const Glacier2::PermissionDeniedException& ex)
@@ -83,7 +83,7 @@ public:
                 cout << "cannot create session:\n" << ex.reason << endl;
             }
         }
-        return session;
+        return sess;
     }
 
     virtual int
@@ -96,7 +96,7 @@ public:
         }
 
         Ice::Identity callbackReceiverIdent = createCallbackIdentity("callbackReceiver");
-    
+
 
         ChatCallbackPtr cb = new ChatCallbackI;
         ChatCallbackPrx callback = ChatCallbackPrx::uncheckedCast(objectAdapter()->add(cb, callbackReceiverIdent));

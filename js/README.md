@@ -1,15 +1,7 @@
-## Requirements
-Compiling and running the Ice for JavaScript demos requires the following:
-- [Node.js](https://nodejs.org)
-- Dependencies for [node-gyp](https://github.com/TooTallNate/node-gyp) (Required to build the slice2js compiler).
+This directory contains demos for various Ice components. The demos
+are provided to get you started on how to use a particular feature or
+coding technique. See the README file in each subdirectory for details
+on the demos.
 
-## Running the scripts
-Be sure to run `npm install` first to get any required dependencies.
-```bash
-$ npm run gulp:build // Build the demos
-$ npm run gulp:watch // Run demo web server; watch for files changes and reload
-$ npm run gulp:clean // Clean the demos
-```
-
-## Running the demos
-Running a demo requires running a corresponding (C++, Java, C#) server. For more information refer to the [documentation](https://doc.zeroc.com/display/Ice36/Sample+Programs).
+For more examples of the features of the Ice services (Glacier2, IceGrid,
+IceStorm) please see the demos in the Ice for C++ distribution.

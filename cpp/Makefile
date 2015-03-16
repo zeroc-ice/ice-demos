@@ -1,6 +1,6 @@
 # **********************************************************************
 #
-# Copyright (c) 2003-2014 ZeroC, Inc. All rights reserved.
+# Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 #
 # This copy of Ice is licensed to you under the terms described in the
 # ICE_LICENSE file included in this distribution.
@@ -11,6 +11,11 @@ top_srcdir	= ..
 
 include $(top_srcdir)/config/Make.rules
 
+ifneq ($(findstring MINGW,$(UNAME)),)
+SUBDIRS		= Ice \
+		  IceDiscovery \
+		  Manual
+else
 SUBDIRS		= IceUtil \
 		  Ice \
 		  IceDiscovery \
@@ -20,6 +25,7 @@ SUBDIRS		= IceUtil \
 		  Glacier2 \
 		  IceGrid \
 		  Manual
+endif
 
 .PHONY: $(EVERYTHING) $(SUBDIRS)
 

@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2014 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 //
 // This copy of Ice is licensed to you under the terms described in the
 // ICE_LICENSE file included in this distribution.
@@ -53,7 +53,7 @@ HelloClient::run(int argc, char* argv[])
 
     //
     // First we try to connect to the object with the `hello'
-    // identity. If it's not registered with the registry, we 
+    // identity. If it's not registered with the registry, we
     // search for an object with the ::Demo::Hello type.
     //
     HelloPrx hello;
@@ -71,10 +71,10 @@ HelloClient::run(int argc, char* argv[])
         cerr << argv[0] << ": couldn't find a `::Demo::Hello' object." << endl;
         return EXIT_FAILURE;
     }
-    
+
     menu();
 
-    char c;
+    char c = 'x';
     do
     {
         try

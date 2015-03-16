@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # **********************************************************************
 #
-# Copyright (c) 2003-2014 ZeroC, Inc. All rights reserved.
+# Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 #
 # This copy of Ice is licensed to you under the terms described in the
 # ICE_LICENSE file included in this distribution.
@@ -76,7 +76,8 @@ class Client(Ice.Application):
                     else:
                         batchDatagram.sayHello(delay)
                 elif c == 'f':
-                    self.communicator().flushBatchRequests()
+                    batchOneway.ice_flushBatchRequests()
+                    batchDatagram.ice_flushBatchRequests()
                 elif c == 'T':
                     if timeout == -1:
                         timeout = 2000

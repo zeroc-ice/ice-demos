@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2014 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 //
 // This copy of Ice is licensed to you under the terms described in the
 // ICE_LICENSE file included in this distribution.
@@ -159,6 +159,4 @@ PrinterI::ice_invoke(const vector<Ice::Byte>& inParams, vector<Ice::Byte>& outPa
         ex.operation = current.operation;
         throw ex;
     }
-
-    return false;
 }

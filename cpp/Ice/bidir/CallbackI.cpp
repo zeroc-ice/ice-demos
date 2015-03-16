@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2014 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 //
 // This copy of Ice is licensed to you under the terms described in the
 // ICE_LICENSE file included in this distribution.
@@ -23,11 +23,11 @@ void
 CallbackSenderI::destroy()
 {
     {
-        IceUtil::Monitor<IceUtil::Mutex>::Lock lock(*this);
-        
+        IceUtil::Monitor<IceUtil::Mutex>::Lock lck(*this);
+
         cout << "destroying callback sender" << endl;
         _destroy = true;
-        
+
         notify();
     }
 
@@ -37,7 +37,7 @@ CallbackSenderI::destroy()
 void
 CallbackSenderI::addClient(const Identity& ident, const Current& current)
 {
-    IceUtil::Monitor<IceUtil::Mutex>::Lock lock(*this);
+    IceUtil::Monitor<IceUtil::Mutex>::Lock lck(*this);
 
     cout << "adding client `" << _communicator->identityToString(ident) << "'"<< endl;
 
@@ -49,16 +49,18 @@ void
 CallbackSenderI::run()
 {
     int num = 0;
-    while(true)
+    bool destroyed = false;
+    while(!destroyed)
     {
         std::set<Demo::CallbackReceiverPrx> clients;
         {
-            IceUtil::Monitor<IceUtil::Mutex>::Lock lock(*this);
+            IceUtil::Monitor<IceUtil::Mutex>::Lock lck(*this);
             timedWait(IceUtil::Time::seconds(2));
 
             if(_destroy)
             {
-                break;
+                destroyed = true;
+                continue;
             }
 
             clients = _clients;
@@ -78,7 +80,7 @@ CallbackSenderI::run()
                     cerr << "removing client `" << _communicator->identityToString((*p)->ice_getIdentity()) << "':\n"
                          << ex << endl;
 
-                    IceUtil::Monitor<IceUtil::Mutex>::Lock lock(*this);
+                    IceUtil::Monitor<IceUtil::Mutex>::Lock lck(*this);
                     _clients.erase(*p);
                 }
             }

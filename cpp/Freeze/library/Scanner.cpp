@@ -502,27 +502,34 @@ char *yytext;
 
 // **********************************************************************
 //
-// Copyright (c) 2003-2014 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 //
 // This copy of Ice is licensed to you under the terms described in the
 // ICE_LICENSE file included in this distribution.
 //
 // **********************************************************************
 
+#include <IceUtil/PushDisableWarnings.h>
 #include <Parser.h>
 #include <Grammar.h>
 
-#if defined(_MSC_VER) && defined(ICE_64)
+#if defined(_MSC_VER)
+#if defined(ICE_64)
 //
 // '=' : conversion from 'size_t' to 'int', possible loss of data
 // The result of fread() is a size_t and gets inserted into an int
 //
-#   pragma warning( 4 : 4267 )
+#   pragma warning( disable : 4267)
+#endif
 //
 // 'initializing' : conversion from '__int64' to 'int', possible loss of data
 // Puts a pointer-difference into an int
 //
-#   pragma warning( 4 : 4244 )
+#   pragma warning( disable : 4244)
+//
+// conditional expression is constant
+//
+#   pragma warning( disable : 4127)
 #endif
 
 using namespace std;
@@ -547,7 +554,7 @@ using namespace std;
 
 #define YY_INPUT(buf, result, maxSize) parser->getInput(buf, result, maxSize)
 
-#line 550 "lex.yy.c"
+#line 557 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -636,7 +643,7 @@ static int input (void );
 /* This used to be an fputs(), but since the string might contain NUL's,
  * we now use fwrite().
  */
-#define ECHO do { if (fwrite( yytext, yyleng, 1, yyout )) {} } while (0)
+#define ECHO fwrite( yytext, yyleng, 1, yyout )
 #endif
 
 /* Gets input and stuffs it into "buf".  number of characters read, or YY_NULL,
@@ -647,7 +654,7 @@ static int input (void );
 	if ( YY_CURRENT_BUFFER_LVALUE->yy_is_interactive ) \
 		{ \
 		int c = '*'; \
-		unsigned n; \
+		int n; \
 		for ( n = 0; n < max_size && \
 			     (c = getc( yyin )) != EOF && c != '\n'; ++n ) \
 			buf[n] = (char) c; \
@@ -729,10 +736,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 58 "Scanner.l"
+#line 65 "Scanner.l"
 
 
-#line 735 "lex.yy.c"
+#line 742 "lex.yy.c"
 
 	if ( !(yy_init) )
 		{
@@ -817,7 +824,7 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 60 "Scanner.l"
+#line 67 "Scanner.l"
 {
     // C++-style comment
     int c;
@@ -830,7 +837,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 70 "Scanner.l"
+#line 77 "Scanner.l"
 {
     // C-style comment
     while(true)
@@ -858,84 +865,84 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 95 "Scanner.l"
+#line 102 "Scanner.l"
 {
     return TOK_HELP;
 }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 99 "Scanner.l"
+#line 106 "Scanner.l"
 {
     return TOK_EXIT;
 }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 103 "Scanner.l"
+#line 110 "Scanner.l"
 {
     return TOK_ADD_BOOK;
 }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 107 "Scanner.l"
+#line 114 "Scanner.l"
 {
     return TOK_FIND_ISBN;
 }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 111 "Scanner.l"
+#line 118 "Scanner.l"
 {
     return TOK_FIND_AUTHORS;
 }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 115 "Scanner.l"
+#line 122 "Scanner.l"
 {
     return TOK_NEXT_FOUND_BOOK;
 }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 119 "Scanner.l"
+#line 126 "Scanner.l"
 {
     return TOK_PRINT_CURRENT;
 }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 123 "Scanner.l"
+#line 130 "Scanner.l"
 {
     return TOK_RENT_BOOK;
 }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 127 "Scanner.l"
+#line 134 "Scanner.l"
 {
     return TOK_RETURN_BOOK;
 }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 131 "Scanner.l"
+#line 138 "Scanner.l"
 {
     return TOK_REMOVE_CURRENT;
 }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 135 "Scanner.l"
+#line 142 "Scanner.l"
 {
     return TOK_SET_EVICTOR_SIZE;
 }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 139 "Scanner.l"
+#line 146 "Scanner.l"
 {
     return TOK_SHUTDOWN;
 }
@@ -943,7 +950,7 @@ YY_RULE_SETUP
 case 15:
 /* rule 15 can match eol */
 YY_RULE_SETUP
-#line 143 "Scanner.l"
+#line 150 "Scanner.l"
 {
     size_t len = strlen(yytext);
     for(size_t i = 0; i < len; ++i)
@@ -958,14 +965,14 @@ YY_RULE_SETUP
 case 16:
 /* rule 16 can match eol */
 YY_RULE_SETUP
-#line 154 "Scanner.l"
+#line 161 "Scanner.l"
 {
     return ';';
 }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 158 "Scanner.l"
+#line 165 "Scanner.l"
 {
     // "..."-type strings
     string s;
@@ -992,13 +999,13 @@ YY_RULE_SETUP
 		    s += next;
 		    break;
 		}
-	    
+
 		case 'n':
 		{
 		    s += '\n';
 		    break;
 		}
-	    
+
 		case 'r':
 		{
 		    s += '\r';
@@ -1010,19 +1017,19 @@ YY_RULE_SETUP
 		    s += '\t';
 		    break;
 		}
-	    
+
 		case 'v':
 		{
 		    s += '\v';
 		    break;
 		}
-	    
+
 		case 'f':
 		{
 		    s += '\f';
 		    break;
 		}
-	    
+
 		default:
 		{
 		    s += c;
@@ -1042,7 +1049,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 232 "Scanner.l"
+#line 239 "Scanner.l"
 {
     // '...'-type strings
     string s;
@@ -1070,7 +1077,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 257 "Scanner.l"
+#line 264 "Scanner.l"
 {
     // Simple strings
     string s;
@@ -1087,7 +1094,7 @@ YY_RULE_SETUP
 	    unput(c);
 	    break;
 	}
-	
+
 	s += c;
     }
     yylvalp->clear();
@@ -1097,10 +1104,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 281 "Scanner.l"
+#line 288 "Scanner.l"
 ECHO;
 	YY_BREAK
-#line 1103 "lex.yy.c"
+#line 1110 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2094,7 +2101,9 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 281 "Scanner.l"
+#line 288 "Scanner.l"
 
 
+
+#include <IceUtil/PopDisableWarnings.h>
 

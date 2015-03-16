@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2014 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 //
 // This copy of Ice is licensed to you under the terms described in the
 // ICE_LICENSE file included in this distribution.
@@ -20,7 +20,7 @@ class CallbackClient : public Glacier2::Application
 public:
 
     CallbackClient();
-    
+
     virtual int runWithSession(int, char*[]);
     virtual Glacier2::SessionPrx createSession();
 };
@@ -62,8 +62,8 @@ CallbackClient::CallbackClient() :
 Glacier2::SessionPrx
 CallbackClient::createSession()
 {
-    Glacier2::SessionPrx session;
-     while(true)
+    Glacier2::SessionPrx sess;
+    while(!sess)
     {
         cout << "This demo accepts any user-id / password combination.\n";
 
@@ -74,10 +74,10 @@ CallbackClient::createSession()
         string pw;
         cout << "password: " << flush;
         cin >> pw;
-    
+
         try
         {
-            session = router()->createSession(id, pw);
+            sess = router()->createSession(id, pw);
             break;
         }
         catch(const Glacier2::PermissionDeniedException& ex)
@@ -89,7 +89,7 @@ CallbackClient::createSession()
             cout << "cannot create session:\n" << ex.reason << endl;
         }
     }
-    return session;
+    return sess;
 }
 
 int
@@ -100,7 +100,7 @@ CallbackClient::runWithSession(int argc, char*[])
         cerr << appName() << ": too many arguments" << endl;
         return EXIT_FAILURE;
     }
-    
+
     Ice::Identity callbackReceiverIdent = createCallbackIdentity("callbackReceiver");
 
     Ice::Identity callbackReceiverFakeIdent;
@@ -111,10 +111,10 @@ CallbackClient::runWithSession(int argc, char*[])
     CallbackPrx twoway = CallbackPrx::checkedCast(base);
     CallbackPrx oneway = CallbackPrx::uncheckedCast(twoway->ice_oneway());
     CallbackPrx batchOneway = CallbackPrx::uncheckedCast(twoway->ice_batchOneway());
-    
+
     objectAdapter()->add(new CallbackReceiverI, callbackReceiverIdent);
-    
-    // Should never be called for the fake identity. 
+
+    // Should never be called for the fake identity.
     objectAdapter()->add(new CallbackReceiverI, callbackReceiverFakeIdent);
 
     CallbackReceiverPrx twowayR = CallbackReceiverPrx::uncheckedCast(
@@ -126,7 +126,7 @@ CallbackClient::runWithSession(int argc, char*[])
 
     menu();
 
-    char c;
+    char c = 'x';
     do
     {
         cout << "==> ";
@@ -163,7 +163,7 @@ CallbackClient::runWithSession(int argc, char*[])
         }
         else if(c == 'f')
         {
-            communicator()->flushBatchRequests();
+            batchOneway->ice_flushBatchRequests();
         }
         else if(c == 'v')
         {
@@ -192,7 +192,7 @@ CallbackClient::runWithSession(int argc, char*[])
                 twowayR = CallbackReceiverPrx::uncheckedCast(twowayR->ice_identity(callbackReceiverIdent));
                 onewayR = CallbackReceiverPrx::uncheckedCast(onewayR->ice_identity(callbackReceiverIdent));
             }
-            
+
             cout << "callback receiver identity: " << communicator()->identityToString(twowayR->ice_getIdentity())
                  << endl;
         }
@@ -220,6 +220,6 @@ CallbackClient::runWithSession(int argc, char*[])
     }
     while(cin.good() && c != 'x');
 
-    
+
     return EXIT_SUCCESS;
 }

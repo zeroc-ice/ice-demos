@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2014 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 //
 // This copy of Ice is licensed to you under the terms described in the
 // ICE_LICENSE file included in this distribution.
@@ -21,42 +21,42 @@ ContactI::ContactI(const ContactFactoryPtr& contactFactory) :
 string
 ContactI::getName(const Ice::Current&) const
 {
-    IceUtil::Mutex::Lock lock(*this);
+    IceUtil::Mutex::Lock lck(*this);
     return name;
 }
 
 void
 ContactI::setName(const string& newName, const Ice::Current&)
 {
-    IceUtil::Mutex::Lock lock(*this);
+    IceUtil::Mutex::Lock lck(*this);
     name = newName;
 }
 
 string
 ContactI::getAddress(const Ice::Current&) const
 {
-    IceUtil::Mutex::Lock lock(*this);
+    IceUtil::Mutex::Lock lck(*this);
     return address;
 }
 
 void
 ContactI::setAddress(const string& newAddress, const Ice::Current&)
 {
-    IceUtil::Mutex::Lock lock(*this);
+    IceUtil::Mutex::Lock lck(*this);
     address = newAddress;
 }
 
 string
 ContactI::getPhone(const Ice::Current&) const
 {
-    IceUtil::Mutex::Lock lock(*this);
+    IceUtil::Mutex::Lock lck(*this);
     return phone;
 }
 
 void
 ContactI::setPhone(const string& newPhone, const Ice::Current&)
 {
-    IceUtil::Mutex::Lock lock(*this);
+    IceUtil::Mutex::Lock lck(*this);
     phone = newPhone;
 }
 
@@ -99,6 +99,9 @@ public:
 
 private:
 
+    // Required to prevent compiler warnings with MSVC++
+    IdentityToContact& operator=(const IdentityToContact&);
+
     const Ice::ObjectAdapterPtr _adapter;
 };
 
@@ -116,14 +119,14 @@ PhoneBookI::createContact(const Ice::Current& c)
     // Create a new Contact Servant.
     //
     ContactIPtr contact = new ContactI(_contactFactory);
-    
+
     //
     // Create a new Ice Object in the evictor, using the new identity
     // and the new Servant.
     //
     _evictor->add(contact, ident);
 
-    
+
     //
     // Turn the identity into a Proxy and return the Proxy to the
     // caller.
@@ -137,7 +140,7 @@ PhoneBookI::findContacts(const string& name, const Ice::Current& c) const
     try
     {
         vector<Ice::Identity> identities = _index->find(name);
-        
+
         Contacts contacts;
         contacts.reserve(identities.size());
         transform(identities.begin(), identities.end(), back_inserter(contacts), IdentityToContact(c.adapter));

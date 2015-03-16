@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2014 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 //
 // This copy of Ice is licensed to you under the terms described in the
 // ICE_LICENSE file included in this distribution.
@@ -103,15 +103,14 @@ ThroughputClient::run(int argc, char* argv[])
     StringSeq stringSeq(StringSeqSize, "hello");
 
     StringDoubleSeq structSeq(StringDoubleSeqSize);
-    int i;
-    for(i = 0; i < StringDoubleSeqSize; ++i)
+    for(int i = 0; i < StringDoubleSeqSize; ++i)
     {
         structSeq[i].s = "hello";
         structSeq[i].d = 3.14;
     }
 
     FixedSeq fixedSeq(FixedSeqSize);
-    for(i = 0; i < FixedSeqSize; ++i)
+    for(int i = 0; i < FixedSeqSize; ++i)
     {
         fixedSeq[i].i = 0;
         fixedSeq[i].j = 0;
@@ -144,7 +143,7 @@ ThroughputClient::run(int argc, char* argv[])
     Callback_Throughput_echoFixedSeqPtr fixedSeqCB = newCallback_Throughput_echoFixedSeq(
         cb, &Callback::responseFS, &Callback::exception);
 
-    char c;
+    char c = 'x';
     do
     {
         try
@@ -236,7 +235,7 @@ ThroughputClient::run(int argc, char* argv[])
                 cout << " sequences of size " << seqSize;
 
                 cout << "..." << endl;
-                
+
                 list<Ice::AsyncResultPtr> results;
                 for(int i = 0; i < repetitions; ++i)
                 {

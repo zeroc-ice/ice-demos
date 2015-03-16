@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # **********************************************************************
 #
-# Copyright (c) 2003-2014 ZeroC, Inc. All rights reserved.
+# Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 #
 # This copy of Ice is licensed to you under the terms described in the
 # ICE_LICENSE file included in this distribution.
@@ -96,7 +96,8 @@ class Client < Ice::Application
                         batchDatagram.sayHello(delay)
                     end
                 elsif c == 'f'
-                    Ice::Application::communicator().flushBatchRequests()
+                    batchOneway.flushBatchRequests()
+                    batchDatagram.flushBatchRequests()
                 elsif c == 'T'
                     if timeout == -1
                         timeout = 2000

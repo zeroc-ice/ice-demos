@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2014 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 //
 // This copy of Ice is licensed to you under the terms described in the
 // ICE_LICENSE file included in this distribution.
@@ -70,15 +70,14 @@ ThroughputClient::run(int argc, char* argv[])
     vector<Util::string_view> stringViewSeq(StringSeqSize, "hello");
 
     StringDoubleSeq structSeq(StringDoubleSeqSize);
-    int i;
-    for(i = 0; i < StringDoubleSeqSize; ++i)
+    for(int i = 0; i < StringDoubleSeqSize; ++i)
     {
         structSeq[i].s = "hello";
         structSeq[i].d = 3.14;
     }
 
     FixedSeq fixedSeq(FixedSeqSize);
-    for(i = 0; i < FixedSeqSize; ++i)
+    for(int i = 0; i < FixedSeqSize; ++i)
     {
         fixedSeq[i].i = 0;
         fixedSeq[i].j = 0;
@@ -150,7 +149,7 @@ ThroughputClient::run(int argc, char* argv[])
     char currentType = '1';
     int seqSize = ByteSeqSize;
 
-    char c;
+    char c = 'x';
     do
     {
         try
@@ -252,9 +251,9 @@ ThroughputClient::run(int argc, char* argv[])
                 {
                     cout << " as oneway";
                 }
-                
+
                 cout << "..." << endl;
-                
+
                 for(int i = 0; i < repetitions; ++i)
                 {
                     switch(currentType)
@@ -268,19 +267,19 @@ ThroughputClient::run(int argc, char* argv[])
                                     throughput->sendByteSeq(byteArr);
                                     break;
                                 }
-                        
+
                                 case 'o':
                                 {
                                     throughputOneway->sendByteSeq(byteArr);
                                     break;
                                 }
-                        
+
                                 case 'r':
                                 {
                                     throughput->recvByteSeq();
                                     break;
                                 }
-                        
+
                                 case 'e':
                                 {
                                     throughput->echoByteSeq(byteArr);
@@ -299,19 +298,19 @@ ThroughputClient::run(int argc, char* argv[])
                                     throughput->sendStringSeq(stringViewSeq);
                                     break;
                                 }
-                        
+
                                 case 'o':
                                 {
                                     throughputOneway->sendStringSeq(stringViewSeq);
                                     break;
                                 }
-                        
+
                                 case 'r':
                                 {
                                     throughput->recvStringSeq();
                                     break;
                                 }
-                        
+
                                 case 'e':
                                 {
                                     throughput->echoStringSeq(stringViewSeq);
@@ -330,19 +329,19 @@ ThroughputClient::run(int argc, char* argv[])
                                     throughput->sendStructSeq(structSeq);
                                     break;
                                 }
-                        
+
                                 case 'o':
                                 {
                                     throughputOneway->sendStructSeq(structSeq);
                                     break;
                                 }
-                        
+
                                 case 'r':
                                 {
                                     throughput->recvStructSeq();
                                     break;
                                 }
-                        
+
                                 case 'e':
                                 {
                                     throughput->echoStructSeq(structSeq);
@@ -361,19 +360,19 @@ ThroughputClient::run(int argc, char* argv[])
                                     throughput->sendFixedSeq(fixedSeq);
                                     break;
                                 }
-                        
+
                                 case 'o':
                                 {
                                     throughputOneway->sendFixedSeq(fixedSeq);
                                     break;
                                 }
-                        
+
                                 case 'r':
                                 {
                                     throughput->recvFixedSeq();
                                     break;
                                 }
-                        
+
                                 case 'e':
                                 {
                                     throughput->echoFixedSeq(fixedSeq);

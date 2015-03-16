@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2014 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 //
 // This copy of Ice is licensed to you under the terms described in the
 // ICE_LICENSE file included in this distribution.
@@ -182,12 +182,12 @@ public class Client extends Glacier2.Application
                     if(override != null)
                     {
                         context.put("_ovrd", override);
-                    } 
+                    }
                     batchOneway.initiateCallback(onewayR, context);
                 }
                 else if(line.equals("f"))
                 {
-                    communicator().flushBatchRequests();
+                    batchOneway.ice_flushBatchRequests();
                 }
                 else if(line.equals("v"))
                 {
@@ -221,7 +221,7 @@ public class Client extends Glacier2.Application
                             onewayR.ice_identity(callbackReceiverIdent));
                     }
 
-                    System.out.println("callback receiver identity: " + 
+                    System.out.println("callback receiver identity: " +
                                     communicator().identityToString(twowayR.ice_getIdentity()));
                 }
                 else if(line.equals("s"))

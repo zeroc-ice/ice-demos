@@ -60,7 +60,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Ice, Version=3.6.51.0, Culture=neutral, PublicKeyToken=cdd571ade22f2f16, processorArchitecture=MSIL" />
+    <Reference Include="Ice, Version=3.6.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="mscorlib" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />

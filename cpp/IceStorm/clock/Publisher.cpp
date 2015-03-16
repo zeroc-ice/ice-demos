@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2014 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 //
 // This copy of Ice is licensed to you under the terms described in the
 // ICE_LICENSE file included in this distribution.
@@ -130,13 +130,14 @@ Publisher::run(int argc, char* argv[])
     {
         publisher = publisher->ice_oneway();
     }
-    
+
     ClockPrx clock = ClockPrx::uncheckedCast(publisher);
 
     cout << "publishing tick events. Press ^C to terminate the application." << endl;
     try
     {
-        while(true)
+        bool stop = false;
+        while(!stop)
         {
             clock->tick(IceUtil::Time::now().toDateTime());
             IceUtil::ThreadControl::sleep(IceUtil::Time::seconds(1));

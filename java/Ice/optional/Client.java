@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2014 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 //
 // This copy of Ice is licensed to you under the terms described in the
 // ICE_LICENSE file included in this distribution.
@@ -48,7 +48,7 @@ public class Client extends Ice.Application
 
         //
         // Add a contact for "john". In this case since all parameters are provided it isn't
-	// necessary to construct an Optional.
+        // necessary to construct an Optional.
         //
         String johnNumber = "123-456-7890";
         contactdb.addContact("john", NumberType.HOME, johnNumber, 0);

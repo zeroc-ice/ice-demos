@@ -1,6 +1,6 @@
 ﻿// **********************************************************************
 //
-// Copyright (c) 2003-2014 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 //
 // This copy of Ice is licensed to you under the terms described in the
 // ICE_LICENSE file included in this distribution.
@@ -31,6 +31,8 @@ MainPage::MainPage()
     InitializeComponent();
     mode->SelectedIndex = 0;
     Ice::InitializationData id;
+	id.properties = Ice::createProperties();
+	id.properties->setProperty("Ice.Plugin.IceDiscovery", "1"); // Enable the IceDiscovery plugin
     id.dispatcher = Ice::newDispatcher(
         [=](const Ice::DispatcherCallPtr& call, const Ice::ConnectionPtr&)
             {
@@ -53,14 +55,23 @@ hello::MainPage::updateProxy()
     }
 
     string h = IceUtil::wstringToString(hostname->Text->Data());
-    if (h.empty())
+    if (h.empty() && !useDiscovery->IsChecked->Value)
     {
         print("Host is empty.");
         _helloPrx = 0;
         return;
     }
-    Ice::ObjectPrx prx = _communicator->stringToProxy("hello:tcp -h " + h + " -p 10000:ssl -h " + h + 
-                                                      " -p 10001:udp -h " + h + " -p 10000");
+	Ice::ObjectPrx prx;
+	if (useDiscovery->IsChecked->Value)
+	{
+		prx = _communicator->stringToProxy("hello");
+	}
+	else
+	{
+		prx = _communicator->stringToProxy("hello:tcp -h " + h + " -p 10000:ssl -h " + h +
+			" -p 10001:udp -h " + h + " -p 10000");
+	}
+
     switch(mode->SelectedIndex)
     {
         case 0:
@@ -114,6 +125,13 @@ hello::MainPage::updateProxy()
         prx = prx->ice_invocationTimeout(static_cast<int>(timeout->Value * 1000));
     }
     _helloPrx = Demo::HelloPrx::uncheckedCast(prx);
+
+    //
+    // The batch requests associated to the proxy are lost when we
+    // update the proxy.
+    //
+    flush->IsEnabled = false;
+
     print("Ready.");
 }
 
@@ -156,6 +174,20 @@ hello::MainPage::hello_Click(Platform::Object^ sender, Windows::UI::Xaml::Routed
                                             },
                                         [=](bool sentSynchronously)
                                             {
+                                                if(_helloPrx)
+                                                {
+                                                    Ice::ConnectionPtr con = _helloPrx->ice_getCachedConnection();
+                                                    if(con)
+                                                    {
+                                                        Ice::IPConnectionInfoPtr info =
+                                                            Ice::IPConnectionInfoPtr::dynamicCast(con->getInfo());
+                                                        if(info)
+                                                        {
+                                                            hostname->Text = ref new String(
+                                                                IceUtil::stringToWstring(info->remoteAddress).c_str());
+                                                        }
+                                                    }
+                                                }
                                                 if(this->_response)
                                                 {
                                                     return; // Response was received already.
@@ -170,7 +202,7 @@ hello::MainPage::hello_Click(Platform::Object^ sender, Windows::UI::Xaml::Routed
                                                     print("Ready.");
                                                 }
                                             });
-            
+
             if(!result->sentSynchronously())
             {
                 print("Sending request");
@@ -198,14 +230,36 @@ hello::MainPage::hello_Click(Platform::Object^ sender, Windows::UI::Xaml::Routed
 
 void hello::MainPage::shutdown_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
+    if(!_helloPrx)
+    {
+        return;
+    }
+
     try
     {
-        if (!_helloPrx)
+        if(_helloPrx->ice_isBatchOneway() || _helloPrx->ice_isBatchDatagram())
         {
-            return;
+            print("Queued shutdown request.");
+            _helloPrx->shutdown();
+            flush->IsEnabled = true;
         }
-        _helloPrx = Demo::HelloPrx::uncheckedCast(_helloPrx->ice_twoway());
-        _helloPrx->begin_shutdown();
+        else
+        {
+            print("Shutting down...");
+            shutdown->IsEnabled = false;
+            _helloPrx->begin_shutdown([=]()
+                                      {
+                                          shutdown->IsEnabled = true;
+                                          print("Ready.");
+                                      },
+                                      [=](const Ice::Exception& ex)
+                                      {
+                                          shutdown->IsEnabled = true;
+                                          ostringstream os;
+                                          os << ex;
+                                          print(os.str());
+                                      });
+        }
     }
     catch(const Ice::Exception& ex)
     {
@@ -217,19 +271,24 @@ void hello::MainPage::shutdown_Click(Platform::Object^ sender, Windows::UI::Xaml
 
 void hello::MainPage::flush_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
+    if(!_helloPrx)
+    {
+        return;
+    }
+
     try
     {
         flush->IsEnabled = false;
-        _communicator->begin_flushBatchRequests([=](const Ice::Exception& ex)
-                                                    {
-                                                        ostringstream os;
-                                                        os << ex;
-                                                        print(os.str());
-                                                    },
+        _helloPrx->begin_ice_flushBatchRequests([=](const Ice::Exception& ex)
+                                                {
+                                                    ostringstream os;
+                                                    os << ex;
+                                                    print(os.str());
+                                                },
                                                 [=](bool)
-                                                    {
-                                                        print("Flushed batch requests.");
-                                                    });
+                                                {
+                                                    print("Flushed batch requests.");
+                                                });
     }
     catch(const Ice::Exception& ex)
     {
@@ -239,22 +298,22 @@ void hello::MainPage::flush_Click(Platform::Object^ sender, Windows::UI::Xaml::R
     }
 }
 
-void 
+void
 MainPage::mode_SelectionChanged(Platform::Object^ sender, Windows::UI::Xaml::Controls::SelectionChangedEventArgs^ e)
 {
     updateProxy();
 }
 
-void 
+void
 MainPage::timeout_ValueChanged(Platform::Object^ sender, Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventArgs^ e)
 {
     updateProxy();
 }
 
-void 
+void
 MainPage::hostname_TextChanged(Platform::Object^ sender, Windows::UI::Xaml::Controls::TextChangedEventArgs^ e)
 {
-    if (hostname->Text->Length() == 0)
+    if (hostname->Text->Length() == 0 && !useDiscovery->IsChecked->Value)
     {
         hello->IsEnabled = false;
         shutdown->IsEnabled = false;
@@ -267,6 +326,21 @@ MainPage::hostname_TextChanged(Platform::Object^ sender, Windows::UI::Xaml::Cont
         flush->IsEnabled = false;
     }
     updateProxy();
+}
+
+void hello::MainPage::useDiscovery_Changed(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+	if (useDiscovery->IsChecked->Value)
+	{
+		hostname->Text = "";
+		hostname->IsEnabled = false;
+	}
+	else
+	{
+		hostname->Text = "127.0.0.1";
+		hostname->IsEnabled = true;
+	}
+	updateProxy();
 }
 
 void

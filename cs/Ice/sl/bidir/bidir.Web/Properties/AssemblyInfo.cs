@@ -1,6 +1,6 @@
 ﻿// **********************************************************************
 //
-// Copyright (c) 2003-2014 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 //
 // This copy of Ice is licensed to you under the terms described in the
 // ICE_LICENSE file included in this distribution.
@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("ZeroC, Inc.")]
 [assembly: AssemblyProduct("bidir.Web")]
-[assembly: AssemblyCopyright("Copyright © 2012-2014 ZeroC, Inc.")]
+[assembly: AssemblyCopyright("Copyright © 2012-2015 ZeroC, Inc.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -40,5 +40,5 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("3.6.51")]
-[assembly: AssemblyFileVersion("3.6.51")]
+[assembly: AssemblyVersion("3.6.0")]
+[assembly: AssemblyFileVersion("3.6.0")]

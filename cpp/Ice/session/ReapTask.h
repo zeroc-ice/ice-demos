@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2014 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 //
 // This copy of Ice is licensed to you under the terms described in the
 // ICE_LICENSE file included in this distribution.
@@ -31,6 +31,10 @@ private:
     {
         SessionProxyPair(const Demo::SessionPrx& p, const SessionIPtr& s) :
             proxy(p), session(s) { }
+
+        // Required to prevent compiler warnings with MSVC++
+        SessionProxyPair& operator=(const SessionProxyPair&);
+
         const Demo::SessionPrx proxy;
         const SessionIPtr session;
     };

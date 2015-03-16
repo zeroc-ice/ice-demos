@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2014 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 //
 // This copy of Ice is licensed to you under the terms described in the
 // ICE_LICENSE file included in this distribution.
@@ -53,14 +53,9 @@ public:
     virtual void
     run()
     {
-        while(1)
+        string item;
+        while((item = nextItem()) != "destroy")
         {
-            string item = nextItem();
-            if(item == "destroy")
-            {
-                break;
-            }
-
             mtprint("work item: " + item + "\n");
             IceUtil::ThreadControl::sleep(IceUtil::Time::seconds(1));
         }
@@ -87,7 +82,7 @@ private:
         {
             _monitor.wait();
         }
-        
+
         string item = _queue.front();
         _queue.pop_front();
         return item;

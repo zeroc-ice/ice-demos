@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2014 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 //
 // This copy of Ice is licensed to you under the terms described in the
 // ICE_LICENSE file included in this distribution.
@@ -56,7 +56,7 @@ HelloClient::run(int argc, char* argv[])
 
     int status = EXIT_SUCCESS;
 
-    IceGrid::RegistryPrx registry = 
+    IceGrid::RegistryPrx registry =
         IceGrid::RegistryPrx::checkedCast(communicator()->stringToProxy("DemoIceGrid/Registry"));
     if(!registry)
     {
@@ -65,7 +65,7 @@ HelloClient::run(int argc, char* argv[])
     }
 
     IceGrid::SessionPrx session;
-    while(true)
+    while(!session)
     {
         cout << "This demo accepts any user-id / password combination.\n";
 
@@ -80,7 +80,7 @@ HelloClient::run(int argc, char* argv[])
         password = trim(password);
 
         try
-        {  
+        {
             session = registry->createSession(id, password);
             break;
         }
@@ -102,7 +102,7 @@ HelloClient::run(int argc, char* argv[])
 
         menu();
 
-        char c;
+        char c = 'x';
         do
         {
             try

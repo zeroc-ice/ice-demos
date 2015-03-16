@@ -24,11 +24,22 @@
 .gdb_history
 .DS_Store
 core
-
+/*/dist
 generated
 generated.test
 cgenerated
 sgenerated
+/java/depcache
+/java/lib
+/android/lib
+/cpp/bin
+/cpp/lib
+/javae/jdk/lib
+/javae/midp/lib
+/cppe/bin
+/cppe/lib
+/cs/bin
+/cs/Assemblies
 *#
 .#*
 *~
@@ -45,9 +56,12 @@ vcproj
 .metadata
 # VIM swap file
 *.swp
-server.keychain
-client.keychain
-.fl????????
+.keychain
+
+cpp/demo/ipch
+cpp/demo/Debug
+
+cpp/test/IceBox/configuration/build.txt
 
 js/lib
 js/node_modules
@@ -55,10 +69,13 @@ js/bower_components
 js/npm-debug.log
 
 # OS X Keychain
-
 *.keychain
+.fl????????
 
 .depend
 
+cpp/src/Ice/EventLoggerMsg.h
+cpp/src/Ice/EventLoggerMsg.rc
+cpp/src/Ice/EventLoggerMsg.res
 *.bin
 

@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2014 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 //
 // This copy of Ice is licensed to you under the terms described in the
 // ICE_LICENSE file included in this distribution.
@@ -69,7 +69,7 @@ HelloClient::run(int argc, char* argv[])
 
     menu();
 
-    char c;
+    char c = 'x';
     do
     {
         try
@@ -112,7 +112,8 @@ HelloClient::run(int argc, char* argv[])
             }
             else if(c == 'f')
             {
-                communicator()->flushBatchRequests();
+                batchOneway->ice_flushBatchRequests();
+                batchDatagram->ice_flushBatchRequests();
             }
             else if(c == 'T')
             {
@@ -124,11 +125,11 @@ HelloClient::run(int argc, char* argv[])
                 {
                     timeout = -1;
                 }
-                
+
                 twoway = twoway->ice_invocationTimeout(timeout);
                 oneway = oneway->ice_invocationTimeout(timeout);
                 batchOneway = batchOneway->ice_invocationTimeout(timeout);
-                
+
                 if(timeout == -1)
                 {
                     cout << "timeout is now switched off" << endl;
@@ -148,7 +149,7 @@ HelloClient::run(int argc, char* argv[])
                 {
                     delay = 0;
                 }
-                
+
                 if(delay == 0)
                 {
                     cout << "server delay is now deactivated" << endl;
@@ -161,13 +162,13 @@ HelloClient::run(int argc, char* argv[])
             else if(c == 'S')
             {
                 secure = !secure;
-                
+
                 twoway = twoway->ice_secure(secure);
                 oneway = oneway->ice_secure(secure);
                 batchOneway = batchOneway->ice_secure(secure);
                 datagram = datagram->ice_secure(secure);
                 batchDatagram = batchDatagram->ice_secure(secure);
-                
+
                 if(secure)
                 {
                     cout << "secure mode is now on" << endl;

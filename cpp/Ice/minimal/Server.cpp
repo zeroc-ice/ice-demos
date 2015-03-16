@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2014 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 //
 // This copy of Ice is licensed to you under the terms described in the
 // ICE_LICENSE file included in this distribution.
@@ -36,9 +36,9 @@ main(int argc, char* argv[])
             {
                 communicator->destroy();
             }
-            catch(const Ice::Exception& ex)
+            catch(const Ice::Exception& ex2)
             {
-                cerr << ex << endl;
+                cerr << ex2 << endl;
             }
         }
         exit(1);

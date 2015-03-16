@@ -1,13 +1,13 @@
 #
 # Enable Ice.Admin object
 #
-Ice.Admin.Endpoints=tcp -p 9990
+Ice.Admin.Endpoints=tcp -p 9991
 Ice.Admin.InstanceName=icebox1
 
 #
 # The IceStorm service
 #
-IceBox.Service.IceStorm=IceStormService,36b:createIceStorm --Ice.Config=config.s1
+IceBox.Service.IceStorm=IceStormService,36:createIceStorm --Ice.Config=config.s1
 
 #
 # Warn about connection exceptions

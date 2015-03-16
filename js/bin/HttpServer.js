@@ -1,25 +1,25 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2014 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 //
 // This copy of Ice is licensed to you under the terms described in the
 // ICE_LICENSE file included in this distribution.
 //
 // **********************************************************************
 
-var http = require("http");
-var https = require("https");
-var url = require("url");
-var crypto = require("crypto");
-var fs = require("fs");
-var path = require("path");
+var crypto    = require("crypto");
+var fs        = require("fs");
+var http      = require("http");
 var httpProxy = require("http-proxy");
+var https     = require("https");
+var path      = require("path");
+var url       = require("url");
 
 function isdir(p)
 {
     try
     {
-        return fs.statSync(path.join(p)).isDirectory(); 
+        return fs.statSync(path.join(p)).isDirectory();
     }
     catch(e)
     {
@@ -34,29 +34,25 @@ function Init()
         css: "text/css",
         html: "text/html",
         ico: "image/x-icon",
-        jpeg: "image/jpeg",
-        jpg: "image/jpeg",
         js: "text/javascript",
-        png: "image/png",
     };
-    
-    var useBinDist = process.env["USE_BIN_DIST"] == "yes";
+
     var demoDist = !isdir(path.join(__dirname, "..", "lib"));
 
     //
     // If using a demo distribution or USE_BIN_DIST was set,
     // resolve libraries in bower_components/zeroc-icejs directory.
     //
-    var iceLibDir;
-    if(demoDist || useBinDist)
-    {
-        iceLibDir = path.resolve(path.join(__dirname, "../bower_components/zeroc-icejs/lib"));
-    }
-
     var libraries = ["/lib/Ice.js", "/lib/Ice.min.js",
                     "/lib/Glacier2.js", "/lib/Glacier2.min.js",
                     "/lib/IceStorm.js", "/lib/IceStorm.min.js",
                     "/lib/IceGrid.js", "/lib/IceGrid.min.js",];
+
+    var libraryMaps = libraries.map(
+        function(f)
+        {
+            return f + ".map";
+        });
 
     var HttpServer = function(host, ports)
     {
@@ -70,25 +66,26 @@ function Init()
         var filePath;
 
         var iceLib = libraries.indexOf(req.url.pathname) !== -1;
+        var iceLibMap = libraryMaps.indexOf(req.url.pathname) !== -1;
         //
         // If ICE_HOME has been set resolve Ice libraries paths into ICE_HOME.
         //
-        if(iceLibDir && iceLib)
-        {
-            filePath = path.join(iceLibDir, req.url.pathname.substr(4));
-        }
-        else
-        {
-            filePath = path.resolve(path.join(this._basePath, req.url.pathname));
-        }
+        filePath = path.resolve(path.join(this._basePath, req.url.pathname));
 
         //
         // If OPTIMIZE is set resolve Ice libraries to the corresponding minified
         // versions.
         //
-        if(process.env.OPTIMIZE == "yes" && iceLib && filePath.substr(-7) !== ".min.js")
+        if(process.env.OPTIMIZE == "yes")
         {
-            filePath = filePath.replace(".js", ".min.js");
+            if(iceLib && filePath.substr(-7) !== ".min.js")
+            {
+                filePath = filePath.replace(".js", ".min.js");
+            }
+            else if(iceLibMap && filePath.substr(-11) !== ".min.js.map")
+            {
+                filePath = filePath.replace(".js.map", ".min.js.map");
+            }
         }
 
         var ext = path.extname(filePath).slice(1);
@@ -97,7 +94,7 @@ function Init()
         // When the browser ask for a .js or .css file and it has support for gzip content
         // check if a gzip version (.js.gz or .css.gz) of the file exists and use that instead.
         //
-        if((ext == "js" || ext == "css") && req.headers["accept-encoding"].indexOf("gzip") !== -1)
+        if((ext == "js" || ext == "css" || ext == "map") && req.headers["accept-encoding"].indexOf("gzip") !== -1)
         {
             fs.stat(filePath + ".gz",
                     function(err, stats)
@@ -166,7 +163,6 @@ function Init()
                     {
                         "Content-Type": MimeTypes[ext] || "text/plain",
                         "Content-Length": stats.size,
-                        "Last-Modified": new Date(stats.mtime).toUTCString(),
                         "Etag": hash.digest("hex")
                     };
 
@@ -176,8 +172,7 @@ function Init()
                     }
 
                     //
-                    // Check for conditional request headers, if-modified-since
-                    // and if-none-match.
+                    // Check for conditional request header if-none-match.
                     //
                     var modified = true;
                     if(req.headers["if-none-match"] !== undefined)
@@ -313,7 +308,7 @@ function Init()
         httpsServer.listen(9090, this._host);
         console.log("listening on ports 8080 (http) and 9090 (https)...");
     };
-    
+
     new HttpServer("0.0.0.0", [8080, 9090]).start();
 }
 

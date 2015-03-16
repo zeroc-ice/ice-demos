@@ -13,11 +13,11 @@
 
 SHELL			= /bin/sh
 VERSION_MAJOR   = 3
-VERSION_MINOR   = 6b
-VERSION_PATCH   = 51
-VERSION         = 3.6b
+VERSION_MINOR   = 6
+VERSION_PATCH   = 0
+VERSION         = 3.6.0
 SHORT_VERSION   = 3.6
-SOVERSION		= 36b
+SOVERSION		= 36
 
 INSTALL			= cp -fp
 INSTALL_PROGRAM	= ${INSTALL}
@@ -104,9 +104,11 @@ ifeq ($(UNAME),Linux)
           LP64      	= yes
       endif
    endif
-   ifneq ($(LP64),yes)
-       binsuffix     = 32
-   endif
+   ifneq ($(STATICLIBS),yes)
+	ifneq ($(LP64),yes)
+	    binsuffix     = 32
+	endif
+    endif
 endif
 
 ifeq ($(shell test -d $(usr_dir)/lib/i386-linux-gnu && echo 0),0)

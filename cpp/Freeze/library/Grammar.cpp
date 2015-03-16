@@ -73,13 +73,14 @@
 
 // **********************************************************************
 //
-// Copyright (c) 2003-2014 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 //
 // This copy of Ice is licensed to you under the terms described in the
 // ICE_LICENSE file included in this distribution.
 //
 // **********************************************************************
 
+#include <IceUtil/PushDisableWarnings.h>
 #include <Parser.h>
 
 #ifdef _MSC_VER
@@ -88,6 +89,12 @@
 #   pragma warning( disable : 4102 )
 // warning C4065: switch statement contains 'default' but no 'case' labels
 #   pragma warning( disable : 4065 )
+// warning C4127: conditional expression is constant
+#   pragma warning( disable : 4127 )
+// warning C4244: '=' : conversion from 'int' to 'yytype_int16', possible loss of data
+#   pragma warning( disable : 4244 )
+// warning C4702: unreachable code
+#   pragma warning( disable : 4702 )
 #endif
 
 using namespace std;
@@ -101,7 +108,7 @@ yyerror(const char* s)
 
 
 /* Line 189 of yacc.c  */
-#line 105 "Grammar.tab.c"
+#line 112 "Grammar.tab.c"
 
 /* Enabling traces.  */
 #ifndef YYDEBUG
@@ -158,7 +165,7 @@ typedef int YYSTYPE;
 
 
 /* Line 264 of yacc.c  */
-#line 162 "Grammar.tab.c"
+#line 169 "Grammar.tab.c"
 
 #ifdef short
 # undef short
@@ -449,9 +456,9 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    53,    53,    57,    64,    67,    75,    79,    83,    87,
-      91,    95,    99,   103,   107,   111,   115,   119,   123,   127,
-     135,   140
+       0,    60,    60,    64,    71,    74,    82,    86,    90,    94,
+      98,   102,   106,   110,   114,   118,   122,   126,   130,   134,
+     142,   147
 };
 #endif
 
@@ -1374,7 +1381,7 @@ yyreduce:
         case 2:
 
 /* Line 1455 of yacc.c  */
-#line 54 "Grammar.y"
+#line 61 "Grammar.y"
     {
 ;}
     break;
@@ -1382,7 +1389,7 @@ yyreduce:
   case 3:
 
 /* Line 1455 of yacc.c  */
-#line 57 "Grammar.y"
+#line 64 "Grammar.y"
     {
 ;}
     break;
@@ -1390,7 +1397,7 @@ yyreduce:
   case 4:
 
 /* Line 1455 of yacc.c  */
-#line 65 "Grammar.y"
+#line 72 "Grammar.y"
     {
 ;}
     break;
@@ -1398,7 +1405,7 @@ yyreduce:
   case 5:
 
 /* Line 1455 of yacc.c  */
-#line 68 "Grammar.y"
+#line 75 "Grammar.y"
     {
 ;}
     break;
@@ -1406,7 +1413,7 @@ yyreduce:
   case 6:
 
 /* Line 1455 of yacc.c  */
-#line 76 "Grammar.y"
+#line 83 "Grammar.y"
     {
     parser->usage();
 ;}
@@ -1415,7 +1422,7 @@ yyreduce:
   case 7:
 
 /* Line 1455 of yacc.c  */
-#line 80 "Grammar.y"
+#line 87 "Grammar.y"
     {
     return 0;
 ;}
@@ -1424,7 +1431,7 @@ yyreduce:
   case 8:
 
 /* Line 1455 of yacc.c  */
-#line 84 "Grammar.y"
+#line 91 "Grammar.y"
     {
     parser->addBook((yyvsp[(2) - (3)]));
 ;}
@@ -1433,7 +1440,7 @@ yyreduce:
   case 9:
 
 /* Line 1455 of yacc.c  */
-#line 88 "Grammar.y"
+#line 95 "Grammar.y"
     {
     parser->findIsbn((yyvsp[(2) - (3)]));
 ;}
@@ -1442,7 +1449,7 @@ yyreduce:
   case 10:
 
 /* Line 1455 of yacc.c  */
-#line 92 "Grammar.y"
+#line 99 "Grammar.y"
     {
     parser->findAuthors((yyvsp[(2) - (3)]));
 ;}
@@ -1451,7 +1458,7 @@ yyreduce:
   case 11:
 
 /* Line 1455 of yacc.c  */
-#line 96 "Grammar.y"
+#line 103 "Grammar.y"
     {
     parser->nextFoundBook();
 ;}
@@ -1460,7 +1467,7 @@ yyreduce:
   case 12:
 
 /* Line 1455 of yacc.c  */
-#line 100 "Grammar.y"
+#line 107 "Grammar.y"
     {
     parser->printCurrent();
 ;}
@@ -1469,7 +1476,7 @@ yyreduce:
   case 13:
 
 /* Line 1455 of yacc.c  */
-#line 104 "Grammar.y"
+#line 111 "Grammar.y"
     {
     parser->rentCurrent((yyvsp[(2) - (3)]));
 ;}
@@ -1478,7 +1485,7 @@ yyreduce:
   case 14:
 
 /* Line 1455 of yacc.c  */
-#line 108 "Grammar.y"
+#line 115 "Grammar.y"
     {
     parser->returnCurrent();
 ;}
@@ -1487,7 +1494,7 @@ yyreduce:
   case 15:
 
 /* Line 1455 of yacc.c  */
-#line 112 "Grammar.y"
+#line 119 "Grammar.y"
     {
     parser->removeCurrent();
 ;}
@@ -1496,7 +1503,7 @@ yyreduce:
   case 16:
 
 /* Line 1455 of yacc.c  */
-#line 116 "Grammar.y"
+#line 123 "Grammar.y"
     {
     parser->setEvictorSize((yyvsp[(2) - (3)]));
 ;}
@@ -1505,7 +1512,7 @@ yyreduce:
   case 17:
 
 /* Line 1455 of yacc.c  */
-#line 120 "Grammar.y"
+#line 127 "Grammar.y"
     {
     parser->shutdown();
 ;}
@@ -1514,7 +1521,7 @@ yyreduce:
   case 18:
 
 /* Line 1455 of yacc.c  */
-#line 124 "Grammar.y"
+#line 131 "Grammar.y"
     {
     yyerrok;
 ;}
@@ -1523,7 +1530,7 @@ yyreduce:
   case 19:
 
 /* Line 1455 of yacc.c  */
-#line 128 "Grammar.y"
+#line 135 "Grammar.y"
     {
 ;}
     break;
@@ -1531,7 +1538,7 @@ yyreduce:
   case 20:
 
 /* Line 1455 of yacc.c  */
-#line 136 "Grammar.y"
+#line 143 "Grammar.y"
     {
     (yyval) = (yyvsp[(2) - (2)]);
     (yyval).push_front((yyvsp[(1) - (2)]).front());
@@ -1541,7 +1548,7 @@ yyreduce:
   case 21:
 
 /* Line 1455 of yacc.c  */
-#line 141 "Grammar.y"
+#line 148 "Grammar.y"
     {
     (yyval) = (yyvsp[(1) - (1)]);
 ;}
@@ -1550,7 +1557,7 @@ yyreduce:
 
 
 /* Line 1455 of yacc.c  */
-#line 1554 "Grammar.tab.c"
+#line 1561 "Grammar.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1762,6 +1769,8 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 146 "Grammar.y"
+#line 153 "Grammar.y"
 
+
+#include <IceUtil/PopDisableWarnings.h>
 

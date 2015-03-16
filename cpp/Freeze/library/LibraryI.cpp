@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2014 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 //
 // This copy of Ice is licensed to you under the terms described in the
 // ICE_LICENSE file included in this distribution.
@@ -21,7 +21,7 @@ BookI::BookI(const LibraryIPtr& library) :
 void
 BookI::destroy(const Ice::Current&)
 {
-    IceUtil::Mutex::Lock lock(*this);
+    IceUtil::Mutex::Lock lck(*this);
     if(_destroyed)
     {
         throw Ice::ObjectNotExistException(__FILE__, __LINE__);
@@ -43,7 +43,7 @@ BookI::destroy(const Ice::Current&)
 Demo::BookDescription
 BookI::getBookDescription(const Ice::Current&) const
 {
-    IceUtil::Mutex::Lock lock(*this);
+    IceUtil::Mutex::Lock lck(*this);
 
     if(_destroyed)
     {
@@ -59,7 +59,7 @@ BookI::getBookDescription(const Ice::Current&) const
 string
 BookI::getRenterName(const Ice::Current&) const
 {
-    IceUtil::Mutex::Lock lock(*this);
+    IceUtil::Mutex::Lock lck(*this);
 
     if(_destroyed)
     {
@@ -76,7 +76,7 @@ BookI::getRenterName(const Ice::Current&) const
 void
 BookI::rentBook(const string& name, const Ice::Current&)
 {
-    IceUtil::Mutex::Lock lock(*this);
+    IceUtil::Mutex::Lock lck(*this);
 
     if(_destroyed)
     {
@@ -93,7 +93,7 @@ BookI::rentBook(const string& name, const Ice::Current&)
 void
 BookI::returnBook(const Ice::Current&)
 {
-    IceUtil::Mutex::Lock lock(*this);
+    IceUtil::Mutex::Lock lck(*this);
 
     if(_destroyed)
     {
@@ -138,10 +138,13 @@ public:
 
 private:
 
+    // Required to prevent compiler warnings with MSVC++
+    IsbnToBook& operator=(const IsbnToBook&);
+
     const Ice::ObjectAdapterPtr _adapter;
 };
 
-LibraryI::LibraryI(const Ice::CommunicatorPtr& communicator, 
+LibraryI::LibraryI(const Ice::CommunicatorPtr& communicator,
                    const string& envName, const string& dbName,
                    const Freeze::EvictorPtr& evictor) :
     _evictor(evictor),
@@ -153,7 +156,7 @@ LibraryI::LibraryI(const Ice::CommunicatorPtr& communicator,
 Demo::BookPrx
 LibraryI::createBook(const Demo::BookDescription& description, const Ice::Current& c)
 {
-    IceUtil::Mutex::Lock lock(*this);
+    IceUtil::Mutex::Lock lck(*this);
 
     BookPrx book = IsbnToBook(c.adapter)(description.isbn);
     try
@@ -228,7 +231,7 @@ LibraryI::findByIsbn(const string& isbn, const Ice::Current& c) const
 Demo::BookPrxSeq
 LibraryI::findByAuthors(const string& authors, const Ice::Current& c) const
 {
-    IceUtil::Mutex::Lock lock(*this);
+    IceUtil::Mutex::Lock lck(*this);
 
     //
     // Lookup all books that match the given authors, and return them
@@ -265,8 +268,8 @@ LibraryI::shutdown(const Ice::Current& current)
 void
 LibraryI::remove(const BookDescription& description)
 {
-    IceUtil::Mutex::Lock lock(*this);
-    
+    IceUtil::Mutex::Lock lck(*this);
+
     //
     // Note: no need to catch and retry on deadlock since all access to
     // _authors is serialized.
@@ -275,7 +278,7 @@ LibraryI::remove(const BookDescription& description)
     try
     {
         StringIsbnSeqDict::iterator p = _authors.find(description.authors);
-        
+
         assert(p != _authors.end());
 
         //
@@ -284,7 +287,7 @@ LibraryI::remove(const BookDescription& description)
         Ice::StringSeq isbnSeq  = p->second;
         isbnSeq.erase(remove_if(isbnSeq.begin(), isbnSeq.end(), bind2nd(equal_to<string>(), description.isbn)),
                          isbnSeq.end());
-        
+
         if(isbnSeq.empty())
         {
             //
