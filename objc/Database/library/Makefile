@@ -25,7 +25,7 @@ COBJS		= Client.o \
 
 OBJS		= $(SLICE_OBJS) $(COBJS)
 
-include $(top_srcdir)/config/Make.rules
+include $(top_srcdir)/config/Make.rules.objc
 
 CPPFLAGS	:= -I. $(CPPFLAGS)
 

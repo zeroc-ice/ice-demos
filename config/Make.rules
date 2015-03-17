@@ -76,7 +76,7 @@ ice_require_cpp  = 1
 
 include $(top_srcdir)/config/Make.common.rules
 
-includedir		= $(ice_dir)/include
+includedir		= $(ice_cpp_dir)/include
 
 #
 # Platform specific definitions
@@ -90,11 +90,11 @@ SLICE2CPPFLAGS		= $(ICECPPFLAGS)
 ifeq ($(ice_dir), $(usr_dir)) 
     LDFLAGS	= $(LDPLATFORMFLAGS) $(CXXFLAGS)
     ifeq ($(CPP11),yes)
-        LDFLAGS = $(LDPLATFORMFLAGS) $(CXXFLAGS) -L$(ice_dir)/$(libsubdir)$(cpp11libdirsuffix)
+        LDFLAGS = $(LDPLATFORMFLAGS) $(CXXFLAGS) -L$(ice_lib_dir)
     endif
 else
     CPPFLAGS	+= -I$(includedir)
-    LDFLAGS	= $(LDPLATFORMFLAGS) $(CXXFLAGS) -L$(ice_dir)/$(libsubdir)$(cpp11libdirsuffix)
+    LDFLAGS	= $(LDPLATFORMFLAGS) $(CXXFLAGS) -L$(ice_lib_dir)
 endif
 
 ifeq ($(FLEX_NOLINE),yes)

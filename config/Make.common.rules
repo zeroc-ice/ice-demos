@@ -175,6 +175,7 @@ $(error Unable to find a valid Ice distribution, please verify ICE_HOME is prope
 
     ice_dir = $(usr_dir)
     ice_cpp_dir = $(ice_dir)
+    ice_objc_dir = $(ice_dir)
 else
     #
     # Two cases here. Either an /opt style install, or a source tree.
@@ -182,10 +183,12 @@ else
     ice_dir = $(ICE_HOME)
     ifeq ($(shell test -f $(ICE_HOME)/$(binsubdir)/$(slice_translator) && echo 0), 0)
         ice_cpp_dir = $(ice_dir)
+        ice_objc_dir = $(ice_dir)
     else
         ifeq ($(shell test -f $(ice_dir)/cpp/bin/$(slice_translator) && echo 0), 0)
             ice_src_dist = 1
             ice_cpp_dir = $(ice_dir)/cpp
+            ice_objc_dir = $(ice_dir)/objc
         else
 $(error Unable to find $(slice_translator) in $(ICE_HOME)/$(binsubdir), please verify ICE_HOME is properly configured and Ice is correctly installed.)
         endif
@@ -233,6 +236,10 @@ else
     install_docdir = $(prefix)
 endif
 
+#
+# TODO: Should this be:
+# $(ice_dir)/$(libsubdir)$(cpp11libdirsuffix)
+#
 ifdef ice_src_dist
     ice_lib_dir = $(ice_cpp_dir)/$(libsubdir)
     ice_bin_dir = $(ice_cpp_dir)/$(binsubdir)

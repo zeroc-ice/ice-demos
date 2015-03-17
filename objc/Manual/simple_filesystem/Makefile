@@ -24,7 +24,7 @@ SOBJS		= Server.o \
 
 OBJS		= $(SLICE_OBJS) $(COBJS) $(SOBJS)
 
-include $(top_srcdir)/config/Make.rules
+include $(top_srcdir)/config/Make.rules.objc
 
 CPPFLAGS	:= -I. $(CPPFLAGS)
 
