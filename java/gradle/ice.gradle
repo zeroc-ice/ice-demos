@@ -18,6 +18,9 @@ buildscript {
         }
 
         def env = System.getenv()
+	def iceDir
+	ext.srcdist = false
+	ext.useLocalRepo = false
 
         // First check if iceHome was set in gradle.properties
         // Otherwise check if ICE_HOME is set and it points at a valid installation
@@ -27,20 +30,20 @@ buildscript {
                 throw new GradleException("Unable to find $slice2java in $iceHome, please verify iceHome is " +
                                           "properly configured in gradle.properties and Ice is correctly installed.")
             }
+	    iceDir = iceHome
         } else {
-            iceHome = env['ICE_HOME']
-            if (iceHome) {
-                def translator = new File("$iceHome/bin/$slice2java")
+            iceDir = env['ICE_HOME']
+            if (iceDir) {
+	        def translator = new File("$iceDir/bin/$slice2java")
                 if (!translator.exists()) {
-                    throw new GradleException("Unable to find $slice2java in $iceHome, please verify ICE_HOME is " +
-                                              "properly configured and Ice is correctly installed.")
+ 	    	    translator = new File("$iceDir/cpp/bin/$slice2java")
+                    if (!translator.exists()) {
+                        throw new GradleException("Unable to find $slice2java in $iceDir, please verify ICE_HOME is " +
+                                                  "properly configured and Ice is correctly installed.")
+		    }
+		    ext.srcdist = true
                 }
             }
-        }
-
-        def iceDir
-        if (iceHome) {
-            iceDir = iceHome
         }
 
         if (iceDir == null) {
@@ -63,16 +66,9 @@ buildscript {
         }
 
         if (iceDir == null) {
-            def f1 = new File("/Library/Developer/Ice-${project.version}/bin/$slice2java")
+            def f1 = new File("/usr/local/bin/$slice2java")
             if (f1.exists()) {
-                iceDir = "/Library/Developer/Ice-${project.version}"
-            }
-        }
-
-        if (iceDir == null) {
-            def f1 = new File("/opt/Ice-${project.version}/bin/$slice2java")
-            if (f1.exists()) {
-                iceDir = "/opt/Ice-${project.version}"
+                iceDir = "/usr/local"
             }
         }
 
@@ -83,11 +79,18 @@ buildscript {
 
         // Set the slice and java jar directory
         if (iceDir == "/usr") {
-            ext.sliceDir = "/usr/share/Ice-${project.version}/slice"
+ 	    ext.sliceDir = "/usr/share/Ice-${project.version}/slice"
             ext.distJarDir = "/usr/share/java"
+        } else if (iceDir == "/usr/local") {
+ 	    ext.sliceDir = "/usr/local/share/slice"
+            ext.distJarDir = "/usr/local/share/java"
         } else {
-            ext.sliceDir = "$iceDir/slice"
-            ext.distJarDir = "$iceDir/lib"
+	    ext.sliceDir = "$iceDir/slice"
+	    if (srcdist) {
+            	ext.distJarDir = "$iceDir/java/lib"
+	    } else {
+            	ext.distJarDir = "$iceDir/lib"
+	    }
         }
 
         return iceDir
@@ -95,10 +98,10 @@ buildscript {
     def iceDir = getIceHome()
 
     repositories {
-        if (localOnly == "true") {
+        if (localOnly == "true" || srcdist) {
             flatDir {
                 name "local"
-                dirs "${iceDir}/lib"
+                dirs distJarDir
             }
         } else {
             maven {
@@ -147,8 +150,13 @@ if (System.properties['os.name'].toLowerCase().contains('windows')) {
 
 def iceDir = getIceHome()
 
-slice.iceHome = iceDir
-slice.srcDist = false
+if (srcdist) {
+    slice.iceHome = "$iceDir/cpp"
+    slice.srcDist = true
+} else {
+    slice.iceHome = iceDir
+    slice.srcDist = false
+}
 
 // Check if we need to append version suffix to jar files
 ext.versionSuffix = ""
