@@ -20,39 +20,6 @@
 #LP64			?= yes
 
 #
-# The "root directory" for runpath embedded in executables. Can be set
-# to change the runpath added to Ice executables. The default is 
-# platform dependent.
-#
-#embedded_runpath_prefix ?= /opt/Ice-$(VERSION_MAJOR).$(VERSION_MINOR)
-
-#
-# Define embedded_runpath as no if you don't want any RPATH added to
-# the executables.
-#
-embedded_runpath ?= yes
-
-#
-# If building on OS X and third party libraries are not installed
-# in the default location and THIRDPARTY_HOME is not set in your
-# environment variables, change the following setting to reflect the
-# installation location.
-#
-#THIRDPARTY_HOME ?= /Library/Developer/Ice-$(VERSION)-ThirdParty
-
-#
-# If libbzip2 is not installed in a location where the compiler can
-# find it, set BZIP2_HOME to the bzip2 installation directory.
-#
-#BZIP2_HOME		?= /opt/bzip2
-
-#
-# If Berkeley DB is not installed in a location where the compiler can
-# find it, set DB_HOME to the Berkeley DB installation directory.
-#
-#DB_HOME		?= /opt/db
-
-#
 # Define CPP11 as yes if you want to enable C++11 features in GCC or 
 # Clang.
 #
@@ -72,11 +39,19 @@ embedded_runpath ?= yes
 #
 ice_language     = cpp
 slice_translator = slice2cpp
-ice_require_cpp  = 1
 
 include $(top_srcdir)/config/Make.common.rules
 
 includedir		= $(ice_cpp_dir)/include
+
+#
+# Embed the runpath if ICE_HOME is defined, otherwise the install
+# is /usr or /usr/local.
+#
+ifneq ($(ICE_HOME),)
+    embedded_runpath = yes
+endif
+
 
 #
 # Platform specific definitions
@@ -112,7 +87,6 @@ endif
 ifeq ($(mkshlib),)
     $(error You need to define mkshlib in Make.rules.$(UNAME)) 
 endif
-
 
 
 SLICEPARSERLIB  = $(ice_lib_dir)/$(subst $(cpp11libsuffix),,$(call mklibfilename,Slice,$(VERSION)))

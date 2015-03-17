@@ -11,22 +11,17 @@
 # Don't change anything below this line!
 # ----------------------------------------------------------------------
 
-SHELL			= /bin/sh
+SHELL		= /bin/sh
 VERSION_MAJOR   = 3
 VERSION_MINOR   = 6
 VERSION_PATCH   = 0
 VERSION         = 3.6.0
 SHORT_VERSION   = 3.6
-SOVERSION		= 36
+SOVERSION	= 36
 
-INSTALL			= cp -fp
-INSTALL_PROGRAM	= ${INSTALL}
-INSTALL_LIBRARY	= ${INSTALL}
-INSTALL_DATA	= ${INSTALL}
+OBJEXT		= .o
 
-OBJEXT			= .o
-
-UNAME			:= $(shell uname)
+UNAME		:= $(shell uname)
 MACHINE_TYPE	:= $(shell uname -m)
 
 #
@@ -40,24 +35,6 @@ ifeq ($(UNAME),Darwin)
     usr_dir = /usr/local
 else
     usr_dir = /usr
-endif
-
-#
-# usr_dir_install means we want to install with a /usr style layout.
-#
-ifeq ($(prefix), /usr)
-    usr_dir_install = 1
-endif
-
-ifeq ($(prefix), /usr/local)
-    usr_dir_install = 1
-endif
-
-#
-# A /usr style layout can be forced by setting USR_DIR_INSTALL=yes.
-#
-ifeq ($(USR_DIR_INSTALL),yes)
-    usr_dir_install = 1
 endif
 
 ifeq ($(UNAME),SunOS)
@@ -157,10 +134,6 @@ endif
 #   Setting this variable is required when building source trees other than the
 #   the source distribution (e.g.: the demo sources).
 #                  
-# - ice_require_cpp: define this variable to check for the presence of the C++
-#   dev kit and check for the existence of the include/Ice/Config.h header.
-#
-
 ifeq ($(ICE_HOME),)
     #
     # /usr or /usr/local install.
@@ -175,7 +148,6 @@ $(error Unable to find a valid Ice distribution, please verify ICE_HOME is prope
 
     ice_dir = $(usr_dir)
     ice_cpp_dir = $(ice_dir)
-    ice_objc_dir = $(ice_dir)
 else
     #
     # Two cases here. Either an /opt style install, or a source tree.
@@ -183,37 +155,14 @@ else
     ice_dir = $(ICE_HOME)
     ifeq ($(shell test -f $(ICE_HOME)/$(binsubdir)/$(slice_translator) && echo 0), 0)
         ice_cpp_dir = $(ice_dir)
-        ice_objc_dir = $(ice_dir)
     else
         ifeq ($(shell test -f $(ice_dir)/cpp/bin/$(slice_translator) && echo 0), 0)
             ice_src_dist = 1
             ice_cpp_dir = $(ice_dir)/cpp
-            ice_objc_dir = $(ice_dir)/objc
         else
 $(error Unable to find $(slice_translator) in $(ICE_HOME)/$(binsubdir), please verify ICE_HOME is properly configured and Ice is correctly installed.)
         endif
     endif
-endif
-
-#
-# If ice_require_cpp is defined, ensure the C++ headers exist
-#
-ifeq ($(ice_require_cpp), "yes")
-    ifdef ice_src_dist
-        ice_cpp_header = $(ice_cpp_dir)/include/Ice/Ice.h
-    else
-        ice_cpp_header = $(ice_dir)/include/Ice/Ice.h
-    endif
-    ifneq ($(shell test -f $(ice_cpp_header) && echo 0),0)
-$(error Unable to find the C++ header file $(ice_cpp_header), please verify ICE_HOME is properly configured and Ice is correctly installed.)
-    endif
-endif
-
-#
-# Clear the embedded runpath prefix if building against RPM distribution.
-#
-ifeq ($(ice_dir), $(usr_dir))
-    embedded_runpath_prefix =
 endif
 
 #
@@ -223,17 +172,6 @@ ifeq ($(ice_dir), $(usr_dir))
     slicedir = $(usr_dir)/share/slice
 else
     slicedir = $(ice_dir)/slice
-endif
-
-#
-# Installation location for slice and doc files.
-#
-ifdef usr_dir_install
-    install_slicedir = $(prefix)/share/Ice-$(VERSION)/slice
-    install_docdir = $(prefix)/share/Ice-$(VERSION)
-else
-    install_slicedir = $(prefix)/slice
-    install_docdir = $(prefix)
 endif
 
 #
@@ -326,7 +264,7 @@ endif
 
 ifeq ($(mklibname),)
     ifeq ($(STATICLIBS),yes)
-		mklibname	= lib$(1)$(cpp11libsuffix).a
+	mklibname	= lib$(1)$(cpp11libsuffix).a
     else
         ifeq ($(UNAME),Darwin)
 	    mklibname   = lib$(1).dylib
@@ -338,37 +276,10 @@ endif
 
 ifndef mklibtargets
     ifeq ($(STATICLIBS),yes)
-		mklibtargets	= $(3)
+	mklibtargets	= $(3)
     else
-		mklibtargets	= $(1) $(2) $(3)
+	mklibtargets	= $(1) $(2) $(3)
     endif
-endif
-
-ifeq ($(installlib),)
-    ifeq ($(STATICLIBS),yes)
-	installlib	= $(INSTALL) $(2)/$(5) $(1); \
-			  chmod a+rx $(1)/$(5) 
-    else
-	installlib	= $(INSTALL) $(2)/$(3) $(1); \
-			  rm -f $(1)/$(4); ln -s $(3) $(1)/$(4); \
-			  rm -f $(1)$(cpp11libdirsuffix)/$(5); ln -s $(cpp11sonamedir)$(4) $(1)$(cpp11libdirsuffix)/$(5); \
-			  chmod a+rx $(1)/$(3) 
-    endif
-endif
-
-ifeq ($(installdata),)
-    installdata		= $(INSTALL_DATA) $(1) $(2); \
-			  chmod a+r $(2)/$(notdir $(1))
-endif
-
-ifeq ($(installprogram),)
-    installprogram	= $(INSTALL_PROGRAM) $(1) $(2); \
-				chmod a+rx $(2)/$(notdir $(1))
-endif
-
-ifeq ($(mkdir),)
-    mkdir		= $(if $(2),mkdir $(2) $(1),mkdir $(1)); \
-			  chmod a+rx $(1)
 endif
 
 all::
@@ -378,41 +289,3 @@ ifeq ($(wildcard $(top_srcdir)/../ICE_LICENSE.txt),)
 else 
     TEXT_EXTENSION = .txt 
 endif
-
-install-common::
-	@if test ! -d $(DESTDIR)$(prefix) ; \
-	then \
-	    echo "Creating $(prefix)..." ; \
-	    $(call mkdir,$(DESTDIR)$(prefix), -p) ; \
-	fi
-
-	@if test ! -d $(DESTDIR)$(install_slicedir) ; \
-	then \
-	    echo "Creating $(DESTDIR)$(install_slicedir)..." ; \
-	    $(call mkdir, $(DESTDIR)$(install_slicedir), -p) ; \
-	    if test ! -z "$(usr_dir_install)" ; \
-	    then \
-		    ln -s Ice-$(VERSION)/slice $(DESTDIR)/$(prefix)/share/slice ; \
-	    fi ; \
-	    cd $(top_srcdir)/../slice ; \
-	    for subdir in * ; \
-	    do \
-	        echo "Copying slice/$$subdir to $(DESTDIR)$(install_slicedir)..." ; \
-	        cp -fpr $$subdir $(DESTDIR)$(install_slicedir) ; \
-	    done ; \
-	    fi
-
-	@if test ! -f $(DESTDIR)$(install_docdir)/ICE_LICENSE$(TEXT_EXTENSION) ; \
-	then \
-	    $(call installdata,$(top_srcdir)/../ICE_LICENSE$(TEXT_EXTENSION),$(DESTDIR)$(install_docdir)) ; \
-	fi
-
-	@if test ! -f $(DESTDIR)$(install_docdir)/LICENSE$(TEXT_EXTENSION) ; \
-    then \
-        $(call installdata,$(top_srcdir)/../LICENSE$(TEXT_EXTENSION),$(DESTDIR)$(install_docdir)) ; \
-    fi
-
-	@if test ! -f $(DESTDIR)$(install_docdir)/CHANGES$(TEXT_EXTENSION) ; \
-	then \
-		$(call installdata,$(top_srcdir)/../CHANGES$(TEXT_EXTENSION),$(DESTDIR)$(install_docdir)) ; \
-	fi

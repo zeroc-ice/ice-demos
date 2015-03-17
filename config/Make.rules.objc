@@ -8,36 +8,10 @@
 # **********************************************************************
 
 #
-# Select an installation base directory. The directory will be created
-# if it does not exist.
-#
-prefix			?= /opt/Ice-$(VERSION)
-
-#
 # Define OPTIMIZE as yes if you want to build with
 # optimization. Otherwise Ice is build with debug information.
 #
 #OPTIMIZE		= yes
-
-#
-# The "root directory" for runpath embedded in executables. Can be set
-# to change the runpath added to Ice executables. The default is 
-# platform dependent.
-#
-#embedded_runpath_prefix ?= /opt/Ice-$(VERSION_MAJOR).$(VERSION_MINOR)
-
-#
-# Define create_runpath_symlink as yes if you would like 'make install'
-# to automatically create a symbolic link for the embedded runpath
-# directory. Only applies if embedded_runpath_prefix is also set.
-#
-create_runpath_symlink  ?= no
-
-#
-# Define embedded_runpath as no if you don't want any RPATH added to
-# the executables.
-#
-embedded_runpath ?= yes
 
 #
 # The build architectures for gcc/llvm based builds. The format of
@@ -60,6 +34,15 @@ slice_translator = slice2objc
 
 include $(top_srcdir)/config/Make.common.rules
 
+#
+# Embed the runpath if ICE_HOME is defined, otherwise the install
+# is /usr or /usr/local.
+#
+ifneq ($(ICE_HOME),)
+    embedded_runpath = yes
+endif
+
+
 ifdef ice_src_dist
     ice_objc_dir = $(ice_dir)/objc
 else
@@ -68,10 +51,6 @@ endif
 
 libdir	        = $(ice_objc_dir)/lib
 includedir	= $(ice_objc_dir)/include
-
-install_includedir  := $(prefix)/include
-install_libdir	:= $(prefix)/$(libsubdir)
-install_bindir	:= $(prefix)/$(binsubdir)
 
 #
 # This file is included by Make.rules when uname is Darwin.
@@ -104,37 +83,7 @@ endif
 # an rpath dir.
 #
 ifeq ($(embedded_runpath),yes)
-    LOADER_PATH = @loader_path
-
-    #
-    # If embedded_runpath_prefix is set it has preference
-    #
-    ifneq ($(embedded_runpath_prefix),)
-        RPATH_DIR = $(embedded_runpath_prefix)
-    endif
-
-    ifeq ($(RPATH_DIR),)
-        ifdef ice_src_dist
-            RPATH_DIR = @loader_path/$(libdir)
-        else
-            RPATH_DIR = $(ice_dir)/$(libsubdir)
-        endif
-    endif
-
-    #
-    # Clear rpath setting when doing a system install
-    #
-    ifeq ($(ice_dir),/usr)
-        RPATH_DIR =
-    endif
-
-    ifneq ($(RPATH_DIR),)
-        LDEXEFLAGS		= -Wl,-rpath,$(RPATH_DIR)
-    endif
-endif
-
-ifdef ice_src_dist
-rpathlink		= -Wl,-rpath,$(1)
+    LDEXEFLAGS		= -Wl,-rpath,$(libdir)
 endif
 
 #
@@ -142,11 +91,11 @@ endif
 # when COMPILE_WITH_ARC is defined.
 #
 ifneq ($(findstring demo/,${CURDIR}),)
-TARGET_SUPPORT_ARC 	= yes
+    TARGET_SUPPORT_ARC 	= yes
 endif
 
 ifneq ($(findstring test/,${CURDIR}),)
-TARGET_SUPPORT_ARC 	= yes
+    TARGET_SUPPORT_ARC 	= yes
 endif
 
 ifeq ($(TARGET_SUPPORT_ARC),yes)
@@ -155,7 +104,7 @@ ifeq ($(TARGET_SUPPORT_ARC),yes)
         # Don't add these to OBJCFLAGS flex and bison generated files used in
         # some demos doesn't support ARC.
         #
-		ARCFLAGS = -fobjc-arc -fobjc-arc-exceptions
+        ARCFLAGS = -fobjc-arc -fobjc-arc-exceptions
     endif
 endif
 
@@ -164,29 +113,21 @@ mkshlib		= $(CXX)  -dynamiclib $(LDFLAGS) -o $(1) -install_name @rpath/$(2) $(3)
 
 BASELIBS	= -L$(ice_cpp_dir)/$(libsubdir) -lIce -lIceUtil -framework Foundation
 LIBS		= -lIceObjC$(libsuffix) -framework Foundation
-ICESSL_LIBS = -lIceSSLObjC$(libsuffix)
+ICESSL_LIBS     = -lIceSSLObjC$(libsuffix)
 TEST_LIBS	= -lTestCommon $(LIBS)
-ICECPPFLAGS		= -I$(slicedir)
+ICECPPFLAGS	= -I$(slicedir)
 SLICE2OBJCFLAGS	= $(ICECPPFLAGS)
-FLEXFLAGS		=
-BISONFLAGS		= -dvt
-CPPFLAGS		+= -I$(includedir)
-LDFLAGS			= $(OBJCFLAGS) -L$(libdir) 
+FLEXFLAGS	=
+BISONFLAGS	= -dvt
+CPPFLAGS	+= -I$(includedir)
+LDFLAGS		= $(OBJCFLAGS) -L$(libdir) 
 
-ifdef ice_src_dist
-    ifeq ($(ice_cpp_dir), $(ice_dir)/cpp)
-        SLICE2OBJC = $(ice_cpp_dir)/bin/slice2objc
-    else
-        SLICE2OBJC = $(ice_cpp_dir)/$(binsubdir)/slice2objc
-    endif
-else
-    SLICE2OBJC = $(ice_dir)/$(binsubdir)/slice2objc
-endif
+SLICE2OBJC	= $(ice_bin_dir)/slice2objc
 
 # This cannot use .cpp:.o as we have multiple types of source files.
 
-EVERYTHING		= all clean install 
-EVERYTHING_EXCEPT_ALL   = clean install
+EVERYTHING		= all clean
+EVERYTHING_EXCEPT_ALL   = clean
 
 .SUFFIXES:
 .SUFFIXES:		.mm .m .o .cpp  .c
@@ -242,6 +183,7 @@ $(HDIR)/%.h %.m: $(SDIR)/%.ice $(SLICE2OBJC)
 	@mkdir -p .depend
 	@$(SLICE2OBJC) $(SLICE2OBJCFLAGS) --depend $(*F).ice > .depend/$(*F).ice.d
 
+ifeq ($(BISON_FLEX),yes)
 %.h %.m: %.y
 	rm -f $(*F).h $(*F).c
 	bison $(BISONFLAGS) $<
@@ -254,6 +196,7 @@ $(HDIR)/%.h %.m: $(SDIR)/%.ice $(SLICE2OBJC)
 	rm -f $@
 	cat lex.yy.c >> $@
 	rm -f lex.yy.c
+endif
 
 clean::
 	-rm -f $(TARGETS)
@@ -270,5 +213,3 @@ ifneq ($(HDIR),)
 clean::
 	rm -f $(addprefix $(HDIR)/, $(addsuffix .h, $(basename $(SLICE_OBJS))))
 endif
-
-install::

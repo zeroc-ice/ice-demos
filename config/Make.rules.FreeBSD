@@ -52,6 +52,3 @@ ICEUTIL_OS_LIBS		= -lcrypto
 ICE_OS_LIBS		= 
 
 ICONV_LIB               = -liconv
-
-PLATFORM_HAS_READLINE	= yes
-
