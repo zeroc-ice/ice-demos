@@ -36,10 +36,6 @@ ifndef ice_language
 $(error ice_language must be defined)
 endif
 
-ifeq ($(USE_BIN_DIST),yes)
-ice_bin_dist = 1
-endif
-
 ifeq ($(UNAME),Darwin)
     usr_dir = /usr/local
 else
@@ -165,115 +161,35 @@ endif
 #   dev kit and check for the existence of the include/Ice/Config.h header.
 #
 
-#
-# First, check if we're building a source distribution. 
-#
-# If building from a source distribution, ice_dir is defined to the
-# top-level directory of the source distribution and ice_cpp_dir is
-# defined to the directory containing the C++ binaries and headers to
-# use to build the sources.
-#
-ifndef ice_bin_dist
-    ifeq ($(shell test -d $(top_srcdir)/../$(ice_language) && echo 0),0)
-        ice_dir = $(top_srcdir)/..
-        ice_src_dist = 1
-
-        #
-        # When building a source distribution, if ICE_HOME is specified, it takes precedence over 
-        # the source tree for building the language mappings. For example, this can be used to 
-        # build the Python language mapping using the translators from the distribution specified
-        # by ICE_HOME.
-        #
-	ifneq ($(ICE_HOME),)
-	    ifdef slice_translator
-		ifneq ($(shell test -f $(ICE_HOME)/$(binsubdir)/$(slice_translator) && echo 0), 0)
-$(error Unable to find $(slice_translator) in $(ICE_HOME)/$(binsubdir), please verify ICE_HOME is properly configured and Ice is correctly installed.)
-		endif
-		ifeq ($(shell test -f $(ice_dir)/cpp/bin/$(slice_translator) && echo 0), 0)
-$(warning Found $(slice_translator) in both ICE_HOME/bin and $(ice_dir)/cpp/bin, ICE_HOME/bin/$(slice_translator) will be used!)
-		endif
-		ice_cpp_dir = $(ICE_HOME)
-	    else
-$(warning Ignoring ICE_HOME environment variable to build current source tree.)
-		ice_cpp_dir = $(ice_dir)/cpp
-	    endif
-	else
-	    ice_cpp_dir = $(ice_dir)/cpp
-	endif
-
-    endif
-    ifeq ($(shell test -d $(top_srcdir)/ice/$(ice_language) && echo 0),0)
-        ice_dir = $(top_srcdir)/ice
-        ice_src_dist = 1
-
-        #
-        # When building a source distribution, if ICE_HOME is specified, it takes precedence over 
-        # the source tree for building the language mappings. For example, this can be used to 
-        # build the Python language mapping using the translators from the distribution specified
-        # by ICE_HOME.
-        #
-	ifneq ($(ICE_HOME),)
-	    ifdef slice_translator
-		ifneq ($(shell test -f $(ICE_HOME)/$(binsubdir)/$(slice_translator) && echo 0), 0)
-$(error Unable to find $(slice_translator) in $(ICE_HOME)/$(binsubdir), please verify ICE_HOME is properly configured and Ice is correctly installed.)
-		endif
-		ifeq ($(shell test -f $(ice_dir)/cpp/bin/$(slice_translator) && echo 0), 0)
-$(warning Found $(slice_translator) in both ICE_HOME/bin and $(ice_dir)/cpp/bin, ICE_HOME/bin/$(slice_translator) will be used!)
-		endif
-		ice_cpp_dir = $(ICE_HOME)
-	    else
-$(warning Ignoring ICE_HOME environment variable to build current source tree.)
-		ice_cpp_dir = $(ice_dir)/cpp
-	    endif
-	else
-	    ice_cpp_dir = $(ice_dir)/cpp
-	endif
-    endif
-endif
-
-#
-# Then, check if we're building against a binary distribution.
-#
-ifndef ice_src_dist
-
+ifeq ($(ICE_HOME),)
+    #
+    # /usr or /usr/local install.
+    #
     ifndef slice_translator
 $(error slice_translator must be defined)
     endif
 
-    ifneq ($(ICE_HOME),)
-        ifneq ($(shell test -f $(ICE_HOME)/$(binsubdir)/$(slice_translator) && echo 0), 0)
-$(error Unable to find $(slice_translator) in $(ICE_HOME)/$(binsubdir), please verify ICE_HOME is properly configured and Ice is correctly installed.)
-        endif
-        ice_dir = $(ICE_HOME)
-    else
-        ifeq ($(shell test -f $(top_srcdir)/bin/$(slice_translator) && echo 0), 0)
-            ice_dir = $(top_srcdir)
-        else 
-	        ifeq ($(shell test -f $(usr_dir)/bin/$(slice_translator) && echo 0), 0)
-                ice_dir = $(usr_dir)
-                ifeq ($(shell test -f /opt/Ice-$(VERSION)/bin/$(slice_translator) && echo 0), 0)
-                   $(warning Found $(slice_translator) in both $(usr_dir)/bin and /opt/Ice-$(VERSION)/bin, $(usr_dir)/bin/$(slice_translator) will be used!)
-                endif
-                ifeq ($(shell test -f /Library/Developer/Ice-$(VERSION)/bin/$(slice_translator) && echo 0), 0)
-                   $(warning Found $(slice_translator) in both $(usr_dir)/bin and /Library/Developer/Ice-$(VERSION)/bin, $(usr_dir)/bin/$(slice_translator) will be used!)
-                endif
-            else
-                ifeq ($(shell test -f /Library/Developer/Ice-$(VERSION)/$(binsubdir)/$(slice_translator) && echo 0), 0)
-                    ice_dir = /Library/Developer/Ice-$(VERSION)
-                else
-                    ifeq ($(shell test -f /opt/Ice-$(VERSION)/$(binsubdir)/$(slice_translator) && echo 0), 0)
-                        ice_dir = /opt/Ice-$(VERSION)
-                    endif
-                endif
-            endif
-        endif
-    endif
-
-    ifndef ice_dir
+    ifneq ($(shell test -f $(usr_dir)/bin/$(slice_translator) && echo 0), 0)
 $(error Unable to find a valid Ice distribution, please verify ICE_HOME is properly configured and Ice is correctly installed.)
     endif
-    ice_bin_dist = 1
+
+    ice_dir = $(usr_dir)
     ice_cpp_dir = $(ice_dir)
+else
+    #
+    # Two cases here. Either an /opt style install, or a source tree.
+    #
+    ice_dir = $(ICE_HOME)
+    ifeq ($(shell test -f $(ICE_HOME)/$(binsubdir)/$(slice_translator) && echo 0), 0)
+        ice_cpp_dir = $(ice_dir)
+    else
+        ifeq ($(shell test -f $(ice_dir)/cpp/bin/$(slice_translator) && echo 0), 0)
+            ice_src_dist = 1
+            ice_cpp_dir = $(ice_dir)/cpp
+        else
+$(error Unable to find $(slice_translator) in $(ICE_HOME)/$(binsubdir), please verify ICE_HOME is properly configured and Ice is correctly installed.)
+        endif
+    endif
 endif
 
 #
@@ -317,20 +233,23 @@ else
     install_docdir = $(prefix)
 endif
 
+ifdef ice_src_dist
+    ice_lib_dir = $(ice_cpp_dir)/$(libsubdir)
+    ice_bin_dir = $(ice_cpp_dir)/$(binsubdir)
+else
+    ifdef lib64subdir
+        ice_lib_dir = $(ice_dir)/$(lib64subdir)
+        ice_bin_dir = $(ice_dir)/$(bin64subdir)
+    else
+        ice_lib_dir = $(ice_dir)/$(libsubdir)
+        ice_bin_dir = $(ice_dir)/$(binsubdir)
+    endif
+endif
+
 #
 # Set environment variables for the Slice translator.
 #
 ifneq ($(ice_dir), $(usr_dir))
-    ifdef ice_src_dist
-        ice_lib_dir = $(ice_cpp_dir)/$(libsubdir)
-    else
-        ifndef lib64subdir
-            ice_lib_dir = $(ice_dir)/$(libsubdir)
-        else
-            ice_lib_dir = $(ice_dir)/$(lib64subdir)
-        endif
-    endif
-
     #
     # We always set library path because the build needs to work
     # whe slice compiler was built without RPATH

@@ -114,12 +114,10 @@ ifeq ($(mkshlib),)
 endif
 
 
-SLICEPARSERLIB  = $(ice_dir)/$(libsubdir)/$(subst $(cpp11libsuffix),,$(call mklibfilename,Slice,$(VERSION)))
-ifeq ($(wildcard $(SLICEPARSERLIB)),)
-	SLICEPARSERLIB  = $(ice_dir)/$(lib64subdir)/$(subst $(cpp11libsuffix),,$(call mklibfilename,Slice,$(VERSION)))
-endif
-SLICE2CPP	= $(ice_dir)/$(binsubdir)/slice2cpp
-SLICE2FREEZE	= $(ice_dir)/$(binsubdir)/slice2freeze
+
+SLICEPARSERLIB  = $(ice_lib_dir)/$(subst $(cpp11libsuffix),,$(call mklibfilename,Slice,$(VERSION)))
+SLICE2CPP	= $(ice_bin_dir)/slice2cpp
+SLICE2FREEZE	= $(ice_bin_dir)/slice2freeze
 
 EVERYTHING		= all clean
 EVERYTHING_EXCEPT_ALL   = clean
