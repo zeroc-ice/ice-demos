@@ -159,8 +159,8 @@ clean::
 	-rm -f $(TARGETS)
 	-rm -f core *.o *.bak
 
-ifneq ($(SLICE_SRCS),)
+ifneq ($(SLICE_OBJS),)
 clean::
-	rm -f $(addsuffix .cpp, $(basename $(notdir $(SLICE_SRCS))))
-	rm -f $(addsuffix .h, $(basename $(notdir $(SLICE_SRCS))))
+	rm -f $(addsuffix .cpp, $(basename $(notdir $(SLICE_OBJS))))
+	rm -f $(addsuffix .h, $(basename $(notdir $(SLICE_OBJS))))
 endif
