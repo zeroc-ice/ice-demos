@@ -153,7 +153,7 @@ all:: $(TARGETS)
 .m.o:
 	$(CC) -c $(ARCFLAGS) $(CPPFLAGS) $(OBJCFLAGS) $<
 	@mkdir -p .depend
-	@$(CXX) -DMAKEDEPEND -M $(CPPFLAGS) $< > .depend/$(*F).d
+	@$(CXX) -DMAKEDEPEND -M $(CPPFLAGS) $< | sed 's/$(subst /,\/,$(includedir))/$$\(includedir\)/' > .depend/$(*F).d
 
 .mm.o:
 	$(CXX) -c $(ARCFLAGS) $(CPPFLAGS) $(OBJCFLAGS) $<
