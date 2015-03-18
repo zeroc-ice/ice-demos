@@ -16,7 +16,7 @@ project.slice.output = project.file("${project.buildDir}/generated/source/ice")
 slice {
     java {
         set1 {
-            include = ["${projectDir}/src/main/slice", "${sliceDir}"]
+            include = ["${projectDir}/src/main/slice"]
             srcDir = 'src/main'
         }
     }

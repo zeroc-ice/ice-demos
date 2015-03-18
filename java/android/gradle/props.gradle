@@ -21,6 +21,8 @@ if (System.properties['os.name'].toLowerCase().contains('windows'))
 }
 
 def env = System.getenv()
+def srcdist = false 
+def iceDir
 
 // First check if iceHome was set in gradle.properties
 // Otherwise check if ICE_HOME is set and it points at a valid installation
@@ -32,27 +34,25 @@ if (iceHome)
 		throw new GradleException("Unable to find $slice2java in $iceHome, please verify iceHome is " +
 								  "properly configured in gradle.properties and Ice is correctly installed.")
 	}
+	iceDir = iceHome
 }
 else
 {
-	iceHome = env['ICE_HOME']
-	if (iceHome)
+	iceDir = env['ICE_HOME']
+	if (iceDir)
 	{
-		def translator = new File("$iceHome/bin/$slice2java")
+		def translator = new File("$iceDir/bin/$slice2java")
 		if (!translator.exists())
 		{
-			throw new GradleException("Unable to find $slice2java in $iceHome, please verify ICE_HOME is " +
-									  "properly configured and Ice is correctly installed.")
+			translator = new File("$iceDir/cpp/bin/$slice2java")
+			if (!translator.exists()) 
+			{
+				throw new GradleException("Unable to find $slice2java in $iceDir, please verify ICE_HOME is " +
+							  "properly configured and Ice is correctly installed.")
+			}
+			srcdist = true
 		}
 	}
-}
-
-def iceBinDist = true
-
-def iceDir
-if (iceHome)
-{
-	iceDir = iceHome
 }
 
 if (iceDir == null)
@@ -82,19 +82,10 @@ if (iceDir == null && isWindows)
 
 if (iceDir == null)
 {
-	def f1 = new File("/Library/Developer/Ice-${project.version}/bin/$slice2java")
+	def f1 = new File("/usr/local/bin/$slice2java")
 	if (f1.exists())
 	{
-		iceDir = "/Library/Developer/Ice-${project.version}"
-	}
-}
-
-if (iceDir == null)
-{
-	def f1 = new File("/opt/Ice-${project.version}/bin/$slice2java")
-	if (f1.exists())
-	{
-		iceDir = "/opt/Ice-${project.version}"
+		iceDir = "/usr/local"
 	}
 }
 
@@ -108,6 +99,14 @@ if (iceDir == null)
 if (iceDir == "/usr")
 {
 	ext.distJarDir = "/usr/share/java"
+}
+else if (iceDir == "/usr/local")
+{
+	ext.distJarDir = "/usr/local/share/java"
+}
+else if (srcdist)
+{
+	ext.distJarDir = "$iceDir/java/lib"
 }
 else
 {
