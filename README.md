@@ -24,7 +24,7 @@ The [Slice](./slice) folder contains [Slice definitions](https://doc.zeroc.com/d
 
 ### Platform Support
 
-The sample programs are not all available on all platforms. For example, the Objective-C sample programs are currently only for OS X and iOS, and were not tested on any other platform.
+The sample programs are not all available on all platforms. For example, the [C#](./cs) sample programs are currently only for Windows and were not tested on any other platform.
 
 ### Building and Running the Sample Programs
 
@@ -34,5 +34,5 @@ Please visit the 'Using the Sample Programs' section in the release notes for Ic
 
 ### License
 
-The sample programs are licensed under the GNU Public License version 2 ([GPL v2](./LICENSE)). Please refer to the [ICE_LICENSE](./ICE_LICENSE) file for more details. 
+The sample programs are licensed under the GNU General Public License version 2 ([GPL v2](./LICENSE)). Please refer to the [ICE_LICENSE](./ICE_LICENSE) file for more details. 
 
