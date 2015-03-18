@@ -216,7 +216,7 @@ gulp.task("demo:build", demos.map(demoTaskName).concat(Object.keys(minDemos).map
 gulp.task("demo:watch", demos.map(demoWatchTask).concat(Object.keys(minDemos).map(minDemoWatchTaskName)));
 gulp.task("demo:clean", demos.map(demoCleanTask).concat(Object.keys(minDemos).map(minDemoCleanTaskName)));
 
-gulp.task("build", ["demo"]);
+gulp.task("build", ["demo:build"]);
 
 gulp.task("watch", ["demo:build", "dist:libs", "demo:watch", "common:css:watch", "common:js:watch"],
     function()
