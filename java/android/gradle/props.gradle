@@ -7,7 +7,7 @@
 //
 // **********************************************************************
 
-ext.useLocalOnly = localOnly == "true"
+ext.useLocalOnly = gradle.startParameter.isOffline()
 
 // Determine the name of the Slice-to-Java translator
 def isWindows = false
