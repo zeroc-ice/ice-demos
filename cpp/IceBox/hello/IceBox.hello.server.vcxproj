@@ -245,7 +245,7 @@
     <None Include="config.server" />
     <None Include="config.icebox" />
     <None Include="config.service" />
-    <None Include="README.txt" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="generated\helloservice\Hello.h" />

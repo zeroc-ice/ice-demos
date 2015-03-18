@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|ARM">
@@ -74,27 +74,27 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$([MSBuild]::GetRegistryValue(`HKEY_LOCAL_MACHINE\Software\Microsoft\Microsoft SDKs\$(TargetPlatformIdentifier)\v$(TargetPlatformVersion)\ExtensionSDKS\Ice\3.6`, ``))\DesignTime\CommonConfiguration\Neutral\Ice.props" Condition="exists('$([MSBuild]::GetRegistryValue(`HKEY_LOCAL_MACHINE\Software\Microsoft\Microsoft SDKs\$(TargetPlatformIdentifier)\v$(TargetPlatformVersion)\ExtensionSDKS\Ice\3.6`, ``))\DesignTime\CommonConfiguration\Neutral\Ice.props')" />
+    <Import Project="$(ALLUSERSPROFILE)\ZeroC\Ice.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$([MSBuild]::GetRegistryValue(`HKEY_LOCAL_MACHINE\Software\Microsoft\Microsoft SDKs\$(TargetPlatformIdentifier)\v$(TargetPlatformVersion)\ExtensionSDKS\Ice\3.6`, ``))\DesignTime\CommonConfiguration\Neutral\Ice.props" Condition="exists('$([MSBuild]::GetRegistryValue(`HKEY_LOCAL_MACHINE\Software\Microsoft\Microsoft SDKs\$(TargetPlatformIdentifier)\v$(TargetPlatformVersion)\ExtensionSDKS\Ice\3.6`, ``))\DesignTime\CommonConfiguration\Neutral\Ice.props')" />
+    <Import Project="$(ALLUSERSPROFILE)\ZeroC\Ice.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$([MSBuild]::GetRegistryValue(`HKEY_LOCAL_MACHINE\Software\Microsoft\Microsoft SDKs\$(TargetPlatformIdentifier)\v$(TargetPlatformVersion)\ExtensionSDKS\Ice\3.6`, ``))\DesignTime\CommonConfiguration\Neutral\Ice.props" Condition="exists('$([MSBuild]::GetRegistryValue(`HKEY_LOCAL_MACHINE\Software\Microsoft\Microsoft SDKs\$(TargetPlatformIdentifier)\v$(TargetPlatformVersion)\ExtensionSDKS\Ice\3.6`, ``))\DesignTime\CommonConfiguration\Neutral\Ice.props')" />
+    <Import Project="$(ALLUSERSPROFILE)\ZeroC\Ice.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$([MSBuild]::GetRegistryValue(`HKEY_LOCAL_MACHINE\Software\Microsoft\Microsoft SDKs\$(TargetPlatformIdentifier)\v$(TargetPlatformVersion)\ExtensionSDKS\Ice\3.6`, ``))\DesignTime\CommonConfiguration\Neutral\Ice.props" Condition="exists('$([MSBuild]::GetRegistryValue(`HKEY_LOCAL_MACHINE\Software\Microsoft\Microsoft SDKs\$(TargetPlatformIdentifier)\v$(TargetPlatformVersion)\ExtensionSDKS\Ice\3.6`, ``))\DesignTime\CommonConfiguration\Neutral\Ice.props')" />
+    <Import Project="$(ALLUSERSPROFILE)\ZeroC\Ice.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$([MSBuild]::GetRegistryValue(`HKEY_LOCAL_MACHINE\Software\Microsoft\Microsoft SDKs\$(TargetPlatformIdentifier)\v$(TargetPlatformVersion)\ExtensionSDKS\Ice\3.6`, ``))\DesignTime\CommonConfiguration\Neutral\Ice.props" Condition="exists('$([MSBuild]::GetRegistryValue(`HKEY_LOCAL_MACHINE\Software\Microsoft\Microsoft SDKs\$(TargetPlatformIdentifier)\v$(TargetPlatformVersion)\ExtensionSDKS\Ice\3.6`, ``))\DesignTime\CommonConfiguration\Neutral\Ice.props')" />
+    <Import Project="$(ALLUSERSPROFILE)\ZeroC\Ice.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$([MSBuild]::GetRegistryValue(`HKEY_LOCAL_MACHINE\Software\Microsoft\Microsoft SDKs\$(TargetPlatformIdentifier)\v$(TargetPlatformVersion)\ExtensionSDKS\Ice\3.6`, ``))\DesignTime\CommonConfiguration\Neutral\Ice.props" Condition="exists('$([MSBuild]::GetRegistryValue(`HKEY_LOCAL_MACHINE\Software\Microsoft\Microsoft SDKs\$(TargetPlatformIdentifier)\v$(TargetPlatformVersion)\ExtensionSDKS\Ice\3.6`, ``))\DesignTime\CommonConfiguration\Neutral\Ice.props')" />
+    <Import Project="$(ALLUSERSPROFILE)\ZeroC\Ice.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -217,9 +217,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="README.txt" />
   </ItemGroup>
   <ItemGroup>
     <SDKReference Include="Ice, Version=3.6" />

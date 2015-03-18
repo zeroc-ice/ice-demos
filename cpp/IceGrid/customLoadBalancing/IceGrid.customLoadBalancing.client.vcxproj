@@ -209,7 +209,7 @@
   <ItemGroup>
     <None Include="config.client" />
     <None Include="Pricing.ice" />
-    <None Include="README.txt" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="generated\client\Pricing.h" />

@@ -244,7 +244,7 @@
     <None Include="Hello.ice" />
     <None Include="config.grid" />
     <None Include="application.xml" />
-    <None Include="README.txt" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="generated\helloservice\Hello.h" />

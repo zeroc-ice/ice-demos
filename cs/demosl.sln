@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "hello", "hello", "{BFB198BC-429D-420F-94B5-360172E91053}"
 	ProjectSection(SolutionItems) = preProject
-		Ice\sl\hello\README.txt = Ice\sl\hello\README.txt
+		Ice\sl\hello\README.md = Ice\sl\hello\README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bidir", "bidir", "{92D95920-7E25-4A77-AD00-651D7DA94DFE}"
 	ProjectSection(SolutionItems) = preProject
-		Ice\sl\bidir\README.txt = Ice\sl\bidir\README.txt
+		Ice\sl\bidir\README.md = Ice\sl\bidir\README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "chat", "chat", "{18878230-8C72-4CDC-B458-9140050F0BBF}"
 	ProjectSection(SolutionItems) = preProject
-		Glacier2\sl\README.txt = Glacier2\sl\README.txt
+		Glacier2\sl\README.md = Glacier2\sl\README.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hello", "Ice\sl\hello\hello\hello.csproj", "{07F11600-BFCA-42DE-BF09-BF964E0A9D94}"

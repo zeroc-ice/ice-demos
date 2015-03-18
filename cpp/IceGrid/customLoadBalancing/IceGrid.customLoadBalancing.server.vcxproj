@@ -215,7 +215,7 @@
     <None Include="application.xml" />
     <None Include="config.grid" />
     <None Include="Pricing.ice" />
-    <None Include="README.txt" />
+    <None Include="README.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

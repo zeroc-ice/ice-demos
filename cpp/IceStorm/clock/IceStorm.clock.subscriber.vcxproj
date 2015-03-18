@@ -211,7 +211,7 @@
     <None Include="config.sub" />
     <None Include="config.icebox" />
     <None Include="config.service" />
-    <None Include="README.txt" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="generated\subscriber\Clock.h" />

@@ -209,7 +209,7 @@
   <ItemGroup>
     <None Include="Chat.ice" />
     <None Include="config.client" />
-    <None Include="README.txt" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="generated\client\Chat.h" />

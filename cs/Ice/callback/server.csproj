@@ -106,8 +106,9 @@
   <ItemGroup>
     <None Include="Callback.ice" />
     <None Include="config.server" />
-    <None Include="README.txt" />
+    <None Include="README.md" />
   </ItemGroup>
+  <Import Project="$(ICE_HOME)\config\Slice.CSharp.targets" Condition="Exists('$(ICE_HOME)\config\Slice.CSharp.targets')" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
@@ -117,7 +118,7 @@
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties ZerocIce_VerboseLevel="1" ZerocIce_Enabled="True" ZerocIce_ProjectVersion="1" ZerocIce_OutputDir=".\generated\server" />
+      <UserProperties ZerocIce_OutputDir=".\generated\server" ZerocIce_ProjectVersion="3.6" ZerocIce_Enabled="True" ZerocIce_VerboseLevel="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

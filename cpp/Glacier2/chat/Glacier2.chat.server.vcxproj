@@ -220,7 +220,7 @@
     <None Include="Chat.ice" />
     <None Include="config.server" />
     <None Include="config.glacier2" />
-    <None Include="README.txt" />
+    <None Include="README.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

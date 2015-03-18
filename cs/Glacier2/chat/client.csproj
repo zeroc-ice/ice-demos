@@ -133,13 +133,14 @@
     <None Include="app.config" />
     <None Include="Chat.ice" />
     <None Include="config.client" />
-    <None Include="README.txt" />
+    <None Include="README.md" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
+  <Import Project="$(ICE_HOME)\config\Slice.CSharp.targets" Condition="Exists('$(ICE_HOME)\config\Slice.CSharp.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
@@ -150,7 +151,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties ZerocIce_OutputDir=".\generated" ZerocIce_VerboseLevel="1" ZerocIce_Enabled="True" ZerocIce_ProjectVersion="1" />
+      <UserProperties ZerocIce_ProjectVersion="3.6" ZerocIce_Enabled="True" ZerocIce_VerboseLevel="1" ZerocIce_OutputDir=".\generated" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

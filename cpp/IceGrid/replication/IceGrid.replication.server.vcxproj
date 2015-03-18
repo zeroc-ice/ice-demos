@@ -224,7 +224,7 @@
     <None Include="config.replica1" />
     <None Include="config.replica2" />
     <None Include="application.xml" />
-    <None Include="README.txt" />
+    <None Include="README.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

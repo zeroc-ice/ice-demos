@@ -211,7 +211,7 @@
     <None Include="config.pub" />
     <None Include="config.icebox" />
     <None Include="config.service" />
-    <None Include="README.txt" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="generated\publisher\Clock.h" />

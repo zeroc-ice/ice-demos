@@ -106,8 +106,10 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="Filesystem.ice" />
-    <None Include="README.txt" />
+    <None Include="README.md" />
   </ItemGroup>
+  <Import Project="$(ICE_HOME)\config\Slice.CSharp.targets"
+          Condition="Exists('$(ICE_HOME)\config\Slice.CSharp.targets')"/>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>

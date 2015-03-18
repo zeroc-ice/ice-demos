@@ -265,7 +265,7 @@
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Running slice2freeze</Message>
     </CustomBuild>
     <None Include="config.server" />
-    <None Include="README.txt" />
+    <None Include="README.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

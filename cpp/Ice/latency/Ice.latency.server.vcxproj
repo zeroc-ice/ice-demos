@@ -209,7 +209,7 @@
   <ItemGroup>
     <None Include="Latency.ice" />
     <None Include="config.server" />
-    <None Include="README.txt" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="generated\server\Latency.h" />

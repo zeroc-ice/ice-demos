@@ -211,7 +211,7 @@
     <None Include="Hello.ice" />
     <None Include="Discovery.ice" />
     <None Include="config.client" />
-    <None Include="README.txt" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="generated\client\Discovery.h" />
