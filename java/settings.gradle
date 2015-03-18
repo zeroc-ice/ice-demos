@@ -39,3 +39,6 @@ demos.each {
 	 	project("${projectName}").projectDir = new File("${dir}/${it}")
 	}
 }
+
+include ":demoProtobuf"
+project(":demoProtobuf").projectDir = new File("Protobuf")

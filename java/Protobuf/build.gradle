@@ -1,0 +1,53 @@
+// **********************************************************************
+//
+// Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
+//
+// This copy of Ice is licensed to you under the terms described in the
+// ICE_LICENSE file included in this distribution.
+//
+// **********************************************************************
+
+apply plugin: 'protobuf'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'ws.antonov.gradle.plugins:gradle-plugin-protobuf:0.9.1'
+    }
+}
+
+slice {
+    java {
+        include = ["${projectDir}"]
+        srcDir = '.'
+    }
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir '.'
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'com.google.protobuf', name: 'protobuf-java', version: '2.6.1'
+    compile localDependency("ice")
+    if (!useLocalOnly) {
+        runtime "org.apache.tools:bzip2:1.0"
+    }
+    protobuf files("${projectDir}/Person.proto")
+}
+
+// Don't create the default jar.
+jar.enabled = false
+
+demoJar("client")
+demoJar("server")
