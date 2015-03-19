@@ -64,11 +64,6 @@ ifeq ($(UNAME),SunOS)
     endif
 endif
 
-ifeq ($(UNAME),HP-UX)
-    lp64suffix		= /pa20_64
-    lp64binsuffix	= /pa20_64
-endif
-
 ifeq ($(UNAME),Linux)
    ifeq ($(MACHINE_TYPE),x86_64)
       #
@@ -77,23 +72,23 @@ ifeq ($(UNAME),Linux)
       ifeq ($(shell test -d $(usr_dir)/lib/x86_64-linux-gnu && echo 0),0)
          lp64suffix	= /x86_64-linux-gnu
       endif
-      
+
       #
       # Rhel/SLES
       #
       ifeq ($(shell test -d $(usr_dir)/lib64 && echo 0),0)
           lp64suffix	= 64
       endif
-      
+
       ifeq ($(LP64),)
           LP64      	= yes
       endif
    endif
    ifneq ($(STATICLIBS),yes)
-	ifneq ($(LP64),yes)
-	    binsuffix     = 32
-	endif
-    endif
+      ifneq ($(LP64),yes)
+	      binsuffix     = 32
+      endif
+   endif
 endif
 
 ifeq ($(shell test -d $(usr_dir)/lib/i386-linux-gnu && echo 0),0)
@@ -109,25 +104,16 @@ ifeq ($(CPP11),yes)
     endif
 endif
 
-ifneq ($(findstring MINGW,$(UNAME)),)
-    UNAME	                := MINGW
-    lp64suffix                  := /x64
-    COMPILER_MACHINE := $(shell $(CXX) -dumpmachine)
-    ifeq ($(COMPILER_MACHINE),x86_64-w64-mingw32)
-        LP64                    := yes
-    endif 
-endif
-
 ifeq ($(LP64),yes)
 	libsubdir		:= lib$(lp64suffix)
-        binsubdir		:= bin$(lp64binsuffix)
+    binsubdir		:= bin$(lp64binsuffix)
 else
 	libsubdir		:= lib$(lp32suffix)
 	binsubdir		:= bin
-	#
-	# For x86 builds in x86_64 machines lib64subdir points to the x86_64 lib
-	# directory and libsubdir to the x86 lib directory.
-	#
+    #
+    # For x86 builds in x86_64 machines lib64subdir points to the x86_64 lib
+    # directory and libsubdir to the x86 lib directory.
+    #
 	ifeq ($(MACHINE_TYPE),x86_64)
 		ifeq ($(UNAME),Linux)
 			ifeq ($(shell test -d $(usr_dir)/lib/x86_64-linux-gnu && echo 0),0)
@@ -141,11 +127,11 @@ endif
 
 #
 # The following variables might also be defined:
-# 
+#
 # - slice_translator: the name of the slice translator required for the build.
 #   Setting this variable is required when building source trees other than the
 #   the source distribution (e.g.: the demo sources).
-#                  
+#
 ifeq ($(ICE_HOME),)
     #
     # /usr or /usr/local install.
@@ -219,40 +205,18 @@ ifneq ($(ice_dir), $(usr_dir))
         export DYLD_LIBRARY_PATH := $(ice_lib_dir):$(DYLD_LIBRARY_PATH)
     endif
 
-    
     ifeq ($(UNAME),SunOS)
         ifeq ($(LP64),yes)
             export LD_LIBRARY_PATH_64 := $(ice_lib_dir):$(LD_LIBRARY_PATH_64)
         else
             export LD_LIBRARY_PATH := $(ice_lib_dir):$(LD_LIBRARY_PATH)
-	endif
-    endif
-
-    ifeq ($(UNAME),AIX)
-        export LIBPATH := $(ice_lib_dir):$(LIBPATH)
-    endif
-
-    ifeq ($(UNAME),HP-UX)
-        ifeq ($(LP64),yes)
-	    export LD_LIBRARY_PATH := $(ice_lib_dir)$(lp64dir):$(SHLIB_PATH)
-	else
-	    export SHLIB_PATH := $(ice_lib_dir):$(LD_LIBRARY_PATH)
-	endif
+		endif
     endif
 
     ifeq ($(UNAME),FreeBSD)
         export LD_LIBRARY_PATH := $(ice_lib_dir):$(LD_LIBRARY_PATH)
     endif
-
-    ifeq ($(UNAME),OSF1)
-        export LD_LIBRARY_PATH := $(ice_lib_dir):$(LD_LIBRARY_PATH)
-    endif
-
-    ifneq ($(findstring MINGW,$(UNAME)),)
-	set PATH := $(ice_lib_dir);$(PATH)
-    endif
 endif
-
 
 #
 # Default functions for shared library names (we have to defined them here
@@ -276,7 +240,7 @@ endif
 
 ifeq ($(mklibname),)
     ifeq ($(STATICLIBS),yes)
-	mklibname	= lib$(1)$(cpp11libsuffix).a
+		mklibname	= lib$(1)$(cpp11libsuffix).a
     else
         ifeq ($(UNAME),Darwin)
 	    mklibname   = lib$(1).dylib
@@ -319,6 +283,9 @@ EVERYTHING		= all clean
 
 $(SLICE_SRCS:.ice=.php): $(SLICE2PHP) $(SLICEPARSERLIB)
 all:: $(SLICE_SRCS:.ice=.php)
+
+clean::
+	rm -f $(SLICE_SRCS:.ice=.php)
 
 %.php: %.ice
 	$(SLICE2PHP) $(SLICE2PHPFLAGS) $<
