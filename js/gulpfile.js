@@ -161,19 +161,19 @@ var minDemos =
     {
         srcs: [
             "lib/Ice.min.js",
-            "demo/Ice/minimal/Hello.js",
-            "demo/Ice/minimal/browser/Client.js"],
-        dest: "demo/Ice/minimal/browser/"
+            "Ice/minimal/Hello.js",
+            "Ice/minimal/browser/Client.js"],
+        dest: "Ice/minimal/browser/"
     },
     "ChatDemo":
     {
         srcs: [
             "lib/Ice.min.js",
             "lib/Glacier2.min.js",
-            "demo/ChatDemo/Chat.js",
-            "demo/ChatDemo/ChatSession.js",
-            "demo/ChatDemo/Client.js"],
-        dest: "demo/ChatDemo"
+            "ChatDemo/Chat.js",
+            "ChatDemo/ChatSession.js",
+            "ChatDemo/Client.js"],
+        dest: "ChatDemo"
     }
 };
 

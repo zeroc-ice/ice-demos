@@ -39,10 +39,6 @@ function Init()
 
     var demoDist = !isdir(path.join(__dirname, "..", "lib"));
 
-    //
-    // If using a demo distribution or USE_BIN_DIST was set,
-    // resolve libraries in bower_components/zeroc-icejs directory.
-    //
     var libraries = ["/lib/Ice.js", "/lib/Ice.min.js",
                     "/lib/Glacier2.js", "/lib/Glacier2.min.js",
                     "/lib/IceStorm.js", "/lib/IceStorm.min.js",
@@ -116,10 +112,10 @@ function Init()
         else
         {
             fs.stat(filePath,
-                        function(err, stats)
-                        {
-                            doRequest(err, stats, filePath);
-                        });
+                    function(err, stats)
+                    {
+                        doRequest(err, stats, filePath);
+                    });
         }
 
         var doRequest = function(err, stats, filePath)
@@ -225,20 +221,10 @@ function Init()
 
     HttpServer.prototype.start = function()
     {
-        var baseDir;
-        if(!["../../certs", "../certs"].some(
-            function(p)
-            {
-                return fs.existsSync(baseDir = path.join(__dirname, p));
-            }))
-        {
-            console.error("Cannot find wss certificates directory");
-            process.exit(1);
-        }
         var options = {
             passphrase: "password",
-            key: fs.readFileSync(path.join(baseDir, "s_rsa1024_priv.pem")),
-            cert: fs.readFileSync(path.join(baseDir, "s_rsa1024_pub.pem"))
+            key: fs.readFileSync(path.join(__dirname, "../../certs", "s_rsa1024_priv.pem")),
+            cert: fs.readFileSync(path.join(__dirname, "../../certs", "s_rsa1024_pub.pem"))
         };
 
         var httpServer = http.createServer();
