@@ -7,14 +7,14 @@ The ice-demos repository provides sample programs for Ice and Ice Touch.
 The sample programs are grouped by programming languages:
 
 * [C++](./cpp)
-* [C#](./cs)
+* [C#](./csharp)
 * [Java](./java)
 * [JavaScript](./js)
-* [Objective-C](./objc)
+* [Objective-C](./objective-c)
 * [PHP](./php)
-* [Python](./py)
-* [Ruby](./rb)
-* [Visual Basic](./vb)
+* [Python](./python)
+* [Ruby](./ruby)
+* [Visual Basic](./visualbasic)
 
 For example, the [C++](./cpp) folder contains all the sample programs written in C++.
 
@@ -24,7 +24,7 @@ The [Slice](./slice) folder contains [Slice definitions](https://doc.zeroc.com/d
 
 ### Platform Support
 
-The sample programs are not all available on all platforms. For example, the [C#](./cs) sample programs are currently only for Windows and were not tested on any other platform.
+The sample programs are not all available on all platforms. For example, the [C#](./csharp) sample programs are currently only for Windows and were not tested on any other platform.
 
 ### Building and Running the Sample Programs
 
