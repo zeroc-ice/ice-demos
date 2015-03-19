@@ -7,7 +7,7 @@
 #
 # **********************************************************************
 
-top_srcdir	= ../../..
+top_srcdir	= ../..
 
 MAXWARN         = yes
 
@@ -37,7 +37,7 @@ OBJS		= $(COBJS) \
 		  $(LOBJS) \
 		  $(HOBJS)
 
-include $(top_srcdir)/config/Make.rules
+include $(top_srcdir)/Make/Make.rules
 
 CPPFLAGS	:= -I. $(CPPFLAGS)
 

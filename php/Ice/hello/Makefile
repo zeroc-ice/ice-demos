@@ -7,8 +7,8 @@
 #
 # **********************************************************************
 
-top_srcdir	= ../../..
+top_srcdir	= ../..
 
 SLICE_SRCS	= Hello.ice
 
-include $(top_srcdir)/config/Make.rules.php
+include $(top_srcdir)/Make/Make.rules

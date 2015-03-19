@@ -7,20 +7,20 @@
 #
 # **********************************************************************
 
-top_srcdir	= ../../..
+top_srcdir	= ../..
 
 CLIENT		= client
 
 TARGETS		= $(CLIENT)
 
 SLICE_OBJS	= Hello.o \
-			  Router.o
+		  Router.o
 
 COBJS		= Client.o
 
 OBJS		= $(SLICE_OBJS) $(COBJS)
 
-include $(top_srcdir)/config/Make.rules.objc
+include $(top_srcdir)/Make/Make.rules
 
 CPPFLAGS	:= -I. $(CPPFLAGS)
 

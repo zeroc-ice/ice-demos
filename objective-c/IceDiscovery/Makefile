@@ -7,9 +7,9 @@
 #
 # **********************************************************************
 
-top_srcdir	= ../..
+top_srcdir	= ..
 
-include $(top_srcdir)/config/Make.rules.objc
+include $(top_srcdir)/Make/Make.rules
 
 SUBDIRS		= hello
 

@@ -7,9 +7,9 @@
 #
 # **********************************************************************
 
-top_srcdir	= ..
+top_srcdir	= .
 
-include $(top_srcdir)/config/Make.rules
+include $(top_srcdir)/Make/Make.rules
 
 ifneq ($(findstring MINGW,$(UNAME)),)
 SUBDIRS		= Ice \

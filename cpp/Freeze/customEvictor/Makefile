@@ -7,7 +7,7 @@
 #
 # **********************************************************************
 
-top_srcdir	= ../../..
+top_srcdir	= ../..
 
 MAXWARN         = yes
 
@@ -36,7 +36,7 @@ OBJS		= $(COBJS) \
 
 all:: Database.cpp Database.h
 
-include $(top_srcdir)/config/Make.rules
+include $(top_srcdir)/Make/Make.rules
 
 CPPFLAGS	:= -I. $(CPPFLAGS)
 

@@ -15,7 +15,7 @@
 #
 PROTOBUF_HOME   ?= /usr/local
 
-top_srcdir	= ../..
+top_srcdir	= ..
 
 CLIENT		= client
 SERVER		= server
@@ -38,7 +38,7 @@ SRCS		= $(SLICE_OBJS:.o=.cpp) \
 
 PROTO_SRCS	= Person.proto
 
-include $(top_srcdir)/config/Make.rules
+include $(top_srcdir)/Make/Make.rules
 
 CPPFLAGS	:= $(ICE_FLAGS) -I$(PROTOBUF_HOME)/include -I. $(CPPFLAGS)
 LIBS		:= $(ICE_LIB_DIR) $(LIBS) -L$(PROTOBUF_HOME)/lib -lprotobuf

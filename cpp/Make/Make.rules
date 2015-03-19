@@ -1,0 +1,448 @@
+# **********************************************************************
+#
+# Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
+#
+# This copy of Ice is licensed to you under the terms described in the
+# ICE_LICENSE file included in this distribution.
+#
+# **********************************************************************
+
+#
+# Define OPTIMIZE as yes if you want to build with
+# optimization. Otherwise Ice is build with debug information.
+#
+#OPTIMIZE		= yes
+
+#
+# Define LP64 as yes or no if you want force a 32 or 64 bit. The
+# default is platform-dependent
+#
+#LP64			?= yes
+
+#
+# Define CPP11 as yes if you want to enable C++11 features in GCC or 
+# Clang.
+#
+#CPP11     ?= yes
+
+# ----------------------------------------------------------------------
+# Don't change anything below this line!
+# ----------------------------------------------------------------------
+
+#
+# Compile scanner and grammar files?
+#
+#BISON_FLEX ?= yes
+
+#
+# Common definitions
+#
+ice_language     = cpp
+slice_translator = slice2cpp
+
+SHELL		= /bin/sh
+VERSION_MAJOR   = 3
+VERSION_MINOR   = 6
+VERSION_PATCH   = 0
+VERSION         = 3.6.0
+SHORT_VERSION   = 3.6
+SOVERSION	= 36
+
+OBJEXT		= .o
+
+UNAME		:= $(shell uname)
+MACHINE_TYPE	:= $(shell uname -m)
+
+#
+# Ensure ice_language has been set by the file that includes this one.
+#
+ifndef ice_language
+$(error ice_language must be defined)
+endif
+
+ifeq ($(UNAME),Darwin)
+    usr_dir = /usr/local
+else
+    usr_dir = /usr
+endif
+
+ifeq ($(UNAME),SunOS)
+    ifeq ($(MACHINE_TYPE),sun4u)
+       lp64suffix	= /64
+       lp64binsuffix	= /sparcv9
+    endif
+    ifeq ($(MACHINE_TYPE),sun4v)
+       lp64suffix       = /64
+       lp64binsuffix    = /sparcv9
+    endif
+    ifeq ($(MACHINE_TYPE),i86pc)
+	lp64suffix	= /amd64
+	lp64binsuffix	= /amd64
+    endif
+endif
+
+ifeq ($(UNAME),HP-UX)
+    lp64suffix		= /pa20_64
+    lp64binsuffix	= /pa20_64
+endif
+
+ifeq ($(UNAME),Linux)
+   ifeq ($(MACHINE_TYPE),x86_64)
+      #
+      # Ubuntu.
+      #
+      ifeq ($(shell test -d $(usr_dir)/lib/x86_64-linux-gnu && echo 0),0)
+         lp64suffix	= /x86_64-linux-gnu
+      endif
+      
+      #
+      # Rhel/SLES
+      #
+      ifeq ($(shell test -d $(usr_dir)/lib64 && echo 0),0)
+          lp64suffix	= 64
+      endif
+      
+      ifeq ($(LP64),)
+          LP64      	= yes
+      endif
+   endif
+   ifneq ($(STATICLIBS),yes)
+	ifneq ($(LP64),yes)
+	    binsuffix     = 32
+	endif
+    endif
+endif
+
+ifeq ($(shell test -d $(usr_dir)/lib/i386-linux-gnu && echo 0),0)
+    lp32suffix     = /i386-linux-gnu
+endif
+
+ifeq ($(CPP11),yes)
+    ifneq ($(UNAME),Darwin)
+        cpp11libdirsuffix	= /c++11
+        cpp11libsuffix		= ++11
+        cpp11sonamedir		= ../
+        binsuffix 		:= $(binsuffix)$(cpp11libsuffix)
+    endif
+endif
+
+ifneq ($(findstring MINGW,$(UNAME)),)
+    UNAME	                := MINGW
+    lp64suffix                  := /x64
+    COMPILER_MACHINE := $(shell $(CXX) -dumpmachine)
+    ifeq ($(COMPILER_MACHINE),x86_64-w64-mingw32)
+        LP64                    := yes
+    endif 
+endif
+
+ifeq ($(LP64),yes)
+	libsubdir		:= lib$(lp64suffix)
+        binsubdir		:= bin$(lp64binsuffix)
+else
+	libsubdir		:= lib$(lp32suffix)
+	binsubdir		:= bin
+	#
+	# For x86 builds in x86_64 machines lib64subdir points to the x86_64 lib
+	# directory and libsubdir to the x86 lib directory.
+	#
+	ifeq ($(MACHINE_TYPE),x86_64)
+		ifeq ($(UNAME),Linux)
+			ifeq ($(shell test -d $(usr_dir)/lib/x86_64-linux-gnu && echo 0),0)
+				lib64subdir               = lib/x86_64-linux-gnu
+			else
+				lib64subdir               = lib$(lp64suffix)
+			endif
+		endif
+	endif
+endif
+
+#
+# The following variables might also be defined:
+# 
+# - slice_translator: the name of the slice translator required for the build.
+#   Setting this variable is required when building source trees other than the
+#   the source distribution (e.g.: the demo sources).
+#                  
+ifeq ($(ICE_HOME),)
+    #
+    # /usr or /usr/local install.
+    #
+    ifndef slice_translator
+$(error slice_translator must be defined)
+    endif
+
+    ifneq ($(shell test -f $(usr_dir)/bin/$(slice_translator) && echo 0), 0)
+$(error Unable to find a valid Ice distribution, please verify ICE_HOME is properly configured and Ice is correctly installed.)
+    endif
+
+    ice_dir = $(usr_dir)
+    ice_cpp_dir = $(ice_dir)
+else
+    #
+    # Two cases here. Either an /opt style install, or a source tree.
+    #
+    ice_dir = $(ICE_HOME)
+    ifeq ($(shell test -f $(ICE_HOME)/$(binsubdir)/$(slice_translator) && echo 0), 0)
+        ice_cpp_dir = $(ice_dir)
+    else
+        ifeq ($(shell test -f $(ice_dir)/cpp/bin/$(slice_translator) && echo 0), 0)
+            ice_src_dist = 1
+            ice_cpp_dir = $(ice_dir)/cpp
+        else
+$(error Unable to find $(slice_translator) in $(ICE_HOME)/$(binsubdir), please verify ICE_HOME is properly configured and Ice is correctly installed.)
+        endif
+    endif
+endif
+
+#
+# Set slicedir to the path of the directory containing the Slice files.
+#
+ifeq ($(ice_dir), $(usr_dir))
+    slicedir = $(usr_dir)/share/slice
+else
+    slicedir = $(ice_dir)/slice
+endif
+
+#
+# TODO: Should this be:
+# $(ice_dir)/$(libsubdir)$(cpp11libdirsuffix)
+#
+ifdef ice_src_dist
+    ice_lib_dir = $(ice_cpp_dir)/$(libsubdir)
+    ice_bin_dir = $(ice_cpp_dir)/$(binsubdir)
+else
+    ifdef lib64subdir
+        ice_lib_dir = $(ice_dir)/$(lib64subdir)
+        ice_bin_dir = $(ice_dir)/$(bin64subdir)
+    else
+        ice_lib_dir = $(ice_dir)/$(libsubdir)
+        ice_bin_dir = $(ice_dir)/$(binsubdir)
+    endif
+endif
+
+#
+# Set environment variables for the Slice translator.
+#
+ifneq ($(ice_dir), $(usr_dir))
+    #
+    # We always set library path because the build needs to work
+    # whe slice compiler was built without RPATH
+    #
+    ifeq ($(UNAME),Linux)
+        export LD_LIBRARY_PATH := $(ice_lib_dir):$(LD_LIBRARY_PATH)
+    endif
+
+    ifeq ($(UNAME),Darwin)
+        export DYLD_LIBRARY_PATH := $(ice_lib_dir):$(DYLD_LIBRARY_PATH)
+    endif
+
+    
+    ifeq ($(UNAME),SunOS)
+        ifeq ($(LP64),yes)
+            export LD_LIBRARY_PATH_64 := $(ice_lib_dir):$(LD_LIBRARY_PATH_64)
+        else
+            export LD_LIBRARY_PATH := $(ice_lib_dir):$(LD_LIBRARY_PATH)
+	endif
+    endif
+
+    ifeq ($(UNAME),AIX)
+        export LIBPATH := $(ice_lib_dir):$(LIBPATH)
+    endif
+
+    ifeq ($(UNAME),HP-UX)
+        ifeq ($(LP64),yes)
+	    export LD_LIBRARY_PATH := $(ice_lib_dir)$(lp64dir):$(SHLIB_PATH)
+	else
+	    export SHLIB_PATH := $(ice_lib_dir):$(LD_LIBRARY_PATH)
+	endif
+    endif
+
+    ifeq ($(UNAME),FreeBSD)
+        export LD_LIBRARY_PATH := $(ice_lib_dir):$(LD_LIBRARY_PATH)
+    endif
+
+    ifeq ($(UNAME),OSF1)
+        export LD_LIBRARY_PATH := $(ice_lib_dir):$(LD_LIBRARY_PATH)
+    endif
+
+    ifneq ($(findstring MINGW,$(UNAME)),)
+	set PATH := $(ice_lib_dir);$(PATH)
+    endif
+endif
+
+
+#
+# Default functions for shared library names (we have to defined them here
+# for the SLICE2PARSERLIB dependency)
+#
+ifeq ($(mklibfilename),)
+    ifeq ($(UNAME),Darwin)
+        mklibfilename   = $(if $(2),lib$(1)$(cpp11libsuffix).$(2).dylib,lib$(1)$(cpp11libsuffix).dylib)
+    else
+        mklibfilename	= $(if $(2),lib$(1)$(cpp11libsuffix).so.$(2),lib$(1)$(cpp11libsuffix).so)
+    endif
+endif
+
+ifeq ($(mksoname),)
+    ifeq ($(UNAME),Darwin)
+        mksoname    = $(if $(2),lib$(1)$(cpp11libsuffix).$(2).dylib,lib$(1).dylib)
+    else
+        mksoname	= $(if $(2),lib$(1)$(cpp11libsuffix).so.$(2),lib$(1).so)
+    endif
+endif
+
+ifeq ($(mklibname),)
+    ifeq ($(STATICLIBS),yes)
+	mklibname	= lib$(1)$(cpp11libsuffix).a
+    else
+        ifeq ($(UNAME),Darwin)
+	    mklibname   = lib$(1).dylib
+	else
+	    mklibname	= lib$(1).so
+	endif
+    endif
+endif
+
+ifndef mklibtargets
+    ifeq ($(STATICLIBS),yes)
+	mklibtargets	= $(3)
+    else
+	mklibtargets	= $(1) $(2) $(3)
+    endif
+endif
+
+all::
+
+includedir		= $(ice_cpp_dir)/include
+
+#
+# Embed the runpath if ICE_HOME is defined, otherwise the install
+# is /usr or /usr/local.
+#
+ifneq ($(ICE_HOME),)
+    embedded_runpath = yes
+endif
+
+
+#
+# Platform specific definitions
+#
+include	 $(top_srcdir)/Make/Make.rules.$(UNAME)
+
+ICECPPFLAGS		= -I$(slicedir)
+
+SLICE2CPPFLAGS		= $(ICECPPFLAGS)
+
+ifeq ($(ice_dir), $(usr_dir)) 
+    LDFLAGS	= $(LDPLATFORMFLAGS) $(CXXFLAGS)
+    ifeq ($(CPP11),yes)
+        LDFLAGS = $(LDPLATFORMFLAGS) $(CXXFLAGS) -L$(ice_lib_dir)
+    endif
+else
+    CPPFLAGS	+= -I$(includedir)
+    LDFLAGS	= $(LDPLATFORMFLAGS) $(CXXFLAGS) -L$(ice_lib_dir)
+endif
+
+ifeq ($(FLEX_NOLINE),yes)
+    FLEXFLAGS	       := -L
+else
+    FLEXFLAGS	       :=
+endif
+
+ifeq ($(BISON_NOLINE),yes)
+    BISONFLAGS		:= -dvtl
+else
+    BISONFLAGS		:= -dvt
+endif
+
+ifeq ($(mkshlib),)
+    $(error You need to define mkshlib in Make.rules.$(UNAME)) 
+endif
+
+
+SLICEPARSERLIB  = $(ice_lib_dir)/$(subst $(cpp11libsuffix),,$(call mklibfilename,Slice,$(VERSION)))
+SLICE2CPP	= $(ice_bin_dir)/slice2cpp
+SLICE2FREEZE	= $(ice_bin_dir)/slice2freeze
+
+EVERYTHING		= all clean
+EVERYTHING_EXCEPT_ALL   = clean
+
+.SUFFIXES:
+.SUFFIXES:		.cpp .c .o
+
+ifneq ($(SLICE_OBJS),)
+-include $(addprefix .depend/, $(SLICE_OBJS:.o=.ice.d))
+endif
+
+#
+# If dependencies haven't been created yet make all OBJS depend on all
+# SRCS, Slice generated files will be created before C++ compilation
+# starts. This prevents issues parallel make.
+#
+ifneq ($(OBJS),)
+
+ifeq ($(wildcard .depend/*.d),)
+
+$(OBJS):$(OBJS:.o=.cpp)
+
+else
+
+-include $(addprefix .depend/, $(OBJS:.o=.d))
+
+#
+# OBJS depend on the non existing sources so generated files are created
+# before compilation takes place.
+#
+$(OBJS):$(filter-out $(wildcard $(OBJS:.o=.cpp)) ,$(OBJS:.o=.cpp))
+
+clean::
+	rm -rf .depend
+endif
+
+endif
+
+.cpp.o:
+	$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $<
+	@mkdir -p .depend
+	@$(CXX) -DMAKEDEPEND -M $(CPPFLAGS) $< | sed 's/$(subst /,\/,$(includedir))/$$\(includedir\)/' > .depend/$(*F).d
+
+.c.o:
+	$(CC) -c $(CPPFLAGS) $(CFLAGS) $<
+
+%.h %.cpp: %.ice $(SLICE2CPP) $(SLICEPARSERLIB)
+	rm -f $(*F).h $(*F).cpp
+	$(SLICE2CPP) $(SLICE2CPPFLAGS) $(*F).ice
+	@touch $(*F).cpp
+	@mkdir -p .depend
+	@$(SLICE2CPP) $(SLICE2CPPFLAGS) --depend $(*F).ice > .depend/$(*F).ice.d
+
+ifeq ($(BISON_FLEX),yes)
+
+%.h %.cpp: %.y
+	rm -f $(*F).h $(*F).cpp
+	bison $(BISONFLAGS) $<
+	mv $(*F).tab.c $(*F).cpp
+	mv $(*F).tab.h $(*F).h
+	rm -f $(*F).output
+
+%.cpp: %.l
+	flex $(FLEXFLAGS) $<
+	rm -f $@
+	echo '#include <IceUtil/Config.h>' > $@
+	cat lex.yy.c >> $@
+	rm -f lex.yy.c
+
+endif
+
+all:: $(SRCS) $(TARGETS)
+
+clean::
+	-rm -f $(TARGETS)
+	-rm -f core *.o *.bak
+	-rm -rf .depend
+
+ifneq ($(SLICE_OBJS),)
+clean::
+	rm -f $(addsuffix .cpp, $(basename $(notdir $(SLICE_OBJS))))
+	rm -f $(addsuffix .h, $(basename $(notdir $(SLICE_OBJS))))
+endif

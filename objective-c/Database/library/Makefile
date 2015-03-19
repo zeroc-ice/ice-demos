@@ -7,25 +7,25 @@
 #
 # **********************************************************************
 
-top_srcdir	= ../../..
+top_srcdir	= ../..
 
 CLIENT		= client
 
 TARGETS		= $(CLIENT)
 
 SLICE_OBJS 	= Library.o \
-			  Session.o \
-			  Glacier2Session.o
+		  Session.o \
+		  Glacier2Session.o
 
 COBJS		= Client.o \
-			  Grammar.o \
-			  Scanner.o \
-			  Parser.o \
-		  	  RunParser.o
+		  Grammar.o \
+		  Scanner.o \
+		  Parser.o \
+	  	  RunParser.o
 
 OBJS		= $(SLICE_OBJS) $(COBJS)
 
-include $(top_srcdir)/config/Make.rules.objc
+include $(top_srcdir)/Make/Make.rules
 
 CPPFLAGS	:= -I. $(CPPFLAGS)
 
@@ -41,7 +41,3 @@ Scanner.o: Scanner.m
 $(CLIENT): $(SLICE_OBJS) $(COBJS)
 	rm -f $@
 	$(CXX) $(LDFLAGS) -o $@ $(SLICE_OBJS) $(COBJS) -lGlacier2ObjC $(LIBS)
-
-clean::
-	-rm -f Grammar.m Grammar.h
-	-rm -f Scanner.m

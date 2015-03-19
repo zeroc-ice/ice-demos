@@ -7,7 +7,7 @@
 #
 # **********************************************************************
 
-top_srcdir	= ../../..
+top_srcdir	= ../..
 
 CLIENT		= client
 SERVER		= server
@@ -24,7 +24,7 @@ SOBJS		= Server.o \
 
 OBJS		= $(SLICE_OBJS) $(COBJS) $(SOBJS)
 
-include $(top_srcdir)/config/Make.rules.objc
+include $(top_srcdir)/Make/Make.rules
 
 CPPFLAGS	:= -I. $(CPPFLAGS)
 
