@@ -89,7 +89,8 @@ Module HelloC
                             batchDatagram.sayHello(delay)
                         End If
                     ElseIf line.Equals("f") Then
-                        communicator().flushBatchRequests()
+                        batchOneway.ice_flushBatchRequests()
+                        batchDatagram.ice_flushBatchRequests()
                     ElseIf line.Equals("T") Then
                         If timeout = -1 Then
                             timeout = 2000
