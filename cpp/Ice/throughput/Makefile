@@ -28,7 +28,7 @@ SOBJS		= $(SLICE_OBJS) \
 OBJS		= $(COBJS) \
 		  $(SOBJS)
 
-include $(top_srcdir)/Make/Make.rules
+include $(top_srcdir)/make/Make.rules
 
 ifeq ($(CXX),aCC)
 #

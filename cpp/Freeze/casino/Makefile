@@ -33,7 +33,7 @@ SOBJS		=  $(SLICE_OBJS) \
 OBJS		= $(COBJS) \
 		  $(SOBJS)
 
-include $(top_srcdir)/Make/Make.rules
+include $(top_srcdir)/make/Make.rules
 
 CPPFLAGS	:= -I. $(CPPFLAGS)
 

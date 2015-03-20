@@ -9,7 +9,7 @@
 
 top_srcdir	= ..
 
-include $(top_srcdir)/Make/Make.rules
+include $(top_srcdir)/make/Make.rules
 
 ifneq ($(findstring MINGW,$(UNAME)),)
 SUBDIRS		= printer \

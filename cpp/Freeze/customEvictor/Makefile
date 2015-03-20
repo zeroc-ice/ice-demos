@@ -36,7 +36,7 @@ OBJS		= $(COBJS) \
 
 all:: Database.cpp Database.h
 
-include $(top_srcdir)/Make/Make.rules
+include $(top_srcdir)/make/Make.rules
 
 CPPFLAGS	:= -I. $(CPPFLAGS)
 

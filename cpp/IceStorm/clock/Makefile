@@ -27,7 +27,7 @@ SOBJS		= $(SLICE_OBJS) \
 OBJS		= $(POBJS) \
 		  $(SOBJS)
 
-include $(top_srcdir)/Make/Make.rules
+include $(top_srcdir)/make/Make.rules
 
 CPPFLAGS	:= -I. $(CPPFLAGS)
 LIBS		:= -lIceStorm $(LIBS)

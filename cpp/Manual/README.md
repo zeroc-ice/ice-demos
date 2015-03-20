@@ -6,12 +6,12 @@ Demos in this directory:
   the Ice Run Time chapter. You can copy and modify this code to suit
   your needs.
 
-- evictor_filesystem
+- evictorFilesystem
 
   An implementation of the persistent version of the file system
   example described in the Freeze chapter using a Freeze evictor.
 
-- map_filesystem
+- mapFilesystem
 
   An implementation of the persistent version of the file system
   example described in the Freeze chapter using a Freeze map.
@@ -25,7 +25,7 @@ Demos in this directory:
   An implementation of the simple printer example at the beginning of
   the manual.
 
-- simple_filesystem
+- simpleFilesystem
 
   An implementation of the simple (non-persistent, non-life-cycle)
   version of the file system example.

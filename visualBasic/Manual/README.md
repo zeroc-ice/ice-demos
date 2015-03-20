@@ -11,7 +11,7 @@ Demos in this directory:
   An implementation of the simple printer example at the beginning of
   the manual.
 
-- simple_filesystem
+- simpleFilesystem
 
   An implementation of the simple (non-persistent, non-life-cycle)
   version of the filesystem example.

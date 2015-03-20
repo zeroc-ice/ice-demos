@@ -11,7 +11,7 @@ top_srcdir	= ../..
 
 MAXWARN         = yes
 
-include $(top_srcdir)/Make/Make.rules
+include $(top_srcdir)/make/Make.rules
 
 SUBDIRS		= proc occi
 

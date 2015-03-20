@@ -37,7 +37,7 @@ OBJS		= $(COBJS) \
 		  $(LOBJS) \
 		  $(HOBJS)
 
-include $(top_srcdir)/Make/Make.rules
+include $(top_srcdir)/make/Make.rules
 
 CPPFLAGS	:= -I. $(CPPFLAGS)
 

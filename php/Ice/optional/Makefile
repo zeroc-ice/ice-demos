@@ -11,4 +11,4 @@ top_srcdir	= ../..
 
 SLICE_SRCS	= Contact.ice
 
-include $(top_srcdir)/Make/Make.rules
+include $(top_srcdir)/make/Make.rules

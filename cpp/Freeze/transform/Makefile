@@ -29,7 +29,7 @@ SLICE_OBJS	= ContactData.o NewContactData.o
 
 all:: Contacts.cpp Contacts.h NewContacts.cpp NewContacts.h
 
-include $(top_srcdir)/Make/Make.rules
+include $(top_srcdir)/make/Make.rules
 
 CPPFLAGS	:= -I. $(CPPFLAGS)
 

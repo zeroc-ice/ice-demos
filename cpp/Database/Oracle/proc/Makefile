@@ -34,7 +34,7 @@ SOBJS		= $(SLICE_OBJS) \
 OBJS		= $(COBJS) \
 		  $(SOBJS)
 
-include $(top_srcdir)/Make/Make.rules
+include $(top_srcdir)/make/Make.rules
 
 CPPFLAGS	:= -I. -I$(ORACLE_HOME)/precomp/public -DSQLCA_NONE $(CPPFLAGS)
 

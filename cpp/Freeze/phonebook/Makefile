@@ -48,7 +48,7 @@ OBJS		= $(COBJS) \
 
 all:: NameIndex.cpp NameIndex.h
 
-include $(top_srcdir)/Make/Make.rules
+include $(top_srcdir)/make/Make.rules
 
 CPPFLAGS	:= -I. $(CPPFLAGS) $(READLINE_FLAGS)
 

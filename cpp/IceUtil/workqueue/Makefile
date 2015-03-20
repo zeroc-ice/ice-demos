@@ -17,7 +17,7 @@ TARGETS		= $(CLIENT)
 
 OBJS		= WorkQueue.o
 
-include $(top_srcdir)/Make/Make.rules
+include $(top_srcdir)/make/Make.rules
 
 CPPFLAGS	:= -I. $(CPPFLAGS)
 

@@ -35,7 +35,7 @@ OBJS		= $(COBJS) \
 		  $(SOBJS) \
 		  $(POBJS)
 
-include $(top_srcdir)/Make/Make.rules
+include $(top_srcdir)/make/Make.rules
 
 CPPFLAGS	:= -I. $(CPPFLAGS)
 LINKWITH	:= $(BZIP2_RPATH_LINK) -lIce -lIceUtil

@@ -19,7 +19,7 @@ OBJS		= Client.o IntLongMap.o
 
 all:: IntLongMap.cpp IntLongMap.h
 
-include $(top_srcdir)/Make/Make.rules
+include $(top_srcdir)/make/Make.rules
 
 CPPFLAGS	:= -I. $(CPPFLAGS)
 

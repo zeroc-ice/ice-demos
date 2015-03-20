@@ -16,26 +16,35 @@ SERVER		= server
 
 TARGETS		= $(CLIENT) $(SERVER)
 
-SLICE_OBJS	= Filesystem.o
+SLICE_OBJS	= Filesystem.o PersistentFilesystem.o
 
-COBJS		= $(SLICE_OBJS) \
-		  Client.o
+COBJS		=  Filesystem.o \
+		  Client.o \
+		  Grammar.o \
+		  Parser.o \
+		  Scanner.o
 
 SOBJS		= $(SLICE_OBJS) \
-		  FilesystemI.o \
+		  PersistentFilesystemI.o \
 		  Server.o
 
 OBJS		= $(COBJS) \
-		  $(SOBJS)
+		  $(SOBJS) \
+		  $(COLOBJS)
 
-include $(top_srcdir)/Make/Make.rules
 
-CPPFLAGS	:= -I. $(CPPFLAGS)
+include $(top_srcdir)/make/Make.rules
+
+CPPFLAGS	:= -I. $(CPPFLAGS) $(READLINE_FLAGS)
+SLICE2CPPFLAGS	:= -I. $(SLICE2CPPFLAGS)
 
 $(CLIENT): $(COBJS)
 	rm -f $@
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(LDEXEFLAGS) -o $@ $(COBJS) $(LIBS)
+	$(CXX) $(LDFLAGS) $(LDEXEFLAGS) -o $@ $(COBJS) $(LIBS) $(READLINE_LIBS)
 
 $(SERVER): $(SOBJS)
 	rm -f $@
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(LDEXEFLAGS) -o $@ $(SOBJS) $(LIBS)
+	$(CXX) $(LDFLAGS) $(LDEXEFLAGS) -o $@ $(SOBJS) $(DB_RPATH_LINK) -lFreeze $(LIBS)
+
+clean::
+	-rm -rf db/*

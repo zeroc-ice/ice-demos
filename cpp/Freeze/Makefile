@@ -9,7 +9,7 @@
 
 top_srcdir	= ..
 
-include $(top_srcdir)/Make/Make.rules
+include $(top_srcdir)/make/Make.rules
 
 SUBDIRS		= casino phonebook bench library backup transform customEvictor
 

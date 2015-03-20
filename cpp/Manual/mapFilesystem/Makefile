@@ -36,7 +36,7 @@ OBJS		= $(COBJS) \
 
 all:: IdentityFileEntryMap.cpp IdentityDirectoryEntryMap.cpp
 
-include $(top_srcdir)/Make/Make.rules
+include $(top_srcdir)/make/Make.rules
 
 CPPFLAGS	:= -I. $(CPPFLAGS) $(READLINE_FLAGS)
 SLICE2CPPFLAGS	:= -I. $(SLICE2CPPFLAGS)
