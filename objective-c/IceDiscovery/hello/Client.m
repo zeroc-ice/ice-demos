@@ -112,7 +112,8 @@ run(int argc, char* argv[], id<ICECommunicator> communicator)
             }
             else if(c == 'f')
             {
-                [communicator flushBatchRequests];
+                [batchOneway ice_flushBatchRequests];
+                [batchDatagram ice_flushBatchRequests];
             }
             else if(c == 'T')
             {
