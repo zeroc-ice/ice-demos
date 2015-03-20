@@ -79,5 +79,6 @@ cpp/src/Ice/EventLoggerMsg.rc
 cpp/src/Ice/EventLoggerMsg.res
 *.bin
 
+demoscript
 allDemos.py
 expect.py
