@@ -144,7 +144,7 @@ Module Glacier2callbackC
                         End If
                         batchOneway.initiateCallback(onewayR, context)
                     ElseIf line.Equals("f") Then
-                        communicator().flushBatchRequests()
+                        batchOneway.ice_flushBatchRequests()
                     ElseIf line.Equals("v") Then
                         If override Is Nothing Then
                             override = "some_value"

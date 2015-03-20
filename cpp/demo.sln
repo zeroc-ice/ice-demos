@@ -19,15 +19,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IceStorm", "IceStorm", "{DB
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IceUtil", "IceUtil", "{F6790D5D-106B-4CCD-B87A-6E9F79DD9463}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "evictor_filesystem", "evictor_filesystem", "{0877BC9D-D0A9-45B5-8B6A-B84CEC9BF5B5}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "evictorFilesystem", "evictorFilesystem", "{0877BC9D-D0A9-45B5-8B6A-B84CEC9BF5B5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lifecycle", "lifecycle", "{4412E5BF-8107-4BF9-8C91-F58BF4F0B8F4}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "map_filesystem", "map_filesystem", "{F5A5B172-925C-4098-9F3F-955BE6D46D52}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mapFilesystem", "mapFilesystem", "{F5A5B172-925C-4098-9F3F-955BE6D46D52}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "printer", "printer", "{34B8ACDD-11CB-4D03-8070-542F5E8D51C3}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "simple_filesystem", "simple_filesystem", "{F0A447B4-A3E9-471F-8441-CE5FA16E50C6}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "simpleFilesystem", "simpleFilesystem", "{F0A447B4-A3E9-471F-8441-CE5FA16E50C6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "backup", "backup", "{E15F3D45-342D-4038-8901-9ED2872E02F5}"
 EndProject
@@ -269,21 +269,21 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Manual\printer\ma
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Manual\printer\manual.printer.server.vcxproj", "{131C5C24-50C3-4AD6-A8D3-C57CEC50AFB9}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Manual\simple_filesystem\manual.simple_filesystem.client.vcxproj", "{4B2FC587-BB5D-4B19-85E0-56E7C7636294}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Manual\simpleFilesystem\manual.simpleFilesystem.client.vcxproj", "{4B2FC587-BB5D-4B19-85E0-56E7C7636294}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Manual\simple_filesystem\manual.simple_filesystem.server.vcxproj", "{EFCFF55E-CCD2-451E-A0B5-604249ECE4D1}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Manual\simpleFilesystem\manual.simpleFilesystem.server.vcxproj", "{EFCFF55E-CCD2-451E-A0B5-604249ECE4D1}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\interleaved\Ice.interleaved.client.vcxproj", "{798DC5EC-427F-49A6-9028-F2A420CCEA4B}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\interleaved\Ice.interleaved.server.vcxproj", "{383AB467-E29D-4A9D-A5D4-6BCA8E754A88}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Manual\map_filesystem\manual.map_filesystem.client.vcxproj", "{0C6E1127-1105-49F0-99BB-CBDC1C2566F0}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Manual\mapFilesystem\manual.mapFilesystem.client.vcxproj", "{0C6E1127-1105-49F0-99BB-CBDC1C2566F0}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Manual\map_filesystem\manual.map_filesystem.server.vcxproj", "{37369B6D-DFB9-4413-A4F5-AE261FDA74A2}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Manual\mapFilesystem\manual.mapFilesystem.server.vcxproj", "{37369B6D-DFB9-4413-A4F5-AE261FDA74A2}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Manual\evictor_filesystem\manual.evictor_filesystem.client.vcxproj", "{66668B00-70BB-4CF0-8DB2-2717DC5F4DA3}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Manual\evictorFilesystem\manual.evictorFilesystem.client.vcxproj", "{66668B00-70BB-4CF0-8DB2-2717DC5F4DA3}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Manual\evictor_filesystem\manual.evictor_filesystem.server.vcxproj", "{2E1BBDAB-F9C2-4C72-9587-29D7F428BC32}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Manual\evictorFilesystem\manual.evictorFilesystem.server.vcxproj", "{2E1BBDAB-F9C2-4C72-9587-29D7F428BC32}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "optional", "optional", "{57D20A28-9954-4D22-ACE6-B367145DC11E}"
 EndProject

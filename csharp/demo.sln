@@ -58,7 +58,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lifecycle", "lifecycle", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "printer", "printer", "{BADDBD20-7FD0-41FF-9E79-E16BBCA69813}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "simple_filesystem", "simple_filesystem", "{42B96E9A-A291-49A7-871D-AA14FFE1CF5A}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "simpleFilesystem", "simpleFilesystem", "{42B96E9A-A291-49A7-871D-AA14FFE1CF5A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Manual\lifecycle\client.csproj", "{E6B38408-D998-40CE-A018-C53529B270D5}"
 EndProject
@@ -68,9 +68,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Manual\printer\cl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Manual\printer\server.csproj", "{2374126D-F982-4E2F-B9F3-278F8B38A310}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Manual\simple_filesystem\client.csproj", "{2E01BB07-5E3A-4563-AE3B-C357672BEEF7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Manual\simpleFilesystem\client.csproj", "{2E01BB07-5E3A-4563-AE3B-C357672BEEF7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Manual\simple_filesystem\server.csproj", "{ECF4A31E-8545-4A9D-ADC2-2020E53C9B46}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Manual\simpleFilesystem\server.csproj", "{ECF4A31E-8545-4A9D-ADC2-2020E53C9B46}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Glacier2\callback\client.csproj", "{2AC78A13-497B-44B1-8BF0-156877B78293}"
 EndProject

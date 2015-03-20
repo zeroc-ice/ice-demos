@@ -84,7 +84,8 @@ Module HelloIceBoxC
                             batchDatagram.sayHello()
                         End If
                     ElseIf line.Equals("f") Then
-                        communicator.flushBatchRequests()
+                        batchOneway.ice_flushBatchRequests()
+                        batchDatagram.ice_flushBatchRequests()
                     ElseIf _haveSSL And line.Equals("S") Then
                         secure = Not secure
 
