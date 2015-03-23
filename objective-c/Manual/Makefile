@@ -11,7 +11,7 @@ top_srcdir	= ..
 
 include $(top_srcdir)/make/Make.rules
 
-SUBDIRS		= printer simple_filesystem
+SUBDIRS		= printer simpleFilesystem
 
 $(EVERYTHING)::
 	@for subdir in $(SUBDIRS); \

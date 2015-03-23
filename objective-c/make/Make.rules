@@ -315,7 +315,7 @@ endif
 
 
 ifdef ice_src_dist
-    ice_objc_dir = $(ice_dir)/objc
+    ice_objc_dir = $(ice_dir)/objective-c
 else
     ice_objc_dir = $(ice_dir)
 endif

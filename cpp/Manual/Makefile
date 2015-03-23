@@ -13,13 +13,13 @@ include $(top_srcdir)/make/Make.rules
 
 ifneq ($(findstring MINGW,$(UNAME)),)
 SUBDIRS		= printer \
-		  simple_filesystem
+		  simpleFilesystem
 else
 SUBDIRS		= printer \
-		  simple_filesystem \
+		  simpleFilesystem \
 		  lifecycle \
-		  evictor_filesystem \
-                  map_filesystem
+		  evictorFilesystem \
+                  mapFilesystem
 endif
 
 .PHONY: $(EVERYTHING) $(SUBDIRS)
