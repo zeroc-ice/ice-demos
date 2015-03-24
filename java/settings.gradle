@@ -39,8 +39,3 @@ demos.each {
 	 	project("${projectName}").projectDir = new File("${dir}/${it}")
 	}
 }
-
-if (!gradle.startParameter.isOffline()) {
-    include ":demoProtobuf"
-    project(":demoProtobuf").projectDir = new File("Protobuf")
-}
