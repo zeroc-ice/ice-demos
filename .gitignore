@@ -82,3 +82,6 @@ cpp/src/Ice/EventLoggerMsg.res
 demoscript
 allDemos.py
 expect.py
+
+xcuserdata
+xcshareddata
