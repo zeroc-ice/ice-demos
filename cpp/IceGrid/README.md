@@ -1,31 +1,31 @@
 Demos in this directory:
 
-- allocate
+- [allocate](./allocate)
 
   This demo shows how to use the allocation feature of IceGrid.
 
-- customLoadBalancing
+- [customLoadBalancing](./customLoadBalancing)
   
   This demo shows how to implement IceGrid custom load balancing using
   replica group filters.
 
-- icebox
+- [icebox](./icebox)
 
   This demo shows a simple IceGrid deployment with an IceBox server.
 
-- replication
+- [replication](./replication)
 
   This example demonstrates IceGrid's registry replication feature.
 
-- secure
+- [secure](./secure)
 
   This demo demonstrates the setup of a secure IceGrid deployment.
 
-- sessionActivation
+- [sessionActivation](./sessionActivation)
 
   This demo shows the use of the session activation mode.
 
-- simple
+- [simple](./simple)
 
   This demo illustrates the basics of using IceGrid, including the 
   use of templates and object adapter replication.

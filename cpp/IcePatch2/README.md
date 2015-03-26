@@ -1,6 +1,6 @@
 Demos in this directory:
 
-- MFC
+- [MFC](./MFC) (Windows Only)
 
   Contains a simple IcePatch2 client built using Microsoft Foundation
   Classes (MFC).

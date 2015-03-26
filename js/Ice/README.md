@@ -1,25 +1,25 @@
 Demos in this directory:
 
-- bidir
+- [bidir](./bidir)
 
   This demo shows how to use bidirectional connections for callbacks.
 
-- hello
+- [hello](./hello)
 
   This demo illustrates how to invoke ordinary (twoway) operations, as
   well as how to invoke oneway operations, use datagrams, secure
   invocations, and how to use batched invocations.
 
-- latency
+- [latency](./latency)
 
   A simple latency test that measures the basic call dispatch delay of
   Ice.
 
-- minimal
+- [minimal](./minimal)
 
   This demo illustrates a minimal Ice application.
 
-- throughput
+- [throughput](./throughput)
 
   A simple throughput demo that allows you to send sequences of
   various types between client and server and to measure the maximum

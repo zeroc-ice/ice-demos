@@ -1,5 +1,5 @@
 Demos in this directory:
 
-- hello
+- [hello](./hello)
 
   Illustrates how to create an IceBox service.

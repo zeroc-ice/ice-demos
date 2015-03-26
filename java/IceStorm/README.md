@@ -1,5 +1,5 @@
 Demos in this directory:
 
-- clock
+- [clock](./clock)
 
   A simple publisher/subscriber application for IceStorm.
