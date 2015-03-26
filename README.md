@@ -20,8 +20,6 @@ For example, the [C++](./cpp) folder contains all the sample programs written in
 
 The [certs](./certs) folder contains X.509 certificates shared by some of these sample programs.
 
-The [Slice](./slice) folder contains [Slice definitions](https://doc.zeroc.com/display/Ice/The+Slice+Language) shared by some of these sample programs.
-
 ### Platform Support
 
 The sample programs are not all available on all platforms. For example, the [C#](./csharp) sample programs are currently only for Windows and were not tested on any other platform.
