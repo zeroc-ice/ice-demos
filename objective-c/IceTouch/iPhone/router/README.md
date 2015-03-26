@@ -8,11 +8,12 @@ The demo shows:
     on the iPhone. Clients on the WiFi network establish a session
     with this router in order to be able to send Ice requests on the
     internet through the iPhone Edge/3G network.
-    
+
   - How to implement a custom Ice logger.
 
-To test the router provided with this demo, you can use the Cocoa
-library client, or the command line demo/Ice/helloRouter demo. These
+To test the router provided with this demo, you can use the
+[Cocoa library client](../../Cocoa/library), or the command line
+[Objective-C helloRouter](../../../Ice/helloRouter) demo. These
 clients can optionally connect to the libray or hello world servers
 using the iPhone router provided with this demo.
 
@@ -41,14 +42,15 @@ verify it.
 On the iPhone, run the router application. This application listens
 on port 12000 and on all network interfaces by default.
 
-You are now ready to try the Cocoa library located in the demo/Cocoa 
-directory of your Ice Touch distribution. To use the iPhone router, 
+You are now ready to try the Cocoa library located in the demo/Cocoa
+directory of your Ice Touch distribution. To use the iPhone router,
 you need to check the "iPhone Router" checkbox and specify its
-IP address (192.168.1.3) in the "Advanced" panel of the library client 
-login dialog. The client will connect to the library server on the 
+IP address (192.168.1.3) in the "Advanced" panel of the library client
+login dialog. The client will connect to the library server on the
 internet through the iPhone 3G/Edge connection.
 
-To test the demo/Ice/helloRouter demo change the value of
-"Ice.Default.Router" in config.client to:
+To test the [Objective-C helloRouter](../../../Ice/helloRouter) demo
+change the value of "Ice.Default.Router" in
+[config.client](../../../Ice/helloRouter/config.client) to:
 
 Ice.Default.Router=iPhoneRouter/Router:tcp -h 192.168.1.3 -p 12000

@@ -14,7 +14,7 @@ The sample programs are grouped by programming languages:
 * [PHP](./php)
 * [Python](./python)
 * [Ruby](./ruby)
-* [Visual Basic](./visualbasic)
+* [Visual Basic](./visualBasic)
 
 For example, the [C++](./cpp) folder contains all the sample programs written in C++.
 
@@ -34,5 +34,4 @@ Please visit the 'Using the Sample Programs' section in the release notes for Ic
 
 ### License
 
-The sample programs are licensed under the GNU General Public License version 2 ([GPL v2](./LICENSE)). Please refer to the [ICE_LICENSE](./ICE_LICENSE) file for more details. 
-
+The sample programs are licensed under the GNU General Public License version 2 ([GPL v2](./LICENSE)). Please refer to the [ICE_LICENSE](./ICE_LICENSE) file for more details.

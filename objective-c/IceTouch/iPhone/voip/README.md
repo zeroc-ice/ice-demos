@@ -15,6 +15,5 @@ background, otherwise an alert box is displayed.
 Note that background applications are not supported in devices before
 3G, and background notifications do not work in the simulator.
 
-If you want to deploy your own VoIP server, the source code for the
-server is included with the Ice distribution in the directory
-java/demo/Glacier2/voip.
+If you want to deploy your own VoIP server, you can run the
+[Java voip demo server](../../../../java/Glacier2/voip).

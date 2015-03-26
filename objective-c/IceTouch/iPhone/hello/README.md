@@ -32,10 +32,8 @@ invocations.
 All invocations use asynchronous method invocations (AMI) to avoid
 blocking the GUI thread and ensure a responsive user experience.
 
-This demo runs against any hello server, such as the Objective-C
-server from objc/demo/Ice/hello (from the Ice Touch source
-distribution) or from Ice/hello (from the Ice Touch demo source
-distribution).
+This demo runs against any hello server, such as the [Objective-C
+server](../../../Ice/hello).
 
 To test timeouts, you can use the timeout slider to set a timeout on
 the client proxy and the delay slider to set a delayed response in the
