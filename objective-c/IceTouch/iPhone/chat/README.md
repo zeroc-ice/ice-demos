@@ -10,4 +10,4 @@ when connecting.
 
 If you would like to run your own server, or are otherwise interested
 in the Chat Demo, the complete source is available
-[here](https://www.zeroc.com/chat/download.html)
+[here](https://www.zeroc.com/chat/download.html).
