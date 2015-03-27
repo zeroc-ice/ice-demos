@@ -79,9 +79,15 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Ice, Version=3.6.0.0, Culture=neutral, processorArchitecture=MSIL" />
-    <Reference Include="IceBox, Version=3.6.0.0, Culture=neutral, processorArchitecture=MSIL" />
-    <Reference Include="IceSSL, Version=3.6.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Ice, Version=3.6.0.0, Culture=neutral, PublicKeyToken=1f998c50fec78381, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="IceBox, Version=3.6.0.0, Culture=neutral, PublicKeyToken=1f998c50fec78381, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="IceSSL, Version=3.6.0.0, Culture=neutral, PublicKeyToken=1f998c50fec78381, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
@@ -104,8 +110,7 @@
     <None Include="config.grid" />
     <None Include="README.md" />
   </ItemGroup>
-  <Import Project="$(ICE_HOME)\config\Slice.CSharp.targets"
-          Condition="Exists('$(ICE_HOME)\config\Slice.CSharp.targets')"/>
+  <Import Project="$(ICE_HOME)\config\Slice.CSharp.targets" Condition="Exists('$(ICE_HOME)\config\Slice.CSharp.targets')" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
@@ -115,7 +120,7 @@
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties ZerocIce_ProjectVersion="3.6" ZerocIce_Enabled="True" ZerocIce_VerboseLevel="1" ZerocIce_OutputDir=".\generated\helloservice" />
+      <UserProperties ZerocIce_OutputDir=".\generated\helloservice" ZerocIce_VerboseLevel="1" ZerocIce_Enabled="True" ZerocIce_ProjectVersion="4.0.0.0" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

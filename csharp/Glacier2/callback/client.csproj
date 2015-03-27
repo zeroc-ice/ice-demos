@@ -79,13 +79,16 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Glacier2, Version=3.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Glacier2, Version=3.6.0.0, Culture=neutral, PublicKeyToken=1f998c50fec78381, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Ice, Version=3.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Ice, Version=3.6.0.0, Culture=neutral, PublicKeyToken=1f998c50fec78381, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
     </Reference>
-    <Reference Include="IceSSL, Version=3.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="IceSSL, Version=3.6.0.0, Culture=neutral, PublicKeyToken=1f998c50fec78381, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
     </Reference>
     <Reference Include="System">
@@ -113,8 +116,7 @@
     <None Include="config.client" />
     <None Include="README.md" />
   </ItemGroup>
-  <Import Project="$(ICE_HOME)\config\Slice.CSharp.targets"
-          Condition="Exists('$(ICE_HOME)\config\Slice.CSharp.targets')"/>
+  <Import Project="$(ICE_HOME)\config\Slice.CSharp.targets" Condition="Exists('$(ICE_HOME)\config\Slice.CSharp.targets')" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
@@ -124,7 +126,7 @@
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties ZerocIce_OutputDir=".\generated\client" ZerocIce_ProjectVersion="3.6" ZerocIce_Enabled="True" ZerocIce_VerboseLevel="1" />
+      <UserProperties ZerocIce_VerboseLevel="1" ZerocIce_Enabled="True" ZerocIce_ProjectVersion="4.0.0.0" ZerocIce_OutputDir=".\generated\client" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
