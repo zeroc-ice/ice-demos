@@ -6,8 +6,6 @@
 
 top_srcdir	= ../..
 
-MAXWARN         = yes
-
 PUBLISHER	= publisher
 SUBSCRIBER	= subscriber
 

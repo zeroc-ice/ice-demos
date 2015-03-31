@@ -6,8 +6,6 @@
 
 top_srcdir	= ../..
 
-MAXWARN         = yes
-
 CLIENT		= client
 
 LIBFILENAME     = $(call mklibfilename,HelloService)

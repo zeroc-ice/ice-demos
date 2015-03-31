@@ -6,8 +6,6 @@
 
 top_srcdir	= ../..
 
-MAXWARN         = yes
-
 CLIENT1		= client1
 CLIENT2		= client2
 SERVER		= server

@@ -6,8 +6,6 @@
 
 top_srcdir	= ../..
 
-MAXWARN         = yes
-
 CREATE          = create
 READ            = read
 READNEW         = readnew
