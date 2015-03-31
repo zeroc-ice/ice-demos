@@ -2,8 +2,6 @@
 //
 // Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 //
-// ICE_LICENSE file included in this distribution.
-//
 // **********************************************************************
 
 #pragma once

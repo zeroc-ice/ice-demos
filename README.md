@@ -39,5 +39,4 @@ Ice and Ice Touch:
 ### License
 
 The sample programs are licensed under the GNU General Public License version 2
-([GPL v2](./LICENSE)). Please refer to the [ICE_LICENSE](./ICE_LICENSE) file for
-more details.
+([GPL v2](./LICENSE)).
