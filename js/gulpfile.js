@@ -137,8 +137,8 @@ demos.forEach(
 
                 gulp.watch([path.join(name, "*.js"),
                             path.join(name, "browser", "*.js"),
-                            path.join(name, "*.html")], 
-                    function(){
+                            path.join(name, "*.html")],
+                    function(e){
                         browserSync.reload(e.path);
                     });
             });

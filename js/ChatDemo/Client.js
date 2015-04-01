@@ -20,8 +20,6 @@ var username;
 var state;
 var hasError = false;
 
-var hostname = document.location.hostname || "127.0.0.1";
-
 //
 // Servant that implements the ChatCallback interface.
 // The message operation just writes the received data
@@ -91,17 +89,45 @@ function userLeft(name)
 var signin = function()
 {
     assert(state === State.Disconnected);
-    setState(State.Connecting).then(
+    setState(State.Connecting)
+    .then(
         function()
         {
             //
+            // Get 'config.json' file from server
+            //
+            var defered = new Ice.Promise();
+            $.getJSON('config.json')
+            .success(
+                function(data)
+                {
+                    if('Ice.Default.Router' in data)
+                    {
+                        defered.succeed(data['Ice.Default.Router']);
+                    }
+                    else
+                    {
+                        defered.fail(new Error('Ice.Default.Router not in config file'));
+                    }
+                })
+            .error(
+                function(ex)
+                {
+                    defered.fail(ex);
+                });
+
+            return defered;
+        })
+    .then(
+        function(routerConfig)
+        {
+            //
             // Initialize the communicator with the Ice.Default.Router property
-            // set to the chat demo Glacier2 router.
+            // provided by 'config.json'
             //
             var id = new Ice.InitializationData();
             id.properties = Ice.createProperties();
-            id.properties.setProperty("Ice.Default.Router",
-                                      "Glacier2/router:wss -p 9090 -h " + hostname + " -r /chatwss");
+            id.properties.setProperty("Ice.Default.Router", routerConfig);
             communicator = Ice.initialize(id);
 
             //
@@ -121,8 +147,8 @@ var signin = function()
                                 run(router, ChatSessionPrx.uncheckedCast(session));
                             });
                 });
-        }
-    ).exception(
+        })
+    .exception(
         function(ex)
         {
             //
