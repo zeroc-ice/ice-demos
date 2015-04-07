@@ -1,7 +1,8 @@
 buildscript {
     repositories {
-        maven { url 'https://repo.zeroc.com/nexus/content/repositories/thirdparty' }
-        maven { url 'http://repo.zeroc.com/nexus/content/repositories/releases' }
+        maven {
+            url 'https://repo.zeroc.com/nexus/content/repositories/thirdparty'
+        }
     }
     dependencies {
         classpath group: 'net.sourceforge', name: 'proguard', version: '5.0'
@@ -10,16 +11,7 @@ buildscript {
 
 slice {
     java {
-        include = ["${projectDir}"]
         srcDir = '.'
-    }
-}
-
-sourceSets {
-    main {
-        java {
-            srcDir 'src'
-        }
     }
 }
 
@@ -27,12 +19,12 @@ dependencies {
     compile 'com.jgoodies:jgoodies-common:1.8.0'
     compile 'com.jgoodies:jgoodies-looks:2.6.0'
     compile 'com.jgoodies:jgoodies-forms:1.8.0'
-    compile 'com.zeroc:ice:3.6b'
-    compile 'com.zeroc:glacier2:3.6b'
+    compile localDependency("ice")
+    compile localDependency("glacier2")
 }
 
 jar {
-    archiveName = "ChatGUI.jar"
+    archiveName = "ChatGUITEMP.jar"
     manifest {
         attributes 'Main-Class': "ChatDemoGUI.MainView"
     }
@@ -42,7 +34,7 @@ def javaHome = System.properties['java.home']
 
 task proguard(type: proguard.gradle.ProGuardTask, dependsOn: jar) {
     injars configurations.compile.resolve(), filter: '!META-INF/**'
-    injars "${projectDir}/build/libs/ChatGUI.jar"
+    injars "${buildDir}/libs/ChatGUITEMP.jar"
     libraryjars "${javaHome}/lib/rt.jar"
     libraryjars "${javaHome}/lib/jsse.jar"
     outjars "ChatGUI.jar"
