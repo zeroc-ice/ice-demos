@@ -24,8 +24,12 @@ buildscript {
         if (iceHome) {
             def translator = new File("$iceHome/bin/$slice2java")
             if (!translator.exists()) {
-                throw new GradleException("Unable to find $slice2java in $iceHome, please verify iceHome is " +
-                                          "properly configured in gradle.properties and Ice is correctly installed.")
+		translator = new File("$iceHome/cpp/bin/$slice2java")
+		if (!translator.exists()) {
+                    throw new GradleException("Unable to find $slice2java in $iceHome, please verify iceHome is " +
+                                              "properly configured in gradle.properties and Ice is correctly installed.")
+		}
+		ext.srcdist = true
             }
 	    iceDir = iceHome
         } else {
