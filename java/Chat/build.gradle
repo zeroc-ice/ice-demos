@@ -11,6 +11,7 @@ buildscript {
 
 slice {
     java {
+        include = ["${projectDir}"]
         srcDir = '.'
     }
 }
