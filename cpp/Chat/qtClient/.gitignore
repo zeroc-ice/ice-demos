@@ -1,0 +1,9 @@
+Chat.cpp
+ChatSession.cpp
+Chat.h
+ChatSession.h
+moc_*
+qrc_qt.cpp
+Makefile.qmake
+Makefile.qmake.*
+env.pri

@@ -1,0 +1,239 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+// **********************************************************************
+//
+// Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
+//
+// This copy of Chat Demo is licensed to you under the terms
+// described in the CHAT_DEMO_LICENSE file included in this
+// distribution.
+//
+// **********************************************************************
+-->
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F1A64A0A-7666-4E7E-82C5-DC34BA15D59A}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ChatDemoGUI</RootNamespace>
+    <AssemblyName>ChatDemoGUI</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <ApplicationIcon>Images\chat.ico</ApplicationIcon>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Glacier2, Version=3.5.0.0, Culture=neutral, PublicKeyToken=1f998c50fec78381, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(IceAssemblyDir)\Glacier2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ice, Version=3.5.0.0, Culture=neutral, PublicKeyToken=cdd571ade22f2f16, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(IceAssemblyDir)\Ice.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IceSSL, Version=3.5.0.0, Culture=neutral, PublicKeyToken=1f998c50fec78381, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(IceAssemblyDir)\IceSSL.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationProvider">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="PresentationCore">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="PresentationFramework">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ChatCommands.cs" />
+    <Compile Include="ChatModel.cs" />
+    <Compile Include="ChatRoomCallbackI.cs" />
+    <Compile Include="ChatUtils.cs" />
+    <Compile Include="ChatView.xaml.cs">
+      <DependentUpon>ChatView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Coordinator.cs" />
+    <Compile Include="ErrorView.xaml.cs">
+      <DependentUpon>ErrorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="generated\Chat.cs" />
+    <Compile Include="generated\ChatSession.cs" />
+    <Compile Include="LoginInfo.cs" />
+    <Compile Include="LoginView.xaml.cs">
+      <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainView.xaml.cs">
+      <DependentUpon>MainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="User.cs" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="ChatView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ErrorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="LoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\chat.png" />
+    <Resource Include="Images\user.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\chat.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\error.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <Target Name="BeforeBuild" DependsOnTargets="CompileSlice">
+  </Target>
+  <Target Name="CompileSlice">
+    <Exec Command="&quot;$(Slice2Cs)&quot; --output-dir generated -I&quot;$(SliceDir)&quot; -I..\..\slice ..\..\slice\Chat.ice" />
+    <Exec Command="&quot;$(Slice2Cs)&quot; --output-dir generated -I&quot;$(SliceDir)&quot; -I..\..\slice ..\..\slice\ChatSession.ice" />
+  </Target>
+  <Target Name="AfterClean">
+    <Delete Files="generated\Chat.cs" />
+    <Delete Files="generated\ChatSession.cs" />
+  </Target>
+  <PropertyGroup>
+    <CompileDependsOn>CompileSlice;$(CompileDependsOn)</CompileDependsOn>
+  </PropertyGroup>
+  <Choose>
+    <When Condition="Exists('$(ICE_HOME)\bin\slice2cs.exe')">
+      <PropertyGroup>
+        <Slice2Cs>$(ICE_HOME)\bin\slice2cs.exe</Slice2Cs>
+        <SliceDir>$(ICE_HOME)\slice</SliceDir>
+        <IceAssemblyDir>$(ICE_HOME)\Assemblies</IceAssemblyDir>
+      </PropertyGroup>
+    </When>
+    <When Condition="Exists('..\..\..\cpp\bin\slice2cs.exe')">
+      <PropertyGroup>
+        <Slice2Cs>..\..\..\cpp\bin\slice2cs.exe</Slice2Cs>
+        <SliceDir>..\..\..\slice</SliceDir>
+        <IceAssemblyDir>..\..\..\cs\Assemblies</IceAssemblyDir>
+      </PropertyGroup>
+    </When>
+    <When Condition="Exists('C:\Program Files (x86)\Zeroc\Ice-3.5.0\bin\slice2cs.exe')">
+      <PropertyGroup>
+        <Slice2Cs>C:\Program Files (x86)\Zeroc\Ice-3.5.0\bin\slice2cs.exe</Slice2Cs>
+        <SliceDir>C:\Program Files (x86)\Zeroc\Ice-3.5.0\slice</SliceDir>
+        <IceAssemblyDir>C:\Program Files (x86)\Zeroc\Ice-3.5.0\Assemblies</IceAssemblyDir>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <Slice2Cs>C:\Program Files\Zeroc\Ice-3.5.0\bin\slice2cs.exe</Slice2Cs>
+        <SliceDir>C:\Program Files\Zeroc\Ice-3.5.0\slice</SliceDir>
+        <IceAssemblyDir>C:\Program Files\Zeroc\Ice-3.5.0\Assemblies</IceAssemblyDir>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
+</Project>

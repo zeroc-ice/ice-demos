@@ -1,0 +1,62 @@
+// **********************************************************************
+//
+// Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
+//
+// This copy of Chat Demo is licensed to you under the terms described
+// in the CHAT_DEMO_LICENSE file included in this distribution.
+//
+// **********************************************************************
+
+#ifndef CHAT_LOGIN_VIEW_H
+#define CHAT_LOGIN_VIEW_H
+
+#include <Coordinator.h>
+#include <QWidget>
+
+class QLabel;
+class QLineEdit;
+class QCheckBox;
+class QPushButton;
+class QKeyEvent;
+
+namespace Chat
+{
+
+class LoginView : public QWidget
+{
+
+Q_OBJECT
+
+public:
+
+    LoginView(QWidget*);
+    bool eventFilter(QObject* target, QEvent* event);
+    void setFocus();
+
+private slots:
+
+    void login();
+
+signals:
+
+    void login(const LoginInfoPtr&);
+    void logout();
+
+private:
+
+    QLabel* _lblTitle;
+    QLabel* _lblWelcome;
+
+    QLabel* _lblUsername;
+    QLineEdit* _lneUsername;
+    QLabel* _lblPassword;
+    QLineEdit* _lnePassword;
+    QLabel* _lblHost;
+    QCheckBox* _chkAvancedOptions;
+    QLineEdit* _lneHost;
+    QPushButton* _pbtLogin;
+    LoginInfoPtr _info;
+};
+
+}
+#endif

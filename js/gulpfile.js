@@ -112,7 +112,7 @@ var demos = [
     "Ice/latency",
     "Ice/bidir",
     "Glacier2/chat",
-    "ChatDemo"];
+    "Chat"];
 
 function demoTaskName(name) { return "demo_" + name.replace("/", "_"); }
 function demoWatchTask(name) { return demoTaskName(name) + ":watch"; }
@@ -162,15 +162,15 @@ var minDemos =
             "Ice/minimal/browser/Client.js"],
         dest: "Ice/minimal/browser/"
     },
-    "ChatDemo":
+    "Chat":
     {
         srcs: [
             "lib/Ice.min.js",
             "lib/Glacier2.min.js",
-            "ChatDemo/Chat.js",
-            "ChatDemo/ChatSession.js",
-            "ChatDemo/Client.js"],
-        dest: "ChatDemo"
+            "Chat/Chat.js",
+            "Chat/ChatSession.js",
+            "Chat/Client.js"],
+        dest: "Chat"
     }
 };
 

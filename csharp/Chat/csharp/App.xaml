@@ -1,0 +1,77 @@
+<!--
+ **********************************************************************
+
+ Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
+
+ This copy of Chat Demo is licensed to you under the terms described in
+ the CHAT_DEMO_LICENSE file included in this distribution.
+
+ **********************************************************************
+-->
+<Application x:Class="ChatDemoGUI.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:chat="clr-namespace:ChatDemoGUI"
+    StartupUri="MainView.xaml"  Startup="AppStartup">
+    <Application.Resources>
+        <!-- Declare an object data provider of type ChatModel. This creates an instance
+          of the ChatDemoGui.ChatModel class that can be accessed from our views. -->
+        <ObjectDataProvider ObjectType="{x:Type chat:ChatModel}" x:Key="ChatModel">
+        </ObjectDataProvider>
+
+        <!-- Declare an object data provider of type UserList. This creates an instance
+          of the ChatDemoGui.UserList class that can be accessed from our views. -->
+        <ObjectDataProvider ObjectType="{x:Type chat:UserList}" x:Key="UserList">
+        </ObjectDataProvider>
+
+        <!-- Declare an instance of our StatusConverter that implements the interface
+            IValueConverter.-->
+        <chat:StatusConverter x:Key="statusFormatter"></chat:StatusConverter>
+
+        <!-- Declare an instance of our BoolVisibilityConverter that implements the interface
+            IValueConverter.-->
+        <chat:BoolVisibilityConverter x:Key="boolVisibilityConverter"></chat:BoolVisibilityConverter>
+        
+        <chat:ConnectingBoolConverter x:Key="connectingBoolConverter"></chat:ConnectingBoolConverter>
+
+        <!-- Styles for our application -->
+
+        <!-- Style for layout background -->
+        <Style x:Key="PageBackground">
+            <Setter Property="Page.Background" Value="#d6d6ce"></Setter>
+        </Style>
+
+        <!-- Style for error messages -->
+        <Style x:Key="ErrorStyle">
+            <Setter Property="TextBlock.FontFamily" Value="Arial" />
+            <Setter Property="TextBlock.FontSize" Value="14" />
+            <Setter Property="TextBlock.Foreground" Value="Red"/>
+        </Style>
+
+        <!-- Style for titles -->
+        <Style x:Key="TextTitle">
+            <Setter Property="TextBlock.FontFamily" Value="Times New Romans" />
+            <Setter Property="TextBlock.FontSize" Value="14" />
+            <Setter Property="TextBlock.Foreground" Value="Black"/>
+        </Style>
+
+        <!-- Style for info messages -->
+        <Style x:Key="TextInfo">
+            <Setter Property="TextBlock.FontFamily" Value="Arial" />
+            <Setter Property="TextBlock.FontSize" Value="12" />
+            <Setter Property="TextBlock.Foreground" Value="Black"/>
+        </Style>
+
+        <!-- Style for tool bar button -->
+        <Style x:Key="ToolBarButton">
+            <Setter Property="Button.FontFamily" Value="Times New Romans"/>
+            <Setter Property="Button.FontSize" Value="12"/>
+        </Style>
+        
+        <!-- Style for tool bar button -->
+        <Style x:Key="Menu">
+            <Setter Property="MenuItem.FontFamily" Value="Times New Romans"/>
+            <Setter Property="MenuItem.FontSize" Value="12"/>
+        </Style>
+    </Application.Resources>
+</Application>

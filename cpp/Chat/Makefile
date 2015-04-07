@@ -4,13 +4,22 @@
 #
 # **********************************************************************
 
-top_srcdir	= .
+top_srcdir	= ..
 
 include $(top_srcdir)/make/Make.rules
 
-SUBDIRS		= Chat Glacier2 Ice IceDiscovery
+SUBDIRS		= cmdLineClient \
+		  server
 
-$(EVERYTHING)::
+.PHONY: $(EVERYTHING) $(SUBDIRS)
+
+all:: $(SUBDIRS)
+
+$(SUBDIRS):
+	@echo "making all in $@"
+	@$(MAKE) all --directory=$@
+
+$(EVERYTHING_EXCEPT_ALL)::
 	@for subdir in $(SUBDIRS); \
 	do \
 	    echo "making $@ in $$subdir"; \

@@ -1,0 +1,22 @@
+﻿<!--
+// **********************************************************************
+//
+// Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
+//
+// This copy of Chat Demo is licensed to you under the terms
+// described in the CHAT_DEMO_LICENSE file included in this
+// distribution.
+//
+// **********************************************************************
+-->
+<UserControl x:Name="parentCanvas"
+        xmlns="http://schemas.microsoft.com/client/2007" 
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+        Loaded="Page_Loaded" 
+        x:Class="ChatDemo.Coordinator"
+        Width="0"
+        Height="0"
+        Background="White">
+  <UserControl.Resources>
+  </UserControl.Resources>
+</UserControl>
