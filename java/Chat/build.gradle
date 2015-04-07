@@ -48,3 +48,8 @@ task proguard(type: proguard.gradle.ProGuardTask, dependsOn: jar) {
     outjars "ChatGUI.jar"
     configuration "chatdemogui.pro"
 }
+assemble.dependsOn(proguard)
+
+clean {
+    delete("ChatGUI.jar")
+}
