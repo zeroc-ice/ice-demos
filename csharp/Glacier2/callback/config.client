@@ -51,5 +51,5 @@ Callback.Proxy=callback:tcp -h localhost -p 10000
 Ice.Plugin.IceSSL=IceSSL:IceSSL.PluginFactory
 IceSSL.DefaultDir=../../../certs
 IceSSL.CertAuthFile=cacert.pem
-IceSSL.CertFile=c_rsa1024.pfx
+IceSSL.CertFile=client.p12
 IceSSL.Password=password

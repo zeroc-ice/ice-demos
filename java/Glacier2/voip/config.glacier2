@@ -6,7 +6,7 @@ Glacier2.InstanceName=Glacier2
 #
 # The client-visible endpoint of Glacier2. This should be an endpoint
 # visible from the public Internet, and it should be secure.
-# 
+#
 Glacier2.Client.Endpoints=ssl -p 4064 -h localhost:tcp -p 4063 -h localhost
 
 #
@@ -18,15 +18,15 @@ Glacier2.Client.Endpoints=ssl -p 4064 -h localhost:tcp -p 4063 -h localhost
 #
 Glacier2.Server.Endpoints=tcp -h localhost
 
-# 
+#
 # The proxy of the session manager.
 #
 Glacier2.SessionManager=VoipSessionManager:tcp -h localhost -p 10001
 
-# 
+#
 # For this demo, we use a custom permissions verifier collocated with
 # the session manager.
-# 
+#
 Glacier2.PermissionsVerifier=VoipVerifier:tcp -h localhost -p 10001
 
 #
@@ -59,5 +59,5 @@ Ice.Plugin.IceSSL=IceSSL:createIceSSL
 IceSSL.VerifyPeer=0
 IceSSL.DefaultDir=../../../certs
 IceSSL.CertAuthFile=cacert.pem
-IceSSL.CertFile=s_rsa1024.pfx
+IceSSL.CertFile=server.p12
 IceSSL.Password=password

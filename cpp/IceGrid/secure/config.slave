@@ -42,9 +42,9 @@ IceGrid.Registry.Trace.Replica=2
 #
 Ice.Plugin.IceSSL=IceSSL:createIceSSL
 IceSSL.DefaultDir=certs
-IceSSL.CertAuthFile=ca_cert.pem
-IceSSL.CertFile=slave_cert.pem
-IceSSL.KeyFile=slave_key.pem
+IceSSL.CertAuthFile=ca.pem
+IceSSL.CertFile=slave.p12
+IceSSL.Password=password
 IceSSL.Keychain=slave.keychain
 IceSSL.KeychainPassword=password
 

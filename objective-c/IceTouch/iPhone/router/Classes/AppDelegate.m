@@ -87,14 +87,14 @@
                                          @"Ice.Trace.Protocol", @"0",
                                          @"Trace.Router", @"1",
                                          nil];
-            
+
             [[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
             [[NSUserDefaults standardUserDefaults] synchronize];
         }
-        
+
         ICEInitializationData* initData = [ICEInitializationData initializationData];
         initData.properties = [ICEUtil createProperties];
-        
+
         [initData.properties setProperty:@"Client.Endpoints" value:@"tcp -p 12000"];
         [initData.properties setProperty:@"Server.Endpoints" value:@"tcp"];
 
@@ -102,15 +102,11 @@
 
         [initData.properties setProperty:@"Ice.Trace.Network" value:[[NSUserDefaults standardUserDefaults] stringForKey:@"Ice.Trace.Network"]];
         [initData.properties setProperty:@"Ice.Trace.Protocol" value:[[NSUserDefaults standardUserDefaults] stringForKey:@"Ice.Trace.Protocol"]];
-        
+
         [initData.properties setProperty:@"Ice.ThreadPool.Server.SizeMax" value:@"10"];
 
-         [initData.properties setProperty:@"Trace.Router" value:[[NSUserDefaults standardUserDefaults] stringForKey:@"Trace.Router"]];
+        [initData.properties setProperty:@"Trace.Router" value:[[NSUserDefaults standardUserDefaults] stringForKey:@"Trace.Router"]];
 
-        //[initData.properties setProperty:@"IceSSL.CheckCertName" value:@"0"];
-        //[initData.properties setProperty:@"IceSSL.CertAuthFile" value:@"cacert.der"];
-        //[initData.properties setProperty:@"IceSSL.CertFile" value:@"c_rsa1024.pfx"];
-        //[initData.properties setProperty:@"IceSSL.Password" value:@"password"];
         self.logger = [[Logger alloc] init];
         initData.logger = logger;
         self.communicator = [ICEUtil createCommunicator:initData];
@@ -119,7 +115,7 @@
 }
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application {
-    
+
     [window setRootViewController:rootViewController];
     [window makeKeyAndVisible];
 }

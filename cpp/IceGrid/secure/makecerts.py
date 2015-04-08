@@ -5,62 +5,57 @@
 #
 # **********************************************************************
 
-import os, sys, shutil, glob
+import os, sys, IceCertUtils
 
-def runIceca(args):
-    os.environ['PYTHONUNBUFFERED'] = '1'
-    command = 'iceca %s' % args
+dn = IceCertUtils.DistinguishedName("IceGrid Secure Demo CA", "Ice", "ZeroC, Inc.", "Jupiter", "Florida", "US")
 
-    # Look for iceca in the PATH, if found, execute it with the
-    # current python executable.
-    for path in os.environ.get("PATH", "").split(os.pathsep):
-        if os.path.exists(os.path.join(path, "iceca")):
-            command = '%s "%s" %s' % (sys.executable, os.path.join(path, "iceca"), args)
+DNelements = {
+    'C': "Country name",
+    'ST':"State or province name",
+    'L': "Locality",
+    'O': "Organization name",
+    'OU':"Organizational unit name",
+    'CN':"Common name",
+    'emailAddress': "Email address"
+}
 
-    if os.system(command):
-        sys.exit(1)
+def question(message, expected = None):
+   sys.stdout.write(message)
+   sys.stdout.write(' ')
+   sys.stdout.flush()
+   choice = sys.stdin.readline().strip()
+   if expected:
+      return choice in expected
+   else:
+      return choice
 
-def createCertificate(filename, cn):
-
-    print("======= Creating " + filename + " certificate =======")
-
-    runIceca('request --no-password --overwrite "%s" "%s"' % (filename, cn))
-    runIceca('sign --in %s_req.pem --out %s_cert.pem --dns="localhost" --ip="127.0.0.1"' % (filename, filename))
-    os.remove("%s_req.pem" % filename)
-
+while True:
     print("")
+    print("The subject name for your CA will be:\n  " + str(dn))
     print("")
-
-cwd = os.getcwd()
-if not os.path.exists("certs") or os.path.basename(cwd) != "secure":
-    print("You must run this script from the secure demo directory")
-    sys.exit(1)
-
-os.environ["ICE_CA_HOME"] = os.path.abspath("certs")
-
-os.chdir("certs")
+    if question("Do you want to keep this as the CA subject name? (y/n) [y]", ['n', 'N']):
+        for k,v in DNelements.items():
+            v = question(v + ": ")
+            if k == 'C' and len(v) > 2:
+               print("The contry code can't be longer than 2 characters")
+               continue
+            setattr(dn, k, v)
+    else:
+        break
 
 #
-# First, create the certificate authority.
+# Create a certificate factory
 #
-print("======= Creating Certificate Authority =======")
-runIceca("init --overwrite --no-password")
-print("")
-print("")
+factory = IceCertUtils.CertificateFactory(dn=dn)
 
-createCertificate("master", "Master")
-createCertificate("slave", "Slave")
-createCertificate("node", "Node")
-createCertificate("glacier2", "Glacier2")
-createCertificate("server", "Server")
+# Save the CA certificate
+factory.getCA().save(os.path.join("certs", "ca.pem")).save(os.path.join("certs", "ca.jks"))
 
-print("======= Creating Java Key Store =======")
+# Create and the certificates for the different components
+factory.create("Master").save(os.path.join("certs", "master.p12"))
+factory.create("Slave").save(os.path.join("certs", "slave.p12"))
+factory.create("Node").save(os.path.join("certs", "node.p12"))
+factory.create("Glacier2").save(os.path.join("certs", "glacier2.p12"))
+factory.create("Server").save(os.path.join("certs", "server.p12"))
 
-try:
-    os.remove("certs.jks")
-except OSError:
-    pass
-
-runIceca("import --key-pass password --store-pass password --java ca_cert ca/db/ca_cert.pem ca/db/ca_key.pem certs.jks")
-
-os.chdir("..")
+factory.destroy()

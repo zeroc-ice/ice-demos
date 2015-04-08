@@ -32,7 +32,7 @@ static NSString* hostnameKey = @"hostnameKey";
 +(void)initialize
 {
     NSDictionary* appDefaults = [NSDictionary dictionaryWithObjectsAndKeys:@"127.0.0.1", hostnameKey, nil];
-	
+
     [[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
 }
 -(void) dealloc
@@ -51,37 +51,37 @@ static NSString* hostnameKey = @"hostnameKey";
     [initData.properties setProperty:@"Ice.Plugin.IceDiscovery" value:@"IceDiscovery:createIceDiscovery"];
     [initData.properties setProperty:@"IceSSL.CheckCertName" value:@"0"];
     [initData.properties setProperty:@"IceSSL.CertAuthFile" value:@"cacert.der"];
-    [initData.properties setProperty:@"IceSSL.CertFile" value:@"c_rsa1024.pfx"];
+    [initData.properties setProperty:@"IceSSL.CertFile" value:@"client.p12"];
     [initData.properties setProperty:@"IceSSL.Password" value:@"password"];
-	
+
     // Dispatch AMI callbacks on the main thread
     initData.dispatcher = ^(id<ICEDispatcherCall> call, id<ICEConnection> con)
     {
         dispatch_sync(dispatch_get_main_queue(), ^ { [call run]; });
     };
-	
+
     communicator = [ICEUtil createCommunicator:initData];
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(applicationWillTerminate) 
+                                             selector:@selector(applicationWillTerminate)
                                                  name:UIApplicationWillTerminateNotification
-                                               object:nil]; 
-    
+                                               object:nil];
+
     // When the user starts typing, show the clear button in the text field.
     hostnameTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-    
+
     // Defaults for the UI elements.
     hostnameTextField.text = [[NSUserDefaults standardUserDefaults] stringForKey:hostnameKey];
     flushButton.enabled = NO;
     [flushButton setAlpha:0.5];
     [useDiscovery setOn:NO];
-    
+
     // This generates a compile time warning, but does actually work!
     [delaySlider setShowValue:YES];
     [timeoutSlider setShowValue:YES];
-    
+
     statusLabel.text = @"Ready";
-    
+
     showAlert = NO;
 }
 
@@ -227,7 +227,7 @@ static NSString* hostnameKey = @"hostnameKey";
         helloPrx = nil;
         return;
     }
-    
+
     NSString* s;
     if(discovery)
     {
@@ -237,7 +237,7 @@ static NSString* hostnameKey = @"hostnameKey";
     {
         s = [NSString stringWithFormat:@"hello:tcp -h \"%@\" -p 10000:ssl -h \"%@\" -p 10001:udp -h \"%@\" -p 10000", hostname, hostname, hostname];
     }
-    
+
     [[NSUserDefaults standardUserDefaults] setObject:hostname forKey:hostnameKey];
     ICEObjectPrx* prx = [communicator stringToProxy:s];
     switch(deliveryMode)
@@ -267,12 +267,12 @@ static NSString* hostnameKey = @"hostnameKey";
             prx = [prx ice_batchDatagram];
             break;
     }
-    
+
     if(timeout != 0)
     {
         prx = [prx ice_invocationTimeout:timeout];
     }
-    
+
     helloPrx = [DemoHelloPrx uncheckedCast:prx];
 }
 
@@ -285,7 +285,7 @@ static NSString* hostnameKey = @"hostnameKey";
         {
             return;
         }
-        
+
         int delay = (int)(delaySlider.value * 1000.0f); // Convert to ms.
         if(deliveryMode != DeliveryModeOnewayBatch &&
            deliveryMode != DeliveryModeOnewaySecureBatch &&
@@ -348,7 +348,7 @@ static NSString* hostnameKey = @"hostnameKey";
         {
             return;
         }
-        
+
         if(deliveryMode != DeliveryModeOnewayBatch &&
            deliveryMode != DeliveryModeOnewaySecureBatch &&
            deliveryMode != DeliveryModeDatagramBatch)
@@ -441,5 +441,3 @@ static NSString* hostnameKey = @"hostnameKey";
 }
 
 @end
-
-

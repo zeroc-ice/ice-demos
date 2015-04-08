@@ -18,9 +18,9 @@ Ice.Default.Locator=DemoIceGrid/Locator:ssl -h localhost -p 4062
 #
 Ice.Plugin.IceSSL=IceSSL:createIceSSL
 IceSSL.DefaultDir=certs
-IceSSL.CertAuthFile=ca_cert.pem
-IceSSL.CertFile=glacier2_cert.pem
-IceSSL.KeyFile=glacier2_key.pem
+IceSSL.CertAuthFile=ca.pem
+IceSSL.CertFile=glacier2.p12
+IceSSL.Password=password
 IceSSL.Keychain=glacier2.keychain
 IceSSL.KeychainPassword=password
 

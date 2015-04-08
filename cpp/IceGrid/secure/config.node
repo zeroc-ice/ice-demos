@@ -22,9 +22,9 @@ IceGrid.Node.Trace.Activator=1
 #
 Ice.Plugin.IceSSL=IceSSL:createIceSSL
 IceSSL.DefaultDir=certs
-IceSSL.CertAuthFile=ca_cert.pem
-IceSSL.CertFile=node_cert.pem
-IceSSL.KeyFile=node_key.pem
+IceSSL.CertAuthFile=ca.pem
+IceSSL.CertFile=node.p12
+IceSSL.Password=password
 IceSSL.Keychain=node.keychain
 IceSSL.KeychainPassword=password
 

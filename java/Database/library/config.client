@@ -58,5 +58,5 @@ Ice.RetryIntervals=-1
 #
 Ice.Plugin.IceSSL=IceSSL.PluginFactory
 IceSSL.DefaultDir=../../../certs
-IceSSL.Truststore=certs.jks
+IceSSL.Truststore=cacert.jks
 IceSSL.TrustOnly.Client=CN=127.0.0.1

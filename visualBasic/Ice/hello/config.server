@@ -42,5 +42,5 @@ Hello.Endpoints=tcp -h localhost -p 10000:udp -h localhost -p 10000:ssl -h local
 Ice.Plugin.IceSSL=IceSSL:IceSSL.PluginFactory
 IceSSL.DefaultDir=../../../certs
 IceSSL.CertAuthFile=cacert.pem
-IceSSL.CertFile=s_rsa1024.pfx
+IceSSL.CertFile=server.p12
 IceSSL.Password=password

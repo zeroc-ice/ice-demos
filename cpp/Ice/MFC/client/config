@@ -27,6 +27,5 @@ Ice.Trace.Protocol=0
 Ice.Plugin.IceSSL=IceSSL:createIceSSL
 IceSSL.DefaultDir=../../../../certs
 IceSSL.CertAuthFile=cacert.pem
-IceSSL.CertFile=c_rsa1024_pub.pem
-IceSSL.KeyFile=c_rsa1024_priv.pem
+IceSSL.CertFile=client.p12
 IceSSL.Trace.Security=0

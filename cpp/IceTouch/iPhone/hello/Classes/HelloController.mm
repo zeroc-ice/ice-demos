@@ -34,13 +34,13 @@ class Dispatcher : public Ice::Dispatcher
 {
 public:
 
-    virtual void 
+    virtual void
     dispatch(const Ice::DispatcherCallPtr& call, const Ice::ConnectionPtr&)
     {
-        dispatch_sync(dispatch_get_main_queue(), ^ { 
+        dispatch_sync(dispatch_get_main_queue(), ^ {
                 @autoreleasepool
                 {
-                    call->run(); 
+                    call->run();
                 }
             });
     }
@@ -49,21 +49,21 @@ public:
 class HelloClient : public IceUtil::Shared
 {
 public:
-    
+
     HelloClient(HelloController* controller) :
         _controller(controller), _response(false)
     {
         Ice::InitializationData initData;
-        initData.properties = Ice::createProperties();        
+        initData.properties = Ice::createProperties();
         initData.properties->setProperty("IceSSL.CheckCertName", "0");
         initData.properties->setProperty("IceSSL.CertAuthFile", "cacert.der");
-        initData.properties->setProperty("IceSSL.CertFile", "c_rsa1024.pfx");
+        initData.properties->setProperty("IceSSL.CertFile", "client.p12");
         initData.properties->setProperty("IceSSL.Password", "password");
         initData.properties->setProperty("Ice.Plugin.IceDiscovery", "IceDiscovery:createIceDiscovery");
         initData.dispatcher = new Dispatcher();
         _communicator = Ice::initialize(initData);
     }
-    
+
     void updateProxy(const string& hostname, int deliveryMode, int timeout, bool discovery)
     {
         if(_helloPrx &&
@@ -74,17 +74,17 @@ public:
         {
             return;
         }
-        
+
         _deliveryMode = deliveryMode;
         _hostname = hostname;
         _timeout = timeout;
         _discovery = discovery;
-        
+
         if(_hostname.empty() && !_discovery)
         {
             return;
         }
-        
+
         ostringstream os;
         os << "hello";
         if(!_discovery)
@@ -93,7 +93,7 @@ public:
             os << ":ssl -h \"" << _hostname << "\" -p 10001";
             os << ":udp -h \"" << _hostname << "\" -p 10000";
         }
-        
+
         _helloPrx = HelloPrx::uncheckedCast(_communicator->stringToProxy(os.str()));
         switch(deliveryMode)
         {
@@ -122,13 +122,13 @@ public:
                 _helloPrx = _helloPrx->ice_batchDatagram();
                 break;
         }
-        
+
         if(_timeout != 0)
         {
             _helloPrx = _helloPrx->ice_invocationTimeout(_timeout);
         }
     }
-    
+
     void sayHello(const string& hostname, int deliveryMode, int timeout, int delay, bool discovery)
     {
         try
@@ -161,20 +161,20 @@ public:
             exception(ex);
         }
     }
-    
+
     void response()
     {
         _response = true;
         [_controller ready];
     }
-    
+
     void sent(bool sentSynchronously)
     {
         if(_response)
         {
             return;
         }
-        
+
         NSString* hostname = nil;
         Ice::ConnectionPtr connection = _helloPrx->ice_getCachedConnection();
         if(connection)
@@ -184,7 +184,7 @@ public:
         }
         [_controller requestSent:_deliveryMode hostname:hostname];
     }
-    
+
     void exception(const Ice::Exception& ex)
     {
         _response = true;
@@ -195,7 +195,7 @@ public:
         NSString* err = [NSString stringWithUTF8String:s.c_str()];
         [_controller exception:err];
     }
-    
+
     void shutdown(const string& hostname, int deliveryMode, int timeout, bool discovery)
     {
         try
@@ -205,7 +205,7 @@ public:
             {
                 return;
             }
-            
+
             if(deliveryMode != DeliveryModeOnewayBatch &&
                deliveryMode != DeliveryModeOnewaySecureBatch &&
                deliveryMode != DeliveryModeDatagramBatch)
@@ -228,19 +228,19 @@ public:
             exception(ex);
         }
     }
-    
+
     void flushBatchSend(bool)
     {
         [_controller flushBatchSend];
     }
-    
+
     void flushBatch()
     {
         try
         {
             _communicator->begin_flushBatchRequests(
-                Ice::newCallback_Communicator_flushBatchRequests(this, 
-                                                                 &HelloClient::exception, 
+                Ice::newCallback_Communicator_flushBatchRequests(this,
+                                                                 &HelloClient::exception,
                                                                  &HelloClient::flushBatchSend));
         }
         catch(const Ice::LocalException& ex)
@@ -248,7 +248,7 @@ public:
             exception(ex);
         }
     }
-                                          
+
     void destroy()
     {
         if(_communicator)
@@ -257,7 +257,7 @@ public:
             _communicator = 0;
         }
     }
-                                    
+
 private:
 
     IceUtil::Mutex _mutex;
@@ -290,7 +290,7 @@ static NSString* hostnameKey = @"hostnameKey";
 +(void)initialize
 {
     NSDictionary* appDefaults = [NSDictionary dictionaryWithObjectsAndKeys:@"127.0.0.1", hostnameKey, nil];
-	
+
     [[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
 }
 
@@ -303,29 +303,29 @@ static NSString* hostnameKey = @"hostnameKey";
 }
 
 -(void)viewDidLoad
-{	
+{
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(applicationWillTerminate) 
+                                             selector:@selector(applicationWillTerminate)
                                                  name:UIApplicationWillTerminateNotification
-                                               object:nil]; 
-    
+                                               object:nil];
+
     // When the user starts typing, show the clear button in the text field.
     hostnameTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-    
+
     // Defaults for the UI elements.
     hostnameTextField.text = [[NSUserDefaults standardUserDefaults] stringForKey:hostnameKey];
     flushButton.enabled = NO;
     [flushButton setAlpha:0.5];
     [useDiscovery setOn:NO];
-    
+
     // This generates a compile time warning, but does actually work!
     [delaySlider setShowValue:YES];
     [timeoutSlider setShowValue:YES];
-    
+
     statusLabel.text = @"Ready";
-    
+
     client = new HelloClient(self);
-    
+
     showAlert = NO;
 }
 
@@ -380,26 +380,26 @@ static NSString* hostnameKey = @"hostnameKey";
 
 -(IBAction)sayHello:(id)sender
 {
-    client->sayHello([hostnameTextField.text cStringUsingEncoding:[NSString defaultCStringEncoding]], 
+    client->sayHello([hostnameTextField.text cStringUsingEncoding:[NSString defaultCStringEncoding]],
                      (int)[modePicker selectedRowInComponent:0],
                      (int)(timeoutSlider.value * 1000.0f),     // Convert to ms.
                      (int)(delaySlider.value * 1000.0f),
                      [useDiscovery isOn]);  // Convert to ms.
-    
+
 }
 
 -(IBAction)flushBatch:(id)sender
 {
-    client->flushBatch();    
+    client->flushBatch();
 }
 
 -(IBAction)shutdown:(id)sender
 {
-    client->shutdown([hostnameTextField.text cStringUsingEncoding:[NSString defaultCStringEncoding]], 
+    client->shutdown([hostnameTextField.text cStringUsingEncoding:[NSString defaultCStringEncoding]],
                      (int)[modePicker selectedRowInComponent:0],
                      (int)(delaySlider.value * 1000.0f),
                      [useDiscovery isOn]);  // Convert to ms.
-    
+
 }
 
 -(IBAction)useDiscovery:(id)sender
@@ -463,7 +463,7 @@ static NSString* hostnameKey = @"hostnameKey";
     {
         return NO;
     }
-    
+
     // Close the text field.
     [theTextField resignFirstResponder];
     return YES;
@@ -486,7 +486,7 @@ static NSString* hostnameKey = @"hostnameKey";
                                                         delegate:self
                                            cancelButtonTitle:@"OK"
                                            otherButtonTitles:nil] autorelease];
-    
+
     [alert show];
     [self ready];
 }
@@ -530,5 +530,3 @@ static NSString* hostnameKey = @"hostnameKey";
 }
 
 @end
-
-

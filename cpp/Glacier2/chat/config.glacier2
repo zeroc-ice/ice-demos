@@ -6,12 +6,12 @@ Glacier2.InstanceName=DemoGlacier2
 #
 # The client-visible endpoint of Glacier2. This should be an endpoint
 # visible from the public Internet, and it should be secure.
-#  
+#
 # When no -h <host> option is specified in the endpoints, the default
 # value from the Ice.Default.Host property is used. If this property
 # isn't set, the endpoints will listen on all available network
 # interfaces.
-# 
+#
 Glacier2.Client.Endpoints=tcp -p 4063:ssl -p 4064:ws -p 5063:wss -p 5064
 
 #
@@ -36,15 +36,15 @@ Ice.Default.Host=127.0.0.1
 #
 Glacier2.Server.Endpoints=tcp -h localhost
 
-# 
+#
 # The proxy of the session manager.
 #
 Glacier2.SessionManager=ChatSessionManager:tcp -h localhost -p 10001
 
-# 
+#
 # For this demo, we use a custom permissions verifier collocated with
 # the session manager.
-# 
+#
 Glacier2.PermissionsVerifier=ChatSessionVerifier:tcp -h localhost -p 10001
 
 #
@@ -73,7 +73,7 @@ Glacier2.Filter.Category.Accept=session
 Ice.Plugin.IceSSL=IceSSL:createIceSSL
 IceSSL.DefaultDir=../../../certs
 IceSSL.CertAuthFile=cacert.pem
-IceSSL.CertFile=s_rsa1024.pfx
+IceSSL.CertFile=server.p12
 IceSSL.Password=password
 IceSSL.Keychain=glacier2.keychain
 IceSSL.KeychainPassword=password

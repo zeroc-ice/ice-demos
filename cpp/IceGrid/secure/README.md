@@ -73,16 +73,16 @@ provide an X.509 certificate. As a result, connecting with IceGrid
 Admin is straightforward: you just need to create an SSL connection
 with no associated X.509 certificate.
 
-When using IceGrid Admin, we recommend importing certs/certs.jks
-into the IceGrid Admin trusted CAs Key Store using the IceGrid Admin
+When using IceGrid Admin, we recommend importing certs/ca.jks into the
+IceGrid Admin trusted CAs Key Store using the IceGrid Admin
 certificate manager. This will ensure IceGrid Admin connects to the
 correct IceGrid Registry or Glacier2 Router.
 
-The icegridadmin command line tool configuration in config.admin
-sets the property "IceSSL.CertAuthFile=ca_cert.pem" to ensure that
-the admin client is connecting to the correct registry or
-glacier2router. In a Java client "IceSSL.Truststore=certs.jks"
-can be used for the same purpose.
+The icegridadmin command line tool configuration in config.admin sets
+the property "IceSSL.CertAuthFile=ca.pem" to ensure that the admin
+client is connecting to the correct registry or glacier2router. In a
+Java client "IceSSL.Truststore=ca.jks" can be used for the same
+purpose.
 
 The IceGrid registry and Glacier2 router are configured to use the
 "null permissions verifier" so you can use any username/password to
