@@ -111,7 +111,7 @@ var demos = [
     "Ice/minimal",
     "Ice/latency",
     "Ice/bidir",
-    "Glacier2/chat",
+    "Glacier2/simpleChat",
     "Chat"];
 
 function demoTaskName(name) { return "demo_" + name.replace("/", "_"); }
