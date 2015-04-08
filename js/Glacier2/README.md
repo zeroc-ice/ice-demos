@@ -1,5 +1,5 @@
 Demo in this directory:
 
-- [chat](./chat)
+- [simpleChat](./simpleChat)
 
-   An application that shows how to write a Glacier2 chat client.
+   An application that shows how to write a simple Glacier2 chat client.

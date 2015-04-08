@@ -5,10 +5,10 @@ Demos in this directory:
   Illustrates how to allow a server to call back into a client via a
   Glacier2 connection.
 
-- [chat](./chat)
+- [simpleChat](./simpleChat)
 
    A swing application that shows how to use write a graphical Glacier2
-   client.
+   simple chat client.
 
 - [voip](./voip)
 

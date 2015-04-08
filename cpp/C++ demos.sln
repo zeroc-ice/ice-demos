@@ -45,7 +45,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "transform", "transform", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "callback", "callback", "{AD08C44E-088B-4843-9B6D-2A77A3268D9D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "chat", "chat", "{B62E6222-2406-4C8A-AAE0-4D837217F533}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "simpleChat", "simpleChat", "{B62E6222-2406-4C8A-AAE0-4D837217F533}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "async", "async", "{634C4C27-A9FC-4900-A121-86227E602150}"
 EndProject
@@ -143,9 +143,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Glacier2\callback
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Glacier2\callback\Glacier2.callback.server.vcxproj", "{50C35E8E-3504-4DDF-8C5A-787525F16A91}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Glacier2\chat\Glacier2.chat.client.vcxproj", "{3202DB5F-A249-4250-AB9D-EAA35AE386F1}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Glacier2\simpleChat\Glacier2.simpleChat.client.vcxproj", "{3202DB5F-A249-4250-AB9D-EAA35AE386F1}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Glacier2\chat\Glacier2.chat.server.vcxproj", "{A5A0DB86-3CB6-4B37-ADC7-5BC49C0E80A8}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Glacier2\simpleChat\Glacier2.simpleChat.server.vcxproj", "{A5A0DB86-3CB6-4B37-ADC7-5BC49C0E80A8}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\MFC\client\Ice.MFC.client.vcxproj", "{44F51074-4C10-469B-9BB2-94803F0837BF}"
 EndProject

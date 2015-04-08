@@ -52,7 +52,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "wpf", "wpf", "{97AAFBFB-C01
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "callback", "callback", "{87223C06-EE52-4664-9499-A4FAD2B6CA75}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "chat", "chat", "{C1DBE0DE-9924-459A-9DD7-223C41EF58BF}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "simpleChat", "simpleChat", "{C1DBE0DE-9924-459A-9DD7-223C41EF58BF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lifecycle", "lifecycle", "{ADDBA3A8-48E7-4310-8BCB-230F99D4FF4F}"
 EndProject
@@ -166,7 +166,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "helloplugin", "Ice\plugin\h
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\wpf\client.csproj", "{1EB710F0-E760-499B-BFD6-24E3B7A132E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Glacier2\chat\client.csproj", "{53DCED47-A722-48EF-86D8-A10AD0594F21}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Glacier2\simpleChat\client.csproj", "{53DCED47-A722-48EF-86D8-A10AD0594F21}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "optional", "optional", "{E84CAC08-D9FF-4A34-AA1D-625AD6038A5D}"
 EndProject

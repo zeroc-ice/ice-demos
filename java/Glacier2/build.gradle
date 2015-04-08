@@ -4,7 +4,7 @@
 //
 // **********************************************************************
 
-['callback', 'chat', 'voip'].each {
+['callback', 'simpleChat', 'voip'].each {
     def name = it
     project(":demoGlacier2${it.capitalize()}") {
         slice {
@@ -38,8 +38,8 @@
             demoJar("client")
         }
 
-        // The chat demo has no serverJar.
-        if(name != "chat") {
+        // The simpleChat demo has no serverJar.
+        if(name != "simpleChat") {
             demoJar("server")
         }
     }

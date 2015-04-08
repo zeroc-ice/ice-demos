@@ -14,7 +14,7 @@ def demos = [
 	'Database' : ['library'],
 	'Freeze' : ['bench', 'casino', 'library', 'phonebook', 'transform'],
 	'IceBox' : ['hello'],
-	'Glacier2' : ['callback', 'chat', 'voip'],
+	'Glacier2' : ['callback', 'simpleChat', 'voip'],
 	'IceStorm' : ['clock'],
 	'IceGrid' : ['icebox', 'simple'],
 	'Manual' : ['evictor_filesystem', 'lifecycle', 'map_filesystem', 'printer', 'simple_filesystem']

@@ -8,7 +8,7 @@ top_srcdir	= ..
 
 include $(top_srcdir)/make/Make.rules
 
-SUBDIRS		= callback chat
+SUBDIRS		= callback simpleChat
 
 .PHONY: $(EVERYTHING) $(SUBDIRS)
 

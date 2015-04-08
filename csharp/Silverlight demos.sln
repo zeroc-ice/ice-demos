@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bidir", "bidir", "{92D95920
 		Ice\silverlight\bidir\README.md = Ice\silverlight\bidir\README.md
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "chat", "chat", "{18878230-8C72-4CDC-B458-9140050F0BBF}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "simpleChat", "simpleChat", "{18878230-8C72-4CDC-B458-9140050F0BBF}"
 	ProjectSection(SolutionItems) = preProject
 		Glacier2\silverlight\README.md = Glacier2\silverlight\README.md
 	EndProjectSection
@@ -24,9 +24,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bidir", "Ice\silverlight\bi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bidir.Web", "Ice\silverlight\bidir\bidir.Web\bidir.Web.csproj", "{0F089AE9-9F65-4C33-9F1F-183C6AC6E043}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "chat", "Glacier2\silverlight\chat\chat.csproj", "{78FA0B57-6672-4173-8CA3-C81FA402F4E1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "simpleChat", "Glacier2\silverlight\simpleChat\simpleChat.csproj", "{78FA0B57-6672-4173-8CA3-C81FA402F4E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "chat.Web", "Glacier2\silverlight\chat.Web\chat.Web.csproj", "{C0234952-390B-4C8F-8288-C7B0BADAD80E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "simpleChat.Web", "Glacier2\silverlight\simpleChat.Web\simpleChat.Web.csproj", "{C0234952-390B-4C8F-8288-C7B0BADAD80E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -5,13 +5,13 @@ classes in a Silverlight client for the simple chat server.
    starting the Glacier2 router, you must modify the router's
    client endpoints to use a port in the range allowed by Silverlight.
 
-   Edit the config.glacier2 file in the C++ chat demo directory and
-   update the property Glacier2.Client.Endpoints as follows:
+   Edit the config.glacier2 file in the C++ simpleChat demo directory
+   and update the property Glacier2.Client.Endpoints as follows:
 
      Glacier2.Client.Endpoints=tcp -p 4502 -h 127.0.0.1
 
-2) Follow the instructions in the C++ demo README to start the chat
-   server and the Glacier2 router.
+2) Follow the instructions in the C++ demo README to start the simple 
+   chat server and the Glacier2 router.
 
 3) In a command window, change to this demo directory and start the
    policy server.
@@ -45,19 +45,19 @@ IIS instructions:
 
    //initData.properties.setProperty("Ice.ClientAccessPolicyProtocol", "Http");
 
-4) Rebuild the demo. You must rebuild both chat and chat.Web projects.
+4) Rebuild the demo. You must rebuild both simpleChat and simpleChat.Web projects.
 
 5) Copy required files. In a command window, execute the following
    commands:
 
-   > mkdir C:\inetpub\wwwroot\chat
-   > xcopy chat.Web\index.html C:\inetpub\wwwroot\chat
-   > xcopy chat.Web\Silverlight.js C:\inetpub\wwwroot\chat
-   > xcopy chat.Web\ClientBin C:\inetpub\wwwroot\chat\ClientBin /s /i
+   > mkdir C:\inetpub\wwwroot\simpleChat
+   > xcopy simpleChat.Web\index.html C:\inetpub\wwwroot\simpleChat
+   > xcopy simpleChat.Web\Silverlight.js C:\inetpub\wwwroot\simpleChat
+   > xcopy simpleChat.Web\ClientBin C:\inetpub\wwwroot\simpleChat\ClientBin /s /i
 
-6) The chat client should now be accessible at the following URL:
+6) The simple chat client should now be accessible at the following URL:
 
-   http://localhost/chat/index.html
+   http://localhost/simpleChat/index.html
 
 
 Notes:
