@@ -136,8 +136,11 @@ namespace ChatDemo
                     Dispatcher.BeginInvoke(action);
                 };
 
+                initData.properties.setProperty("Ice.Default.Router", _defaultRouter);
+
                 Glacier2.SessionFactoryHelper factory = new Glacier2.SessionFactoryHelper(initData, this);
-                factory.setRouterHost(_defaultRouter);
+                factory.setProtocol("tcp");
+                
                 _session = factory.connect(name, password);
             }
             catch(Ice.LocalException ex)

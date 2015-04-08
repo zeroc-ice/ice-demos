@@ -11,14 +11,14 @@
 //
 // The proxy of the Glacier2 router.
 //
-var DefaultRouter = "Glacier2/router:tcp -p 4502 -h 127.0.0.1";
+var DefaultRouter = "Glacier2/router:tcp -p 4502 -h demo.zeroc.com";
 
 //
 // The access policy protocol. If set to Http, Ice for Silverlight
 // configures an outgoing socket to use the HTTP access policy 
 // protocol rather than the default TCP protocol.
 //
-var ClientAccessPolicyProtocol = "Tcp";
+var ClientAccessPolicyProtocol = "Http";
 
 String.prototype.trim = function()
 {

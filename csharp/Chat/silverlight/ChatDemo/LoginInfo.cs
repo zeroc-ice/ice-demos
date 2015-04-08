@@ -55,6 +55,6 @@ namespace ChatDemo
 
         private string _userName = "";
         private string _userPassword = "";
-        private string _host = "127.0.0.1";
+        private string _host = "demo.zeroc.com";
     }
 }
