@@ -17,7 +17,7 @@ def demos = [
 	'Glacier2' : ['callback', 'simpleChat', 'voip'],
 	'IceStorm' : ['clock'],
 	'IceGrid' : ['icebox', 'simple'],
-	'Manual' : ['evictor_filesystem', 'lifecycle', 'map_filesystem', 'printer', 'simple_filesystem']
+	'Manual' : ['evictorFilesystem', 'lifecycle', 'mapFilesystem', 'printer', 'simpleFilesystem']
 ]
 
 demos.each {
