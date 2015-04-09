@@ -230,6 +230,12 @@ if (!android) {
         def subdirs
         if (isWindows) {
             subdirs = [ "${iceDir}/lib/" ]
+
+            def thirdpartyhome = env['THIRDPARTY_HOME']
+            if (thirdpartyhome == null || thirdpartyhome.length() == 0) {
+                thirdpartyhome = "${programFiles}/ZeroC/Ice-${project.version}-ThirdParty"
+            }
+            subdirs.push("${thirdpartyhome}/lib/")
         } else {
             subdirs = [
                 "/usr/local/opt/ice/libexec/lib/",
