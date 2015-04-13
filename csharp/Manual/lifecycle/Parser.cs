@@ -311,12 +311,8 @@ class Parser
 
     internal virtual int parse()
     {
-#if COMPACT
-        _in = Console.In;
-#else
         _in = new StreamReader(new StreamReader(Console.OpenStandardInput(), Encoding.Default).BaseStream,
                                new StreamReader(Console.OpenStandardInput(), Encoding.Default).CurrentEncoding);
-#endif
 
         Grammar g = new Grammar(this);
         g.parse();

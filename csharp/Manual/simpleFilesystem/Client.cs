@@ -16,7 +16,7 @@ using System.Reflection;
 
 public class Client
 {
-    // Recursively print the contents of directory "dir" in tree fashion. 
+    // Recursively print the contents of directory "dir" in tree fashion.
     // For files, show the contents of each file. The "depth"
     // parameter is the current nesting level (for indentation).
 
@@ -53,14 +53,6 @@ public class Client
         try
         {
             Ice.InitializationData data = new Ice.InitializationData();
-#if COMPACT
-            //
-            // When using Ice for .NET Compact Framework, we need to specify
-            // the assembly so that Ice can locate classes and exceptions.
-            //
-            data.properties = Ice.Util.createProperties();
-            data.properties.setProperty("Ice.FactoryAssemblies", "client,version=1.0.0.0");
-#endif
 
             //
             // Create a communicator
