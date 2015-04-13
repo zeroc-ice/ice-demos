@@ -16,8 +16,8 @@ SLICE_OBJS	= Filesystem.o
 COBJS		= Client.o
 
 SOBJS		= Server.o \
-			  DirectoryI.o \
-			  FileI.o
+		  DirectoryI.o \
+		  FileI.o
 
 OBJS		= $(SLICE_OBJS) $(COBJS) $(SOBJS)
 

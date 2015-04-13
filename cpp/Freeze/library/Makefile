@@ -14,14 +14,14 @@ TARGETS		= $(CLIENT) $(SERVER) $(COLLOCATED)
 
 SLICE_OBJS	= Library.o
 
-COBJS		=  $(SLICE_OBJS) \
+COBJS		= $(SLICE_OBJS) \
 		  Client.o \
 		  Grammar.o \
 		  Parser.o \
 		  RunParser.o \
 		  Scanner.o
 
-SOBJS		=  $(SLICE_OBJS) \
+SOBJS		= $(SLICE_OBJS) \
 		  BookFactory.o \
 		  LibraryI.o \
 		  LibraryTypes.o \

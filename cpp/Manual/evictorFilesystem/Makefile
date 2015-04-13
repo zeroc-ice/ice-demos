@@ -13,7 +13,7 @@ TARGETS		= $(CLIENT) $(SERVER)
 
 SLICE_OBJS	= Filesystem.o PersistentFilesystem.o
 
-COBJS		=  Filesystem.o \
+COBJS		= Filesystem.o \
 		  Client.o \
 		  Grammar.o \
 		  Parser.o \

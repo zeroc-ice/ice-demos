@@ -7,12 +7,12 @@
 #
 # **********************************************************************
 
-top_srcdir     = ../..
+top_srcdir     	= ../..
 
-UNAME			:= $(shell uname)
+UNAME		:= $(shell uname)
 
 ifeq ($(UNAME),Darwin)
-APPSUFFIX		= .app
+APPSUFFIX	= .app
 endif
 
 CLIENT		= QtChatDemo$(APPSUFFIX)
@@ -20,25 +20,25 @@ CLIENT		= QtChatDemo$(APPSUFFIX)
 TARGETS		= Makefile.qmake $(CLIENT)
 
 SLICE_SRCS	= Chat.ice \
-					 ChatSession.ice
+		  ChatSession.ice
 
-SRCS	= Chat.cpp \
-	ChatSession.cpp \
-	Util.cpp \
-		Chat.cpp \
-		ChatSession.cpp \
-		LoginView.cpp \
-		ChatView.cpp \
-		MainView.cpp \
-		Coordinator.cpp
+SRCS		= Chat.cpp \
+		  ChatSession.cpp \
+		  Util.cpp \
+		  Chat.cpp \
+		  ChatSession.cpp \
+		  LoginView.cpp \
+		  ChatView.cpp \
+		  MainView.cpp \
+		  Coordinator.cpp
 
 HEADERS		= Chat.h \
-	ChatSession.h \
-	ChatView.h \
-	Coordinator.h \
-	LoginView.h \
-	MainView.h \
-	Util.h
+		  ChatSession.h \
+		  ChatView.h \
+		  Coordinator.h \
+		  LoginView.h \
+		  MainView.h \
+		  Util.h
 
 include $(top_srcdir)/make/Make.rules
 
@@ -100,12 +100,12 @@ $(CLIENT): Makefile.qmake $(SRCS) $(HEADERS)
 	ICE_HOME=$(ice_cpp_dir) $(MAKE) -f Makefile.qmake
 	@if test $(UNAME) = "Darwin" ; \
 	then \
-		$(MACDEPLOYQT) QtChatDemo.app; \
-		for component in IceUtil Ice IceSSL Glacier2 ; \
-		do \
-			cp -v $(ice_cpp_dir)/lib/lib$$component.$(SOVERSION).dylib  \
-			QtChatDemo.app/Contents/Frameworks/; \
-		done; \
+	    $(MACDEPLOYQT) QtChatDemo.app; \
+	    for component in IceUtil Ice IceSSL Glacier2 ; \
+	    do \
+		cp -v $(ice_cpp_dir)/lib/lib$$component.$(SOVERSION).dylib  \
+		QtChatDemo.app/Contents/Frameworks/; \
+	    done; \
 	fi
 
 clean::
@@ -113,6 +113,6 @@ clean::
 	make -f Makefile.qmake clean
 	@if test $(UNAME) = "Darwin" ; \
 	then \
-		rm -rf $(CLIENT); \
+	    rm -rf $(CLIENT); \
 	fi
 	rm -rf Makefile.qmake

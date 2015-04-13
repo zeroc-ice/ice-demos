@@ -9,16 +9,15 @@
 
 top_srcdir = ..
 
-
-SLICE_SRCS = Chat.ice \
-	PollingChat.ice
+SLICE_SRCS 	= Chat.ice \
+		  PollingChat.ice
 
 include $(top_srcdir)/make/Make.rules
 
 SLICE2PHPFLAGS  := -I. $(SLICE2PHPFLAGS)
 
-SRCS = Chat.php \
-	PollingChat.php
+SRCS 		= Chat.php \
+		  PollingChat.php
 
 all:: $(SRCS)
 

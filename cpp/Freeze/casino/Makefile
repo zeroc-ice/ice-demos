@@ -17,7 +17,7 @@ SLICE_OBJS	= Casino.o \
 COBJS		= Casino.o \
 		  Client.o \
 
-SOBJS		=  $(SLICE_OBJS) \
+SOBJS		= $(SLICE_OBJS) \
 		  BankI.o \
 		  BetI.o \
 		  BetResolver.o \

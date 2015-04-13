@@ -11,7 +11,7 @@ SERVER		= server
 
 TARGETS		= $(CLIENT) $(SERVER)
 
-SLICE_OBJS		=  Nrvo.o
+SLICE_OBJS	= Nrvo.o
 
 COBJS		= $(SLICE_OBJS) \
 		  MyStringSeq.o \

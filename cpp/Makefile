@@ -10,19 +10,19 @@ include $(top_srcdir)/make/Make.rules
 
 ifneq ($(findstring MINGW,$(UNAME)),)
 SUBDIRS		= Ice \
-			IceDiscovery \
-			Manual
+		  IceDiscovery \
+		  Manual
 else
 SUBDIRS		= IceUtil \
-			Chat \
-			Freeze \
-			Glacier2 \
-			Ice \
-			IceBox \
-			IceDiscovery \
-			IceGrid \
-			IceStorm \
-			Manual
+		  Chat \
+		  Freeze \
+		  Glacier2 \
+		  Ice \
+		  IceBox \
+		  IceDiscovery \
+		  IceGrid \
+		  IceStorm \
+		  Manual
 endif
 
 .PHONY: $(EVERYTHING) $(SUBDIRS)
@@ -36,6 +36,6 @@ $(SUBDIRS):
 $(EVERYTHING_EXCEPT_ALL)::
 	@for subdir in $(SUBDIRS); \
 	do \
-			echo "making $@ in $$subdir"; \
-			( cd $$subdir && $(MAKE) $@ ) || exit 1; \
+	    echo "making $@ in $$subdir"; \
+            ( cd $$subdir && $(MAKE) $@ ) || exit 1; \
 	done

@@ -14,9 +14,9 @@ POLLCLIENT	= chatpollclient
 
 TARGETS		= $(GL2CLIENT) $(POLLCLIENT)
 
-SLICE_OBJS = Chat.o \
-	ChatSession.o \
-	PollingChat.o
+SLICE_OBJS 	= Chat.o \
+		  ChatSession.o \
+		  PollingChat.o
 
 GL2_CLIENT_OBJS	= Chat.o \
 		  ChatSession.o \
@@ -43,4 +43,3 @@ $(GL2CLIENT): $(GL2_CLIENT_OBJS)
 $(POLLCLIENT): $(POLL_CLIENT_OBJS)
 	rm -f $@
 	$(CXX) $(LDFLAGS) -o $@ $(POLL_CLIENT_OBJS) $(LIBS)
-

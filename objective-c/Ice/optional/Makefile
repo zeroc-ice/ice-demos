@@ -16,7 +16,7 @@ SLICE_OBJS	= Contact.o
 COBJS		= Client.o \
 
 SOBJS		= ContactDBI.o \
-			  Server.o
+		  Server.o
 
 OBJS		= $(SLICE_OBJS) $(COBJS) $(SOBJS)
 
