@@ -1,0 +1,47 @@
+// **********************************************************************
+//
+// Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
+//
+// **********************************************************************
+
+buildscript {
+    repositories {
+        maven {
+            url 'https://repo.zeroc.com/nexus/content/repositories/releases'
+        }
+    }
+    dependencies {
+        classpath group: 'com.zeroc.gradle.plugins', name: 'ice-gradle-plugin', version: '1.0'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'slice'
+
+slice {
+    java {
+        srcDir = '.'
+    }
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir '.'
+        }
+    }
+}
+
+repositories {
+    maven {
+        url 'https://repo.zeroc.com/nexus/content/repositories/releases'
+    }
+    flatDir {
+        name 'local'
+	dirs '/opt/Ice-3.6.0/lib'
+    }
+}
+
+dependencies {
+    compile 'com.zeroc:ice:3.6.0'
+}

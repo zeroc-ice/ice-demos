@@ -20,3 +20,7 @@ $ server --Ice.Default.Protocol=ws
 To run the client with WebSocket support:
 
 $ client --Ice.Default.Protocol=ws
+
+Also included is a sample [build.gradle](./build.gradle.example) file
+that demonstrates how to use the Ice Builder for Gradle plugin and
+build a simple Ice application.
