@@ -6,7 +6,7 @@ demos.
 The [Manual](./Manual) directory contains demos for some of the code examples
 in the [Ice manual](https://doc.zeroc.com/display/Ice/Ice+Manual).
 
-The [Chat](./Chat) directory contains .NET GUI client for the ZeroC
+The [Chat](./Chat) directory contains a .NET GUI client for the ZeroC
 [Chat Demo](https://zeroc.com/chat/index.html).
 
 For more examples of the features of the Ice services (Glacier2, IceGrid,
