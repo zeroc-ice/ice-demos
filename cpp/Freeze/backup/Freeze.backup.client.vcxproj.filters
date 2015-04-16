@@ -21,25 +21,17 @@
     <ClCompile Include="generated\IntLongMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="generated\dummy.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="generated\IntLongMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="generated\dummy.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="README.txt" />
     <None Include="config" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="dummy.ice">
-      <Filter>Resource Files</Filter>
-    </CustomBuild>
+    <CustomBuild Include="dummy.freeze" />
   </ItemGroup>
 </Project>

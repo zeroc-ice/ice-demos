@@ -70,15 +70,14 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Item.ice">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="README.txt" />
     <None Include="config.server" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="ItemInfo.ice">
-      <Filter>Resource Files</Filter>
-    </CustomBuild>
+    <CustomBuild Include="dummy.freeze" />
+  </ItemGroup>
+  <ItemGroup>
+    <IceBuilder Include="Item.ice" />
+    <IceBuilder Include="ItemInfo.ice" />
   </ItemGroup>
 </Project>

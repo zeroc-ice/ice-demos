@@ -58,13 +58,11 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Casino.ice">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="CasinoStore.ice">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="README.txt" />
     <None Include="config.server" />
+    <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <IceBuilder Include="Casino.ice" />
+    <IceBuilder Include="CasinoStore.ice" />
   </ItemGroup>
 </Project>

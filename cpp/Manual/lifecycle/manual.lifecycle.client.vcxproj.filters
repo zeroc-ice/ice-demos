@@ -42,9 +42,9 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Filesystem.ice">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="README.txt" />
+    <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <IceBuilder Include="Filesystem.ice" />
   </ItemGroup>
 </Project>

@@ -45,23 +45,20 @@
     <PlatformToolset>v110</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <Import Project="$(LOCALAPPDATA)\ZeroC\IceBuilder\IceBuilder.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(LOCALAPPDATA)\ZeroC\IceVisualStudioExtension\Ice.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(LOCALAPPDATA)\ZeroC\IceVisualStudioExtension\Ice.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(LOCALAPPDATA)\ZeroC\IceVisualStudioExtension\Ice.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(LOCALAPPDATA)\ZeroC\IceVisualStudioExtension\Ice.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -106,9 +103,8 @@
     </ResourceCompile>
     <Link>
       <AdditionalOptions>/FIXED:NO %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>Iced.lib;IceUtild.lib;setargv.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>setargv.obj;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>loggerplugin36d.dll</OutputFile>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
@@ -116,6 +112,7 @@
       <ImportLibrary>loggerplugin36d.lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
+    <IceBuilder />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <BuildLog>
@@ -144,9 +141,8 @@
     </ResourceCompile>
     <Link>
       <AdditionalOptions>/FIXED:NO %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>Iced.lib;IceUtild.lib;setargv.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>setargv.obj;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>loggerplugin36d.dll</OutputFile>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
@@ -154,6 +150,7 @@
       <ImportLibrary>loggerplugin36d.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
+    <IceBuilder />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Midl>
@@ -178,15 +175,15 @@
     </ResourceCompile>
     <Link>
       <AdditionalOptions>/FIXED:NO /IGNORE:4089 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>Ice.lib;IceUtil.lib;setargv.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>setargv.obj;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>loggerplugin36.dll</OutputFile>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <ImportLibrary>loggerplugin36.lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
+    <IceBuilder />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <BuildLog>
@@ -215,15 +212,15 @@
     </ResourceCompile>
     <Link>
       <AdditionalOptions>/FIXED:NO /IGNORE:4089 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>Ice.lib;IceUtil.lib;setargv.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>setargv.obj;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>loggerplugin36.dll</OutputFile>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <ImportLibrary>loggerplugin36.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
+    <IceBuilder />
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="LoggerPluginI.cpp">
@@ -237,11 +234,7 @@
     <None Include="README.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <Import Project="$(LOCALAPPDATA)\ZeroC\IceBuilder\IceBuilder.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-  <ProjectExtensions>
-    <VisualStudio>
-      <UserProperties ZerocIce_Enabled="True" ZerocIce_VerboseLevel="1" ZerocIce_ProjectVersion="4.0.0.0" />
-    </VisualStudio>
-  </ProjectExtensions>
 </Project>

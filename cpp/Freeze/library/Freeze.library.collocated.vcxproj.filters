@@ -64,12 +64,13 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="README.txt" />
     <None Include="config.collocated" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="Library.ice">
-      <Filter>Resource Files</Filter>
-    </CustomBuild>
+    <CustomBuild Include="dummy.freeze" />
+  </ItemGroup>
+  <ItemGroup>
+    <IceBuilder Include="Library.ice" />
   </ItemGroup>
 </Project>

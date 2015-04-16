@@ -54,6 +54,6 @@
     <None Include="res\PatchClient.rc2">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="README.txt" />
+    <None Include="README.md" />
   </ItemGroup>
 </Project>

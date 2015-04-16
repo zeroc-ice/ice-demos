@@ -46,10 +46,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="README.txt" />
     <None Include="config.client" />
-    <None Include="Library.ice">
-      <Filter>Resource Files</Filter>
-    </None>
+    <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <IceBuilder Include="Library.ice" />
   </ItemGroup>
 </Project>

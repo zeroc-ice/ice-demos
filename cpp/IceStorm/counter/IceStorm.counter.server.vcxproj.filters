@@ -34,12 +34,12 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Counter.ice">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="README.txt" />
     <None Include="config.server" />
     <None Include="config.icebox" />
     <None Include="config.service" />
+    <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <IceBuilder Include="Counter.ice" />
   </ItemGroup>
 </Project>

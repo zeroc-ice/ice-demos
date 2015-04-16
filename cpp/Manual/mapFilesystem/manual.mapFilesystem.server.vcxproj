@@ -47,23 +47,20 @@
     <PlatformToolset>v110</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <Import Project="$(LOCALAPPDATA)\ZeroC\IceBuilder\IceBuilder.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(LOCALAPPDATA)\ZeroC\IceVisualStudioExtension\Ice.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(LOCALAPPDATA)\ZeroC\IceVisualStudioExtension\Ice.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(LOCALAPPDATA)\ZeroC\IceVisualStudioExtension\Ice.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(LOCALAPPDATA)\ZeroC\IceVisualStudioExtension\Ice.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -85,7 +82,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>.;.\generated\server;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CONSOLE;NDEBUG;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -100,13 +97,15 @@
     <Link>
       <AdditionalOptions>/FIXED:NO /IGNORE:4089 %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>setargv.obj;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Console</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
+    <IceBuilder>
+      <OutputDir>.\generated\server</OutputDir>
+    </IceBuilder>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <BuildLog>
@@ -116,7 +115,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>.;.\generated\server;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CONSOLE;NDEBUG;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -131,18 +130,20 @@
     <Link>
       <AdditionalOptions>/FIXED:NO /IGNORE:4089 %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>setargv.obj;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Console</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
+    <IceBuilder>
+      <OutputDir>.\generated\server</OutputDir>
+    </IceBuilder>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>.;.\generated\server;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CONSOLE;_DEBUG;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -158,7 +159,6 @@
     <Link>
       <AdditionalOptions>/FIXED:NO %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>setargv.obj;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
@@ -166,6 +166,9 @@
       </DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
+    <IceBuilder>
+      <OutputDir>.\generated\server</OutputDir>
+    </IceBuilder>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <BuildLog>
@@ -174,7 +177,7 @@
     </BuildLog>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>.;.\generated\server;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CONSOLE;_DEBUG;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -190,7 +193,6 @@
     <Link>
       <AdditionalOptions>/FIXED:NO %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>setargv.obj;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
@@ -198,11 +200,20 @@
       </DataExecutionPrevention>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
+    <IceBuilder>
+      <OutputDir>.\generated\server</OutputDir>
+    </IceBuilder>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="FilesystemI.cpp" />
-    <ClCompile Include="generated\server\Filesystem.cpp" />
-    <ClCompile Include="generated\server\FilesystemDB.cpp" />
+    <ClCompile Include="generated\server\Filesystem.cpp">
+      <DependentUpon>Filesystem.ice</DependentUpon>
+      <AutoGen>True</AutoGen>
+    </ClCompile>
+    <ClCompile Include="generated\server\FilesystemDB.cpp">
+      <DependentUpon>FilesystemDB.ice</DependentUpon>
+      <AutoGen>True</AutoGen>
+    </ClCompile>
     <ClCompile Include="generated\server\IdentityDirectoryEntryMap.cpp" />
     <ClCompile Include="generated\server\IdentityFileEntryMap.cpp" />
     <ClCompile Include="Server.cpp">
@@ -214,14 +225,22 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FilesystemI.h" />
-    <ClInclude Include="generated\server\Filesystem.h" />
-    <ClInclude Include="generated\server\FilesystemDB.h" />
+    <ClInclude Include="generated\server\Filesystem.h">
+      <DependentUpon>Filesystem.ice</DependentUpon>
+      <AutoGen>True</AutoGen>
+    </ClInclude>
+    <ClInclude Include="generated\server\FilesystemDB.h">
+      <DependentUpon>FilesystemDB.ice</DependentUpon>
+      <AutoGen>True</AutoGen>
+    </ClInclude>
     <ClInclude Include="generated\server\IdentityDirectoryEntryMap.h" />
     <ClInclude Include="generated\server\IdentityFileEntryMap.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Filesystem.ice" />
-    <CustomBuild Include="FilesystemDB.ice">
+    <IceBuilder Include="FilesystemDB.ice" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="dummy.freeze">
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(IceToolsBin)\slice2freeze.exe" -I"$(IceHome)\slice" --output-dir="generated\server" -I. --ice --dict FilesystemDB::IdentityFileEntryMap,Ice::Identity,FilesystemDB::FileEntry IdentityFileEntryMap FilesystemDB.ice "$(IceHome)\slice\Ice\Identity.ice"
 "$(IceToolsBin)\slice2freeze.exe" -I"$(IceHome)\slice" --output-dir="generated\server" -I. --ice --dict FilesystemDB::IdentityDirectoryEntryMap,Ice::Identity,FilesystemDB::DirectoryEntry IdentityDirectoryEntryMap FilesystemDB.ice "$(IceHome)\slice\Ice\Identity.ice"
 </Command>
@@ -242,16 +261,19 @@
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Running slice2freeze</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Running slice2freeze</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Running slice2freeze</Message>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">FilesystemDB.ice</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">FilesystemDB.ice</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">FilesystemDB.ice</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">FilesystemDB.ice</AdditionalInputs>
     </CustomBuild>
     <None Include="config.server" />
     <None Include="README.md" />
   </ItemGroup>
+  <ItemGroup>
+    <IceBuilder Include="Filesystem.ice" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <Import Project="$(LOCALAPPDATA)\ZeroC\IceBuilder\IceBuilder.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-  <ProjectExtensions>
-    <VisualStudio>
-      <UserProperties ZerocIce_Enabled="True" ZerocIce_IncludePath="." ZerocIce_VerboseLevel="1" ZerocIce_ProjectVersion="4.0.0.0" ZerocIce_OutputDir=".\generated\server" />
-    </VisualStudio>
-  </ProjectExtensions>
 </Project>

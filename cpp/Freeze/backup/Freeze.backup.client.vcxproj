@@ -45,23 +45,20 @@
     <PlatformToolset>v110</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <Import Project="$(LOCALAPPDATA)\ZeroC\IceBuilder\IceBuilder.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(LOCALAPPDATA)\ZeroC\IceVisualStudioExtension\Ice.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(LOCALAPPDATA)\ZeroC\IceVisualStudioExtension\Ice.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(LOCALAPPDATA)\ZeroC\IceVisualStudioExtension\Ice.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(LOCALAPPDATA)\ZeroC\IceVisualStudioExtension\Ice.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -83,7 +80,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>.;.\generated;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>generated</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CONSOLE;NDEBUG;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -98,13 +95,15 @@
     <Link>
       <AdditionalOptions>/FIXED:NO /IGNORE:4089 %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>setargv.obj;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Console</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
+    <IceBuilder>
+      <OutputDir>.\generated</OutputDir>
+    </IceBuilder>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <BuildLog>
@@ -114,7 +113,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>.;.\generated;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>generated</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CONSOLE;NDEBUG;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -129,18 +128,19 @@
     <Link>
       <AdditionalOptions>/FIXED:NO /IGNORE:4089 %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>setargv.obj;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Console</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
+    <IceBuilder>
+      <OutputDir>.\generated</OutputDir>
+    </IceBuilder>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>.;.\generated;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CONSOLE;_DEBUG;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -148,6 +148,7 @@
       <WarningLevel>Level4</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <AdditionalIncludeDirectories>generated</AdditionalIncludeDirectories>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -156,7 +157,6 @@
     <Link>
       <AdditionalOptions>/FIXED:NO %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>setargv.obj;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
@@ -164,6 +164,9 @@
       </DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
+    <IceBuilder>
+      <OutputDir>.\generated</OutputDir>
+    </IceBuilder>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <BuildLog>
@@ -172,7 +175,7 @@
     </BuildLog>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>.;.\generated;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>generated</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CONSOLE;_DEBUG;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -188,7 +191,6 @@
     <Link>
       <AdditionalOptions>/FIXED:NO %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>setargv.obj;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
@@ -196,6 +198,9 @@
       </DataExecutionPrevention>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
+    <IceBuilder>
+      <OutputDir>.\generated</OutputDir>
+    </IceBuilder>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -204,15 +209,13 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="generated\dummy.cpp" />
     <ClCompile Include="generated\IntLongMap.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="generated\dummy.h" />
     <ClInclude Include="generated\IntLongMap.h" />
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="dummy.ice">
+    <CustomBuild Include="dummy.freeze">
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(IceToolsBin)\slice2freeze.exe" --output-dir="generated" -I. --dict IntLongMap,int,long IntLongMap</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">generated\IntLongMap.h;generated\IntLongMap.cpp;%(Outputs)</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(IceToolsBin)\slice2freeze.exe" --output-dir="generated" -I. --dict IntLongMap,int,long IntLongMap</Command>
@@ -230,11 +233,7 @@
     <None Include="README.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <Import Project="$(LOCALAPPDATA)\ZeroC\IceBuilder\IceBuilder.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-  <ProjectExtensions>
-    <VisualStudio>
-      <UserProperties ZerocIce_OutputDir=".\generated" ZerocIce_VerboseLevel="1" ZerocIce_ProjectVersion="4.0.0.0" ZerocIce_Enabled="True" />
-    </VisualStudio>
-  </ProjectExtensions>
 </Project>

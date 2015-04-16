@@ -34,11 +34,11 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Callback.ice">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="README.txt" />
     <None Include="config.server" />
     <None Include="config.glacier2" />
+    <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <IceBuilder Include="Callback.ice" />
   </ItemGroup>
 </Project>

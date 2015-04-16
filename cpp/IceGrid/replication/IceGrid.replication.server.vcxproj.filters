@@ -34,15 +34,15 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Hello.ice">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="README.txt" />
     <None Include="config.master" />
     <None Include="config.node1" />
     <None Include="config.node2" />
     <None Include="config.replica1" />
     <None Include="config.replica2" />
     <None Include="application.xml" />
+    <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <IceBuilder Include="Hello.ice" />
   </ItemGroup>
 </Project>

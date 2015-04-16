@@ -13,6 +13,10 @@
       <UniqueIdentifier>{7b47cbac-53ba-40cf-9b0a-357f60cd8d8d}</UniqueIdentifier>
       <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
     </Filter>
+    <Filter Include="Slice Files">
+      <UniqueIdentifier>{CD96D044-4021-4AB5-BD98-7CC0E05CE7D3}</UniqueIdentifier>
+      <Extensions>ice</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -23,15 +27,17 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Hello.ice">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="README.txt" />
     <None Include="config.client" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="generated\client\Hello.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <IceBuilder Include="Hello.ice">
+      <Filter>Slice Files</Filter>
+    </IceBuilder>
   </ItemGroup>
 </Project>

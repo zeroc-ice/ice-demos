@@ -51,16 +51,16 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Hello.ice">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="res\HelloClient.ico">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="res\HelloClient.rc2">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="README.txt" />
     <None Include="config.client" />
+    <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <IceBuilder Include="Hello.ice" />
   </ItemGroup>
 </Project>

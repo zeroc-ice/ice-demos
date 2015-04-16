@@ -34,10 +34,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Throughput.ice">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="README.txt" />
     <None Include="config.server" />
+    <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <IceBuilder Include="Throughput.ice" />
   </ItemGroup>
 </Project>

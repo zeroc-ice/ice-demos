@@ -23,15 +23,15 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Latency.ice">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="README.txt" />
     <None Include="config.server" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="generated\server\Latency.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <IceBuilder Include="Latency.ice" />
   </ItemGroup>
 </Project>

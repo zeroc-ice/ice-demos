@@ -34,10 +34,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Nrvo.ice">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="README.txt" />
     <None Include="config.client" />
+    <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <IceBuilder Include="Nrvo.ice" />
   </ItemGroup>
 </Project>

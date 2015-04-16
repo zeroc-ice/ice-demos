@@ -28,10 +28,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Props.ice">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="README.txt" />
     <None Include="config.server" />
+    <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <IceBuilder Include="Props.ice" />
   </ItemGroup>
 </Project>

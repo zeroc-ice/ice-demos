@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="README.txt" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RegistryPlugin.cpp">

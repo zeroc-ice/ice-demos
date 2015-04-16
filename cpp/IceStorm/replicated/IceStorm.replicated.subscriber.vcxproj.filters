@@ -23,17 +23,17 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Clock.ice">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="README.txt" />
     <None Include="application.xml" />
     <None Include="config.sub" />
     <None Include="config.grid" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="generated\subscriber\Clock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <IceBuilder Include="Clock.ice" />
   </ItemGroup>
 </Project>

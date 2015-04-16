@@ -23,10 +23,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Clock.ice">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="README.txt" />
     <None Include="config.pub" />
     <None Include="config.ib1" />
     <None Include="config.ib2" />
@@ -34,10 +30,14 @@
     <None Include="config.s1" />
     <None Include="config.s2" />
     <None Include="config.s3" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="generated\publisher\Clock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <IceBuilder Include="Clock.ice" />
   </ItemGroup>
 </Project>

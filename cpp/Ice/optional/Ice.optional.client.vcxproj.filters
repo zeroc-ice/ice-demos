@@ -23,15 +23,15 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Contact.ice">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="README.txt" />
     <None Include="config.client" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="generated\client\Contact.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <IceBuilder Include="Contact.ice" />
   </ItemGroup>
 </Project>

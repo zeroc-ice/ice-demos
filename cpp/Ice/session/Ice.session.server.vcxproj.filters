@@ -46,10 +46,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Session.ice">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="README.txt" />
     <None Include="config.server" />
+    <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <IceBuilder Include="Session.ice" />
   </ItemGroup>
 </Project>

@@ -34,10 +34,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Nested.ice">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="README.txt" />
     <None Include="config.client" />
+    <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <IceBuilder Include="Nested.ice" />
   </ItemGroup>
 </Project>

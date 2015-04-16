@@ -13,6 +13,10 @@
       <UniqueIdentifier>{7635e0bc-abc3-4b31-8e27-58c2f689cfff}</UniqueIdentifier>
       <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
     </Filter>
+    <Filter Include="Slice Files">
+      <UniqueIdentifier>{CD96D044-4021-4AB5-BD98-7CC0E05CE7D3}</UniqueIdentifier>
+      <Extensions>ice</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CallbackI.cpp">
@@ -34,10 +38,12 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Callback.ice">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="README.txt" />
     <None Include="config.client" />
+    <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <IceBuilder Include="Callback.ice">
+      <Filter>Slice Files</Filter>
+    </IceBuilder>
   </ItemGroup>
 </Project>

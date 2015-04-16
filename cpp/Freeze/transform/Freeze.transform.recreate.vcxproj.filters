@@ -34,11 +34,12 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="README.txt" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="NewContactData.ice">
-      <Filter>Resource Files</Filter>
-    </CustomBuild>
+    <CustomBuild Include="dummy.freeze" />
+  </ItemGroup>
+  <ItemGroup>
+    <IceBuilder Include="NewContactData.ice" />
   </ItemGroup>
 </Project>
