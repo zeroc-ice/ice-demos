@@ -152,3 +152,4 @@ UpgradeLog*.htm
 *.exe.manifest
 
 csharp/**/*.xml
+visualBasic/**/*.xml
