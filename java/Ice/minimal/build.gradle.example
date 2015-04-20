@@ -36,10 +36,11 @@ repositories {
     maven {
         url 'https://repo.zeroc.com/nexus/content/repositories/releases'
     }
-    flatDir {
-        name 'local'
-	dirs '/opt/Ice-3.6.0/lib'
-    }
+    // Uncomment to build against locally installed jars
+    //flatDir {
+    //    name 'local'
+    //    dirs '/opt/Ice-3.6.0/lib'
+    //}
 }
 
 dependencies {

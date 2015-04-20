@@ -21,6 +21,11 @@ def env = System.getenv()
 def srcdist = false
 def iceDir
 
+ext.iceMavenRepo = env['ICE_MAVEN_REPOSITORY']
+if (ext.iceMavenRepo == null) {
+    ext.iceMavenRepo = "repo.zeroc.com"
+}
+
 // First check if iceHome was set in gradle.properties
 // Otherwise check if ICE_HOME is set and it points at a valid installation
 if (iceHome)

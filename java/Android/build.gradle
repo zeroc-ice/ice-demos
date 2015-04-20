@@ -30,10 +30,10 @@ subprojects {
 
         if (!useLocalOnly) {
             maven {
-                url 'https://repo.zeroc.com/nexus/content/repositories/thirdparty'
+                url "https://${iceMavenRepo}/nexus/content/repositories/thirdparty"
             }
             maven {
-                url 'https://repo.zeroc.com/nexus/content/repositories/releases'
+                url "https://${iceMavenRepo}/nexus/content/repositories/releases"
             }
         }
     }

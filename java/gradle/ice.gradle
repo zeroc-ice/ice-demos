@@ -5,6 +5,12 @@
 // **********************************************************************
 
 buildscript {
+    def env = System.getenv()
+    ext.iceMavenRepo = env['ICE_MAVEN_REPOSITORY']
+    if (ext.iceMavenRepo == null) {
+        ext.iceMavenRepo = "repo.zeroc.com"
+    }
+
     ext.getIceHome = {
         // Determine the name of the Slice-to-Java translator
         def isWindows = false
@@ -14,10 +20,9 @@ buildscript {
             slice2java = "slice2java.exe"
         }
 
-        def env = System.getenv()
-	def iceDir
-	ext.srcdist = false
-	ext.useLocalRepo = false
+	    def iceDir
+	    ext.srcdist = false
+	    ext.useLocalRepo = false
 
         // First check if iceHome was set in gradle.properties
         // Otherwise check if ICE_HOME is set and it points at a valid installation
@@ -107,7 +112,7 @@ buildscript {
         }
 	if (!gradle.startParameter.isOffline()) {
             maven {
-                url 'https://repo.zeroc.com/nexus/content/repositories/releases'
+                url "https://${iceMavenRepo}/nexus/content/repositories/releases"
             }
         }
     }
