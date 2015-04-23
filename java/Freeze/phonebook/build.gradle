@@ -17,7 +17,7 @@ slice {
                 javaType = "NameIndex"
                 type = "Demo::Contact"
                 member = "name"
-                casesensitive = false
+                caseSensitive = false
             }
         }
     }
