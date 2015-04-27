@@ -93,10 +93,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="generated\server\Session.cs">
-      <DependentUpon>Session.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </Compile>
+    <Compile Include="generated\server\Session.cs" />
     <Compile Include="HelloI.cs">
       <SubType>Code</SubType>
     </Compile>

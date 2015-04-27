@@ -203,10 +203,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="generated\server\Greet.cpp">
-      <DependentUpon>Greet.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </ClCompile>
+    <ClCompile Include="generated\server\Greet.cpp" />
     <ClCompile Include="GreetI.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -221,10 +218,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="generated\server\Greet.h">
-      <DependentUpon>Greet.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </ClInclude>
+    <ClInclude Include="generated\server\Greet.h" />
     <ClInclude Include="GreetI.h" />
   </ItemGroup>
   <ItemGroup>

@@ -96,10 +96,7 @@
     <Compile Include="Client.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="generated\client\Session.cs">
-      <DependentUpon>Session.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </Compile>
+    <Compile Include="generated\client\Session.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -199,10 +199,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="generated\publisher\Clock.cpp">
-      <DependentUpon>Clock.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </ClCompile>
+    <ClCompile Include="generated\publisher\Clock.cpp" />
     <ClCompile Include="Publisher.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -217,10 +214,7 @@
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="generated\publisher\Clock.h">
-      <DependentUpon>Clock.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </ClInclude>
+    <ClInclude Include="generated\publisher\Clock.h" />
   </ItemGroup>
   <ItemGroup>
     <IceBuilder Include="Clock.ice" />

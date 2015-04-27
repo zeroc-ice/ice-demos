@@ -212,17 +212,11 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="generated\client\Counter.cpp">
-      <DependentUpon>Counter.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </ClCompile>
+    <ClCompile Include="generated\client\Counter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CounterObserverI.h" />
-    <ClInclude Include="generated\client\Counter.h">
-      <DependentUpon>Counter.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </ClInclude>
+    <ClInclude Include="generated\client\Counter.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="config.client" />

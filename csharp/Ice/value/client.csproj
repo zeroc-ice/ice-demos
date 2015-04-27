@@ -102,10 +102,7 @@
     <Compile Include="DerivedPrinterI.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="generated\client\Value.cs">
-      <DependentUpon>Value.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </Compile>
+    <Compile Include="generated\client\Value.cs" />
     <Compile Include="ObjectFactory.cs">
       <SubType>Code</SubType>
     </Compile>

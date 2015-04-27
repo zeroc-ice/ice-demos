@@ -210,20 +210,14 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <ClCompile Include="ClientWithoutConverter.cpp" />
-    <ClCompile Include="generated\client-without-converter\Greet.cpp">
-      <DependentUpon>Greet.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </ClCompile>
+    <ClCompile Include="generated\client-without-converter\Greet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="config.client" />
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="generated\client-without-converter\Greet.h">
-      <DependentUpon>Greet.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </ClInclude>
+    <ClInclude Include="generated\client-without-converter\Greet.h" />
   </ItemGroup>
   <ItemGroup>
     <IceBuilder Include="Greet.ice" />

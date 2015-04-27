@@ -222,14 +222,8 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <ClCompile Include="generated\server\Database.cpp" />
-    <ClCompile Include="generated\server\Item.cpp">
-      <DependentUpon>Item.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </ClCompile>
-    <ClCompile Include="generated\server\ItemInfo.cpp">
-      <DependentUpon>ItemInfo.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </ClCompile>
+    <ClCompile Include="generated\server\Item.cpp" />
+    <ClCompile Include="generated\server\ItemInfo.cpp" />
     <ClCompile Include="ItemI.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -254,14 +248,8 @@
     <ClInclude Include="Evictor.h" />
     <ClInclude Include="EvictorBase.h" />
     <ClInclude Include="generated\server\Database.h" />
-    <ClInclude Include="generated\server\Item.h">
-      <DependentUpon>Item.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </ClInclude>
-    <ClInclude Include="generated\server\ItemInfo.h">
-      <DependentUpon>ItemInfo.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </ClInclude>
+    <ClInclude Include="generated\server\Item.h" />
+    <ClInclude Include="generated\server\ItemInfo.h" />
     <ClInclude Include="ItemI.h" />
     <ClInclude Include="SimpleEvictor.h" />
   </ItemGroup>

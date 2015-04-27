@@ -223,10 +223,7 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="generated\collocated\Library.cpp">
-      <DependentUpon>Library.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </ClCompile>
+    <ClCompile Include="generated\collocated\Library.cpp" />
     <ClCompile Include="generated\collocated\LibraryTypes.cpp" />
     <ClCompile Include="Grammar.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -281,10 +278,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BookFactory.h" />
-    <ClInclude Include="generated\collocated\Library.h">
-      <DependentUpon>Library.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </ClInclude>
+    <ClInclude Include="generated\collocated\Library.h" />
     <ClInclude Include="generated\collocated\LibraryTypes.h" />
     <ClInclude Include="Grammar.h" />
     <ClInclude Include="LibraryI.h" />

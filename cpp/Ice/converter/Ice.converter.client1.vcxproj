@@ -210,10 +210,7 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <ClCompile Include="ClientWithConverter.cpp" />
-    <ClCompile Include="generated\client-with-converter\Greet.cpp">
-      <DependentUpon>Greet.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </ClCompile>
+    <ClCompile Include="generated\client-with-converter\Greet.cpp" />
     <ClCompile Include="StringConverterI.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -222,10 +219,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="generated\client-with-converter\Greet.h">
-      <DependentUpon>Greet.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </ClInclude>
+    <ClInclude Include="generated\client-with-converter\Greet.h" />
     <ClInclude Include="StringConverterI.h" />
   </ItemGroup>
   <ItemGroup>

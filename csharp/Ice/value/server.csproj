@@ -101,8 +101,6 @@
     </Compile>
     <Compile Include="generated\server\Value.cs">
       <SubType>Code</SubType>
-      <DependentUpon>Value.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="InitialI.cs">
       <SubType>Code</SubType>

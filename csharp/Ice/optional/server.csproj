@@ -99,10 +99,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="generated\server\Contact.cs">
-      <DependentUpon>Contact.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </Compile>
+    <Compile Include="generated\server\Contact.cs" />
     <Compile Include="ContactDBI.cs">
       <SubType>Code</SubType>
     </Compile>

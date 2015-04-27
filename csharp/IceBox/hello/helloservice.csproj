@@ -98,10 +98,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="generated\helloservice\Hello.cs">
-      <DependentUpon>Hello.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </Compile>
+    <Compile Include="generated\helloservice\Hello.cs" />
     <Compile Include="HelloI.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -96,10 +96,7 @@
     <Compile Include="Client.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="generated\client\Nested.cs">
-      <DependentUpon>Nested.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </Compile>
+    <Compile Include="generated\client\Nested.cs" />
     <Compile Include="NestedI.cs">
       <SubType>Code</SubType>
     </Compile>

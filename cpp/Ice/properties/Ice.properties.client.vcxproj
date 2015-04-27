@@ -200,20 +200,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp" />
-    <ClCompile Include="generated\client\Props.cpp">
-      <DependentUpon>Props.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </ClCompile>
+    <ClCompile Include="generated\client\Props.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="config.client" />
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="generated\client\Props.h">
-      <DependentUpon>Props.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </ClInclude>
+    <ClInclude Include="generated\client\Props.h" />
   </ItemGroup>
   <ItemGroup>
     <IceBuilder Include="Props.ice" />

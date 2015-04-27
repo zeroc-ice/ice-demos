@@ -94,10 +94,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="generated\server\Greet.cs">
-      <DependentUpon>Greet.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </Compile>
+    <Compile Include="generated\server\Greet.cs" />
     <Compile Include="GreetI.cs">
       <SubType>Code</SubType>
     </Compile>

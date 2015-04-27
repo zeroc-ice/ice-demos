@@ -97,10 +97,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="generated\subscriber\Clock.cs">
-      <DependentUpon>Clock.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </Compile>
+    <Compile Include="generated\subscriber\Clock.cs" />
     <Compile Include="Subscriber.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -205,17 +205,11 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="generated\create\ContactData.cpp">
-      <DependentUpon>ContactData.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </ClCompile>
+    <ClCompile Include="generated\create\ContactData.cpp" />
     <ClCompile Include="generated\create\Contacts.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="generated\create\ContactData.h">
-      <DependentUpon>ContactData.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </ClInclude>
+    <ClInclude Include="generated\create\ContactData.h" />
     <ClInclude Include="generated\create\Contacts.h" />
   </ItemGroup>
   <ItemGroup>

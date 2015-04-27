@@ -52,10 +52,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="generated\server\Printer.cs">
-      <DependentUpon>Printer.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </Compile>
+    <Compile Include="generated\server\Printer.cs" />
     <Compile Include="Server.cs" />
   </ItemGroup>
   <ItemGroup>

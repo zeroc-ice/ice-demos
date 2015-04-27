@@ -203,10 +203,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="generated\server\Session.cpp">
-      <DependentUpon>Session.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </ClCompile>
+    <ClCompile Include="generated\server\Session.cpp" />
     <ClCompile Include="ReapTask.cpp" />
     <ClCompile Include="Server.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -228,10 +225,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="generated\server\Session.h">
-      <DependentUpon>Session.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </ClInclude>
+    <ClInclude Include="generated\server\Session.h" />
     <ClInclude Include="ReapTask.h" />
     <ClInclude Include="SessionFactoryI.h" />
     <ClInclude Include="SessionI.h" />

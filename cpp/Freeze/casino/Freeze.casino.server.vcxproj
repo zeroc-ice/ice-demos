@@ -221,14 +221,8 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="generated\server\Casino.cpp">
-      <DependentUpon>Casino.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </ClCompile>
-    <ClCompile Include="generated\server\CasinoStore.cpp">
-      <DependentUpon>CasinoStore.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </ClCompile>
+    <ClCompile Include="generated\server\Casino.cpp" />
+    <ClCompile Include="generated\server\CasinoStore.cpp" />
     <ClCompile Include="PlayerI.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -246,14 +240,8 @@
     <ClInclude Include="BankI.h" />
     <ClInclude Include="BetI.h" />
     <ClInclude Include="BetResolver.h" />
-    <ClInclude Include="generated\server\Casino.h">
-      <DependentUpon>Casino.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </ClInclude>
-    <ClInclude Include="generated\server\CasinoStore.h">
-      <DependentUpon>CasinoStore.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </ClInclude>
+    <ClInclude Include="generated\server\Casino.h" />
+    <ClInclude Include="generated\server\CasinoStore.h" />
     <ClInclude Include="PlayerI.h" />
   </ItemGroup>
   <ItemGroup>

@@ -95,10 +95,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="generated\server\Printer.cs">
-      <DependentUpon>Printer.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </Compile>
+    <Compile Include="generated\server\Printer.cs" />
     <Compile Include="PrinterI.cs">
       <SubType>Code</SubType>
     </Compile>

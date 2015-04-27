@@ -96,14 +96,8 @@
     <Compile Include="DiscoverI.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="generated\server\Discovery.cs">
-      <DependentUpon>Discovery.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="generated\server\Hello.cs">
-      <DependentUpon>Hello.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </Compile>
+    <Compile Include="generated\server\Discovery.cs" />
+    <Compile Include="generated\server\Hello.cs" />
     <Compile Include="HelloI.cs">
       <SubType>Code</SubType>
     </Compile>

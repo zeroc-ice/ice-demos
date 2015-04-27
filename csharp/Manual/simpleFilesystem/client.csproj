@@ -96,10 +96,7 @@
     <Compile Include="Client.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="generated\client\Filesystem.cs">
-      <DependentUpon>Filesystem.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </Compile>
+    <Compile Include="generated\client\Filesystem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

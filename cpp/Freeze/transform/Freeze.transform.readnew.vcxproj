@@ -199,10 +199,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="generated\readnew\NewContactData.cpp">
-      <DependentUpon>NewContactData.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </ClCompile>
+    <ClCompile Include="generated\readnew\NewContactData.cpp" />
     <ClCompile Include="generated\readnew\NewContacts.cpp" />
     <ClCompile Include="readnew.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -212,10 +209,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="generated\readnew\NewContactData.h">
-      <DependentUpon>NewContactData.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </ClInclude>
+    <ClInclude Include="generated\readnew\NewContactData.h" />
     <ClInclude Include="generated\readnew\NewContacts.h" />
   </ItemGroup>
   <ItemGroup>

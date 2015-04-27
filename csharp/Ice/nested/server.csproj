@@ -93,10 +93,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="generated\server\Nested.cs">
-      <DependentUpon>Nested.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </Compile>
+    <Compile Include="generated\server\Nested.cs" />
     <Compile Include="NestedI.cs">
       <SubType>Code</SubType>
     </Compile>

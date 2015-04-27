@@ -210,10 +210,7 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <ClCompile Include="generated\server\NameIndex.cpp" />
-    <ClCompile Include="generated\server\PhoneBook.cpp">
-      <DependentUpon>PhoneBook.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </ClCompile>
+    <ClCompile Include="generated\server\PhoneBook.cpp" />
     <ClCompile Include="PhoneBookI.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -230,10 +227,7 @@
   <ItemGroup>
     <ClInclude Include="ContactFactory.h" />
     <ClInclude Include="generated\server\NameIndex.h" />
-    <ClInclude Include="generated\server\PhoneBook.h">
-      <DependentUpon>PhoneBook.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </ClInclude>
+    <ClInclude Include="generated\server\PhoneBook.h" />
     <ClInclude Include="PhoneBookI.h" />
   </ItemGroup>
   <ItemGroup>

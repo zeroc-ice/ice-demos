@@ -209,10 +209,7 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="generated\server\Library.cpp">
-      <DependentUpon>Library.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </ClCompile>
+    <ClCompile Include="generated\server\Library.cpp" />
     <ClCompile Include="generated\server\LibraryTypes.cpp" />
     <ClCompile Include="LibraryI.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -229,10 +226,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BookFactory.h" />
-    <ClInclude Include="generated\server\Library.h">
-      <DependentUpon>Library.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </ClInclude>
+    <ClInclude Include="generated\server\Library.h" />
     <ClInclude Include="generated\server\LibraryTypes.h" />
     <ClInclude Include="LibraryI.h" />
   </ItemGroup>

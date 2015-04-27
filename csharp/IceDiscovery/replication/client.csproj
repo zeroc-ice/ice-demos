@@ -106,8 +106,6 @@
     </Compile>
     <Compile Include="generated\client\Hello.cs">
       <SubType>Code</SubType>
-      <DependentUpon>Hello.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
     </Compile>
   </ItemGroup>
   <ItemGroup>

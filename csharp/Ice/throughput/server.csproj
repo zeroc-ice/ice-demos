@@ -93,10 +93,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="generated\server\Throughput.cs">
-      <DependentUpon>Throughput.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </Compile>
+    <Compile Include="generated\server\Throughput.cs" />
     <Compile Include="Server.cs">
       <SubType>Code</SubType>
     </Compile>

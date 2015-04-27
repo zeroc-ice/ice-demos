@@ -99,14 +99,8 @@
     <Compile Include="DiscoverReplyI.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="generated\client\Discovery.cs">
-      <DependentUpon>Discovery.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="generated\client\Hello.cs">
-      <DependentUpon>Hello.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </Compile>
+    <Compile Include="generated\client\Discovery.cs" />
+    <Compile Include="generated\client\Hello.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

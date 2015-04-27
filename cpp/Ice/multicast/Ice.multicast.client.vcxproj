@@ -205,28 +205,16 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="generated\client\Discovery.cpp">
-      <DependentUpon>Discovery.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </ClCompile>
-    <ClCompile Include="generated\client\Hello.cpp">
-      <DependentUpon>Hello.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </ClCompile>
+    <ClCompile Include="generated\client\Discovery.cpp" />
+    <ClCompile Include="generated\client\Hello.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="config.client" />
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="generated\client\Discovery.h">
-      <DependentUpon>Discovery.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </ClInclude>
-    <ClInclude Include="generated\client\Hello.h">
-      <DependentUpon>Hello.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </ClInclude>
+    <ClInclude Include="generated\client\Discovery.h" />
+    <ClInclude Include="generated\client\Hello.h" />
   </ItemGroup>
   <ItemGroup>
     <IceBuilder Include="Discovery.ice" />

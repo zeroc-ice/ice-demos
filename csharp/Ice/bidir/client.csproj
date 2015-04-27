@@ -99,10 +99,7 @@
     <Compile Include="Client.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="generated\client\Callback.cs">
-      <DependentUpon>Callback.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </Compile>
+    <Compile Include="generated\client\Callback.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

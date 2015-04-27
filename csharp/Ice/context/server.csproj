@@ -99,10 +99,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="generated\server\Context.cs">
-      <DependentUpon>Context.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </Compile>
+    <Compile Include="generated\server\Context.cs" />
     <Compile Include="ContextI.cs">
       <SubType>Code</SubType>
     </Compile>

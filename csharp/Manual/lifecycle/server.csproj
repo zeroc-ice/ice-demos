@@ -54,10 +54,7 @@
   <ItemGroup>
     <Compile Include="DirectoryI.cs" />
     <Compile Include="FileI.cs" />
-    <Compile Include="generated\server\Filesystem.cs">
-      <DependentUpon>Filesystem.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </Compile>
+    <Compile Include="generated\server\Filesystem.cs" />
     <Compile Include="NodeI.cs" />
     <Compile Include="Server.cs" />
   </ItemGroup>

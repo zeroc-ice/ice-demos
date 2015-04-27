@@ -53,10 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Client.cs" />
-    <Compile Include="generated\client\Printer.cs">
-      <DependentUpon>Printer.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </Compile>
+    <Compile Include="generated\client\Printer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

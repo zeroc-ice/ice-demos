@@ -199,14 +199,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="generated\server\Discovery.cpp">
-      <DependentUpon>Discovery.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </ClCompile>
-    <ClCompile Include="generated\server\Hello.cpp">
-      <DependentUpon>Hello.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </ClCompile>
+    <ClCompile Include="generated\server\Discovery.cpp" />
+    <ClCompile Include="generated\server\Hello.cpp" />
     <ClCompile Include="Server.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -219,14 +213,8 @@
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="generated\server\Discovery.h">
-      <DependentUpon>Discovery.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </ClInclude>
-    <ClInclude Include="generated\server\Hello.h">
-      <DependentUpon>Hello.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </ClInclude>
+    <ClInclude Include="generated\server\Discovery.h" />
+    <ClInclude Include="generated\server\Hello.h" />
   </ItemGroup>
   <ItemGroup>
     <IceBuilder Include="Discovery.ice" />

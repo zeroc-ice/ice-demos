@@ -53,10 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Client.cs" />
-    <Compile Include="generated\client\Filesystem.cs">
-      <DependentUpon>Filesystem.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </Compile>
+    <Compile Include="generated\client\Filesystem.cs" />
     <Compile Include="Grammar.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="Scanner.cs" />

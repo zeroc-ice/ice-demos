@@ -206,17 +206,11 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <ClCompile Include="generated\BenchTypes.cpp" />
-    <ClCompile Include="generated\Test.cpp">
-      <DependentUpon>Test.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </ClCompile>
+    <ClCompile Include="generated\Test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="generated\BenchTypes.h" />
-    <ClInclude Include="generated\Test.h">
-      <DependentUpon>Test.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </ClInclude>
+    <ClInclude Include="generated\Test.h" />
   </ItemGroup>
   <ItemGroup>
     <IceBuilder Include="Test.ice" />

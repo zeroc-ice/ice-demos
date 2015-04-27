@@ -97,10 +97,7 @@
     <Compile Include="Client.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="generated\client\Greet.cs">
-      <DependentUpon>Greet.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </Compile>
+    <Compile Include="generated\client\Greet.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

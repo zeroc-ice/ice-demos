@@ -101,10 +101,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="generated\server\Props.cs">
-      <DependentUpon>Props.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </Compile>
+    <Compile Include="generated\server\Props.cs" />
     <Compile Include="Server.cs">
       <SubType>Code</SubType>
     </Compile>

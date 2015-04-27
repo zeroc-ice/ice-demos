@@ -102,8 +102,6 @@
     </Compile>
     <Compile Include="generated\server\Callback.cs">
       <SubType>Code</SubType>
-      <DependentUpon>Callback.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Server.cs">
       <SubType>Code</SubType>

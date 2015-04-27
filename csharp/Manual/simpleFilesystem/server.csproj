@@ -101,8 +101,6 @@
     </Compile>
     <Compile Include="generated\server\Filesystem.cs">
       <SubType>Code</SubType>
-      <DependentUpon>Filesystem.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Server.cs">
       <SubType>Code</SubType>

@@ -215,17 +215,11 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="generated\client\Callback.cpp">
-      <DependentUpon>Callback.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </ClCompile>
+    <ClCompile Include="generated\client\Callback.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CallbackI.h" />
-    <ClInclude Include="generated\client\Callback.h">
-      <DependentUpon>Callback.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </ClInclude>
+    <ClInclude Include="generated\client\Callback.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="config.client" />
