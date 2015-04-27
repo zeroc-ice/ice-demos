@@ -13,6 +13,10 @@
       <UniqueIdentifier>{934c7e3b-0dcf-4f6d-8107-8d1bfebdf255}</UniqueIdentifier>
       <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
     </Filter>
+    <Filter Include="Slice Files">
+      <UniqueIdentifier>{9d4f5d7a-7810-4782-9eff-e56fcf40e2b0}</UniqueIdentifier>
+      <Extensions>ice</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CounterI.cpp">
@@ -40,6 +44,8 @@
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <IceBuilder Include="Counter.ice" />
+    <IceBuilder Include="Counter.ice">
+      <Filter>Slice Files</Filter>
+    </IceBuilder>
   </ItemGroup>
 </Project>

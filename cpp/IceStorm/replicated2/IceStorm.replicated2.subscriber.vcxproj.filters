@@ -13,6 +13,10 @@
       <UniqueIdentifier>{37d5877d-2525-45ff-ae7a-e56e77c63cc3}</UniqueIdentifier>
       <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
     </Filter>
+    <Filter Include="Slice Files">
+      <UniqueIdentifier>{facff090-d92d-41f2-8253-88d6a62fd40d}</UniqueIdentifier>
+      <Extensions>ice</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Subscriber.cpp">
@@ -38,6 +42,8 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <IceBuilder Include="Clock.ice" />
+    <IceBuilder Include="Clock.ice">
+      <Filter>Slice Files</Filter>
+    </IceBuilder>
   </ItemGroup>
 </Project>

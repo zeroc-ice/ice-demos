@@ -13,6 +13,10 @@
       <UniqueIdentifier>{3a3074a5-eea9-4254-a072-94457b74ece9}</UniqueIdentifier>
       <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
     </Filter>
+    <Filter Include="Slice Files">
+      <UniqueIdentifier>{e032cfac-106a-4d60-a49c-2027576b23df}</UniqueIdentifier>
+      <Extensions>ice</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -47,6 +51,8 @@
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <IceBuilder Include="Filesystem.ice" />
+    <IceBuilder Include="Filesystem.ice">
+      <Filter>Slice Files</Filter>
+    </IceBuilder>
   </ItemGroup>
 </Project>

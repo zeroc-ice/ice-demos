@@ -13,6 +13,10 @@
       <UniqueIdentifier>{4ebf5d47-3fc0-4d6e-9363-f2d8b9eb5a8e}</UniqueIdentifier>
       <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
     </Filter>
+    <Filter Include="Slice Files">
+      <UniqueIdentifier>{9aa55f40-f0a1-4820-b1d4-80e2f40ce623}</UniqueIdentifier>
+      <Extensions>ice</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContactDBI.cpp">
@@ -38,6 +42,8 @@
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <IceBuilder Include="Contact.ice" />
+    <IceBuilder Include="Contact.ice">
+      <Filter>Slice Files</Filter>
+    </IceBuilder>
   </ItemGroup>
 </Project>

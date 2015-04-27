@@ -13,6 +13,10 @@
       <UniqueIdentifier>{78e8d37c-d329-4f6d-baf1-3f871f424275}</UniqueIdentifier>
       <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
     </Filter>
+    <Filter Include="Slice Files">
+      <UniqueIdentifier>{3e33b2f8-afef-4920-9e22-318e41fe721b}</UniqueIdentifier>
+      <Extensions>ice</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FilesystemI.cpp">
@@ -59,7 +63,11 @@
     <CustomBuild Include="dummy.freeze" />
   </ItemGroup>
   <ItemGroup>
-    <IceBuilder Include="FilesystemDB.ice" />
-    <IceBuilder Include="Filesystem.ice" />
+    <IceBuilder Include="Filesystem.ice">
+      <Filter>Slice Files</Filter>
+    </IceBuilder>
+    <IceBuilder Include="FilesystemDB.ice">
+      <Filter>Slice Files</Filter>
+    </IceBuilder>
   </ItemGroup>
 </Project>

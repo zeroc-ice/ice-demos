@@ -13,6 +13,10 @@
       <UniqueIdentifier>{aef31bf8-d9e9-465b-818c-42d5176a4fb2}</UniqueIdentifier>
       <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
     </Filter>
+    <Filter Include="Slice Files">
+      <UniqueIdentifier>{33cb1474-2bcb-462d-a57e-ba0bf3d27fa2}</UniqueIdentifier>
+      <Extensions>ice</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContactFactory.cpp">
@@ -53,6 +57,8 @@
     <CustomBuild Include="dummy.freeze" />
   </ItemGroup>
   <ItemGroup>
-    <IceBuilder Include="PhoneBook.ice" />
+    <IceBuilder Include="PhoneBook.ice">
+      <Filter>Slice Files</Filter>
+    </IceBuilder>
   </ItemGroup>
 </Project>

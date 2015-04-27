@@ -12,6 +12,10 @@
     <Filter Include="Resource Files">
       <UniqueIdentifier>{261530b2-f896-458c-9d3b-1ebed0a69ea0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Slice Files">
+      <UniqueIdentifier>{b3b8a0a1-3ce1-45ce-ab16-df3b4e53ecbe}</UniqueIdentifier>
+      <Extensions>ice</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -30,6 +34,8 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <IceBuilder Include="Printer.ice" />
+    <IceBuilder Include="Printer.ice">
+      <Filter>Slice Files</Filter>
+    </IceBuilder>
   </ItemGroup>
 </Project>

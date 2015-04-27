@@ -13,6 +13,10 @@
       <UniqueIdentifier>{7a82e9b2-3c75-489a-9497-5db930527ab2}</UniqueIdentifier>
       <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
     </Filter>
+    <Filter Include="Slice Files">
+      <UniqueIdentifier>{df76c06d-3092-44d9-ae02-cc50e6e3f91d}</UniqueIdentifier>
+      <Extensions>ice</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CallbackI.cpp">

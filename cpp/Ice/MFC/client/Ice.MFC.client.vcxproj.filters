@@ -13,6 +13,10 @@
       <UniqueIdentifier>{c3a91244-3e90-42fb-970a-efe03342f818}</UniqueIdentifier>
       <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
     </Filter>
+    <Filter Include="Slice Files">
+      <UniqueIdentifier>{22374994-f969-4872-b1d4-c4a3bc067b98}</UniqueIdentifier>
+      <Extensions>ice</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HelloClient.cpp">
@@ -61,6 +65,8 @@
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <IceBuilder Include="Hello.ice" />
+    <IceBuilder Include="Hello.ice">
+      <Filter>Slice Files</Filter>
+    </IceBuilder>
   </ItemGroup>
 </Project>

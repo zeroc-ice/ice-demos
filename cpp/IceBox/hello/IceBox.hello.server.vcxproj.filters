@@ -13,6 +13,10 @@
       <UniqueIdentifier>{21597b1c-4e82-4d5b-9e6a-82df584b1ee4}</UniqueIdentifier>
       <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
     </Filter>
+    <Filter Include="Slice Files">
+      <UniqueIdentifier>{b186dff7-f92f-4fc0-9704-207a82a9e147}</UniqueIdentifier>
+      <Extensions>ice</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HelloI.cpp">

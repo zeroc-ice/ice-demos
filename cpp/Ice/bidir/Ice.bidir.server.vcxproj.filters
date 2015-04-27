@@ -13,6 +13,10 @@
       <UniqueIdentifier>{67087c46-ceca-48b3-a7a3-3b63d79650f7}</UniqueIdentifier>
       <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
     </Filter>
+    <Filter Include="Slice Files">
+      <UniqueIdentifier>{8103358a-725a-4636-ac53-01bb283011f1}</UniqueIdentifier>
+      <Extensions>ice</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CallbackI.cpp">
@@ -38,6 +42,8 @@
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <IceBuilder Include="Callback.ice" />
+    <IceBuilder Include="Callback.ice">
+      <Filter>Slice Files</Filter>
+    </IceBuilder>
   </ItemGroup>
 </Project>

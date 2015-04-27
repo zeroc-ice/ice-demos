@@ -13,6 +13,10 @@
       <UniqueIdentifier>{89bd0e5b-5cf0-4596-a5fd-83341c7c1d77}</UniqueIdentifier>
       <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
     </Filter>
+    <Filter Include="Slice Files">
+      <UniqueIdentifier>{c3839af1-4077-4027-9697-da2c3e8f04f9}</UniqueIdentifier>
+      <Extensions>ice</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="create.cpp">
@@ -40,6 +44,8 @@
     <CustomBuild Include="dummy.freeze" />
   </ItemGroup>
   <ItemGroup>
-    <IceBuilder Include="ContactData.ice" />
+    <IceBuilder Include="ContactData.ice">
+      <Filter>Slice Files</Filter>
+    </IceBuilder>
   </ItemGroup>
 </Project>

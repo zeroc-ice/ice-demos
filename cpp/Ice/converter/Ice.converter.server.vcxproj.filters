@@ -13,6 +13,10 @@
       <UniqueIdentifier>{ddaf5b7c-3122-4ef0-8e4c-d1b1508f8db5}</UniqueIdentifier>
       <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
     </Filter>
+    <Filter Include="Slice Files">
+      <UniqueIdentifier>{2aa00a06-edd7-4de4-942f-f4faee99eff3}</UniqueIdentifier>
+      <Extensions>ice</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GreetI.cpp">
@@ -38,6 +42,8 @@
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <IceBuilder Include="Greet.ice" />
+    <IceBuilder Include="Greet.ice">
+      <Filter>Slice Files</Filter>
+    </IceBuilder>
   </ItemGroup>
 </Project>

@@ -13,6 +13,10 @@
       <UniqueIdentifier>{f81b8b86-ed30-423a-a231-cb0398a45450}</UniqueIdentifier>
       <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
     </Filter>
+    <Filter Include="Slice Files">
+      <UniqueIdentifier>{538cda0a-d337-4f53-8e43-17b475780d75}</UniqueIdentifier>
+      <Extensions>ice</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LoggerPluginI.cpp">

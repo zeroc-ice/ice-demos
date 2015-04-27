@@ -13,6 +13,10 @@
       <UniqueIdentifier>{82a9a83b-420d-4ded-b42b-186ece2bfd2b}</UniqueIdentifier>
       <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
     </Filter>
+    <Filter Include="Slice Files">
+      <UniqueIdentifier>{fbaf6a59-2db6-410d-9bb4-9f6d9bb96b99}</UniqueIdentifier>
+      <Extensions>ice</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BookFactory.cpp">
@@ -53,6 +57,8 @@
     <CustomBuild Include="dummy.freeze" />
   </ItemGroup>
   <ItemGroup>
-    <IceBuilder Include="Library.ice" />
+    <IceBuilder Include="Library.ice">
+      <Filter>Slice Files</Filter>
+    </IceBuilder>
   </ItemGroup>
 </Project>

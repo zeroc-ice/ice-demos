@@ -13,6 +13,10 @@
       <UniqueIdentifier>{197c5162-a9ce-4f4a-9610-885cee0b865c}</UniqueIdentifier>
       <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
     </Filter>
+    <Filter Include="Slice Files">
+      <UniqueIdentifier>{c48f5c62-bca9-403d-a2bd-34ef6dd5fcba}</UniqueIdentifier>
+      <Extensions>ice</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Collocated.cpp">
@@ -71,6 +75,8 @@
     <CustomBuild Include="dummy.freeze" />
   </ItemGroup>
   <ItemGroup>
-    <IceBuilder Include="PhoneBook.ice" />
+    <IceBuilder Include="PhoneBook.ice">
+      <Filter>Slice Files</Filter>
+    </IceBuilder>
   </ItemGroup>
 </Project>

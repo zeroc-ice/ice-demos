@@ -56,7 +56,6 @@
     <WarningLevel>4</WarningLevel>
     <DebugType>full</DebugType>
     <ErrorReport>prompt</ErrorReport>
-    <OutputDir>.\generated\client</OutputDir>
     <Stream>True</Stream>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -81,7 +80,6 @@
     <WarningLevel>4</WarningLevel>
     <DebugType>none</DebugType>
     <ErrorReport>prompt</ErrorReport>
-    <OutputDir>.\generated\client</OutputDir>
     <Stream>True</Stream>
   </PropertyGroup>
   <ItemGroup>
@@ -118,5 +116,8 @@
     </PreBuildEvent>
     <PostBuildEvent>
     </PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Label="IceBuilder">
+    <OutputDir>generated\client</OutputDir>
   </PropertyGroup>
 </Project>

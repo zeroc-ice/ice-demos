@@ -13,6 +13,10 @@
       <UniqueIdentifier>{1cfca26e-7275-47c7-bc5c-b4605a30f839}</UniqueIdentifier>
       <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
     </Filter>
+    <Filter Include="Slice Files">
+      <UniqueIdentifier>{7bff0a4c-c356-4701-9d95-3c58aebc6a4c}</UniqueIdentifier>
+      <Extensions>ice</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BankI.cpp">
@@ -62,7 +66,11 @@
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <IceBuilder Include="Casino.ice" />
-    <IceBuilder Include="CasinoStore.ice" />
+    <IceBuilder Include="CasinoStore.ice">
+      <Filter>Slice Files</Filter>
+    </IceBuilder>
+    <IceBuilder Include="Casino.ice">
+      <Filter>Slice Files</Filter>
+    </IceBuilder>
   </ItemGroup>
 </Project>

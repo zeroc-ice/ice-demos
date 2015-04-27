@@ -13,6 +13,10 @@
       <UniqueIdentifier>{e9ed4117-a86c-4a01-8aca-6daee9e1d1fa}</UniqueIdentifier>
       <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
     </Filter>
+    <Filter Include="Slice Files">
+      <UniqueIdentifier>{6c32abcd-27b8-4fe6-840f-152763e57152}</UniqueIdentifier>
+      <Extensions>ice</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="workqueue.cpp">

@@ -13,6 +13,10 @@
       <UniqueIdentifier>{09bb8e49-07a4-43fd-be92-c58242a63fc6}</UniqueIdentifier>
       <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
     </Filter>
+    <Filter Include="Slice Files">
+      <UniqueIdentifier>{f1b5b2bf-5001-4093-8ab8-27b0b695d29f}</UniqueIdentifier>
+      <Extensions>ice</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />

@@ -107,4 +107,5 @@
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>
+  <PropertyGroup Label="IceBuilder" />
 </Project>

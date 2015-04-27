@@ -13,6 +13,10 @@
       <UniqueIdentifier>{f455ae36-d0b8-493b-b0f4-cd1c95d7d2b4}</UniqueIdentifier>
       <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
     </Filter>
+    <Filter Include="Slice Files">
+      <UniqueIdentifier>{b2cc89e1-cd68-435e-b694-b37c901af3e2}</UniqueIdentifier>
+      <Extensions>ice</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MyStringSeq.cpp">
@@ -41,6 +45,8 @@
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <IceBuilder Include="Nrvo.ice" />
+    <IceBuilder Include="Nrvo.ice">
+      <Filter>Slice Files</Filter>
+    </IceBuilder>
   </ItemGroup>
 </Project>

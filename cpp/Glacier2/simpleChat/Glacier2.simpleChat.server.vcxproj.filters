@@ -13,6 +13,10 @@
       <UniqueIdentifier>{ebea94cf-3e40-4675-ad22-8259b694643d}</UniqueIdentifier>
       <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
     </Filter>
+    <Filter Include="Slice Files">
+      <UniqueIdentifier>{b2230991-23a7-4d37-8693-f8c65306c3ee}</UniqueIdentifier>
+      <Extensions>ice</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ChatSessionI.cpp">
@@ -39,6 +43,8 @@
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <IceBuilder Include="Chat.ice" />
+    <IceBuilder Include="Chat.ice">
+      <Filter>Slice Files</Filter>
+    </IceBuilder>
   </ItemGroup>
 </Project>

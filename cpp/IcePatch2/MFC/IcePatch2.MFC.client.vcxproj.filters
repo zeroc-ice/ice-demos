@@ -13,6 +13,10 @@
       <UniqueIdentifier>{8342c023-d542-427e-a4e1-1d3f9e24d7c2}</UniqueIdentifier>
       <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
     </Filter>
+    <Filter Include="Slice Files">
+      <UniqueIdentifier>{85fd839e-f5be-4701-9571-d51ba21b75f9}</UniqueIdentifier>
+      <Extensions>ice</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PatchClient.cpp">
