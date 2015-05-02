@@ -37,6 +37,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup Label="IceBuilder">
+    <IceBuilderOutputDir>generated</IceBuilderOutputDir>
+    <IceBuilderIncludeDirectories>$(IceHome)\slice</IceBuilderIncludeDirectories>
+  </PropertyGroup>
   <Import Project="$(LOCALAPPDATA)\ZeroC\IceBuilder\IceBuilder.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
@@ -67,10 +71,6 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Callback.cs">
-      <SubType>Code</SubType>
-      <DependentUpon>Callback.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </Compile>
+    <Compile Include="generated\Callback.cs" />
   </ItemGroup>
 </Project>

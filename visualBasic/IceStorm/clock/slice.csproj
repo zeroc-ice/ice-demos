@@ -52,11 +52,7 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Clock.cs">
-      <SubType>Code</SubType>
-      <DependentUpon>Clock.ice</DependentUpon>
-      <AutoGen>True</AutoGen>
-    </Compile>
+    <Compile Include="generated\Clock.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(LOCALAPPDATA)\ZeroC\IceBuilder\IceBuilder.CSharp.targets" />
