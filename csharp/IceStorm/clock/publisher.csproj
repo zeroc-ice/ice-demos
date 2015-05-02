@@ -121,5 +121,6 @@
   </PropertyGroup>
   <PropertyGroup Label="IceBuilder">
     <OutputDir>generated\publisher</OutputDir>
+    <IceBuilderOutputDir>generated\publisher</IceBuilderOutputDir>
   </PropertyGroup>
 </Project>

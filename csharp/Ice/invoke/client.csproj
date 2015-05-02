@@ -56,7 +56,6 @@
     <WarningLevel>4</WarningLevel>
     <DebugType>full</DebugType>
     <ErrorReport>prompt</ErrorReport>
-    <Stream>True</Stream>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>.\</OutputPath>
@@ -107,14 +106,15 @@
     <None Include="README.md" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup Label="IceBuilder">
+    <IceBuilderOutputDir>generated\client</IceBuilderOutputDir>
+    <IceBuilderStream>yes</IceBuilderStream>
+  </PropertyGroup>
   <Import Project="$(LOCALAPPDATA)\ZeroC\IceBuilder\IceBuilder.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
     <PostBuildEvent>
     </PostBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup Label="IceBuilder">
-    <OutputDir>generated\client</OutputDir>
   </PropertyGroup>
 </Project>

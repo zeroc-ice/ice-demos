@@ -145,14 +145,14 @@
     </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup Label="IceBuilder">
+    <IceBuilderOutputDir>generated\server</IceBuilderOutputDir>
+  </PropertyGroup>
   <Import Project="$(LOCALAPPDATA)\ZeroC\IceBuilder\IceBuilder.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
     <PostBuildEvent>
     </PostBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup Label="IceBuilder">
-    <OutputDir>generated\server</OutputDir>
   </PropertyGroup>
 </Project>

@@ -122,6 +122,6 @@
     </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup Label="IceBuilder">
-    <OutputDir>generated\server</OutputDir>
+    <IceBuilderOutputDir>generated\server</IceBuilderOutputDir>
   </PropertyGroup>
 </Project>

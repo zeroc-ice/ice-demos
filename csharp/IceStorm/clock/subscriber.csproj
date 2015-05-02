@@ -120,5 +120,6 @@
   </PropertyGroup>
   <PropertyGroup Label="IceBuilder">
     <OutputDir>generated\subscriber</OutputDir>
+    <IceBuilderOutputDir>generated\subscriber</IceBuilderOutputDir>
   </PropertyGroup>
 </Project>

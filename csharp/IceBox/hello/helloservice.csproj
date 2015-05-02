@@ -123,5 +123,6 @@
   </PropertyGroup>
   <PropertyGroup Label="IceBuilder">
     <OutputDir>generated\helloservice</OutputDir>
+    <IceBuilderOutputDir>generated\helloservice</IceBuilderOutputDir>
   </PropertyGroup>
 </Project>

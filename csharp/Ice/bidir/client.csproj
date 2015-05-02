@@ -108,14 +108,15 @@
     <None Include="README.md" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup Label="IceBuilder">
+    <IceBuilderOutputDir>generated\client</IceBuilderOutputDir>
+    <IceBuilderIncludeDirectories>$(IceHome)\slice</IceBuilderIncludeDirectories>
+  </PropertyGroup>
   <Import Project="$(LOCALAPPDATA)\ZeroC\IceBuilder\IceBuilder.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
     </PreBuildEvent>
     <PostBuildEvent>
     </PostBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup Label="IceBuilder">
-    <OutputDir>generated\client</OutputDir>
   </PropertyGroup>
 </Project>
