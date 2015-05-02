@@ -78,6 +78,7 @@
   </PropertyGroup>
   <PropertyGroup Label="IceBuilder">
     <OutputDir>.\generated\publisher</OutputDir>
+    <IceBuilderOutputDir>generated\publisher</IceBuilderOutputDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

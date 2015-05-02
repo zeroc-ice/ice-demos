@@ -28,7 +28,7 @@
     <ClCompile Include="StdAfx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="generated\Hello.cpp">
+    <ClCompile Include="generated\client\Hello.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -50,7 +50,7 @@
     <ClInclude Include="StdAfx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="generated\Hello.h">
+    <ClInclude Include="generated\client\Hello.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

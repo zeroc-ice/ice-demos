@@ -82,6 +82,7 @@
   </PropertyGroup>
   <PropertyGroup Label="IceBuilder">
     <OutputDir>.\generated\helloservice</OutputDir>
+    <IceBuilderOutputDir>generated\helloservice</IceBuilderOutputDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Midl>

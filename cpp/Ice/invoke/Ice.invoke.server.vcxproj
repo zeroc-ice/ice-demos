@@ -76,10 +76,6 @@
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Configuration)\$(PlatformName)\$(ProjectName)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
   </PropertyGroup>
-  <PropertyGroup Label="IceBuilder">
-    <OutputDir>.\generated\server</OutputDir>
-    <Stream>True</Stream>
-  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
@@ -106,10 +102,6 @@
       </DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
-    <IceBuilder>
-      <OutputDir>.\generated\server</OutputDir>
-      <Stream>True</Stream>
-    </IceBuilder>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <BuildLog>
@@ -141,10 +133,6 @@
       </DataExecutionPrevention>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
-    <IceBuilder>
-      <OutputDir>.\generated\server</OutputDir>
-      <Stream>True</Stream>
-    </IceBuilder>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -171,10 +159,6 @@
       </DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
-    <IceBuilder>
-      <OutputDir>.\generated\server</OutputDir>
-      <Stream>True</Stream>
-    </IceBuilder>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <BuildLog>
@@ -233,6 +217,9 @@
     <IceBuilder Include="Printer.ice" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <PropertyGroup Label="IceBuilder">
+    <IceBuilderOutputDir>.\generated\server</IceBuilderOutputDir>
+  </PropertyGroup>
   <Import Project="$(LOCALAPPDATA)\ZeroC\IceBuilder\IceBuilder.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

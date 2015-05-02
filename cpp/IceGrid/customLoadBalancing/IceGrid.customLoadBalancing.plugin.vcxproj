@@ -80,7 +80,9 @@
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">registryplugin36</TargetName>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">registryplugin36</TargetName>
   </PropertyGroup>
-  <PropertyGroup Label="IceBuilder" />
+  <PropertyGroup Label="IceBuilder">
+    <IceBuilderOutputDir>generated\plugin</IceBuilderOutputDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Midl>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>

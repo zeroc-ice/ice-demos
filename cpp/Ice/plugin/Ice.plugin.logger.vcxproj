@@ -80,7 +80,9 @@
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">loggerplugin36</TargetName>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">loggerplugin36</TargetName>
   </PropertyGroup>
-  <PropertyGroup Label="IceBuilder" />
+  <PropertyGroup Label="IceBuilder">
+    <IceBuilderOutputDir>generated\loggerplugin</IceBuilderOutputDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Midl>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -112,7 +114,6 @@
       <ImportLibrary>loggerplugin36d.lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
-    <IceBuilder />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <BuildLog>
@@ -149,7 +150,6 @@
       <ImportLibrary>loggerplugin36d.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
-    <IceBuilder />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Midl>
@@ -181,7 +181,6 @@
       <ImportLibrary>loggerplugin36.lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
-    <IceBuilder />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <BuildLog>

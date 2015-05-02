@@ -80,9 +80,6 @@
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">helloplugin36</TargetName>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">helloplugin36</TargetName>
   </PropertyGroup>
-  <PropertyGroup Label="IceBuilder">
-    <OutputDir>.\generated\helloplugin</OutputDir>
-  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Midl>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -114,9 +111,6 @@
       <ImportLibrary>helloplugin36d.lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
-    <IceBuilder>
-      <OutputDir>.\generated\helloplugin</OutputDir>
-    </IceBuilder>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <BuildLog>
@@ -153,9 +147,6 @@
       <ImportLibrary>helloplugin36d.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
-    <IceBuilder>
-      <OutputDir>.\generated\helloplugin</OutputDir>
-    </IceBuilder>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Midl>
@@ -187,9 +178,6 @@
       <ImportLibrary>helloplugin36.lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
-    <IceBuilder>
-      <OutputDir>.\generated\helloplugin</OutputDir>
-    </IceBuilder>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <BuildLog>
@@ -245,6 +233,9 @@
     <IceBuilder Include="Hello.ice" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <PropertyGroup Label="IceBuilder">
+    <IceBuilderOutputDir>.\generated\helloplugin</IceBuilderOutputDir>
+  </PropertyGroup>
   <Import Project="$(LOCALAPPDATA)\ZeroC\IceBuilder\IceBuilder.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
