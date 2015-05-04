@@ -153,3 +153,8 @@ UpgradeLog*.htm
 
 csharp/**/*.xml
 visualBasic/**/*.xml
+
+#
+# WinRT Generated
+#
+cpp/**/Generated Files
