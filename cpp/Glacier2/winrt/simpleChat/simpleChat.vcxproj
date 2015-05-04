@@ -70,37 +70,33 @@
     <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <Import Project="$(LOCALAPPDATA)\ZeroC\IceBuilder\IceBuilder.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(ALLUSERSPROFILE)\ZeroC\Ice.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(ALLUSERSPROFILE)\ZeroC\Ice.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(ALLUSERSPROFILE)\ZeroC\Ice.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(ALLUSERSPROFILE)\ZeroC\Ice.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(ALLUSERSPROFILE)\ZeroC\Ice.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(ALLUSERSPROFILE)\ZeroC\Ice.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <PackageCertificateKeyFile>simpleChat_TemporaryKey.pfx</PackageCertificateKeyFile>
     <PackageCertificateThumbprint>5D062BFD9EAE6143AFAA53EB3AC2CB0A2B668FDA</PackageCertificateThumbprint>
   </PropertyGroup>
+  <PropertyGroup Label="IceBuilder" />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
@@ -133,6 +129,9 @@
     <Link>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
     </Link>
+    <IceBuilder>
+      <AdditionalOptions>--add-header pch.h %(AdditionalOptions)</AdditionalOptions>
+    </IceBuilder>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -168,10 +167,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Chat.h" />
     <ClInclude Include="ChatView.xaml.h">
       <DependentUpon>ChatView.xaml</DependentUpon>
     </ClInclude>
+    <ClInclude Include="generated\Chat.h" />
     <ClInclude Include="LoginView.xaml.h">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </ClInclude>
@@ -207,7 +206,6 @@
     <None Include="..\..\..\..\certs\cacert.der">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="Chat.ice" />
     <None Include="simpleChat_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
@@ -220,10 +218,10 @@
     <ClCompile Include="App.xaml.cpp">
       <DependentUpon>App.xaml</DependentUpon>
     </ClCompile>
-    <ClCompile Include="Chat.cpp" />
     <ClCompile Include="ChatView.xaml.cpp">
       <DependentUpon>ChatView.xaml</DependentUpon>
     </ClCompile>
+    <ClCompile Include="generated\Chat.cpp" />
     <ClCompile Include="LoginView.xaml.cpp">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </ClCompile>
@@ -242,12 +240,11 @@
   <ItemGroup>
     <SDKReference Include="Ice, Version=3.6" />
   </ItemGroup>
+  <ItemGroup>
+    <IceBuilder Include="Chat.ice" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <Import Project="$(LOCALAPPDATA)\ZeroC\IceBuilder\IceBuilder.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-  <ProjectExtensions>
-    <VisualStudio>
-      <UserProperties ZerocIce_ProjectVersion="3.6" ZerocIce_Enabled="True" />
-    </VisualStudio>
-  </ProjectExtensions>
 </Project>

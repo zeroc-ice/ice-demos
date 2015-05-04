@@ -22,6 +22,10 @@
     <Image Include="Assets\SplashScreen.png">
       <Filter>Assets</Filter>
     </Image>
+    <Filter Include="Slice Files">
+      <UniqueIdentifier>{ba63e8c4-47ac-4c64-80d4-ed7f922b8166}</UniqueIdentifier>
+      <Extensions>ice</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
@@ -32,7 +36,7 @@
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="ChatView.xaml.cpp" />
     <ClCompile Include="LoginView.xaml.cpp" />
-    <ClCompile Include="Chat.cpp" />
+    <ClCompile Include="generated\Chat.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -40,10 +44,9 @@
     <ClInclude Include="MainPage.xaml.h" />
     <ClInclude Include="ChatView.xaml.h" />
     <ClInclude Include="LoginView.xaml.h" />
-    <ClInclude Include="Chat.h" />
+    <ClInclude Include="generated\Chat.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Chat.ice" />
     <None Include="..\..\..\..\certs\cacert.der" />
     <None Include="simpleChat_TemporaryKey.pfx" />
   </ItemGroup>
@@ -54,5 +57,10 @@
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <IceBuilder Include="Chat.ice">
+      <Filter>Slice Files</Filter>
+    </IceBuilder>
   </ItemGroup>
 </Project>
