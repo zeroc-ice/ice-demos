@@ -20,9 +20,9 @@ buildscript {
             slice2java = "slice2java.exe"
         }
 
-	    def iceDir
-	    ext.srcdist = false
-	    ext.useLocalRepo = false
+	def iceDir
+	ext.srcdist = false
+	ext.useLocalRepo = false
 
         // First check if iceHome was set in gradle.properties
         // Otherwise check if ICE_HOME is set and it points at a valid installation
