@@ -16,7 +16,7 @@ var newer       = require('gulp-newer');
 var open        = require("gulp-open");
 var path        = require("path");
 var paths       = require('vinyl-paths');
-var slice2js    = require("gulp-zeroc-slice2js");
+var slice2js    = require("gulp-ice-builder");
 var uglify      = require("gulp-uglify");
 
 var HttpServer  = require("./bin/HttpServer");
@@ -126,7 +126,7 @@ demos.forEach(
             function()
             {
                 return gulp.src(path.join(name, "*.ice"))
-                    .pipe(slice2js({args: ["-I" + name], dest: name}))
+                    .pipe(slice2js.compile({args: ["-I" + name], dest: name}))
                     .pipe(gulp.dest(name));
             });
 
