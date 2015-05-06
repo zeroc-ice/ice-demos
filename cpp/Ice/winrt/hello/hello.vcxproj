@@ -129,9 +129,6 @@
     <Link>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
     </Link>
-    <IceBuilder>
-      <AdditionalOptions>--add-header pch.h %(AdditionalOptions)</AdditionalOptions>
-    </IceBuilder>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -226,6 +223,9 @@
     <IceBuilder Include="Hello.ice" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <PropertyGroup Label="IceBuilder">
+    <IceBuilderAdditionalOptions>--add-header pch.h</IceBuilderAdditionalOptions>
+  </PropertyGroup>
   <Import Project="$(LOCALAPPDATA)\ZeroC\IceBuilder\IceBuilder.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
