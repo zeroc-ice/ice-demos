@@ -35,3 +35,10 @@ apply from: "$rootProject.projectDir/IceDiscovery/build.gradle"
 apply from: "$rootProject.projectDir/Glacier2/build.gradle"
 apply from: "$rootProject.projectDir/IceGrid/build.gradle"
 apply from: "$rootProject.projectDir/Manual/build.gradle"
+
+//
+// Used to build the gradle wrapper to automatically download and install gradle.
+//
+task wrapper(type: Wrapper) {
+    gradleVersion = "2.4"
+}
