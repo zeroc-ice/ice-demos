@@ -7,9 +7,8 @@
 //
 // **********************************************************************
 
-#include <IceUtil/Timer.h>
+#include <IceUtil/IceUtil.h>
 #include <Ice/Ice.h>
-#include <Ice/Service.h>
 
 #include <ChatSessionManagerI.h>
 #include <PollingChatSessionFactoryI.h>

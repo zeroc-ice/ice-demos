@@ -44,6 +44,9 @@ public:
     virtual PollingChat::PollingChatSessionPrx create(const std::string&, const std::string&, const Ice::Current&);
 
 private:
+	
+	// Required to prevent compiler warnings with MSVC++
+	PollingChatSessionFactoryI& operator=(const PollingChatSessionFactoryI&);
 
     const ChatRoomPtr _chatRoom;
     const ReaperTaskPtr _reaper;

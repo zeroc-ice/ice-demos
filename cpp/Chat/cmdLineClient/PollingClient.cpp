@@ -125,7 +125,7 @@ public:
         }
 
         PollingChat::PollingChatSessionPrx session;
-        while(true)
+        while(!session)
         {
             cout << "This demo accepts any user ID and password.\n";
 

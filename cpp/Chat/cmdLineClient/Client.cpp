@@ -74,7 +74,7 @@ public:
     createSession()
     {
         Glacier2::SessionPrx session;
-        while(true)
+        while(!session)
         {
             cout << "This demo accepts any user ID and password.\n";
 
@@ -178,8 +178,8 @@ main(int argc, char* argv[])
     initData.properties = Ice::createProperties(argc, argv);
 
     //
-    // Set Ice.Default.Router if not set
-    //
+	// Set Ice.Default.Router if not set
+	//
     if(initData.properties->getProperty("Ice.Default.Router").empty())
     {
         initData.properties->setProperty("Ice.Plugin.IceSSL","IceSSL:createIceSSL");

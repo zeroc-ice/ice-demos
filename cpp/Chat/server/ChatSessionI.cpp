@@ -100,6 +100,9 @@ public:
     }
 
 private:
+	
+	// Required to prevent compiler warnings with MSVC++
+	SessionCallbackAdapter& operator=(const SessionCallbackAdapter&);
 
     const Chat::ChatRoomCallbackPrx _callback;
     const Chat::ChatSessionPrx _session;

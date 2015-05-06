@@ -24,6 +24,9 @@ public:
     virtual void destroy(const Ice::Current&);
 
 private:
+	
+	// Required to prevent compiler warnings with MSVC++
+	ChatSessionI& operator=(const ChatSessionI&);
 
     const ChatRoomPtr _chatRoom;
     const std::string _name;

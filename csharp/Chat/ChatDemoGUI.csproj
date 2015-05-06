@@ -11,6 +11,7 @@
 // **********************************************************************
 -->
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(LOCALAPPDATA)\ZeroC\IceBuilder\IceBuilder.CSharp.props" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -23,7 +24,7 @@
     <AssemblyName>ChatDemoGUI</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectTypeGuids>{3C53C28F-DC44-46B0-8B85-0C96B85B2042};{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <ApplicationIcon>Images\chat.ico</ApplicationIcon>
     <FileUpgradeFlags>
@@ -145,6 +146,8 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="Chat.ice" />
+    <None Include="ChatSession.ice" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -188,52 +191,9 @@
     <Resource Include="Images\error.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="AfterBuild">
-  </Target>
-  -->
-  <Target Name="BeforeBuild" DependsOnTargets="CompileSlice">
-  </Target>
-  <Target Name="CompileSlice">
-    <Exec Command="&quot;$(Slice2Cs)&quot; --output-dir generated -I&quot;$(SliceDir)&quot; -I..\..\slice ..\..\slice\Chat.ice" />
-    <Exec Command="&quot;$(Slice2Cs)&quot; --output-dir generated -I&quot;$(SliceDir)&quot; -I..\..\slice ..\..\slice\ChatSession.ice" />
-  </Target>
-  <Target Name="AfterClean">
-    <Delete Files="generated\Chat.cs" />
-    <Delete Files="generated\ChatSession.cs" />
-  </Target>
-  <PropertyGroup>
-    <CompileDependsOn>CompileSlice;$(CompileDependsOn)</CompileDependsOn>
+  <Import Project="$(LOCALAPPDATA)\ZeroC\IceBuilder\IceBuilder.CSharp.targets" />
+  <PropertyGroup Label="IceBuilder">
+    <IceBuilderOutputDir>generated</IceBuilderOutputDir>
+    <IceBuilderIncludeDirectories>$(IceHome)\slice;$(ProjectDir)</IceBuilderIncludeDirectories>
   </PropertyGroup>
-  <Choose>
-    <When Condition="Exists('$(ICE_HOME)\bin\slice2cs.exe')">
-      <PropertyGroup>
-        <Slice2Cs>$(ICE_HOME)\bin\slice2cs.exe</Slice2Cs>
-        <SliceDir>$(ICE_HOME)\slice</SliceDir>
-        <IceAssemblyDir>$(ICE_HOME)\Assemblies</IceAssemblyDir>
-      </PropertyGroup>
-    </When>
-    <When Condition="Exists('..\..\..\cpp\bin\slice2cs.exe')">
-      <PropertyGroup>
-        <Slice2Cs>..\..\..\cpp\bin\slice2cs.exe</Slice2Cs>
-        <SliceDir>..\..\..\slice</SliceDir>
-        <IceAssemblyDir>..\..\..\cs\Assemblies</IceAssemblyDir>
-      </PropertyGroup>
-    </When>
-    <When Condition="Exists('C:\Program Files (x86)\Zeroc\Ice-3.5.0\bin\slice2cs.exe')">
-      <PropertyGroup>
-        <Slice2Cs>C:\Program Files (x86)\Zeroc\Ice-3.5.0\bin\slice2cs.exe</Slice2Cs>
-        <SliceDir>C:\Program Files (x86)\Zeroc\Ice-3.5.0\slice</SliceDir>
-        <IceAssemblyDir>C:\Program Files (x86)\Zeroc\Ice-3.5.0\Assemblies</IceAssemblyDir>
-      </PropertyGroup>
-    </When>
-    <Otherwise>
-      <PropertyGroup>
-        <Slice2Cs>C:\Program Files\Zeroc\Ice-3.5.0\bin\slice2cs.exe</Slice2Cs>
-        <SliceDir>C:\Program Files\Zeroc\Ice-3.5.0\slice</SliceDir>
-        <IceAssemblyDir>C:\Program Files\Zeroc\Ice-3.5.0\Assemblies</IceAssemblyDir>
-      </PropertyGroup>
-    </Otherwise>
-  </Choose>
 </Project>

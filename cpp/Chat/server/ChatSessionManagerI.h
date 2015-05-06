@@ -27,6 +27,9 @@ public:
 
 private:
 
+	// Required to prevent compiler warnings with MSVC++
+	ChatSessionManagerI& operator=(const ChatSessionManagerI&);
+
     const ChatRoomPtr _chatRoom;
     const bool _trace;
     const Ice::LoggerPtr _logger;
