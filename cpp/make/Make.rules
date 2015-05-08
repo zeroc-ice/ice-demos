@@ -324,7 +324,7 @@ endif
 #
 # Platform specific definitions
 #
-include	 $(top_srcdir)/Make/Make.rules.$(UNAME)
+include	 $(top_srcdir)/make/Make.rules.$(UNAME)
 
 ICECPPFLAGS		= -I$(slicedir)
 
