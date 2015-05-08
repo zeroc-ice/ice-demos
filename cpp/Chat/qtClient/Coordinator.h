@@ -2,9 +2,6 @@
 //
 // Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 //
-// This copy of Chat Demo is licensed to you under the terms described
-// in the CHAT_DEMO_LICENSE file included in this distribution.
-//
 // **********************************************************************
 
 #ifndef CHAT_COORDINATOR_H
@@ -27,32 +24,32 @@ namespace Chat
 const int CUSTOM_EVENT_TYPE = QEvent::User + 1000;
 
 enum ClientState
-{ 
-    Disconnected, 
-    Connecting, 
-    Connected, 
-    Disconnecting 
+{
+    Disconnected,
+    Connecting,
+    Connected,
+    Disconnecting
 };
 
 class LoginInfo : public IceUtil::Shared
 {
-    
+
 public:
-    
+
     std::string username() const;
     void setUsername(const std::string& username);
-    
+
     std::string password() const;
     void setPassword(const std::string& password);
-    
+
     std::string host() const;
     void setHost(const std::string& host);
-    
+
     void load();
     void save();
-    
+
 private:
-    
+
     IceUtil::Mutex _mutex;
     std::string _username;
     std::string _password;
@@ -78,15 +75,15 @@ public:
 
     virtual void setState(ClientState) = 0;
     virtual std::string getUsername() const = 0;
-    
+
     virtual void createdCommunicator(const Glacier2::SessionHelperPtr&) = 0;
     virtual void connected(const Glacier2::SessionHelperPtr&) = 0;
     virtual void disconnected(const Glacier2::SessionHelperPtr&) = 0;
     virtual void disconnected(const Glacier2::SessionHelperPtr&, const Ice::Exception&) = 0;
     virtual void connectFailed(const Glacier2::SessionHelperPtr&, const Ice::Exception&) = 0;
-    
+
 public slots:
-    
+
     virtual void sendMessage(const std::string&) = 0;
     virtual void login(const LoginInfoPtr& info) = 0;
     virtual void login() = 0;
@@ -99,17 +96,17 @@ class Application : public QApplication
 {
 
 Q_OBJECT
-    
+
 public:
-    
+
     Application(int argc, char** argv);
-    
+
 public slots:
-    
+
     void shutdown();
-    
+
 private:
-    
+
     CoordinatorPtr _coordinator;
 };
 

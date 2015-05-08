@@ -29,20 +29,13 @@ import com.zeroc.chat.service.SessionListener;
 
 public class LoginActivity extends Activity
 {
-    private static final String DEFAULT_HOST = "demo.zeroc.com";
-    private static final boolean DEFAULT_SECURE = false;
-    private static final String HOSTNAME_KEY = "host";
     private static final String USERNAME_KEY = "username";
     private static final String PASSWORD_KEY = "password";
-    private static final String SECURE_KEY = "secure";
     public static final String LOGIN_ERROR_TAG = "loginerror";
-    public static final String INVALID_HOST_TAG = "invalidhost";
 
     private Button _login;
-    private EditText _hostname;
     private EditText _username;
     private EditText _password;
-    private CheckBox _secure;
     private SharedPreferences _prefs;
 
     private boolean _loginInProgress = false;
@@ -154,38 +147,18 @@ public class LoginActivity extends Activity
         }
         else
         {
-            String host = _hostname.getText().toString().trim();
             String username = _username.getText().toString().trim();
-            _login.setEnabled(host.length() > 0 && username.length() > 0);
+            _login.setEnabled(username.length() > 0);
         }
     }
 
     private void login()
     {
-        final String hostname = _hostname.getText().toString().trim();
         final String username = _username.getText().toString().trim();
         final String password = _password.getText().toString().trim();
-        final boolean secure = _secure.isChecked();
-
-        // We don't want to save obviously bogus hostnames in the application
-        // preferences. These two regexp validates that the hostname is well
-        // formed.
-        // Note that this regexp doesn't handle IPv6 addresses.
-        final String hostre = "^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)*([A-Za-z]|[A-Za-z][A-Za-z0-9\\-]*[A-Za-z0-9])$";
-        final String ipre = "^([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$";
-        if(!hostname.matches(hostre) && !hostname.matches(ipre))
-        {
-            DialogFragment dialog = new InvalidHostDialogFragment();
-            dialog.show(getFragmentManager(), INVALID_HOST_TAG);
-            return;
-        }
 
         // Update preferences.
         SharedPreferences.Editor edit = _prefs.edit();
-        if(!_prefs.getString(HOSTNAME_KEY, DEFAULT_HOST).equals(hostname))
-        {
-            edit.putString(HOSTNAME_KEY, hostname);
-        }
         if(!_prefs.getString(USERNAME_KEY, "").equals(username))
         {
             edit.putString(USERNAME_KEY, username);
@@ -194,17 +167,13 @@ public class LoginActivity extends Activity
         {
             edit.putString(PASSWORD_KEY, password);
         }
-        if(_prefs.getBoolean(SECURE_KEY, DEFAULT_SECURE) != secure)
-        {
-            edit.putBoolean(SECURE_KEY, secure);
-        }
         edit.apply();
 
         _login.setEnabled(false);
 
         // Kick off the login process. The activity is notified of changes
         // in the login process through calls to the SessionListener.
-        _service.login(hostname, username, password, secure);
+        _service.login(username, password);
     }
 
     @Override
@@ -244,23 +213,6 @@ public class LoginActivity extends Activity
         });
         _login.setEnabled(false);
 
-        _hostname = (EditText)findViewById(R.id.hostname);
-        _hostname.addTextChangedListener(new TextWatcher()
-        {
-            public void afterTextChanged(Editable s)
-            {
-                setLoginState();
-            }
-
-            public void beforeTextChanged(CharSequence s, int start, int count, int after)
-            {
-            }
-
-            public void onTextChanged(CharSequence s, int start, int count, int after)
-            {
-            }
-        });
-
         _username = (EditText)findViewById(R.id.username);
         _username.addTextChangedListener(new TextWatcher()
         {
@@ -279,17 +231,12 @@ public class LoginActivity extends Activity
         });
         _password = (EditText)findViewById(R.id.password);
 
-        _secure = (CheckBox)findViewById(R.id.secure);
-        _secure.setEnabled(true);
-
         _prefs = getPreferences(MODE_PRIVATE);
 
         if(savedInstanceState == null)
         {
-            _hostname.setText(_prefs.getString(HOSTNAME_KEY, DEFAULT_HOST));
             _username.setText(_prefs.getString(USERNAME_KEY, ""));
             _password.setText(_prefs.getString(PASSWORD_KEY, ""));
-            _secure.setChecked(_prefs.getBoolean(SECURE_KEY, DEFAULT_SECURE));
         }
 
         // Start the ChatService.

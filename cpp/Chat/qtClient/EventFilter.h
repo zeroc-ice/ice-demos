@@ -2,9 +2,6 @@
 //
 // Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 //
-// This copy of Chat Demo is licensed to you under the terms described
-// in the CHAT_DEMO_LICENSE file included in this distribution.
-//
 // **********************************************************************
 
 #ifndef CHAT_EVENTFILTER_H
@@ -28,7 +25,7 @@ public:
 
     Ice::DispatcherCallPtr
     call() const;
-    
+
     Ice::ConnectionPtr
     connection() const;
 
@@ -46,9 +43,9 @@ public:
 
     EventFilter(QObject*);
     virtual bool eventFilter(QObject* oject, QEvent* event);
-    
+
 signals:
-    
+
     void dispatchError(const std::string&);
 };
 

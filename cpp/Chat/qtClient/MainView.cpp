@@ -2,9 +2,6 @@
 //
 // Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 //
-// This copy of Chat Demo is licensed to you under the terms described
-// in the CHAT_DEMO_LICENSE file included in this distribution.
-//
 // **********************************************************************
 
 #include <iostream>
@@ -39,21 +36,21 @@ MainView::MainView(QWidget* loginView, QWidget* chatView) :
 {
     setWindowTitle(tr("Chat Demo"));
     setWindowIcon(QIcon(":/icons/logo.png"));
-    
+
     _stackWidget = new QStackedWidget();
     _stackWidget->addWidget(loginView);
     _stackWidget->addWidget(chatView);
     setCentralWidget(_stackWidget);
-    
+
     _statusBar = new QLabel();
     statusBar()->addPermanentWidget(_statusBar);
 
     _loginAction = new QAction(tr("Login"), this);
     connect(_loginAction, SIGNAL(triggered()), this, SIGNAL(login()));
-    
+
     _logoutAction = new QAction(tr("Logout"), this);
     connect(_logoutAction, SIGNAL(triggered()), this, SIGNAL(logout()));
-    
+
     _exitAction = new QAction(tr("Exit"), this);
     connect(_exitAction, SIGNAL(triggered()), this, SLOT(close()));
 
@@ -67,7 +64,7 @@ MainView::MainView(QWidget* loginView, QWidget* chatView) :
     _fileMenu->addAction(_loginAction);
     _fileMenu->addAction(_logoutAction);
     _fileMenu->addAction(_exitAction);
-    
+
     //
     // Help menu
     //

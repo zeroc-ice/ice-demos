@@ -1,0 +1,16 @@
+#
+# Set the default router to the zeroc.com chat proxy
+#
+
+Ice.Default.Router=Glacier2/router:wss -p 443 -h zeroc.com -r /demo-proxy/chat/glacier2 -t 10000
+
+IceSSL.UsePlatformCAs=1
+IceSSL.CheckCertName=1
+
+#
+# To connect to locally hosted server uncomment the follwing
+# section and modify the above Ice.Default.Router
+#
+
+# IceSSL.TrustOnly.Client=CN=127.0.0.1
+# IceSSL.CertAuthFile=cacert.pem

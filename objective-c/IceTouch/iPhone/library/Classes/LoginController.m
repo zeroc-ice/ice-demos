@@ -34,19 +34,13 @@
 @synthesize router;
 @synthesize communicator;
 
-static NSString* hostnameKey = @"hostnameKey";
-static NSString* glacier2Key = @"glacier2Key";
-static NSString* sslKey = @"sslKey";
 static NSString* usernameKey = @"usernameKey";
 static NSString* passwordKey = @"passwordKey";
 
 +(void)initialize
 {
-    NSDictionary* appDefaults = [NSDictionary dictionaryWithObjectsAndKeys:@"demo2.zeroc.com", hostnameKey,
-                                 @"", usernameKey,
+    NSDictionary* appDefaults = [NSDictionary dictionaryWithObjectsAndKeys:@"", usernameKey,
                                  @"", passwordKey,
-                                 @"YES", glacier2Key,
-                                 @"YES", sslKey,
                                  nil];
 	
     [[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];    
@@ -57,16 +51,10 @@ static NSString* passwordKey = @"passwordKey";
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     
     // Set the default values, and show the clear button in the text field.
-    hostnameField.clearButtonMode = UITextFieldViewModeWhileEditing;
-    hostnameField.text = [defaults stringForKey:hostnameKey];
     usernameField.clearButtonMode = UITextFieldViewModeWhileEditing;
     usernameField.text = [defaults stringForKey:usernameKey];
     passwordField.clearButtonMode = UITextFieldViewModeWhileEditing;
     passwordField.text = [defaults stringForKey:passwordKey];
-
-    glacier2Switch.on = [defaults boolForKey:glacier2Key];
-    
-    sslSwitch.on = [defaults boolForKey:sslKey];
     
     mainController = [[MainController alloc] initWithNibName:@"MainView" bundle:nil];
     
@@ -83,7 +71,7 @@ static NSString* passwordKey = @"passwordKey";
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    loginButton.enabled = hostnameField.text.length > 0;
+    loginButton.enabled = usernameField.text.length > 0;
     [loginButton setAlpha:loginButton.enabled ? 1.0 : 0.5];
 	[super viewWillAppear:animated];
 }
@@ -117,11 +105,7 @@ static NSString* passwordKey = @"passwordKey";
     // When the user presses return, take focus away from the text
     // field so that the keyboard is dismissed.
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-    if(theTextField == hostnameField)
-    {
-        [defaults setObject:theTextField.text forKey:hostnameKey];
-    }
-    else if(theTextField == usernameField)
+    if(theTextField == usernameField)
     {
         [defaults setObject:theTextField.text forKey:usernameKey];
     }
@@ -130,7 +114,7 @@ static NSString* passwordKey = @"passwordKey";
         [defaults setObject:theTextField.text forKey:passwordKey];
     }
 
-    loginButton.enabled = hostnameField.text.length > 0;
+    loginButton.enabled = usernameField.text.length > 0;
     [loginButton setAlpha:loginButton.enabled ? 1.0 : 0.5];
 
     [theTextField resignFirstResponder];
@@ -149,20 +133,6 @@ static NSString* passwordKey = @"passwordKey";
     currentField.text = oldFieldValue; 
     self.currentField = nil;
     [super touchesBegan:touches withEvent:event];
-}
-
-#pragma mark UI Actions
-
--(void)glacier2Changed:(id)s
-{
-    UISwitch* sender = (UISwitch*)s;
-    [[NSUserDefaults standardUserDefaults] setBool:sender.isOn forKey:glacier2Key];
-}
-
--(void)sslChanged:(id)s
-{
-    UISwitch* sender = (UISwitch*)s;
-    [[NSUserDefaults standardUserDefaults] setBool:sender.isOn forKey:sslKey];
 }
 
 #pragma mark Login
@@ -196,12 +166,9 @@ static NSString* passwordKey = @"passwordKey";
     {
         [statusActivity stopAnimating];
     }
-    hostnameField.enabled = !connecting;
     usernameField.enabled = !connecting;
     passwordField.enabled = !connecting;
     loginButton.enabled = !connecting;
-    glacier2Switch.enabled = !connecting;
-    sslSwitch.enabled = !connecting;
 }
 
 // Runs in a separate thread, called only by NSInvocationOperation.
@@ -237,7 +204,8 @@ static NSString* passwordKey = @"passwordKey";
 -(IBAction)login:(id)sender
 {
     ICEInitializationData* initData = [ICEInitializationData initializationData];
-    initData.properties = [ICEUtil createProperties ];
+    initData.properties = [ICEUtil createProperties];
+    [initData.properties load:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"config.client"]];
     [initData.properties setProperty:@"Ice.ACM.Client.Timeout" value:@"0"];
     [initData.properties setProperty:@"Ice.RetryIntervals" value:@"-1"];
     
@@ -248,79 +216,46 @@ static NSString* passwordKey = @"passwordKey";
     initData.dispatcher = ^(id<ICEDispatcherCall> call, id<ICEConnection> con) {
         dispatch_sync(dispatch_get_main_queue(), ^ { [call run]; });
     };
-    // Setup the SSL certificates
-    if(sslSwitch.isOn)
-    {
-        [initData.properties setProperty:@"IceSSL.TrustOnly.Client"
-                                   value:@"D1:33:E4:95:73:E6:66:45:2A:EE:C6:61:28:40:57:2F:B1:FF:48:B9"];
-        [initData.properties setProperty:@"IceSSL.CheckCertName" value:@"0"];
-        [initData.properties setProperty:@"IceSSL.CertAuthFile" value:@"cacert.der"];
-    }
     
-    NSAssert(communicator == nil, @"communicator == nil");
-    self.communicator = [ICEUtil createCommunicator:initData];
-
-	NSString *hostname = [hostnameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 	
     id<ICEObjectPrx> proxy;
     SEL loginSelector;
     @try
     {
-        if(glacier2Switch.isOn)
+        NSAssert(communicator == nil, @"communicator == nil");
+        self.communicator = [ICEUtil createCommunicator:initData];
+        
+        if([[[communicator getProperties] getProperty:@"Ice.Default.Router"] length] > 0)
         {
-			int port = 4063;
-            if(sslSwitch.isOn)
-            {
-                port = 4064;
-            }
-
-            NSString* s;
-            if(sslSwitch.isOn)
-            {
-				
-                s = [NSString stringWithFormat:@"DemoGlacier2/router:ssl -h \"%@\" -p %d -t 10000", hostname, port];
-            }
-            else
-            {
-                s = [NSString stringWithFormat:@"DemoGlacier2/router:tcp -h \"%@\" -p %d -t 10000", hostname, port];
-            }
-            proxy = [communicator stringToProxy:s];
-
-            // Configure the default router on the communicator.
-            id<ICERouterPrx> r = [ICERouterPrx uncheckedCast:proxy];
-            [communicator setDefaultRouter:r];
-
+            proxy = [communicator stringToProxy:[[communicator getProperties] getProperty:@"Ice.Default.Router"]];
             loginSelector = @selector(doGlacier2Login:);
         }
         else
         {
-            int port = 10000;
-            if(sslSwitch.isOn)
-            {
-                port = 10001;
-            }
-            
-            NSString* s;
-            if(sslSwitch.isOn)
-            {
-                s = [NSString stringWithFormat:@"SessionFactory:ssl -h \"%@\" -p %d -t 10000", hostname, port];
-            }
-            else
-            {
-                s = [NSString stringWithFormat:@"SessionFactory:tcp -h \"%@\" -p %d -t 10000", hostname, port];
-            }
-            proxy = [communicator stringToProxy:s];
-
+            proxy = [communicator stringToProxy:[[communicator getProperties] getProperty:@"SessionFactory.Proxy"]];
             loginSelector = @selector(doLogin:);
         }
     }
     @catch(ICEEndpointParseException* ex)
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid Hostname"
-                                                         message:@"The provided hostname is invalid."
-                                                        delegate:self
-                                               cancelButtonTitle:@"OK"
-                                               otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error parsing config"
+                                                        message: ex.reason
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        
+        [communicator destroy];
+        self.communicator = nil;
+        return;
+    }
+    @catch(...)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error parsing config"
+                                                        message: @"Please check your config file"
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
         [alert show];
         
         [communicator destroy];

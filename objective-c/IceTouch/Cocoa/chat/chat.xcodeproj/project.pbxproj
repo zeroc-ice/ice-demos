@@ -23,6 +23,7 @@
 		82AC63CB173812FE0040F03D /* cacert.pem in Resources */ = {isa = PBXBuildFile; fileRef = 82AC63CA173812FE0040F03D /* cacert.pem */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
+		D8EC93E61AD4583500055945 /* config.client in Resources */ = {isa = PBXBuildFile; fileRef = D8EC93E51AD4583500055945 /* config.client */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		82AC63CA173812FE0040F03D /* cacert.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = cacert.pem; path = ../../../../certs/cacert.pem; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* ChatDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D8EC93E51AD4583500055945 /* config.client */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = config.client; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +121,7 @@
 				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
 				345436110FB29554005CB1B6 /* ChatView.xib */,
 				343DE5980FC3EBD900FCC49C /* LoginView.xib */,
+				D8EC93E51AD4583500055945 /* config.client */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -182,6 +185,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8EC93E61AD4583500055945 /* config.client in Resources */,
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
 				345436120FB29554005CB1B6 /* ChatView.xib in Resources */,

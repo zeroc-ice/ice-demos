@@ -27,6 +27,7 @@
 		34BB759D0E87DBC000813E0B /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 34BB759C0E87DBC000813E0B /* icon.png */; };
 		826C67A01737F87200059EAA /* cacert.der in Resources */ = {isa = PBXBuildFile; fileRef = 826C679F1737F87200059EAA /* cacert.der */; };
 		82D3968A1822FD78000BA551 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82D396891822FD78000BA551 /* Images.xcassets */; };
+		D8EC93E81AD4663200055945 /* config.client in Resources */ = {isa = PBXBuildFile; fileRef = D8EC93E71AD4663200055945 /* config.client */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +58,7 @@
 		826C679F1737F87200059EAA /* cacert.der */ = {isa = PBXFileReference; lastKnownFileType = file; name = cacert.der; path = ../../../../certs/cacert.der; sourceTree = "<group>"; };
 		82D396891822FD78000BA551 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = chat/Images.xcassets; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D8EC93E71AD4663200055945 /* config.client */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = config.client; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +135,7 @@
 				348A1F0C0E829947003DBDDD /* LoginView.xib */,
 				348A1F100E829950003DBDDD /* ChatView.xib */,
 				348A1F140E82995D003DBDDD /* UserView.xib */,
+				D8EC93E71AD4663200055945 /* config.client */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -209,6 +212,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8EC93E81AD4663200055945 /* config.client in Resources */,
 				82D3968A1822FD78000BA551 /* Images.xcassets in Resources */,
 				28AD73600D9D9599002E5188 /* MainWindow.xib in Resources */,
 				348A1F0D0E829947003DBDDD /* LoginView.xib in Resources */,

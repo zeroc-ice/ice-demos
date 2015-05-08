@@ -6,17 +6,21 @@
 
 package com.zeroc.chat.service;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Properties;
 import java.util.UUID;
 
 import android.os.Build;
-import com.zeroc.chat.R;
 
 import android.content.res.Resources;
 import android.os.Handler;
+
+import com.zeroc.chat.R;
 
 public class AppSession
 {
@@ -37,9 +41,9 @@ public class AppSession
     private String _hostname;
     private String _error;
 
-    public AppSession(Resources resources, final Handler handler, String hostname, String username,
-                      String password, boolean secure)
-        throws Glacier2.CannotCreateSessionException, Glacier2.PermissionDeniedException
+    public AppSession(Resources resources, final Handler handler, String username,
+                      String password)
+        throws Glacier2.CannotCreateSessionException, Glacier2.PermissionDeniedException, IOException
     {
         _handler = handler;
 
@@ -56,12 +60,19 @@ public class AppSession
         };
 
         initData.properties = Ice.Util.createProperties();
+
+        InputStream inputStream = resources.getAssets().open("config.properties");
+        Properties properties = new Properties();
+        properties.load(inputStream);
+        for(String name: properties.stringPropertyNames())
+        {
+            String value = properties.getProperty(name);
+            initData.properties.setProperty(name, value);
+        }
+
         initData.properties.setProperty("Ice.RetryIntervals", "-1");
         initData.properties.setProperty("Ice.Trace.Network", "0");
         initData.properties.setProperty("Ice.Plugin.IceSSL", "IceSSL.PluginFactory");
-        initData.properties.setProperty("Ice.InitPlugins", "0");
-        initData.properties.setProperty("IceSSL.TruststoreType", "BKS");
-        initData.properties.setProperty("IceSSL.Password", "password");
 
         // SDK versions < 21 only support TLSv1 with SSLEngine.
         if(Build.VERSION.SDK_INT < 21)
@@ -69,31 +80,25 @@ public class AppSession
             initData.properties.setProperty("IceSSL.Protocols", "tls1_0");
         }
 
-        _communicator = Ice.Util.initialize(initData);
-        _hostname = hostname;
-
-        String s;
-        if(secure)
+        if(initData.properties.getPropertyAsIntWithDefault("IceSSL.UseDefaultTruststore",1) == 0)
         {
-            java.io.InputStream certStream;
-            certStream = resources.openRawResource(R.raw.client);
+            initData.properties.setProperty("Ice.InitPlugins", "0");
+            initData.properties.setProperty("IceSSL.TruststoreType", "BKS");
+            initData.properties.setProperty("IceSSL.Password", "password");
 
+            _communicator = Ice.Util.initialize(initData);
+
+            java.io.InputStream certStream = resources.openRawResource(R.raw.client);
             IceSSL.Plugin plugin = (IceSSL.Plugin)_communicator.getPluginManager().getPlugin("IceSSL");
             plugin.setTruststoreStream(certStream);
             _communicator.getPluginManager().initializePlugins();
-            s = "Glacier2/router:ssl -p 4064 -h " + hostname + " -t 10000";
         }
         else
         {
-            s = "Glacier2/router:tcp -p 4502 -h " + hostname + " -t 10000";
+            _communicator = Ice.Util.initialize(initData);
         }
 
-        Ice.ObjectPrx proxy = _communicator.stringToProxy(s);
-        Ice.RouterPrx r = Ice.RouterPrxHelper.uncheckedCast(proxy);
-
-        _communicator.setDefaultRouter(r);
-
-        _router = Glacier2.RouterPrxHelper.checkedCast(r);
+        _router = Glacier2.RouterPrxHelper.checkedCast(_communicator.getDefaultRouter());
         Glacier2.SessionPrx glacier2session = _router.createSession(username, password);
         _session = Chat.ChatSessionPrxHelper.uncheckedCast(glacier2session);
 

@@ -24,21 +24,14 @@ public interface Service
      *
      * Establish a session with the chat server.
      *
-     * @param hostname
-     *            The chat server host.
-     *
      * @param username
      *            The username.
      *
      * @param password
      *            The password.
      *
-     * @param secure
-     *            True if a secure session should be established, false
-     *            otherwise.
-     *
      */
-    void login(String hostname, String username, String password, boolean secure);
+    void login(String username, String password);
 
     /**
      *

@@ -32,6 +32,7 @@
 		34FF1F1D0E76904300EA9DEC /* AddController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34FF1F1C0E76904300EA9DEC /* AddController.m */; };
 		826C67A61738069C00059EAA /* cacert.der in Resources */ = {isa = PBXBuildFile; fileRef = 826C67A51738069C00059EAA /* cacert.der */; };
 		82D53AA3182320C900703264 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82D53AA2182320C900703264 /* Images.xcassets */; };
+		D8EC45091AF26BA5001C2D72 /* config.client in Resources */ = {isa = PBXBuildFile; fileRef = D8EC45081AF26BA5001C2D72 /* config.client */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,6 +70,7 @@
 		826C67A51738069C00059EAA /* cacert.der */ = {isa = PBXFileReference; lastKnownFileType = file; name = cacert.der; path = ../../../../certs/cacert.der; sourceTree = "<group>"; };
 		82D53AA2182320C900703264 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = library/Images.xcassets; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D8EC45081AF26BA5001C2D72 /* config.client */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = config.client; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +153,7 @@
 				347553670E71A029001C7AB8 /* MainView.xib */,
 				347553AF0E71AB3A001C7AB8 /* DetailView.xib */,
 				347553EC0E71BA33001C7AB8 /* EditView.xib */,
+				D8EC45081AF26BA5001C2D72 /* config.client */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -232,6 +235,7 @@
 				347552C10E71968B001C7AB8 /* LoginView.xib in Resources */,
 				347553680E71A029001C7AB8 /* MainView.xib in Resources */,
 				347553B00E71AB3A001C7AB8 /* DetailView.xib in Resources */,
+				D8EC45091AF26BA5001C2D72 /* config.client in Resources */,
 				82D53AA3182320C900703264 /* Images.xcassets in Resources */,
 				347553ED0E71BA33001C7AB8 /* EditView.xib in Resources */,
 				34BB75760E87DAEC00813E0B /* redButton.png in Resources */,

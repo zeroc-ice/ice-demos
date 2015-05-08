@@ -15,12 +15,9 @@
 @interface LoginController : UIViewController<UITextFieldDelegate,UIAlertViewDelegate>
 {
 @private
-    IBOutlet UITextField* hostnameField;
     IBOutlet UITextField* usernameField;
     IBOutlet UITextField* passwordField;
     IBOutlet UIButton* loginButton;
-    IBOutlet UISwitch* glacier2Switch;
-    IBOutlet UISwitch* sslSwitch;
     IBOutlet UILabel* statusLabel;
     IBOutlet UIActivityIndicatorView* statusActivity;
     UITextField* currentField;
@@ -38,7 +35,5 @@
 }
 
 -(IBAction)login:(id)sender;
--(void)glacier2Changed:(id)sender;
--(void)sslChanged:(id)sender;
 
 @end

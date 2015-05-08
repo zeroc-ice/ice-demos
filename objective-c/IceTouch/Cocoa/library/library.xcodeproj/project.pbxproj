@@ -30,6 +30,7 @@
 		82AC63CD1738185D0040F03D /* cacert.pem in Resources */ = {isa = PBXBuildFile; fileRef = 82AC63CC1738185D0040F03D /* cacert.pem */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
+		D8081A711AF14D8700F32A9D /* config.client in Resources */ = {isa = PBXBuildFile; fileRef = D8081A701AF14D8700F32A9D /* config.client */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,6 +66,7 @@
 		82AC63CC1738185D0040F03D /* cacert.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = cacert.pem; path = ../../../../certs/cacert.pem; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Library.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Library.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D8081A701AF14D8700F32A9D /* config.client */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = config.client; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +148,7 @@
 				3488C4F00FC23DCF001C9F93 /* EditView.xib */,
 				3488C5290FC24104001C9F93 /* RentView.xib */,
 				3488C52C0FC2414D001C9F93 /* SavingView.xib */,
+				D8081A701AF14D8700F32A9D /* config.client */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -214,6 +217,7 @@
 				3447919F0FBBC4AC0037E9FA /* LoginView.xib in Resources */,
 				3447926A0FBC13940037E9FA /* LibraryView.xib in Resources */,
 				3488C4F10FC23DCF001C9F93 /* EditView.xib in Resources */,
+				D8081A711AF14D8700F32A9D /* config.client in Resources */,
 				3488C52A0FC24104001C9F93 /* RentView.xib in Resources */,
 				3488C52D0FC2414D001C9F93 /* SavingView.xib in Resources */,
 				34C5F1930FC508AE00B226F7 /* icon.icns in Resources */,

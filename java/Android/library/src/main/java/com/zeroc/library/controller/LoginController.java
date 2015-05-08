@@ -6,11 +6,16 @@
 
 package com.zeroc.library.controller;
 
+import Demo.Glacier2Session;
 import android.os.Build;
 import com.zeroc.library.R;
 
 import android.content.res.Resources;
 import android.os.Handler;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 public class LoginController
 {
@@ -44,8 +49,7 @@ public class LoginController
         }
     }
 
-    public LoginController(final Resources resources, final String hostname, final boolean secure,
-                           final boolean glacier2, Listener listener)
+    public LoginController(final Resources resources, final String username, final String password, Listener listener)
     {
         _handler = new Handler();
         _loginListener = listener;
@@ -72,65 +76,70 @@ public class LoginController
                     };
 
                     initData.properties = Ice.Util.createProperties();
-                    if(glacier2)
+
+                    InputStream inputStream = resources.getAssets().open("config.properties");
+                    Properties properties = new Properties();
+                    properties.load(inputStream);
+                    for(String name: properties.stringPropertyNames())
+                    {
+                        String value = properties.getProperty(name);
+                        initData.properties.setProperty(name, value);
+                    }
+
+                    //
+                    // Set common properties
+                    //
+                    initData.properties.setProperty("Ice.Trace.Network", "0");
+                    initData.properties.setProperty("IceSSL.Trace.Security", "0");
+                    initData.properties.setProperty("Ice.Plugin.IceSSL", "IceSSL.PluginFactory");
+
+                    // SDK versions < 21 only support TLSv1 with SSLEngine.
+                    if(Build.VERSION.SDK_INT < 21)
+                    {
+                        initData.properties.setProperty("IceSSL.Protocols", "tls1_0");
+                    }
+
+                    //
+                    // Check for Ice.Default.Router. If we find it use it, otherwise use a direct connection
+                    //
+
+                    if(!initData.properties.getProperty("Ice.Default.Router").isEmpty())
                     {
                         initData.properties.setProperty("Ice.RetryIntervals", "-1");
                     }
-                    initData.properties.setProperty("Ice.Trace.Network", "0");
 
-                    if(secure)
+
+                    if(initData.properties.getPropertyAsIntWithDefault("IceSSL.UseDefaultTruststore", 1) != 0)
                     {
-                        initData.properties.setProperty("IceSSL.Trace.Security", "0");
-                        initData.properties.setProperty("IceSSL.TruststoreType", "BKS");
-                        initData.properties.setProperty("IceSSL.Password", "password");
                         initData.properties.setProperty("Ice.InitPlugins", "0");
-                        initData.properties.setProperty("Ice.Plugin.IceSSL", "IceSSL.PluginFactory");
-
-                        // SDK versions < 21 only support TLSv1 with SSLEngine.
-                        if(Build.VERSION.SDK_INT < 21)
-                        {
-                            initData.properties.setProperty("IceSSL.Protocols", "tls1_0");
-                        }
-
-                        java.io.InputStream certStream;
-                        certStream = resources.openRawResource(R.raw.client);
+                        java.io.InputStream certStream = resources.openRawResource(R.raw.client);
                         _communicator = Ice.Util.initialize(initData);
 
                         IceSSL.Plugin plugin = (IceSSL.Plugin)_communicator.getPluginManager().getPlugin("IceSSL");
                         plugin.setTruststoreStream(certStream);
+
                         _communicator.getPluginManager().initializePlugins();
                     }
                     else
                     {
-                        _communicator = Ice.Util.initialize(initData);
+                    _communicator = Ice.Util.initialize(initData);
                     }
+
 
                     SessionAdapter session = null;
 
-                    if(glacier2)
+                    if(_communicator.getDefaultRouter() != null)
                     {
-                        StringBuilder s = new StringBuilder();
-                        s.append("DemoGlacier2/router:");
-                        s.append(secure ? "ssl " : "tcp");
-                        s.append(" -p ");
-                        s.append(secure ? "4064" : "4063");
-                        s.append(" -h ");
-                        s.append(hostname);
-                        s.append(" -t 10000");
+                        final Ice.RouterPrx r = _communicator.getDefaultRouter();
+                        final Glacier2.RouterPrx router =  Glacier2.RouterPrxHelper.checkedCast(r);
 
-                        Ice.ObjectPrx proxy = _communicator.stringToProxy(s.toString());
-                        Ice.RouterPrx r = Ice.RouterPrxHelper.uncheckedCast(proxy);
-
-                        _communicator.setDefaultRouter(r);
-
-                        final Glacier2.RouterPrx router = Glacier2.RouterPrxHelper.checkedCast(r);
                         if(router == null)
                         {
-                            postLoginFailure("Glacier2 proxy is invalid.");
+                            postLoginFailure("Glacier2 proxy is invalid");
                             return;
                         }
 
-                        Glacier2.SessionPrx glacier2session = router.createSession("dummy", "none");
+                        Glacier2.SessionPrx glacier2session = router.createSession(username, password);
 
                         final Demo.Glacier2SessionPrx sess =
                             Demo.Glacier2SessionPrxHelper.uncheckedCast(glacier2session);
@@ -163,15 +172,8 @@ public class LoginController
                     }
                     else
                     {
-                        StringBuilder s = new StringBuilder();
-                        s.append("SessionFactory:");
-                        s.append(secure ? "ssl " : "tcp");
-                        s.append(" -p ");
-                        s.append(secure ? "10001" : "10000");
-                        s.append(" -h ");
-                        s.append(hostname);
-                        s.append(" -t 10000");
-                        Ice.ObjectPrx proxy = _communicator.stringToProxy(s.toString());
+                        Ice.ObjectPrx proxy = _communicator.stringToProxy("LibraryDemo.Proxy");
+
                         Demo.SessionFactoryPrx factory = Demo.SessionFactoryPrxHelper.checkedCast(proxy);
                         if(factory == null)
                         {
@@ -226,7 +228,7 @@ public class LoginController
                             return;
                         }
 
-                        _sessionController = new SessionController(_handler, _communicator, session, refreshTimeout);
+                        _sessionController = new SessionController(_handler, _communicator, session, username, refreshTimeout);
                         if(_loginListener != null)
                         {
                             final Listener listener = _loginListener;
@@ -254,6 +256,11 @@ public class LoginController
                 {
                     ex.printStackTrace();
                     postLoginFailure(String.format("Login failed: %s", ex.toString()));
+                }
+                catch(IOException ex)
+                {
+                    ex.printStackTrace();
+                    postLoginFailure(String.format("Loading config failed: %s", ex.toString()));
                 }
             }
         }).start();

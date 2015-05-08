@@ -4,9 +4,6 @@
 #
 # Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 #
-# This copy of Chat Demo is licensed to you under the terms described
-# in the CHAT_DEMO_LICENSE file included in this distribution.
-#
 # **********************************************************************
 
 //
@@ -74,13 +71,13 @@ require_once 'Ice.php';
 require_once dirname(__FILE__) . '/SessionI.php';
 require_once dirname(__FILE__) . '/PollingChat.php';
 
-
 $data = new Ice_InitializationData;
 $data->properties = Ice_getProperties();
 if($data->properties->getProperty("PollingChatSessionFactory") == '')
 {
     $data->properties->setProperty("Ice.Plugin.IceSSL", "IceSSL:createIceSSL");
-    $data->properties->setProperty("IceSSL.VerifyDepthMax", "3");
+    $data->properties->setProperty("IceSSL.UsePlatformCAs", "1");
+    $data->properties->setProperty("IceSSL.CheckCertName", "1");
     $data->properties->setProperty("PollingChatSessionFactory",
                                    "PollingChatSessionFactory:wss -h zeroc.com -p 443 -r /demo-proxy/chat/poll");
 }

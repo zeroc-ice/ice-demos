@@ -19,6 +19,8 @@ import android.os.SystemClock;
 import com.zeroc.chat.ChatActivity;
 import com.zeroc.chat.R;
 
+import java.io.IOException;
+
 public class ChatService extends Service implements com.zeroc.chat.service.Service
 {
     private static final int CHATACTIVE_NOTIFICATION = 0;
@@ -116,8 +118,7 @@ public class ChatService extends Service implements com.zeroc.chat.service.Servi
         }
     }
 
-    synchronized public void login(final String hostname, final String username, final String password,
-                                   final boolean secure)
+    synchronized public void login(final String username, final String password)
     {
         assert _session == null;
         assert !_loginInProgress;
@@ -131,7 +132,7 @@ public class ChatService extends Service implements com.zeroc.chat.service.Servi
             {
                 try
                 {
-                    loginComplete(new AppSession(getResources(), _handler, hostname, username, password, secure), hostname);
+                    loginComplete(new AppSession(getResources(), _handler, username, password));
                 }
                 catch(final Glacier2.CannotCreateSessionException ex)
                 {
@@ -147,6 +148,11 @@ public class ChatService extends Service implements com.zeroc.chat.service.Servi
                 {
                     ex.printStackTrace();
                     postLoginFailure(String.format("Login failed: %s", ex.toString()));
+                }
+                catch(final IOException ex)
+                {
+                    ex.printStackTrace();
+                    postLoginFailure(String.format("Initialization failed %s", ex.toString()));
                 }
                 finally
                 {
@@ -210,7 +216,7 @@ public class ChatService extends Service implements com.zeroc.chat.service.Servi
         }
     }
 
-    synchronized private void loginComplete(AppSession session, String hostname)
+    synchronized private void loginComplete(AppSession session)
     {
         _session = session;
 
@@ -231,7 +237,7 @@ public class ChatService extends Service implements com.zeroc.chat.service.Servi
                 .setSmallIcon(R.drawable.stat_notify)
                 .setContentText("Logged In")
                 .setWhen(System.currentTimeMillis())
-                .setContentTitle("You are logged into " + hostname)
+                .setContentTitle("You are logged into server")
                 .setContentIntent(PendingIntent.getActivity(this, 0, new Intent(this, ChatActivity.class), 0))
                 .build();
         NotificationManager n = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);

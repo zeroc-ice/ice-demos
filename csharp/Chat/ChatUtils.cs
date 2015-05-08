@@ -2,9 +2,6 @@
 //
 // Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 //
-// This copy of Chat Demo is licensed to you under the terms described
-// in the CHAT_DEMO_LICENSE file included in this distribution.
-//
 // **********************************************************************
 
 using System;
@@ -47,7 +44,7 @@ namespace ChatDemoGUI
         public static string getSystemUsername()
         {
             string username = System.Security.Principal.WindowsIdentity.GetCurrent().Name.ToString();
-            int pos = username.IndexOf("\\"); 
+            int pos = username.IndexOf("\\");
             if(pos > 0)
             {
                 username = username.Substring(pos + 1, username.Length - pos -1);
@@ -179,7 +176,7 @@ namespace ChatDemoGUI
     }
 
     //
-    // This class implements the IValueConverter interface to transform a bool value to its 
+    // This class implements the IValueConverter interface to transform a bool value to its
     // inverse. We use this in our xaml definitions for binding to the inverse value of
     // a boolean property.
     //

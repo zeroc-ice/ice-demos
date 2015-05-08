@@ -26,15 +26,13 @@
 @synthesize waitAlert;
 @synthesize communicator;
 
-static NSString* hostnameKey = @"hostnameKey";
 static NSString* usernameKey = @"usernameKey";
 static NSString* passwordKey = @"passwordKey";
 static NSString* sslKey = @"sslKey";
 
 +(void)initialize
 {
-    NSDictionary* appDefaults = [NSDictionary dictionaryWithObjectsAndKeys:@"demo.zeroc.com", hostnameKey,
-                                 @"", usernameKey,
+    NSDictionary* appDefaults = [NSDictionary dictionaryWithObjectsAndKeys:@"", usernameKey,
                                  @"", passwordKey,
                                  @"YES", sslKey,
                                  nil];
@@ -47,8 +45,6 @@ static NSString* sslKey = @"sslKey";
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
 
     // Set the default values, and show the clear button in the text field.
-    hostnameField.text = [defaults stringForKey:hostnameKey];
-    hostnameField.clearButtonMode = UITextFieldViewModeWhileEditing;
     usernameField.text =  [defaults stringForKey:usernameKey];
     usernameField.clearButtonMode = UITextFieldViewModeWhileEditing;
     passwordField.text = [defaults stringForKey:passwordKey];
@@ -79,7 +75,6 @@ static NSString* sslKey = @"sslKey";
         [statusActivity stopAnimating];
     }
     loginButton.enabled = !v;
-    hostnameField.enabled = !v;
     usernameField.enabled = !v;
     passwordField.enabled = !v;
 }
@@ -94,7 +89,7 @@ static NSString* sslKey = @"sslKey";
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    loginButton.enabled = hostnameField.text.length > 0 && usernameField.text.length > 0;
+    loginButton.enabled = usernameField.text.length > 0;
     [loginButton setAlpha:loginButton.enabled ? 1.0 : 0.5];
 	[super viewWillAppear:animated];
 }
@@ -127,11 +122,7 @@ static NSString* sslKey = @"sslKey";
     // When the user presses return, take focus away from the text
     // field so that the keyboard is dismissed.
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults]; 
-    if(theTextField == hostnameField)
-    {
-        [defaults setObject:theTextField.text forKey:hostnameKey];
-    }
-    else if(theTextField == usernameField)
+    if(theTextField == usernameField)
     {
         [defaults setObject:theTextField.text forKey:usernameKey];
     }
@@ -139,7 +130,7 @@ static NSString* sslKey = @"sslKey";
     {
         [defaults setObject:theTextField.text forKey:passwordKey];
     }
-    loginButton.enabled = hostnameField.text.length > 0 && usernameField.text.length > 0;
+    loginButton.enabled = usernameField.text.length > 0;
     [loginButton setAlpha:loginButton.enabled ? 1.0 : 0.5];
 
     [theTextField resignFirstResponder];
@@ -179,7 +170,7 @@ static NSString* sslKey = @"sslKey";
     [communicator destroy];
     self.communicator = nil;
  
-    loginButton.enabled = hostnameField.text.length > 0 && usernameField.text.length > 0;
+    loginButton.enabled = usernameField.text.length > 0;
     [loginButton setAlpha:loginButton.enabled ? 1.0 : 0.5];
     
     // open an alert with just an OK button
@@ -196,12 +187,9 @@ static NSString* sslKey = @"sslKey";
     ICEInitializationData* initData = [ICEInitializationData initializationData];
     
     initData.properties = [ICEUtil createProperties];
+    [initData.properties load:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"config.client"]];
     [initData.properties setProperty:@"Ice.ACM.Client.Timeout" value:@"0"];
     [initData.properties setProperty:@"Ice.RetryIntervals" value:@"-1"];
-    [initData.properties setProperty:@"IceSSL.CheckCertName" value:@"0"];
-    [initData.properties setProperty:@"IceSSL.TrustOnly.Client"
-                               value:@"D1:33:E4:95:73:E6:66:45:2A:EE:C6:61:28:40:57:2F:B1:FF:48:B9"];
-    [initData.properties setProperty:@"IceSSL.CertAuthFile" value:@"cacert.der"];
     
     initData.dispatcher = ^(id<ICEDispatcherCall> call, id<ICEConnection> con)
     {
@@ -210,31 +198,6 @@ static NSString* sslKey = @"sslKey";
     
     NSAssert(communicator == nil, @"communicator == nil");
     self.communicator = [ICEUtil createCommunicator:initData];
-
-    @try
-    {
-        NSString *hostname = [hostnameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-        NSString* s = [NSString stringWithFormat:@"Glacier2/router:ssl -p 4064 -h \"%@\" -t 10000", hostname];
-           
-        id<ICEObjectPrx> proxy = [communicator stringToProxy:s];
-        id<ICERouterPrx> router = [ICERouterPrx uncheckedCast:proxy];
-        
-        // Configure the default router on the communicator.
-        [communicator setDefaultRouter:router];
-    }
-    @catch(ICEEndpointParseException* ex)
-    {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid Hostname"
-                                                        message:@"The provided hostname is invalid."
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
-
-        [communicator destroy];
-        self.communicator = nil;
-        return;
-    }
     
     [self connecting:TRUE];
     
@@ -258,7 +221,7 @@ static NSString* sslKey = @"sslKey";
                 // The communicator is now owned by the ChatController.
                 self.communicator = nil;
                 
-                [chatController activate:hostnameField.text];
+                [chatController activate:@"Chat"];
                 [self.navigationController pushViewController:chatController animated:YES];
             });
         }
@@ -272,6 +235,13 @@ static NSString* sslKey = @"sslKey";
         @catch(GLACIER2PermissionDeniedException* ex)
         {
             NSString* s = [NSString stringWithFormat:@"Login failed: %@", ex.reason_];
+            dispatch_async(dispatch_get_main_queue(), ^ {
+                [self exception:s];
+            });
+        }
+        @catch(ICEEndpointParseException* ex)
+        {
+            NSString* s = [NSString stringWithFormat:@"Invalid router: %@", ex.reason];
             dispatch_async(dispatch_get_main_queue(), ^ {
                 [self exception:s];
             });

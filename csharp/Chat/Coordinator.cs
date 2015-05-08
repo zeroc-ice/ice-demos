@@ -2,9 +2,6 @@
 //
 // Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 //
-// This copy of Chat Demo is licensed to you under the terms described
-// in the CHAT_DEMO_LICENSE file included in this distribution.
-//
 // **********************************************************************
 
 using System;
@@ -102,7 +99,7 @@ namespace ChatDemoGUI
                 _users.RemoveAt(index);
                 if(_chatView != null)
                 {
-                    _chatView.appendMessage(ChatUtils.formatTimestamp(timestamp) + " - <system-message> - " + 
+                    _chatView.appendMessage(ChatUtils.formatTimestamp(timestamp) + " - <system-message> - " +
                                             name + " left." + Environment.NewLine);
                 }
             }
@@ -184,7 +181,7 @@ namespace ChatDemoGUI
             if(_model.State == ClientState.Connected || _model.State == ClientState.ConnectionLost)
             {
                 _chatView.appendError(error);
-                setState(ClientState.ConnectionLost);   
+                setState(ClientState.ConnectionLost);
             }
             else
             {
@@ -233,7 +230,7 @@ namespace ChatDemoGUI
 
         //
         // AMI implementation of callback send operation.
-        // 
+        //
         public class AMI_ChatSession_sendI
         {
             public AMI_ChatSession_sendI(Coordinator coordinator, string name, string message)
@@ -392,7 +389,7 @@ namespace ChatDemoGUI
 
         private App _app = null;
         private string[] _args = null;
-        private Glacier2.SessionFactoryHelper _factory;        
+        private Glacier2.SessionFactoryHelper _factory;
         private LoginInfo _info = new LoginInfo();
         private Glacier2.SessionHelper _session = null;
         private Object _sessionMonitor = new Object();

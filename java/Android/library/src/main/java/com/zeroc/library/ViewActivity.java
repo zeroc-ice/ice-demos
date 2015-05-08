@@ -40,39 +40,6 @@ public class ViewActivity extends SessionActivity
     private TextView _rentedBy;
     private Button _rent;
 
-    public static class RentBookDialogFragment extends DialogFragment
-    {
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState)
-        {
-            // This example shows how to add a custom layout to an AlertDialog
-            LayoutInflater factory = LayoutInflater.from(getActivity());
-            final View entryView = factory.inflate(R.layout.rentername, null);
-            final EditText renter = (EditText)entryView.findViewById(R.id.renter);
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle("Enter Renter")
-                    .setView(entryView)
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener()
-                    {
-                        public void onClick(DialogInterface dialog, int whichButton)
-                        {
-                            final String r = renter.getText().toString().trim();
-                            if(r.length() > 0)
-                            {
-                                ((ViewActivity)getActivity()).rentBook(r);
-                            }
-                        }
-                    })
-                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener()
-                    {
-                        public void onClick(DialogInterface dialog, int whichButton)
-                        {
-                        }
-                    });
-            return builder.create();
-        }
-    }
-
     public static class DeleteBookDialogFragment extends DialogFragment
     {
         @Override
@@ -159,8 +126,9 @@ public class ViewActivity extends SessionActivity
             {
                 if(_desc.rentedBy.length() == 0)
                 {
-                    DialogFragment dialog = new RentBookDialogFragment();
-                    dialog.show(getFragmentManager(), RENT_TAG);
+                    LibraryApp app = (LibraryApp) getApplication();
+                    String renter = app.getSessionController().getUsername();
+                    rentBook(renter);
                 }
                 else
                 {

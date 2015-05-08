@@ -3,9 +3,6 @@
 
  Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 
- This copy of Chat Demo is licensed to you under the terms described in
- the CHAT_DEMO_LICENSE file included in this distribution.
-
  **********************************************************************
 -->
 
@@ -53,7 +50,7 @@
             -->
             <ListBox Grid.Row="0" Grid.Column="0"
                  IsSynchronizedWithCurrentItem="True"
-                 ItemsSource="{Binding Mode=OneWay, IsAsync=True, Source={StaticResource UserList}}" 
+                 ItemsSource="{Binding Mode=OneWay, IsAsync=True, Source={StaticResource UserList}}"
                  ItemTemplate="{StaticResource UserTemplate}" Focusable="False" IsHitTestVisible="False"
                  IsTextSearchEnabled="False">
             </ListBox>
@@ -63,8 +60,8 @@
 
             <!-- Define a text box to show chat messages. -->
             <TextBox Grid.Row="0" Grid.Column="2" x:Name="txtMessages"
-                 FontSize="12" Text="" TextWrapping="Wrap" IsEnabled="True"    
-                 ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" 
+                 FontSize="12" Text="" TextWrapping="Wrap" IsEnabled="True"
+                 ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto"
                  ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnly="True"
                  MinLines="4" SizeChanged="scrollDown"/>
         </Grid>
@@ -77,7 +74,7 @@
         <!--- Define an editable text box for the user to write messages. -->
         <TextBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3"
                  Name="txtChatInputLine"
-                 TextWrapping="Wrap" 
+                 TextWrapping="Wrap"
                  ScrollViewer.CanContentScroll="True"
                  HorizontalScrollBarVisibility="Hidden"
                  VerticalScrollBarVisibility="Auto"

@@ -11,13 +11,8 @@
 @interface LoginController : NSWindowController
 {
 @private
-    IBOutlet NSTextField* chatServerField;
     IBOutlet NSTextField* usernameField;
     IBOutlet NSTextField* passwordField;
-    IBOutlet NSButton* sslField;
-    IBOutlet NSButton* glacier2Field;
-    IBOutlet NSButton* routerField;
-    IBOutlet NSTextField* routerServerField;
     IBOutlet NSWindow* advancedSheet;
     IBOutlet NSWindow* connectingSheet;
     IBOutlet NSProgressIndicator* progress;
@@ -25,7 +20,6 @@
 }
 
 -(void)login:(id)sender;
--(void)routerChanged:(id)sender;
 -(void)showAdvancedSheet:(id)sender;
 -(void)closeAdvancedSheet:(id)sender;
 

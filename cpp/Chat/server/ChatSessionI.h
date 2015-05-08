@@ -2,11 +2,8 @@
 //
 // Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 //
-// This copy of Chat Demo is licensed to you under the terms described
-// in the CHAT_DEMO_LICENSE file included in this distribution.
-//
 // **********************************************************************
- 
+
 #ifndef CHAT_SESSION_I_H
 #define CHAT_SESSION_I_H
 
@@ -24,7 +21,7 @@ public:
     virtual void destroy(const Ice::Current&);
 
 private:
-	
+
 	// Required to prevent compiler warnings with MSVC++
 	ChatSessionI& operator=(const ChatSessionI&);
 

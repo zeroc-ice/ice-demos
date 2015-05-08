@@ -14,7 +14,6 @@
 @interface LoginController : UIViewController<UITextFieldDelegate,UIAlertViewDelegate>
 {
 @private
-    IBOutlet UITextField* hostnameField;
     IBOutlet UITextField* usernameField;
     IBOutlet UITextField* passwordField;
     IBOutlet UIButton* loginButton;

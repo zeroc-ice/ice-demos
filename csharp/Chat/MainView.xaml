@@ -3,9 +3,6 @@
 
  Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 
- This copy of Chat Demo is licensed to you under the terms described in
- the CHAT_DEMO_LICENSE file included in this distribution.
-
  **********************************************************************
 -->
 
@@ -20,9 +17,9 @@
     MinWidth="400" MinHeight="540" Style="{StaticResource PageBackground}"
     Activated="windowActivated" Visibility="Visible">
     <Window.CommandBindings>
-        <CommandBinding Command="local:ChatCommands.Login" 
+        <CommandBinding Command="local:ChatCommands.Login"
                         Executed="login" CanExecute="isLoginEnabled"></CommandBinding>
-        <CommandBinding Command="local:ChatCommands.Logout" 
+        <CommandBinding Command="local:ChatCommands.Logout"
                         Executed="logout" CanExecute="isLogoutEnabled"></CommandBinding>
         <CommandBinding Command="local:ChatCommands.Exit" Executed="exit"></CommandBinding>
         <CommandBinding Command="local:ChatCommands.About" Executed="about"></CommandBinding>
@@ -49,7 +46,7 @@
                         Converter={StaticResource statusFormatter}}">
         </TextBlock>
 
-        <!-- Frame for load XAML pages 
+        <!-- Frame for load XAML pages
              The source attribute uses a binding to show the frame assigned to
              ChatModel.CurrentFrame. When the property changes, the loaded frame
              is reloaded with the new page. -->

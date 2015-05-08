@@ -126,15 +126,13 @@
         <h4>Chat Demo Readme</h4>
         <hr/>
         <p>This demo implements a push client for the
-            <a href="https://zeroc.com/chat/index.html">ZeroC's Chat Demo Application</a>. You can also use the
-            <a href="#" class="chatbutton">Live Client</a> if you don't want to setup your own server.
+            <a href="https://zeroc.com/chat/index.html">ZeroC's Chat Demo Application</a>. By default it will connect to a chat server running on demo.zeroc.com though a proxy on https://zeroc.com. There is also a <a href="#" class="chatbutton">Live Client</a> which connects to the same server.
         </p>
 
-        <p>To set up the server follow the instructions from the
-            <a href="https://zeroc.com/chat/download.html">Chat Demo Distribution</a>.</p>
+        <p>To set up your own server follow the instructions from the <a href="https://zeroc.com/chat/download.html">Chat Demo Distribution</a>.</p>
 
         <p>You will need to update the Glacier2 configuration to include WSS endpoints.
-        Edit <code>ChatDemo-1.4.0/config/config.glacier2router</code>
+        Edit <code>ice-demos/js/Chat/server/config.glacier2router</code>
         and update the <code>Glacier2.Client.Endpoints</code> property with the value shown below:</p>
         <p>
         <code style="color:#858585;font-weight:normal;font-size:80%;">
@@ -143,15 +141,9 @@
         </p>
 
         <p>After making those modifications to the Glacier2 router configuration, you can start the Chat Demo
-           server and Glacier2 router as documented in the Chat Demo distribution.</p>
+           server and Glacier2 router as shown in the server README.md.</p>
 
-        <div class="panel callout radius">
-            <p>You must configure your environment to run IceWS applications as documented in the Ice
-            <a href="https://doc.zeroc.com/display/Rel/Ice+3.6.0+Release+Notes">Release Notes</a>.</p>
-        </div>
-
-        <p>Once you have configured and started the Chat Demo server and router,
-           you can log into the chat using the sign-in form below.</p>
+        <p>Once you have configured and started the Chat Demo server and router, edit Ice.Default.Router property in js/Chat/config.json. You will then be able to log into your chat server using this page.</p>
 
         <h4>Using the minified scripts</h4>
         <p>When the demo is built with optimizations enabled, it creates a minified
@@ -163,7 +155,7 @@
             <li>Chat.js & ChatSession.js (The generated code for this demo)</li>
             <li>Client.js (The client application)</li>
         </ul>
-        <p>To use the minified version you should edit the <code>demo/ChatDemo/index.html</code>
+        <p>To use the minified version you should edit the <code>js/Chat/index.html</code>
         file and comment out the non-optimized scripts:</p>
         <pre>
     &lt;!-- Scripts used during development, for optimized builds
@@ -200,17 +192,17 @@
         </dl>
         <div class="tabs-content">
             <div class="content active" id="panel2-1">
-                <h6>File: ChatDemo/Chat.ice</h6>
+                <h6>File: Chat/Chat.ice</h6>
                 <pre class="source language-c" data-code="Chat.ice"></pre>
-                <h6>File: ChatDemo/ChatSession.ice</h6>
+                <h6>File: Chat/ChatSession.ice</h6>
                 <pre class="source language-c" data-code="ChatSession.ice"></pre>
             </div>
             <div class="content" id="panel2-2">
-                <h6>File: ChatDemo/Client.js</h6>
+                <h6>File: Chat/Client.js</h6>
                 <pre class="source" data-code="Client.js"></pre>
             </div>
             <div class="content" id="panel2-3">
-                <h6>File: ChatDemo/index.html</h6>
+                <h6>File: Chat/index.html</h6>
                 <pre class="source" data-code="index.html"></pre>
             </div>
         </div>
@@ -249,7 +241,7 @@
         $(".chatbutton").click(
             function(e)
             {
-                window.open("https://demo.zeroc.com/chat/js/index.html", "ChatDemo",
+                window.open("https://demo.zeroc.com/chat/js/index.html", "Chat",
                             "width=800,height=600,location=no,directories=no,status=yes," +
                             "menubar=no,scrollbars=yes,resizable=yes,toolbar=no");
                 return false;

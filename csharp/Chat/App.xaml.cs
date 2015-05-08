@@ -2,9 +2,6 @@
 //
 // Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 //
-// This copy of Chat Demo is licensed to you under the terms described
-// in the CHAT_DEMO_LICENSE file included in this distribution.
-//
 // **********************************************************************
 
 using System;
@@ -45,7 +42,7 @@ namespace ChatDemoGUI
         private void AppStartup(object sender, StartupEventArgs e)
         {
             PlatformID id = Environment.OSVersion.Platform;
-            bool windows = id == PlatformID.Win32NT || id  == PlatformID.Win32S || id == PlatformID.Win32Windows || 
+            bool windows = id == PlatformID.Win32NT || id  == PlatformID.Win32S || id == PlatformID.Win32Windows ||
                            id == PlatformID.WinCE;
             if(windows)
             {

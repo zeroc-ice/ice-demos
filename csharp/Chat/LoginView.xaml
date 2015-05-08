@@ -3,9 +3,6 @@
 
  Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 
- This copy of Chat Demo is licensed to you under the terms described in
- the CHAT_DEMO_LICENSE file included in this distribution.
-
  **********************************************************************
 -->
 
@@ -20,10 +17,10 @@
                 Converter={StaticResource connectingBoolConverter}}"
                 MaxWidth="400" Margin="7,7,7,7">
         <!-- Info text -->
-        <TextBlock HorizontalAlignment="Center" TextWrapping="WrapWithOverflow" 
+        <TextBlock HorizontalAlignment="Center" TextWrapping="WrapWithOverflow"
                    Style="{StaticResource TextTitle}" Text="Chat Demo"></TextBlock>
 
-        <TextBlock HorizontalAlignment="Center" TextWrapping="WrapWithOverflow" 
+        <TextBlock HorizontalAlignment="Center" TextWrapping="WrapWithOverflow"
                    Style="{StaticResource TextInfo}" Text="Welcome! You can login with any username / password."/>
 
         <!-- Form fields , are connected to the LoginData of the ChatModel data provider instance
@@ -32,7 +29,7 @@
              and from property to text box. -->
         <StackPanel Orientation="Vertical">
             <TextBlock Name="lblUsername">Username:</TextBlock>
-            <TextBox Name="txtUsername" Text="{Binding Source={StaticResource ChatModel}, 
+            <TextBox Name="txtUsername" Text="{Binding Source={StaticResource ChatModel},
                      Path=LoginData.Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             <TextBlock TextWrapping="NoWrap">Password:</TextBlock>
             <PasswordBox Name="txtPassword"></PasswordBox>
@@ -46,14 +43,14 @@
                     Converter={StaticResource boolVisibilityConverter}}">
 
                 <TextBlock TextWrapping="WrapWithOverflow">Host:</TextBlock>
-                <TextBox Name="txtHost" Text="{Binding Source={StaticResource ChatModel}, 
+                <TextBox Name="txtHost" Text="{Binding Source={StaticResource ChatModel},
                              Path=LoginData.Host, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
 
             </StackPanel>
         </StackPanel>
 
         <!-- The login button -->
-        <Button MaxWidth="60" Click="login" IsDefault="True" 
+        <Button MaxWidth="60" Click="login" IsDefault="True"
                 Style="{StaticResource ToolBarButton}" Margin="0,10,0,0">Login</Button>
     </StackPanel>
 </Page>

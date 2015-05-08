@@ -56,10 +56,10 @@ public class LibraryApp extends Application
         }
     }
 
-    public LoginController login(String hostname, boolean secure, boolean glacier2, Listener listener)
+    public LoginController login(String username, String password, Listener listener)
     {
         assert _loginController == null && _sessionController == null;
-        _loginController = new LoginController(getResources(), hostname, secure, glacier2, listener);
+        _loginController = new LoginController(getResources(), username, password, listener);
         return _loginController;
     }
 

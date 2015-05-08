@@ -2,9 +2,6 @@
 //
 // Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 //
-// This copy of Chat Demo is licensed to you under the terms described
-// in the CHAT_DEMO_LICENSE file included in this distribution.
-//
 // **********************************************************************
 
 #ifndef POLLING_CHAT_SESSION_FACTORY_I_H
@@ -26,7 +23,7 @@ public:
     void add(const PollingChat::PollingChatSessionPrx&, const PollingChatSessionIPtr&);
 
 private:
-    
+
     IceUtil::Mutex _mutex;
     const IceUtil::Time _timeout;
     std::list<std::pair<PollingChat::PollingChatSessionPrx, PollingChatSessionIPtr> > _reapables;
@@ -44,7 +41,7 @@ public:
     virtual PollingChat::PollingChatSessionPrx create(const std::string&, const std::string&, const Ice::Current&);
 
 private:
-	
+
 	// Required to prevent compiler warnings with MSVC++
 	PollingChatSessionFactoryI& operator=(const PollingChatSessionFactoryI&);
 

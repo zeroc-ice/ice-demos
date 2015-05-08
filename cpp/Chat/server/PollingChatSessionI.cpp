@@ -2,9 +2,6 @@
 //
 // Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 //
-// This copy of Chat Demo is licensed to you under the terms described
-// in the CHAT_DEMO_LICENSE file included in this distribution.
-//
 // **********************************************************************
 
 #include <PollingChatSessionI.h>
@@ -16,28 +13,28 @@ class PollCallbackAdapter : public ChatRoomCallbackAdapter
 {
 public:
 
-    virtual void 
+    virtual void
     init(const Ice::StringSeq& users)
     {
         IceUtil::Mutex::Lock sync(_mutex);
         _users = users;
     }
 
-    virtual void 
+    virtual void
     send(const PollingChat::MessageEventPtr& e)
     {
         IceUtil::Mutex::Lock sync(_mutex);
         _updates.push_back(e);
     }
 
-    virtual void 
+    virtual void
     join(const PollingChat::UserJoinedEventPtr& e)
     {
         IceUtil::Mutex::Lock sync(_mutex);
         _updates.push_back(e);
     }
 
-    virtual void 
+    virtual void
     leave(const PollingChat::UserLeftEventPtr& e)
     {
         IceUtil::Mutex::Lock sync(_mutex);
@@ -53,7 +50,7 @@ public:
         return users;
     }
 
-    PollingChat::ChatRoomEventSeq 
+    PollingChat::ChatRoomEventSeq
     getUpdates()
     {
         IceUtil::Mutex::Lock sync(_mutex);

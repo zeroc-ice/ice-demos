@@ -7,3 +7,4 @@ qrc_qt.cpp
 Makefile.qmake
 Makefile.qmake.*
 env.pri
+QtChatDemo.app

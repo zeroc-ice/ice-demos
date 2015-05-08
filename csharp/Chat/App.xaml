@@ -3,9 +3,6 @@
 
  Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 
- This copy of Chat Demo is licensed to you under the terms described in
- the CHAT_DEMO_LICENSE file included in this distribution.
-
  **********************************************************************
 -->
 <Application x:Class="ChatDemoGUI.App"
@@ -31,7 +28,7 @@
         <!-- Declare an instance of our BoolVisibilityConverter that implements the interface
             IValueConverter.-->
         <chat:BoolVisibilityConverter x:Key="boolVisibilityConverter"></chat:BoolVisibilityConverter>
-        
+
         <chat:ConnectingBoolConverter x:Key="connectingBoolConverter"></chat:ConnectingBoolConverter>
 
         <!-- Styles for our application -->
@@ -67,7 +64,7 @@
             <Setter Property="Button.FontFamily" Value="Times New Romans"/>
             <Setter Property="Button.FontSize" Value="12"/>
         </Style>
-        
+
         <!-- Style for tool bar button -->
         <Style x:Key="Menu">
             <Setter Property="MenuItem.FontFamily" Value="Times New Romans"/>

@@ -2,9 +2,6 @@
 //
 // Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 //
-// This copy of Chat Demo is licensed to you under the terms described
-// in the CHAT_DEMO_LICENSE file included in this distribution.
-//
 // **********************************************************************
 
 package ChatDemoGUI;
@@ -58,14 +55,14 @@ class Coordinator
         Ice.InitializationData initData = new Ice.InitializationData();
         initData.properties = Ice.Util.createProperties(new Ice.StringSeqHolder(_args));
         initData.properties.setProperty("Ice.Plugin.IceSSL", "IceSSL.PluginFactory");
-        initData.properties.setProperty("IceSSL.VerifyPeer", "0");
 
         //
         // Set Ice.Default.Router if not set.
         //
         if(initData.properties.getProperty("Ice.Default.Router").isEmpty())
         {
-            initData.properties.setProperty("IceSSL.VerifyDepthMax", "3");
+            initData.properties.setProperty("IceSSL.UsePlatformCAs", "1");
+            initData.properties.setProperty("IceSSL.CheckCertName", "1");
             initData.properties.setProperty("Ice.Default.Router",
                                             "Glacier2/router:wss -p 443 -h zeroc.com -r /demo-proxy/chat/glacier2");
         }

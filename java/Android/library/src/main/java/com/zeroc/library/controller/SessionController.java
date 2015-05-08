@@ -22,6 +22,8 @@ public class SessionController
     private boolean _fatal = false;
     private boolean _destroyed = false;
 
+    String _username;
+
     private SessionAdapter _session;
 
     class SessionRefreshThread extends Thread
@@ -85,7 +87,7 @@ public class SessionController
         }
     }
 
-    SessionController(Handler handler, Ice.Communicator communicator, SessionAdapter session, long refreshTimeout)
+    SessionController(Handler handler, Ice.Communicator communicator, SessionAdapter session, String username, long refreshTimeout)
     {
         _communicator = communicator;
         _session = session;
@@ -93,6 +95,8 @@ public class SessionController
 
         _refresh = new SessionRefreshThread(refreshTimeout);
         _refresh.start();
+
+        _username = username;
 
         _queryController = new QueryController(_handler, _session.getLibrary());
     }
@@ -104,6 +108,7 @@ public class SessionController
             return;
         }
         _destroyed = true;
+        _username = null;
 
         new Thread(new Runnable()
         {
@@ -140,6 +145,11 @@ public class SessionController
                 }
             }
         }).start();
+    }
+
+    synchronized public String getUsername()
+    {
+        return _username;
     }
 
     synchronized public void setSessionListener(Listener listener)

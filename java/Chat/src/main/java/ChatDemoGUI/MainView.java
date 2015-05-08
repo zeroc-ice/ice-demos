@@ -2,9 +2,6 @@
 //
 // Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 //
-// This copy of Chat Demo is licensed to you under the terms described
-// in the CHAT_DEMO_LICENSE file included in this distribution.
-//
 // **********************************************************************
 
 package ChatDemoGUI;
@@ -50,7 +47,7 @@ import com.jgoodies.forms.util.LayoutStyle;
 
 public class MainView extends JFrame
 {
-    public static void main(final String[] args) 
+    public static void main(final String[] args)
     {
         try
         {
@@ -69,12 +66,12 @@ public class MainView extends JFrame
                 UIManager.setLookAndFeel("com.jgoodies.looks.plastic.PlasticLookAndFeel");
             }
         }
-        catch(Exception e) 
+        catch(Exception e)
         {
         }
-        SwingUtilities.invokeLater(new Runnable() 
+        SwingUtilities.invokeLater(new Runnable()
         {
-            public void run() 
+            public void run()
             {
                 new MainView(args); // Create and set up the window.
             }
@@ -124,7 +121,7 @@ public class MainView extends JFrame
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter()
         {
-            public void windowClosing(WindowEvent e) 
+            public void windowClosing(WindowEvent e)
             {
                 storeWindowPrefs();
                 _coordinator.exit();
@@ -134,7 +131,7 @@ public class MainView extends JFrame
         _about = new AbstractAction("About")
         {
             public void
-            actionPerformed(ActionEvent e) 
+            actionPerformed(ActionEvent e)
             {
                 about();
             }
@@ -142,7 +139,7 @@ public class MainView extends JFrame
 
         _login = new AbstractAction("Login")
         {
-            public void actionPerformed(ActionEvent e) 
+            public void actionPerformed(ActionEvent e)
             {
                 _coordinator.setState(Coordinator.ClientState.Disconnected);
                 _login.setEnabled(false);
@@ -152,7 +149,7 @@ public class MainView extends JFrame
 
         _logout = new AbstractAction("Logout")
         {
-            public void actionPerformed(ActionEvent e) 
+            public void actionPerformed(ActionEvent e)
             {
                 _logout.setEnabled(false);
                 _chatView.storeWindowPrefs();
@@ -163,7 +160,7 @@ public class MainView extends JFrame
 
         _exit = new AbstractAction("Exit")
         {
-            public void actionPerformed(ActionEvent e) 
+            public void actionPerformed(ActionEvent e)
             {
                 _logout.setEnabled(false);
                 _chatView.storeWindowPrefs();

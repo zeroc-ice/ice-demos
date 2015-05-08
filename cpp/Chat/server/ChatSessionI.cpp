@@ -2,9 +2,6 @@
 //
 // Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 //
-// This copy of Chat Demo is licensed to you under the terms described
-// in the CHAT_DEMO_LICENSE file included in this distribution.
-//
 // **********************************************************************
 
 #include <ChatSessionI.h>
@@ -16,7 +13,7 @@ class SessionCallbackAdapter : public ChatRoomCallbackAdapter
 {
 public:
 
-    SessionCallbackAdapter(const Chat::ChatRoomCallbackPrx& callback, const Chat::ChatSessionPrx& session, bool trace, 
+    SessionCallbackAdapter(const Chat::ChatRoomCallbackPrx& callback, const Chat::ChatSessionPrx& session, bool trace,
                            const Ice::LoggerPtr& logger, const std::string& name) :
         _callback(callback),
         _session(session),
@@ -30,7 +27,7 @@ public:
     {
         try
         {
-            _callback->begin_init(users, Chat::newCallback_ChatRoomCallback_init(this, 
+            _callback->begin_init(users, Chat::newCallback_ChatRoomCallback_init(this,
                                                  &SessionCallbackAdapter::success, &SessionCallbackAdapter::failure));
         }
         catch(const Ice::CommunicatorDestroyedException&)
@@ -43,7 +40,7 @@ public:
     {
         try
         {
-            _callback->begin_join(e->timestamp, e->name, Chat::newCallback_ChatRoomCallback_join(this, 
+            _callback->begin_join(e->timestamp, e->name, Chat::newCallback_ChatRoomCallback_join(this,
                                                  &SessionCallbackAdapter::success, &SessionCallbackAdapter::failure));
         }
         catch(const Ice::CommunicatorDestroyedException&)
@@ -56,7 +53,7 @@ public:
     {
         try
         {
-            _callback->begin_leave(e->timestamp, e->name, Chat::newCallback_ChatRoomCallback_leave(this, 
+            _callback->begin_leave(e->timestamp, e->name, Chat::newCallback_ChatRoomCallback_leave(this,
                                                 &SessionCallbackAdapter::success, &SessionCallbackAdapter::failure));
         }
         catch(const Ice::CommunicatorDestroyedException&)
@@ -69,7 +66,7 @@ public:
     {
         try
         {
-            _callback->begin_send(e->timestamp, e->name, e->message, Chat::newCallback_ChatRoomCallback_send(this, 
+            _callback->begin_send(e->timestamp, e->name, e->message, Chat::newCallback_ChatRoomCallback_send(this,
                                                 &SessionCallbackAdapter::success, &SessionCallbackAdapter::failure));
         }
         catch(const Ice::CommunicatorDestroyedException&)
@@ -77,11 +74,11 @@ public:
             // Ignored server is being shutdown
         }
     }
-    
+
     void success()
     {
     }
-    
+
     void failure(const Ice::Exception&)
     {
         if(_trace)
@@ -100,7 +97,7 @@ public:
     }
 
 private:
-	
+
 	// Required to prevent compiler warnings with MSVC++
 	SessionCallbackAdapter& operator=(const SessionCallbackAdapter&);
 

@@ -3,10 +3,10 @@ This demo is an iPhone client for the
 connects to a single chat room, allowing you to chat with other chat
 room participants.
 
-By default, the demo connects to a chat server hosted on
-demo.zeroc.com. The server accepts both secure and non-secure
-connections through Glacier2. You may use any user name and password
-when connecting.
+By default, the demo connects throught a WebSocket proxy hosted on zeroc.com 
+to a chat server hosted on demo.zeroc.com.  
+
+You may use any user name and password when connecting.
 
 If you would like to run your own server, or are otherwise interested
 in the Chat Demo, the complete source is available

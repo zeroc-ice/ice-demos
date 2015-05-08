@@ -2,9 +2,6 @@
 //
 // Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 //
-// This copy of Chat Demo is licensed to you under the terms described
-// in the CHAT_DEMO_LICENSE file included in this distribution.
-//
 // **********************************************************************
 
 #include <Chat.h>
@@ -367,7 +364,6 @@ public:
             QString(QApplication::applicationDirPath() +
                     "/../Frameworks/IceSSL:createIceSSL").toUtf8().data());
 #endif
-        initData.properties->setProperty("IceSSL.VerifyPeer", "0");
 
         _dispatcher = new Dispatcher(this);
         initData.dispatcher = _dispatcher;
@@ -377,7 +373,8 @@ public:
         //
         if(initData.properties->getProperty("Ice.Default.Router").empty())
         {
-            initData.properties->setProperty("IceSSL.VerifyDepthMax", "3");
+            initData.properties->setProperty("IceSSL.UsePlatformCAs", "1");
+            initData.properties->setProperty("IceSSL.CheckCertName", "1");
             initData.properties->setProperty("Ice.Default.Router",
                                              "Glacier2/router:wss -p 443 -h zeroc.com -r /demo-proxy/chat/glacier2");
         }

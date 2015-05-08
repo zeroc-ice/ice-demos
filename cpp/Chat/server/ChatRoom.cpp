@@ -2,9 +2,6 @@
 //
 // Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
 //
-// This copy of Chat Demo is licensed to you under the terms described
-// in the CHAT_DEMO_LICENSE file included in this distribution.
-//
 // **********************************************************************
 
 #include <ChatRoom.h>
@@ -76,7 +73,7 @@ ChatRoom::leave(const string& name)
 
     _members.erase(name);
 
-    PollingChat::UserLeftEventPtr e = new PollingChat::UserLeftEvent(timestamp, name); 
+    PollingChat::UserLeftEventPtr e = new PollingChat::UserLeftEvent(timestamp, name);
     for(ChatRoomCallbackMap::const_iterator q = _members.begin(); q != _members.end(); ++q)
     {
         q->second->leave(e);
