@@ -18,4 +18,4 @@ IceSSL.TrustOnly.Client=CN="Master";CN="Slave";CN="Glacier2"
 # C++ configuration
 Ice.Plugin.IceSSL.cpp=IceSSL:createIceSSL
 IceSSL.DefaultDir=certs
-IceSSL.CertAuthFile=ca.pem
+IceSSL.CAs=ca.pem

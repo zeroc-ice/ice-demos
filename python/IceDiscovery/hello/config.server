@@ -57,7 +57,7 @@ Ice.Plugin.IceDiscovery=IceDiscovery:createIceDiscovery
 #
 Ice.Plugin.IceSSL=IceSSL:createIceSSL
 IceSSL.DefaultDir=../../../certs
-IceSSL.CertAuthFile=cacert.pem
+IceSSL.CAs=cacert.pem
 IceSSL.CertFile=server.p12
 IceSSL.Password=password
 IceSSL.Keychain=server.keychain

@@ -72,7 +72,7 @@ Glacier2.Filter.Category.Accept=session
 #
 Ice.Plugin.IceSSL=IceSSL:createIceSSL
 IceSSL.DefaultDir=../../../certs
-IceSSL.CertAuthFile=cacert.pem
+IceSSL.CAs=cacert.pem
 IceSSL.CertFile=server.p12
 IceSSL.Password=password
 IceSSL.Keychain=glacier2.keychain

@@ -49,7 +49,7 @@ IceSSL.Trace.Security=1
 #
 Ice.Plugin.IceSSL=IceSSL:createIceSSL
 IceSSL.DefaultDir=../../../certs
-IceSSL.CertAuthFile=cacert.pem
+IceSSL.CAs=cacert.pem
 IceSSL.CertFile=server.p12
 IceSSL.Password=password
 IceSSL.VerifyPeer=0

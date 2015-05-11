@@ -44,7 +44,7 @@ Ice.Trace.Locator=1
 #
 Ice.Plugin.IceSSL=IceSSL:IceSSL.PluginFactory
 IceSSL.DefaultDir=../../../certs
-IceSSL.CertAuthFile=cacert.pem
+IceSSL.CAs=cacert.pem
 IceSSL.CertFile=client.p12
 IceSSL.Password=password
 

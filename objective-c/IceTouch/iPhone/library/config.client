@@ -18,4 +18,4 @@ IceSSL.CheckCertName=1
 #
 # IceSSL.TrustOnly.Client=D1:33:E4:95:73:E6:66:45:2A:EE:C6:61:28:40:57:2F:B1:FF:48:B9
 # IceSSL.CheckCertName=0
-# IceSSL.CertAuthFile=cacert.der
+# IceSSL.CAs=cacert.der

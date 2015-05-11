@@ -62,7 +62,7 @@ Ice.RetryIntervals=-1
 #
 # SSL Configuration
 #
-IceSSL.CertAuthFile=cacert.pem
+IceSSL.CAs=cacert.pem
 IceSSL.DefaultDir=../../../certs
 IceSSL.TrustOnly.Client=CN="127.0.0.1"
 IceSSL.CheckCertName=0

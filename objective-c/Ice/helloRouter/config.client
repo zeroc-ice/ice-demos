@@ -52,5 +52,5 @@ Ice.ACM.Client.Timeout=10
 # SSL Configuration
 #
 IceSSL.DefaultDir=../../../certs
-IceSSL.CertAuthFile=cacert.pem
+IceSSL.CAs=cacert.pem
 IceSSL.CertFile=client.p12

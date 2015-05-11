@@ -13,4 +13,4 @@ IceSSL.CheckCertName=1
 #
 
 # IceSSL.TrustOnly.Client=CN=127.0.0.1
-# IceSSL.CertAuthFile=cacert.pem
+# IceSSL.CAs=cacert.pem
