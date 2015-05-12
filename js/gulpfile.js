@@ -13,13 +13,32 @@ var gulp        = require("gulp");
 var gzip        = require("gulp-gzip");
 var minifycss   = require('gulp-minify-css');
 var newer       = require('gulp-newer');
+var npm         = require('npm');
 var open        = require("gulp-open");
 var path        = require("path");
 var paths       = require('vinyl-paths');
-var slice2js    = require("gulp-ice-builder");
+var iceBuilder  = require("gulp-ice-builder");
 var uglify      = require("gulp-uglify");
 
 var HttpServer  = require("./bin/HttpServer");
+
+//
+// Check ICE_HOME environment variable. If this is set then
+// prefer it over default packages
+//
+var ICE_HOME = process.env.ICE_HOME || null;
+
+function slice2js(options) {
+    var defaults = {};
+    var opts = options || {};
+
+    defaults.args = opts.args || [];
+    defaults.dest = opts.dest;
+    defaults.exe = ICE_HOME === null ? undefined : (opts.exe || path.resolve(
+            path.join(ICE_HOME, 'cpp', 'bin', process.platform == "win32" ? "slice2js.exe" : "slice2js")));
+    defaults.args = defaults.args.concat(ICE_HOME === null ? [] : ["-I" + path.join(ICE_HOME, 'slice')]);
+    return iceBuilder.compile(defaults);
+}
 
 var common =
 {
@@ -41,15 +60,36 @@ var common =
          "assets/icejs.css"]
 };
 
-gulp.task("dist:libs", ["bower"],
+gulp.task("dist:libs", ["npm", "bower"],
     function()
     {
-        return gulp.src(["bower_components/zeroc-icejs/lib/*"])
+        var libs = ICE_HOME === null ?  'bower_components/ice/lib/*' : path.join(ICE_HOME, 'js', 'lib', '*');
+        return gulp.src([libs])
             .pipe(newer("lib"))
             .pipe(gulp.dest("lib"));
     });
 
-gulp.task("bower", [],
+gulp.task("npm", [],
+    function(cb)
+    {
+        npm.load({loglevel: 'silent'}, function(err, npm) {
+            if(ICE_HOME)
+            {
+                console.log("Installing ice from", path.join(ICE_HOME, 'js'));
+                npm.commands.install([path.join(ICE_HOME, 'js')], function(err, data)
+                {
+                    if(err) return cb(err);
+                    cb();
+                });
+            }
+            else
+            {
+                cb();
+            }
+        });
+    });
+
+gulp.task("bower", ["npm"],
     function(cb)
     {
         bower.commands.install().on("end", function(){ cb(); });
@@ -122,11 +162,11 @@ function demoGeneratedFile(file){ return path.join(path.basename(file, ".ice") +
 demos.forEach(
     function(name)
     {
-        gulp.task(demoTaskName(name), [],
+        gulp.task(demoTaskName(name), ['dist:libs'],
             function()
             {
                 return gulp.src(path.join(name, "*.ice"))
-                    .pipe(slice2js.compile({args: ["-I" + name], dest: name}))
+                    .pipe(slice2js({args: ["-I" + name], dest: name}))
                     .pipe(gulp.dest(name));
             });
 
@@ -183,7 +223,7 @@ Object.keys(minDemos).forEach(
     {
         var demo = minDemos[name];
 
-        gulp.task(minDemoTaskName(name), [demoTaskName(name), "common:css", "common:js", "dist:libs"],
+        gulp.task(minDemoTaskName(name), [demoTaskName(name), "dist:libs", "common:css", "common:js"],
             function()
             {
                 return gulp.src(demo.srcs)
