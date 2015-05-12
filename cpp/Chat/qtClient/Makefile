@@ -59,20 +59,6 @@ QMAKE = $(QT_HOME)/bin/qmake
 MACDEPLOYQT = $(QT_HOME)/bin/macdeployqt
 endif
 
-ifeq ($(UNAME),Darwin)
-
-ifeq ($(shell test -f $(QT_HOME)/5.0.0/clang_64/bin/qmake && echo 0),0)
-QMAKE = $(QT_HOME)/5.0.0/clang_64/bin/qmake
-MACDEPLOYQT = $(QT_HOME)/5.0.0/clang_64/bin/macdeployqt
-endif
-
-ifeq ($(shell test -f $(QT_HOME)/5.0.1/clang_64/bin/qmake && echo 0),0)
-QMAKE = $(QT_HOME)/5.0.1/clang_64/bin/qmake
-MACDEPLOYQT = $(QT_HOME)/5.0.1/clang_64/bin/macdeployqt
-endif
-
-endif
-
 endif
 
 #
@@ -94,7 +80,7 @@ Makefile.qmake: qt.pro
 	OPTIMIZE=$(OPTIMIZE) ICE_HOME=$(ice_cpp_dir) ICE_libsubdir=$(libsubdir) $(QMAKE) -o Makefile.qmake qt.pro
 
 $(CLIENT): Makefile.qmake $(SRCS) $(HEADERS)
-	ICE_HOME=$(ice_cpp_dir) $(MAKE) -f Makefile.qmake
+	OPTIMIZE=$(OPTIMIZE) ICE_HOME=$(ice_cpp_dir) ICE_libsubdir=$(libsubdir) $(MAKE) -f Makefile.qmake
 	@if test $(UNAME) = "Darwin" ; \
 	then \
 	    $(MACDEPLOYQT) QtChatDemo.app; \

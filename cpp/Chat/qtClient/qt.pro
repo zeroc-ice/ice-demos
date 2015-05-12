@@ -71,8 +71,8 @@ else{
 }
 
 mac{
-    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.8
-    QMAKE_INFO_PLIST = $$TOPDIR/config/Info.plist
+    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.9
+    QMAKE_INFO_PLIST = resources/Info.plist
     QMAKE_LFLAGS    += -Wl,-rpath,@executable_path/../Frameworks/
     ICON = resources/icons/logo.icns
 }

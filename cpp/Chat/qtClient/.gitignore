@@ -8,3 +8,4 @@ Makefile.qmake
 Makefile.qmake.*
 env.pri
 QtChatDemo.app
+.qmake.stash
