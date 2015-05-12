@@ -38,8 +38,7 @@
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:orientation="horizontal"
-		android:paddingBottom="5dip"
-		android:id="@+id/">
+		android:paddingBottom="5dip">
 
 		<TextView
 		    android:layout_width="0dip"
