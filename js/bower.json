@@ -6,13 +6,9 @@
   "homepage": "https://zeroc.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/zeroc-inc/ice-demos.git"
+    "url": "https://github.com/zeroc-ice/ice-demos.git"
   },
   "license": "GPL-2.0",
-  "keywords": [
-    "Ice",
-    "IceJS"
-  ],
   "dependencies": {
     "foundation": "~5.5.0",
     "jquery": "~2.1.3",
