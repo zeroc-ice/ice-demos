@@ -101,8 +101,8 @@ server = factory.create("server", cn = (dns if usedns else ip), ip=ip, dns=dns)
 server.save("server.p12").save("server.jks", caalias="cacert")
 
 try:
-    client.save("client.bks")
-    server.save("server.bks")
+    client.save("client.bks", caalias="cacert")
+    server.save("server.bks", caalias="cacert")
 except Exception as ex:
     print("warning: couldn't generate BKS certificates:\n" + str(ex))
 
