@@ -16,7 +16,7 @@ The sample programs are grouped by programming language:
 * [Ruby](./ruby)
 * [Visual Basic](./visualBasic)
 
-For example, the [C++](./cpp) folder contains all the sample programs written
+For example, the [cpp](./cpp) folder contains all the sample programs written
 in C++.
 
 The [certs](./certs) folder contains X.509 certificates shared by some of these
