@@ -1,13 +1,53 @@
-This directory contains demos for various Ice components. The demos are
-provided to get you started on how to use a particular feature or coding
-technique. See the README file in each subdirectory for details on the
-demos.
+# Objective-C Demos
 
-The [Manual](./Manual) directory contains demos for some of the code examples
-in the [Ice manual](https://doc.zeroc.com/display/Ice/Ice+Manual).
+## Overview
 
-The [IceTouch](./IceTouch) directory contains iPhone demos for the Ice Touch
-SDKs.
+This directory contains Objective-C sample programs for various Ice components.
+These examples are provided to get you started on using a particular Ice feature or
+coding technique.
 
-For more examples of the features of the Ice services (Glacier2, IceGrid,
-IceStorm) please see the [C++ demos](../cpp).
+Most of the subdirectories here correspond directly to Ice components, such as
+[Ice](./Ice) and [IceDiscovery](./IceDiscovery). We've also included the following
+additional subdirectories:
+
+- [Database](./Database) has an Ice Touch client for our Java-based
+[database](../java/Database/library) demo.
+
+- [IceTouch](./IceTouch) contains a number of Cocoa and iOS examples.
+
+- [Manual](./Manual) contains complete examples for some of the code snippets
+in the [Ice manual][1].
+
+## Build Instructions
+
+### Prerequisites
+
+The sample programs require the [Ice Builder for Xcode][2].
+
+The command-line demos require the Xcode Command Line Tools to be installed
+(installed from Xcode -> Preferences).
+
+### Building the Demos
+
+To build the command-line examples, first review the settings found in
+`make/Make.rules` and adjust any you want changed. If you've installed Ice
+in a non-standard location, you'll also need to set the `ICE_HOME` environment
+variable with the path name of the installation directory:
+
+    $ export ICE_HOME=~/testing/Ice
+
+Run `make` to start the build:
+
+    $ make
+
+To build the Cocoa or iOS examples, open `IceTouch/demos.xcworkspace` in
+Xcode. If you've installed Ice in a non-standard location, update the Ice Home
+property in the Ice Builder - General Options settings with the directory of your
+Ice installation.
+
+## Running the Demos
+
+Refer to the README file in each demo directory for usage instructions.
+
+[1]: https://doc.zeroc.com/display/Ice36/Ice+Manual
+[2]: https://github.com/zeroc-ice/ice-builder-xcode

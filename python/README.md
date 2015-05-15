@@ -1,6 +1,26 @@
-This directory contains demos for various Ice components. The demos are
-provided to get you started on how to use a particular feature or coding
-technique. See the README file in each subdirectory for details on the demos.
+# Python Demos
 
-For more examples of the features of the Ice services (Glacier2, IceGrid,
-IceStorm) please see the [C++ demos](../cpp).
+## Overview
+
+This directory contains Python sample programs for various Ice components.
+These examples are provided to get you started on using a particular Ice feature or
+coding technique.
+
+Most of the subdirectories here correspond directly to Ice components, such as
+[Glacier2](./Glacier2), [IceGrid](./IceGrid), and so on. Note that [Manual](./Manual)
+contains complete examples for some of the code snippets in the
+[Ice manual][1].
+
+Refer to the [C++ demos](../cpp) for more examples that use the Ice services.
+
+## Prerequisites
+
+You'll need to install Ice for Python in order to use any of the sample programs.
+Our [documentation][2] describes how to install the Python packages.
+
+## Running the Demos
+
+Refer to the README file in each demo directory for usage instructions.
+
+[1]: https://doc.zeroc.com/display/Ice36/Ice+Manual
+[2]: https://doc.zeroc.com/display/Ice36/Using+the+Python+Distribution

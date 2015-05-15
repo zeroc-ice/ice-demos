@@ -1,17 +1,78 @@
-This directory contains demos for various Ice components. The demos are
-provided to get you started on how to use a particular feature or coding
-technique. See the README file in each subdirectory for details on the
-demos.
+# JavaScript Demos
 
-The [Chat](./Chat) directory contains a Javascript client for the ZeroC
-[Chat Demo](https://zeroc.com/chat/index.html).
+## Overview
 
-For more examples of the features of the Ice services (Glacier2, IceGrid,
-IceStorm) please see the [C++ demos](../cpp).
+This directory contains JavaScript sample programs for various Ice components. These
+examples are provided to get you started on using a particular Ice feature or coding
+technique.
 
-To run the browser demos run
+The following subdirectories contain sample programs:
 
-```
-$ npm install
-$ npm run gulp:watch
-```
+- [Chat](./Chat) is a JavaScript client for the ZeroC [Chat Demo][1].
+
+- [Glacier2](./Glacier2) is a simpler chat client that uses the Glacier2 service.
+
+- [Ice](./Ice) has several examples that illustrate fundamental Ice concepts.
+
+Refer to the [C++ demos](../cpp) for more examples that use Ice services
+such as IceGrid and IceStorm.
+
+## Build Instructions
+
+### Prerequisites
+
+The JavaScript sample programs require an installation of [Node.js][2].
+
+### Building the Demos
+
+With Node.js in your PATH, run the following command to install several
+dependencies:
+
+    npm install
+
+This command builds the Slice-to-JavaScript compiler (`slice2js`) from
+source and requires a supported C++ compiler.
+
+Now use gulp to build the demos:
+
+    npm run gulp:build
+
+## Running the Node.js JavaScript Demos
+
+Ice provides only client demos in JavaScript since Ice for JavaScript does not support
+full server-side activities. In order to run a sample client, you must first start its
+corresponding server from another Ice language mapping. For example, start the C++
+"hello" server:
+
+    > cd cpp/Ice/hello
+    > server
+
+To run the client, open another terminal window, change to the corresponding
+JavaScript demo directory, and run:
+
+    > cd js/Ice/hello
+    > node Client
+
+## Running the Browser JavaScript Demos
+
+Ice provides only client demos in JavaScript since Ice for JavaScript does not support
+full server-side activities. The browser clients require an HTTP server that supports
+WebSocket connections. For your convenience, this distribution includes a Node.js
+HTTP server pre-configured for the demos. Open another terminal window and run:
+
+    $ npm run gulp:watch
+
+This will load http://127.0.0.1:8080/index.html in the default browser. From this page
+you can select the client that you want to run.
+
+Next, start the corresponding server from another Ice language mapping. Open a
+terminal window, change to the desired server directory, and start the server. The
+client page provides a README link which might include additional instructions for
+running the server; please refer to the README of each client before starting the
+server.
+
+To try a different client, terminate the server that you started earlier, change to the
+new server directory and start the new server.
+
+[1]: https://zeroc.com/chat/index.html
+[2]: http://nodejs.org
