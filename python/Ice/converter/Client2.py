@@ -13,8 +13,7 @@ import Demo
 def menu():
     print("""
 usage:
-t: send greeting with conversion
-u: send greeting without conversion
+t: send greeting
 s: shutdown server
 x: exit
 ?: help
@@ -30,8 +29,7 @@ def decodeString(str):
             ret += str[i]
     return ret
 
-communicator1 = None
-communicator2 = None
+communicator = None
 
 class Client:
     def run(self, args):
@@ -39,13 +37,8 @@ class Client:
             print(self.appName() + ": too many arguments")
             return 1
 
-        greet1 = Demo.GreetPrx.checkedCast(communicator1.propertyToProxy('Greet.Proxy'))
-        if not greet1:
-            print(args[0] + ": invalid proxy")
-            return 1
-        
-        greet2 = Demo.GreetPrx.checkedCast(communicator2.propertyToProxy('Greet.Proxy'))
-        if not greet2:
+        greet = Demo.GreetPrx.checkedCast(communicator.propertyToProxy('Greet.Proxy'))
+        if not greet:
             print(args[0] + ": invalid proxy")
             return 1
         
@@ -60,13 +53,10 @@ class Client:
                 sys.stdout.flush()
                 c = sys.stdin.readline().strip()
                 if c == 't':
-                    ret = greet2.exchangeGreeting(greeting)
-                    print("Received by client: \"" + decodeString(ret) + "\"")
-                elif c == 'u':
-                    ret = greet1.exchangeGreeting(greeting)
+                    ret = greet.exchangeGreeting(greeting)
                     print("Received by client: \"" + decodeString(ret) + "\"")
                 elif c == 's':
-                    greet2.shutdown()
+                    greet.shutdown()
                 elif c == 'x':
                     pass # Nothing to do
                 elif c == '?':
@@ -90,16 +80,8 @@ try:
     initData = Ice.InitializationData()
     initData.properties = Ice.createProperties(None, initData.properties)
     initData.properties.load("config.client")
-    #
-    # Without converter
-    #
-    communicator1 = Ice.initialize(sys.argv, initData)
 
-    #
-    # Add converter plugin (can't be removed later on)
-    #
-    initData.properties.setProperty("Ice.Plugin.StringConverter", "Ice:createStringConverter iconv=ISO8859-1 windows=1252")
-    communicator2 = Ice.initialize(sys.argv, initData)
+    communicator = Ice.initialize(sys.argv, initData)
 
     app = Client()
     status = app.run(sys.argv)
@@ -108,16 +90,9 @@ except:
     traceback.print_exc()
     status = 1
 
-if communicator1:
+if communicator:
     try:
-        communicator1.destroy()
-    except:
-        traceback.print_exc()
-        status = 1
-
-if communicator2:
-    try:
-        communicator2.destroy()
+        communicator.destroy()
     except:
         traceback.print_exc()
         status = 1
