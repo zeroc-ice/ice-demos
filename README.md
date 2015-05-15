@@ -30,11 +30,8 @@ tested on any other platform.
 
 ### Building and Running the Sample Programs
 
-Please visit the 'Using the Sample Programs' section in the release notes for
-Ice and Ice Touch:
-
-* https://doc.zeroc.com/display/Ice36/Release+Notes
-* https://doc.zeroc.com/display/IceTouch/Release+Notes
+The README file in each language subdirectory provides instructions for
+building and running the sample programs.
 
 ### License
 
