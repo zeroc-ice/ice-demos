@@ -4,8 +4,8 @@
 //
 // **********************************************************************
 
-var Ice = require("zeroc-icejs").Ice;
-var Glacier2 = require("zeroc-icejs").Glacier2;
+var Ice = require("ice").Ice;
+var Glacier2 = require("ice").Glacier2;
 var Demo = require("./Chat").Demo;
 
 //

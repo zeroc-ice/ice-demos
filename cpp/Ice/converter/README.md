@@ -10,8 +10,8 @@ The demo server prints the strings as they are received to show
 how, without conversion, they are not in the format expected by
 the application.
 
-There are two clients client1 uses an string converter and, client2
-doesn't use and string converter.
+There are two clients, client1 uses a string converter and client2
+doesn't use a string converter.
 
 To run the demo, first start the server:
 

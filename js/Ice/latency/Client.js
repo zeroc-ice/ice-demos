@@ -4,7 +4,7 @@
 //
 // **********************************************************************
 
-var Ice = require("zeroc-icejs").Ice;
+var Ice = require("ice").Ice;
 var Demo = require("./Latency").Demo;
 
 var communicator;
