@@ -55,6 +55,8 @@ edit `gradle.properties` and set the following variable:
 
     iceHome=<path to your Ice installation>
 
+This path name must only use forward slashes, even on Windows.
+
 ## Building the Project
 
 Follow these steps to import the project into Android Studio:
