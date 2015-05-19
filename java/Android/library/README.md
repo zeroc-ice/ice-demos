@@ -10,5 +10,4 @@ on "demo2.zeroc.com". If you prefer, you can run your own library
 server; the Java source code for this server can be found in the
 Database/library subdirectory.
 
-Please refer to the release notes for instructions on configuring
-your environment to use Ice in an Android project.
+Refer to the [parent directory](../README.md) for build instructions.

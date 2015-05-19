@@ -18,5 +18,4 @@ below:
 
   https://zeroc.com/chat/index.html
 
-Please refer to the release notes for instructions on configuring
-your environment to use Ice in an Android project.
+Refer to the [parent directory](../README.md) for build instructions.
