@@ -15,6 +15,8 @@ in the [Ice manual][1].
 
 - [Chat](./Chat) contains a GUI client for the ZeroC [Chat Demo][2].
 
+- [Android](./Android) contains examples of Android applications.
+
 Refer to the [C++ demos](../cpp) for more examples that use the Ice services
 (Glacier2, IceGrid, IceStorm).
 
