@@ -266,6 +266,6 @@ if (!android) {
     }
 
     if(!ext.dbJar || !new File(ext.dbJar).exists()) {
-        ext.dbJar = ""
+        throw new GradleException("Unable to find Berkeley DB JAR file, you may have to install it or set dbHome in gradle.properties.");
     }
 }
