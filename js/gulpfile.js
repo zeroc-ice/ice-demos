@@ -27,7 +27,11 @@ var HttpServer  = require("./bin/HttpServer");
 // Check ICE_HOME environment variable. If this is set and points to a source
 // distribution then prefer it over default packages.
 //
-var ICE_HOME = fs.existsSync(path.join(process.env.ICE_HOME, "js", "package.json")) ? process.env.ICE_HOME : undefined;
+var ICE_HOME;
+if(process.env.ICE_HOME)
+{
+    ICE_HOME = fs.existsSync(path.join(process.env.ICE_HOME, "js", "package.json")) ? process.env.ICE_HOME : undefined;
+}
 
 function slice2js(options)
 {
@@ -67,7 +71,7 @@ var common =
 gulp.task("dist:libs", ["npm", "bower"],
     function()
     {
-        var libs = ICE_HOME ?  path.join(ICE_HOME, 'js', 'lib', '*') : 'bower_components/ice/lib/*';
+        var libs = ICE_HOME ? path.join(ICE_HOME, 'js', 'lib', '*') : 'bower_components/ice/lib/*';
         return gulp.src([libs])
             .pipe(newer("lib"))
             .pipe(gulp.dest("lib"));
