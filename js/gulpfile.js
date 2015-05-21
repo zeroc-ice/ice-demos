@@ -9,6 +9,7 @@ var browserSync = require("browser-sync");
 var concat      = require('gulp-concat');
 var del         = require("del");
 var extreplace  = require("gulp-ext-replace");
+var fs          = require('fs');
 var gulp        = require("gulp");
 var gzip        = require("gulp-gzip");
 var minifycss   = require('gulp-minify-css');
@@ -23,20 +24,23 @@ var uglify      = require("gulp-uglify");
 var HttpServer  = require("./bin/HttpServer");
 
 //
-// Check ICE_HOME environment variable. If this is set then
-// prefer it over default packages
+// Check ICE_HOME environment variable. If this is set and points to a source
+// distribution then prefer it over default packages.
 //
-var ICE_HOME = process.env.ICE_HOME || null;
+var ICE_HOME = fs.existsSync(path.join(process.env.ICE_HOME, "js", "package.json")) ? process.env.ICE_HOME : undefined;
 
-function slice2js(options) {
+function slice2js(options)
+{
     var defaults = {};
     var opts = options || {};
 
     defaults.args = opts.args || [];
     defaults.dest = opts.dest;
-    defaults.exe = ICE_HOME === null ? undefined : (opts.exe || path.resolve(
-            path.join(ICE_HOME, 'cpp', 'bin', process.platform == "win32" ? "slice2js.exe" : "slice2js")));
-    defaults.args = defaults.args.concat(ICE_HOME === null ? [] : ["-I" + path.join(ICE_HOME, 'slice')]);
+    if(ICE_HOME)
+    {
+        defaults.exe = path.join(ICE_HOME, 'cpp', 'bin', process.platform == "win32" ? "slice2js.exe" : "slice2js");
+        defaults.args = defaults.args.concat(["-I" + path.join(ICE_HOME, 'slice')])
+    }
     return iceBuilder.compile(defaults);
 }
 
@@ -63,7 +67,7 @@ var common =
 gulp.task("dist:libs", ["npm", "bower"],
     function()
     {
-        var libs = ICE_HOME === null ?  'bower_components/ice/lib/*' : path.join(ICE_HOME, 'js', 'lib', '*');
+        var libs = ICE_HOME ?  path.join(ICE_HOME, 'js', 'lib', '*') : 'bower_components/ice/lib/*';
         return gulp.src([libs])
             .pipe(newer("lib"))
             .pipe(gulp.dest("lib"));
@@ -75,11 +79,9 @@ gulp.task("npm", [],
         npm.load({loglevel: 'silent'}, function(err, npm) {
             if(ICE_HOME)
             {
-                console.log("Installing ice from", path.join(ICE_HOME, 'js'));
                 npm.commands.install([path.join(ICE_HOME, 'js')], function(err, data)
                 {
-                    if(err) return cb(err);
-                    cb();
+                    cb(err);
                 });
             }
             else
