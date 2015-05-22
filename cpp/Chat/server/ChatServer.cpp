@@ -31,34 +31,34 @@ ChatServer::start(int, char*[], int& status)
     _timer = new IceUtil::Timer();
     // Timeout for reaping polling sessions.
     int timeout = communicator()->getProperties()->getPropertyAsIntWithDefault("ReaperTimeout", 10);
-    bool trace = communicator()->getProperties()->getPropertyAsIntWithDefault("Server.Trace", 0) != 0;
+    bool traceEnabled = communicator()->getProperties()->getPropertyAsIntWithDefault("Server.Trace", 0) != 0;
     Ice::LoggerPtr logger = communicator()->getLogger();
-    ReaperTaskPtr reaper = new ReaperTask(timeout, trace, logger);
+    ReaperTaskPtr reaper = new ReaperTask(timeout, traceEnabled, logger);
     _timer->scheduleRepeated(reaper, IceUtil::Time::seconds(timeout));
     try
     {
         _adapter = communicator()->createObjectAdapter("ChatServer");
 
-        ChatRoomPtr chatRoom = new ChatRoom(trace, logger);
-        if(trace)
+        ChatRoomPtr chatRoom = new ChatRoom(traceEnabled, logger);
+        if(traceEnabled)
         {
             ostringstream os;
             os << "Chat room created ok.";
             logger->trace("info", os.str());
         }
-        _adapter->add(new ChatSessionManagerI(chatRoom, trace, logger),
+        _adapter->add(new ChatSessionManagerI(chatRoom, traceEnabled, logger),
                      communicator()->stringToIdentity("ChatSessionManager"));
 
-        if(trace)
+        if(traceEnabled)
         {
             ostringstream os;
             os << "Chat session manager created ok.";
             logger->trace("info", os.str());
         }
-        _adapter->add(new PollingChatSessionFactoryI(chatRoom, reaper, trace, logger),
+        _adapter->add(new PollingChatSessionFactoryI(chatRoom, reaper, traceEnabled, logger),
                      communicator()->stringToIdentity("PollingChatSessionFactory"));
 
-        if(trace)
+        if(traceEnabled)
         {
             ostringstream os;
             os << "Polling chat session factory created ok.";
@@ -66,7 +66,7 @@ ChatServer::start(int, char*[], int& status)
         }
 
         _adapter->activate();
-        if(trace)
+        if(traceEnabled)
         {
             ostringstream os;
             os << "Chat server started ok.";

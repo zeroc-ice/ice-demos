@@ -70,8 +70,8 @@ public:
     virtual Glacier2::SessionPrx
     createSession()
     {
-        Glacier2::SessionPrx session;
-        while(!session)
+        Glacier2::SessionPrx sessionPrx;
+        while(!sessionPrx)
         {
             cout << "This demo accepts any user ID and password.\n";
 
@@ -87,7 +87,7 @@ public:
 
             try
             {
-                session = router()->createSession(id, pw);
+                sessionPrx = router()->createSession(id, pw);
                 break;
             }
             catch(const Glacier2::CannotCreateSessionException& ex)
@@ -103,7 +103,7 @@ public:
                 cerr << "Communication with the server failed:\n" << ex << endl;
             }
         }
-        return session;
+        return sessionPrx;
     }
 
     virtual void
@@ -120,8 +120,8 @@ public:
             throw string("usage: ") + appName();
         }
 
-        Chat::ChatSessionPrx session = Chat::ChatSessionPrx::uncheckedCast(this->session());
-        session->setCallback(Chat::ChatRoomCallbackPrx::uncheckedCast(addWithUUID(new ChatRoomCallbackI())));
+        Chat::ChatSessionPrx sessionPrx = Chat::ChatSessionPrx::uncheckedCast(this->session());
+        sessionPrx->setCallback(Chat::ChatRoomCallbackPrx::uncheckedCast(addWithUUID(new ChatRoomCallbackI())));
 
         menu();
 
@@ -150,7 +150,7 @@ public:
                     }
                     else
                     {
-                        session->send(s);
+                        sessionPrx->send(s);
                     }
                 }
             }
