@@ -62,7 +62,7 @@ ice_cpp_dir = $(ice_dir)\cpp
 slicedir		= $(ice_dir)\slice
 SLICE2PHP 		= $(ice_cpp_dir)\bin\$(slice_translator)
 
-ICECPPFLAGS		= -I$(slicedir)
+ICECPPFLAGS		= -I"$(slicedir)"
 SLICE2PHPFLAGS		= $(ICECPPFLAGS)
 
 !if "$(USE_NAMESPACES)" == "yes"
