@@ -203,6 +203,7 @@
     <None Include="..\..\..\..\certs\cacert.der">
       <DeploymentContent>true</DeploymentContent>
     </None>
+    <None Include="README.md" />
     <None Include="simpleChat_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>

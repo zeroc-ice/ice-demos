@@ -49,6 +49,7 @@
   <ItemGroup>
     <None Include="..\..\..\..\certs\cacert.der" />
     <None Include="simpleChat_TemporaryKey.pfx" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainPage.xaml" />

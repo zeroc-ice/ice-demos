@@ -188,6 +188,7 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <None Include="bidir_TemporaryKey.pfx" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Logo.png" />

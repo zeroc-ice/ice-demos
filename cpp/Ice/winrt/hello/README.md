@@ -6,12 +6,11 @@ First follow the instructions from the C++ Ice hello demo README to
 start the server. Since the WinRT SSL transport doesn't support
 client-side SSL authentication, you also need to edit the hello server
 configuration file config.server to uncomment the IceSSL.VerifyPeer=0
-property. If you run the client from a remote device such as the
-Surface, you will also need to regenerate the server certificate to
-ensure the certificate common name is set to the IP address of the
-server. To regenerate the certificate, you can run the makecerts.py
-Python script from the certs directory at the top of this
-distribution. For example:
+property. If you run the client from a remote machine or device, you 
+will also need to regenerate the server certificate to ensure the 
+certificate common name is set to the IP address of the server. To 
+regenerate the certificate, you can run the makecerts.py Python script 
+from the certs directory at the top of this distribution. For example:
 
   > cd certs
   > makecerts.py 192.168.1.53

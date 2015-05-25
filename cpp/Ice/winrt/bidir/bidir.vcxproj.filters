@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="bidir_TemporaryKey.pfx" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainPage.xaml" />
