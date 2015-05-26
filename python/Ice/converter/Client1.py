@@ -83,7 +83,7 @@ try:
     #
     # Add converter plugin (can't be removed later on)
     #
-    initData.properties.setProperty("Ice.Plugin.StringConverter", "Ice:createStringConverter iconv=ISO8859-1 windows=1252")
+    initData.properties.setProperty("Ice.Plugin.IceStringConverter", "Ice:createStringConverter iconv=ISO8859-1 windows=1252")
     communicator = Ice.initialize(sys.argv, initData)
 
     app = Client()
