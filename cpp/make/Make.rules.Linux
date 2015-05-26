@@ -13,8 +13,8 @@ MACHINE                 = $(shell uname -m)
 SUSE_i586               = $(shell grep i586 /etc/SuSE-release 2>/dev/null)
 
 ifneq ($(shell grep 'release 4' /etc/redhat-release 2>/dev/null),)
-   NPTL_LIB		= -L/usr/$(libsubdir)/nptl
-   NPTL_FLAGS	        = -I/usr/include/nptl
+   NPTL_LIB   = -L/usr/$(libsubdir)/nptl
+   NPTL_FLAGS	= -I/usr/include/nptl
 endif
 
 #
@@ -42,12 +42,12 @@ ifeq ($(CXX),g++)
         #
         # We are an ultra, at least, and so have the atomic instructions
         #
-        $(warning ===================================================================) 
+        $(warning ===================================================================)
         $(warning Linux on SPARC is currently unsupported. The Ice team does not)
         $(warning maintain SPARC specific portions of the source code or build)
         $(warning system. Contact sales@zeroc.com if you wish to sponsor official)
         $(warning support.)
-        $(warning ===================================================================) 
+        $(warning ===================================================================)
         USE_SPARC_ASM	= yes
         CXXARCHFLAGS	+= -mcpu=ultrasparc -pipe -Wno-deprecated -DUSE_SPARC_ASM
     endif
@@ -58,12 +58,12 @@ ifeq ($(CXX),g++)
         # On sun4m, there is a bug in some CPU/kernel/gcc configurations which
         # prevent us from using '-mcpu=v8'
         #
-        $(warning ===================================================================) 
+        $(warning ===================================================================)
         $(warning Linux on SPARC is currently unsupported. The Ice team does not)
         $(warning maintain SPARC specific portions of the source code or build)
         $(warning system. Contact sales@zeroc.com if you wish to sponsor official)
         $(warning support.)
-        $(warning ===================================================================) 
+        $(warning ===================================================================)
         USE_SPARC_ASM	= no
         CXXARCHFLAGS	+= -mtune=v8 -pipe -Wno-deprecated -DICE_USE_MUTEX_SHARED
     endif
@@ -90,9 +90,9 @@ ifeq ($(CXX),g++)
     ifeq ($(OPTIMIZE),yes)
         CXXFLAGS		+= -O2 -DNDEBUG
     else
-        CXXFLAGS		+= -g 
+        CXXFLAGS		+= -g
     endif
-   
+
     #
     # Add RPATH to LDEXEFLAGS if embedded_runpath is set to yes
     #
@@ -125,13 +125,13 @@ ifeq ($(CXX),g++)
 endif
 
 ifeq ($(CXX),icpc)
-   $(warning ===================================================================) 
+   $(warning ===================================================================)
    $(warning Intel C++ is currently not supported. The Ice team does not)
    $(warning maintain Intel C++ specific portions of the source code or build)
    $(warning system.  Contact sales@zeroc.com if you wish to sponsor official)
    $(warning support.)
-   $(warning ===================================================================) 
-   CXXFLAGS		= -D_REENTRANT    
+   $(warning ===================================================================)
+   CXXFLAGS		= -D_REENTRANT
 
    ifneq ($(GENPIC),no)
       CXXFLAGS		+= -fPIC
@@ -161,7 +161,7 @@ ifneq ($(NPTL_LIB),)
 endif
 
 ICESSL_LIBS             = $(OPENSSL_RPATH_LINK) -lIceSSL
-LIBS			= $(BZIP2_RPATH_LINK) -lIce $(BASELIBS)
+LIBS			              = $(BZIP2_RPATH_LINK) -lIce $(BASELIBS)
 
 ICEUTIL_OS_LIBS         = -lrt $(OPENSSL_RPATH_LINK) -lcrypto
 ICE_OS_LIBS             = -ldl

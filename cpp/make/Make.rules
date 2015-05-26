@@ -17,7 +17,7 @@
 #LP64			?= yes
 
 #
-# Define CPP11 as yes if you want to enable C++11 features in GCC or 
+# Define CPP11 as yes if you want to enable C++11 features in GCC or
 # Clang.
 #
 #CPP11     ?= yes
@@ -91,22 +91,22 @@ ifeq ($(UNAME),Linux)
       ifeq ($(shell test -d $(usr_dir)/lib/x86_64-linux-gnu && echo 0),0)
          lp64suffix	= /x86_64-linux-gnu
       endif
-      
+
       #
       # Rhel/SLES
       #
       ifeq ($(shell test -d $(usr_dir)/lib64 && echo 0),0)
           lp64suffix	= 64
       endif
-      
+
       ifeq ($(LP64),)
           LP64      	= yes
       endif
    endif
    ifneq ($(STATICLIBS),yes)
-	ifneq ($(LP64),yes)
-	    binsuffix     = 32
-	endif
+       ifneq ($(LP64),yes)
+           binsuffix     = 32
+       endif
     endif
 endif
 
@@ -119,7 +119,7 @@ ifeq ($(CPP11),yes)
         cpp11libdirsuffix	= /c++11
         cpp11libsuffix		= ++11
         cpp11sonamedir		= ../
-        binsuffix 		:= $(binsuffix)$(cpp11libsuffix)
+        binsuffix 	        := $(binsuffix)++11
     endif
 endif
 
@@ -129,37 +129,31 @@ ifneq ($(findstring MINGW,$(UNAME)),)
     COMPILER_MACHINE := $(shell $(CXX) -dumpmachine)
     ifeq ($(COMPILER_MACHINE),x86_64-w64-mingw32)
         LP64                    := yes
-    endif 
+    endif
 endif
 
 ifeq ($(LP64),yes)
-	libsubdir		:= lib$(lp64suffix)
-        binsubdir		:= bin$(lp64binsuffix)
+    libsubdir		:= lib$(lp64suffix)
+    binsubdir		:= bin$(lp64binsuffix)
 else
-	libsubdir		:= lib$(lp32suffix)
-	binsubdir		:= bin
-	#
-	# For x86 builds in x86_64 machines lib64subdir points to the x86_64 lib
-	# directory and libsubdir to the x86 lib directory.
-	#
-	ifeq ($(MACHINE_TYPE),x86_64)
-		ifeq ($(UNAME),Linux)
-			ifeq ($(shell test -d $(usr_dir)/lib/x86_64-linux-gnu && echo 0),0)
-				lib64subdir               = lib/x86_64-linux-gnu
-			else
-				lib64subdir               = lib$(lp64suffix)
-			endif
-		endif
-	endif
+    libsubdir		:= lib$(lp32suffix)
+    binsubdir		:= bin
+    #
+    # For x86 builds in x86_64 machines lib64subdir points to the x86_64 lib
+    # directory and libsubdir to the x86 lib directory.
+    #
+    ifeq ($(MACHINE_TYPE),x86_64)
+        lib64subdir               = lib$(lp64suffix)
+    endif
 endif
 
 #
 # The following variables might also be defined:
-# 
+#
 # - slice_translator: the name of the slice translator required for the build.
 #   Setting this variable is required when building source trees other than the
 #   the source distribution (e.g.: the demo sources).
-#                  
+#
 ifeq ($(ICE_HOME),)
     #
     # /usr or /usr/local install.
@@ -200,21 +194,16 @@ else
     slicedir = $(ice_dir)/slice
 endif
 
-#
-# TODO: Should this be:
-# $(ice_dir)/$(libsubdir)$(cpp11libdirsuffix)
-#
 ifdef ice_src_dist
     ice_lib_dir = $(ice_cpp_dir)/$(libsubdir)
     ice_bin_dir = $(ice_cpp_dir)/$(binsubdir)
 else
-    ifdef lib64subdir
-        ice_lib_dir = $(ice_dir)/$(lib64subdir)
-        ice_bin_dir = $(ice_dir)/$(bin64subdir)
-    else
+    ifndef lib64subdir
         ice_lib_dir = $(ice_dir)/$(libsubdir)
-        ice_bin_dir = $(ice_dir)/$(binsubdir)
+    else
+        ice_lib_dir = $(ice_dir)/$(lib64subdir)
     endif
+    ice_bin_dir = $(ice_dir)/$(binsubdir)
 endif
 
 #
@@ -233,7 +222,7 @@ ifneq ($(ice_dir), $(usr_dir))
         export DYLD_LIBRARY_PATH := $(ice_lib_dir):$(DYLD_LIBRARY_PATH)
     endif
 
-    
+
     ifeq ($(UNAME),SunOS)
         ifeq ($(LP64),yes)
             export LD_LIBRARY_PATH_64 := $(ice_lib_dir):$(LD_LIBRARY_PATH_64)
@@ -284,7 +273,7 @@ ifeq ($(mksoname),)
     ifeq ($(UNAME),Darwin)
         mksoname    = $(if $(2),lib$(1)$(cpp11libsuffix).$(2).dylib,lib$(1).dylib)
     else
-        mksoname	= $(if $(2),lib$(1)$(cpp11libsuffix).so.$(2),lib$(1).so)
+        mksoname    = $(if $(2),lib$(1)$(cpp11libsuffix).so.$(2),lib$(1).so)
     endif
 endif
 
@@ -330,14 +319,18 @@ ICECPPFLAGS		= -I$(slicedir)
 
 SLICE2CPPFLAGS		= $(ICECPPFLAGS)
 
-ifeq ($(ice_dir), $(usr_dir)) 
+ifeq ($(ice_dir), $(usr_dir))
     LDFLAGS	= $(LDPLATFORMFLAGS) $(CXXFLAGS)
     ifeq ($(CPP11),yes)
-        LDFLAGS = $(LDPLATFORMFLAGS) $(CXXFLAGS) -L$(ice_lib_dir)
+        LDFLAGS = $(LDPLATFORMFLAGS) $(CXXFLAGS) -L$(ice_dir)/$(libsubdir)$(cpp11libdirsuffix)
     endif
 else
     CPPFLAGS	+= -I$(includedir)
-    LDFLAGS	= $(LDPLATFORMFLAGS) $(CXXFLAGS) -L$(ice_lib_dir)
+    ifdef ice_src_dist
+        LDFLAGS	= $(LDPLATFORMFLAGS) $(CXXFLAGS) -L$(ice_cpp_dir)/$(libsubdir)$(cpp11libdirsuffix)
+    else
+        LDFLAGS	= $(LDPLATFORMFLAGS) $(CXXFLAGS) -L$(ice_dir)/$(libsubdir)$(cpp11libdirsuffix)
+    endif
 endif
 
 ifeq ($(FLEX_NOLINE),yes)
@@ -353,7 +346,7 @@ else
 endif
 
 ifeq ($(mkshlib),)
-    $(error You need to define mkshlib in Make.rules.$(UNAME)) 
+    $(error You need to define mkshlib in Make.rules.$(UNAME))
 endif
 
 
