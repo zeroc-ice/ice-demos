@@ -34,8 +34,6 @@ function Init()
         js: "text/javascript",
     };
 
-    var demoDist = !isdir(path.join(__dirname, "..", "lib"));
-
     var libraries = ["/lib/Ice.js", "/lib/Ice.min.js",
                     "/lib/Glacier2.js", "/lib/Glacier2.min.js",
                     "/lib/IceStorm.js", "/lib/IceStorm.min.js",
@@ -60,9 +58,6 @@ function Init()
 
         var iceLib = libraries.indexOf(req.url.pathname) !== -1;
         var iceLibMap = libraryMaps.indexOf(req.url.pathname) !== -1;
-        //
-        // If ICE_HOME has been set resolve Ice libraries paths into ICE_HOME.
-        //
         filePath = path.resolve(path.join(this._basePath, req.url.pathname));
 
         //
