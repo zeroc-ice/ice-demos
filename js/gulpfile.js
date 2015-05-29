@@ -77,6 +77,12 @@ gulp.task("dist:libs", ["npm", "bower"],
             .pipe(gulp.dest("lib"));
     });
 
+gulp.task("dist:clean", [],
+    function()
+    {
+        del(["lib/*"]);
+    });
+
 gulp.task("npm", [],
     function(cb)
     {
@@ -268,5 +274,5 @@ gulp.task("watch", ["demo:build", "dist:libs", "demo:watch", "common:css:watch",
         HttpServer();
         return gulp.src("./index.html").pipe(open("", {url: "http://127.0.0.1:8080/index.html"}));
     });
-gulp.task("clean", ["demo:clean", "common:clean"]);
+gulp.task("clean", ["demo:clean", "common:clean", "dist:clean"]);
 gulp.task("default", ["build"]);
