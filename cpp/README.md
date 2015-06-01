@@ -18,7 +18,7 @@ and a QT client for the ZeroC [Chat Demo][2].
 
 - [IceTouch](./IceTouch) contains iPhone demos for the Ice Touch SDKs.
 
-## Build Instructions for Linux & OS X
+## Building and Using the Demos for Linux & OS X
 
 ### Prerequisites
 
@@ -43,7 +43,7 @@ When you're ready to start the build, run `make`:
 
     $ make
 
-## Running the Demos
+### Running the Demos
 
 Before running a demo, make sure you've configured your environment to use Ice
 as described in the [release notes][3].
