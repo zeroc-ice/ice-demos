@@ -313,10 +313,10 @@ Commands:
 
         except Ice.ObjectNotExistException as ex:
             print("failed to get metrics from `%s':\n(the admin object doesn't exist, " +
-                  "are you sure you used the correct instance name?)") % (proxyStr)
+                  "are you sure you used the correct instance name?)" % (proxyStr))
             return 1
         except Ice.Exception as ex:
-            print("failed to get metrics from `%s':\n%s") % (proxyStr, ex)
+            print("failed to get metrics from `%s':\n%s" % (proxyStr, ex))
             return 1
 
         return 0
