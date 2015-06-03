@@ -186,13 +186,15 @@ public class HelloApp extends Application
 
     void flush()
     {
-        try
+        if(_proxy != null)
         {
-            _communicator.begin_flushBatchRequests();
-        }
-        catch(final Ice.LocalException ex)
-        {
-            _uiHandler.sendMessage(_uiHandler.obtainMessage(MSG_EXCEPTION, ex));
+            _proxy.begin_ice_flushBatchRequests(new Ice.Callback_Object_ice_flushBatchRequests() {
+                @Override
+                public void exception(final Ice.LocalException ex)
+                {
+                    _uiHandler.sendMessage(_uiHandler.obtainMessage(MSG_EXCEPTION, ex));
+                }
+            });
         }
     }
 
