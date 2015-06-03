@@ -31,7 +31,6 @@ public class AppSession
     private List<String> _users = new LinkedList<String>();
 
     static final int MAX_MESSAGES = 200;
-    private static final int INACTIVITY_TIMEOUT = 5 * 60 * 1000; // 5 Minutes
 
     private boolean _destroyed = false;
     private long _lastSend;
@@ -80,7 +79,7 @@ public class AppSession
             initData.properties.setProperty("IceSSL.Protocols", "tls1_0");
         }
 
-        if(initData.properties.getPropertyAsIntWithDefault("IceSSL.UseDefaultTruststore",1) == 0)
+        if(initData.properties.getPropertyAsIntWithDefault("IceSSL.UseDefaultTruststore", 1) == 0)
         {
             initData.properties.setProperty("Ice.InitPlugins", "0");
             initData.properties.setProperty("IceSSL.TruststoreType", "BKS");
@@ -127,9 +126,11 @@ public class AppSession
             acmTimeout = (int)_router.getSessionTimeout();
         }
 
-        Ice.Connection connection = _router.ice_getCachedConnection();
-        assert(connection != null);
-        connection.setCallback(new Ice.ConnectionCallback()
+        if(acmTimeout > 0)
+        {
+            Ice.Connection connection = _router.ice_getCachedConnection();
+            assert(connection != null);
+            connection.setCallback(new Ice.ConnectionCallback()
                                 {
                                     @Override
                                     public void heartbeat(Ice.Connection con)
@@ -139,12 +140,11 @@ public class AppSession
                                     @Override
                                     public void closed(Ice.Connection con)
                                     {
-                                        destroyWithError("Connection closed");
+                                        destroy();
                                     }
                                 });
 
-        if(acmTimeout > 0)
-        {
+
             connection.setACM(new Ice.IntOptional(acmTimeout), null,
                               new Ice.Optional<Ice.ACMHeartbeat>(Ice.ACMHeartbeat.HeartbeatAlways));
         }
@@ -252,38 +252,6 @@ public class AppSession
     synchronized public void removeChatRoomListener(ChatRoomListener cb)
     {
         _listeners.remove(cb);
-    }
-
-    // Returns false if the session has been destroyed, true otherwise.
-    synchronized public boolean refresh()
-    {
-        if(_destroyed)
-        {
-            return false;
-        }
-
-        // If the user has not sent a message in the INACTIVITY_TIMEOUT interval
-        // then drop the session.
-        if(System.currentTimeMillis() - _lastSend > INACTIVITY_TIMEOUT)
-        {
-            destroy();
-            _error = "The session was dropped due to inactivity.";
-
-            final List<ChatRoomListener> copy = new ArrayList<ChatRoomListener>(_listeners);
-            _handler.post(new Runnable()
-            {
-                public void run()
-                {
-                    for(ChatRoomListener listener : copy)
-                    {
-                        listener.inactivity();
-                    }
-                }
-            });
-            return false;
-        }
-
-        return true;
     }
 
     private interface ChatEventReplay

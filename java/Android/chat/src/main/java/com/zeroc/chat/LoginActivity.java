@@ -20,7 +20,6 @@ import android.os.IBinder;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.zeroc.chat.service.ChatService;

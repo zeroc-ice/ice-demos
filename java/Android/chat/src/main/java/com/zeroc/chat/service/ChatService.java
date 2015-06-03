@@ -5,7 +5,6 @@
 // **********************************************************************
 package com.zeroc.chat.service;
 
-import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -14,7 +13,6 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
-import android.os.SystemClock;
 
 import com.zeroc.chat.ChatActivity;
 import com.zeroc.chat.R;
@@ -24,7 +22,6 @@ import java.io.IOException;
 public class ChatService extends Service implements com.zeroc.chat.service.Service
 {
     private static final int CHATACTIVE_NOTIFICATION = 0;
-    private static final String REFRESH_EXTRA = "refresh";
     private AppSession _session = null;
     private boolean _confirmConnectionInProgress = false;
     private SessionListener _listener;
@@ -63,17 +60,6 @@ public class ChatService extends Service implements com.zeroc.chat.service.Servi
     @Override
     synchronized public int onStartCommand(Intent intent, int flags, int startId)
     {
-        // Find out if we were started by the alarm manager
-        // to refresh the current session.
-        if(intent != null && intent.hasExtra(REFRESH_EXTRA))
-        {
-            // If there is no associated session, or the refresh failed then
-            // mark the session as destroyed.
-            if(_session == null || !_session.refresh())
-            {
-                sessionDestroyed();
-            }
-        }
         return START_STICKY;
     }
 
@@ -219,19 +205,6 @@ public class ChatService extends Service implements com.zeroc.chat.service.Servi
     synchronized private void loginComplete(AppSession session)
     {
         _session = session;
-
-        // Set up an alarm to refresh the session.
-        Intent intent = new Intent(ChatService.this, ChatService.class);
-        intent.putExtra(REFRESH_EXTRA, true);
-        PendingIntent sender = PendingIntent.getService(ChatService.this, 0, intent, 0);
-
-        long refreshTimeout = _session.getRefreshTimeout();
-
-        long firstTime = SystemClock.elapsedRealtime() + refreshTimeout;
-
-        AlarmManager am = (AlarmManager)getSystemService(ALARM_SERVICE);
-        am.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, firstTime, refreshTimeout, sender);
-
         // Display a notification that the user is logged in.
         Notification notification = new Notification.Builder(this)
                 .setSmallIcon(R.drawable.stat_notify)
@@ -257,20 +230,8 @@ public class ChatService extends Service implements com.zeroc.chat.service.Servi
         }
     }
 
-    private void cancelRefreshTimer()
-    {
-        Intent intent = new Intent(ChatService.this, ChatService.class);
-        intent.putExtra(REFRESH_EXTRA, true);
-        PendingIntent sender = PendingIntent.getService(ChatService.this, 0, intent, 0);
-
-        // And cancel the alarm.
-        AlarmManager am = (AlarmManager)getSystemService(ALARM_SERVICE);
-        am.cancel(sender);
-    }
-
     private void sessionDestroyed()
     {
-        cancelRefreshTimer();
         NotificationManager n = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
         // Cancel the notification -- we use the same ID that we had used to
         // start it
