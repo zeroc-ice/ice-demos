@@ -71,8 +71,37 @@ client page provides a README link which might include additional instructions f
 running the server; please refer to the README of each client before starting the
 server.
 
-To try a different client, terminate the server that you started earlier, change to the
-new server directory and start the new server.
+To try a different client, terminate the server that you started earlier, change
+to the new server directory and start the new server.
+
+#### Secure WebSockets on iOS and Android
+
+To use WSS on iOS and Android it may be required (depending on browser and
+platform) that the server certificate's common name mathces the computer hosting
+the demos, and that the demo certificate authority be installed on your device.
+
+First you'll need to generate a new certifcates to match the IP address of the
+computer hosting the demos.
+
+    > certs/makecerts.py [ip address]
+
+Next you must install the certificate authority on your device. The
+simplest way is to email the CA certificate (`certs/cacert.pem`) to yourself
+then follow the instructions below to install the certificate on your device.
+
+Once installed you connected to the server using the same ip address used to
+create the certificates.
+
+##### Installing certificates on iOS
+
+Open the certificate (`cacert.pem`) from the device's email client. You
+will be promped to create a configuration profile containing this certificate.
+
+##### Installing certificates on Android
+
+Download the certifcate (`cacert.pem`) to the device from an email client.
+Next go to _Settings -> Security -> Install from storage_, and choose
+`cacert.pem`. Enter a name and press OK.
 
 [1]: https://zeroc.com/chat/index.html
 [2]: http://nodejs.org
