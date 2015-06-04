@@ -24,18 +24,19 @@ id.properties = Ice.createProperties();
 var communicator = Ice.initialize(process.argv, id);
 
 //
-// Exit on SIGINT
+// Exit on SIGINT or SIGBREAK
 //
-process.on("SIGINT", function() {
-    if(communicator)
+process.on(process.platform == "win32" ? "SIGBREAK" : "SIGINT", function()
     {
-        communicator.destroy().finally(
-            function()
-            {
-                process.exit(0);
-            });
-    }
-});
+        if(communicator)
+        {
+            communicator.destroy().finally(
+                function()
+                {
+                    process.exit(0);
+                });
+        }
+    });
 
 Ice.Promise.try(
     function()
