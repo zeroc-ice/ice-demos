@@ -168,6 +168,7 @@ var demos = [
 
 function demoTaskName(name) { return "demo_" + name.replace("/", "_"); }
 function demoWatchTask(name) { return demoTaskName(name) + ":watch"; }
+function demoDependCleanTask(name) { return demoTaskName(name) + "-depend:clean"; }
 function demoCleanTask(name) { return demoTaskName(name) + ":clean"; }
 function demoGeneratedFile(file){ return path.join(path.basename(file, ".ice") + ".js"); }
 
@@ -195,10 +196,16 @@ demos.forEach(
                     });
             });
 
-        gulp.task(demoCleanTask(name), [],
+        gulp.task(demoDependCleanTask(name), [],
             function()
             {
-                return gulp.src(path.join(name, "*.ice"))
+                gulp.src(path.join(name, ".depend")).pipe(paths(del));
+            });
+        
+        gulp.task(demoCleanTask(name), [demoDependCleanTask(name)],
+            function()
+            {
+                gulp.src(path.join(name, "*.ice"))
                     .pipe(extreplace(".js"))
                     .pipe(paths(del));
             });
