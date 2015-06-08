@@ -160,12 +160,6 @@ NSString* const passwordKey = @"passwordKey";
         dispatch_sync(dispatch_get_main_queue(), ^ { [call run]; });
     };
 
-//    if(sslField.state == NSOnState && routerField.state != NSOnState)
-//    {
-//        [[initData properties] setProperty:@"IceSSL.TrustOnly.Client"
-//                                     value:@"CN=\"127.0.0.1\""];
-//        [[initData properties] setProperty:@"IceSSL.CertAuthFile" value:@"cacert.pem"];
-//    }
     [initData.properties setProperty:@"IceSSL.DefaultDir" value:[[NSBundle mainBundle] resourcePath]];
 
     SEL loginSelector;

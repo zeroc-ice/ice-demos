@@ -50,7 +50,7 @@ static NSString* hostnameKey = @"hostnameKey";
     initData.properties = [ICEUtil createProperties];
     [initData.properties setProperty:@"Ice.Plugin.IceDiscovery" value:@"IceDiscovery:createIceDiscovery"];
     [initData.properties setProperty:@"IceSSL.CheckCertName" value:@"0"];
-    [initData.properties setProperty:@"IceSSL.CertAuthFile" value:@"cacert.der"];
+    [initData.properties setProperty:@"IceSSL.CAs" value:@"cacert.der"];
     [initData.properties setProperty:@"IceSSL.CertFile" value:@"client.p12"];
     [initData.properties setProperty:@"IceSSL.Password" value:@"password"];
 

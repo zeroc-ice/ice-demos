@@ -11,7 +11,7 @@
 
     <properties id="Secure-Ice.Admin">
       <property name="Ice.Plugin.IceSSL" value="IceSSL:createIceSSL"/>
-      <property name="IceSSL.CertAuthFile" value="ca.pem"/>
+      <property name="IceSSL.CAs" value="ca.pem"/>
       <property name="IceSSL.CertFile" value="server.p12"/>
       <property name="IceSSL.Password" value="password"/>
       <property name="IceSSL.DefaultDir" value="certs"/>

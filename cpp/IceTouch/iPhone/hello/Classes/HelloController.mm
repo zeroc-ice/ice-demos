@@ -56,7 +56,7 @@ public:
         Ice::InitializationData initData;
         initData.properties = Ice::createProperties();
         initData.properties->setProperty("IceSSL.CheckCertName", "0");
-        initData.properties->setProperty("IceSSL.CertAuthFile", "cacert.der");
+        initData.properties->setProperty("IceSSL.CAs", "cacert.der");
         initData.properties->setProperty("IceSSL.CertFile", "client.p12");
         initData.properties->setProperty("IceSSL.Password", "password");
         initData.properties->setProperty("Ice.Plugin.IceDiscovery", "IceDiscovery:createIceDiscovery");

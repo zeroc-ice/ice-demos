@@ -83,7 +83,7 @@ certificate manager. This will ensure IceGrid Admin connects to the
 correct IceGrid Registry or Glacier2 Router.
 
 The icegridadmin command line tool configuration in config.admin sets
-the property "IceSSL.CertAuthFile=ca.pem" to ensure that the admin
+the property "IceSSL.CAs=ca.pem" to ensure that the admin
 client is connecting to the correct registry or glacier2router. In a
 Java client "IceSSL.Truststore=ca.jks" can be used for the same
 purpose.
