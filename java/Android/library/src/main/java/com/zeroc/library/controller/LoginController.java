@@ -6,7 +6,6 @@
 
 package com.zeroc.library.controller;
 
-import Demo.Glacier2Session;
 import android.os.Build;
 import com.zeroc.library.R;
 
@@ -109,7 +108,7 @@ public class LoginController
                     }
 
 
-                    if(initData.properties.getPropertyAsIntWithDefault("IceSSL.UseDefaultTruststore", 1) != 0)
+                    if(initData.properties.getPropertyAsIntWithDefault("IceSSL.UsePlatformCAs", 0) == 0)
                     {
                         initData.properties.setProperty("Ice.InitPlugins", "0");
                         java.io.InputStream certStream = resources.openRawResource(R.raw.client);
