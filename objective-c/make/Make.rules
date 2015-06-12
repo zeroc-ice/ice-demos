@@ -49,109 +49,18 @@ ifndef ice_language
 $(error ice_language must be defined)
 endif
 
-ifeq ($(UNAME),Darwin)
-    usr_dir = /usr/local
-else
-    usr_dir = /usr
-endif
+usr_dir = /usr/local
 
-ifeq ($(UNAME),SunOS)
-    ifeq ($(MACHINE_TYPE),sun4u)
-       lp64suffix	= /64
-       lp64binsuffix	= /sparcv9
-    endif
-    ifeq ($(MACHINE_TYPE),sun4v)
-       lp64suffix       = /64
-       lp64binsuffix    = /sparcv9
-    endif
-    ifeq ($(MACHINE_TYPE),i86pc)
-	lp64suffix	= /amd64
-	lp64binsuffix	= /amd64
-    endif
-endif
-
-ifeq ($(UNAME),HP-UX)
-    lp64suffix		= /pa20_64
-    lp64binsuffix	= /pa20_64
-endif
-
-ifeq ($(UNAME),Linux)
-   ifeq ($(MACHINE_TYPE),x86_64)
-      #
-      # Ubuntu.
-      #
-      ifeq ($(shell test -d $(usr_dir)/lib/x86_64-linux-gnu && echo 0),0)
-         lp64suffix	= /x86_64-linux-gnu
-      endif
-      
-      #
-      # Rhel/SLES
-      #
-      ifeq ($(shell test -d $(usr_dir)/lib64 && echo 0),0)
-          lp64suffix	= 64
-      endif
-      
-      ifeq ($(LP64),)
-          LP64      	= yes
-      endif
-   endif
-   ifneq ($(STATICLIBS),yes)
-	ifneq ($(LP64),yes)
-	    binsuffix     = 32
-	endif
-    endif
-endif
-
-ifeq ($(shell test -d $(usr_dir)/lib/i386-linux-gnu && echo 0),0)
-    lp32suffix     = /i386-linux-gnu
-endif
-
-ifeq ($(CPP11),yes)
-    ifneq ($(UNAME),Darwin)
-        cpp11libdirsuffix	= /c++11
-        cpp11libsuffix		= ++11
-        cpp11sonamedir		= ../
-        binsuffix 		:= $(binsuffix)$(cpp11libsuffix)
-    endif
-endif
-
-ifneq ($(findstring MINGW,$(UNAME)),)
-    UNAME	                := MINGW
-    lp64suffix                  := /x64
-    COMPILER_MACHINE := $(shell $(CXX) -dumpmachine)
-    ifeq ($(COMPILER_MACHINE),x86_64-w64-mingw32)
-        LP64                    := yes
-    endif 
-endif
-
-ifeq ($(LP64),yes)
-	libsubdir		:= lib$(lp64suffix)
-        binsubdir		:= bin$(lp64binsuffix)
-else
-	libsubdir		:= lib$(lp32suffix)
-	binsubdir		:= bin
-	#
-	# For x86 builds in x86_64 machines lib64subdir points to the x86_64 lib
-	# directory and libsubdir to the x86 lib directory.
-	#
-	ifeq ($(MACHINE_TYPE),x86_64)
-		ifeq ($(UNAME),Linux)
-			ifeq ($(shell test -d $(usr_dir)/lib/x86_64-linux-gnu && echo 0),0)
-				lib64subdir               = lib/x86_64-linux-gnu
-			else
-				lib64subdir               = lib$(lp64suffix)
-			endif
-		endif
-	endif
-endif
+libsubdir		:= lib
+binsubdir		:= bin
 
 #
 # The following variables might also be defined:
-# 
+#
 # - slice_translator: the name of the slice translator required for the build.
 #   Setting this variable is required when building source trees other than the
 #   the source distribution (e.g.: the demo sources).
-#                  
+#
 ifeq ($(ICE_HOME),)
     #
     # /usr or /usr/local install.
@@ -217,87 +126,7 @@ ifneq ($(ice_dir), $(usr_dir))
     # We always set library path because the build needs to work
     # whe slice compiler was built without RPATH
     #
-    ifeq ($(UNAME),Linux)
-        export LD_LIBRARY_PATH := $(ice_lib_dir):$(LD_LIBRARY_PATH)
-    endif
-
-    ifeq ($(UNAME),Darwin)
-        export DYLD_LIBRARY_PATH := $(ice_lib_dir):$(DYLD_LIBRARY_PATH)
-    endif
-
-    
-    ifeq ($(UNAME),SunOS)
-        ifeq ($(LP64),yes)
-            export LD_LIBRARY_PATH_64 := $(ice_lib_dir):$(LD_LIBRARY_PATH_64)
-        else
-            export LD_LIBRARY_PATH := $(ice_lib_dir):$(LD_LIBRARY_PATH)
-	endif
-    endif
-
-    ifeq ($(UNAME),AIX)
-        export LIBPATH := $(ice_lib_dir):$(LIBPATH)
-    endif
-
-    ifeq ($(UNAME),HP-UX)
-        ifeq ($(LP64),yes)
-	    export LD_LIBRARY_PATH := $(ice_lib_dir)$(lp64dir):$(SHLIB_PATH)
-	else
-	    export SHLIB_PATH := $(ice_lib_dir):$(LD_LIBRARY_PATH)
-	endif
-    endif
-
-    ifeq ($(UNAME),FreeBSD)
-        export LD_LIBRARY_PATH := $(ice_lib_dir):$(LD_LIBRARY_PATH)
-    endif
-
-    ifeq ($(UNAME),OSF1)
-        export LD_LIBRARY_PATH := $(ice_lib_dir):$(LD_LIBRARY_PATH)
-    endif
-
-    ifneq ($(findstring MINGW,$(UNAME)),)
-	set PATH := $(ice_lib_dir);$(PATH)
-    endif
-endif
-
-
-#
-# Default functions for shared library names (we have to defined them here
-# for the SLICE2PARSERLIB dependency)
-#
-ifeq ($(mklibfilename),)
-    ifeq ($(UNAME),Darwin)
-        mklibfilename   = $(if $(2),lib$(1)$(cpp11libsuffix).$(2).dylib,lib$(1)$(cpp11libsuffix).dylib)
-    else
-        mklibfilename	= $(if $(2),lib$(1)$(cpp11libsuffix).so.$(2),lib$(1)$(cpp11libsuffix).so)
-    endif
-endif
-
-ifeq ($(mksoname),)
-    ifeq ($(UNAME),Darwin)
-        mksoname    = $(if $(2),lib$(1)$(cpp11libsuffix).$(2).dylib,lib$(1).dylib)
-    else
-        mksoname	= $(if $(2),lib$(1)$(cpp11libsuffix).so.$(2),lib$(1).so)
-    endif
-endif
-
-ifeq ($(mklibname),)
-    ifeq ($(STATICLIBS),yes)
-	mklibname	= lib$(1)$(cpp11libsuffix).a
-    else
-        ifeq ($(UNAME),Darwin)
-	    mklibname   = lib$(1).dylib
-	else
-	    mklibname	= lib$(1).so
-	endif
-    endif
-endif
-
-ifndef mklibtargets
-    ifeq ($(STATICLIBS),yes)
-	mklibtargets	= $(3)
-    else
-	mklibtargets	= $(1) $(2) $(3)
-    endif
+    export DYLD_LIBRARY_PATH := $(ice_lib_dir):$(DYLD_LIBRARY_PATH)
 endif
 
 all::
@@ -309,7 +138,6 @@ all::
 ifneq ($(ICE_HOME),)
     embedded_runpath = yes
 endif
-
 
 ifdef ice_src_dist
     ice_objc_dir = $(ice_dir)/objective-c
@@ -327,7 +155,6 @@ includedir	= $(ice_objc_dir)/include
 OSX_TARGET_MIN_SDK_VERSION = 10.9
 
 CC     = xcrun clang
-CXX    = xcrun clang++
 
 CPPFLAGS		+= -pthread -fvisibility=hidden
 OBJCFLAGS		+= -Wall -Werror -mmacosx-version-min=$(OSX_TARGET_MIN_SDK_VERSION)
@@ -377,7 +204,7 @@ ifeq ($(TARGET_SUPPORT_ARC),yes)
 endif
 
 mklib 		= libtool -static -o $(1) $(2)
-mkshlib		= $(CXX)  -dynamiclib $(LDFLAGS) -o $(1) -install_name @rpath/$(2) $(3) $(4)
+mkshlib		= $(CC)  -dynamiclib $(LDFLAGS) -o $(1) -install_name @rpath/$(2) $(3) $(4)
 
 BASELIBS	= -L$(ice_cpp_dir)/$(libsubdir) -lIce -lIceUtil -framework Foundation
 LIBS		= -lIceObjC$(libsuffix) -framework Foundation
@@ -388,7 +215,7 @@ SLICE2OBJCFLAGS	= $(ICECPPFLAGS)
 FLEXFLAGS	=
 BISONFLAGS	= -dvt
 CPPFLAGS	+= -I$(includedir)
-LDFLAGS		= $(OBJCFLAGS) -L$(libdir) 
+LDFLAGS		= $(OBJCFLAGS) -L$(libdir)
 
 SLICE2OBJC	= $(ice_bin_dir)/slice2objc
 
@@ -398,7 +225,7 @@ EVERYTHING		= all clean
 EVERYTHING_EXCEPT_ALL   = clean
 
 .SUFFIXES:
-.SUFFIXES:		.mm .m .o .cpp  .c
+.SUFFIXES:		.m .o .c
 
 ifneq ($(SLICE_OBJS),)
 -include $(addprefix .depend/, $(SLICE_OBJS:.o=.ice.d))
@@ -409,11 +236,7 @@ ifneq ($(OBJS),)
 endif
 
 ifeq ($(wildcard .depend/*.d),)
-ifneq ($(OBJCXX_OBJS),)
-$(OBJS): $(SLICE_OBJS:.o=.m) $(OBJC_OBJS:.o=.m) $(OBJCXX_OBJS:.o=.mm)
-else
 $(OBJS): $(OBJS:.o=.m)
-endif
 endif
 
 all:: $(TARGETS)
@@ -421,28 +244,7 @@ all:: $(TARGETS)
 .m.o:
 	$(CC) -c $(ARCFLAGS) $(CPPFLAGS) $(OBJCFLAGS) $<
 	@mkdir -p .depend
-	@$(CXX) -DMAKEDEPEND -M $(CPPFLAGS) $< | sed 's/$(subst /,\/,$(includedir))/$$\(includedir\)/' > .depend/$(*F).d
-
-.mm.o:
-	$(CXX) -c $(ARCFLAGS) $(CPPFLAGS) $(OBJCFLAGS) $<
-	@mkdir -p .depend
-	@$(CXX) -DMAKEDEPEND -M $(CPPFLAGS) $< > .depend/$(*F).d
-
-$(HDIR)/%F.h: $(SDIR)/%F.ice $(SLICE2OBJC)
-	rm -f $(HDIR)/$(*F)F.h $(*F)F.m
-	$(SLICE2OBJC) $(SLICE2OBJCFLAGS) $<
-	mv $(*F)F.h $(HDIR)
-	@touch $(*F)F.m
-	@mkdir -p .depend
-	@$(SLICE2OBJC) $(SLICE2OBJCFLAGS) --depend $< | $(ice_dir)/config/makedepend.py "\$$(HDIR)/" > .depend/$(*F)F.ice.d
-
-$(HDIR)/%.h %.m: $(SDIR)/%.ice $(SLICE2OBJC)
-	rm -f $(HDIR)/$(*F).h $(*F).m
-	$(SLICE2OBJC) $(SLICE2OBJCFLAGS) $<
-	mv $(*F).h $(HDIR)
-	@touch $(*F).m
-	@mkdir -p .depend
-	@$(SLICE2OBJC) $(SLICE2OBJCFLAGS) --depend $< | $(ice_dir)/config/makedepend.py "\$$(HDIR)/" > .depend/$(*F).ice.d
+	@$(CC) -DMAKEDEPEND -M $(CPPFLAGS) $< | sed 's/$(subst /,\/,$(includedir))/$$\(includedir\)/' > .depend/$(*F).d
 
 %.h %.m: %.ice $(SLICE2OBJC)
 	rm -f $(*F).h $(*F).m
@@ -477,7 +279,3 @@ clean::
 	rm -f $(addsuffix .h, $(basename $(notdir $(SLICE_OBJS))))
 endif
 
-ifneq ($(HDIR),)
-clean::
-	rm -f $(addprefix $(HDIR)/, $(addsuffix .h, $(basename $(SLICE_OBJS))))
-endif

@@ -37,4 +37,4 @@ Scanner.o: Scanner.m
 
 $(CLIENT): $(SLICE_OBJS) $(COBJS)
 	rm -f $@
-	$(CXX) $(LDFLAGS) -o $@ $(SLICE_OBJS) $(COBJS) -lGlacier2ObjC $(LIBS)
+	$(CC) $(LDFLAGS) -o $@ $(SLICE_OBJS) $(COBJS) -lGlacier2ObjC $(LIBS)

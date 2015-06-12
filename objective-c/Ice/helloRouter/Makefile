@@ -23,4 +23,4 @@ CPPFLAGS	:= -I. $(CPPFLAGS)
 
 $(CLIENT): $(SLICE_OBJS) $(COBJS)
 	rm -f $@
-	$(CXX) $(LDFLAGS) $(LDEXEFLAGS) -o $@ $(SLICE_OBJS) $(COBJS) -lGlacier2Objc $(LIBS)
+	$(CC) $(LDFLAGS) $(LDEXEFLAGS) -o $@ $(SLICE_OBJS) $(COBJS) -lGlacier2Objc $(LIBS)
