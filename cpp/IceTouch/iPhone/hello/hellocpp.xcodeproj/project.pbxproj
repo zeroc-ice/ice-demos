@@ -24,6 +24,7 @@
 		34F173000FE75375002B0E95 /* client.p12 in Resources */ = {isa = PBXBuildFile; fileRef = 34F172FE0FE75375002B0E95 /* client.p12 */; };
 		8229108B1464A85E003DC504 /* HelloController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8229108A1464A85E003DC504 /* HelloController.mm */; };
 		82D3968C1823207D000BA551 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82D3968B1823207D000BA551 /* Images.xcassets */; };
+		D81311951B2F51AC00DFAE96 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D81311941B2F51AC00DFAE96 /* libiconv.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +50,7 @@
 		8229108A1464A85E003DC504 /* HelloController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HelloController.mm; sourceTree = "<group>"; };
 		82D3968B1823207D000BA551 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = hellocpp/Images.xcassets; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D81311941B2F51AC00DFAE96 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D81311951B2F51AC00DFAE96 /* libiconv.dylib in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				14A268EB0E83FD0A00E562FE /* CFNetwork.framework in Frameworks */,
 				14A268EC0E83FD0A00E562FE /* Security.framework in Frameworks */,
@@ -125,6 +128,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D81311941B2F51AC00DFAE96 /* libiconv.dylib */,
 				14A268E90E83FD0A00E562FE /* CFNetwork.framework */,
 				14A268EA0E83FD0A00E562FE /* Security.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
@@ -232,7 +236,7 @@
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ADDITIONAL_SDKS = "/usr/local/opt/icetouch/SDKs/Cpp/$(PLATFORM_NAME).sdk";
+				ADDITIONAL_SDKS = "/usr/local/lib/IceTouch/Cpp/$(PLATFORM_NAME).sdk";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -253,6 +257,7 @@
 				PRODUCT_NAME = Hello;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
+				SLICE_CPP_FLAG = NO;
 				SLICE_OUTPUT_DIR = generated;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -261,7 +266,7 @@
 		1D6058950D05DD3E006BFB54 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ADDITIONAL_SDKS = "/usr/local/opt/icetouch/SDKs/Cpp/$(PLATFORM_NAME).sdk";
+				ADDITIONAL_SDKS = "/usr/local/lib/IceTouch/Cpp/$(PLATFORM_NAME).sdk";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -280,6 +285,7 @@
 				PRODUCT_NAME = Hello;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
+				SLICE_CPP_FLAG = NO;
 				SLICE_OUTPUT_DIR = generated;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
