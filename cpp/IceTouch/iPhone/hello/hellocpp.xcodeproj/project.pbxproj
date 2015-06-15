@@ -24,7 +24,6 @@
 		34F173000FE75375002B0E95 /* client.p12 in Resources */ = {isa = PBXBuildFile; fileRef = 34F172FE0FE75375002B0E95 /* client.p12 */; };
 		8229108B1464A85E003DC504 /* HelloController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8229108A1464A85E003DC504 /* HelloController.mm */; };
 		82D3968C1823207D000BA551 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82D3968B1823207D000BA551 /* Images.xcassets */; };
-		D81311951B2F51AC00DFAE96 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D81311941B2F51AC00DFAE96 /* libiconv.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,7 +57,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D81311951B2F51AC00DFAE96 /* libiconv.dylib in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				14A268EB0E83FD0A00E562FE /* CFNetwork.framework in Frameworks */,
 				14A268EC0E83FD0A00E562FE /* Security.framework in Frameworks */,
