@@ -79,7 +79,7 @@ public class AppSession
             initData.properties.setProperty("IceSSL.Protocols", "tls1_0");
         }
 
-        if(initData.properties.getPropertyAsIntWithDefault("IceSSL.UseDefaultTruststore", 1) == 0)
+        if(initData.properties.getPropertyAsIntWithDefault("IceSSL.UsePlatformCAs", 0) == 0)
         {
             initData.properties.setProperty("Ice.InitPlugins", "0");
             initData.properties.setProperty("IceSSL.TruststoreType", "BKS");
