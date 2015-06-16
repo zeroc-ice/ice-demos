@@ -183,7 +183,7 @@ main(int argc, char* argv[])
         initData.properties->setProperty("IceSSL.UsePlatformCAs", "1");
         initData.properties->setProperty("IceSSL.CheckCertName", "1");
         initData.properties->setProperty("Ice.Default.Router",
-                                         "Glacier2/router:wss -p 5064 -h demo.zeroc.com -r /demo-proxy/chat/glacier2");
+                                         "Glacier2/router:wss -p 443 -h zeroc.com -r /demo-proxy/chat/glacier2");
     }
 
     ChatClient app;

@@ -38,18 +38,13 @@
 @synthesize router;
 @synthesize refreshTimer;
 
-static NSString* hostnameKey = @"hostnameKey";
 static NSString* usernameKey = @"usernameKey";
 static NSString* passwordKey = @"passwordKey";
-static NSString* sslKey = @"sslKey";
-static NSString* defaultHost = @"demo2.zeroc.com";
 
 +(void)initialize
 {
-    NSDictionary* appDefaults = [NSDictionary dictionaryWithObjectsAndKeys:defaultHost, hostnameKey,
-                                 @"", usernameKey,
+    NSDictionary* appDefaults = [NSDictionary dictionaryWithObjectsAndKeys: @"", usernameKey,
                                  @"", passwordKey,
-                                 @"YES", sslKey,
                                  nil];
 
     [[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
@@ -59,14 +54,10 @@ static NSString* defaultHost = @"demo2.zeroc.com";
 	NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
 
     // Set the default values, and show the clear button in the text field.
-    hostnameField.text = [defaults stringForKey:hostnameKey];
-    hostnameField.clearButtonMode = UITextFieldViewModeWhileEditing;
     usernameField.text =  [defaults stringForKey:usernameKey];
     usernameField.clearButtonMode = UITextFieldViewModeWhileEditing;
     passwordField.text = [defaults stringForKey:passwordKey];
     passwordField.clearButtonMode = UITextFieldViewModeWhileEditing;
-
-    sslSwitch.on = [defaults boolForKey:sslKey];
 
 	callButton.enabled = NO;
     [callButton setAlpha:0.5];
@@ -81,7 +72,7 @@ static NSString* defaultHost = @"demo2.zeroc.com";
                                                  name:UIApplicationWillEnterForegroundNotification
                                                object:nil];
 
-    loginButton.enabled = hostnameField.text.length > 0 && usernameField.text.length > 0;
+    loginButton.enabled = usernameField.text.length > 0;
     [loginButton setAlpha:loginButton.enabled ? 1.0 : 0.5];
      // This generates a compile time warning, but does actually work!
     [delaySlider setShowValue:YES];
@@ -119,11 +110,9 @@ static NSString* defaultHost = @"demo2.zeroc.com";
     {
         [statusActivity stopAnimating];
     }
-    hostnameField.enabled = !connecting;
     usernameField.enabled = !connecting;
     passwordField.enabled = !connecting;
     loginButton.enabled = !connecting;
-    sslSwitch.enabled = !connecting;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -158,7 +147,7 @@ static NSString* defaultHost = @"demo2.zeroc.com";
 
     callButton.enabled = NO;
     [callButton setAlpha:0.5];
-    loginButton.enabled = hostnameField.text.length > 0 && usernameField.text.length > 0;
+    loginButton.enabled = usernameField.text.length > 0;
     [loginButton setAlpha:loginButton.enabled ? 1.0 : 0.5];
     [loginButton setTitle:@"Login" forState:UIControlStateNormal];
 
@@ -320,11 +309,7 @@ static NSString* defaultHost = @"demo2.zeroc.com";
     // When the user presses return, take focus away from the text
     // field so that the keyboard is dismissed.
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-    if(theTextField == hostnameField)
-    {
-        [defaults setObject:theTextField.text forKey:hostnameKey];
-    }
-    else if(theTextField == usernameField)
+    if(theTextField == usernameField)
     {
         [defaults setObject:theTextField.text forKey:usernameKey];
     }
@@ -332,7 +317,7 @@ static NSString* defaultHost = @"demo2.zeroc.com";
     {
         [defaults setObject:theTextField.text forKey:passwordKey];
     }
-    loginButton.enabled = hostnameField.text.length > 0 && usernameField.text.length > 0;
+    loginButton.enabled = usernameField.text.length > 0;
     [loginButton setAlpha:loginButton.enabled ? 1.0 : 0.5];
 
     [theTextField resignFirstResponder];
@@ -353,14 +338,6 @@ static NSString* defaultHost = @"demo2.zeroc.com";
     [super touchesBegan:touches withEvent:event];
 }
 
-#pragma mark UI Actions
-
--(IBAction)sslChanged:(id)s
-{
-    UISwitch* sender = (UISwitch*)s;
-    [[NSUserDefaults standardUserDefaults] setBool:sender.isOn forKey:sslKey];
-}
-
 #pragma mark Login
 
 -(IBAction)login:(id)sender
@@ -375,6 +352,7 @@ static NSString* defaultHost = @"demo2.zeroc.com";
     ICEInitializationData* initData = [ICEInitializationData initializationData];
 
     initData.properties = [ICEUtil createProperties];
+    [initData.properties load:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"config.client"]];
     [initData.properties setProperty:@"Ice.Voip" value:@"1"];
     [initData.properties setProperty:@"Ice.ACM.Client.Timeout" value:@"0"];
     [initData.properties setProperty:@"Ice.RetryIntervals" value:@"-1"];
@@ -383,55 +361,20 @@ static NSString* defaultHost = @"demo2.zeroc.com";
     //[self.initData.properties setProperty:@"Ice.Trace.Network" value:@"1"];
     //[self.initData.properties setProperty:@"Ice.Trace.Protocol" value:@"1"];
 
-    NSString *hostname = [hostnameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-
-    // Setup the SSL certificates depending on the which server host we are
-    // connecting with.
-    int portOffset = 0;
-    if([hostname caseInsensitiveCompare:@"demo2.zeroc.com"] == NSOrderedSame)
-    {
-        if(sslSwitch.isOn)
-        {
-            portOffset = 1100;
-        }
-        else
-        {
-            portOffset = 100;
-        }
-    }
-    [initData.properties setProperty:@"IceSSL.TrustOnly.Client"
-                               value:@"D1:33:E4:95:73:E6:66:45:2A:EE:C6:61:28:40:57:2F:B1:FF:48:B9"];
-    [initData.properties setProperty:@"IceSSL.CheckCertName" value:@"0"];
-    [initData.properties setProperty:@"IceSSL.CAs" value:@"cacert.der"];
-
     initData.dispatcher = ^(id<ICEDispatcherCall> call, id<ICEConnection> con) {
         dispatch_sync(dispatch_get_main_queue(), ^ { [call run]; });
     };
 
     NSAssert(communicator == nil, @"communicator == nil");
-    self.communicator = [ICEUtil createCommunicator:initData];
 
     @try
     {
-        NSString* s;
-        if(sslSwitch.isOn)
-        {
-            s = [NSString stringWithFormat:@"Glacier2/router:ssl -p %d -h \"%@\" -t 10000", 4064 + portOffset, hostname];
-        }
-        else
-        {
-            s = [NSString stringWithFormat:@"Glacier2/router:tcp -p %d -h \"%@\" -t 10000", 4063 + portOffset, hostname];
-        }
-        id<ICEObjectPrx> proxy = [communicator stringToProxy:s];
-        id<ICERouterPrx> r = [ICERouterPrx uncheckedCast:proxy];
-
-        // Configure the default router on the communicator.
-        [communicator setDefaultRouter:r];
+        self.communicator = [ICEUtil createCommunicator:initData];
     }
     @catch(ICEEndpointParseException* ex)
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid Hostname"
-                                                         message:@"The provided hostname is invalid."
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error parsing config"
+                                                         message:ex.reason
                                                         delegate:nil
                                                cancelButtonTitle:@"OK"
                                                otherButtonTitles:nil];

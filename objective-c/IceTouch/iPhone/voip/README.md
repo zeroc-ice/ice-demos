@@ -3,9 +3,8 @@ The demo only simulates how Ice might be be used for the control
 channel of a VoIP application.
 
 ZeroC hosts a server for this demo on demo2.zeroc.com. The iPhone
-client connects to this host by default. The deployment on
-demo2.zeroc.com accepts both secure and non-secure connections using
-Glacier2.
+client connects to this server though a WebSocket proxy hosted 
+on zeroc.com.
 
 After pressing the "Call Back" button the server will call
 "incomingCall" on the Voip::Control callback proxy after the specified

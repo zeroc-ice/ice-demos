@@ -14,12 +14,10 @@
 
 @interface VoipViewController : UIViewController<UITextFieldDelegate,VoipControl> {
 @private
-    IBOutlet UITextField* hostnameField;
     IBOutlet UITextField* usernameField;
     IBOutlet UITextField* passwordField;
     IBOutlet UIButton* loginButton;
 	IBOutlet UIButton* callButton;
-    IBOutlet UISwitch* sslSwitch;
     IBOutlet UISlider* delaySlider;
     IBOutlet UILabel* statusLabel;
     IBOutlet UIActivityIndicatorView* statusActivity;
@@ -37,7 +35,6 @@
 
 -(IBAction)login:(id)sender;
 -(IBAction)call:(id)sender;
--(IBAction)sslChanged:(id)sender;
 
 @end
 
