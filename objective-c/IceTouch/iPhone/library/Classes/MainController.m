@@ -66,7 +66,7 @@
                                                    action:@selector(addBook:)];
     self.navigationItem.leftBarButtonItem =
     [[UIBarButtonItem alloc] initWithTitle:@"Logout"
-                                      style:UIBarButtonItemStylePlain
+                                     style:UIBarButtonItemStylePlain
                                      target:self action:@selector(logout:)];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -140,24 +140,15 @@
     {
         [session begin_destroy];
     }
+    router = nil;
+    session = nil;
     
-	// Destroy the session and destroy the communicator from another thread since these
-    // calls block.
-    id<ICECommunicator> c = communicator;
-    id<GLACIER2RouterPrx> r = router;
-    self.router = nil;
-    self.communicator = nil;
+	// Destroy the communicator from another thread since this call blocks.
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^ {
         @try
-        {
-            [r destroySession];
-        }
-        @catch (ICEException* ex) {
-        }
-		
-        @try
         {            
-            [c destroy];
+            [communicator destroy];
+            communicator = nil;
         }
         @catch (ICEException* ex) {
         }

@@ -190,7 +190,7 @@ static NSString* passwordKey = @"passwordKey";
 // Runs in a separate thread, called only by NSInvocationOperation.
 -(void)doGlacier2Login:(id)proxy
 {
-	id<GLACIER2RouterPrx> glacier2router = [GLACIER2RouterPrx uncheckedCast:proxy];
+    id<GLACIER2RouterPrx> glacier2router = [GLACIER2RouterPrx uncheckedCast:proxy];
 	
 	id<GLACIER2SessionPrx> glacier2session = [glacier2router createSession:usernameField.text password:passwordField.text];
 	id<DemoGlacier2SessionPrx> sess = [DemoGlacier2SessionPrx uncheckedCast:glacier2session];
@@ -227,7 +227,7 @@ static NSString* passwordKey = @"passwordKey";
         
         if([[[communicator getProperties] getProperty:@"Ice.Default.Router"] length] > 0)
         {
-            proxy = [communicator stringToProxy:[[communicator getProperties] getProperty:@"Ice.Default.Router"]];
+            proxy = [communicator getDefaultRouter];
             loginSelector = @selector(doGlacier2Login:);
         }
         else
@@ -239,7 +239,7 @@ static NSString* passwordKey = @"passwordKey";
     @catch(ICEEndpointParseException* ex)
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error parsing config"
-                                                        message: ex.reason
+                                                        message:ex.reason
                                                        delegate:self
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
@@ -252,7 +252,7 @@ static NSString* passwordKey = @"passwordKey";
     @catch(...)
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error parsing config"
-                                                        message: @"Please check your config file"
+                                                        message:@"Please check your config file"
                                                        delegate:self
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
