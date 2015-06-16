@@ -14,11 +14,16 @@ server. Run the makecerts.py script to create these certificates:
 $ makecerts.py
 
 Follow the instructions provided by the script. Note that to run the
-script you must install the zeroc-ice-certutils package from the
+script you must install the zeroc-icecertutils package from the
 [Python package repository](https://pypi.python.org/pypi). To install
 this package with [pip](https://pip.pypa.io):
 
-$ pip install zeroc-ice-certutils
+$ pip install zeroc-icecertutils
+
+The keytool utility from the Java Development Kit is also required to
+generate Java KeyStore files so you need to add the the JDK bin
+directory to your PATH (if it's not found, makecerts.py will print a
+warning).
 
 For simplicity, the certificates created by makecerts.py are not
 protected with a password. In a real world deployment, to ensure that

@@ -49,7 +49,12 @@ while True:
 factory = IceCertUtils.CertificateFactory(dn=dn)
 
 # Save the CA certificate
-factory.getCA().save(os.path.join("certs", "ca.pem")).save(os.path.join("certs", "ca.jks"))
+factory.getCA().save(os.path.join("certs", "ca.pem"))
+
+try:
+    factory.getCA().save(os.path.join("certs", "ca.jks"))
+except Exception as ex:
+    print("warning: couldn't generate JKS certificate `ca.jks':\n" + str(ex))
 
 # Create and the certificates for the different components
 factory.create("Master").save(os.path.join("certs", "master.p12"))
