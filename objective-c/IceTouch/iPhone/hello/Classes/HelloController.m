@@ -60,7 +60,19 @@ static NSString* hostnameKey = @"hostnameKey";
         dispatch_sync(dispatch_get_main_queue(), ^ { [call run]; });
     };
 
-    communicator = [ICEUtil createCommunicator:initData];
+    @try
+    {
+        communicator = [ICEUtil createCommunicator:initData];
+    }
+    @catch(ICEPluginInitializationException*)
+    {
+        //
+        // IceDiscovery might fail to join the multicast group if there's no network supporting
+        // multicast, disable it and try again.
+        //
+        [initData.properties setProperty:@"Ice.Plugin.IceDiscovery" value:@""];
+        communicator = [ICEUtil createCommunicator:initData];
+    }
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(applicationWillTerminate)
@@ -332,12 +344,12 @@ static NSString* hostnameKey = @"hostnameKey";
 {
     if([useDiscovery isOn])
     {
-        [hostnameTextField setEnabled:YES];
+        [hostnameTextField setEnabled:NO];
         hostnameTextField.text = @"";
     }
     else
     {
-        [hostnameTextField setEnabled:NO];
+        [hostnameTextField setEnabled:YES];
         hostnameTextField.text = [[NSUserDefaults standardUserDefaults] stringForKey:hostnameKey];
     }
 }

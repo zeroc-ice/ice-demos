@@ -61,7 +61,19 @@ public:
         initData.properties->setProperty("IceSSL.Password", "password");
         initData.properties->setProperty("Ice.Plugin.IceDiscovery", "IceDiscovery:createIceDiscovery");
         initData.dispatcher = new Dispatcher();
-        _communicator = Ice::initialize(initData);
+        try
+        {
+            _communicator = Ice::initialize(initData);
+        }
+        catch(const Ice::PluginInitializationException&)
+        {
+            //
+            // IceDiscovery might fail to join the multicast group if there's no network supporting
+            // multicast, disable it and try again.
+            //
+            initData.properties->setProperty("Ice.Plugin.IceDiscovery", "");
+            _communicator = Ice::initialize(initData);
+        }
     }
 
     void updateProxy(const string& hostname, int deliveryMode, int timeout, bool discovery)
@@ -413,12 +425,12 @@ static NSString* hostnameKey = @"hostnameKey";
 {
     if([useDiscovery isOn])
     {
-        [hostnameTextField setEnabled:YES];
+        [hostnameTextField setEnabled:NO];
         hostnameTextField.text = @"";
     }
     else
     {
-        [hostnameTextField setEnabled:NO];
+        [hostnameTextField setEnabled:YES];
         hostnameTextField.text = [[NSUserDefaults standardUserDefaults] stringForKey:hostnameKey];
     }
 }

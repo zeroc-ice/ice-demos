@@ -323,7 +323,7 @@ MainPage::timeout_ValueChanged(Platform::Object^ sender, Windows::UI::Xaml::Cont
 void
 MainPage::hostname_TextChanged(Platform::Object^ sender, Windows::UI::Xaml::Controls::TextChangedEventArgs^ e)
 {
-    if (hostname->Text->Length() == 0 && !useDiscovery->IsChecked->Value)
+    if(hostname->Text->Length() == 0 && !useDiscovery->IsChecked->Value)
     {
         hello->IsEnabled = false;
         shutdown->IsEnabled = false;
@@ -340,7 +340,7 @@ MainPage::hostname_TextChanged(Platform::Object^ sender, Windows::UI::Xaml::Cont
 
 void hello::MainPage::useDiscovery_Changed(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
-	if (useDiscovery->IsChecked->Value)
+	if(useDiscovery->IsChecked->Value)
 	{
 		hostname->Text = "";
 		hostname->IsEnabled = false;
