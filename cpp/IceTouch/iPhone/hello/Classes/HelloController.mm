@@ -179,8 +179,15 @@ public:
         Ice::ConnectionPtr connection = _helloPrx->ice_getCachedConnection();
         if(connection)
         {
-            Ice::IPConnectionInfoPtr info = Ice::IPConnectionInfoPtr::dynamicCast(connection->getInfo());
-            hostname = [NSString stringWithUTF8String:info->localAddress.c_str()];
+            try
+            {
+                Ice::IPConnectionInfoPtr info = Ice::IPConnectionInfoPtr::dynamicCast(connection->getInfo());
+                hostname = [NSString stringWithUTF8String:info->remoteAddress.c_str()];
+            }
+            catch(const Ice::LocalException&)
+            {
+                // Ignore.
+            }
         }
         [_controller requestSent:_deliveryMode hostname:hostname];
     }

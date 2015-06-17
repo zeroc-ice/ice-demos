@@ -150,11 +150,18 @@ static NSString* hostnameKey = @"hostnameKey";
         id<ICEConnection> connection = [helloPrx ice_getCachedConnection];
         if(connection != nil)
         {
-            ICEConnectionInfo* info = [connection getInfo];
-            if([info isKindOfClass:[ICEIPConnectionInfo class]])
+            @try
             {
-                hostnameTextField.text = ((ICEIPConnectionInfo*)info).localAddress;
-                [[NSUserDefaults standardUserDefaults] setObject:hostnameTextField.text forKey:hostnameKey];
+                ICEConnectionInfo* info = [connection getInfo];
+                if([info isKindOfClass:[ICEIPConnectionInfo class]])
+                {
+                    hostnameTextField.text = ((ICEIPConnectionInfo*)info).remoteAddress;
+                    [[NSUserDefaults standardUserDefaults] setObject:hostnameTextField.text forKey:hostnameKey];
+                }
+            }
+            @catch(ICELocalException* ex)
+            {
+                // Ignore.
             }
         }
     }

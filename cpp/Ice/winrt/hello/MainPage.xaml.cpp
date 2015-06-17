@@ -171,18 +171,22 @@ hello::MainPage::hello_Click(Platform::Object^ sender, Windows::UI::Xaml::Routed
                                             },
                                         [=](bool sentSynchronously)
                                             {
-                                                if(_helloPrx)
+                                                if(_helloPrx && _helloPrx->ice_getCachedConnection())
                                                 {
-                                                    Ice::ConnectionPtr con = _helloPrx->ice_getCachedConnection();
-                                                    if(con)
+                                                    try
                                                     {
                                                         Ice::IPConnectionInfoPtr info =
-                                                            Ice::IPConnectionInfoPtr::dynamicCast(con->getInfo());
+                                                            Ice::IPConnectionInfoPtr::dynamicCast(
+                                                                _helloPrx->ice_getCachedConnection()->getInfo());
                                                         if(info)
                                                         {
                                                             hostname->Text = ref new String(
                                                                 IceUtil::stringToWstring(info->remoteAddress).c_str());
                                                         }
+                                                    }
+                                                    catch(const Ice::LocalException&)
+                                                    {
+                                                        // Ignore
                                                     }
                                                 }
                                                 if(this->_response)
@@ -244,6 +248,7 @@ void hello::MainPage::shutdown_Click(Platform::Object^ sender, Windows::UI::Xaml
         {
             print("Shutting down...");
             shutdown->IsEnabled = false;
+            int deliveryMode = mode->SelectedIndex;
             _helloPrx->begin_shutdown([=]()
                                       {
                                           shutdown->IsEnabled = true;
@@ -255,6 +260,14 @@ void hello::MainPage::shutdown_Click(Platform::Object^ sender, Windows::UI::Xaml
                                           ostringstream os;
                                           os << ex;
                                           print(os.str());
+                                      },
+                                      [=](bool sentSynchronously)
+                                      {
+                                          if(deliveryMode > 1)
+                                          {
+                                              shutdown->IsEnabled = true;
+                                              print("Ready.");
+                                          }
                                       });
         }
     }
