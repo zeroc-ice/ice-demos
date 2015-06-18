@@ -66,7 +66,7 @@ Demos in this directory:
   A demo to illustrate how nested callbacks work, and how the size of
   the thread pool affects the maximum nesting depth.
 
-- [nrvo}(./nrvo)
+- [nrvo](./nrvo)
 
   A demo that shows how Ice takes advantage of NRVO (Named Return
   Value Optimization) which is included in modern C++ compilers.

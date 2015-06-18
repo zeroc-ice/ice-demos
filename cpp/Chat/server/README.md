@@ -6,17 +6,11 @@ custom session mechanism for Ice clients that cannot use callbacks.
 
 The Slice definitions for the chat demo are:
 
-slice/ChatSession.ice
+- `slice/ChatSession.ice`: Definitions for Glacier2 clients (C++, Java, .NET, Silverlight)
 
-    Definitions for Glacier2 clients (C++, Java, .NET, Silverlight)
+- `slice/PollingChat.ice`: Definitions for non-Glacier2 clients (PHP)
 
-slice/PollingChat.ice
-
-    Definitions for non-Glacier2 clients (PHP)
-
-The server source code is located in the server subdirectory.
-
-You can use this if you want to host your own Chat Demo server.
+You can use this demo if you want to host your own Chat Demo server.
 
 To run the server:
 

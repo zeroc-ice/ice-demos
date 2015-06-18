@@ -28,6 +28,10 @@ following link:
 
 http://www.gnu.org/software/make/
 
+On OS X, the command-line demos require the Xcode Command Line Tools to be
+installed (use `xcode-select --install` to install them). The Ice Touch sample
+programs require the [Ice Builder for Xcode][3].
+
 If you've installed Ice in a non-standard location, you'll need to set the
 `ICE_HOME` environment variable with the path name of the
 installation directory:
@@ -43,10 +47,12 @@ When you're ready to start the build, run `make`:
 
     $ make
 
+To build the iOS examples, open `IceTouch/demos.xcworkspace` in Xcode.
+
 ### Running the Demos
 
 Before running a demo, make sure you've configured your environment to use Ice
-as described in the [release notes][3].
+as described in the [release notes][4].
 
 If you've installed Ice in a non-standard location, you'll need to set
 `LD_LIBRARY_PATH` (Linux) or `DYLD_LIBRARY_PATH` (OS X)
@@ -62,7 +68,7 @@ Refer to the README file in each demo directory for usage instructions.
 
 ### Prerequisites
 
-The projects for the sample programs require the [Ice Builder for Visual Studio][4].
+The projects for the sample programs require the [Ice Builder for Visual Studio][5].
 Add this extension to Visual Studio before opening the solution.
 
 ### Building the Demos
@@ -86,7 +92,7 @@ Refer to the README file in each demo directory for usage instructions.
 
 ### Prerequisites
 
-The projects for the sample programs require the [Ice Builder for Visual Studio][4].
+The projects for the sample programs require the [Ice Builder for Visual Studio][5].
 Add this extension to Visual Studio before opening the solution.
 
 WinRT requires Windows 8.1 with Visual Studio 2013.
@@ -101,11 +107,12 @@ and select "Build".
 
 ### Running the Demos
 
-To run the demos with a device such as Surface, you will also need to re-create the
-server certificate to try out SSL. The Windows RT SSL implementation requires the
-certificate's common name to match the IP address or DNS name of the target server.
-We provide a `makecerts.py` Python script to re-generate the server certificate
-in the `certs` directory at the root of the Ice demo source tree.
+To run the demos with servers running on a different machine, you will also need
+to re-create the server certificate to try out SSL. The Windows RT SSL
+implementation requires the certificate's common name to match the IP address or
+DNS name of the target server. We provide a `makecerts.py` Python script to re-
+generate the server certificate in the `certs` directory at the root of the Ice
+demo source tree.
 
 To run the script:
 
@@ -122,5 +129,6 @@ Refer to the README file in each demo directory for usage instructions.
 
 [1]: https://doc.zeroc.com/display/Ice36/Ice+Manual
 [2]: https://zeroc.com/chat/index.html
-[3]: https://doc.zeroc.com/display/Ice36/Ice+Release+Notes
-[4]: https://github.com/zeroc-ice/ice-builder-visualstudio
+[3]: https://github.com/zeroc-ice/ice-builder-xcode
+[4]: https://doc.zeroc.com/display/Ice36/Ice+Release+Notes
+[5]: https://github.com/zeroc-ice/ice-builder-visualstudio

@@ -22,10 +22,10 @@ in the [Ice manual][1].
 
 ### Prerequisites
 
-The sample programs require the [Ice Builder for Xcode][2].
+The Ice Touch sample programs require the [Ice Builder for Xcode][2].
 
 The command-line demos require the Xcode Command Line Tools to be installed
-(installed from Xcode -> Preferences).
+(use `xcode-select --install` to install them).
 
 ### Building the Demos
 
@@ -40,10 +40,7 @@ Run `make` to start the build:
 
     $ make
 
-To build the Cocoa or iOS examples, open `IceTouch/demos.xcworkspace` in
-Xcode. If you've installed Ice in a non-standard location, update the Ice Home
-property in the Ice Builder - General Options settings with the directory of your
-Ice installation.
+To build the Cocoa or iOS examples, open `IceTouch/demos.xcworkspace` in Xcode.
 
 ## Running the Demos
 
