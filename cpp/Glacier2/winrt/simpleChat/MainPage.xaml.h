@@ -21,7 +21,7 @@ struct LoginData
     std::string username;
     std::string password;
 };
-    
+
 class Coordinator : public Glacier2::SessionCallback, public Demo::ChatCallback
 {
 public:
@@ -30,7 +30,7 @@ public:
 
     void signIn(const LoginData&);
     LoginData loginData();
-        
+
     //
     //  Session callback
     //
@@ -38,7 +38,7 @@ public:
     virtual void connected(const Glacier2::SessionHelperPtr&);
     virtual void disconnected(const Glacier2::SessionHelperPtr&);
     virtual void connectFailed(const Glacier2::SessionHelperPtr&, const Ice::Exception&);
-    
+
     //
     // Chat callback
     //
@@ -48,13 +48,15 @@ public:
     // Chat session.
     //
     void say(const std::string&);
+    void logout();
+
     void destroy();
 
 private:
 
     Demo::ChatSessionPrx _chat;
+    Glacier2::SessionFactoryHelperPtr _factory;
     Glacier2::SessionHelperPtr _session;
-    Windows::UI::Core::CoreDispatcher^ _dispatcher;
     LoginData _loginData;
 };
 typedef IceUtil::Handle<Coordinator> CoordinatorPtr;
@@ -68,15 +70,16 @@ public:
     static MainPage^ instance();
     void setConnected(bool c);
     void appendMessage(Platform::String^ msg);
+	void suspended();
 
 private:
-        
+
     virtual void setError(const std::string&);
 
     CoordinatorPtr coordinator()
     {
         return _coordinator;
-    }    
+    }
     CoordinatorPtr _coordinator;
 
     static MainPage^ _instance;

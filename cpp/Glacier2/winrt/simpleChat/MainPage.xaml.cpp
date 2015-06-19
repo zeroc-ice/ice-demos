@@ -27,33 +27,33 @@ using namespace std;
 
 MainPage^ MainPage::_instance = nullptr;
 
-Coordinator::Coordinator(CoreDispatcher^ dispatcher) :
-    _dispatcher(dispatcher)
+Coordinator::Coordinator(CoreDispatcher^ dispatcher)
 {
+    Ice::InitializationData id;
+    id.properties = Ice::createProperties();
+    id.dispatcher = Ice::newDispatcher(
+        [=](const Ice::DispatcherCallPtr& call, const Ice::ConnectionPtr&)
+            {
+                dispatcher->RunAsync(
+                    CoreDispatcherPriority::Normal, ref new DispatchedHandler([=]()
+                        {
+                            call->run();
+                        }, CallbackContext::Any));
+            });
+    _factory = new Glacier2::SessionFactoryHelper(id, this);
+
+    Ice::Identity identity;
+    identity.name = "router";
+    identity.category = "DemoGlacier2";
+    _factory->setRouterIdentity(identity);
 }
 
 void
 Coordinator::signIn(const LoginData& loginData)
 {
     _loginData = loginData;
-    Ice::InitializationData id;
-    id.properties = Ice::createProperties();
-    id.dispatcher = Ice::newDispatcher(
-        [=](const Ice::DispatcherCallPtr& call, const Ice::ConnectionPtr&)
-            {
-                this->_dispatcher->RunAsync(
-                    CoreDispatcherPriority::Normal, ref new DispatchedHandler([=]()
-                        {
-                            call->run();
-                        }, CallbackContext::Any));
-            });
-    Glacier2::SessionFactoryHelperPtr factory = new Glacier2::SessionFactoryHelper(id, this);
-    Ice::Identity identity;
-    identity.name = "router";
-    identity.category = "DemoGlacier2";
-    factory->setRouterIdentity(identity);
-    factory->setRouterHost(_loginData.hostname);
-    _session = factory->connect(_loginData.username, _loginData.password);
+    _factory->setRouterHost(_loginData.hostname);
+    _session = _factory->connect(_loginData.username, _loginData.password);
 }
 
 LoginData
@@ -70,14 +70,14 @@ Coordinator::say(const std::string& msg)
         _chat->begin_say(msg, nullptr, [](const Ice::Exception& ex)
                                             {
                                                 ostringstream os;
-                                                os << "Connect failed:\n" << ex << endl; 
+                                                os << "Connect failed:\n" << ex << endl;
                                                 MainPage::instance()->setError(os.str());
                                             });
     }
     catch(const Ice::CommunicatorDestroyedException& ex)
     {
         ostringstream os;
-        os << "Connect failed:\n" << ex << endl; 
+        os << "Connect failed:\n" << ex << endl;
         MainPage::instance()->setError(os.str());
     }
 }
@@ -105,14 +105,14 @@ Coordinator::connected(const Glacier2::SessionHelperPtr& session)
                                  [](const Ice::Exception& ex)
                                     {
                                         ostringstream os;
-                                        os << "Connect failed:\n" << ex << endl; 
+                                        os << "Connect failed:\n" << ex << endl;
                                         MainPage::instance()->setError(os.str());
                                     });
     }
     catch(const Ice::CommunicatorDestroyedException& ex)
     {
         ostringstream os;
-        os << "Connect failed:\n" << ex << endl; 
+        os << "Connect failed:\n" << ex << endl;
         MainPage::instance()->setError(os.str());
     }
 }
@@ -127,10 +127,10 @@ void
 Coordinator::connectFailed(const Glacier2::SessionHelperPtr&, const Ice::Exception& ex)
 {
     ostringstream os;
-    os << "Connect failed:\n" << ex << endl; 
+    os << "Connect failed:\n" << ex << endl;
     MainPage::instance()->setError(os.str());
 }
- 
+
 void
 Coordinator::message(const string& msg, const Ice::Current&)
 {
@@ -141,19 +141,25 @@ Coordinator::message(const string& msg, const Ice::Current&)
     catch(const Ice::CommunicatorDestroyedException& ex)
     {
         ostringstream os;
-        os << ex << endl; 
+        os << ex << endl;
         MainPage::instance()->setError(os.str());
     }
 }
 
 void
-Coordinator::destroy()
+Coordinator::logout()
 {
     if(_session)
     {
         _session->destroy();
         _session = 0;
     }
+}
+
+void
+Coordinator::destroy()
+{
+    _factory->destroy();
 }
 
 MainPage::MainPage()
@@ -202,8 +208,14 @@ MainPage::setError(const std::string& err)
     _loginView->setError(ref new String(IceUtil::stringToWstring(err).c_str()));
 }
 
-void 
+void
 MainPage::signoutClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+{
+    _coordinator->logout();
+}
+
+void
+MainPage::suspended()
 {
     _coordinator->destroy();
 }

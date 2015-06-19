@@ -361,8 +361,7 @@ public:
         //
 #ifdef __APPLE__
         initData.properties->setProperty("Ice.Plugin.IceSSL",
-            QString(QApplication::applicationDirPath() +
-                    "/../Frameworks/IceSSL:createIceSSL").toUtf8().data());
+            QString(QApplication::applicationDirPath() + "/../Frameworks/IceSSL:createIceSSL").toUtf8().data());
 #endif
 
         _dispatcher = new Dispatcher(this);
@@ -426,6 +425,8 @@ public:
         {
             communicator->waitForShutdown();
         }
+
+        _factory->destroy();
     }
 
     void

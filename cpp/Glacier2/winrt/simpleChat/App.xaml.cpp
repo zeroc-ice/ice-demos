@@ -77,8 +77,5 @@ void App::OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEvent
 /// <param name="e">Details about the suspend request.</param>
 void App::OnSuspending(Object^ sender, SuspendingEventArgs^ e)
 {
-        (void) sender;  // Unused parameter
-        (void) e;       // Unused parameter
-
-        //TODO: Save application state and stop any background activity
+    MainPage::instance()->suspended();
 }
