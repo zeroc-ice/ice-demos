@@ -255,12 +255,17 @@ public:
 
     void flushBatch()
     {
+        if(!_helloPrx)
+        {
+            return;
+        }
+
         try
         {
-            _communicator->begin_flushBatchRequests(
-                Ice::newCallback_Communicator_flushBatchRequests(this,
-                                                                 &HelloClient::exception,
-                                                                 &HelloClient::flushBatchSend));
+            _helloPrx->begin_ice_flushBatchRequests(
+                Ice::newCallback_Object_ice_flushBatchRequests(this,
+                                                               &HelloClient::exception,
+                                                               &HelloClient::flushBatchSend));
         }
         catch(const Ice::LocalException& ex)
         {

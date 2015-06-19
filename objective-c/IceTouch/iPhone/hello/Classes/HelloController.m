@@ -404,16 +404,21 @@ static NSString* hostnameKey = @"hostnameKey";
 
 -(IBAction)flushBatch:(id) sender
 {
+    if(helloPrx == nil)
+    {
+        return;
+    }
+
     @try
     {
-        [communicator begin_flushBatchRequests:^(ICEException* ex) {
-                                              [self exception:ex];
-                                            }
-                                          sent:^(BOOL sentSynchronously) {
-                                              flushButton.enabled = NO;
-                                              [flushButton setAlpha:0.5];
-                                              statusLabel.text = @"Flushed batch requests";
-                                          }];
+        flushButton.enabled = NO;
+        [flushButton setAlpha:0.5];
+        [helloPrx begin_ice_flushBatchRequests:^(ICEException* ex) {
+                                                  [self exception:ex];
+                                               }
+                                               sent:^(BOOL sentSynchronously) {
+                                                  statusLabel.text = @"Flushed batch requests";
+                                               }];
     }
     @catch(ICELocalException* ex)
     {
