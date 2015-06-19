@@ -204,7 +204,7 @@ ifeq ($(TARGET_SUPPORT_ARC),yes)
 endif
 
 mklib 		= libtool -static -o $(1) $(2)
-mkshlib		= $(CC)  -dynamiclib $(LDFLAGS) -o $(1) -install_name @rpath/$(2) $(3) $(4)
+mkshlib		= $(CC) -dynamiclib $(LDFLAGS) -o $(1) -install_name @rpath/$(2) $(3) $(4)
 
 BASELIBS	= -L$(ice_cpp_dir)/$(libsubdir) -lIce -lIceUtil -framework Foundation
 LIBS		= -lIceObjC$(libsuffix) -framework Foundation
@@ -214,8 +214,11 @@ ICECPPFLAGS	= -I$(slicedir)
 SLICE2OBJCFLAGS	= $(ICECPPFLAGS)
 FLEXFLAGS	=
 BISONFLAGS	= -dvt
-CPPFLAGS	+= -I$(includedir)
-LDFLAGS		= $(OBJCFLAGS) -L$(libdir)
+
+ifneq ($(ice_dir), $(usr_dir))
+    CPPFLAGS	+= -I$(includedir)
+    LDFLAGS	= $(OBJCFLAGS) -L$(libdir)
+endif
 
 SLICE2OBJC	= $(ice_bin_dir)/slice2objc
 
