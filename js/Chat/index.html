@@ -129,31 +129,17 @@
             <a href="https://zeroc.com/chat/index.html">ZeroC's Chat Demo Application</a>. By default it will connect to a chat server running on demo.zeroc.com though a proxy on https://zeroc.com. There is also a <a href="#" class="chatbutton">Live Client</a> which connects to the same server.
         </p>
 
-        <p>To set up your own server follow the instructions from the <a href="https://zeroc.com/chat/download.html">Chat Demo Distribution</a>.</p>
+        <p>To set up your own server follow the instructions from the C++ Chat Demo README to start the server.</p>
 
-        <p>You will need to update the Glacier2 configuration to include WSS endpoints.
-        Edit <code>ice-demos/js/Chat/server/config.glacier2router</code>
-        and update the <code>Glacier2.Client.Endpoints</code> property with the value shown below:</p>
-        <p>
-        <code style="color:#858585;font-weight:normal;font-size:80%;">
-        Glacier2.Client.Endpoints=ssl -p 4064 -t 10000 -h 127.0.0.1:tcp -p 4502 -t 10000 -h 127.0.0.1:wss -p 5064 -t 10000 -h 127.0.0.1
-        </code>
-        </p>
-
-        <p>After making those modifications to the Glacier2 router configuration, you can start the Chat Demo
-           server and Glacier2 router as shown in the server README.md.</p>
-
-        <p>Once you have configured and started the Chat Demo server and router, edit Ice.Default.Router property in js/Chat/config.json. You will then be able to log into your chat server using this page.</p>
+        <p>Once you have configured and started the Chat Demo server and router, edit <code>Ice.Default.Router</code> property in <code>js/Chat/config.json</code>. You will then be able to log into your chat server using this page.</p>
 
         <h4>Using the minified scripts</h4>
-        <p>When the demo is built with optimizations enabled, it creates a minified
-        script <code>browser/Client.min.js</code> that includes:
-        </p>
+        <p>The minified script <code>browser/Client.min.js</code> includes:</p>
         <ul>
-            <li>Ice.js (The Ice run-time library)</li>
-            <li>Glacier2.js (The Glacier2 library)</li>
-            <li>Chat.js & ChatSession.js (The generated code for this demo)</li>
-            <li>Client.js (The client application)</li>
+            <li><code>Ice.js</code> (The Ice run-time library)</li>
+            <li><code>Glacier2.js</code> (The Glacier2 library)</li>
+            <li><code>Chat.js</code> and <code>ChatSession.js</code> (The generated code for this demo)</li>
+            <li><code>Client.js</code> (The client application)</li>
         </ul>
         <p>To use the minified version you should edit the <code>js/Chat/index.html</code>
         file and comment out the non-optimized scripts:</p>
