@@ -261,7 +261,7 @@ void hello::MainPage::shutdown_Click(Platform::Object^ sender, Windows::UI::Xaml
                                           os << ex;
                                           print(os.str());
                                       },
-                                      [=](bool sentSynchronously)
+                                      [=](bool)
                                       {
                                           if(deliveryMode > 1)
                                           {
