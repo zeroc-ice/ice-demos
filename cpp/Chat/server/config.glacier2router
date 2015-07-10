@@ -1,7 +1,7 @@
 #
 # Set the Glacier2 instance name.
 #
-Glacier2.InstanceName=Glacier2
+Glacier2.InstanceName=DemoGlacier2
 
 #
 # The client-visible endpoint of Glacier2. This should be an endpoint
@@ -33,7 +33,7 @@ Glacier2.Filter.Address.Accept=127.0.0.1:10001
 # For this demo, we use the null permissions verifier. This permissions
 # verifier allows any user-id / password combination.
 # 
-Glacier2.PermissionsVerifier=Glacier2/NullPermissionsVerifier
+Glacier2.PermissionsVerifier=DemoGlacier2/NullPermissionsVerifier
 
 #
 # The timeout for inactive sessions. If any client session is inactive

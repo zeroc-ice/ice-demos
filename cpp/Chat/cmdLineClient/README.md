@@ -8,5 +8,6 @@ You may run either the Glacier2 client (`chatgl2client`) or the polling client (
 If you wish to run your own server you can specify a custom configuration file when launching the client:
 
 ```
-$ chatgl2client --Ice.Config=config.client
+$ chatgl2client --Ice.Config=config.gl2client
+$ chatpollclient --Ice.Config=config.pollclient
 ```

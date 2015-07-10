@@ -19,7 +19,7 @@ ChatServer.Endpoints=tcp -h 127.0.0.1 -p 10001
 # 2 = like 1, but more detailed
 # 3 = like 2, but also trace data transfer
 #
-Ice.Trace.Network=3
+#Ice.Trace.Network=3
 
 #
 # Protocol Tracing
@@ -27,8 +27,7 @@ Ice.Trace.Network=3
 # 0 = no protocol tracing
 # 1 = trace protocol messages
 #
-Ice.Trace.Protocol=1
-
+#Ice.Trace.Protocol=1
 
 #
 # Chat Server Tracing
@@ -37,11 +36,9 @@ Ice.Trace.Protocol=1
 # 1 = enable chat server tracing
 Server.Trace=1
 
-
 #
 # We configure the server thread pool as we want the chatserver
 # to be multi threaded.
 #
-
 Ice.ThreadPool.Server.Size=4
 Ice.ThreadPool.Server.SizeMax=10

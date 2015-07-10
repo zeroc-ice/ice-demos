@@ -41,14 +41,14 @@ public:
                         PollingChat::UserJoinedEventPtr joinedEvt = PollingChat::UserJoinedEventPtr::dynamicCast(*it);
                         if(joinedEvt)
                         {
-                            cout << joinedEvt->name << " >> joined." << endl;
+                            cout << ">>>> " << joinedEvt->name << " joined." << endl;
                             break;
                         }
 
                         PollingChat::UserLeftEventPtr leftEvt = PollingChat::UserLeftEventPtr::dynamicCast(*it);
                         if(leftEvt)
                         {
-                            cout << leftEvt->name << " << left." << endl;
+                            cout << ">>>> " << leftEvt->name << " left." << endl;
                             break;
                         }
 
@@ -153,6 +153,14 @@ public:
             {
                 break;
             }
+        }
+
+        //
+        // Override session proxy's endpoints if necessary
+        //
+        if(communicator()->getProperties()->getPropertyAsInt("OverrideSessionEndpoints") != 0)
+        {
+            session = session->ice_endpoints(sessionFactory->ice_getEndpoints());
         }
 
         IceUtil::TimerPtr timer = new IceUtil::Timer();
@@ -260,7 +268,7 @@ main(int argc, char* argv[])
     initData.properties = Ice::createProperties(argc, argv);
 
     //
-    // Set Ice.Default.Router if not set
+    // Set PollingChatSessionFactory if not set
     //
     if(initData.properties->getProperty("PollingChatSessionFactory").empty())
     {
@@ -269,8 +277,10 @@ main(int argc, char* argv[])
         initData.properties->setProperty("IceSSL.CheckCertName", "1");
         initData.properties->setProperty("PollingChatSessionFactory",
                                          "PollingChatSessionFactory:wss -h zeroc.com -p 443 -r /demo-proxy/chat/poll");
+        initData.properties->setProperty("OverrideSessionEndpoints", "1");
     }
 
     ChatClient app;
     return app.main(argc, argv, initData);
+
 }
