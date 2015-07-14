@@ -170,7 +170,7 @@ SimpleClient::run(int argc, char* argv[])
             else if(c == 'r')
             {
                 int remove = properties->getPropertyAsInt("IcePatch2Client.Remove");
-                properties->setProperty("IcePatch2Client.Remove", remove == 0 ? "1" : "0");
+                properties->setProperty("IcePatch2Client.Remove", remove == 0 ? "2" : "0");
                 cout << "Remove " << (remove == 0 ? "enabled" : "disabled") << endl;
             }
             else if(c == 'x')
