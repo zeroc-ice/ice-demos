@@ -38,11 +38,20 @@ CPPFLAGS	:= -I. $(CPPFLAGS)
 $(CLIENT1): $(C1OBJS)
 	rm -f $@
 	$(CXX) $(LDFLAGS) $(LDEXEFLAGS) -o $@ $(C1OBJS) $(LIBS)
+ifeq ($(BUILD_WITH_ICEE),yes)
+	$(Q)$(STRIP) --strip-all --remove-section=.comment --remove-section=.note $(@)
+endif
 
 $(CLIENT2): $(C2OBJS)
 	rm -f $@
 	$(CXX) $(LDFLAGS) $(LDEXEFLAGS) -o $@ $(C2OBJS) $(LIBS)
+ifeq ($(BUILD_WITH_ICEE),yes)
+	$(Q)$(STRIP) --strip-all --remove-section=.comment --remove-section=.note $(@)
+endif
 
 $(SERVER): $(SOBJS)
 	rm -f $@
 	$(CXX) $(LDFLAGS) $(LDEXEFLAGS) -o $@ $(SOBJS) $(LIBS)
+ifeq ($(BUILD_WITH_ICEE),yes)
+	$(Q)$(STRIP) --strip-all --remove-section=.comment --remove-section=.note $(@)
+endif

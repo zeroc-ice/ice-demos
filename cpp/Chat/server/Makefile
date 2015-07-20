@@ -31,3 +31,6 @@ SLICE2CPPFLAGS  := -I. $(SLICE2CPPFLAGS)
 $(SERVER): $(OBJS)
 	rm -f $@
 	$(CXX) $(LDFLAGS) -o $@ $(OBJS) -lGlacier2 $(LIBS)
+ifeq ($(BUILD_WITH_ICEE),yes)
+	$(Q)$(STRIP) --strip-all --remove-section=.comment --remove-section=.note $(@)
+endif

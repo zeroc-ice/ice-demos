@@ -127,6 +127,32 @@ the new root certificate is included with the demo application.
 
 Refer to the README file in each demo directory for usage instructions.
 
+## Building and Using the Demos for Ice-E
+
+Review the settings in `make/Make.rules`. For example, set `OPTIMIZE=yes`
+to build with optimization.
+
+When you're ready to start the build, run `make`:
+
+    $ make BUILD_WITH_ICEE=yes
+    
+The default build configuration will cross-compile demos for Debian 7.8
+(Wheezy) ARMHF. After a successful build, you need to deploy the demos to
+the target device:
+
+    $ make BUILD_WITH_ICEE=yes demo_deploy
+    
+This command will deploy the demos to the device specified by the 
+`DEPLOY_TARGET` variable in `make/Make.rules`.
+
+After successfully deploying the demos, open an ssh session to the target
+and change to the deployment directory:
+
+    $ ssh debian@192.168.7.2
+    $ cd ice-demos/cpp
+    
+Refer to the README file in each demo directory for usage instructions.
+
 [1]: https://doc.zeroc.com/display/Ice36/Ice+Manual
 [2]: https://zeroc.com/chat/index.html
 [3]: https://github.com/zeroc-ice/ice-builder-xcode

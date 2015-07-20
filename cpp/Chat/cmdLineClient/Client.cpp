@@ -168,15 +168,27 @@ private:
     }
 };
 
+#ifdef ICE_STATIC_LIBS
+extern "C"
+{
+
+Ice::Plugin* createIceSSL(const Ice::CommunicatorPtr&, const string&, const Ice::StringSeq&);
+
+}
+#endif
+
 int
 main(int argc, char* argv[])
 {
+#ifdef ICE_STATIC_LIBS
+    Ice::registerPluginFactory("IceSSL", createIceSSL, false);
+#endif
     Ice::InitializationData initData;
     initData.properties = Ice::createProperties(argc, argv);
 
     //
-	// Set Ice.Default.Router if not set
-	//
+    // Set Ice.Default.Router if not set
+    //
     if(initData.properties->getProperty("Ice.Default.Router").empty())
     {
         initData.properties->setProperty("Ice.Plugin.IceSSL","IceSSL:createIceSSL");

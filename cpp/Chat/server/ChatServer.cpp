@@ -90,9 +90,22 @@ ChatServer::stop()
     return true;
 }
 
+#ifdef ICE_STATIC_LIBS
+extern "C"
+{
+
+Ice::Plugin* createIceSSL(const Ice::CommunicatorPtr&, const string&, const Ice::StringSeq&);
+
+}
+#endif
+
+
 int
 main(int argc, char* argv[])
 {
+#ifdef ICE_STATIC_LIBS
+    Ice::registerPluginFactory("IceSSL", createIceSSL, false);
+#endif
     ChatServer app;
     return app.main(argc, argv);
 }

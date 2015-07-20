@@ -27,10 +27,22 @@ include $(top_srcdir)/make/Make.rules
 
 CPPFLAGS	:= -I. $(CPPFLAGS)
 
+ifeq ($(BUILD_WITH_ICEE),yes)
+GLACIER2_LIBS	= -Wl,-Bstatic -lGlacier2
+else
+GLACIER2_LIBS	= -lGlacier2
+endif
+
 $(CLIENT): $(COBJS)
 	rm -f $@
-	$(CXX) $(LDFLAGS) $(LDEXEFLAGS) -o $@ $(COBJS) -lGlacier2 $(LIBS)
+	$(CXX) $(LDFLAGS) $(LDEXEFLAGS) -o $@ $(COBJS) $(GLACIER2_LIBS) $(LIBS)
+ifeq ($(BUILD_WITH_ICEE),yes)
+	$(Q)$(STRIP) --strip-all --remove-section=.comment --remove-section=.note $(@)
+endif
 
 $(SERVER): $(SOBJS)
 	rm -f $@
-	$(CXX) $(LDFLAGS) $(LDEXEFLAGS) -o $@ $(SOBJS) -lGlacier2 $(LIBS)
+	$(CXX) $(LDFLAGS) $(LDEXEFLAGS) -o $@ $(SOBJS) $(GLACIER2_LIBS) $(LIBS)
+ifeq ($(BUILD_WITH_ICEE),yes)
+	$(Q)$(STRIP) --strip-all --remove-section=.comment --remove-section=.note $(@)
+endif

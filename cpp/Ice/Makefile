@@ -22,11 +22,15 @@ SUBDIRS		= minimal \
 		  async \
 		  multicast \
 		  nrvo \
-		  plugin \
-		  interleaved \
 		  properties \
 		  optional \
 		  context
+
+ifneq ($(BUILD_WITH_ICEE),yes)
+SUBDIRS		:= $(SUBDIRS) \
+		   interleaved \
+		   plugin
+endif
 
 .PHONY: $(EVERYTHING) $(SUBDIRS)
 

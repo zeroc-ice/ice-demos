@@ -20,7 +20,45 @@
 # Define CPP11 as yes if you want to enable C++11 features in GCC or
 # Clang.
 #
-#CPP11     ?= yes
+#CPP11			?= yes
+
+#
+# If Ice is not installed in the default location set ICE_HOME to 
+# the Ice installation directory.
+#
+#ICE_HOME		?= /opt/Ice-3.6.0
+
+#
+# Set to yes to build demos with Ice-E instead of Ice.
+#
+#BUILD_WITH_ICEE	?= yes
+
+#
+# If building with Ice-E, Debian arch tuple of the host machine 
+# supported values are arm-linux-gnueabihf and x86_64-linux-gnu.
+#
+# Set it to arm-linux-gnueabihf if you are cross compiling for
+# armhf.
+#
+HOST			?= arm-linux-gnueabihf
+
+#
+# If building wiht Ice-E and Ice-E is not installed in the default 
+# location set ICEE_HOME to the Ice-E installation directory.
+#
+#ICEE_HOME		?= /opt/IceE-3.6.0
+
+#
+# If cross compiling with Ice-E and third party libraries are not installed in 
+# the default location or ICEE_THIRDPARTY_HOME is not set in your environment 
+# variables then change the following setting to reflect the installation location.
+#
+ICEE_THIRDPARTY_HOME	?= /opt/IceE-3.6.0-ThirdParty
+
+#
+# Target to deploy the demos when cross compiling with Ice-E.
+#
+DEPLOY_TARGET		?= debian@192.168.7.2:/home/debian/ice-demos
 
 # ----------------------------------------------------------------------
 # Don't change anything below this line!
@@ -309,15 +347,20 @@ ifneq ($(ICE_HOME),)
     embedded_runpath = yes
 endif
 
-
 #
 # Platform specific definitions
 #
+ifneq ($(BUILD_WITH_ICEE),yes)
 include	 $(top_srcdir)/make/Make.rules.$(UNAME)
+else
+include	 $(top_srcdir)/make/Make.rules.IceE
+endif
 
 ICECPPFLAGS		= -I$(slicedir)
 
 SLICE2CPPFLAGS		= $(ICECPPFLAGS)
+
+ifneq ($(BUILD_WITH_ICEE),yes)
 
 ifeq ($(ice_dir), $(usr_dir))
     LDFLAGS	= $(LDPLATFORMFLAGS) $(CXXFLAGS)
@@ -331,6 +374,7 @@ else
     else
         LDFLAGS	= $(LDPLATFORMFLAGS) $(CXXFLAGS) -L$(ice_dir)/$(libsubdir)$(cpp11libdirsuffix)
     endif
+endif
 endif
 
 ifeq ($(FLEX_NOLINE),yes)

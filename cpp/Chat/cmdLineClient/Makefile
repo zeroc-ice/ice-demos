@@ -33,10 +33,22 @@ include $(top_srcdir)/make/Make.rules
 CPPFLAGS	:= -I. $(CPPFLAGS)
 SLICE2CPPFLAGS  := -I. $(SLICE2CPPFLAGS)
 
+ifeq ($(BUILD_WITH_ICEE),yes)
+GLACIER2_LIBS	= -Wl,-Bstatic -lGlacier2
+else
+GLACIER2_LIBS	= -lGlacier2
+endif
+
 $(GL2CLIENT): $(GL2_CLIENT_OBJS)
 	rm -f $@
-	$(CXX) $(LDFLAGS) -o $@ $(GL2_CLIENT_OBJS) -lGlacier2 $(LIBS)
+	$(CXX) $(LDFLAGS) -o $@ $(GL2_CLIENT_OBJS) $(GLACIER2_LIBS) $(LIBS)
+ifeq ($(BUILD_WITH_ICEE),yes)
+	$(Q)$(STRIP) --strip-all --remove-section=.comment --remove-section=.note $(@)
+endif
 
 $(POLLCLIENT): $(POLL_CLIENT_OBJS)
 	rm -f $@
 	$(CXX) $(LDFLAGS) -o $@ $(POLL_CLIENT_OBJS) $(LIBS)
+ifeq ($(BUILD_WITH_ICEE),yes)
+	$(Q)$(STRIP) --strip-all --remove-section=.comment --remove-section=.note $(@)
+endif

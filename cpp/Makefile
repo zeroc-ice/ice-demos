@@ -8,11 +8,20 @@ top_srcdir	= .
 
 include $(top_srcdir)/make/Make.rules
 
+
+ifeq ($(BUILD_WITH_ICEE),yes)
+
+SUBDIRS		:= Ice IceDiscovery Glacier2 Chat
+
+endif
+
 ifneq ($(findstring MINGW,$(UNAME)),)
 SUBDIRS		= Ice \
 		  IceDiscovery \
 		  Manual
-else
+endif
+
+ifeq ($(SUBDIRS),)
 SUBDIRS		= IceUtil \
 		  Chat \
 		  Freeze \
