@@ -4,10 +4,22 @@ This demo is a Qt client for the [ZeroC Chat Demo](https://zeroc.com/chat/index.
 
 By default, the demo connects to the chat server hosted on demo.zeroc.com through a WebSocket reverse proxy hosted on zeroc.com.
 
-If you wish to run your own server you can specify a custom configuration file when launching the application:
+To run the client on Windows or Linux:
 
 ```
-$ open QtChatDemo.app --Ice.Config=config.client
+$ QtChatDemo
+```
+
+To run the client on OS X:
+
+```
+$ open QtChatDemo.app
+```
+
+If you wish to use your own server from the `server` directory you should specify the custom configuration file when launching the application. For example:
+
+```
+$ QtChatDemo --Ice.Config=config.client
 ```
 
 ## Requirements
@@ -20,4 +32,3 @@ The chat demo is compatible with both Qt4 and Qt5.
 ### Windows
 
 The chat demo on Windows requires Qt5, Microsoft Visual Studio 2013, the Visual Studio Add-in for Qt5.
-

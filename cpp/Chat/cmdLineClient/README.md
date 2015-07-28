@@ -4,8 +4,7 @@ By default, the demo connects to the chat server hosted on demo.zeroc.com throug
 
 You may run either the Glacier2 client (`chatgl2client`) or the polling client (`chatpollclient`), as well as any username or password to connect.
 
-
-If you wish to run your own server you can specify a custom configuration file when launching the client:
+If you wish to use your own server from the `server` direcory you should specify the appropriate custom configuration file when launching the client:
 
 ```
 $ chatgl2client --Ice.Config=config.gl2client
