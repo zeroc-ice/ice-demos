@@ -38,7 +38,7 @@ CXXFLAGS	= -DICE_STATIC_LIBS
 
 ifneq ($(ICEE_HOME),/usr)
 LDFLAGS		:= $(LDFLAGS) -L$(libdir)
-CXXFLAGS	+= -I$(includedir) 
+CPPFLAGS	+= -I$(includedir)
 endif
 
 CXXFLAGS	+= -Wall -Werror -Wextra -Wshadow -pthread
