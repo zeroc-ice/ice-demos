@@ -24,7 +24,8 @@ SUBDIRS		= minimal \
 		  nrvo \
 		  properties \
 		  optional \
-		  context
+		  context \
+		  locator
 
 ifneq ($(BUILD_WITH_ICEE),yes)
 SUBDIRS		:= $(SUBDIRS) \
