@@ -19,7 +19,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Client.cpp">
+    <ClCompile Include="Locator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
