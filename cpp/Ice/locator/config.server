@@ -12,6 +12,11 @@ Ice.Default.Locator=locator:tcp -p 10000
 Hello.Endpoints=tcp
 
 #
+# The following causes the server to register with the locator
+#
+Hello.AdapterId=Hello
+
+#
 # Only listen on the localhost interface by default. You can comment
 # out this property to allow listening on all available interfaces.
 #

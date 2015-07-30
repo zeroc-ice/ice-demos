@@ -48,7 +48,7 @@ Demos in this directory:
   A simple latency test that measures the basic call dispatch delay of
   Ice.
 
-- [latency](./latency)
+- [locator](./locator)
 
   This demo illustrates how to write a simple custom Ice::Locator.
 
