@@ -1,4 +1,4 @@
-This demo illustrates how to use a custom Ice::Locator.
+This demo illustrates how to write a simple Locator.
 
 To run the demo, first start the server:
 
