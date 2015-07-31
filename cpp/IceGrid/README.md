@@ -9,6 +9,11 @@ Demos in this directory:
   This demo shows how to implement IceGrid custom load balancing using
   replica group filters.
 
+- [customLocator](./customLocator)
+  
+  This demo shows how to implement a custom locator that delegates
+  to the IceGrid locator.
+
 - [icebox](./icebox)
 
   This demo shows a simple IceGrid deployment with an IceBox server.

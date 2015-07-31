@@ -10,6 +10,7 @@ include $(top_srcdir)/make/Make.rules
 
 SUBDIRS		= simple \
 		  customLoadBalancing \
+		  customLocator \
 		  sessionActivation \
 		  allocate \
 		  replication \

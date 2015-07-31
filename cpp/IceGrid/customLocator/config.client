@@ -1,0 +1,4 @@
+#
+# The custom locator proxy.
+#
+Ice.Default.Locator=locator:default -h localhost -p 10000
