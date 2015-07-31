@@ -37,6 +37,9 @@ public:
 
 private:
 
+	// Required to prevent compiler warning with MSVC++
+	SetAdapterDirectProxyCallback& operator=(const SetAdapterDirectProxyCallback&);
+
     const Ice::AMD_LocatorRegistry_setAdapterDirectProxyPtr _cb;
 };
 typedef IceUtil::Handle<SetAdapterDirectProxyCallback> SetAdapterDirectProxyCallbackPtr;
@@ -67,6 +70,9 @@ public:
 
 private:
 
+	// Required to prevent compiler warning with MSVC++
+	SetReplicatedAdapterDirectProxyCallback& operator=(const SetReplicatedAdapterDirectProxyCallback&);
+
     const Ice::AMD_LocatorRegistry_setReplicatedAdapterDirectProxyPtr _cb;
 };
 typedef IceUtil::Handle<SetReplicatedAdapterDirectProxyCallback> SetReplicatedAdapterDirectProxyCallbackPtr;
@@ -96,6 +102,9 @@ public:
     }
 
 private:
+
+	// Required to prevent compiler warning with MSVC++
+	SetServerProcessProxyCallback& operator=(const SetServerProcessProxyCallback&);
 
     const Ice::AMD_LocatorRegistry_setServerProcessProxyPtr _cb;
 };
@@ -146,6 +155,9 @@ public:
 
 private:
 
+	// Required to prevent compiler warning with MSVC++
+	LocatorRegistryI& operator=(const LocatorRegistryI&);
+
     const Ice::LocatorRegistryPrx _registry;
 };
 
@@ -174,6 +186,9 @@ public:
     }
 
 private:
+
+	// Required to prevent compiler warning with MSVC++
+	FindObjectByIdCallback& operator=(const FindObjectByIdCallback&);
 
     const Ice::AMD_Locator_findObjectByIdPtr _cb;
 };
@@ -204,6 +219,9 @@ public:
     }
 
 private:
+
+	// Required to prevent compiler warning with MSVC++
+	FindAdapterByIdCallback& operator=(const FindAdapterByIdCallback&);
 
     const Ice::AMD_Locator_findAdapterByIdPtr _cb;
 };
