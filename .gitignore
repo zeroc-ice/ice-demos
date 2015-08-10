@@ -158,3 +158,5 @@ visualBasic/**/*.xml
 # WinRT Generated
 #
 cpp/**/Generated Files
+
+Thumbs.db
