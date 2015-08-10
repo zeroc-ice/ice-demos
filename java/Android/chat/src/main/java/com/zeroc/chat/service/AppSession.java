@@ -24,8 +24,8 @@ import com.zeroc.chat.R;
 
 public class AppSession
 {
-    private Ice.Communicator _communicator;
-    private Chat.ChatSessionPrx _session;
+    private ChatService _service;
+    private Chat.ChatSessionPrx _chat;
     private List<ChatRoomListener> _listeners = new LinkedList<ChatRoomListener>();
     private LinkedList<ChatEventReplay> _replay = new LinkedList<ChatEventReplay>();
     private List<String> _users = new LinkedList<String>();
@@ -33,18 +33,15 @@ public class AppSession
     static final int MAX_MESSAGES = 200;
 
     private boolean _destroyed = false;
-    private long _lastSend;
-    private long _refreshTimeout;
-    private Glacier2.RouterPrx _router;
-    private Handler _handler;
     private String _hostname;
     private String _error;
 
-    public AppSession(Resources resources, final Handler handler, String username,
-                      String password)
-        throws Glacier2.CannotCreateSessionException, Glacier2.PermissionDeniedException, IOException
+    private Glacier2.SessionHelper _session;
+
+    public AppSession(ChatService service, final Resources resources, final Handler handler, String username, String password)
+            throws IOException
     {
-        _handler = handler;
+        _service = service;
 
         Ice.InitializationData initData = new Ice.InitializationData();
 
@@ -60,13 +57,20 @@ public class AppSession
 
         initData.properties = Ice.Util.createProperties();
 
-        InputStream inputStream = resources.getAssets().open("config.properties");
-        Properties properties = new Properties();
-        properties.load(inputStream);
-        for(String name: properties.stringPropertyNames())
+        try
         {
-            String value = properties.getProperty(name);
-            initData.properties.setProperty(name, value);
+            InputStream inputStream = resources.getAssets().open("config.properties");
+            Properties properties = new Properties();
+            properties.load(inputStream);
+            for (String name : properties.stringPropertyNames()) {
+                String value = properties.getProperty(name);
+                initData.properties.setProperty(name, value);
+            }
+        }
+        catch(IOException ex)
+        {
+            _error = String.format("Initialization failed %s", ex.toString());
+            throw ex;
         }
 
         initData.properties.setProperty("Ice.RetryIntervals", "-1");
@@ -84,77 +88,91 @@ public class AppSession
             initData.properties.setProperty("Ice.InitPlugins", "0");
             initData.properties.setProperty("IceSSL.TruststoreType", "BKS");
             initData.properties.setProperty("IceSSL.Password", "password");
-
-            _communicator = Ice.Util.initialize(initData);
-
-            java.io.InputStream certStream = resources.openRawResource(R.raw.client);
-            IceSSL.Plugin plugin = (IceSSL.Plugin)_communicator.getPluginManager().getPlugin("IceSSL");
-            plugin.setTruststoreStream(certStream);
-            _communicator.getPluginManager().initializePlugins();
-        }
-        else
-        {
-            _communicator = Ice.Util.initialize(initData);
         }
 
-        _router = Glacier2.RouterPrxHelper.checkedCast(_communicator.getDefaultRouter());
-        Glacier2.SessionPrx glacier2session = _router.createSession(username, password);
-        _session = Chat.ChatSessionPrxHelper.uncheckedCast(glacier2session);
+        Glacier2.SessionFactoryHelper factory = new Glacier2.SessionFactoryHelper(initData, new Glacier2.SessionCallback()
+            {
+                public void
+                connected(final Glacier2.SessionHelper session)
+                    throws Glacier2.SessionNotExistException {
+                    //
+                    // If the session has been reassigned avoid the spurious callback.
+                    //
+                    if (session != _session) {
+                        return;
+                    }
 
-        Ice.ObjectAdapter adapter = _communicator.createObjectAdapterWithRouter("ChatDemo.Client", _router);
+                    Chat.ChatRoomCallbackPrx callback = Chat.ChatRoomCallbackPrxHelper.uncheckedCast(_session.addWithUUID(new ChatCallbackI()));
 
-        Ice.Identity callbackId = new Ice.Identity();
-        callbackId.name = UUID.randomUUID().toString();
-        callbackId.category = _router.getCategoryForClient();
+                    _chat = Chat.ChatSessionPrxHelper.uncheckedCast(_session.session());
+                    try {
+                        _chat.begin_setCallback(callback, new Chat.Callback_ChatSession_setCallback() {
+                            @Override
+                            public void
+                            response() {
+                                _service.loginComplete();
+                            }
 
-        Ice.ObjectPrx cb = adapter.add(new ChatCallbackI(), callbackId);
-        _session.setCallback(Chat.ChatRoomCallbackPrxHelper.uncheckedCast(cb));
+                            @Override
+                            public void
+                            exception(Ice.LocalException ex) {
+                                AppSession.this.destroy();
+                            }
+                        });
+                    } catch (Ice.CommunicatorDestroyedException ex) {
+                        //Ignore client session was destroyed.
+                    }
+                }
 
-        adapter.activate();
-        _lastSend = System.currentTimeMillis();
+                public void
+                disconnected(Glacier2.SessionHelper session)
+                {
+                    if(!_destroyed) // Connection closed by user logout/exit
+                    {
+                        destroyWithError("<system-message> - The connection with the server was unexpectedly lost.\nTry again.");
+                    }
+                }
 
-        int acmTimeout = 0;
-        try
-        {
-            acmTimeout = _router.getACMTimeout();
-        }
-        catch(Ice.OperationNotExistException ex)
-        {
-        }
-        if(acmTimeout <= 0)
-        {
-            acmTimeout = (int)_router.getSessionTimeout();
-        }
+                public void
+                connectFailed(Glacier2.SessionHelper session, Throwable exception)
+                {
+                    try
+                    {
+                        throw exception;
+                    }
+                    catch(final Glacier2.CannotCreateSessionException ex)
+                    {
+                        setError("Login failed (Glacier2.CannotCreateSessionException):\n" + ex.reason);
+                    }
+                    catch(final Glacier2.PermissionDeniedException ex)
+                    {
+                        setError("Login failed (Glacier2.PermissionDeniedException):\n" + ex.reason);
+                    }
+                    catch(Ice.Exception ex)
+                    {
+                        setError("Login failed (" + ex.ice_name() + ").\n" +
+                                 "Please check your configuration.");
+                    }
+                    catch(final Throwable ex) {
+                        setError("Login failed:\n" + stack2string(ex));
+                    }
+                    _service.loginFailed();
+                }
 
-        if(acmTimeout > 0)
-        {
-            Ice.Connection connection = _router.ice_getCachedConnection();
-            assert(connection != null);
-            connection.setCallback(new Ice.ConnectionCallback()
-                                {
-                                    @Override
-                                    public void heartbeat(Ice.Connection con)
-                                    {
-                                    }
-
-                                    @Override
-                                    public void closed(Ice.Connection con)
-                                    {
-                                        destroy();
-                                    }
-                                });
-
-
-            connection.setACM(new Ice.IntOptional(acmTimeout), null,
-                              new Ice.Optional<Ice.ACMHeartbeat>(Ice.ACMHeartbeat.HeartbeatAlways));
-        }
-
-        _refreshTimeout = (acmTimeout * 1000) / 2;
-    }
-
-    synchronized public long getRefreshTimeout()
-    {
-        return _refreshTimeout;
+                public void
+                createdCommunicator(Glacier2.SessionHelper session)
+                {
+                    Ice.Communicator communicator = session.communicator();
+                    if(communicator.getProperties().getPropertyAsIntWithDefault("IceSSL.UsePlatformCAs", 0) == 0)
+                    {
+                        java.io.InputStream certStream = resources.openRawResource(R.raw.client);
+                        IceSSL.Plugin plugin = (IceSSL.Plugin)communicator.getPluginManager().getPlugin("IceSSL");
+                        plugin.setTruststoreStream(certStream);
+                        communicator.getPluginManager().initializePlugins();
+                    }
+                }
+            });
+        _session = factory.connect(username, password);
     }
 
     synchronized public void destroy()
@@ -165,34 +183,19 @@ public class AppSession
         }
         _destroyed = true;
 
+        _session.destroy();
         _session = null;
-        new Thread(new Runnable()
-        {
-            public void run()
-            {
-                try
-                {
-                    _router.destroySession();
-                }
-                catch(Exception ex)
-                {
-                }
-
-                try
-                {
-                    _communicator.destroy();
-                }
-                catch(Ice.LocalException e)
-                {
-                }
-                _communicator = null;
-            }
-        }).start();
     }
+
 
     synchronized public String getError()
     {
         return _error;
+    }
+
+    synchronized private void setError(String error)
+    {
+        _error = error;
     }
 
     // This method is only called by the UI thread.
@@ -203,8 +206,7 @@ public class AppSession
             return;
         }
 
-        _lastSend = System.currentTimeMillis();
-        _session.begin_send(t, new Chat.Callback_ChatSession_send()
+        _chat.begin_send(t, new Chat.Callback_ChatSession_send()
             {
                 @Override
                 public void exception(Ice.LocalException ex)
@@ -389,6 +391,21 @@ public class AppSession
         for(ChatRoomListener listener : copy)
         {
             listener.error();
+        }
+    }
+
+    private String stack2string(Throwable e)
+    {
+        try
+        {
+            java.io.StringWriter sw = new java.io.StringWriter();
+            java.io.PrintWriter pw = new java.io.PrintWriter(sw);
+            e.printStackTrace(pw);
+            return sw.toString();
+        }
+        catch(Exception e2)
+        {
+            return e.toString();
         }
     }
 }

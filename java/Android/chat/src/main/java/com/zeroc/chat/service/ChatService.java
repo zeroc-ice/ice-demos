@@ -104,51 +104,21 @@ public class ChatService extends Service implements com.zeroc.chat.service.Servi
         }
     }
 
-    synchronized public void login(final String username, final String password)
-    {
+    synchronized public void login(final String username, final String password) {
         assert _session == null;
         assert !_loginInProgress;
 
         _loginError = null;
         _loginInProgress = true;
 
-        new Thread(new Runnable()
+        try
         {
-            public void run()
-            {
-                try
-                {
-                    loginComplete(new AppSession(getResources(), _handler, username, password));
-                }
-                catch(final Glacier2.CannotCreateSessionException ex)
-                {
-                    ex.printStackTrace();
-                    postLoginFailure(String.format("Session creation failed: %s", ex.toString()));
-                }
-                catch(final Glacier2.PermissionDeniedException ex)
-                {
-                    ex.printStackTrace();
-                    postLoginFailure(String.format("Login failed: %s", ex.toString()));
-                }
-                catch(final Ice.LocalException ex)
-                {
-                    ex.printStackTrace();
-                    postLoginFailure(String.format("Login failed: %s", ex.toString()));
-                }
-                catch(final IOException ex)
-                {
-                    ex.printStackTrace();
-                    postLoginFailure(String.format("Initialization failed %s", ex.toString()));
-                }
-                finally
-                {
-                    synchronized(ChatService.this)
-                    {
-                        _loginInProgress = false;
-                    }
-                }
-            }
-        }).start();
+            _session = new AppSession(this, getResources(), _handler, username, password);
+        }
+        catch(IOException ex)
+        {
+            loginFailed();
+        }
     }
 
     synchronized public String addChatRoomListener(ChatRoomListener listener, boolean replay) throws NoSessionException
@@ -186,9 +156,11 @@ public class ChatService extends Service implements com.zeroc.chat.service.Servi
         return _session != null ? _session.getError() : "";
     }
 
-    synchronized private void postLoginFailure(final String loginError)
+    synchronized public void loginFailed()
     {
-        _loginError = loginError;
+        _loginError = _session.getError();
+        _loginInProgress = false;
+        _session = null;
         if(_listener != null)
         {
             final SessionListener listener = _listener;
@@ -202,9 +174,10 @@ public class ChatService extends Service implements com.zeroc.chat.service.Servi
         }
     }
 
-    synchronized private void loginComplete(AppSession session)
+    synchronized public void loginComplete()
     {
-        _session = session;
+        _loginInProgress = false;
+
         // Display a notification that the user is logged in.
         Notification notification = new Notification.Builder(this)
                 .setSmallIcon(R.drawable.stat_notify)
@@ -219,7 +192,6 @@ public class ChatService extends Service implements com.zeroc.chat.service.Servi
         if(_listener != null)
         {
             final SessionListener listener = _listener;
-
             _handler.post(new Runnable()
             {
                 public void run()
