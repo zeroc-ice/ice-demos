@@ -51,11 +51,11 @@
     <Page Include="MainPage.xaml" />
   </ItemGroup>
   <ItemGroup>
-    <AppxManifest Include="Package.appxmanifest" />
-  </ItemGroup>
-  <ItemGroup>
     <IceBuilder Include="Hello.ice">
       <Filter>Slice Files</Filter>
     </IceBuilder>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.winrt.appxmanifest" />
   </ItemGroup>
 </Project>

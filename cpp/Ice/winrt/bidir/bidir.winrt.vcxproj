@@ -27,13 +27,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{dc1a22cc-0ad9-40cf-9159-952962f71520}</ProjectGuid>
-    <RootNamespace>hello</RootNamespace>
+    <ProjectGuid>{4ef04ddd-1b81-4dc7-adf2-290e22008616}</ProjectGuid>
+    <RootNamespace>bidir</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
     <ApplicationTypeRevision>8.1</ApplicationTypeRevision>
+    <ProjectName>bidir</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -93,10 +94,9 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <PackageCertificateKeyFile>hello_TemporaryKey.pfx</PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>6CC5B5B4C4E6105C1F1A0BBE03544927C01F2DF4</PackageCertificateThumbprint>
+    <PackageCertificateKeyFile>bidir_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateThumbprint>C03E2F096DE88C20139368FB6EC67A4ECAF2A2C3</PackageCertificateThumbprint>
   </PropertyGroup>
-  <PropertyGroup Label="IceBuilder" />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
@@ -164,7 +164,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="generated\Hello.h" />
+    <ClInclude Include="generated\Callback.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="App.xaml.h">
       <DependentUpon>App.xaml</DependentUpon>
@@ -185,13 +185,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <AppxManifest Include="Package.appxmanifest">
+    <AppxManifest Include="Package.winrt.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="..\..\..\..\certs\cacert.der">
-      <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="hello_TemporaryKey.pfx" />
+    <None Include="bidir_TemporaryKey.pfx" />
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
@@ -204,7 +201,7 @@
     <ClCompile Include="App.xaml.cpp">
       <DependentUpon>App.xaml</DependentUpon>
     </ClCompile>
-    <ClCompile Include="generated\Hello.cpp" />
+    <ClCompile Include="generated\Callback.cpp" />
     <ClCompile Include="MainPage.xaml.cpp">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </ClCompile>
@@ -221,7 +218,7 @@
     <SDKReference Include="Ice, Version=3.6" />
   </ItemGroup>
   <ItemGroup>
-    <IceBuilder Include="Hello.ice" />
+    <IceBuilder Include="Callback.ice" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <PropertyGroup Label="IceBuilder">

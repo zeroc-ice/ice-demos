@@ -2,10 +2,10 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Common">
-      <UniqueIdentifier>4ef04ddd-1b81-4dc7-adf2-290e22008616</UniqueIdentifier>
+      <UniqueIdentifier>c56bdb5e-9829-49d6-b5eb-9089ad7e89cc</UniqueIdentifier>
     </Filter>
     <Filter Include="Assets">
-      <UniqueIdentifier>51dcd63d-9ac1-4f7a-ae17-45da43b621d7</UniqueIdentifier>
+      <UniqueIdentifier>13723f9e-afb3-465e-9f73-02f19059882b</UniqueIdentifier>
     </Filter>
     <Page Include="Common\StandardStyles.xaml">
       <Filter>Common</Filter>
@@ -23,7 +23,7 @@
       <Filter>Assets</Filter>
     </Image>
     <Filter Include="Slice Files">
-      <UniqueIdentifier>{292fab1a-578c-480d-96de-b7e8a130ad75}</UniqueIdentifier>
+      <UniqueIdentifier>{ba63e8c4-47ac-4c64-80d4-ed7f922b8166}</UniqueIdentifier>
       <Extensions>ice</Extensions>
     </Filter>
   </ItemGroup>
@@ -34,27 +34,34 @@
     <ClCompile Include="App.xaml.cpp" />
     <ClCompile Include="MainPage.xaml.cpp" />
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="generated\Callback.cpp" />
+    <ClCompile Include="ChatView.xaml.cpp" />
+    <ClCompile Include="LoginView.xaml.cpp" />
+    <ClCompile Include="generated\Chat.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="App.xaml.h" />
     <ClInclude Include="MainPage.xaml.h" />
-    <ClInclude Include="generated\Callback.h" />
+    <ClInclude Include="ChatView.xaml.h" />
+    <ClInclude Include="LoginView.xaml.h" />
+    <ClInclude Include="generated\Chat.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="bidir_TemporaryKey.pfx" />
+    <None Include="..\..\..\..\certs\cacert.der" />
+    <None Include="simpleChat_TemporaryKey.pfx" />
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainPage.xaml" />
+    <Page Include="ChatView.xaml" />
+    <Page Include="LoginView.xaml" />
   </ItemGroup>
   <ItemGroup>
-    <AppxManifest Include="Package.appxmanifest" />
-  </ItemGroup>
-  <ItemGroup>
-    <IceBuilder Include="Callback.ice">
+    <IceBuilder Include="Chat.ice">
       <Filter>Slice Files</Filter>
     </IceBuilder>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.winrt.appxmanifest" />
   </ItemGroup>
 </Project>
