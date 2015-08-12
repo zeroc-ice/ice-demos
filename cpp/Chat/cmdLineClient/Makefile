@@ -41,14 +41,14 @@ endif
 
 $(GL2CLIENT): $(GL2_CLIENT_OBJS)
 	rm -f $@
-	$(CXX) $(LDFLAGS) -o $@ $(GL2_CLIENT_OBJS) $(GLACIER2_LIBS) $(LIBS)
+	$(CXX) $(LDFLAGS) $(LDEXEFLAGS) -o $@ $(GL2_CLIENT_OBJS) $(GLACIER2_LIBS) $(LIBS)
 ifeq ($(BUILD_WITH_ICEE),yes)
 	$(Q)$(STRIP) --strip-all --remove-section=.comment --remove-section=.note $(@)
 endif
 
 $(POLLCLIENT): $(POLL_CLIENT_OBJS)
 	rm -f $@
-	$(CXX) $(LDFLAGS) -o $@ $(POLL_CLIENT_OBJS) $(LIBS)
+	$(CXX) $(LDFLAGS) $(LDEXEFLAGS) -o $@ $(POLL_CLIENT_OBJS) $(LIBS)
 ifeq ($(BUILD_WITH_ICEE),yes)
 	$(Q)$(STRIP) --strip-all --remove-section=.comment --remove-section=.note $(@)
 endif
