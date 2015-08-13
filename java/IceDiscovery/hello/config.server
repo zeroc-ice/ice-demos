@@ -9,6 +9,10 @@ Hello.AdapterId=HelloAdapter
 #
 # Only listen on the localhost interface by default.
 #
+# Change this property to the IP address of a network interface if
+# you want the server to be discoverable and accessible on your
+# local network.
+#
 Ice.Default.Host=localhost
 
 #

@@ -4,6 +4,14 @@
 Ice.Plugin.IceDiscovery=IceDiscovery:IceDiscovery.PluginFactory
 
 #
+# Use the localhost interface by default for discovery.
+#
+# Change this property to the IP address of a network interface if
+# you want the client to discover servers on your local network.
+#
+Ice.Default.Host=localhost
+
+#
 # Warn about connection exceptions
 #
 Ice.Warn.Connections=1

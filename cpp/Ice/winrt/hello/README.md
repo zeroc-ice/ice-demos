@@ -35,3 +35,20 @@ as idempotent in the Slice, meaning that Ice does not need to follow
 the at-most-once retry semantics.
 
 See the manual for more information about retry behavior.
+
+IceDiscovery
+------------
+
+Instead of configuring the IP address for the server you can use IceDiscovery to
+discover the server.
+
+To enable IceDiscovery, click on the "Use IceDiscovery" check-box. You must run
+the hello server from the IceDiscovery/hello demo and ensure that the server is
+listening on an accessible network interface.
+
+See the README file of the IceDiscovery hello demo for more information on how
+to start the server.
+
+NOTE: you must run the server on another machine. The hello client can't
+discover servers running on the local machine due to network isolation
+restrictions of Windows Store applications.
