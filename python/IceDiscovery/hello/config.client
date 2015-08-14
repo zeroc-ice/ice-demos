@@ -4,12 +4,12 @@
 Ice.Plugin.IceDiscovery=IceDiscovery:createIceDiscovery
 
 #
-# Use the localhost interface by default for discovery.
+# Use the loopback interface by default for discovery.
 #
 # Change this property to the IP address of a network interface if
 # you want the client to discover servers on your local network.
 #
-Ice.Default.Host=localhost
+IceDiscovery.Interface=127.0.0.1
 
 #
 # Warn about connection exceptions
