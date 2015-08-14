@@ -39,7 +39,20 @@ MainPage::MainPage()
                             call->run();
                         }, CallbackContext::Any));
             });
-    _communicator = Ice::initialize(id);
+    try
+    {
+        _communicator = Ice::initialize(id);
+    }
+    catch(const Ice::PluginInitializationException&)
+    {
+        //
+        // Disable the IceDiscovery plugin if it fails loading. On Windows 10, this can
+        // fail if another process binds to the multicast address/port.
+        //
+        id.properties->setProperty("Ice.Plugin.IceDiscovery", "");
+        useDiscovery->IsEnabled = false;
+        _communicator = Ice::initialize(id);
+    }
     updateProxy();
 }
 
