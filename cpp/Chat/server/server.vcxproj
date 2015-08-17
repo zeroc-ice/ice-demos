@@ -99,21 +99,25 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(ProjectDir)</OutDir>
     <IntDir>$(Configuration)\$(PlatformName)\$(ProjectName)\</IntDir>
+    <TargetName>chatserver</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <IntDir>$(Configuration)\$(PlatformName)\$(ProjectName)\</IntDir>
     <OutDir>$(ProjectDir)</OutDir>
+    <TargetName>chatserver</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)</OutDir>
     <IntDir>$(Configuration)\$(PlatformName)\$(ProjectName)\</IntDir>
+    <TargetName>chatserver</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <IntDir>$(Configuration)\$(PlatformName)\$(ProjectName)\</IntDir>
     <OutDir>$(ProjectDir)</OutDir>
+    <TargetName>chatserver</TargetName>
   </PropertyGroup>
   <PropertyGroup Label="IceBuilder">
     <IceBuilderIncludeDirectories>$(ProjectDir);$(IceBuilderIncludeDirectories)</IceBuilderIncludeDirectories>
