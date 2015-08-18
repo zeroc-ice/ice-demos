@@ -9,7 +9,7 @@ Ice.Plugin.IceDiscovery=IceDiscovery:createIceDiscovery
 # Change this property to the IP address of a network interface if
 # you want the client to discover servers on your local network.
 #
-IceDiscovery.Interface=localhost
+IceDiscovery.Interface=127.0.0.1
 
 #
 # Warn about connection exceptions
