@@ -6,19 +6,19 @@
 
 var bower       = require("bower");
 var browserSync = require("browser-sync");
-var concat      = require('gulp-concat');
+var concat      = require("gulp-concat");
 var del         = require("del");
 var extreplace  = require("gulp-ext-replace");
-var fs          = require('fs');
+var fs          = require("fs");
 var gulp        = require("gulp");
 var gzip        = require("gulp-gzip");
-var minifycss   = require('gulp-minify-css');
-var newer       = require('gulp-newer');
-var npm         = require('npm');
+var iceBuilder  = require("gulp-ice-builder");
+var minifycss   = require("gulp-minify-css");
+var newer       = require("gulp-newer");
+var npm         = require("npm");
 var open        = require("gulp-open");
 var path        = require("path");
-var paths       = require('vinyl-paths');
-var iceBuilder  = require("gulp-ice-builder");
+var paths       = require("vinyl-paths");
 var uglify      = require("gulp-uglify");
 
 var HttpServer  = require("./bin/HttpServer");
@@ -43,14 +43,15 @@ function slice2js(options)
     if(ICE_HOME)
     {
         defaults.exe = path.join(ICE_HOME, 'cpp', 'bin', process.platform == "win32" ? "slice2js.exe" : "slice2js");
-        defaults.args = defaults.args.concat(["-I" + path.join(ICE_HOME, 'slice')])
+        defaults.args = defaults.args.concat(["-I" + path.join(ICE_HOME, 'slice')]);
     }
     return iceBuilder.compile(defaults);
 }
 
 var common =
 {
-    "scripts": [
+    "scripts":
+    [
         "bower_components/foundation/js/vendor/modernizr.js",
         "bower_components/foundation/js/vendor/jquery.js",
         "bower_components/foundation/js/foundation.min.js",
@@ -59,13 +60,16 @@ var common =
         "bower_components/spin.js/spin.js",
         "bower_components/spin.js/jquery.spin.js",
         "bower_components/highlightjs/highlight.pack.js",
-        "assets/icejs.js"],
+        "assets/icejs.js"
+    ],
     "styles":
-        ["bower_components/foundation/css/foundation.css",
-         "bower_components/animo.js/animate-animo.css",
-         "bower_components/highlightjs/styles/vs.css",
-         "bower_components/nouislider/distribute/jquery.nouislider.min.css",
-         "assets/icejs.css"]
+    [
+        "bower_components/foundation/css/foundation.css",
+        "bower_components/animo.js/animate-animo.css",
+        "bower_components/highlightjs/styles/vs.css",
+        "bower_components/nouislider/distribute/jquery.nouislider.min.css",
+        "assets/icejs.css"
+    ]
 };
 
 gulp.task("dist:libs", ["npm", "bower"],
