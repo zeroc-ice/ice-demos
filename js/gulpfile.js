@@ -62,7 +62,7 @@ var common =
         "assets/icejs.js"],
     "styles":
         ["bower_components/foundation/css/foundation.css",
-         "bower_components/animo.js/animate+animo.css",
+         "bower_components/animo.js/animate-animo.css",
          "bower_components/highlightjs/styles/vs.css",
          "bower_components/nouislider/distribute/jquery.nouislider.min.css",
          "assets/icejs.css"]
@@ -201,7 +201,7 @@ demos.forEach(
             {
                 gulp.src(path.join(name, ".depend")).pipe(paths(del));
             });
-        
+
         gulp.task(demoCleanTask(name), [demoDependCleanTask(name)],
             function()
             {
