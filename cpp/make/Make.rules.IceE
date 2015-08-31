@@ -4,62 +4,77 @@
 #
 # **********************************************************************
 
-BUILD		= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
-
 ifeq ($(ICEE_HOME),)
-ICEE_HOME	= /usr
+    ICEE_HOME                   = /usr
 endif
 
-ifeq ($(BUILD),$(HOST))
-CC		= gcc
-CXX		= g++
-STRIP		= strip
+ifeq ($(ICEE_TARGET_OS), debian)
+    
+    BUILD                       = $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
+    ifeq ($(BUILD),$(HOST))
+        CC                      = gcc
+        CXX                     = g++
+        STRIP                   = strip
+    else
+        CC                      = arm-linux-gnueabihf-gcc-4.6
+        CXX                     = arm-linux-gnueabihf-g++-4.6
+        STRIP                   = arm-linux-gnueabihf-strip
+
+        ifneq ($(ICEE_THIRDPARTY_HOME),)
+            LDFLAGS             = -L$(ICEE_THIRDPARTY_HOME)/usr/lib/arm-linux-gnueabihf \
+                                  -Wl,-rpath-link,$(ICEE_THIRDPARTY_HOME)/lib/arm-linux-gnueabihf
+        endif
+    endif
+    
+    icee_libdir                 = lib/$(BUILD)
 else
-CC              = arm-linux-gnueabihf-gcc-4.6
-CXX             = arm-linux-gnueabihf-g++-4.6
-STRIP		= arm-linux-gnueabihf-strip
-
-ifneq ($(ICEE_THIRDPARTY_HOME),)
-LDFLAGS		= -L$(ICEE_THIRDPARTY_HOME)/usr/lib/arm-linux-gnueabihf \
-		   -Wl,-rpath-link,$(ICEE_THIRDPARTY_HOME)/lib/arm-linux-gnueabihf
+    ifneq ($(wildcard $(ICEE_HOME)/cpp/bin/slice2cpp),)
+        #
+        # String trailing and leading - in TARGET_PREFIX
+        #
+        icee_libdir             = lib/$(subst $(eval) ,-,$(strip $(subst -, ,$(TARGET_PREFIX))))
+    else
+        icee_libdir             = lib
+    endif
 endif
 
+ifneq ($(wildcard $(ICEE_HOME)/$(icee_libdir)/libIce.a),)
+    libdir                      := $(ICEE_HOME)/$(icee_libdir)
+    includedir                  := $(ICEE_HOME)/include
 endif
 
-ifneq ($(wildcard $(ICEE_HOME)/lib/$(HOST)/libIce.a),)
-libdir		= $(ICEE_HOME)/lib/$(HOST)
+ifneq ($(wildcard $(ICEE_HOME)/cpp/$(icee_libdir)/libIce.a),)
+    libdir                      := $(ICEE_HOME)/cpp/$(icee_libdir)
+    includedir                  := $(ICEE_HOME)/cpp/include
 endif
 
-ifneq ($(wildcard $(ICEE_HOME)/cpp/lib/$(HOST)/libIce.a),)
-libdir		= $(ICEE_HOME)/cpp/lib/$(HOST)
+ifneq ($(ICEE_HOME),$(base_prefix)/usr)
+    LDFLAGS                     = -L$(libdir)
+    CPPFLAGS                    = -I$(includedir)
 endif
 
-CXXFLAGS	= -DICE_STATIC_LIBS
-
-ifneq ($(ICEE_HOME),/usr)
-LDFLAGS		:= $(LDFLAGS) -L$(libdir)
-CPPFLAGS	+= -I$(includedir)
+ifeq ($(BUILD_DEMOS),static)
+    CXXFLAGS                    = -DICE_STATIC_LIBS
+else
+    CXXFLAGS                    = -fPIC
 endif
 
-CXXFLAGS	+= -Wall -Werror -Wextra -Wshadow -pthread
-LIBS		= -Wl,-Bstatic -lIce -Wl,-Bdynamic -lcrypto -lssl -pthread -lbz2 -ldl -lrt
+ifeq ($(BUILD_DEMOS),static)
+    ICE_LIBS                    = -lIce
+else
+    ICE_LIBS                    = -lIce -lIceUtil
+endif
 
-mkshlib		= $(CXX) -shared $(LDFLAGS) -o $(1) -Wl,-h,$(2) $(3) $(4)
+CXXFLAGS                        += -Wall -Werror -Wextra -Wshadow -pthread
+LIBS                            = -Wl,-B$(BUILD_DEMOS) $(ICE_LIBS) -Wl,-Bdynamic -lcrypto -lssl -pthread -lbz2 -ldl -lrt
+
+mkshlib                         = $(CXX) -shared $(LDFLAGS) -o $(1) -Wl,-h,$(2) $(3) $(4)
 
 ifeq ($(OPTIMIZE),yes)
-    #
-    # For x86_64 builds don't use -Os as this cause problems with DeprecatedStringConverter.cpp
-    # see ICE-6661
-    #
-    ifeq ($(HOST),arm-linux-gnueabihf)
-        CXXFLAGS	+= -Os
-    else
-        CXXFLAGS	+= -O2
-    endif
-    CXXFLAGS		+= -DNDEBUG -ffunction-sections -fdata-sections
-    LDFLAGS		+= -Wl,--gc-sections
+    CXXFLAGS                    += -Os -DNDEBUG -ffunction-sections -fdata-sections
+    LDFLAGS                     += -Wl,--gc-sections
 else
-    CXXFLAGS		+= -g
+    CXXFLAGS                    += -g
 endif
 
 demo_deploy::
@@ -83,7 +98,6 @@ demo_deploy::
 		--exclude="php" \
 		--exclude="ruby" \
 		--exclude="js" \
-		--exclude="python" \
 		--exclude="scripts" \
 		--exclude="visualBasic" \
 		--exclude="cpp/Chat/qtClient" \

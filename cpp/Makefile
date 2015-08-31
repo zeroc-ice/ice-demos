@@ -13,6 +13,10 @@ ifeq ($(BUILD_WITH_ICEE),yes)
 
 SUBDIRS		:= Ice IceDiscovery Glacier2 Chat
 
+    ifeq ($(BUILD_DEMOS),dynamic)
+        SUBDIRS	:= $(SUBDIRS) IceBox
+    endif
+
 endif
 
 ifneq ($(findstring MINGW,$(UNAME)),)

@@ -28,9 +28,14 @@ include $(top_srcdir)/make/Make.rules
 CPPFLAGS	:= -I. $(CPPFLAGS)
 SLICE2CPPFLAGS  := -I. $(SLICE2CPPFLAGS)
 
+ifneq ($(BUILD_DEMOS),)
+GLACIER2_LIBS   = -Wl,-B$(BUILD_DEMOS)
+endif
+GLACIER2_LIBS	+= -lGlacier2
+
 $(SERVER): $(OBJS)
 	rm -f $@
-	$(CXX) $(LDFLAGS) $(LDEXEFLAGS) -o $@ $(OBJS) -lGlacier2 $(LIBS)
+	$(CXX) $(LDFLAGS) $(LDEXEFLAGS) -o $@ $(OBJS) $(GLACIER2_LIBS) $(LIBS)
 ifeq ($(BUILD_WITH_ICEE),yes)
 	$(Q)$(STRIP) --strip-all --remove-section=.comment --remove-section=.note $(@)
 endif

@@ -34,11 +34,19 @@
 #BUILD_WITH_ICEE	?= yes
 
 #
-# If building with Ice-E, Debian arch tuple of the host machine 
-# supported values are arm-linux-gnueabihf and x86_64-linux-gnu.
+# To build Ice-E demos against static libraries define
+# BUILD_DEMOS as static, to build demos against dynamic
+# libraries define BUILD_DEMOS as dynamic.
 #
-# Set it to arm-linux-gnueabihf if you are cross compiling for
-# armhf.
+BUILD_DEMOS		?= static
+
+#
+# If building with Ice-E for Debian, arch tuple of the host
+# machine supported values are arm-linux-gnueabihf and 
+# x86_64-linux-gnu.
+#
+# Set it to arm-linux-gnueabihf if you are cross compiling
+# for armhf.
 #
 HOST			?= arm-linux-gnueabihf
 
@@ -46,14 +54,15 @@ HOST			?= arm-linux-gnueabihf
 # If building wiht Ice-E and Ice-E is not installed in the default 
 # location set ICEE_HOME to the Ice-E installation directory.
 #
-#ICEE_HOME		?= /opt/IceE-3.6.0
+#ICEE_HOME		?= /opt/IceE-3.6.1
 
 #
-# If cross compiling with Ice-E and third party libraries are not installed in 
-# the default location or ICEE_THIRDPARTY_HOME is not set in your environment 
-# variables then change the following setting to reflect the installation location.
+# If cross compiling with Ice-E for Debian and third party libraries
+# are not installed in the default location or ICEE_THIRDPARTY_HOME 
+# is not set in your environment variables then change the following 
+# setting to reflect the installation location.
 #
-ICEE_THIRDPARTY_HOME	?= /opt/IceE-3.6.0-ThirdParty
+ICEE_THIRDPARTY_HOME	?= /opt/IceE-3.6.1-ThirdParty
 
 #
 # Target to deploy the demos when cross compiling with Ice-E.

@@ -28,7 +28,11 @@ OBJS		= $(COBJS) \
 include $(top_srcdir)/make/Make.rules
 
 CPPFLAGS	:= -I. $(CPPFLAGS)
-LINKWITH	:= -lIceBox $(BZIP2_RPATH_LINK) -lIce -lIceUtil
+
+ifeq ($(BUILD_WITH_ICEE),yes)
+LINKWITH	:= -Wl,-Bdynamic
+endif
+LINKWITH	:= $(LINKWITH) -lIceBox $(BZIP2_RPATH_LINK) -lIce -lIceUtil
 
 $(LIBFILENAME): $(SOBJS)
 	rm -f $@

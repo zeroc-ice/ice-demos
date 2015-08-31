@@ -27,11 +27,10 @@ include $(top_srcdir)/make/Make.rules
 
 CPPFLAGS	:= -I. $(CPPFLAGS)
 
-ifeq ($(BUILD_WITH_ICEE),yes)
-GLACIER2_LIBS	= -Wl,-Bstatic -lGlacier2
-else
-GLACIER2_LIBS	= -lGlacier2
+ifneq ($(BUILD_DEMOS),)
+GLACIER2_LIBS   = -Wl,-B$(BUILD_DEMOS)
 endif
+GLACIER2_LIBS	+= -lGlacier2
 
 $(CLIENT): $(COBJS)
 	rm -f $@
