@@ -131,6 +131,7 @@
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="hello_TemporaryKey.pfx" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\LockScreenLogo.scale-200.png" />

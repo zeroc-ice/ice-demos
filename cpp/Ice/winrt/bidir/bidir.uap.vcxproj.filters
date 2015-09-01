@@ -54,6 +54,7 @@
   <ItemGroup>
     <None Include="bidir.uap_TemporaryKey.pfx" />
     <None Include="..\..\..\..\certs\cacert.der" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainPage.xaml" />
