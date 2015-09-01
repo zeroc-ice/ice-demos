@@ -105,19 +105,22 @@ server.save("server.p12")
 try:
     server.save("server.jks", caalias="cacert")
     client.save("client.jks", caalias="cacert")
+
+    # Don't try to generate the BKS if the JKS generation fails
+    try:
+        server.save("server.bks", caalias="cacert")
+        client.save("client.bks", caalias="cacert")
+    except Exception as ex:
+        for f in ["server.bks", "client.bks"]:
+            if os.path.exists(f): os.remove(f)
+        print("warning: couldn't generate BKS certificates for Android applications:\n" + str(ex))
+        print("Please fix this issue if you want to run the Android demos.")
+
 except Exception as ex:
     for f in ["server.jks", "client.jks"]:
         if os.path.exists(f): os.remove(f)
     print("warning: couldn't generate JKS certificates for Java applications:\n" + str(ex))
     print("Please fix this issue if you want to run the Java demos.")
 
-try:
-    server.save("server.bks", caalias="cacert")
-    client.save("client.bks", caalias="cacert")
-except Exception as ex:
-    for f in ["server.bks", "client.bks"]:
-        if os.path.exists(f): os.remove(f)
-    print("warning: couldn't generate BKS certificates for Android applications:\n" + str(ex))
-    print("Please fix this issue if you want to run the Android demos.")
 
 factory.destroy()
