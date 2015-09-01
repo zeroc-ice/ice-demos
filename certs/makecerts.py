@@ -9,9 +9,9 @@ import os, sys, socket, getopt
 
 try:
     import IceCertUtils
-except:
-    print("error: couldn't find IceCertUtils, install `zeroc-icecertutils' package "
-          "from Python package repository")
+except Exception as ex:
+    print("couldn't load IceCertUtils, did you install the `zeroc-icecertutils'\n"
+          "package from the Python package repository?\nerror: " + str(ex))
     sys.exit(1)
 
 def usage():
@@ -68,6 +68,10 @@ def request(question, newvalue, value):
         else:
             return value
 
+#
+# Change to the directory where the certs files are stored
+#
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 if not ip:
     try:
@@ -92,16 +96,28 @@ factory.getCA().save("cacert.pem").save("cacert.der").save("cacert.jks")
 
 # Client certificate
 client = factory.create("client")
-client.save("client.p12").save("client.jks", caalias="cacert")
+client.save("client.p12")
 
 # Server certificate
 server = factory.create("server", cn = (dns if usedns else ip), ip=ip, dns=dns)
-server.save("server.p12").save("server.jks", caalias="cacert")
+server.save("server.p12")
 
 try:
-    client.save("client.bks", caalias="cacert")
-    server.save("server.bks", caalias="cacert")
+    server.save("server.jks", caalias="cacert")
+    client.save("client.jks", caalias="cacert")
 except Exception as ex:
-    print("warning: couldn't generate BKS certificates:\n" + str(ex))
+    for f in ["server.jks", "client.jks"]:
+        if os.path.exists(f): os.remove(f)
+    print("warning: couldn't generate JKS certificates for Java applications:\n" + str(ex))
+    print("Please fix this issue if you want to run the Java demos.")
+
+try:
+    server.save("server.bks", caalias="cacert")
+    client.save("client.bks", caalias="cacert")
+except Exception as ex:
+    for f in ["server.bks", "client.bks"]:
+        if os.path.exists(f): os.remove(f)
+    print("warning: couldn't generate BKS certificates for Android applications:\n" + str(ex))
+    print("Please fix this issue if you want to run the Android demos.")
 
 factory.destroy()
