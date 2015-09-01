@@ -1,5 +1,11 @@
 # C++ Demos
 
+- [Overview](#overview)
+- [Building and Running the Demos on Linux and OS X](#building-and-running-the-demos-on-linux-and-os-x)
+- [Building and Running the Demos on Windows](#building-and-running-the-demos-on-windows)
+- [Building the Demo Apps for WinRT and Universal Windows Platform (UWP)](#building-the-demo-apps-for-winrt-and-uwp)
+- [Building the demos for Ice-E](#building-the-demos-for-ice-e)
+
 ## Overview
 
 This directory contains C++ sample programs for various Ice components. These
@@ -18,7 +24,7 @@ and a QT client for the ZeroC [Chat Demo][2].
 
 - [IceTouch](./IceTouch) contains iPhone demos for the Ice Touch SDKs.
 
-## Building the Demos for Linux & OS X
+## Building and Running the Demos on Linux and OS X
 
 ### Prerequisites
 
@@ -64,7 +70,7 @@ export DYLD_LIBRARY_PATH=$ICE_HOME/lib   (OS X)
 
 Refer to the README file in each demo directory for usage instructions.
 
-## Building the Demos for Windows
+## Building and Running the Demos on Windows
 
 ### Prerequisites
 
@@ -87,7 +93,7 @@ as described in the [release notes][3].
 
 Refer to the README file in each demo directory for usage instructions.
 
-## Building the Demo Apps for WinRT and Universal Windows Platform (UWP)
+## Building the Demo Apps for WinRT and UWP
 
 ### Prerequisites
 
