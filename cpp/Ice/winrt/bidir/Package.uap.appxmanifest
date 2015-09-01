@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="7f170846-cb0c-4f3f-a787-67193e2029af" Publisher="CN=pepe" Version="1.0.0.0" />
+  <Identity Name="7f170846-cb0c-4f3f-a787-67193e2029af" Publisher="CN=ZeroC" Version="1.0.0.0" />
   <mp:PhoneIdentity PhoneProductId="7f170846-cb0c-4f3f-a787-67193e2029af" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>bidir.uap</DisplayName>
-    <PublisherDisplayName>pepe</PublisherDisplayName>
+    <DisplayName>Ice Bidir Demo</DisplayName>
+    <PublisherDisplayName>ZeroC</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>

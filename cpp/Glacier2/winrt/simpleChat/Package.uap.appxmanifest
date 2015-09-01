@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="a3cb6618-156c-4b91-a277-eba4d1b55bb3" Publisher="CN=pepe" Version="1.0.0.0" />
+  <Identity Name="a3cb6618-156c-4b91-a277-eba4d1b55bb3" Publisher="CN=ZeroC" Version="1.0.0.0" />
   <mp:PhoneIdentity PhoneProductId="a3cb6618-156c-4b91-a277-eba4d1b55bb3" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>simpleChat</DisplayName>
-    <PublisherDisplayName>pepe</PublisherDisplayName>
+    <DisplayName>Glacier2 Chat Demo</DisplayName>
+    <PublisherDisplayName>ZeroC</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>
