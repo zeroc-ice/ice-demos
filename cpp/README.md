@@ -18,15 +18,11 @@ and a QT client for the ZeroC [Chat Demo][2].
 
 - [IceTouch](./IceTouch) contains iPhone demos for the Ice Touch SDKs.
 
-## Building and Using the Demos for Linux & OS X
+## Building the Demos for Linux & OS X
 
 ### Prerequisites
 
-The makefiles require GNU make 3.80 or later. If your system does not come
-with GNU make, you can find information on how to acquire it at the
-following link:
-
-http://www.gnu.org/software/make/
+The makefiles require GNU make 3.80 or later. 
 
 On OS X, the command-line demos require the Xcode Command Line Tools to be
 installed (use `xcode-select --install` to install them). The Ice Touch sample
@@ -35,8 +31,9 @@ programs require the [Ice Builder for Xcode][3].
 If you've installed Ice in a non-standard location, you'll need to set the
 `ICE_HOME` environment variable with the path name of the
 installation directory:
-
-    $ export ICE_HOME=~/testing/Ice
+```
+export ICE_HOME=~/testing/Ice
+```
 
 ### Building the Demos
 
@@ -44,8 +41,9 @@ Review the settings in `make/Make.rules`. For example, set `OPTIMIZE=yes`
 to build with optimization.
 
 When you're ready to start the build, run `make`:
-
-    $ make
+```
+make
+```
 
 To build the iOS examples, open `IceTouch/demos.xcworkspace` in Xcode.
 
@@ -58,13 +56,15 @@ If you've installed Ice in a non-standard location, you'll need to set
 `LD_LIBRARY_PATH` (Linux) or `DYLD_LIBRARY_PATH` (OS X)
 with the library directory of your Ice installation:
 
-        $ export LD_LIBRARY_PATH=$ICE_HOME/lib     (Linux x86)
-        $ export LD_LIBRARY_PATH=$ICE_HOME/lib64   (Linux x64)
-        $ export DYLD_LIBRARY_PATH=$ICE_HOME/lib   (OS X)
+```bash
+export LD_LIBRARY_PATH=$ICE_HOME/lib     (Linux x86)
+export LD_LIBRARY_PATH=$ICE_HOME/lib64   (Linux x64)
+export DYLD_LIBRARY_PATH=$ICE_HOME/lib   (OS X)
+```
 
 Refer to the README file in each demo directory for usage instructions.
 
-## Building and Using the Demos for Windows
+## Building the Demos for Windows
 
 ### Prerequisites
 
@@ -77,9 +77,8 @@ Open the solution file `C++ demos.sln` to build the sample programs. This file
 was created with Visual Studio 2012 and will be converted if you are using a newer
 version of Visual Studio.
 
-Select your target configuration: Debug or Release, Win32 or x64 (on supported x64
-platforms). Right click on the desired demo in the Solution Explorer window and
-select "Build".
+Select your target configuration: Debug or Release, Win32 or x64. Right click on 
+the desired demo in the Solution Explorer window and select "Build".
 
 ### Running the Demos
 
@@ -88,59 +87,43 @@ as described in the [release notes][3].
 
 Refer to the README file in each demo directory for usage instructions.
 
-## Building and Using the Demos for WinRT
+## Building the Demo Apps for WinRT and Universal Windows Platform (UWP)
 
 ### Prerequisites
 
 The projects for the sample programs require the [Ice Builder for Visual Studio][5].
 Add this extension to Visual Studio before opening the solution.
 
-WinRT requires Windows 8.1 with Visual Studio 2013.
+WinRT requires Windows 8.1 with Visual Studio 2013, and UWP requires Windows 10 
+with Visual Studio 2015.
 
 ### Building the Demos
 
-Open the solution file `C++ demos for WinRT.sln` to build the sample programs.
+Open the solution file `C++ demos for WinRT.sln` or `C++ demos for Universal Windows Plaform.sln` 
+to build the WinRT resp. UWP demo programs.
 
-Select your target configuration: Debug or Release, Win32 or x64 (on supported x64
-platforms) or ARM. Right click on the desired demo in the Solution Explorer window
-and select "Build".
-
-### Running the Demos
-
-To run the demos with servers running on a different machine, you will also need
-to re-create the server certificate to try out SSL. The Windows RT SSL
-implementation requires the certificate's common name to match the IP address or
-DNS name of the target server. We provide a `makecerts.py` Python script to re-
-generate the server certificate in the `certs` directory at the root of the Ice
-demo source tree.
-
-To run the script:
-
-    > cd certs
-    > makecerts.py 192.168.1.50
-
-In the example above, the server certificate's common name will be set to
-192.168.1.50. The certificate is generated in the `certs` directory. You
-should specify the IP address of the machine running the SSL server here. You
-will need to restart Visual Studio 2013 and rebuild the demo project to ensure
-the new root certificate is included with the demo application.
+Select your target configuration: Debug or Release, and Win32, x86 or x64. 
+Right click on the desired demo in the Solution Explorer window and 
+select "Build".
 
 Refer to the README file in each demo directory for usage instructions.
 
-## Building and Using the Demos for Ice-E
+## Building the Demos for Ice-E
 
 Review the settings in `make/Make.rules`. For example, set `OPTIMIZE=yes`
 to build with optimization.
 
 When you're ready to start the build, run `make`:
+```
+make BUILD_WITH_ICEE=yes
+```
 
-    $ make BUILD_WITH_ICEE=yes
-    
 The default build configuration will cross-compile demos for Debian 7.8
 (Wheezy) ARMHF. After a successful build, you need to deploy the demos to
 the target device:
-
-    $ make BUILD_WITH_ICEE=yes demo_deploy
+```
+make BUILD_WITH_ICEE=yes demo_deploy
+```
     
 This command will deploy the demos to the device specified by the 
 `DEPLOY_TARGET` variable in `make/Make.rules`.
@@ -148,8 +131,10 @@ This command will deploy the demos to the device specified by the
 After successfully deploying the demos, open an ssh session to the target
 and change to the deployment directory:
 
-    $ ssh debian@192.168.7.2
-    $ cd ice-demos/cpp
+```bash
+ssh debian@192.168.7.2
+cd ice-demos/cpp
+```
     
 Refer to the README file in each demo directory for usage instructions.
 
