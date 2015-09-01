@@ -28,7 +28,7 @@ ifeq ($(ICEE_TARGET_OS), debian)
     
     icee_libdir                 = lib/$(BUILD)
 else
-    ifneq ($(wildcard $(ICEE_HOME)/cpp/bin/slice2cpp),)
+    ifneq ($(wildcard $(ICEE_HOME)/config/Make.yocto.rules),)
         #
         # String trailing and leading - in TARGET_PREFIX
         #
