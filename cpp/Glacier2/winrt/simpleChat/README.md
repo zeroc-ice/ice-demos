@@ -1,27 +1,42 @@
-This demo demonstrates the use of Glacier2 session helpers and how to
-create a graphical client for the simple chat server.
+# SimpleChat Demo Client App for WinRT and Universal Windows Platform (UWP)
 
-First follow the instructions from the C++ Glacier2 simpleChat demo
-README to start the server and the Glacier2 router. Since the WinRT SSL
-transport doesn't support client-side SSL authentication, you also
-need to edit the Glacier2 router configuration file config.glacier to
-uncomment the IceSSL.VerifyPeer=0 property. If you run the client from 
-a remote machine or device, you will also need to regenerate the server
-certificate to ensure the certificate common name is set to the IP address
-of the server. To regenerate the certificate, you can run the makecerts.py
-Python script from the certs directory at the top of this distribution.
-For example:
+This demo is a graphical client app written in C++/CX. This client
+works with the Glacier2/simpleChat server provided in C++, and demonstrates 
+the use of Glacier2 session helpers.
 
-  > cd certs
-  > makecerts.py 192.168.1.53
+## Running the demo
+
+* Build and start the Glacier2/simpleChat server.
+* Build and deploy this demo app using `Deploy chat` from the `Build` menu.
+* Start the "Glacier2 Simple Chat Demo" application from the Windows Start screen
+or right click on the project and select `Debug -> Start new instance`.
+
+### SSL
+
+The Ice ssl transport for WinRT / UWP currently does not support client-side 
+authentication. In order to successfully connect with SSL, you need to edit 
+the Glacier2 router configuration file (`config.router`) and uncomment the 
+`IceSSL.VerifyPeer=0` property. 
+
+If you run the chat client and Glacier2 router on different computers or 
+devices, you also need to regenerate the server certificate to ensure the 
+certificate common name is set to the IP address of the Glacier2 router. 
+To regenerate the certificate, you can run the `makecerts.py` Python script 
+from the `certs` directory at the top of this distribution. For example:
+
+```bash
+cd certs
+makecerts.py 192.168.1.53
+```
 
 This will regenerate a server certificate with a common name set to
-192.168.1.53. This can either be set to an IP address or DNS name, the
-only requirement is that it matches the value that will be used by the
+192.168.1.53 (please use your server's IP address). You can provide an IP address
+or DNS name, the only requirement is that it matches the value used by the
 chat client to connect to the Glacier2 router.
 
-Build and deploy the demo using "Deploy chat" from the "Build" menu.
+You can regenerate these certificates on the client or on the server. Then
+make sure to copy these certificates (the `certs` directory) to the other system. 
 
-Start the "Glacier2 Simple Chat Demo" application from the Windows Start
-screen or right click on the project and select Debug -> Start new
-instance.
+ > Note: Rebuilding and redeploying the chat client app is not sufficient to
+ > update its certificates. Make sure to manually un-install this app before
+ > redeploying it.
