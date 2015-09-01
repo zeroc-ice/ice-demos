@@ -11,13 +11,13 @@ such as C++, C#, Java and Python.
 ## Running the demo
 
 * Build (if needed) and start the Ice/hello server of your choice.
-* Build and deploy the demo using "Deploy hello" from the "Build" menu.
+* Build and deploy the demo using `Deploy hello` from the `Build` menu.
 * Start the "Ice Hello Demo" application from the Windows Start screen
-or right click on the project and select Debug -> Start new instance.
+or right click on the project and select `Debug -> Start new instance`.
 
 ### SSL
 
-The Ice ssl transport for WinRT / UWP currently doesn't support client-side 
+The Ice ssl transport for WinRT / UWP currently does not support client-side 
 authentication. In order to successfully connect with SSL, you need to edit 
 the hello server configuration file (`config.server`) and uncomment the 
 `IceSSL.VerifyPeer=0` property. 
@@ -25,8 +25,8 @@ the hello server configuration file (`config.server`) and uncomment the
 If you run the hello client and server on different computers or devices,
 you also need to regenerate the server certificate to ensure the 
 certificate common name is set to the IP address of the server. To 
-regenerate the certificate, you can run the makecerts.py Python script 
-from the certs directory at the top of this distribution. For example:
+regenerate the certificate, you can run the `makecerts.py` Python script 
+from the `certs` directory at the top of this distribution. For example:
 
 ```bash
 cd certs
@@ -39,7 +39,7 @@ or DNS name, the only requirement is that it matches the value used by the
 hello client to connect to the hello server.
 
 You can regenerate these certificates on the client or on the server. Then
-make sure to copy these certificates (the certs directory) to the other system. 
+make sure to copy these certificates (the `certs` directory) to the other system. 
 
  > Note: Rebuilding and redeploying the hello client app is not sufficient to
  > update its certificates. Make sure to manually un-install this app before
