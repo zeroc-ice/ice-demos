@@ -26,12 +26,25 @@
 # If Ice is not installed in the default location set ICE_HOME to 
 # the Ice installation directory.
 #
-#ICE_HOME		?= /opt/Ice-3.6.0
+#ICE_HOME		?= /opt/Ice-3.6.1
+
 
 #
 # Set to yes to build demos with Ice-E instead of Ice.
 #
 #BUILD_WITH_ICEE	?= yes
+
+#
+# If building wiht Ice-E and Ice-E is not installed in the default 
+# location set ICEE_HOME to the Ice-E installation directory.
+#
+#ICEE_HOME		?= /opt/IceE-3.6.1
+
+#
+# The target operating system for the build, supported values are 'yocto'
+# and 'debian'.
+#
+#ICEE_TARGET_OS		?= debian
 
 #
 # To build Ice-E demos against static libraries define
@@ -51,12 +64,6 @@ BUILD_DEMOS		?= static
 HOST			?= arm-linux-gnueabihf
 
 #
-# If building wiht Ice-E and Ice-E is not installed in the default 
-# location set ICEE_HOME to the Ice-E installation directory.
-#
-#ICEE_HOME		?= /opt/IceE-3.6.1
-
-#
 # If cross compiling with Ice-E for Debian and third party libraries
 # are not installed in the default location or ICEE_THIRDPARTY_HOME 
 # is not set in your environment variables then change the following 
@@ -67,7 +74,7 @@ ICEE_THIRDPARTY_HOME	?= /opt/IceE-3.6.1-ThirdParty
 #
 # Target to deploy the demos when cross compiling with Ice-E.
 #
-DEPLOY_TARGET		?= debian@192.168.7.2:/home/debian/ice-demos
+#DEPLOY_TARGET		?= debian@192.168.7.2:/home/debian/ice-demos
 
 # ----------------------------------------------------------------------
 # Don't change anything below this line!

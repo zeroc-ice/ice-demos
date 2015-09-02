@@ -4,6 +4,22 @@
 #
 # **********************************************************************
 
+#
+# Check if ICEE_TARGET_OS is correctly defined.
+#
+ifeq ($(filter $(ICEE_TARGET_OS),debian yocto),)
+    $(error Invalid ICEE_TARGET_OS: '$(ICEE_TARGET_OS)' supported values are: 'debian' and 'yocto'. Review instructions in $(CURDIR)/Make.rules)
+endif
+
+#
+# Check if DEPLOY_TARGET is set when using demo_deploy.
+#
+ifeq ($(filter $(MAKECMDGOALS),demo_deploy),demo_deploy)
+    ifeq ($(DEPLOY_TARGET),)
+        $(error You need to define DEPLOY_TARGET to use demo_deploy. Review instructions in $(CURDIR)/Make.rules)
+    endif
+endif
+
 ifeq ($(ICEE_HOME),)
     ICEE_HOME                   = /usr
 endif
@@ -45,7 +61,11 @@ endif
 
 ifneq ($(wildcard $(ICEE_HOME)/cpp/$(icee_libdir)/libIce.a),)
     libdir                      := $(ICEE_HOME)/cpp/$(icee_libdir)
-    includedir                  := $(ICEE_HOME)/cpp/include
+    includedir                  := $(ICEE_HOME)/ice/cpp/include
+endif
+
+ifeq ($(libdir),)
+    $(error Unable to find a valid Ice-E distribution, please verify ICEE_HOME is properly configured and Ice-E is correctly installed.)
 endif
 
 ifneq ($(ICEE_HOME),$(base_prefix)/usr)
@@ -102,7 +122,6 @@ demo_deploy::
 		--exclude="visualBasic" \
 		--exclude="cpp/Chat/qtClient" \
 		--exclude="cpp/Freeze" \
-		--exclude="cpp/IceBox" \
 		--exclude="cpp/IceGrid" \
 		--exclude="cpp/IcePatch2" \
 		--exclude="cpp/IceStorm" \
