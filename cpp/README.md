@@ -117,7 +117,7 @@ Refer to the README file in each demo directory for usage instructions.
 ## Building the Demos for Ice-E
 
 Review the settings in `make/Make.rules`. For example, set`OPTIMIZE=yes`
-to build with optimization. Ensure `ICE_TARGET_OS` is set to a supported
+to build with optimization. Ensure `ICEE_TARGET_OS` is set to a supported
 platform, either `debian` or `yocto`.
 
 When you're ready to start the build, run `make`:
