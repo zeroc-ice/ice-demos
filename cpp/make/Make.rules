@@ -23,7 +23,7 @@
 #CPP11			?= yes
 
 #
-# If Ice is not installed in the default location set ICE_HOME to 
+# If Ice is not installed in the default location (/usr) set ICE_HOME to 
 # the Ice installation directory.
 #
 #ICE_HOME		?= /opt/Ice-3.6.1
@@ -35,8 +35,8 @@
 #BUILD_WITH_ICEE	?= yes
 
 #
-# If building wiht Ice-E and Ice-E is not installed in the default 
-# location set ICEE_HOME to the Ice-E installation directory.
+# If building with Ice-E and Ice-E is not installed in the default 
+# location (/usr) set ICEE_HOME to the Ice-E installation directory.
 #
 #ICEE_HOME		?= /opt/IceE-3.6.1
 
