@@ -28,7 +28,7 @@ and a QT client for the ZeroC [Chat Demo][2].
 
 ### Prerequisites
 
-The makefiles require GNU make 3.80 or later. 
+The makefiles require GNU make 3.80 or later.
 
 On OS X, the command-line demos require the Xcode Command Line Tools to be
 installed (use `xcode-select --install` to install them). The Ice Touch sample
@@ -83,7 +83,7 @@ Open the solution file `C++ demos.sln` to build the sample programs. This file
 was created with Visual Studio 2012 and will be converted if you are using a newer
 version of Visual Studio.
 
-Select your target configuration: Debug or Release, Win32 or x64. Right click on 
+Select your target configuration: Debug or Release, Win32 or x64. Right click on
 the desired demo in the Solution Explorer window and select "Build".
 
 ### Running the Demos
@@ -100,48 +100,45 @@ Refer to the README file in each demo directory for usage instructions.
 The projects for the sample programs require the [Ice Builder for Visual Studio][5].
 Add this extension to Visual Studio before opening the solution.
 
-WinRT requires Windows 8.1 with Visual Studio 2013, and UWP requires Windows 10 
+WinRT requires Windows 8.1 with Visual Studio 2013, and UWP requires Windows 10
 with Visual Studio 2015.
 
 ### Building the Demos
 
-Open the solution file `C++ demos for WinRT.sln` or `C++ demos for Universal Windows Plaform.sln` 
+Open the solution file `C++ demos for WinRT.sln` or `C++ demos for Universal Windows Plaform.sln`
 to build the WinRT resp. UWP demo programs.
 
-Select your target configuration: Debug or Release, and Win32, x86 or x64. 
-Right click on the desired demo in the Solution Explorer window and 
+Select your target configuration: Debug or Release, and Win32, x86 or x64.
+Right click on the desired demo in the Solution Explorer window and
 select "Build".
 
 Refer to the README file in each demo directory for usage instructions.
 
 ## Building the Demos for Ice-E
 
-Review the settings in `make/Make.rules`. For example, set `OPTIMIZE=yes`
-to build with optimization.
+Review the settings in `make/Make.rules`. For example, set`OPTIMIZE=yes`
+to build with optimization. Ensure `ICE_TARGET_OS` is set to a supported
+platform, either `debian` or `yocto`.
 
 When you're ready to start the build, run `make`:
-```
-make BUILD_WITH_ICEE=yes
-```
 
-The default build configuration will cross-compile demos for Debian 7.8
-(Wheezy) ARMHF. After a successful build, you need to deploy the demos to
-the target device:
-```
-make BUILD_WITH_ICEE=yes demo_deploy
-```
-    
-This command will deploy the demos to the device specified by the 
+    make BUILD_WITH_ICEE=yes
+
+The default build configuration will cross-compile demos for the target
+set in `ICEE_TARGET_OS`. After a successful build, you need to deploy the
+demos to the target device:
+
+    make BUILD_WITH_ICEE=yes demo_deploy
+
+This command will deploy the demos to the device specified by the
 `DEPLOY_TARGET` variable in `make/Make.rules`.
 
 After successfully deploying the demos, open an ssh session to the target
 and change to the deployment directory:
 
-```bash
-ssh debian@192.168.7.2
-cd ice-demos/cpp
-```
-    
+    ssh debian@192.168.7.2
+    cd ice-demos/cpp
+
 Refer to the README file in each demo directory for usage instructions.
 
 [1]: https://doc.zeroc.com/display/Ice36/Ice+Manual
