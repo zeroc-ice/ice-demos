@@ -28,8 +28,8 @@ include $(top_srcdir)/make/Make.rules
 CPPFLAGS	:= -I. $(CPPFLAGS)
 SLICE2CPPFLAGS  := -I. $(SLICE2CPPFLAGS)
 
-ifneq ($(BUILD_DEMOS),)
-GLACIER2_LIBS   = -Wl,-B$(BUILD_DEMOS)
+ifeq ($(BUILD_WITH_ICEE),yes)
+    GLACIER2_LIBS = -Wl,-B$(BUILD_DEMOS)
 endif
 GLACIER2_LIBS	+= -lGlacier2
 

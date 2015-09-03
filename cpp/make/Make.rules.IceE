@@ -4,6 +4,8 @@
 #
 # **********************************************************************
 
+BUILD_DEMOS                     ?= static
+
 #
 # Check if ICEE_TARGET_OS is correctly defined.
 #

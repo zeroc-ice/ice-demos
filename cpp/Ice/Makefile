@@ -28,14 +28,13 @@ SUBDIRS		= minimal \
 		  locator
 
 ifneq ($(BUILD_WITH_ICEE),yes)
-SUBDIRS		:= $(SUBDIRS) \
+    SUBDIRS	:= $(SUBDIRS) \
 		   interleaved \
 		   plugin
-endif
-
-ifeq ($(BUILD_DEMOS),dynamic)
-SUBDIRS		:= $(SUBDIRS) \
-		   plugin
+else
+    ifeq ($(BUILD_DEMOS),dynamic)
+        SUBDIRS	:= $(SUBDIRS) plugin
+    endif
 endif
 
 .PHONY: $(EVERYTHING) $(SUBDIRS)

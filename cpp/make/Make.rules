@@ -51,7 +51,7 @@
 # BUILD_DEMOS as static, to build demos against dynamic
 # libraries define BUILD_DEMOS as dynamic.
 #
-BUILD_DEMOS		?= static
+#BUILD_DEMOS		?= static
 
 #
 # Target to deploy the demos when cross compiling with Ice-E.
