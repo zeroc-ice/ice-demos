@@ -54,6 +54,11 @@
 BUILD_DEMOS		?= static
 
 #
+# Target to deploy the demos when cross compiling with Ice-E.
+#
+#DEPLOY_TARGET		?= debian@192.168.7.2:/home/debian/ice-demos
+
+#
 # If building with Ice-E for Debian, arch tuple of the host
 # machine supported values are arm-linux-gnueabihf and 
 # x86_64-linux-gnu.
@@ -70,11 +75,6 @@ HOST			?= arm-linux-gnueabihf
 # setting to reflect the installation location.
 #
 ICEE_THIRDPARTY_HOME	?= /opt/IceE-3.6.1-ThirdParty
-
-#
-# Target to deploy the demos when cross compiling with Ice-E.
-#
-#DEPLOY_TARGET		?= debian@192.168.7.2:/home/debian/ice-demos
 
 # ----------------------------------------------------------------------
 # Don't change anything below this line!

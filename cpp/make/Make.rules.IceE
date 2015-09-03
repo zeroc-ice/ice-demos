@@ -42,7 +42,7 @@ ifeq ($(ICEE_TARGET_OS), debian)
         endif
     endif
     
-    icee_libdir                 = lib/$(BUILD)
+    icee_libdir                 = lib/$(HOST)
 else
     ifneq ($(wildcard $(ICEE_HOME)/config/Make.yocto.rules),)
         #
@@ -65,12 +65,12 @@ ifneq ($(wildcard $(ICEE_HOME)/cpp/$(icee_libdir)/libIce.a),)
 endif
 
 ifeq ($(libdir),)
-    $(error Unable to find a valid Ice-E distribution, please verify ICEE_HOME is properly configured and Ice-E is correctly installed.)
+    $(error Unable to find a valid Ice-E distribution, please verify ICEE_HOME is properly configured and Ice-E is correctly installed. $(ICEE_HOME)/cpp/$(icee_libdir)/libIce.a))
 endif
 
 ifneq ($(ICEE_HOME),$(base_prefix)/usr)
-    LDFLAGS                     = -L$(libdir)
-    CPPFLAGS                    = -I$(includedir)
+    LDFLAGS                     += -L$(libdir)
+    CPPFLAGS                    += -I$(includedir)
 endif
 
 ifeq ($(BUILD_DEMOS),static)
@@ -128,7 +128,6 @@ demo_deploy::
 		--exclude="cpp/IceTouch" \
 		--exclude="cpp/IceUtil" \
 		--exclude="cpp/Ice/MFC" \
-		--exclude="cpp/Ice/plugin" \
 		--exclude="cpp/Ice/winrt" \
 		--exclude="cpp/Glacier2/winrt" \
 		--exclude="cpp/Manual"\

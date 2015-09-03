@@ -33,6 +33,11 @@ SUBDIRS		:= $(SUBDIRS) \
 		   plugin
 endif
 
+ifeq ($(BUILD_DEMOS),dynamic)
+SUBDIRS		:= $(SUBDIRS) \
+		   plugin
+endif
+
 .PHONY: $(EVERYTHING) $(SUBDIRS)
 
 all:: $(SUBDIRS)
