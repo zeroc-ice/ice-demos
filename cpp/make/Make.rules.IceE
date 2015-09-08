@@ -27,7 +27,7 @@ ifeq ($(ICEE_HOME),)
 endif
 
 ifeq ($(ICEE_TARGET_OS), debian)
-    
+
     BUILD                       = $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
     ifeq ($(BUILD),$(HOST))
         CC                      = gcc
@@ -43,7 +43,7 @@ ifeq ($(ICEE_TARGET_OS), debian)
                                   -Wl,-rpath-link,$(ICEE_THIRDPARTY_HOME)/lib/arm-linux-gnueabihf
         endif
     endif
-    
+
     icee_libdir                 = lib/$(HOST)
 else
     ifneq ($(wildcard $(ICEE_HOME)/config/Make.yocto.rules),)
@@ -53,6 +53,7 @@ else
         icee_libdir             = lib/$(subst $(eval) ,-,$(strip $(subst -, ,$(TARGET_PREFIX))))
     else
         icee_libdir             = lib
+        libsubdir               = lib
     endif
 endif
 
@@ -70,7 +71,9 @@ ifeq ($(libdir),)
     $(error Unable to find a valid Ice-E distribution, please verify ICEE_HOME is properly configured and Ice-E is correctly installed. $(ICEE_HOME)/cpp/$(icee_libdir)/libIce.a))
 endif
 
-ifneq ($(ICEE_HOME),$(base_prefix)/usr)
+ifeq ($(ICEE_HOME:%/=%),$(SDKTARGETSYSROOT)/usr)
+    slicedir                    := $(ICEE_HOME)/share/Ice-$(VERSION)/slice
+else
     LDFLAGS                     += -L$(libdir)
     CPPFLAGS                    += -I$(includedir)
 endif
