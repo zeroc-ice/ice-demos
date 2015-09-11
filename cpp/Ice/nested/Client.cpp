@@ -19,20 +19,12 @@ public:
     virtual int run(int, char*[]);
 };
 
-#ifdef ICE_STATIC_LIBS
-extern "C"
-{
-
-Ice::Plugin* createIceSSL(const Ice::CommunicatorPtr&, const string&, const Ice::StringSeq&);
-
-}
-#endif
 
 int
 main(int argc, char* argv[])
 {
 #ifdef ICE_STATIC_LIBS
-    Ice::registerPluginFactory("IceSSL", createIceSSL, false);
+    Ice::registerIceSSL();
 #endif
     NestedClient app;
     return app.main(argc, argv, "config.client");
@@ -62,7 +54,7 @@ NestedClient::run(int argc, char*[])
         cerr << appName() << ": invalid proxy" << endl;
         return EXIT_FAILURE;
     }
-    
+
     //
     // Ensure the invocation times out if the nesting level is too
     // high and there are no more threads in the thread pool to
