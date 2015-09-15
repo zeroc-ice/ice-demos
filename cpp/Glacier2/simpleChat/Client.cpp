@@ -19,19 +19,7 @@ public:
     virtual void
     message(const string& data, const Ice::Current&)
     {
-#ifdef __xlC__
-
-        //
-        // The xlC compiler synchronizes cin and cout; to see the messages
-        // while accepting input through cin, we have to print the messages
-        // with printf
-        //
-
-        printf("%s\n", data.c_str());
-        fflush(0);
-#else
         cout << data << endl;
-#endif
     }
 };
 
