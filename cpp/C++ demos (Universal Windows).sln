@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hello", "Ice\winrt\hello\hello.uap.vcxproj", "{C8173321-AB8B-4F46-8508-FB99A909B179}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hello", "Ice\uwp\hello\hello.uap.vcxproj", "{C8173321-AB8B-4F46-8508-FB99A909B179}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ice", "Ice", "{C810DCB4-0B6A-40CF-B451-8DFA21C1CC6C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Glacier2", "Glacier2", "{968933D7-409C-4C20-9776-3AB5CD3A602C}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bidir", "Ice\winrt\bidir\bidir.uap.vcxproj", "{11AF79C7-8E73-4CFA-AA03-41C45027C7BB}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bidir", "Ice\uwp\bidir\bidir.uap.vcxproj", "{11AF79C7-8E73-4CFA-AA03-41C45027C7BB}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "simpleChat", "Glacier2\winrt\simpleChat\simpleChat.uap.vcxproj", "{0F61C1A6-2A63-4044-94A6-DDBA1D279300}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "simpleChat", "Glacier2\uwp\simpleChat\simpleChat.uap.vcxproj", "{0F61C1A6-2A63-4044-94A6-DDBA1D279300}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

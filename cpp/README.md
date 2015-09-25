@@ -105,7 +105,7 @@ with Visual Studio 2015.
 
 ### Building the Demos
 
-Open the solution file `C++ demos for WinRT.sln` or `C++ demos for Universal Windows Plaform.sln`
+Open the solution file `C++ demos (Windows 8.1 WinRT).sln` or `C++ demos (Universal Windows).sln`
 to build the WinRT resp. UWP demo programs.
 
 Select your target configuration: Debug or Release, and Win32, x86 or x64.
