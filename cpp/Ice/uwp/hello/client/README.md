@@ -4,15 +4,11 @@ This demo is a graphical client app written in C++/CX. This client
 works with the Ice/hello server provided by other language mappings,
 such as C++, C#, Java and Python.
 
- > Note: it is possible to implement a "hello server" in C++/CX
- > for WinRT / UWP as Ice for WinRT / UWP provide server side 
- > support. Such a "hello server" will be provided soon.
-
 ## Running the demo
 
 * Build (if needed) and start the Ice/hello server of your choice.
 * Build and deploy the demo using `Deploy hello` from the `Build` menu.
-* Start the "Ice Hello Demo" application from the Windows Start screen
+* Start the "Ice Hello Demo Client" application from the Windows Start screen
 or right click on the project and select `Debug -> Start new instance`.
 
 ### SSL

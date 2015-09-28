@@ -43,7 +43,7 @@
     <ClInclude Include="generated\Hello.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\..\certs\cacert.der" />
+    <None Include="..\..\..\..\..\certs\cacert.der" />
     <None Include="hello_TemporaryKey.pfx" />
     <None Include="README.md" />
   </ItemGroup>

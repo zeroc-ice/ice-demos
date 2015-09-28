@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
-  <Identity Name="be9e42f6-f89b-4671-8754-e408ccec94f0" Publisher="CN=ZeroC" Version="1.1.0.0" />
+  <Identity Name="be9e42f6-f89b-4671-92cb-57fbccb3dc9" Publisher="CN=ZeroC" Version="1.1.0.0" />
   <Properties>
-    <DisplayName>Ice Hello Demo</DisplayName>
+    <DisplayName>Ice Hello Demo Server</DisplayName>
     <PublisherDisplayName>ZeroC</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -15,7 +15,7 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="hello.App">
-      <m2:VisualElements DisplayName="Ice Hello Demo" Description="hello" BackgroundColor="#464646" ForegroundText="light" Square150x150Logo="Assets\Logo.png" Square30x30Logo="Assets\SmallLogo.png">
+      <m2:VisualElements DisplayName="Ice Hello Demo Server" Description="hello" BackgroundColor="#464646" ForegroundText="light" Square150x150Logo="Assets\Logo.png" Square30x30Logo="Assets\SmallLogo.png">
         <m2:DefaultTile>
           <m2:ShowNameOnTiles>
             <m2:ShowOn Tile="square150x150Logo" />

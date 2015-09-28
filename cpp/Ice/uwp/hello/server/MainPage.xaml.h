@@ -1,0 +1,36 @@
+﻿// **********************************************************************
+//
+// Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
+//
+// **********************************************************************
+
+#pragma once
+
+#include "MainPage.g.h"
+#include <IceUtil/IceUtil.h>
+#include <Ice/Ice.h>
+#include <Hello.h>
+
+namespace hello
+{
+
+public ref class MainPage sealed
+{
+public:
+
+    MainPage();
+
+	static MainPage^ instance();
+	void print(Platform::String^ message);
+
+private:
+
+    void clear_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+	
+	static MainPage^ _instance;
+
+    Ice::CommunicatorPtr _communicator;
+	Ice::ObjectAdapterPtr _adapter;
+};
+
+}
