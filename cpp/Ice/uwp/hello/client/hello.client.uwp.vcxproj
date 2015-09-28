@@ -11,7 +11,7 @@
     <WindowsTargetPlatformMinVersion>10.0.10240.0</WindowsTargetPlatformMinVersion>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
     <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
-    <ProjectName>hello</ProjectName>
+    <ProjectName>client</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <ItemGroup Label="ProjectConfigurations">
@@ -77,16 +77,16 @@
     <PackageCertificateKeyFile>hello_TemporaryKey.pfx</PackageCertificateKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)Ice\uwp\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)Ice\uwp\hello\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)Ice\uwp\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)Ice\uwp\hello\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)Ice\uwp\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)Ice\uwp\hello\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)Ice\uwp\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)Ice\uwp\hello\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -139,7 +139,7 @@
     <AppxManifest Include="Package.uap.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="..\..\..\..\certs\cacert.der">
+    <None Include="..\..\..\..\..\certs\cacert.der">
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="hello_TemporaryKey.pfx" />
