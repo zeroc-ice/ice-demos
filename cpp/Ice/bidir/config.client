@@ -2,12 +2,17 @@
 # The client reads this property to create the reference to the
 # "CallbackSender" object in the server.
 #
-CallbackSender.Proxy=sender:tcp -h localhost -p 10000
+CallbackSender.Proxy=sender:tcp -p 10000
 
 #
 # Uncomment to use the WebSocket transport instead.
 #
-#CallbackSender.Proxy=sender:ws -h localhost -p 10002
+#CallbackSender.Proxy=sender:ws -p 10002
+
+#
+# Only connect to the localhost interface by default.
+#
+Ice.Default.Host=localhost
 
 #
 # Warn about connection exceptions
