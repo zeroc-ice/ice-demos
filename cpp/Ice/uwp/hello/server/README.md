@@ -9,13 +9,15 @@ such as C++, C#, Java and Python.
 * Build and deploy the demo using `Deploy server` from the `Build` menu.
 * Start the "Ice Hello Demo Server" application from the Windows Start screen
 or right click on the project and select `Debug -> Start new instance`.
-* Build (if needed) and start the Ice/hello client of your choice.
+* On another machine/device build (if needed) and start the Ice/hello client
+of your choice and connect using the public IP address of the machine running
+the server.
 
 ### SSL
 
-If you run the hello client and server on different computers or devices,
-you also need to regenerate the server certificate to ensure the 
-certificate common name is set to the IP address of the server. To 
+Since you need to run the hello client and server on different computers
+or devices, you also need to regenerate the server certificate to ensure
+the certificate common name is set to the IP address of the server. To 
 regenerate the certificate, you can run the `makecerts.py` Python script 
 from the `certs` directory at the top of this distribution. For example:
 

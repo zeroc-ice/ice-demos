@@ -7,7 +7,6 @@
 #include "pch.h"
 #include "MainPage.xaml.h"
 #include "Hello.h"
-#include <iostream>
 
 using namespace std;
 using namespace hello;
@@ -68,7 +67,7 @@ MainPage::MainPage()
     Ice::InitializationData id;
 	id.properties = Ice::createProperties();
 	id.properties->setProperty("Hello.Endpoints", "tcp -p 10000:ssl -p 10001:udp -p 10000");
-	id.properties->setProperty("Ice.Trace.Network", "3");
+	id.properties->setProperty("Ice.Trace.Network", "2");
 
 	_communicator = Ice::initialize(id);
 	_adapter = _communicator->createObjectAdapter("Hello");
