@@ -3,7 +3,7 @@
   <Identity Name="7f170846-cb0c-4f3f-a787-67193e2029af" Publisher="CN=ZeroC" Version="1.0.0.0" />
   <mp:PhoneIdentity PhoneProductId="7f170846-cb0c-4f3f-a787-67193e2029af" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>Ice Bidir Demo</DisplayName>
+    <DisplayName>Ice Bidir Demo Client</DisplayName>
     <PublisherDisplayName>ZeroC</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -15,7 +15,7 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="bidir_uap.App">
-      <uap:VisualElements DisplayName="Ice Bidir Demo" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="bidir.uap" BackgroundColor="transparent">
+      <uap:VisualElements DisplayName="Ice Bidir Demo Client" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="bidir.uap" BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png">
         </uap:DefaultTile>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />

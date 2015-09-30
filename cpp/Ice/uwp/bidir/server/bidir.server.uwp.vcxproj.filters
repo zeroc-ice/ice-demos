@@ -53,8 +53,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="bidir.uap_TemporaryKey.pfx" />
-    <None Include="..\..\..\..\certs\cacert.der" />
     <None Include="README.md" />
+    <None Include="..\..\..\..\..\certs\cacert.der" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainPage.xaml" />
