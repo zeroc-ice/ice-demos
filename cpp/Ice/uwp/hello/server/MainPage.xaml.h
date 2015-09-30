@@ -20,14 +20,11 @@ public:
 
     MainPage();
 
-	static MainPage^ instance();
 	void print(Platform::String^ message);
 
 private:
 
     void clear_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
-	
-	static MainPage^ _instance;
 
     Ice::CommunicatorPtr _communicator;
 	Ice::ObjectAdapterPtr _adapter;

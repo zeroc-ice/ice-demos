@@ -16,7 +16,7 @@
         </Grid.RowDefinitions>
         <!-- Header -->
         <StackPanel Grid.Row="0">
-            <TextBlock Text="ZeroC - Ice Bidir Demo" Style="{StaticResource TitleStyle}"
+            <TextBlock Text="ZeroC - Ice Bidir Demo Client" Style="{StaticResource TitleStyle}"
                        Margin="5, 5, 5, 5"
                        VerticalAlignment="Bottom" TextWrapping="Wrap"/>
         </StackPanel>

@@ -30,7 +30,7 @@ class HelloI : public Hello
 public:
 
 
-	HelloI()
+	HelloI(MainPage^ page) : _page(page)
 	{
 	}
 
@@ -42,10 +42,10 @@ public:
 			IceUtil::ThreadControl::sleep(IceUtil::Time::milliSeconds(delay));
 		}
 
-		MainPage::instance()->Dispatcher->RunAsync(
+		_page->Dispatcher->RunAsync(
 			CoreDispatcherPriority::Normal, ref new DispatchedHandler([=]()
 			{
-				MainPage::instance()->print(ref new String(L"Hello World!\n"));
+				_page->print(ref new String(L"Hello World!\n"));
 			}, CallbackContext::Any));
 	}
 
@@ -54,15 +54,16 @@ public:
 	{
 		Application::Current->Exit();
 	}
+
+private:
+
+	MainPage^ _page;
 };
 }
-
-MainPage^ MainPage::_instance = nullptr;
 
 MainPage::MainPage()
 {
     InitializeComponent();
-	_instance = this;
 
     Ice::InitializationData id;
 	id.properties = Ice::createProperties();
@@ -71,7 +72,7 @@ MainPage::MainPage()
 
 	_communicator = Ice::initialize(id);
 	_adapter = _communicator->createObjectAdapter("Hello");
-	_adapter->add(new HelloI(), _communicator->stringToIdentity("hello"));
+	_adapter->add(new HelloI(this), _communicator->stringToIdentity("hello"));
 	_adapter->activate();
 	print(ref new String(L"Ready to receive requests\n"));
 }
@@ -86,10 +87,4 @@ void
 MainPage::print(Platform::String^ message)
 {
 	output->Text = String::Concat(output->Text, message);
-}
-
-MainPage^
-MainPage::instance()
-{
-	return _instance;
 }
