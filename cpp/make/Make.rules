@@ -23,7 +23,7 @@
 #CPP11			?= yes
 
 #
-# If Ice is not installed in the default location (/usr) set ICE_HOME to 
+# If Ice is not installed in the default location (/usr) set ICE_HOME to
 # the Ice installation directory.
 #
 #ICE_HOME		?= /opt/Ice-3.6.1
@@ -35,7 +35,7 @@
 #BUILD_WITH_ICEE	?= yes
 
 #
-# If building with Ice-E and Ice-E is not installed in the default 
+# If building with Ice-E and Ice-E is not installed in the default
 # location (/usr) set ICEE_HOME to the Ice-E installation directory.
 #
 #ICEE_HOME		?= /opt/IceE-3.6.1
@@ -60,7 +60,7 @@
 
 #
 # If building with Ice-E for Debian, arch tuple of the host
-# machine supported values are arm-linux-gnueabihf and 
+# machine supported values are arm-linux-gnueabihf and
 # x86_64-linux-gnu.
 #
 # Set it to arm-linux-gnueabihf if you are cross compiling
@@ -70,8 +70,8 @@ HOST			?= arm-linux-gnueabihf
 
 #
 # If cross compiling with Ice-E for Debian and third party libraries
-# are not installed in the default location or ICEE_THIRDPARTY_HOME 
-# is not set in your environment variables then change the following 
+# are not installed in the default location or ICEE_THIRDPARTY_HOME
+# is not set in your environment variables then change the following
 # setting to reflect the installation location.
 #
 ICEE_THIRDPARTY_HOME	?= /opt/IceE-3.6.1-ThirdParty

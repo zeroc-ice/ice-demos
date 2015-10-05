@@ -53,3 +53,5 @@ IceSSL.CAs=cacert.pem
 IceSSL.CertFile=server.p12
 IceSSL.Password=password
 IceSSL.VerifyPeer=0
+IceSSL.Keychain=glacier2.keychain
+IceSSL.KeychainPassword=password
