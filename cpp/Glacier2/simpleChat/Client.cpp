@@ -12,6 +12,12 @@
 using namespace std;
 using namespace Demo;
 
+namespace
+{
+// mutex to prevent intertwined cout output
+IceUtil::Mutex _mutex;
+}
+
 class ChatCallbackI : public ChatCallback
 {
 public:
@@ -19,6 +25,7 @@ public:
     virtual void
     message(const string& data, const Ice::Current&)
     {
+        IceUtil::Mutex::Lock lock(_mutex);
         cout << data << endl;
     }
 };
@@ -93,7 +100,10 @@ public:
         do
         {
             string s;
-            cout << "==> ";
+            {
+                IceUtil::Mutex::Lock lock(_mutex);
+                cout << "==> ";
+            }
             getline(cin, s);
             s = trim(s);
             if(!s.empty())
