@@ -46,5 +46,5 @@ To build the Cocoa or iOS examples, open `IceTouch/demos.xcworkspace` in Xcode.
 
 Refer to the README file in each demo directory for usage instructions.
 
-[1]: https://doc.zeroc.com/display/Ice36/Ice+Manual
+[1]: https://doc.zeroc.com/display/Ice37/Ice+Manual
 [2]: https://github.com/zeroc-ice/ice-builder-xcode

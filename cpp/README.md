@@ -141,8 +141,8 @@ and change to the deployment directory:
 
 Refer to the README file in each demo directory for usage instructions.
 
-[1]: https://doc.zeroc.com/display/Ice36/Ice+Manual
+[1]: https://doc.zeroc.com/display/Ice37/Ice+Manual
 [2]: https://zeroc.com/chat/index.html
 [3]: https://github.com/zeroc-ice/ice-builder-xcode
-[4]: https://doc.zeroc.com/display/Ice36/Ice+Release+Notes
+[4]: https://doc.zeroc.com/display/Ice37/Ice+Release+Notes
 [5]: https://github.com/zeroc-ice/ice-builder-visualstudio

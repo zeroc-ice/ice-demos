@@ -51,6 +51,6 @@ as described in the [release notes][3].
 
 Refer to the README file in each demo directory for usage instructions.
 
-[1]: https://doc.zeroc.com/display/Ice36/Ice+Manual
+[1]: https://doc.zeroc.com/display/Ice37/Ice+Manual
 [2]: https://zeroc.com/chat/index.html
-[3]: https://doc.zeroc.com/display/Ice36/Ice+Release+Notes
+[3]: https://doc.zeroc.com/display/Ice37/Ice+Release+Notes
