@@ -65,10 +65,10 @@ IceStorm.Flush.Timeout=2000
 #Ice.Trace.Network=1
 
 #
-# This property defines the home directory of the Freeze 
+# This property defines the home directory of the LMDB
 # database environment for the IceStorm service.
 #
-Freeze.DbEnv.IceStorm.DbHome=db
+IceStorm.LMDB.Path=db
 
 #
 # IceMX configuration.
