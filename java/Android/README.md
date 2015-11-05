@@ -2,19 +2,23 @@
 
 This directory contains the following Android examples:
 
+- [btchat](./btchat)
+
+  An app that allows two devices to chat via Bluetooth.
+
 - [chat](./chat)
 
-  An Android client for the ZeroC chat application.
+  A client for the ZeroC chat application.
 
 - [hello](./hello)
 
-  An Android client that shows how to invoke ordinary (twoway)
+  An app that shows how to invoke ordinary (twoway)
   and oneway operations, as well as how to use datagrams, secure
   invocations, and batched invocations.
 
 - [library](./library)
 
-  An Android front-end for remotely querying and manipulating a
+  A front-end for remotely querying and manipulating a
   relational database implemented using JDBC.
 
 Please review the build instructions below prior to opening the project.

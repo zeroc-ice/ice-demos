@@ -5,7 +5,8 @@
 // **********************************************************************
 
 // Main source
-include ':hello', ':chat', ':library'
+include ':hello', ':btchat', ':chat', ':library'
 project(':hello').projectDir = new File('hello')
+project(':btchat').projectDir = new File('btchat')
 project(':chat').projectDir = new File('chat')
 project(':library').projectDir = new File('library')
