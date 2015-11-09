@@ -9,7 +9,7 @@ IceGrid.InstanceName=ReplicationDemoIceGrid
 IceGrid.Registry.Client.Endpoints=default -h localhost -p 12000
 IceGrid.Registry.Server.Endpoints=default -h localhost
 IceGrid.Registry.Internal.Endpoints=default -h localhost
-IceGrid.Registry.Data=db/master
+IceGrid.Registry.LMDB.Path=db/master
 IceGrid.Registry.PermissionsVerifier=ReplicationDemoIceGrid/NullPermissionsVerifier
 IceGrid.Registry.AdminPermissionsVerifier=ReplicationDemoIceGrid/NullPermissionsVerifier
 

@@ -14,7 +14,7 @@ IceGrid.InstanceName=DemoIceGrid
 IceGrid.Registry.Client.Endpoints=tcp -h localhost -p 14061:ssl -h localhost -p 14062
 IceGrid.Registry.Server.Endpoints=ssl -h localhost
 IceGrid.Registry.Internal.Endpoints=ssl -h localhost
-IceGrid.Registry.Data=db/slave
+IceGrid.Registry.LMDB.Path=db/slave
 IceGrid.Registry.ReplicaName=Slave
 
 #
