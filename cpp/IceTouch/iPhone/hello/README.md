@@ -35,10 +35,28 @@ blocking the GUI thread and ensure a responsive user experience.
 This demo runs against any hello server, such as the
 [C++ server](../../../Ice/hello).
 
-To test timeouts, you can use the timeout slider to set a timeout on
-the client proxy and the delay slider to set a delayed response in the
-server to cause a timeout. In the case of a timeout, you will notice
-that the server prints two "Hello World!" messages. This happens
-because the Slice operation sayHello is marked as idempotent, meaning
-that Ice does not need to preserve the at-most-once retry semantics.
+### Timeouts
+
+To test timeouts you can use the timeout slider to set a timeout in
+the client proxy and the delay slider to set a delayed response in
+the server to cause a timeout.
+
+You will notice that two "Hello World!" messages will be printed by
+the server in this case. This is because the sayHello method is marked
+as idempotent in the Slice, meaning that Ice does not need to follow
+the at-most-once retry semantics.
+
 See the manual for more information about retry behavior.
+
+### IceDiscovery
+
+Instead of configuring the IP address for the server you can use IceDiscovery to
+discover the server.
+
+To enable IceDiscovery, touch the "Use IceDiscovery" button to switch it on. You
+must run the hello server from the IceDiscovery/hello demo (such as the [C++
+server](../../../IceDiscovery/hello)) and ensure that the server is listening on
+an accessible network interface.
+
+See the README file of the IceDiscovery hello demo for more information on how
+to start the server.
