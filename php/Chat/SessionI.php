@@ -72,7 +72,7 @@ class Session
             {
                 $ident = $this->_communicator->identityToString($this->_chatsession->ice_getIdentity());
                 $endpoints = $this->_communicator->getProperties()->getProperty(
-                    "PollingChatSessionFactory.OverrideEndpoints")
+                    "PollingChatSessionFactory.OverrideEndpoints");
                 $this->_chatsession = $this->_communicator->stringToProxy(
                     $ident . ":wss -h zeroc.com -p 443 -r /demo-proxy/chat/poll");
             }
