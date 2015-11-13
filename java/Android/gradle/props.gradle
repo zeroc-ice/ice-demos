@@ -9,12 +9,10 @@ ext.useLocalOnly = gradle.startParameter.isOffline()
 // Determine the name of the Slice-to-Java translator
 def isWindows = false
 def slice2java = "slice2java"
-def slice2freezej = "slice2freezej"
 if (System.properties['os.name'].toLowerCase().contains('windows'))
 {
     isWindows = true
     slice2java = "slice2java.exe"
-    slice2freezej = "slice2freezej.exe"
 }
 
 def env = System.getenv()

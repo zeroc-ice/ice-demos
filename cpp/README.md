@@ -13,7 +13,7 @@ examples are provided to get you started on using a particular Ice feature or
 coding technique.
 
 Most of the subdirectories here correspond directly to Ice components, such as
-[Freeze](./Freeze), [Glacier2](./Glacier2), and so on. We've also included the
+[IceGrid](./IceGrid), [Glacier2](./Glacier2), and so on. We've also included the
 following additional subdirectories:
 
 - [Manual](./Manual) contains complete examples for some of the code snippets

@@ -6,16 +6,6 @@ Demos in this directory:
   the Ice Run Time chapter. You can copy and modify this code to
   suit your needs.
 
-- [evictorFilesystem](./evictorFilesystem)
-
-  An implementation of the persistent version of the file system
-  example described in the Freeze chapter using a Freeze evictor.
-
-- [mapFilesystem](./mapFilesystem)
-
-  An implementation of the persistent version of the file system
-  example described in the Freeze chapter using a Freeze map.
-
 - [lifecycle](./lifecycle)
 
   An implementation of the file system that supports life cycle operations.

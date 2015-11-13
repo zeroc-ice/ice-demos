@@ -412,7 +412,6 @@ endif
 
 SLICEPARSERLIB  = $(ice_lib_dir)/$(subst $(cpp11libsuffix),,$(call mklibfilename,Slice,$(VERSION)))
 SLICE2CPP	= $(ice_bin_dir)/slice2cpp
-SLICE2FREEZE	= $(ice_bin_dir)/slice2freeze
 
 EVERYTHING		= all clean
 EVERYTHING_EXCEPT_ALL   = clean

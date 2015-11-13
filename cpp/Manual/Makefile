@@ -14,9 +14,7 @@ SUBDIRS		= printer \
 else
 SUBDIRS		= printer \
 		  simpleFilesystem \
-		  lifecycle \
-		  evictorFilesystem \
-                  mapFilesystem
+		  lifecycle
 endif
 
 .PHONY: $(EVERYTHING) $(SUBDIRS)

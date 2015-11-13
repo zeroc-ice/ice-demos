@@ -26,7 +26,6 @@ endif
 ifeq ($(SUBDIRS),)
 SUBDIRS		= IceUtil \
 		  Chat \
-		  Freeze \
 		  Glacier2 \
 		  Ice \
 		  IceBox \

@@ -7,7 +7,7 @@ These examples are provided to get you started on using a particular Ice feature
 coding technique.
 
 Most of the subdirectories here correspond directly to Ice components, such as
-[Freeze](./Freeze), [Glacier2](./Glacier2), and so on. Note that [Manual](./Manual)
+[IceGrid](./IceGrid), [Glacier2](./Glacier2), and so on. Note that [Manual](./Manual)
 contains complete examples for some of the code snippets in the
 [Ice manual][1].
 

@@ -126,7 +126,6 @@ demo_deploy::
 		--exclude="scripts" \
 		--exclude="visualBasic" \
 		--exclude="cpp/Chat/qtClient" \
-		--exclude="cpp/Freeze" \
 		--exclude="cpp/IceGrid" \
 		--exclude="cpp/IcePatch2" \
 		--exclude="cpp/IceStorm" \
