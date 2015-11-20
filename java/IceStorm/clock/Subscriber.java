@@ -150,11 +150,6 @@ public class Subscriber extends Ice.Application
                 System.err.println(appName() + ": temporary failure, try again.");
                 return 1;
             }
-            catch(IceStorm.InvalidTopic ex)
-            {
-                System.err.println(appName() + ": invalid topic: " + ex.reason);
-                return 1;
-            }
         }
 
         Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Clock.Subscriber");
