@@ -19,7 +19,6 @@
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 		3448C7200FB015FE00BFB717 /* Hello.ice in Sources */ = {isa = PBXBuildFile; fileRef = 3448C71F0FB015FE00BFB717 /* Hello.ice */; };
 		3473098A122BE5BE00D293CC /* HelloView-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34730989122BE5BE00D293CC /* HelloView-iPad.xib */; };
-		34BB75B20E87DC1800813E0B /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 34BB75B10E87DC1800813E0B /* icon.png */; };
 		34C618C8122C039900F60A28 /* MainWindow-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34C618C7122C039900F60A28 /* MainWindow-iPad.xib */; };
 		34F173000FE75375002B0E95 /* client.p12 in Resources */ = {isa = PBXBuildFile; fileRef = 34F172FE0FE75375002B0E95 /* client.p12 */; };
 		8229108B1464A85E003DC504 /* HelloController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8229108A1464A85E003DC504 /* HelloController.mm */; };
@@ -34,7 +33,7 @@
 		14EAF6F10E93B19A00EF4807 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		1D3623240D0F684500981E51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		1D6058910D05DD3D006BFB54 /* Hello.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hello.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D6058910D05DD3D006BFB54 /* hello.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hello.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2899E5210DE3E06400AC0155 /* HelloView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HelloView.xib; sourceTree = "<group>"; };
 		28AD733E0D9D9553002E5188 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
@@ -42,11 +41,10 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3448C71F0FB015FE00BFB717 /* Hello.ice */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.slice; path = Hello.ice; sourceTree = "<group>"; };
 		34730989122BE5BE00D293CC /* HelloView-iPad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "HelloView-iPad.xib"; sourceTree = "<group>"; };
-		34BB75B10E87DC1800813E0B /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = Images/icon.png; sourceTree = "<group>"; };
 		34C618C7122C039900F60A28 /* MainWindow-iPad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "MainWindow-iPad.xib"; sourceTree = "<group>"; };
 		34F172FE0FE75375002B0E95 /* client.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; name = client.p12; path = ../../../../certs/client.p12; sourceTree = "<group>"; };
 		8229108A1464A85E003DC504 /* HelloController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HelloController.mm; sourceTree = "<group>"; };
-		82D3968B1823207D000BA551 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = hellocpp/Images.xcassets; sourceTree = "<group>"; };
+		82D3968B1823207D000BA551 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D81311941B2F51AC00DFAE96 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -80,7 +78,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1D6058910D05DD3D006BFB54 /* Hello.app */,
+				1D6058910D05DD3D006BFB54 /* hello.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -89,7 +87,6 @@
 			isa = PBXGroup;
 			children = (
 				14EAF6F10E93B19A00EF4807 /* README.md */,
-				34BB75B00E87DC0A00813E0B /* Images */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -142,14 +139,6 @@
 			name = "Resources-iPad";
 			sourceTree = "<group>";
 		};
-		34BB75B00E87DC0A00813E0B /* Images */ = {
-			isa = PBXGroup;
-			children = (
-				34BB75B10E87DC1800813E0B /* icon.png */,
-			);
-			name = Images;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -167,7 +156,7 @@
 			);
 			name = hello;
 			productName = hello;
-			productReference = 1D6058910D05DD3D006BFB54 /* Hello.app */;
+			productReference = 1D6058910D05DD3D006BFB54 /* hello.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -202,7 +191,6 @@
 				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
 				82D3968C1823207D000BA551 /* Images.xcassets in Resources */,
 				2899E5220DE3E06400AC0155 /* HelloView.xib in Resources */,
-				34BB75B20E87DC1800813E0B /* icon.png in Resources */,
 				14EAF6F20E93B19A00EF4807 /* README.md in Resources */,
 				34F173000FE75375002B0E95 /* client.p12 in Resources */,
 				3473098A122BE5BE00D293CC /* HelloView-iPad.xib in Resources */,
@@ -234,6 +222,7 @@
 			buildSettings = {
 				ADDITIONAL_SDKS = "/usr/local/lib/IceTouch/Cpp/$(PLATFORM_NAME).sdk";
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -247,8 +236,8 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.zeroc.${PRODUCT_NAME:identifier}";
-				PRODUCT_NAME = Hello;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.zeroc.Hello-Cpp";
+				PRODUCT_NAME = hello;
 				SDKROOT = iphoneos;
 				SLICE_CPP_FLAG = NO;
 				SLICE_OUTPUT_DIR = generated;
@@ -261,6 +250,7 @@
 			buildSettings = {
 				ADDITIONAL_SDKS = "/usr/local/lib/IceTouch/Cpp/$(PLATFORM_NAME).sdk";
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -272,8 +262,8 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.zeroc.${PRODUCT_NAME:identifier}";
-				PRODUCT_NAME = Hello;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.zeroc.Hello-Cpp";
+				PRODUCT_NAME = hello;
 				SDKROOT = iphoneos;
 				SLICE_CPP_FLAG = NO;
 				SLICE_OUTPUT_DIR = generated;
