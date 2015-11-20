@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
-        <deployment version="1072" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3746"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FlipsideViewController">
@@ -21,6 +21,7 @@
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Network" lineBreakMode="tailTruncation" minimumFontSize="10" id="46">
                     <rect key="frame" x="20" y="91" width="87" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <animations/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.68235296000000001" green="0.68235296000000001" blue="0.68235296000000001" alpha="1" colorSpace="deviceRGB"/>
                     <nil key="highlightedColor"/>
@@ -28,6 +29,7 @@
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Protocol" lineBreakMode="tailTruncation" minimumFontSize="10" id="47">
                     <rect key="frame" x="20" y="147" width="63" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <animations/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.73333334999999999" green="0.73333334999999999" blue="0.73333334999999999" alpha="1" colorSpace="deviceRGB"/>
                     <nil key="highlightedColor"/>
@@ -35,6 +37,7 @@
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Tracing" lineBreakMode="tailTruncation" minimumFontSize="10" id="50">
                     <rect key="frame" x="20" y="51" width="57" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <animations/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.41568631" green="0.46274513" blue="0.50196081000000004" alpha="1" colorSpace="deviceRGB"/>
                     <nil key="highlightedColor"/>
@@ -42,6 +45,7 @@
                 <switch opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="58">
                     <rect key="frame" x="123" y="144" width="51" height="31"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <animations/>
                     <connections>
                         <action selector="protocolChanged:" destination="-1" eventType="valueChanged" id="69"/>
                     </connections>
@@ -49,6 +53,7 @@
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Router" lineBreakMode="tailTruncation" minimumFontSize="10" id="60">
                     <rect key="frame" x="20" y="191" width="63" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <animations/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.73333334999999999" green="0.73333334999999999" blue="0.73333334999999999" alpha="1" colorSpace="deviceRGB"/>
                     <nil key="highlightedColor"/>
@@ -56,6 +61,7 @@
                 <switch opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="61">
                     <rect key="frame" x="123" y="188" width="51" height="31"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <animations/>
                     <connections>
                         <action selector="routerChanged:" destination="-1" eventType="valueChanged" id="70"/>
                     </connections>
@@ -63,6 +69,7 @@
                 <segmentedControl opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="59">
                     <rect key="frame" x="108" y="84" width="169" height="29"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <animations/>
                     <segments>
                         <segment title="Off"/>
                         <segment title="Low"/>
@@ -76,12 +83,15 @@
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Changing any of these settings requires restarting the application to take effect." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="3" minimumFontSize="10" id="64">
                     <rect key="frame" x="20" y="308" width="280" height="75"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <animations/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.96428572999999995" green="0.076095975999999996" blue="0.10749506" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
+            <animations/>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+            <nil key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
         </view>
     </objects>

@@ -5,7 +5,7 @@
       location = "container:"
       name = "iPhone">
       <FileRef
-         location = "group:iPhone/hello/hellocpp.xcodeproj">
+         location = "group:/Users/joe/Development/ZeroC/ice-demos/cpp/IceTouch/iPhone/hello/hello.xcodeproj">
       </FileRef>
    </Group>
 </Workspace>
