@@ -190,6 +190,11 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0710;
+				TargetAttributes = {
+					8D1107260486CEB800E47090 = {
+						DevelopmentTeam = U4TBVKNQ7F;
+					};
+				};
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "library" */;
 			compatibilityVersion = "Xcode 6.3";
@@ -275,6 +280,8 @@
 				ADDITIONAL_SDKS = "/usr/local/lib/IceTouch/ObjC/$(PLATFORM_NAME).sdk";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -293,6 +300,7 @@
 				OTHER_CFLAGS = "-fobjc-arc-exceptions";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.zeroc.${PRODUCT_NAME:identifier}";
 				PRODUCT_NAME = Library;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -303,6 +311,8 @@
 				ADDITIONAL_SDKS = "/usr/local/lib/IceTouch/ObjC/$(PLATFORM_NAME).sdk";
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -320,6 +330,7 @@
 				OTHER_CFLAGS = "-fobjc-arc-exceptions";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.zeroc.${PRODUCT_NAME:identifier}";
 				PRODUCT_NAME = Library;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = macosx;
 			};
 			name = Release;
