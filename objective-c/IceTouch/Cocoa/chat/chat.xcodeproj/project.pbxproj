@@ -17,12 +17,12 @@
 		343DE5F70FC3F0AD00FCC49C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 343DE5F60FC3F0AD00FCC49C /* AppDelegate.m */; };
 		3448C79E0FB018C900BFB717 /* Chat.ice in Sources */ = {isa = PBXBuildFile; fileRef = 3448C79C0FB018C900BFB717 /* Chat.ice */; };
 		3448C79F0FB018C900BFB717 /* ChatSession.ice in Sources */ = {isa = PBXBuildFile; fileRef = 3448C79D0FB018C900BFB717 /* ChatSession.ice */; };
-		34537F320FBAA03100933480 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 34537F310FBAA03100933480 /* icon.icns */; };
 		345436120FB29554005CB1B6 /* ChatView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 345436110FB29554005CB1B6 /* ChatView.xib */; };
 		3478AF7D0FF2104F00BD9F2B /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 3478AF7C0FF2104F00BD9F2B /* README.md */; };
 		82AC63CB173812FE0040F03D /* cacert.pem in Resources */ = {isa = PBXBuildFile; fileRef = 82AC63CA173812FE0040F03D /* cacert.pem */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
+		D8168A4E1C03835C00CE1F8C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D8168A4D1C03835C00CE1F8C /* Images.xcassets */; };
 		D8EC93E61AD4583500055945 /* config.client in Resources */ = {isa = PBXBuildFile; fileRef = D8EC93E51AD4583500055945 /* config.client */; };
 /* End PBXBuildFile section */
 
@@ -43,12 +43,12 @@
 		343DE5F90FC3F10500FCC49C /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Classes/AppDelegate.h; sourceTree = "<group>"; };
 		3448C79C0FB018C900BFB717 /* Chat.ice */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.slice; name = Chat.ice; path = Classes/Chat.ice; sourceTree = "<group>"; };
 		3448C79D0FB018C900BFB717 /* ChatSession.ice */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.slice; name = ChatSession.ice; path = Classes/ChatSession.ice; sourceTree = "<group>"; };
-		34537F310FBAA03100933480 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
 		345436110FB29554005CB1B6 /* ChatView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatView.xib; sourceTree = "<group>"; };
 		3478AF7C0FF2104F00BD9F2B /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		82AC63CA173812FE0040F03D /* cacert.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = cacert.pem; path = ../../../../certs/cacert.pem; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* ChatDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D8168A4D1C03835C00CE1F8C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		D8EC93E51AD4583500055945 /* config.client */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = config.client; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -114,8 +114,8 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D8168A4D1C03835C00CE1F8C /* Images.xcassets */,
 				82AC63CA173812FE0040F03D /* cacert.pem */,
-				34537F310FBAA03100933480 /* icon.icns */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
@@ -186,10 +186,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				D8EC93E61AD4583500055945 /* config.client in Resources */,
+				D8168A4E1C03835C00CE1F8C /* Images.xcassets in Resources */,
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
 				345436120FB29554005CB1B6 /* ChatView.xib in Resources */,
-				34537F320FBAA03100933480 /* icon.icns in Resources */,
 				343DE5990FC3EBD900FCC49C /* LoginView.xib in Resources */,
 				3478AF7D0FF2104F00BD9F2B /* README.md in Resources */,
 				82AC63CB173812FE0040F03D /* cacert.pem in Resources */,
@@ -240,6 +240,7 @@
 			buildSettings = {
 				ADDITIONAL_SDKS = "/usr/local/lib/IceTouch/ObjC/$(PLATFORM_NAME).sdk";
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
@@ -272,6 +273,7 @@
 			buildSettings = {
 				ADDITIONAL_SDKS = "/usr/local/lib/IceTouch/ObjC/$(PLATFORM_NAME).sdk";
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";

@@ -28,7 +28,6 @@
 		347553EB0E71BA29001C7AB8 /* EditController.m in Sources */ = {isa = PBXBuildFile; fileRef = 347553EA0E71BA29001C7AB8 /* EditController.m */; };
 		347553ED0E71BA33001C7AB8 /* EditView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 347553EC0E71BA33001C7AB8 /* EditView.xib */; };
 		34BB75760E87DAEC00813E0B /* redButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 34BB75750E87DAEC00813E0B /* redButton.png */; };
-		34BB75780E87DB1B00813E0B /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 34BB75770E87DB1B00813E0B /* icon.png */; };
 		34FF1F1D0E76904300EA9DEC /* AddController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34FF1F1C0E76904300EA9DEC /* AddController.m */; };
 		826C67A61738069C00059EAA /* cacert.der in Resources */ = {isa = PBXBuildFile; fileRef = 826C67A51738069C00059EAA /* cacert.der */; };
 		82D53AA3182320C900703264 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82D53AA2182320C900703264 /* Images.xcassets */; };
@@ -64,11 +63,10 @@
 		347553EA0E71BA29001C7AB8 /* EditController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditController.m; sourceTree = "<group>"; };
 		347553EC0E71BA33001C7AB8 /* EditView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditView.xib; sourceTree = "<group>"; };
 		34BB75750E87DAEC00813E0B /* redButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redButton.png; sourceTree = "<group>"; };
-		34BB75770E87DB1B00813E0B /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		34FF1F1B0E76904300EA9DEC /* AddController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddController.h; sourceTree = "<group>"; };
 		34FF1F1C0E76904300EA9DEC /* AddController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddController.m; sourceTree = "<group>"; };
 		826C67A51738069C00059EAA /* cacert.der */ = {isa = PBXFileReference; lastKnownFileType = file; name = cacert.der; path = ../../../../certs/cacert.der; sourceTree = "<group>"; };
-		82D53AA2182320C900703264 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = library/Images.xcassets; sourceTree = "<group>"; };
+		82D53AA2182320C900703264 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D8EC45081AF26BA5001C2D72 /* config.client */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = config.client; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -172,7 +170,6 @@
 		3492A6810E7AD01600FACCC4 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				34BB75770E87DB1B00813E0B /* icon.png */,
 				34BB75750E87DAEC00813E0B /* redButton.png */,
 			);
 			path = Images;
@@ -239,7 +236,6 @@
 				82D53AA3182320C900703264 /* Images.xcassets in Resources */,
 				347553ED0E71BA33001C7AB8 /* EditView.xib in Resources */,
 				34BB75760E87DAEC00813E0B /* redButton.png in Resources */,
-				34BB75780E87DB1B00813E0B /* icon.png in Resources */,
 				14EAF7020E93B23700EF4807 /* README.md in Resources */,
 				14060BE4161D62900077BEE0 /* Default-568h@2x.png in Resources */,
 				826C67A61738069C00059EAA /* cacert.der in Resources */,
@@ -274,6 +270,7 @@
 			buildSettings = {
 				ADDITIONAL_SDKS = "/usr/local/lib/IceTouch/ObjC/$(PLATFORM_NAME).sdk";
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
@@ -300,6 +297,7 @@
 			buildSettings = {
 				ADDITIONAL_SDKS = "/usr/local/lib/IceTouch/ObjC/$(PLATFORM_NAME).sdk";
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
@@ -322,7 +320,6 @@
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "$(IDENTIFIER)";
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -336,7 +333,6 @@
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "$(IDENTIFIER)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;

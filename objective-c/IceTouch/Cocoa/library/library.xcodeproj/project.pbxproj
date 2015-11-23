@@ -16,7 +16,6 @@
 		3488C4F10FC23DCF001C9F93 /* EditView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3488C4F00FC23DCF001C9F93 /* EditView.xib */; };
 		3488C52A0FC24104001C9F93 /* RentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3488C5290FC24104001C9F93 /* RentView.xib */; };
 		3488C52D0FC2414D001C9F93 /* SavingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3488C52C0FC2414D001C9F93 /* SavingView.xib */; };
-		34C5F1930FC508AE00B226F7 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 34C5F1920FC508AE00B226F7 /* icon.icns */; };
 		34C5F2170FC514C900B226F7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C5F2080FC514C900B226F7 /* AppDelegate.m */; };
 		34C5F2180FC514C900B226F7 /* LoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C5F20A0FC514C900B226F7 /* LoginController.m */; };
 		34C5F2190FC514C900B226F7 /* EditController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C5F20C0FC514C900B226F7 /* EditController.m */; };
@@ -31,6 +30,7 @@
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		D8081A711AF14D8700F32A9D /* config.client in Resources */ = {isa = PBXBuildFile; fileRef = D8081A701AF14D8700F32A9D /* config.client */; };
+		D8BCC6A81C03801D001BC53D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D8BCC6A71C03801D001BC53D /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,7 +46,6 @@
 		3488C4F00FC23DCF001C9F93 /* EditView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditView.xib; sourceTree = "<group>"; };
 		3488C5290FC24104001C9F93 /* RentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RentView.xib; sourceTree = "<group>"; };
 		3488C52C0FC2414D001C9F93 /* SavingView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SavingView.xib; sourceTree = "<group>"; };
-		34C5F1920FC508AE00B226F7 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
 		34C5F2070FC514C900B226F7 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Classes/AppDelegate.h; sourceTree = "<group>"; };
 		34C5F2080FC514C900B226F7 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Classes/AppDelegate.m; sourceTree = "<group>"; };
 		34C5F2090FC514C900B226F7 /* LoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginController.h; path = Classes/LoginController.h; sourceTree = "<group>"; };
@@ -67,6 +66,7 @@
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Library.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Library.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8081A701AF14D8700F32A9D /* config.client */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = config.client; sourceTree = "<group>"; };
+		D8BCC6A71C03801D001BC53D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,8 +138,8 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D8BCC6A71C03801D001BC53D /* Images.xcassets */,
 				82AC63CC1738185D0040F03D /* cacert.pem */,
-				34C5F1920FC508AE00B226F7 /* icon.icns */,
 				3447919E0FBBC4AC0037E9FA /* LoginView.xib */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
@@ -221,11 +221,11 @@
 				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
 				3447919F0FBBC4AC0037E9FA /* LoginView.xib in Resources */,
 				3447926A0FBC13940037E9FA /* LibraryView.xib in Resources */,
+				D8BCC6A81C03801D001BC53D /* Images.xcassets in Resources */,
 				3488C4F10FC23DCF001C9F93 /* EditView.xib in Resources */,
 				D8081A711AF14D8700F32A9D /* config.client in Resources */,
 				3488C52A0FC24104001C9F93 /* RentView.xib in Resources */,
 				3488C52D0FC2414D001C9F93 /* SavingView.xib in Resources */,
-				34C5F1930FC508AE00B226F7 /* icon.icns in Resources */,
 				3478AF810FF2107100BD9F2B /* README.md in Resources */,
 				82AC63CD1738185D0040F03D /* cacert.pem in Resources */,
 			);
@@ -279,6 +279,7 @@
 			buildSettings = {
 				ADDITIONAL_SDKS = "/usr/local/lib/IceTouch/ObjC/$(PLATFORM_NAME).sdk";
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -310,6 +311,7 @@
 			buildSettings = {
 				ADDITIONAL_SDKS = "/usr/local/lib/IceTouch/ObjC/$(PLATFORM_NAME).sdk";
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
