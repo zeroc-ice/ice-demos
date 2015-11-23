@@ -32,7 +32,6 @@
 		34684F500FA7EC15009000C3 /* RouterI.m in Sources */ = {isa = PBXBuildFile; fileRef = 34684F4D0FA7EC15009000C3 /* RouterI.m */; };
 		34684F510FA7EC15009000C3 /* Router.ice in Sources */ = {isa = PBXBuildFile; fileRef = 34684F4E0FA7EC15009000C3 /* Router.ice */; };
 		3478AF670FF2100300BD9F2B /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 3478AF660FF2100300BD9F2B /* README.md */; };
-		34D6E9F80FFC750600C748D5 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 34D6E9F70FFC750600C748D5 /* icon.png */; };
 		82D53AA1182320C200703264 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82D53AA0182320C200703264 /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -77,8 +76,7 @@
 		34684F4E0FA7EC15009000C3 /* Router.ice */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.slice; name = Router.ice; path = Classes/Router.ice; sourceTree = "<group>"; };
 		34684F4F0FA7EC15009000C3 /* RouterDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RouterDelegate.h; path = Classes/RouterDelegate.h; sourceTree = "<group>"; };
 		3478AF660FF2100300BD9F2B /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		34D6E9F70FFC750600C748D5 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
-		82D53AA0182320C200703264 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = router/Images.xcassets; sourceTree = "<group>"; };
+		82D53AA0182320C200703264 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -143,7 +141,6 @@
 			isa = PBXGroup;
 			children = (
 				3478AF660FF2100300BD9F2B /* README.md */,
-				34D6E9F60FFC750600C748D5 /* Images */,
 				3448BF340FA971D700BFB717 /* Log View */,
 				34684E350FA70F0E009000C3 /* Router */,
 				289233A00DB2D0730083E9F9 /* Main View */,
@@ -220,14 +217,6 @@
 			name = Router;
 			sourceTree = "<group>";
 		};
-		34D6E9F60FFC750600C748D5 /* Images */ = {
-			isa = PBXGroup;
-			children = (
-				34D6E9F70FFC750600C748D5 /* icon.png */,
-			);
-			path = Images;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -288,7 +277,6 @@
 				3448BF520FA9723E00BFB717 /* LogView.xib in Resources */,
 				3448C1BC0FAA7E4900BFB717 /* LogZoomView.xib in Resources */,
 				3478AF670FF2100300BD9F2B /* README.md in Resources */,
-				34D6E9F80FFC750600C748D5 /* icon.png in Resources */,
 				14060BFD161D66EA0077BEE0 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -325,6 +313,7 @@
 			buildSettings = {
 				ADDITIONAL_SDKS = "/usr/local/lib/IceTouch/ObjC/$(PLATFORM_NAME).sdk";
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
@@ -354,6 +343,7 @@
 			buildSettings = {
 				ADDITIONAL_SDKS = "/usr/local/lib/IceTouch/ObjC/$(PLATFORM_NAME).sdk";
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;

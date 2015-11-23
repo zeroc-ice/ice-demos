@@ -5,29 +5,29 @@
       location = "container:"
       name = "iPhone">
       <FileRef
-         location = "group:iPhone/voip/voip.xcodeproj">
-      </FileRef>
-      <FileRef
-         location = "group:iPhone/router/router.xcodeproj">
-      </FileRef>
-      <FileRef
-         location = "group:iPhone/library/library.xcodeproj">
+         location = "group:iPhone/chat/chat.xcodeproj">
       </FileRef>
       <FileRef
          location = "group:iPhone/hello/hello.xcodeproj">
       </FileRef>
       <FileRef
-         location = "group:iPhone/chat/chat.xcodeproj">
+         location = "group:iPhone/library/library.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:iPhone/router/router.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:iPhone/voip/voip.xcodeproj">
       </FileRef>
    </Group>
    <Group
       location = "container:"
       name = "Cocoa">
       <FileRef
-         location = "group:Cocoa/library/library.xcodeproj">
+         location = "group:Cocoa/chat/chat.xcodeproj">
       </FileRef>
       <FileRef
-         location = "group:Cocoa/chat/chat.xcodeproj">
+         location = "group:Cocoa/library/library.xcodeproj">
       </FileRef>
    </Group>
 </Workspace>
