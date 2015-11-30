@@ -6,16 +6,14 @@
 
 top_srcdir	= ../..
 
-CLIENT		= client
+APP		= talk
 
-TARGETS		= $(CLIENT)
+TARGETS		= $(APP)
 
 SLICE_OBJS	= Talk.o
 
-COBJS		= $(SLICE_OBJS) \
-		  Client.o
-
-OBJS		= $(COBJS)
+OBJS		= $(SLICE_OBJS) \
+		  App.o
 
 include $(top_srcdir)/make/Make.rules
 
@@ -26,9 +24,9 @@ ifeq ($(BUILD_WITH_ICEE),yes)
 endif
 ICEBT_LIBS	+= -lIceBT
 
-$(CLIENT): $(COBJS)
+$(APP): $(OBJS)
 	rm -f $@
-	$(CXX) $(LDFLAGS) $(LDEXEFLAGS) -o $@ $(COBJS) $(ICEBT_LIBS) $(LIBS)
+	$(CXX) $(LDFLAGS) $(LDEXEFLAGS) -o $@ $(OBJS) $(ICEBT_LIBS) $(LIBS)
 ifeq ($(BUILD_WITH_ICEE),yes)
 	$(Q)$(STRIP) --strip-all --remove-section=.comment --remove-section=.note $(@)
 endif

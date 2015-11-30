@@ -11,13 +11,11 @@
 
 using namespace std;
 
-static const unsigned int maxMessageSize = 1024;
-
-class TalkClient : public Ice::Application
+class TalkApp : public Ice::Application
 {
 public:
 
-    TalkClient();
+    TalkApp();
     virtual int run(int, char*[]);
 
 private:
@@ -32,9 +30,9 @@ typedef IceUtil::Handle<PeerI> PeerIPtr;
 // We use two implementations of Peer servants. PeerI is the common
 // base class for our servants.
 //
-// The client only supports one active connection at a time. That
+// The program only supports one active connection at a time. That
 // connection can either be initiated by a peer (an "incoming"
-// connection) or it can be initiated by this client (an "outgoing"
+// connection) or it can be initiated by this program (an "outgoing"
 // connection. We use different servants for each type of connection.
 //
 class PeerI : public Talk::Peer
@@ -187,10 +185,6 @@ public:
         {
             _peer->send(message);
         }
-        catch(const Talk::InvalidMessageException& ex)
-        {
-            cout << ">>>> Invalid message: " << ex.reason << endl;
-        }
         catch(const Ice::Exception& ex)
         {
             cout << ">>>> Error: " << ex << endl;
@@ -282,11 +276,11 @@ main(int argc, char* argv[])
     Ice::registerIceBT();
 #endif
 
-    TalkClient app;
-    return app.main(argc, argv, "config.client");
+    TalkApp app;
+    return app.main(argc, argv, "config");
 }
 
-TalkClient::TalkClient() :
+TalkApp::TalkApp() :
     //
     // Since this is an interactive demo we don't want any signal handling.
     //
@@ -295,7 +289,7 @@ TalkClient::TalkClient() :
 }
 
 int
-TalkClient::run(int argc, char*[])
+TalkApp::run(int argc, char*[])
 {
     if(argc > 1)
     {
@@ -305,7 +299,7 @@ TalkClient::run(int argc, char*[])
 
     //
     // Create an object adapter with the name "Talk". Its endpoint is defined
-    // in the configuration file config.client.
+    // in the configuration file 'config'.
     //
     Ice::ObjectAdapterPtr adapter = communicator()->createObjectAdapter("Talk");
 
@@ -408,14 +402,7 @@ TalkClient::run(int argc, char*[])
             }
             else
             {
-                if(s.size() > maxMessageSize)
-                {
-                    cout << "Message length exceeded, maximum length is " << maxMessageSize << " characters.";
-                }
-                else
-                {
-                    peer->sendMessage(s);
-                }
+                peer->sendMessage(s);
             }
         }
     }
@@ -426,7 +413,7 @@ TalkClient::run(int argc, char*[])
 }
 
 void
-TalkClient::usage()
+TalkApp::usage()
 {
     cout << endl;
     cout << "Usage:" << endl;

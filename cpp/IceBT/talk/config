@@ -8,7 +8,7 @@
 # Bluetooth adapter.
 #
 # The UUID is a unique identifier associated with this talk service.
-# Other clients must also know this identifier.
+# Other talk apps must also know this identifier.
 #
 # The value for the --name option will appear in the Bluetooth SDP
 # registry but is only for informational purposes.
