@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="com.zeroc.btchat"
+      package="com.zeroc.talk"
       android:versionCode="1"
       android:versionName="1.0.0">
 
@@ -15,7 +15,7 @@
         android:allowBackup="false">
 
         <activity
-            android:name=".ChatActivity"
+            android:name=".TalkActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name">
             <intent-filter>
@@ -31,7 +31,7 @@
             android:theme="@android:style/Theme.Holo.Dialog"/>
 
         <service
-            android:name=".service.ChatService"
+            android:name=".service.TalkService"
             android:enabled="true"
             android:exported="false"/>
 

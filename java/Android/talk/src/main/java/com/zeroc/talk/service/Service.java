@@ -4,7 +4,7 @@
 //
 // **********************************************************************
 
-package com.zeroc.btchat.service;
+package com.zeroc.talk.service;
 
 import android.os.Handler;
 

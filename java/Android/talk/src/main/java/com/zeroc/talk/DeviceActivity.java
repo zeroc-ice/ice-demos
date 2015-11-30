@@ -4,7 +4,7 @@
 //
 // **********************************************************************
 
-package com.zeroc.btchat;
+package com.zeroc.talk;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;

@@ -22,7 +22,7 @@ android {
     buildToolsVersion ice_buildToolsVersion
 
     defaultConfig {
-        applicationId "com.zeroc.btchat"
+        applicationId "com.zeroc.talk"
         minSdkVersion ice_minSdkVersion.toInteger()
         targetSdkVersion ice_targetSdkVersion.toInteger()
         compileOptions {

@@ -4,7 +4,7 @@
 //
 // **********************************************************************
 
-package com.zeroc.btchat.service;
+package com.zeroc.talk.service;
 
 import android.app.Service;
 import android.content.Intent;
@@ -14,10 +14,10 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 
-import com.zeroc.btchat.ChatActivity;
-import com.zeroc.btchat.R;
+import com.zeroc.talk.TalkActivity;
+import com.zeroc.talk.R;
 
-public class ChatService extends Service implements com.zeroc.btchat.service.Service
+public class TalkService extends Service implements com.zeroc.talk.service.Service
 {
     private Handler _handler;
     private int _state;
@@ -25,10 +25,10 @@ public class ChatService extends Service implements com.zeroc.btchat.service.Ser
     private Ice.ObjectAdapter _adapter;
 
     //
-    // The well-known Bluetooth service UUID for the Ice chat service, as well as the service name.
+    // The well-known Bluetooth service UUID for the Ice talk service, as well as the service name.
     //
     private final static String SERVICE_ID = "6a193943-1754-4869-8d0a-ddc5f9a2b294";
-    private final static String SERVICE_NAME = "Ice Bluetooth Chat";
+    private final static String SERVICE_NAME = "Ice Bluetooth Talk";
 
     //
     // PeerInfo tracks some state about a peer.
@@ -69,7 +69,7 @@ public class ChatService extends Service implements com.zeroc.btchat.service.Ser
 
         String address;
         String name;
-        Chat.PeerPrx peer;
+        Talk.PeerPrx peer;
         Ice.Identity servant;
     }
 
@@ -77,18 +77,17 @@ public class ChatService extends Service implements com.zeroc.btchat.service.Ser
     // We use this servant to handle new incoming connections. We use a different servant implementation
     // for outgoing connections.
     //
-    private class PeerImpl extends Chat._PeerDisp
+    private class PeerImpl extends Talk._PeerDisp
     {
         @Override
         public void connect(Ice.Identity id, Ice.Current current)
-            throws Chat.ConnectionException
+            throws Talk.ConnectionException
         {
             info = incoming(id, current.con);
         }
 
         @Override
         public void send(String message, Ice.Current current)
-            throws Chat.InvalidMessageException
         {
             received(info, message);
         }
@@ -106,9 +105,9 @@ public class ChatService extends Service implements com.zeroc.btchat.service.Ser
 
     public class LocalBinder extends Binder
     {
-        public com.zeroc.btchat.service.Service getService()
+        public com.zeroc.talk.service.Service getService()
         {
-            return ChatService.this;
+            return TalkService.this;
         }
     }
 
@@ -209,7 +208,7 @@ public class ChatService extends Service implements com.zeroc.btchat.service.Ser
 
             //
             // Create an object adapter for receiving callbacks and incoming connections. The Bluetooth
-            // endpoint specifies the chat service's ID and name.
+            // endpoint specifies the talk service's ID and name.
             //
             _adapter = _communicator.createObjectAdapterWithEndpoints("",
                     "bt -u " + SERVICE_ID + " --name \"" + SERVICE_NAME + "\"");
@@ -252,9 +251,9 @@ public class ChatService extends Service implements com.zeroc.btchat.service.Ser
 
         //
         // Create a proxy for the peer. The identity of the remote object is "peer". The UUID in the
-        // proxy is the well-known Bluetooth service ID for the Chat service.
+        // proxy is the well-known Bluetooth service ID for the Talk service.
         //
-        info.peer = Chat.PeerPrxHelper.uncheckedCast(
+        info.peer = Talk.PeerPrxHelper.uncheckedCast(
             _communicator.stringToProxy("peer:bt -a \"" + address + "\" -u " + SERVICE_ID));
 
         //
@@ -264,16 +263,15 @@ public class ChatService extends Service implements com.zeroc.btchat.service.Ser
         info.servant = Ice.Util.stringToIdentity(java.util.UUID.randomUUID().toString());
 
         _adapter.add(
-            new Chat._PeerDisp()
+            new Talk._PeerDisp()
             {
                 public void connect(Ice.Identity id, Ice.Current current)
-                    throws Chat.ConnectionException
+                    throws Talk.ConnectionException
                 {
-                    throw new Chat.ConnectionException("already connected");
+                    throw new Talk.ConnectionException("already connected");
                 }
 
                 public void send(String message, Ice.Current current)
-                    throws Chat.InvalidMessageException
                 {
                     received(info, message);
                 }
@@ -348,11 +346,7 @@ public class ChatService extends Service implements com.zeroc.btchat.service.Ser
                     try
                     {
                         info.peer.end_send(r);
-                        ChatService.this.sent(info, message);
-                    }
-                    catch(Chat.InvalidMessageException ex)
-                    {
-                        sendFailed(info, "Send failed: " + ex.reason, false);
+                        TalkService.this.sent(info, message);
                     }
                     catch(Ice.LocalException ex)
                     {
@@ -417,20 +411,20 @@ public class ChatService extends Service implements com.zeroc.btchat.service.Ser
     }
 
     synchronized private PeerInfo incoming(Ice.Identity id, Ice.Connection con)
-        throws Chat.ConnectionException
+        throws Talk.ConnectionException
     {
         //
         // Only accept a new incoming connection if we're idle.
         //
         if(_state != STATE_NOT_CONNECTED)
         {
-            throw new Chat.ConnectionException("Peer is busy");
+            throw new Talk.ConnectionException("Peer is busy");
         }
 
         IceBT.ConnectionInfo ci = (IceBT.ConnectionInfo)con.getInfo();
 
         PeerInfo info = new PeerInfo();
-        info.peer = Chat.PeerPrxHelper.uncheckedCast(con.createProxy(id));
+        info.peer = Talk.PeerPrxHelper.uncheckedCast(con.createProxy(id));
         info.address = ci.remoteAddress;
         info.servant = null;
 
@@ -470,7 +464,7 @@ public class ChatService extends Service implements com.zeroc.btchat.service.Ser
                         info.peer.end_connect(r);
                         connected(info);
                     }
-                    catch(Chat.ConnectionException ex)
+                    catch(Talk.ConnectionException ex)
                     {
                         connectFailed(info, "Connection to " + info.getName() + " failed: " + ex.reason);
                     }
@@ -591,7 +585,7 @@ public class ChatService extends Service implements com.zeroc.btchat.service.Ser
                    new Ice.Optional<Ice.ACMHeartbeat>(Ice.ACMHeartbeat.HeartbeatAlways));
     }
 
-    private void closeConnection(Chat.PeerPrx peer)
+    private void closeConnection(Talk.PeerPrx peer)
     {
         Ice.Connection con = peer.ice_getCachedConnection();
         if(con != null)

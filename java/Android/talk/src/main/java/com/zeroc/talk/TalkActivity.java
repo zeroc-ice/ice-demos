@@ -4,7 +4,7 @@
 //
 // **********************************************************************
 
-package com.zeroc.btchat;
+package com.zeroc.talk;
 
 import java.lang.ref.WeakReference;
 import java.util.LinkedList;
@@ -37,10 +37,10 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.zeroc.btchat.service.ChatService;
-import com.zeroc.btchat.service.Service;
+import com.zeroc.talk.service.TalkService;
+import com.zeroc.talk.service.Service;
 
-public class ChatActivity extends Activity
+public class TalkActivity extends Activity
 {
     private static final int MAX_MESSAGE_SIZE = 1024;
 
@@ -58,7 +58,7 @@ public class ChatActivity extends Activity
     //
     private static class HandlerI extends Handler
     {
-        HandlerI(WeakReference<ChatActivity> activity)
+        HandlerI(WeakReference<TalkActivity> activity)
         {
             _activity = activity;
         }
@@ -93,7 +93,7 @@ public class ChatActivity extends Activity
             }
         }
 
-        private WeakReference<ChatActivity> _activity;
+        private WeakReference<TalkActivity> _activity;
     }
 
     final private ServiceConnection _connection = new ServiceConnection()
@@ -107,7 +107,7 @@ public class ChatActivity extends Activity
             // service that we know is running in our own process, we can
             // cast its IBinder to a concrete class and directly access it.
             //
-            serviceConnected(((com.zeroc.btchat.service.ChatService.LocalBinder)service).getService());
+            serviceConnected(((com.zeroc.talk.service.TalkService.LocalBinder)service).getService());
         }
 
         public void onServiceDisconnected(ComponentName name)
@@ -121,12 +121,12 @@ public class ChatActivity extends Activity
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.chat);
+        setContentView(R.layout.main);
 
         //
-        // Start the ChatService.
+        // Start the TalkService.
         //
-        _serviceIntent = new Intent(ChatActivity.this, ChatService.class);
+        _serviceIntent = new Intent(TalkActivity.this, TalkService.class);
         startService(_serviceIntent);
     }
 
@@ -169,7 +169,7 @@ public class ChatActivity extends Activity
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        getMenuInflater().inflate(R.menu.chat, menu);
+        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
@@ -340,7 +340,7 @@ public class ChatActivity extends Activity
     synchronized private void serviceConnected(Service service)
     {
         _service = service;
-        _service.setHandler(new HandlerI(new WeakReference<ChatActivity>(this)));
+        _service.setHandler(new HandlerI(new WeakReference<TalkActivity>(this)));
         if(BluetoothAdapter.getDefaultAdapter().isEnabled())
         {
             _service.initialize();

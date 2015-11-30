@@ -2,10 +2,6 @@
 
 This directory contains the following Android examples:
 
-- [btchat](./btchat)
-
-  An app that allows two devices to chat via Bluetooth.
-
 - [chat](./chat)
 
   A client for the ZeroC chat application.
@@ -20,6 +16,10 @@ This directory contains the following Android examples:
 
   A front-end for remotely querying and manipulating a
   relational database implemented using JDBC.
+
+- [talk](./talk)
+
+  An app that allows two devices to talk via Bluetooth.
 
 Please review the build instructions below prior to opening the project.
 
