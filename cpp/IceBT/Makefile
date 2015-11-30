@@ -4,38 +4,14 @@
 #
 # **********************************************************************
 
-top_srcdir	= .
+top_srcdir	= ..
 
 include $(top_srcdir)/make/Make.rules
 
-ifeq ($(BUILD_WITH_ICEE),yes)
-    SUBDIRS	:= Ice IceDiscovery Glacier2 Chat
-
-    ifeq ($(BUILD_DEMOS),dynamic)
-        SUBDIRS	:= $(SUBDIRS) IceBox
-    endif
-endif
-
-ifneq ($(findstring MINGW,$(UNAME)),)
-SUBDIRS		= Ice \
-		  IceDiscovery \
-		  Manual
-endif
-
-ifeq ($(SUBDIRS),)
-SUBDIRS		= IceUtil \
-		  Chat \
-		  Glacier2 \
-		  Ice \
-		  IceBox \
-		  IceDiscovery \
-		  IceGrid \
-		  IceStorm \
-		  Manual
-endif
-
 ifneq ($(findstring Linux,$(UNAME)),)
-    SUBDIRS	:= $(SUBDIRS) IceBT
+SUBDIRS		= talk
+else
+SUBDIRS		=
 endif
 
 .PHONY: $(EVERYTHING) $(SUBDIRS)
@@ -50,5 +26,5 @@ $(EVERYTHING_EXCEPT_ALL)::
 	@for subdir in $(SUBDIRS); \
 	do \
 	    echo "making $@ in $$subdir"; \
-            ( cd $$subdir && $(MAKE) $@ ) || exit 1; \
+	    ( cd $$subdir && $(MAKE) $@ ) || exit 1; \
 	done
