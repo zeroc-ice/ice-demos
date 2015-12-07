@@ -34,10 +34,6 @@ SUBDIRS		= IceUtil \
 		  Manual
 endif
 
-ifneq ($(findstring Linux,$(UNAME)),)
-    SUBDIRS	:= $(SUBDIRS) IceBT
-endif
-
 .PHONY: $(EVERYTHING) $(SUBDIRS)
 
 all:: $(SUBDIRS)
