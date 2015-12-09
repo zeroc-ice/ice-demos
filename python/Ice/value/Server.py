@@ -51,8 +51,8 @@ class Server(Ice.Application):
             print(self.appName() + ": too many arguments")
             return 1
 
-        factory = Printer.ObjectFactory()
-        self.communicator().addObjectFactory(factory, Demo.Printer.ice_staticId())
+        factory = Printer.ValueFactory()
+        self.communicator().addValueFactory(factory, Demo.Printer.ice_staticId())
 
         adapter = self.communicator().createObjectAdapter("Value")
         adapter.add(InitialI(adapter), self.communicator().stringToIdentity("initial"))

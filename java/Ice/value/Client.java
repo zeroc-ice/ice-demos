@@ -86,10 +86,10 @@ public class Client extends Ice.Application
         try
         {
             initial.getPrinter(printer, printerProxy);
-            System.err.println("Did not get the expected NoObjectFactoryException!");
+            System.err.println("Did not get the expected NoValueFactoryException!");
             System.exit(1);
         }
-        catch(Ice.NoObjectFactoryException ex)
+        catch(Ice.NoValueFactoryException ex)
         {
             System.out.println("==> " + ex);
         }
@@ -101,8 +101,8 @@ public class Client extends Ice.Application
         System.out.println("[press enter]");
         readline(in);
 
-        Ice.ObjectFactory factory = new ObjectFactory();
-        communicator().addObjectFactory(factory, Demo.Printer.ice_staticId());
+        Ice.ValueFactory factory = new ValueFactory();
+        communicator().addValueFactory(factory, Demo.Printer.ice_staticId());
 
         initial.getPrinter(printer, printerProxy);
         System.out.println("==> " + printer.value.message);
@@ -143,7 +143,7 @@ public class Client extends Ice.Application
         System.out.println("[press enter]");
         readline(in);
 
-        communicator().addObjectFactory(factory, Demo.DerivedPrinter.ice_staticId());
+        communicator().addValueFactory(factory, Demo.DerivedPrinter.ice_staticId());
 
         derivedAsBase = initial.getDerivedPrinter();
         DerivedPrinter derived = (Demo.DerivedPrinter)derivedAsBase;
@@ -173,7 +173,7 @@ public class Client extends Ice.Application
 
     	ClientPrinter clientp = new ClientPrinterI();
     	clientp.message = "a message 4 u";
-    	communicator().addObjectFactory(factory, Demo.ClientPrinter.ice_staticId());
+    	communicator().addValueFactory(factory, Demo.ClientPrinter.ice_staticId());
 
     	derivedAsBase = initial.updatePrinterMessage(clientp);
     	clientp = (Demo.ClientPrinter)derivedAsBase;

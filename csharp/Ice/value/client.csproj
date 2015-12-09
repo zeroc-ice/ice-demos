@@ -102,12 +102,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="generated\client\Value.cs" />
-    <Compile Include="ObjectFactory.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="PrinterI.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ValueFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

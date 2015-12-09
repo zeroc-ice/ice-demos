@@ -205,7 +205,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="generated\server\Value.cpp" />
-    <ClCompile Include="ObjectFactory.cpp" />
+    <ClCompile Include="ValueFactory.cpp" />
     <ClCompile Include="Server.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -221,7 +221,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="generated\server\Value.h" />
-    <ClInclude Include="ObjectFactory.h" />
+    <ClInclude Include="ValueFactory.h" />
     <ClInclude Include="ValueI.h" />
   </ItemGroup>
   <ItemGroup>

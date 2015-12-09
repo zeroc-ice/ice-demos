@@ -5,13 +5,13 @@
 // **********************************************************************
 
 #include <Ice/Ice.h>
-#include <ObjectFactory.h>
+#include <ValueFactory.h>
 #include <ValueI.h>
 
 using namespace std;
 
 Ice::ObjectPtr
-ObjectFactory::create(const string& type)
+ValueFactory::create(const string& type)
 {
     if(type == Demo::Printer::ice_staticId())
     {
@@ -30,10 +30,4 @@ ObjectFactory::create(const string& type)
 
     assert(false);
     return 0;
-}
-
-void
-ObjectFactory::destroy()
-{
-    // Nothing to do
 }

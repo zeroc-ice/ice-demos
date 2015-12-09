@@ -40,9 +40,9 @@ class Client(Ice.Application):
 
         try:
             printer, printerProxy = initial.getPrinter()
-            print(args[0] + ": Did not get the expected NoObjectFactoryException!")
+            print(args[0] + ": Did not get the expected NoValueFactoryException!")
             sys.exit(false)
-        except Ice.NoObjectFactoryException as ex:
+        except Ice.NoValueFactoryException as ex:
             print("==>", ex)
 
         print('\n'\
@@ -52,8 +52,8 @@ class Client(Ice.Application):
               "[press enter]")
         sys.stdin.readline()
 
-        factory = Printer.ObjectFactory()
-        self.communicator().addObjectFactory(factory, Demo.Printer.ice_staticId())
+        factory = Printer.ValueFactory()
+        self.communicator().addValueFactory(factory, Demo.Printer.ice_staticId())
 
         printer, printerProxy = initial.getPrinter()
         print("==> " + printer.message)
@@ -93,7 +93,7 @@ class Client(Ice.Application):
               "[press enter]")
         sys.stdin.readline()
 
-        self.communicator().addObjectFactory(factory, Demo.DerivedPrinter.ice_staticId())
+        self.communicator().addValueFactory(factory, Demo.DerivedPrinter.ice_staticId())
 
         derived = initial.getDerivedPrinter()
         print("==> The type ID of the received object is \"" + derived.ice_id() + "\"")
@@ -120,7 +120,7 @@ class Client(Ice.Application):
 
         clientp = Printer.ClientPrinterI()
         clientp.message = "a message 4 u"
-        self.communicator().addObjectFactory(factory, Demo.ClientPrinter.ice_staticId())
+        self.communicator().addValueFactory(factory, Demo.ClientPrinter.ice_staticId())
 
         derivedAsBase = initial.updatePrinterMessage(clientp)
         assert(derivedAsBase.ice_id() == Demo.ClientPrinter.ice_staticId())

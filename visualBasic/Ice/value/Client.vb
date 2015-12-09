@@ -45,9 +45,9 @@ Module ValueC
             Dim printerProxy As PrinterPrx = Nothing
             Try
                 initial.getPrinter(printer, printerProxy)
-                Console.Error.WriteLine("Did not get the expected NoObjectFactoryException!")
+                Console.Error.WriteLine("Did not get the expected NoValueFactoryException!")
                 Environment.Exit(1)
-            Catch ex As Ice.NoObjectFactoryException
+            Catch ex As Ice.NoValueFactoryException
                 Console.Out.WriteLine("==> " & ex.ToString())
             End Try
 
@@ -59,7 +59,7 @@ Module ValueC
             Console.In.ReadLine()
 
             Dim factory As Ice.ObjectFactory = New ObjectFactory
-            communicator().addObjectFactory(factory, Demo.Printer.ice_staticId())
+            communicator().addValueFactory(factory, Demo.Printer.ice_staticId())
 
             initial.getPrinter(printer, printerProxy)
             Console.Out.WriteLine("==> " & printer.message)
@@ -100,7 +100,7 @@ Module ValueC
             Console.Out.WriteLine("[press enter]")
             Console.In.ReadLine()
 
-            communicator().addObjectFactory(factory, Demo.DerivedPrinter.ice_staticId())
+            communicator().addValueFactory(factory, Demo.DerivedPrinter.ice_staticId())
 
             derivedAsBase = initial.getDerivedPrinter()
             Dim derived As DerivedPrinter = CType(derivedAsBase, DerivedPrinter)
@@ -130,7 +130,7 @@ Module ValueC
 
             Dim clientp As ClientPrinter = New ClientPrinterI
 	    clientp.message = "a message 4 u"
-            communicator().addObjectFactory(factory, Demo.ClientPrinter.ice_staticId())
+            communicator().addValueFactory(factory, Demo.ClientPrinter.ice_staticId())
 
 	    derivedAsBase = initial.updatePrinterMessage(clientp)
 	    clientp = CType(derivedAsBase, ClientPrinter)

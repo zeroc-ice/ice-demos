@@ -4,7 +4,7 @@
 //
 // **********************************************************************
 
-class ObjectFactory implements Ice.ObjectFactory
+class ValueFactory implements Ice.ValueFactory
 {
     @Override
     public Ice.Object
@@ -27,12 +27,5 @@ class ObjectFactory implements Ice.ObjectFactory
 
         assert(false);
         return null;
-    }
-
-    @Override
-    public void
-    destroy()
-    {
-        // Nothing to do
     }
 }

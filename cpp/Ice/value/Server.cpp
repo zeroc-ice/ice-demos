@@ -6,7 +6,7 @@
 
 #include <Ice/Ice.h>
 #include <ValueI.h>
-#include <ObjectFactory.h>
+#include <ValueFactory.h>
 
 using namespace std;
 
@@ -33,8 +33,8 @@ ValueServer::run(int argc, char*[])
         return EXIT_FAILURE;
     }
 
-    Ice::ObjectFactoryPtr factory = new ObjectFactory;
-    communicator()->addObjectFactory(factory, Demo::Printer::ice_staticId());
+    Ice::ValueFactoryPtr factory = new ValueFactory;
+    communicator()->addValueFactory(factory, Demo::Printer::ice_staticId());
 
     Ice::ObjectAdapterPtr adapter = communicator()->createObjectAdapter("Value");
     Demo::InitialPtr initial = new InitialI(adapter);

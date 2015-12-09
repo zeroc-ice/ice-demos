@@ -22,7 +22,7 @@
     <ClCompile Include="Client.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ObjectFactory.cpp">
+    <ClCompile Include="ValueFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ValueI.cpp">
@@ -33,7 +33,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ObjectFactory.h">
+    <ClInclude Include="ValueFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ValueI.h">

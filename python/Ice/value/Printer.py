@@ -18,7 +18,7 @@ class DerivedPrinterI(Demo.DerivedPrinter, PrinterI):
 class ClientPrinterI(Demo.ClientPrinter, PrinterI):
     pass
 
-class ObjectFactory(Ice.ObjectFactory):
+class ValueFactory(Ice.ValueFactory):
     def create(self, type):
         if type == Demo.Printer.ice_staticId():
             return PrinterI()
@@ -30,7 +30,3 @@ class ObjectFactory(Ice.ObjectFactory):
             return ClientPrinterI()
 
         assert(False)
-
-    def destroy(self):
-        # Nothing to do
-        pass

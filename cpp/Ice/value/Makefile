@@ -14,12 +14,12 @@ TARGETS		= $(CLIENT) $(SERVER)
 SLICE_OBJS	= Value.o
 
 COBJS		= $(SLICE_OBJS) \
-		  ObjectFactory.o \
+		  ValueFactory.o \
 		  ValueI.o \
 		  Client.o
 
 SOBJS		= $(SLICE_OBJS) \
-		  ObjectFactory.o \
+		  ValueFactory.o \
 		  ValueI.o \
 		  Server.o
 

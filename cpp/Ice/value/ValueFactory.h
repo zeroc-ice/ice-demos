@@ -9,12 +9,11 @@
 
 #include <Ice/Ice.h>
 
-class ObjectFactory : public Ice::ObjectFactory
+class ValueFactory : public Ice::ValueFactory
 {
 public:
 
     virtual Ice::ObjectPtr create(const std::string&);
-    virtual void destroy();
 };
 
 #endif

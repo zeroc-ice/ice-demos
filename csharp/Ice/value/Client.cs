@@ -56,10 +56,10 @@ public class Client
             try
             {
                 initial.getPrinter(out printer, out printerProxy);
-                Console.Error.WriteLine("Did not get the expected NoObjectFactoryException!");
+                Console.Error.WriteLine("Did not get the expected NoValueFactoryException!");
                 return 1;
             }
-            catch(Ice.NoObjectFactoryException ex)
+            catch(Ice.NoValueFactoryException ex)
             {
                 Console.Out.WriteLine("==> " + ex);
             }
@@ -71,8 +71,7 @@ public class Client
             Console.Out.WriteLine("[press enter]");
             Console.In.ReadLine();
 
-            Ice.ObjectFactory factory = new ObjectFactory();
-            communicator().addObjectFactory(factory, Demo.Printer.ice_staticId());
+            communicator().addValueFactory(ValueFactory.create, Demo.Printer.ice_staticId());
 
             initial.getPrinter(out printer, out printerProxy);
             Console.Out.WriteLine("==> " + printer.message);
@@ -113,7 +112,7 @@ public class Client
             Console.Out.WriteLine("[press enter]");
             Console.In.ReadLine();
 
-            communicator().addObjectFactory(factory, Demo.DerivedPrinter.ice_staticId());
+            communicator().addValueFactory(ValueFactory.create, Demo.DerivedPrinter.ice_staticId());
 
             derivedAsBase = initial.getDerivedPrinter();
             DerivedPrinter derived = (DerivedPrinter)derivedAsBase;
@@ -143,7 +142,7 @@ public class Client
 
 	    ClientPrinter clientp = new ClientPrinterI();
 	    clientp.message = "a message 4 u";
-            communicator().addObjectFactory(factory, Demo.ClientPrinter.ice_staticId());
+            communicator().addValueFactory(ValueFactory.create, Demo.ClientPrinter.ice_staticId());
 
 	    derivedAsBase = initial.updatePrinterMessage(clientp);
 	    clientp = (ClientPrinter)derivedAsBase;

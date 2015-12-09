@@ -14,8 +14,8 @@ Module ValueS
                 Return 1
             End If
 
-	    Dim factory As Ice.ObjectFactory = New ObjectFactory
-            communicator().addObjectFactory(factory, Demo.Printer.ice_staticId())
+            Dim factory As Ice.ObjectFactory = New ObjectFactory
+            communicator().addValueFactory(factory, Demo.Printer.ice_staticId())
 
             Dim adapter As Ice.ObjectAdapter = communicator().createObjectAdapter("Value")
             adapter.add(New InitialI(adapter), communicator().stringToIdentity("initial"))

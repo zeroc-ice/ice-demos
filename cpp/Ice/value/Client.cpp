@@ -7,7 +7,7 @@
 #include <Ice/Ice.h>
 #include <Value.h>
 #include <ValueI.h>
-#include <ObjectFactory.h>
+#include <ValueFactory.h>
 
 using namespace std;
 using namespace Demo;
@@ -76,10 +76,10 @@ ValueClient::run(int argc, char* argv[])
     try
     {
         initial->getPrinter(printer, printerProxy);
-        cerr << argv[0] << "Did not get the expected NoObjectFactoryException!" << endl;
+        cerr << argv[0] << "Did not get the expected NoValueFactoryException!" << endl;
         exit(EXIT_FAILURE);
     }
-    catch(const Ice::NoObjectFactoryException& ex)
+    catch(const Ice::NoValueFactoryException& ex)
     {
         cout << "==> " << ex << endl;
     }
@@ -91,8 +91,8 @@ ValueClient::run(int argc, char* argv[])
          << "[press enter]\n";
     cin.getline(c, 2);
 
-    Ice::ObjectFactoryPtr factory = new ObjectFactory;
-    communicator()->addObjectFactory(factory, Demo::Printer::ice_staticId());
+    Ice::ValueFactoryPtr factory = new ValueFactory;
+    communicator()->addValueFactory(factory, Demo::Printer::ice_staticId());
 
     initial->getPrinter(printer, printerProxy);
     cout << "==> " << printer->message << endl;
@@ -126,16 +126,16 @@ ValueClient::run(int argc, char* argv[])
     derivedAsBase = initial->getDerivedPrinter();
     cout << "==> The type ID of the received object is \"" << derivedAsBase->ice_id() << "\"" << endl;
     assert(derivedAsBase->ice_id() == Demo::Printer::ice_staticId());
-    
+
     cout << '\n'
          << "Now we install a factory for the derived class, and try again.\n"
          << "Because we receive the derived object as a base object, we\n"
          << "we need to do a dynamic_cast<> to get from the base to the derived object.\n"
          << "[press enter]\n";
     cin.getline(c, 2);
-    
-    communicator()->addObjectFactory(factory, Demo::DerivedPrinter::ice_staticId());
-    
+
+    communicator()->addValueFactory(factory, Demo::DerivedPrinter::ice_staticId());
+
     derivedAsBase = initial->getDerivedPrinter();
     DerivedPrinterPtr derived = DerivedPrinterPtr::dynamicCast(derivedAsBase);
     assert(derived);
@@ -164,7 +164,7 @@ ValueClient::run(int argc, char* argv[])
 
     ClientPrinterPtr clientp = new ClientPrinterI;
     clientp->message = "a message 4 u";
-    communicator()->addObjectFactory(factory, Demo::ClientPrinter::ice_staticId());
+    communicator()->addValueFactory(factory, Demo::ClientPrinter::ice_staticId());
 
     derivedAsBase = initial->updatePrinterMessage(clientp);
     clientp = ClientPrinterPtr::dynamicCast(derivedAsBase);
