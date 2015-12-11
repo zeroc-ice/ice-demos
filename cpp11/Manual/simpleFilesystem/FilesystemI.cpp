@@ -18,29 +18,21 @@ Filesystem::NodeI::name(const Ice::Current&)
 
 // NodeI constructor
 
-Filesystem::NodeI::NodeI(string nm, shared_ptr<DirectoryI> parent) :
-    _name(move(nm)),
-    _parent(move(parent))
+Filesystem::NodeI::NodeI(const string& name, const shared_ptr<DirectoryI>& parent) :
+    _name(name),
+    _parent(parent)
 {
     // Create an identity. The root directory has the fixed identity "RootDir"
-    if(_parent)
-    {
-        _id.name = IceUtil::generateUUID();
-    }
-    else
-    {
-        _id.name = "RootDir";
-    }
+    _id.name = parent ? IceUtil::generateUUID() : "RootDir";
 }
 
 // NodeI activate() member function
 
 void
-Filesystem::NodeI::activate(const Ice::ObjectAdapterPtr& adapter)
+Filesystem::NodeI::activate(const shared_ptr<Ice::ObjectAdapter>& adapter)
 {
     auto self = Ice::uncheckedCast<NodePrx>(adapter->add(shared_from_this(), _id));
-    if(_parent)
-    {
+    if(_parent) {
         _parent->addChild(self);
     }
 }
@@ -58,13 +50,13 @@ Filesystem::FileI::read(const Ice::Current&)
 void
 Filesystem::FileI::write(Filesystem::Lines text, const Ice::Current&)
 {
-    _lines = move(text);
+    _lines = std::move(text);
 }
 
 // FileI constructor
 
-Filesystem::FileI::FileI(string nm, shared_ptr<DirectoryI> parent) :
-    NodeI(move(nm), move(parent))
+Filesystem::FileI::FileI(const string& name, const shared_ptr<DirectoryI>& parent) :
+    NodeI(name, parent)
 {
 }
 
@@ -78,8 +70,8 @@ Filesystem::DirectoryI::list(const Ice::Current&)
 
 // DirectoryI constructor
 
-Filesystem::DirectoryI::DirectoryI(string nm, shared_ptr<DirectoryI> parent) :
-    NodeI(move(nm), move(parent))
+Filesystem::DirectoryI::DirectoryI(const string& name, const shared_ptr<DirectoryI>& parent) :
+    NodeI(name, parent)
 {
 }
 

@@ -11,23 +11,19 @@ using namespace std;
 using namespace Demo;
 
 int
-main(int argc, char * argv[])
+main(int argc, char* argv[])
 {
-    int status = 0;
-    try
-    {
-        auto ic = Ice::initialize(argc, argv);
-        auto printer = Ice::checkedCast<PrinterPrx>(ic->stringToProxy("SimplePrinter:default -h localhost -p 10000"));
-        if(!printer)
-        {
-            throw "Invalid proxy";
-        }
+    try {
+        Ice::CommunicatorHolder icHolder = Ice::initialize(argc, argv);
+        auto base = icHolder->stringToProxy("SimplePrinter:default -p 10000");
+        auto printer = Ice::checkedCast<PrinterPrx>(base);
+        if (!printer)
+            throw std::runtime_error("Invalid proxy");
+
         printer->printString("Hello World!");
+    } catch(const std::exception& e) {
+        cerr << e.what() << endl;
+        return 1;
     }
-    catch(const exception& ex)
-    {
-        cerr << ex.what() << endl;
-        status = 1;
-    }
-    return status;
+    return 0;
 }

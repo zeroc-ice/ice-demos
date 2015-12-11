@@ -10,8 +10,7 @@
 using namespace std;
 using namespace Filesystem;
 
-class FilesystemApp : public Ice::Application
-{
+class FilesystemApp : public Ice::Application {
 public:
 
     virtual int run(int, char*[])
@@ -24,8 +23,8 @@ public:
         //
         // Create an object adapter.
         //
-        auto adapter =
-            communicator()->createObjectAdapterWithEndpoints("SimpleFilesystem", "default -h localhost -p 10000");
+        auto adapter = communicator()->createObjectAdapterWithEndpoints(
+            "SimpleFilesystem", "default -h localhost -p 10000");
 
         //
         // Create the root directory (with name "/" and no parent)
@@ -51,14 +50,13 @@ public:
         // Create a file called "Kubla_Khan" in the Coleridge directory
         //
         file = make_shared<FileI>("Kubla_Khan", coleridge);
-        text =
-            {
-                "In Xanadu did Kubla Khan",
-                "A stately pleasure-dome decree:",
-                "Where Alph, the sacred river, ran",
-                "Through caverns measureless to man",
-                "Down to a sunless sea."
-            };
+        text = {
+            "In Xanadu did Kubla Khan",
+            "A stately pleasure-dome decree:",
+            "Where Alph, the sacred river, ran",
+            "Through caverns measureless to man",
+            "Down to a sunless sea."
+        };
         file->write(text);
         file->activate(adapter);
 
@@ -71,8 +69,7 @@ public:
         // Wait until we are done
         //
         communicator()->waitForShutdown();
-        if(interrupted())
-        {
+        if(interrupted()) {
             cerr << appName() << ": received signal, shutting down" << endl;
         }
 

@@ -23,20 +23,15 @@ listRecursive(const shared_ptr<DirectoryPrx>& dir, int depth = 0)
 
     NodeSeq contents = dir->list();
 
-    for(const auto& node : contents)
-    {
-        auto d = Ice::checkedCast<DirectoryPrx>(node);
-        cout << indent << node->name() << (d ? " (directory):" : " (file):") << endl;
-        if(d)
-        {
-            listRecursive(d, depth);
-        }
-        else
-        {
+    for(const auto& node : contents) {
+        auto subdir = Ice::checkedCast<DirectoryPrx>(node);
+        cout << indent << node->name() << (subdir ? " (directory):" : " (file):") << endl;
+        if(subdir) {
+            listRecursive(subdir, depth);
+        } else {
             auto file = Ice::uncheckedCast<FilePrx>(node);
             auto text = file->read();
-            for(const auto line : text)
-            {
+            for(const auto& line : text) {
                 cout << indent << "\t" << line << endl;
             }
         }
@@ -46,33 +41,31 @@ listRecursive(const shared_ptr<DirectoryPrx>& dir, int depth = 0)
 int
 main(int argc, char* argv[])
 {
-    int status = 0;
-    try
-    {
+    try {
+        // Create Ice communicator
         //
-        // Create a communicator
-        //
-        auto ic = Ice::initialize(argc, argv);
+        Ice::CommunicatorHolder icHolder = Ice::initialize(argc, argv);
 
+        // Create a proxy for the root directory
         //
-        // Create a proxy for the root directory and down-cast the proxy to a Directory proxy
-        //
-        auto rootDir = Ice::checkedCast<DirectoryPrx>(ic->stringToProxy("RootDir:default -h localhost -p 10000"));
-        if(!rootDir)
-        {
-            throw "Invalid proxy";
-        }
+        auto base = icHolder->stringToProxy("RootDir:default -p 10000");
+        if (!base)
+            throw std::runtime_error("Could not create proxy");
 
+        // Down-cast the proxy to a Directory proxy
         //
+        auto rootDir = Ice::checkedCast<DirectoryPrx>(base);
+        if (!rootDir)
+            throw std::runtime_error("Invalid proxy");
+
         // Recursively list the contents of the root directory
         //
         cout << "Contents of root directory:" << endl;
         listRecursive(rootDir);
+
+    } catch(const std::exception& e) {
+        cerr << e.what() << endl;
+        return 1;
     }
-    catch(const exception& ex)
-    {
-        cerr << ex.what() << endl;
-        status = 1;
-    }
-    return status;
+    return 0;
 }

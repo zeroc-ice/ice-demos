@@ -10,16 +10,13 @@
 using namespace std;
 using namespace Demo;
 
-class PrinterI : public Printer
-{
+class PrinterI : public Printer {
 public:
-
-    virtual void printString(string, const Ice::Current&);
+    virtual void printString(string s, const Ice::Current&) override;
 };
 
 void 
-PrinterI::
-printString(string s, const Ice::Current&)
+PrinterI::printString(string s, const Ice::Current&)
 {
     cout << s << endl;
 }
@@ -27,21 +24,16 @@ printString(string s, const Ice::Current&)
 int
 main(int argc, char* argv[])
 {
-    int status = 0;
-    try
-    {
-        auto ic = Ice::initialize(argc, argv);
-        auto adapter =
-            ic->createObjectAdapterWithEndpoints("SimplePrinterAdapter", "default -h localhost -p 10000");
-        auto object = make_shared<PrinterI>();
-        adapter->add(object, ic->stringToIdentity("SimplePrinter"));
+    try {
+        Ice::CommunicatorHolder icHolder = Ice::initialize(argc, argv);
+        auto adapter = icHolder->createObjectAdapterWithEndpoints("SimplePrinterAdapter", "default -p 10000");
+        auto servant = make_shared<PrinterI>();
+        adapter->add(servant, icHolder->stringToIdentity("SimplePrinter"));
         adapter->activate();
-        ic->waitForShutdown();
-    }
-    catch(const exception& e)
-    {
+        icHolder->waitForShutdown();
+    } catch(const std::exception& e) {
         cerr << e.what() << endl;
-        status = 1;
+        return 1;
     }
-    return status;
+    return 0;
 }
