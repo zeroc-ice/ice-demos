@@ -13,41 +13,22 @@ using namespace Demo;
 int
 main(int argc, char * argv[])
 {
-    int status = 0;
-    Ice::CommunicatorPtr ic;
     try
     {
-        ic = Ice::initialize(argc, argv);
-        Ice::ObjectPrx base = ic->stringToProxy("SimplePrinter:default -h localhost -p 10000");
+        Ice::CommunicatorHolder icHolder = Ice::initialize(argc, argv);
+        Ice::ObjectPrx base = icHolder->stringToProxy("SimplePrinter:default -h localhost -p 10000");
         PrinterPrx printer = PrinterPrx::checkedCast(base);
         if(!printer)
         {
-            throw "Invalid proxy";
+            throw std::runtime_error("Invalid proxy");
         }
 
         printer->printString("Hello World!");
     }
-    catch(const Ice::Exception& ex)
+    catch(const std::exception& ex)
     {
-        cerr << ex << endl;
-        status = 1;
+        cerr << ex.what() << endl;
+        return 1;
     }
-    catch(const char* msg)
-    {
-        cerr << msg << endl;
-        status = 1;
-    }
-    if(ic)
-    {
-        try
-        {
-            ic->destroy();
-        }
-        catch (const Ice::Exception& ex)
-        {
-            cerr << ex << endl;
-            status = 1;
-        }
-    }
-    return status;
+    return 0;
 }

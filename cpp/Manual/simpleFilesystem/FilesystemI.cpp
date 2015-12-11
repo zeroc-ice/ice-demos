@@ -19,7 +19,7 @@ Filesystem::NodeI::name(const Ice::Current&)
 
 // NodeI constructor
 
-Filesystem::NodeI::NodeI(const Ice::CommunicatorPtr&, const string& nm, const DirectoryIPtr& parent) :
+Filesystem::NodeI::NodeI(const string& nm, const DirectoryIPtr& parent) :
     _name(nm), _parent(parent)
 {
     // Create an identity. The root directory has the fixed identity "RootDir"
@@ -63,8 +63,8 @@ Filesystem::FileI::write(const Filesystem::Lines& text, const Ice::Current&)
 
 // FileI constructor
 
-Filesystem::FileI::FileI(const Ice::CommunicatorPtr& communicator, const string& nm, const DirectoryIPtr& parent) :
-    NodeI(communicator, nm, parent)
+Filesystem::FileI::FileI(const string& nm, const DirectoryIPtr& parent) :
+    NodeI(nm, parent)
 {
 }
 
@@ -78,9 +78,8 @@ Filesystem::DirectoryI::list(const Ice::Current&)
 
 // DirectoryI constructor
 
-Filesystem::DirectoryI::DirectoryI(const Ice::CommunicatorPtr& communicator, const string& nm,
-                                   const DirectoryIPtr& parent) :
-    NodeI(communicator, nm, parent)
+Filesystem::DirectoryI::DirectoryI(const string& nm, const DirectoryIPtr& parent) :
+    NodeI(nm, parent)
 {
 }
 

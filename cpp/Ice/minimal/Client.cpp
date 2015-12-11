@@ -12,31 +12,17 @@ using namespace Demo;
 
 int
 main(int argc, char* argv[])
-{
-    Ice::CommunicatorPtr communicator;
-
+{  
     try
     {
-        communicator = Ice::initialize(argc, argv);
-        HelloPrx hello = HelloPrx::checkedCast(communicator->stringToProxy("hello:default -h localhost -p 10000"));
+        Ice::CommunicatorHolder icHolder = Ice::initialize(argc, argv);
+        HelloPrx hello = HelloPrx::checkedCast(icHolder->stringToProxy("hello:default -h localhost -p 10000"));
         hello->sayHello();
-        communicator->destroy();
     }
-    catch(const Ice::Exception& ex1)
+    catch(const std::exception& ex)
     {
-        cerr << ex1 << endl;
-        try
-        {
-            if(communicator)
-            {
-                communicator->destroy();
-            }
-        }
-        catch(const Ice::Exception& ex2)
-        {
-            cerr << ex2 << endl;
-        }
-        exit(1);
+        cerr << ex.what() << endl;
+        return 1;
     }
     return 0;
 }

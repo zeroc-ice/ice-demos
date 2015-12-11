@@ -12,33 +12,19 @@ using namespace std;
 int
 main(int argc, char* argv[])
 {
-    Ice::CommunicatorPtr communicator;
-
     try
     {
-        communicator = Ice::initialize(argc, argv);
+        Ice::CommunicatorHolder icHolder = Ice::initialize(argc, argv);
         Ice::ObjectAdapterPtr adapter =
-            communicator->createObjectAdapterWithEndpoints("Hello", "default -h localhost -p 10000");
-        adapter->add(new HelloI, communicator->stringToIdentity("hello"));
+            icHolder->createObjectAdapterWithEndpoints("Hello", "default -h localhost -p 10000");
+        adapter->add(new HelloI, icHolder->stringToIdentity("hello"));
         adapter->activate();
-        communicator->waitForShutdown();
-        communicator->destroy();
+        icHolder->waitForShutdown();
     }
-    catch(const Ice::Exception& ex)
+    catch(const std::exception& ex)
     {
-        cerr << ex << endl;
-        if(communicator)
-        {
-            try
-            {
-                communicator->destroy();
-            }
-            catch(const Ice::Exception& ex2)
-            {
-                cerr << ex2 << endl;
-            }
-        }
-        exit(1);
+        cerr << ex.what() << endl;
+        return 1;
     }
     return 0;
 }

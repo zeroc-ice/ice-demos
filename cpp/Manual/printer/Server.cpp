@@ -18,8 +18,7 @@ public:
 };
 
 void 
-PrinterI::
-printString(const string &s, const Ice::Current&)
+PrinterI::printString(const string &s, const Ice::Current&)
 {
     cout << s << endl;
 }
@@ -27,39 +26,20 @@ printString(const string &s, const Ice::Current&)
 int
 main(int argc, char* argv[])
 {
-    int status = 0;
-    Ice::CommunicatorPtr ic;
     try
     {
-        ic = Ice::initialize(argc, argv);
+        Ice::CommunicatorHolder icHolder = Ice::initialize(argc, argv);
         Ice::ObjectAdapterPtr adapter =
-            ic->createObjectAdapterWithEndpoints("SimplePrinterAdapter", "default -h localhost -p 10000");
+            icHolder->createObjectAdapterWithEndpoints("SimplePrinterAdapter", "default -h localhost -p 10000");
         Ice::ObjectPtr object = new PrinterI;
-        adapter->add(object, ic->stringToIdentity("SimplePrinter"));
+        adapter->add(object, icHolder->stringToIdentity("SimplePrinter"));
         adapter->activate();
-        ic->waitForShutdown();
+        icHolder->waitForShutdown();
     }
-    catch(const Ice::Exception& e)
+    catch(const std::exception& e)
     {
-        cerr << e << endl;
-        status = 1;
+        cerr << e.what() << endl;
+        return 1;
     }
-    catch(const char* msg)
-    {
-        cerr << msg << endl;
-        status = 1;
-    }
-    if(ic)
-    {
-        try
-        {
-            ic->destroy();
-        }
-        catch(const Ice::Exception& e)
-        {
-            cerr << e << endl;
-            status = 1;
-        }
-    }
-    return status;
+    return 0;
 }
