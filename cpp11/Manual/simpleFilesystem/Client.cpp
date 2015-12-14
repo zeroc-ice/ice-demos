@@ -8,6 +8,7 @@
 #include <Filesystem.h>
 #include <iostream>
 #include <iterator>
+#include <stdexcept>
 
 using namespace std;
 using namespace Filesystem;
