@@ -115,18 +115,13 @@ protected:
     // We install this callback on the Bluetooth connection so that
     // we're notified when the connection closes.
     //
-    class ConnectionCallbackI : public Ice::ConnectionCallback
+    class CloseCallbackI : public Ice::CloseCallback
     {
     public:
 
-        ConnectionCallbackI(const PeerIPtr& p) :
+        CloseCallbackI(const PeerIPtr& p) :
             _obj(p)
         {
-        }
-
-        virtual void heartbeat(const Ice::ConnectionPtr&)
-        {
-            // Ignore.
         }
 
         virtual void closed(const Ice::ConnectionPtr&)
@@ -138,7 +133,7 @@ protected:
 
         PeerIPtr _obj;
     };
-    friend class ConnectionCallbackI;
+    friend class CloseCallbackI;
 
     virtual void closed()
     {
@@ -208,7 +203,7 @@ public:
         //
         // Install a connection callback and enable ACM heartbeats.
         //
-        curr.con->setCallback(new ConnectionCallbackI(this));
+        curr.con->setCloseCallback(new CloseCallbackI(this));
         curr.con->setACM(30, Ice::CloseOff, Ice::HeartbeatAlways);
 
         _peer = Talk::PeerPrx::uncheckedCast(curr.con->createProxy(id));

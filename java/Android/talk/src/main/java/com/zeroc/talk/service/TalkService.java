@@ -569,13 +569,9 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
         //
         // Set a callback to detect connection closure and configure active connection management settings.
         //
-        con.setCallback(new Ice.ConnectionCallback()
+        con.setCloseCallback(new Ice.CloseCallback()
             {
-                public void heartbeat(Ice.Connection c)
-                {
-                    // Ignore.
-                }
-
+                @Override
                 public void closed(Ice.Connection c)
                 {
                     connectionClosed(info);
