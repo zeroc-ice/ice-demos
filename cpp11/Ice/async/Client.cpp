@@ -80,7 +80,7 @@ AsyncClient::run(int argc, char* argv[])
                         {
                             rethrow_exception(e);
                         }
-                        catch(exception ex)
+                        catch(const exception& ex)
                         {
                             cerr << "sayHello AMI call failed:\n" << ex.what() << endl;
                         }
