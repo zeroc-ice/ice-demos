@@ -52,8 +52,7 @@ class Client(Ice.Application):
               "[press enter]")
         sys.stdin.readline()
 
-        factory = Printer.ValueFactory()
-        self.communicator().addValueFactory(factory, Demo.Printer.ice_staticId())
+        self.communicator().addValueFactory(Printer.ValueFactory, Demo.Printer.ice_staticId())
 
         printer, printerProxy = initial.getPrinter()
         print("==> " + printer.message)
@@ -93,7 +92,7 @@ class Client(Ice.Application):
               "[press enter]")
         sys.stdin.readline()
 
-        self.communicator().addValueFactory(factory, Demo.DerivedPrinter.ice_staticId())
+        self.communicator().addValueFactory(Printer.ValueFactory, Demo.DerivedPrinter.ice_staticId())
 
         derived = initial.getDerivedPrinter()
         print("==> The type ID of the received object is \"" + derived.ice_id() + "\"")
@@ -120,7 +119,7 @@ class Client(Ice.Application):
 
         clientp = Printer.ClientPrinterI()
         clientp.message = "a message 4 u"
-        self.communicator().addValueFactory(factory, Demo.ClientPrinter.ice_staticId())
+        self.communicator().addValueFactory(Printer.ValueFactory, Demo.ClientPrinter.ice_staticId())
 
         derivedAsBase = initial.updatePrinterMessage(clientp)
         assert(derivedAsBase.ice_id() == Demo.ClientPrinter.ice_staticId())

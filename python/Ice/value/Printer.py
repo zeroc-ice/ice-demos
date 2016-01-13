@@ -18,15 +18,14 @@ class DerivedPrinterI(Demo.DerivedPrinter, PrinterI):
 class ClientPrinterI(Demo.ClientPrinter, PrinterI):
     pass
 
-class ValueFactory(Ice.ValueFactory):
-    def create(self, type):
-        if type == Demo.Printer.ice_staticId():
-            return PrinterI()
+def ValueFactory(type):
+    if type == Demo.Printer.ice_staticId():
+        return PrinterI()
 
-        if type == Demo.DerivedPrinter.ice_staticId():
-            return DerivedPrinterI()
+    if type == Demo.DerivedPrinter.ice_staticId():
+        return DerivedPrinterI()
 
-        if type == Demo.ClientPrinter.ice_staticId():
-            return ClientPrinterI()
+    if type == Demo.ClientPrinter.ice_staticId():
+        return ClientPrinterI()
 
-        assert(False)
+    assert(False)
