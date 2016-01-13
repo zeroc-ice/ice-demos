@@ -303,8 +303,7 @@ endif
 
 
 #
-# Default functions for shared library names (we have to defined them here
-# for the SLICE2PARSERLIB dependency)
+# Default functions for shared library names
 #
 ifeq ($(mklibfilename),)
     ifeq ($(UNAME),Darwin)
@@ -370,10 +369,8 @@ SLICE2CPPFLAGS		= $(ICECPPFLAGS)
 ifneq ($(BUILD_WITH_ICEE),yes)
 
 ifeq ($(ice_dir), $(usr_dir))
-    LDFLAGS	= $(LDPLATFORMFLAGS) $(CXXFLAGS)
-    ifeq ($(CPP11),yes)
-        LDFLAGS = $(LDPLATFORMFLAGS) $(CXXFLAGS) -L$(ice_dir)/$(libsubdir)$(cpp11libdirsuffix)
-    endif
+    CPPFLAGS	+= -DICE_CPP11_MAPPING
+    LDFLAGS 	= $(LDPLATFORMFLAGS) $(CXXFLAGS) -L$(ice_dir)/$(libsubdir)$(cpp11libdirsuffix)
 else
     CPPFLAGS	+= -DICE_CPP11_MAPPING -I$(includedir)
     ifdef ice_src_dist
@@ -401,7 +398,14 @@ ifeq ($(mkshlib),)
 endif
 
 
-SLICEPARSERLIB  := $(ice_lib_dir)/$(call mklibfilename,Slice,$(VERSION))
+ifdef ice_src_dist
+    SLICEPARSERLIB  := $(ice_lib_dir)/$(call mklibfilename,Slice,$(VERSION))
+else
+    # Don't check for dependency with the Slice library if building against
+    # a binary distribution (we would need to figure out the library name
+    # for this to be correct and this isn't so trivial with C++11)
+    SLICEPARSERLIB  :=
+endif
 SLICE2CPP	:= $(ice_bin_dir)/slice2cpp
 
 EVERYTHING		= all clean
