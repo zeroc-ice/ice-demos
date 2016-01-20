@@ -87,11 +87,11 @@ InvokeClient::run(int argc, char*[])
                 // Marshal the in parameter.
                 //
                 Ice::ByteSeq inParams, outParams;
-                Ice::OutputStreamPtr out = Ice::createOutputStream(communicator());
-                out->startEncapsulation();
-                out->write("The streaming API works!");
-                out->endEncapsulation();
-                out->finished(inParams);
+                Ice::OutputStream out(communicator());
+                out.startEncapsulation();
+                out.write("The streaming API works!");
+                out.endEncapsulation();
+                out.finished(inParams);
 
                 //
                 // Invoke operation.
@@ -107,16 +107,16 @@ InvokeClient::run(int argc, char*[])
                 // Marshal the in parameter.
                 //
                 Ice::ByteSeq inParams, outParams;
-                Ice::OutputStreamPtr out = Ice::createOutputStream(communicator());
-                out->startEncapsulation();
+                Ice::OutputStream out(communicator());
+                out.startEncapsulation();
                 Demo::StringSeq arr;
                 arr.push_back("The");
                 arr.push_back("streaming");
                 arr.push_back("API");
                 arr.push_back("works!");
-                out->write(arr);
-                out->endEncapsulation();
-                out->finished(inParams);
+                out.write(arr);
+                out.endEncapsulation();
+                out.finished(inParams);
 
                 //
                 // Invoke operation.
@@ -132,14 +132,14 @@ InvokeClient::run(int argc, char*[])
                 // Marshal the in parameter.
                 //
                 Ice::ByteSeq inParams, outParams;
-                Ice::OutputStreamPtr out = Ice::createOutputStream(communicator());
-                out->startEncapsulation();
+                Ice::OutputStream out(communicator());
+                out.startEncapsulation();
                 Demo::StringDict dict;
                 dict["The"] = "streaming";
                 dict["API"] = "works!";
-                out->write(dict);
-                out->endEncapsulation();
-                out->finished(inParams);
+                out.write(dict);
+                out.endEncapsulation();
+                out.finished(inParams);
 
                 //
                 // Invoke operation.
@@ -155,11 +155,11 @@ InvokeClient::run(int argc, char*[])
                 // Marshal the in parameter.
                 //
                 Ice::ByteSeq inParams, outParams;
-                Ice::OutputStreamPtr out = Ice::createOutputStream(communicator());
-                out->startEncapsulation();
-                out->write(Demo::green);
-                out->endEncapsulation();
-                out->finished(inParams);
+                Ice::OutputStream out(communicator());
+                out.startEncapsulation();
+                out.write(Demo::green);
+                out.endEncapsulation();
+                out.finished(inParams);
 
                 //
                 // Invoke operation.
@@ -175,14 +175,14 @@ InvokeClient::run(int argc, char*[])
                 // Marshal the in parameter.
                 //
                 Ice::ByteSeq inParams, outParams;
-                Ice::OutputStreamPtr out = Ice::createOutputStream(communicator());
-                out->startEncapsulation();
+                Ice::OutputStream out(communicator());
+                out.startEncapsulation();
                 Demo::Structure s;
                 s.name = "red";
                 s.value = Demo::red;
-                out->write(s);
-                out->endEncapsulation();
-                out->finished(inParams);
+                out.write(s);
+                out.endEncapsulation();
+                out.finished(inParams);
 
                 //
                 // Invoke operation.
@@ -198,8 +198,8 @@ InvokeClient::run(int argc, char*[])
                 // Marshal the in parameter.
                 //
                 Ice::ByteSeq inParams, outParams;
-                Ice::OutputStreamPtr out = Ice::createOutputStream(communicator());
-                out->startEncapsulation();
+                Ice::OutputStream out(communicator());
+                out.startEncapsulation();
                 Demo::StructureSeq arr;
                 arr.push_back(Demo::Structure());
                 arr.back().name = "red";
@@ -210,9 +210,9 @@ InvokeClient::run(int argc, char*[])
                 arr.push_back(Demo::Structure());
                 arr.back().name = "blue";
                 arr.back().value = Demo::blue;
-                out->write(arr);
-                out->endEncapsulation();
-                out->finished(inParams);
+                out.write(arr);
+                out.endEncapsulation();
+                out.finished(inParams);
 
                 //
                 // Invoke operation.
@@ -228,15 +228,15 @@ InvokeClient::run(int argc, char*[])
                 // Marshal the in parameter.
                 //
                 Ice::ByteSeq inParams, outParams;
-                Ice::OutputStreamPtr out = Ice::createOutputStream(communicator());
-                out->startEncapsulation();
+                Ice::OutputStream out(communicator());
+                out.startEncapsulation();
                 Demo::CPtr c = new Demo::C;
                 c->s.name = "blue";
                 c->s.value = Demo::blue;
-                out->write(c);
-                out->writePendingObjects();
-                out->endEncapsulation();
-                out->finished(inParams);
+                out.write(c);
+                out.writePendingObjects();
+                out.endEncapsulation();
+                out.finished(inParams);
 
                 //
                 // Invoke operation.
@@ -261,14 +261,14 @@ InvokeClient::run(int argc, char*[])
                 //
                 // Unmarshal the results.
                 //
-                Ice::InputStreamPtr in = Ice::createInputStream(communicator(), outParams);
-                in->startEncapsulation();
+                Ice::InputStream in(communicator(), outParams);
+                in.startEncapsulation();
                 Demo::CPtr c;
-                in->read(c);
+                in.read(c);
                 string str;
-                in->read(str);
-                in->readPendingObjects();
-                in->endEncapsulation();
+                in.read(str);
+                in.readPendingObjects();
+                in.endEncapsulation();
                 cout << "Got string `" << str << "' and class: s.name=" << c->s.name
                      << ", s.value=" << c->s.value << endl;
             }
@@ -284,11 +284,11 @@ InvokeClient::run(int argc, char*[])
                     continue;
                 }
 
-                Ice::InputStreamPtr in = Ice::createInputStream(communicator(), outParams);
-                in->startEncapsulation();
+                Ice::InputStream in(communicator(), outParams);
+                in.startEncapsulation();
                 try
                 {
-                    in->throwException();
+                    in.throwException();
                 }
                 catch(const Demo::PrintFailure&)
                 {
@@ -298,7 +298,7 @@ InvokeClient::run(int argc, char*[])
                 {
                     cout << "Unknown user exception" << endl;
                 }
-                in->endEncapsulation();
+                in.endEncapsulation();
             }
             else if(ch == 's')
             {

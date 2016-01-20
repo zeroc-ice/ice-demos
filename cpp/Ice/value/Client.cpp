@@ -92,7 +92,7 @@ ValueClient::run(int argc, char* argv[])
     cin.getline(c, 2);
 
     Ice::ValueFactoryPtr factory = new ValueFactory;
-    communicator()->addValueFactory(factory, Demo::Printer::ice_staticId());
+    communicator()->getValueFactoryManager()->add(factory, Demo::Printer::ice_staticId());
 
     initial->getPrinter(printer, printerProxy);
     cout << "==> " << printer->message << endl;
@@ -134,7 +134,7 @@ ValueClient::run(int argc, char* argv[])
          << "[press enter]\n";
     cin.getline(c, 2);
 
-    communicator()->addValueFactory(factory, Demo::DerivedPrinter::ice_staticId());
+    communicator()->getValueFactoryManager()->add(factory, Demo::DerivedPrinter::ice_staticId());
 
     derivedAsBase = initial->getDerivedPrinter();
     DerivedPrinterPtr derived = DerivedPrinterPtr::dynamicCast(derivedAsBase);
@@ -164,7 +164,7 @@ ValueClient::run(int argc, char* argv[])
 
     ClientPrinterPtr clientp = new ClientPrinterI;
     clientp->message = "a message 4 u";
-    communicator()->addValueFactory(factory, Demo::ClientPrinter::ice_staticId());
+    communicator()->getValueFactoryManager()->add(factory, Demo::ClientPrinter::ice_staticId());
 
     derivedAsBase = initial->updatePrinterMessage(clientp);
     clientp = ClientPrinterPtr::dynamicCast(derivedAsBase);

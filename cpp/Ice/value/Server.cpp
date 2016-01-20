@@ -34,7 +34,7 @@ ValueServer::run(int argc, char*[])
     }
 
     Ice::ValueFactoryPtr factory = new ValueFactory;
-    communicator()->addValueFactory(factory, Demo::Printer::ice_staticId());
+    communicator()->getValueFactoryManager()->add(factory, Demo::Printer::ice_staticId());
 
     Ice::ObjectAdapterPtr adapter = communicator()->createObjectAdapter("Value");
     Demo::InitialPtr initial = new InitialI(adapter);
