@@ -17,7 +17,7 @@ public class Server extends Ice.Application
         }
 
         Ice.ValueFactory factory = new ValueFactory();
-        communicator().addValueFactory(factory, Demo.Printer.ice_staticId());
+        communicator().getValueFactoryManager().add(factory, Demo.Printer.ice_staticId());
 
         Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Value");
         Ice.Object object = new InitialI(adapter);

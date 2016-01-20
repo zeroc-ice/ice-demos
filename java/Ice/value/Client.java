@@ -102,7 +102,7 @@ public class Client extends Ice.Application
         readline(in);
 
         Ice.ValueFactory factory = new ValueFactory();
-        communicator().addValueFactory(factory, Demo.Printer.ice_staticId());
+        communicator().getValueFactoryManager().add(factory, Demo.Printer.ice_staticId());
 
         initial.getPrinter(printer, printerProxy);
         System.out.println("==> " + printer.value.message);
@@ -143,7 +143,7 @@ public class Client extends Ice.Application
         System.out.println("[press enter]");
         readline(in);
 
-        communicator().addValueFactory(factory, Demo.DerivedPrinter.ice_staticId());
+        communicator().getValueFactoryManager().add(factory, Demo.DerivedPrinter.ice_staticId());
 
         derivedAsBase = initial.getDerivedPrinter();
         DerivedPrinter derived = (Demo.DerivedPrinter)derivedAsBase;
@@ -173,7 +173,7 @@ public class Client extends Ice.Application
 
     	ClientPrinter clientp = new ClientPrinterI();
     	clientp.message = "a message 4 u";
-    	communicator().addValueFactory(factory, Demo.ClientPrinter.ice_staticId());
+    	communicator().getValueFactoryManager().add(factory, Demo.ClientPrinter.ice_staticId());
 
     	derivedAsBase = initial.updatePrinterMessage(clientp);
     	clientp = (Demo.ClientPrinter)derivedAsBase;
