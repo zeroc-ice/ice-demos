@@ -82,7 +82,7 @@ public class Client extends Ice.Application
                     //
                     // Marshal the in parameter.
                     //
-                    Ice.OutputStream out = Ice.Util.createOutputStream(communicator());
+                    Ice.OutputStream out = new Ice.OutputStream(communicator());
                     out.startEncapsulation();
                     out.writeString("The streaming API works!");
                     out.endEncapsulation();
@@ -94,15 +94,13 @@ public class Client extends Ice.Application
                     {
                         System.out.println("Unknown user exception");
                     }
-
-                    out.destroy();
                 }
                 else if(line.equals("2"))
                 {
                     //
                     // Marshal the in parameter.
                     //
-                    Ice.OutputStream out = Ice.Util.createOutputStream(communicator());
+                    Ice.OutputStream out = new Ice.OutputStream(communicator());
                     out.startEncapsulation();
                     final String[] arr = { "The", "streaming", "API", "works!" };
                     Demo.StringSeqHelper.write(out, arr);
@@ -115,15 +113,13 @@ public class Client extends Ice.Application
                     {
                         System.out.println("Unknown user exception");
                     }
-
-                    out.destroy();
                 }
                 else if(line.equals("3"))
                 {
                     //
                     // Marshal the in parameter.
                     //
-                    Ice.OutputStream out = Ice.Util.createOutputStream(communicator());
+                    Ice.OutputStream out = new Ice.OutputStream(communicator());
                     out.startEncapsulation();
                     java.util.Map<String, String> dict = new java.util.HashMap<String, String>();
                     dict.put("The", "streaming");
@@ -138,15 +134,13 @@ public class Client extends Ice.Application
                     {
                         System.out.println("Unknown user exception");
                     }
-
-                    out.destroy();
                 }
                 else if(line.equals("4"))
                 {
                     //
                     // Marshal the in parameter.
                     //
-                    Ice.OutputStream out = Ice.Util.createOutputStream(communicator());
+                    Ice.OutputStream out = new Ice.OutputStream(communicator());
                     out.startEncapsulation();
                     Demo.Color.green.ice_write(out);
                     out.endEncapsulation();
@@ -158,15 +152,13 @@ public class Client extends Ice.Application
                     {
                         System.out.println("Unknown user exception");
                     }
-
-                    out.destroy();
                 }
                 else if(line.equals("5"))
                 {
                     //
                     // Marshal the in parameter.
                     //
-                    Ice.OutputStream out = Ice.Util.createOutputStream(communicator());
+                    Ice.OutputStream out = new Ice.OutputStream(communicator());
                     out.startEncapsulation();
                     Demo.Structure s = new Demo.Structure();
                     s.name = "red";
@@ -181,15 +173,13 @@ public class Client extends Ice.Application
                     {
                         System.out.println("Unknown user exception");
                     }
-
-                    out.destroy();
                 }
                 else if(line.equals("6"))
                 {
                     //
                     // Marshal the in parameter.
                     //
-                    Ice.OutputStream out = Ice.Util.createOutputStream(communicator());
+                    Ice.OutputStream out = new Ice.OutputStream(communicator());
                     out.startEncapsulation();
                     Demo.Structure[] arr = new Demo.Structure[3];
                     arr[0] = new Demo.Structure();
@@ -211,21 +201,19 @@ public class Client extends Ice.Application
                     {
                         System.out.println("Unknown user exception");
                     }
-
-                    out.destroy();
                 }
                 else if(line.equals("7"))
                 {
                     //
                     // Marshal the in parameter.
                     //
-                    Ice.OutputStream out = Ice.Util.createOutputStream(communicator());
+                    Ice.OutputStream out = new Ice.OutputStream(communicator());
                     out.startEncapsulation();
                     Demo.C c = new Demo.C();
                     c.s = new Demo.Structure();
                     c.s.name = "blue";
                     c.s.value = Demo.Color.blue;
-                    Demo.CHelper.write(out, c);
+                    out.writeObject(c);
                     out.writePendingObjects();
                     out.endEncapsulation();
 
@@ -236,8 +224,6 @@ public class Client extends Ice.Application
                     {
                         System.out.println("Unknown user exception");
                     }
-
-                    out.destroy();
                 }
                 else if(line.equals("8"))
                 {
@@ -254,14 +240,13 @@ public class Client extends Ice.Application
                     //
                     // Unmarshal the results.
                     //
-                    Ice.InputStream in = Ice.Util.createInputStream(communicator(), outParams.value);
+                    Ice.InputStream in = new Ice.InputStream(communicator(), outParams.value);
                     in.startEncapsulation();
                     Demo.CHolder c = new Demo.CHolder();
-                    Demo.CHelper.read(in, c);
+                    in.readObject(c);
                     String str = in.readString();
                     in.readPendingObjects();
                     in.endEncapsulation();
-                    in.destroy();
                     System.out.println("Got string `" + str + "' and class: s.name=" + c.value.s.name +
                         ", s.value=" + c.value.s.value);
                 }
@@ -277,7 +262,7 @@ public class Client extends Ice.Application
                         continue;
                     }
 
-                    Ice.InputStream in = Ice.Util.createInputStream(communicator(), outParams.value);
+                    Ice.InputStream in = new Ice.InputStream(communicator(), outParams.value);
                     in.startEncapsulation();
                     try
                     {
@@ -292,7 +277,6 @@ public class Client extends Ice.Application
                         System.out.println("Unknown user exception");
                     }
                     in.endEncapsulation();
-                    in.destroy();
                 }
                 else if(line.equals("s"))
                 {

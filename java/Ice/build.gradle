@@ -39,5 +39,3 @@
         demoJar("server")
     }
 }
-
-project(":demoIceInvoke").slice.java.default.args += " --stream"
