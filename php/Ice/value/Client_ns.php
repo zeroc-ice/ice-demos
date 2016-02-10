@@ -102,7 +102,7 @@ try
     fgets(STDIN);
 
     $factory = new ValueFactory;
-    $ICE->addValueFactory($factory, Demo\Printer::ice_staticId());
+    $ICE->getValueFactoryManager()->($factory, Demo\Printer::ice_staticId());
 
     $initial->getPrinter($printer, $printerProxy);
     echo "==> ",$printer->message,"\n";
@@ -143,7 +143,7 @@ try
     echo "[press enter]\n";
     fgets(STDIN);
 
-    $ICE->addValueFactory($factory, Demo\DerivedPrinter::ice_staticId());
+    $ICE->getValueFactoryManager()->($factory, Demo\DerivedPrinter::ice_staticId());
 
     $derivedAsBase = $initial->getDerivedPrinter();
     assert($derivedAsBase instanceof Demo\DerivedPrinter);
@@ -171,7 +171,7 @@ try
 
     $clientp = new ClientPrinterI()
     $clientp->message = "a message 4 u"
-    $ICE->addValueFactory($factory, Demo\ClientPrinter::ice_staticId());
+    $ICE->getValueFactoryManager()->($factory, Demo\ClientPrinter::ice_staticId());
 
     $derivedAsBase = $initial->updatePrinterMessage($clientp);
     assert($derivedAsBase instanceof Demo\ClientPrinter);

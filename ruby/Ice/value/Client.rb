@@ -32,7 +32,7 @@ end
 class ClientPrinterI < Demo::ClientPrinter
 end
 
-class ObjectFactory
+class ValueFactory
     def create(type)
         if type == Demo::DerivedPrinter::ice_staticId()
             return DerivedPrinterI.new
@@ -151,7 +151,7 @@ class Ice::Application
 	STDOUT.flush
         STDIN.readline
 
-        Ice::Application::communicator().addObjectFactory(ObjectFactory.new, Demo::DerivedPrinter::ice_staticId())
+        Ice::Application::communicator().getValueFactoryManager().add(ValueFactory.new, Demo::DerivedPrinter::ice_staticId())
 
         derived = initial.getDerivedPrinter()
         puts "==> The type ID of the received object is \"" + derived.ice_id() + "\""
@@ -178,7 +178,7 @@ class Ice::Application
 
 	clientp = ClientPrinterI.new
 	clientp.message = "a message 4 u"
-        Ice::Application::communicator().addObjectFactory(ObjectFactory.new, Demo::ClientPrinter::ice_staticId())
+        Ice::Application::communicator().getValueFactoryManager().add(ValueFactory.new, Demo::ClientPrinter::ice_staticId())
 
 	derivedAsBase = initial.updatePrinterMessage(clientp)
         fail unless derivedAsBase.ice_id() == "::Demo::ClientPrinter"
