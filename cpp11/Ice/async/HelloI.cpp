@@ -16,7 +16,7 @@ HelloI::HelloI(const shared_ptr<WorkQueue>& workQueue) :
 
 void
 HelloI::sayHello_async(int delay,
-                       function<void ()> response, 
+                       function<void ()> response,
                        function<void (exception_ptr)> error,
                        const Ice::Current&)
 {

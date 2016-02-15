@@ -9,8 +9,7 @@
 
 using namespace std;
 
-WorkQueue::WorkQueue() :
-    _done(false)
+WorkQueue::WorkQueue() : _done(false)
 {
 }
 
@@ -40,12 +39,12 @@ WorkQueue::run()
 
     while(!_done)
     {
-        if(_callbacks.size() == 0)
+        if(_callbacks.empty())
         {
             _condition.wait(lock);
         }
 
-        if(_callbacks.size() != 0)
+        if(!_callbacks.empty())
         {
             //
             // Get next work item.
@@ -53,7 +52,7 @@ WorkQueue::run()
             CallbackEntry entry = _callbacks.front();
 
             //
-            // Wait for the amount of time indicated in delay to 
+            // Wait for the amount of time indicated in delay to
             // emulate a process that takes a significant period of
             // time to complete.
             //
@@ -75,7 +74,6 @@ WorkQueue::run()
     //
     // Throw exception for any outstanding requests.
     //
-    list<CallbackEntry>::const_iterator p;
     for(auto& entry : _callbacks)
     {
         try
@@ -90,7 +88,7 @@ WorkQueue::run()
     }
 }
 
-void 
+void
 WorkQueue::add(int delay, function<void ()> response, function<void (exception_ptr)> error)
 {
     unique_lock<mutex> lock(_mutex);

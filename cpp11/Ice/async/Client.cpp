@@ -73,7 +73,7 @@ AsyncClient::run(int argc, char* argv[])
             {
                 hello->sayHello_async(
                     5000,
-                    nullptr, 
+                    nullptr,
                     [](exception_ptr e)
                     {
                         try
