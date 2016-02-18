@@ -25,7 +25,7 @@ public class Server
                 return 1;
             }
 
-            communicator().addValueFactory(ValueFactory.create, Demo.Printer.ice_staticId());
+            communicator().getValueFactoryManager().add(ValueFactory.create, Demo.Printer.ice_staticId());
 
             Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Value");
             Ice.Object @object = new InitialI(adapter);

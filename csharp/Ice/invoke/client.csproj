@@ -108,7 +108,6 @@
   <Import Project="$(LOCALAPPDATA)\ZeroC\IceBuilder\IceBuilder.CSharp.props" />
   <PropertyGroup Label="IceBuilder">
     <IceBuilderOutputDir>generated\client</IceBuilderOutputDir>
-    <IceBuilderStream>yes</IceBuilderStream>
     <IceBuilderIncludeDirectories>$(IceHome)\slice</IceBuilderIncludeDirectories>
   </PropertyGroup>
   <Import Project="$(LOCALAPPDATA)\ZeroC\IceBuilder\IceBuilder.CSharp.targets" />

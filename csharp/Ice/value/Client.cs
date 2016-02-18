@@ -71,7 +71,7 @@ public class Client
             Console.Out.WriteLine("[press enter]");
             Console.In.ReadLine();
 
-            communicator().addValueFactory(ValueFactory.create, Demo.Printer.ice_staticId());
+            communicator().getValueFactoryManager().add(ValueFactory.create, Demo.Printer.ice_staticId());
 
             initial.getPrinter(out printer, out printerProxy);
             Console.Out.WriteLine("==> " + printer.message);
@@ -112,7 +112,7 @@ public class Client
             Console.Out.WriteLine("[press enter]");
             Console.In.ReadLine();
 
-            communicator().addValueFactory(ValueFactory.create, Demo.DerivedPrinter.ice_staticId());
+            communicator().getValueFactoryManager().add(ValueFactory.create, Demo.DerivedPrinter.ice_staticId());
 
             derivedAsBase = initial.getDerivedPrinter();
             DerivedPrinter derived = (DerivedPrinter)derivedAsBase;
@@ -142,7 +142,7 @@ public class Client
 
 	    ClientPrinter clientp = new ClientPrinterI();
 	    clientp.message = "a message 4 u";
-            communicator().addValueFactory(ValueFactory.create, Demo.ClientPrinter.ice_staticId());
+            communicator().getValueFactoryManager().add(ValueFactory.create, Demo.ClientPrinter.ice_staticId());
 
 	    derivedAsBase = initial.updatePrinterMessage(clientp);
 	    clientp = (ClientPrinter)derivedAsBase;

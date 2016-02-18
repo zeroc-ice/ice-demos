@@ -17,6 +17,16 @@ using System.Reflection;
 
 public class Client
 {
+    private class ReadObjectCallback
+    {
+        public void invoke(Ice.Object obj)
+        {
+            this.obj = obj;
+        }
+
+        internal Ice.Object obj;
+    }
+
     public class App : Ice.Application
     {
         private static void menu()
@@ -69,7 +79,7 @@ public class Client
                         //
                         // Marshal the in parameter.
                         //
-                        Ice.OutputStream outStream = Ice.Util.createOutputStream(communicator());
+                        Ice.OutputStream outStream = new Ice.OutputStream(communicator());
                         outStream.startEncapsulation();
                         outStream.writeString("The streaming API works!");
                         outStream.endEncapsulation();
@@ -82,15 +92,13 @@ public class Client
                         {
                             Console.Error.WriteLine("Unknown user exception");
                         }
-
-                        outStream.destroy();
                     }
                     else if(line.Equals("2"))
                     {
                         //
                         // Marshal the in parameter.
                         //
-                        Ice.OutputStream outStream = Ice.Util.createOutputStream(communicator());
+                        Ice.OutputStream outStream = new Ice.OutputStream(communicator());
                         outStream.startEncapsulation();
                         string[] arr = { "The", "streaming", "API", "works!" };
                         Demo.StringSeqHelper.write(outStream, arr);
@@ -104,15 +112,13 @@ public class Client
                         {
                             Console.Error.WriteLine("Unknown user exception");
                         }
-
-                        outStream.destroy();
                     }
                     else if(line.Equals("3"))
                     {
                         //
                         // Marshal the in parameter.
                         //
-                        Ice.OutputStream outStream = Ice.Util.createOutputStream(communicator());
+                        Ice.OutputStream outStream = new Ice.OutputStream(communicator());
                         outStream.startEncapsulation();
                         Dictionary<string, string> dict = new Dictionary<string, string>();
                         dict["The"] = "streaming";
@@ -128,17 +134,15 @@ public class Client
                         {
                             Console.Error.WriteLine("Unknown user exception");
                         }
-
-                        outStream.destroy();
                     }
                     else if(line.Equals("4"))
                     {
                         //
                         // Marshal the in parameter.
                         //
-                        Ice.OutputStream outStream = Ice.Util.createOutputStream(communicator());
+                        Ice.OutputStream outStream = new Ice.OutputStream(communicator());
                         outStream.startEncapsulation();
-                        Demo.ColorHelper.write(outStream, Demo.Color.green);
+                        outStream.writeEnum((int)Demo.Color.green, (int)Demo.Color.blue);
                         outStream.endEncapsulation();
 
                         //
@@ -148,20 +152,18 @@ public class Client
                         {
                             Console.Error.WriteLine("Unknown user exception");
                         }
-
-                        outStream.destroy();
                     }
                     else if(line.Equals("5"))
                     {
                         //
                         // Marshal the in parameter.
                         //
-                        Ice.OutputStream outStream = Ice.Util.createOutputStream(communicator());
+                        Ice.OutputStream outStream = new Ice.OutputStream(communicator());
                         outStream.startEncapsulation();
                         Demo.Structure s = new Demo.Structure();
                         s.name = "red";
                         s.value = Demo.Color.red;
-                        s.ice_write(outStream);
+                        s.write__(outStream);
                         outStream.endEncapsulation();
 
                         //
@@ -172,15 +174,13 @@ public class Client
                         {
                             Console.Error.WriteLine("Unknown user exception");
                         }
-
-                        outStream.destroy();
                     }
                     else if(line.Equals("6"))
                     {
                         //
                         // Marshal the in parameter.
                         //
-                        Ice.OutputStream outStream = Ice.Util.createOutputStream(communicator());
+                        Ice.OutputStream outStream = new Ice.OutputStream(communicator());
                         outStream.startEncapsulation();
                         Demo.Structure[] arr = new Demo.Structure[3];
                         arr[0] = new Demo.Structure();
@@ -203,21 +203,19 @@ public class Client
                         {
                             Console.Error.WriteLine("Unknown user exception");
                         }
-
-                        outStream.destroy();
                     }
                     else if(line.Equals("7"))
                     {
                         //
                         // Marshal the in parameter.
                         //
-                        Ice.OutputStream outStream = Ice.Util.createOutputStream(communicator());
+                        Ice.OutputStream outStream = new Ice.OutputStream(communicator());
                         outStream.startEncapsulation();
                         Demo.C c = new Demo.C();
                         c.s = new Demo.Structure();
                         c.s.name = "blue";
                         c.s.value = Demo.Color.blue;
-                        Demo.CHelper.write(outStream, c);
+                        outStream.writeObject(c);
                         outStream.writePendingObjects();
                         outStream.endEncapsulation();
 
@@ -228,8 +226,6 @@ public class Client
                         {
                             Console.Error.WriteLine("Unknown user exception");
                         }
-
-                        outStream.destroy();
                     }
                     else if(line.Equals("8"))
                     {
@@ -245,14 +241,13 @@ public class Client
                         //
                         // Unmarshal the results.
                         //
-                        Ice.InputStream inStream = Ice.Util.createInputStream(communicator(), outParams);
+                        Ice.InputStream inStream = new Ice.InputStream(communicator(), outParams);
                         inStream.startEncapsulation();
-                        Demo.CHelper ch = new Demo.CHelper(inStream);
-                        ch.read();
+                        ReadObjectCallback cb = new ReadObjectCallback();
+                        inStream.readObject(cb.invoke);
                         String str = inStream.readString();
                         inStream.readPendingObjects();
-                        inStream.destroy();
-                        Demo.C c = ch.value;
+                        Demo.C c = cb.obj as Demo.C;
                         Console.Error.WriteLine("Got string `" + str + "' and class: s.name=" + c.s.name +
                                                 ", s.value=" + c.s.value);
                     }
@@ -267,7 +262,7 @@ public class Client
                             continue;
                         }
 
-                        Ice.InputStream inStream = Ice.Util.createInputStream(communicator(), outParams);
+                        Ice.InputStream inStream = new Ice.InputStream(communicator(), outParams);
                         inStream.startEncapsulation();
                         try
                         {
@@ -282,7 +277,6 @@ public class Client
                             Console.Error.WriteLine("Unknown user exception");
                         }
                         inStream.endEncapsulation();
-                        inStream.destroy();
                     }
                     else if(line.Equals("s"))
                     {

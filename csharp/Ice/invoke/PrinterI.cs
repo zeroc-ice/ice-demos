@@ -9,6 +9,16 @@ using System.Collections.Generic;
 
 public class PrinterI : Ice.Blobject
 {
+    private class ReadObjectCallback
+    {
+        public void invoke(Ice.Object obj)
+        {
+            this.obj = obj;
+        }
+
+        internal Ice.Object obj;
+    }
+
     public override bool ice_invoke(byte[] inParams, out byte[] outParams, Ice.Current current)
     {
         outParams = null;
@@ -18,7 +28,7 @@ public class PrinterI : Ice.Blobject
         Ice.InputStream inStream = null;
         if(inParams.Length > 0)
         {
-            inStream = Ice.Util.createInputStream(communicator, inParams);
+            inStream = new Ice.InputStream(communicator, inParams);
             inStream.startEncapsulation();
         }
 
@@ -26,7 +36,6 @@ public class PrinterI : Ice.Blobject
         {
             string message = inStream.readString();
             inStream.endEncapsulation();
-            inStream.destroy();
             Console.WriteLine("Printing string `" + message + "'");
             return true;
         }
@@ -34,7 +43,6 @@ public class PrinterI : Ice.Blobject
         {
             String[] seq = Demo.StringSeqHelper.read(inStream);
             inStream.endEncapsulation();
-            inStream.destroy();
             Console.Write("Printing string sequence {");
             for(int i = 0; i < seq.Length; ++i)
             {
@@ -51,7 +59,6 @@ public class PrinterI : Ice.Blobject
         {
             Dictionary<string, string> dict = Demo.StringDictHelper.read(inStream);
             inStream.endEncapsulation();
-            inStream.destroy();
             Console.Write("Printing dictionary {");
             bool first = true;
             foreach(KeyValuePair<string, string> e in dict)
@@ -68,18 +75,16 @@ public class PrinterI : Ice.Blobject
         }
         else if(current.operation.Equals("printEnum"))
         {
-            Demo.Color c = Demo.ColorHelper.read(inStream);
+            Demo.Color c = (Demo.Color)inStream.readEnum((int)Demo.Color.blue);
             inStream.endEncapsulation();
-            inStream.destroy();
             Console.WriteLine("Printing enum " + c);
             return true;
         }
         else if(current.operation.Equals("printStruct"))
         {
             Demo.Structure s = new Demo.Structure();
-            s.ice_read(inStream);
+            s.read__(inStream);
             inStream.endEncapsulation();
-            inStream.destroy();
             Console.WriteLine("Printing struct: name=" + s.name + ", value=" + s.value);
             return true;
         }
@@ -87,7 +92,6 @@ public class PrinterI : Ice.Blobject
         {
             Demo.Structure[] seq = Demo.StructureSeqHelper.read(inStream);
             inStream.endEncapsulation();
-            inStream.destroy();
             Console.Write("Printing struct sequence: {");
             for(int i = 0; i < seq.Length; ++i)
             {
@@ -102,12 +106,11 @@ public class PrinterI : Ice.Blobject
         }
         else if(current.operation.Equals("printClass"))
         {
-            Demo.CHelper ch = new Demo.CHelper(inStream);
-            ch.read();
+            ReadObjectCallback cb = new ReadObjectCallback();
+            inStream.readObject(cb.invoke);
             inStream.readPendingObjects();
             inStream.endEncapsulation();
-            inStream.destroy();
-            Demo.C c = ch.value;
+            Demo.C c = cb.obj as Demo.C;
             Console.WriteLine("Printing class: s.name=" + c.s.name + ", s.value=" + c.s.value);
             return true;
         }
@@ -117,9 +120,9 @@ public class PrinterI : Ice.Blobject
             c.s = new Demo.Structure();
             c.s.name = "green";
             c.s.value = Demo.Color.green;
-            Ice.OutputStream outStream = Ice.Util.createOutputStream(communicator);
+            Ice.OutputStream outStream = new Ice.OutputStream(communicator);
             outStream.startEncapsulation();
-            Demo.CHelper.write(outStream, c);
+            outStream.writeObject(c);
             outStream.writeString("hello");
             outStream.writePendingObjects();
             outStream.endEncapsulation();
@@ -131,7 +134,7 @@ public class PrinterI : Ice.Blobject
             Console.WriteLine("Throwing PrintFailure");
             Demo.PrintFailure ex = new Demo.PrintFailure();
             ex.reason = "paper tray empty";
-            Ice.OutputStream outStream = Ice.Util.createOutputStream(communicator);
+            Ice.OutputStream outStream = new Ice.OutputStream(communicator);
             outStream.startEncapsulation();
             outStream.writeException(ex);
             outStream.endEncapsulation();
