@@ -140,7 +140,7 @@ Ice.Promise.try(
                         {
                             closed: function()
                             {
-                                console.log("connection lost");
+                                console.log("Connection lost");
                             },
                             heartbeat: function()
                             {
