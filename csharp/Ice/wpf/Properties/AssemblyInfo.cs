@@ -1,6 +1,6 @@
 ﻿// **********************************************************************
 //
-// Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2016 ZeroC, Inc. All rights reserved.
 //
 // **********************************************************************
 
@@ -18,7 +18,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("ZeroC, Inc.")]
 [assembly: AssemblyProduct("Ice.wpf.client")]
-[assembly: AssemblyCopyright("Copyright (c) 2003-2015 ZeroC, Inc.")]
+[assembly: AssemblyCopyright("Copyright (c) 2003-2016 ZeroC, Inc.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
