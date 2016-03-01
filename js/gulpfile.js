@@ -72,6 +72,10 @@ var common =
     ]
 };
 
+//
+// Deploy Ice for JavaScript browser libraries from bower or from ICE_HOME depending
+// on whenever or not ICE_HOME is set.
+//
 gulp.task("dist:libs", ["npm", "bower"],
     function()
     {
@@ -87,6 +91,10 @@ gulp.task("dist:clean", [],
         del(["lib/*"]);
     });
 
+//
+// If ICE_HOME is set we install Ice for JavaScript module from ICE_HOME
+// that is required for running JavaScript NodeJS demos.
+//
 gulp.task("npm", [],
     function(cb)
     {

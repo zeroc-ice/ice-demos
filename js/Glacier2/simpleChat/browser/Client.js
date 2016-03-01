@@ -154,7 +154,7 @@ var run = function(communicator, router, session)
     // calls.
     //
     Ice.Promise.all(
-        router.getSessionTimeout(),
+        router.getACMTimeout(),
         router.getCategoryForClient(),
         communicator.createObjectAdapterWithRouter("", router)
     ).then(
@@ -165,26 +165,26 @@ var run = function(communicator, router, session)
             var adapter = adapterArgs[0];
 
             //
-            // Call refreshSession in a loop to keep the
-            // session alive.
+            // Use ACM heartbeat to keep session alive.
             //
-            var refreshSession = function()
+            var connection = router.ice_getCachedConnection();
+            if(timeout > 0)
             {
-                router.refreshSession().exception(
-                    function(ex)
-                    {
-                        chat.fail(ex);
-                    }
-                ).delay(timeout.toNumber() * 500).then(
-                    function()
+                connection.setACM(timeout, undefined, Ice.ACMHeartbeat.HeartbeatAlways);
+            }
+            connection.setCallback(
+                {
+                    closed: function()
                     {
                         if(!chat.completed())
                         {
-                            refreshSession();
+                            error("connection lost");
                         }
-                    });
-            };
-            refreshSession();
+                    },
+                    heartbeat: function()
+                    {
+                    }
+                });
 
             //
             // Create the ChatCallback servant and add it to the
