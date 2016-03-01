@@ -211,17 +211,12 @@ var run = function(router, session)
             {
                 connection.setACM(timeout, undefined, Ice.ACMHeartbeat.HeartbeatAlways);
             }
-            connection.setCallback(
+            connection.setCloseCallback(
+                function()
                 {
-                    closed: function()
+                    if(!chat.completed())
                     {
-                        if(!chat.completed())
-                        {
-                            error("connection lost");
-                        }
-                    },
-                    heartbeat: function()
-                    {
+                        error("connection lost");
                     }
                 });
 

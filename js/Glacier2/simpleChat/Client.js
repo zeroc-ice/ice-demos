@@ -136,14 +136,12 @@ Ice.Promise.try(
                     {
                         connection.setACM(timeout, undefined, Ice.ACMHeartbeat.HeartbeatAlways);
                     }
-                    connection.setCallback(
+                    connection.setCloseCallback(
+                        function()
                         {
-                            closed: function()
+                            if(!p.completed())
                             {
                                 console.log("connection lost");
-                            },
-                            heartbeat: function()
-                            {
                             }
                         });
 
