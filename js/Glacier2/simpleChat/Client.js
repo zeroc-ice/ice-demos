@@ -141,7 +141,7 @@ Ice.Promise.try(
                         {
                             if(!p.completed())
                             {
-                                console.log("connection lost");
+                                console.log("Connection lost");
                             }
                         });
 

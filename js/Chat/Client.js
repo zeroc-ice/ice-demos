@@ -216,7 +216,7 @@ var run = function(router, session)
                 {
                     if(!chat.completed())
                     {
-                        error("connection lost");
+                        chat.fail(new Error("Connection lost"));
                     }
                 });
 
@@ -451,19 +451,16 @@ function setState(newState, error)
                         if(error)
                         {
                             hasError = true;
-                            stopProgress(false);
                             $("#signin-alert span").text(error);
-                            return transition("#loading", "#signin-alert").then(
-                                function(){
-                                    $("#loading .meter").css("width", "0%");
-                                    $("#signin-form").css("display", "block")
-                                        .animo({ animation: "flipInX", keep: true });
-                                });
                         }
-                        else
-                        {
-                            return transition("#chat-form", "#signin-form");
-                        }
+
+                        stopProgress(false);
+                        return transition(state === State.Connecting ? "#loading" : "#chat-form", "#signin-alert").then(
+                            function(){
+                                $("#loading .meter").css("width", "0%");
+                                $("#signin-form").css("display", "block")
+                                    .animo({ animation: "flipInX", keep: true });
+                            });
                     }
                 }
             ).then(

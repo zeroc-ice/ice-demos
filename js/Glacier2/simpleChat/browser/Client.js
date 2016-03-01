@@ -177,7 +177,7 @@ var run = function(communicator, router, session)
                 {
                     if(!chat.completed())
                     {
-                        error("connection lost");
+                        error("Connection lost");
                     }
                 });
 
