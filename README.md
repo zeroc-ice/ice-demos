@@ -33,6 +33,20 @@ tested on any other platform.
 The README file in each language subdirectory provides instructions for
 building and running the sample programs.
 
+### Branches
+
+- `master`
+  Primary development branch (unstable, frequently updated)
+
+- `3.6`
+  Demos for Ice 3.6.x plus various patches (stable, frequently updated)
+
+- `3.5`
+  Demos for Ice 3.5.1 plus various patches (stable)
+
+- `3.4`
+  Demos for Ice 3.4.2 plus various patches (stable)
+
 ### License
 
 The sample programs are licensed under the GNU General Public License version 2
