@@ -12,10 +12,25 @@
 
 @implementation ChatController
 
+-(void)closed:(id<ICEConnection>)connection
+{
+    // The session is invalid, clear.
+    if(session != nil)
+    {
+        [self destroySession];
+        
+        NSRunAlertPanel(@"Error", @"%@", @"OK", nil, nil, @"Lost connection with session!\n");
+    }
+}
+
+-(void)heartbeat:(id<ICEConnection>)connection
+{
+}
+
 // This is called outside of the main thread.
 -(id)initWithCommunicator:(id<ICECommunicator>)c
                   session:(id<ChatChatSessionPrx>)s
-           sessionTimeout:(int)t
+               acmTiemout:(int)t
                    router:(id<GLACIER2RouterPrx>)r
                  category:(NSString*)category
 { 
@@ -24,6 +39,7 @@
         communicator = c;
         session = s;
         router = r;
+        acmTimeout = t;
         
         // Set up the adapter, and register the callback object, and setup the session ping.
         id<ICEObjectAdapter> adapter = [communicator createObjectAdapterWithRouter:@"ChatDemo.Client" router:router];
@@ -39,8 +55,6 @@
         // The callback is registered in awakeFromNib, otherwise the callbacks can arrive
         // prior to the IBOutlet connections being setup.
         callbackProxy = [ChatChatRoomCallbackPrx uncheckedCast:proxy];
-		
-        sessionTimeout = t;
 		
         users = [NSMutableArray array];
 		
@@ -113,10 +127,6 @@
 
 -(void)destroySession
 {
-    // Cancel the refresh timeer.
-    [refreshTimer invalidate];
-    refreshTimer = nil;
-        
     // Destroy the session.
     if(router && [router isKindOfClass:[GLACIER2RouterPrx class]])
     {
@@ -160,13 +170,11 @@
     AppDelegate* delegate = (AppDelegate*)[app delegate];
     [delegate setChatActive:YES];
     
-    // Setup the session refresh timer.
-    refreshTimer = [NSTimer timerWithTimeInterval:sessionTimeout/2
-                                           target:self
-                                         selector:@selector(refreshSession:)
-                                         userInfo:nil
-                                          repeats:YES];
-    [[NSRunLoop currentRunLoop] addTimer:refreshTimer forMode:NSDefaultRunLoopMode];
+    id<ICEConnection> conn = [router ice_getCachedConnection];
+    id heartbeat = @(ICEHeartbeatAlways);
+    id timeout = [NSNumber numberWithInteger:acmTimeout];
+    [conn setACM:timeout close:ICENone heartbeat:heartbeat];
+    [conn setCallback:self];
     
     [chatView.textStorage deleteCharactersInRange:NSMakeRange(0, chatView.textStorage.length)];
     
@@ -186,14 +194,6 @@
 -(void)windowWillClose:(NSNotification *)notification
 {
     [self destroySession];
-}
-
--(void)refreshSession:(NSTimer*)timer
-{
-    if(router != nil)
-    {
-      [router begin_refreshSession:nil exception:^(ICEException* ex) { [self exception:ex]; }];
-    }
 }
 
 -(void)logout:(id)sender

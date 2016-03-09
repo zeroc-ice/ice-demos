@@ -6,10 +6,11 @@
 
 #import <Cocoa/Cocoa.h>
 #import <ChatSession.h> // For ChatChatRoomCallback protocol
+#import <objc/Ice.h>
 
 @protocol GLACIER2RouterPrx;
 
-@interface ChatController : NSWindowController<ChatChatRoomCallback>
+@interface ChatController : NSWindowController<ChatChatRoomCallback, ICEConnectionCallback>
 {
 @private
     IBOutlet NSTextView* chatView;
@@ -19,7 +20,7 @@
     id<ICECommunicator> communicator;
     id<ChatChatSessionPrx>  session;
     id<ChatChatRoomCallbackPrx> callbackProxy;
-    int sessionTimeout;
+    int acmTimeout;
     id<GLACIER2RouterPrx> router;
     
     NSTimer* refreshTimer;
@@ -35,7 +36,7 @@
 
 -(id)initWithCommunicator:(id<ICECommunicator>)communicator
                   session:(id<ChatChatSessionPrx>)session
-           sessionTimeout:(int)sessionTimeout
+               acmTiemout:(int)acmTiemout
                    router:(id<ICERouterPrx>)router
                  category:(NSString*)category;
 

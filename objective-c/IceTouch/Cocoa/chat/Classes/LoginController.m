@@ -53,12 +53,16 @@ NSString* const passwordKey = @"passwordKey";
 														  password:passwordField.stringValue];
     id<ChatChatSessionPrx> session = [ChatChatSessionPrx uncheckedCast:glacier2session];
 
-    int sessionTimeout = [router getSessionTimeout];
+    ICEInt acmTiemout = [router getACMTimeout];
+    if(acmTiemout <= 0)
+    {
+        acmTiemout = (ICEInt)[router getSessionTimeout];
+    }
     NSString* category = [router getCategoryForClient];
     
     return [[ChatController alloc] initWithCommunicator:communicator
 												session:session
-										 sessionTimeout:sessionTimeout
+										     acmTiemout:acmTiemout
 												 router:router
 											   category:category];
 }
