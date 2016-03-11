@@ -167,7 +167,6 @@
 
 @property (nonatomic) id<ChatChatSessionPrx> session;
 @property (nonatomic) id<GLACIER2RouterPrx> router;
-@property (nonatomic) NSTimer* refreshTimer;
 @property (nonatomic) id<ICECommunicator> communicator;
 @property (nonatomic) id<ChatChatRoomCallbackPrx> callbackProxy;
 
@@ -177,7 +176,6 @@
 
 @synthesize session;
 @synthesize router;
-@synthesize refreshTimer;
 @synthesize communicator;
 @synthesize callbackProxy;
 
@@ -213,9 +211,6 @@
 
 -(void)destroySession
 {
-    // Invalidate the refresh timer.
-    [refreshTimer invalidate];
-    self.refreshTimer = nil;
     self.session = nil;
     
     // Destroy the session and destroy the communicator from another thread since these
@@ -259,14 +254,14 @@
 // Called by the thread other than main.
 -(void)  setup:(id<ICECommunicator>)c
        session:(id<ChatChatSessionPrx>)s
-sessionTimeout:(ICELong)t
+    acmTimeout:(ICEInt)t
         router:(id<GLACIER2RouterPrx>)r
       category:(NSString*)category
 {
     self.communicator = c;
     self.session = s;
     self.router = r;
-    sessionTimeout = t;
+    acmTimeout = t;
     id<ICEObjectAdapter> adapter = [communicator createObjectAdapterWithRouter:@"ChatDemo.Client"
                                                                         router:router];
     [adapter activate];
@@ -281,6 +276,34 @@ sessionTimeout:(ICELong)t
     self.callbackProxy = [ChatChatRoomCallbackPrx uncheckedCast:[adapter add:callbackImpl identity:callbackId]];
 }
 
+-(void)closed:(id<ICEConnection>)connection
+{
+    // The session is invalid, clear.
+    if(self.session != nil)
+    {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+        
+        // The session is invalid, clear.
+        self.session = nil;
+        self.router = nil;
+        
+        // Clean up the remainder.
+        [self destroySession];
+        
+        // open an alert with just an OK button
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:@"Lost connection with session!\n"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+}
+
+-(void)heartbeat:(id<ICEConnection>)connection
+{
+}
+
 // Called when the chat controller becomes active.
 -(void)activate:(NSString*)t
 {
@@ -289,13 +312,12 @@ sessionTimeout:(ICELong)t
     [messages removeAllObjects];
     [chatView reloadData];
     
-    // Setup the session refresh timer.
-    self.refreshTimer = [NSTimer timerWithTimeInterval:sessionTimeout/2
-                                                target:self
-                                              selector:@selector(refreshSession:)
-                                              userInfo:nil
-                                               repeats:YES];
-    [[NSRunLoop currentRunLoop] addTimer:refreshTimer forMode:NSDefaultRunLoopMode];
+    id<ICEConnection> conn = [router ice_getCachedConnection];
+    id heartbeat = @(ICEHeartbeatAlways);
+    id timeout = [NSNumber numberWithInteger:acmTimeout];
+    [conn setACM:timeout close:ICENone heartbeat:heartbeat];
+    [conn setCallback:self];
+
     
     // Register the chat callback.
     [session begin_setCallback:callbackProxy response:nil exception:^(ICEException* ex) { [self exception:ex]; }];
@@ -305,34 +327,6 @@ sessionTimeout:(ICELong)t
 {
     [self destroySession];
     [self.navigationController popViewControllerAnimated:YES];
-}
-
--(void)refreshSession:(NSTimer*)timer
-{
-    if(self.router != nil)
-    {
-        [router begin_refreshSession:nil exception:^(ICEException* ex)
-            {
-                [self.navigationController popToRootViewControllerAnimated:YES];
-                
-                // The session is invalid, clear.
-                self.session = nil;
-                self.router = nil;
-                
-                // Clean up the remainder.
-                [self destroySession];
-                
-                NSString* s = [NSString stringWithFormat:@"Lost connection with session!\n%@", ex];
-                
-                // open an alert with just an OK button
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                                 message:s
-                                                                delegate:nil
-                                                       cancelButtonTitle:@"OK"
-                                                       otherButtonTitles:nil];
-                [alert show];
-            }];
-    }
 }
 
 #pragma mark UIViewController delegate methods

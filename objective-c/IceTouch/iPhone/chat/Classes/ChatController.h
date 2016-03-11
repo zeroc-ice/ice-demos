@@ -6,12 +6,13 @@
 
 #import <UIKit/UIKit.h>
 #import <ChatSession.h>
+#import <objc/Ice.h>
 
 @protocol GLACIER2RouterPrx;
 @class UserController;
 
 @interface ChatController : UIViewController<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate,
-                                             ChatChatRoomCallback>
+                                             ChatChatRoomCallback, ICEConnectionCallback>
 {
 @private
     IBOutlet UITableView* chatView;
@@ -24,13 +25,13 @@
     id<ChatChatSessionPrx>  session;
     id<GLACIER2RouterPrx> router;
     id<ChatChatRoomCallbackPrx> callbackProxy;
-    ICELong sessionTimeout;
+    ICEInt acmTimeout;
 }
 
 // Called to setup the session.
 -(void)  setup:(id<ICECommunicator>)communicator
        session:(id<ChatChatSessionPrx>)session
-sessionTimeout:(ICELong)timeout
+    acmTimeout:(ICEInt)timeout
         router:(id<GLACIER2RouterPrx>)router
       category:(NSString*)category;
 // Called just prior to being shown.

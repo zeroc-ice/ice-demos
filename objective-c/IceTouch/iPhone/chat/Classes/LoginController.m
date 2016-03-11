@@ -210,9 +210,16 @@ static NSString* sslKey = @"sslKey";
             id<GLACIER2RouterPrx> router = [GLACIER2RouterPrx checkedCast:[communicator getDefaultRouter]];
             id<GLACIER2SessionPrx> glacier2session = [router createSession:username password:password];
             id<ChatChatSessionPrx> sess = [ChatChatSessionPrx uncheckedCast:glacier2session];
+            
+            ICEInt acmTiemout = [router getACMTimeout];
+            if(acmTiemout <= 0)
+            {
+                acmTiemout = (ICEInt)[router getSessionTimeout];
+            }
+            
             [chatController setup:communicator
                           session:sess
-                   sessionTimeout:[router getSessionTimeout]
+                       acmTimeout:acmTiemout
                            router:router
                          category:[router getCategoryForClient]];
             dispatch_async(dispatch_get_main_queue(), ^ {
