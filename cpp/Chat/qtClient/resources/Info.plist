@@ -22,7 +22,7 @@
     <string>QtChatDemo</string>
 
     <key>CFBundleShortVersionString</key>
-    <string>3.6.2</string>
+    <string>3.7.0</string>
 
     <key>CFBundleIdentifier</key>
     <string>com.zeroc.QtChatDemo</string>
