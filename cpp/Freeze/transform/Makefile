@@ -48,13 +48,13 @@ $(RECREATE): $(RECREATE_OBJS)
 # The slice2freeze rules are structured like this to avoid issues with
 # parallel make.
 Contacts.h: Contacts.cpp
-Contacts.cpp: ContactData.ice $(SLICE2FREEZE) $(SLICEPARSERLIB)
+Contacts.cpp: ContactData.ice
 	rm -f Contacts.h Contacts.cpp
 	$(SLICE2FREEZE) -I. -I$(slicedir) --dict Demo::Contacts,string,Demo::ContactData,sort \
               --dict-index Demo::Contacts,phoneNumber,sort Contacts ContactData.ice
 
 NewContacts.h: NewContacts.cpp
-NewContacts.cpp: NewContactData.ice $(SLICE2FREEZE) $(SLICEPARSERLIB)
+NewContacts.cpp: NewContactData.ice
 	rm -f NewContacts.h NewContacts.cpp
 	$(SLICE2FREEZE) -I. -I$(slicedir) --dict Demo::NewContacts,string,Demo::ContactData,sort \
               --dict-index Demo::NewContacts,phoneNumber,sort NewContacts NewContactData.ice

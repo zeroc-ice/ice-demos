@@ -45,7 +45,7 @@ $(SERVER): $(SOBJS)
 	$(CXX) $(LDFLAGS) $(LDEXEFLAGS) -o $@ $(SOBJS) $(DB_RPATH_LINK) -lFreeze $(LIBS)
 
 IdentityFileEntryMap.h: IdentityFileEntryMap.cpp
-IdentityFileEntryMap.cpp: FilesystemDB.ice Filesystem.ice $(SLICE2FREEZE) $(SLICEPARSERLIB)
+IdentityFileEntryMap.cpp: FilesystemDB.ice Filesystem.ice
 	rm -f IdentityFileEntryMap.h IdentityFileEntryMap.cpp
 	$(SLICE2FREEZE) -I$(slicedir) -I. --ice \
 	    --dict FilesystemDB::IdentityFileEntryMap,Ice::Identity,FilesystemDB::FileEntry \
@@ -54,7 +54,7 @@ clean::
 	-rm -f IdentityFileEntryMap.h IdentityFileEntryMap.cpp
 
 IdentityDirectoryEntryMap.h: IdentityDirectoryEntryMap.cpp
-IdentityDirectoryEntryMap.cpp: FilesystemDB.ice Filesystem.ice $(SLICE2FREEZE) $(SLICEPARSERLIB)
+IdentityDirectoryEntryMap.cpp: FilesystemDB.ice Filesystem.ice
 	rm -f IdentityDirectoryEntryMap.h IdentityDirectoryEntryMap.cpp
 	$(SLICE2FREEZE) -I$(slicedir) -I. --ice \
 	    --dict FilesystemDB::IdentityDirectoryEntryMap,Ice::Identity,FilesystemDB::DirectoryEntry \

@@ -63,7 +63,7 @@ $(COLLOCATED): $(COLOBJS)
 # The slice2freeze rules are structured like this to avoid issues with
 # parallel make.
 LibraryTypes.h: LibraryTypes.cpp
-LibraryTypes.cpp: Library.ice $(SLICE2FREEZE) $(SLICEPARSERLIB)
+LibraryTypes.cpp: Library.ice
 	rm -f LibraryTypes.h LibraryTypes.cpp
 	$(SLICE2FREEZE) --ice -I. -I$(slicedir) --dict StringIsbnSeqDict,string,Ice::StringSeq LibraryTypes $(slicedir)/Ice/BuiltinSequences.ice Library.ice
 
