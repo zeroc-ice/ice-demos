@@ -16,7 +16,7 @@ USE_NAMESPACES		= no
 # Don't change anything below this line!
 # ----------------------------------------------------------------------
 
-VERSION		= 3.6.2
+VERSION		= 3.6.1
 
 #
 # Common definitions

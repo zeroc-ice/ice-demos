@@ -1,6 +1,6 @@
 {
   "name": "ice-demos",
-  "version": "3.6.2",
+  "version": "3.6.1",
   "description": "Ice for JavaScript demos",
   "author": "Zeroc, Inc.",
   "homepage": "https://zeroc.com",
@@ -16,6 +16,6 @@
     "spin.js": "~2.0.2",
     "nouislider": "~7.0.10",
     "highlightjs": "~8.4.0",
-    "ice": "3.6.2"
+    "ice": "3.6.1"
   }
 }
