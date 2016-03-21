@@ -389,7 +389,7 @@ Parser::getInput(char* buf, size_t& result, size_t maxSize)
         }
         else
         {
-            line += c;
+            line += static_cast<char>(c);
         }
     } while(c != EOF && c != '\n');
 
