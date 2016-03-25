@@ -28,6 +28,10 @@ endif
 
 ifeq ($(ICEE_TARGET_OS), debian)
 
+    ifeq ($(filter $(HOST),arm-linux-gnueabihf x86_64-linux-gnu),)
+        $(error Invalid HOST: `$(HOST)' supported values are: `arm-linux-gnueabihf' and `x86_64-linux-gnu')
+    endif
+
     BUILD                       = $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
     ifeq ($(BUILD),$(HOST))
         CC                      = gcc
@@ -63,7 +67,7 @@ ifneq ($(wildcard $(ICEE_HOME)/cpp/$(icee_libdir)/libIce.a),)
 endif
 
 ifeq ($(libdir),)
-    $(error Unable to find a valid Ice-E distribution, please verify ICEE_HOME is properly configured and Ice-E is correctly installed.
+    $(error Unable to find a valid Ice-E distribution, please verify ICEE_HOME is properly configured and Ice-E is correctly installed.)
 endif
 
 LDFLAGS				+= -pthread
