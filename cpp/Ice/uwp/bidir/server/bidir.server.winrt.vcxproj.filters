@@ -26,6 +26,12 @@
       <UniqueIdentifier>{292fab1a-578c-480d-96de-b7e8a130ad75}</UniqueIdentifier>
       <Extensions>ice</Extensions>
     </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{98fb5342-838b-4475-990c-0c58ac8403cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{c965610c-b9eb-4f5b-9582-beaf3a6ff828}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
@@ -43,8 +49,8 @@
     <ClInclude Include="generated\Callback.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="bidir_TemporaryKey.pfx" />
     <None Include="README.md" />
+    <None Include="server_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainPage.xaml" />

@@ -74,7 +74,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <PackageCertificateKeyFile>bidir_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>server_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateThumbprint>AF349493365EE949055507A9ACDACA176B2CC796</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)Ice\uwp\bidir\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
@@ -142,8 +143,8 @@
     <None Include="..\..\..\..\..\certs\cacert.der">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="bidir.uap_TemporaryKey.pfx" />
     <None Include="README.md" />
+    <None Include="server_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\LockScreenLogo.scale-200.png" />

@@ -75,6 +75,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <PackageCertificateKeyFile>simpleChat_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateThumbprint>294824327A307D218D269BA4A767A92170E2A3CD</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)Glacier2\uwp\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>

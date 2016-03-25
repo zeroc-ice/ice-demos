@@ -69,8 +69,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <PackageCertificateKeyFile>bidir_TemporaryKey.pfx</PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>C03E2F096DE88C20139368FB6EC67A4ECAF2A2C3</PackageCertificateThumbprint>
+    <PackageCertificateKeyFile>client_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateThumbprint>4B33133E74AF57A121EA2C82E5C4A24B177EDC94</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)Ice\uwp\bidir\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
@@ -153,7 +153,7 @@
     <AppxManifest Include="Package.winrt.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="bidir_TemporaryKey.pfx" />
+    <None Include="client_TemporaryKey.pfx" />
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>

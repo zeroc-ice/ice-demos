@@ -12,6 +12,12 @@
       <UniqueIdentifier>{764cab8e-dce8-4210-b32f-9347ae0812ba}</UniqueIdentifier>
       <Extensions>ice</Extensions>
     </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{6cffcb21-93e1-4a5e-baaf-4b4e8ff00484}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{4acb61ac-95f4-4507-9c9f-088b345e9f6b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
