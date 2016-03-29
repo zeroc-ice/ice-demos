@@ -75,6 +75,7 @@ LDFLAGS				+= -pthread
 ifeq ($(ICEE_HOME:%/=%),$(SDKTARGETSYSROOT)/usr)
     slicedir                    := $(ICEE_HOME)/share/Ice-$(VERSION)/slice
 else
+    slicedir                    := $(ICEE_HOME)/ice/slice
     LDFLAGS                     += -L$(libdir)
     CPPFLAGS                    += -I$(includedir)
 endif

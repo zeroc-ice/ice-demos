@@ -8,12 +8,13 @@ top_srcdir	= .
 
 include $(top_srcdir)/make/Make.rules
 
-
 ifeq ($(BUILD_WITH_ICEE),yes)
-    SUBDIRS	:= Ice IceDiscovery Glacier2 Chat Manual
-
-    ifeq ($(BUILD_DEMOS),dynamic)
-        SUBDIRS	:= $(SUBDIRS) IceBox Freeze IceStorm
+    SUBDIRS             :=  Ice IceDiscovery Glacier2 Chat
+    ifneq ($(NOFREEZE),yes)
+        SUBDIRS         := $(SUBDIRS) Manual
+        ifeq ($(BUILD_DEMOS),dynamic)
+                SUBDIRS := $(SUBDIRS) IceBox Freeze IceStorm
+        endif
     endif
 endif
 
