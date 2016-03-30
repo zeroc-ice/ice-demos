@@ -77,10 +77,22 @@
     <PackageCertificateKeyFile>server_TemporaryKey.pfx</PackageCertificateKeyFile>
     <PackageCertificateThumbprint>DFECE477F72647A4A7A3A0CB5D8DD1E8B1D8A2F7</PackageCertificateThumbprint>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(MSBuildThisFileDirectory)\uwp\$(Platform)\$(Configuration)\$(ProjectName)</OutDir>
+    <IntDir>uwp\$(ProjectName)\$(Platform)\$(Configuration)</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(MSBuildThisFileDirectory)\uwp\$(Platform)\$(Configuration)\$(ProjectName)</OutDir>
+    <IntDir>uwp\$(ProjectName)\$(Platform)\$(Configuration)</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(MSBuildThisFileDirectory)\uwp\$(Platform)\$(Configuration)\$(ProjectName)</OutDir>
+    <IntDir>uwp\$(ProjectName)\$(Platform)\$(Configuration)</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(MSBuildThisFileDirectory)\uwp\$(Platform)\$(Configuration)\$(ProjectName)</OutDir>
+    <IntDir>uwp\$(ProjectName)\$(Platform)\$(Configuration)</IntDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
@@ -129,7 +141,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <AppxManifest Include="Package.uap.appxmanifest">
+    <AppxManifest Include="Package.uwp.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
     <None Include="..\..\..\..\..\certs\cacert.der">

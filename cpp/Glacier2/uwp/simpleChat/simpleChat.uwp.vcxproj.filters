@@ -25,18 +25,26 @@
   <ItemGroup>
     <ClCompile Include="App.xaml.cpp" />
     <ClCompile Include="MainPage.xaml.cpp" />
-    <ClCompile Include="pch.cpp" />
-    <ClCompile Include="generated\Chat.cpp" />
-    <ClCompile Include="ChatView.xaml.cpp" />
-    <ClCompile Include="LoginView.xaml.cpp" />
+    <ClCompile Include="generated\Chat.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ChatViewPage.xaml.cpp" />
+    <ClCompile Include="LoginViewPage.xaml.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h" />
     <ClInclude Include="App.xaml.h" />
     <ClInclude Include="MainPage.xaml.h" />
-    <ClInclude Include="generated\Chat.h" />
-    <ClInclude Include="ChatView.xaml.h" />
-    <ClInclude Include="LoginView.xaml.h" />
+    <ClInclude Include="generated\Chat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ChatViewPage.xaml.h" />
+    <ClInclude Include="LoginViewPage.xaml.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\LockScreenLogo.scale-200.png">
@@ -68,14 +76,14 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainPage.xaml" />
-    <Page Include="ChatView.xaml" />
-    <Page Include="LoginView.xaml" />
     <Page Include="Common\StandardStyles.xaml">
       <Filter>Common</Filter>
     </Page>
+    <Page Include="ChatViewPage.xaml" />
+    <Page Include="LoginViewPage.xaml" />
   </ItemGroup>
   <ItemGroup>
-    <AppxManifest Include="Package.uap.appxmanifest" />
+    <AppxManifest Include="Package.uwp.appxmanifest" />
   </ItemGroup>
   <ItemGroup>
     <IceBuilder Include="Chat.ice">

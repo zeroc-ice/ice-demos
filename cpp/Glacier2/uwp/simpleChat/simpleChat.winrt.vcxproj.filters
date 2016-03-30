@@ -40,16 +40,16 @@
     <ClCompile Include="App.xaml.cpp" />
     <ClCompile Include="MainPage.xaml.cpp" />
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="ChatView.xaml.cpp" />
-    <ClCompile Include="LoginView.xaml.cpp" />
+    <ClCompile Include="ChatViewPage.xaml.cpp" />
+    <ClCompile Include="LoginViewPage.xaml.cpp" />
     <ClCompile Include="generated\Chat.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="App.xaml.h" />
     <ClInclude Include="MainPage.xaml.h" />
-    <ClInclude Include="ChatView.xaml.h" />
-    <ClInclude Include="LoginView.xaml.h" />
+    <ClInclude Include="ChatViewPage.xaml.h" />
+    <ClInclude Include="LoginViewPage.xaml.h" />
     <ClInclude Include="generated\Chat.h" />
   </ItemGroup>
   <ItemGroup>
@@ -59,8 +59,8 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainPage.xaml" />
-    <Page Include="ChatView.xaml" />
-    <Page Include="LoginView.xaml" />
+    <Page Include="ChatViewPage.xaml" />
+    <Page Include="LoginViewPage.xaml" />
   </ItemGroup>
   <ItemGroup>
     <IceBuilder Include="Chat.ice">

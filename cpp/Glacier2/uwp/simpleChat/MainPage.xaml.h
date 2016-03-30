@@ -7,8 +7,8 @@
 #pragma once
 
 #include "MainPage.g.h"
-#include "ChatView.xaml.h"
-#include "LoginView.xaml.h"
+#include "ChatViewPage.xaml.h"
+#include "LoginViewPage.xaml.h"
 
 #include <Glacier2/Glacier2.h>
 #include <Chat.h>
@@ -84,12 +84,12 @@ private:
 
     static MainPage^ _instance;
 
-    friend ref class LoginView;
-    friend ref class ChatView;
+    friend ref class LoginViewPage;
+	friend ref class ChatViewPage;
     friend class Coordinator;
 
-    LoginView^ _loginView;
-    ChatView^ _chatView;
+	LoginViewPage^ _loginView;
+	ChatViewPage^ _chatView;
     void signoutClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 };
 

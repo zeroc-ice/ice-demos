@@ -77,44 +77,59 @@
     <PackageCertificateKeyFile>simpleChat_TemporaryKey.pfx</PackageCertificateKeyFile>
     <PackageCertificateThumbprint>294824327A307D218D269BA4A767A92170E2A3CD</PackageCertificateThumbprint>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(MSBuildThisFileDirectory)\uwp\$(Platform)\$(Configuration)\$(ProjectName)</OutDir>
+    <IntDir>uwp\$(ProjectName)\$(Platform)\$(Configuration)</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(MSBuildThisFileDirectory)\uwp\$(Platform)\$(Configuration)\$(ProjectName)</OutDir>
+    <IntDir>uwp\$(ProjectName)\$(Platform)\$(Configuration)</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(MSBuildThisFileDirectory)\uwp\$(Platform)\$(Configuration)\$(ProjectName)</OutDir>
+    <IntDir>uwp\$(ProjectName)\$(Platform)\$(Configuration)</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(MSBuildThisFileDirectory)\uwp\$(Platform)\$(Configuration)\$(ProjectName)</OutDir>
+    <IntDir>uwp\$(ProjectName)\$(Platform)\$(Configuration)</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Label="IceBuilder">
+    <IceBuilderAdditionalOptions>--add-header pch.h</IceBuilderAdditionalOptions>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="ChatView.xaml.h">
-      <DependentUpon>ChatView.xaml</DependentUpon>
+    <ClInclude Include="ChatViewPage.xaml.h">
+      <DependentUpon>ChatViewPage.xaml</DependentUpon>
     </ClInclude>
-    <ClInclude Include="LoginView.xaml.h">
-      <DependentUpon>LoginView.xaml</DependentUpon>
+    <ClInclude Include="LoginViewPage.xaml.h">
+      <DependentUpon>LoginViewPage.xaml</DependentUpon>
     </ClInclude>
     <ClInclude Include="generated\Chat.h" />
     <ClInclude Include="pch.h" />
@@ -129,11 +144,12 @@
     <ApplicationDefinition Include="App.xaml">
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="ChatView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Common\StandardStyles.xaml" />
-    <Page Include="LoginView.xaml">
+    <Page Include="ChatViewPage.xaml">
+      <SubType>Designer</SubType>
+      <DeploymentContent>false</DeploymentContent>
+    </Page>
+    <Page Include="LoginViewPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Include="MainPage.xaml">
@@ -141,7 +157,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <AppxManifest Include="Package.uap.appxmanifest">
+    <AppxManifest Include="Package.uwp.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
     <None Include="..\..\..\..\certs\cacert.der">
@@ -163,11 +179,11 @@
     <ClCompile Include="App.xaml.cpp">
       <DependentUpon>App.xaml</DependentUpon>
     </ClCompile>
-    <ClCompile Include="ChatView.xaml.cpp">
-      <DependentUpon>ChatView.xaml</DependentUpon>
+    <ClCompile Include="ChatViewPage.xaml.cpp">
+      <DependentUpon>ChatViewPage.xaml</DependentUpon>
     </ClCompile>
-    <ClCompile Include="LoginView.xaml.cpp">
-      <DependentUpon>LoginView.xaml</DependentUpon>
+    <ClCompile Include="LoginViewPage.xaml.cpp">
+      <DependentUpon>LoginViewPage.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="generated\Chat.cpp" />
     <ClCompile Include="MainPage.xaml.cpp">
