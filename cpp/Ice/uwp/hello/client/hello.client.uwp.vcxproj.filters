@@ -69,7 +69,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <AppxManifest Include="Package.uap.appxmanifest" />
+    <AppxManifest Include="Package.uwp.appxmanifest" />
   </ItemGroup>
   <ItemGroup>
     <IceBuilder Include="Hello.ice">

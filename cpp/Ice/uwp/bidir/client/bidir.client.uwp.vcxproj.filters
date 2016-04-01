@@ -74,6 +74,6 @@
     </IceBuilder>
   </ItemGroup>
   <ItemGroup>
-    <AppxManifest Include="Package.uap.appxmanifest" />
+    <AppxManifest Include="Package.uwp.appxmanifest" />
   </ItemGroup>
 </Project>

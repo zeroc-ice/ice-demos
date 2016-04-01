@@ -78,20 +78,20 @@
     <PackageCertificateThumbprint>ED7CD9A7D08D30ED157282368676B2426C8D936B</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(MSBuildThisFileDirectory)\uwp\$(Platform)\$(Configuration)\$(ProjectName)</OutDir>
-    <IntDir>uwp\$(ProjectName)\$(Platform)\$(Configuration)</IntDir>
+    <OutDir>uwp\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>uwp\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(MSBuildThisFileDirectory)\uwp\$(Platform)\$(Configuration)\$(ProjectName)</OutDir>
-    <IntDir>uwp\$(ProjectName)\$(Platform)\$(Configuration)</IntDir>
+    <OutDir>uwp\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>uwp\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(MSBuildThisFileDirectory)\uwp\$(Platform)\$(Configuration)\$(ProjectName)</OutDir>
-    <IntDir>uwp\$(ProjectName)\$(Platform)\$(Configuration)</IntDir>
+    <OutDir>uwp\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>uwp\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(MSBuildThisFileDirectory)\uwp\$(Platform)\$(Configuration)\$(ProjectName)</OutDir>
-    <IntDir>uwp\$(ProjectName)\$(Platform)\$(Configuration)</IntDir>
+    <OutDir>uwp\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>uwp\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

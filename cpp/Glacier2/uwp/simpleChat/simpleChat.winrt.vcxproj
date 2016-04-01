@@ -73,20 +73,20 @@
     <PackageCertificateThumbprint>5D062BFD9EAE6143AFAA53EB3AC2CB0A2B668FDA</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(MSBuildThisFileDirectory)\winrt\$(Platform)\$(Configuration)\$(ProjectName)</OutDir>
-    <IntDir>winrt\$(ProjectName)\$(Platform)\$(Configuration)</IntDir>
+    <OutDir>winrt\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>winrt\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(MSBuildThisFileDirectory)\winrt\$(Platform)\$(Configuration)\$(ProjectName)</OutDir>
-    <IntDir>winrt\$(ProjectName)\$(Platform)\$(Configuration)</IntDir>
+    <OutDir>winrt\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>winrt\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(MSBuildThisFileDirectory)\winrt\$(Platform)\$(Configuration)\$(ProjectName)</OutDir>
-    <IntDir>winrt\$(ProjectName)\$(Platform)\$(Configuration)</IntDir>
+    <OutDir>winrt\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>winrt\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(MSBuildThisFileDirectory)\winrt\$(Platform)\$(Configuration)\$(ProjectName)</OutDir>
-    <IntDir>winrt\$(ProjectName)\$(Platform)\$(Configuration)</IntDir>
+    <OutDir>winrt\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>winrt\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Label="IceBuilder" />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

@@ -78,20 +78,20 @@
     <PackageCertificateThumbprint>294824327A307D218D269BA4A767A92170E2A3CD</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(MSBuildThisFileDirectory)\uwp\$(Platform)\$(Configuration)\$(ProjectName)</OutDir>
-    <IntDir>uwp\$(ProjectName)\$(Platform)\$(Configuration)</IntDir>
+    <OutDir>uwp\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>uwp\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(MSBuildThisFileDirectory)\uwp\$(Platform)\$(Configuration)\$(ProjectName)</OutDir>
-    <IntDir>uwp\$(ProjectName)\$(Platform)\$(Configuration)</IntDir>
+    <OutDir>uwp\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>uwp\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(MSBuildThisFileDirectory)\uwp\$(Platform)\$(Configuration)\$(ProjectName)</OutDir>
-    <IntDir>uwp\$(ProjectName)\$(Platform)\$(Configuration)</IntDir>
+    <OutDir>uwp\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>uwp\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(MSBuildThisFileDirectory)\uwp\$(Platform)\$(Configuration)\$(ProjectName)</OutDir>
-    <IntDir>uwp\$(ProjectName)\$(Platform)\$(Configuration)</IntDir>
+    <OutDir>uwp\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>uwp\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Label="IceBuilder">
     <IceBuilderAdditionalOptions>--add-header pch.h</IceBuilderAdditionalOptions>
