@@ -37,13 +37,13 @@ GLACIER2_LIBS	+= -lGlacier2
 $(CLIENT): $(COBJS)
 	rm -f $@
 	$(CXX) $(LDFLAGS) $(LDEXEFLAGS) -o $@ $(COBJS) $(GLACIER2_LIBS) $(LIBS)
-ifeq ($(BUILD_WITH_ICEE),yes)
+ifeq ($(BUILD_DEMOS),static)
 	$(Q)$(STRIP) --strip-all --remove-section=.comment --remove-section=.note $(@)
 endif
 
 $(SERVER): $(SOBJS)
 	rm -f $@
 	$(CXX) $(LDFLAGS) $(LDEXEFLAGS) -o $@ $(SOBJS) $(LIBS)
-ifeq ($(BUILD_WITH_ICEE),yes)
+ifeq ($(BUILD_DEMOS),static)
 	$(Q)$(STRIP) --strip-all --remove-section=.comment --remove-section=.note $(@)
 endif

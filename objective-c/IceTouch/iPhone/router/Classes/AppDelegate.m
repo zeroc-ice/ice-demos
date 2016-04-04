@@ -79,18 +79,16 @@
 {
     if (self = [super init])
     {
-        NSString* testValue = [[NSUserDefaults standardUserDefaults] stringForKey:@"Ice.Trace.Network"];
-        if (testValue == nil)
-        {
-            NSDictionary* appDefaults = [NSDictionary dictionaryWithObjectsAndKeys:
-                                         @"Ice.Trace.Network", @"0",
-                                         @"Ice.Trace.Protocol", @"0",
-                                         @"Trace.Router", @"1",
-                                         nil];
+        NSDictionary* appDefaults = [NSDictionary dictionaryWithObjectsAndKeys:
+                                     @"0", @"Ice.Trace.Network",
+                                     @"0", @"Ice.Trace.Protocol",
+                                     @"1", @"Trace.Router",
+                                     @"1", @"IceSSL.UsePlatformCAs",
+                                     @"1", @"IceSSL.CheckCertName",
+                                     nil];
 
-            [[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-        }
+        [[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
+        [[NSUserDefaults standardUserDefaults] synchronize];
 
         ICEInitializationData* initData = [ICEInitializationData initializationData];
         initData.properties = [ICEUtil createProperties];
@@ -106,6 +104,9 @@
         [initData.properties setProperty:@"Ice.ThreadPool.Server.SizeMax" value:@"10"];
 
         [initData.properties setProperty:@"Trace.Router" value:[[NSUserDefaults standardUserDefaults] stringForKey:@"Trace.Router"]];
+
+        [initData.properties setProperty:@"IceSSL.UsePlatformCAs" value:[[NSUserDefaults standardUserDefaults] stringForKey:@"IceSSL.UsePlatformCAs"]];
+        [initData.properties setProperty:@"IceSSL.CheckCertName" value:[[NSUserDefaults standardUserDefaults] stringForKey:@"IceSSL.CheckCertName"]];
 
         self.logger = [[Logger alloc] init];
         initData.logger = logger;

@@ -8,6 +8,13 @@ top_srcdir	= ..
 
 include $(top_srcdir)/make/Make.rules
 
+ifeq ($(BUILD_WITH_ICEE),yes)
+SUBDIRS		= printer simpleFilesystem lifecycle
+    ifeq ($(BUILD_DEMOS),dynamic)
+    	SUBDIRS		:= $(SUBDIRS) evictorFilesystem mapFilesystem
+    endif
+else
+
 ifneq ($(findstring MINGW,$(UNAME)),)
 SUBDIRS		= printer \
 		  simpleFilesystem
@@ -17,6 +24,7 @@ SUBDIRS		= printer \
 		  lifecycle \
 		  evictorFilesystem \
                   mapFilesystem
+endif
 endif
 
 .PHONY: $(EVERYTHING) $(SUBDIRS)

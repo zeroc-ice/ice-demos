@@ -38,6 +38,4 @@
     [serverExceptionsTextField setText:[NSString stringWithFormat:@"%d", app.router.serverExceptions]];
 }
 
-
-
 @end

@@ -341,10 +341,10 @@ Parser::getInput(char* buf, size_t& result, size_t maxSize)
     cout << parser->getPrompt() << flush;
 
     string line;
-    char c;
+    int c;
     do
     {
-        c = static_cast<char>(getc(yyin));
+        c = getc(yyin);
         if(c == EOF)
         {
             if(line.size())
@@ -354,7 +354,7 @@ Parser::getInput(char* buf, size_t& result, size_t maxSize)
         }
         else
         {
-            line += c;
+            line += static_cast<char>(c);
         }
     } while(c != EOF && c != '\n');
 

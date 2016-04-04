@@ -133,6 +133,7 @@ private:
     void
     menu()
     {
+        IceUtil::Mutex::Lock lock(coutMutex);
         cout << "enter /quit to exit." << endl;
     }
 

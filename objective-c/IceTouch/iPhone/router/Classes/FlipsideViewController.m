@@ -13,12 +13,17 @@
 @synthesize network;
 @synthesize protocol;
 @synthesize router;
+@synthesize usePlatformCAs;
+@synthesize checkCertName;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
     network.selectedSegmentIndex = [[NSUserDefaults standardUserDefaults] integerForKey:@"Ice.Trace.Network"];
     protocol.on = [[NSUserDefaults standardUserDefaults] integerForKey:@"Ice.Trace.Protocol"];
     router.on = [[NSUserDefaults standardUserDefaults] integerForKey:@"Trace.Router"];
+    usePlatformCAs.on = [[NSUserDefaults standardUserDefaults] integerForKey:@"IceSSL.UsePlatformCAs"];
+    checkCertName.on = [[NSUserDefaults standardUserDefaults] integerForKey:@"IceSSL.CheckCertName"];
 }
 
 
@@ -35,8 +40,6 @@
     [super didReceiveMemoryWarning]; // Releases the view if it doesn't have a superview
     // Release anything that's not essential, such as cached data
 }
-
-
 
 
 - (void)networkChanged:(id)thesender
@@ -61,6 +64,21 @@
     UISwitch* sender = thesender;
     int val = (int)sender.isOn;
     [[NSUserDefaults standardUserDefaults] setInteger:val forKey:@"Trace.Router"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void)platformCAsChanged:(id)thesender
+{
+    UISwitch* sender = thesender;
+    int val = (int)sender.isOn;
+    [[NSUserDefaults standardUserDefaults] setInteger:val forKey:@"IceSSL.UsePlatformCAs"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void)checkCertNameChanged:(id)thesender {
+    UISwitch* sender = thesender;
+    int val = (int)sender.isOn;
+    [[NSUserDefaults standardUserDefaults] setInteger:val forKey:@"IceSSL.CheckCertName"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 

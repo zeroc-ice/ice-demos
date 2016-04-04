@@ -59,7 +59,7 @@ interface Router extends Ice::Router
      */
     
     void createGlacier2Session(Ice::Router* router, string userId, string password,
-                               out string category, out int sessionTimeout,
+                               out string category, out long sessionTimeout,
                                out Glacier2::Session* sess)
         throws Glacier2::PermissionDeniedException, Glacier2::CannotCreateSessionException;
 };

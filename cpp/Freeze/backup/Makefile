@@ -25,7 +25,7 @@ $(CLIENT): $(OBJS)
 # The slice2freeze rules are structured like this to avoid issues with
 # parallel make.
 IntLongMap.h: IntLongMap.cpp
-IntLongMap.cpp: $(SLICE2FREEZE) $(SLICEPARSERLIB)
+IntLongMap.cpp:
 	rm -f IntLongMap.h IntLongMap.cpp
 	$(SLICE2FREEZE) -I$(slicedir) --dict IntLongMap,int,long IntLongMap
 

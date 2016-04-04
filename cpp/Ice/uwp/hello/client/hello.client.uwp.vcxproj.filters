@@ -12,6 +12,12 @@
       <UniqueIdentifier>{b3235707-1e7b-4144-9905-8fcce3dc28c0}</UniqueIdentifier>
       <Extensions>ice</Extensions>
     </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{037a88b0-6834-4e4f-b8dc-e478628899f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{96044c75-ed22-417c-989b-3ba883dd467f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
@@ -52,9 +58,9 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <None Include="hello_TemporaryKey.pfx" />
-    <None Include="..\..\..\..\certs\cacert.der" />
     <None Include="README.md" />
+    <None Include="..\..\..\..\..\certs\cacert.der" />
+    <None Include="client_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainPage.xaml" />
@@ -63,7 +69,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <AppxManifest Include="Package.uap.appxmanifest" />
+    <AppxManifest Include="Package.uwp.appxmanifest" />
   </ItemGroup>
   <ItemGroup>
     <IceBuilder Include="Hello.ice">

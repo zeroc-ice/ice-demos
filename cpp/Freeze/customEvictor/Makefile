@@ -46,7 +46,7 @@ $(SERVER): $(SOBJS)
 # The slice2freeze rules are structured like this to avoid issues with
 # parallel make.
 Database.h: Database.cpp
-Database.cpp: ItemInfo.ice $(SLICE2FREEZE) $(SLICEPARSERLIB)
+Database.cpp: ItemInfo.ice
 	rm -f Database.h Database.cpp
 	$(SLICE2FREEZE) -I. -I$(slicedir) --dict Database,string,Warehouse::ItemInfo Database ItemInfo.ice
 

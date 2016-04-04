@@ -73,16 +73,20 @@
     <PackageCertificateThumbprint>5D062BFD9EAE6143AFAA53EB3AC2CB0A2B668FDA</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)Glacier2\uwp\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>winrt\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>winrt\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)Glacier2\uwp\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>winrt\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>winrt\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)Glacier2\uwp\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>winrt\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>winrt\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)Glacier2\uwp\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>winrt\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>winrt\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Label="IceBuilder" />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -130,12 +134,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="ChatView.xaml.h">
-      <DependentUpon>ChatView.xaml</DependentUpon>
+    <ClInclude Include="ChatViewPage.xaml.h">
+      <DependentUpon>ChatViewPage.xaml</DependentUpon>
     </ClInclude>
     <ClInclude Include="generated\Chat.h" />
-    <ClInclude Include="LoginView.xaml.h">
-      <DependentUpon>LoginView.xaml</DependentUpon>
+    <ClInclude Include="LoginViewPage.xaml.h">
+      <DependentUpon>LoginViewPage.xaml</DependentUpon>
     </ClInclude>
     <ClInclude Include="pch.h" />
     <ClInclude Include="App.xaml.h">
@@ -149,13 +153,13 @@
     <ApplicationDefinition Include="App.xaml">
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="ChatView.xaml">
+    <Page Include="ChatViewPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Common\StandardStyles.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="LoginView.xaml">
+    <Page Include="LoginViewPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Include="MainPage.xaml">
@@ -182,12 +186,12 @@
     <ClCompile Include="App.xaml.cpp">
       <DependentUpon>App.xaml</DependentUpon>
     </ClCompile>
-    <ClCompile Include="ChatView.xaml.cpp">
-      <DependentUpon>ChatView.xaml</DependentUpon>
+    <ClCompile Include="ChatViewPage.xaml.cpp">
+      <DependentUpon>ChatViewPage.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="generated\Chat.cpp" />
-    <ClCompile Include="LoginView.xaml.cpp">
-      <DependentUpon>LoginView.xaml</DependentUpon>
+    <ClCompile Include="LoginViewPage.xaml.cpp">
+      <DependentUpon>LoginViewPage.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="MainPage.xaml.cpp">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -198,9 +202,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <SDKReference Include="Ice, Version=3.6" />
   </ItemGroup>
   <ItemGroup>
     <IceBuilder Include="Chat.ice" />

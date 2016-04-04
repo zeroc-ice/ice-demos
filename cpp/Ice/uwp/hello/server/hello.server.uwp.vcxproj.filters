@@ -12,6 +12,12 @@
       <UniqueIdentifier>{b3235707-1e7b-4144-9905-8fcce3dc28c0}</UniqueIdentifier>
       <Extensions>ice</Extensions>
     </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{33f5606b-79a2-4144-b94c-c4ba76e844ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{10ed5f13-2c63-42e1-9dc0-7db8db3c86c7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
@@ -19,14 +25,22 @@
   <ItemGroup>
     <ClCompile Include="App.xaml.cpp" />
     <ClCompile Include="MainPage.xaml.cpp" />
-    <ClCompile Include="pch.cpp" />
-    <ClCompile Include="generated\Hello.cpp" />
+    <ClCompile Include="generated\Hello.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h" />
     <ClInclude Include="App.xaml.h" />
     <ClInclude Include="MainPage.xaml.h" />
-    <ClInclude Include="generated\Hello.h" />
+    <ClInclude Include="generated\Hello.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\LockScreenLogo.scale-200.png">
@@ -52,9 +66,9 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <None Include="hello_TemporaryKey.pfx" />
-    <None Include="..\..\..\..\certs\cacert.der" />
     <None Include="README.md" />
+    <None Include="..\..\..\..\..\certs\cacert.der" />
+    <None Include="server_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainPage.xaml" />
@@ -63,7 +77,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <AppxManifest Include="Package.uap.appxmanifest" />
+    <AppxManifest Include="Package.uwp.appxmanifest" />
   </ItemGroup>
   <ItemGroup>
     <IceBuilder Include="Hello.ice">

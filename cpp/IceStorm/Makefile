@@ -8,7 +8,11 @@ top_srcdir	= ..
 
 include $(top_srcdir)/make/Make.rules
 
+ifeq ($(BUILD_WITH_ICEE),yes)
+SUBDIRS		= clock counter replicated2
+else
 SUBDIRS		= clock counter replicated replicated2
+endif
 
 .PHONY: $(EVERYTHING) $(SUBDIRS)
 

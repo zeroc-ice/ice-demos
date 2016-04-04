@@ -6,17 +6,17 @@
 
 #pragma once
 
-#include "LoginView.g.h"
+#include "LoginViewPage.g.h"
 
 namespace simpleChat
 {
 
 [Windows::Foundation::Metadata::WebHostHidden]
-public ref class LoginView sealed
+public ref class LoginViewPage sealed
 {
 public:
 
-    LoginView();
+	LoginViewPage();
     void setError(Platform::String^ msg);
     void signinCompleted()
     {

@@ -2,7 +2,7 @@
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
   <Identity Name="46e81031-9c5b-4caa-92cb-57fbccb3dc93" Publisher="CN=ZeroC" Version="1.1.0.0" />
   <Properties>
-    <DisplayName>Glacier2 Chat Demo</DisplayName>
+    <DisplayName>Glacier2 Simple Chat Demo</DisplayName>
     <PublisherDisplayName>ZeroC</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -15,7 +15,7 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="simpleChat.App">
-      <m2:VisualElements DisplayName="Glacier2 Chat Demo" Description="simpleChat" BackgroundColor="#464646" ForegroundText="light" Square150x150Logo="Assets\Logo.png" Square30x30Logo="Assets\SmallLogo.png">
+      <m2:VisualElements DisplayName="Glacier2 Simple Chat Demo" Description="simpleChat" BackgroundColor="#464646" ForegroundText="light" Square150x150Logo="Assets\Logo.png" Square30x30Logo="Assets\SmallLogo.png">
         <m2:DefaultTile>
           <m2:ShowNameOnTiles>
             <m2:ShowOn Tile="square150x150Logo" />

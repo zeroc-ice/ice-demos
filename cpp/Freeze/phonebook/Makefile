@@ -62,7 +62,7 @@ $(COLLOCATED): $(COLOBJS)
 # The slice2freeze rules are structured like this to avoid issues with
 # parallel make.
 NameIndex.h: NameIndex.cpp
-NameIndex.cpp: PhoneBook.ice $(SLICE2FREEZE) $(SLICEPARSERLIB)
+NameIndex.cpp: PhoneBook.ice
 	rm -f NameIndex.h NameIndex.cpp
 	$(SLICE2FREEZE) -I. $(ICECPPFLAGS) --index NameIndex,Demo::Contact,name,case-insensitive NameIndex PhoneBook.ice
 

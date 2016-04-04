@@ -29,7 +29,7 @@ $(CLIENT): $(OBJS)
 # The slice2freeze rules are structured like this to avoid issues with
 # parallel make.
 BenchTypes.h: BenchTypes.cpp
-BenchTypes.cpp: Test.ice $(SLICE2FREEZE) $(SLICEPARSERLIB)
+BenchTypes.cpp: Test.ice
 	rm -f BenchTypes.h BenchTypes.cpp
 	$(SLICE2FREEZE) -I. -I$(slicedir) --dict Demo::IntIntMap,int,int --dict Demo::Struct1Struct2Map,Demo::Struct1,Demo::Struct2 \
 	--dict Demo::Struct1Class1Map,Demo::Struct1,Demo::Class1 \
