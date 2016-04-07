@@ -20,7 +20,7 @@
 # If Ice is not installed in the default location (/usr) set ICE_HOME to
 # the Ice installation directory.
 #
-#ICE_HOME		?= /opt/Ice-3.7.0
+#ICE_HOME		?= /opt/Ice-3.7a0
 
 
 #
@@ -68,7 +68,7 @@ HOST			?= arm-linux-gnueabihf
 # is not set in your environment variables then change the following
 # setting to reflect the installation location.
 #
-ICEE_THIRDPARTY_HOME	?= /opt/Ice-3.7.0-ThirdParty
+ICEE_THIRDPARTY_HOME	?= /opt/Ice-3.7a0-ThirdParty
 
 # ----------------------------------------------------------------------
 # Don't change anything below this line!
@@ -87,11 +87,11 @@ slice_translator = slice2cpp
 
 SHELL		= /bin/sh
 VERSION_MAJOR   = 3
-VERSION_MINOR   = 7
-VERSION_PATCH   = 0
-VERSION         = 3.7.0
+VERSION_MINOR   = 7a0
+VERSION_PATCH   = 51
+VERSION         = 3.7a0
 SHORT_VERSION   = 3.7
-SOVERSION	= 37
+SOVERSION	= 37a0
 
 OBJEXT		= .o
 

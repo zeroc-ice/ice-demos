@@ -16,7 +16,7 @@ USE_NAMESPACES		= no
 # Don't change anything below this line!
 # ----------------------------------------------------------------------
 
-VERSION		= 3.7.0
+VERSION		= 3.7a0
 
 #
 # Common definitions
