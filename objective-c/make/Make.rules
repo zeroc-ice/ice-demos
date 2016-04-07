@@ -249,7 +249,7 @@ all:: $(TARGETS)
 	@mkdir -p .depend
 	@$(CC) -DMAKEDEPEND -M $(CPPFLAGS) $< | sed 's/$(subst /,\/,$(includedir))/$$\(includedir\)/' > .depend/$(*F).d
 
-%.h %.m: %.ice $(SLICE2OBJC)
+%.h %.m: %.ice
 	rm -f $(*F).h $(*F).m
 	$(SLICE2OBJC) $(SLICE2OBJCFLAGS) $<
 	@touch $(*F).m

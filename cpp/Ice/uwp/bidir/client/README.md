@@ -4,7 +4,7 @@ This demo is a graphical client app written in C++/CX. This client
 works with the UWP bidir server as well as the Ice/bidir servers provided by
 other language mappings, such as C++, C#, Java and Python.
 
-Note that is you use the UWP server, due to UWP restrictions it must be ran on
+Note that if you use the UWP server, due to UWP restrictions it must be ran on
 a separate machine from the client.
 
 This demo shows how to use bidirectional connections for callbacks.

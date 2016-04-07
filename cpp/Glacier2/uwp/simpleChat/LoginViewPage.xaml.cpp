@@ -5,7 +5,7 @@
 // **********************************************************************
 
 #include "pch.h"
-#include "LoginView.xaml.h"
+#include "LoginViewPage.xaml.h"
 #include "MainPage.xaml.h"
 
 using namespace simpleChat;
@@ -21,14 +21,14 @@ using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
 
-LoginView::LoginView()
+LoginViewPage::LoginViewPage()
 {
     InitializeComponent();
     MainPage::instance()->_loginView = this;
 }
 
 void
-LoginView::setError(String^ err)
+LoginViewPage::setError(String^ err)
 {
     signin->IsEnabled = true;
     errorBorder->Visibility = Windows::UI::Xaml::Visibility::Visible;
@@ -36,7 +36,7 @@ LoginView::setError(String^ err)
 }
 
 void 
-LoginView::OnNavigatedTo(NavigationEventArgs^)
+LoginViewPage::OnNavigatedTo(NavigationEventArgs^)
 {
     LoginData loginData = MainPage::instance()->coordinator()->loginData();
     if(!loginData.hostname.empty())
@@ -54,7 +54,7 @@ LoginView::OnNavigatedTo(NavigationEventArgs^)
 }
 
 void 
-LoginView::signinClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
+LoginViewPage::signinClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
     LoginData loginData;
     loginData.hostname = IceUtil::wstringToString(hostname->Text->Data());

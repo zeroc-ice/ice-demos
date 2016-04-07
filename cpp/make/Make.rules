@@ -310,10 +310,8 @@ ifneq ($(ice_dir), $(usr_dir))
     endif
 endif
 
-
 #
-# Default functions for shared library names (we have to defined them here
-# for the SLICE2PARSERLIB dependency)
+# Default functions for shared library names.
 #
 ifeq ($(mklibfilename),)
     ifeq ($(UNAME),Darwin)
@@ -409,8 +407,6 @@ ifeq ($(mkshlib),)
     $(error You need to define mkshlib in Make.rules.$(UNAME))
 endif
 
-
-SLICEPARSERLIB  = $(ice_lib_dir)/$(subst $(cpp11libsuffix),,$(call mklibfilename,Slice,$(VERSION)))
 SLICE2CPP	= $(ice_bin_dir)/slice2cpp
 
 EVERYTHING		= all clean
@@ -458,7 +454,7 @@ endif
 .c.o:
 	$(CC) -c $(CPPFLAGS) $(CFLAGS) $<
 
-%.h %.cpp: %.ice $(SLICE2CPP) $(SLICEPARSERLIB)
+%.h %.cpp: %.ice
 	rm -f $(*F).h $(*F).cpp
 	$(SLICE2CPP) $(SLICE2CPPFLAGS) $(*F).ice
 	@touch $(*F).cpp
@@ -477,7 +473,7 @@ ifeq ($(BISON_FLEX),yes)
 %.cpp: %.l
 	flex $(FLEXFLAGS) $<
 	rm -f $@
-	echo '#include <IceUtil/Config.h>' > $@
+	echo '#include <IceUtil/ScannerConfig.h>' >> $@
 	cat lex.yy.c >> $@
 	rm -f lex.yy.c
 

@@ -74,19 +74,24 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <PackageCertificateKeyFile>hello_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>client_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateThumbprint>ED7CD9A7D08D30ED157282368676B2426C8D936B</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)Ice\uwp\hello\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>uwp\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>uwp\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)Ice\uwp\hello\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>uwp\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>uwp\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)Ice\uwp\hello\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>uwp\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>uwp\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)Ice\uwp\hello\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>uwp\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>uwp\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -136,13 +141,13 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <AppxManifest Include="Package.uap.appxmanifest">
+    <AppxManifest Include="Package.uwp.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
     <None Include="..\..\..\..\..\certs\cacert.der">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="hello_TemporaryKey.pfx" />
+    <None Include="client_TemporaryKey.pfx" />
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>

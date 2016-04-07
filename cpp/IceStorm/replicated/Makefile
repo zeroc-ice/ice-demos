@@ -25,7 +25,11 @@ OBJS		= $(POBJS) \
 include $(top_srcdir)/make/Make.rules
 
 CPPFLAGS	:= -I. $(CPPFLAGS)
-LIBS		:= -lIceStorm -lGlacier2 $(LIBS)
+ifeq ($(BUILD_WITH_ICEE),yes)
+    LIBS		:= -Wl,-Bdynamic -lIceStorm -lGlacier2 $(LIBS)
+else
+    LIBS		:= -lIceStorm -lGlacier2 $(LIBS)
+endif
 
 $(PUBLISHER): $(POBJS)
 	rm -f $@

@@ -69,20 +69,24 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <PackageCertificateKeyFile>hello_TemporaryKey.pfx</PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>6CC5B5B4C4E6105C1F1A0BBE03544927C01F2DF4</PackageCertificateThumbprint>
+    <PackageCertificateKeyFile>server_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateThumbprint>DFECE477F72647A4A7A3A0CB5D8DD1E8B1D8A2F7</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)Ice\uwp\hello\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>winrt\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>winrt\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)Ice\uwp\hello\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>winrt\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>winrt\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)Ice\uwp\hello\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>winrt\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>winrt\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)Ice\uwp\hello\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>winrt\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>winrt\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Label="IceBuilder" />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -157,8 +161,8 @@
     <None Include="..\..\..\..\..\certs\cacert.der">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="hello_TemporaryKey.pfx" />
     <None Include="README.md" />
+    <None Include="server_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Logo.png" />

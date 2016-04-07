@@ -28,20 +28,19 @@ endif
 
 ifeq ($(ICEE_TARGET_OS), debian)
 
+    ifeq ($(filter $(HOST),arm-linux-gnueabihf x86_64-linux-gnu),)
+        $(error Invalid HOST: `$(HOST)' supported values are: `arm-linux-gnueabihf' and `x86_64-linux-gnu')
+    endif
+
     BUILD                       = $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
     ifeq ($(BUILD),$(HOST))
         CC                      = gcc
         CXX                     = g++
         STRIP                   = strip
     else
-        CC                      = arm-linux-gnueabihf-gcc-4.6
-        CXX                     = arm-linux-gnueabihf-g++-4.6
+        CC                      = arm-linux-gnueabihf-gcc-4.9
+        CXX                     = arm-linux-gnueabihf-g++-4.9
         STRIP                   = arm-linux-gnueabihf-strip
-
-        ifneq ($(ICEE_THIRDPARTY_HOME),)
-            LDFLAGS             = -L$(ICEE_THIRDPARTY_HOME)/usr/lib/arm-linux-gnueabihf \
-                                  -Wl,-rpath-link,$(ICEE_THIRDPARTY_HOME)/lib/arm-linux-gnueabihf
-        endif
     endif
 
     icee_libdir                 = lib/$(HOST)
@@ -68,12 +67,15 @@ ifneq ($(wildcard $(ICEE_HOME)/cpp/$(icee_libdir)/libIce.a),)
 endif
 
 ifeq ($(libdir),)
-    $(error Unable to find a valid Ice-E distribution, please verify ICEE_HOME is properly configured and Ice-E is correctly installed. $(ICEE_HOME)/cpp/$(icee_libdir)/libIce.a))
+    $(error Unable to find a valid Ice-E distribution, please verify ICEE_HOME is properly configured and Ice-E is correctly installed.)
 endif
+
+LDFLAGS				+= -pthread
 
 ifeq ($(ICEE_HOME:%/=%),$(SDKTARGETSYSROOT)/usr)
     slicedir                    := $(ICEE_HOME)/share/Ice-$(VERSION)/slice
 else
+    slicedir                    := $(ICEE_HOME)/ice/slice
     LDFLAGS                     += -L$(libdir)
     CPPFLAGS                    += -I$(includedir)
 endif
@@ -91,7 +93,11 @@ else
 endif
 
 CXXFLAGS                        += -Wall -Werror -Wextra -Wshadow -pthread
-LIBS                            = -Wl,-B$(BUILD_DEMOS) $(ICE_LIBS) -Wl,-Bdynamic -lcrypto -lssl -pthread -lbz2 -ldl -lrt
+LIBS                            = -Wl,-B$(BUILD_DEMOS) $(ICE_LIBS)
+
+ifeq ($(BUILD_DEMOS),static)
+LIBS                            += -Wl,-Bdynamic -lcrypto -lssl -lbz2 -ldl -lrt
+endif
 
 mkshlib                         = $(CXX) -shared $(LDFLAGS) -o $(1) -Wl,-h,$(2) $(3) $(4)
 
@@ -104,36 +110,34 @@ endif
 
 demo_deploy::
 	rsync -aczv --prune-empty-dirs \
-		--exclude="*.d" \
-		--exclude="*.ice" \
-		--exclude="*.ico" \
-		--exclude="*.rc" \
-		--exclude="*.h" \
-		--exclude="*.cpp" \
-		--exclude="*.mak" \
-		--exclude="*.o" \
-		--exclude="Makefile" \
-		--exclude=".git*" \
-		--exclude="*.vcxproj" \
-		--exclude="*.vcxproj.filters" \
-		--exclude="*.sln" \
-		--exclude="csharp" \
-		--exclude="java" \
-		--exclude="objective-c" \
-		--exclude="php" \
-		--exclude="ruby" \
-		--exclude="js" \
-		--exclude="scripts" \
-		--exclude="visualBasic" \
-		--exclude="cpp/Chat/qtClient" \
-		--exclude="cpp/IceGrid" \
-		--exclude="cpp/IcePatch2" \
-		--exclude="cpp/IceStorm" \
-		--exclude="cpp/IceTouch" \
-		--exclude="cpp/IceUtil" \
-		--exclude="cpp/Ice/MFC" \
-		--exclude="cpp/Ice/winrt" \
-		--exclude="cpp/Glacier2/winrt" \
-		--exclude="cpp/Manual"\
-		--exclude="cpp/README.md" \
-		.. $(DEPLOY_TARGET)
+        --exclude="*.d" \
+        --exclude="*.ico" \
+        --exclude="*.rc" \
+        --exclude="*.h" \
+        --exclude="*.cpp" \
+        --exclude="*.mak" \
+        --exclude="*.o" \
+        --exclude="Makefile" \
+        --exclude=".git" \
+        --exclude="*.vcxproj" \
+        --exclude="*.vcxproj.filters" \
+        --exclude="*.sln" \
+        --exclude="csharp" \
+        --exclude="java" \
+        --exclude="objective-c" \
+        --exclude="php" \
+        --exclude="ruby" \
+        --exclude="js" \
+        --exclude="scripts" \
+        --exclude="visualBasic" \
+        --exclude="cpp/Chat/qtClient" \
+        --exclude="cpp/IceGrid" \
+        --exclude="cpp/IcePatch2" \
+        --exclude="cpp/IceTouch" \
+        --exclude="cpp/IceUtil" \
+        --exclude="cpp/Ice/MFC" \
+        --exclude="cpp/Ice/winrt" \
+        --exclude="cpp/Glacier2/winrt" \
+        --exclude="cpp/README.md" \
+        .. $(DEPLOY_TARGET)
+

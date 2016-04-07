@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FlipsideViewController">
             <connections>
+                <outlet property="checkCertName" destination="gCz-cp-9jf" id="ybz-ul-WGj"/>
                 <outlet property="network" destination="59" id="65"/>
                 <outlet property="protocol" destination="58" id="66"/>
                 <outlet property="router" destination="61" id="67"/>
+                <outlet property="usePlatformCAs" destination="sPQ-UR-kie" id="Iab-XM-i4w"/>
                 <outlet property="view" destination="40" id="41"/>
             </connections>
         </placeholder>
@@ -21,7 +23,6 @@
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Network" lineBreakMode="tailTruncation" minimumFontSize="10" id="46">
                     <rect key="frame" x="20" y="91" width="87" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <animations/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.68235296000000001" green="0.68235296000000001" blue="0.68235296000000001" alpha="1" colorSpace="deviceRGB"/>
                     <nil key="highlightedColor"/>
@@ -29,7 +30,6 @@
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Protocol" lineBreakMode="tailTruncation" minimumFontSize="10" id="47">
                     <rect key="frame" x="20" y="147" width="63" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <animations/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.73333334999999999" green="0.73333334999999999" blue="0.73333334999999999" alpha="1" colorSpace="deviceRGB"/>
                     <nil key="highlightedColor"/>
@@ -37,15 +37,20 @@
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Tracing" lineBreakMode="tailTruncation" minimumFontSize="10" id="50">
                     <rect key="frame" x="20" y="51" width="57" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <animations/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.41568631" green="0.46274513" blue="0.50196081000000004" alpha="1" colorSpace="deviceRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Security" lineBreakMode="tailTruncation" minimumFontSize="10" id="yhW-hq-GIH">
+                    <rect key="frame" x="20" y="241" width="64" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.41568631" green="0.46274513" blue="0.50196081000000004" alpha="1" colorSpace="deviceRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <switch opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="58">
-                    <rect key="frame" x="123" y="144" width="51" height="31"/>
+                    <rect key="frame" x="228" y="142" width="51" height="31"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <animations/>
                     <connections>
                         <action selector="protocolChanged:" destination="-1" eventType="valueChanged" id="69"/>
                     </connections>
@@ -53,15 +58,20 @@
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Router" lineBreakMode="tailTruncation" minimumFontSize="10" id="60">
                     <rect key="frame" x="20" y="191" width="63" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <animations/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.73333334999999999" green="0.73333334999999999" blue="0.73333334999999999" alpha="1" colorSpace="deviceRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Check Cert Name" lineBreakMode="tailTruncation" minimumFontSize="10" id="yKA-BP-k0s">
+                    <rect key="frame" x="20" y="329" width="136" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.73333334999999999" green="0.73333334999999999" blue="0.73333334999999999" alpha="1" colorSpace="deviceRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <switch opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="61">
-                    <rect key="frame" x="123" y="188" width="51" height="31"/>
+                    <rect key="frame" x="228" y="186" width="51" height="31"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <animations/>
                     <connections>
                         <action selector="routerChanged:" destination="-1" eventType="valueChanged" id="70"/>
                     </connections>
@@ -69,7 +79,6 @@
                 <segmentedControl opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="59">
                     <rect key="frame" x="108" y="84" width="169" height="29"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <animations/>
                     <segments>
                         <segment title="Off"/>
                         <segment title="Low"/>
@@ -81,15 +90,34 @@
                     </connections>
                 </segmentedControl>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Changing any of these settings requires restarting the application to take effect." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="3" minimumFontSize="10" id="64">
-                    <rect key="frame" x="20" y="308" width="280" height="75"/>
+                    <rect key="frame" x="20" y="371" width="280" height="75"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <animations/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.96428572999999995" green="0.076095975999999996" blue="0.10749506" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Platform CAs" lineBreakMode="tailTruncation" minimumFontSize="10" id="b31-Mz-ptm">
+                    <rect key="frame" x="20" y="286" width="101" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.73333334999999999" green="0.73333334999999999" blue="0.73333334999999999" alpha="1" colorSpace="deviceRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <switch opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="gCz-cp-9jf">
+                    <rect key="frame" x="228" y="324" width="51" height="31"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <connections>
+                        <action selector="checkCertNameChanged:" destination="-1" eventType="valueChanged" id="hvK-Iv-Trb"/>
+                    </connections>
+                </switch>
+                <switch opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="sPQ-UR-kie">
+                    <rect key="frame" x="228" y="276" width="51" height="31"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <connections>
+                        <action selector="platformCAsChanged:" destination="-1" eventType="valueChanged" id="Sqa-Sp-uLd"/>
+                    </connections>
+                </switch>
             </subviews>
-            <animations/>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
             <nil key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics"/>

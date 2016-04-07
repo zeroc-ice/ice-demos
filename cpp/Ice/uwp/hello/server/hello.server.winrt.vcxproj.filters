@@ -26,6 +26,12 @@
       <UniqueIdentifier>{b4dcf4d6-df51-4b83-bc11-970ee0d53aa9}</UniqueIdentifier>
       <Extensions>ice</Extensions>
     </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{db5fdb3f-db05-484b-bb52-e456a27b0792}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{9d667900-c9b5-4c18-b47f-cf4d84ca4626}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
@@ -44,8 +50,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\..\certs\cacert.der" />
-    <None Include="hello_TemporaryKey.pfx" />
     <None Include="README.md" />
+    <None Include="server_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainPage.xaml" />

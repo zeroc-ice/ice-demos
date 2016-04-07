@@ -188,12 +188,12 @@ MainPage::setConnected(bool connected)
     String^ pageName = nullptr;
     if(connected)
     {
-        pageName = "simpleChat.ChatView";
+        pageName = "simpleChat.ChatViewPage";
         signout->Visibility =  Windows::UI::Xaml::Visibility::Visible;
     }
     else
     {
-        pageName = "simpleChat.LoginView";
+        pageName = "simpleChat.LoginViewPage";
         signout->Visibility =  Windows::UI::Xaml::Visibility::Collapsed;
     }
     TypeName page = {pageName, TypeKind::Custom};
