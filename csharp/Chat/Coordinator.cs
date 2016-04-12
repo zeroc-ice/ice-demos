@@ -288,7 +288,7 @@ namespace ChatDemoGUI
             }
             catch(Ice.Exception ex)
             {
-                setError("Login failed (" + ex.ice_name() + ").\n" +
+                setError("Login failed (" + ex.ice_id() + ").\n" +
                          "Please check your configuration.");
             }
             catch(System.Exception ex)
