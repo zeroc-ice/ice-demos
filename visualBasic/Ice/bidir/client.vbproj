@@ -73,8 +73,9 @@
     <DebugType>none</DebugType>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Ice, Version=3.6.2.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Ice, Version=3.6.3.0, Culture=neutral, processorArchitecture=MSIL">
       <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="System">
       <Name>System</Name>
@@ -100,21 +101,5 @@
       <Name>slice %28Ice\bidir\slice%29</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="My Project\" />
-  </ItemGroup>
-  <Import Project="$(ICE_HOME)\config\Slice.CSharp.targets"
-          Condition="Exists('$(ICE_HOME)\config\Slice.CSharp.targets')"/>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
-  <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
-    <PostBuildEvent>
-    </PostBuildEvent>
-  </PropertyGroup>
-  <ProjectExtensions>
-    <VisualStudio>
-      <UserProperties ZerocIce_ProjectVersion="1" ZerocIce_Enabled="True" />
-    </VisualStudio>
-  </ProjectExtensions>
 </Project>

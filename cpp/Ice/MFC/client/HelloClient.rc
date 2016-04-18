@@ -27,18 +27,18 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE 
+1 TEXTINCLUDE
 BEGIN
     "resource.h\0"
 END
 
-2 TEXTINCLUDE 
+2 TEXTINCLUDE
 BEGIN
     "#include ""afxres.h""\r\n"
     "\0"
 END
 
-3 TEXTINCLUDE 
+3 TEXTINCLUDE
 BEGIN
     "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
     "#define _AFX_NO_OLE_RESOURCES\r\n"
@@ -101,8 +101,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 3,6,2,0
- PRODUCTVERSION 3,6,2,0
+ FILEVERSION 1,0,0,0
+ PRODUCTVERSION 1,0,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -119,12 +119,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "ZeroC, Inc."
             VALUE "FileDescription", "Ice Hello Client"
-            VALUE "FileVersion", "3.6.2"
+            VALUE "FileVersion", "1.0.0"
             VALUE "InternalName", "HelloClient.exe"
             VALUE "LegalCopyright", "Copyright (c) 2003-2016 ZeroC, Inc.  All rights reserved."
             VALUE "OriginalFilename", "HelloClient.exe"
             VALUE "ProductName", "Ice"
-            VALUE "ProductVersion", "3.6.2"
+            VALUE "ProductVersion", "1.0.0"
         END
     END
     BLOCK "VarFileInfo"
@@ -140,7 +140,7 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO 
+GUIDELINES DESIGNINFO
 BEGIN
     IDD_HELLOCLIENT_DIALOG, DIALOG
     BEGIN
@@ -161,22 +161,22 @@ END
 IDD_HELLOCLIENT_DIALOG DLGINIT
 BEGIN
     IDC_MODE, 0x403, 7, 0
-0x7754, 0x776f, 0x7961, "\000" 
+0x7754, 0x776f, 0x7961, "\000"
     IDC_MODE, 0x403, 14, 0
-0x7754, 0x776f, 0x7961, 0x5320, 0x6365, 0x7275, 0x0065, 
+0x7754, 0x776f, 0x7961, 0x5320, 0x6365, 0x7275, 0x0065,
     IDC_MODE, 0x403, 7, 0
-0x6e4f, 0x7765, 0x7961, "\000" 
+0x6e4f, 0x7765, 0x7961, "\000"
     IDC_MODE, 0x403, 14, 0
-0x6e4f, 0x7765, 0x7961, 0x5320, 0x6365, 0x7275, 0x0065, 
+0x6e4f, 0x7765, 0x7961, 0x5320, 0x6365, 0x7275, 0x0065,
     IDC_MODE, 0x403, 13, 0
-0x6e4f, 0x7765, 0x7961, 0x4220, 0x7461, 0x6863, "\000" 
+0x6e4f, 0x7765, 0x7961, 0x4220, 0x7461, 0x6863, "\000"
     IDC_MODE, 0x403, 20, 0
-0x6e4f, 0x7765, 0x7961, 0x5320, 0x6365, 0x7275, 0x2065, 0x6142, 0x6374, 
-0x0068, 
+0x6e4f, 0x7765, 0x7961, 0x5320, 0x6365, 0x7275, 0x2065, 0x6142, 0x6374,
+0x0068,
     IDC_MODE, 0x403, 9, 0
-0x6144, 0x6174, 0x7267, 0x6d61, "\000" 
+0x6144, 0x6174, 0x7267, 0x6d61, "\000"
     IDC_MODE, 0x403, 15, 0
-0x6144, 0x6174, 0x7267, 0x6d61, 0x4220, 0x7461, 0x6863, "\000" 
+0x6144, 0x6174, 0x7267, 0x6d61, 0x4220, 0x7461, 0x6863, "\000"
     0
 END
 
@@ -204,4 +204,3 @@ LANGUAGE 9, 1
 
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
-

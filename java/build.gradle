@@ -5,17 +5,18 @@
 // **********************************************************************
 
 subprojects {
-	project.version = iceVersion
 	project.group = "com.zeroc"
 
 	apply plugin: 'java'
 	apply from: "$rootProject.projectDir/gradle/ice.gradle"
 
+	project.version = slice.iceVersion
+
 	repositories {
-		if (distJarDir != null) {
+		if (slice.jarDir) {
 			flatDir {
 		        name "local"
-		        dirs distJarDir
+		        dirs slice.jarDir
 		    }
 	    }
 

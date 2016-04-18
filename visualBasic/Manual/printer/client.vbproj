@@ -73,7 +73,10 @@
     <DebugType>none</DebugType>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Ice, Version=3.6.2.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Ice, Version=3.6.3.0, Culture=neutral, processorArchitecture=MSIL">
+        <Private>True</Private>
+        <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
@@ -95,21 +98,5 @@
       <Name>slice %28Book\printer\slice%29</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="My Project\" />
-  </ItemGroup>
-  <Import Project="$(ICE_HOME)\config\Slice.CSharp.targets"
-          Condition="Exists('$(ICE_HOME)\config\Slice.CSharp.targets')"/>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
-  <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
-    <PostBuildEvent>
-    </PostBuildEvent>
-  </PropertyGroup>
-  <ProjectExtensions>
-    <VisualStudio>
-      <UserProperties ZerocIce_Enabled="True" ZerocIce_ProjectVersion="1" />
-    </VisualStudio>
-  </ProjectExtensions>
 </Project>
