@@ -82,6 +82,7 @@
   <ItemGroup>
     <Reference Include="Ice, Version=3.6.3.0, Culture=neutral, PublicKeyToken=1f998c50fec78381, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(IceAssembliesDir)\Ice.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Name>System</Name>

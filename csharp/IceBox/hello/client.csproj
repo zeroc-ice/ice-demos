@@ -83,14 +83,17 @@
     <Reference Include="Ice, Version=3.6.3.0, Culture=neutral, PublicKeyToken=1f998c50fec78381, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
+      <HintPath>$(IceAssembliesDir)\Ice.dll</HintPath>
     </Reference>
     <Reference Include="IceBox, Version=3.6.3.0, Culture=neutral, PublicKeyToken=1f998c50fec78381, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
+      <HintPath>$(IceAssembliesDir)\IceBox.dll</HintPath>
     </Reference>
     <Reference Include="IceSSL, Version=3.6.3.0, Culture=neutral, PublicKeyToken=1f998c50fec78381, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
+      <HintPath>$(IceAssembliesDir)\IceSSL.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Name>System</Name>
