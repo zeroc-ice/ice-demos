@@ -382,7 +382,7 @@ ifeq ($(ice_dir), $(usr_dir))
         LDFLAGS = $(LDPLATFORMFLAGS) $(CXXFLAGS) -L$(ice_dir)/$(libsubdir)$(cpp11libdirsuffix)
     endif
 else
-    CPPFLAGS	+= -I$(includedir)
+    CPPFLAGS	+= -I$(includedir) -I$(includedir)/generated
     ifdef ice_src_dist
         LDFLAGS	= $(LDPLATFORMFLAGS) $(CXXFLAGS) -L$(ice_cpp_dir)/$(libsubdir)$(cpp11libdirsuffix)
     else
