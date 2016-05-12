@@ -14,7 +14,6 @@ The sample programs are grouped by programming language:
 * [PHP](./php)
 * [Python](./python)
 * [Ruby](./ruby)
-* [Visual Basic](./visualBasic)
 
 For example, the [cpp](./cpp) folder contains all the sample programs written
 in C++.
