@@ -58,15 +58,14 @@ public class PrinterI extends Ice.Blobject
         }
         else if(current.operation.equals("printEnum"))
         {
-            Demo.Color c = Demo.Color.ice_read(in);
+            Demo.Color c = Demo.Color.read(in);
             in.endEncapsulation();
             System.out.println("Printing enum " + c);
             return true;
         }
         else if(current.operation.equals("printStruct"))
         {
-            Demo.Structure s = new Demo.Structure();
-            s.ice_read(in);
+            Demo.Structure s = Demo.Structure.read(in, null);
             in.endEncapsulation();
             System.out.println("Printing struct: name=" + s.name + ", value=" + s.value);
             return true;
@@ -90,8 +89,8 @@ public class PrinterI extends Ice.Blobject
         else if(current.operation.equals("printClass"))
         {
             Demo.CHolder c = new Demo.CHolder();
-            in.readObject(c);
-            in.readPendingObjects();
+            in.readValue(c);
+            in.readPendingValues();
             in.endEncapsulation();
             System.out.println("Printing class: s.name=" + c.value.s.name + ", s.value=" + c.value.s.value);
             return true;
@@ -104,9 +103,9 @@ public class PrinterI extends Ice.Blobject
             c.s.value = Demo.Color.green;
             Ice.OutputStream out = new Ice.OutputStream(communicator);
             out.startEncapsulation();
-            out.writeObject(c);
+            out.writeValue(c);
             out.writeString("hello");
-            out.writePendingObjects();
+            out.writePendingValues();
             out.endEncapsulation();
             outParams.value = out.finished();
             return true;

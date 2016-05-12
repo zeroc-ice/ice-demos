@@ -142,7 +142,7 @@ public class Client extends Ice.Application
                     //
                     Ice.OutputStream out = new Ice.OutputStream(communicator());
                     out.startEncapsulation();
-                    Demo.Color.green.ice_write(out);
+                    Demo.Color.write(out, Demo.Color.green);
                     out.endEncapsulation();
 
                     //
@@ -163,7 +163,7 @@ public class Client extends Ice.Application
                     Demo.Structure s = new Demo.Structure();
                     s.name = "red";
                     s.value = Demo.Color.red;
-                    s.ice_write(out);
+                    Demo.Structure.write(out, s);
                     out.endEncapsulation();
 
                     //
@@ -213,8 +213,8 @@ public class Client extends Ice.Application
                     c.s = new Demo.Structure();
                     c.s.name = "blue";
                     c.s.value = Demo.Color.blue;
-                    out.writeObject(c);
-                    out.writePendingObjects();
+                    out.writeValue(c);
+                    out.writePendingValues();
                     out.endEncapsulation();
 
                     //
@@ -243,9 +243,9 @@ public class Client extends Ice.Application
                     Ice.InputStream in = new Ice.InputStream(communicator(), outParams.value);
                     in.startEncapsulation();
                     Demo.CHolder c = new Demo.CHolder();
-                    in.readObject(c);
+                    in.readValue(c);
                     String str = in.readString();
-                    in.readPendingObjects();
+                    in.readPendingValues();
                     in.endEncapsulation();
                     System.out.println("Got string `" + str + "' and class: s.name=" + c.value.s.name +
                         ", s.value=" + c.value.s.value);

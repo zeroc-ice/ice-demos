@@ -234,7 +234,7 @@ InvokeClient::run(int argc, char*[])
                 c->s.name = "blue";
                 c->s.value = Demo::blue;
                 out.write(c);
-                out.writePendingObjects();
+                out.writePendingValues();
                 out.endEncapsulation();
                 out.finished(inParams);
 
@@ -267,7 +267,7 @@ InvokeClient::run(int argc, char*[])
                 in.read(c);
                 string str;
                 in.read(str);
-                in.readPendingObjects();
+                in.readPendingValues();
                 in.endEncapsulation();
                 cout << "Got string `" << str << "' and class: s.name=" << c->s.name
                      << ", s.value=" << c->s.value << endl;
