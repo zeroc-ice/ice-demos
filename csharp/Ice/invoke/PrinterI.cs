@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 public class PrinterI : Ice.Blobject
 {
-    private class ReadObjectCallback
+    private class ReadValueCallback
     {
         public void invoke(Ice.Object obj)
         {
@@ -75,15 +75,14 @@ public class PrinterI : Ice.Blobject
         }
         else if(current.operation.Equals("printEnum"))
         {
-            Demo.Color c = (Demo.Color)inStream.readEnum((int)Demo.Color.blue);
+            Demo.Color c = Demo.ColorHelper.read(inStream);
             inStream.endEncapsulation();
             Console.WriteLine("Printing enum " + c);
             return true;
         }
         else if(current.operation.Equals("printStruct"))
         {
-            Demo.Structure s = new Demo.Structure();
-            s.read__(inStream);
+            Demo.Structure s = Demo.Structure.read(inStream);
             inStream.endEncapsulation();
             Console.WriteLine("Printing struct: name=" + s.name + ", value=" + s.value);
             return true;
@@ -106,9 +105,9 @@ public class PrinterI : Ice.Blobject
         }
         else if(current.operation.Equals("printClass"))
         {
-            ReadObjectCallback cb = new ReadObjectCallback();
-            inStream.readObject(cb.invoke);
-            inStream.readPendingObjects();
+            ReadValueCallback cb = new ReadValueCallback();
+            inStream.readValue(cb.invoke);
+            inStream.readPendingValues();
             inStream.endEncapsulation();
             Demo.C c = cb.obj as Demo.C;
             Console.WriteLine("Printing class: s.name=" + c.s.name + ", s.value=" + c.s.value);
@@ -122,9 +121,9 @@ public class PrinterI : Ice.Blobject
             c.s.value = Demo.Color.green;
             Ice.OutputStream outStream = new Ice.OutputStream(communicator);
             outStream.startEncapsulation();
-            outStream.writeObject(c);
+            outStream.writeValue(c);
             outStream.writeString("hello");
-            outStream.writePendingObjects();
+            outStream.writePendingValues();
             outStream.endEncapsulation();
             outParams = outStream.finished();
             return true;

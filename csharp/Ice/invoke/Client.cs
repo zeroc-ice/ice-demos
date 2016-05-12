@@ -17,7 +17,7 @@ using System.Reflection;
 
 public class Client
 {
-    private class ReadObjectCallback
+    private class ReadValueCallback
     {
         public void invoke(Ice.Object obj)
         {
@@ -142,7 +142,7 @@ public class Client
                         //
                         Ice.OutputStream outStream = new Ice.OutputStream(communicator());
                         outStream.startEncapsulation();
-                        outStream.writeEnum((int)Demo.Color.green, (int)Demo.Color.blue);
+                        Demo.ColorHelper.write(outStream, Demo.Color.green);
                         outStream.endEncapsulation();
 
                         //
@@ -163,7 +163,7 @@ public class Client
                         Demo.Structure s = new Demo.Structure();
                         s.name = "red";
                         s.value = Demo.Color.red;
-                        s.write__(outStream);
+                        Demo.Structure.write(outStream, s);
                         outStream.endEncapsulation();
 
                         //
@@ -215,8 +215,8 @@ public class Client
                         c.s = new Demo.Structure();
                         c.s.name = "blue";
                         c.s.value = Demo.Color.blue;
-                        outStream.writeObject(c);
-                        outStream.writePendingObjects();
+                        outStream.writeValue(c);
+                        outStream.writePendingValues();
                         outStream.endEncapsulation();
 
                         //
@@ -243,10 +243,10 @@ public class Client
                         //
                         Ice.InputStream inStream = new Ice.InputStream(communicator(), outParams);
                         inStream.startEncapsulation();
-                        ReadObjectCallback cb = new ReadObjectCallback();
-                        inStream.readObject(cb.invoke);
+                        ReadValueCallback cb = new ReadValueCallback();
+                        inStream.readValue(cb.invoke);
                         String str = inStream.readString();
-                        inStream.readPendingObjects();
+                        inStream.readPendingValues();
                         Demo.C c = cb.obj as Demo.C;
                         Console.Error.WriteLine("Got string `" + str + "' and class: s.name=" + c.s.name +
                                                 ", s.value=" + c.s.value);
