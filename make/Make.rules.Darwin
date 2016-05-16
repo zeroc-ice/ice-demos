@@ -1,0 +1,80 @@
+# **********************************************************************
+#
+# Copyright (c) 2003-2016 ZeroC, Inc. All rights reserved.
+#
+# This copy of Ice is licensed to you under the terms described in the
+# ICE_LICENSE file included in this distribution.
+#
+# **********************************************************************
+
+supported-platforms		= osx iphoneos iphonesimulator
+supported-languages		= cpp java python js ruby php objective-c
+
+osx_ar 				= libtool
+osx_cppflags			= -mmacosx-version-min=10.9 -arch x86_64
+osx_ldflags			= $(osx_cppflags)
+osx_targetdir			= $(if $(filter %/build,$($1_targetdir)),/osx)
+
+iphoneos_ar			= libtool
+iphoneos_cc			= xcrun -sdk iphoneos clang
+iphoneos_cxx			= xcrun -sdk iphoneos clang++
+iphoneos_cppflags		= -miphoneos-version-min=7.1 -arch armv7 -arch armv7s -arch arm64
+iphoneos_ldflags		= $(iphoneos_cppflags)
+iphoneos_configs		= xcodesdk
+iphoneos_projects		= src/%
+
+iphonesimulator_ar		= libtool
+iphonesimulator_cc		= xcrun -sdk iphonesimulator clang
+iphonesimulator_cxx		= xcrun -sdk iphonesimulator clang++
+iphonesimulator_cppflags	= -mios-simulator-version-min=7.1 -arch i386 -arch x86_64
+iphonesimulator_ldflags		= $(iphonesimulator_cppflags)
+iphonesimulator_configs		= xcodesdk
+iphonesimulator_projects	= src/%
+
+# If building objects for a shared library, enable fPIC
+shared_cppflags	= $(if $(filter-out program,$($1_target)),-fPIC)
+
+CXXFLAGS	+= -fvisibility=hidden -Wall -Werror -pthread
+
+ifeq ($(MAXWARN),yes)
+    CXXFLAGS	+= -Wextra -Wshadow -Wredundant-decls
+endif
+
+ifeq ($(OPTIMIZE),yes)
+    CXXFLAGS	+= -O2 -DNDEBUG
+else
+    CXXFLAGS	+= -g
+endif
+
+nodeprecatedwarnings-cppflags := -Wno-deprecated-declarations
+
+loader_path     = @loader_path
+
+# $(call mklib,$1=target,$2=objects,$3=libname,$4=version,$5=soversion,$6=ldflags,$7=platform)
+mklib 		= $(or $($7_ar),$(AR)) -static -no_warning_for_no_symbols -o $1 $2
+
+# $(call mkshlib,$1=target,$2=objects,$3=libname,$4=version,$5=soversion,$6=ldflags,$7=platform)
+mkshlib   	= $(or $($7_cxx),$(CXX)) -dynamiclib $(if $5,-install_name @rpath/$(call mksoname,$3,$4,$5)) -o $1 $2 $6
+
+#
+# $(call mkxxx,$1=libname,$2=version,$3=soversion)
+#
+mklibname 	= lib$1.a
+mksoname      	= lib$1$(if $3,.$3).dylib
+mkshlibfilename = lib$1$(if $2,.$2).dylib
+mkshlibname     = lib$1.dylib
+
+mkpymodulename	= $1.so
+mkrbmodulename	= $1.bundle
+mkphpmodulename = $1.dy
+
+#
+# System libraries
+#
+ICEUTIL_OS_LIBS	=
+ICE_OS_LIBS     = -ldl
+CRYPT_OS_LIBS   = -framework Security -framework CoreFoundation
+SSL_OS_LIBS     = $(CRYPT_OS_LIBS)
+
+# clean::
+# 	rm -f *.keychain *.fl*

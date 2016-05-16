@@ -1,0 +1,159 @@
+# **********************************************************************
+#
+# Copyright (c) 2003-2016 ZeroC, Inc. All rights reserved.
+#
+# This copy of Ice is licensed to you under the terms described in the
+# ICE_LICENSE file included in this distribution.
+#
+# **********************************************************************
+
+#
+# Define ICE_HOME if Ice is not installed in /usr (Linux) or
+# /usr/local (OS X)
+#
+#ICE_HOME		?= /opt/Ice-3.7a0
+
+#
+# Define OPTIMIZE as yes if you want to build with optimization.
+# Otherwise Ice is build with debug information.
+#
+#OPTIMIZE		= yes
+
+#
+# Define PLATFORMS to the list of platforms to build. This defaults
+# to the first supported platform for this system.
+#
+# Run `make print V=supported-platforms' to see the list of supported
+# platforms on this system.
+#
+PLATFORMS              	?= $(firstword $(supported-platforms))
+
+#
+# Configurations to build. This defaults to the first supported
+# configuration.
+#
+# Run `make print V=supported-configs` to see the list of supported
+# configurations.
+#
+CONFIGS			?= $(firstword $(supported-configs))
+
+
+# ----------------------------------------------------------------------
+# Don't change anything below this line!
+# ----------------------------------------------------------------------
+
+os			?= $(shell uname)
+embedded_runpath	:= yes
+
+include	$(top_srcdir)/make/Make.rules.$(os)
+include	$(top_srcdir)/make/Make.project.rules
+include	$(top_srcdir)/make/Make.demos.rules
+
+ice_home 		:= $(or $(ICE_HOME),$(if $(filter Darwin,$(os)),/usr/local,/usr))
+
+ifeq ($(ice_home),)
+$(error Can't find Ice distribution, please set ICE_HOME to the Ice installation directory)
+endif
+
+version			= 3.7a0
+soversion		= 37a0
+
+ice_bindir		?= $(ice_home)$(if $(ice_src_dist),/cpp)/bin
+ice_libdir		?= $(ice_home)$(if $(ice_src_dist),/cpp)/lib
+ice_slicedir 		?= $(ice_home)$(if $(usr_dir_install),/share/Ice-$(version))/slice
+ice_includedir		?= $(ice_home)$(if $(ice_src_dist),/cpp)/include
+
+ice_src_dist 		:= $(wildcard $(ice_home)/config/Make.rules)
+usr_dir_install		:= $(filter /usr%,$(ice_home))
+
+supported-configs	?= shared
+
+static_projects		= %
+static_targetdir	=
+
+shared_targetdir	=
+
+platform_targetdir	=
+
+#
+# Support for 3rd party libraries
+#
+thirdparties		:= bz2
+bz2_home 		:= $(BZ2_HOME)
+
+define make-thirdparty
+ifneq ($($1_home),)
+# Check for 3rd party libraries either in home/lib<platform specific subdir> or home/lib
+$1_libdir	?= $$(strip $$(if $$(wildcard $$($1_home)/lib$$(call platform-var,installdir,$$1,$$2,$$3)),\
+			$$($1_home)/lib$$(call platform-var,installdir,$$1,$$2,$$3),$$($1_home)/lib))
+endif
+$1_ldflags	?= -l$1
+endef
+$(foreach l,$(thirdparties),$(eval $(call make-thirdparty,$l)))
+
+#
+# Support for Ice libraries
+#
+dependencies 		= Ice Glacier2 IceGrid IcePatch2 IceSSL IceDiscovery IceLocatorDiscovery IceStorm IceBox \
+			  IceObjC Glacier2ObjC IceGridObjC IceSSLObjC IceStormObjC
+
+# Ice
+Ice_libs                := bz2
+Ice_system_libs         := $(ICE_OS_LIBS) $(ICEUTIL_OS_LIBS)
+
+# Glacier2
+Glacier2_dependencies	:= Ice
+
+# IceGrid
+IceGrid_dependencies    := Glacier2 Ice
+
+# IcePatch2
+IcePatch2_dependencies  := Ice
+IcePatch2_libs          := bz2
+
+# IceSSL
+IceSSL_dependencies     := Ice
+IceSSL_system_libs      := $(SSL_OS_LIBS)
+
+# IceDiscovery
+IceDiscovery_dependencies := Ice
+
+# IceLocatorDiscovery
+IceLocatorDiscovery_dependencies := Ice
+
+# IceStorm
+IceStorm_dependencies   := Ice
+
+# IceBox
+IceBox_dependencies   	:= Ice
+
+# IceObjC
+IceObjC_dependencies 		:= Ice
+
+# Glacier2ObjC
+Glacier2ObjC_dependencies	:= IceObjC
+
+# IceGridObjC
+IceGridObjC_dependencies    	:= Glacier2ObjC IceObjC
+
+# IcePatch2ObjC
+IcePatch2ObjC_dependencies  	:= IceObjC
+
+# IceSSLObjC
+IceSSLObjC_dependencies     	:= IceObjC
+
+# IceStormObjC
+IceStormObjC_dependencies   	:= IceObjC
+
+# Create component dependency variables
+ice_targetdir 		= $(ice_libdir)
+$(foreach d,$(dependencies),$(eval $(call create-component-targets,ice,$d,library)))
+
+#
+# $(call create-demo-project-targets,$1=project)
+#
+define create-demo-project-targets
+$1_targetdir		:= $1
+$(create-project-targets)
+endef
+

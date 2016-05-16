@@ -1,0 +1,97 @@
+# **********************************************************************
+#
+# Copyright (c) 2003-2015 ZeroC, Inc. All rights reserved.
+#
+# This copy of Ice is licensed to you under the terms described in the
+# ICE_LICENSE file included in this distribution.
+#
+# **********************************************************************
+
+#
+# $(call demo,[$1])
+#
+# Returns the demo project name (./demo/Ice/hello -> demo/Ice/hello)
+#
+demo = $(patsubst $(lang_srcdir)/%,%,$(if $1,$1,$(currentdir)))
+
+#
+# $(call demo-sources,$1=sources,$2=dir,$3=main-src extra-srcs)
+#
+# Returns sources if set, otherwise if main-src exists return main-src + extra-srcs, if it
+# doesn't exist, returns an empty value.
+#
+demo-sources = $(call unique,$(if $1,$(foreach f,$1,$(notdir $(wildcard $2/$f))),\
+		 $(if $(wildcard $2/$(firstword $3)),$(foreach f,$3,$(notdir $(wildcard $2/$f))))))
+
+#
+# The demo executables to try to build in each demo directory
+#
+demo-programs 		= client server publisher subscriber
+
+#
+# The default demo sources for each demo executable.
+#
+demo-client-sources 	= Client.$1 *.ice
+demo-server-sources 	= Server.$1 *.ice *I.$1
+demo-publisher-sources 	= Publisher.$1 *.ice
+demo-subscriber-sources = Subscriber.$1 *.ice
+
+#
+# $(call create-demo-project,demo)
+#
+# Defines a project for the given demo.
+#
+# The following variables can be defined to customize the build of the demo:
+#
+# <name>_cleandirs
+# <name>_clean
+# <name>_bindir
+# <name>_libdir
+# <name>_sliceflags
+# <name>_cppflags
+# <name>_dependencies
+# <name>_programs
+# <name>_libraries
+#
+# The following variables allows to specify per-target (program or library) configuration
+#
+# <name>_<target>_sources
+# <name>_<target>_sources
+#
+define create-demo-project
+
+$1_srcdir	:= $1
+$1_programs	:= $$(or $$($1_programs),$(demo-programs))
+$1_noinstall	:= 1
+
+$1_client_sources 	:= $$(call demo-sources,$$(call $1_client_sources,$$($1_srcext)),$$($1_srcdir),\
+				$$(call demo-client-sources,$$($1_srcext)))
+
+$1_server_sources 	:= $$(call demo-sources,$$(call $1_server_sources,$$($1_srcext)),$$($1_srcdir),\
+				$$(call demo-server-sources,$$($1_srcext)))
+
+$1_publisher_sources 	:= $$(call demo-sources,$$(call $1_publisher_sources,$$($1_srcext)),$$($1_srcdir),\
+				$$(call demo-publisher-sources,$$($1_srcext)))
+
+$1_subscriber_sources 	:= $$(call demo-sources,$$(call $1_subscriber_sources,$$($1_srcext)),$$($1_srcdir),\
+				$$(call demo-subscriber-sources,$$($1_srcext)))
+
+$1_programs		:= $$(foreach p,$$($1_programs),$$(if $$($1_$$(p)_sources),$1_$$(p)))
+$1_libraries		:= $$(foreach p,$$($1_libraries),$1_$$(p))
+
+$$(foreach m,$$($1_programs) $$($1_libraries),$$(eval $$m_sources := $$(addprefix $$($1_srcdir)/,$$($$m_sources))))
+
+projects += $(project)
+
+endef
+
+#
+# Returns the demos which don't have a Makefile.mk fragment specified
+#
+demos-without-project-makefile = $(call unique,$(foreach d,$(call dirname,$(shell find $(lang_srcdir) -name $1)),\
+			 	     $(if $(wildcard $d/Makefile.mk),,$(call demo,$d))))
+
+#
+# The demos variable is used to load demos in Makefile.mk fragments
+#
+demos :=
