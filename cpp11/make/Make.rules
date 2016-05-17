@@ -19,76 +19,16 @@
 supported-configs	= shared static
 
 static_projects		= %
-static_targetdir	=
-
-shared_targetdir	=
-
-platform_targetdir	=
-
-ice_bindir		?= $(ice_home)$(if $(ice_src_dist),/cpp)/bin
-ice_libdir		?= $(ice_home)$(if $(ice_src_dist),/cpp)/lib
-ice_slicedir 		?= $(ice_home)$(if $(usr_dir_install),/share/Ice-$(version))/slice
-ice_includedir		?= $(ice_home)$(if $(ice_src_dist),/cpp)/include
 
 slice2cpp_targetext	= cpp
 slice2cpp_path		= $(ice_bindir)/slice2cpp
 
 #
-# Support for 3rd party libraries
+# Don't set config/platform targetdir/targetname for demos. The executables are always
+# produced in the demo directory with the same name regardless of the config/platform.
 #
-thirdparties		:= bz2
-bz2_home 		:= $(BZ2_HOME)
-
-define make-thirdparty
-ifneq ($($1_home),)
-# Check for 3rd party libraries either in home/lib<platform specific subdir> or home/lib
-$1_libdir	?= $$(strip $$(if $$(wildcard $$($1_home)/lib$$(call platform-var,installdir,$$1,$$2,$$3)),\
-			$$($1_home)/lib$$(call platform-var,installdir,$$1,$$2,$$3),$$($1_home)/lib))
-endif
-$1_ldflags	?= -l$1
-endef
-$(foreach l,$(thirdparties),$(eval $(call make-thirdparty,$l)))
-
-#
-# Support for Ice libraries
-#
-dependencies = Ice++11 Glacier2++11 IceGrid++11 IcePatch2++11 IceSSL++11 IceStorm++11 IceBox++11
-
-# Ice
-Ice++11_libs                	:= bz2
-Ice++11_system_libs         	:= $(ICE_OS_LIBS) $(ICEUTIL_OS_LIBS)
-
-# Glacier2
-Glacier2++11_dependencies	:= Ice++11
-
-# IceGrid
-IceGrid++11_dependencies    	:= Glacier2++11 Ice++11
-
-# IcePatch2
-IcePatch2++11_dependencies  	:= Ice++11
-IcePatch2++11_libs          	:= bz2
-
-# IceSSL
-IceSSL++11_dependencies     	:= Ice++11
-IceSSL++11_system_libs      	:= $(SSL_OS_LIBS)
-
-# IceStorm
-IceStorm++11_dependencies   	:= Ice++11
-
-# IceBox
-IceBox++11_dependencies   	:= Ice++11
-
-# Create component dependency variables
-ice_targetdir 		= $(ice_libdir)
-$(foreach d,$(dependencies),$(eval $(call create-component-targets,ice,$d,library)))
-
-#
-# $(call create-demo-project-targets,$1=project)
-#
-define create-demo-project-targets
-$1_targetdir		:= $1
-$(create-project-targets)
-endef
+$(foreach v,$(supported-configs) $(supported-platforms) platform config,$(eval $v_targetdir := )\
+									$(eval $v_targetname := ))
 
 #
 # $(call make-cpp-demo-project,$1=project)
@@ -96,7 +36,8 @@ endef
 define make-cpp-demo-project
 $1_slicecompiler 	:= slice2cpp
 $1_sliceflags		:= -I$(ice_slicedir) -I$1 $$($1_sliceflags)
-$1_cppflags		:= -DICE_CPP11_MAPPING -std=c++11 -I$(ice_includedir) $(if $(ice_src_dist),-I$(ice_includedir)/generated) -I$1 -I$1/generated $$($1_cppflags)
+$1_cppflags		:= -DICE_CPP11_MAPPING -std=c++11 -I$(ice_includedir) \
+				$(if $(ice_src_dist),-I$(ice_includedir)/generated) -I$1 -I$1/generated $$($1_cppflags)
 $(make-project)
 endef
 

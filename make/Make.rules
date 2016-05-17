@@ -69,11 +69,6 @@ usr_dir_install		:= $(filter /usr%,$(ice_home))
 supported-configs	?= shared
 
 static_projects		= %
-static_targetdir	=
-
-shared_targetdir	=
-
-platform_targetdir	=
 
 #
 # Support for 3rd party libraries
@@ -97,56 +92,27 @@ $(foreach l,$(thirdparties),$(eval $(call make-thirdparty,$l)))
 dependencies 		= Ice Glacier2 IceGrid IcePatch2 IceSSL IceDiscovery IceLocatorDiscovery IceStorm IceBox \
 			  IceObjC Glacier2ObjC IceGridObjC IceSSLObjC IceStormObjC
 
-# Ice
-Ice_libs                := bz2
-Ice_system_libs         := $(ICE_OS_LIBS) $(ICEUTIL_OS_LIBS)
-
-# Glacier2
-Glacier2_dependencies	:= Ice
-
-# IceGrid
-IceGrid_dependencies    := Glacier2 Ice
-
-# IcePatch2
-IcePatch2_dependencies  := Ice
-IcePatch2_libs          := bz2
-
-# IceSSL
-IceSSL_dependencies     := Ice
-IceSSL_system_libs      := $(SSL_OS_LIBS)
-
-# IceDiscovery
-IceDiscovery_dependencies := Ice
-
-# IceLocatorDiscovery
+Ice_libs                	:= bz2
+Ice_system_libs         	:= $(ICE_OS_LIBS) $(ICEUTIL_OS_LIBS)
+Glacier2_dependencies		:= Ice
+IceGrid_dependencies    	:= Glacier2 Ice
+IcePatch2_dependencies  	:= Ice
+IcePatch2_libs          	:= bz2
+IceSSL_dependencies     	:= Ice
+IceSSL_system_libs      	:= $(SSL_OS_LIBS)
+IceDiscovery_dependencies 	:= Ice
 IceLocatorDiscovery_dependencies := Ice
-
-# IceStorm
-IceStorm_dependencies   := Ice
-
-# IceBox
-IceBox_dependencies   	:= Ice
-
-# IceObjC
+IceStorm_dependencies   	:= Ice
+IceBox_dependencies   		:= Ice
 IceObjC_dependencies 		:= Ice
-
-# Glacier2ObjC
 Glacier2ObjC_dependencies	:= IceObjC
-
-# IceGridObjC
 IceGridObjC_dependencies    	:= Glacier2ObjC IceObjC
-
-# IcePatch2ObjC
 IcePatch2ObjC_dependencies  	:= IceObjC
-
-# IceSSLObjC
 IceSSLObjC_dependencies     	:= IceObjC
-
-# IceStormObjC
 IceStormObjC_dependencies   	:= IceObjC
 
 # Create component dependency variables
-ice_targetdir 		= $(ice_libdir)
+ice_targetdir 			:= $(ice_libdir)
 $(foreach d,$(dependencies),$(eval $(call create-component-targets,ice,$d,library)))
 
 #

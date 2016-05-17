@@ -22,6 +22,13 @@ slice2cpp_targetext	= cpp
 slice2cpp_path		= $(ice_bindir)/slice2cpp
 
 #
+# Don't set config/platform targetdir/targetname for demos. The executables are always
+# produced in the demo directory with the same name regardless of the config/platform.
+#
+$(foreach v,$(supported-configs) $(supported-platforms) platform config,$(eval $v_targetdir := )\
+									$(eval $v_targetname := ))
+
+#
 # $(call make-cpp-demo-project,$1=project)
 #
 define make-cpp-demo-project
