@@ -49,22 +49,23 @@ include	$(top_srcdir)/make/Make.rules.$(os)
 include	$(top_srcdir)/make/Make.project.rules
 include	$(top_srcdir)/make/Make.demos.rules
 
+#
+# Ice installation
+#
 ice_home 		:= $(or $(ICE_HOME),$(if $(filter Darwin,$(os)),/usr/local,/usr))
 
 ifeq ($(ice_home),)
 $(error Can't find Ice distribution, please set ICE_HOME to the Ice installation directory)
 endif
 
+ice_slicedir 		?= $(ice_home)$(if $(filter /usr%,$(ice_home)),/share/Ice-$(version))/slice
+ice_src_dist 		:= $(wildcard $(ice_home)/config/Make.rules)
+
+#
+# The version/soversion variables are used for versionning plugins built with the demos.
+#
 version			= 3.7a0
 soversion		= 37a0
-
-ice_bindir		?= $(ice_home)$(if $(ice_src_dist),/cpp)/bin
-ice_libdir		?= $(ice_home)$(if $(ice_src_dist),/cpp)/lib
-ice_slicedir 		?= $(ice_home)$(if $(usr_dir_install),/share/Ice-$(version))/slice
-ice_includedir		?= $(ice_home)$(if $(ice_src_dist),/cpp)/include
-
-ice_src_dist 		:= $(wildcard $(ice_home)/config/Make.rules)
-usr_dir_install		:= $(filter /usr%,$(ice_home))
 
 supported-configs	?= shared
 
@@ -89,8 +90,8 @@ $(foreach l,$(thirdparties),$(eval $(call make-thirdparty,$l)))
 #
 # Support for Ice libraries
 #
-dependencies 		= Ice Glacier2 IceGrid IcePatch2 IceSSL IceDiscovery IceLocatorDiscovery IceStorm IceBox \
-			  IceObjC Glacier2ObjC IceGridObjC IceSSLObjC IceStormObjC
+cpp-dependencies 		= Ice Glacier2 IceGrid IcePatch2 IceSSL IceDiscovery IceLocatorDiscovery IceStorm IceBox
+objc-dependencies		= IceObjC Glacier2ObjC IceGridObjC IceSSLObjC IceStormObjC
 
 Ice_libs                	:= bz2
 Ice_system_libs         	:= $(ICE_OS_LIBS) $(ICEUTIL_OS_LIBS)
@@ -112,8 +113,15 @@ IceSSLObjC_dependencies     	:= IceObjC
 IceStormObjC_dependencies   	:= IceObjC
 
 # Create component dependency variables
-ice_targetdir 			:= $(ice_libdir)
-$(foreach d,$(dependencies),$(eval $(call create-component-targets,ice,$d,library)))
+ice_cpp_libdir 			:= $(ice_home)$(if $(ice_src_dist),/cpp)/lib
+ice_objc_libdir			:= $(ice_home)$(if $(ice_src_dist),/objective-c)/lib
+
+$(foreach d,$(cpp-dependencies),$(eval $$d_targetdir := $(ice_cpp_libdir))\
+				$(eval $(call create-component-targets,ice,$d,library)))
+$(foreach d,$(cpp-dependencies),$(eval $$d++11_targetdir := $(ice_cpp_libdir))\
+				$(eval $(call create-component-targets,ice,$d++11,library)))
+$(foreach d,$(objc-dependencies),$(eval $$d_targetdir := $(ice_objc_libdir))\
+				 $(eval $(call create-component-targets,ice,$d,library)))
 
 #
 # $(call create-demo-project-targets,$1=project)

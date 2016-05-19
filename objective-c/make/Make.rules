@@ -18,6 +18,9 @@
 #
 supported-configs	= shared static
 
+ice_bindir		?= $(ice_home)$(if $(ice_src_dist),/objective-c)/bin
+ice_includedir		?= $(ice_home)$(if $(ice_src_dist),/objective-c)/include
+
 slice2objc_targetext	= m
 slice2objc_path		= $(ice_bindir)/slice2objc
 
@@ -27,7 +30,8 @@ slice2objc_path		= $(ice_bindir)/slice2objc
 define make-objc-demo-project
 $1_slicecompiler 	:= slice2objc
 $1_sliceflags		:= -I$(ice_slicedir) -I$1 $$($1_sliceflags)
-$1_cppflags		:= -I$(ice_includedir) $(if $(ice_src_dist),-I$(ice_includedir)/generated) -I$1 -I$1/generated $$($1_cppflags)
+$1_cppflags		:= -I$(ice_includedir) $(if $(ice_src_dist),-I$(ice_includedir)/generated) \
+			   -I$1 -I$1/generated $$($1_cppflags)
 $1_ldflags              += -framework Foundation
 $(make-project)
 endef
