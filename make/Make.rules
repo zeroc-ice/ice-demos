@@ -112,6 +112,12 @@ IcePatch2ObjC_dependencies  	:= IceObjC
 IceSSLObjC_dependencies     	:= IceObjC
 IceStormObjC_dependencies   	:= IceObjC
 
+ifneq ($(filter debian ubuntu,$(linux_id)),)
+cpp-dependencies 		+= IceBT
+IceBT_dependencies     		:= Ice
+IceBT_system_libs      		:= $(SSL_OS_LIBS) `pkg-config --libs dbus-1`
+endif
+
 # Create component dependency variables
 ice_cpp_libdir 			:= $(ice_home)$(if $(ice_src_dist),/cpp)/lib
 ice_objc_libdir			:= $(ice_home)$(if $(ice_src_dist),/objective-c)/lib
