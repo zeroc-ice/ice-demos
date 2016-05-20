@@ -58,6 +58,7 @@ ifeq ($(ice_home),)
 $(error Can't find Ice distribution, please set ICE_HOME to the Ice installation directory)
 endif
 
+ice_bindir		?= $(ice_home)$(if $(ice_src_dist),/cpp)/bin
 ice_slicedir 		?= $(ice_home)$(if $(filter /usr%,$(ice_home)),/share/Ice-$(version))/slice
 ice_src_dist 		:= $(wildcard $(ice_home)/config/Make.rules)
 
@@ -66,8 +67,6 @@ ice_src_dist 		:= $(wildcard $(ice_home)/config/Make.rules)
 #
 version			= 3.7a0
 soversion		= 37a0
-
-supported-configs	?= shared
 
 static_projects		= %
 
@@ -88,51 +87,11 @@ endef
 $(foreach l,$(thirdparties),$(eval $(call make-thirdparty,$l)))
 
 #
-# Support for Ice libraries
-#
-cpp-dependencies 		= Ice Glacier2 IceGrid IcePatch2 IceSSL IceDiscovery IceLocatorDiscovery IceStorm IceBox
-objc-dependencies		= IceObjC Glacier2ObjC IceGridObjC IceSSLObjC IceStormObjC
-
-Ice_libs                	:= bz2
-Ice_system_libs         	:= $(ICE_OS_LIBS) $(ICEUTIL_OS_LIBS)
-Glacier2_dependencies		:= Ice
-IceGrid_dependencies    	:= Glacier2 Ice
-IcePatch2_dependencies  	:= Ice
-IcePatch2_libs          	:= bz2
-IceSSL_dependencies     	:= Ice
-IceSSL_system_libs      	:= $(SSL_OS_LIBS)
-IceDiscovery_dependencies 	:= Ice
-IceLocatorDiscovery_dependencies := Ice
-IceStorm_dependencies   	:= Ice
-IceBox_dependencies   		:= Ice
-IceObjC_dependencies 		:= Ice
-Glacier2ObjC_dependencies	:= IceObjC
-IceGridObjC_dependencies    	:= Glacier2ObjC IceObjC
-IcePatch2ObjC_dependencies  	:= IceObjC
-IceSSLObjC_dependencies     	:= IceObjC
-IceStormObjC_dependencies   	:= IceObjC
-
-ifneq ($(filter debian ubuntu,$(linux_id)),)
-cpp-dependencies 		+= IceBT
-IceBT_dependencies     		:= Ice
-IceBT_system_libs      		:= $(SSL_OS_LIBS) `pkg-config --libs dbus-1`
-endif
-
-# Create component dependency variables
-ice_cpp_libdir 			:= $(ice_home)$(if $(ice_src_dist),/cpp)/lib
-ice_objc_libdir			:= $(ice_home)$(if $(ice_src_dist),/objective-c)/lib
-
-$(foreach d,$(cpp-dependencies),$(eval $$d_targetdir := $(ice_cpp_libdir))\
-				$(eval $(call create-component-targets,ice,$d,library)))
-$(foreach d,$(cpp-dependencies),$(eval $$d++11_targetdir := $(ice_cpp_libdir))\
-				$(eval $(call create-component-targets,ice,$d++11,library)))
-$(foreach d,$(objc-dependencies),$(eval $$d_targetdir := $(ice_objc_libdir))\
-				 $(eval $(call create-component-targets,ice,$d,library)))
-
-#
 # $(call create-demo-project-targets,$1=project)
 #
 define create-demo-project-targets
+# Default is to build executable in the <project>/build directory, we want them
+# to be in <project>/ directly.
 $1_targetdir		:= $1
 $(create-project-targets)
 endef

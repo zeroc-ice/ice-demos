@@ -18,11 +18,37 @@
 #
 supported-configs	= shared static
 
-ice_bindir		?= $(ice_home)$(if $(ice_src_dist),/cpp)/bin
-ice_includedir		?= $(ice_home)$(if $(ice_src_dist),/cpp)/include
+#
+# Support for Ice libraries
+#
+cpp-dependencies 		= Ice Glacier2 IceGrid IcePatch2 IceSSL IceDiscovery IceLocatorDiscovery IceStorm IceBox
+Ice_libs                	:= bz2
+Ice_system_libs         	:= $(ICE_OS_LIBS) $(ICEUTIL_OS_LIBS)
+Glacier2_dependencies		:= Ice
+IceGrid_dependencies    	:= Glacier2 Ice
+IcePatch2_dependencies  	:= Ice
+IcePatch2_libs          	:= bz2
+IceSSL_dependencies     	:= Ice
+IceSSL_system_libs      	:= $(SSL_OS_LIBS)
+IceDiscovery_dependencies 	:= Ice
+IceLocatorDiscovery_dependencies := Ice
+IceStorm_dependencies   	:= Ice
+IceBox_dependencies   		:= Ice
 
-slice2cpp_targetext	= cpp
-slice2cpp_path		= $(ice_bindir)/slice2cpp
+ifneq ($(filter debian ubuntu,$(linux_id)),)
+cpp-dependencies 		+= IceBT
+IceBT_dependencies     		:= Ice
+IceBT_system_libs      		:= $(SSL_OS_LIBS) `pkg-config --libs dbus-1`
+endif
+
+ice_includedir			?= $(ice_home)$(if $(ice_src_dist),/cpp)/include
+
+# Create component dependency variables
+$(foreach d,$(cpp-dependencies),$(eval $$d++11_targetdir := $(ice_home)$(if $(ice_src_dist),/cpp)/lib)\
+				$(eval $(call create-component-targets,ice,$d++11,library)))
+
+slice2cpp_targetext		= cpp
+slice2cpp_path			= $(ice_bindir)/slice2cpp
 
 #
 # Don't set config/platform targetdir/targetname for demos. The executables are always

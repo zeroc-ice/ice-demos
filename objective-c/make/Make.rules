@@ -16,13 +16,38 @@
 #
 # Supported configurations
 #
-supported-configs	= shared static
+supported-configs	= shared static arc-shared arc-static
 
-ice_bindir		?= $(ice_home)$(if $(ice_src_dist),/objective-c)/bin
-ice_includedir		?= $(ice_home)$(if $(ice_src_dist),/objective-c)/include
+#
+# Define the arc configuration to build the tests with ARC support.
+#
+# Note that we clear the dependency variable to not include the "arc"
+# sub-configuration into the dependency name (for example, if "client"
+# depends on "IceObjC", client[osx-arc-shared] will still depend on
+# Ice[osx-shared] not Ice[osx-arc-shared]). This is necessary since
+# we don't have an ARC specific build of the libraries.
+#
+arc_projects		:= %
+arc_cppflags 		:= -fobjc-arc -fobjc-arc-exceptions
+arc_dependency	 	:=
 
-slice2objc_targetext	= m
-slice2objc_path		= $(ice_bindir)/slice2objc
+# Objective-C dependencies
+objc-dependencies		:= IceObjC Glacier2ObjC IceGridObjC IceSSLObjC IceStormObjC
+IceObjC_dependencies 		:= Ice
+Glacier2ObjC_dependencies	:= IceObjC
+IceGridObjC_dependencies    	:= Glacier2ObjC IceObjC
+IcePatch2ObjC_dependencies  	:= IceObjC
+IceSSLObjC_dependencies     	:= IceObjC
+IceStormObjC_dependencies   	:= IceObjC
+
+ice_configs			:= $(supported-configs)
+ice_includedir			?= $(ice_home)$(if $(ice_src_dist),/objective-c)/include
+
+$(foreach d,$(objc-dependencies),$(eval $$d_targetdir := $(ice_home)$(if $(ice_src_dist),/objective-c)/lib)\
+				 $(eval $(call create-component-targets,ice,$d,library)))
+
+slice2objc_targetext		= m
+slice2objc_path			= $(ice_bindir)/slice2objc
 
 #
 # $(call make-cpp-demo-project,$1=project)
