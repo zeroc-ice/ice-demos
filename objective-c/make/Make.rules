@@ -28,6 +28,7 @@ supported-configs	= shared static arc-shared arc-static
 # we don't have an ARC specific build of the libraries.
 #
 arc_projects		:= %
+arc_excludes		:= Database/library
 arc_cppflags 		:= -fobjc-arc -fobjc-arc-exceptions
 arc_dependency	 	:=
 
