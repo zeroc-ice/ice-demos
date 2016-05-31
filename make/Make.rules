@@ -11,7 +11,7 @@
 # Define ICE_HOME if Ice is not installed in /usr (Linux) or
 # /usr/local (OS X)
 #
-#ICE_HOME		?= /opt/Ice-3.7a0
+#ICE_HOME		?= /opt/Ice-3.7a2
 
 #
 # Define OPTIMIZE as yes if you want to build with optimization.
