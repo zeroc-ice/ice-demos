@@ -67,6 +67,7 @@ ice_src_dist 		:= $(wildcard $(ice_home)/config/Make.rules)
 #
 version			= 3.7a2
 soversion		= 37a2
+compatversion		= $(version)
 
 static_projects		= %
 
@@ -76,15 +77,7 @@ static_projects		= %
 thirdparties		:= bz2
 bz2_home 		:= $(BZ2_HOME)
 
-define make-thirdparty
-ifneq ($($1_home),)
-# Check for 3rd party libraries either in home/lib<platform specific subdir> or home/lib
-$1_libdir	?= $$(strip $$(if $$(wildcard $$($1_home)/lib$$(call platform-var,installdir,$$1,$$2,$$3)),\
-			$$($1_home)/lib$$(call platform-var,installdir,$$1,$$2,$$3),$$($1_home)/lib))
-endif
-$1_ldflags	?= -l$1
-endef
-$(foreach l,$(thirdparties),$(eval $(call make-thirdparty,$l)))
+$(foreach l,$(thirdparties),$(eval $(call make-lib,$l)))
 
 #
 # $(call create-demo-project-targets,$1=project)
