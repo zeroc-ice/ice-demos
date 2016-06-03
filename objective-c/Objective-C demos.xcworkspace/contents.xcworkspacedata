@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <Group
+      location = "container:"
+      name = "iOS">
+      <FileRef
+         location = "group:Chat/iOS/chat.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Ice/iOS/hello/hello.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Database/iOS/library/library.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Ice/iOS/router/router.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Ice/iOS/voip/voip.xcodeproj">
+      </FileRef>
+   </Group>
+   <Group
+      location = "container:"
+      name = "Cocoa">
+      <FileRef
+         location = "group:Chat/Cocoa/chat.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Database/Cocoa/library/library.xcodeproj">
+      </FileRef>
+   </Group>
+</Workspace>
