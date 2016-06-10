@@ -71,7 +71,7 @@ AsyncClient::run(int argc, char* argv[])
             }
             else if(c == 'd')
             {
-                hello->sayHello_async(
+                hello->sayHelloAsync(
                     5000,
                     nullptr,
                     [](exception_ptr e)
@@ -125,4 +125,3 @@ AsyncClient::menu()
         "x: exit\n"
         "?: help\n";
 }
-

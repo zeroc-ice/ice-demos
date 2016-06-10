@@ -20,10 +20,10 @@ public:
     }
 
     virtual void
-    setAdapterDirectProxy_async(string id, shared_ptr<Ice::ObjectPrx> proxy,
-                                function<void ()> response,
-                                function<void (exception_ptr)>,
-                                const Ice::Current&)
+    setAdapterDirectProxyAsync(string id, shared_ptr<Ice::ObjectPrx> proxy,
+                               function<void ()> response,
+                               function<void (exception_ptr)>,
+                               const Ice::Current&)
     {
         if(!proxy)
         {
@@ -37,16 +37,16 @@ public:
     }
 
     virtual void
-    setReplicatedAdapterDirectProxy_async(string, string, shared_ptr<Ice::ObjectPrx>, function<void ()> response,
-                                          function<void (exception_ptr)>, const Ice::Current&)
+    setReplicatedAdapterDirectProxyAsync(string, string, shared_ptr<Ice::ObjectPrx>, function<void ()> response,
+                                         function<void (exception_ptr)>, const Ice::Current&)
     {
         assert(false); // Not used by this demo
         response();
     }
 
     virtual void
-    setServerProcessProxy_async(string, shared_ptr<Ice::ProcessPrx>, function<void ()> response,
-                                function<void (exception_ptr)>, const Ice::Current&)
+    setServerProcessProxyAsync(string, shared_ptr<Ice::ProcessPrx>, function<void ()> response,
+                               function<void (exception_ptr)>, const Ice::Current&)
     {
         assert(false); // Not used by this demo
         response();
@@ -81,20 +81,20 @@ public:
     }
 
     virtual void
-    findObjectById_async(Ice::Identity,
-                         function<void (const shared_ptr<Ice::ObjectPrx>&)> response,
-                         function<void (exception_ptr)>,
-                         const Ice::Current&) const
+    findObjectByIdAsync(Ice::Identity,
+                        function<void (const shared_ptr<Ice::ObjectPrx>&)> response,
+                        function<void (exception_ptr)>,
+                        const Ice::Current&) const
     {
         response(nullptr);
     }
 
 
     virtual void
-    findAdapterById_async(string id,
-                          function<void (const shared_ptr<Ice::ObjectPrx>&)> response,
-                          function<void (exception_ptr)>,
-                          const Ice::Current&) const
+    findAdapterByIdAsync(string id,
+                         function<void (const shared_ptr<Ice::ObjectPrx>&)> response,
+                         function<void (exception_ptr)>,
+                         const Ice::Current&) const
     {
         response(_registry->getAdapter(id));
     }

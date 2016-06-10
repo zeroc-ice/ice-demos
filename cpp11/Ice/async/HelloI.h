@@ -15,8 +15,8 @@ class HelloI : public Demo::Hello
 public:
 
     HelloI(const std::shared_ptr<WorkQueue>&);
-    virtual void sayHello_async(int, std::function<void ()>, std::function<void (std::exception_ptr)>,
-                                const Ice::Current&);
+    virtual void sayHelloAsync(int, std::function<void()>, std::function<void(std::exception_ptr)>,
+                               const Ice::Current&);
     virtual void shutdown(const Ice::Current&);
 
 private:
