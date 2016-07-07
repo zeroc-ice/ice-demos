@@ -11,18 +11,6 @@
 
 using namespace std;
 
-class TalkApp : public Ice::Application
-{
-public:
-
-    TalkApp();
-    virtual int run(int, char*[]);
-
-private:
-
-    void usage();
-};
-
 class PeerI;
 typedef IceUtil::Handle<PeerI> PeerIPtr;
 
@@ -209,6 +197,10 @@ public:
         _peer = Talk::PeerPrx::uncheckedCast(curr.con->createProxy(id));
 
         Ice::ConnectionInfoPtr info = curr.con->getInfo();
+        if(info->underlying)
+        {
+            info = info->underlying;
+        }
         IceBT::ConnectionInfoPtr btInfo = IceBT::ConnectionInfoPtr::dynamicCast(info);
         assert(btInfo);
         cout << ">>>> Incoming connection from " << btInfo->remoteAddress << endl;
@@ -264,6 +256,26 @@ private:
     Ice::Identity _id;
 };
 
+class TalkApp : public Ice::Application
+{
+public:
+
+    TalkApp();
+    virtual int run(int, char*[]);
+
+private:
+
+    void connect(const string&);
+    void usage();
+
+    Ice::ObjectAdapterPtr _adapter;
+    PeerIPtr _incomingPeer;
+    PeerIPtr _peer;
+};
+
+static string btUUID = "6a193943-1754-4869-8d0a-ddc5f9a2b294";
+static string btsUUID = "043257a6-d67c-4000-aa62-2ffe4583d324";
+
 int
 main(int argc, char* argv[])
 {
@@ -296,15 +308,15 @@ TalkApp::run(int argc, char*[])
     // Create an object adapter with the name "Talk". Its endpoint is defined
     // in the configuration file 'config'.
     //
-    Ice::ObjectAdapterPtr adapter = communicator()->createObjectAdapter("Talk");
+    _adapter = communicator()->createObjectAdapter("Talk");
 
     //
     // Install a servant with the well-known identity "peer".
     //
-    PeerIPtr incomingPeer = new IncomingPeerI;
-    PeerIPtr peer = incomingPeer;
-    adapter->add(peer, communicator()->stringToIdentity("peer"));
-    adapter->activate();
+    _incomingPeer = new IncomingPeerI;
+    _peer = _incomingPeer;
+    _adapter->add(_peer, communicator()->stringToIdentity("peer"));
+    _adapter->activate();
 
     usage();
 
@@ -320,71 +332,14 @@ TalkApp::run(int argc, char*[])
         {
             if(s[0] == '/')
             {
-                if(s.size() > 8 && s.substr(0, 8) == "/connect")
+                if(s.size() > 8 && (s.substr(0, 8) == "/connect" || s.substr(0, 9) == "/sconnect"))
                 {
-                    string::size_type sp = s.find(' ');
-                    if(sp == string::npos)
-                    {
-                        usage();
-                        continue;
-                    }
-                    sp = s.find_first_not_of(' ', sp);
-                    if(sp == string::npos)
-                    {
-                        usage();
-                        continue;
-                    }
-                    string addr = s.substr(sp);
-
-                    //
-                    // Generate a UUID for our callback servant. We have to pass this identity to
-                    // the remote peer so that it can invoke callbacks on the servant over a
-                    // bidirectional connection.
-                    //
-                    Ice::Identity id = communicator()->stringToIdentity(IceUtil::generateUUID());
-                    PeerIPtr servant;
-
-                    try
-                    {
-                        //
-                        // Create a proxy for the remote peer using the address given by the user
-                        // and the well-known UUID for the talk service.
-                        //
-                        Talk::PeerPrx prx = Talk::PeerPrx::uncheckedCast(
-                            communicator()->stringToProxy(
-                                "peer:bt -a \"" + addr + "\" -u 6a193943-1754-4869-8d0a-ddc5f9a2b294"));
-                        cout << ">>>> Connecting to " << addr << endl;
-
-                        //
-                        // Configure an object adapter for the connection and add the servant. This enables
-                        // us to receive callbacks via this connection. Calling ice_getConnection() blocks
-                        // until the connection to the peer is established.
-                        //
-                        Ice::ConnectionPtr con = prx->ice_getConnection();
-                        con->setAdapter(adapter);
-                        servant = new OutgoingPeerI(adapter, id, prx);
-                        adapter->add(servant, id);
-
-                        //
-                        // Now we're ready to notify the peer that we'd like to connect.
-                        //
-                        prx->connect(id);
-                        peer = servant;
-                        cout << ">>>> Connected to " << addr << endl;
-                    }
-                    catch(const Ice::Exception& ex)
-                    {
-                        cout << ">>>> " << ex << endl;
-                        if(servant)
-                        {
-                            adapter->remove(id);
-                        }
-                    }
+                    connect(s);
                 }
                 else if(s == "/disconnect")
                 {
-                    peer->close();
-                    peer = incomingPeer;
+                    _peer->close();
+                    _peer = _incomingPeer;
                 }
                 else if(s == "/quit")
                 {
@@ -397,7 +352,7 @@ TalkApp::run(int argc, char*[])
             }
             else
             {
-                peer->sendMessage(s);
+                _peer->sendMessage(s);
             }
         }
     }
@@ -408,11 +363,84 @@ TalkApp::run(int argc, char*[])
 }
 
 void
+TalkApp::connect(const string& cmd)
+{
+    const bool secure = cmd.find("/sconnect") == 0;
+
+    string::size_type sp = cmd.find(' ');
+    if(sp == string::npos)
+    {
+        usage();
+        return;
+    }
+    sp = cmd.find_first_not_of(' ', sp);
+    if(sp == string::npos)
+    {
+        usage();
+        return;
+    }
+    string addr = cmd.substr(sp);
+
+    //
+    // Generate a UUID for our callback servant. We have to pass this identity to
+    // the remote peer so that it can invoke callbacks on the servant over a
+    // bidirectional connection.
+    //
+    Ice::Identity id = communicator()->stringToIdentity(IceUtil::generateUUID());
+    PeerIPtr servant;
+
+    try
+    {
+        string proxy = "peer:";
+        if(secure)
+        {
+            proxy += "bts -a \"" + addr + "\" -u " + btsUUID;
+        }
+        else
+        {
+            proxy += "bt -a \"" + addr + "\" -u " + btUUID;
+        }
+        //
+        // Create a proxy for the remote peer using the address given by the user
+        // and the well-known UUID for the talk service.
+        //
+        Talk::PeerPrx prx = Talk::PeerPrx::uncheckedCast(communicator()->stringToProxy(proxy));
+        cout << ">>>> Connecting to " << addr << endl;
+
+        //
+        // Configure an object adapter for the connection and add the servant. This enables
+        // us to receive callbacks via this connection. Calling ice_getConnection() blocks
+        // until the connection to the peer is established.
+        //
+        Ice::ConnectionPtr con = prx->ice_getConnection();
+        con->setAdapter(_adapter);
+        servant = new OutgoingPeerI(_adapter, id, prx);
+        _adapter->add(servant, id);
+
+        //
+        // Now we're ready to notify the peer that we'd like to connect.
+        //
+        prx->connect(id);
+        _peer = servant;
+        cout << ">>>> Connected to " << addr << endl;
+    }
+    catch(const Ice::Exception& ex)
+    {
+        cout << ">>>> " << ex << endl;
+        if(servant)
+        {
+            _adapter->remove(id);
+        }
+    }
+}
+
+void
 TalkApp::usage()
 {
     cout << endl;
     cout << "Usage:" << endl;
     cout << "  /connect <addr>" << endl;
+    cout << "  /sconnect <addr>" << endl;
     cout << "  /disconnect" << endl;
     cout << "  /quit" << endl;
     cout << endl;

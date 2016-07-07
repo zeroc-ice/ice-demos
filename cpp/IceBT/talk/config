@@ -13,7 +13,7 @@
 # The value for the --name option will appear in the Bluetooth SDP
 # registry but is only for informational purposes.
 #
-Talk.Endpoints=bt -u "6a193943-1754-4869-8d0a-ddc5f9a2b294" --name "Ice Bluetooth Talk Service"
+Talk.Endpoints=bt -u "6a193943-1754-4869-8d0a-ddc5f9a2b294" --name "Ice Bluetooth Talk Service":bts -u "043257a6-d67c-4000-aa62-2ffe4583d324" --name "Ice Bluetooth Talk Service (SSL)"
 
 #
 # Install the IceBT plug-in.
@@ -42,3 +42,22 @@ Ice.Warn.Connections=1
 # 1 = trace protocol messages
 #
 #Ice.Trace.Protocol=1
+
+#
+# Security Tracing
+#
+# 0 = no security tracing
+# 1 = trace messages
+#
+#IceSSL.Trace.Security=1
+
+#
+# SSL Configuration
+#
+Ice.Plugin.IceSSL=IceSSL:createIceSSL
+IceSSL.DefaultDir=../../../certs
+IceSSL.CAs=cacert.pem
+IceSSL.CertFile=server.p12
+IceSSL.Password=password
+IceSSL.Keychain=server.keychain
+IceSSL.KeychainPassword=password
