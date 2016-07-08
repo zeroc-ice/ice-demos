@@ -45,9 +45,10 @@ public interface Service
      *
      * @param address The device address of the peer.
      * @param name The device name of the peer (or null).
+     * @param ssl True to use SSL over Bluetooth.
      *
      */
-    void connect(String address, String name);
+    void connect(String address, String name, boolean ssl);
 
     /**
      *

@@ -11,6 +11,7 @@
 
     <!-- Options Menu -->
     <string name="connect">Connect</string>
+    <string name="connectSSL">Connect with BT+SSL</string>
     <string name="disconnect">Disconnect</string>
     <string name="discoverable">Make discoverable</string>
     <string name="clear">Clear log</string>

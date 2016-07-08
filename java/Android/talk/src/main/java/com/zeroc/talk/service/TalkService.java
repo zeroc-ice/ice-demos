@@ -9,6 +9,7 @@ package com.zeroc.talk.service;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
+import android.os.Build.VERSION;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -25,10 +26,12 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
     private Ice.ObjectAdapter _adapter;
 
     //
-    // The well-known Bluetooth service UUID for the Ice talk service, as well as the service name.
+    // The well-known Bluetooth service UUIDs for the Ice talk service.
     //
     private final static String SERVICE_ID = "6a193943-1754-4869-8d0a-ddc5f9a2b294";
     private final static String SERVICE_NAME = "Ice Bluetooth Talk";
+    private final static String SSL_SERVICE_ID = "043257a6-d67c-4000-aa62-2ffe4583d324";
+    private final static String SSL_SERVICE_NAME = "Ice Bluetooth Talk (SSL)";
 
     //
     // PeerInfo tracks some state about a peer.
@@ -194,7 +197,25 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
             // You can enable network tracing by setting Ice.Trace.Network to 1, 2 or 3. The output
             // will be in logcat.
             //
-            initData.properties.setProperty("Ice.Trace.Network", "0");
+            initData.properties.setProperty("Ice.Trace.Network", "3");
+
+            //
+            // The IceSSL plug-in is required for using SSL-over-Bluetooth.
+            //
+            initData.properties.setProperty("IceSSL.Trace.Security", "3");
+            initData.properties.setProperty("IceSSL.KeystoreType", "BKS");
+            initData.properties.setProperty("IceSSL.TruststoreType", "BKS");
+            initData.properties.setProperty("IceSSL.Password", "password");
+            initData.properties.setProperty("Ice.InitPlugins", "0");
+            initData.properties.setProperty("Ice.Plugin.IceSSL", "IceSSL.PluginFactory");
+
+            //
+            // SDK versions < 21 only support TLSv1 with SSLEngine.
+            //
+            if(VERSION.SDK_INT < 21)
+            {
+                initData.properties.setProperty("IceSSL.Protocols", "tls1_0");
+            }
 
             //
             // Install the IceBT transport.
@@ -207,11 +228,26 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
             _communicator = Ice.Util.initialize(initData);
 
             //
+            // Complete initialization of the IceSSL plug-in.
+            //
+            // Be sure to pass the same input stream to the SSL plug-in for
+            // both the keystore and the truststore. This makes startup a
+            // little faster since the plugin will not initialize
+            // two keystores.
+            //
+            IceSSL.Plugin plugin = (IceSSL.Plugin)_communicator.getPluginManager().getPlugin("IceSSL");
+            java.io.InputStream certs = getResources().openRawResource(R.raw.client);
+            plugin.setKeystoreStream(certs);
+            plugin.setTruststoreStream(certs);
+            _communicator.getPluginManager().initializePlugins();
+
+            //
             // Create an object adapter for receiving callbacks and incoming connections. The Bluetooth
             // endpoint specifies the talk service's ID and name.
             //
             _adapter = _communicator.createObjectAdapterWithEndpoints("",
-                    "bt -u " + SERVICE_ID + " --name \"" + SERVICE_NAME + "\"");
+                    "bt -u " + SERVICE_ID + " --name \"" + SERVICE_NAME + "\":" +
+                    "bts -u " + SSL_SERVICE_ID + " --name \"" + SSL_SERVICE_NAME + "\"");
 
             //
             // Install a servant for handling incoming connections from peers.
@@ -242,7 +278,7 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
         }
     }
 
-    public void connect(String address, String name)
+    public void connect(String address, String name, boolean ssl)
     {
         final PeerInfo info = new PeerInfo();
 
@@ -250,11 +286,24 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
         info.name = name;
 
         //
+        // Compose a stringified proxy for the peer. The identity of the remote object is "peer". The UUID in the
+        // proxy is the well-known Bluetooth service ID for the Talk service. The peer's address must be enclosed
+        // in quotes.
+        //
+        String proxy = "peer:";
+        if(ssl)
+        {
+            proxy += "bts -a \"" + address + "\" -u " + SSL_SERVICE_ID;
+        }
+        else
+        {
+            proxy += "bt -a \"" + address + "\" -u " + SERVICE_ID;
+        }
+        //
         // Create a proxy for the peer. The identity of the remote object is "peer". The UUID in the
         // proxy is the well-known Bluetooth service ID for the Talk service.
         //
-        info.peer = Talk.PeerPrxHelper.uncheckedCast(
-            _communicator.stringToProxy("peer:bt -a \"" + address + "\" -u " + SERVICE_ID));
+        info.peer = Talk.PeerPrxHelper.uncheckedCast(_communicator.stringToProxy(proxy));
 
         //
         // Register a unique servant with the OA for each outgoing connection. This servant receives
@@ -421,11 +470,16 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
             throw new Talk.ConnectionException("Peer is busy");
         }
 
-        IceBT.ConnectionInfo ci = (IceBT.ConnectionInfo)con.getInfo();
+        Ice.ConnectionInfo ci = con.getInfo();
+        if(ci.underlying != null)
+        {
+            ci = ci.underlying;
+        }
+        IceBT.ConnectionInfo btci = (IceBT.ConnectionInfo)ci;
 
         PeerInfo info = new PeerInfo();
         info.peer = Talk.PeerPrxHelper.uncheckedCast(con.createProxy(id));
-        info.address = ci.remoteAddress;
+        info.address = btci.remoteAddress;
         info.servant = null;
 
         setState(STATE_CONNECTED); // Also notifies the activity.

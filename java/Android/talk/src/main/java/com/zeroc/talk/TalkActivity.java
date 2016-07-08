@@ -45,7 +45,8 @@ public class TalkActivity extends Activity
     private static final int MAX_MESSAGE_SIZE = 1024;
 
     private static final int REQUEST_CONNECT_DEVICE = 1;
-    private static final int REQUEST_ENABLE_BT = 2;
+    private static final int REQUEST_CONNECT_DEVICE_SSL = 2;
+    private static final int REQUEST_ENABLE_BT = 3;
 
     private EditText _text;
     private ArrayAdapter<String> _adapter;
@@ -185,6 +186,13 @@ public class TalkActivity extends Activity
             return true;
         }
 
+        case R.id.connectSSL:
+        {
+            Intent intent = new Intent(this, DeviceActivity.class);
+            startActivityForResult(intent, REQUEST_CONNECT_DEVICE_SSL);
+            return true;
+        }
+
         case R.id.disconnect:
         {
             disconnect();
@@ -221,7 +229,13 @@ public class TalkActivity extends Activity
         case REQUEST_CONNECT_DEVICE:
             if(res == Activity.RESULT_OK)
             {
-                connect(data);
+                connect(data, false);
+            }
+            break;
+        case REQUEST_CONNECT_DEVICE_SSL:
+            if(res == Activity.RESULT_OK)
+            {
+                connect(data, true);
             }
             break;
         case REQUEST_ENABLE_BT:
@@ -322,14 +336,14 @@ public class TalkActivity extends Activity
         _service.send(t);
     }
 
-    private void connect(Intent data)
+    private void connect(Intent data, boolean ssl)
     {
         //
         // Extract the address and name of the peer from the result intent returned by DeviceActivity.
         //
         String address = data.getExtras().getString(DeviceActivity.EXTRA_DEVICE_ADDRESS);
         String name = data.getExtras().getString(DeviceActivity.EXTRA_DEVICE_NAME);
-        _service.connect(address, name);
+        _service.connect(address, name, ssl);
     }
 
     private void disconnect()
