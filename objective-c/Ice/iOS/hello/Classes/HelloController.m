@@ -46,6 +46,10 @@ static NSString* hostnameKey = @"hostnameKey";
 }
 -(void)viewDidLoad
 {
+    ICEregisterIceDiscovery(NO); // Register the plugin but don't load it on communicator initialization.
+    ICEregisterIceSSL(YES);
+    ICEregisterIceIAP(YES);
+    
     ICEInitializationData* initData = [ICEInitializationData initializationData];
     initData.properties = [ICEUtil createProperties];
     [initData.properties setProperty:@"Ice.Plugin.IceDiscovery" value:@"IceDiscovery:createIceDiscovery"];
@@ -164,11 +168,15 @@ static NSString* hostnameKey = @"hostnameKey";
         {
             @try
             {
-                ICEConnectionInfo* info = [connection getInfo];
-                if([info isKindOfClass:[ICEIPConnectionInfo class]])
+                // Loop through the connection informations until we find an IPConnectionInfo class.
+                for(ICEConnectionInfo* info = [connection getInfo]; info; info = info.underlying)
                 {
-                    hostnameTextField.text = ((ICEIPConnectionInfo*)info).remoteAddress;
-                    [[NSUserDefaults standardUserDefaults] setObject:hostnameTextField.text forKey:hostnameKey];
+                    if([info isKindOfClass:[ICEIPConnectionInfo class]])
+                    {
+                        hostnameTextField.text = ((ICEIPConnectionInfo*)info).remoteAddress;
+                        [[NSUserDefaults standardUserDefaults] setObject:hostnameTextField.text forKey:hostnameKey];
+                        break;
+                    }
                 }
             }
             @catch(ICELocalException* ex)

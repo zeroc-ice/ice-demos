@@ -53,19 +53,22 @@ public:
     HelloClient(HelloController* controller) :
         _controller(controller), _response(false)
     {
+        Ice::registerIceDiscovery(false); // Register the plugin but don't load it on initialization
+        Ice::registerIceSSL();
+        
         Ice::InitializationData initData;
         initData.properties = Ice::createProperties();
         initData.properties->setProperty("IceSSL.CheckCertName", "0");
         initData.properties->setProperty("IceSSL.CAs", "cacert.der");
         initData.properties->setProperty("IceSSL.CertFile", "client.p12");
         initData.properties->setProperty("IceSSL.Password", "password");
-        initData.properties->setProperty("Ice.Plugin.IceDiscovery", "IceDiscovery:createIceDiscovery");
+        initData.properties->setProperty("Ice.Plugin.IceDiscovery", "1");
         initData.dispatcher = new Dispatcher();
         try
         {
             _communicator = Ice::initialize(initData);
         }
-        catch(const Ice::PluginInitializationException&)
+        catch(const Ice::PluginInitializationException& ex)
         {
             //
             // IceDiscovery might fail to join the multicast group if there's no network supporting
@@ -193,8 +196,16 @@ public:
         {
             try
             {
-                Ice::IPConnectionInfoPtr info = Ice::IPConnectionInfoPtr::dynamicCast(connection->getInfo());
-                hostname = [NSString stringWithUTF8String:info->remoteAddress.c_str()];
+                // Loop through the connection informations until we find an IPConnectionInfo class.
+                for(Ice::ConnectionInfoPtr info = connection->getInfo(); info; info = info->underlying)
+                {
+                    Ice::IPConnectionInfoPtr ipinfo = Ice::IPConnectionInfoPtr::dynamicCast(info);
+                    if(ipinfo)
+                    {
+                        hostname = [NSString stringWithUTF8String:ipinfo->remoteAddress.c_str()];
+                        break;
+                    }
+                }
             }
             catch(const Ice::LocalException&)
             {

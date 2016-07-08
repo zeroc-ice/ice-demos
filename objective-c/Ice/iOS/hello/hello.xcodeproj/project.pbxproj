@@ -10,7 +10,7 @@
 		14060BEB161D63830077BEE0 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 14060BEA161D63830077BEE0 /* Default-568h@2x.png */; };
 		14176C841A70FC7500331986 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14176C831A70FC7500331986 /* CFNetwork.framework */; };
 		14176C861A70FC8500331986 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14176C851A70FC8500331986 /* Security.framework */; };
-		14EA07B91D016CE5008377E9 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14EA07B81D016CE5008377E9 /* ExternalAccessory.framework */; };
+		1446FA431D2FBEF2002278C4 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1446FA421D2FBEF2002278C4 /* ExternalAccessory.framework */; };
 		14EAF6F20E93B19A00EF4807 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 14EAF6F10E93B19A00EF4807 /* README.md */; };
 		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
@@ -30,7 +30,7 @@
 		14060BEA161D63830077BEE0 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		14176C831A70FC7500331986 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		14176C851A70FC8500331986 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		14EA07B81D016CE5008377E9 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
+		1446FA421D2FBEF2002278C4 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
 		14EAF6F10E93B19A00EF4807 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		1D3623240D0F684500981E51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -56,7 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				14EA07B91D016CE5008377E9 /* ExternalAccessory.framework in Frameworks */,
+				1446FA431D2FBEF2002278C4 /* ExternalAccessory.framework in Frameworks */,
 				14176C861A70FC8500331986 /* Security.framework in Frameworks */,
 				14176C841A70FC7500331986 /* CFNetwork.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
@@ -125,7 +125,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				14EA07B81D016CE5008377E9 /* ExternalAccessory.framework */,
+				1446FA421D2FBEF2002278C4 /* ExternalAccessory.framework */,
 				14176C851A70FC8500331986 /* Security.framework */,
 				14176C831A70FC7500331986 /* CFNetwork.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
@@ -242,7 +242,7 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				OTHER_CFLAGS = "-fobjc-arc-exceptions";
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = "-lIceIAP";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.zeroc.${PRODUCT_NAME:identifier}";
 				PRODUCT_NAME = Hello;
 				SDKROOT = iphoneos;
@@ -269,7 +269,7 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				OTHER_CFLAGS = "-fobjc-arc-exceptions";
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = "-lIceIAP";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.zeroc.${PRODUCT_NAME:identifier}";
 				PRODUCT_NAME = Hello;
 				SDKROOT = iphoneos;

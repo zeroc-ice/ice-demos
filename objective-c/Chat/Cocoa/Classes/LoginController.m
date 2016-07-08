@@ -37,6 +37,9 @@ NSString* const passwordKey = @"passwordKey";
 
 -(void)awakeFromNib
 {
+    // Register and load the IceSSL plugin on communicator initialization.
+    ICEregisterIceSSL(YES);
+
     // Restore the field values from the app defaults.
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
 	

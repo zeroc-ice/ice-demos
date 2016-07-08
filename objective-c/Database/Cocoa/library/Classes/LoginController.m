@@ -38,6 +38,9 @@ NSString* const passwordKey = @"passwordKey";
 
 -(void)awakeFromNib
 {
+    // Register and load the IceSSL plugin on communicator initialization.
+    ICEregisterIceSSL(YES);
+    
     // Initialize the fields from the application defaults.
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
 
@@ -118,7 +121,7 @@ NSString* const passwordKey = @"passwordKey";
     id<ICERouterPrx> glacier2router = [ICERouterPrx uncheckedCast:proxy];
     id<GLACIER2SessionPrx> glacier2session;
     NSMutableString* category;
-    ICEInt sessionTimeout;
+    ICELong sessionTimeout;
 
     [router createGlacier2Session:glacier2router
                            userId:usernameField.stringValue

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		14EA07B11D016C4B008377E9 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14EA07B01D016C4B008377E9 /* ExternalAccessory.framework */; };
 		14EAF7150E93C01700EF4807 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 14EAF7140E93C01700EF4807 /* README.md */; };
 		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
@@ -31,7 +30,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		14EA07B01D016C4B008377E9 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
 		14EAF7140E93C01700EF4807 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		1D3623240D0F684500981E51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -66,7 +64,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				14EA07B11D016C4B008377E9 /* ExternalAccessory.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				344125C10FD8E81200C8D69C /* Security.framework in Frameworks */,
 				344125C20FD8E81200C8D69C /* CFNetwork.framework in Frameworks */,
@@ -143,7 +140,6 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				14EA07B01D016C4B008377E9 /* ExternalAccessory.framework */,
 				344125BF0FD8E81200C8D69C /* Security.framework */,
 				344125C00FD8E81200C8D69C /* CFNetwork.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,

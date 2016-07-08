@@ -188,13 +188,19 @@ hello::MainPage::hello_Click(Platform::Object^ sender, Windows::UI::Xaml::Routed
                                                 {
                                                     try
                                                     {
-                                                        Ice::IPConnectionInfoPtr info =
-                                                            Ice::IPConnectionInfoPtr::dynamicCast(
-                                                                _helloPrx->ice_getCachedConnection()->getInfo());
-                                                        if(info)
+                                                        // Loop through the connection informations until we find an
+                                                        // IPConnectionInfo class.
+                                                        for(Ice::ConnectionInfoPtr info = connection->getInfo(); info;
+                                                            info = info.underlying)
                                                         {
-                                                            hostname->Text = ref new String(
-                                                                IceUtil::stringToWstring(info->remoteAddress).c_str());
+                                                            Ice::IPConnectionInfoPtr ipinfo =
+                                                                Ice::IPConnectionInfoPtr::dynamicCast(info);
+                                                            if(ipinfo)
+                                                            {
+                                                                hostname->Text = ref new String(
+                                                                    IceUtil::stringToWstring(info->remoteAddress).c_str());
+                                                                break;
+                                                            }
                                                         }
                                                     }
                                                     catch(const Ice::LocalException&)

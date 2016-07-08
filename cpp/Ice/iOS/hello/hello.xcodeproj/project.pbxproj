@@ -11,7 +11,6 @@
 		148D1E3417662D7D00ADA0C9 /* cacert.der in Resources */ = {isa = PBXBuildFile; fileRef = 148D1E3317662D7D00ADA0C9 /* cacert.der */; };
 		14A268EB0E83FD0A00E562FE /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14A268E90E83FD0A00E562FE /* CFNetwork.framework */; };
 		14A268EC0E83FD0A00E562FE /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14A268EA0E83FD0A00E562FE /* Security.framework */; };
-		14D2DE8B1CFDECB500D599FD /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14D2DE8A1CFDECB500D599FD /* ExternalAccessory.framework */; };
 		14EAF6F20E93B19A00EF4807 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 14EAF6F10E93B19A00EF4807 /* README.md */; };
 		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
@@ -31,7 +30,6 @@
 		148D1E3317662D7D00ADA0C9 /* cacert.der */ = {isa = PBXFileReference; lastKnownFileType = file; name = cacert.der; path = ../../../../certs/cacert.der; sourceTree = "<group>"; };
 		14A268E90E83FD0A00E562FE /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		14A268EA0E83FD0A00E562FE /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		14D2DE8A1CFDECB500D599FD /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
 		14EAF6F10E93B19A00EF4807 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		1D3623240D0F684500981E51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -48,7 +46,6 @@
 		8229108A1464A85E003DC504 /* HelloController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HelloController.mm; sourceTree = "<group>"; };
 		82D3968B1823207D000BA551 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D81311941B2F51AC00DFAE96 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,7 +53,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				14D2DE8B1CFDECB500D599FD /* ExternalAccessory.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				14A268EB0E83FD0A00E562FE /* CFNetwork.framework in Frameworks */,
 				14A268EC0E83FD0A00E562FE /* Security.framework in Frameworks */,
@@ -124,8 +120,6 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				14D2DE8A1CFDECB500D599FD /* ExternalAccessory.framework */,
-				D81311941B2F51AC00DFAE96 /* libiconv.dylib */,
 				14A268E90E83FD0A00E562FE /* CFNetwork.framework */,
 				14A268EA0E83FD0A00E562FE /* Security.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
@@ -230,18 +224,13 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = (
 					Classes,
 					generated,
 				);
 				INFOPLIST_FILE = Info.plist;
-				OTHER_CFLAGS = "-DICE_STATIC_LIBS";
-				OTHER_CPLUSPLUSFLAGS = "-DICE_STATIC_LIBS";
-				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.zeroc.Hello-Cpp";
 				PRODUCT_NAME = hello;
 				SDKROOT = iphoneos;
@@ -260,17 +249,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = (
 					Classes,
 					generated,
 				);
 				INFOPLIST_FILE = Info.plist;
-				OTHER_CFLAGS = "-DICE_STATIC_LIBS";
-				OTHER_CPLUSPLUSFLAGS = "-DICE_STATIC_LIBS";
-				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.zeroc.Hello-Cpp";
 				PRODUCT_NAME = hello;
 				SDKROOT = iphoneos;

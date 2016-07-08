@@ -8,11 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		14060BFD161D66EA0077BEE0 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 14060BFC161D66EA0077BEE0 /* Default-568h@2x.png */; };
-		14176C881A70FC9F00331986 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14176C871A70FC9F00331986 /* Security.framework */; };
-		14176C8A1A70FCA700331986 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14176C891A70FCA700331986 /* UIKit.framework */; };
-		14176C8C1A70FCAD00331986 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14176C8B1A70FCAD00331986 /* CFNetwork.framework */; };
-		14176C8E1A70FCC800331986 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14176C8D1A70FCC800331986 /* CoreGraphics.framework */; };
-		14EA07B51D016CD2008377E9 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14EA07B41D016CD2008377E9 /* ExternalAccessory.framework */; };
+		1446FA451D2FBFDD002278C4 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1446FA441D2FBFDD002278C4 /* CFNetwork.framework */; };
+		1446FA471D2FBFE2002278C4 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1446FA461D2FBFE2002278C4 /* Security.framework */; };
+		1446FA491D2FBFE8002278C4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1446FA481D2FBFE8002278C4 /* UIKit.framework */; };
+		1446FA511D2FC0AC002278C4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1446FA501D2FC0AC002278C4 /* CoreGraphics.framework */; };
 		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		280E754D0DD40C5E005A515E /* FlipsideView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 280E754A0DD40C5E005A515E /* FlipsideView.xib */; };
@@ -38,11 +37,10 @@
 
 /* Begin PBXFileReference section */
 		14060BFC161D66EA0077BEE0 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		14176C871A70FC9F00331986 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
-		14176C891A70FCA700331986 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
-		14176C8B1A70FCAD00331986 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/CFNetwork.framework; sourceTree = DEVELOPER_DIR; };
-		14176C8D1A70FCC800331986 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
-		14EA07B41D016CD2008377E9 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.2.sdk/System/Library/Frameworks/ExternalAccessory.framework; sourceTree = DEVELOPER_DIR; };
+		1446FA441D2FBFDD002278C4 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.2.sdk/System/Library/Frameworks/CFNetwork.framework; sourceTree = DEVELOPER_DIR; };
+		1446FA461D2FBFE2002278C4 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.2.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
+		1446FA481D2FBFE8002278C4 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.2.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		1446FA501D2FC0AC002278C4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.2.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		1D3623240D0F684500981E51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* Router.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Router.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -87,11 +85,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				14EA07B51D016CD2008377E9 /* ExternalAccessory.framework in Frameworks */,
-				14176C8E1A70FCC800331986 /* CoreGraphics.framework in Frameworks */,
-				14176C8C1A70FCAD00331986 /* CFNetwork.framework in Frameworks */,
-				14176C8A1A70FCA700331986 /* UIKit.framework in Frameworks */,
-				14176C881A70FC9F00331986 /* Security.framework in Frameworks */,
+				1446FA511D2FC0AC002278C4 /* CoreGraphics.framework in Frameworks */,
+				1446FA491D2FBFE8002278C4 /* UIKit.framework in Frameworks */,
+				1446FA471D2FBFE2002278C4 /* Security.framework in Frameworks */,
+				1446FA451D2FBFDD002278C4 /* CFNetwork.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -184,11 +181,10 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				14EA07B41D016CD2008377E9 /* ExternalAccessory.framework */,
-				14176C8D1A70FCC800331986 /* CoreGraphics.framework */,
-				14176C8B1A70FCAD00331986 /* CFNetwork.framework */,
-				14176C891A70FCA700331986 /* UIKit.framework */,
-				14176C871A70FC9F00331986 /* Security.framework */,
+				1446FA501D2FC0AC002278C4 /* CoreGraphics.framework */,
+				1446FA481D2FBFE8002278C4 /* UIKit.framework */,
+				1446FA461D2FBFE2002278C4 /* Security.framework */,
+				1446FA441D2FBFDD002278C4 /* CFNetwork.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

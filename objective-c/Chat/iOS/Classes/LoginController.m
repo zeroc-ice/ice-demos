@@ -42,6 +42,9 @@ static NSString* sslKey = @"sslKey";
 
 - (void)viewDidLoad
 {
+    // Register IceSSL plugin and load it on communicator initialization.
+    ICEregisterIceSSL(YES);
+
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
 
     // Set the default values, and show the clear button in the text field.
@@ -55,9 +58,7 @@ static NSString* sslKey = @"sslKey";
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(applicationDidEnterBackground) 
                                                  name:UIApplicationDidEnterBackgroundNotification
-                                               object:nil]; 
-    
-    
+                                               object:nil];
 }
 
 -(void) connecting:(BOOL)v

@@ -51,7 +51,11 @@ static NSString* passwordKey = @"passwordKey";
 }
 
 - (void)viewDidLoad {
-	NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+
+    // Register IceSSL plugin and load it on communicator initialization.
+    ICEregisterIceSSL(YES);
+
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
 
     // Set the default values, and show the clear button in the text field.
     usernameField.text =  [defaults stringForKey:usernameKey];
@@ -348,7 +352,7 @@ static NSString* passwordKey = @"passwordKey";
         [self destroySession];
 		return;
 	}
-
+    
     ICEInitializationData* initData = [ICEInitializationData initializationData];
 
     initData.properties = [ICEUtil createProperties];
