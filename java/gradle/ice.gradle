@@ -8,6 +8,18 @@ if (!project.plugins.findPlugin(com.zeroc.gradle.icebuilder.slice.SlicePlugin)) 
     project.apply(plugin: com.zeroc.gradle.icebuilder.slice.SlicePlugin)
 }
 
+if(this.cppPlatform) {
+    slice.cppPlatform = this.cppPlatform
+}
+
+if(this.cppConfiguration) {
+    slice.cppConfiguration = this.cppConfiguration
+}
+
+if(this.iceHome) {
+    slice.iceHome = this.iceHome
+}
+
 buildscript {
 
     ext.iceMavenRepo = System.env.ICE_MAVEN_REPOSITORY ? System.env.ICE_MAVEN_REPOSITORY : "repo.zeroc.com"

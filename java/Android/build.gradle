@@ -9,34 +9,14 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.2.3'
+        classpath 'com.android.tools.build:gradle:2.1.2'
     }
 }
 
 subprojects {
-    project.version = iceVersion
     project.group = "com.zeroc"
 
     apply plugin: 'idea'
-    apply from: "$rootProject.projectDir/gradle/props.gradle"
-
-    repositories {
-        if (distJarDir != null) {
-            flatDir {
-                name "local"
-                dirs distJarDir
-            }
-        }
-
-        if (!useLocalOnly) {
-            maven {
-                url "https://${iceMavenRepo}/nexus/content/repositories/thirdparty"
-            }
-            maven {
-                url "https://${iceMavenRepo}/nexus/content/repositories/releases"
-            }
-        }
-    }
 }
 
 //
@@ -44,5 +24,5 @@ subprojects {
 // the version of gradle needed to build Ice.
 //
 task wrapper(type: Wrapper) {
-    gradleVersion = "2.6"
+    gradleVersion = "2.10"
 }
