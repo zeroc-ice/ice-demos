@@ -79,10 +79,10 @@
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Configuration)\$(PlatformName)\$(ProjectName)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">registryplugin37a2d</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">registryplugin37a2d</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">registryplugin37a2</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">registryplugin37a2</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">registryplugin37a3d</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">registryplugin37a3d</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">registryplugin37a3</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">registryplugin37a3</TargetName>
   </PropertyGroup>
   <PropertyGroup Label="IceBuilder">
     <IceBuilderOutputDir>generated\plugin</IceBuilderOutputDir>
@@ -109,12 +109,12 @@
     </ResourceCompile>
     <Link>
       <AdditionalOptions>/FIXED:NO %(AdditionalOptions)</AdditionalOptions>
-      <OutputFile>registryplugin37a2d.dll</OutputFile>
+      <OutputFile>registryplugin37a3d.dll</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
-      <ImportLibrary>registryplugin37a2d.lib</ImportLibrary>
+      <ImportLibrary>registryplugin37a3d.lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <IceBuilder />
@@ -145,12 +145,12 @@
     </ResourceCompile>
     <Link>
       <AdditionalOptions>/FIXED:NO %(AdditionalOptions)</AdditionalOptions>
-      <OutputFile>registryplugin37a2d.dll</OutputFile>
+      <OutputFile>registryplugin37a3d.dll</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
-      <ImportLibrary>registryplugin37a2d.lib</ImportLibrary>
+      <ImportLibrary>registryplugin37a3d.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <IceBuilder />
@@ -177,11 +177,11 @@
     </ResourceCompile>
     <Link>
       <AdditionalOptions>/FIXED:NO /IGNORE:4089 %(AdditionalOptions)</AdditionalOptions>
-      <OutputFile>registryplugin37a2.dll</OutputFile>
+      <OutputFile>registryplugin37a3.dll</OutputFile>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
-      <ImportLibrary>registryplugin37a2.lib</ImportLibrary>
+      <ImportLibrary>registryplugin37a3.lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <IceBuilder />
@@ -212,11 +212,11 @@
     </ResourceCompile>
     <Link>
       <AdditionalOptions>/FIXED:NO /IGNORE:4089 %(AdditionalOptions)</AdditionalOptions>
-      <OutputFile>registryplugin37a2.dll</OutputFile>
+      <OutputFile>registryplugin37a3.dll</OutputFile>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
-      <ImportLibrary>registryplugin37a2.lib</ImportLibrary>
+      <ImportLibrary>registryplugin37a3.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
   </ItemDefinitionGroup>

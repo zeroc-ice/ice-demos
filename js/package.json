@@ -1,6 +1,6 @@
 {
   "name": "ice-demos",
-  "version": "3.7.0-alpha2",
+  "version": "3.7.0-alpha3",
   "description": "Sample programs for Ice (Internet Communications Engine)",
   "author": "ZeroC, Inc.",
   "homepage": "https://zeroc.com",
@@ -20,9 +20,9 @@
     "gulp-open": "^0.3.2",
     "gulp-uglify": "^1.2.0",
     "http-proxy": "^1.11.1",
-    "ice": "^3.7.0-alpha2",
+    "ice": "^3.7.0-alpha3",
     "npm": "^2.11.1",
-    "slice2js": "^3.7.0-alpha2",
+    "slice2js": "^3.7.0-alpha3",
     "vinyl-paths": "^1.0.0"
   },
   "scripts": {
