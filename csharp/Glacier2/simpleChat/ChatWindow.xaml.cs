@@ -5,18 +5,8 @@
 // **********************************************************************
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 
 using Demo;
@@ -32,22 +22,22 @@ namespace Glacier2.simpleChat.client
             password = "";
         }
 
-        public String routerHost;
-        public String userName;
-        public String password;
+        public string routerHost;
+        public string userName;
+        public string password;
     }
 
     class Util
     {
         static public void
-        locateOnScreen(System.Windows.Window window)
+        locateOnScreen(Window window)
         {
-            window.Left = (System.Windows.SystemParameters.PrimaryScreenWidth - window.Width) / 2;
-            window.Top = (System.Windows.SystemParameters.PrimaryScreenHeight - window.Height) / 2;
+            window.Left = (SystemParameters.PrimaryScreenWidth - window.Width) / 2;
+            window.Top = (SystemParameters.PrimaryScreenHeight - window.Height) / 2;
         }
 
         static public void
-        centerWindow(System.Windows.Window w1, System.Windows.Window w)
+        centerWindow(Window w1, Window w)
         {
             w1.Top = w.Top + ((w.Height - w1.Height) / 2);
             w1.Left = w.Left + ((w.Width - w1.Width) / 2);
@@ -57,9 +47,9 @@ namespace Glacier2.simpleChat.client
     /// <summary>
     /// Interaction logic for ChatWindow.xaml
     /// </summary>
-    public partial class ChatWindow : Window, Glacier2.SessionCallback
+    public partial class ChatWindow : Window, SessionCallback
     {
-        private class ChatCallbackI : Demo.ChatCallbackDisp_
+        private class ChatCallbackI : ChatCallbackDisp_
         {
             public ChatCallbackI(ChatWindow window)
             {
@@ -98,7 +88,7 @@ namespace Glacier2.simpleChat.client
         {
             doLogin();
         }
-        
+
         public void doLogin()
         {
             LoginDialog loginDialog = new LoginDialog(_loginData);
@@ -150,7 +140,7 @@ namespace Glacier2.simpleChat.client
         }
 
         private void
-        isLoginEnabled(object sender,CanExecuteRoutedEventArgs args)
+        isLoginEnabled(object sender, CanExecuteRoutedEventArgs args)
         {
             args.CanExecute = _session == null || !_session.isConnected();
         }
@@ -165,17 +155,24 @@ namespace Glacier2.simpleChat.client
         {
             if(e.Key == Key.Enter)
             {
-                string message = input.Text.Trim();
-                if(message.Length > 0)
-                {
-                    _chat.begin_say(message).whenCompleted(
-                        (Ice.Exception ex) =>
-                        {
-                            appendMessage("<system-message> - " + ex.ToString() + 
-                                Environment.NewLine);
-                        });
-                }
+                sendMessageAsync(input.Text.Trim());
                 input.Text = "";
+            }
+        }
+
+        private async void
+        sendMessageAsync(string message)
+        {
+            if(!string.IsNullOrEmpty(message))
+            {
+                try
+                {
+                    await _chat.sayAsync(message);
+                }
+                catch(AggregateException ex)
+                {
+                    appendMessage("<system-message> - " + ex.ToString() + Environment.NewLine);
+                }
             }
         }
 
@@ -214,9 +211,9 @@ namespace Glacier2.simpleChat.client
 
         private LoginData _loginData = new LoginData();
         private CancelDialog _cancelDialog = new CancelDialog();
-        private Glacier2.SessionFactoryHelper _factory;
-        private Glacier2.SessionHelper _session;
-        private Demo.ChatSessionPrx _chat;
+        private SessionFactoryHelper _factory;
+        private SessionHelper _session;
+        private ChatSessionPrx _chat;
 
         #region Callback Members
 
@@ -233,7 +230,7 @@ namespace Glacier2.simpleChat.client
             status.Content = ex.GetType();
         }
 
-        public void connected(SessionHelper session)
+        public async void connected(SessionHelper session)
         {
             // If the session has been reassigned avoid the
             // spurious callback.
@@ -244,22 +241,22 @@ namespace Glacier2.simpleChat.client
 
             Ice.Object servant = new ChatCallbackI(this);
 
-            Demo.ChatCallbackPrx callback = Demo.ChatCallbackPrxHelper.uncheckedCast(_session.addWithUUID(servant));
-            _chat = Demo.ChatSessionPrxHelper.uncheckedCast(_session.session());
-            _chat.begin_setCallback(callback).whenCompleted(
-                () =>
+            ChatCallbackPrx callback = Demo.ChatCallbackPrxHelper.uncheckedCast(_session.addWithUUID(servant));
+            _chat = ChatSessionPrxHelper.uncheckedCast(_session.session());
+            try
+            {
+                await _chat.setCallbackAsync(callback);
+                closeCancelDialog();
+                input.IsEnabled = true;
+                status.Content = "Connected with " + _loginData.routerHost;
+            }
+            catch(Exception)
+            {
+                if(_session != null)
                 {
-                    closeCancelDialog();
-                    input.IsEnabled = true;
-                    status.Content = "Connected with " + _loginData.routerHost;
-                },
-                (Ice.Exception ex) =>
-                {
-                    if(_session != null)
-                    {
-                        _session.destroy();
-                    }
-                });
+                    _session.destroy();
+                }
+            }
         }
 
         public void createdCommunicator(SessionHelper session)

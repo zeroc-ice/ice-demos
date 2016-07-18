@@ -6,7 +6,6 @@
 
 using System;
 using System.Windows;
-using System.ComponentModel;
 using System.Windows.Data;
 using System.Windows.Threading;
 using System.Windows.Input;
@@ -126,7 +125,7 @@ namespace ChatDemoGUI
         //
         //  Send a message using Ice AMI.
         //
-        public void sendMessage(string message)
+        public async void sendMessage(string message)
         {
             if(_chat != null)
             {
@@ -137,8 +136,23 @@ namespace ChatDemoGUI
                 }
                 else
                 {
-                    AMI_ChatSession_sendI cb = new AMI_ChatSession_sendI(this, _username, message);
-                    _chat.begin_send(message).whenCompleted(cb.response, cb.exception);
+                    try
+                    {
+                        long timestamp = await _chat.sendAsync(message);
+                        userSayEvent(timestamp, _username, message);
+                    }
+                    catch(AggregateException ae)
+                    {
+                        if(ae.InnerException is Chat.InvalidMessageException)
+                        {
+                            Chat.InvalidMessageException e = (Chat.InvalidMessageException)ae.InnerException;
+                            appendMessage("<system-message> - " + e.reason + Environment.NewLine);
+                        }
+                        else
+                        {
+                            destroySession();
+                        }
+                    }
                 }
             }
         }
@@ -228,40 +242,6 @@ namespace ChatDemoGUI
             }
         }
 
-        //
-        // AMI implementation of callback send operation.
-        //
-        public class AMI_ChatSession_sendI
-        {
-            public AMI_ChatSession_sendI(Coordinator coordinator, string name, string message)
-            {
-                _coordinator = coordinator;
-                _name = name;
-                _message = message;
-            }
-
-            public void response(long timestamp)
-            {
-                _coordinator.userSayEvent(timestamp, _name, _message);
-            }
-
-            public void exception(Ice.Exception ex)
-            {
-                if(ex is Chat.InvalidMessageException)
-                {
-                    Chat.InvalidMessageException e = (Chat.InvalidMessageException)ex;
-                    _coordinator.appendMessage("<system-message> - " + e.reason + Environment.NewLine);
-                }
-                else
-                {
-                    _coordinator.destroySession();
-                }
-            }
-            private Coordinator _coordinator = null;
-            private string _name = "";
-            private string _message = "";
-        }
-
         #region Callback Members
 
         public void connectFailed(Glacier2.SessionHelper session, Exception exception)
@@ -297,7 +277,7 @@ namespace ChatDemoGUI
             }
         }
 
-        public void connected(Glacier2.SessionHelper session)
+        public async void connected(Glacier2.SessionHelper session)
         {
 
             //
@@ -322,21 +302,18 @@ namespace ChatDemoGUI
             _chat = Chat.ChatSessionPrxHelper.uncheckedCast(_session.session());
             try
             {
-                _chat.begin_setCallback(callback).whenCompleted(
-                    delegate()
-                        {
-                            _username = ChatUtils.formatUsername(_info.Username);
-                            _info.save();
-                            setState(ClientState.Connected);
-                        },
-                    delegate(Ice.Exception ex)
-                        {
-                            destroySession();
-                        });
+                await _chat.setCallbackAsync(callback);
+                _username = ChatUtils.formatUsername(_info.Username);
+                _info.save();
+                setState(ClientState.Connected);
             }
             catch(Ice.CommunicatorDestroyedException)
             {
                 //Ignore client session was destroyed.
+            }
+            catch(Exception)
+            {
+                destroySession();
             }
         }
 

@@ -188,5 +188,6 @@
   <PropertyGroup Label="IceBuilder">
     <IceBuilderOutputDir>generated</IceBuilderOutputDir>
     <IceBuilderIncludeDirectories>$(IceHome)\slice;$(ProjectDir)</IceBuilderIncludeDirectories>
+    <IceBuilderAdditionalOptions>--compat</IceBuilderAdditionalOptions>
   </PropertyGroup>
 </Project>

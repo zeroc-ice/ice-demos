@@ -7,6 +7,7 @@
 using Demo;
 using System;
 using System.Reflection;
+using System.Threading.Tasks;
 
 [assembly: CLSCompliant(true)]
 
@@ -27,6 +28,26 @@ public class Client
                 "s: shutdown server\n" +
                 "x: exit\n" +
                 "?: help\n");
+        }
+
+        private async void helloAsync(HelloPrx hello)
+        {
+            try
+            {
+                await hello.sayHelloAsync(5000);
+            }
+            catch(AggregateException ae)
+            {
+                if(ae.InnerException is RequestCanceledException)
+                {
+                    Console.Error.WriteLine("RequestCanceledException");
+                }
+                else
+                {
+                    Console.Error.WriteLine("sayHello AMI call failed:");
+                    Console.Error.WriteLine(ae.InnerException);
+                }
+            }
         }
 
         public override int run(string[] args)
@@ -64,20 +85,7 @@ public class Client
                     }
                     else if(line.Equals("d"))
                     {
-                        hello.begin_sayHello(5000).whenCompleted(
-                            () => { },
-                            (Ice.Exception ex) =>
-                            {
-                                if(ex is RequestCanceledException)
-                                {
-                                    Console.Error.WriteLine("RequestCanceledException");
-                                }
-                                else
-                                {
-                                    Console.Error.WriteLine("sayHello AMI call failed:");
-                                    Console.Error.WriteLine(ex);
-                                }
-                            });
+                        helloAsync(hello);
                     }
                     else if(line.Equals("s"))
                     {

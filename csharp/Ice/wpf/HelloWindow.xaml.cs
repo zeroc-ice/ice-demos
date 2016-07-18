@@ -118,7 +118,7 @@ namespace Ice.wpf.client
             return prx;
         }
 
-        private void sayHello_Click(object sender, RoutedEventArgs e)
+        private async void sayHello_Click(object sender, RoutedEventArgs e)
         {
             if(_helloPrx == null)
             {
@@ -132,26 +132,11 @@ namespace Ice.wpf.client
                 {
                     status.Content = "Sending request";
                     bool haveResponse = false;
-                    _helloPrx.begin_sayHello(delay).whenCompleted(
-                        () =>
+                    await _helloPrx.sayHelloAsync(delay, progress:new Progress<bool>((value) =>
+                    {
+                        if(!haveResponse)
                         {
-                            Debug.Assert(!haveResponse);
-                            haveResponse = true;
-                            status.Content = "Ready";
-                        },
-                        (Ice.Exception ex) =>
-                        {
-                            Debug.Assert(!haveResponse);
-                            haveResponse = true;
-                            handleException(ex);
-                    }).whenSent(
-                        (bool sentSynchronously) =>
-                        {
-                            if (haveResponse)
-                            {
-                                return;
-                            }
-                            if (deliveryMode.Text.Equals(TWOWAY) || deliveryMode.Text.Equals(TWOWAY_SECURE))
+                            if(deliveryMode.Text.Equals(TWOWAY) || deliveryMode.Text.Equals(TWOWAY_SECURE))
                             {
                                 status.Content = "Waiting for response";
                             }
@@ -159,7 +144,11 @@ namespace Ice.wpf.client
                             {
                                 status.Content = "Ready";
                             }
-                        });
+                        }
+                    }));
+                    Debug.Assert(!haveResponse);
+                    haveResponse = true;
+                    status.Content = "Ready";
                 }
                 else
                 {
@@ -168,18 +157,18 @@ namespace Ice.wpf.client
                     status.Content = "Queued sayHello request";
                 }
             }
-            catch(Ice.LocalException ex)
+            catch(System.Exception ex)
             {
                 handleException(ex);
             }
         }
 
-        private void handleException(Exception ex)
+        private void handleException(System.Exception ex)
         {
             status.Content = ex.GetType();
         }
 
-        private void shutdown_Click(object sender, RoutedEventArgs e)
+        private async void shutdown_Click(object sender, RoutedEventArgs e)
         {
             if(_helloPrx == null)
             {
@@ -192,17 +181,9 @@ namespace Ice.wpf.client
             {
                 if(!deliveryModeIsBatch())
                 {
-                    AsyncResult<Demo.Callback_Hello_shutdown> result = _helloPrx.begin_shutdown();
+                    await _helloPrx.shutdownAsync();
                     status.Content = "Sending request";
-                    result.whenCompleted(
-                        () =>
-                        {
-                            status.Content = "Ready";
-                        },
-                        (Exception ex) =>
-                        {
-                            handleException(ex);
-                        });
+                    status.Content = "Ready";
                 }
                 else
                 {
@@ -211,7 +192,7 @@ namespace Ice.wpf.client
                     status.Content = "Queued shutdown request";
                 }
             }
-            catch(Ice.LocalException ex)
+            catch(System.Exception ex)
             {
                 handleException(ex);
             }
