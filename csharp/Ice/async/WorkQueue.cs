@@ -6,14 +6,22 @@
 
 using System;
 using System.Threading;
-using System.Collections;
+using System.Collections.Generic;
 using Demo;
 
 public class WorkQueue
 {
-    private class CallbackEntry
+    public class CallbackEntry
     {
-        public AMD_Hello_sayHello cb;
+        public CallbackEntry(Action response, Action<Exception> exception, int delay)
+        {
+            this.response = response;
+            this.exception = exception;
+            this.delay = delay;
+        }
+
+        public Action response;
+        public Action<Exception> exception;
         public int delay;
     }
 
@@ -44,7 +52,7 @@ public class WorkQueue
                     //
                     // Get next work item.
                     //
-                    CallbackEntry entry = (CallbackEntry)_callbacks[0];
+                    var entry = _callbacks[0];
 
                     //
                     // Wait for the amount of time indicated in delay to
@@ -60,43 +68,36 @@ public class WorkQueue
                         //
                         _callbacks.RemoveAt(0);
                         Console.Out.WriteLine("Belated Hello World!");
-                        entry.cb.ice_response();
+                        entry.response();
                     }
                 }
             }
 
-            foreach(CallbackEntry e in _callbacks)
+            foreach(var e in _callbacks)
             {
-                e.cb.ice_exception(new RequestCanceledException());
+                e.exception(new RequestCanceledException());
             }
         }
     }
 
-    public void Add(AMD_Hello_sayHello cb, int delay)
+    public void Add(CallbackEntry cb)
     {
         lock(this)
         {
             if(!_done)
             {
-                //
-                // Add the work item.
-                //
-                CallbackEntry entry = new CallbackEntry();
-                entry.cb = cb;
-                entry.delay = delay;
-
                 if(_callbacks.Count == 0)
                 {
                     Monitor.Pulse(this);
                 }
-                _callbacks.Add(entry);
+                _callbacks.Add(cb);
             }
             else
             {
                 //
                 // Destroyed, throw exception.
                 //
-                cb.ice_exception(new RequestCanceledException());
+                cb.exception(new RequestCanceledException());
             }
         }
     }
@@ -110,7 +111,7 @@ public class WorkQueue
         }
     }
 
-    private ArrayList _callbacks = new ArrayList();
+    private List<CallbackEntry> _callbacks = new List<CallbackEntry>();
     private bool _done = false;
     private Thread thread_;
 }
