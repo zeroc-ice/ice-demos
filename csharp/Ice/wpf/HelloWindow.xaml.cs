@@ -125,7 +125,7 @@ namespace Ice.wpf.client
                 updateProxy();
             }
 
-            int delay =(int)delaySlider.Value;
+            int delay = (int)delaySlider.Value;
             try
             {
                 if(!deliveryModeIsBatch())

@@ -41,7 +41,7 @@ public class FileI : FileDisp_
 
     // Slice File::write() operation
 
-    public override void write(string[] text, Ice.Current current)
+    public override void write(string[] text, Ice.Current current = null)
     {
         _lines = text;
     }
