@@ -21,15 +21,14 @@ public class Server
         {
             if(args.Length > 0)
             {
-                System.Console.Error.WriteLine(appName() + ": too many arguments");
+                Console.Error.WriteLine(appName() + ": too many arguments");
                 return 1;
             }
 
             communicator().getValueFactoryManager().add(ValueFactory.create, Demo.Printer.ice_staticId());
 
-            Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Value");
-            Ice.Object @object = new InitialI(adapter);
-            adapter.add(@object, communicator().stringToIdentity("initial"));
+            var adapter = communicator().createObjectAdapter("Value");
+            adapter.add(new InitialI(adapter), communicator().stringToIdentity("initial"));
             adapter.activate();
             communicator().waitForShutdown();
             return 0;
@@ -38,7 +37,7 @@ public class Server
 
     public static int Main(string[] args)
     {
-        App app = new App();
+        var app = new App();
         return app.main(args, "config.server");
     }
 }

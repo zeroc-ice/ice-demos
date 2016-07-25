@@ -47,9 +47,7 @@ class InitialI : InitialDisp_
 
     public override void throwDerivedPrinter(Ice.Current current)
     {
-        DerivedPrinterException ex = new DerivedPrinterException();
-        ex.derived = _derivedPrinter;
-        throw ex;
+        throw new DerivedPrinterException(_derivedPrinter);
     }
     
     public override void shutdown(Ice.Current current)

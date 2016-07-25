@@ -50,7 +50,7 @@ public class FileI : FileDisp_
 
     public void activate(Ice.ObjectAdapter a)
     {
-        NodePrx thisNode = NodePrxHelper.uncheckedCast(a.add(this, _id));
+        var thisNode = NodePrxHelper.uncheckedCast(a.add(this, _id));
         _parent.addChild(thisNode);
     }
 

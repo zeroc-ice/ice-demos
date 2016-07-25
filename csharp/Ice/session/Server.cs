@@ -27,10 +27,10 @@ public class Server
                 return 1;
             }
 
-            Ice.ObjectAdapter adapter = communicator().createObjectAdapter("SessionFactory");
+            var adapter = communicator().createObjectAdapter("SessionFactory");
 
-            ReapThread reaper = new ReapThread();
-            Thread reaperThread = new Thread(new ThreadStart(reaper.run));
+            var reaper = new ReapThread();
+            var reaperThread = new Thread(new ThreadStart(reaper.run));
             reaperThread.Start();
 
             adapter.add(new SessionFactoryI(reaper), communicator().stringToIdentity("SessionFactory"));
@@ -46,7 +46,7 @@ public class Server
 
     public static int Main(string[] args)
     {
-        App app = new App();
+        var app = new App();
         return app.main(args, "config.server");
     }
 }

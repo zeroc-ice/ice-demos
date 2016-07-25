@@ -37,14 +37,14 @@ public class Client
                 return 1;
             }
 
-            GreetPrx greet = GreetPrxHelper.checkedCast(communicator().propertyToProxy("Greet.Proxy"));
+            var greet = GreetPrxHelper.checkedCast(communicator().propertyToProxy("Greet.Proxy"));
             if(greet == null)
             {
                 Console.Error.WriteLine("invalid proxy");
                 return 1;
             }
 
-            MyGreeting greeting = new MyGreeting();
+            var greeting = new MyGreeting();
             greeting.text = "Hello there!";
             MyGreeting nullGreeting = null;
 
@@ -97,7 +97,7 @@ public class Client
                         menu();
                     }
                 }
-                catch(System.Exception ex)
+                catch(Exception ex)
                 {
                     Console.Error.WriteLine(ex);
                 }
@@ -110,7 +110,7 @@ public class Client
 
     public static int Main(string[] args)
     {
-        App app = new App();
+        var app = new App();
         return app.main(args, "config.client");
     }
 }

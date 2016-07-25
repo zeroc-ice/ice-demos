@@ -5,7 +5,7 @@
 // **********************************************************************
 
 using Filesystem;
-using System.Collections;
+using System.Collections.Generic;
 
 public class DirectoryI : DirectoryDisp_
 {
@@ -34,7 +34,7 @@ public class DirectoryI : DirectoryDisp_
 
     public override NodePrx[] list(Ice.Current current)
     {
-        return (NodePrx[])_contents.ToArray(typeof(NodePrx));
+        return _contents.ToArray();
     }
 
     // addChild is called by the child in order to add
@@ -49,7 +49,7 @@ public class DirectoryI : DirectoryDisp_
 
     public void activate(Ice.ObjectAdapter a)
     {
-        NodePrx thisNode = NodePrxHelper.uncheckedCast(a.add(this, _id));
+        var thisNode = NodePrxHelper.uncheckedCast(a.add(this, _id));
         if(_parent != null)
         {
             _parent.addChild(thisNode);
@@ -59,5 +59,5 @@ public class DirectoryI : DirectoryDisp_
     private string _name;
     private DirectoryI _parent;
     private Ice.Identity _id;
-    private ArrayList _contents = new ArrayList();
+    private List<NodePrx> _contents = new List<NodePrx>();
 }

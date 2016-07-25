@@ -13,7 +13,7 @@ public class HelloPluginI : Ice.Plugin
 
     public void initialize()
     {
-        Ice.ObjectAdapter adapter = _communicator.createObjectAdapter("Hello");
+        var adapter = _communicator.createObjectAdapter("Hello");
         adapter.add(new HelloI(), _communicator.stringToIdentity("hello"));
         adapter.activate();
     }

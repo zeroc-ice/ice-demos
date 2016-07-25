@@ -5,7 +5,7 @@
 // **********************************************************************
 
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using Ice;
 using Filesystem;
 
@@ -45,13 +45,13 @@ namespace FilesystemI
                     throw new ObjectNotExistException();
                 }
 
-                NodeDesc[] ret = new NodeDesc[_contents.Count];
+                var ret = new NodeDesc[_contents.Count];
                 int i = 0;
-                foreach(DictionaryEntry e in _contents)
+                foreach(var e in _contents)
                 {
-                    NodeI p = (NodeI)e.Value;
+                    var p = e.Value;
                     ret[i] = new NodeDesc();
-                    ret[i].name = (string)e.Key;
+                    ret[i].name = e.Key;
                     ret[i].type = p is FileI ? NodeType.FileType : NodeType.DirType;
                     ret[i].proxy = NodePrxHelper.uncheckedCast(c.adapter.createProxy(p.id()));
                     ++i;
@@ -77,7 +77,7 @@ namespace FilesystemI
                     throw new NoSuchName(name);
                 }
 
-                NodeDesc d = new NodeDesc();
+                var d = new NodeDesc();
                 d.name = name;
                 d.type = p is FileI ? NodeType.FileType : NodeType.DirType;
                 d.proxy = NodePrxHelper.uncheckedCast(c.adapter.createProxy(p.id()));
@@ -96,13 +96,13 @@ namespace FilesystemI
                     throw new ObjectNotExistException();
                 }
 
-                if(name.Length == 0 || _contents.Contains(name))
+                if(name.Length == 0 || _contents.ContainsKey(name))
                 {
                     throw new NameInUse(name);
                 }
 
-                FileI f = new FileI(name, this);
-                ObjectPrx node = c.adapter.add(f, f.id());
+                var f = new FileI(name, this);
+                var node = c.adapter.add(f, f.id());
                 _contents.Add(name, f);
                 return FilePrxHelper.uncheckedCast(node);
             }
@@ -119,13 +119,13 @@ namespace FilesystemI
                     throw new ObjectNotExistException();
                 }
 
-                if(name.Length == 0 || _contents.Contains(name))
+                if(name.Length == 0 || _contents.ContainsKey(name))
                 {
                     throw new NameInUse(name);
                 }
 
-                DirectoryI d = new DirectoryI(name, this);
-                ObjectPrx node = c.adapter.add(d, d.id());
+                var d = new DirectoryI(name, this);
+                var node = c.adapter.add(d, d.id());
                 _contents.Add(name, d);
                 return DirectoryPrxHelper.uncheckedCast(node);
             }
@@ -174,7 +174,7 @@ namespace FilesystemI
             _parent = parent;
             _id = new Identity();
             _destroyed = false;
-            _contents = new Hashtable();
+            _contents = new Dictionary<string, NodeI>();
 
             if(parent == null)
             {
@@ -188,7 +188,7 @@ namespace FilesystemI
 
         // Remove the entry from the _contents map.
 
-        public void removeEntry(String name)
+        public void removeEntry(string name)
         {
             _contents.Remove(name);
         }
@@ -197,6 +197,6 @@ namespace FilesystemI
         private DirectoryI _parent; // Immutable
         private Identity _id; // Immutable
         private bool _destroyed;
-        private IDictionary _contents;
+        private Dictionary<string, NodeI> _contents;
     }
 }

@@ -4,8 +4,8 @@
 //
 // **********************************************************************
 
+using Demo;
 using System;
-using System.Collections.Generic;
 
 public class PrinterI : Ice.Blobject
 {
@@ -23,7 +23,7 @@ public class PrinterI : Ice.Blobject
     {
         outParams = null;
 
-        Ice.Communicator communicator = current.adapter.getCommunicator();
+        var communicator = current.adapter.getCommunicator();
 
         Ice.InputStream inStream = null;
         if(inParams.Length > 0)
@@ -34,14 +34,14 @@ public class PrinterI : Ice.Blobject
 
         if(current.operation.Equals("printString"))
         {
-            string message = inStream.readString();
+            var message = inStream.readString();
             inStream.endEncapsulation();
             Console.WriteLine("Printing string `" + message + "'");
             return true;
         }
         else if(current.operation.Equals("printStringSequence"))
         {
-            String[] seq = Demo.StringSeqHelper.read(inStream);
+            var seq = StringSeqHelper.read(inStream);
             inStream.endEncapsulation();
             Console.Write("Printing string sequence {");
             for(int i = 0; i < seq.Length; ++i)
@@ -57,11 +57,11 @@ public class PrinterI : Ice.Blobject
         }
         else if(current.operation.Equals("printDictionary"))
         {
-            Dictionary<string, string> dict = Demo.StringDictHelper.read(inStream);
+            var dict = StringDictHelper.read(inStream);
             inStream.endEncapsulation();
             Console.Write("Printing dictionary {");
             bool first = true;
-            foreach(KeyValuePair<string, string> e in dict)
+            foreach(var e in dict)
             {
                 if(!first)
                 {
@@ -75,21 +75,21 @@ public class PrinterI : Ice.Blobject
         }
         else if(current.operation.Equals("printEnum"))
         {
-            Demo.Color c = Demo.ColorHelper.read(inStream);
+            var c = ColorHelper.read(inStream);
             inStream.endEncapsulation();
             Console.WriteLine("Printing enum " + c);
             return true;
         }
         else if(current.operation.Equals("printStruct"))
         {
-            Demo.Structure s = Demo.Structure.read(inStream);
+            var s = Structure.read(inStream);
             inStream.endEncapsulation();
             Console.WriteLine("Printing struct: name=" + s.name + ", value=" + s.value);
             return true;
         }
         else if(current.operation.Equals("printStructSequence"))
         {
-            Demo.Structure[] seq = Demo.StructureSeqHelper.read(inStream);
+            var seq = StructureSeqHelper.read(inStream);
             inStream.endEncapsulation();
             Console.Write("Printing struct sequence: {");
             for(int i = 0; i < seq.Length; ++i)
@@ -105,21 +105,18 @@ public class PrinterI : Ice.Blobject
         }
         else if(current.operation.Equals("printClass"))
         {
-            ReadValueCallback cb = new ReadValueCallback();
+            var cb = new ReadValueCallback();
             inStream.readValue(cb.invoke);
             inStream.readPendingValues();
             inStream.endEncapsulation();
-            Demo.C c = cb.obj as Demo.C;
+            var c = cb.obj as C;
             Console.WriteLine("Printing class: s.name=" + c.s.name + ", s.value=" + c.s.value);
             return true;
         }
         else if(current.operation.Equals("getValues"))
         {
-            Demo.C c = new Demo.C();
-            c.s = new Demo.Structure();
-            c.s.name = "green";
-            c.s.value = Demo.Color.green;
-            Ice.OutputStream outStream = new Ice.OutputStream(communicator);
+            var c = new C(new Structure("green", Color.green));
+            var outStream = new Ice.OutputStream(communicator);
             outStream.startEncapsulation();
             outStream.writeValue(c);
             outStream.writeString("hello");
@@ -131,9 +128,8 @@ public class PrinterI : Ice.Blobject
         else if(current.operation.Equals("throwPrintFailure"))
         {
             Console.WriteLine("Throwing PrintFailure");
-            Demo.PrintFailure ex = new Demo.PrintFailure();
-            ex.reason = "paper tray empty";
-            Ice.OutputStream outStream = new Ice.OutputStream(communicator);
+            var ex = new PrintFailure("paper tray empty");
+            var outStream = new Ice.OutputStream(communicator);
             outStream.startEncapsulation();
             outStream.writeException(ex);
             outStream.endEncapsulation();
@@ -147,11 +143,7 @@ public class PrinterI : Ice.Blobject
         }
         else
         {
-            Ice.OperationNotExistException ex = new Ice.OperationNotExistException();
-            ex.id = current.id;
-            ex.facet = current.facet;
-            ex.operation = current.operation;
-            throw ex;
+            throw new Ice.OperationNotExistException(current.id, current.facet, current.operation);
         }
     }
 }

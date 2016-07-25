@@ -58,7 +58,7 @@ public class Client
                 return 1;
             }
 
-            HelloPrx hello = HelloPrxHelper.checkedCast(communicator().propertyToProxy("Hello.Proxy"));
+            var hello = HelloPrxHelper.checkedCast(communicator().propertyToProxy("Hello.Proxy"));
             if(hello == null)
             {
                 Console.Error.WriteLine("invalid proxy");
@@ -118,7 +118,7 @@ public class Client
 
     public static int Main(string[] args)
     {
-        App app = new App();
+        var app = new App();
         return app.main(args, "config.client");
     }
 }

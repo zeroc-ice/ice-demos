@@ -28,14 +28,14 @@ public class Server
             //
             // Create an object adapter
             //
-            Ice.ObjectAdapter adapter = communicator().createObjectAdapterWithEndpoints(
+            var adapter = communicator().createObjectAdapterWithEndpoints(
                 "LifecycleFilesystem", "default -h localhost -p 10000");
 
             //
             // Create the root directory.
             //
-            DirectoryI root = new DirectoryI();
-            Ice.Identity id = new Ice.Identity();
+            var root = new DirectoryI();
+            var id = new Ice.Identity();
             id.name = "RootDir";
             adapter.add(root, id);
 
@@ -50,7 +50,7 @@ public class Server
             communicator().waitForShutdown();
             if(interrupted())
             {
-                System.Console.Error.WriteLine(appName() + ": received signal, shutting down");
+                Console.Error.WriteLine(appName() + ": received signal, shutting down");
             }
 
             return 0;
@@ -59,7 +59,7 @@ public class Server
 
     static public int Main(string[] args)
     {
-        App app = new App();
+        var app = new App();
         return app.main(args);
     }
 }

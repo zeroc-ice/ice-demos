@@ -6,7 +6,7 @@
 
 using IceBox;
 
-class HelloServiceI : IceBox.Service
+class HelloServiceI : Service
 {
     public void start(string name, Ice.Communicator communicator, string[] args)
     {

@@ -91,8 +91,8 @@ public class Client
             }
             while(name.Length == 0);
 
-            Ice.ObjectPrx basePrx = communicator().propertyToProxy("SessionFactory.Proxy");
-            SessionFactoryPrx factory = SessionFactoryPrxHelper.checkedCast(basePrx);
+            var basePrx = communicator().propertyToProxy("SessionFactory.Proxy");
+            var factory = SessionFactoryPrxHelper.checkedCast(basePrx);
             if(factory == null)
             {
                 Console.Error.WriteLine("invalid proxy");
@@ -101,11 +101,11 @@ public class Client
 
             SessionPrx session = factory.create(name);
 
-            SessionRefreshThread refresh = new SessionRefreshThread(communicator().getLogger(), 5000, session);
-            Thread refreshThread = new Thread(new ThreadStart(refresh.run));
+            var refresh = new SessionRefreshThread(communicator().getLogger(), 5000, session);
+            var refreshThread = new Thread(new ThreadStart(refresh.run));
             refreshThread.Start();
 
-            List<HelloPrx> hellos = new List<HelloPrx>();
+            var hellos = new List<HelloPrx>();
 
             menu();
 
@@ -117,7 +117,7 @@ public class Client
                 {
                     Console.Out.Write("==> ");
                     Console.Out.Flush();
-                    string line = Console.In.ReadLine();
+                    var line = Console.In.ReadLine();
                     if(line == null)
                     {
                         break;
@@ -187,7 +187,7 @@ public class Client
                     factory.shutdown();
                 }
             }
-            catch(System.Exception)
+            catch(Exception)
             {
                 //
                 // The refresher thread must be terminated in the event of a
@@ -220,7 +220,7 @@ public class Client
 
     public static int Main(string[] args)
     {
-        App app = new App();
+        var app = new App();
         return app.main(args, "config.client");
     }
 }

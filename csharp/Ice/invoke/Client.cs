@@ -55,7 +55,7 @@ public class Client
                 return 1;
             }
 
-            Ice.ObjectPrx obj = communicator().propertyToProxy("Printer.Proxy");
+            var obj = communicator().propertyToProxy("Printer.Proxy");
 
             menu();
 
@@ -79,7 +79,7 @@ public class Client
                         //
                         // Marshal the in parameter.
                         //
-                        Ice.OutputStream outStream = new Ice.OutputStream(communicator());
+                        var outStream = new Ice.OutputStream(communicator());
                         outStream.startEncapsulation();
                         outStream.writeString("The streaming API works!");
                         outStream.endEncapsulation();
@@ -98,10 +98,10 @@ public class Client
                         //
                         // Marshal the in parameter.
                         //
-                        Ice.OutputStream outStream = new Ice.OutputStream(communicator());
+                        var outStream = new Ice.OutputStream(communicator());
                         outStream.startEncapsulation();
                         string[] arr = { "The", "streaming", "API", "works!" };
-                        Demo.StringSeqHelper.write(outStream, arr);
+                        StringSeqHelper.write(outStream, arr);
                         outStream.endEncapsulation();
 
                         //
@@ -118,12 +118,14 @@ public class Client
                         //
                         // Marshal the in parameter.
                         //
-                        Ice.OutputStream outStream = new Ice.OutputStream(communicator());
+                        var outStream = new Ice.OutputStream(communicator());
                         outStream.startEncapsulation();
-                        Dictionary<string, string> dict = new Dictionary<string, string>();
-                        dict["The"] = "streaming";
-                        dict["API"] = "works!";
-                        Demo.StringDictHelper.write(outStream, dict);
+                        var dict = new Dictionary<string, string>()
+                            {
+                                { "The", "streaming" },
+                                { "API", "works!"}
+                            };
+                        StringDictHelper.write(outStream, dict);
                         outStream.endEncapsulation();
 
                         //
@@ -140,9 +142,9 @@ public class Client
                         //
                         // Marshal the in parameter.
                         //
-                        Ice.OutputStream outStream = new Ice.OutputStream(communicator());
+                        var outStream = new Ice.OutputStream(communicator());
                         outStream.startEncapsulation();
-                        Demo.ColorHelper.write(outStream, Demo.Color.green);
+                        ColorHelper.write(outStream, Color.green);
                         outStream.endEncapsulation();
 
                         //
@@ -158,12 +160,10 @@ public class Client
                         //
                         // Marshal the in parameter.
                         //
-                        Ice.OutputStream outStream = new Ice.OutputStream(communicator());
+                        var outStream = new Ice.OutputStream(communicator());
                         outStream.startEncapsulation();
-                        Demo.Structure s = new Demo.Structure();
-                        s.name = "red";
-                        s.value = Demo.Color.red;
-                        Demo.Structure.write(outStream, s);
+                        var s = new Structure("read", Color.red);
+                        Structure.write(outStream, s);
                         outStream.endEncapsulation();
 
                         //
@@ -180,19 +180,15 @@ public class Client
                         //
                         // Marshal the in parameter.
                         //
-                        Ice.OutputStream outStream = new Ice.OutputStream(communicator());
+                        var outStream = new Ice.OutputStream(communicator());
                         outStream.startEncapsulation();
-                        Demo.Structure[] arr = new Demo.Structure[3];
-                        arr[0] = new Demo.Structure();
-                        arr[0].name = "red";
-                        arr[0].value = Demo.Color.red;
-                        arr[1] = new Demo.Structure();
-                        arr[1].name = "green";
-                        arr[1].value = Demo.Color.green;
-                        arr[2] = new Demo.Structure();
-                        arr[2].name = "blue";
-                        arr[2].value = Demo.Color.blue;
-                        Demo.StructureSeqHelper.write(outStream, arr);
+                        Structure[] arr = 
+                            {
+                                new Structure("red", Color.red),
+                                new Structure("green", Color.green),
+                                new Structure("blue", Color.blue)
+                            };
+                        StructureSeqHelper.write(outStream, arr);
                         outStream.endEncapsulation();
 
                         //
@@ -211,10 +207,7 @@ public class Client
                         //
                         Ice.OutputStream outStream = new Ice.OutputStream(communicator());
                         outStream.startEncapsulation();
-                        Demo.C c = new Demo.C();
-                        c.s = new Demo.Structure();
-                        c.s.name = "blue";
-                        c.s.value = Demo.Color.blue;
+                        var c = new C(new Structure("blue", Color.blue));
                         outStream.writeValue(c);
                         outStream.writePendingValues();
                         outStream.endEncapsulation();
@@ -241,13 +234,13 @@ public class Client
                         //
                         // Unmarshal the results.
                         //
-                        Ice.InputStream inStream = new Ice.InputStream(communicator(), outParams);
+                        var inStream = new Ice.InputStream(communicator(), outParams);
                         inStream.startEncapsulation();
-                        ReadValueCallback cb = new ReadValueCallback();
+                        var cb = new ReadValueCallback();
                         inStream.readValue(cb.invoke);
-                        String str = inStream.readString();
+                        var str = inStream.readString();
                         inStream.readPendingValues();
-                        Demo.C c = cb.obj as Demo.C;
+                        var c = cb.obj as C;
                         Console.Error.WriteLine("Got string `" + str + "' and class: s.name=" + c.s.name +
                                                 ", s.value=" + c.s.value);
                     }
@@ -262,13 +255,13 @@ public class Client
                             continue;
                         }
 
-                        Ice.InputStream inStream = new Ice.InputStream(communicator(), outParams);
+                        var inStream = new Ice.InputStream(communicator(), outParams);
                         inStream.startEncapsulation();
                         try
                         {
                             inStream.throwException();
                         }
-                        catch(Demo.PrintFailure)
+                        catch(PrintFailure)
                         {
                             // Expected.
                         }
@@ -309,7 +302,7 @@ public class Client
 
     public static int Main(string[] args)
     {
-        App app = new App();
+        var app = new App();
         return app.main(args, "config.client");
     }
 }

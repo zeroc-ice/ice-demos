@@ -6,17 +6,17 @@
 
 using Demo;
 using System;
-using System.Collections;
+using System.Collections.Generic;
 
 public class SessionI : SessionDisp_
 {
     public SessionI(string name)
     {
         _name = name;
-        _timestamp = System.DateTime.Now;
+        _timestamp = DateTime.Now;
         _nextId = 0;
         _destroy = false;
-        _objs = new ArrayList();
+        _objs = new List<HelloPrx>();
 
         Console.Out.WriteLine("The session " + _name + " is now created.");
     }
@@ -30,7 +30,7 @@ public class SessionI : SessionDisp_
                 throw new Ice.ObjectNotExistException();
             }
             
-            HelloPrx hello = HelloPrxHelper.uncheckedCast(c.adapter.addWithUUID(new HelloI(_name, _nextId++)));
+            var hello = HelloPrxHelper.uncheckedCast(c.adapter.addWithUUID(new HelloI(_name, _nextId++)));
             _objs.Add(hello);
             return hello;
         }
@@ -44,8 +44,7 @@ public class SessionI : SessionDisp_
             {
                 throw new Ice.ObjectNotExistException();
             }
-            
-            _timestamp = System.DateTime.Now;
+            _timestamp = DateTime.Now;
         }
     }
 
@@ -77,7 +76,7 @@ public class SessionI : SessionDisp_
             try
             {
                 c.adapter.remove(c.id);
-                foreach(HelloPrx p in _objs)
+                foreach(var p in _objs)
                 {
                     c.adapter.remove(p.ice_getIdentity());
                 }
@@ -92,7 +91,7 @@ public class SessionI : SessionDisp_
         _objs.Clear();
     }
 
-    public System.DateTime timestamp() 
+    public DateTime timestamp() 
     {
         lock(this)
         {
@@ -105,8 +104,8 @@ public class SessionI : SessionDisp_
     }
 
     private string _name;
-    private System.DateTime _timestamp; // The last time the session was refreshed.
+    private DateTime _timestamp; // The last time the session was refreshed.
     private int _nextId; // The per-session id of the next hello object. This is used for tracing purposes.
-    private ArrayList _objs; // List of per-session allocated hello objects.
+    private List<HelloPrx> _objs; // List of per-session allocated hello objects.
     private bool _destroy;
 }

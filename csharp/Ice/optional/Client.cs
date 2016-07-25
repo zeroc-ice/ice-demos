@@ -26,7 +26,7 @@ public class Client
                 return 1;
             }
 
-            ContactDBPrx contactdb = ContactDBPrxHelper.checkedCast(communicator().propertyToProxy("ContactDB.Proxy"));
+            var contactdb = ContactDBPrxHelper.checkedCast(communicator().propertyToProxy("ContactDB.Proxy"));
             if(contactdb == null)
             {
                 Console.Error.WriteLine(appName() + ": invalid proxy");
@@ -36,7 +36,7 @@ public class Client
             //
             // Add a contact for "john". All parameters are provided.
             //
-            String johnNumber = "123-456-7890";
+            var johnNumber = "123-456-7890";
             contactdb.addContact("john", NumberType.HOME, johnNumber, 0);
 
             Console.Write("Checking john... ");
@@ -44,7 +44,7 @@ public class Client
             //
             // Find the phone number for "john".
             //
-            Ice.Optional<String> number = contactdb.queryNumber("john");
+            var number = contactdb.queryNumber("john");
 
             //
             // HasValue tests if an optional value is set.
@@ -95,7 +95,7 @@ public class Client
             //
             // The C# mapping permits Ice.Util.None to be passed to unset optional values.
             //
-            String steveNumber = "234-567-8901";
+            var steveNumber = "234-567-8901";
             contactdb.addContact("steve", Ice.Util.None, steveNumber, 1);
 
             Console.Write("Checking steve... ");
@@ -130,7 +130,7 @@ public class Client
             //
             // Add a contact from "frank". Here the dialGroup field isn't set.
             //
-            String frankNumber = "345-678-9012";
+            var frankNumber = "345-678-9012";
             contactdb.addContact("frank", NumberType.CELL, frankNumber, Ice.Util.None);
 
             Console.Write("Checking frank... ");
@@ -197,7 +197,7 @@ public class Client
             // update on the contact.  Here we update only the number for anne,
             // the remainder of the fields are unchanged.
             //
-            String anneNumber = "456-789-0123";
+            var anneNumber = "456-789-0123";
             contactdb.updateContact("anne", Ice.Util.None, new Ice.Optional<String>(anneNumber), Ice.Util.None);
             number = contactdb.queryNumber("anne");
             if(!number.Value.Equals(anneNumber))
@@ -220,7 +220,7 @@ public class Client
 
     public static int Main(string[] args)
     {
-        App app = new App();
+        var app = new App();
         return app.main(args, "config.client");
     }
 }

@@ -4,6 +4,7 @@
 //
 // **********************************************************************
 
+using System;
 using Demo;
 
 public class Client
@@ -12,17 +13,17 @@ public class Client
     {
         try
         {
-            using(Ice.Communicator communicator = Ice.Util.initialize(ref args))
+            using(var communicator = Ice.Util.initialize(ref args))
             {
-                HelloPrx hello = HelloPrxHelper.checkedCast(
+                var hello = HelloPrxHelper.checkedCast(
                     communicator.stringToProxy("hello:default -h localhost -p 10000"));
                 hello.sayHello();
             }
             return 0;
         }
-        catch(System.Exception ex)
+        catch(Exception ex)
         {
-            System.Console.Error.WriteLine(ex);
+            Console.Error.WriteLine(ex);
             return 1;
         }
     }

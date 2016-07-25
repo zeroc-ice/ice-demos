@@ -26,7 +26,7 @@ public class Client
                 return 1;
             }
 
-            NestedPrx nested = NestedPrxHelper.checkedCast(communicator().propertyToProxy("Nested.Proxy"));
+            var nested = NestedPrxHelper.checkedCast(communicator().propertyToProxy("Nested.Proxy"));
             if(nested == null)
             {
                 Console.Error.WriteLine("invalid proxy");
@@ -40,8 +40,8 @@ public class Client
             //
             nested = (NestedPrx)nested.ice_invocationTimeout(5000);
 
-            Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Nested.Client");
-            NestedPrx self = 
+            var adapter = communicator().createObjectAdapter("Nested.Client");
+            var self = 
                 NestedPrxHelper.uncheckedCast(adapter.createProxy(communicator().stringToIdentity("nestedClient")));
             adapter.add(new NestedI(self), communicator().stringToIdentity("nestedClient"));
             adapter.activate();
@@ -64,16 +64,16 @@ public class Client
                     {
                         break;
                     }
-                    int level = System.Int32.Parse(s);
+                    var level = int.Parse(s);
                     if(level > 0)
                     {
                         nested.nestedCall(level, self);
                     }
                 }
-                catch(System.FormatException)
+                catch(FormatException)
                 {
                 }
-                catch(System.Exception ex)
+                catch(Exception ex)
                 {
                     Console.Error.WriteLine(ex);
                 }
@@ -86,7 +86,7 @@ public class Client
 
     public static int Main(string[] args)
     {
-        App app = new App();
+        var app = new App();
         return app.main(args, "config.client");
     }
 }

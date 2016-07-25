@@ -35,8 +35,7 @@ public class Client
                 return 1;
             }
 
-            CallbackSenderPrx sender = CallbackSenderPrxHelper.checkedCast(
-                communicator().propertyToProxy("CallbackSender.Proxy").
+            var sender = CallbackSenderPrxHelper.checkedCast(communicator().propertyToProxy("CallbackSender.Proxy").
                     ice_twoway().ice_timeout(-1).ice_secure(false));
             if(sender == null)
             {
@@ -44,11 +43,11 @@ public class Client
                 return 1;
             }
             
-            Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Callback.Client");
+            var adapter = communicator().createObjectAdapter("Callback.Client");
             adapter.add(new CallbackReceiverI(), communicator().stringToIdentity("callbackReceiver"));
             adapter.activate();
             
-            CallbackReceiverPrx receiver = CallbackReceiverPrxHelper.uncheckedCast(
+            var receiver = CallbackReceiverPrxHelper.uncheckedCast(
                                            adapter.createProxy(communicator().stringToIdentity("callbackReceiver")));
 
             menu();
@@ -87,7 +86,7 @@ public class Client
                         menu();
                     }
                 }
-                catch(System.Exception ex)
+                catch(Exception ex)
                 {
                     Console.Error.WriteLine(ex);
                 }

@@ -15,9 +15,9 @@ public class HelloI : HelloDisp_
 
     public override void sayHello(Ice.Current current)
     {
-        string lang = System.Environment.GetEnvironmentVariable("LANG") != null ?
-                                                            System.Environment.GetEnvironmentVariable("LANG") : "en";
-        string greeting = "Hello, ";
+        var lang = System.Environment.GetEnvironmentVariable("LANG") != null ?
+                                                             System.Environment.GetEnvironmentVariable("LANG") : "en";
+        var greeting = "Hello, ";
         if(lang.Equals("fr"))
         {
             greeting = "Bonjour, ";

@@ -9,12 +9,12 @@ using System.Collections.Generic;
 
 public class ContactDBI : ContactDBDisp_
 {
-    Dictionary<string,Contact> _contacts = new Dictionary<string,Contact>();
+    Dictionary<string, Contact> _contacts = new Dictionary<string, Contact>();
 
-    public override void addContact(string name, Ice.Optional<Demo.NumberType> type, Ice.Optional<string> number, Ice.Optional<int> dialGroup,
-            Ice.Current current)
+    public override void addContact(string name, Ice.Optional<NumberType> type, Ice.Optional<string> number,
+                                    Ice.Optional<int> dialGroup, Ice.Current current)
     {
-        Contact contact = new Contact();
+        var contact = new Contact();
         contact.name = name;
         if(type.HasValue)
         {
@@ -31,8 +31,8 @@ public class ContactDBI : ContactDBDisp_
         _contacts[name] = contact;
     }
 
-    public override void updateContact(string name, Ice.Optional<Demo.NumberType> type, Ice.Optional<string> number,
-            Ice.Optional<int> dialGroup, Ice.Current current)
+    public override void updateContact(string name, Ice.Optional<NumberType> type, Ice.Optional<string> number,
+                                       Ice.Optional<int> dialGroup, Ice.Current current)
     {
         Contact c;
         if(_contacts.TryGetValue(name, out c))
@@ -52,7 +52,7 @@ public class ContactDBI : ContactDBDisp_
         }
     }
 
-    public override Demo.Contact query(string name, Ice.Current current)
+    public override Contact query(string name, Ice.Current current)
     {
         Contact c;
         if(_contacts.TryGetValue(name, out c))

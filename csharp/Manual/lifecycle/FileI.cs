@@ -7,7 +7,6 @@
 using System;
 using Ice;
 using Filesystem;
-using FilesystemI;
 
 namespace FilesystemI
 {
@@ -53,7 +52,7 @@ namespace FilesystemI
                 }
 
                 _lines = new string[text.Length];
-                text.CopyTo((string[])_lines, 0);
+                text.CopyTo(_lines, 0);
             }
         }
 

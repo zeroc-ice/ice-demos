@@ -48,24 +48,23 @@ public class Client
                 return 1;
             }
 
-            ThroughputPrx throughput = ThroughputPrxHelper.checkedCast(
-                communicator().propertyToProxy("Throughput.Proxy"));
+            var throughput = ThroughputPrxHelper.checkedCast(communicator().propertyToProxy("Throughput.Proxy"));
             if(throughput == null)
             {
                 Console.Error.WriteLine("invalid proxy");
                 return 1;
             }
-            ThroughputPrx throughputOneway = ThroughputPrxHelper.uncheckedCast(throughput.ice_oneway());
+            var throughputOneway = ThroughputPrxHelper.uncheckedCast(throughput.ice_oneway());
 
-            byte[] byteSeq = new byte[ByteSeqSize.value];
+            var byteSeq = new byte[ByteSeqSize.value];
 
-            string[] stringSeq = new string[StringSeqSize.value];
+            var stringSeq = new string[StringSeqSize.value];
             for(int i = 0; i < StringSeqSize.value; ++i)
             {
                 stringSeq[i] = "hello";
             }
 
-            StringDouble[] structSeq = new StringDouble[StringDoubleSeqSize.value];
+            var structSeq = new StringDouble[StringDoubleSeqSize.value];
             for(int i = 0; i < StringDoubleSeqSize.value; ++i)
             {
                 structSeq[i] = new StringDouble();
@@ -73,7 +72,7 @@ public class Client
                 structSeq[i].d = 3.14;
             }
 
-            Fixed[] fixedSeq = new Fixed[FixedSeqSize.value];
+            var fixedSeq = new Fixed[FixedSeqSize.value];
             for(int i = 0; i < FixedSeqSize.value; ++i)
             {
                 fixedSeq[i].i = 0;
@@ -88,11 +87,11 @@ public class Client
             // JIT compiler.
             //
             {
-                byte[] emptyBytes = new byte[1];
-                string[] emptyStrings = new string[1];
-                StringDouble[] emptyStructs = new StringDouble[1];
+                var emptyBytes = new byte[1];
+                var emptyStrings = new string[1];
+                var emptyStructs = new StringDouble[1];
                 emptyStructs[0] = new StringDouble();
-                Fixed[] emptyFixed = new Fixed[1];
+                var emptyFixed = new Fixed[1];
 
                 throughput.startWarmup();
 
@@ -141,7 +140,7 @@ public class Client
                         break;
                     }
 
-                    long tmsec = System.DateTime.Now.Ticks / 10000;
+                    long tmsec = DateTime.Now.Ticks / 10000;
                     const int repetitions = 100;
 
                     if(line.Equals("1") || line.Equals("2") || line.Equals("3") || line.Equals("4"))
@@ -365,7 +364,7 @@ public class Client
                             }
                         }
             
-                        double dmsec = System.DateTime.Now.Ticks / 10000 - tmsec;
+                        double dmsec = DateTime.Now.Ticks / 10000 - tmsec;
                         Console.WriteLine("time for " + repetitions + " sequences: " + dmsec.ToString("F") + "ms");
                         Console.WriteLine("time per sequence: " + ((double)(dmsec / repetitions)).ToString("F") + "ms");
                         int wireSize = 0;
@@ -418,7 +417,7 @@ public class Client
                         menu();
                     }
                 }
-                catch(System.Exception ex)
+                catch(Exception ex)
                 {
                     Console.Error.WriteLine(ex);
                 }
@@ -431,7 +430,7 @@ public class Client
 
     public static int Main(string[] args)
     {
-        App app = new App();
+        var app = new App();
         return app.main(args, "config.client");
     }
 }

@@ -22,26 +22,24 @@ public class Client
         {
             args = communicator().getProperties().parseCommandLineOptions("Discover", args);
 
-            Ice.ObjectAdapter adapter = communicator().createObjectAdapter("DiscoverReply");
-            DiscoverReplyI replyI = new DiscoverReplyI();
-            DiscoverReplyPrx reply = DiscoverReplyPrxHelper.uncheckedCast(adapter.addWithUUID(replyI));
+            var adapter = communicator().createObjectAdapter("DiscoverReply");
+            var replyI = new DiscoverReplyI();
+            var reply = DiscoverReplyPrxHelper.uncheckedCast(adapter.addWithUUID(replyI));
             adapter.activate();
 
-            DiscoverPrx discover = DiscoverPrxHelper.uncheckedCast(
+            var discover = DiscoverPrxHelper.uncheckedCast(
                 communicator().propertyToProxy("Discover.Proxy").ice_datagram());
             discover.lookup(reply);
-            Ice.ObjectPrx obj = replyI.waitReply(2000);
-
-
+            var obj = replyI.waitReply(2000);
             if(obj == null)
             {
-                System.Console.Error.WriteLine(appName() + ": no replies");
+                Console.Error.WriteLine(appName() + ": no replies");
                 return 1;
             }
-            HelloPrx hello = HelloPrxHelper.checkedCast(obj);
+            var hello = HelloPrxHelper.checkedCast(obj);
             if(hello == null)
             {
-                System.Console.Error.WriteLine(appName() + ": invalid reply");
+                Console.Error.WriteLine(appName() + ": invalid reply");
                 return 1;
             }
 
@@ -52,7 +50,7 @@ public class Client
 
     public static int Main(string[] args)
     {
-        App app = new App();
+        var app = new App();
         return app.main(args, "config.client");
     }
 }

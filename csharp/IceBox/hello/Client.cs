@@ -54,17 +54,17 @@ public class Client
             {
             }
 
-            HelloPrx twoway = HelloPrxHelper.checkedCast(
+            var twoway = HelloPrxHelper.checkedCast(
                 communicator().propertyToProxy("Hello.Proxy").ice_twoway().ice_timeout(-1).ice_secure(false));
             if(twoway == null)
             {
                 Console.Error.WriteLine("invalid proxy");
                 return 1;
             }
-            HelloPrx oneway = HelloPrxHelper.uncheckedCast(twoway.ice_oneway());
-            HelloPrx batchOneway = HelloPrxHelper.uncheckedCast(twoway.ice_batchOneway());
-            HelloPrx datagram = HelloPrxHelper.uncheckedCast(twoway.ice_datagram());
-            HelloPrx batchDatagram = HelloPrxHelper.uncheckedCast(twoway.ice_batchDatagram());
+            var oneway = HelloPrxHelper.uncheckedCast(twoway.ice_oneway());
+            var batchOneway = HelloPrxHelper.uncheckedCast(twoway.ice_batchOneway());
+            var datagram = HelloPrxHelper.uncheckedCast(twoway.ice_datagram());
+            var batchDatagram = HelloPrxHelper.uncheckedCast(twoway.ice_batchDatagram());
 
             bool secure = false;
 
@@ -154,7 +154,7 @@ public class Client
                         menu();
                     }
                 }
-                catch(System.Exception ex)
+                catch(Exception ex)
                 {
                     Console.Error.WriteLine(ex);
                 }
@@ -169,7 +169,7 @@ public class Client
 
     public static int Main(string[] args)
     {
-        App app = new App();
+        var app = new App();
         return app.main(args, "config.client");
     }
 }

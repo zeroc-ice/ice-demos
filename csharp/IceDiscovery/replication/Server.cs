@@ -25,8 +25,8 @@ public class Server
                 return 1;
             }
 
-            Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Hello");
-            HelloI hello = new HelloI(communicator().getProperties().getProperty("Ice.ProgramName"));
+            var adapter = communicator().createObjectAdapter("Hello");
+            var hello = new HelloI(communicator().getProperties().getProperty("Ice.ProgramName"));
             adapter.add(hello, communicator().stringToIdentity("hello"));
             adapter.activate();
             communicator().waitForShutdown();
@@ -36,7 +36,7 @@ public class Server
 
     public static int Main(string[] args)
     {
-        App app = new App();
+        var app = new App();
         return app.main(args);
     }
 }

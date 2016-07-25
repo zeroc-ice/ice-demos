@@ -27,7 +27,7 @@ public class Client
                 return 1;
             }
 
-            InitialPrx initial = InitialPrxHelper.checkedCast(communicator().propertyToProxy("Initial.Proxy"));
+            var initial = InitialPrxHelper.checkedCast(communicator().propertyToProxy("Initial.Proxy"));
             if(initial == null)
             {
                 Console.Error.WriteLine("invalid object reference");
@@ -114,8 +114,8 @@ public class Client
 
             communicator().getValueFactoryManager().add(ValueFactory.create, Demo.DerivedPrinter.ice_staticId());
 
-            derivedAsBase = initial.getDerivedPrinter();
-            DerivedPrinter derived = (DerivedPrinter)derivedAsBase;
+
+            var derived = (DerivedPrinter)initial.getDerivedPrinter();
 
             Console.Out.WriteLine("==> class cast to derived object succeeded");
             Console.Out.WriteLine("==> The type ID of the received object is \"" + derived.ice_id() + "\"");
@@ -140,12 +140,13 @@ public class Client
             Console.Out.WriteLine("[press enter]");
             Console.In.ReadLine();
 
-	    ClientPrinter clientp = new ClientPrinterI();
-	    clientp.message = "a message 4 u";
+            ClientPrinter clientp = new ClientPrinterI();
+            clientp.message = "a message 4 u";
             communicator().getValueFactoryManager().add(ValueFactory.create, Demo.ClientPrinter.ice_staticId());
 
-	    derivedAsBase = initial.updatePrinterMessage(clientp);
-	    clientp = (ClientPrinter)derivedAsBase;
+            derivedAsBase = initial.updatePrinterMessage(clientp);
+            clientp = (ClientPrinter)derivedAsBase;
+
             Console.Out.WriteLine("==> " + clientp.message);
 
             Console.Out.WriteLine();
@@ -180,7 +181,7 @@ public class Client
 
     public static int Main(string[] args)
     {
-        App app = new App();
+        var app = new App();
         return app.main(args, "config.client");
     }
 }

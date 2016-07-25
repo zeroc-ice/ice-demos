@@ -22,20 +22,19 @@ public class Client
         {
             if(args.Length > 0)
             {
-                System.Console.Error.WriteLine(appName() + ": too many arguments");
+                Console.Error.WriteLine(appName() + ": too many arguments");
                 return 1;
             }
 
-            CallbackSenderPrx server = CallbackSenderPrxHelper.checkedCast(
-                communicator().propertyToProxy("CallbackSender.Proxy"));
+            var server = CallbackSenderPrxHelper.checkedCast(communicator().propertyToProxy("CallbackSender.Proxy"));
             if(server == null)
             {
-                System.Console.Error.WriteLine("invalid proxy");
+                Console.Error.WriteLine("invalid proxy");
                 return 1;
             }
 
-            Ice.ObjectAdapter adapter = communicator().createObjectAdapter("");
-            Ice.Identity ident = new Ice.Identity();
+            var adapter = communicator().createObjectAdapter("");
+            var ident = new Ice.Identity();
             ident.name = Guid.NewGuid().ToString();
             ident.category = "";
             adapter.add(new CallbackReceiverI(), ident);
@@ -50,7 +49,7 @@ public class Client
 
     public static int Main(string[] args)
     {
-        App app = new App();
+        var app = new App();
         return app.main(args, "config.client");
     }
 }
