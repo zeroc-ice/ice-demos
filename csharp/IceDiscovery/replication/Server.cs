@@ -27,7 +27,7 @@ public class Server
 
             var adapter = communicator().createObjectAdapter("Hello");
             var hello = new HelloI(communicator().getProperties().getProperty("Ice.ProgramName"));
-            adapter.add(hello, communicator().stringToIdentity("hello"));
+            adapter.add(hello, Ice.Util.stringToIdentity("hello"));
             adapter.activate();
             communicator().waitForShutdown();
             return 0;

@@ -44,11 +44,11 @@ public class Client
             }
             
             var adapter = communicator().createObjectAdapter("Callback.Client");
-            adapter.add(new CallbackReceiverI(), communicator().stringToIdentity("callbackReceiver"));
+            adapter.add(new CallbackReceiverI(), Ice.Util.stringToIdentity("callbackReceiver"));
             adapter.activate();
             
             var receiver = CallbackReceiverPrxHelper.uncheckedCast(
-                                           adapter.createProxy(communicator().stringToIdentity("callbackReceiver")));
+                                           adapter.createProxy(Ice.Util.stringToIdentity("callbackReceiver")));
 
             menu();
             

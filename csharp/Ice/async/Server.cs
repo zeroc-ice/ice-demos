@@ -29,7 +29,7 @@ public class Server
 
             var adapter = communicator().createObjectAdapter("Hello");
             _workQueue = new WorkQueue();
-            adapter.add(new HelloI(_workQueue), communicator().stringToIdentity("hello"));
+            adapter.add(new HelloI(_workQueue), Ice.Util.stringToIdentity("hello"));
 
             _workQueue.Start();
             adapter.activate();

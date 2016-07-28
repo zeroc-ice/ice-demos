@@ -11,12 +11,12 @@ public class PrinterI : Ice.Blobject
 {
     private class ReadValueCallback
     {
-        public void invoke(Ice.Object obj)
+        public void invoke(Ice.Value obj)
         {
             this.obj = obj;
         }
 
-        internal Ice.Object obj;
+        internal Ice.Value obj;
     }
 
     public override bool ice_invoke(byte[] inParams, out byte[] outParams, Ice.Current current)

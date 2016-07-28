@@ -19,12 +19,12 @@ public class Client
 {
     private class ReadValueCallback
     {
-        public void invoke(Ice.Object obj)
+        public void invoke(Ice.Value obj)
         {
             this.obj = obj;
         }
 
-        internal Ice.Object obj;
+        internal Ice.Value obj;
     }
 
     public class App : Ice.Application

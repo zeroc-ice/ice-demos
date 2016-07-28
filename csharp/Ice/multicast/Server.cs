@@ -25,7 +25,7 @@ public class Server
             var discoverAdapter = communicator().createObjectAdapter("Discover");
 
             var hello = adapter.addWithUUID(new HelloI());
-            discoverAdapter.add(new DiscoverI(hello), communicator().stringToIdentity("discover"));
+            discoverAdapter.add(new DiscoverI(hello), Ice.Util.stringToIdentity("discover"));
 
             discoverAdapter.activate();        
             adapter.activate();

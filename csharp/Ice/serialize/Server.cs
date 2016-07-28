@@ -26,7 +26,7 @@ public class Server
             }
 
             var adapter = communicator().createObjectAdapter("Greet");
-            adapter.add(new GreetI(), communicator().stringToIdentity("greet"));
+            adapter.add(new GreetI(), Ice.Util.stringToIdentity("greet"));
             adapter.activate();
             communicator().waitForShutdown();
             return 0;

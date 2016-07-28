@@ -77,7 +77,7 @@ public class Server : Ice.Application
         admin.addUpdateCallback(props);
 
         var adapter = communicator().createObjectAdapter("Props");
-        adapter.add(props, communicator().stringToIdentity("props"));
+        adapter.add(props, Ice.Util.stringToIdentity("props"));
         adapter.activate();
         communicator().waitForShutdown();
         return 0;

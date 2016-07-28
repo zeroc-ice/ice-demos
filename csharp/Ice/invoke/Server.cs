@@ -27,7 +27,7 @@ public class Server
             }
 
             var adapter = communicator().createObjectAdapter("Printer");
-            adapter.add(new PrinterI(), communicator().stringToIdentity("printer"));
+            adapter.add(new PrinterI(), Ice.Util.stringToIdentity("printer"));
             adapter.activate();
             communicator().waitForShutdown();
             return 0;

@@ -33,7 +33,7 @@ public class Server
             var reaperThread = new Thread(new ThreadStart(reaper.run));
             reaperThread.Start();
 
-            adapter.add(new SessionFactoryI(reaper), communicator().stringToIdentity("SessionFactory"));
+            adapter.add(new SessionFactoryI(reaper), Ice.Util.stringToIdentity("SessionFactory"));
             adapter.activate();
             communicator().waitForShutdown();
 

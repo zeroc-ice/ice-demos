@@ -28,8 +28,8 @@ public class Server
 
             var adapter = communicator().createObjectAdapter("Nested.Server");
             var self = 
-                NestedPrxHelper.uncheckedCast(adapter.createProxy(communicator().stringToIdentity("nestedServer")));
-            adapter.add(new NestedI(self), communicator().stringToIdentity("nestedServer"));
+                NestedPrxHelper.uncheckedCast(adapter.createProxy(Ice.Util.stringToIdentity("nestedServer")));
+            adapter.add(new NestedI(self), Ice.Util.stringToIdentity("nestedServer"));
             adapter.activate();
             communicator().waitForShutdown();
             return 0;

@@ -29,7 +29,7 @@ public class Server
 
             var adapter = communicator().createObjectAdapter("Callback.Server");
             var sender = new CallbackSenderI(communicator());
-            adapter.add(sender, communicator().stringToIdentity("sender"));
+            adapter.add(sender, Ice.Util.stringToIdentity("sender"));
             adapter.activate();
 
             var t = new Thread(new ThreadStart(sender.Run));

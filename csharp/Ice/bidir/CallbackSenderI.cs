@@ -31,7 +31,7 @@ class CallbackSenderI : CallbackSenderDisp_
     {
         lock(this)
         {
-            Console.Out.WriteLine("adding client `" + _communicator.identityToString(ident) + "'");
+            Console.Out.WriteLine("adding client `" + Ice.Util.identityToString(ident) + "'");
             _clients.Add(CallbackReceiverPrxHelper.uncheckedCast(current.con.createProxy(ident)));
         }
     }
@@ -65,7 +65,7 @@ class CallbackSenderI : CallbackSenderDisp_
                     catch(Ice.LocalException ex)
                     {
                         Console.Error.WriteLine("removing client `" +
-                                                _communicator.identityToString(c.ice_getIdentity()) + "':\n" + ex);
+                                                Ice.Util.identityToString(c.ice_getIdentity()) + "':\n" + ex);
 
                         lock(this)
                         {
