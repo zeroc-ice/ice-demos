@@ -52,9 +52,9 @@ public:
         Ice::ObjectAdapterPtr adapter = communicator()->createObjectAdapter("ChatServer");
 
         Glacier2::PermissionsVerifierPtr dpv = new DummyPermissionsVerifierI;
-        adapter->add(dpv, communicator()->stringToIdentity("ChatSessionVerifier"));
+        adapter->add(dpv, Ice::stringToIdentity("ChatSessionVerifier"));
         Glacier2::SessionManagerPtr csm = new ChatSessionManagerI;
-        adapter->add(csm, communicator()->stringToIdentity("ChatSessionManager"));
+        adapter->add(csm, Ice::stringToIdentity("ChatSessionManager"));
         adapter->activate();
         communicator()->waitForShutdown();
 

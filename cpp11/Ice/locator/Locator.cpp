@@ -140,10 +140,10 @@ LocatorServer::run(int argc, char*[])
     auto registry = make_shared<LocatorRegistryI>();
 
     auto registryPrx = Ice::uncheckedCast<Ice::LocatorRegistryPrx>(
-        adapter->add(registry, communicator()->stringToIdentity("registry")));
+        adapter->add(registry, Ice::stringToIdentity("registry")));
 
     adapter->add(make_shared<LocatorI>(move(registry), move(registryPrx)),
-                 communicator()->stringToIdentity("locator"));
+                 Ice::stringToIdentity("locator"));
     adapter->activate();
     communicator()->waitForShutdown();
     return EXIT_SUCCESS;

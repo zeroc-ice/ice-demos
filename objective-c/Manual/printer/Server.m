@@ -31,7 +31,7 @@ main(int argc, char* argv[])
             communicator = [ICEUtil createCommunicator:&argc argv:argv];
             id<ICEObjectAdapter> adapter = [communicator createObjectAdapterWithEndpoints:@"SimplePrinterAdapter"
                                                                                 endpoints:@"default -p 10000"];
-            [adapter add:[PrinterI printer] identity:[communicator stringToIdentity:@"SimplePrinter"]];
+            [adapter add:[PrinterI printer] identity:[ICEUtil stringToIdentity:@"SimplePrinter"]];
             [adapter activate];
 
             [communicator waitForShutdown];

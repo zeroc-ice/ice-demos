@@ -29,7 +29,7 @@ class Server(Ice.Application):
             return 1
 
         adapter = self.communicator().createObjectAdapter("Callback.Server")
-        adapter.add(CallbackI(), self.communicator().stringToIdentity("callback"))
+        adapter.add(CallbackI(), Ice.stringToIdentity("callback"))
         adapter.activate()
         self.communicator().waitForShutdown()
         return 0

@@ -34,7 +34,7 @@ void
 CallbackSenderI::addClient(Identity ident, const Current& current)
 {
     unique_lock<mutex> lock(_mutex);
-    cout << "adding client `" << _communicator->identityToString(ident) << "'"<< endl;
+    cout << "adding client `" << Ice::identityToString(ident) << "'"<< endl;
     _clients.insert(Ice::uncheckedCast<CallbackReceiverPrx>(current.con->createProxy(ident)));
 }
 
@@ -72,7 +72,7 @@ CallbackSenderI::start()
                         }
                         catch(const Exception& ex)
                         {
-                            cerr << "removing client `" << _communicator->identityToString(p->ice_getIdentity()) << "':\n"
+                            cerr << "removing client `" << Ice::identityToString(p->ice_getIdentity()) << "':\n"
                                  << ex << endl;
 
                             unique_lock<mutex> lock(_mutex);

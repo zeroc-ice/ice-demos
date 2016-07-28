@@ -39,7 +39,7 @@ CallbackServer::run(int argc, char*[])
 
     Ice::ObjectAdapterPtr adapter = communicator()->createObjectAdapter("Callback.Server");
     CallbackPtr cb = new CallbackI;
-    adapter->add(cb, communicator()->stringToIdentity("callback"));
+    adapter->add(cb, Ice::stringToIdentity("callback"));
     adapter->activate();
     communicator()->waitForShutdown();
     return EXIT_SUCCESS;

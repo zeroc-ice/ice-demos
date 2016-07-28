@@ -219,7 +219,7 @@ public class Client extends Glacier2.Application
                     }
 
                     System.out.println("callback receiver identity: " +
-                                    communicator().identityToString(twowayR.ice_getIdentity()));
+                                    Ice.Util.identityToString(twowayR.ice_getIdentity()));
                 }
                 else if(line.equals("s"))
                 {

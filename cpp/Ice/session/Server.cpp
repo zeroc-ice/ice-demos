@@ -43,7 +43,7 @@ SessionServer::run(int argc, char*[])
     timer->scheduleRepeated(reapTask, IceUtil::Time::seconds(1));
 
     SessionFactoryPtr factory = new SessionFactoryI(reapTask);
-    adapter->add(factory, communicator()->stringToIdentity("SessionFactory"));
+    adapter->add(factory, Ice::stringToIdentity("SessionFactory"));
     adapter->activate();
     communicator()->waitForShutdown();
 

@@ -10,11 +10,9 @@
 using namespace std;
 
 //
-// The servant implements the Slice interface Demo::Props as well as the
-// native callback class Ice::PropertiesAdminUpdateCallback.
+// The servant implements the Slice interface Demo::Props
 //
-class PropsI : public Demo::Props,
-               public Ice::PropertiesAdminUpdateCallback
+class PropsI : public Demo::Props
 {
 public:
 
@@ -22,7 +20,7 @@ public:
     {
     }
 
-    virtual Ice::PropertyDict getChanges(const Ice::Current&)
+    virtual Ice::PropertyDict getChanges(const Ice::Current&) override
     {
         unique_lock<mutex> lock(_mutex);
 
@@ -39,12 +37,12 @@ public:
         return _changes;
     }
 
-    virtual void shutdown(const Ice::Current& current)
+    virtual void shutdown(const Ice::Current& current) override
     {
         current.adapter->getCommunicator()->shutdown();
     }
 
-    virtual void updated(const Ice::PropertyDict& changes)
+    void updated(const Ice::PropertyDict& changes)
     {
         unique_lock<mutex> lock(_mutex);
 
@@ -65,7 +63,7 @@ class Server : public Ice::Application
 {
 public:
 
-    virtual int run(int, char*[]);
+    virtual int run(int, char*[]) override;
 };
 
 
@@ -89,14 +87,15 @@ Server::run(int argc, char*[])
     }
 
     auto props = make_shared<PropsI>();
+
     //
-    // Retrieve the PropertiesAdmin facet and register the servant as the update callback.
+    // Retrieve the PropertiesAdmin facet and register the update callback.
     //
     auto admin = dynamic_pointer_cast<Ice::NativePropertiesAdmin>(communicator()->findAdminFacet("Properties"));
-    admin->addUpdateCallback(props);
+    admin->addUpdateCallback([props](const Ice::PropertyDict& changes) { props->updated(changes); });
 
     auto adapter = communicator()->createObjectAdapter("Props");
-    adapter->add(props, communicator()->stringToIdentity("props"));
+    adapter->add(props, Ice::stringToIdentity("props"));
     adapter->activate();
     communicator()->waitForShutdown();
     return EXIT_SUCCESS;

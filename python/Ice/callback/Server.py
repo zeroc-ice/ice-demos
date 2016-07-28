@@ -32,7 +32,7 @@ class Server(Ice.Application):
             return 1
 
         adapter = self.communicator().createObjectAdapter("Callback.Server")
-        adapter.add(CallbackSenderI(), self.communicator().stringToIdentity("callbackSender"))
+        adapter.add(CallbackSenderI(), Ice.stringToIdentity("callbackSender"))
         adapter.activate()
         self.communicator().waitForShutdown()
         return 0

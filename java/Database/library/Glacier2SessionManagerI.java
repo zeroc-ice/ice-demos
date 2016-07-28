@@ -18,7 +18,7 @@ class Glacier2SessionManagerI extends Glacier2._SessionManagerDisp
         Glacier2.SessionPrx proxy = Glacier2.SessionPrxHelper.uncheckedCast(c.adapter.addWithUUID(servant));
 
         _logger.trace("SessionFactory", "create new session: " +
-                      c.adapter.getCommunicator().identityToString(proxy.ice_getIdentity()));
+                      Ice.Util.identityToString(proxy.ice_getIdentity()));
 
         _reaper.add(proxy, session);
 

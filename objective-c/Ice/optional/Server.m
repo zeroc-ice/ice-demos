@@ -17,7 +17,7 @@ run(int argc, char* argv[], id<ICECommunicator> communicator)
         return EXIT_FAILURE;
     }
     id<ICEObjectAdapter> adapter = [communicator createObjectAdapter:@"ContactDB"];
-    [adapter add:[ContactDBI contactDB] identity:[communicator stringToIdentity:@"contactdb"]];
+    [adapter add:[ContactDBI contactDB] identity:[ICEUtil stringToIdentity:@"contactdb"]];
     [adapter activate];
     [communicator waitForShutdown];
     return EXIT_SUCCESS;

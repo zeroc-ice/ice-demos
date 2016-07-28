@@ -24,7 +24,7 @@ public class Server extends Ice.Application
         ReapTask reaper = new ReapTask();
         executor.scheduleAtFixedRate(reaper, 1, 1, java.util.concurrent.TimeUnit.SECONDS);
 
-        adapter.add(new SessionFactoryI(reaper), communicator().stringToIdentity("SessionFactory"));
+        adapter.add(new SessionFactoryI(reaper), Ice.Util.stringToIdentity("SessionFactory"));
         adapter.activate();
         communicator().waitForShutdown();
 

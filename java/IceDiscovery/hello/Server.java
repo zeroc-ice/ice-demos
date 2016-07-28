@@ -19,7 +19,7 @@ public class Server extends Ice.Application
         }
 
         Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Hello");
-        adapter.add(new HelloI(), communicator().stringToIdentity("hello"));
+        adapter.add(new HelloI(), Ice.Util.stringToIdentity("hello"));
         adapter.activate();
         communicator().waitForShutdown();
         return 0;

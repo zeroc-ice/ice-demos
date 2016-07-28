@@ -20,8 +20,8 @@ public class Server extends Ice.Application
 
         Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Nested.Server");
         NestedPrx self =
-            NestedPrxHelper.uncheckedCast(adapter.createProxy(communicator().stringToIdentity("nestedServer")));
-        adapter.add(new NestedI(self), communicator().stringToIdentity("nestedServer"));
+            NestedPrxHelper.uncheckedCast(adapter.createProxy(Ice.Util.stringToIdentity("nestedServer")));
+        adapter.add(new NestedI(self), Ice.Util.stringToIdentity("nestedServer"));
         adapter.activate();
         communicator().waitForShutdown();
         return 0;

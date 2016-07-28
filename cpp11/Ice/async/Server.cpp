@@ -42,7 +42,7 @@ AsyncServer::run(int argc, char*[])
 
     auto adapter = communicator()->createObjectAdapter("Hello");
     _workQueue = make_shared<WorkQueue>();
-    adapter->add(make_shared<HelloI>(_workQueue), communicator()->stringToIdentity("hello"));
+    adapter->add(make_shared<HelloI>(_workQueue), Ice::stringToIdentity("hello"));
 
     _workQueue->start();
     adapter->activate();

@@ -35,7 +35,7 @@ Server::run(int argc, char*[])
 
     Ice::PropertiesPtr properties = communicator()->getProperties();
     Ice::ObjectAdapterPtr adapter = communicator()->createObjectAdapter("Pricing");
-    Ice::Identity id = communicator()->stringToIdentity(properties->getProperty("Identity"));
+    Ice::Identity id = Ice::stringToIdentity(properties->getProperty("Identity"));
     Demo::PricingEnginePtr pricing = new PricingI(properties->getPropertyAsList("Currencies"));
     adapter->add(pricing, id);
     adapter->activate();

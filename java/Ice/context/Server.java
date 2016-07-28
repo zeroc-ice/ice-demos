@@ -17,7 +17,7 @@ public class Server extends Ice.Application
         }
 
         Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Context");
-        adapter.add(new ContextI(), communicator().stringToIdentity("context"));
+        adapter.add(new ContextI(), Ice.Util.stringToIdentity("context"));
         adapter.activate();
         communicator().waitForShutdown();
         return 0;

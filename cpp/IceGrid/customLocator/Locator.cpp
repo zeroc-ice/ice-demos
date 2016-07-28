@@ -327,9 +327,9 @@ LocatorServer::run(int argc, char*[])
     Ice::ObjectAdapterPtr adapter = communicator()->createObjectAdapter("Locator");
     Ice::LocatorRegistryPtr registry = new LocatorRegistryI(defaultRegistry);
     Ice::LocatorRegistryPrx registryPrx =
-        Ice::LocatorRegistryPrx::uncheckedCast(adapter->add(registry, communicator()->stringToIdentity("registry")));
+        Ice::LocatorRegistryPrx::uncheckedCast(adapter->add(registry, Ice::stringToIdentity("registry")));
     Ice::LocatorPtr locator = new LocatorI(defaultLocator, registryPrx);
-    adapter->add(locator, communicator()->stringToIdentity("locator"));
+    adapter->add(locator, Ice::stringToIdentity("locator"));
     adapter->activate();
     communicator()->waitForShutdown();
     return EXIT_SUCCESS;

@@ -31,7 +31,7 @@ CallbackSenderI::addClient(const Ice::Identity& ident, const Ice::Current& curre
 
 	ostringstream os;
 	os << "adding client `";
-	os << _communicator->identityToString(ident);
+	os << Ice::identityToString(ident);
 	os << "'\n";
 	_page->print(os.str());
 
@@ -66,7 +66,7 @@ CallbackSenderI::run()
 				{
 					ostringstream os;
 					os << "removing client `";
-					os << _communicator->identityToString((*p)->ice_getIdentity());
+					os << Ice::identityToString((*p)->ice_getIdentity());
 					os << "':\n";
 					os << ex;
 					os << "\n";
@@ -93,7 +93,7 @@ MainPage::MainPage()
         _communicator = Ice::initialize(id);
         _adapter = _communicator->createObjectAdapter("Callback.Server");
         CallbackSenderIPtr sender = new CallbackSenderI(this, _communicator);
-        _adapter->add(sender, _communicator->stringToIdentity("sender"));
+        _adapter->add(sender, _Ice::stringToIdentity("sender"));
         _adapter->activate();
 
         sender->start();

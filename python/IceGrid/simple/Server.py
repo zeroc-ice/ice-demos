@@ -29,7 +29,7 @@ class Server(Ice.Application):
 
         properties = self.communicator().getProperties()
         adapter = self.communicator().createObjectAdapter("Hello")
-        id = self.communicator().stringToIdentity(properties.getProperty("Identity"))
+        id = Ice.stringToIdentity(properties.getProperty("Identity"))
         adapter.add(HelloI(properties.getProperty("Ice.ProgramName")), id)
         adapter.activate()
         self.communicator().waitForShutdown()

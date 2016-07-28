@@ -37,7 +37,7 @@ ContextServer::run(int argc, char*[])
     }
 
     auto adapter = communicator()->createObjectAdapter("Context");
-    adapter->add(make_shared<ContextI>(), communicator()->stringToIdentity("context"));
+    adapter->add(make_shared<ContextI>(), Ice::stringToIdentity("context"));
     adapter->activate();
     communicator()->waitForShutdown();
     return EXIT_SUCCESS;

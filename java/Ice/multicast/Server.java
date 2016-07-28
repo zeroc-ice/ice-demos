@@ -16,7 +16,7 @@ public class Server extends Ice.Application
         Ice.ObjectAdapter discoverAdapter = communicator().createObjectAdapter("Discover");
 
         Ice.ObjectPrx hello = adapter.addWithUUID(new HelloI());
-        discoverAdapter.add(new DiscoverI(hello), communicator().stringToIdentity("discover"));
+        discoverAdapter.add(new DiscoverI(hello), Ice.Util.stringToIdentity("discover"));
 
         discoverAdapter.activate();        
         adapter.activate();

@@ -53,7 +53,7 @@ class ReapTask implements Runnable
                 if((System.currentTimeMillis() - s.session.timestamp()) > _timeout * 1000)
                 {
                     _logger.trace("ReapTask", "The session " +
-                                  s.proxy.ice_getCommunicator().identityToString(s.proxy.ice_getIdentity()) +
+                                  Ice.Util.identityToString(s.proxy.ice_getIdentity()) +
                                   " has timed out.");
                     if(s.proxy != null)
                     {

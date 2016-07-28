@@ -38,7 +38,7 @@ LatencyServer::run(int argc, char*[])
     }
 
     auto adapter = communicator()->createObjectAdapter("Latency");
-    adapter->add(make_shared<Ping>(), communicator()->stringToIdentity("ping"));
+    adapter->add(make_shared<Ping>(), Ice::stringToIdentity("ping"));
     adapter->activate();
     communicator()->waitForShutdown();
     return EXIT_SUCCESS;

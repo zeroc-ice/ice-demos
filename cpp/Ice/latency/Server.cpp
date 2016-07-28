@@ -39,7 +39,7 @@ LatencyServer::run(int argc, char*[])
 
     Ice::ObjectAdapterPtr adapter = communicator()->createObjectAdapter("Latency");
     Ice::ObjectPtr object = new Ping;
-    adapter->add(object, communicator()->stringToIdentity("ping"));
+    adapter->add(object, Ice::stringToIdentity("ping"));
     adapter->activate();
     communicator()->waitForShutdown();
     return EXIT_SUCCESS;

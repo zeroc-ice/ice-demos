@@ -17,7 +17,7 @@ main(int argc, char* argv[])
         Ice::CommunicatorHolder icHolder = Ice::initialize(argc, argv);
         Ice::ObjectAdapterPtr adapter =
             icHolder->createObjectAdapterWithEndpoints("Hello", "default -h localhost -p 10000");
-        adapter->add(new HelloI, icHolder->stringToIdentity("hello"));
+        adapter->add(new HelloI, Ice::stringToIdentity("hello"));
         adapter->activate();
         icHolder->waitForShutdown();
     }

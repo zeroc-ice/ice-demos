@@ -13,7 +13,7 @@ public class HelloServiceI implements IceBox.Service
         _adapter = communicator.createObjectAdapter("Hello-" + name);
 
         String helloIdentity = communicator.getProperties().getProperty("Hello.Identity");
-        _adapter.add(new HelloI(name), communicator.stringToIdentity(helloIdentity));
+        _adapter.add(new HelloI(name), Ice.Util.stringToIdentity(helloIdentity));
         _adapter.activate();
     }
 

@@ -32,7 +32,7 @@ main(int argc, char* argv[])
         Ice::ObjectAdapterPtr adapter =
             icHolder->createObjectAdapterWithEndpoints("SimplePrinterAdapter", "default -h localhost -p 10000");
         Ice::ObjectPtr object = new PrinterI;
-        adapter->add(object, icHolder->stringToIdentity("SimplePrinter"));
+        adapter->add(object, Ice::stringToIdentity("SimplePrinter"));
         adapter->activate();
         icHolder->waitForShutdown();
     }

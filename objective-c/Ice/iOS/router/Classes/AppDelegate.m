@@ -128,7 +128,7 @@
         id<ICEObjectAdapter> clientAdapter = [communicator createObjectAdapter:@"Client"];
 
         self.router = [[RouterI alloc] initWithCommunicator:communicator];
-        [clientAdapter add:self.router identity:[communicator stringToIdentity:@"iPhoneRouter/Router"]];
+        [clientAdapter add:self.router identity:[ICEUtil stringToIdentity:@"iPhoneRouter/Router"]];
         [clientAdapter addDefaultServant:router.clientBlobject category:@""];
         [clientAdapter activate];
     }

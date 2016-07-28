@@ -91,7 +91,7 @@ class Server(Ice.Application):
 
         adapter = self.communicator().createObjectAdapter("Hello")
         self._workQueue = WorkQueue()
-        adapter.add(HelloI(self._workQueue), self.communicator().stringToIdentity("hello"))
+        adapter.add(HelloI(self._workQueue), Ice.stringToIdentity("hello"))
         
         self._workQueue.start()
         adapter.activate()

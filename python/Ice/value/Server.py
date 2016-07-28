@@ -54,7 +54,7 @@ class Server(Ice.Application):
         self.communicator().getValueFactoryManager().add(Printer.ValueFactory, Demo.Printer.ice_staticId())
 
         adapter = self.communicator().createObjectAdapter("Value")
-        adapter.add(InitialI(adapter), self.communicator().stringToIdentity("initial"))
+        adapter.add(InitialI(adapter), Ice.stringToIdentity("initial"))
         adapter.activate()
         self.communicator().waitForShutdown()
         return 0

@@ -50,7 +50,7 @@ class SessionI implements _SessionOperations, _Glacier2SessionOperations
         }
 
         _destroyed = true;
-        _logger.trace("Session", "session " + c.adapter.getCommunicator().identityToString(c.id) +
+        _logger.trace("Session", "session " + Ice.Util.identityToString(c.id) +
                       " is now destroyed.");
 
         // This method is never called on shutdown of the server.

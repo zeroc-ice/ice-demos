@@ -37,7 +37,7 @@ InvokeServer::run(int argc, char*[])
     }
 
     auto adapter = communicator()->createObjectAdapter("Printer");
-    adapter->add(make_shared<PrinterI>(), communicator()->stringToIdentity("printer"));
+    adapter->add(make_shared<PrinterI>(), Ice::stringToIdentity("printer"));
     adapter->activate();
     communicator()->waitForShutdown();
     return EXIT_SUCCESS;

@@ -103,9 +103,9 @@ class Server extends Ice.Application
         SQLRequestContext.initialize(logger, pool);
         adapter.addServantLocator(new LocatorI(new BookI()), "book");
         
-        adapter.add(new SessionFactoryI(logger, reaper, timeout), communicator().stringToIdentity("SessionFactory"));
+        adapter.add(new SessionFactoryI(logger, reaper, timeout), Ice.Util.stringToIdentity("SessionFactory"));
         adapter.add(new Glacier2SessionManagerI(logger, reaper),
-                    communicator().stringToIdentity("LibrarySessionManager"));
+                    Ice.Util.stringToIdentity("LibrarySessionManager"));
 
         //
         // Everything ok, let's go.

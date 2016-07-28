@@ -98,7 +98,7 @@ Server::run(int argc, char*[])
     admin->addUpdateCallback(props);
 
     Ice::ObjectAdapterPtr adapter = communicator()->createObjectAdapter("Props");
-    adapter->add(props, communicator()->stringToIdentity("props"));
+    adapter->add(props, Ice::stringToIdentity("props"));
     adapter->activate();
     communicator()->waitForShutdown();
     return EXIT_SUCCESS;

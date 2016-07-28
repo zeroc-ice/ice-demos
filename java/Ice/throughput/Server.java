@@ -19,7 +19,7 @@ public class Server extends Ice.Application
         }
 
         Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Throughput");
-        adapter.add(new ThroughputI(), communicator().stringToIdentity("throughput"));
+        adapter.add(new ThroughputI(), Ice.Util.stringToIdentity("throughput"));
         adapter.activate();
         communicator().waitForShutdown();
         return 0;

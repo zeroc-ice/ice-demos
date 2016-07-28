@@ -19,7 +19,7 @@ public class Server extends Ice.Application
         }
 
         Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Latency");
-        adapter.add(new Ping(), communicator().stringToIdentity("ping"));
+        adapter.add(new Ping(), Ice.Util.stringToIdentity("ping"));
         adapter.activate();
         communicator().waitForShutdown();
         return 0;

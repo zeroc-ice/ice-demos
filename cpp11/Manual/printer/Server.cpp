@@ -28,7 +28,7 @@ main(int argc, char* argv[])
         Ice::CommunicatorHolder icHolder = Ice::initialize(argc, argv);
         auto adapter = icHolder->createObjectAdapterWithEndpoints("SimplePrinterAdapter", "default -p 10000");
         auto servant = make_shared<PrinterI>();
-        adapter->add(servant, icHolder->stringToIdentity("SimplePrinter"));
+        adapter->add(servant, Ice::stringToIdentity("SimplePrinter"));
         adapter->activate();
         icHolder->waitForShutdown();
     } catch(const std::exception& e) {

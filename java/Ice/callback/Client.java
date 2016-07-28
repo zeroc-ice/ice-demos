@@ -63,12 +63,12 @@ public class Client extends Ice.Application
         }
 
         Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Callback.Client");
-        adapter.add(new CallbackReceiverI(), communicator().stringToIdentity("callbackReceiver"));
+        adapter.add(new CallbackReceiverI(), Ice.Util.stringToIdentity("callbackReceiver"));
         adapter.activate();
 
         CallbackReceiverPrx receiver = 
             CallbackReceiverPrxHelper.uncheckedCast(adapter.createProxy(
-                communicator().stringToIdentity("callbackReceiver")));
+                Ice.Util.stringToIdentity("callbackReceiver")));
 
         menu();
 

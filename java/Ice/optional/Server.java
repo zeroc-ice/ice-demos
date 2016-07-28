@@ -19,7 +19,7 @@ public class Server extends Ice.Application
         }
 
         Ice.ObjectAdapter adapter = communicator().createObjectAdapter("ContactDB");
-        adapter.add(new ContactDBI(), communicator().stringToIdentity("contactdb"));
+        adapter.add(new ContactDBI(), Ice.Util.stringToIdentity("contactdb"));
         adapter.activate();
         communicator().waitForShutdown();
         return 0;

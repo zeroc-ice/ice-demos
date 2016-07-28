@@ -193,7 +193,7 @@ CallbackClient::runWithSession(int argc, char*[])
                 onewayR = CallbackReceiverPrx::uncheckedCast(onewayR->ice_identity(callbackReceiverIdent));
             }
 
-            cout << "callback receiver identity: " << communicator()->identityToString(twowayR->ice_getIdentity())
+            cout << "callback receiver identity: " << Ice::identityToString(twowayR->ice_getIdentity())
                  << endl;
         }
         else if(c == 's')

@@ -33,7 +33,7 @@ HelloServer::run(int argc, char*[])
     }
 
     auto adapter = communicator()->createObjectAdapter("Hello");
-    adapter->add(make_shared<HelloI>(), communicator()->stringToIdentity("hello"));
+    adapter->add(make_shared<HelloI>(), Ice::stringToIdentity("hello"));
     adapter->activate();
     communicator()->waitForShutdown();
     return EXIT_SUCCESS;

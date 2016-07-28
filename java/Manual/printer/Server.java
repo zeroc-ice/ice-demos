@@ -16,7 +16,7 @@ public class Server
             ic = Ice.Util.initialize(args);
             Ice.ObjectAdapter adapter = ic.createObjectAdapterWithEndpoints("SimplePrinterAdapter", "default -h localhost -p 10000");
             Ice.Object object = new PrinterI();
-            adapter.add(object, ic.stringToIdentity("SimplePrinter"));
+            adapter.add(object, Ice.Util.stringToIdentity("SimplePrinter"));
             adapter.activate();
             ic.waitForShutdown();
         }

@@ -38,7 +38,7 @@ ValueServer::run(int argc, char*[])
 
     Ice::ObjectAdapterPtr adapter = communicator()->createObjectAdapter("Value");
     Demo::InitialPtr initial = new InitialI(adapter);
-    adapter->add(initial, communicator()->stringToIdentity("initial"));
+    adapter->add(initial, Ice::stringToIdentity("initial"));
     adapter->activate();
     communicator()->waitForShutdown();
     return EXIT_SUCCESS;

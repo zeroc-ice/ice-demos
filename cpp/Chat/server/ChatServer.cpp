@@ -47,7 +47,7 @@ ChatServer::start(int, char*[], int& status)
             logger->trace("info", os.str());
         }
         _adapter->add(new ChatSessionManagerI(chatRoom, traceEnabled, logger),
-                     communicator()->stringToIdentity("ChatSessionManager"));
+                     Ice::stringToIdentity("ChatSessionManager"));
 
         if(traceEnabled)
         {
@@ -56,7 +56,7 @@ ChatServer::start(int, char*[], int& status)
             logger->trace("info", os.str());
         }
         _adapter->add(new PollingChatSessionFactoryI(chatRoom, reaper, traceEnabled, logger),
-                     communicator()->stringToIdentity("PollingChatSessionFactory"));
+                     Ice::stringToIdentity("PollingChatSessionFactory"));
 
         if(traceEnabled)
         {

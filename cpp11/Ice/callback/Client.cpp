@@ -71,11 +71,11 @@ CallbackClient::run(int argc, char*[])
     }
 
     auto adapter = communicator()->createObjectAdapter("Callback.Client");
-    adapter->add(make_shared<CallbackReceiverI>(), communicator()->stringToIdentity("callbackReceiver"));
+    adapter->add(make_shared<CallbackReceiverI>(), Ice::stringToIdentity("callbackReceiver"));
     adapter->activate();
 
     auto receiver = Ice::uncheckedCast<CallbackReceiverPrx>(
-        adapter->createProxy(communicator()->stringToIdentity("callbackReceiver")));
+        adapter->createProxy(Ice::stringToIdentity("callbackReceiver")));
 
     menu();
 

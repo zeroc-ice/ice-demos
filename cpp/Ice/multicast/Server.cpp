@@ -78,7 +78,7 @@ HelloServer::run(int argc, char* argv[])
 
     Ice::ObjectPrx hello = adapter->addWithUUID(new HelloI);
     DiscoverPtr d = new DiscoverI(hello);
-    discoverAdapter->add(d, communicator()->stringToIdentity("discover"));
+    discoverAdapter->add(d, Ice::stringToIdentity("discover"));
 
     discoverAdapter->activate();
     adapter->activate();

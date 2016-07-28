@@ -20,7 +20,7 @@ public class Server extends Ice.Application
 
         Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Hello");
         HelloI hello = new HelloI(communicator().getProperties().getProperty("Ice.ProgramName"));
-        adapter.add(hello, communicator().stringToIdentity("hello"));
+        adapter.add(hello, Ice.Util.stringToIdentity("hello"));
         adapter.activate();
         communicator().waitForShutdown();
         return 0;

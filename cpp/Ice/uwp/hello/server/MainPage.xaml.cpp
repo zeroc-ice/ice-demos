@@ -74,7 +74,7 @@ MainPage::MainPage()
 
         _communicator = Ice::initialize(id);
         _adapter = _communicator->createObjectAdapter("Hello");
-        _adapter->add(new HelloI(this), _communicator->stringToIdentity("hello"));
+        _adapter->add(new HelloI(this), _Ice::stringToIdentity("hello"));
         _adapter->activate();
         print(ref new String(L"Ready to receive requests\n"));
     }

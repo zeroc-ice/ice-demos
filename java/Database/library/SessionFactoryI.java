@@ -18,7 +18,7 @@ class SessionFactoryI extends _SessionFactoryDisp
         SessionPrx proxy = SessionPrxHelper.uncheckedCast(c.adapter.addWithUUID(servant));
 
         _logger.trace("SessionFactory", "create new session: " +
-                      c.adapter.getCommunicator().identityToString(proxy.ice_getIdentity()));
+                      Ice.Util.identityToString(proxy.ice_getIdentity()));
 
         _reaper.add(proxy, session);
 

@@ -46,7 +46,7 @@ public class Server extends Ice.Application
         });
 
         Ice.ObjectAdapter adapter = communicator().createObjectAdapter("TaskManager");
-        adapter.add(new TaskManagerI(_executor), communicator().stringToIdentity("manager"));
+        adapter.add(new TaskManagerI(_executor), Ice.Util.stringToIdentity("manager"));
         adapter.activate();
         communicator().waitForShutdown();
         

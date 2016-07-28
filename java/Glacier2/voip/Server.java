@@ -151,8 +151,8 @@ public class Server extends Ice.Application
         }
 
         Ice.ObjectAdapter adapter = communicator().createObjectAdapter("VoipServer");
-        adapter.add(new PermissionsVerifierI(), communicator().stringToIdentity("VoipVerifier"));
-        adapter.add(new SessionManagerI(), communicator().stringToIdentity("VoipSessionManager"));
+        adapter.add(new PermissionsVerifierI(), Ice.Util.stringToIdentity("VoipVerifier"));
+        adapter.add(new SessionManagerI(), Ice.Util.stringToIdentity("VoipSessionManager"));
         adapter.activate();
         communicator().waitForShutdown();
         _executor.shutdown();

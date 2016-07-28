@@ -70,7 +70,7 @@ Server::run(int argc, char*[])
     //
     Ice::ObjectAdapterPtr adapter = communicator()->createObjectAdapter("Counter");
     Demo::CounterPtr counter = new CounterI(topic);
-    adapter->add(counter, communicator()->stringToIdentity("counter"));
+    adapter->add(counter, Ice::stringToIdentity("counter"));
     adapter->activate();
 
     communicator()->waitForShutdown();

@@ -26,7 +26,7 @@ class CallbackSenderI extends _CallbackSenderDisp implements java.lang.Runnable
     synchronized public void
     addClient(Ice.Identity ident, Ice.Current current)
     {
-        System.out.println("adding client `" + _communicator.identityToString(ident) + "'");
+        System.out.println("adding client `" + Ice.Util.identityToString(ident) + "'");
 
         Ice.ObjectPrx base = current.con.createProxy(ident);
         CallbackReceiverPrx client = CallbackReceiverPrxHelper.uncheckedCast(base);
@@ -71,7 +71,7 @@ class CallbackSenderI extends _CallbackSenderDisp implements java.lang.Runnable
                     }
                     catch(Exception ex)
                     {
-                        System.out.println("removing client `" + _communicator.identityToString(p.ice_getIdentity()) +
+                        System.out.println("removing client `" + Ice.Util.identityToString(p.ice_getIdentity()) +
                                            "':");
                         ex.printStackTrace();
 

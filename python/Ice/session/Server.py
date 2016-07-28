@@ -171,7 +171,7 @@ class Server(Ice.Application):
         reaper = ReapThread()
         reaper.start()
         try:
-            adapter.add(SessionFactoryI(reaper), self.communicator().stringToIdentity("SessionFactory"))
+            adapter.add(SessionFactoryI(reaper), Ice.stringToIdentity("SessionFactory"))
             adapter.activate()
             self.communicator().waitForShutdown()
         finally:
