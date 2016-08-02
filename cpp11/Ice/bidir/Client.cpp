@@ -4,7 +4,6 @@
 //
 // **********************************************************************
 
-#include <IceUtil/IceUtil.h>
 #include <Ice/Ice.h>
 #include <Callback.h>
 
@@ -53,7 +52,7 @@ CallbackClient::run(int argc, char*[])
     }
 
     auto adapter = communicator()->createObjectAdapter("");
-    Ice::Identity ident{ IceUtil::generateUUID(), ""};
+    Ice::Identity ident{ Ice::generateUUID(), ""};
     adapter->add(make_shared<CallbackReceiverI>(), ident);
     adapter->activate();
     server->ice_getConnection()->setAdapter(adapter);

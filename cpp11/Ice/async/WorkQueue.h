@@ -8,9 +8,12 @@
 #define WORK_QUEUE_H
 
 #include <Hello.h>
-#include <IceUtil/IceUtil.h>
 
 #include <list>
+#include <condition_variable>
+#include <mutex>
+#include <thread>
+
 class WorkQueue
 {
 public:

@@ -4,7 +4,7 @@
 //
 // **********************************************************************
 
-#include <IceUtil/IceUtil.h>
+#include <Ice/Ice.h>
 #include <FilesystemI.h>
 
 using namespace std;
@@ -23,7 +23,7 @@ Filesystem::NodeI::NodeI(const string& nm, const shared_ptr<DirectoryI>& parent)
     _parent(parent)
 {
     // Create an identity. The root directory has the fixed identity "RootDir"
-    _id.name = parent ? IceUtil::generateUUID() : "RootDir";
+    _id.name = parent ? Ice::generateUUID() : "RootDir";
 }
 
 // NodeI activate() member function
