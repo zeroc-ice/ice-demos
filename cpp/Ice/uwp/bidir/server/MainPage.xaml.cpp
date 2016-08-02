@@ -114,7 +114,7 @@ bidir::MainPage::print(const std::string& message)
 					ref new DispatchedHandler(
 							[=] ()
 								{
-									output->Text += ref new String(IceUtil::stringToWstring(message).c_str());
+									output->Text += ref new String(Ice::stringToWstring(message).c_str());
 									output->UpdateLayout();
 #if (_WIN32_WINNT > 0x0602)
 									scroller->ChangeView(nullptr, scroller->ScrollableHeight, nullptr);

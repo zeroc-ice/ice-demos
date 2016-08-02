@@ -64,7 +64,7 @@ hello::MainPage::updateProxy()
         return;
     }
 
-    string h = IceUtil::wstringToString(hostname->Text->Data());
+    string h = Ice::wstringToString(hostname->Text->Data());
     if (h.empty() && !useDiscovery->IsChecked->Value)
     {
         print("Host is empty.");
@@ -198,7 +198,7 @@ hello::MainPage::hello_Click(Platform::Object^ sender, Windows::UI::Xaml::Routed
                                                             if(ipinfo)
                                                             {
                                                                 hostname->Text = ref new String(
-                                                                    IceUtil::stringToWstring(info->remoteAddress).c_str());
+                                                                    Ice::stringToWstring(info->remoteAddress).c_str());
                                                                 break;
                                                             }
                                                         }
@@ -375,5 +375,5 @@ void hello::MainPage::useDiscovery_Changed(Platform::Object^ sender, Windows::UI
 void
 MainPage::print(const std::string& message)
 {
-    output->Text = ref new String(IceUtil::stringToWstring(message).c_str());
+    output->Text = ref new String(Ice::stringToWstring(message).c_str());
 }

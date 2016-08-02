@@ -22,7 +22,7 @@ HelloI::sayHello(const Ice::Current&)
     buf.resize(1024);
     DWORD val = GetEnvironmentVariableW(L"LANG", &buf[0], static_cast<DWORD>(buf.size()));
     string lang = (val > 0 && val < buf.size()) ?
-        IceUtil::wstringToString(&buf[0], IceUtil::getProcessStringConverter()) : string("en");
+        wstringToString(&buf[0], Ice::getProcessStringConverter()) : string("en");
 #else
     char* val = getenv("LANG");
     string lang = val ? string(val) : "en";

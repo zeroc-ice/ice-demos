@@ -136,7 +136,7 @@ Coordinator::message(const string& msg, const Ice::Current&)
 {
     try
     {
-        MainPage::instance()->appendMessage(ref new String(IceUtil::stringToWstring(msg).c_str()));
+        MainPage::instance()->appendMessage(ref new String(Ice::stringToWstring(msg).c_str()));
     }
     catch(const Ice::CommunicatorDestroyedException& ex)
     {
@@ -205,7 +205,7 @@ void
 MainPage::setError(const std::string& err)
 {
     setConnected(false);
-    _loginView->setError(ref new String(IceUtil::stringToWstring(err).c_str()));
+    _loginView->setError(ref new String(Ice::stringToWstring(err).c_str()));
 }
 
 void

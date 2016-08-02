@@ -18,9 +18,9 @@ main(int argc, char* argv[])
     {
         //
         // Set the process string converter and then initialize the
-        // aplication.
+        // application.
         //
-        IceUtil::setProcessStringConverter(new StringConverterI());
+        setProcessStringConverter(new StringConverterI());
         Client app;
         status = app.main(argc, argv, "config.client");
     }

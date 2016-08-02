@@ -31,7 +31,7 @@ public:
     virtual Glacier2::SessionPrx
     create(const string& userId, const Glacier2::SessionControlPrx&, const Ice::Current& current)
     {
-        Ice::Identity ident = { IceUtil::generateUUID(), "session" };
+        Ice::Identity ident = { Ice::generateUUID(), "session" };
         return Glacier2::SessionPrx::uncheckedCast(current.adapter->add(new ChatSessionI(userId), ident));
     }
 };

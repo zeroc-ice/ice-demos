@@ -25,7 +25,7 @@ Filesystem::NodeI::NodeI(const string& nm, const DirectoryIPtr& parent) :
     // Create an identity. The root directory has the fixed identity "RootDir"
     if(parent)
     {
-        _id.name = IceUtil::generateUUID();
+        _id.name = Ice::generateUUID();
     }
     else
     {

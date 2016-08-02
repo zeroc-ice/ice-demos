@@ -386,7 +386,7 @@ TalkApp::connect(const string& cmd)
     // the remote peer so that it can invoke callbacks on the servant over a
     // bidirectional connection.
     //
-    Ice::Identity id = Ice::stringToIdentity(IceUtil::generateUUID());
+    Ice::Identity id = Ice::stringToIdentity(Ice::generateUUID());
     PeerIPtr servant;
 
     try

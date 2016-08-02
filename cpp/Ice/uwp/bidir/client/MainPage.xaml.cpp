@@ -46,7 +46,7 @@ void bidir::MainPage::startClient_Click(Platform::Object^ sender, Windows::UI::X
         _communicator = Ice::initialize(initData);
 
         CallbackSenderPrx server = CallbackSenderPrx::checkedCast(
-            _communicator->stringToProxy("sender:tcp -h " + IceUtil::wstringToString(hostname->Text->Data()) + 
+            _communicator->stringToProxy("sender:tcp -h " + Ice::wstringToString(hostname->Text->Data()) + 
                                          " -p 10000"));
 
         if(!server)
@@ -58,7 +58,7 @@ void bidir::MainPage::startClient_Click(Platform::Object^ sender, Windows::UI::X
         stopClient->IsEnabled = true;
         Ice::ObjectAdapterPtr adapter = _communicator->createObjectAdapter("");
         Ice::Identity ident;
-        ident.name = IceUtil::generateUUID();
+        ident.name = Ice::generateUUID();
         ident.category = "";
         CallbackReceiverPtr cr = new CallbackReceiverI(this);
         adapter->add(cr, ident);
@@ -121,7 +121,7 @@ bidir::MainPage::print(const std::string& message)
                     ref new DispatchedHandler(
                             [=] ()
                                 {
-                                    output->Text += ref new String(IceUtil::stringToWstring(message).c_str());
+                                    output->Text += ref new String(Ice::stringToWstring(message).c_str());
                                     output->UpdateLayout();
 #if (_WIN32_WINNT > 0x0602)
                                     scroller->ChangeView(nullptr, scroller->ScrollableHeight, nullptr);

@@ -83,7 +83,7 @@ MainPage::MainPage()
         ostringstream os;
         os << "Server initialization failed with exception:\n";
         os << ex.what();
-        wstring msg = IceUtil::stringToWstring(os.str());
+        wstring msg = Ice::stringToWstring(os.str());
         print(ref new String(msg.c_str()));
     }
 }   

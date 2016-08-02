@@ -145,7 +145,7 @@ CPatchDlg::checksumProgress(const string& path)
     // TODO: indicate busy progress
  
     CString file;
-    file.Format(L" %s", IceUtil::stringToWstring(getBasename(path)).c_str());
+    file.Format(L" %s", Ice::stringToWstring(getBasename(path)).c_str());
     _file->SetWindowText(file);
 
     processMessages();
@@ -203,7 +203,7 @@ CPatchDlg::patchStart(const string& path, Ice::Long size, Ice::Long totalProgres
     }
 
     CString file;
-    file.Format(L" %s", IceUtil::stringToWstring(getBasename(path)).c_str());
+    file.Format(L" %s", Ice::stringToWstring(getBasename(path)).c_str());
     _file->SetWindowText(file);
 
     return patchProgress(0, size, totalProgress, totalSize);
@@ -291,15 +291,15 @@ CPatchDlg::OnInitDialog()
     // Set the patch directory and thorough flag from properties.
     //
     Ice::PropertiesPtr properties = _communicator->getProperties();
-    CString path = IceUtil::stringToWstring(
+    CString path = Ice::stringToWstring(
         properties->getPropertyWithDefault("IcePatch2Client.Directory", "")).c_str();
     _path->SetWindowText(path);
 
-    CString thorough = IceUtil::stringToWstring(
+    CString thorough = Ice::stringToWstring(
         properties->getPropertyWithDefault("IcePatch2Client.Thorough", "0")).c_str();
     _thorough->SetCheck(thorough != "0");
 
-    CString remove = IceUtil::stringToWstring(
+    CString remove = Ice::stringToWstring(
         properties->getPropertyWithDefault("IcePatch2Client.Remove", "0")).c_str();
     _remove->SetCheck(remove != "0");
 
@@ -396,7 +396,7 @@ CPatchDlg::OnStartPatch()
             return;
         }
         properties->setProperty("IcePatch2Client.Directory", 
-                                IceUtil::wstringToString(wstring(path)));
+                                Ice::wstringToString(wstring(path)));
 
         //
         // Set the thorough patch flag.

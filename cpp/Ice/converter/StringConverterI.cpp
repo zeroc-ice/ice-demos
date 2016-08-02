@@ -7,7 +7,7 @@
 #include <StringConverterI.h>
 
 using namespace std;
-using namespace IceUtil;
+using namespace Ice;
 
 Demo::StringConverterI::StringConverterI()
 {

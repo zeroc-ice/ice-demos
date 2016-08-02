@@ -186,7 +186,7 @@ Subscriber::run(int argc, char* argv[])
     subId.name = id;
     if(subId.name.empty())
     {
-        subId.name = IceUtil::generateUUID();
+        subId.name = Ice::generateUUID();
     }
     ClockPtr  clock = new ClockI;
     Ice::ObjectPrx subscriber = adapter->add(clock, subId);

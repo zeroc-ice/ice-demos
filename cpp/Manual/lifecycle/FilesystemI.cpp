@@ -45,7 +45,7 @@ FilesystemI::NodeI::NodeI(const string& nm, const DirectoryIPtr& parent)
     //
     if(parent != 0)
     {
-        _id.name = IceUtil::generateUUID();
+        _id.name = Ice::generateUUID();
     }
     else
     {
