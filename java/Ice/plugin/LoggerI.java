@@ -4,48 +4,40 @@
 //
 // **********************************************************************
 
-
-
-public class LoggerI implements Ice.Logger
+public class LoggerI implements com.zeroc.Ice.Logger
 {
     @Override
-    public void
-    print(String message)
+    public void print(String message)
     {
         System.out.println("PRINT: " + message);
     }
     
     @Override
-    public void
-    trace(String category, String message)
+    public void trace(String category, String message)
     {
         System.out.println("TRACE(" + category + "): " + message);
     }
     
     @Override
-    public void
-    warning(String message)
+    public void warning(String message)
     {
         System.out.println("WARNING: " + message);
     }
 
     @Override
-    public void
-    error(String message)
+    public void error(String message)
     {
         System.out.println("ERROR: " + message);
     }
 
     @Override
-    public String
-    getPrefix()
+    public String getPrefix()
     {
         return "";
     }
 
     @Override
-    public Ice.Logger
-    cloneWithPrefix(String prefix)
+    public com.zeroc.Ice.Logger cloneWithPrefix(String prefix)
     {
         return new LoggerI();
     }

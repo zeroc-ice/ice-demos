@@ -4,19 +4,18 @@
 //
 // **********************************************************************
 
-public class Server extends Ice.Application
+public class Server extends com.zeroc.Ice.Application
 {
     @Override
-    public int
-    run(String[] args)
+    public int run(String[] args)
     {
         args = communicator().getProperties().parseCommandLineOptions("Discover", args);
 
-        Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Hello");
-        Ice.ObjectAdapter discoverAdapter = communicator().createObjectAdapter("Discover");
+        com.zeroc.Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Hello");
+        com.zeroc.Ice.ObjectAdapter discoverAdapter = communicator().createObjectAdapter("Discover");
 
-        Ice.ObjectPrx hello = adapter.addWithUUID(new HelloI());
-        discoverAdapter.add(new DiscoverI(hello), Ice.Util.stringToIdentity("discover"));
+        com.zeroc.Ice.ObjectPrx hello = adapter.addWithUUID(new HelloI());
+        discoverAdapter.add(new DiscoverI(hello), com.zeroc.Ice.Util.stringToIdentity("discover"));
 
         discoverAdapter.activate();        
         adapter.activate();
@@ -25,8 +24,7 @@ public class Server extends Ice.Application
         return 0;
     }
 
-    public static void
-    main(String[] args)
+    public static void main(String[] args)
     {
         Server app = new Server();
         int status = app.main("Server", args, "config.server");

@@ -8,13 +8,12 @@ import Demo.*;
 
 class Parser
 {
-    Parser(Ice.Communicator communicator, LibraryPrx library)
+    Parser(com.zeroc.Ice.Communicator communicator, LibraryPrx library)
     {
         _library = library;
     }
 
-    void
-    usage()
+    void usage()
     {
         System.err.print(
             "help                    Print this message.\n" +
@@ -30,8 +29,7 @@ class Parser
             "remove                  Permanently remove the current book from the library.\n");
     }
 
-    void
-    addBook(java.util.List<String> args)
+    void addBook(java.util.List<String> args)
     {
         if(args.size() != 3)
         {
@@ -44,7 +42,7 @@ class Parser
             String isbn = args.get(0);
             String title = args.get(1);
 
-            java.util.List<String> authors = new java.util.LinkedList<String>();
+            java.util.List<String> authors = new java.util.LinkedList<>();
             java.util.StringTokenizer st = new java.util.StringTokenizer(args.get(2), ",");
             while(st.hasMoreTokens())
             {
@@ -62,14 +60,13 @@ class Parser
         {
             error("invalid ISBN");
         }
-        catch(Ice.LocalException ex)
+        catch(com.zeroc.Ice.LocalException ex)
         {
             error(ex.toString());
         }
     }
 
-    void
-    findIsbn(java.util.List<String> args)
+    void findIsbn(java.util.List<String> args)
     {
         if(args.size() != 1)
         {
@@ -93,29 +90,25 @@ class Parser
                 _current = null;
             }
 
-            BookDescriptionSeqHolder first = new BookDescriptionSeqHolder();
-            Ice.IntHolder nrows = new Ice.IntHolder();
-            BookQueryResultPrxHolder result = new BookQueryResultPrxHolder();
-            _library.queryByIsbn(args.get(0), 1, first, nrows, result);
+            Library.QueryByIsbnResult r = _library.queryByIsbn(args.get(0), 1);
 
-            System.out.println(nrows.value + " results");
-            if(nrows.value == 0)
+            System.out.println(r.nrows + " results");
+            if(r.nrows == 0)
             {   
                 return;
             }
 
-            _current = first.value.get(0);
-            _query = result.value;
+            _current = r.first.get(0);
+            _query = r.result;
             printCurrent();
         }
-        catch(Ice.LocalException ex)
+        catch(com.zeroc.Ice.LocalException ex)
         {
             error(ex.toString());
         }
     }
 
-    void
-    findAuthors(java.util.List<String> args)
+    void findAuthors(java.util.List<String> args)
     {
         if(args.size() != 1)
         {
@@ -139,29 +132,25 @@ class Parser
                 _current = null;
             }
 
-            BookDescriptionSeqHolder first = new BookDescriptionSeqHolder();
-            Ice.IntHolder nrows = new Ice.IntHolder();
-            BookQueryResultPrxHolder result = new BookQueryResultPrxHolder();
-            _library.queryByAuthor(args.get(0), 1, first, nrows, result);
+            Library.QueryByAuthorResult r = _library.queryByAuthor(args.get(0), 1);
 
-            System.out.println(nrows.value + " results");
-            if(nrows.value == 0)
+            System.out.println(r.nrows + " results");
+            if(r.nrows == 0)
             {   
                 return;
             }
 
-            _current = first.value.get(0);
-            _query = result.value;
+            _current = r.first.get(0);
+            _query = r.result;
             printCurrent();
         }
-        catch(Ice.LocalException ex)
+        catch(com.zeroc.Ice.LocalException ex)
         {
             error(ex.toString());
         }
     }
 
-    void
-    findTitle(java.util.List<String> args)
+    void findTitle(java.util.List<String> args)
     {
         if(args.size() != 1)
         {
@@ -185,29 +174,25 @@ class Parser
                 _current = null;
             }
 
-            BookDescriptionSeqHolder first = new BookDescriptionSeqHolder();
-            Ice.IntHolder nrows = new Ice.IntHolder();
-            BookQueryResultPrxHolder result = new BookQueryResultPrxHolder();
-            _library.queryByTitle(args.get(0), 1, first, nrows, result);
+            Library.QueryByTitleResult r = _library.queryByTitle(args.get(0), 1);
 
-            System.out.println(nrows.value + " results");
-            if(nrows.value == 0)
+            System.out.println(r.nrows + " results");
+            if(r.nrows == 0)
             {   
                 return;
             }
 
-            _current = first.value.get(0);
-            _query = result.value;
+            _current = r.first.get(0);
+            _query = r.result;
             printCurrent();
         }
-        catch(Ice.LocalException ex)
+        catch(com.zeroc.Ice.LocalException ex)
         {
             error(ex.toString());
         }
     }
 
-    void
-    nextFoundBook()
+    void nextFoundBook()
     {
         if(_query == null)
         {
@@ -217,35 +202,33 @@ class Parser
 
         try
         {
-            Ice.BooleanHolder destroyed = new Ice.BooleanHolder();
-            java.util.List<BookDescription> next = _query.next(1, destroyed);
-            if(next.size() > 0)
+            BookQueryResult.NextResult r = _query.next(1);
+            if(r.returnValue.size() > 0)
             {
-                _current = next.get(0);
+                _current = r.returnValue.get(0);
             }
             else
             {
-                assert destroyed.value;
+                assert r.destroyed;
                 _current = null;
             }
-            if(destroyed.value)
+            if(r.destroyed)
             {
                 _query = null;
             }
             printCurrent();
         }
-        catch(Ice.ObjectNotExistException ex)
+        catch(com.zeroc.Ice.ObjectNotExistException ex)
         {
             System.out.println("the query object no longer exists");
         }
-        catch(Ice.LocalException ex)
+        catch(com.zeroc.Ice.LocalException ex)
         {
             error(ex.toString());
         }
     }
 
-    void
-    printCurrent()
+    void printCurrent()
     {
         if(_current != null)
         {
@@ -264,8 +247,7 @@ class Parser
         }
     }
 
-    void
-    rentCurrent(java.util.List<String> args)
+    void rentCurrent(java.util.List<String> args)
     {
         if(args.size() != 1)
         {
@@ -294,18 +276,17 @@ class Parser
         {
             System.out.println("the customer name is invalid");
         }
-        catch(Ice.ObjectNotExistException ex)
+        catch(com.zeroc.Ice.ObjectNotExistException ex)
         {
             System.out.println("current book no longer exists");
         }
-        catch(Ice.LocalException ex)
+        catch(com.zeroc.Ice.LocalException ex)
         {
             error(ex.toString());
         }
     }
 
-    void
-    returnCurrent()
+    void returnCurrent()
     {
         try
         {
@@ -324,18 +305,17 @@ class Parser
         {
             System.out.println("the book is not currently rented");
         }
-        catch(Ice.ObjectNotExistException ex)
+        catch(com.zeroc.Ice.ObjectNotExistException ex)
         {
             System.out.println("current book no longer exists");
         }
-        catch(Ice.LocalException ex)
+        catch(com.zeroc.Ice.LocalException ex)
         {
             error(ex.toString());
         }
     }
 
-    void
-    removeCurrent()
+    void removeCurrent()
     {
         try
         {
@@ -350,30 +330,27 @@ class Parser
                 System.out.println("no current book" );
             }
         }
-        catch(Ice.ObjectNotExistException ex)
+        catch(com.zeroc.Ice.ObjectNotExistException ex)
         {
             System.out.println("current book no longer exists");
         }
-        catch(Ice.LocalException ex)
+        catch(com.zeroc.Ice.LocalException ex)
         {
             error(ex.toString());
         }
     }
 
-    void
-    error(String s)
+    void error(String s)
     {
         System.err.println("error: " + s);
     }
 
-    void
-    warning(String s)
+    void warning(String s)
     {
         System.err.println("warning: " + s);
     }
 
-    String
-    getInput()
+    String getInput()
     {
         System.out.print(">>> ");
         System.out.flush();
@@ -388,8 +365,7 @@ class Parser
         }
     }
 
-    int
-    parse()
+    int parse()
     {
         _query = null;
         _current = null;
@@ -402,8 +378,7 @@ class Parser
         return 0;
     }
 
-    int
-    parse(String file)
+    int parse(String file)
     {
         _query = null;
         _current = null;

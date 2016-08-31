@@ -8,5 +8,5 @@ package FilesystemI;
 
 public interface NodeI
 {
-    Ice.Identity id();
+    com.zeroc.Ice.Identity id();
 }

@@ -8,7 +8,7 @@ import java.util.concurrent.ExecutorService;
 
 import Demo.*;
 
-public class TaskManagerI extends _TaskManagerDisp
+public class TaskManagerI implements TaskManager
 {
     public TaskManagerI(ExecutorService executor)
     {
@@ -16,8 +16,7 @@ public class TaskManagerI extends _TaskManagerDisp
     }
 
     @Override
-    public void
-    run(int id, Ice.Current current)
+    public void run(int id, com.zeroc.Ice.Current current)
     {
         System.out.println("starting task " + id);
         // Sleep for 10 seconds.
@@ -36,11 +35,10 @@ public class TaskManagerI extends _TaskManagerDisp
     }
 
     @Override
-    public void
-    shutdown(Ice.Current current)
+    public void shutdown(com.zeroc.Ice.Current current)
     {
         System.out.println("Shutting down...");
-         //
+        //
         // Call shutdownNow on the executor. This interrupts all
         // executor threads causing any running upcalls to terminate
         // quickly.

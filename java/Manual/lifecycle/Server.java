@@ -6,11 +6,10 @@
 
 import FilesystemI.*;
 
-class Server extends Ice.Application
+class Server extends com.zeroc.Ice.Application
 {
     @Override
-    public int
-    run(String[] args)
+    public int run(String[] args)
     {
         //
         // Terminate cleanly on receipt of a signal.
@@ -20,14 +19,14 @@ class Server extends Ice.Application
         //
         // Create an object adapter
         //
-        Ice.ObjectAdapter adapter = communicator().createObjectAdapterWithEndpoints(
+        com.zeroc.Ice.ObjectAdapter adapter = communicator().createObjectAdapterWithEndpoints(
             "LifecycleFilesystem", "default -h localhost -p 10000");
 
         //
         // Create the root directory.
         //
         DirectoryI root = new DirectoryI();
-        Ice.Identity id = new Ice.Identity();
+        com.zeroc.Ice.Identity id = new com.zeroc.Ice.Identity();
         id.name = "RootDir";
         adapter.add(root, id);
 
@@ -48,8 +47,7 @@ class Server extends Ice.Application
         return 0;
     }
 
-    static public void
-    main(String[] args)
+    static public void main(String[] args)
     {
         Server app = new Server();
         app.main("demo.book.lifecycle.Server", args);

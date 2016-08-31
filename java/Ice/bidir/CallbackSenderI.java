@@ -6,15 +6,14 @@
 
 import Demo.*;
 
-class CallbackSenderI extends _CallbackSenderDisp implements java.lang.Runnable
+class CallbackSenderI implements CallbackSender, java.lang.Runnable
 {
-    CallbackSenderI(Ice.Communicator communicator)
+    CallbackSenderI(com.zeroc.Ice.Communicator communicator)
     {
         _communicator = communicator;
     }
 
-    synchronized public void
-    destroy()
+    synchronized public void destroy()
     {
         System.out.println("destroying callback sender");
         _destroy = true;
@@ -23,19 +22,17 @@ class CallbackSenderI extends _CallbackSenderDisp implements java.lang.Runnable
     }
 
     @Override
-    synchronized public void
-    addClient(Ice.Identity ident, Ice.Current current)
+    synchronized public void addClient(com.zeroc.Ice.Identity ident, com.zeroc.Ice.Current current)
     {
-        System.out.println("adding client `" + Ice.Util.identityToString(ident) + "'");
+        System.out.println("adding client `" + com.zeroc.Ice.Util.identityToString(ident) + "'");
 
-        Ice.ObjectPrx base = current.con.createProxy(ident);
-        CallbackReceiverPrx client = CallbackReceiverPrxHelper.uncheckedCast(base);
+        com.zeroc.Ice.ObjectPrx base = current.con.createProxy(ident);
+        CallbackReceiverPrx client = CallbackReceiverPrx.uncheckedCast(base);
         _clients.add(client);
     }
 
     @Override
-    public void
-    run()
+    public void run()
     {
         int num = 0;
         while(true)
@@ -56,7 +53,7 @@ class CallbackSenderI extends _CallbackSenderDisp implements java.lang.Runnable
                     break;
                 }
 
-                clients = new java.util.ArrayList<CallbackReceiverPrx>(_clients);
+                clients = new java.util.ArrayList<>(_clients);
             }
 
             if(!clients.isEmpty())
@@ -71,7 +68,8 @@ class CallbackSenderI extends _CallbackSenderDisp implements java.lang.Runnable
                     }
                     catch(Exception ex)
                     {
-                        System.out.println("removing client `" + Ice.Util.identityToString(p.ice_getIdentity()) +
+                        System.out.println("removing client `" +
+                                           com.zeroc.Ice.Util.identityToString(p.ice_getIdentity()) +
                                            "':");
                         ex.printStackTrace();
 
@@ -85,7 +83,7 @@ class CallbackSenderI extends _CallbackSenderDisp implements java.lang.Runnable
         }
     }
 
-    private Ice.Communicator _communicator;
+    private com.zeroc.Ice.Communicator _communicator;
     private boolean _destroy = false;
-    private java.util.List<CallbackReceiverPrx> _clients = new java.util.ArrayList<CallbackReceiverPrx>();
+    private java.util.List<CallbackReceiverPrx> _clients = new java.util.ArrayList<>();
 }

@@ -6,55 +6,25 @@
 
 import Demo.*;
 
-public class Client extends Ice.Application
+public class Client extends com.zeroc.Ice.Application
 {
     class ShutdownHook extends Thread
     {
         @Override
-        public void
-        run()
+        public void run()
         {
             try
             {
                 communicator().destroy();
             }
-            catch(Ice.LocalException ex)
+            catch(com.zeroc.Ice.LocalException ex)
             {
                 ex.printStackTrace();
             }
         }
     }
 
-    public class Callback_Hello_sayHelloI extends Callback_Hello_sayHello
-    {
-        @Override
-        public void response()
-        {
-        }
-
-        @Override
-        public void exception(Ice.LocalException ex)
-        {
-            System.err.println("sayHello AMI call failed:");
-            ex.printStackTrace();
-        }
-
-        @Override
-        public void exception(Ice.UserException ex)
-        {
-            if(ex instanceof Demo.RequestCanceledException)
-            {
-                System.out.println("Demo.RequestCanceledException");
-            }
-            else
-            {
-                ex.printStackTrace();
-            }
-        }
-    }
-
-    private static void
-    menu()
+    private static void menu()
     {
         System.out.println(
             "usage:\n" +
@@ -66,8 +36,7 @@ public class Client extends Ice.Application
     }
 
     @Override
-    public int
-    run(String[] args)
+    public int run(String[] args)
     {
         if(args.length > 0)
         {
@@ -82,7 +51,7 @@ public class Client extends Ice.Application
         //
         setInterruptHook(new ShutdownHook());
 
-        HelloPrx hello = HelloPrxHelper.checkedCast(communicator().propertyToProxy("Hello.Proxy"));
+        HelloPrx hello = HelloPrx.checkedCast(communicator().propertyToProxy("Hello.Proxy"));
         if(hello == null)
         {
             System.err.println("invalid proxy");
@@ -111,7 +80,18 @@ public class Client extends Ice.Application
                 }
                 else if(line.equals("d"))
                 {
-                    hello.begin_sayHello(5000, new Callback_Hello_sayHelloI());
+                    hello.sayHelloAsync(5000).whenComplete((result, ex) ->
+                        {
+                            if(ex instanceof Demo.RequestCanceledException)
+                            {
+                                System.out.println("Demo.RequestCanceledException");
+                            }
+                            else
+                            {
+                                System.err.println("sayHello AMI call failed:");
+                                ex.printStackTrace();
+                            }
+                        });
                 }
                 else if(line.equals("s"))
                 {
@@ -131,11 +111,11 @@ public class Client extends Ice.Application
             {
                 ex.printStackTrace();
             }
-            catch(Ice.UserException ex)
+            catch(com.zeroc.Ice.UserException ex)
             {
                 ex.printStackTrace();
             }
-            catch(Ice.LocalException ex)
+            catch(com.zeroc.Ice.LocalException ex)
             {
                 ex.printStackTrace();
             }
@@ -145,8 +125,7 @@ public class Client extends Ice.Application
         return 0;
     }
 
-    public static void
-    main(String[] args)
+    public static void main(String[] args)
     {
         Client app = new Client();
         int status = app.main("Client", args, "config.client");

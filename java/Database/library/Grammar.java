@@ -12,8 +12,7 @@ class Grammar
         _scanner = new Scanner(_parser);
     }
 
-    void
-    parse()
+    void parse()
     {
         while(true)
         {
@@ -144,10 +143,9 @@ class Grammar
         }
     }
 
-    private java.util.List<String>
-    strings()
+    private java.util.List<String> strings()
     {
-        java.util.List<String> l = new java.util.ArrayList<String>();
+        java.util.List<String> l = new java.util.ArrayList<>();
         while(true)
         {
             _token = _scanner.nextToken();

@@ -6,52 +6,38 @@
 
 import Demo.*;
 
-class SessionI implements _SessionOperations, _Glacier2SessionOperations
+class SessionI implements Glacier2Session
 {
     @Override
-    synchronized public LibraryPrx
-    getLibrary(Ice.Current c)
+    synchronized public LibraryPrx getLibrary(com.zeroc.Ice.Current c)
     {
         if(_destroyed)
         {
-            throw new Ice.ObjectNotExistException();
+            throw new com.zeroc.Ice.ObjectNotExistException();
         }
         return _library;
     }
 
     @Override
-    synchronized public void
-    refresh(Ice.Current c)
+    synchronized public void refresh(com.zeroc.Ice.Current c)
     {
         if(_destroyed)
         {
-            throw new Ice.ObjectNotExistException();
+            throw new com.zeroc.Ice.ObjectNotExistException();
         }
         _timestamp = System.currentTimeMillis();
     }
 
-    synchronized public long
-    getSessionTimeout(Ice.Current c)
-    {
-        if(_destroyed)
-        {
-            throw new Ice.ObjectNotExistException();
-        }
-        return 5000;
-    }
-
     @Override
-    synchronized public void
-    destroy(Ice.Current c)
+    synchronized public void destroy(com.zeroc.Ice.Current c)
     {
         if(_destroyed)
         {
-            throw new Ice.ObjectNotExistException();
+            throw new com.zeroc.Ice.ObjectNotExistException();
         }
 
         _destroyed = true;
-        _logger.trace("Session", "session " + Ice.Util.identityToString(c.id) +
-                      " is now destroyed.");
+        _logger.trace("Session", "session " + com.zeroc.Ice.Util.identityToString(c.id) + " is now destroyed.");
 
         // This method is never called on shutdown of the server.
         _libraryI.destroy();
@@ -60,8 +46,7 @@ class SessionI implements _SessionOperations, _Glacier2SessionOperations
     }
 
     // Called on application shutdown.
-    synchronized public void
-    shutdown()
+    synchronized public void shutdown()
     {
         if(!_destroyed)
         {
@@ -70,25 +55,24 @@ class SessionI implements _SessionOperations, _Glacier2SessionOperations
         }
     }
 
-    synchronized public long
-    timestamp()
+    synchronized public long timestamp()
     {
         if(_destroyed)
         {
-            throw new Ice.ObjectNotExistException();
+            throw new com.zeroc.Ice.ObjectNotExistException();
         }
         return _timestamp;
     }
 
-    SessionI(Ice.Logger logger, Ice.ObjectAdapter adapter)
+    SessionI(com.zeroc.Ice.Logger logger, com.zeroc.Ice.ObjectAdapter adapter)
     {
         _logger = logger;
         _timestamp = System.currentTimeMillis();
         _libraryI = new LibraryI();
-        _library = LibraryPrxHelper.uncheckedCast(adapter.addWithUUID(new DispatchInterceptorI(_libraryI)));
+        _library = LibraryPrx.uncheckedCast(adapter.addWithUUID(new DispatchInterceptorI(_libraryI)));
     }
 
-    private Ice.Logger _logger;
+    private com.zeroc.Ice.Logger _logger;
     private boolean _destroyed = false; // true if destroy() was called, false otherwise.
     private long _timestamp; // The last time the session was refreshed.
     private LibraryPrx _library;

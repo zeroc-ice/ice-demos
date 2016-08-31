@@ -6,11 +6,10 @@
 
 import Demo.*;
 
-public class Client extends Ice.Application
+public class Client extends com.zeroc.Ice.Application
 {
     @Override
-    public int
-    run(String[] args)
+    public int run(String[] args)
     {
         if(args.length > 0)
         {
@@ -18,7 +17,7 @@ public class Client extends Ice.Application
             return 1;
         }
 
-        CallbackSenderPrx server = CallbackSenderPrxHelper.checkedCast(
+        CallbackSenderPrx server = CallbackSenderPrx.checkedCast(
             communicator().propertyToProxy("CallbackSender.Proxy"));
         if(server == null)
         {
@@ -26,8 +25,8 @@ public class Client extends Ice.Application
             return 1;
         }
 
-        Ice.ObjectAdapter adapter = communicator().createObjectAdapter("");
-        Ice.Identity ident = new Ice.Identity();
+        com.zeroc.Ice.ObjectAdapter adapter = communicator().createObjectAdapter("");
+        com.zeroc.Ice.Identity ident = new com.zeroc.Ice.Identity();
         ident.name = java.util.UUID.randomUUID().toString();
         ident.category = "";
         adapter.add(new CallbackReceiverI(), ident);
@@ -39,8 +38,7 @@ public class Client extends Ice.Application
         return 0;
     }
 
-    public static void
-    main(String[] args)
+    public static void main(String[] args)
     {
         Client app = new Client();
         int status = app.main("Client", args, "config.client");

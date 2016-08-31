@@ -12,21 +12,20 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import Demo.*;
-import Ice.LocalException;
+import com.zeroc.Ice.LocalException;
 
-public class Client extends Ice.Application
+public class Client extends com.zeroc.Ice.Application
 {
     class ShutdownHook extends Thread
     {
         @Override
-        public void
-        run()
+        public void run()
         {
             try
             {
                 communicator().destroy();
             }
-            catch(Ice.LocalException ex)
+            catch(com.zeroc.Ice.LocalException ex)
             {
                 ex.printStackTrace();
             }
@@ -47,8 +46,7 @@ public class Client extends Ice.Application
     }
 
     @Override
-    public int
-    run(String[] args)
+    public int run(String[] args)
     {
         if(args.length > 0)
         {
@@ -63,7 +61,8 @@ public class Client extends Ice.Application
         //
         setInterruptHook(new ShutdownHook());
 
-        final TaskManagerPrx taskManager = TaskManagerPrxHelper.checkedCast(communicator().propertyToProxy("TaskManager.Proxy"));
+        final TaskManagerPrx taskManager =
+            TaskManagerPrx.checkedCast(communicator().propertyToProxy("TaskManager.Proxy"));
         if(taskManager == null)
         {
             System.err.println("invalid proxy");
@@ -75,7 +74,7 @@ public class Client extends Ice.Application
         java.io.BufferedReader in = new java.io.BufferedReader(new java.io.InputStreamReader(System.in));
         
         ExecutorService executor = Executors.newFixedThreadPool(5);
-        List<Future<?> > futures = new ArrayList<Future<?> >();
+        List<Future<?> > futures = new ArrayList<>();
         int nextId = 0;
         String line = null;
         do
@@ -92,16 +91,13 @@ public class Client extends Ice.Application
                 if(line.equals("t"))
                 {
                     final int id = nextId++;
-                    taskManager.begin_run(id, new Callback_TaskManager_run()
+                    taskManager.runAsync(id).whenComplete((result, ex) ->
                     {
-                        @Override
-                        public void response()
+                        if(ex == null)
                         {
                             System.out.println("task " + id + " completed running");
                         }
-                        
-                        @Override
-                        public void exception(LocalException ex)
+                        else
                         {
                             System.out.println("blocking task " + id + " failed");
                             ex.printStackTrace();
@@ -114,34 +110,32 @@ public class Client extends Ice.Application
                     // Remove any completed tasks.
                     //
                     Iterator<Future<?> > iterator = futures.iterator();
-                    while(iterator.hasNext()) {
+                    while(iterator.hasNext())
+                    {
                         Future<?> f = iterator.next();
-                        if(f.isDone()) {
+                        if(f.isDone())
+                        {
                             iterator.remove();
                         }
                     }
 
                     final int id = nextId++;
-                    Future<?> future = executor.submit(new Runnable() {
-                        @Override
-                        public void
-                        run()
+                    Future<?> future = executor.submit(() ->
+                    {
+                        try
                         {
-                            try
-                            {
-                                taskManager.run(id);
-                                System.out.println("task " + id + " completed running");
-                            } 
-                            catch(Ice.OperationInterruptedException e)
-                            {
-                                System.out.println("blocking task " + id + " interrupted");
-                            }
-                            catch(Ice.Exception e)
-                            {
-                                System.out.println("blocking task " + id + " failed");
-                                e.printStackTrace();
-                            }                                
+                            taskManager.run(id);
+                            System.out.println("task " + id + " completed running");
+                        } 
+                        catch(com.zeroc.Ice.OperationInterruptedException e)
+                        {
+                            System.out.println("blocking task " + id + " interrupted");
                         }
+                        catch(com.zeroc.Ice.Exception e)
+                        {
+                            System.out.println("blocking task " + id + " failed");
+                            e.printStackTrace();
+                        }                                
                     });
                     futures.add(future);
                 }
@@ -175,7 +169,7 @@ public class Client extends Ice.Application
             {
                 ex.printStackTrace();
             }
-            catch(Ice.LocalException ex)
+            catch(com.zeroc.Ice.LocalException ex)
             {
                 ex.printStackTrace();
             }
@@ -185,8 +179,7 @@ public class Client extends Ice.Application
         return 0;
     }
 
-    public static void
-    main(String[] args)
+    public static void main(String[] args)
     {
         Client app = new Client();
         int status = app.main("Client", args, "config.client");

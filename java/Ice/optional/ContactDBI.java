@@ -6,78 +6,75 @@
 
 import Demo.*;
 
-public class ContactDBI extends _ContactDBDisp
+public class ContactDBI implements ContactDB
 {
-    private java.util.Map<String, Contact> _contacts = new java.util.HashMap<String, Contact>();
+    private java.util.Map<String, Contact> _contacts = new java.util.HashMap<>();
 
     @Override
-    public final void
-    addContact(String name, Ice.Optional<NumberType> type, Ice.Optional<String> number, Ice.IntOptional dialGroup,
-               Ice.Current current)
+    public final void addContact(String name, java.util.Optional<NumberType> type, java.util.Optional<String> number,
+                                 java.util.OptionalInt dialGroup, com.zeroc.Ice.Current current)
     {
         Contact contact = new Contact();
         contact.name = name;
-        if(type.isSet())
+        if(type.isPresent())
         {
             contact.setType(type.get());
         }
-        if(number.isSet())
+        if(number.isPresent())
         {
             contact.setNumber(number.get());
         }
-        if(dialGroup.isSet())
+        if(dialGroup.isPresent())
         {
-            contact.setDialGroup(dialGroup.get());
+            contact.setDialGroup(dialGroup.getAsInt());
         }
         _contacts.put(name, contact);
     }
 
     @Override
-    public final void
-    updateContact(String name, Ice.Optional<NumberType> type, Ice.Optional<String> number, Ice.IntOptional dialGroup,
-                  Ice.Current current)
+    public final void updateContact(String name, java.util.Optional<NumberType> type,
+                                    java.util.Optional<String> number, java.util.OptionalInt dialGroup,
+                                    com.zeroc.Ice.Current current)
     {
         Contact c = _contacts.get(name);
         if(c != null)
         {
-            if(type.isSet())
+            if(type.isPresent())
             {
                 c.setType(type.get());
             }
-            if(number.isSet())
+            if(number.isPresent())
             {
                 c.setNumber(number.get());
             }
-            if(dialGroup.isSet())
+            if(dialGroup.isPresent())
             {
-                c.setDialGroup(dialGroup.get());
+                c.setDialGroup(dialGroup.getAsInt());
             }
         }
     }
 
     @Override
-    public final Contact
-    query(String name, Ice.Current current)
+    public final Contact query(String name, com.zeroc.Ice.Current current)
     {
         return _contacts.get(name);
     }
 
     @Override
-    public final void
-    queryDialgroup(String name, Ice.IntOptional dialGroup, Ice.Current current)
+    public final java.util.OptionalInt queryDialgroup(String name, com.zeroc.Ice.Current current)
     {
         Contact c = _contacts.get(name);
         if(c != null)
         {
-            dialGroup.set(c.optionalDialGroup());
+            return c.optionalDialGroup();
         }
+        return java.util.OptionalInt.empty();
     }
 
     @Override
-    public final Ice.Optional<String>
-    queryNumber(String name, Ice.Current current)
+    public final java.util.Optional<String> queryNumber(String name, com.zeroc.Ice.Current current)
     {
-        Ice.Optional<String> ret = null;
+        java.util.Optional<String> ret = null;
         Contact c = _contacts.get(name);
         if(c != null)
         {
@@ -87,8 +84,7 @@ public class ContactDBI extends _ContactDBDisp
     }
 
     @Override
-    public void
-    shutdown(Ice.Current current)
+    public void shutdown(com.zeroc.Ice.Current current)
     {
         System.out.println("Shutting down...");
         current.adapter.getCommunicator().shutdown();

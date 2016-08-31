@@ -6,27 +6,25 @@
 
 import Demo.*;
 
-public class Client extends Ice.Application
+public class Client extends com.zeroc.Ice.Application
 {
     class ShutdownHook extends Thread
     {
         @Override
-        public void
-        run()
+        public void run()
         {
             try
             {
                 communicator().destroy();
             }
-            catch(Ice.LocalException ex)
+            catch(com.zeroc.Ice.LocalException ex)
             {
                 ex.printStackTrace();
             }
         }
     }
 
-    private void
-    menu()
+    private void menu()
     {
         System.out.println(
             "usage:\n" +
@@ -37,8 +35,7 @@ public class Client extends Ice.Application
     }
 
     @Override
-    public int
-    run(String[] args)
+    public int run(String[] args)
     {
         if(args.length > 0)
         {
@@ -61,13 +58,13 @@ public class Client extends Ice.Application
         HelloPrx hello = null;
         try
         {
-            hello = HelloPrxHelper.checkedCast(communicator().stringToProxy("hello"));
+            hello = HelloPrx.checkedCast(communicator().stringToProxy("hello"));
         }
-        catch(Ice.NotRegisteredException ex)
+        catch(com.zeroc.Ice.NotRegisteredException ex)
         {
-            IceGrid.QueryPrx query = 
-                IceGrid.QueryPrxHelper.checkedCast(communicator().stringToProxy("DemoIceGrid/Query"));
-            hello = HelloPrxHelper.checkedCast(query.findObjectByType("::Demo::Hello"));
+            com.zeroc.IceGrid.QueryPrx query = 
+                com.zeroc.IceGrid.QueryPrx.checkedCast(communicator().stringToProxy("DemoIceGrid/Query"));
+            hello = HelloPrx.checkedCast(query.findObjectByType("::Demo::Hello"));
         }
         if(hello == null)
         {
@@ -117,7 +114,7 @@ public class Client extends Ice.Application
             {
                 ex.printStackTrace();
             }
-            catch(Ice.LocalException ex)
+            catch(com.zeroc.Ice.LocalException ex)
             {
                 ex.printStackTrace();
             }
@@ -127,8 +124,7 @@ public class Client extends Ice.Application
         return 0;
     }
 
-    public static void
-    main(String[] args)
+    public static void main(String[] args)
     {
         Client app = new Client();
         int status = app.main("Client", args, "config.client");

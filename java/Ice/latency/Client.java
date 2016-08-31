@@ -6,11 +6,10 @@
 
 import Demo.*;
 
-class Client extends Ice.Application
+class Client extends com.zeroc.Ice.Application
 {
     @Override
-    public int
-    run(String[] args)
+    public int run(String[] args)
     {
         if(args.length > 0)
         {
@@ -18,7 +17,7 @@ class Client extends Ice.Application
             return 1;
         }
 
-        PingPrx ping = PingPrxHelper.checkedCast(communicator().propertyToProxy("Ping.Proxy"));
+        com.zeroc.Ice.ObjectPrx ping = communicator().propertyToProxy("Ping.Proxy");
         if(ping == null)
         {
             System.err.println("invalid proxy");
@@ -59,8 +58,7 @@ class Client extends Ice.Application
         return 0;
     }
 
-    public static void
-    main(String[] args)
+    public static void main(String[] args)
     {
         Client app = new Client();
         int status = app.main("Client", args, "config.client");

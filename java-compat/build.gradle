@@ -1,0 +1,48 @@
+// **********************************************************************
+//
+// Copyright (c) 2003-2016 ZeroC, Inc. All rights reserved.
+//
+// **********************************************************************
+
+subprojects {
+
+    project.group = "com.zeroc"
+    apply plugin: 'java'
+
+    apply from: "$rootProject.projectDir/gradle/ice.gradle"
+    project.version = slice.iceVersion
+
+    // We set this early so that slice.jarDir is correct
+    slice.compat = true
+
+    repositories {
+        if (slice.jarDir != null) {
+            flatDir {
+	        name "local"
+                dirs slice.jarDir
+            }
+        }
+
+        if (!useLocalOnly) {
+            maven {
+                url "https://${iceMavenRepo}/nexus/content/repositories/thirdparty"
+            }
+            maven {
+                url "https://${iceMavenRepo}/nexus/content/repositories/releases"
+            }
+        }
+    }
+}
+
+apply from: "$rootProject.projectDir/Ice/build.gradle"
+apply from: "$rootProject.projectDir/IceDiscovery/build.gradle"
+apply from: "$rootProject.projectDir/Glacier2/build.gradle"
+apply from: "$rootProject.projectDir/IceGrid/build.gradle"
+apply from: "$rootProject.projectDir/Manual/build.gradle"
+
+//
+// Used to build the gradle wrapper to automatically download and install gradle.
+//
+task wrapper(type: Wrapper) {
+    gradleVersion = "2.14"
+}

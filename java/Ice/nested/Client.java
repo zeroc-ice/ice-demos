@@ -6,13 +6,12 @@
 
 import Demo.*;
 
-public class Client extends Ice.Application
+public class Client extends com.zeroc.Ice.Application
 {
     class ShutdownHook extends Thread
     {
         @Override
-        public void
-        run()
+        public void run()
         {
             /*
              * For this demo we won't destroy the communicator since it has to
@@ -23,7 +22,7 @@ public class Client extends Ice.Application
              {
                  communicator().destroy();
              }
-             catch(Ice.LocalException ex)
+             catch(com.zeroc.Ice.LocalException ex)
              {
                  ex.printStackTrace();
              }
@@ -32,8 +31,7 @@ public class Client extends Ice.Application
     }
 
     @Override
-    public int
-    run(String[] args)
+    public int run(String[] args)
     {
         if(args.length > 0)
         {
@@ -48,7 +46,7 @@ public class Client extends Ice.Application
         //
         setInterruptHook(new ShutdownHook());
 
-        NestedPrx nested = NestedPrxHelper.checkedCast(communicator().propertyToProxy("Nested.Proxy"));
+        NestedPrx nested = NestedPrx.checkedCast(communicator().propertyToProxy("Nested.Proxy"));
         if(nested == null)
         {
             System.err.println("invalid proxy");
@@ -60,12 +58,12 @@ public class Client extends Ice.Application
         // high and there are no more threads in the thread pool to
         // dispatch the call.
         //
-        nested = (NestedPrx)nested.ice_invocationTimeout(5000);
+        nested = nested.ice_invocationTimeout(5000);
 
-        Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Nested.Client");
+        com.zeroc.Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Nested.Client");
         NestedPrx self =
-            NestedPrxHelper.uncheckedCast(adapter.createProxy(Ice.Util.stringToIdentity("nestedClient")));
-        adapter.add(new NestedI(self), Ice.Util.stringToIdentity("nestedClient"));
+            NestedPrx.uncheckedCast(adapter.createProxy(com.zeroc.Ice.Util.stringToIdentity("nestedClient")));
+        adapter.add(new NestedI(self), com.zeroc.Ice.Util.stringToIdentity("nestedClient"));
         adapter.activate();
 
         System.out.println("Note: The maximum nesting level is sz * 2, with sz being");
@@ -101,7 +99,7 @@ public class Client extends Ice.Application
             {
                 ex.printStackTrace();
             }
-            catch(Ice.LocalException ex)
+            catch(com.zeroc.Ice.LocalException ex)
             {
                 ex.printStackTrace();
             }
@@ -111,8 +109,7 @@ public class Client extends Ice.Application
         return 0;
     }
 
-    public static void
-    main(String[] args)
+    public static void main(String[] args)
     {
         Client app = new Client();
         int status = app.main("Client", args, "config.client");

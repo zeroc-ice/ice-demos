@@ -6,8 +6,7 @@
 
 class ConnectionPool
 {
-    public synchronized void
-    destroy()
+    public synchronized void destroy()
     {
         _destroyed = true;
         while(_connections.size() != _nconnections)
@@ -34,8 +33,7 @@ class ConnectionPool
         }
     }
 
-    public synchronized java.sql.Connection
-    acquire()
+    public synchronized java.sql.Connection acquire()
     {
         while(_connections.isEmpty() && !_destroyed)
         {
@@ -111,8 +109,7 @@ class ConnectionPool
         return conn;
     }
 
-    public synchronized void
-    release(java.sql.Connection connection)
+    public synchronized void release(java.sql.Connection connection)
     {
         if(connection != null)
         {
@@ -121,7 +118,7 @@ class ConnectionPool
         }
     }
 
-    ConnectionPool(Ice.Logger logger, String url, String username, String password, int numConnections)
+    ConnectionPool(com.zeroc.Ice.Logger logger, String url, String username, String password, int numConnections)
         throws java.sql.SQLException
     {
         _logger = logger;
@@ -142,13 +139,12 @@ class ConnectionPool
         }
     }
 
-
-    private Ice.Logger _logger;
+    private com.zeroc.Ice.Logger _logger;
     private boolean _trace = true;
     private String _url;
     private String _username;
     private String _password;
-    private java.util.LinkedList<java.sql.Connection> _connections = new java.util.LinkedList<java.sql.Connection>();
+    private java.util.LinkedList<java.sql.Connection> _connections = new java.util.LinkedList<>();
     private boolean _destroyed = false;
     private int _nconnections;
 }

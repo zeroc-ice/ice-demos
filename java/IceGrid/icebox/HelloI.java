@@ -6,7 +6,7 @@
 
 import Demo.*;
 
-public class HelloI extends _HelloDisp
+public class HelloI implements Hello
 {
     HelloI(String serviceName)
     {
@@ -14,8 +14,7 @@ public class HelloI extends _HelloDisp
     }
 
     @Override
-    public void
-    sayHello(Ice.Current current)
+    public void sayHello(com.zeroc.Ice.Current current)
     {
         java.util.Map<String,String> env =  System.getenv();
         String lang = env.containsKey("LANG") ? env.get("LANG") : "en";

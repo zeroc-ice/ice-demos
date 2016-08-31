@@ -6,27 +6,25 @@
 
 import Demo.*;
 
-public class Client extends Glacier2.Application
+public class Client extends com.zeroc.Glacier2.Application
 {
     class ShutdownHook extends Thread
     {
         @Override
-        public void
-        run()
+        public void run()
         {
             try
             {
                 communicator().destroy();
             }
-            catch(Ice.LocalException ex)
+            catch(com.zeroc.Ice.LocalException ex)
             {
                 ex.printStackTrace();
             }
         }
     }
 
-    private static void
-    menu()
+    private static void menu()
     {
         System.out.println(
             "usage:\n" +
@@ -49,9 +47,9 @@ public class Client extends Glacier2.Application
     }
 
     @Override
-    public Glacier2.SessionPrx createSession()
+    public com.zeroc.Glacier2.SessionPrx createSession()
     {
-        Glacier2.SessionPrx session;
+        com.zeroc.Glacier2.SessionPrx session;
         while(true)
         {
             java.io.BufferedReader in = new java.io.BufferedReader(new java.io.InputStreamReader(System.in));
@@ -80,11 +78,11 @@ public class Client extends Glacier2.Application
                 session = router().createSession(id, pw);
                 break;
             }
-            catch(Glacier2.PermissionDeniedException ex)
+            catch(com.zeroc.Glacier2.PermissionDeniedException ex)
             {
                 System.out.println("permission denied:\n" + ex.reason);
             }
-            catch(Glacier2.CannotCreateSessionException ex)
+            catch(com.zeroc.Glacier2.CannotCreateSessionException ex)
             {
                 System.out.println("cannot create session:\n" + ex.reason);
             }
@@ -93,8 +91,7 @@ public class Client extends Glacier2.Application
     }
 
     @Override
-    public int
-    runWithSession(String[] args)
+    public int runWithSession(String[] args)
         throws RestartSessionException
     {
         if(args.length > 0)
@@ -112,20 +109,19 @@ public class Client extends Glacier2.Application
 
         try
         {
-            Ice.Identity callbackReceiverIdent = createCallbackIdentity("callbackReceiver");
-            Ice.Identity callbackReceiverFakeIdent = new Ice.Identity("fake", "callbackReceiver");
+            com.zeroc.Ice.Identity callbackReceiverIdent = createCallbackIdentity("callbackReceiver");
+            com.zeroc.Ice.Identity callbackReceiverFakeIdent = new com.zeroc.Ice.Identity("fake", "callbackReceiver");
 
-            Ice.ObjectPrx base = communicator().propertyToProxy("Callback.Proxy");
-            CallbackPrx twoway = CallbackPrxHelper.checkedCast(base);
-            CallbackPrx oneway = CallbackPrxHelper.uncheckedCast(twoway.ice_oneway());
-            CallbackPrx batchOneway = CallbackPrxHelper.uncheckedCast(twoway.ice_batchOneway());
+            com.zeroc.Ice.ObjectPrx base = communicator().propertyToProxy("Callback.Proxy");
+            CallbackPrx twoway = CallbackPrx.checkedCast(base);
+            CallbackPrx oneway = twoway.ice_oneway();
+            CallbackPrx batchOneway = twoway.ice_batchOneway();
 
             objectAdapter().add(new CallbackReceiverI(), callbackReceiverFakeIdent);
 
-            CallbackReceiverPrx twowayR = CallbackReceiverPrxHelper.uncheckedCast(
+            CallbackReceiverPrx twowayR = CallbackReceiverPrx.uncheckedCast(
                 objectAdapter().add(new CallbackReceiverI(), callbackReceiverIdent));
-            CallbackReceiverPrx onewayR = CallbackReceiverPrxHelper.uncheckedCast(twowayR.ice_oneway());
-
+            CallbackReceiverPrx onewayR = twowayR.ice_oneway();
 
             menu();
 
@@ -154,7 +150,7 @@ public class Client extends Glacier2.Application
 
                 if(line.equals("t"))
                 {
-                    java.util.Map<String, String> context = new java.util.HashMap<String, String>();
+                    java.util.Map<String, String> context = new java.util.HashMap<>();
                     context.put("_fwd", "t");
                     if(override != null)
                     {
@@ -164,7 +160,7 @@ public class Client extends Glacier2.Application
                 }
                 else if(line.equals("o"))
                 {
-                    java.util.Map<String, String> context = new java.util.HashMap<String, String>();
+                    java.util.Map<String, String> context = new java.util.HashMap<>();
                     context.put("_fwd", "o");
                     if(override != null)
                     {
@@ -174,7 +170,7 @@ public class Client extends Glacier2.Application
                 }
                 else if(line.equals("O"))
                 {
-                    java.util.Map<String, String> context = new java.util.HashMap<String, String>();
+                    java.util.Map<String, String> context = new java.util.HashMap<>();
                     context.put("_fwd", "O");
                     if(override != null)
                     {
@@ -205,21 +201,17 @@ public class Client extends Glacier2.Application
 
                     if(fake)
                     {
-                        twowayR = CallbackReceiverPrxHelper.uncheckedCast(
-                            twowayR.ice_identity(callbackReceiverFakeIdent));
-                        onewayR = CallbackReceiverPrxHelper.uncheckedCast(
-                            onewayR.ice_identity(callbackReceiverFakeIdent));
+                        twowayR = CallbackReceiverPrx.uncheckedCast(twowayR.ice_identity(callbackReceiverFakeIdent));
+                        onewayR = CallbackReceiverPrx.uncheckedCast(onewayR.ice_identity(callbackReceiverFakeIdent));
                     }
                     else
                     {
-                        twowayR = CallbackReceiverPrxHelper.uncheckedCast(
-                            twowayR.ice_identity(callbackReceiverIdent));
-                        onewayR = CallbackReceiverPrxHelper.uncheckedCast(
-                            onewayR.ice_identity(callbackReceiverIdent));
+                        twowayR = CallbackReceiverPrx.uncheckedCast(twowayR.ice_identity(callbackReceiverIdent));
+                        onewayR = CallbackReceiverPrx.uncheckedCast(onewayR.ice_identity(callbackReceiverIdent));
                     }
 
                     System.out.println("callback receiver identity: " +
-                                    Ice.Util.identityToString(twowayR.ice_getIdentity()));
+                                       com.zeroc.Ice.Util.identityToString(twowayR.ice_getIdentity()));
                 }
                 else if(line.equals("s"))
                 {
@@ -245,7 +237,7 @@ public class Client extends Glacier2.Application
             }
             while(!line.equals("x"));
         }
-        catch(Glacier2.SessionNotExistException ex)
+        catch(com.zeroc.Glacier2.SessionNotExistException ex)
         {
             System.err.println(appName() + ": " + ex.toString());
             return 1;
@@ -254,8 +246,7 @@ public class Client extends Glacier2.Application
         return 0;
     }
 
-    public static void
-    main(String[] args)
+    public static void main(String[] args)
     {
         Client app = new Client();
         int status = app.main("Client", args, "config.client");

@@ -56,7 +56,7 @@ Ice.RetryIntervals=-1
 #
 # SSL Configuration
 #
-Ice.Plugin.IceSSL=IceSSL.PluginFactory
+Ice.Plugin.IceSSL=com.zeroc.IceSSL.PluginFactory
 IceSSL.DefaultDir=../../../certs
 IceSSL.Truststore=cacert.jks
 IceSSL.TrustOnly.Client=CN=127.0.0.1

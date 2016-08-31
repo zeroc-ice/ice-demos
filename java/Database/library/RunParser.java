@@ -19,13 +19,14 @@ class RunParser
         public long getTimeout();
     }
 
-    static SessionAdapter
-    createSession(String appName, Ice.Communicator communicator) {
+    static SessionAdapter createSession(String appName, com.zeroc.Ice.Communicator communicator)
+    {
         SessionAdapter session;
-        final Glacier2.RouterPrx router = Glacier2.RouterPrxHelper.uncheckedCast(communicator.getDefaultRouter());
+        final com.zeroc.Glacier2.RouterPrx router =
+            com.zeroc.Glacier2.RouterPrx.uncheckedCast(communicator.getDefaultRouter());
         if(router != null)
         {
-            Glacier2.SessionPrx glacier2session = null;
+            com.zeroc.Glacier2.SessionPrx glacier2session = null;
             long timeout;
             java.io.BufferedReader in = new java.io.BufferedReader(new java.io.InputStreamReader(System.in));
             while(true)
@@ -49,11 +50,11 @@ class RunParser
                         timeout = router.getSessionTimeout() / 2;
                         break;
                     }
-                    catch(Glacier2.PermissionDeniedException ex)
+                    catch(com.zeroc.Glacier2.PermissionDeniedException ex)
                     {
                         System.out.println("permission denied:\n" + ex.reason);
                     }
-                    catch(Glacier2.CannotCreateSessionException ex)
+                    catch(com.zeroc.Glacier2.CannotCreateSessionException ex)
                     {
                         System.out.println("cannot create session:\n" + ex.reason);
                     }
@@ -64,7 +65,7 @@ class RunParser
                 }
             }
             final long to = timeout;
-            final Glacier2SessionPrx sess = Glacier2SessionPrxHelper.uncheckedCast(glacier2session);
+            final Glacier2SessionPrx sess = Glacier2SessionPrx.uncheckedCast(glacier2session);
             session = new SessionAdapter()
             {
                 @Override
@@ -80,10 +81,10 @@ class RunParser
                     {
                         router.destroySession();
                     }
-                    catch(Glacier2.SessionNotExistException ex)
+                    catch(com.zeroc.Glacier2.SessionNotExistException ex)
                     {
                     }
-                    catch(Ice.ConnectionLostException ex)
+                    catch(com.zeroc.Ice.ConnectionLostException ex)
                     {
                         //
                         // Expected: the router closed the connection.
@@ -106,7 +107,7 @@ class RunParser
         }
         else
         {
-            SessionFactoryPrx factory = SessionFactoryPrxHelper.checkedCast(
+            SessionFactoryPrx factory = SessionFactoryPrx.checkedCast(
                 communicator.propertyToProxy("SessionFactory.Proxy"));
             if(factory == null)
             {
@@ -136,9 +137,9 @@ class RunParser
                     sess.refresh();
                 }
 
-                 @Override
+                @Override
                 public long getTimeout()
-                 {
+                {
                     return timeout;
                 }
             };
@@ -146,8 +147,7 @@ class RunParser
         return session;
     }
 
-    static int
-    runParser(String appName, String[] args, final Ice.Communicator communicator)
+    static int runParser(String appName, String[] args, final com.zeroc.Ice.Communicator communicator)
     {
         final SessionAdapter session = createSession(appName, communicator);
         if(session == null)
@@ -155,24 +155,20 @@ class RunParser
             return 1;
         }
 
-        java.util.concurrent.ScheduledExecutorService executor = java.util.concurrent.Executors.newScheduledThreadPool(1);
-        executor.scheduleAtFixedRate(new Runnable()
+        java.util.concurrent.ScheduledExecutorService executor =
+            java.util.concurrent.Executors.newScheduledThreadPool(1);
+        executor.scheduleAtFixedRate(() ->
             {
-                @Override
-                public void
-                run()
+                try
                 {
-                    try
-                    {
-                        session.refresh();
-                    }
-                    catch(Ice.LocalException ex)
-                    {
-                        communicator.getLogger().warning("SessionRefreshThread: " + ex);
-                        // Exceptions thrown from the executor task supress subsequent execution
-                        // of the task.
-                        throw ex;
-                    }
+                    session.refresh();
+                }
+                catch(com.zeroc.Ice.LocalException ex)
+                {
+                    communicator.getLogger().warning("SessionRefreshThread: " + ex);
+                    // Exceptions thrown from the executor task supress subsequent execution
+                    // of the task.
+                    throw ex;
                 }
             }, session.getTimeout(), session.getTimeout(), java.util.concurrent.TimeUnit.SECONDS);
 

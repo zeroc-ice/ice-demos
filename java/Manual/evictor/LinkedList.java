@@ -19,14 +19,12 @@ package Evictor;
 //
 public class LinkedList<T>
 {
-    public
-    LinkedList()
+    public LinkedList()
     {
         _header.next = _header.previous = _header;
     }
 
-    public T
-    getFirst()
+    public T getFirst()
     {
         if(_size == 0)
         {
@@ -36,46 +34,39 @@ public class LinkedList<T>
         return _header.next.element;
     }
 
-    public void
-    addFirst(T o)
+    public void addFirst(T o)
     {
         addBefore(o, _header.next);
     }
 
-    public boolean
-    isEmpty()
+    public boolean isEmpty()
     {
         return _size == 0;
     }
 
-    public int
-    size()
+    public int size()
     {
         return _size;
     }
 
-    public java.util.Iterator<T>
-    iterator()
+    public java.util.Iterator<T> iterator()
     {
         return new ForwardIterator();
     }
 
-    public java.util.Iterator<T>
-    riterator()
+    public java.util.Iterator<T> riterator()
     {
         return new ReverseIterator();
     }
 
     private class ForwardIterator implements java.util.Iterator<T>
     {
-        public boolean
-        hasNext()
+        public boolean hasNext()
         {
             return _next != null;
         }
 
-        public T
-        next()
+        public T next()
         {
             if(_next == null)
             {
@@ -95,8 +86,7 @@ public class LinkedList<T>
             return _current.element;
         }
 
-        public void
-        remove()
+        public void remove()
         {
             if(_current == null)
             {
@@ -125,14 +115,12 @@ public class LinkedList<T>
 
     private class ReverseIterator implements java.util.Iterator<T>
     {
-        public boolean
-        hasNext()
+        public boolean hasNext()
         {
             return _next != null;
         }
 
-        public T
-        next()
+        public T next()
         {
             if(_next == null)
             {
@@ -152,8 +140,7 @@ public class LinkedList<T>
             return _current.element;
         }
 
-        public void
-        remove()
+        public void remove()
         {
             if(_current == null)
             {
@@ -194,8 +181,7 @@ public class LinkedList<T>
         }
     }
 
-    private Entry<T>
-    addBefore(T o, Entry<T> e)
+    private Entry<T> addBefore(T o, Entry<T> e)
     {
         Entry<T> newEntry = new Entry<T>(o, e, e.previous);
         newEntry.previous.next = newEntry;
@@ -204,8 +190,7 @@ public class LinkedList<T>
         return newEntry;
     }
 
-    private void
-    remove(Entry<T> e)
+    private void remove(Entry<T> e)
     {
         if(e == _header)
         {

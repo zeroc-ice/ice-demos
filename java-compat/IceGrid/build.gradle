@@ -1,0 +1,51 @@
+// **********************************************************************
+//
+// Copyright (c) 2003-2016 ZeroC, Inc. All rights reserved.
+//
+// **********************************************************************
+
+['icebox', 'simple'].each {
+    def name = it
+    project(":demoIceGrid${it.capitalize()}") {
+        slice {
+            java {
+                include = ["${projectDir}"]
+                srcDir = '.'
+            }
+        }
+
+        sourceSets {
+            main {
+                java {
+                    srcDir '.'
+                }
+            }
+        }
+
+        dependencies {
+            compile localDependency("ice-compat")
+            compile localDependency("icebox-compat")
+            compile localDependency("icegrid-compat")
+            compile localDependency("icelocatordiscovery-compat")
+            if (!useLocalOnly) {
+                runtime "org.apache.tools:bzip2:1.0"
+            }
+        }
+
+        task makeDbDirs << {
+            file('db/registry').mkdirs()
+            file('db/node').mkdirs()
+        }
+        compileJava.dependsOn(makeDbDirs)
+
+        clean {
+            delete 'db'
+        }
+
+        // Don't create the default jar.
+        jar.enabled = false
+
+        demoJar("client")
+        demoJar("server")
+    }
+}

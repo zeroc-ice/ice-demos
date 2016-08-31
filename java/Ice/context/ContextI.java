@@ -6,11 +6,10 @@
 
 import Demo.*;
 
-public class ContextI extends _ContextDisp
+public class ContextI implements Context
 {
     @Override
-    public void
-    call(Ice.Current current)
+    public void call(com.zeroc.Ice.Current current)
     {
         System.out.print("Type = ");
         String type = current.ctx.get("type");
@@ -26,8 +25,7 @@ public class ContextI extends _ContextDisp
     }
 
     @Override
-    public void
-    shutdown(Ice.Current current)
+    public void shutdown(com.zeroc.Ice.Current current)
     {
         System.out.println("Shutting down...");
         current.adapter.getCommunicator().shutdown();

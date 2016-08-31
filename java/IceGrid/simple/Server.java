@@ -4,11 +4,10 @@
 //
 // **********************************************************************
 
-public class Server extends Ice.Application
+public class Server extends com.zeroc.Ice.Application
 {
     @Override
-    public int
-    run(String[] args)
+    public int run(String[] args)
     {
         if(args.length > 0)
         {
@@ -16,17 +15,16 @@ public class Server extends Ice.Application
             return 1;
         }
 
-        Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Hello");
-        Ice.Properties properties = communicator().getProperties();
-        Ice.Identity id = Ice.Util.stringToIdentity(properties.getProperty("Identity"));
+        com.zeroc.Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Hello");
+        com.zeroc.Ice.Properties properties = communicator().getProperties();
+        com.zeroc.Ice.Identity id = com.zeroc.Ice.Util.stringToIdentity(properties.getProperty("Identity"));
         adapter.add(new HelloI(properties.getProperty("Ice.ProgramName")), id);
         adapter.activate();
         communicator().waitForShutdown();
         return 0;
     }
 
-    static public void
-    main(String[] args)
+    static public void main(String[] args)
     {
         Server app = new Server();
         int status = app.main("Server", args);

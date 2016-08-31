@@ -6,27 +6,25 @@
 
 import Demo.*;
 
-public class Client extends Ice.Application
+public class Client extends com.zeroc.Ice.Application
 {
     class ShutdownHook extends Thread
     {
         @Override
-        public void
-        run()
+        public void run()
         {
             try
             {
                 communicator().destroy();
             }
-            catch(Ice.LocalException ex)
+            catch(com.zeroc.Ice.LocalException ex)
             {
                 ex.printStackTrace();
             }
         }
     }
 
-    private static void
-    menu()
+    private static void menu()
     {
         System.out.println(
             "usage:\n" +
@@ -45,8 +43,7 @@ public class Client extends Ice.Application
     }
 
     @Override
-    public int
-    run(String[] args)
+    public int run(String[] args)
     {
         if(args.length > 0)
         {
@@ -61,17 +58,17 @@ public class Client extends Ice.Application
         //
         setInterruptHook(new ShutdownHook());
 
-        HelloPrx twoway = HelloPrxHelper.checkedCast(
-            communicator().propertyToProxy("Hello.Proxy").ice_twoway().ice_secure(false));
+        HelloPrx twoway = HelloPrx.checkedCast(
+            communicator().propertyToProxy("Hello.Proxy")).ice_twoway().ice_secure(false);
         if(twoway == null)
         {
             System.err.println("invalid proxy");
             return 1;
         }
-        HelloPrx oneway = (HelloPrx)twoway.ice_oneway();
-        HelloPrx batchOneway = (HelloPrx)twoway.ice_batchOneway();
-        HelloPrx datagram = (HelloPrx)twoway.ice_datagram();
-        HelloPrx batchDatagram = (HelloPrx)twoway.ice_batchDatagram();
+        HelloPrx oneway = twoway.ice_oneway();
+        HelloPrx batchOneway = twoway.ice_batchOneway();
+        HelloPrx datagram = twoway.ice_datagram();
+        HelloPrx batchDatagram = twoway.ice_batchDatagram();
 
         boolean secure = false;
         int timeout = -1;
@@ -143,9 +140,9 @@ public class Client extends Ice.Application
                         timeout = -1;
                     }
 
-                    twoway = (HelloPrx)twoway.ice_invocationTimeout(timeout);
-                    oneway = (HelloPrx)oneway.ice_invocationTimeout(timeout);
-                    batchOneway = (HelloPrx)batchOneway.ice_invocationTimeout(timeout);
+                    twoway = twoway.ice_invocationTimeout(timeout);
+                    oneway = oneway.ice_invocationTimeout(timeout);
+                    batchOneway = batchOneway.ice_invocationTimeout(timeout);
 
                     if(timeout == -1)
                     {
@@ -180,11 +177,11 @@ public class Client extends Ice.Application
                 {
                     secure = !secure;
 
-                    twoway = (HelloPrx)twoway.ice_secure(secure);
-                    oneway = (HelloPrx)oneway.ice_secure(secure);
-                    batchOneway = (HelloPrx)batchOneway.ice_secure(secure);
-                    datagram = (HelloPrx)datagram.ice_secure(secure);
-                    batchDatagram = (HelloPrx)batchDatagram.ice_secure(secure);
+                    twoway = twoway.ice_secure(secure);
+                    oneway = oneway.ice_secure(secure);
+                    batchOneway = batchOneway.ice_secure(secure);
+                    datagram = datagram.ice_secure(secure);
+                    batchDatagram = batchDatagram.ice_secure(secure);
 
                     if(secure)
                     {
@@ -217,7 +214,7 @@ public class Client extends Ice.Application
             {
                 ex.printStackTrace();
             }
-            catch(Ice.LocalException ex)
+            catch(com.zeroc.Ice.LocalException ex)
             {
                 ex.printStackTrace();
             }
@@ -227,8 +224,7 @@ public class Client extends Ice.Application
         return 0;
     }
 
-    public static void
-    main(String[] args)
+    public static void main(String[] args)
     {
         Client app = new Client();
         int status = app.main("Client", args, "config.client");

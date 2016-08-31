@@ -6,32 +6,31 @@
 
 import Demo.*;
 
-public class HelloI extends _HelloDisp
+public class HelloI implements Hello
 {
-    public 
-    HelloI(WorkQueue workQueue)
+    public HelloI(WorkQueue workQueue)
     {
         _workQueue = workQueue;
     }
 
     @Override
-    public void
-    sayHello_async(AMD_Hello_sayHello cb, int delay, Ice.Current current)
+    public java.util.concurrent.CompletionStage<Void> sayHelloAsync(int delay, com.zeroc.Ice.Current current)
     {
         if(delay == 0)
         {
             System.out.println("Hello World!");
-            cb.ice_response();
+            return java.util.concurrent.CompletableFuture.completedFuture((Void)null);
         }
         else
         {
-            _workQueue.add(cb, delay);
+            java.util.concurrent.CompletableFuture<Void> r = new java.util.concurrent.CompletableFuture<>();
+            _workQueue.add(r, delay);
+            return r;
         }
     }
 
     @Override
-    public void
-    shutdown(Ice.Current current)
+    public void shutdown(com.zeroc.Ice.Current current)
     {
         System.out.println("Shutting down...");
 

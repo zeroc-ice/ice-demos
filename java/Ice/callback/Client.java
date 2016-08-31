@@ -6,27 +6,25 @@
 
 import Demo.*;
 
-public class Client extends Ice.Application
+public class Client extends com.zeroc.Ice.Application
 {
     class ShutdownHook extends Thread
     {
         @Override
-        public void
-        run()
+        public void run()
         {
             try
             {
                 communicator().destroy();
             }
-            catch(Ice.LocalException ex)
+            catch(com.zeroc.Ice.LocalException ex)
             {
                 ex.printStackTrace();
             }
         }
     }
 
-    private static void
-    menu()
+    private static void menu()
     {
         System.out.println(
             "usage:\n" +
@@ -37,8 +35,7 @@ public class Client extends Ice.Application
     }
 
     @Override
-    public int
-    run(String[] args)
+    public int run(String[] args)
     {
         if(args.length > 0)
         {
@@ -53,22 +50,21 @@ public class Client extends Ice.Application
         //
         setInterruptHook(new ShutdownHook());
 
-        CallbackSenderPrx sender = CallbackSenderPrxHelper.checkedCast(
-            communicator().propertyToProxy("CallbackSender.Proxy").
-                ice_twoway().ice_timeout(-1).ice_secure(false));
+        CallbackSenderPrx sender = CallbackSenderPrx.checkedCast(
+            communicator().propertyToProxy("CallbackSender.Proxy")).ice_twoway().ice_timeout(-1).ice_secure(false);
         if(sender == null)
         {
             System.err.println("invalid proxy");
             return 1;
         }
 
-        Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Callback.Client");
-        adapter.add(new CallbackReceiverI(), Ice.Util.stringToIdentity("callbackReceiver"));
+        com.zeroc.Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Callback.Client");
+        adapter.add(new CallbackReceiverI(), com.zeroc.Ice.Util.stringToIdentity("callbackReceiver"));
         adapter.activate();
 
         CallbackReceiverPrx receiver = 
-            CallbackReceiverPrxHelper.uncheckedCast(adapter.createProxy(
-                Ice.Util.stringToIdentity("callbackReceiver")));
+            CallbackReceiverPrx.uncheckedCast(adapter.createProxy(
+                com.zeroc.Ice.Util.stringToIdentity("callbackReceiver")));
 
         menu();
 
@@ -112,7 +108,7 @@ public class Client extends Ice.Application
             {
                 ex.printStackTrace();
             }
-            catch(Ice.LocalException ex)
+            catch(com.zeroc.Ice.LocalException ex)
             {
                 ex.printStackTrace();
             }
@@ -122,8 +118,7 @@ public class Client extends Ice.Application
         return 0;
     }
 
-    public static void
-    main(String[] args)
+    public static void main(String[] args)
     {
         Client app = new Client();
         int status = app.main("Client", args, "config.client");

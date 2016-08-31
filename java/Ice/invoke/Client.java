@@ -4,10 +4,9 @@
 //
 // **********************************************************************
 
-public class Client extends Ice.Application
+public class Client extends com.zeroc.Ice.Application
 {
-    private static void
-    menu()
+    private static void menu()
     {
         System.out.println(
             "usage:\n" +
@@ -28,14 +27,13 @@ public class Client extends Ice.Application
     class ShutdownHook extends Thread
     {
         @Override
-        public void
-        run()
+        public void run()
         {
             try
             {
                 communicator().destroy();
             }
-            catch(Ice.LocalException ex)
+            catch(com.zeroc.Ice.LocalException ex)
             {
                 ex.printStackTrace();
             }
@@ -43,8 +41,7 @@ public class Client extends Ice.Application
     }
 
     @Override
-    public int
-    run(String[] args)
+    public int run(String[] args)
     {
         if(args.length > 0)
         {
@@ -59,7 +56,7 @@ public class Client extends Ice.Application
         //
         setInterruptHook(new ShutdownHook());
 
-        Ice.ObjectPrx obj = communicator().propertyToProxy("Printer.Proxy");
+        com.zeroc.Ice.ObjectPrx obj = communicator().propertyToProxy("Printer.Proxy");
 
         menu();
 
@@ -82,7 +79,7 @@ public class Client extends Ice.Application
                     //
                     // Marshal the in parameter.
                     //
-                    Ice.OutputStream out = new Ice.OutputStream(communicator());
+                    com.zeroc.Ice.OutputStream out = new com.zeroc.Ice.OutputStream(communicator());
                     out.startEncapsulation();
                     out.writeString("The streaming API works!");
                     out.endEncapsulation();
@@ -90,7 +87,9 @@ public class Client extends Ice.Application
                     //
                     // Invoke operation.
                     //
-                    if(!obj.ice_invoke("printString", Ice.OperationMode.Normal, out.finished(), null))
+                    com.zeroc.Ice.Object.Ice_invokeResult r =
+                        obj.ice_invoke("printString", com.zeroc.Ice.OperationMode.Normal, out.finished());
+                    if(!r.returnValue)
                     {
                         System.out.println("Unknown user exception");
                     }
@@ -100,7 +99,7 @@ public class Client extends Ice.Application
                     //
                     // Marshal the in parameter.
                     //
-                    Ice.OutputStream out = new Ice.OutputStream(communicator());
+                    com.zeroc.Ice.OutputStream out = new com.zeroc.Ice.OutputStream(communicator());
                     out.startEncapsulation();
                     final String[] arr = { "The", "streaming", "API", "works!" };
                     Demo.StringSeqHelper.write(out, arr);
@@ -109,7 +108,9 @@ public class Client extends Ice.Application
                     //
                     // Invoke operation.
                     //
-                    if(!obj.ice_invoke("printStringSequence", Ice.OperationMode.Normal, out.finished(), null))
+                    com.zeroc.Ice.Object.Ice_invokeResult r =
+                        obj.ice_invoke("printStringSequence", com.zeroc.Ice.OperationMode.Normal, out.finished());
+                    if(!r.returnValue)
                     {
                         System.out.println("Unknown user exception");
                     }
@@ -119,9 +120,9 @@ public class Client extends Ice.Application
                     //
                     // Marshal the in parameter.
                     //
-                    Ice.OutputStream out = new Ice.OutputStream(communicator());
+                    com.zeroc.Ice.OutputStream out = new com.zeroc.Ice.OutputStream(communicator());
                     out.startEncapsulation();
-                    java.util.Map<String, String> dict = new java.util.HashMap<String, String>();
+                    java.util.Map<String, String> dict = new java.util.HashMap<>();
                     dict.put("The", "streaming");
                     dict.put("API", "works!");
                     Demo.StringDictHelper.write(out, dict);
@@ -130,7 +131,9 @@ public class Client extends Ice.Application
                     //
                     // Invoke operation.
                     //
-                    if(!obj.ice_invoke("printDictionary", Ice.OperationMode.Normal, out.finished(), null))
+                    com.zeroc.Ice.Object.Ice_invokeResult r =
+                        obj.ice_invoke("printDictionary", com.zeroc.Ice.OperationMode.Normal, out.finished());
+                    if(!r.returnValue)
                     {
                         System.out.println("Unknown user exception");
                     }
@@ -140,7 +143,7 @@ public class Client extends Ice.Application
                     //
                     // Marshal the in parameter.
                     //
-                    Ice.OutputStream out = new Ice.OutputStream(communicator());
+                    com.zeroc.Ice.OutputStream out = new com.zeroc.Ice.OutputStream(communicator());
                     out.startEncapsulation();
                     Demo.Color.write(out, Demo.Color.green);
                     out.endEncapsulation();
@@ -148,7 +151,9 @@ public class Client extends Ice.Application
                     //
                     // Invoke operation.
                     //
-                    if(!obj.ice_invoke("printEnum", Ice.OperationMode.Normal, out.finished(), null))
+                    com.zeroc.Ice.Object.Ice_invokeResult r =
+                        obj.ice_invoke("printEnum", com.zeroc.Ice.OperationMode.Normal, out.finished());
+                    if(!r.returnValue)
                     {
                         System.out.println("Unknown user exception");
                     }
@@ -158,7 +163,7 @@ public class Client extends Ice.Application
                     //
                     // Marshal the in parameter.
                     //
-                    Ice.OutputStream out = new Ice.OutputStream(communicator());
+                    com.zeroc.Ice.OutputStream out = new com.zeroc.Ice.OutputStream(communicator());
                     out.startEncapsulation();
                     Demo.Structure s = new Demo.Structure();
                     s.name = "red";
@@ -169,7 +174,9 @@ public class Client extends Ice.Application
                     //
                     // Invoke operation.
                     //
-                    if(!obj.ice_invoke("printStruct", Ice.OperationMode.Normal, out.finished(), null))
+                    com.zeroc.Ice.Object.Ice_invokeResult r =
+                        obj.ice_invoke("printStruct", com.zeroc.Ice.OperationMode.Normal, out.finished());
+                    if(!r.returnValue)
                     {
                         System.out.println("Unknown user exception");
                     }
@@ -179,7 +186,7 @@ public class Client extends Ice.Application
                     //
                     // Marshal the in parameter.
                     //
-                    Ice.OutputStream out = new Ice.OutputStream(communicator());
+                    com.zeroc.Ice.OutputStream out = new com.zeroc.Ice.OutputStream(communicator());
                     out.startEncapsulation();
                     Demo.Structure[] arr = new Demo.Structure[3];
                     arr[0] = new Demo.Structure();
@@ -197,7 +204,9 @@ public class Client extends Ice.Application
                     //
                     // Invoke operation.
                     //
-                    if(!obj.ice_invoke("printStructSequence", Ice.OperationMode.Normal, out.finished(), null))
+                    com.zeroc.Ice.Object.Ice_invokeResult r =
+                        obj.ice_invoke("printStructSequence", com.zeroc.Ice.OperationMode.Normal, out.finished());
+                    if(!r.returnValue)
                     {
                         System.out.println("Unknown user exception");
                     }
@@ -207,7 +216,7 @@ public class Client extends Ice.Application
                     //
                     // Marshal the in parameter.
                     //
-                    Ice.OutputStream out = new Ice.OutputStream(communicator());
+                    com.zeroc.Ice.OutputStream out = new com.zeroc.Ice.OutputStream(communicator());
                     out.startEncapsulation();
                     Demo.C c = new Demo.C();
                     c.s = new Demo.Structure();
@@ -220,7 +229,9 @@ public class Client extends Ice.Application
                     //
                     // Invoke operation.
                     //
-                    if(!obj.ice_invoke("printClass", Ice.OperationMode.Normal, out.finished(), null))
+                    com.zeroc.Ice.Object.Ice_invokeResult r =
+                        obj.ice_invoke("printClass", com.zeroc.Ice.OperationMode.Normal, out.finished());
+                    if(!r.returnValue)
                     {
                         System.out.println("Unknown user exception");
                     }
@@ -230,8 +241,9 @@ public class Client extends Ice.Application
                     //
                     // Invoke operation.
                     //
-                    Ice.ByteSeqHolder outParams = new Ice.ByteSeqHolder();
-                    if(!obj.ice_invoke("getValues", Ice.OperationMode.Normal, null, outParams))
+                    com.zeroc.Ice.Object.Ice_invokeResult r =
+                        obj.ice_invoke("getValues", com.zeroc.Ice.OperationMode.Normal, null);
+                    if(!r.returnValue)
                     {
                         System.out.println("Unknown user exception");
                         continue;
@@ -240,29 +252,34 @@ public class Client extends Ice.Application
                     //
                     // Unmarshal the results.
                     //
-                    Ice.InputStream in = new Ice.InputStream(communicator(), outParams.value);
+                    com.zeroc.Ice.InputStream in = new com.zeroc.Ice.InputStream(communicator(), r.outParams);
                     in.startEncapsulation();
-                    Demo.CHolder c = new Demo.CHolder();
-                    in.readValue(c);
+                    class Holder
+                    {
+                        Demo.C obj;
+                    }
+                    final Holder h = new Holder();
+                    in.readValue(v -> h.obj = (Demo.C)v);
                     String str = in.readString();
                     in.readPendingValues();
                     in.endEncapsulation();
-                    System.out.println("Got string `" + str + "' and class: s.name=" + c.value.s.name +
-                        ", s.value=" + c.value.s.value);
+                    System.out.println("Got string `" + str + "' and class: s.name=" + h.obj.s.name +
+                        ", s.value=" + h.obj.s.value);
                 }
                 else if(line.equals("9"))
                 {
                     //
                     // Invoke operation.
                     //
-                    Ice.ByteSeqHolder outParams = new Ice.ByteSeqHolder();
-                    if(obj.ice_invoke("throwPrintFailure", Ice.OperationMode.Normal, null, outParams))
+                    com.zeroc.Ice.Object.Ice_invokeResult r =
+                        obj.ice_invoke("throwPrintFailure", com.zeroc.Ice.OperationMode.Normal, null);
+                    if(r.returnValue)
                     {
                         System.out.println("Expected exception");
                         continue;
                     }
 
-                    Ice.InputStream in = new Ice.InputStream(communicator(), outParams.value);
+                    com.zeroc.Ice.InputStream in = new com.zeroc.Ice.InputStream(communicator(), r.outParams);
                     in.startEncapsulation();
                     try
                     {
@@ -272,7 +289,7 @@ public class Client extends Ice.Application
                     {
                         // Expected.
                     }
-                    catch(Ice.UserException ex)
+                    catch(com.zeroc.Ice.UserException ex)
                     {
                         System.out.println("Unknown user exception");
                     }
@@ -280,7 +297,7 @@ public class Client extends Ice.Application
                 }
                 else if(line.equals("s"))
                 {
-                    obj.ice_invoke("shutdown", Ice.OperationMode.Normal, null, null);
+                    obj.ice_invoke("shutdown", com.zeroc.Ice.OperationMode.Normal, null);
                 }
                 else if(line.equals("x"))
                 {
@@ -300,7 +317,7 @@ public class Client extends Ice.Application
             {
                 ex.printStackTrace();
             }
-            catch(Ice.LocalException ex)
+            catch(com.zeroc.Ice.LocalException ex)
             {
                 ex.printStackTrace();
             }
@@ -310,8 +327,7 @@ public class Client extends Ice.Application
         return 0;
     }
 
-    public static void
-    main(String[] args)
+    public static void main(String[] args)
     {
         Client app = new Client();
         int status = app.main("Client", args, "config.client");

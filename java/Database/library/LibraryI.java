@@ -9,17 +9,17 @@ import Demo.*;
 //
 // This is a per-session library object.
 //
-class LibraryI extends _LibraryDisp
+class LibraryI implements Library
 {
     @Override
-    public void
-    queryByIsbn(String isbn, int n, BookDescriptionSeqHolder first, Ice.IntHolder nrows,
-                BookQueryResultPrxHolder result, Ice.Current current)
+    public Library.QueryByIsbnResult queryByIsbn(String isbn, int n, com.zeroc.Ice.Current current)
     {
         SQLRequestContext context = SQLRequestContext.getCurrentContext();
         assert context != null;
 
         reapQueries();
+
+        Library.QueryByIsbnResult r = new Library.QueryByIsbnResult();
 
         try
         {
@@ -28,10 +28,10 @@ class LibraryI extends _LibraryDisp
             java.sql.ResultSet rs = stmt.executeQuery();
             boolean next = rs.next();
             assert next;
-            nrows.value = rs.getInt(1);
-            if(nrows.value == 0)
+            r.nrows = rs.getInt(1);
+            if(r.nrows == 0)
             {
-                return;
+                return r;
             }
 
             stmt = context.prepareStatement("SELECT * FROM books WHERE isbn LIKE ?");
@@ -40,18 +40,18 @@ class LibraryI extends _LibraryDisp
             next = rs.next();
             assert next;
 
-            first.value = new java.util.LinkedList<BookDescription>();
+            r.first = new java.util.LinkedList<>();
             next = true;
             for(int i = 0; i < n && next; ++i)
             {
-                first.value.add(BookI.extractDescription(context, rs, current.adapter));
+                r.first.add(BookI.extractDescription(context, rs, current.adapter));
                 next = rs.next();
             }
             if(next)
             {
                 BookQueryResultI impl = new BookQueryResultI(context, rs, current.adapter);
-                result.value = BookQueryResultPrxHelper.uncheckedCast(current.adapter.addWithUUID(impl));
-                add(result.value, impl);
+                r.result = BookQueryResultPrx.uncheckedCast(current.adapter.addWithUUID(impl));
+                add(r.result, impl);
             }
         }
         catch(java.sql.SQLException e)
@@ -60,17 +60,19 @@ class LibraryI extends _LibraryDisp
             ex.initCause(e);
             throw ex;
         }
+
+        return r;
     }
 
     @Override
-    public void
-    queryByAuthor(String author, int n, BookDescriptionSeqHolder first, Ice.IntHolder nrows,
-                  BookQueryResultPrxHolder result, Ice.Current current)
+    public Library.QueryByAuthorResult queryByAuthor(String author, int n, com.zeroc.Ice.Current current)
     {
         SQLRequestContext context = SQLRequestContext.getCurrentContext();
         assert context != null;
 
         reapQueries();
+
+        Library.QueryByAuthorResult r = new Library.QueryByAuthorResult();
 
         try
         {
@@ -81,8 +83,8 @@ class LibraryI extends _LibraryDisp
             if(!rs.next())
             {
                 // No results are available.
-                nrows.value = 0;
-                return;
+                r.nrows = 0;
+                return r;
             }
 
             // Build a query that finds all books by these authors.
@@ -108,10 +110,10 @@ class LibraryI extends _LibraryDisp
             rs = stmt.executeQuery();
             boolean next = rs.next();
             assert next;
-            nrows.value = rs.getInt(1);
-            if(nrows.value == 0)
+            r.nrows = rs.getInt(1);
+            if(r.nrows == 0)
             {
-                return;
+                return r;
             }
 
             // Execute the query.
@@ -123,18 +125,18 @@ class LibraryI extends _LibraryDisp
             assert next;
 
             next = true;
-            first.value = new java.util.LinkedList<BookDescription>();
+            r.first = new java.util.LinkedList<>();
             for(int i = 0; i < n && next; ++i)
             {
-                first.value.add(BookI.extractDescription(context, rs, current.adapter));
+                r.first.add(BookI.extractDescription(context, rs, current.adapter));
                 next = rs.next();
             }
 
             if(next)
             {
                 BookQueryResultI impl = new BookQueryResultI(context, rs, current.adapter);
-                result.value = BookQueryResultPrxHelper.uncheckedCast(current.adapter.addWithUUID(impl));
-                add(result.value, impl);
+                r.result = BookQueryResultPrx.uncheckedCast(current.adapter.addWithUUID(impl));
+                add(r.result, impl);
             }
         }
         catch(java.sql.SQLException e)
@@ -143,17 +145,19 @@ class LibraryI extends _LibraryDisp
             ex.initCause(e);
             throw ex;
         }
+
+        return r;
     }
 
     @Override
-    public void
-    queryByTitle(String title, int n, BookDescriptionSeqHolder first, Ice.IntHolder nrows,
-                BookQueryResultPrxHolder result, Ice.Current current)
+    public Library.QueryByTitleResult queryByTitle(String title, int n, com.zeroc.Ice.Current current)
     {
         SQLRequestContext context = SQLRequestContext.getCurrentContext();
         assert context != null;
 
         reapQueries();
+
+        Library.QueryByTitleResult r = new Library.QueryByTitleResult();
 
         try
         {
@@ -162,10 +166,10 @@ class LibraryI extends _LibraryDisp
             java.sql.ResultSet rs = stmt.executeQuery();
             boolean next = rs.next();
             assert next;
-            nrows.value = rs.getInt(1);
-            if(nrows.value == 0)
+            r.nrows = rs.getInt(1);
+            if(r.nrows == 0)
             {
-                return;
+                return r;
             }
 
             stmt = context.prepareStatement("SELECT * FROM books WHERE title LIKE ?");
@@ -174,18 +178,18 @@ class LibraryI extends _LibraryDisp
             next = rs.next();
             assert next;
 
-            first.value = new java.util.LinkedList<BookDescription>();
+            r.first = new java.util.LinkedList<>();
             next = true;
             for(int i = 0; i < n && next; ++i)
             {
-                first.value.add(BookI.extractDescription(context, rs, current.adapter));
+                r.first.add(BookI.extractDescription(context, rs, current.adapter));
                 next = rs.next();
             }
             if(next)
             {
                 BookQueryResultI impl = new BookQueryResultI(context, rs, current.adapter);
-                result.value = BookQueryResultPrxHelper.uncheckedCast(current.adapter.addWithUUID(impl));
-                add(result.value, impl);
+                r.result = BookQueryResultPrx.uncheckedCast(current.adapter.addWithUUID(impl));
+                add(r.result, impl);
             }
         }
         catch(java.sql.SQLException e)
@@ -194,11 +198,12 @@ class LibraryI extends _LibraryDisp
             ex.initCause(e);
             throw ex;
         }
+
+        return r;
     }
 
     @Override
-    public BookPrx
-    createBook(String isbn, String title, java.util.List<String> authors, Ice.Current current)
+    public BookPrx createBook(String isbn, String title, java.util.List<String> authors, com.zeroc.Ice.Current current)
         throws BookExistsException, InvalidISBNException
     {
         SQLRequestContext context = SQLRequestContext.getCurrentContext();
@@ -221,7 +226,7 @@ class LibraryI extends _LibraryDisp
             //
             // First convert the authors string to an id set.
             //
-            java.util.List<Integer> authIds = new java.util.LinkedList<Integer>();
+            java.util.List<Integer> authIds = new java.util.LinkedList<>();
             for(String author : authors)
             {
                 Integer id;
@@ -276,7 +281,7 @@ class LibraryI extends _LibraryDisp
                 assert count == 1;
             }
 
-            return BookPrxHelper.uncheckedCast(current.adapter.createProxy(BookI.createIdentity(bookId)));
+            return BookPrx.uncheckedCast(current.adapter.createProxy(BookI.createIdentity(bookId)));
         }
         catch(java.sql.SQLException e)
         {
@@ -290,8 +295,7 @@ class LibraryI extends _LibraryDisp
     {
     }
 
-    synchronized public void
-    destroy()
+    synchronized public void destroy()
     {
         if(_destroyed)
         {
@@ -304,15 +308,14 @@ class LibraryI extends _LibraryDisp
             {
                 p.proxy.destroy();
             }
-            catch(Ice.ObjectNotExistException e)
+            catch(com.zeroc.Ice.ObjectNotExistException e)
             {
                 // Ignore, it could have already been destroyed.
             }
         }
     }
 
-    synchronized public void
-    shutdown()
+    synchronized public void shutdown()
     {
         if(_destroyed)
         {
@@ -327,25 +330,23 @@ class LibraryI extends _LibraryDisp
         }
     }
 
-    synchronized private void
-    add(BookQueryResultPrx proxy, BookQueryResultI impl)
+    synchronized private void add(BookQueryResultPrx proxy, BookQueryResultI impl)
     {
         // If the session has been destroyed, then destroy the book
         // result, and raise an ObjectNotExistException.
         if(_destroyed)
         {
             proxy.destroy();
-            throw new Ice.ObjectNotExistException();
+            throw new com.zeroc.Ice.ObjectNotExistException();
         }
         _queries.add(new QueryProxyPair(proxy, impl));
     }
 
-    synchronized private void
-    reapQueries()
+    synchronized private void reapQueries()
     {
         if(_destroyed)
         {
-            throw new Ice.ObjectNotExistException();
+            throw new com.zeroc.Ice.ObjectNotExistException();
         }
 
         java.util.Iterator<QueryProxyPair> p = _queries.iterator();
@@ -356,7 +357,7 @@ class LibraryI extends _LibraryDisp
             {
                 pair.proxy.ice_ping();
             }
-            catch(Ice.ObjectNotExistException e)
+            catch(com.zeroc.Ice.ObjectNotExistException e)
             {
                 p.remove();
             }
@@ -375,6 +376,6 @@ class LibraryI extends _LibraryDisp
         BookQueryResultI impl;
     }
 
-    private java.util.List<QueryProxyPair> _queries = new java.util.LinkedList<QueryProxyPair>();
+    private java.util.List<QueryProxyPair> _queries = new java.util.LinkedList<>();
     private boolean _destroyed = false;
 }

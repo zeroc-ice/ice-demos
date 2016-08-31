@@ -4,13 +4,10 @@
 //
 // **********************************************************************
 
-
-
-public class Server extends Ice.Application
+public class Server extends com.zeroc.Ice.Application
 {
     @Override
-    public int
-    run(String[] args)
+    public int run(String[] args)
     {
         if(args.length > 0)
         {
@@ -18,13 +15,14 @@ public class Server extends Ice.Application
             return 1;
         }
 
-        Ice.ObjectAdapter adapter = communicator().createObjectAdapter("SessionFactory");
+        com.zeroc.Ice.ObjectAdapter adapter = communicator().createObjectAdapter("SessionFactory");
 
-        java.util.concurrent.ScheduledExecutorService executor = java.util.concurrent.Executors.newScheduledThreadPool(1);
+        java.util.concurrent.ScheduledExecutorService executor =
+            java.util.concurrent.Executors.newScheduledThreadPool(1);
         ReapTask reaper = new ReapTask();
         executor.scheduleAtFixedRate(reaper, 1, 1, java.util.concurrent.TimeUnit.SECONDS);
 
-        adapter.add(new SessionFactoryI(reaper), Ice.Util.stringToIdentity("SessionFactory"));
+        adapter.add(new SessionFactoryI(reaper), com.zeroc.Ice.Util.stringToIdentity("SessionFactory"));
         adapter.activate();
         communicator().waitForShutdown();
 
@@ -34,8 +32,7 @@ public class Server extends Ice.Application
         return 0;
     }
 
-    public static void
-    main(String[] args)
+    public static void main(String[] args)
     {
         Server app = new Server();
         int status = app.main("Server", args, "config.server");

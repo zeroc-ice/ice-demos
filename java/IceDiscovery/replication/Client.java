@@ -6,19 +6,18 @@
 
 import Demo.*;
 
-public class Client extends Ice.Application
+public class Client extends com.zeroc.Ice.Application
 {
     class ShutdownHook extends Thread
     {
         @Override
-        public void
-        run()
+        public void run()
         {
             try
             {
                 communicator().destroy();
             }
-            catch(Ice.LocalException ex)
+            catch(com.zeroc.Ice.LocalException ex)
             {
                 ex.printStackTrace();
             }
@@ -26,8 +25,7 @@ public class Client extends Ice.Application
     }
 
     @Override
-    public int
-    run(String[] args)
+    public int run(String[] args)
     {
         if(args.length > 0)
         {
@@ -50,11 +48,11 @@ public class Client extends Ice.Application
         // will be sent over the server connection matching the returned
         // endpoints.
         //
-        Ice.ObjectPrx obj = communicator().stringToProxy("hello");
+        com.zeroc.Ice.ObjectPrx obj = communicator().stringToProxy("hello");
         obj = obj.ice_connectionCached(false);
         obj = obj.ice_locatorCacheTimeout(0);
 
-        HelloPrx hello = HelloPrxHelper.checkedCast(obj);
+        HelloPrx hello = HelloPrx.checkedCast(obj);
         if(hello == null)
         {
             System.err.println("invalid proxy");
@@ -104,7 +102,7 @@ public class Client extends Ice.Application
                     }
                 }
             }
-            catch(Ice.LocalException ex)
+            catch(com.zeroc.Ice.LocalException ex)
             {
                 ex.printStackTrace();
             }
@@ -121,8 +119,7 @@ public class Client extends Ice.Application
         return 0;
     }
 
-    public static void
-    main(String[] args)
+    public static void main(String[] args)
     {
         Client app = new Client();
         int status = app.main("Client", args, "config.client");

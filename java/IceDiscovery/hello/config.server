@@ -9,7 +9,7 @@ Hello.AdapterId=HelloAdapter
 #
 # Enable the Ice discovery plugin
 #
-Ice.Plugin.IceDiscovery=IceDiscovery:IceDiscovery.PluginFactory
+Ice.Plugin.IceDiscovery=IceDiscovery:com.zeroc.IceDiscovery.PluginFactory
 
 #
 # Only listen on the loopback interface by default.
@@ -60,7 +60,7 @@ Ice.Trace.Locator=0
 #
 # SSL Configuration
 #
-Ice.Plugin.IceSSL=IceSSL:IceSSL.PluginFactory
+Ice.Plugin.IceSSL=IceSSL:com.zeroc.IceSSL.PluginFactory
 IceSSL.DefaultDir=../../../certs
 IceSSL.Keystore=server.jks
 IceSSL.Password=password

@@ -5,21 +5,22 @@
 // **********************************************************************
 
 import Demo.*;
-import Ice.Optional;
 
-public class Client extends Ice.Application
+import java.util.Optional;
+import java.util.OptionalInt;
+
+public class Client extends com.zeroc.Ice.Application
 {
     class ShutdownHook extends Thread
     {
         @Override
-        public void
-        run()
+        public void run()
         {
             try
             {
                 communicator().destroy();
             }
-            catch(Ice.LocalException ex)
+            catch(com.zeroc.Ice.LocalException ex)
             {
                 ex.printStackTrace();
             }
@@ -27,8 +28,7 @@ public class Client extends Ice.Application
     }
 
     @Override
-    public int
-    run(String[] args)
+    public int run(String[] args)
     {
         if(args.length > 0)
         {
@@ -36,7 +36,7 @@ public class Client extends Ice.Application
             return 1;
         }
 
-        ContactDBPrx contactdb = ContactDBPrxHelper.checkedCast(communicator().propertyToProxy("ContactDB.Proxy"));
+        ContactDBPrx contactdb = ContactDBPrx.checkedCast(communicator().propertyToProxy("ContactDB.Proxy"));
         if(contactdb == null)
         {
             System.err.println(appName() + ": invalid proxy");
@@ -56,12 +56,12 @@ public class Client extends Ice.Application
         // Find the phone number for "john". Note the use of the Ice.Optional
         // for non-generic types.
         //
-        Ice.Optional<String> number = contactdb.queryNumber("john");
+        Optional<String> number = contactdb.queryNumber("john");
 
         //
         // isSet() tests if an optional value is set.
         //
-        if(!number.isSet())
+        if(!number.isPresent())
         {
             System.out.print("number is incorrect ");
         }
@@ -76,9 +76,8 @@ public class Client extends Ice.Application
 
         // Optional can also be used in an out parameter. Note that
         // primitive types don't use Ice.Optional.
-        Ice.IntOptional dialgroup = new Ice.IntOptional();
-        contactdb.queryDialgroup("john", dialgroup);
-        if(!dialgroup.isSet() || dialgroup.get() != 0)
+        OptionalInt dialgroup = contactdb.queryDialgroup("john");
+        if(!dialgroup.isPresent() || dialgroup.getAsInt() != 0)
         {
             System.out.print("dialgroup is incorrect ");
         }
@@ -113,7 +112,7 @@ public class Client extends Ice.Application
         // The java mapping permits null to be passed to unset optional values.
         //
         String steveNumber = "234-567-8901";
-        contactdb.addContact("steve", null, Optional.O(steveNumber), Optional.O(1));
+        contactdb.addContact("steve", null, Optional.of(steveNumber), OptionalInt.of(1));
 
         System.out.print("Checking steve... ");
         number = contactdb.queryNumber("steve");
@@ -136,8 +135,8 @@ public class Client extends Ice.Application
             System.out.print("info is incorrect ");
         }
 
-        contactdb.queryDialgroup("steve", dialgroup);
-        if(!dialgroup.isSet() || dialgroup.get() != 1)
+        dialgroup = contactdb.queryDialgroup("steve");
+        if(!dialgroup.isPresent() || dialgroup.getAsInt() != 1)
         {
             System.out.print("dialgroup is incorrect ");
         }
@@ -148,7 +147,7 @@ public class Client extends Ice.Application
         // Add a contact from "frank". Here the dialGroup field isn't set.
         //
         String frankNumber = "345-678-9012";
-        contactdb.addContact("frank", Optional.O(NumberType.CELL), Optional.O(frankNumber), null);
+        contactdb.addContact("frank", Optional.of(NumberType.CELL), Optional.of(frankNumber), null);
 
         System.out.print("Checking frank... ");
 
@@ -171,8 +170,8 @@ public class Client extends Ice.Application
             System.out.print("info is incorrect ");
         }
 
-        contactdb.queryDialgroup("frank", dialgroup);
-        if(dialgroup.isSet())
+        dialgroup = contactdb.queryDialgroup("frank");
+        if(dialgroup.isPresent())
         {
             System.out.print("dialgroup is incorrect ");
         }
@@ -181,11 +180,11 @@ public class Client extends Ice.Application
         //
         // Add a contact from "anne". The number field isn't set.
         //
-        contactdb.addContact("anne", Optional.O(NumberType.OFFICE), null, Optional.O(2));
+        contactdb.addContact("anne", Optional.of(NumberType.OFFICE), null, OptionalInt.of(2));
 
         System.out.print("Checking anne... ");
         number = contactdb.queryNumber("anne");
-        if(number.isSet())
+        if(number.isPresent())
         {
             System.out.print("number is incorrect ");
         }
@@ -203,8 +202,8 @@ public class Client extends Ice.Application
             System.out.print("info is incorrect ");
         }
 
-        contactdb.queryDialgroup("anne", dialgroup);
-        if(!dialgroup.isSet() || dialgroup.get() != 2)
+        dialgroup = contactdb.queryDialgroup("anne");
+        if(!dialgroup.isPresent() || dialgroup.getAsInt() != 2)
         {
             System.out.print("dialgroup is incorrect ");
         }
@@ -215,7 +214,7 @@ public class Client extends Ice.Application
         // the remainder of the fields are unchanged.
         //
         String anneNumber = "456-789-0123";
-        contactdb.updateContact("anne", null, Optional.O(anneNumber), null);
+        contactdb.updateContact("anne", null, Optional.of(anneNumber), null);
         number = contactdb.queryNumber("anne");
         if(!number.get().equals(anneNumber))
         {

@@ -6,28 +6,30 @@
 
 import Demo.*;
 
-class DispatchInterceptorI extends Ice.DispatchInterceptor
+import java.util.concurrent.CompletionStage;
+
+import com.zeroc.Ice.DispatchInterceptor;
+import com.zeroc.Ice.OutputStream;
+import com.zeroc.Ice.Request;
+import com.zeroc.Ice.UserException;
+
+class DispatchInterceptorI extends DispatchInterceptor
 {
     @Override
-    public Ice.DispatchStatus 
-    dispatch(Ice.Request request)
+    public CompletionStage<OutputStream> dispatch(Request request)
+        throws UserException
     {
         // Allocate a new SQLRequestContext associated with this
         // request thread.
         SQLRequestContext context = new SQLRequestContext();
         try
         {
-            Ice.DispatchStatus status = _servant.ice_dispatch(request);
-
-            // An exception causes the current transaction to rollback.
-            context.destroyFromDispatch(status == Ice.DispatchStatus.DispatchOK);
-
-            return status;
+            return _servant.ice_dispatch(request);
         }
         catch(JDBCException ex)
         {
             // Log the error.
-            Ice.Current c = request.getCurrent();
+            com.zeroc.Ice.Current c = request.getCurrent();
             context.error("call of `" + c.operation + "' on id `" + c.id.category + "/" + c.id.name + "' failed", ex);
 
             // A JDBCException causes the current transaction to
@@ -35,9 +37,15 @@ class DispatchInterceptorI extends Ice.DispatchInterceptor
             context.destroyFromDispatch(false);
 
             // Translate the exception to UnknownException.
-            Ice.UnknownException e = new Ice.UnknownException();
+            com.zeroc.Ice.UnknownException e = new com.zeroc.Ice.UnknownException();
             e.initCause(ex);
             throw e;
+        }
+        catch(UserException ex)
+        {
+            // A user exception causes the transaction to rollback.
+            context.destroyFromDispatch(false);
+            throw ex;
         }
         catch(RuntimeException ex)
         {
@@ -47,10 +55,10 @@ class DispatchInterceptorI extends Ice.DispatchInterceptor
         }
     }
 
-    DispatchInterceptorI(Ice.Object servant)
+    DispatchInterceptorI(com.zeroc.Ice.Object servant)
     {
         _servant = servant;
     }
 
-    private Ice.Object _servant;
+    private com.zeroc.Ice.Object _servant;
 }

@@ -24,7 +24,7 @@ Ice.ACM.Client.Timeout=0
 #
 # SSL Configuration
 #
-Ice.Plugin.IceSSL=IceSSL.PluginFactory
+Ice.Plugin.IceSSL=com.zeroc.IceSSL.PluginFactory
 IceSSL.DefaultDir=../../../certs
 IceSSL.Keystore=client.jks
 IceSSL.Password=password

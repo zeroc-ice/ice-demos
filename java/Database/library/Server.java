@@ -4,41 +4,37 @@
 //
 // **********************************************************************
 
-class Server extends Ice.Application
+class Server extends com.zeroc.Ice.Application
 {
-    static class LocatorI implements Ice.ServantLocator
+    static class LocatorI implements com.zeroc.Ice.ServantLocator
     {
         @Override
-        public Ice.Object
-        locate(Ice.Current c, Ice.LocalObjectHolder cookie)
+        public com.zeroc.Ice.ServantLocator.LocateResult locate(com.zeroc.Ice.Current c)
         {
             assert c.id.category.equals("book");
-            return _servant;
+            return new com.zeroc.Ice.ServantLocator.LocateResult(_servant, null);
         }
 
         @Override
-        public void
-        finished(Ice.Current c, Ice.Object servant, Object cookie)
+        public void finished(com.zeroc.Ice.Current c, com.zeroc.Ice.Object servant, Object cookie)
         {
         }
 
         @Override
-        public void
-        deactivate(String category)
+        public void deactivate(String category)
         {
         }
 
-        LocatorI(Ice.Object servant)
+        LocatorI(com.zeroc.Ice.Object servant)
         {
             _servant = new DispatchInterceptorI(servant);
         }
 
-        private Ice.Object _servant;
+        private com.zeroc.Ice.Object _servant;
     }
 
     @Override
-    public int
-    run(String[] args)
+    public int run(String[] args)
     {
         args = communicator().getProperties().parseCommandLineOptions("JDBC", args);
 
@@ -48,7 +44,7 @@ class Server extends Ice.Application
             return 1;
         }
 
-        Ice.Properties properties = communicator().getProperties();
+        com.zeroc.Ice.Properties properties = communicator().getProperties();
 
         String username = properties.getProperty("JDBC.Username");
         String password = properties.getProperty("JDBC.Password");
@@ -59,7 +55,7 @@ class Server extends Ice.Application
             nConnections = 1;
         }
         ConnectionPool pool = null;
-        Ice.Logger logger = communicator().getLogger();
+        com.zeroc.Ice.Logger logger = communicator().getLogger();
 
         try
         {
@@ -91,21 +87,23 @@ class Server extends Ice.Application
 
         long timeout = properties.getPropertyAsIntWithDefault("SessionTimeout", 30);
 
-        java.util.concurrent.ScheduledExecutorService executor = java.util.concurrent.Executors.newScheduledThreadPool(1);
+        java.util.concurrent.ScheduledExecutorService executor =
+            java.util.concurrent.Executors.newScheduledThreadPool(1);
         ReapTask reaper = new ReapTask(logger, timeout);
         executor.scheduleAtFixedRate(reaper, timeout/2, timeout/2, java.util.concurrent.TimeUnit.SECONDS);
         
         //
         // Create an object adapter
         //
-        Ice.ObjectAdapter adapter = communicator().createObjectAdapter("SessionFactory");
+        com.zeroc.Ice.ObjectAdapter adapter = communicator().createObjectAdapter("SessionFactory");
 
         SQLRequestContext.initialize(logger, pool);
         adapter.addServantLocator(new LocatorI(new BookI()), "book");
         
-        adapter.add(new SessionFactoryI(logger, reaper, timeout), Ice.Util.stringToIdentity("SessionFactory"));
+        adapter.add(new SessionFactoryI(logger, reaper, timeout),
+                    com.zeroc.Ice.Util.stringToIdentity("SessionFactory"));
         adapter.add(new Glacier2SessionManagerI(logger, reaper),
-                    Ice.Util.stringToIdentity("LibrarySessionManager"));
+                    com.zeroc.Ice.Util.stringToIdentity("LibrarySessionManager"));
 
         //
         // Everything ok, let's go.
@@ -124,8 +122,7 @@ class Server extends Ice.Application
         return 0;
     }
 
-    static public void
-    main(String[] args)
+    static public void main(String[] args)
     {
         Server app = new Server();
         int status = app.main("demo.Database.library.Server", args, "config.server");

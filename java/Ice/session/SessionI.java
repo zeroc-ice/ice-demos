@@ -6,10 +6,9 @@
 
 import Demo.*;
 
-class SessionI extends _SessionDisp
+class SessionI implements Session
 {
-    public
-    SessionI(String name)
+    public SessionI(String name)
     {
         _name = name;
         _timestamp = System.currentTimeMillis();
@@ -17,47 +16,43 @@ class SessionI extends _SessionDisp
     }
 
     @Override
-    synchronized public HelloPrx
-    createHello(Ice.Current c)
+    synchronized public HelloPrx createHello(com.zeroc.Ice.Current c)
     {
         if(_destroy)
         {
-            throw new Ice.ObjectNotExistException();
+            throw new com.zeroc.Ice.ObjectNotExistException();
         }
-        HelloPrx hello = HelloPrxHelper.uncheckedCast(c.adapter.addWithUUID(new HelloI(_name, _nextId++)));
+        HelloPrx hello = HelloPrx.uncheckedCast(c.adapter.addWithUUID(new HelloI(_name, _nextId++)));
         _objs.add(hello);
         return hello;
     }
 
     @Override
-    synchronized public void
-    refresh(Ice.Current c)
+    synchronized public void refresh(com.zeroc.Ice.Current c)
     {
         if(_destroy)
         {
-            throw new Ice.ObjectNotExistException();
+            throw new com.zeroc.Ice.ObjectNotExistException();
         }
         _timestamp = System.currentTimeMillis();
     }
 
     @Override
-    synchronized public String
-    getName(Ice.Current c)
+    synchronized public String getName(com.zeroc.Ice.Current c)
     {
         if(_destroy)
         {
-            throw new Ice.ObjectNotExistException();
+            throw new com.zeroc.Ice.ObjectNotExistException();
         }
         return _name;
     }
     
     @Override
-    synchronized public void
-    destroy(Ice.Current c)
+    synchronized public void destroy(com.zeroc.Ice.Current c)
     {
         if(_destroy)
         {
-            throw new Ice.ObjectNotExistException();
+            throw new com.zeroc.Ice.ObjectNotExistException();
         }
 
         _destroy = true;
@@ -70,7 +65,7 @@ class SessionI extends _SessionDisp
                 c.adapter.remove(p.ice_getIdentity());
             }
         }
-        catch(Ice.ObjectAdapterDeactivatedException e)
+        catch(com.zeroc.Ice.ObjectAdapterDeactivatedException e)
         {
             // This method is called on shutdown of the server, in
             // which case this exception is expected.
@@ -78,12 +73,11 @@ class SessionI extends _SessionDisp
         _objs.clear();
     }
 
-    synchronized public long
-    timestamp()
+    synchronized public long timestamp()
     {
         if(_destroy)
         {
-            throw new Ice.ObjectNotExistException();
+            throw new com.zeroc.Ice.ObjectNotExistException();
         }
         return _timestamp;
     }
@@ -93,5 +87,5 @@ class SessionI extends _SessionDisp
     private long _timestamp; // The last time the session was refreshed.
     private int _nextId = 0; // The id of the next hello object. This is used for tracing purposes.
     private java.util.List<HelloPrx> _objs =
-        new java.util.LinkedList<HelloPrx>(); // List of per-client allocated Hello objects.
+        new java.util.LinkedList<>(); // List of per-client allocated Hello objects.
 }

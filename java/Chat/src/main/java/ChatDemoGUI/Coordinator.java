@@ -34,10 +34,10 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.Borders;
 
-import Glacier2.SessionFactoryHelper;
-import Glacier2.SessionHelper;
-import Glacier2.SessionCallback;
-import Glacier2.SessionNotExistException;
+import com.zeroc.Glacier2.SessionFactoryHelper;
+import com.zeroc.Glacier2.SessionHelper;
+import com.zeroc.Glacier2.SessionCallback;
+import com.zeroc.Glacier2.SessionNotExistException;
 
 class Coordinator
 {
@@ -52,9 +52,13 @@ class Coordinator
         _chatView = chatView;
         _users = users;
 
-        Ice.InitializationData initData = new Ice.InitializationData();
-        initData.properties = Ice.Util.createProperties(new Ice.StringSeqHolder(_args));
-        initData.properties.setProperty("Ice.Plugin.IceSSL", "IceSSL.PluginFactory");
+        com.zeroc.Ice.InitializationData initData = new com.zeroc.Ice.InitializationData();
+
+        com.zeroc.Ice.Util.CreatePropertiesResult cpr = com.zeroc.Ice.Util.createProperties(_args);
+        initData.properties = cpr.properties;
+        _args = cpr.args;
+
+        initData.properties.setProperty("Ice.Plugin.IceSSL", "com.zeroc.IceSSL.PluginFactory");
 
         //
         // Set Ice.Default.Router if not set.
@@ -67,27 +71,22 @@ class Coordinator
                                             "Glacier2/router:wss -p 443 -h zeroc.com -r /demo-proxy/chat/glacier2");
         }
 
-        initData.dispatcher = new Ice.Dispatcher()
+        initData.dispatcher = (runnable, connection) ->
             {
-                public void
-                dispatch(Runnable runnable, Ice.Connection connection)
+                if(_exit)  // The GUI is being destroyed, don't use the GUI thread any more
                 {
-                    if(_exit)  // The GUI is being destroyed, don't use the GUI thread any more
-                    {
-                        runnable.run();
-                    }
-                    else
-                    {
-                        SwingUtilities.invokeLater(runnable);
-                    }
+                    runnable.run();
+                }
+                else
+                {
+                    SwingUtilities.invokeLater(runnable);
                 }
             };
 
         final Coordinator coordinator = this;
-        _factory = new Glacier2.SessionFactoryHelper(initData, new Glacier2.SessionCallback()
+        _factory = new SessionFactoryHelper(initData, new SessionCallback()
             {
-                public void
-                connected(final SessionHelper session)
+                public void connected(final SessionHelper session)
                     throws SessionNotExistException
                 {
                     //
@@ -107,39 +106,33 @@ class Coordinator
                         return;
                     }
 
-                    Chat.ChatRoomCallbackPrx callback = Chat.ChatRoomCallbackPrxHelper.uncheckedCast(
-                                                        _session.addWithUUID(new ChatRoomCallbackI(coordinator)));
+                    Chat.ChatRoomCallbackPrx callback = Chat.ChatRoomCallbackPrx.uncheckedCast(
+                        _session.addWithUUID(new ChatRoomCallbackI(coordinator)));
 
-                    _chat = Chat.ChatSessionPrxHelper.uncheckedCast(_session.session());
+                    _chat = Chat.ChatSessionPrx.uncheckedCast(_session.session());
                     try
                     {
-                        _chat.begin_setCallback(callback, new Chat.Callback_ChatSession_setCallback()
+                        _chat.setCallbackAsync(callback).whenComplete((result, ex) ->
                             {
-                                @Override
-                                public void
-                                response()
+                                if(ex == null)
                                 {
                                     _info.save();
                                     _username = ChatUtils.formatUsername(_info.username);
                                     setState(ClientState.Connected);
                                 }
-
-                                @Override
-                                public void
-                                exception(Ice.LocalException ex)
+                                else
                                 {
                                     destroySession();
                                 }
                             });
                     }
-                    catch(Ice.CommunicatorDestroyedException ex)
+                    catch(com.zeroc.Ice.CommunicatorDestroyedException ex)
                     {
-                        //Ignore client session was destroyed.
+                        // Ignore client session was destroyed.
                     }
                 }
 
-                public void
-                disconnected(SessionHelper session)
+                public void disconnected(SessionHelper session)
                 {
                     //
                     // Ignore callbacks during shutdown.
@@ -166,8 +159,7 @@ class Coordinator
                     }
                 }
 
-                public void
-                connectFailed(SessionHelper session, Throwable exception)
+                public void connectFailed(SessionHelper session, Throwable exception)
                 {
                     //
                     // Ignore callbacks during shutdown.
@@ -181,28 +173,25 @@ class Coordinator
                     {
                         throw exception;
                     }
-                    catch(final Glacier2.CannotCreateSessionException ex)
+                    catch(final com.zeroc.Glacier2.CannotCreateSessionException ex)
                     {
                         setError("Login failed (Glacier2.CannotCreateSessionException):\n" + ex.reason);
                     }
-                    catch(final Glacier2.PermissionDeniedException ex)
+                    catch(final com.zeroc.Glacier2.PermissionDeniedException ex)
                     {
                         setError("Login failed (Glacier2.PermissionDeniedException):\n" + ex.reason);
                     }
-                    catch(Ice.Exception ex)
+                    catch(com.zeroc.Ice.Exception ex)
                     {
-                        setError("Login failed (" + ex.ice_name() + ").\n" +
-                                 "Please check your configuration.");
+                        setError("Login failed (" + ex.ice_name() + ").\n" + "Please check your configuration.");
                     }
                     catch(final Throwable ex)
                     {
                         setError("Login failed:\n" + ChatUtils.stack2string(ex));
                     }
-
                 }
 
-                public void
-                createdCommunicator(SessionHelper session)
+                public void createdCommunicator(SessionHelper session)
                 {
                 }
             });
@@ -224,7 +213,7 @@ class Coordinator
     public void exit()
     {
         _exit = true;
-        Ice.Communicator communicator = _session == null ? null : _session.communicator();
+        com.zeroc.Ice.Communicator communicator = _session == null ? null : _session.communicator();
         destroySession();
         _mainView.dispose();
         if(communicator != null)
@@ -247,8 +236,7 @@ class Coordinator
     public void userJoinEvent(final long timestamp, final String name)
     {
         _users.addElement(name);
-        _chatView.appendMessage(ChatUtils.formatTimestamp(timestamp) + " - <system-message> - " + name +
-                                " joined.");
+        _chatView.appendMessage(ChatUtils.formatTimestamp(timestamp) + " - <system-message> - " + name + " joined.");
     }
 
     public void userLeaveEvent(final long timestamp, final String name)
@@ -268,7 +256,7 @@ class Coordinator
                                 ChatUtils.unstripHtml(message));
     }
 
-    public void sendMessage(String message)
+    public void sendMessage(final String message)
     {
 
         if(_chat != null)
@@ -282,11 +270,26 @@ class Coordinator
             {
                 try
                 {
-                    _chat.begin_send(message, new AMI_ChatSession_sendI(_username, message));
+                    _chat.sendAsync(message).whenComplete((timestamp, ex) ->
+                        {
+                            if(ex == null)
+                            {
+                                userSayEvent(timestamp, _username, message);
+                            }
+                            else if(ex instanceof Chat.InvalidMessageException)
+                            {
+                                Chat.InvalidMessageException e = (Chat.InvalidMessageException)ex;
+                                _chatView.appendMessage("<system-message> - " + e.reason);
+                            }
+                            else
+                            {
+                                destroySession();
+                            }
+                        });
                 }
-                catch(Ice.CommunicatorDestroyedException ex)
+                catch(com.zeroc.Ice.CommunicatorDestroyedException ex)
                 {
-                    //Ignore client session was destroyed.
+                    // Ignore client session was destroyed.
                 }
             }
         }
@@ -359,40 +362,6 @@ class Coordinator
         return _username;
     }
 
-    //
-    // Callback for the send async operation.
-    //
-    public class AMI_ChatSession_sendI extends Chat.Callback_ChatSession_send
-    {
-        public AMI_ChatSession_sendI(String name, String message)
-        {
-            _name = name;
-            _message = message;
-        }
-
-        public void response(long timestamp)
-        {
-            userSayEvent(timestamp, _name, _message);
-        }
-
-        public void exception(Ice.LocalException ex)
-        {
-            destroySession();
-        }
-
-        public void exception(Ice.UserException ex)
-        {
-            if(ex instanceof Chat.InvalidMessageException)
-            {
-                Chat.InvalidMessageException e = (Chat.InvalidMessageException)ex;
-                _chatView.appendMessage("<system-message> - " + e.reason);
-            }
-        }
-
-        private final String _name;
-        private final String _message;
-    }
-
     public class ErrorView extends JDialog
     {
         private JButton bttClose = new JButton("Close");
@@ -449,7 +418,6 @@ class Coordinator
             textMenu.add(new DefaultEditorKit.CopyAction());
             textMenu.pack();
 
-
             txtErrorMessage.addMouseListener(new MouseAdapter()
                 {
                     public void mousePressed(MouseEvent e)
@@ -466,7 +434,7 @@ class Coordinator
     protected void
     destroySession()
     {
-        final Glacier2.SessionHelper s = _session;
+        final com.zeroc.Glacier2.SessionHelper s = _session;
         _session = null;
         _chat = null;
 
@@ -476,15 +444,15 @@ class Coordinator
         }
     }
 
-    private final Glacier2.SessionFactoryHelper _factory;
+    private final SessionFactoryHelper _factory;
     private ClientState _state;
-    private final String[] _args;
+    private String[] _args;
     private final MainView _mainView;
     private final ChatView _chatView;
     private final LoginView _loginView;
     private final DefaultListModel _users;
     private LoginInfo _info = new LoginInfo();
-    private Glacier2.SessionHelper _session = null;
+    private SessionHelper _session = null;
     private Object _sessionMonitor = new java.lang.Object();
     private Chat.ChatSessionPrx _chat = null;
     private String _username = "";

@@ -9,6 +9,7 @@ The sample programs are grouped by programming language:
 * [C++](./cpp)
 * [C#](./csharp)
 * [Java](./java)
+* [Java-Compat](./java-compat)
 * [JavaScript](./js)
 * [Objective-C](./objective-c)
 * [PHP](./php)

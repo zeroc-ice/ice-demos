@@ -4,10 +4,9 @@
 //
 // **********************************************************************
 
-public class PrinterI extends Demo._PrinterDisp
+public class PrinterI implements Demo.Printer
 {
-    @Override public void
-    printString(String s, Ice.Current current)
+    @Override public void printString(String s, com.zeroc.Ice.Current current)
     {
         System.out.println(s);
     }

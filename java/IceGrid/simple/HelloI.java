@@ -6,7 +6,7 @@
 
 import Demo.*;
 
-public class HelloI extends _HelloDisp
+public class HelloI implements Hello
 {
     public HelloI(String name)
     {
@@ -14,15 +14,13 @@ public class HelloI extends _HelloDisp
     }
 
     @Override
-    public void
-    sayHello(Ice.Current current)
+    public void sayHello(com.zeroc.Ice.Current current)
     {
         System.out.println(_name + " says Hello World!");
     }
 
     @Override
-    public void
-    shutdown(Ice.Current current)
+    public void shutdown(com.zeroc.Ice.Current current)
     {
         System.out.println(_name + " shutting down...");
         current.adapter.getCommunicator().shutdown();

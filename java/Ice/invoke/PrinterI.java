@@ -4,23 +4,24 @@
 //
 // **********************************************************************
 
-public class PrinterI extends Ice.Blobject
+public class PrinterI implements com.zeroc.Ice.Blobject
 {
     @Override
-    public boolean
-    ice_invoke(byte[] inParams, Ice.ByteSeqHolder outParams, Ice.Current current)
+    public com.zeroc.Ice.Object.Ice_invokeResult ice_invoke(byte[] inParams, com.zeroc.Ice.Current current)
     {
-        Ice.Communicator communicator = current.adapter.getCommunicator();
+        com.zeroc.Ice.Communicator communicator = current.adapter.getCommunicator();
 
-        Ice.InputStream in = new Ice.InputStream(communicator, inParams);
+        com.zeroc.Ice.InputStream in = new com.zeroc.Ice.InputStream(communicator, inParams);
         in.startEncapsulation();
+
+        com.zeroc.Ice.Object.Ice_invokeResult r = new com.zeroc.Ice.Object.Ice_invokeResult();
+        r.returnValue = true;
 
         if(current.operation.equals("printString"))
         {
             String message = in.readString();
             System.out.println("Printing string `" + message + "'");
             in.endEncapsulation();
-            return true;
         }
         else if(current.operation.equals("printStringSequence"))
         {
@@ -36,7 +37,6 @@ public class PrinterI extends Ice.Blobject
                 System.out.print("'" + seq[i] + "'");
             }
             System.out.println("}");
-            return true;
         }
         else if(current.operation.equals("printDictionary"))
         {
@@ -54,21 +54,18 @@ public class PrinterI extends Ice.Blobject
                 System.out.print(i.getKey() + "=" + i.getValue());
             }
             System.out.println("}");
-            return true;
         }
         else if(current.operation.equals("printEnum"))
         {
             Demo.Color c = Demo.Color.read(in);
             in.endEncapsulation();
             System.out.println("Printing enum " + c);
-            return true;
         }
         else if(current.operation.equals("printStruct"))
         {
             Demo.Structure s = Demo.Structure.read(in, null);
             in.endEncapsulation();
             System.out.println("Printing struct: name=" + s.name + ", value=" + s.value);
-            return true;
         }
         else if(current.operation.equals("printStructSequence"))
         {
@@ -84,16 +81,18 @@ public class PrinterI extends Ice.Blobject
                 System.out.print(seq[i].name + "=" + seq[i].value);
             }
             System.out.println("}");
-            return true;
         }
         else if(current.operation.equals("printClass"))
         {
-            Demo.CHolder c = new Demo.CHolder();
-            in.readValue(c);
+            class Holder
+            {
+                Demo.C obj;
+            }
+            final Holder h = new Holder();
+            in.readValue(v -> h.obj = (Demo.C)v);
             in.readPendingValues();
             in.endEncapsulation();
-            System.out.println("Printing class: s.name=" + c.value.s.name + ", s.value=" + c.value.s.value);
-            return true;
+            System.out.println("Printing class: s.name=" + h.obj.s.name + ", s.value=" + h.obj.s.value);
         }
         else if(current.operation.equals("getValues"))
         {
@@ -101,39 +100,39 @@ public class PrinterI extends Ice.Blobject
             c.s = new Demo.Structure();
             c.s.name = "green";
             c.s.value = Demo.Color.green;
-            Ice.OutputStream out = new Ice.OutputStream(communicator);
+            com.zeroc.Ice.OutputStream out = new com.zeroc.Ice.OutputStream(communicator);
             out.startEncapsulation();
             out.writeValue(c);
             out.writeString("hello");
             out.writePendingValues();
             out.endEncapsulation();
-            outParams.value = out.finished();
-            return true;
+            r.outParams = out.finished();
         }
         else if(current.operation.equals("throwPrintFailure"))
         {
             System.out.println("Throwing PrintFailure");
             Demo.PrintFailure ex = new Demo.PrintFailure();
             ex.reason = "paper tray empty";
-            Ice.OutputStream out = new Ice.OutputStream(communicator);
+            com.zeroc.Ice.OutputStream out = new com.zeroc.Ice.OutputStream(communicator);
             out.startEncapsulation();
             out.writeException(ex);
             out.endEncapsulation();
-            outParams.value = out.finished();
-            return false;
+            r.outParams = out.finished();
+            r.returnValue = false;
         }
         else if(current.operation.equals("shutdown"))
         {
             current.adapter.getCommunicator().shutdown();
-            return true;
         }
         else
         {
-            Ice.OperationNotExistException ex = new Ice.OperationNotExistException();
+            com.zeroc.Ice.OperationNotExistException ex = new com.zeroc.Ice.OperationNotExistException();
             ex.id = current.id;
             ex.facet = current.facet;
             ex.operation = current.operation;
             throw ex;
         }
+
+        return r;
     }
 }
