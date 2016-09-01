@@ -7,7 +7,6 @@
 apply plugin: 'com.android.application'
 apply from: "$rootProject.projectDir/gradle/ice.gradle"
 
-
 project.slice.output = project.file("${project.buildDir}/generated/source/ice")
 
 slice {
