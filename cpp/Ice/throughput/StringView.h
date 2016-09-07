@@ -25,7 +25,7 @@ public:
         _data(0),
         _size(0)
     {}
-    
+
     string_view(const string_view& sv) :
         _data(sv._data),
         _size(sv._size)
@@ -68,7 +68,7 @@ public:
     {
         return _size != 0;
     }
-    
+
     const char* data() const
     {
         return _data;
@@ -82,7 +82,7 @@ public:
 
     std::string to_string() const
     {
-        return std::string(_data, _size);  
+        return std::string(_data, _size);
     }
 
     int compare(string_view str) const
@@ -107,19 +107,19 @@ public:
             return 1;
         }
     }
-  
+
 private:
     const char* _data;
     size_t _size;
 };
 
-inline bool 
+inline bool
 operator==(string_view lhs, string_view rhs)
 {
    return lhs.compare(rhs) == 0;
 }
 
-inline bool 
+inline bool
 operator!=(string_view lhs, string_view rhs)
 {
     return lhs.compare(rhs) != 0;
@@ -150,33 +150,22 @@ struct StreamHelper<Util::string_view, StreamHelperCategoryBuiltin>
     template<class S> static inline void
     write(S* stream, const Util::string_view& v)
     {
-
-#ifdef STRING_VIEW_IGNORE_STRING_CONVERTER
+        //
+        // For consistency with the read, we don't string-convert
+        //
         stream->write(v.data(), v.size(), false);
-#else
-        stream->write(v.data(), v.size(), true);
-#endif
     }
 
-    template<class S> static inline void 
+    template<class S> static inline void
     read(S* stream, Util::string_view& v)
     {
         const char* vdata = 0;
         size_t vsize = 0;
 
-#ifdef STRING_VIEW_IGNORE_STRING_CONVERTER
+        //
+        // We ignore the string converter
+        //
         stream->read(vdata, vsize);
-#else
-        std::string holder;
-        stream->read(vdata, vsize, holder);
-        
-        // If holder is not empty, a string conversion occured, and we can't return a 
-        // string_view since it does not hold the memory
-        if(!holder.empty())
-        {
-            throw Ice::MarshalException(__FILE__, __LINE__, "string conversion not supported");
-        }
-#endif
 
         if(vsize > 0)
         {
