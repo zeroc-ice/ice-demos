@@ -45,9 +45,9 @@
       </replica-group>
 
       <node name="node1">
-         <server-instance template="Glacier2" 
-                          instance-name="DemoGlacier2" 
-                          client-endpoints="tcp -h localhost -p 4063" 
+         <server-instance template="Glacier2"
+                          instance-name="DemoGlacier2"
+                          client-endpoints="tcp -h localhost -p 4063"
                           server-endpoints="tcp -h localhost">
             <properties>
                <property name="Glacier2.SessionManager" value="DemoIceGrid/AdminSessionManager"/>
@@ -56,7 +56,7 @@
          </server-instance>
          <icebox id="IceBox" activation="on-demand" exe="java">
             <description>A sample IceBox server</description>
-            <option>IceBox.Server</option>
+            <option>com.zeroc.IceBox.Server</option>
             <properties>
                <properties refid="mx"/>
                <property name="IceBox.Trace.ServiceObserver" value="1"/>
