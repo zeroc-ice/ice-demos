@@ -6,11 +6,10 @@
 
 #pragma once
 
+#include <Library.ice>
+
 module Demo
 {
-
-/* Forward declaration. */
-interface Library;
 
 /**
  *

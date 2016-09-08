@@ -6,11 +6,10 @@
 
 #pragma once
 
+#include <Library.ice>
+
 module Demo
 {
-
-/* Forward declaration. */
-interface Library;
 
 /**
  *
@@ -55,7 +54,7 @@ interface SessionFactory
 {
     /**
      *
-     * Create a session. 
+     * Create a session.
      *
      * @return A proxy to the session.
      *
