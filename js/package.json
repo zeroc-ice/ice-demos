@@ -29,5 +29,12 @@
     "gulp:build": "gulp",
     "gulp:watch": "gulp watch",
     "gulp:clean": "gulp clean"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.14.0",
+    "babel-plugin-transform-builtin-extend": "^1.1.0",
+    "babel-polyfill": "^6.13.0",
+    "babel-preset-es2015-script": "^1.1.0",
+    "gulp-babel": "^6.1.2"
   }
 }

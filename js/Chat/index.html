@@ -205,19 +205,22 @@
     <!-- Bundle with all the scripts used to build the user interface,
          see assets/Makefile in your distribution for details -->
     <script type="text/javascript" src="../../assets/common.min.js"></script>
+    <!-- Babel dependencies -->
+    <script type="text/javascript" src="../../../node_modules/babel-polyfill/dist/polyfill.js"></script>
+    <script type="text/javascript" src="../../../node_modules/regenerator-runtime/runtime.js"></script>
     <!-- Scripts used during development, for optimized builds
          comment the following scripts and uncomment Client.min.js
          below -->
     <!-- Ice.js (Ice run-time library) -->
-    <script type="text/javascript" src="../../lib/Ice.js"></script>
+    <script type="text/javascript" src="../../lib/es5/Ice.js"></script>
     <!-- Glacier2.js (Glacier2 run-time library) -->
-    <script type="text/javascript" src="../../lib/Glacier2.js"></script>
+    <script type="text/javascript" src="../../lib/es5/Glacier2.js"></script>
     <!-- Chat.js (Demo generated code) -->
-    <script type="text/javascript" src="Chat.js"></script>
+    <script type="text/javascript" src="es5/Chat.js"></script>
     <!-- ChatSession.js (Demo generated code) -->
-    <script type="text/javascript" src="ChatSession.js"></script>
+    <script type="text/javascript" src="es5/ChatSession.js"></script>
     <!-- Client.js (Chat Demo Application) -->
-    <script type="text/javascript" src="Client.js"></script>
+    <script type="text/javascript" src="es5/Client.js"></script>
     <!-- Uncomment the following script to use a minified version of the
          scripts that includes: the Ice and Glacier2 run-time libraries,
          the generated code and the demo application. -->

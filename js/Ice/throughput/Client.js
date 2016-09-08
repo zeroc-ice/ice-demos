@@ -4,8 +4,8 @@
 //
 // **********************************************************************
 
-var Ice = require("ice").Ice;
-var Demo = require("./Throughput").Demo;
+const Ice = require("ice").Ice;
+const Demo = require("./Throughput").Demo;
 
 function menu()
 {
@@ -51,74 +51,68 @@ function loop(fn, repetitions)
 //
 // Initialize sequences.
 //
-var byteSeq = new Buffer(Demo.ByteSeqSize);
-for(var i = 0; i < Demo.ByteSeqSize; ++i)
+const byteSeq = new Buffer(Demo.ByteSeqSize);
+for(let i = 0; i < Demo.ByteSeqSize; ++i)
 {
     byteSeq[i] = 0;
 }
 
-var stringSeq = [];
-for(var i = 0; i < Demo.StringSeqSize; ++i)
+const stringSeq = [];
+for(let i = 0; i < Demo.StringSeqSize; ++i)
 {
     stringSeq[i] = "hello";
 }
 
-var structSeq = [];
-for(var i = 0; i < Demo.StringDoubleSeqSize; ++i)
+const structSeq = [];
+for(let i = 0; i < Demo.StringDoubleSeqSize; ++i)
 {
-    structSeq[i] = new Demo.StringDouble();
-    structSeq[i].s = "hello";
-    structSeq[i].d = 3.14;
+    structSeq[i] = new Demo.StringDouble("hello", 3.14);
 }
 
-var fixedSeq = [];
-for(var i = 0; i < Demo.FixedSeqSize; ++i)
+const fixedSeq = [];
+for(let i = 0; i < Demo.FixedSeqSize; ++i)
 {
-    fixedSeq[i] = new Demo.Fixed();
-    fixedSeq[i].i = 0;
-    fixedSeq[i].j = 0;
-    fixedSeq[i].d = 0;
+    fixedSeq[i] = new Demo.Fixed(0, 0, 0);
 }
 
-var communicator;
-Ice.Promise.try(
-    function()
+let communicator;
+let completed = false;
+Ice.Promise.try(() =>
     {
-        var currentType = "1";
-        var repetitions = 100;
+        let currentType = "1";
+        const repetitions = 100;
 
-        var seqSize = Demo.ByteSeqSize;
-        var seq = byteSeq;
-        var wireSize = 1;
+        let seqSize = Demo.ByteSeqSize;
+        let seq = byteSeq;
+        let wireSize = 1;
 
         //
-        // Initialize the communicator and create a proxy
-        // to the throughput object.
+        // Initialize the communicator.
         //
         communicator = Ice.initialize(process.argv);
-        var proxy = communicator.stringToProxy("throughput:default -p 10000");
 
         //
-        // Down-cast the proxy to the Demo.Throughput interface.
+        // Create a proxy to the throughput object and down-cast the 
+        // proxy to the Demo.Throughput interface.
         //
-        return Demo.ThroughputPrx.checkedCast(proxy).then(
-            function(twoway)
+        return Demo.ThroughputPrx.checkedCast(communicator.stringToProxy("throughput:default -p 10000")).then(twoway =>
             {
-                var oneway = twoway.ice_oneway();
+                const oneway = twoway.ice_oneway();
                 menu();
                 process.stdout.write("==> ");
-                var keyLoop = new Ice.Promise();
+                const keyLoop = new Ice.Promise();
 
                 function processKey(key)
                 {
                     if(key == "x")
                     {
-                        keyLoop.succeed();
+                        completed = true;
+                        keyLoop.resolve();
                         return;
                     }
 
-                    var proxy;
-                    var operation;
+                    let proxy;
+                    let operation;
 
                     if(key == "1" || key == "2" || key == "3" || key == "4")
                     {
@@ -279,25 +273,18 @@ Ice.Promise.try(
                         }
                         console.log("...");
 
-                        var start = new Date().getTime();
-                        var args = key != "r" ? [seq] : [];
-                        return loop(
-                            function()
-                            {
-                                return operation.apply(proxy, args);
-                            },
-                            repetitions
-                        ).then(
-                            function()
+                        let start = new Date().getTime();
+                        let args = key != "r" ? [seq] : [];
+                        return loop(() => operation.apply(proxy, args), repetitions).then(() =>
                             {
                                 //
                                 // Write the results.
                                 //
-                                var total = new Date().getTime() - start;
+                                let total = new Date().getTime() - start;
                                 console.log("time for " + repetitions + " sequences: " + total  + " ms");
                                 console.log("time per sequence: " + total / repetitions + " ms");
 
-                                var mbit = repetitions * seqSize * wireSize * 8.0 / total / 1000.0;
+                                let mbit = repetitions * seqSize * wireSize * 8.0 / total / 1000.0;
                                 if(key == "e")
                                 {
                                     mbit *= 2;
@@ -329,43 +316,32 @@ Ice.Promise.try(
                 // keys we print the prompt and resume the standard input.
                 //
                 process.stdin.resume();
-                var promise = new Ice.Promise().succeed();
-                process.stdin.on("data",
-                                 function(buffer)
-                                 {
-                                     process.stdin.pause();
-                                     var data = buffer.toString("utf-8").trim().split("");
-                                     // Process each key
-                                     data.forEach(function(key)
-                                                  {
-                                                      promise = promise.then(
-                                                          function(r)
-                                                          {
-                                                              return processKey(key);
-                                                          }
-                                                      ).exception(
-                                                          function(ex)
-                                                          {
-                                                              console.log(ex.toString());
-                                                          });
-                                                  });
-                                     // Once we're done, print the prompt
-                                     promise.then(function()
-                                                  {
-                                                      if(!keyLoop.completed())
-                                                      {
-                                                          process.stdout.write("==> ");
-                                                          process.stdin.resume();
-                                                      }
-                                                  });
-                                     data = [];
-                                 });
+                let p = Ice.Promise.resolve();
+                process.stdin.on("data", buffer =>
+                    {
+                        process.stdin.pause();
+                        let data = buffer.toString("utf-8").trim().split("");
+                        // Process each key
+                        data.forEach(key =>
+                        {
+                            p = p.then(() => processKey(key)).catch(ex => console.log(ex));
+                        });
+                        // Once we're done, print the prompt
+                        p.then(() =>
+                        {
+                            if(!completed)
+                            {
+                                process.stdout.write("==> ");
+                                process.stdin.resume();
+                            }
+                        });
+                        data = [];
+                    });
 
                 return keyLoop;
             });
     }
-).finally(
-    function()
+).finally(() =>
     {
         //
         // Destroy the communicator if required.
@@ -376,15 +352,12 @@ Ice.Promise.try(
         }
     }
 ).then(
-    function()
-    {
-        process.exit(0);
-    },
-    function(ex)
+    () => process.exit(0),
+    ex =>
     {
         //
         // Handle any exceptions above.
         //
-        console.log(ex.toString());
+        console.log(ex);
         process.exit(1);
     });

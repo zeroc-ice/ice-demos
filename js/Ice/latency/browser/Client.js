@@ -9,46 +9,34 @@
 //
 // Initialize the communicator
 //
-var communicator = Ice.initialize();
+const communicator = Ice.initialize();
 
 //
 // Run the latency test.
 //
 function run()
 {
-    //
-    // Create a proxy to the ping object.
-    //
-    var hostname = document.location.hostname || "127.0.0.1";
-    var secure = document.location.protocol.indexOf("https") != -1;
-    var ref = secure ?
+    const hostname = document.location.hostname || "127.0.0.1";
+    const secure = document.location.protocol.indexOf("https") != -1;
+    const ref = secure ?
         "ping:wss -h " + hostname + " -p 9090 -r /demowss" :
         "ping:ws -h " + hostname + " -p 8080 -r /demows";
-    var proxy = communicator.stringToProxy(ref);
-
-    var repetitions = 1000;
+    const repetitions = 1000;
 
     //
-    // Down-cast the proxy to the Demo.Ping interface.
+    // Create a proxy to the ping object and down-cast the proxy
+    // to the Demo.Ping interface.
     //
-    return Demo.PingPrx.checkedCast(proxy).then(
-        function(obj)
+    return Demo.PingPrx.checkedCast(communicator.stringToProxy(ref)).then(ping =>
         {
             writeLine("pinging server " + repetitions + " times (this may take a while)");
-            var start = new Date().getTime();
-            return loop(
-                function()
-                {
-                    return obj.ice_ping();
-                },
-                repetitions
-            ).then(
-                function()
+            const start = new Date().getTime();
+            return loop(() => ping.ice_ping(), repetitions).then(() =>
                 {
                     //
                     // Write the results.
                     //
-                    var total = new Date().getTime() - start;
+                    const total = new Date().getTime() - start;
                     writeLine("time for " + repetitions + " pings: " + total + "ms");
                     writeLine("time per ping: " + (total / repetitions) + "ms");
                     setState(State.Idle);
@@ -59,8 +47,7 @@ function run()
 //
 // Run button event handler.
 //
-$("#run").click(
-    function()
+$("#run").click(() =>
     {
         //
         // Run the latency loop if not already running.
@@ -69,22 +56,18 @@ $("#run").click(
         {
             setState(State.Running);
 
-            Ice.Promise.try(
-                function()
+            Ice.Promise.try(() => 
                 {
                     return run();
                 }
-            ).exception(
-                function(ex)
+            ).catch(ex => 
                 {
                     $("#output").val(ex.toString());
                 }
-            ).finally(
-                function()
+            ).finally(() => 
                 {
                     setState(State.Idle);
-                }
-            );
+                });
         }
         return false;
     });
@@ -95,8 +78,8 @@ $("#run").click(
 //
 function loop(fn, repetitions)
 {
-    var i = 0;
-    var next = function()
+    let i = 0;
+    function next()
     {
         if(i++ < repetitions)
         {
@@ -118,12 +101,13 @@ function writeLine(msg)
 //
 // Handle the client state.
 //
-var State = {
+const State =
+{
     Idle:0,
     Running: 1
 };
 
-var state;
+let state;
 
 function setState(s, ex)
 {

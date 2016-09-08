@@ -10,10 +10,10 @@ module Demo
 {
 
 sequence<byte> ByteSeq;
-const int ByteSeqSize = 500000;
+const int ByteSeqSize = 50000;
 
 sequence<string> StringSeq;
-const int StringSeqSize = 50000;
+const int StringSeqSize = 5000;
 
 struct StringDouble
 {
@@ -21,7 +21,7 @@ struct StringDouble
     double d;
 };
 sequence<StringDouble> StringDoubleSeq;
-const int StringDoubleSeqSize = 50000;
+const int StringDoubleSeqSize = 5000;
 
 struct Fixed
 {
@@ -30,7 +30,7 @@ struct Fixed
     double d;
 };
 sequence<Fixed> FixedSeq;
-const int FixedSeqSize = 50000;
+const int FixedSeqSize = 5000;
 
 interface Throughput
 {

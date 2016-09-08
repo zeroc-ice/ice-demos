@@ -6,128 +6,99 @@
 
 (function(){
 
-var CallbackSenderPrx = Demo.CallbackSenderPrx;
-
 //
 // Define a servant class that implements the Demo.CallbackReceiver
 // interface.
 //
-var CallbackReceiverI = Ice.Class(Demo.CallbackReceiver, {
-    callback: function(num, current)
+class CallbackReceiverI extends Demo.CallbackReceiver
+{
+    callback(num, current)
     {
         writeLine("received callback #" + num);
     }
-});
-
-var id = new Ice.InitializationData();
-id.properties = Ice.createProperties();
+}
 
 //
 // Initialize the communicator
 //
-var communicator = Ice.initialize(id);
+const communicator = Ice.initialize();
 
-var connection;
+let connection;
 
-var start = function()
+function start()
 {
     //
     // Create a proxy to the sender object.
     //
-    var hostname = document.location.hostname || "127.0.0.1";
-    var proxy = communicator.stringToProxy("sender:ws -p 10002 -h " + hostname);
+    const hostname = document.location.hostname || "127.0.0.1";
+    const str = communicator.stringToProxy("sender:ws -p 10002 -h " + hostname);
 
     //
     // Down-cast the proxy to the Demo.CallbackSender interface.
     //
-    return CallbackSenderPrx.checkedCast(proxy).then(
-        function(server)
+    return Demo.CallbackSenderPrx.checkedCast(str).then(server =>
         {
             //
             // Create the client object adapter.
             //
-            return communicator.createObjectAdapter("").then(
-                function(adapter)
+            return communicator.createObjectAdapter("").then(adapter =>
                 {
                     //
                     // Create a callback receiver servant and add it to
                     // the object adapter.
                     //
-                    var r = adapter.addWithUUID(new CallbackReceiverI());
+                    const receiver = adapter.addWithUUID(new CallbackReceiverI());
 
                     //
                     // Set the connection adapter and remember the connection.
                     //
-                    connection = proxy.ice_getCachedConnection();
+                    connection = server.ice_getCachedConnection();
                     connection.setAdapter(adapter);
 
                     //
                     // Register the client with the bidir server.
                     //
-                    return server.addClient(r.ice_getIdentity());
+                    return server.addClient(receiver.ice_getIdentity());
                 });
         });
-};
+}
 
-var stop = function()
+function stop()
 {
     //
     // Close the connection, the server will unregister the client
     // when it tries to invoke on the bi-dir proxy.
     //
     return connection.close(false);
-};
+}
 
 //
 // Setup button click handlers
 //
-$("#start").click(
-    function()
+$("#start").click(() =>
     {
         if(isDisconnected())
         {
             setState(State.Connecting);
-            Ice.Promise.try(
-                function()
-                {
-                    return start().then(function()
-                                        {
-                                            setState(State.Connected);
-                                        });
-                }
-            ).exception(
-                function(ex)
+            Ice.Promise.try(() => start().then(() => setState(State.Connected))).catch(ex =>
                 {
                     $("#output").val(ex.toString());
                     setState(State.Disconnected);
-                }
-            );
+                });
         }
         return false;
     });
 
-$("#stop").click(
-    function()
+$("#stop").click(() =>
     {
         if(isConnected())
         {
             setState(State.Disconnecting);
-            Ice.Promise.try(
-                function()
-                {
-                    return stop();
-                }
-            ).exception(
-                function(ex)
-                {
-                    $("#output").val(ex.toString());
-                }
-            ).finally(
-                function()
+            Ice.Promise.try(() => stop()).catch(ex => $("#output").val(ex.toString())).finally(
+                () =>
                 {
                     setState(State.Disconnected);
-                }
-            );
+                });
         }
         return false;
     });
@@ -135,32 +106,33 @@ $("#stop").click(
 //
 // Handle client state
 //
-var State = {
+const State =
+{
     Disconnected: 0,
     Connecting: 1,
     Connected: 2,
     Disconnecting: 3
 };
 
-var isConnected = function()
+function isConnected()
 {
     return state == State.Connected;
-};
+}
 
-var isDisconnected = function()
+function isDisconnected()
 {
     return state == State.Disconnected;
-};
+}
 
-var writeLine = function(msg)
+function writeLine(msg)
 {
     $("#output").val($("#output").val() + msg + "\n");
     $("#output").scrollTop($("#output").get(0).scrollHeight);
 };
 
-var state;
+let state;
 
-var setState = function(s)
+function setState(s)
 {
     if(state == s)
     {

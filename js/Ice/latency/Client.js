@@ -4,8 +4,8 @@
 //
 // **********************************************************************
 
-var Ice = require("ice").Ice;
-var Demo = require("./Latency").Demo;
+const Ice = require("ice").Ice;
+const Demo = require("./Latency").Demo;
 
 var communicator;
 
@@ -15,8 +15,8 @@ var communicator;
 //
 function loop(fn, repetitions)
 {
-    var i = 0;
-    var next = function()
+    let i = 0;
+    function next()
     {
         if(i++ < repetitions)
         {
@@ -34,8 +34,8 @@ Ice.Promise.try(
         // ping object.
         //
         communicator = Ice.initialize(process.argv);
-        var repetitions = 1000;
-        var proxy = communicator.stringToProxy("ping:default -p 10000");
+        const repetitions = 1000;
+        const proxy = communicator.stringToProxy("ping:default -p 10000");
 
         //
         // Down-cast the proxy to the Demo.Ping interface.
@@ -44,27 +44,20 @@ Ice.Promise.try(
             function(obj)
             {
                 console.log("pinging server " + repetitions + " times (this may take a while)");
-                var start = new Date().getTime();
-                return loop(
-                    function()
-                    {
-                        return obj.ice_ping();
-                    },
-                    repetitions
-                ).then(
-                    function()
+                const start = new Date().getTime();
+                
+                return loop(() => obj.ice_ping(), repetitions).then(() =>
                     {
                         //
                         // Write the results.
                         //
-                        var total = new Date().getTime() - start;
+                        const total = new Date().getTime() - start;
                         console.log("time for " + repetitions + " pings: " + total + "ms");
                         console.log("time per ping: " + (total / repetitions) + "ms");
                     });
             });
     }
-).finally(
-    function()
+).finally(() =>
     {
         //
         // Destroy the communicator if required.
@@ -74,8 +67,7 @@ Ice.Promise.try(
             return communicator.destroy();
         }
     }
-).exception(
-    function(ex)
+).catch(ex =>
     {
         //
         // Handle any exceptions above.
@@ -83,4 +75,3 @@ Ice.Promise.try(
         console.log(ex.toString());
         process.exit(1);
     });
-

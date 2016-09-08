@@ -166,16 +166,16 @@
          see assets/Makefile in your distribution for details -->
     <script type="text/javascript" src="../../../assets/common.min.js"></script>
 
-    <script type="text/javascript">
-
-    </script>
+    <!-- Babel dependencies -->
+    <script type="text/javascript" src="../../../node_modules/babel-polyfill/dist/polyfill.js"></script>
+    <script type="text/javascript" src="../../../node_modules/regenerator-runtime/runtime.js"></script>
 
     <!-- Ice.js (Ice run-time library) -->
-    <script type="text/javascript" src="../../../lib/Ice.js"></script>
+    <script type="text/javascript" src="../../../lib/es5/Ice.js"></script>
     <!-- Hello.js (Demo generated code) -->
-    <script type="text/javascript" src="Hello.js"></script>
+    <script type="text/javascript" src="es5/Hello.js"></script>
     <!-- browser/Client.js (Hello Demo Application) -->
-    <script type="text/javascript" src="browser/Client.js"></script>
+    <script type="text/javascript" src="browser/es5/Client.js"></script>
 
     <script type="text/javascript">
         /* jshint browser:true, jquery:true */
