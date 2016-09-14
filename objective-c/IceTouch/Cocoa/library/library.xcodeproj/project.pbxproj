@@ -33,6 +33,21 @@
 		D8BCC6A81C03801D001BC53D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D8BCC6A71C03801D001BC53D /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXBuildRule section */
+		D81F86F81D8999010076917C /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			filePatterns = "*.ice";
+			fileType = pattern.proxy;
+			isEditable = 1;
+			outputFiles = (
+				"$(DERIVED_FILE_DIR)/$(INPUT_FILE_BASE).h",
+				"$(DERIVED_FILE_DIR)/$(INPUT_FILE_BASE).m",
+			);
+			script = "#!/bin/bash\n# For Xcode < 8 we still use the Xcode plug-in\nif [ \"$XCODE_VERSION_MAJOR\" = \"0800\" ]; then\n    if [ -x /usr/local/bin/icebuilder ]; then\n        /usr/local/bin/icebuilder\n    else\n        echo \"Unable to find Ice Builder for Xcode. Visit https://github.com/zeroc-ice/ice-builder-xcode for installation instructions.\"\n        exit 1\n    fi\nfi";
+		};
+/* End PBXBuildRule section */
+
 /* Begin PBXFileReference section */
 		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		14176C7F1A70FAC900331986 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -52,16 +67,16 @@
 		34C5F20A0FC514C900B226F7 /* LoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginController.m; path = Classes/LoginController.m; sourceTree = "<group>"; };
 		34C5F20B0FC514C900B226F7 /* EditController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EditController.h; path = Classes/EditController.h; sourceTree = "<group>"; };
 		34C5F20C0FC514C900B226F7 /* EditController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EditController.m; path = Classes/EditController.m; sourceTree = "<group>"; };
-		34C5F20D0FC514C900B226F7 /* Glacier2Session.ice */ = {isa = PBXFileReference; explicitFileType = sourcecode.slice; fileEncoding = 4; name = Glacier2Session.ice; path = Classes/Glacier2Session.ice; sourceTree = "<group>"; };
-		34C5F20E0FC514C900B226F7 /* Library.ice */ = {isa = PBXFileReference; explicitFileType = sourcecode.slice; fileEncoding = 4; name = Library.ice; path = Classes/Library.ice; sourceTree = "<group>"; };
+		34C5F20D0FC514C900B226F7 /* Glacier2Session.ice */ = {isa = PBXFileReference; explicitFileType = sourcecode.slice; fileEncoding = 4; lastKnownFileType = text; name = Glacier2Session.ice; path = Classes/Glacier2Session.ice; sourceTree = "<group>"; };
+		34C5F20E0FC514C900B226F7 /* Library.ice */ = {isa = PBXFileReference; explicitFileType = sourcecode.slice; fileEncoding = 4; lastKnownFileType = text; name = Library.ice; path = Classes/Library.ice; sourceTree = "<group>"; };
 		34C5F20F0FC514C900B226F7 /* LibraryController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LibraryController.h; path = Classes/LibraryController.h; sourceTree = "<group>"; };
 		34C5F2100FC514C900B226F7 /* LibraryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LibraryController.m; path = Classes/LibraryController.m; sourceTree = "<group>"; };
 		34C5F2110FC514C900B226F7 /* RentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RentController.h; path = Classes/RentController.h; sourceTree = "<group>"; };
 		34C5F2120FC514C900B226F7 /* RentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RentController.m; path = Classes/RentController.m; sourceTree = "<group>"; };
-		34C5F2130FC514C900B226F7 /* Router.ice */ = {isa = PBXFileReference; explicitFileType = sourcecode.slice; fileEncoding = 4; name = Router.ice; path = Classes/Router.ice; sourceTree = "<group>"; };
+		34C5F2130FC514C900B226F7 /* Router.ice */ = {isa = PBXFileReference; explicitFileType = sourcecode.slice; fileEncoding = 4; lastKnownFileType = text; name = Router.ice; path = Classes/Router.ice; sourceTree = "<group>"; };
 		34C5F2140FC514C900B226F7 /* SavingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SavingController.h; path = Classes/SavingController.h; sourceTree = "<group>"; };
 		34C5F2150FC514C900B226F7 /* SavingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SavingController.m; path = Classes/SavingController.m; sourceTree = "<group>"; };
-		34C5F2160FC514C900B226F7 /* Session.ice */ = {isa = PBXFileReference; explicitFileType = sourcecode.slice; fileEncoding = 4; name = Session.ice; path = Classes/Session.ice; sourceTree = "<group>"; };
+		34C5F2160FC514C900B226F7 /* Session.ice */ = {isa = PBXFileReference; explicitFileType = sourcecode.slice; fileEncoding = 4; lastKnownFileType = text; name = Session.ice; path = Classes/Session.ice; sourceTree = "<group>"; };
 		82AC63CC1738185D0040F03D /* cacert.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = cacert.pem; path = ../../../../certs/cacert.pem; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Library.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Library.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -174,6 +189,7 @@
 				8D11072E0486CEB800E47090 /* Frameworks */,
 			);
 			buildRules = (
+				D81F86F81D8999010076917C /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
@@ -192,7 +208,7 @@
 				LastUpgradeCheck = 0710;
 				TargetAttributes = {
 					8D1107260486CEB800E47090 = {
-						DevelopmentTeam = U4TBVKNQ7F;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -281,10 +297,11 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_GC = unsupported;
@@ -299,6 +316,14 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_CFLAGS = "-fobjc-arc-exceptions";
+				OTHER_LDFLAGS = (
+					"-lc++",
+					"-liconv",
+					"-lbz2",
+					"-ObjC",
+					"-lIceObjc",
+					"-lGlacier2Objc",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.zeroc.${PRODUCT_NAME:identifier}";
 				PRODUCT_NAME = Library;
 				PROVISIONING_PROFILE = "";
@@ -313,10 +338,11 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_MODEL_TUNING = "";
@@ -330,6 +356,14 @@
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-fobjc-arc-exceptions";
+				OTHER_LDFLAGS = (
+					"-lc++",
+					"-liconv",
+					"-lbz2",
+					"-ObjC",
+					"-lIceObjc",
+					"-lGlacier2Objc",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.zeroc.${PRODUCT_NAME:identifier}";
 				PRODUCT_NAME = Library;
 				PROVISIONING_PROFILE = "";

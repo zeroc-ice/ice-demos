@@ -25,6 +25,21 @@
 		82D3968C1823207D000BA551 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82D3968B1823207D000BA551 /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXBuildRule section */
+		D81F86F91D899B200076917C /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			filePatterns = "*.ice";
+			fileType = pattern.proxy;
+			isEditable = 1;
+			outputFiles = (
+				"$(DERIVED_FILE_DIR)/$(INPUT_FILE_BASE).h",
+				"$(DERIVED_FILE_DIR)/$(INPUT_FILE_BASE).cpp",
+			);
+			script = /usr/local/bin/icebuilder;
+		};
+/* End PBXBuildRule section */
+
 /* Begin PBXFileReference section */
 		14060C0B161D79B10077BEE0 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		148D1E3317662D7D00ADA0C9 /* cacert.der */ = {isa = PBXFileReference; lastKnownFileType = file; name = cacert.der; path = ../../../../certs/cacert.der; sourceTree = "<group>"; };
@@ -151,6 +166,7 @@
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
 			);
 			buildRules = (
+				D81F86F91D899B200076917C /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
@@ -166,6 +182,11 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0710;
+				TargetAttributes = {
+					1D6058900D05DD3D006BFB54 = {
+						DevelopmentTeam = U4TBVKNQ7F;
+					};
+				};
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "hello" */;
 			compatibilityVersion = "Xcode 6.3";
@@ -225,6 +246,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = U4TBVKNQ7F;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -235,7 +257,12 @@
 					generated,
 				);
 				INFOPLIST_FILE = Info.plist;
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-lc++",
+					"-liconv",
+					"-lIce",
+					"-lGlacier2",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.zeroc.Hello-Cpp";
 				PRODUCT_NAME = hello;
 				SDKROOT = iphoneos;
@@ -253,6 +280,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = U4TBVKNQ7F;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
@@ -261,7 +289,12 @@
 					generated,
 				);
 				INFOPLIST_FILE = Info.plist;
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-lc++",
+					"-liconv",
+					"-lIce",
+					"-lGlacier2",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.zeroc.Hello-Cpp";
 				PRODUCT_NAME = hello;
 				SDKROOT = iphoneos;
