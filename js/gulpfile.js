@@ -208,7 +208,7 @@ demos.forEach(
                     .pipe(slice2js({args: ["-I" + name], dest: name}))
                     .pipe(gulp.dest(name));
             });
-        
+
         gulp.task(demoBabelTask(name), [demoTaskName(name)],
             function()
             {
@@ -216,7 +216,7 @@ demos.forEach(
                     .pipe(babel({compact:false}))
                     .pipe(gulp.dest(path.join(name, "es5")));
             });
-        
+
         const depends = [demoBabelTask(name)];
 
         if(fs.existsSync(path.join(name, "browser")))
@@ -230,7 +230,7 @@ demos.forEach(
                 });
             depends.push(demoBrowserBabelTask(name));
         }
-        
+
         gulp.task(demoES5IceTask(name), [demoBabelTask(name)],
             function()
             {
@@ -238,8 +238,8 @@ demos.forEach(
                     gulp.dest(path.join(name, "es5", "node_modules")));
             });
         depends.push(demoES5IceTask(name));
-        
-        gul.task(demoBuildTask(name), depends, function(){});
+
+        gulp.task(demoBuildTask(name), depends, function(){});
 
         gulp.task(demoWatchTask(name), demoBuildTask(name),
             function()
@@ -253,7 +253,7 @@ demos.forEach(
                         browserSync.reload(e.path);
                     });
             });
-        
+
         gulp.task(demoBabelCleanTask(name), [],
             function()
             {
