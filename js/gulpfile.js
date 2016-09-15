@@ -188,8 +188,10 @@ var demos = [
     "Chat"];
 
 function demoTaskName(name) { return "demo_" + name.replace("/", "_"); }
+function demoES5IceTask(name) { return demoTaskName(name) + ":ice-es5"; }
 function demoBabelTask(name) { return demoTaskName(name) + ":babel"; }
 function demoBrowserBabelTask(name) { return demoTaskName(name) + "-browser:babel"; }
+function demoBuildTask(name) { return demoTaskName(name) + ":build"; }
 function demoWatchTask(name) { return demoTaskName(name) + ":watch"; }
 function demoDependCleanTask(name) { return demoTaskName(name) + "-depend:clean"; }
 function demoCleanTask(name) { return demoTaskName(name) + ":clean"; }
@@ -228,8 +230,18 @@ demos.forEach(
                 });
             depends.push(demoBrowserBabelTask(name));
         }
+        
+        gulp.task(demoES5IceTask(name), [demoBabelTask(name)],
+            function()
+            {
+                return gulp.src(['node_modules/ice/src/es5/**/*']).pipe(
+                    gulp.dest(path.join(name, "es5", "node_modules")));
+            });
+        depends.push(demoES5IceTask(name));
+        
+        gul.task(demoBuildTask(name), depends, function(){});
 
-        gulp.task(demoWatchTask(name), depends,
+        gulp.task(demoWatchTask(name), demoBuildTask(name),
             function()
             {
                 gulp.watch(path.join(name, "*.ice"), [demoTaskName(name)]);
@@ -245,7 +257,9 @@ demos.forEach(
         gulp.task(demoBabelCleanTask(name), [],
             function()
             {
-                gulp.src([path.join(name, "es5", "*.js"), path.join(name, "browser", "es5", "*.js")])
+                gulp.src([path.join(name, "es5", "*.js"),
+                         path.join(name, "es5", "node_modules"),
+                          path.join(name, "browser", "es5", "*.js")])
                     .pipe(paths(del));
             })
 
@@ -321,7 +335,7 @@ Object.keys(minDemos).forEach(
             });
     });
 
-gulp.task("demo:build", demos.map(demoTaskName).concat(Object.keys(minDemos).map(minDemoTaskName)));
+gulp.task("demo:build", demos.map(demoBuildTask).concat(Object.keys(minDemos).map(minDemoTaskName)));
 gulp.task("demo:watch", demos.map(demoWatchTask).concat(Object.keys(minDemos).map(minDemoWatchTaskName)));
 gulp.task("demo:clean", demos.map(demoCleanTask).concat(Object.keys(minDemos).map(minDemoCleanTaskName)));
 
