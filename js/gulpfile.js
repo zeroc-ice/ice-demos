@@ -241,7 +241,7 @@ demos.forEach(
 
         gulp.task(demoBuildTask(name), depends, function(){});
 
-        gulp.task(demoWatchTask(name), demoBuildTask(name),
+        gulp.task(demoWatchTask(name), [demoBuildTask(name)],
             function()
             {
                 gulp.watch(path.join(name, "*.ice"), [demoTaskName(name)]);
