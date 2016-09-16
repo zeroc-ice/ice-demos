@@ -7,12 +7,10 @@
 #pragma once
 
 #include <Glacier2/Session.ice>
+#include <Library.ice>
 
 module Demo
 {
-
-/* Forward declaration. */
-interface Library;
 
 /**
  *

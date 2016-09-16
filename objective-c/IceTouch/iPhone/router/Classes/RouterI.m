@@ -57,7 +57,7 @@
     //
     // Set the correct facet on the proxy.
     //
-    if(!current.facet.length == 0)
+    if(current.facet.length != 0)
     {
         proxy = [proxy ice_facet:current.facet];
     }
