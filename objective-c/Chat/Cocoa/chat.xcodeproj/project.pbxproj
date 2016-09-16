@@ -283,6 +283,8 @@
 				OTHER_CFLAGS = "-fobjc-arc-exceptions";
 				OTHER_LDFLAGS = (
 					"-ObjC",
+					"-lIce",
+					"-lIceSSL",
 					"-lIceObjc",
 					"-lGlacier2Objc",
 					"-lc++",
@@ -324,6 +326,8 @@
 				OTHER_CFLAGS = "-fobjc-arc-exceptions";
 				OTHER_LDFLAGS = (
 					"-ObjC",
+					"-lIce",
+					"-lIceSSL",
 					"-lIceObjc",
 					"-lGlacier2Objc",
 					"-lc++",

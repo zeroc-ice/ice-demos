@@ -193,7 +193,7 @@
 				LastUpgradeCheck = 0800;
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -267,7 +267,6 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = chat_Prefix.pch;
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					Classes,
@@ -278,6 +277,8 @@
 				OTHER_CFLAGS = "-objc-arc-exceptions";
 				OTHER_LDFLAGS = (
 					"-ObjC",
+					"-lIce",
+					"-lIceSSL",
 					"-lIceObjc",
 					"-lGlacier2Objc",
 					"-lc++",
@@ -303,7 +304,6 @@
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = chat_Prefix.pch;
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					Classes,
@@ -314,6 +314,8 @@
 				OTHER_CFLAGS = "-objc-arc-exceptions";
 				OTHER_LDFLAGS = (
 					"-ObjC",
+					"-lIce",
+					"-lIceSSL",
 					"-lIceObjc",
 					"-lGlacier2Objc",
 					"-lc++",

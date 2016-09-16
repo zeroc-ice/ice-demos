@@ -344,7 +344,6 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = router_Prefix.pch;
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					Classes,
@@ -354,10 +353,12 @@
 				OTHER_CFLAGS = "-fobjc-arc-exceptions";
 				OTHER_LDFLAGS = (
 					"-ObjC",
+					"-lIce",
 					"-lIceObjc",
 					"-lGlacier2Objc",
 					"-lc++",
 					"-liconv",
+					"-lbz2",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.zeroc.${PRODUCT_NAME:identifier}";
 				PRODUCT_NAME = Router;
@@ -380,7 +381,6 @@
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = router_Prefix.pch;
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					Classes,
@@ -390,10 +390,12 @@
 				OTHER_CFLAGS = "-fobjc-arc-exceptions";
 				OTHER_LDFLAGS = (
 					"-ObjC",
+					"-lIce",
 					"-lIceObjc",
 					"-lGlacier2Objc",
 					"-lc++",
 					"-liconv",
+					"-lbz2",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.zeroc.${PRODUCT_NAME:identifier}";
 				PRODUCT_NAME = Router;

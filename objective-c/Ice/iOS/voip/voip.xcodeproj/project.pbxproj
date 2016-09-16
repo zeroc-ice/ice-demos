@@ -249,7 +249,6 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = voip_Prefix.pch;
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					Classes,
@@ -259,10 +258,13 @@
 				OTHER_CFLAGS = "-fobjc-arc-exceptions";
 				OTHER_LDFLAGS = (
 					"-ObjC",
+					"-lIce",
+					"-lIceSSL",
 					"-lIceObjc",
 					"-lGlacier2Objc",
 					"-lc++",
 					"-liconv",
+					"-lbz2",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.zeroc.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = VoIP;
@@ -283,7 +285,6 @@
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = voip_Prefix.pch;
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					Classes,
@@ -296,10 +297,13 @@
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
+					"-lIce",
+					"-lIceSSL",
 					"-lIceObjc",
 					"-lGlacier2Objc",
 					"-lc++",
 					"-liconv",
+					"-lbz2",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.zeroc.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = VoIP;
