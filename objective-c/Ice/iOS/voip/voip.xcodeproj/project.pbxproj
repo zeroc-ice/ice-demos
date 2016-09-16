@@ -24,6 +24,21 @@
 		D84395681B30B56E00C5A8E8 /* config.client in Resources */ = {isa = PBXBuildFile; fileRef = D84395671B30B56E00C5A8E8 /* config.client */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXBuildRule section */
+		D81F86F51D8998430076917C /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			filePatterns = "*.ice";
+			fileType = pattern.proxy;
+			isEditable = 1;
+			outputFiles = (
+				"$(DERIVED_FILE_DIR)/$(INPUT_FILE_BASE).h",
+				"$(DERIVED_FILE_DIR)/$(INPUT_FILE_BASE).m",
+			);
+			script = "#!/bin/bash\n# For Xcode < 8 we still use the Xcode plug-in\nif [ \"$XCODE_VERSION_MAJOR\" = \"0800\" ]; then\n    if [ -x /usr/local/bin/icebuilder ]; then\n        /usr/local/bin/icebuilder\n    else\n        echo \"Unable to find Ice Builder for Xcode. Visit https://github.com/zeroc-ice/ice-builder-xcode for installation instructions.\"\n        exit 1\n    fi\nfi";
+		};
+/* End PBXBuildRule section */
+
 /* Begin PBXFileReference section */
 		14060BF1161D64A20077BEE0 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		1446FA4A1D2FC001002278C4 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -149,6 +164,7 @@
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
 			);
 			buildRules = (
+				D81F86F51D8998430076917C /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
@@ -166,7 +182,7 @@
 				LastUpgradeCheck = 0710;
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
-						DevelopmentTeam = U4TBVKNQ7F;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -229,6 +245,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = "";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -240,7 +257,13 @@
 				);
 				INFOPLIST_FILE = "voip-Info.plist";
 				OTHER_CFLAGS = "-fobjc-arc-exceptions";
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-lc++",
+					"-liconv",
+					"-ObjC",
+					"-lIceObjc",
+					"-lGlacier2Objc",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.zeroc.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = VoIP;
 				PROVISIONING_PROFILE = "";
@@ -258,6 +281,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = voip_Prefix.pch;
 				GCC_VERSION = "";
@@ -270,7 +294,13 @@
 					"-fobjc-arc-exceptions",
 					"-DNS_BLOCK_ASSERTIONS=1",
 				);
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-lc++",
+					"-liconv",
+					"-ObjC",
+					"-lIceObjc",
+					"-lGlacier2Objc",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.zeroc.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = VoIP;
 				PROVISIONING_PROFILE = "";

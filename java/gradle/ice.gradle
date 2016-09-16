@@ -53,7 +53,6 @@ buildscript {
 }
 
 ext.generatedDir = "$project.buildDir/generated"
-ext.useLocalOnly = gradle.startParameter.isOffline()
 
 // Android does not have a compileJava task
 if(!(project.hasProperty('android') && project.android.sourceSets)) {
@@ -86,7 +85,6 @@ def demoJar(name) {
         attributes("Main-Class": name.capitalize())
         attributes("Class-Path": configurations.runtime.resolve().collect { it.toURI() }.join(' '))
     }
-
 
     artifacts {
         archives jarTask

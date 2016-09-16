@@ -26,6 +26,21 @@
 		D83717A31BFFD14E005D65BC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D83717A21BFFD14E005D65BC /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXBuildRule section */
+		D81F86F21D898B820076917C /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			filePatterns = "*.ice";
+			fileType = pattern.proxy;
+			isEditable = 1;
+			outputFiles = (
+				"$(DERIVED_FILE_DIR)/$(INPUT_FILE_BASE).h",
+				"$(DERIVED_FILE_DIR)/$(INPUT_FILE_BASE).m",
+			);
+			script = "#!/bin/bash\n# For Xcode < 8 we still use the Xcode plug-in\nif [ \"$XCODE_VERSION_MAJOR\" = \"0800\" ]; then\n    if [ -x /usr/local/bin/icebuilder ]; then\n        /usr/local/bin/icebuilder\n    else\n        echo \"Unable to find Ice Builder for Xcode. Visit https://github.com/zeroc-ice/ice-builder-xcode for installation instructions.\"\n        exit 1\n    fi\nfi";
+		};
+/* End PBXBuildRule section */
+
 /* Begin PBXFileReference section */
 		14060BEA161D63830077BEE0 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		14176C831A70FC7500331986 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -155,6 +170,7 @@
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
 			);
 			buildRules = (
+				D81F86F21D898B820076917C /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
@@ -170,6 +186,11 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0710;
+				TargetAttributes = {
+					1D6058900D05DD3D006BFB54 = {
+						ProvisioningStyle = Automatic;
+					};
+				};
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "hello" */;
 			compatibilityVersion = "Xcode 6.3";
@@ -231,6 +252,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = "";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -260,6 +282,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = hello_Prefix.pch;
 				GCC_VERSION = "";

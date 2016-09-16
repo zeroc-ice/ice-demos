@@ -35,6 +35,21 @@
 		82D53AA1182320C200703264 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82D53AA0182320C200703264 /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXBuildRule section */
+		D81F86F41D89911D0076917C /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			filePatterns = "*.ice";
+			fileType = pattern.proxy;
+			isEditable = 1;
+			outputFiles = (
+				"$(DERIVED_FILE_DIR)/$(INPUT_FILE_BASE).m",
+				"$(DERIVED_FILE_DIR)/$(INPUT_FILE_BASE).h",
+			);
+			script = "#!/bin/bash\n# For Xcode < 8 we still use the Xcode plug-in\nif [ \"$XCODE_VERSION_MAJOR\" = \"0800\" ]; then\n    if [ -x /usr/local/bin/icebuilder ]; then\n        /usr/local/bin/icebuilder\n    else\n        echo \"Unable to find Ice Builder for Xcode. Visit https://github.com/zeroc-ice/ice-builder-xcode for installation instructions.\"\n        exit 1\n    fi\nfi";
+		};
+/* End PBXBuildRule section */
+
 /* Begin PBXFileReference section */
 		14060BFC161D66EA0077BEE0 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		1446FA441D2FBFDD002278C4 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.2.sdk/System/Library/Frameworks/CFNetwork.framework; sourceTree = DEVELOPER_DIR; };
@@ -229,6 +244,7 @@
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
 			);
 			buildRules = (
+				D81F86F41D89911D0076917C /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
@@ -244,6 +260,11 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0710;
+				TargetAttributes = {
+					1D6058900D05DD3D006BFB54 = {
+						ProvisioningStyle = Manual;
+					};
+				};
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "router" */;
 			compatibilityVersion = "Xcode 6.3";
@@ -318,6 +339,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = "";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -329,7 +351,13 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				OTHER_CFLAGS = "-fobjc-arc-exceptions";
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-lc++",
+					"-liconv",
+					"-ObjC",
+					"-lIceObjc",
+					"-lGlacier2Objc",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.zeroc.${PRODUCT_NAME:identifier}";
 				PRODUCT_NAME = Router;
 				SDKROOT = iphoneos;
@@ -348,6 +376,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = router_Prefix.pch;
 				GCC_VERSION = "";
@@ -357,7 +386,13 @@
 				);
 				INFOPLIST_FILE = Info.plist;
 				OTHER_CFLAGS = "-fobjc-arc-exceptions";
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-lc++",
+					"-liconv",
+					"-ObjC",
+					"-lIceObjc",
+					"-lGlacier2Objc",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.zeroc.${PRODUCT_NAME:identifier}";
 				PRODUCT_NAME = Router;
 				SDKROOT = iphoneos;
