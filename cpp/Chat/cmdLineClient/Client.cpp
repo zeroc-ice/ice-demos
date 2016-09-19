@@ -15,6 +15,14 @@ using namespace std;
 
 static const unsigned int maxMessageSize = 1024;
 
+namespace
+{
+
+// mutex to prevent intertwined cout output
+IceUtil::Mutex coutMutex;
+
+}
+
 class ChatRoomCallbackI : public Chat::ChatRoomCallback
 {
 public:
@@ -22,6 +30,7 @@ public:
     virtual void
     init(const Ice::StringSeq& names, const Ice::Current&)
     {
+        IceUtil::Mutex::Lock lock(coutMutex);
         cout << "Users: ";
         for(Ice::StringSeq::const_iterator it = names.begin(); it != names.end();)
         {
@@ -38,18 +47,21 @@ public:
     virtual void
     join(Ice::Long, const string& name, const Ice::Current&)
     {
+        IceUtil::Mutex::Lock lock(coutMutex);
         cout << ">>>> " << name << " joined." << endl;
     }
 
     virtual void
     leave(Ice::Long, const string& name, const Ice::Current&)
     {
+        IceUtil::Mutex::Lock lock(coutMutex);
         cout << "<<<< " << name << " left." << endl;
     }
 
     virtual void
     send(Ice::Long, const string& name, const string& message, const Ice::Current&)
     {
+        IceUtil::Mutex::Lock lock(coutMutex);
         cout << name << " > " << ChatUtils::unstripHtml(message) << endl;
     }
 };
@@ -146,6 +158,7 @@ public:
                 {
                     if(s.size() > maxMessageSize)
                     {
+                        IceUtil::Mutex::Lock lock(coutMutex);
                         cout << "Message length exceeded, maximum length is " << maxMessageSize << " characters.";
                     }
                     else
@@ -164,6 +177,7 @@ private:
     void
     menu()
     {
+        IceUtil::Mutex::Lock lock(coutMutex);
         cout << "enter /quit to exit." << endl;
     }
 };
