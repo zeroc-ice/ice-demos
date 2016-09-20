@@ -6,22 +6,21 @@
 
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using Demo;
 
 public class WorkQueue
 {
-    public class CallbackEntry
+    private class TaskEntry
     {
-        public CallbackEntry(Action response, Action<Exception> exception, int delay)
+        public TaskEntry(Task task, int delay)
         {
-            this.response = response;
-            this.exception = exception;
+            this.task = task;
             this.delay = delay;
         }
 
-        public Action response;
-        public Action<Exception> exception;
+        public Task task;
         public int delay;
     }
 
@@ -42,17 +41,17 @@ public class WorkQueue
         {
             while(!_done)
             {
-                if(_callbacks.Count == 0)
+                if(_tasks.Count == 0)
                 {
                     Monitor.Wait(this);
                 }
 
-                if(_callbacks.Count != 0)
+                if(_tasks.Count != 0)
                 {
                     //
                     // Get next work item.
                     //
-                    var entry = _callbacks[0];
+                    var entry = _tasks[0];
 
                     //
                     // Wait for the amount of time indicated in delay to
@@ -63,43 +62,41 @@ public class WorkQueue
 
                     if(!_done)
                     {
-                        //
-                        // Print greeting and send response.
-                        //
-                        _callbacks.RemoveAt(0);
-                        Console.Out.WriteLine("Belated Hello World!");
-                        entry.response();
+                        _tasks.RemoveAt(0);
+                        entry.task.Start();
                     }
                 }
             }
 
-            foreach(var e in _callbacks)
+            foreach(var e in _tasks)
             {
-                e.exception(new RequestCanceledException());
+                e.task.Start();
             }
         }
     }
 
-    public void Add(CallbackEntry cb)
+    public Task Add(int delay)
     {
+        Task t;
+
         lock(this)
         {
             if(!_done)
             {
-                if(_callbacks.Count == 0)
+                if(_tasks.Count == 0)
                 {
                     Monitor.Pulse(this);
                 }
-                _callbacks.Add(cb);
+                t = new Task(() => RunTask());
+                _tasks.Add(new TaskEntry(t, delay));
             }
             else
             {
-                //
-                // Destroyed, throw exception.
-                //
-                cb.exception(new RequestCanceledException());
+                t = Task.Factory.StartNew(() => RunTask());
             }
         }
+
+        return t;
     }
 
     public void destroy()
@@ -111,7 +108,22 @@ public class WorkQueue
         }
     }
 
-    private List<CallbackEntry> _callbacks = new List<CallbackEntry>();
+    private void RunTask()
+    {
+        lock(this)
+        {
+            if(!_done)
+            {
+                Console.Out.WriteLine("Belated Hello World!");
+            }
+            else
+            {
+                throw new RequestCanceledException();
+            }
+        }
+    }
+
+    private List<TaskEntry> _tasks = new List<TaskEntry>();
     private bool _done = false;
     private Thread thread_;
 }

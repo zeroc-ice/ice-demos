@@ -5,6 +5,7 @@
 // **********************************************************************
 
 using System;
+using System.Threading.Tasks;
 using Demo;
 
 public class HelloI : HelloDisp_
@@ -14,16 +15,16 @@ public class HelloI : HelloDisp_
         _workQueue = workQueue;
     }
 
-    public override void sayHelloAsync(int delay, Action response, Action<Exception> exception, Ice.Current current)
+    public override Task sayHelloAsync(int delay, Ice.Current current)
     {
        if(delay == 0)
        {
            Console.Out.WriteLine("Hello World!");
-           response();
+           return null;
        }
        else
        {
-           _workQueue.Add(new WorkQueue.CallbackEntry(response, exception, delay));
+           return _workQueue.Add(delay);
        }
     }
 
