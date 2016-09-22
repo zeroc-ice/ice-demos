@@ -169,7 +169,7 @@ namespace Glacier2.simpleChat.client
                 {
                     await _chat.sayAsync(message);
                 }
-                catch(AggregateException ex)
+                catch(Exception ex)
                 {
                     appendMessage("<system-message> - " + ex.ToString() + Environment.NewLine);
                 }

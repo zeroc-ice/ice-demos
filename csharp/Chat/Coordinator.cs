@@ -141,17 +141,13 @@ namespace ChatDemoGUI
                         long timestamp = await _chat.sendAsync(message);
                         userSayEvent(timestamp, _username, message);
                     }
-                    catch(AggregateException ae)
+                    catch(Chat.InvalidMessageException ex)
                     {
-                        if(ae.InnerException is Chat.InvalidMessageException)
-                        {
-                            Chat.InvalidMessageException e = (Chat.InvalidMessageException)ae.InnerException;
-                            appendMessage("<system-message> - " + e.reason + Environment.NewLine);
-                        }
-                        else
-                        {
-                            destroySession();
-                        }
+                        appendMessage("<system-message> - " + ex.reason + Environment.NewLine);
+                    }
+                    catch(Exception ex)
+                    {
+                        destroySession();
                     }
                 }
             }
@@ -309,7 +305,7 @@ namespace ChatDemoGUI
             }
             catch(Ice.CommunicatorDestroyedException)
             {
-                //Ignore client session was destroyed.
+                // Ignore client session was destroyed.
             }
             catch(Exception)
             {

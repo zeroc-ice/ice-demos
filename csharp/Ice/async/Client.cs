@@ -7,6 +7,7 @@
 using Demo;
 using System;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 
 [assembly: CLSCompliant(true)]
@@ -36,17 +37,14 @@ public class Client
             {
                 await hello.sayHelloAsync(5000);
             }
-            catch(AggregateException ae)
+            catch(RequestCanceledException)
             {
-                if(ae.InnerException is RequestCanceledException)
-                {
-                    Console.Error.WriteLine("RequestCanceledException");
-                }
-                else
-                {
-                    Console.Error.WriteLine("sayHello AMI call failed:");
-                    Console.Error.WriteLine(ae.InnerException);
-                }
+                Console.Error.WriteLine("RequestCanceledException");
+            }
+            catch(Exception ex)
+            {
+                Console.Error.WriteLine("sayHello AMI call failed:");
+                Console.Error.WriteLine(ex);
             }
         }
 
