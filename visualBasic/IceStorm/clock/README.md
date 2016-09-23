@@ -71,11 +71,11 @@ publisher, subscriber, and IceStorm service on separate hosts. For
 the sake of discussion, let us assume that the processes are running
 on the following hosts:
 
-  Host <P>: publisher
-  Host <S>: subscriber
-  Host <I>: IceStorm
+*  Host \<P>: publisher
+*  Host \<S>: subscriber
+*  Host \<I>: IceStorm
 
-Replace <P>, <S>, and <I> with the appropriate host names or IP
+Replace \<P>, \<S>, and \<I> with the appropriate host names or IP
 addresses in the steps below:
 
 1. Edit the subscriber's configuration file, `config.sub`, and change
