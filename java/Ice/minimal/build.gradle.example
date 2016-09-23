@@ -39,10 +39,10 @@ repositories {
     // Uncomment to build against locally installed jars
     //flatDir {
     //    name 'local'
-    //    dirs '/opt/Ice-3.6.2/lib'
+    //    dirs '/opt/Ice-3.6.3/lib'
     //}
 }
 
 dependencies {
-    compile 'com.zeroc:ice:3.6.2'
+    compile 'com.zeroc:ice:3.6.3'
 }

@@ -38,7 +38,7 @@
 # If building with Ice-E and Ice-E is not installed in the default
 # location (/usr) set ICEE_HOME to the Ice-E installation directory.
 #
-#ICEE_HOME		?= /opt/IceE-3.6.2
+#ICEE_HOME		?= /opt/IceE-3.6.3
 
 #
 # The target operating system for the build, supported values are 'yocto'
@@ -74,7 +74,7 @@ HOST			?= arm-linux-gnueabihf
 # is not set in your environment variables then change the following
 # setting to reflect the installation location.
 #
-ICEE_THIRDPARTY_HOME	?= /opt/IceE-3.6.2-ThirdParty
+ICEE_THIRDPARTY_HOME	?= /opt/IceE-3.6.3-ThirdParty
 
 # ----------------------------------------------------------------------
 # Don't change anything below this line!
