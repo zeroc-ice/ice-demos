@@ -51,32 +51,32 @@ utility. For a full description of db_hotbackup, please refer to:
 
 The following command creates a full backup (both data and log files)
 in the 'hotbackup' directory:
-
+```
  $ ./backup full
-
+```
 Or on Windows:
-
+```
  > backup full
-
+```
 Alternatively, you can perform an incremental backup, which only moves
 and copies log files to the hotbackup directory:
-
+```
  $ ./backup incremental
-
+```
 Or on Windows:
-
+```
  > backup incremental
-
+```
 Note that the Ice configuration file (named config) disables the
 automatic deletion of old log files:
-
+```
 Freeze.DbEnv.backup.OldLogsAutoDelete=0
-
+```
 The file also sets DbPrivate to 0 to allow db_archive to access the db
 environment while the client is running:
-
+```
 Freeze.DbEnv.backup.DbPrivate=0
-
+```
 The db/DB_CONFIG file is used to put the data files and log files in
 different subdirectories, which simplifies archiving.
 
@@ -91,33 +91,33 @@ only need to do the following:
  1. Make sure the client is not running.
 
  2. Move the old 'db' directory out of the way:
-
+```
     $ mv db db.old
-
+```
     Or on Windows:
-
+```
     > move db db.old
-
+```
  3. Move or copy the hotbackup directory to db:
-
+```
     $ cp -R hotbackup db
-
+```
     Or on Windows:
-
+```
     > xcopy /s hotbackup db\
-
+```
 If you have recent uncorrupted log files in your original db
 directory, you can also copy these log files over your restored log
 files and perform a catastrophic recovery to recover these updates.
 
 With the example above:
- 
+```
   $ cp db.old/logs/log.* db/logs
   $ db_recover -c -h db
-
+```
 Or on Windows:
-
+```
   > xcopy /y db.old\logs\log.* db\logs
   > db_recover -c -h db
-
+```
 Finally, restart the client.

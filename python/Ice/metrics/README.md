@@ -15,19 +15,19 @@ your application.
 
 Once you have configured IceMX with a demo or your application, you
 can run Metrics.py to dump the metrics views:
-
+```
  $ ./Metrics.py --Endpoints="tcp -p 10004 -h localhost" \
        --InstanceName="server" dump
-
+```
 You can also disable or enable views with the "enable" or "disable"
 commands:
-
+```
  $ ./Metrics.py --Endpoints="tcp -p 10004 -h localhost" \
        --InstanceName="server" disable Debug
 
  $ ./Metrics.py --Endpoints="tcp -p 10004 -h localhost" \
        --InstanceName="server" enable ByParent
-
+```
 The Endpoints and InstanceName properties passed to the Metrics.py
 script must match the value of the `Ice.Admin.Endpoints` and
 `Ice.Admin.InstanceName` properties configured for the application to
