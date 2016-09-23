@@ -14,13 +14,14 @@ There are two clients, Client1.py uses a string converter and
 Client2.py doesn't use a string converter.
 
 To run the demo, first start the server:
-
+```
 $ python Server.py
-
+```
 In a separate window, start Client1.py:
-
+```
 $ python Client1.py
-
+```
 In a separate window, start Client2.py:
-
+```
 $ python Client2.py
+```

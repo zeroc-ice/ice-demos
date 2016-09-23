@@ -32,13 +32,13 @@ with two possible servant locator implementations:
    object is being retrieved from the database.
 
 To use the Evictor, run the server with no arguments:
-
+```
 $ server
-
+```
 To use the SimpleEvictor, run the server with "simple" as the argument:
-
+```
 $ server simple
-
+```
 In both configurations, the evictor size (the number of objects cached
 by the evictor) is set to 8,000 to provide a good cache-hit ratio when
 the access pattern is random.

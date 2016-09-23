@@ -71,9 +71,9 @@ application you deployed above:
 
 Running the Client
 ------------------
-
+```
 $ java -jar build/libs/client.jar
-
+```
 The client simply calls 'sayHello' on the replicated 'hello' object.
 
 

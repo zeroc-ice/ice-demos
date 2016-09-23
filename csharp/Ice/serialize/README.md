@@ -23,12 +23,12 @@ Note that it is also necessary for your .NET class to be located in
 an assembly that is referenced by both the client and server.
 
 To run the demo, first start the server:
-
+```
 $ server.exe
-
+```
 In a separate window, start the client:
-
+```
 $ client.exe
-
+```
 The client allows you to toggle between sending a real class instance
 and sending a null value, to show that passing null is supported.

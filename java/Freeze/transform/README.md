@@ -22,9 +22,9 @@ struct NewContactData
 
 If the contacts map was not sorted on its key, the transformation
 would be a straightforward 'FreezeScript' transformation:
-
+```
 $ transformdb --old ContactData.ice --new NewContactData.ice db dbnew
-
+```
 (with -f <xml-file> if you want a customized transformation)
 
 With a sorted map, the situation is more complicated. transformdb

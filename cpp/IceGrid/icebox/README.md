@@ -115,9 +115,9 @@ Running the Client
 ------------------
 
 In a command window, start the client as shown below:
-
+```
 $ client
-
+```
 The client simply calls 'sayHello' on the replicated 'hello' object.
 
 

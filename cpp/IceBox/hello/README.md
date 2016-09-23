@@ -3,9 +3,9 @@ file before continuing.
 
 To run this demo, open two terminal windows. In the first window,
 start the IceBox server:
-
+```
 $ icebox --Ice.Config=config.icebox
-
+```
 Please note that depending on your platform and C++ environment
 you will need to use different icebox executables. The names are
 as follows:
@@ -20,9 +20,10 @@ You can find more details in our online documentation.
 https://doc.zeroc.com/display/Ice36/Starting+the+IceBox+Server
 
 In the second window, run the client:
-
+```
 $ client
-
+```
 To shut down IceBox, use iceboxadmin:
-
+```
 $ iceboxadmin --Ice.Config=config.admin shutdown
+```

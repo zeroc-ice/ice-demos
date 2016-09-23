@@ -2,20 +2,20 @@ Overview
 --------
 
 To run the demo, start the IceStorm service:
-
+```
 $ icebox --Ice.Config=config.icebox
-
+```
 This configuration assumes there is a subdirectory named db in the
 current working directory.
 
 In a separate window:
-
+```
 $ python Subscriber.py
-
+```
 In another window:
-
+```
 $ python Publisher.py
-
+```
 While the publisher continues to run, "tick" messages should be
 displayed in the subscriber window.
 

@@ -4,13 +4,13 @@ bandwidth that can be achieved using asynchronous requests and
 replies.
 
 To run the demo, first start the server:
-
+```
 $ server
-
+```
 In a separate window, start the client:
-
+```
 $ client
-
+```
 We utilize some optimizations for the byte sequence operations in this
 demo. First, we use the "cpp:array" metadata for in parameters, which
 means the servant implementation in the server receives the sequence

@@ -77,9 +77,9 @@ application you deployed above:
 
 Running the Client
 ------------------
-
+```
 $ client.exe
-
+```
 The client simply calls 'sayHello' on the replicated 'hello' object.
 
 

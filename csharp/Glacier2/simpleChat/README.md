@@ -6,5 +6,6 @@ First follow the instructions in the C++ Glacier2 simpleChat demo README
 to start the server and the Glacier2 router.
 
 In a separate window, start the WPF client:
-
+```
 $ client.exe
+```

@@ -6,9 +6,9 @@ functionality, therefore you must use a server from any other language
 mapping.
 
 After starting the server, run the Ruby client:
-
+```
 $ ruby Client.rb
-
+```
 To test timeouts you can use 'T' to set a timeout on the client proxy 
 and 'P' to set a delayed response in the server to cause a timeout.
 You will notice that two "Hello World!" messages will be printed by

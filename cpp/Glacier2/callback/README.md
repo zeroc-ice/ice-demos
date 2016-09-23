@@ -3,17 +3,17 @@ well known server objects. In this demo no Glacier2 session manager is
 used.
 
 To run the demo, first start the server:
-
+```
 $ server
-
+```
 In a separate window, start the Glacier2 router:
-
+```
 $ glacier2router --Ice.Config=config.glacier2
-
+```
 In a separate window, start the client:
-
+```
 $ client
-
+```
 If you plan to run this demo using clients on different hosts than the
 router, you must first modify the configuration. You need to change
 the Glacier2.Client.Endpoints property in config.glacier2 and the

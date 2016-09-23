@@ -14,13 +14,13 @@ changes at:
   * http://www.gnu.org/software/gcc/gcc-3.1/changes.html
 
 To run the demo, first start the server:
-
+```
 $ server
-
+```
 In a separate window, start the client:
-
+```
 $ client
-
+```
 The client presents a menu of options that you can invoke by pressing
 the corresponding key. All of these operations return a string
 sequence mapped to the custom class MyStringSeq. This class prints

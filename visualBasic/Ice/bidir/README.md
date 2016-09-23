@@ -4,9 +4,10 @@ client to send callbacks, for example, because firewalls block
 incoming connections to the client.
 
 To run the demo, first start the server:
-
+```
 $ server
-
+```
 In a separate window, start the client:
-
+```
 $ client
+```

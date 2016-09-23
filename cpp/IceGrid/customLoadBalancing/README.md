@@ -1,16 +1,15 @@
 To run the demo, first start the IceGrid service:
-
+```
 $ icegridnode --Ice.Config=config.grid
-
+```
 Note that for debug Windows builds you will need to use icegridnoded
 rather than icegridnode as the executable name.
 
 In a separate window:
-
-$ icegridadmin --Ice.Config=config.admin -e \
-    "application add 'application.xml'"
+```
+$ icegridadmin --Ice.Config=config.admin -e "application add application.xml"
 $ client
-
+```
 This will deploy the application described in the file
 "application.xml" and start the client.
 

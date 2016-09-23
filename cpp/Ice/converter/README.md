@@ -14,13 +14,14 @@ There are two clients, client1 uses a string converter and client2
 doesn't use a string converter.
 
 To run the demo, first start the server:
-
+```
 $ server
-
+```
 In a separate window, start client1:
-
+```
 $ client1
-
+```
 In a separate window, start client2:
-
+```
 $ client2
+```

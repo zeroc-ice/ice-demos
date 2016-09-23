@@ -4,20 +4,20 @@ Overview
 To run the demo:
 
 Start the IceStorm service:
-
+```
 $ icebox --Ice.Config=config.icebox
-
+```
 This configuration assumes there is a subdirectory named db in the
 current working directory.
 
 In a separate window:
-
+```
 $ java -jar build/libs/subscriber.jar
-
+```
 In another window:
-
+```
 $ java -jar build/libs/publisher.jar
-
+```
 While the publisher continues to run, "tick" messages should be
 displayed in the subscriber window.
 

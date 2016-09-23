@@ -9,9 +9,10 @@ destroying the session upon termination or due to a timeout, all
 per-client objects are automatically cleaned up by the session object.
 
 To run the demo, first start the server:
-
+```
 $ server
-
+```
 In a separate window, start the client:
-
+```
 $ client
+```

@@ -5,5 +5,6 @@ To run the demo, first follow the instructions from the C++ Glacier2
 simpleChat demo README to start the server.
 
 In a separate window, start the client:
-
+```
 $ node Client.js
+```

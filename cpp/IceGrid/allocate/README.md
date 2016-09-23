@@ -1,7 +1,7 @@
 To run the demo, first start the IceGrid service:
-
+```
 $ icegridnode --Ice.Config=config.grid
-
+```
 Note that for debug Windows builds you will need to use icegridnoded
 rather than icegridnode as the executable name.
 
@@ -11,28 +11,28 @@ object. This object is allocated by the client using the
 allocateObjectById operation. Only one client can access this object
 at a time. All other clients will hang until the object is released.
 Use the following command to deploy this descriptor:
-
+```
 $ icegridadmin --Ice.Config=config.grid -e \
-    "application add 'application-single.xml'"
-
+    "application add application-single.xml"
+```
 The second descriptor, application-multiple.xml, contains two servers,
 each with an object. The clients retrieve these objects using
 allocateObjectByType. Since there are two objects available, two
 clients can get access simultaneously. Additional clients will hang
 until one of the clients with an allocated object releases it. Use the
 following command to deploy this descriptor:
-
+```
 $ icegridadmin --Ice.Config=config.grid -e \
-    "application add 'application-multiple.xml'"
-
+    "application add application-multiple.xml"
+```
 To run the client type:
-
+```
 $ client
-
+```
 If you have already deployed the application, you can update it to try
 a different set of descriptors, for example:
-
+```
 $ icegridadmin --Ice.Config=config.grid -e \
-    "application update 'application-multiple.xml'"
-
+    "application update application-multiple.xml"
+```
 Messages will be displayed in the IceGrid service window.

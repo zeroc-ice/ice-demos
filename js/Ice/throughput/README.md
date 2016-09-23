@@ -9,9 +9,9 @@ the server.
 
 After starting the server, open a separate window and start the
 client:
-
+```
 $ node Client.js
-
+```
 The performance for byte sequences is expected to be greater than
 for other types because the cost of marshaling and unmarshaling is
 lower than for more complex types.

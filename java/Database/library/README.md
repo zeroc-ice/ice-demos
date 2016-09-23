@@ -84,16 +84,16 @@ Running the demo
 ----------------
 
 To run the demo, first start the server:
-
+```
 $ java Server
-
+```
 The demo includes a text file named "books" containing a series of
 commands that populate the server's database with a collection of
 books. Pass this file as an argument the first time you run the
 client. In another window:
-
+```
 $ java Client books
-
+```
 Type "help" to get a list of valid commands.
 
 
@@ -106,16 +106,16 @@ config.client and uncomment this configuration property:
 #Ice.Default.Router=DemoGlacier2/router:ssl -p 4064 -h 127.0.0.1
 
 To run the demo using Glacier2, first start the server:
-
+```
 $ java Server
-
+```
 In a separate window, start the Glacier2 router:
-
+```
 $ glacier2router --Ice.Config=config.glacier2
-
+```
 In a separate window, start the client:
-
+```
 $ java Client books
-
+```
 Omit the "books" argument if you have already populated the server's
 database.

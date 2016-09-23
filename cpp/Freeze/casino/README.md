@@ -2,13 +2,13 @@ This example demonstrates the use of the Freeze Transactional Evictor
 to implement a reliable gambling operation.
 
 To run the demo, first start the server:
-
+```
 $ server
-
+```
 In another window, start the client:
-
+```
 $ client
-
+```
 You can run a number of clients concurrently (in different windows)
 to exercise the server even more.
 

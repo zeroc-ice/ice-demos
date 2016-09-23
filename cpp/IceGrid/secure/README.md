@@ -10,16 +10,16 @@ they could also use a secure endpoint if necessary.
 To run the demo, you first need to generate certificates for the
 IceGrid registry and node, the Glacier2 administrative router, and the
 server. Run the makecerts.py script to create these certificates:
-
+```
 $ makecerts.py
-
+```
 Follow the instructions provided by the script. Note that to run the
 script you must install the zeroc-icecertutils package from the
 [Python package repository](https://pypi.python.org/pypi). To install
 this package with [pip](https://pip.pypa.io):
-
+```
 $ pip install zeroc-icecertutils
-
+```
 The keytool utility from the Java Development Kit is also required to
 generate Java KeyStore files so you need to add the the JDK bin
 directory to your PATH (if it's not found, makecerts.py will print a
@@ -41,31 +41,30 @@ the filesystem permissions to restrict access to the certificate.
 
 Once the certificates are generated, you can start the IceGrid
 registries, node, and Glacier2 router:
-
+```
 $ icegridregistry --Ice.Config=config.master
 $ icegridregistry --Ice.Config=config.slave
 $ icegridnode --Ice.Config=config.node
 $ glacier2router --Ice.Config=config.glacier2
-
+```
 Note that for debug Windows builds you will need to use icegridnoded
 and icegridregistryd rather than icegridnode and icegridregistry as
 the executable name.
 
 In a separate window:
-
-$ icegridadmin --Ice.Config=config.admin -e \
-    "application add application.xml"
+```
+$ icegridadmin --Ice.Config=config.admin -e "application add application.xml"
 $ client
-
+```
 This will deploy the application described in the file
 "application.xml" and start the client.
 
 To use icegridadmin through the Glacier2 router, you can use the
 following command:
-
+```
 $ icegridadmin --Ice.Config=config.admin \
   --Ice.Default.Router="DemoGlacier2/router:ssl -p 4064"
-
+```
 Alternatively, you can edit the config.admin file and uncomment the
 Ice.Default.Router property definition.
 
