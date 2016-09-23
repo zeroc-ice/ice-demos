@@ -2,21 +2,21 @@ This example demonstrates the use of the Freeze Transactional Evictor
 to implement a reliable gambling operation.
 
 To run the demo, first start the server:
-```
-$ java -jar build/libs/server.jar
-```
+
+      java -jar build/libs/server.jar
+
 In another window, start the client:
-```
-$ java -jar build/libs/client.jar
-```
+
+      java -jar build/libs/client.jar
+
 You can run a number of clients concurrently (in different windows)
 to exercise the server even more.
 
 Highlights:
 ----------
 
-- The public interface of the server is specified in Casino.ice;
-  CasinoStore.ice is just an implementation detail of the server.
+- The public interface of the server is specified in `Casino.ice`;
+  `CasinoStore.ice` is just an implementation detail of the server.
 
 - This demo uses a transactional evictor per servant type; this 
   is more efficient than storing different types of servants in

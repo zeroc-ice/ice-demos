@@ -25,7 +25,7 @@ would be a straightforward 'FreezeScript' transformation:
 
       transformdb --old ContactData.ice --new NewContactData.ice db dbnew
 
-(with -f <xml-file> if you want a customized transformation)
+(with `-f <xml-file>` if you want a customized transformation)
 
 With a sorted map, the situation is more complicated. transformdb
 is unaware of the sort order, and as a result transforms the map into

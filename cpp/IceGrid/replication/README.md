@@ -13,10 +13,10 @@ and icegridregistryd rather than icegridnode and icegridregistry as
 the executable name.
 
 In a separate window:
-```
-$ icegridadmin --Ice.Config=config.client -e "application add application.xml"
-$ client
-```
+
+     icegridadmin --Ice.Config=config.client -e "application add application.xml"
+     client
+
 This will deploy the application described in the file `application.xml` and
 start the client.
 
@@ -37,7 +37,7 @@ the client will continue to work.
 
 Finally, the registries and nodes are configured to redirect their
 standard error and output to files in their data directories named
-stderr.txt and stdout.txt. You can view these files using the
+`stderr.txt` and `stdout.txt`. You can view these files using the
 icegridadmin `registry show` or `node show` commands or with the
 IceGrid Admin GUI. The standard error files contain the registry and
 node traces.

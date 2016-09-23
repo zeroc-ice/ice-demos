@@ -15,8 +15,8 @@ Demos in this directory:
 
 - [customEvictor](./customEvictor)
 
-  Illustrates how to write your own evictor, using either IceUtil::Cache
-  or EvictorBase.
+  Illustrates how to write your own evictor, using either `IceUtil::Cache`
+  or `EvictorBase`.
 
 - [library](./library)
 

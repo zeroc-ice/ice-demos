@@ -50,7 +50,7 @@ Demos in this directory:
 
 - [locator](./locator)
 
-  This demo illustrates how to write a simple custom Ice::Locator.
+  This demo illustrates how to write a simple custom `Ice::Locator`.
 
 - [minimal](./minimal)
 

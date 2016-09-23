@@ -7,7 +7,7 @@ client connects to this server though a WebSocket proxy hosted
 on zeroc.com.
 
 After pressing the "Call Back" button the server will call
-"incomingCall" on the Voip::Control callback proxy after the specified
+"incomingCall" on the `Voip::Control` callback proxy after the specified
 delay. A local notification is pushed if the application is in the
 background, otherwise an alert box is displayed.
 
