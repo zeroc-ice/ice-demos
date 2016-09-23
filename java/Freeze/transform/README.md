@@ -100,7 +100,7 @@ Running the demo
 ```
    Recreate reads and rewrites the contacts map with the proper sort
    order; it also removes and recreates the phoneNumber index. You can
-   run `java Recreate --Freeze.Trace.Map=2`'` to get more information on
+   run `java Recreate --Freeze.Trace.Map=2` to get more information on
    the actions performed by Recreate.
 
  - read again the new contacts map:

@@ -22,9 +22,9 @@ struct ContactData
 ```
 If the contacts map was not sorted on its key, the transformation
 would be a straightforward 'FreezeScript' transformation:
-```
-$ transformdb --old ContactData.ice --new NewContactData.ice db dbnew
-```
+
+      transformdb --old ContactData.ice --new NewContactData.ice db dbnew
+
 (with -f <xml-file> if you want a customized transformation)
 
 With a sorted map, the situation is more complicated. transformdb
@@ -99,7 +99,7 @@ Running the demo
 ```
    recreate reads and rewrites the contacts map with the proper sort
    order; it also removes and recreates the phoneNumber index. You can
-   run `recreate --Freeze.Trace.Map=2`'` to get more information on the
+   run `recreate --Freeze.Trace.Map=2` to get more information on the
    actions performed by recreate.
 
  - read again the new contacts map:

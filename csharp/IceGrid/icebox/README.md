@@ -20,15 +20,15 @@ Setup
 -----
 
 Start the IceGrid registry and node:
-```
- $ icegridnode --Ice.Config=config.grid
-```
+
+    $ icegridnode --Ice.Config=config.grid
+
 Deploy the `HelloSimpsons` application (in file `application.xml`) with
 the IceGrid Admin graphical tool. If you prefer to use the command-
 line utility, use:
-```
- $ icegridadmin --Ice.Config=config.grid -e "application add application.xml"
-```
+
+    $ icegridadmin --Ice.Config=config.grid -e "application add application.xml"
+
 
 Using the IceGrid Admin GUI
 ---------------------------
@@ -76,9 +76,9 @@ application you deployed above:
 
 Running the Client
 ------------------
-```
-$ client.exe
-```
+
+      client.exe
+
 The client simply calls 'sayHello' on the replicated 'hello' object.
 
 
@@ -88,11 +88,11 @@ Stopping and restarting IceBox services
 You can use the IceGrid Admin GUI or the command-line utility to stop 
 and restart IceBox services. The commands below show how to manipulate
 the 'Lisa' service:
-```
- $ icegridadmin --Ice.Config=config.grid
- >>> service stop IceBox Lisa
- >>> service start IceBox Lisa
-```
+
+    $ icegridadmin --Ice.Config=config.grid
+    >>> service stop IceBox Lisa
+    >>> service start IceBox Lisa
+
 
 Administration through Glacier2
 -------------------------------

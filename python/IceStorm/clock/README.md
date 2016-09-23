@@ -2,20 +2,20 @@ Overview
 --------
 
 To run the demo, start the IceStorm service:
-```
-$ icebox --Ice.Config=config.icebox
-```
+
+      icebox --Ice.Config=config.icebox
+
 This configuration assumes there is a subdirectory named db in the
 current working directory.
 
 In a separate window:
-```
-$ python Subscriber.py
-```
+
+      python Subscriber.py
+
 In another window:
-```
-$ python Publisher.py
-```
+
+      python Publisher.py
+
 While the publisher continues to run, "tick" messages should be
 displayed in the subscriber window.
 
@@ -60,9 +60,9 @@ python Subscriber.py --id <id>
   you use this option, you should also run the subscriber on a fixed
   port by setting the `Clock.Subscriber.Endpoints` property. For
   example:
-```
-  $ subscriber --Clock.Subscriber.Endpoints="tcp -p <port> -h <host>"
-```
+
+    $ subscriber --Clock.Subscriber.Endpoints="tcp -p <port> -h <host>"
+
   Replace "tcp" with "udp" when using the --datagram option.
 
 python Subscriber.py --retryCount <count>

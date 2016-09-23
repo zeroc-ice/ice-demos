@@ -48,9 +48,9 @@ files that is disabled by default:
 
 To enable IceMX, you need to un-comment the following property in the
 configuration file of the demo application you wish to monitor:
-```
- Ice.Admin.Endpoints
-```
+
+    Ice.Admin.Endpoints
+
 Once this property is enabled, restart the client or server.
 
 
@@ -59,25 +59,25 @@ Enable IceMX with your application
 
 First you need to enable the Ice administrative facility by setting the
 following properties:
-```
-  Ice.Admin.Endpoints
-  Ice.Admin.InstanceName
-```
+
+    Ice.Admin.Endpoints
+    Ice.Admin.InstanceName
+
 For example:
-```
-  Ice.Admin.Endpoints=tcp -p 10002 -h localhost
-  Ice.Admin.InstanceName=server
-```
+
+    Ice.Admin.Endpoints=tcp -p 10002 -h localhost
+    Ice.Admin.InstanceName=server
+
 Note that enabling the Ice administrative facility can have security
 implications if your network is not secured. See the Ice manual for
 more information on this.
 
 Next, you need to configure metrics views. You can for example use the
 following properties to enable two metrics views:
-```
-  IceMX.Metrics.Debug.GroupBy=id
-  IceMX.Metrics.ByParent.GroupBy=parent
-```
+
+    IceMX.Metrics.Debug.GroupBy=id
+    IceMX.Metrics.ByParent.GroupBy=parent
+
 The Debug metrics view provides detailed metrics information while the
 ByParent metrics view groups metrics by parent (the parent is usually
 either the Ice communicator or object adapter depending on the object

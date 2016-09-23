@@ -8,22 +8,22 @@ operations to be deserialized by the receiver. You can now accomplish
 the same thing more conveniently via metadata.
 
 In your Slice definitions, you must declare a byte sequence using the
-"java:serializable" metadata and specify the Java class name, as shown
+`java:serializable` metadata and specify the Java class name, as shown
 below:
 
-["java:serializable:JavaClassName"] sequence<byte> SliceType;
+    ["java:serializable:JavaClassName"] sequence<byte> SliceType;
 
 Now, wherever you use the declared Slice type in your operations or
 data types, you can supply an instance of the designated Java class
 and Ice automatically converts it to and from the byte sequence that
 is passed over the wire. (The Java class you pass must derive from
-java.io.Serializable.)
+`java.io.Serializable`.)
 
-With the "java:serializable" metadata, if you have a serializable
+With the `java:serializable` metadata, if you have a serializable
 class as an out-parameter, the out-parameter is passed as
-Ice.Holder<JavaClassName>. For example, if you have a Java class
-MyPackage.Car as an out-parameter, the out-parameter is passed as
-Ice.Holder<MyPackage.Car>.
+`Ice.Holder<JavaClassName>`. For example, if you have a Java class
+`MyPackage.Car` as an out-parameter, the out-parameter is passed as
+`Ice.Holder<MyPackage.Car>`.
 
 To run the demo, first start the server:
 ```

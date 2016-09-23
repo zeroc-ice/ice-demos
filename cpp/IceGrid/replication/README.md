@@ -1,13 +1,13 @@
 To run the demo, start the IceGrid registries and nodes (you can start
 the registries and nodes in any order, you can also start one or two
 registries and start more later):
-```
-$ icegridregistry --Ice.Config=config.master
-$ icegridregistry --Ice.Config=config.replica1
-$ icegridregistry --Ice.Config=config.replica2
-$ icegridnode --Ice.Config=config.node1
-$ icegridnode --Ice.Config=config.node2
-```
+
+    $ icegridregistry --Ice.Config=config.master
+    $ icegridregistry --Ice.Config=config.replica1
+    $ icegridregistry --Ice.Config=config.replica2
+    $ icegridnode --Ice.Config=config.node1
+    $ icegridnode --Ice.Config=config.node2
+
 Note that for debug Windows builds you will need to use icegridnoded
 and icegridregistryd rather than icegridnode and icegridregistry as
 the executable name.
