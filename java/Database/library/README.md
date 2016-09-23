@@ -30,13 +30,13 @@ Setting up the demo
    https://downloads.mariadb.org/client-java/+releases/
 
    After downloading the jar, add mariadb-java-client-1.1.7.jar to your
-   CLASSPATH. You must also edit config.server and change the JDBC.Url and
+   CLASSPATH. You must also edit `config.server` and change the JDBC.Url and
    JDBC.DriverClassName to the MariaDB configurations.
 
 3. Create a database named "library" and grant privileges to a user. In
    the commands below, replace USER with the name you have chosen and
    PASSWORD with a suitable password:
-
+```
    $ mysql -u root -p
    Enter password:
    Welcome to the MySQL monitor.
@@ -52,17 +52,17 @@ Setting up the demo
    Query OK, 0 rows affected (0.01 sec)
 
    mysql> EXIT
-
+```
 4. Create the SQL tables using the script createTypes.sql:
-
+```
    $ mysql --user=USER --password=PASSWORD library < createTypes.sql
-
+```
 5. Edit the JDBC properties in config.server to reflect your selected
    user name and password:
-
+```
    JDBC.Username=USER
    JDBC.Password=PASSWORD
-
+```
 NOTES:
       These instructions assume that the demo server runs on the same
       host as the database server. If you intend to run the demo server on
@@ -101,10 +101,10 @@ Running the demo with Glacier2
 ------------------------------
 
 The demo also supports a Glacier2 deployment. You will need to edit
-config.client and uncomment this configuration property:
-
+`config.client` and uncomment this configuration property:
+```
 #Ice.Default.Router=DemoGlacier2/router:ssl -p 4064 -h 127.0.0.1
-
+```
 To run the demo using Glacier2, first start the server:
 ```
 $ java Server

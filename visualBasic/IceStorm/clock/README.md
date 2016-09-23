@@ -78,32 +78,32 @@ on the following hosts:
 Replace <P>, <S>, and <I> with the appropriate host names or IP
 addresses in the steps below:
 
-1. Edit the subscriber's configuration file, config.sub, and change
-   the TopicManager.Proxy property to
-
+1. Edit the subscriber's configuration file, `config.sub`, and change
+   the `TopicManager.Proxy` property to
+```
    TopicManager.Proxy=DemoIceStorm/TopicManager:default -h <I> -p 10000
-
-2. Edit the publisher's configuration file, config.pub, and change
-   the TopicManager.Proxy property to
-
+```
+2. Edit the publisher's configuration file, `config.pub`, and change
+   the `TopicManager.Proxy` property to
+```
    TopicManager.Proxy=DemoIceStorm/TopicManager:default -h <I> -p 10000
-
+```
 3. Since the default configurations for the subscriber and IceStorm
    endpoints listen only on localhost, you must also modify the Endpoints
    properties to explicitly include the host machine's name or IP
    address.
 
-   In config.sub:
-
+   In `config.sub`:
+```
    Clock.Subscriber.Endpoints=tcp -h <S>:udp -h <S>
-
-   In config.service:
-
+```
+   In `config.service`:
+```
    IceStorm.TopicManager.Endpoints=default -h <I> -p 10000
    IceStorm.Publish.Endpoints=tcp -h <I> -p 10001:udp -h <I> -p 10001
-
+```
 If you experience any network delays or errors, edit all of the
-configuration files and enable the Ice.Trace.Network property. Running
+configuration files and enable the `Ice.Trace.Network` property. Running
 the processes with this property enabled displays a log of Ice's
 network activity and may help you to identify the problem more
 quickly.

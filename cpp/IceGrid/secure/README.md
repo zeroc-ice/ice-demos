@@ -57,7 +57,7 @@ $ icegridadmin --Ice.Config=config.admin -e "application add application.xml"
 $ client
 ```
 This will deploy the application described in the file
-"application.xml" and start the client.
+`application.xml` and start the client.
 
 To use icegridadmin through the Glacier2 router, you can use the
 following command:
@@ -65,31 +65,31 @@ following command:
 $ icegridadmin --Ice.Config=config.admin \
   --Ice.Default.Router="DemoGlacier2/router:ssl -p 4064"
 ```
-Alternatively, you can edit the config.admin file and uncomment the
-Ice.Default.Router property definition.
+Alternatively, you can edit the `config.admin` file and uncomment the
+`Ice.Default.Router` property definition.
 
 You can also manage this IceGrid deployment with the IceGrid Admin
 graphical tool.
 
-The IceSSL configuration in config.master, config.slave and
-config.glacier2 is:
-
+The IceSSL configuration in `config.master`, `config.slave` and
+`config.glacier2` is:
+```
 IceSSL.VerifyPeer=1
-
+```
 which means that a client, such as IceGrid Admin, does not need to
 provide an X.509 certificate. As a result, connecting with IceGrid
 Admin is straightforward: you just need to create an SSL connection
 with no associated X.509 certificate.
 
-When using IceGrid Admin, we recommend importing certs/ca.jks into the
+When using IceGrid Admin, we recommend importing `certs/ca.jks` into the
 IceGrid Admin trusted CAs Key Store using the IceGrid Admin
 certificate manager. This will ensure IceGrid Admin connects to the
 correct IceGrid Registry or Glacier2 Router.
 
-The icegridadmin command line tool configuration in config.admin sets
-the property "IceSSL.CAs=ca.pem" to ensure that the admin
+The icegridadmin command line tool configuration in `config.admin` sets
+the property `IceSSL.CAs=ca.pem` to ensure that the admin
 client is connecting to the correct registry or glacier2router. In a
-Java client "IceSSL.Truststore=ca.jks" can be used for the same
+Java client `IceSSL.Truststore=ca.jks` can be used for the same
 purpose.
 
 The IceGrid registry and Glacier2 router are configured to use the

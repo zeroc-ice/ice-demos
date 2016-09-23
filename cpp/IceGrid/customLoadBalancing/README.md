@@ -11,7 +11,7 @@ $ icegridadmin --Ice.Config=config.admin -e "application add application.xml"
 $ client
 ```
 This will deploy the application described in the file
-"application.xml" and start the client.
+`application.xml` and start the client.
 
 The client makes an invocation on the "pricing" well-known object to
 retrieve the preferred currencies of the server. The client sets up a

@@ -8,7 +8,7 @@ Running the VOIP server
 ======================================================================
 
 Before running the server, review the server and Glacier2 router
-configuration files, config.server and config.glacier2 respectively.
+configuration files, `config.server` and `config.glacier2` respectively.
 
 To run the demo:
 
