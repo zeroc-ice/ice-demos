@@ -26,12 +26,12 @@ class as an out-parameter, the out-parameter is passed as
 `Ice.Holder<MyPackage.Car>`.
 
 To run the demo, first start the server:
-```
-$ java -jar build/libs/server.jar
-```
+
+      java -jar build/libs/server.jar
+
 In a separate window, start the client:
-```
-$ java -jar build/libs/client.jar
-```
+
+      java -jar build/libs/client.jar
+
 The client allows you to toggle between sending a real class instance
 and sending a null value, to show that passing null is supported.

@@ -8,9 +8,9 @@ the server.
 
 After starting the server, open a separate window and start the
 client:
-```
-$ node Client.js
-```
+
+      node Client.js
+
 To test timeouts you can use 'T' to set a timeout on the client proxy
 and 'P' to set a delayed response in the server to cause a timeout.
 You will notice that two "Hello World!" messages will be printed by

@@ -2,13 +2,13 @@ This demo illustrates how to use UDP multicast to implement a
 discovery service.
 
 To run the demo, first start multiple instances of the server:
-```
-$ server.exe
-```
+
+      server.exe
+
 In a separate window, start a client:
-```
-$ client.exe
-```
+
+      client.exe
+
 On startup the client will send out a broadcast message containing a
 callback proxy and waits for a response. Any servers that are up and 
 listening on the broadcast port will then contact the client using the

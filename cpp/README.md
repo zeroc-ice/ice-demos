@@ -37,9 +37,8 @@ programs require the [Ice Builder for Xcode][3].
 If you've installed Ice in a non-standard location, you'll need to set the
 `ICE_HOME` environment variable with the path name of the
 installation directory:
-```
-export ICE_HOME=~/testing/Ice
-```
+
+    export ICE_HOME=~/testing/Ice
 
 ### Building the Demos
 
@@ -47,9 +46,8 @@ Review the settings in `make/Make.rules`. For example, set `OPTIMIZE=yes`
 to build with optimization.
 
 When you're ready to start the build, run `make`:
-```
-make
-```
+
+    make
 
 To build the iOS examples, open `IceTouch/demos.xcworkspace` in Xcode.
 

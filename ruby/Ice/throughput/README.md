@@ -7,9 +7,9 @@ functionality, therefore you must use a server from any other language
 mapping.
 
 After starting the server, run the Ruby client:
-```
-$ ruby Client.rb
-```
+
+      ruby Client.rb
+
 The performance for byte sequences is expected to be greater than 
 for other types because the cost of marshaling and unmarshaling is
 lower than for more complex types. With byte sequences there is no

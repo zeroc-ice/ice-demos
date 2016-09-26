@@ -14,13 +14,9 @@ You can use this demo if you want to host your own Chat Demo server.
 
 To run the server:
 
-```
-$ chatserver --Ice.Config=config.chatserver
-```
+    $ chatserver --Ice.Config=config.chatserver
 
 For push clients Glacier2 is also required, to start it run the following in a 
 new shell:
 
-```
-$ glacier2router --Ice.Config=config.glacier2router
-```
+    $ glacier2router --Ice.Config=config.glacier2router

@@ -4,10 +4,10 @@ demo also shows how the server can receive notifications whenever its
 properties are changed.
 
 To run the demo, first start the server:
-```
-$ server.exe
-```
+
+      server.exe
+
 In a separate window, start the client:
-```
-$ client.exe
-```
+
+      client.exe
+

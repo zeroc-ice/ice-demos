@@ -13,13 +13,13 @@ configuration files, `config.server` and `config.glacier2` respectively.
 To run the demo:
 
 Start the server:
-```
-$ java -jar build/libs/server.jar
-```
+
+      java -jar build/libs/server.jar
+
 In a separate window, start the Glacier2 router:
-```
-$ glacier2router --Ice.Config=config.glacier2
-```
+
+      glacier2router --Ice.Config=config.glacier2
+
 ======================================================================
 Running the VOIP client
 ======================================================================

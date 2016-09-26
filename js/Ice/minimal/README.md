@@ -8,9 +8,9 @@ the server.
 
 After starting the server, open a separate window and start the
 client:
-```
-$ node Client.js
-```
+
+      node Client.js
+
 Note that this demo hardwires port 10000. If port 10000 is not
 available on your machine, you need to edit both client and server
 to use a free port.

@@ -9,10 +9,9 @@ destroying the session upon termination or due to a timeout, all
 per-client objects are automatically cleaned up by the session object.
 
 To run the demo, first start the server:
-```
-$ java -jar build/libs/server.jar
-```
+
+      java -jar build/libs/server.jar
+
 In a separate window, start the client:
-```
-$ java -jar build/libs/client.jar
-```
+
+      java -jar build/libs/client.jar

@@ -6,6 +6,5 @@ functionality, therefore you must use a server from any other language
 mapping.
 
 After starting the server, run the Ruby client:
-```
-$ ruby Client.rb
-```
+
+      ruby Client.rb

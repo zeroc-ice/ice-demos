@@ -2,17 +2,17 @@ This example demonstrates the use of a Glacier2 session to create a
 very simple chat server.
 
 To run the demo, first start the chat server:
-```
-$ server
-```
+
+      server
+
 In a separate window, start the Glacier2 router:
-```
-$ glacier2router --Ice.Config=config.glacier2
-```
+
+      glacier2router --Ice.Config=config.glacier2
+
 In a separate window, start the client:
-```
-$ client
-```
+
+      client
+
 If you plan to run this demo using clients running on different
 hosts than the glacier2router, it is necessary to first modify the
 configuration. You need to change the `Glacier2.Client.Endpoints`

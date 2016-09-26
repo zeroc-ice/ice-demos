@@ -3,19 +3,19 @@ replicated fashion without using IceGrid.
 
 To run the demo, start the three IceStorm replicas. In three separate
 windows:
-```
-$ icebox --Ice.Config=config.ib1
-$ icebox --Ice.Config=config.ib2
-$ icebox --Ice.Config=config.ib3
-```
+
+     icebox --Ice.Config=config.ib1
+     icebox --Ice.Config=config.ib2
+     icebox --Ice.Config=config.ib3
+
 And then in a separate window:
-```
-$ subscriber
-```
+
+      subscriber
+
 In another window:
-```
-$ publisher
-```
+
+      publisher
+
 While the publisher continues to run, "tick" messages should be
 displayed in the subscriber window.
 

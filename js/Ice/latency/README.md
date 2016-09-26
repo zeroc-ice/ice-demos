@@ -8,6 +8,5 @@ the server.
 
 After starting the server, open a separate window and start the
 client:
-```
-$ node Client.js
-```
+
+      node Client.js

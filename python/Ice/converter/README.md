@@ -2,7 +2,7 @@ This demo illustrates how to implement and use string converters
 with Ice. In this demo, the clients uses ISO-Latin-1 as its
 character set, while the server uses UTF-8.
 
-The demo sends and receives the greeting "Bonne journée" which
+The demo sends and receives the greeting "Bonne journÃ©e" which
 in Latin-1 encoding is "Bonne journ\351e" and in UTF-8 encoding
 is "Bonne journ\303\251e".
 
@@ -14,14 +14,13 @@ There are two clients, Client1.py uses a string converter and
 Client2.py doesn't use a string converter.
 
 To run the demo, first start the server:
-```
-$ python Server.py
-```
+
+      python Server.py
+
 In a separate window, start Client1.py:
-```
-$ python Client1.py
-```
+
+      python Client1.py
+
 In a separate window, start Client2.py:
-```
-$ python Client2.py
-```
+
+      python Client2.py

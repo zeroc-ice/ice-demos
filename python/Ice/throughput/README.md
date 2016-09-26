@@ -3,13 +3,13 @@ types between client and server and to measure the maximum bandwidth
 that can be achieved using serialized synchronous requests.
 
 To run the demo, first start the server:
-```
-$ python Server.py
-```
+
+      python Server.py
+
 In a separate window, start the client:
-```
-$ python Client.py
-```
+
+      python Client.py
+
 The performance for byte sequences is expected to be greater than 
 for other types because the cost of marshaling and unmarshaling is
 lower than for more complex types. With byte sequences there is no
