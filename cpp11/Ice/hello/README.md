@@ -3,11 +3,11 @@ well as how to make oneway, datagram, secure, and batched invocations.
 
 To run the demo, first start the server:
 
-$ server
+      server
 
 In a separate window, start the client:
 
-$ client
+      client
 
 To test timeouts you can use 'T' to set a timeout on the client proxy
 and 'P' to set a delayed response in the server to cause a timeout.

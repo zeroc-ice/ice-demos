@@ -1,12 +1,12 @@
 To run the demo, start the 3 servers:
 
-$ server --Ice.Config=config.server1
-$ server --Ice.Config=config.server2
-$ server --Ice.Config=config.server3
+     server --Ice.Config=config.server1
+     server --Ice.Config=config.server2
+     server --Ice.Config=config.server3
 
 In a separate window:
 
-$ client
+      client
 
 The client invokes the number of specified iterations with a given
 delay on a well-known proxy configured to use per-request load

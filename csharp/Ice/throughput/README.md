@@ -4,11 +4,11 @@ that can be achieved using serialized synchronous requests.
 
 To run the demo, first start the server:
 
-$ server.exe
+      server.exe
 
 In a separate window, start the client:
 
-$ client.exe
+      client.exe
 
 The performance for byte sequences is expected to be greater than 
 for other types because the cost of marshaling and unmarshaling is

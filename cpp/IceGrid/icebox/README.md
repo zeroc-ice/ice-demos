@@ -4,7 +4,7 @@ IceBox server hosting a number of IceBox services.
 The demo also demonstrates how to use an environment variable in a
 server descriptor.
 
-In application.xml, <env>LANG=en</env> defines an environment variable
+In `application.xml`, `<env>LANG=en</env>` defines an environment variable
 named "LANG" with value "en". The Hello object implementation HelloI
 reads the value of "LANG" and shows the message in the corresponding
 language; you can try to update the value to fr, de, es or it.
@@ -15,18 +15,16 @@ Setup
 
 Start the IceGrid registry and node:
 
- $ icegridnode --Ice.Config=config.grid
+    $ icegridnode --Ice.Config=config.grid
 
 Note that for debug Windows builds you will need to use icegridnoded
 rather than icegridnode as the executable name.
 
-Deploy the 'HelloSimpsons' application (in file application.xml) with
+Deploy the `HelloSimpsons` application (in file `application.xml`) with
 the IceGrid Admin graphical tool. If you prefer to use the command-
 line utility, use:
 
- $ icegridadmin --Ice.Config=config.grid -e \
-    "application add application.xml"
-
+    $ icegridadmin --Ice.Config=config.grid -e "application add application.xml"
 
 Using the IceGrid Admin GUI
 ---------------------------
@@ -40,16 +38,16 @@ you deployed above:
     icon from the Finder Applications folder, and users with a Linux
     RPM installation can use the icegridgui script to start the
     program:
-
+```
     $ icegridgui
-
+```
     On other platforms, start it from a command window as follows:
-
+```
     $ java -jar icegridgui.jar
-
+```
     The location of the JAR file varies by platform; for a Linux RPM
-    installation, the file resides in /usr/share/java. On other
-    platforms it can be found in <Ice installation directory>/lib.
+    installation, the file resides in `/usr/share/java`. On other
+    platforms it can be found in `<Ice installation directory>/lib`.
 
   - Select Login... from the File menu.
 
@@ -76,7 +74,7 @@ you deployed above:
 Adjusting the name of the IceBox executable
 -------------------------------------------
 
-The name of the IceBox executable in application.xml is simply 
+The name of the IceBox executable in `application.xml` is simply 
 "icebox". If you compiled this demo in debug mode on Windows, 
 or in a non-default mode on Linux, you need to modify your deployment 
 so that IceGrid executes the desired version of the IceBox server
@@ -94,21 +92,20 @@ and log into the registry.
 
   - In the "Server Properties" pane, scroll down to the field "Path to
     Executable" and change it to the desired name:
-       "iceboxd" for a Windows debug build.
-       "icebox++11" for a Linux C++11 build.
-       "icebox32" for a Linux 32-bit build.
-       "icebox32++11" for a Linux 32-bit C++11 build.
+      - "iceboxd" for a Windows debug build.
+      - "icebox++11" for a Linux C++11 build.
+      - "icebox32" for a Linux 32-bit build.
+      - "icebox32++11" for a Linux 32-bit C++11 build.
 
   - Apply your changes, then redeploy the application by selecting
     "Save to Registry" from the File menu.
 
 If you prefer to use the command-line tool instead, open the file
-application.xml in this directory, search for the text "icebox", and
-change exe="icebox" to exe="<desired icebox name>". Then redeploy the 
+`application.xml` in this directory, search for the text `icebox`, and
+change `exe="icebox"` to `exe="<desired icebox name>"`. Then redeploy the 
 application using the following command:
 
- $ icegridadmin --Ice.Config=config.grid -e \
-    "application update application.xml"
+    $ icegridadmin --Ice.Config=config.grid -e "application update application.xml"
 
 
 Running the Client
@@ -116,7 +113,7 @@ Running the Client
 
 In a command window, start the client as shown below:
 
-$ client
+      client
 
 The client simply calls 'sayHello' on the replicated 'hello' object.
 
@@ -128,9 +125,9 @@ You can use the IceGrid Admin GUI or the command-line utility to stop and
 restart IceBox services. The commands below show how to manipulate
 the 'Lisa' service:
 
- $ icegridadmin --Ice.Config=config.grid
- >>> service stop IceBox Lisa
- >>> service start IceBox Lisa
+    $ icegridadmin --Ice.Config=config.grid
+    >>> service stop IceBox Lisa
+    >>> service start IceBox Lisa
 
 
 Administration through Glacier2
@@ -151,12 +148,12 @@ Follow these steps:
  - Reconnect to the IceGrid registry, this time using a Glacier2
    session. For example, using the command-line utility you must
    supply a proxy for the router:
-
+```
    $ icegridadmin --Ice.Default.Router="DemoGlacier2/router:tcp -h localhost -p 4063"
-
+```
    In the IceGrid Admin GUI, use the Routed tab of the Login dialog. 
    Change the Glacier2 instance name to "DemoGlacier2" and the endpoints 
-   to "tcp -h localhost -p 4063".
+   to `tcp -h localhost -p 4063`.
 
    DemoGlacier2 is configured to use a built-in permissions verifier
    that does not validate passwords, so you can log in using any

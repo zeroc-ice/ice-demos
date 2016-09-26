@@ -6,21 +6,18 @@ By default, the demo connects to the chat server hosted on demo.zeroc.com throug
 
 To run the client on Windows or Linux:
 
-```
-$ QtChatDemo
-```
+      QtChatDemo
+
 
 To run the client on OS X:
 
-```
-$ open QtChatDemo.app
-```
+      open QtChatDemo.app
+
 
 If you wish to use your own server from the `server` directory you should specify the custom configuration file when launching the application. For example:
 
-```
-$ QtChatDemo --Ice.Config=config.client
-```
+      QtChatDemo --Ice.Config=config.client
+
 
 ## Requirements
 

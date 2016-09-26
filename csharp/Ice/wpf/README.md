@@ -4,9 +4,9 @@ as how to make oneway, datagram, secure, and batched invocations.
 
 To run the demo, first start the hello server:
 
-$ cd ../hello
-$ server.exe
+     cd ../hello
+     server.exe
 
 In a separate window, start the WPF client:
 
-$ client.exe
+      client.exe

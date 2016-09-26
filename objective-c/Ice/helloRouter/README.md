@@ -3,11 +3,11 @@ demo](../../IceTouch/iPhone/router).
 
 To run the demo, first start the [hello server](../hello):
 
-$ server
+      server
 
 Next start the [router demo](../../IceTouch/iPhone/router) on the
 iPhone.
 
 Finally, in a separate window, start the client:
 
-$ client
+      client

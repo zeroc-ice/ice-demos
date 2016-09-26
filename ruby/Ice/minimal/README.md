@@ -7,7 +7,7 @@ mapping.
 
 After starting the server, run the Ruby client:
 
-$ ruby Client.rb
+      ruby Client.rb
 
 Note that this demo hardwires port 10000. If port 10000 is not
 available on your machine, you need to edit both client and server

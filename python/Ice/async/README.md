@@ -3,11 +3,11 @@ and Asynchronous Message Dispatch (AMD).
 
 To run the demo, first start the server:
 
-$ python Server.py
+      python Server.py
 
 In a second window, start the client:
 
-$ python Client.py
+      python Client.py
 
 The demo invocation can either have a short response time or require a
 significant amount of time to complete. For the long running request

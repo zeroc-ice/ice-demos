@@ -3,17 +3,16 @@ IceGrid.
 
 To run the demo, start the IceGrid service:
 
-$ icegridnode --Ice.Config=config.grid
+      icegridnode --Ice.Config=config.grid
 
 In a separate window:
 
-$ icegridadmin --Ice.Config=config.grid -e \
-    "application add 'application.xml'"
-$ subscriber
+     icegridadmin --Ice.Config=config.grid -e "application add application.xml"
+     subscriber
 
 In another window:
 
-$ publisher
+      publisher
 
 While the publisher continues to run, "tick" messages should be
 displayed in the subscriber window.

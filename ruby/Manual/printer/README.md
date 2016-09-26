@@ -4,4 +4,4 @@ supported language mappings.
 
 In a separate window, run the client:
 
-$ ruby Client.rb
+      ruby Client.rb

@@ -10,25 +10,25 @@ to be patched.
 Assuming that your current working directory is demo/IcePatch2/MFC,
 you can prepare the data files with the following command:
 
-$ icepatch2calc .
+      icepatch2calc .
 
 Next, start the IcePatch2 server. Note that the trailing "." argument
 in the following command is required and directs the server to use the
 current directory as its data directory:
 
-$ icepatch2server --IcePatch2.Endpoints="tcp -h 127.0.0.1 -p 10000" .
+      icepatch2server --IcePatch2.Endpoints="tcp -h 127.0.0.1 -p 10000" .
 
 Before we start the patch client, we must first create an empty
 directory where the downloaded files will be placed. For example, open
 a new command window and execute this command:
 
-$ mkdir C:\icepatch_download
+      mkdir C:\icepatch_download
 
 Now you can start the IcePatch2 client (You will also need to pass an
 argument that defines IcePatch2Client.Proxy if you use an endpoint other
 than the one shown above when you start icepatch2server):
 
-$ client
+      client
 
 Click the "..." button to the right of the Patch Directory field and
 select the empty directory you just created. Then click the "Patch"

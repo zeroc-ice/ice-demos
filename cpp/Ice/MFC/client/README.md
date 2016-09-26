@@ -4,12 +4,12 @@ example, the one contained in demo/Ice/hello).
 
 To run the demo, first start the server:
 
-$ cd ../server
-$ server
+     cd ../server
+     server
 
 Then start the client:
 
-$ client
+      client
 
 To test timeouts, use the "Timeout" slider to set a timeout on the
 client proxy and the "Delay" slider to force the server to delay its

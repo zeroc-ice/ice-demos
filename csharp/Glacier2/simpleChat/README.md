@@ -7,4 +7,4 @@ to start the server and the Glacier2 router.
 
 In a separate window, start the WPF client:
 
-$ client.exe
+      client.exe

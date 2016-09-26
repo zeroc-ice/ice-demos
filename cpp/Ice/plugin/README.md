@@ -3,11 +3,11 @@ as well as an Ice Logger plug-in.
 
 To run the demo, first start the server:
 
-$ server
+      server
 
 In a separate window, start the client:
 
-$ client
+      client
 
 Both the client and server use a custom logger that is loaded as
 a logger plug-in. The server also uses a plug-in to implement the

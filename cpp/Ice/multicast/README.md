@@ -3,11 +3,11 @@ discovery service.
 
 To run the demo, first start multiple instances of the server:
 
-$ server
+      server
 
 In a separate window, start a client:
 
-$ client
+      client
 
 On startup the client will send out a broadcast message containing a
 callback proxy and waits for a response. Any servers that are up and 
@@ -16,5 +16,5 @@ callback saying they are available. The client selects a server and
 proceeds.
 
 By default this demo uses IPv4. If you want to use IPv6 UDP multicast
-instead, uncomment the alternative IPv6 configuration in config.client
-and config.server.
+instead, uncomment the alternative IPv6 configuration in `config.client`
+and `config.server`.
