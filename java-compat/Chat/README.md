@@ -4,6 +4,4 @@ By default, the demo connects to the chat server hosted on demo.zeroc.com throug
 
 If you wish to run your own server you can specify a custom configuration file when launching the application:
 
-```
-$ java -jar ChatGUI.jar --Ice.Config=config.client
-```
+    $ java -jar ChatGUI.jar --Ice.Config=config.client

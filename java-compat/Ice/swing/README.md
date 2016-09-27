@@ -4,9 +4,9 @@ secure, and batched invocations.
 
 To run the demo, first start the hello server:
 
-$ cd ../hello
-$ java -jar build/libs/server.jar
+    $ cd ../hello
+    $ java -jar build/libs/server.jar
 
 In a separate window, start the swing client:
 
-$ java -jar build/libs/client.jar
+    $ java -jar build/libs/client.jar

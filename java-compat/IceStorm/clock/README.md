@@ -5,18 +5,18 @@ To run the demo:
 
 Start the IceStorm service:
 
-$ icebox --Ice.Config=config.icebox
+    $ icebox --Ice.Config=config.icebox
 
 This configuration assumes there is a subdirectory named db in the
 current working directory.
 
 In a separate window:
 
-$ java -jar build/libs/subscriber.jar
+    $ java -jar build/libs/subscriber.jar
 
 In another window:
 
-$ java -jar build/libs/publisher.jar
+    $ java -jar build/libs/publisher.jar
 
 While the publisher continues to run, "tick" messages should be
 displayed in the subscriber window.
@@ -60,10 +60,10 @@ java -jar build/libs/subscriber.jar --id <id>
 
   This option specifies a unique identity for this subscriber. When
   you use this option, you should also run the subscriber on a fixed
-  port by setting the Clock.Subscriber.Endpoints property. For
+  port by setting the `Clock.Subscriber.Endpoints` property. For
   example:
 
-  $ subscriber --Clock.Subscriber.Endpoints="tcp -p <port> -h <host>"
+    $ subscriber --Clock.Subscriber.Endpoints="tcp -p <port> -h <host>"
 
   Replace "tcp" with "udp" when using the --datagram option.
 
@@ -103,32 +103,32 @@ on the following hosts:
 Replace <P>, <S>, and <I> with the appropriate host names or IP
 addresses in the steps below:
 
-1. Edit the subscriber's configuration file, config.sub, and change
+1. Edit the subscriber's configuration file, `config.sub`, and change
    the TopicManager.Proxy property to
-
+```
    TopicManager.Proxy=DemoIceStorm/TopicManager:default -h <I> -p 10000
-
-2. Edit the publisher's configuration file, config.pub, and change
+```
+2. Edit the publisher's configuration file, `config.pub`, and change
    the TopicManager.Proxy property to
-
+```
    TopicManager.Proxy=DemoIceStorm/TopicManager:default -h <I> -p 10000
-
+```
 3. Since the default configurations for the subscriber and IceStorm
    endpoints listen only to localhost, you must also modify the Endpoints
    properties to explicitly include the host machine's name or IP
    address.
 
-   In config.sub:
-
+   In `config.sub`:
+```
    Clock.Subscriber.Endpoints=tcp -h <S>:udp -h <S>
-
-   In config.service:
-
+```
+   In `config.service`:
+```
    IceStorm.TopicManager.Endpoints=default -h <I> -p 10000
    IceStorm.Publish.Endpoints=tcp -h <I> -p 10001:udp -h <I> -p 10001
-
+```
 If you experience any network delays or errors, edit all of the
-configuration files and enable the Ice.Trace.Network property. Running
+configuration files and enable the `Ice.Trace.Network` property. Running
 the processes with this property enabled displays a log of Ice's
 network activity and may help you to identify the problem more
 quickly.

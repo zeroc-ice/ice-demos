@@ -4,6 +4,6 @@ session with another device on Linux or Android.
 
 To run the demo, just start the program:
 
-$ ./talk
+    $ ./talk
 
 On another device, start the command-line program or Android app.

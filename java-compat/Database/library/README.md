@@ -36,7 +36,7 @@ Setting up the demo
 3. Create a database named "library" and grant privileges to a user. In
    the commands below, replace USER with the name you have chosen and
    PASSWORD with a suitable password:
-
+```
    $ mysql -u root -p
    Enter password:
    Welcome to the MySQL monitor.
@@ -52,17 +52,17 @@ Setting up the demo
    Query OK, 0 rows affected (0.01 sec)
 
    mysql> EXIT
-
+```
 4. Create the SQL tables using the script createTypes.sql:
-
+```
    $ mysql --user=USER --password=PASSWORD library < createTypes.sql
-
+```
 5. Edit the JDBC properties in config.server to reflect your selected
    user name and password:
-
+```
    JDBC.Username=USER
    JDBC.Password=PASSWORD
-
+```
 NOTES:
       These instructions assume that the demo server runs on the same
       host as the database server. If you intend to run the demo server on
@@ -85,14 +85,14 @@ Running the demo
 
 To run the demo, first start the server:
 
-$ java Server
+    $ java Server
 
 The demo includes a text file named "books" containing a series of
 commands that populate the server's database with a collection of
 books. Pass this file as an argument the first time you run the
 client. In another window:
 
-$ java Client books
+    $ java Client books
 
 Type "help" to get a list of valid commands.
 
@@ -103,19 +103,19 @@ Running the demo with Glacier2
 The demo also supports a Glacier2 deployment. You will need to edit
 config.client and uncomment this configuration property:
 
-#Ice.Default.Router=DemoGlacier2/router:ssl -p 4064 -h 127.0.0.1
+    #Ice.Default.Router=DemoGlacier2/router:ssl -p 4064 -h 127.0.0.1
 
 To run the demo using Glacier2, first start the server:
 
-$ java Server
+    $ java Server
 
 In a separate window, start the Glacier2 router:
 
-$ glacier2router --Ice.Config=config.glacier2
+    $ glacier2router --Ice.Config=config.glacier2
 
 In a separate window, start the client:
 
-$ java Client books
+    $ java Client books
 
 Omit the "books" argument if you have already populated the server's
 database.
