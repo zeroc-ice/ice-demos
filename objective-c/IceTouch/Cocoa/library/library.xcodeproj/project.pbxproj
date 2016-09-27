@@ -44,7 +44,7 @@
 				"$(DERIVED_FILE_DIR)/$(INPUT_FILE_BASE).h",
 				"$(DERIVED_FILE_DIR)/$(INPUT_FILE_BASE).m",
 			);
-			script = "#!/bin/bash\n# For Xcode < 8 we still use the Xcode plug-in\nif [ \"$XCODE_VERSION_MAJOR\" = \"0800\" ]; then\n    if [ -x /usr/local/bin/icebuilder ]; then\n        /usr/local/bin/icebuilder\n    else\n        echo \"Unable to find Ice Builder for Xcode. Visit https://github.com/zeroc-ice/ice-builder-xcode for installation instructions.\"\n        exit 1\n    fi\nfi";
+			script = "#!/bin/bash\nif [ -x /usr/local/bin/icebuilder ]; then\n    /usr/local/bin/icebuilder\nelse\n    echo \"Unable to find Ice Builder for Xcode. Visit https://github.com/zeroc-ice/ice-builder-xcode for installation instructions.\"\n    exit 1\nfi";
 		};
 /* End PBXBuildRule section */
 
@@ -67,16 +67,16 @@
 		34C5F20A0FC514C900B226F7 /* LoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginController.m; path = Classes/LoginController.m; sourceTree = "<group>"; };
 		34C5F20B0FC514C900B226F7 /* EditController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EditController.h; path = Classes/EditController.h; sourceTree = "<group>"; };
 		34C5F20C0FC514C900B226F7 /* EditController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EditController.m; path = Classes/EditController.m; sourceTree = "<group>"; };
-		34C5F20D0FC514C900B226F7 /* Glacier2Session.ice */ = {isa = PBXFileReference; explicitFileType = sourcecode.slice; fileEncoding = 4; lastKnownFileType = text; name = Glacier2Session.ice; path = Classes/Glacier2Session.ice; sourceTree = "<group>"; };
-		34C5F20E0FC514C900B226F7 /* Library.ice */ = {isa = PBXFileReference; explicitFileType = sourcecode.slice; fileEncoding = 4; lastKnownFileType = text; name = Library.ice; path = Classes/Library.ice; sourceTree = "<group>"; };
+		34C5F20D0FC514C900B226F7 /* Glacier2Session.ice */ = {isa = PBXFileReference; explicitFileType = sourcecode.slice; fileEncoding = 4; name = Glacier2Session.ice; path = Classes/Glacier2Session.ice; sourceTree = "<group>"; };
+		34C5F20E0FC514C900B226F7 /* Library.ice */ = {isa = PBXFileReference; explicitFileType = sourcecode.slice; fileEncoding = 4; name = Library.ice; path = Classes/Library.ice; sourceTree = "<group>"; };
 		34C5F20F0FC514C900B226F7 /* LibraryController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LibraryController.h; path = Classes/LibraryController.h; sourceTree = "<group>"; };
 		34C5F2100FC514C900B226F7 /* LibraryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LibraryController.m; path = Classes/LibraryController.m; sourceTree = "<group>"; };
 		34C5F2110FC514C900B226F7 /* RentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RentController.h; path = Classes/RentController.h; sourceTree = "<group>"; };
 		34C5F2120FC514C900B226F7 /* RentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RentController.m; path = Classes/RentController.m; sourceTree = "<group>"; };
-		34C5F2130FC514C900B226F7 /* Router.ice */ = {isa = PBXFileReference; explicitFileType = sourcecode.slice; fileEncoding = 4; lastKnownFileType = text; name = Router.ice; path = Classes/Router.ice; sourceTree = "<group>"; };
+		34C5F2130FC514C900B226F7 /* Router.ice */ = {isa = PBXFileReference; explicitFileType = sourcecode.slice; fileEncoding = 4; name = Router.ice; path = Classes/Router.ice; sourceTree = "<group>"; };
 		34C5F2140FC514C900B226F7 /* SavingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SavingController.h; path = Classes/SavingController.h; sourceTree = "<group>"; };
 		34C5F2150FC514C900B226F7 /* SavingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SavingController.m; path = Classes/SavingController.m; sourceTree = "<group>"; };
-		34C5F2160FC514C900B226F7 /* Session.ice */ = {isa = PBXFileReference; explicitFileType = sourcecode.slice; fileEncoding = 4; lastKnownFileType = text; name = Session.ice; path = Classes/Session.ice; sourceTree = "<group>"; };
+		34C5F2160FC514C900B226F7 /* Session.ice */ = {isa = PBXFileReference; explicitFileType = sourcecode.slice; fileEncoding = 4; name = Session.ice; path = Classes/Session.ice; sourceTree = "<group>"; };
 		82AC63CC1738185D0040F03D /* cacert.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = cacert.pem; path = ../../../../certs/cacert.pem; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Library.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Library.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -305,8 +305,6 @@
 				DEVELOPMENT_TEAM = U4TBVKNQ7F;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_GC = unsupported;
-				GCC_MODEL_TUNING = "";
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				HEADER_SEARCH_PATHS = (
@@ -345,8 +343,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = U4TBVKNQ7F;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				GCC_ENABLE_OBJC_GC = unsupported;
-				GCC_MODEL_TUNING = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				HEADER_SEARCH_PATHS = (
 					Classes,

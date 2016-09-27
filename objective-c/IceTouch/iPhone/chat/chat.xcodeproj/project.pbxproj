@@ -40,7 +40,7 @@
 				"$(DERIVED_FILE_DIR)/$(INPUT_FILE_BASE).m",
 				"$(DERIVED_FILE_DIR)/$(INPUT_FILE_BASE).h",
 			);
-			script = "#!/bin/bash\n# For Xcode < 8 we still use the Xcode plug-in\nif [ \"$XCODE_VERSION_MAJOR\" = \"0800\" ]; then\n    if [ -x /usr/local/bin/icebuilder ]; then\n        /usr/local/bin/icebuilder\n    else\n        echo \"Unable to find Ice Builder for Xcode. Visit https://github.com/zeroc-ice/ice-builder-xcode for installation instructions.\"\n        exit 1\n    fi\nfi";
+			script = "#!/bin/bash\nif [ -x /usr/local/bin/icebuilder ]; then\n    /usr/local/bin/icebuilder\nelse\n    echo \"Unable to find Ice Builder for Xcode. Visit https://github.com/zeroc-ice/ice-builder-xcode for installation instructions.\"\n    exit 1\nfi";
 		};
 /* End PBXBuildRule section */
 
@@ -193,7 +193,7 @@
 				LastUpgradeCheck = 0800;
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -287,7 +287,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.zeroc.${PRODUCT_NAME:identifier}";
 				PRODUCT_NAME = Chat;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SLICE_INCLUDE_PATH = Classes;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -323,7 +322,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.zeroc.${PRODUCT_NAME:identifier}";
 				PRODUCT_NAME = Chat;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SLICE_INCLUDE_PATH = Classes;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
