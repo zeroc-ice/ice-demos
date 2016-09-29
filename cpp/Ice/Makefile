@@ -25,11 +25,11 @@ SUBDIRS		= minimal \
 		  properties \
 		  optional \
 		  context \
-		  locator
+		  locator \
+		  interleaved
 
 ifneq ($(BUILD_WITH_ICEE),yes)
     SUBDIRS	:= $(SUBDIRS) \
-		   interleaved \
 		   plugin
 else
     ifeq ($(BUILD_DEMOS),dynamic)
