@@ -1,6 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(LOCALAPPDATA)\ZeroC\IceBuilder\IceBuilder.CSharp.props" />
+  <PropertyGroup Label="Globals">
+    <IceBuilderCsharpProps Condition="!Exists('$(IceBuilderCsharpProps)')">$([System.IO.Directory]::GetFiles('$(LocalAppData)\Microsoft\VisualStudio\$(VisualStudioVersion)\Extensions', 'IceBuilder.Csharp.props', SearchOption.AllDirectories))</IceBuilderCsharpProps>
+    <IceBuilderCsharpTargets Condition="!Exists('$(IceBuilderCsharpTargets)')">$([System.IO.Directory]::GetFiles('$(LocalAppData)\Microsoft\VisualStudio\$(VisualStudioVersion)\Extensions', 'IceBuilder.Csharp.targets', SearchOption.AllDirectories))</IceBuilderCsharpTargets>
+  </PropertyGroup>
+  <Import Project="$(IceBuilderCsharpProps)" Condition="Exists('$(IceBuilderCsharpProps)')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -180,7 +184,7 @@
     <Resource Include="Images\error.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(LOCALAPPDATA)\ZeroC\IceBuilder\IceBuilder.CSharp.targets" />
+  <Import Project="$(IceBuilderCsharpTargets)" Condition="Exists('$(IceBuilderCsharpTargets)')" />
   <PropertyGroup Label="IceBuilder">
     <IceBuilderOutputDir>generated</IceBuilderOutputDir>
     <IceBuilderIncludeDirectories>$(IceHome)\slice;$(ProjectDir)</IceBuilderIncludeDirectories>
