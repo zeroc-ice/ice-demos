@@ -37,7 +37,7 @@ while True:
         for k,v in DNelements.items():
             v = question(v + ": ")
             if k == 'C' and len(v) > 2:
-               print("The contry code can't be longer than 2 characters")
+               print("The country code cannot be longer than 2 characters")
                continue
             setattr(dn, k, v)
     else:
