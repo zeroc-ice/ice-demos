@@ -146,9 +146,6 @@
     <AppxManifest Include="Package.uwp.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="..\..\..\..\..\certs\cacert.der">
-      <DeploymentContent>true</DeploymentContent>
-    </None>
     <None Include="client_TemporaryKey.pfx" />
     <None Include="README.md" />
   </ItemGroup>

@@ -69,7 +69,7 @@ MainPage::MainPage()
     {
         Ice::InitializationData id;
         id.properties = Ice::createProperties();
-        id.properties->setProperty("Hello.Endpoints", "tcp -p 10000:ssl -p 10001:udp -p 10000");
+        id.properties->setProperty("Hello.Endpoints", "tcp -p 10000:udp -p 10000");
         id.properties->setProperty("Ice.Trace.Network", "2");
 
         _communicator = Ice::initialize(id);

@@ -27,13 +27,4 @@
     <Capability Name="internetClientServer" />
     <Capability Name="privateNetworkClientServer" />
   </Capabilities>
-  <Extensions>
-    <Extension Category="windows.certificates">
-      <Certificates>
-        <Certificate StoreName="Root" Content="cacert.der" />
-        <Certificate StoreName="CA" Content="cacert.der" />
-        <TrustFlags ExclusiveTrust="true" />
-      </Certificates>
-    </Extension>
-  </Extensions>
 </Package>
