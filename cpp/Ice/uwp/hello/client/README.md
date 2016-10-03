@@ -29,13 +29,15 @@ from the `certs` directory at the top of this distribution. For example:
 
 ```bash
 cd certs
-makecerts.py 192.168.1.53
+makecerts.py --ip 192.168.1.53 --dns foo.bar.com
 ```
 
-This will regenerate a server certificate with a common name set to
-192.168.1.53 (please use your server's IP address). You can provide an IP address
-or DNS name, the only requirement is that it matches the value used by the
-hello client to connect to the hello server.
+This will regenerate a server certificate with a common name and IP address set
+to `192.168.1.53` and the DNS name set to `foo.bar.com`. To use the DNS name for
+the common name, you can run the script with the `--use-dns` argument. You can
+use either the IP address or DNS name for the common name, the only requirement
+is that it matches the value used by the hello client to connect to hello
+server.
 
 You can regenerate these certificates on the client or on the server. Then
 make sure to copy these certificates (the `certs` directory) to the other system.
