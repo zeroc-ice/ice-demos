@@ -21,23 +21,21 @@ authentication. In order to successfully connect with SSL, you need to edit
 the hello server configuration file (`config.server`) and uncomment the
 `IceSSL.VerifyPeer=0` property.
 
-If you run the hello client and server on different computers or devices,
-you also need to regenerate the server certificate to ensure the
-certificate common name is set to the IP address of the server. To
-regenerate the certificate, you can run the `makecerts.py` Python script
-from the `certs` directory at the top of this distribution. For example:
+If you run the hello client and server on different computers or devices, you
+also need to regenerate the server certificate to ensure the certificate common
+name is set to the address used by the client to connect to the server.
+
+To regenerate the certificate, you can run the `makecerts.py` Python script from
+the `certs` directory at the top of this distribution. For example:
 
 ```bash
 cd certs
-makecerts.py --ip 192.168.1.53 --dns foo.bar.com
+makecerts.py --ip 192.168.1.53 --dns 192.168.1.53
 ```
 
-This will regenerate a server certificate with a common name and IP address set
-to `192.168.1.53` and the DNS name set to `foo.bar.com`. To use the DNS name for
-the common name, you can run the script with the `--use-dns` argument. You can
-use either the IP address or DNS name for the common name, the only requirement
-is that it matches the value used by the hello client to connect to hello
-server.
+This will regenerate a server certificate with a common name, IP address and DNS
+name set to `192.168.1.53`. It's important to use the same value as the value
+used in the client to connect to the server.
 
 You can regenerate these certificates on the client or on the server. Then
 make sure to copy these certificates (the `certs` directory) to the other system.
