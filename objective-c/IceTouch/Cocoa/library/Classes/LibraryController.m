@@ -20,7 +20,7 @@
 -(id)initWithCommunicator:(id<ICECommunicator>)c
                   session:(id)s
                    router:(id<GLACIER2RouterPrx>)r
-           sessionTimeout:(int)t
+           sessionTimeout:(ICELong)t
                   library:(id<DemoLibraryPrx>)l
 {
     if(self = [super initWithWindowNibName:@"LibraryView"])
@@ -528,7 +528,7 @@
 {
     if([aNotification object] == queryTable)
     {
-        int index = queryTable.selectedRow;
+        NSInteger index = queryTable.selectedRow;
         if(index == -1)
         {
             [self setSelection:nil];

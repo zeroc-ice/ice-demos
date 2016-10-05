@@ -58,7 +58,7 @@ NSString* const passwordKey = @"passwordKey";
     }
 
     id<DemoSessionPrx> session = [factory create];
-    int sessionTimeout = [factory getSessionTimeout];
+    ICELong sessionTimeout = [factory getSessionTimeout];
     id<DemoLibraryPrx> library = [session getLibrary];
     return [[LibraryController alloc]
             initWithCommunicator:[proxy ice_getCommunicator]
@@ -76,7 +76,7 @@ NSString* const passwordKey = @"passwordKey";
                                                           password:passwordField.stringValue];
     id<DemoGlacier2SessionPrx> session = [DemoGlacier2SessionPrx uncheckedCast:glacier2session];
 
-    int sessionTimeout = [router getSessionTimeout];
+    ICELong sessionTimeout = [router getSessionTimeout];
 
     id<DemoLibraryPrx> library = [session getLibrary];
 
@@ -101,7 +101,7 @@ NSString* const passwordKey = @"passwordKey";
     }
 
     id<DemoSessionPrx> session = [factory create];
-    int sessionTimeout = [factory getSessionTimeout];
+    ICELong sessionTimeout = [factory getSessionTimeout];
     id<DemoLibraryPrx> library = [session getLibrary];
     return [[LibraryController alloc]
             initWithCommunicator:[proxy ice_getCommunicator]
@@ -118,7 +118,7 @@ NSString* const passwordKey = @"passwordKey";
     id<ICERouterPrx> glacier2router = [ICERouterPrx uncheckedCast:proxy];
     id<GLACIER2SessionPrx> glacier2session;
     NSMutableString* category;
-    ICEInt sessionTimeout;
+    ICELong sessionTimeout;
 
     [router createGlacier2Session:glacier2router
                            userId:usernameField.stringValue

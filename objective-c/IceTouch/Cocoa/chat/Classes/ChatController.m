@@ -259,7 +259,7 @@
 
 #pragma mark NSTableView delegate
 
-- (int)numberOfRowsInTableView:(NSTableView *)tv 
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tv
 { 
     return users.count;
 }
