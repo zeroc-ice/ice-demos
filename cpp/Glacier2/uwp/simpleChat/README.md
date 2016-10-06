@@ -15,7 +15,7 @@ or right click on the project and select `Debug -> Start new instance`.
 
 The Ice ssl transport for UWP currently does not support client-side 
 authentication. In order to successfully connect with SSL, you need to edit 
-the Glacier2 router configuration file (`config.router`) and uncomment the 
+the Glacier2 router configuration file (`config.glacier2`) and uncomment the 
 `IceSSL.VerifyPeer=0` property. 
 
 If you run the chat client and Glacier2 router on different computers or
