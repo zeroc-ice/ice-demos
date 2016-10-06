@@ -4,8 +4,8 @@ This demo is a graphical client app written in C++/CX. This client
 works with the UWP hello server as well as the Ice/hello servers provided by
 other language mappings, such as C++, C#, Java and Python.
 
-Note that is you use the UWP server, due to UWP restrictions it must be ran on
-a separate machine from the client.
+Note that if you use the UWP server, this server cannot run on same machine as
+the client due to UWP restrictions.
 
 ## Running the demo
 
@@ -66,7 +66,7 @@ To enable IceDiscovery, click on the "Use IceDiscovery" check-box. You must run
 the hello server from the IceDiscovery/hello demo and ensure that the server is
 listening on an accessible network interface.
 
-See the README file of the IceDiscovery hello demo for more information on how
+See the README.md file of the IceDiscovery hello demo for more information on how
 to start the server.
 
 > Note: you must run the server on another machine. The hello client can't
