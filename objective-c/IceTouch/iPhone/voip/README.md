@@ -11,8 +11,9 @@ After pressing the "Call Back" button the server will call
 delay. A local notification is pushed if the application is in the
 background, otherwise an alert box is displayed.
 
-Note that background applications are not supported in devices before
-3G, and background notifications do not work in the simulator.
+Note that VoIP sockets are no longer supported with iOS 10. The `Ice.Voip`
+property used by this demo will be deprecated in upcoming releases. Applications
+are encouraged to use the iOS PushKit API instead.
 
 If you want to deploy your own VoIP server, you can run the
 [Java voip demo server](../../../../java/Glacier2/voip).
