@@ -12,9 +12,6 @@
 
 using namespace std;
 
-class PeerI;
-typedef IceUtil::Handle<PeerI> PeerIPtr;
-
 //
 // We use two implementations of Peer servants. PeerI is the common
 // base class for our servants.
@@ -24,18 +21,18 @@ typedef IceUtil::Handle<PeerI> PeerIPtr;
 // connection) or it can be initiated by this program (an "outgoing"
 // connection. We use different servants for each type of connection.
 //
-class PeerI : public Talk::Peer
+class PeerI : public virtual Talk::Peer
 {
 public:
 
-    virtual void sendMessage(const string& message) = 0;
+    virtual void sendMessage(string message) = 0;
 
     //
     // Disconnect from the remote peer.
     //
     virtual void close()
     {
-        Talk::PeerPrx peer;
+        shared_ptr<Talk::PeerPrx> peer;
 
         {
             IceUtil::Monitor<IceUtil::Mutex>::Lock lock(_lock);
@@ -57,7 +54,7 @@ public:
         try
         {
             peer->disconnect();
-            Ice::ConnectionPtr con = peer->ice_getCachedConnection();
+            auto con = peer->ice_getCachedConnection();
             if(con)
             {
                 con->close(false);
@@ -69,7 +66,7 @@ public:
         }
     }
 
-    virtual void send(const string& message, const Ice::Current&)
+    virtual void send(string message, const Ice::Current&)
     {
         IceUtil::Monitor<IceUtil::Mutex>::Lock lock(_lock);
 
@@ -87,43 +84,6 @@ public:
         curr.con->close(false);
     }
 
-protected:
-
-    PeerI() :
-        _connected(false)
-    {
-    }
-
-    PeerI(const Talk::PeerPrx& peer) :
-        _connected(false),
-        _peer(peer)
-    {
-    }
-
-    //
-    // We install this callback on the Bluetooth connection so that
-    // we're notified when the connection closes.
-    //
-    class CloseCallbackI : public Ice::CloseCallback
-    {
-    public:
-
-        CloseCallbackI(const PeerIPtr& p) :
-            _obj(p)
-        {
-        }
-
-        virtual void closed(const Ice::ConnectionPtr&)
-        {
-            _obj->closed();
-        }
-
-    private:
-
-        PeerIPtr _obj;
-    };
-    friend class CloseCallbackI;
-
     virtual void closed()
     {
         IceUtil::Monitor<IceUtil::Mutex>::Lock lock(_lock);
@@ -135,9 +95,22 @@ protected:
         }
     }
 
+protected:
+
+    PeerI() :
+        _connected(false)
+    {
+    }
+
+    PeerI(shared_ptr<Talk::PeerPrx> peer) :
+        _connected(false),
+        _peer(peer)
+    {
+    }
+
     IceUtil::Monitor<IceUtil::Mutex> _lock;
     bool _connected;
-    Talk::PeerPrx _peer;
+    shared_ptr<Talk::PeerPrx> _peer;
 };
 
 //
@@ -146,14 +119,14 @@ protected:
 // with a well-known object identity so that other peers can invoke
 // on it.
 //
-class IncomingPeerI : public PeerI
+class IncomingPeerI : public PeerI, public enable_shared_from_this<PeerI>
 {
 public:
 
     //
     // Send a message to the remote peer.
     //
-    virtual void sendMessage(const string& message)
+    virtual void sendMessage(string message)
     {
         {
             IceUtil::Monitor<IceUtil::Mutex>::Lock lock(_lock);
@@ -178,7 +151,7 @@ public:
     //
     // A remote peer wants to connect to us.
     //
-    virtual void connect(const Ice::Identity& id, const Ice::Current& curr)
+    virtual void connect(Ice::Identity id, const Ice::Current& curr)
     {
         IceUtil::Monitor<IceUtil::Mutex>::Lock lock(_lock);
 
@@ -192,17 +165,22 @@ public:
         //
         // Install a connection callback and enable ACM heartbeats.
         //
-        curr.con->setCloseCallback(new CloseCallbackI(this));
+        auto self = shared_from_this();
+        curr.con->setCloseCallback(
+            [self](shared_ptr<Ice::Connection>)
+            {
+                self->closed();
+            });
         curr.con->setACM(30, Ice::CloseOff, Ice::HeartbeatAlways);
 
-        _peer = Talk::PeerPrx::uncheckedCast(curr.con->createProxy(id));
+        _peer = Ice::uncheckedCast<Talk::PeerPrx>(curr.con->createProxy(id));
 
-        Ice::ConnectionInfoPtr info = curr.con->getInfo();
+        auto info = curr.con->getInfo();
         if(info->underlying)
         {
             info = info->underlying;
         }
-        IceBT::ConnectionInfoPtr btInfo = IceBT::ConnectionInfoPtr::dynamicCast(info);
+        auto btInfo = dynamic_pointer_cast<IceBT::ConnectionInfo>(info);
         assert(btInfo);
         cout << ">>>> Incoming connection from " << btInfo->remoteAddress << endl;
     }
@@ -217,7 +195,8 @@ class OutgoingPeerI : public PeerI
 {
 public:
 
-    OutgoingPeerI(const Ice::ObjectAdapterPtr& adapter, const Ice::Identity& id, const Talk::PeerPrx& peer) :
+    OutgoingPeerI(const shared_ptr<Ice::ObjectAdapter>& adapter, const Ice::Identity& id,
+                  const shared_ptr<Talk::PeerPrx>& peer) :
         PeerI(peer),
         _adapter(adapter),
         _id(id)
@@ -228,12 +207,12 @@ public:
     //
     // Send a message to the remote peer.
     //
-    virtual void sendMessage(const string& message)
+    virtual void sendMessage(string message)
     {
         _peer->send(message);
     }
 
-    virtual void connect(const Ice::Identity&, const Ice::Current&)
+    virtual void connect(Ice::Identity, const Ice::Current&)
     {
         //
         // We established an outgoing connection to the peer, so there's no need for
@@ -241,8 +220,6 @@ public:
         //
         throw Talk::ConnectionException("already connected");
     }
-
-protected:
 
     virtual void closed()
     {
@@ -253,7 +230,7 @@ protected:
 
 private:
 
-    Ice::ObjectAdapterPtr _adapter;
+    shared_ptr<Ice::ObjectAdapter> _adapter;
     Ice::Identity _id;
 };
 
@@ -266,13 +243,13 @@ public:
 
 private:
 
-    void connect(const string&);
+    void connect(string);
     void list();
     void usage();
 
-    Ice::ObjectAdapterPtr _adapter;
-    PeerIPtr _incomingPeer;
-    PeerIPtr _peer;
+    shared_ptr<Ice::ObjectAdapter> _adapter;
+    shared_ptr<PeerI> _incomingPeer;
+    shared_ptr<PeerI> _peer;
 };
 
 static string btUUID = "6a193943-1754-4869-8d0a-ddc5f9a2b294";
@@ -316,7 +293,7 @@ TalkApp::run(int argc, char*[])
     //
     // Install a servant with the well-known identity "peer".
     //
-    _incomingPeer = new IncomingPeerI;
+    _incomingPeer = make_shared<IncomingPeerI>();
     _peer = _incomingPeer;
     _adapter->add(_peer, Ice::stringToIdentity("peer"));
     _adapter->activate();
@@ -370,7 +347,7 @@ TalkApp::run(int argc, char*[])
 }
 
 void
-TalkApp::connect(const string& cmd)
+TalkApp::connect(string cmd)
 {
     const bool secure = cmd.find("/sconnect") == 0;
 
@@ -394,7 +371,7 @@ TalkApp::connect(const string& cmd)
     // bidirectional connection.
     //
     Ice::Identity id = Ice::stringToIdentity(Ice::generateUUID());
-    PeerIPtr servant;
+    shared_ptr<PeerI> servant;
 
     try
     {
@@ -411,7 +388,7 @@ TalkApp::connect(const string& cmd)
         // Create a proxy for the remote peer using the address given by the user
         // and the well-known UUID for the talk service.
         //
-        Talk::PeerPrx prx = Talk::PeerPrx::uncheckedCast(communicator()->stringToProxy(proxy));
+        auto prx = Ice::uncheckedCast<Talk::PeerPrx>(communicator()->stringToProxy(proxy));
         cout << ">>>> Connecting to " << addr << endl;
 
         //
@@ -419,9 +396,9 @@ TalkApp::connect(const string& cmd)
         // us to receive callbacks via this connection. Calling ice_getConnection() blocks
         // until the connection to the peer is established.
         //
-        Ice::ConnectionPtr con = prx->ice_getConnection();
+        auto con = prx->ice_getConnection();
         con->setAdapter(_adapter);
-        servant = new OutgoingPeerI(_adapter, id, prx);
+        servant = make_shared<OutgoingPeerI>(_adapter, id, prx);
         _adapter->add(servant, id);
 
         //
@@ -447,25 +424,25 @@ TalkApp::list()
     //
     // Obtain a reference to the IceBT plug-in.
     //
-    IceBT::PluginPtr plugin = IceBT::PluginPtr::dynamicCast(communicator()->getPluginManager()->getPlugin("IceBT"));
+    auto plugin = dynamic_pointer_cast<IceBT::Plugin>(communicator()->getPluginManager()->getPlugin("IceBT"));
     assert(plugin);
 
-    IceBT::DeviceMap devices = plugin->getDevices();
+    auto devices = plugin->getDevices();
     if(devices.empty())
     {
         cout << ">>>> No known devices" << endl;
     }
     else
     {
-        for(IceBT::DeviceMap::iterator p = devices.begin(); p != devices.end(); ++p)
+        for(auto p : devices)
         {
             string name;
-            IceBT::PropertyMap::iterator q = p->second.find("Name");
-            if(q == p->second.end())
+            auto q = p.second.find("Name");
+            if(q == p.second.end())
             {
-                q = p->second.find("Alias");
+                q = p.second.find("Alias");
             }
-            if(q == p->second.end())
+            if(q == p.second.end())
             {
                 name = "Unknown";
             }
@@ -473,7 +450,7 @@ TalkApp::list()
             {
                 name = q->second;
             }
-            cout << ">>>> " << name << " - " << p->first << endl;
+            cout << ">>>> " << name << " - " << p.first << endl;
         }
     }
 }
