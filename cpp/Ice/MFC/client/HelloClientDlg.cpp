@@ -475,5 +475,5 @@ CHelloClientDlg::deliveryModeIsBatch()
 void
 CHelloClientDlg::handleException(const IceUtil::Exception& ex)
 {
-    _status->SetWindowText(CString(ex.ice_name().c_str()));
+    _status->SetWindowText(CString(ex.ice_id().c_str()));
 }

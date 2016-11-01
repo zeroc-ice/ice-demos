@@ -145,7 +145,7 @@ namespace ChatDemoGUI
                     {
                         appendMessage("<system-message> - " + ex.reason + Environment.NewLine);
                     }
-                    catch(Exception ex)
+                    catch(Exception)
                     {
                         destroySession();
                     }
