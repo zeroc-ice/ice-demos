@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\..\..\packages\zeroc.ice.uwp.3.7.0-alpha3\build\native\zeroc.ice.uwp.props" Condition="Exists('..\..\..\..\packages\zeroc.ice.uwp.3.7.0-alpha3\build\native\zeroc.ice.uwp.props') and '$(UseIceHome)' != 'yes'" />
   <PropertyGroup Label="Globals">
     <ProjectGuid>{647C6FD3-E5E5-4451-949D-A41D2A911868}</ProjectGuid>
     <RootNamespace>bidir</RootNamespace>
@@ -95,11 +96,15 @@
     <OutDir>uwp\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
     <IntDir>uwp\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
+  <PropertyGroup Label="IceBuilder">
+    <IceBuilderOutputDir>$(Platform)\$(Configuration)\</IceBuilderOutputDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions>ICE_CPP11_MAPPING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -107,6 +112,7 @@
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions>ICE_CPP11_MAPPING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -114,6 +120,7 @@
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions>ICE_CPP11_MAPPING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -121,16 +128,36 @@
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions>ICE_CPP11_MAPPING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="generated\Callback.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="App.xaml.h">
       <DependentUpon>App.xaml</DependentUpon>
     </ClInclude>
     <ClInclude Include="MainPage.xaml.h">
       <DependentUpon>MainPage.xaml</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="Win32\Debug\Callback.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="Win32\Release\Callback.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="x64\Debug\Callback.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="x64\Release\Callback.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -146,6 +173,10 @@
     <AppxManifest Include="Package.uwp.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <None Include="..\..\..\..\..\certs\cacert.der">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="packages.config" />
     <None Include="README.md" />
     <None Include="server_TemporaryKey.pfx" />
   </ItemGroup>
@@ -162,7 +193,6 @@
     <ClCompile Include="App.xaml.cpp">
       <DependentUpon>App.xaml</DependentUpon>
     </ClCompile>
-    <ClCompile Include="generated\Callback.cpp" />
     <ClCompile Include="MainPage.xaml.cpp">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </ClCompile>
@@ -172,6 +202,26 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Win32\Debug\Callback.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Win32\Release\Callback.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="x64\Debug\Callback.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="x64\Release\Callback.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <IceBuilder Include="Callback.ice" />
@@ -179,5 +229,19 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Import Project="$(IceBuilderCppTargets)" Condition="Exists('$(IceBuilderCppTargets)')" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\..\..\..\packages\zeroc.ice.uwp.arm.3.7.0-alpha3\build\native\zeroc.ice.uwp.arm.targets" Condition="Exists('..\..\..\..\packages\zeroc.ice.uwp.arm.3.7.0-alpha3\build\native\zeroc.ice.uwp.arm.targets') and '$(UseIceHome)' != 'yes'" />
+    <Import Project="..\..\..\..\packages\zeroc.ice.uwp.x64.3.7.0-alpha3\build\native\zeroc.ice.uwp.x64.targets" Condition="Exists('..\..\..\..\packages\zeroc.ice.uwp.x64.3.7.0-alpha3\build\native\zeroc.ice.uwp.x64.targets') and '$(UseIceHome)' != 'yes'" />
+    <Import Project="..\..\..\..\packages\zeroc.ice.uwp.x86.3.7.0-alpha3\build\native\zeroc.ice.uwp.x86.targets" Condition="Exists('..\..\..\..\packages\zeroc.ice.uwp.x86.3.7.0-alpha3\build\native\zeroc.ice.uwp.x86.targets') and '$(UseIceHome)' != 'yes'" />
+    <Import Project="..\..\..\..\packages\zeroc.ice.uwp.3.7.0-alpha3\build\native\zeroc.ice.uwp.targets" Condition="Exists('..\..\..\..\packages\zeroc.ice.uwp.3.7.0-alpha3\build\native\zeroc.ice.uwp.targets') and '$(UseIceHome)' != 'yes'" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild" Condition="'$(UseIceHome)' != 'yes'">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\..\..\packages\zeroc.ice.uwp.arm.3.7.0-alpha3\build\native\zeroc.ice.uwp.arm.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.uwp.arm.3.7.0-alpha3\build\native\zeroc.ice.uwp.arm.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\packages\zeroc.ice.uwp.x64.3.7.0-alpha3\build\native\zeroc.ice.uwp.x64.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.uwp.x64.3.7.0-alpha3\build\native\zeroc.ice.uwp.x64.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\packages\zeroc.ice.uwp.x86.3.7.0-alpha3\build\native\zeroc.ice.uwp.x86.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.uwp.x86.3.7.0-alpha3\build\native\zeroc.ice.uwp.x86.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\packages\zeroc.ice.uwp.3.7.0-alpha3\build\native\zeroc.ice.uwp.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.uwp.3.7.0-alpha3\build\native\zeroc.ice.uwp.props'))" />
+    <Error Condition="!Exists('..\..\..\..\packages\zeroc.ice.uwp.3.7.0-alpha3\build\native\zeroc.ice.uwp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.uwp.3.7.0-alpha3\build\native\zeroc.ice.uwp.targets'))" />
+  </Target>
 </Project>

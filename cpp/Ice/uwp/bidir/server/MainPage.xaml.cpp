@@ -27,57 +27,81 @@ using namespace Windows::UI::Xaml::Navigation;
 void
 CallbackSenderI::addClient(const Ice::Identity& ident, const Ice::Current& current)
 {
-	IceUtil::Monitor<IceUtil::Mutex>::Lock lck(*this);
+    unique_lock<mutex> lock(_mutex);
 
-	ostringstream os;
-	os << "adding client `";
-	os << Ice::identityToString(ident);
-	os << "'\n";
-	_page->print(os.str());
+    ostringstream os;
+    os << "adding client `";
+    os << Ice::identityToString(ident);
+    os << "'\n";
+    _page->print(os.str());
 
-	CallbackReceiverPrx client = CallbackReceiverPrx::uncheckedCast(current.con->createProxy(ident));
-	_clients.insert(client);
+    auto client = Ice::uncheckedCast<CallbackReceiverPrx>(current.con->createProxy(ident));
+    _clients.insert(client);
 }
 
 void
-CallbackSenderI::run()
+CallbackSenderI::destroy()
 {
-	int num = 0;
-	while(num >= 0)
-	{
-		std::set<Demo::CallbackReceiverPrx> clients;
-		{
-			IceUtil::Monitor<IceUtil::Mutex>::Lock lck(*this);
-			timedWait(IceUtil::Time::seconds(2));
+    {
+        unique_lock<mutex> lock(_mutex);
+        cout << "destroying callback sender" << endl;
+        _destroy = true;
+        _cv.notify_one();
+    }
 
-			clients = _clients;
-		}
+    _senderThread.join();
+}
 
-		if(!clients.empty())
-		{
-			++num;
-			for(set<CallbackReceiverPrx>::iterator p = clients.begin(); p != clients.end(); ++p)
-			{
-				try
-				{
-					(*p)->callback(num);
-				}
-				catch(const Ice::Exception& ex)
-				{
-					ostringstream os;
-					os << "removing client `";
-					os << Ice::identityToString((*p)->ice_getIdentity());
-					os << "':\n";
-					os << ex;
-					os << "\n";
-					_page->print(os.str());
+void
+CallbackSenderI::start()
+{
+    thread t([this]()
+        {
+            int num = 0;
+            bool destroyed = false;
+            while(!destroyed)
+            {
+                set<shared_ptr<Demo::CallbackReceiverPrx>> clients;
+                {
+                    unique_lock<mutex> lock(this->_mutex);
+                    this->_cv.wait_for(lock, chrono::seconds(2));
 
-					IceUtil::Monitor<IceUtil::Mutex>::Lock lck(*this);
-					_clients.erase(*p);
-				}
-			}
-		}
-	}
+                    if(this->_destroy)
+                    {
+                        destroyed = true;
+                        continue;
+                    }
+
+                    clients = this->_clients;
+                }
+
+                if(!clients.empty())
+                {
+                    ++num;
+                    for(auto p : clients)
+                    {
+                        try
+                        {
+                            p->callback(num);
+                        }
+                        catch(const Ice::Exception& ex)
+                        {
+                            ostringstream os;
+                            os << "removing client `";
+                            os << Ice::identityToString(p->ice_getIdentity());
+                            os << "':\n";
+                            os << ex;
+                            os << "\n";
+                            _page->print(os.str());
+
+                            unique_lock<mutex> lock(_mutex);
+                            this->_clients.erase(p);
+                        }
+                    }
+                }
+            }
+        });
+    _senderThread = move(t);
 }
 
 MainPage::MainPage()
@@ -92,11 +116,11 @@ MainPage::MainPage()
 
         _communicator = Ice::initialize(id);
         _adapter = _communicator->createObjectAdapter("Callback.Server");
-        CallbackSenderIPtr sender = new CallbackSenderI(this, _communicator);
-        _adapter->add(sender, _Ice::stringToIdentity("sender"));
+        _sender = make_shared<CallbackSenderI>(this, _communicator);
+        _adapter->add(_sender, Ice::stringToIdentity("sender"));
         _adapter->activate();
 
-        sender->start();
+        _sender->start();
     }
     catch(const std::exception& ex)
     {
@@ -110,17 +134,26 @@ MainPage::MainPage()
 void 
 bidir::MainPage::print(const std::string& message)
 {
-	this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, 
-					ref new DispatchedHandler(
-							[=] ()
-								{
-									output->Text += ref new String(Ice::stringToWstring(message).c_str());
-									output->UpdateLayout();
-#if (_WIN32_WINNT > 0x0602)
-									scroller->ChangeView(nullptr, scroller->ScrollableHeight, nullptr);
-#else
-									scroller->ScrollToVerticalOffset(scroller->ScrollableHeight);
-#endif
-								}, 
-							CallbackContext::Any));
+    this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, 
+                    ref new DispatchedHandler(
+                            [=] ()
+                                {
+                                    output->Text += ref new String(Ice::stringToWstring(message).c_str());
+                                    output->UpdateLayout();
+                                    scroller->ChangeView(nullptr, scroller->ScrollableHeight, nullptr);
+                                }, 
+                            CallbackContext::Any));
+}
+
+void
+bidir::MainPage::destroy()
+{
+    try
+    {
+        _communicator->destroy();
+    }
+    catch(...)
+    {
+    }
+    _sender->destroy();
 }

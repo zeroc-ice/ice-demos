@@ -30,34 +30,34 @@ class HelloI : public Hello
 public:
 
 
-	HelloI(MainPage^ page) : _page(page)
-	{
-	}
+    HelloI(MainPage^ page) : _page(page)
+    {
+    }
 
-	virtual void
-	sayHello(int delay, const Ice::Current&)
-	{
-		if(delay > 0)
-		{
-			IceUtil::ThreadControl::sleep(IceUtil::Time::milliSeconds(delay));
-		}
+    virtual void
+    sayHello(int delay, const Ice::Current&)
+    {
+        if(delay > 0)
+        {
+            IceUtil::ThreadControl::sleep(IceUtil::Time::milliSeconds(delay));
+        }
 
-		_page->Dispatcher->RunAsync(
-			CoreDispatcherPriority::Normal, ref new DispatchedHandler([=]()
-			{
-				_page->print(ref new String(L"Hello World!\n"));
-			}, CallbackContext::Any));
-	}
+        _page->Dispatcher->RunAsync(
+            CoreDispatcherPriority::Normal, ref new DispatchedHandler([=]()
+            {
+                _page->print(ref new String(L"Hello World!\n"));
+            }, CallbackContext::Any));
+    }
 
-	virtual void
-	shutdown(const Ice::Current&)
-	{
-		Application::Current->Exit();
-	}
+    virtual void
+    shutdown(const Ice::Current&)
+    {
+        Application::Current->Exit();
+    }
 
 private:
 
-	MainPage^ _page;
+    MainPage^ _page;
 };
 }
 
@@ -74,7 +74,7 @@ MainPage::MainPage()
 
         _communicator = Ice::initialize(id);
         _adapter = _communicator->createObjectAdapter("Hello");
-        _adapter->add(new HelloI(this), _Ice::stringToIdentity("hello"));
+        _adapter->add(make_shared<HelloI>(this), Ice::stringToIdentity("hello"));
         _adapter->activate();
         print(ref new String(L"Ready to receive requests\n"));
     }
@@ -91,11 +91,11 @@ MainPage::MainPage()
 void
 MainPage::clear_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
-	output->Text = ref new String(L"");
+    output->Text = ref new String(L"");
 }
 
 void
 MainPage::print(Platform::String^ message)
 {
-	output->Text = String::Concat(output->Text, message);
+    output->Text = String::Concat(output->Text, message);
 }

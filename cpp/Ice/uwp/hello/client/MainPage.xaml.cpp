@@ -28,17 +28,17 @@ MainPage::MainPage()
     InitializeComponent();
     mode->SelectedIndex = 0;
     Ice::InitializationData id;
-	id.properties = Ice::createProperties();
-	id.properties->setProperty("Ice.Plugin.IceDiscovery", "1"); // Enable the IceDiscovery plugin
-    id.dispatcher = Ice::newDispatcher(
-        [=](const Ice::DispatcherCallPtr& call, const Ice::ConnectionPtr&)
+    id.properties = Ice::createProperties();
+    id.properties->setProperty("Ice.Plugin.IceDiscovery", "1"); // Enable the IceDiscovery plugin
+    id.dispatcher = 
+        [=](function<void()> call, const shared_ptr<Ice::Connection>&)
             {
                 this->Dispatcher->RunAsync(
                     CoreDispatcherPriority::Normal, ref new DispatchedHandler([=]()
                         {
-                            call->run();
+                            call();
                         }, CallbackContext::Any));
-            });
+            };
     try
     {
         _communicator = Ice::initialize(id);
@@ -71,16 +71,16 @@ hello::MainPage::updateProxy()
         _helloPrx = 0;
         return;
     }
-	Ice::ObjectPrx prx;
-	if (useDiscovery->IsChecked->Value)
-	{
-		prx = _communicator->stringToProxy("hello");
-	}
-	else
-	{
-		prx = _communicator->stringToProxy("hello:tcp -h " + h + " -p 10000:ssl -h " + h +
-			" -p 10001:udp -h " + h + " -p 10000");
-	}
+    shared_ptr<Ice::ObjectPrx> prx;
+    if (useDiscovery->IsChecked->Value)
+    {
+        prx = _communicator->stringToProxy("hello");
+    }
+    else
+    {
+        prx = _communicator->stringToProxy("hello:tcp -h " + h + " -p 10000:ssl -h " + h +
+              " -p 10001:udp -h " + h + " -p 10000");
+    }
 
     switch(mode->SelectedIndex)
     {
@@ -134,7 +134,7 @@ hello::MainPage::updateProxy()
     {
         prx = prx->ice_invocationTimeout(static_cast<int>(timeout->Value * 1000));
     }
-    _helloPrx = Demo::HelloPrx::uncheckedCast(prx);
+    _helloPrx = Ice::uncheckedCast<Demo::HelloPrx>(prx);
 
     //
     // The batch requests associated to the proxy are lost when we
@@ -167,67 +167,72 @@ hello::MainPage::hello_Click(Platform::Object^ sender, Windows::UI::Xaml::Routed
             _response = false;
             hello->IsEnabled = false;
             int deliveryMode = mode->SelectedIndex;
-            Ice::AsyncResultPtr result = _helloPrx->begin_sayHello(static_cast<int>(delay->Value * 1000),
-                                        [=]()
-                                            {
-                                                hello->IsEnabled = true;
-                                                this->_response = true;
-                                                print("Ready.");
-                                            },
-                                        [=](const Ice::Exception& ex)
-                                            {
-                                                hello->IsEnabled = true;
-                                                this->_response = true;
-                                                ostringstream os;
-                                                os << ex;
-                                                print(os.str());
-                                            },
-                                        [=](bool sentSynchronously)
-                                            {
-                                                if(_helloPrx && _helloPrx->ice_getCachedConnection())
-                                                {
-                                                    try
-                                                    {
-                                                        // Loop through the connection informations until we find an
-                                                        // IPConnectionInfo class.
-                                                        for(Ice::ConnectionInfoPtr info = connection->getInfo(); info;
-                                                            info = info.underlying)
-                                                        {
-                                                            Ice::IPConnectionInfoPtr ipinfo =
-                                                                Ice::IPConnectionInfoPtr::dynamicCast(info);
-                                                            if(ipinfo)
-                                                            {
-                                                                hostname->Text = ref new String(
-                                                                    Ice::stringToWstring(info->remoteAddress).c_str());
-                                                                break;
-                                                            }
-                                                        }
-                                                    }
-                                                    catch(const Ice::LocalException&)
-                                                    {
-                                                        // Ignore
-                                                    }
-                                                }
-                                                if(this->_response)
-                                                {
-                                                    return; // Response was received already.
-                                                }
-                                                if(deliveryMode <= 1)
-                                                {
-                                                    print("Waiting for response.");
-                                                }
-                                                else if(!sentSynchronously)
-                                                {
-                                                    hello->IsEnabled = true;
-                                                    print("Ready.");
-                                                }
-                                            });
 
-            if(!result->sentSynchronously())
-            {
-                print("Sending request");
-            }
-            else if(deliveryMode > 1)
+            _helloPrx->sayHelloAsync(static_cast<int>(delay->Value * 1000),
+                [=]()
+                    {
+                        hello->IsEnabled = true;
+                        this->_response = true;
+                        print("Ready.");
+                    },
+                [=](const exception_ptr ex)
+                    {
+                        try
+                        {
+                            rethrow_exception(ex);
+                        }
+                        catch (const exception& err)
+                        {
+                            hello->IsEnabled = true;
+                            this->_response = true;
+                            ostringstream os;
+                            os << err.what();
+                            print(os.str());
+                        }
+                    },
+                [=](bool sentSynchronously)
+                    {
+                        if(_helloPrx && _helloPrx->ice_getCachedConnection())
+                        {
+                            try
+                            {
+                                auto connection = _helloPrx->ice_getCachedConnection();
+                                // Loop through the connection informations until we find an
+                                // IPConnectionInfo class.
+                                for(auto info = connection->getInfo(); info;
+                                    info = info->underlying)
+                                {
+                                    auto ipinfo =
+                                        dynamic_pointer_cast<Ice::IPConnectionInfo>(info);
+                                    if(ipinfo)
+                                    {
+                                        hostname->Text = ref new String(
+                                            Ice::stringToWstring(ipinfo->remoteAddress).c_str());
+                                        break;
+                                    }
+                                }
+                            }
+                            catch(const Ice::LocalException&)
+                            {
+                                // Ignore
+                            }
+                        }
+                        if(this->_response)
+                        {
+                            return; // Response was received already.
+                        }
+                        if(deliveryMode <= 1)
+                        {
+                            print("Waiting for response.");
+                        }
+                        else if(!sentSynchronously)
+                        {
+                            hello->IsEnabled = true;
+                            print("Ready.");
+                        }
+                    });
+
+            if(deliveryMode > 1)
             {
                 hello->IsEnabled = true;
                 print("Ready.");
@@ -268,17 +273,24 @@ void hello::MainPage::shutdown_Click(Platform::Object^ sender, Windows::UI::Xaml
             print("Shutting down...");
             shutdown->IsEnabled = false;
             int deliveryMode = mode->SelectedIndex;
-            _helloPrx->begin_shutdown([=]()
+            _helloPrx->shutdownAsync([=]()
                                       {
                                           shutdown->IsEnabled = true;
                                           print("Ready.");
                                       },
-                                      [=](const Ice::Exception& ex)
+                                      [=](const exception_ptr ex)
                                       {
-                                          shutdown->IsEnabled = true;
-                                          ostringstream os;
-                                          os << ex;
-                                          print(os.str());
+                                          try
+                                          {
+                                              rethrow_exception(ex);
+                                          }
+                                          catch(const std::exception& err)
+                                          {
+                                              shutdown->IsEnabled = true;
+                                              ostringstream os;
+                                              os << err.what();
+                                              print(os.str());
+                                          }
                                       },
                                       [=](bool)
                                       {
@@ -308,16 +320,24 @@ void hello::MainPage::flush_Click(Platform::Object^ sender, Windows::UI::Xaml::R
     try
     {
         flush->IsEnabled = false;
-        _helloPrx->begin_ice_flushBatchRequests([=](const Ice::Exception& ex)
-                                                {
-                                                    ostringstream os;
-                                                    os << ex;
-                                                    print(os.str());
-                                                },
-                                                [=](bool)
-                                                {
-                                                    print("Flushed batch requests.");
-                                                });
+        _helloPrx->ice_flushBatchRequestsAsync(
+            [=](const exception_ptr ex)
+            {
+                try
+                {
+                    rethrow_exception(ex);
+                }
+                catch(const exception& err)
+                {
+                    ostringstream os;
+                    os << err.what();
+                    print(os.str());
+                }
+            },
+                [=](bool)
+            {
+                print("Flushed batch requests.");
+            });
     }
     catch(const Ice::Exception& ex)
     {
@@ -359,17 +379,17 @@ MainPage::hostname_TextChanged(Platform::Object^ sender, Windows::UI::Xaml::Cont
 
 void hello::MainPage::useDiscovery_Changed(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
-	if(useDiscovery->IsChecked->Value)
-	{
-		hostname->Text = "";
-		hostname->IsEnabled = false;
-	}
-	else
-	{
-		hostname->Text = "127.0.0.1";
-		hostname->IsEnabled = true;
-	}
-	updateProxy();
+    if(useDiscovery->IsChecked->Value)
+    {
+        hostname->Text = "";
+        hostname->IsEnabled = false;
+    }
+    else
+    {
+        hostname->Text = "127.0.0.1";
+        hostname->IsEnabled = true;
+    }
+    updateProxy();
 }
 
 void
