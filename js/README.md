@@ -80,17 +80,22 @@ To use WSS on iOS and Android it may be required (depending on browser and
 platform) that the server certificate's common name matches the computer hosting
 the demos, and that the demo certificate authority be installed on your device.
 
-First you'll need to generate new certificates to match the IP address of the
-computer hosting the demos:
+First you'll need to generate new certificates to match the IP address or DNS
+name of the computer hosting the demos:
 
-    > certs/makecerts.py [IP address]
+    > certs/makecerts.py --ip [IP address] --dns [DNS name] [--use-dns]
+
+The option `--use-dns` specifies to use the DNS name instead of the IP address
+for the certificate common name. You can use either the IP address or DNS name
+for the common name, the only requirement is that it matches the value used to
+connect to the server.
 
 Next you must install the certificate authority on your device. The simplest way
 is to email the CA certificate (`certs/cacert.pem`) to yourself and then follow
 the instructions below to install the certificate on your device.
 
-Once installed, you connect to the server using the same IP address used to
-create the certificates.
+Once installed, you connect to the server using the same IP address or DNS name
+used to create the certificates.
 
 ##### Installing Certificates on iOS
 

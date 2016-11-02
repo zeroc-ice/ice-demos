@@ -164,10 +164,18 @@
     <IceBuilderIncludeDirectories>$(IceHome)\slice</IceBuilderIncludeDirectories>
   </PropertyGroup>
   <Import Project="$(IceBuilderCsharpTargets)" Condition="Exists('$(IceBuilderCsharpTargets)')" />
+<<<<<<< HEAD
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild" Condition="'$(UseIceHome)' != 'yes'">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\..\packages\zeroc.ice.net.3.7.0-alpha3\build\zeroc.ice.net.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\zeroc.ice.net.3.7.0-alpha3\build\zeroc.ice.net.props'))" />
+=======
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+>>>>>>> origin/3.6
   </Target>
 </Project>

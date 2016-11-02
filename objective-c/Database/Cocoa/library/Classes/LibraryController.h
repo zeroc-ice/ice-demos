@@ -5,6 +5,7 @@
 // **********************************************************************
 
 #import <Cocoa/Cocoa.h>
+#import <objc/Ice/Ice.h>
 
 @protocol DemoLibraryPrx;
 @protocol ICECommunicator;
@@ -38,7 +39,7 @@
 
     id<ICECommunicator> communicator;
     id session;
-    int sessionTimeout;
+    ICELong sessionTimeout;
     id<DemoLibraryPrx> library;
     id<GLACIER2RouterPrx> router;
 
@@ -47,7 +48,7 @@
     NSMutableArray* books;
     int rowsQueried;
     int nrows;
-    int searchType; // Equivalent to the tag of the menu item.
+    NSInteger searchType; // Equivalent to the tag of the menu item.
     
     DemoBookDescription* selection;
     DemoBookDescription* updated;
@@ -56,7 +57,7 @@
 -(id)initWithCommunicator:(id<ICECommunicator>)communicator
                   session:(id)session
                    router:(id<GLACIER2RouterPrx>)router
-           sessionTimeout:(int)sessionTimeout
+           sessionTimeout:(ICELong)sessionTimeout
                   library:(id<DemoLibraryPrx>)library;
 
 -(void)add:(id)sender;

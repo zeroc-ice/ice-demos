@@ -4,8 +4,8 @@ This demo is a graphical client app written in C++/CX. This client
 works with the UWP hello server as well as the Ice/hello servers provided by
 other language mappings, such as C++, C#, Java and Python.
 
-Note that is you use the UWP server, due to UWP restrictions it must be ran on
-a separate machine from the client.
+Note that if you use the UWP server, this server cannot run on same machine as
+the client due to UWP restrictions.
 
 ## Running the demo
 
@@ -21,21 +21,21 @@ authentication. In order to successfully connect with SSL, you need to edit
 the hello server configuration file (`config.server`) and uncomment the
 `IceSSL.VerifyPeer=0` property.
 
-If you run the hello client and server on different computers or devices,
-you also need to regenerate the server certificate to ensure the
-certificate common name is set to the IP address of the server. To
-regenerate the certificate, you can run the `makecerts.py` Python script
-from the `certs` directory at the top of this distribution. For example:
+If you run the hello client and server on different computers or devices, you
+also need to regenerate the server certificate to ensure the certificate common
+name is set to the address used by the client to connect to the server.
+
+To regenerate the certificate, you can run the `makecerts.py` Python script from
+the `certs` directory at the top of this distribution. For example:
 
 ```bash
 cd certs
-makecerts.py 192.168.1.53
+makecerts.py --ip 192.168.1.53 --dns 192.168.1.53
 ```
 
-This will regenerate a server certificate with a common name set to
-192.168.1.53 (please use your server's IP address). You can provide an IP address
-or DNS name, the only requirement is that it matches the value used by the
-hello client to connect to the hello server.
+This will regenerate a server certificate with a common name, IP address and DNS
+name set to `192.168.1.53`. It's important to use the same value as the value
+used in the client to connect to the server.
 
 You can regenerate these certificates on the client or on the server. Then
 make sure to copy these certificates (the `certs` directory) to the other system.
@@ -66,7 +66,7 @@ To enable IceDiscovery, click on the "Use IceDiscovery" check-box. You must run
 the hello server from the IceDiscovery/hello demo and ensure that the server is
 listening on an accessible network interface.
 
-See the README file of the IceDiscovery hello demo for more information on how
+See the README.md file of the IceDiscovery hello demo for more information on how
 to start the server.
 
 > Note: you must run the server on another machine. The hello client can't

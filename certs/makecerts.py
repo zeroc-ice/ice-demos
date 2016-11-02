@@ -92,7 +92,7 @@ factory = CertificateFactory(debug=debug, cn="Ice Demos CA")
 #
 # CA certificate
 #
-factory.getCA().save("cacert.pem").save("cacert.der").save("cacert.jks")
+factory.getCA().save("cacert.pem").save("cacert.der")
 
 # Client certificate
 client = factory.create("client")
@@ -103,6 +103,7 @@ server = factory.create("server", cn = (dns if usedns else ip), ip=ip, dns=dns)
 server.save("server.p12")
 
 try:
+    factory.getCA().save("cacert.pem").save("cacert.jks") # Used by the Database/library demo
     server.save("server.jks", caalias="cacert")
     client.save("client.jks", caalias="cacert")
 

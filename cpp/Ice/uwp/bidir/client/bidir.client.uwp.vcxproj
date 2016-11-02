@@ -12,6 +12,8 @@
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
     <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
     <ProjectName>client</ProjectName>
+    <IceBuilderCppProps Condition="!Exists('$(IceBuilderCppProps)')">$([System.IO.Directory]::GetFiles('$(LocalAppData)\Microsoft\VisualStudio\$(VisualStudioVersion)\Extensions', 'IceBuilder.Cpp.props', SearchOption.AllDirectories))</IceBuilderCppProps>
+    <IceBuilderCppTargets Condition="!Exists('$(IceBuilderCppTargets)')">$([System.IO.Directory]::GetFiles('$(LocalAppData)\Microsoft\VisualStudio\$(VisualStudioVersion)\Extensions', 'IceBuilder.Cpp.targets', SearchOption.AllDirectories))</IceBuilderCppTargets>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <ItemGroup Label="ProjectConfigurations">
@@ -57,7 +59,7 @@
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <Import Project="$(LOCALAPPDATA)\ZeroC\IceBuilder\IceBuilder.Cpp.props" />
+  <Import Project="$(IceBuilderCppProps)" Condition="Exists('$(IceBuilderCppProps)')" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -144,9 +146,6 @@
     <AppxManifest Include="Package.uwp.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="..\..\..\..\..\certs\cacert.der">
-      <DeploymentContent>true</DeploymentContent>
-    </None>
     <None Include="client_TemporaryKey.pfx" />
     <None Include="README.md" />
   </ItemGroup>
@@ -178,7 +177,7 @@
     <IceBuilder Include="Callback.ice" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <Import Project="$(LOCALAPPDATA)\ZeroC\IceBuilder\IceBuilder.Cpp.targets" />
+  <Import Project="$(IceBuilderCppTargets)" Condition="Exists('$(IceBuilderCppTargets)')" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
 </Project>

@@ -59,7 +59,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
-    <None Include="..\..\..\..\..\certs\cacert.der" />
     <None Include="server_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
