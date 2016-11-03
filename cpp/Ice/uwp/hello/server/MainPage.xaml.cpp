@@ -25,6 +25,7 @@ using namespace Windows::UI::Xaml::Navigation;
 
 namespace
 {
+    
 class HelloI : public Hello
 {
 public:
@@ -59,6 +60,7 @@ private:
 
     MainPage^ _page;
 };
+
 }
 
 MainPage::MainPage()

@@ -25,7 +25,7 @@ using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
 
 void
-CallbackSenderI::addClient(const Ice::Identity& ident, const Ice::Current& current)
+CallbackSenderI::addClient(Ice::Identity ident, const Ice::Current& current)
 {
     unique_lock<mutex> lock(_mutex);
 
@@ -40,38 +40,17 @@ CallbackSenderI::addClient(const Ice::Identity& ident, const Ice::Current& curre
 }
 
 void
-CallbackSenderI::destroy()
-{
-    {
-        unique_lock<mutex> lock(_mutex);
-        cout << "destroying callback sender" << endl;
-        _destroy = true;
-        _cv.notify_one();
-    }
-
-    _senderThread.join();
-}
-
-void
 CallbackSenderI::start()
 {
     thread t([this]()
         {
             int num = 0;
-            bool destroyed = false;
-            while(!destroyed)
+            while(true)
             {
                 set<shared_ptr<Demo::CallbackReceiverPrx>> clients;
                 {
                     unique_lock<mutex> lock(this->_mutex);
                     this->_cv.wait_for(lock, chrono::seconds(2));
-
-                    if(this->_destroy)
-                    {
-                        destroyed = true;
-                        continue;
-                    }
-
                     clients = this->_clients;
                 }
 
@@ -143,17 +122,4 @@ bidir::MainPage::print(const std::string& message)
                                     scroller->ChangeView(nullptr, scroller->ScrollableHeight, nullptr);
                                 }, 
                             CallbackContext::Any));
-}
-
-void
-bidir::MainPage::destroy()
-{
-    try
-    {
-        _communicator->destroy();
-    }
-    catch(...)
-    {
-    }
-    _sender->destroy();
 }
