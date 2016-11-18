@@ -77,12 +77,41 @@ Add this extension to Visual Studio before opening the solution.
 
 ### Building the Demos
 
-Open the solution file `C++ demos.sln` to build the sample programs. This file
-was created with Visual Studio 2012 and will be converted if you are using a newer
-version of Visual Studio.
+#### Building the demos using NuGet packages:
 
-Select your target configuration: Debug or Release, Win32 or x64. Right click on
-the desired demo in the Solution Explorer window and select "Build".
+Open the solution file `C++ demos.sln` to build the sample programs.
+
+The demos are configure to use Ice distribution from Nuget packages, this packages are
+automatically downloaded during build. If you have disabled the automatic download of
+Nuget packages in Visual Studio you need to restore the packages before you build.
+
+Packages can be restore from "Tools > NuGet Package Manager > Manage NuGet Packages for Solution..."
+command in Visual Studio.
+
+After restoring the packages select your target configuration: Debug or Release and platform
+Win32 or x64. Right click on the desired demo in the Solution Explorer window and select "Build".
+
+#### Building the demos without using NuGet packages:
+
+- Build from command line:
+
+ - Open a Visual Studio command prompt
+
+    cd ice-demos\cpp
+    MSBuild /p:UseIceHome=yes /p:IceHome:<Ice dist path> /p:Configuration<Debug|Release> /p:Platform:<x64|Win32> "C++ demos.sln"
+
+- Build from Visual Studio
+
+ - Open a Visual Studio command prompt
+
+    set UseIceHome=yes
+    devenv
+
+ - When Visual Studio starts set IceHome in Ice Builder options, "Tools > Options > Projects and Solutions > Ice Builder"
+ - Disable automatic restoring of NuGet packages in Visual Studio from "Tools > Options > NuGet Package Manager"
+ - Select your target configuration: Debug or Release and platform Win32 or x64. Right click on the desired demo in the Solution Explorer window and select "Build".
+ 
+
 
 ### Running the Demos
 
