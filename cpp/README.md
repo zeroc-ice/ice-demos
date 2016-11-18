@@ -96,14 +96,14 @@ Win32 or x64. Right click on the desired demo in the Solution Explorer window an
 - Build from command line:
   * Open a Visual Studio command prompt
 
-        cd ice-demos\cpp
-        MSBuild /p:UseIceHome=yes /p:IceHome:<Ice dist path> /p:Configuration<Debug|Release> /p:Platform:<x64|Win32> "C++ demos.sln"
+            cd ice-demos\cpp
+            MSBuild /p:UseIceHome=yes /p:IceHome:<Ice dist path> /p:Configuration<Debug|Release> /p:Platform:<x64|Win32> "C++ demos.sln"
 
 - Build from Visual Studio
   * Open a Visual Studio command prompt
   
-        set UseIceHome=yes
-        devenv
+            set UseIceHome=yes
+            devenv
 
   * When Visual Studio starts set IceHome in Ice Builder options, "Tools > Options > Projects and Solutions > Ice Builder"
   * Disable automatic restoring of NuGet packages in Visual Studio from "Tools > Options > NuGet Package Manager"
