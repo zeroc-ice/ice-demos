@@ -85,7 +85,7 @@ The demos are configure to use Ice distribution from Nuget packages, this packag
 automatically downloaded during build. If you have disabled the automatic download of
 Nuget packages in Visual Studio you need to restore the packages before you build.
 
-Packages can be restore from "Tools > NuGet Package Manager > Manage NuGet Packages for Solution..."
+Packages can be restored from "Tools > NuGet Package Manager > Manage NuGet Packages for Solution..."
 command in Visual Studio.
 
 After restoring the packages select your target configuration: Debug or Release and platform
