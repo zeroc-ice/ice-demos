@@ -82,7 +82,7 @@ public class PrinterI : Ice.Blobject
         }
         else if(current.operation.Equals("printStruct"))
         {
-            var s = Structure.read(inStream);
+            var s = Structure.ice_read(inStream);
             inStream.endEncapsulation();
             Console.WriteLine("Printing struct: name=" + s.name + ", value=" + s.value);
             return true;
