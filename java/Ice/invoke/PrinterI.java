@@ -57,13 +57,13 @@ public class PrinterI implements com.zeroc.Ice.Blobject
         }
         else if(current.operation.equals("printEnum"))
         {
-            Demo.Color c = Demo.Color.read(in);
+            Demo.Color c = Demo.Color.ice_read(in);
             in.endEncapsulation();
             System.out.println("Printing enum " + c);
         }
         else if(current.operation.equals("printStruct"))
         {
-            Demo.Structure s = Demo.Structure.read(in, null);
+            Demo.Structure s = Demo.Structure.ice_read(in, null);
             in.endEncapsulation();
             System.out.println("Printing struct: name=" + s.name + ", value=" + s.value);
         }

@@ -145,7 +145,7 @@ public class Client extends com.zeroc.Ice.Application
                     //
                     com.zeroc.Ice.OutputStream out = new com.zeroc.Ice.OutputStream(communicator());
                     out.startEncapsulation();
-                    Demo.Color.write(out, Demo.Color.green);
+                    Demo.Color.ice_write(out, Demo.Color.green);
                     out.endEncapsulation();
 
                     //
@@ -168,7 +168,7 @@ public class Client extends com.zeroc.Ice.Application
                     Demo.Structure s = new Demo.Structure();
                     s.name = "red";
                     s.value = Demo.Color.red;
-                    Demo.Structure.write(out, s);
+                    Demo.Structure.ice_write(out, s);
                     out.endEncapsulation();
 
                     //
