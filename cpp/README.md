@@ -116,24 +116,30 @@ as described in the [release notes][3].
 
 Refer to the README file in each demo directory for usage instructions.
 
-## Building the Demo Apps for WinRT and UWP
+## Building the Demo Apps for Universal Windows Platform
 
 ### Prerequisites
 
 The projects for the sample programs require the [Ice Builder for Visual Studio][5].
 Add this extension to Visual Studio before opening the solution.
 
-WinRT requires Windows 8.1 with Visual Studio 2013, and UWP requires Windows 10
-with Visual Studio 2015.
+UWP requires Windows 10 with Visual Studio 2015.
 
 ### Building the Demos
 
-Open the solution file `C++ demos (Windows 8.1 WinRT).sln` or `C++ demos (Universal Windows).sln`
-to build the WinRT resp. UWP demo programs.
+#### Building the demos using NuGet packages:
 
-Select your target configuration: Debug or Release, and Win32, x86 or x64.
-Right click on the desired demo in the Solution Explorer window and
-select "Build".
+Open the solution file `C++ demos (Universal Windows).sln`.
+
+The demos are configure to use Ice distribution from Nuget packages, this packages are
+automatically downloaded during build. If you have disabled the automatic download of
+Nuget packages in Visual Studio you need to restore the packages before you build.
+
+Packages can be restore from "Tools > NuGet Package Manager > Manage NuGet Packages for Solution..."
+command in Visual Studio.
+
+After restoring the packages select your target configuration: Debug or Release, and platform
+Win32, x64 or ARM. Right click on the desired demo in the Solution Explorer window and select "Build".
 
 Refer to the README file in each demo directory for usage instructions.
 
