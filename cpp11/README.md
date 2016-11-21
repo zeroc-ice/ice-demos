@@ -3,7 +3,7 @@
 - [Overview](#overview)
 - [Building and Running the Demos on Linux and OS X](#building-and-running-the-demos-on-linux-and-os-x)
 - [Building and Running the Demos on Windows](#building-and-running-the-demos-on-windows)
-- [Building the Demo Apps for Universal Windows Platform (UWP)](#building-the-demo-apps-for-universal-windows-platform)
+- [Building the Demo Apps for Universal Windows Platform (UWP)](#building-the-demo-apps-for-universal-windows-platform-uwp)
 
 ## Overview
 
