@@ -30,43 +30,6 @@ if(!extension_loaded("ice"))
     exit(1);
 }
 
-$paths = explode(PATH_SEPARATOR, get_include_path());
-$paths = array_merge($paths, array("/usr/share/Ice-3.5.0/php",
-    "/Users/joe/Development/zeroc/ice/php/lib",
-    "C:\\Program Files\\ZeroC\\Ice-3.5.0\\php",
-    "C:\\Program Files (x86)\\ZeroC\\Ice-3.5.0\\php",
-    "C:\\Ice-3.5.0\\php"));
-
-$iceIncludePath = "";
-
-foreach($paths as $path)
-{
-    $path .= '/Ice.php';
-    if(is_file($path))
-    {
-        $iceIncludePath = dirname($path);
-        break;
-    }
-}
-
-if($iceIncludePath == "")
-{
-    printJson("IcePHP includes not found. Revise your IcePHP installation.");
-    error_log("IcePHP includes not found. Revise your IcePHP installation.");
-    exit(1);
-}
-
-$includePath = get_include_path();
-if(!in_array($iceIncludePath, explode(PATH_SEPARATOR, get_include_path())))
-{
-    if($includePath != '')
-    {
-        $includePath .= PATH_SEPARATOR;
-    }
-    $includePath .= $iceIncludePath;
-    set_include_path($includePath);
-}
-
 require_once 'Ice.php';
 require_once dirname(__FILE__) . '/SessionI.php';
 require_once dirname(__FILE__) . '/PollingChat.php';

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\..\msbuild\ice.props" />
+
+  <Import Project="..\..\..\msbuild\packages\zeroc.ice.php.3.7.0-alpha3\build\native\zeroc.ice.php.props" 
+          Condition="Exists('..\..\..\msbuild\packages\zeroc.ice.php.3.7.0-alpha3\build\native\zeroc.ice.php.props') and '$(UseIceHome)' != 'yes'" />
+
+  <Import Project="$(IceBuilderPhpProps)" />
+  <ItemGroup>
+      <IceBuilder Include="..\*.ice" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <IceBuilderOutputDir>..</IceBuilderOutputDir>
+  </PropertyGroup>
+
+  <Target Name="Build"></Target>
+  <Target Name="Clean"></Target>
+
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="Build" Condition="'$(UseIceHome)' != 'yes'">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\..\msbuild\packages\zeroc.ice.php.3.7.0-alpha3\build\native\zeroc.ice.php.props')"
+           Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\msbuild\zeroc.ice.php.3.7.0-alpha3\build\native\zeroc.ice.php.props'))" />
+  </Target>
+
+  <Target Name="EnsureIceBuilderImports" BeforeTargets="Build">
+    <PropertyGroup>
+      <ErrorText>This project requires the Ice Builder for Visual Studio extension. Use "Tools &amp;gt; Extensions and Updates" to install it. For more information, see https://visualstudiogallery.msdn.microsoft.com/1a64e701-63f2-4740-8004-290e6c682ce0.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(IceBuilderPhpProps)')" Text="$(ErrorText)" />
+  </Target>
+  <Import Project="$(IceBuilderPhpTargets)" />
+</Project>
