@@ -181,7 +181,7 @@
     </IceBuilder>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <None Include="..\README.md" />
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

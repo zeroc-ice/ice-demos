@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\README.md" />
+    <None Include="..\..\config.client" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -93,8 +94,5 @@
     <ClInclude Include="x64\Release\Chat.h">
       <Filter>Header Files\x64\Release</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="..\..\config.client" />
   </ItemGroup>
 </Project>

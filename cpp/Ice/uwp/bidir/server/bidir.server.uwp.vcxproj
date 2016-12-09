@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\..\..\..\packages\zeroc.ice.uwp.3.7.0-alpha3\build\native\zeroc.ice.uwp.props" Condition="Exists('..\..\..\..\packages\zeroc.ice.uwp.3.7.0-alpha3\build\native\zeroc.ice.uwp.props') and '$(UseIceHome)' != 'yes'" />
+  <Import Project="..\..\..\..\packages\zeroc.ice.uwp.3.7.0-alpha3\build\native\zeroc.ice.uwp.props" Condition="Exists('..\..\..\..\packages\zeroc.ice.uwp.3.7.0-alpha3\build\native\zeroc.ice.uwp.props') and '$(UseSrcDist)' != 'yes'" />
   <PropertyGroup Label="Globals">
     <ProjectGuid>{647C6FD3-E5E5-4451-949D-A41D2A911868}</ProjectGuid>
     <RootNamespace>bidir</RootNamespace>
@@ -230,20 +230,20 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Import Project="$(IceBuilderCppTargets)" Condition="Exists('$(IceBuilderCppTargets)')" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\..\..\..\packages\zeroc.ice.uwp.arm.3.7.0-alpha3\build\native\zeroc.ice.uwp.arm.targets" Condition="Exists('..\..\..\..\packages\zeroc.ice.uwp.arm.3.7.0-alpha3\build\native\zeroc.ice.uwp.arm.targets') and '$(UseIceHome)' != 'yes'" />
-    <Import Project="..\..\..\..\packages\zeroc.ice.uwp.x64.3.7.0-alpha3\build\native\zeroc.ice.uwp.x64.targets" Condition="Exists('..\..\..\..\packages\zeroc.ice.uwp.x64.3.7.0-alpha3\build\native\zeroc.ice.uwp.x64.targets') and '$(UseIceHome)' != 'yes'" />
-    <Import Project="..\..\..\..\packages\zeroc.ice.uwp.x86.3.7.0-alpha3\build\native\zeroc.ice.uwp.x86.targets" Condition="Exists('..\..\..\..\packages\zeroc.ice.uwp.x86.3.7.0-alpha3\build\native\zeroc.ice.uwp.x86.targets') and '$(UseIceHome)' != 'yes'" />
     <Import Project="..\..\..\..\packages\zeroc.ice.uwp.3.7.0-alpha3\build\native\zeroc.ice.uwp.targets" Condition="Exists('..\..\..\..\packages\zeroc.ice.uwp.3.7.0-alpha3\build\native\zeroc.ice.uwp.targets') and '$(UseIceHome)' != 'yes'" />
+    <Import Project="..\..\..\..\packages\zeroc.ice.uwp.arm.3.7.0-alpha3\build\native\zeroc.ice.uwp.arm.targets" Condition="Exists('..\..\..\..\packages\zeroc.ice.uwp.arm.3.7.0-alpha3\build\native\zeroc.ice.uwp.arm.targets') and '$(UseSrcDist)' != 'yes'" />
+    <Import Project="..\..\..\..\packages\zeroc.ice.uwp.x64.3.7.0-alpha3\build\native\zeroc.ice.uwp.x64.targets" Condition="Exists('..\..\..\..\packages\zeroc.ice.uwp.x64.3.7.0-alpha3\build\native\zeroc.ice.uwp.x64.targets') and '$(UseSrcDist)' != 'yes'" />
+    <Import Project="..\..\..\..\packages\zeroc.ice.uwp.x86.3.7.0-alpha3\build\native\zeroc.ice.uwp.x86.targets" Condition="Exists('..\..\..\..\packages\zeroc.ice.uwp.x86.3.7.0-alpha3\build\native\zeroc.ice.uwp.x86.targets') and '$(UseSrcDist)' != 'yes'" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild" Condition="'$(UseIceHome)' != 'yes'">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\..\..\packages\zeroc.ice.uwp.arm.3.7.0-alpha3\build\native\zeroc.ice.uwp.arm.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.uwp.arm.3.7.0-alpha3\build\native\zeroc.ice.uwp.arm.targets'))" />
-    <Error Condition="!Exists('..\..\..\..\packages\zeroc.ice.uwp.x64.3.7.0-alpha3\build\native\zeroc.ice.uwp.x64.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.uwp.x64.3.7.0-alpha3\build\native\zeroc.ice.uwp.x64.targets'))" />
-    <Error Condition="!Exists('..\..\..\..\packages\zeroc.ice.uwp.x86.3.7.0-alpha3\build\native\zeroc.ice.uwp.x86.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.uwp.x86.3.7.0-alpha3\build\native\zeroc.ice.uwp.x86.targets'))" />
-    <Error Condition="!Exists('..\..\..\..\packages\zeroc.ice.uwp.3.7.0-alpha3\build\native\zeroc.ice.uwp.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.uwp.3.7.0-alpha3\build\native\zeroc.ice.uwp.props'))" />
-    <Error Condition="!Exists('..\..\..\..\packages\zeroc.ice.uwp.3.7.0-alpha3\build\native\zeroc.ice.uwp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.uwp.3.7.0-alpha3\build\native\zeroc.ice.uwp.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\packages\zeroc.ice.uwp.3.7.0-alpha3\build\native\zeroc.ice.uwp.targets') and '$(UseSrcDist)' != 'yes'" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.uwp.3.7.0-alpha3\build\native\zeroc.ice.uwp.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\packages\zeroc.ice.uwp.arm.3.7.0-alpha3\build\native\zeroc.ice.uwp.arm.targets') and '$(UseSrcDist)' != 'yes'" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.uwp.arm.3.7.0-alpha3\build\native\zeroc.ice.uwp.arm.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\packages\zeroc.ice.uwp.x64.3.7.0-alpha3\build\native\zeroc.ice.uwp.x64.targets') and '$(UseSrcDist)' != 'yes'" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.uwp.x64.3.7.0-alpha3\build\native\zeroc.ice.uwp.x64.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\packages\zeroc.ice.uwp.x86.3.7.0-alpha3\build\native\zeroc.ice.uwp.x86.targets') and '$(UseSrcDist)' != 'yes'" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.uwp.x86.3.7.0-alpha3\build\native\zeroc.ice.uwp.x86.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\packages\zeroc.ice.uwp.3.7.0-alpha3\build\native\zeroc.ice.uwp.props') and '$(UseSrcDist)' != 'yes'" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.uwp.3.7.0-alpha3\build\native\zeroc.ice.uwp.props'))" />
   </Target>
   <Target Name="EnsureIceBuilderImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

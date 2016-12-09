@@ -93,8 +93,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\config.glacier2" />
-    <None Include="packages.config" />
     <None Include="..\..\config.server" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <IceBuilder Include="..\..\Callback.ice">

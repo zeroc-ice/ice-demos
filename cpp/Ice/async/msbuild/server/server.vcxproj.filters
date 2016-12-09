@@ -103,9 +103,7 @@
     </IceBuilder>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="..\..\config.server" />
-  </ItemGroup>
-  <ItemGroup>
+    <None Include="..\..\config.server" />
     <None Include="packages.config" />
   </ItemGroup>
 </Project>

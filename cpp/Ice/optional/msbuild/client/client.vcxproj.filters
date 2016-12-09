@@ -72,8 +72,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <None Include="..\..\config.client" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <IceBuilder Include="..\..\Contact.ice">

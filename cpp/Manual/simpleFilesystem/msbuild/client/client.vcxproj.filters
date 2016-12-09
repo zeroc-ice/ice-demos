@@ -72,9 +72,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <IceBuilder Include="..\..\Filesystem.ice">
       <Filter>Slice Files</Filter>
     </IceBuilder>
@@ -92,5 +89,8 @@
     <ClInclude Include="x64\Release\Filesystem.h">
       <Filter>Header Files\x64\Release</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

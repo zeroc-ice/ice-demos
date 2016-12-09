@@ -87,9 +87,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="..\..\config.client" />
-  </ItemGroup>
-  <ItemGroup>
+    <None Include="..\..\config.client" />
     <None Include="packages.config" />
   </ItemGroup>
 </Project>
