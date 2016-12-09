@@ -11,15 +11,14 @@ Ice.loadSlice('Hello.ice')
 import Demo
 
 class Callback:
-    def response(self):
-        pass
-
-    def exception(self, ex):
-        if isinstance(ex, Demo.RequestCanceledException):
+    def response(self, f):
+        try:
+            f.result()
+        except Demo.RequestCanceledException:
             print("Demo.RequestCanceledException")
-        else:
+        except:
             print("sayHello AMI call failed:")
-            print(ex)
+            traceback.print_exc()
 
 def menu():
     print("""
@@ -54,7 +53,7 @@ class Client(Ice.Application):
                     hello.sayHello(0)
                 elif c == 'd':
                     cb = Callback()
-                    hello.begin_sayHello(5000, cb.response, cb.exception)
+                    hello.sayHelloAsync(5000).add_done_callback(cb.response)
                 elif c == 's':
                     hello.shutdown()
                 elif c == 'x':

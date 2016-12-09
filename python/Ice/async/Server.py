@@ -11,8 +11,8 @@ Ice.loadSlice('Hello.ice')
 import Demo
 
 class CallbackEntry(object):
-    def __init__(self, cb, delay):
-        self.cb = cb
+    def __init__(self, f, delay):
+        self.future = f
         self.delay = delay
 
 class WorkQueue(threading.Thread):
@@ -23,9 +23,7 @@ class WorkQueue(threading.Thread):
         self._cond = threading.Condition()
 
     def run(self):
-        self._cond.acquire()
-
-        try:
+        with self._cond:
             while not self._done:
                 if len(self._callbacks) == 0:
                     self._cond.wait()
@@ -35,47 +33,39 @@ class WorkQueue(threading.Thread):
 
                     if not self._done:
                         print("Belated Hello World!")
-                        self._callbacks[0].cb.ice_response()
+                        self._callbacks[0].future.set_result(None)
                         del self._callbacks[0]
 
             for i in range(0, len(self._callbacks)):
-                self._callbacks[i].cb.ice_exception(Demo.RequestCanceledException())
-        finally:
-            self._cond.release()
+                self._callbacks[i].future.set_exception(Demo.RequestCanceledException())
 
-    def add(self, cb, delay):
-        self._cond.acquire()
-
-        try:
+    def add(self, delay):
+        future = Ice.Future()
+        with self._cond:
             if not self._done:
-                entry = CallbackEntry(cb, delay)
+                entry = CallbackEntry(future, delay)
                 if len(self._callbacks) == 0:
                     self._cond.notify()
                 self._callbacks.append(entry)
             else:
-               cb.ice_exception(Demo.RequestCanceledException())
-        finally:
-            self._cond.release()
+               future.set_exception(Demo.RequestCanceledException())
+        return future
 
     def destroy(self):
-        self._cond.acquire()
-
-        try:
+        with self._cond:
             self._done = True
             self._cond.notify()
-        finally:
-            self._cond.release()
 
 class HelloI(Demo.Hello):
     def __init__(self, workQueue):
         self._workQueue = workQueue
 
-    def sayHello_async(self, cb, delay, current=None):
+    def sayHello(self, delay, current=None):
         if delay == 0:
             print("Hello World!")
-            cb.ice_response()
+            return None
         else:
-            self._workQueue.add(cb, delay)
+            return self._workQueue.add(delay)
 
     def shutdown(self, current=None):
         self._workQueue.destroy()
