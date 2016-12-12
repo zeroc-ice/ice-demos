@@ -86,11 +86,6 @@ Demos in this directory:
   bandwidth that can be achieved using serialized synchronous
   requests.
 
-- [value](./value)
-
-  This demo shows how to use classes, class factories, and the
-  difference between local and remote invocations of class operations.
-
 - [wpf](./wpf)
 
   A Windows Presentation Foundation (WPF) application that shows how

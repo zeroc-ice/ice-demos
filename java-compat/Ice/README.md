@@ -91,8 +91,3 @@ Demos in this directory:
   various types between client and server and to measure the maximum
   bandwidth that can be achieved using serialized synchronous
   requests.
-
-- [value](./value)
-
-  This demo shows how to use classes, class factories, and the
-  difference between local and remote invocations of class operations.
