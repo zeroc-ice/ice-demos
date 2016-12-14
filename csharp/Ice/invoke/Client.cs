@@ -162,7 +162,7 @@ public class Client
                         //
                         var outStream = new Ice.OutputStream(communicator());
                         outStream.startEncapsulation();
-                        var s = new Structure("read", Color.red);
+                        var s = new Structure("red", Color.red);
                         Structure.ice_write(outStream, s);
                         outStream.endEncapsulation();
 

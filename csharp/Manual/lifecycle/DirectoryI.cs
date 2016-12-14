@@ -71,8 +71,9 @@ namespace FilesystemI
                     throw new ObjectNotExistException();
                 }
 
-                NodeI p = (NodeI) _contents[name];
-                if(p == null)
+
+                NodeI p;
+                if(!_contents.TryGetValue(name, out p))
                 {
                     throw new NoSuchName(name);
                 }
