@@ -222,26 +222,26 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>..\..\</OutDir>
+    <OutDir>..\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
     <TargetName>chatserver</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
-    <OutDir>..\..\</OutDir>
+    <OutDir>..\</OutDir>
     <TargetName>chatserver</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>..\..\</OutDir>
+    <OutDir>..\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
     <TargetName>chatserver</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
-    <OutDir>..\..\</OutDir>
+    <OutDir>..\</OutDir>
     <TargetName>chatserver</TargetName>
   </PropertyGroup>
   <PropertyGroup Label="IceBuilder">
