@@ -79,12 +79,8 @@ endif
 # If building objects for a shared library, enable fPIC
 shared_cppflags	= $(if $(filter-out program,$($1_target)),-fPIC)
 
-CXXFLAGS        += -fvisibility=hidden -Wall -Werror -pthread
+CXXFLAGS        += -fvisibility=hidden -Wall -Wextra -Wdeprecated -Wshadow -Wredundant-decls -Werror -pthread
 LDFLAGS         += -pthread
-
-ifeq ($(MAXWARN),yes)
-    CXXFLAGS    += -Wextra -Wshadow -Wredundant-decls
-endif
 
 ifeq ($(OPTIMIZE),yes)
     CXXFLAGS    += -O2 -DNDEBUG
