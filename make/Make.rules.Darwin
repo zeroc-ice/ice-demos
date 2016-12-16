@@ -34,11 +34,7 @@ iphonesimulator_targetdir	= $(if $(filter %/build,$5),/iphonesimulator)
 # If building objects for a shared library, enable fPIC
 shared_cppflags	= $(if $(filter-out program,$($1_target)),-fPIC)
 
-CXXFLAGS	+= -fvisibility=hidden -Wall -Werror -pthread
-
-ifeq ($(MAXWARN),yes)
-    CXXFLAGS	+= -Wextra -Wshadow -Wredundant-decls
-endif
+CXXFLAGS	+= -fvisibility=hidden -Wall -Wextra -Wshadow -Wredundant-decls -Wdeprecated -Werror -pthread
 
 ifeq ($(OPTIMIZE),yes)
     CXXFLAGS	+= -O2 -DNDEBUG
