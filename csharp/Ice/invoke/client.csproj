@@ -85,7 +85,7 @@
     <Stream>True</Stream>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Ice, Version=3.7.53.0, Culture=neutral, PublicKeyToken=1f998c50fec78381, processorArchitecture=MSIL">
+    <Reference Include="Ice, Version=3.7.54.0, Culture=neutral, PublicKeyToken=1f998c50fec78381, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
       <HintPath>$(IceAssembliesDir)\Ice.dll</HintPath>
