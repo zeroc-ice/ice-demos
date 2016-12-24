@@ -14,6 +14,11 @@
 -include	$(lang_srcdir)/config/Make.rules.$(os)
 
 #
+# Disable unused parameter warnings in Objective-C
+#
+CXXFLAGS	+= -Wno-unused-parameter
+
+#
 # Supported configurations
 #
 supported-configs	= shared static arc-shared arc-static

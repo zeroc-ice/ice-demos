@@ -18,15 +18,15 @@ printIndent(int depth)
     }
 }
 
-// Recursively print the contents of directory "dir" in tree fashion. 
+// Recursively print the contents of directory "dir" in tree fashion.
 // For files, show the contents of each file. The "depth"
 // parameter is the current nesting level (for indentation).
 
 static void
-listRecursive(id<FSDirectoryPrx> dir, int depth)
+listRecursive(id<FSDirectoryPrx> directory, int depth)
 {
     ++depth;
-    FSNodeSeq *contents = [dir list];
+    FSNodeSeq *contents = [directory list];
 
     for(id<FSNodePrx> node in contents)
     {
@@ -77,7 +77,7 @@ main(int argc, char* argv[])
             listRecursive(rootDir, 0);
 
             status = EXIT_SUCCESS;
-        } 
+        }
         @catch (NSException *ex)
         {
             NSLog(@"%@\n", ex);
