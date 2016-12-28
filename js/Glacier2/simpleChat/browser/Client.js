@@ -11,7 +11,7 @@
 // The message operation just writes the received data
 // to the output textarea.
 //
-class ChatCallbackI extends Demo.ChatCallback
+class ChatCallbackI extends Demo._ChatCallbackDisp
 {
     message(data)
     {

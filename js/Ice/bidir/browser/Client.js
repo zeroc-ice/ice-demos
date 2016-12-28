@@ -10,7 +10,7 @@
 // Define a servant class that implements the Demo.CallbackReceiver
 // interface.
 //
-class CallbackReceiverI extends Demo.CallbackReceiver
+class CallbackReceiverI extends Demo._CallbackReceiverDisp
 {
     callback(num, current)
     {
