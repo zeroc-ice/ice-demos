@@ -5,7 +5,8 @@ works with the UWP hello server as well as the Ice/hello servers provided by
 other language mappings, such as C++, C#, Java and Python.
 
 Note that if you use the UWP server, this server cannot run on same machine as
-the client due to UWP restrictions.
+the client due to UWP restrictions, SSL secure connections are also not supported
+with UWP servers.
 
 ## Running the demo
 
@@ -15,11 +16,6 @@ the client due to UWP restrictions.
 or right click on the project and select `Debug -> Start new instance`.
 
 ### SSL
-
-The Ice ssl transport for UWP currently does not support client-side
-authentication. In order to successfully connect with SSL, you need to edit
-the hello server configuration file (`config.server`) and uncomment the
-`IceSSL.VerifyPeer=0` property.
 
 If you run the hello client and server on different computers or devices, you
 also need to regenerate the server certificate to ensure the certificate common

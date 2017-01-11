@@ -177,6 +177,9 @@
     <None Include="..\..\..\..\..\certs\cacert.der">
       <DeploymentContent>true</DeploymentContent>
     </None>
+    <None Include="..\..\..\..\..\certs\client.p12">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
     <None Include="client_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="README.md" />

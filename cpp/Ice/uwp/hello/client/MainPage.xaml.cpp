@@ -26,10 +26,13 @@ using namespace Windows::UI::Xaml::Navigation;
 MainPage::MainPage()
 {
     InitializeComponent();
+    Ice::registerIceSSL();
     mode->SelectedIndex = 0;
     Ice::InitializationData id;
     id.properties = Ice::createProperties();
     id.properties->setProperty("Ice.Plugin.IceDiscovery", "1"); // Enable the IceDiscovery plugin
+    id.properties->setProperty("IceSSL.CertFile", "ms-appx:///client.p12");
+    id.properties->setProperty("IceSSL.Password", "password");
     id.dispatcher = 
         [=](function<void()> call, const shared_ptr<Ice::Connection>&)
             {
@@ -334,7 +337,7 @@ void hello::MainPage::flush_Click(Platform::Object^ sender, Windows::UI::Xaml::R
                     print(os.str());
                 }
             },
-                [=](bool)
+            [=](bool)
             {
                 print("Flushed batch requests.");
             });
