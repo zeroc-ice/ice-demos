@@ -47,15 +47,7 @@ main(int argc, char* argv[])
 
         if(communicator != nil)
         {
-            @try
-            {
-                [communicator destroy];
-            }
-            @catch(ICELocalException* ex)
-            {
-                NSLog(@"%@", ex);
-                status = EXIT_FAILURE;
-            }
+            [communicator destroy];
         }
     }
     return status;

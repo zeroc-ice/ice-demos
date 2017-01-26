@@ -13,14 +13,7 @@ public class Client extends com.zeroc.Ice.Application
         @Override
         public void run()
         {
-            try
-            {
-                communicator().destroy();
-            }
-            catch(com.zeroc.Ice.LocalException ex)
-            {
-                ex.printStackTrace();
-            }
+            communicator().destroy();
         }
     }
 
@@ -62,7 +55,7 @@ public class Client extends com.zeroc.Ice.Application
         adapter.add(new CallbackReceiverI(), com.zeroc.Ice.Util.stringToIdentity("callbackReceiver"));
         adapter.activate();
 
-        CallbackReceiverPrx receiver = 
+        CallbackReceiverPrx receiver =
             CallbackReceiverPrx.uncheckedCast(adapter.createProxy(
                 com.zeroc.Ice.Util.stringToIdentity("callbackReceiver")));
 

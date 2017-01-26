@@ -22,14 +22,7 @@ public class Client extends Ice.Application
         public void
         run()
         {
-            try
-            {
-                communicator().destroy();
-            }
-            catch(Ice.LocalException ex)
-            {
-                ex.printStackTrace();
-            }
+            communicator().destroy();
         }
     }
 
@@ -73,7 +66,7 @@ public class Client extends Ice.Application
         menu();
 
         java.io.BufferedReader in = new java.io.BufferedReader(new java.io.InputStreamReader(System.in));
-        
+
         ExecutorService executor = Executors.newFixedThreadPool(5);
         List<Future<?> > futures = new ArrayList<Future<?> >();
         int nextId = 0;
@@ -99,7 +92,7 @@ public class Client extends Ice.Application
                         {
                             System.out.println("task " + id + " completed running");
                         }
-                        
+
                         @Override
                         public void exception(LocalException ex)
                         {
@@ -131,7 +124,7 @@ public class Client extends Ice.Application
                             {
                                 taskManager.run(id);
                                 System.out.println("task " + id + " completed running");
-                            } 
+                            }
                             catch(Ice.OperationInterruptedException e)
                             {
                                 System.out.println("blocking task " + id + " interrupted");
@@ -140,7 +133,7 @@ public class Client extends Ice.Application
                             {
                                 System.out.println("blocking task " + id + " failed");
                                 e.printStackTrace();
-                            }                                
+                            }
                         }
                     });
                     futures.add(future);

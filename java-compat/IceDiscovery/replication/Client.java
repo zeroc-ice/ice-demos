@@ -14,14 +14,7 @@ public class Client extends Ice.Application
         public void
         run()
         {
-            try
-            {
-                communicator().destroy();
-            }
-            catch(Ice.LocalException ex)
-            {
-                ex.printStackTrace();
-            }
+            communicator().destroy();
         }
     }
 
@@ -90,7 +83,7 @@ public class Client extends Ice.Application
                 {
                     delay = 500; // 500 milli-seconds
                 }
-                
+
                 for(int i = 0; i < count; i++)
                 {
                     System.out.println(hello.getGreeting());
@@ -117,7 +110,7 @@ public class Client extends Ice.Application
                 ex.printStackTrace();
             }
         }
-            
+
         return 0;
     }
 

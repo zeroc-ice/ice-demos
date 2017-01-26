@@ -14,14 +14,7 @@ public class Client extends com.zeroc.Ice.Application
         public void run()
         {
             cleanup(true);
-            try
-            {
-                communicator().destroy();
-            }
-            catch(com.zeroc.Ice.LocalException ex)
-            {
-                ex.printStackTrace();
-            }
+            communicator().destroy();
         }
     }
 
@@ -96,7 +89,7 @@ public class Client extends com.zeroc.Ice.Application
                 }
             }, 5, 5, java.util.concurrent.TimeUnit.SECONDS);
         }
-            
+
         java.util.ArrayList<HelloPrx> hellos = new java.util.ArrayList<>();
 
         menu();
@@ -195,7 +188,7 @@ public class Client extends com.zeroc.Ice.Application
         // The refresher task must be terminated before destroy is
         // called, otherwise it might get ObjectNotExistException.
         //
-        _executor.shutdown();       
+        _executor.shutdown();
         if(destroy && _session != null)
         {
             _session.destroy();

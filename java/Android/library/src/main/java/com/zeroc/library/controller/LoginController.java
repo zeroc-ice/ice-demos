@@ -217,13 +217,7 @@ public class LoginController
                             {
                             }
 
-                            try
-                            {
-                                _communicator.destroy();
-                            }
-                            catch(Exception e)
-                            {
-                            }
+                            _communicator.destroy();
                             return;
                         }
 
@@ -286,13 +280,7 @@ public class LoginController
         //
         if(_sessionController == null && _loginError != null)
         {
-            try
-            {
-                _communicator.destroy();
-            }
-            catch(Exception e)
-            {
-            }
+            _communicator.destroy();
         }
     }
 

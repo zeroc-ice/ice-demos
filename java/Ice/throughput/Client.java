@@ -13,14 +13,7 @@ public class Client extends com.zeroc.Ice.Application
         @Override
         public void run()
         {
-            try
-            {
-                communicator().destroy();
-            }
-            catch(com.zeroc.Ice.LocalException ex)
-            {
-                ex.printStackTrace();
-            }
+            communicator().destroy();
         }
     }
 
@@ -125,14 +118,14 @@ public class Client extends com.zeroc.Ice.Application
                 throughput.recvStringSeq();
                 throughput.recvStructSeq();
                 throughput.recvFixedSeq();
-                
+
                 throughput.echoByteSeq(emptyBytes);
                 throughput.echoStringSeq(emptyStrings);
                 throughput.echoStructSeq(emptyStructs);
                 throughput.echoFixedSeq(emptyFixed);
             }
             throughput.endWarmup();
-            
+
             System.out.println(" ok");
         }
 
@@ -145,7 +138,7 @@ public class Client extends com.zeroc.Ice.Application
 
         // Initial ping to setup the connection.
         throughput.ice_ping();
-        
+
         String line = null;
         do
         {
@@ -209,20 +202,20 @@ public class Client extends com.zeroc.Ice.Application
                             System.out.print("sending");
                             break;
                         }
-                        
+
                         case 'r':
                         {
                             System.out.print("receiving");
                             break;
                         }
-                        
+
                         case 'e':
                         {
                             System.out.print("sending and receiving");
                             break;
                         }
                     }
-                    
+
                     System.out.print(" " + repetitions);
                     switch(currentType)
                     {
@@ -250,16 +243,16 @@ public class Client extends com.zeroc.Ice.Application
                             break;
                         }
                     }
-                    
+
                     System.out.print(" sequences of size " + seqSize);
-                    
+
                     if(c == 'o')
                     {
                         System.out.print(" as oneway");
                     }
-                    
+
                     System.out.println("...");
-                    
+
                     for(int i = 0; i < repetitions; ++i)
                     {
                         switch(currentType)
@@ -273,19 +266,19 @@ public class Client extends com.zeroc.Ice.Application
                                         throughput.sendByteSeq(byteSeq);
                                         break;
                                     }
-                            
+
                                     case 'o':
                                     {
                                         throughputOneway.sendByteSeq(byteSeq);
                                         break;
                                     }
-                            
+
                                     case 'r':
                                     {
                                         throughput.recvByteSeq();
                                         break;
                                     }
-                            
+
                                     case 'e':
                                     {
                                         throughput.echoByteSeq(byteSeq);
@@ -304,19 +297,19 @@ public class Client extends com.zeroc.Ice.Application
                                         throughput.sendStringSeq(stringSeq);
                                         break;
                                     }
-                            
+
                                     case 'o':
                                     {
                                         throughputOneway.sendStringSeq(stringSeq);
                                         break;
                                     }
-                            
+
                                     case 'r':
                                     {
                                         throughput.recvStringSeq();
                                         break;
                                     }
-                            
+
                                     case 'e':
                                     {
                                         throughput.echoStringSeq(stringSeq);
@@ -335,19 +328,19 @@ public class Client extends com.zeroc.Ice.Application
                                         throughput.sendStructSeq(structSeq);
                                         break;
                                     }
-                            
+
                                     case 'o':
                                     {
                                         throughputOneway.sendStructSeq(structSeq);
                                         break;
                                     }
-                            
+
                                     case 'r':
                                     {
                                         throughput.recvStructSeq();
                                         break;
                                     }
-                            
+
                                     case 'e':
                                     {
                                         throughput.echoStructSeq(structSeq);
@@ -366,19 +359,19 @@ public class Client extends com.zeroc.Ice.Application
                                         throughput.sendFixedSeq(fixedSeq);
                                         break;
                                     }
-                            
+
                                     case 'o':
                                     {
                                         throughputOneway.sendFixedSeq(fixedSeq);
                                         break;
                                     }
-                            
+
                                     case 'r':
                                     {
                                         throughput.recvFixedSeq();
                                         break;
                                     }
-                            
+
                                     case 'e':
                                     {
                                         throughput.echoFixedSeq(fixedSeq);

@@ -15,14 +15,7 @@ public class Client extends Ice.Application
         run()
         {
             cleanup(true);
-            try
-            {
-                communicator().destroy();
-            }
-            catch(Ice.LocalException ex)
-            {
-                ex.printStackTrace();
-            }
+            communicator().destroy();
         }
     }
 
@@ -105,7 +98,7 @@ public class Client extends Ice.Application
                 }
             }, 5, 5, java.util.concurrent.TimeUnit.SECONDS);
         }
-            
+
         java.util.ArrayList<HelloPrx> hellos = new java.util.ArrayList<HelloPrx>();
 
         menu();
@@ -205,7 +198,7 @@ public class Client extends Ice.Application
         // The refresher task must be terminated before destroy is
         // called, otherwise it might get ObjectNotExistException.
         //
-        _executor.shutdown();       
+        _executor.shutdown();
         if(destroy && _session != null)
         {
             _session.destroy();

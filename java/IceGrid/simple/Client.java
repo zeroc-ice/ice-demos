@@ -13,14 +13,7 @@ public class Client extends com.zeroc.Ice.Application
         @Override
         public void run()
         {
-            try
-            {
-                communicator().destroy();
-            }
-            catch(com.zeroc.Ice.LocalException ex)
-            {
-                ex.printStackTrace();
-            }
+            communicator().destroy();
         }
     }
 
@@ -62,7 +55,7 @@ public class Client extends com.zeroc.Ice.Application
         }
         catch(com.zeroc.Ice.NotRegisteredException ex)
         {
-            com.zeroc.IceGrid.QueryPrx query = 
+            com.zeroc.IceGrid.QueryPrx query =
                 com.zeroc.IceGrid.QueryPrx.checkedCast(communicator().stringToProxy("DemoIceGrid/Query"));
             hello = HelloPrx.checkedCast(query.findObjectByType("::Demo::Hello"));
         }

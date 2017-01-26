@@ -136,13 +136,7 @@ public class SessionController
                 {
                 }
 
-                try
-                {
-                    _communicator.destroy();
-                }
-                catch(Exception e)
-                {
-                }
+                _communicator.destroy();
             }
         }).start();
     }

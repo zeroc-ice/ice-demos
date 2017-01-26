@@ -93,13 +93,7 @@ BOOL CHelloServerApp::InitInstance()
     //
     // Clean up.
     //
-    try
-    {
-        communicator->destroy();
-    }
-    catch(const IceUtil::Exception&)
-    {
-    }
+    communicator->destroy();
 
     // Since the dialog has been closed, return FALSE so that we exit the
     // application, rather than start the application's message pump.

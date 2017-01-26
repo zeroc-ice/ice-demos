@@ -199,16 +199,9 @@ void
 CHelloClientDlg::OnClose()
 {
     //
-    // Destroy the communicator. If AMI calls are still in progress they will be
-    // interrupted with an Ice::CommunicatorDestroyedException.
+    // Destroy the communicator.
     //
-    try
-    {
-        _communicator->destroy();
-    }
-    catch(const IceUtil::Exception&)
-    {
-    }
+    _communicator->destroy();
 }
 
 // If you add a minimize button to your dialog, you will need the code below

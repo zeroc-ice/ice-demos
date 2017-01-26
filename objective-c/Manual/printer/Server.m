@@ -21,7 +21,7 @@
 
 int
 main(int argc, char* argv[])
-{   
+{
     int status = EXIT_FAILURE;
     @autoreleasepool
     {
@@ -43,15 +43,7 @@ main(int argc, char* argv[])
             NSLog(@"%@", ex);
         }
 
-        @try
-        {
-            [communicator destroy];
-        }
-        @catch (NSException* ex)
-        {
-            NSLog(@"%@", ex);
-        }
-
+        [communicator destroy];
     }
     return status;
 }

@@ -14,14 +14,7 @@ public class Client extends Ice.Application
         public void
         run()
         {
-            try
-            {
-                communicator().destroy();
-            }
-            catch(Ice.LocalException ex)
-            {
-                ex.printStackTrace();
-            }
+            communicator().destroy();
         }
     }
 
@@ -66,7 +59,7 @@ public class Client extends Ice.Application
         adapter.add(new CallbackReceiverI(), Ice.Util.stringToIdentity("callbackReceiver"));
         adapter.activate();
 
-        CallbackReceiverPrx receiver = 
+        CallbackReceiverPrx receiver =
             CallbackReceiverPrxHelper.uncheckedCast(adapter.createProxy(
                 Ice.Util.stringToIdentity("callbackReceiver")));
 

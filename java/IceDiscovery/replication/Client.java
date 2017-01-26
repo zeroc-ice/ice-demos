@@ -13,14 +13,7 @@ public class Client extends com.zeroc.Ice.Application
         @Override
         public void run()
         {
-            try
-            {
-                communicator().destroy();
-            }
-            catch(com.zeroc.Ice.LocalException ex)
-            {
-                ex.printStackTrace();
-            }
+            communicator().destroy();
         }
     }
 
@@ -88,7 +81,7 @@ public class Client extends com.zeroc.Ice.Application
                 {
                     delay = 500; // 500 milli-seconds
                 }
-                
+
                 for(int i = 0; i < count; i++)
                 {
                     System.out.println(hello.getGreeting());
@@ -115,7 +108,7 @@ public class Client extends com.zeroc.Ice.Application
                 ex.printStackTrace();
             }
         }
-            
+
         return 0;
     }
 

@@ -83,14 +83,7 @@ main(int argc, char* argv[])
             NSLog(@"%@\n", ex);
         }
 
-        @try
-        {
-            [communicator destroy];
-        }
-        @catch (NSException* ex)
-        {
-            NSLog(@"%@\n", ex);
-        }
+        [communicator destroy];
     }
     return status;
 }

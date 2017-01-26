@@ -21,14 +21,7 @@ public class Client extends com.zeroc.Ice.Application
         @Override
         public void run()
         {
-            try
-            {
-                communicator().destroy();
-            }
-            catch(com.zeroc.Ice.LocalException ex)
-            {
-                ex.printStackTrace();
-            }
+            communicator().destroy();
         }
     }
 
@@ -72,7 +65,7 @@ public class Client extends com.zeroc.Ice.Application
         menu();
 
         java.io.BufferedReader in = new java.io.BufferedReader(new java.io.InputStreamReader(System.in));
-        
+
         ExecutorService executor = Executors.newFixedThreadPool(5);
         List<Future<?> > futures = new ArrayList<>();
         int nextId = 0;
@@ -126,7 +119,7 @@ public class Client extends com.zeroc.Ice.Application
                         {
                             taskManager.run(id);
                             System.out.println("task " + id + " completed running");
-                        } 
+                        }
                         catch(com.zeroc.Ice.OperationInterruptedException e)
                         {
                             System.out.println("blocking task " + id + " interrupted");
@@ -135,7 +128,7 @@ public class Client extends com.zeroc.Ice.Application
                         {
                             System.out.println("blocking task " + id + " failed");
                             e.printStackTrace();
-                        }                                
+                        }
                     });
                     futures.add(future);
                 }

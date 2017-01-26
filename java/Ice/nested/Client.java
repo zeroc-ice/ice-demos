@@ -18,14 +18,7 @@ public class Client extends com.zeroc.Ice.Application
              * wait for any outstanding invocations to complete which may take
              * some time if the nesting level is exceeded.
              *
-             try
-             {
-                 communicator().destroy();
-             }
-             catch(com.zeroc.Ice.LocalException ex)
-             {
-                 ex.printStackTrace();
-             }
+             communicator().destroy();
             */
         }
     }

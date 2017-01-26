@@ -131,13 +131,7 @@ public class HelloApp extends Application
         super.onTerminate();
         if(_communicator != null)
         {
-            try
-            {
-                _communicator.destroy();
-            }
-            catch(Ice.LocalException ex)
-            {
-            }
+            _communicator.destroy();
         }
     }
 

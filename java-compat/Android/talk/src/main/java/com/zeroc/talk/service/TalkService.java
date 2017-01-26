@@ -132,13 +132,7 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
     {
         super.onDestroy();
 
-        try
-        {
-            _communicator.destroy();
-        }
-        catch(Ice.LocalException ex)
-        {
-        }
+        _communicator.destroy();
 
         _handler = null;
         _communicator = null;
@@ -261,13 +255,7 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
 
             if(_communicator != null)
             {
-                try
-                {
-                    _communicator.destroy();
-                }
-                catch(Ice.LocalException e)
-                {
-                }
+                _communicator.destroy();
                 _communicator = null;
                 _adapter = null;
             }

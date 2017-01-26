@@ -14,14 +14,7 @@ public class Client extends Ice.Application
         public void
         run()
         {
-            try
-            {
-                communicator().destroy();
-            }
-            catch(Ice.LocalException ex)
-            {
-                ex.printStackTrace();
-            }
+            communicator().destroy();
         }
     }
 
@@ -65,7 +58,7 @@ public class Client extends Ice.Application
         }
         catch(Ice.NotRegisteredException ex)
         {
-            IceGrid.QueryPrx query = 
+            IceGrid.QueryPrx query =
                 IceGrid.QueryPrxHelper.checkedCast(communicator().stringToProxy("DemoIceGrid/Query"));
             hello = HelloPrxHelper.checkedCast(query.findObjectByType("::Demo::Hello"));
         }

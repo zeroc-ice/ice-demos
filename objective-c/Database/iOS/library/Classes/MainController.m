@@ -49,7 +49,7 @@
         books = [NSMutableArray array];
         nrows = 0;
         rowsQueried = 0;
-        
+
         detailController = [[DetailController alloc] initWithNibName:@"DetailView" bundle:nil];
         detailController.delegate = self;
 
@@ -68,11 +68,11 @@
     [[UIBarButtonItem alloc] initWithTitle:@"Logout"
                                      style:UIBarButtonItemStylePlain
                                      target:self action:@selector(logout:)];
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(destroySession)
                                                  name:UIApplicationWillTerminateNotification
-                                               object:nil];    
+                                               object:nil];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -115,7 +115,7 @@
     nrows = 0;
     rowsQueried = 10;
     [books removeAllObjects];
-    
+
     // Save the new session, and create the refresh timer.
     self.refreshTimer = [NSTimer
                          timerWithTimeInterval:sessionTimeout/2
@@ -131,7 +131,7 @@
     // Destroy the old session, and invalidate the refresh timer.
     [refreshTimer invalidate];
     self.refreshTimer = nil;
-    
+
     if(router)
     {
         [router begin_destroySession];
@@ -142,16 +142,11 @@
     }
     router = nil;
     session = nil;
-    
+
 	// Destroy the communicator from another thread since this call blocks.
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^ {
-        @try
-        {            
-            [communicator destroy];
-            communicator = nil;
-        }
-        @catch (ICEException* ex) {
-        }
+        [communicator destroy];
+        communicator = nil;
     });
 }
 
@@ -191,23 +186,23 @@
 -(void)removeCurrentBook
 {
     DemoBookDescription *book = (DemoBookDescription *)[books objectAtIndex:currentIndexPath.row];
-    
+
     [[book proxy] begin_destroy:nil exception:^(ICEException* ex) {
 		[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-		
+
 		// Ignore ICEObjectNotExistException
 		if([ex isKindOfClass:[ICEObjectNotExistException class]])
 		{
 			return;
 		}
-		
+
 		[self exception:ex];
 	}];
-    
+
     // Remove the book, and the row from the table.
-    [books removeObjectAtIndex:currentIndexPath.row];        
+    [books removeObjectAtIndex:currentIndexPath.row];
     --nrows;
-    [searchTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:currentIndexPath] 
+    [searchTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:currentIndexPath]
                            withRowAnimation:UITableViewRowAnimationFade];
 }
 
@@ -216,7 +211,7 @@
     DemoBookDescription* book = [DemoBookDescription bookDescription];
     book.title = @"";
     book.authors = [NSMutableArray array];
-    
+
     [addController startEdit:book library:library];
 
     [self.navigationController pushViewController:addController animated:YES];
@@ -246,7 +241,7 @@
     // causes the navigation view & the bar to get out of sync. So instead, we pop to the root view
     // in the alert view didDismissWithButtonIndex callback.
     [self destroySession];
-    
+
     // open an alert with just an OK button
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
                                                      message:[ex description]
@@ -280,7 +275,7 @@
     [sender resignFirstResponder];
     searchSegmentedControl.hidden = YES;
     sender.showsCancelButton = NO;
-    
+
     // Initiate a search.
     NSString* search = sender.text;
 
@@ -292,10 +287,10 @@
     rowsQueried = 10;
     [books removeAllObjects];
     [searchTableView reloadData];
-    
+
     // Run the query.
-	void(^queryResponse)(NSMutableArray*, int, id<DemoBookQueryResultPrx>) = 
-    ^(NSMutableArray* seq, int n, id<DemoBookQueryResultPrx> q) 
+	void(^queryResponse)(NSMutableArray*, int, id<DemoBookQueryResultPrx>) =
+    ^(NSMutableArray* seq, int n, id<DemoBookQueryResultPrx> q)
     {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 		nrows = n;
@@ -310,13 +305,13 @@
 			[alert show];
 			return;
 		}
-		
+
 		[books addObjectsFromArray:seq];
 		self.query = q;
-		
+
 		[searchTableView reloadData];
     };
-	
+
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     if(searchMode == 0) // ISBN
     {
@@ -334,7 +329,7 @@
     }
     else // Title
     {
-        
+
         [library begin_queryByTitle:search
 								  n:10
                            response:queryResponse
@@ -346,7 +341,7 @@
 {
     searchSegmentedControl.hidden = NO;
     sender.showsCancelButton = YES;
-    
+
     return YES;
 }
 
@@ -401,14 +396,14 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
             [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
             NSAssert(query != nil, @"query != nil");
             [query begin_next:10
-                     response:^(NSMutableArray* seq, BOOL destroyed) { 
+                     response:^(NSMutableArray* seq, BOOL destroyed) {
 						 [books addObjectsFromArray:seq];
 						 // The query has returned all available results.
 						 if(destroyed)
 						 {
 							 self.query = nil;
 						 }
-						 
+
 						 [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 						 [searchTableView reloadData];
 					 }
@@ -433,11 +428,11 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
     {
         return nil;
     }
-    
+
     self.currentIndexPath = indexPath;
 
     [detailController startEdit:[books objectAtIndex:indexPath.row]];
-    
+
     // Push the detail view on to the navigation controller's stack.
     [self.navigationController pushViewController:detailController animated:YES];
     return nil;

@@ -50,18 +50,8 @@ public class Client extends JFrame
         //
         // Destroy the Ice communicator.
         //
-        try
-        {
-            _communicator.destroy();
-        }
-        catch(Throwable ex)
-        {
-            ex.printStackTrace();
-        }
-        finally
-        {
-            _communicator = null;
-        }
+        _communicator.destroy();
+        _communicator = null;
     }
 
     Client(String[] args)

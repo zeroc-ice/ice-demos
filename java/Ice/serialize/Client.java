@@ -13,14 +13,7 @@ public class Client extends com.zeroc.Ice.Application
         @Override
         public void run()
         {
-            try
-            {
-                communicator().destroy();
-            }
-            catch(com.zeroc.Ice.LocalException ex)
-            {
-                ex.printStackTrace();
-            }
+            communicator().destroy();
         }
     }
 
@@ -53,7 +46,7 @@ public class Client extends com.zeroc.Ice.Application
 
         GreetPrx greet = GreetPrx.checkedCast(communicator().propertyToProxy("Greet.Proxy"));
         if(greet == null) {
-        
+
             System.err.println("invalid proxy");
             return 1;
         }

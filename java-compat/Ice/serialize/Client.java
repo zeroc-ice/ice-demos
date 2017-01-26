@@ -14,14 +14,7 @@ public class Client extends Ice.Application
         public void
         run()
         {
-            try
-            {
-                communicator().destroy();
-            }
-            catch(Ice.LocalException ex)
-            {
-                ex.printStackTrace();
-            }
+            communicator().destroy();
         }
     }
 
@@ -56,7 +49,7 @@ public class Client extends Ice.Application
 
         GreetPrx greet = GreetPrxHelper.checkedCast(communicator().propertyToProxy("Greet.Proxy"));
         if(greet == null) {
-        
+
             System.err.println("invalid proxy");
             return 1;
         }
