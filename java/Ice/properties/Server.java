@@ -4,15 +4,13 @@
 //
 // **********************************************************************
 
-
-
-public class Server extends Ice.Application
+public class Server extends com.zeroc.Ice.Application
 {
     //
     // The servant implements the Slice interface Demo::Props as well as the
-    // native callback interface Ice.PropertiesAdminUpdateCallback.
+    // native callback interface com.zeroc.Ice.PropertiesAdminUpdateCallback.
     //
-    static class PropsI extends Demo._PropsDisp implements Ice.PropertiesAdminUpdateCallback
+    static class PropsI implements Demo.Props, com.zeroc.Ice.PropertiesAdminUpdateCallback
     {
         PropsI()
         {
@@ -20,7 +18,7 @@ public class Server extends Ice.Application
         }
 
         @Override
-        public synchronized java.util.Map<String, String> getChanges(Ice.Current current)
+        public synchronized java.util.Map<String, String> getChanges(com.zeroc.Ice.Current current)
         {
             //
             // Make sure that we have received the property updates before we
@@ -42,7 +40,7 @@ public class Server extends Ice.Application
         }
 
         @Override
-        public void shutdown(Ice.Current current)
+        public void shutdown(com.zeroc.Ice.Current current)
         {
             current.adapter.getCommunicator().shutdown();
         }
@@ -60,8 +58,7 @@ public class Server extends Ice.Application
     }
 
     @Override
-    public int
-    run(String[] args)
+    public int run(String[] args)
     {
         if(args.length > 0)
         {
@@ -74,19 +71,18 @@ public class Server extends Ice.Application
         //
         // Retrieve the PropertiesAdmin facet and register the servant as the update callback.
         //
-        Ice.Object obj = communicator().findAdminFacet("Properties");
-        Ice.NativePropertiesAdmin admin = (Ice.NativePropertiesAdmin)obj;
+        com.zeroc.Ice.Object obj = communicator().findAdminFacet("Properties");
+        com.zeroc.Ice.NativePropertiesAdmin admin = (com.zeroc.Ice.NativePropertiesAdmin)obj;
         admin.addUpdateCallback(props);
 
-        Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Props");
-        adapter.add(props, communicator().stringToIdentity("props"));
+        com.zeroc.Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Props");
+        adapter.add(props, com.zeroc.Ice.Util.stringToIdentity("props"));
         adapter.activate();
         communicator().waitForShutdown();
         return 0;
     }
 
-    public static void
-    main(String[] args)
+    public static void main(String[] args)
     {
         Server app = new Server();
         int status = app.main("Server", args, "config.server");

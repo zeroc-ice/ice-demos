@@ -17,7 +17,7 @@ run(int argc, char* argv[], id<ICECommunicator> communicator)
         return EXIT_FAILURE;
     }
     id<ICEObjectAdapter> adapter = [communicator createObjectAdapter:@"ContactDB"];
-    [adapter add:[ContactDBI contactDB] identity:[communicator stringToIdentity:@"contactdb"]];
+    [adapter add:[ContactDBI contactDB] identity:[ICEUtil stringToIdentity:@"contactdb"]];
     [adapter activate];
     [communicator waitForShutdown];
     return EXIT_SUCCESS;
@@ -47,15 +47,7 @@ main(int argc, char* argv[])
 
         if(communicator != nil)
         {
-            @try
-            {
-                [communicator destroy];
-            }
-            @catch(ICELocalException* ex)
-            {
-                NSLog(@"%@", ex);
-                status = EXIT_FAILURE;
-            }
+            [communicator destroy];
         }
     }
     return status;

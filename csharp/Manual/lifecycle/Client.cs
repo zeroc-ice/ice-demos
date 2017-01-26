@@ -28,18 +28,18 @@ public class Client
             //
             // Create a proxy for the root directory
             //
-            Ice.ObjectPrx @base = communicator().stringToProxy("RootDir:default -h localhost -p 10000");
+            var @base = communicator().stringToProxy("RootDir:default -h localhost -p 10000");
 
             //
             // Down-cast the proxy to a Directory proxy.
             //
-            DirectoryPrx rootDir = DirectoryPrxHelper.checkedCast(@base);
+            var rootDir = DirectoryPrxHelper.checkedCast(@base);
             if(rootDir == null)
             {
                 throw new Error("Invalid proxy");
             }
 
-            Parser p = new Parser(rootDir);
+            var p = new Parser(rootDir);
             return p.parse();
         }
 
@@ -54,8 +54,8 @@ public class Client
 
     static public int Main(String[] args)
     {
-        App app = new App();
-        Ice.InitializationData data = new Ice.InitializationData();
+        var app = new App();
+        var data = new Ice.InitializationData();
         return app.main(args, data);
     }
 }

@@ -9,10 +9,9 @@ def demos = [
 	'Ice' : ['async', 'bidir', 'callback', 'hello', 'invoke',
  	'interrupt', 'latency', 'minimal', 'multicast', 'nested',
  	'plugin', 'properties', 'serialize','session', 'swing',
- 	'throughput', 'value', 'optional','context'],
+ 	'throughput', 'optional','context'],
  	'IceDiscovery' : ['hello', 'replication'],
 	'Database' : ['library'],
-	'Freeze' : ['bench', 'casino', 'library', 'phonebook', 'transform'],
 	'IceBox' : ['hello'],
 	'Glacier2' : ['callback', 'simpleChat', 'voip'],
 	'IceStorm' : ['clock'],
@@ -39,4 +38,3 @@ demos.each {
 
 include ":demoChat"
 project(":demoChat").projectDir = new File("Chat")
-

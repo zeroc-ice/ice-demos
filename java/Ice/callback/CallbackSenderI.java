@@ -6,33 +6,31 @@
 
 import Demo.*;
 
-public final class CallbackSenderI extends _CallbackSenderDisp
+public final class CallbackSenderI implements CallbackSender
 {
     @Override
-    public void
-    initiateCallback(CallbackReceiverPrx proxy, Ice.Current current)
+    public void initiateCallback(CallbackReceiverPrx proxy, com.zeroc.Ice.Current current)
     {
         System.out.println("initiating callback");
         try
         {
             proxy.callback();
         }
-        catch(Ice.LocalException ex)
+        catch(com.zeroc.Ice.LocalException ex)
         {
             ex.printStackTrace();
         }
     }
 
     @Override
-    public void
-    shutdown(Ice.Current current)
+    public void shutdown(com.zeroc.Ice.Current current)
     {
         System.out.println("Shutting down...");
         try
         {
             current.adapter.getCommunicator().shutdown();
         }
-        catch(Ice.LocalException ex)
+        catch(com.zeroc.Ice.LocalException ex)
         {
             ex.printStackTrace();
         }

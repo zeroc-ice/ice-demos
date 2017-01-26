@@ -6,41 +6,37 @@
 
 (function(){
 
-var RouterPrx = Glacier2.RouterPrx;
-var ChatSessionPrx = Demo.ChatSessionPrx;
-var ChatCallbackPrx = Demo.ChatCallbackPrx;
-
 //
 // Servant that implements the ChatCallback interface.
 // The message operation just writes the received data
 // to the output textarea.
 //
-var ChatCallbackI = Ice.Class(Demo.ChatCallback, {
-    message: function(data)
+class ChatCallbackI extends Demo._ChatCallbackDisp
+{
+    message(data)
     {
         $("#output").val($("#output").val() + data + "\n");
         $("#output").scrollTop($("#output").get(0).scrollHeight);
     }
-});
+}
 
 //
 // Chat client state
 //
-var State = {
+const State =
+{
     Disconnected: 0,
     Connecting: 1,
     Connected:2
 };
 
-var state = State.Disconnected;
-var hasError = false;
+let state = State.Disconnected;
+let hasError = false;
 
-var signin = function()
+function signin()
 {
-    var communicator;
-    var router;
-    Ice.Promise.try(
-        function()
+    let communicator;
+    Ice.Promise.try(() =>
         {
             state = State.Connecting;
             //
@@ -55,15 +51,14 @@ var signin = function()
             //
             return transition("#signin-form", "#loading");
         }
-    ).then(
-        function()
+    ).then(() =>
         {
             //
             // Start animating the loading progress bar.
             //
             startProgress();
 
-            var hostname = document.location.hostname || "127.0.0.1";
+            const hostname = document.location.hostname || "127.0.0.1";
             //
             // If the demo is accessed vi https, use a secure (WSS) endpoint, otherwise
             // use a non-secure (WS) endpoint.
@@ -73,42 +68,37 @@ var signin = function()
             // and Internet Explorer certificate exceptions are only valid for the same
             // port and host.
             //
-            var secure = document.location.protocol.indexOf("https") != -1;
-            var router = secure ? "DemoGlacier2/router:wss -p 9090 -h " + hostname + " -r /chatwss" :
-                                  "DemoGlacier2/router:ws -p 8080 -h " + hostname + " -r /chatws";
+            const secure = document.location.protocol.indexOf("https") != -1;
+            const router = secure ? "DemoGlacier2/router:wss -p 9090 -h " + hostname + " -r /chatwss" :
+                                    "DemoGlacier2/router:ws -p 8080 -h " + hostname + " -r /chatws";
 
             //
             // Initialize the communicator with the Ice.Default.Router property
             // set to the simple chat demo Glacier2 router.
             //
-            var id = new Ice.InitializationData();
-            id.properties = Ice.createProperties();
-            id.properties.setProperty("Ice.Default.Router", router);
-            communicator = Ice.initialize(id);
+            const initData = new Ice.InitializationData();
+            initData.properties = Ice.createProperties();
+            initData.properties.setProperty("Ice.Default.Router", router);
+            communicator = Ice.initialize(initData);
 
             //
             // Get a proxy to the Glacier2 router using checkedCast to ensure
             // the Glacier2 server is available.
             //
-            return RouterPrx.checkedCast(communicator.getDefaultRouter());
+            return Glacier2.RouterPrx.checkedCast(communicator.getDefaultRouter()).then(
+                router =>
+                {
+                    const username = $("#username").val();
+                    const password = $("#password").val();
+                    
+                    return router.createSession(username, password).then(
+                        session =>
+                        {
+                            return run(communicator, router, Demo.ChatSessionPrx.uncheckedCast(session));
+                        });
+                });
         }
-    ).then(
-        function(r)
-        {
-            router = r;
-
-            //
-            // Create a session with the Glacier2 router.
-            //
-            return router.createSession($("#username").val(), $("#password").val());
-        }
-    ).then(
-        function(session)
-        {
-            run(communicator, router, ChatSessionPrx.uncheckedCast(session));
-        }
-    ).exception(
-        function(ex)
+    ).catch(ex =>
         {
             //
             // Handle any exceptions that occurred during session creation.
@@ -137,14 +127,15 @@ var signin = function()
         });
 };
 
-var run = function(communicator, router, session)
+function run(communicator, router, session)
 {
     //
     // The chat promise is used to wait for the completion of chatting
     // state. The completion could happen because the user signed out,
     // or because an exception was raised.
     //
-    var chat = new Ice.Promise();
+    const chat = new Ice.Promise();
+    let completed = false;
 
     //
     // Get the session timeout and the router client category, and
@@ -154,35 +145,27 @@ var run = function(communicator, router, session)
     // calls.
     //
     Ice.Promise.all(
-        router.getACMTimeout(),
-        router.getCategoryForClient(),
-        communicator.createObjectAdapterWithRouter("", router)
-    ).then(
-        function(timeoutArgs, categoryArgs, adapterArgs)
+        [router.getACMTimeout(),
+         router.getCategoryForClient(),
+         communicator.createObjectAdapterWithRouter("", router)]
+    ).then(values =>
         {
-            var timeout = timeoutArgs[0];
-            var category = categoryArgs[0];
-            var adapter = adapterArgs[0];
+            let [timeout, category, adapter] = values;
 
             //
             // Use ACM heartbeat to keep session alive.
             //
-            var connection = router.ice_getCachedConnection();
+            const connection = router.ice_getCachedConnection();
             if(timeout > 0)
             {
                 connection.setACM(timeout, undefined, Ice.ACMHeartbeat.HeartbeatAlways);
             }
-            connection.setCallback(
+
+            connection.setCloseCallback(() =>
                 {
-                    closed: function()
+                    if(!completed)
                     {
-                        if(!chat.completed())
-                        {
-                            error("Connection lost");
-                        }
-                    },
-                    heartbeat: function()
-                    {
+                        error("Connection lost");
                     }
                 });
 
@@ -190,16 +173,15 @@ var run = function(communicator, router, session)
             // Create the ChatCallback servant and add it to the
             // ObjectAdapter.
             //
-            var callback = ChatCallbackPrx.uncheckedCast(adapter.add(new ChatCallbackI(),
-                                                                     new Ice.Identity("callback", category)));
+            const callback = Demo.ChatCallbackPrx.uncheckedCast(
+                adapter.add(new ChatCallbackI(), new Ice.Identity("callback", category)));
 
             //
             // Set the chat session callback.
             //
             return session.setCallback(callback);
         }
-    ).then(
-        function()
+    ).then(() =>
         {
             //
             // Stop animating the loading progress bar and
@@ -208,8 +190,7 @@ var run = function(communicator, router, session)
             stopProgress(true);
             return transition("#loading", "#chat-form");
         }
-    ).then(
-        function()
+    ).then(() =>
         {
             $("#loading .meter").css("width", "0%");
             state = State.Connected;
@@ -219,10 +200,9 @@ var run = function(communicator, router, session)
             // Process input events in the input textbox until the chat
             // promise is completed.
             //
-            $("#input").keypress(
-                function(e)
+            $("#input").keypress(e =>
                 {
-                    if(!chat.completed())
+                    if(!completed)
                     {
                         //
                         // When the enter key is pressed, we send a new
@@ -231,13 +211,9 @@ var run = function(communicator, router, session)
                         //
                         if(e.which === 13)
                         {
-                            var msg = $(this).val();
-                            $(this).val("");
-                            session.say(msg).exception(
-                                function(ex)
-                                {
-                                    chat.fail(ex);
-                                });
+                            var msg = $(e.currentTarget).val();
+                            $(e.currentTarget).val("");
+                            session.say(msg).catch(ex => chat.reject(ex));
                             return false;
                         }
                     }
@@ -247,18 +223,16 @@ var run = function(communicator, router, session)
             // Exit the chat loop by accepting the chat
             // promise.
             //
-            $("#signout").click(
-                function()
+            $("#signout").click(() =>
                 {
-                    chat.succeed();
+                    completed = true;
+                    chat.resolve();
                     return false;
-                }
-            );
+                });
 
             return chat;
         }
-    ).finally(
-        function()
+    ).finally(() =>
         {
             //
             // Reset the input text box and chat output
@@ -274,26 +248,22 @@ var run = function(communicator, router, session)
             //
             return router.destroySession();
         }
-    ).then(
-        function()
+    ).then(() =>
         {
             //
             // Destroy the communicator and go back to the
             // disconnected state.
             //
-            communicator.destroy().finally(
-                function()
+            communicator.destroy().finally(() =>
                 {
-                    transition("#chat-form", "#signin-form").finally(
-                        function()
+                    transition("#chat-form", "#signin-form").finally(() =>
                         {
                             $("#username").focus();
                             state = State.Disconnected;
                         });
                 });
         }
-    ).exception(
-        function(ex)
+    ).catch(ex =>
         {
             //
             // Handle any exceptions that occurred while running.
@@ -307,24 +277,22 @@ var run = function(communicator, router, session)
 // Switch to Disconnected state and display the error
 // message.
 //
-var error = function(message)
+function error(message)
 {
     stopProgress(false);
     hasError = true;
-    var current = state === State.Connecting ? "#loading" : "#chat-form";
+    const current = state === State.Connecting ? "#loading" : "#chat-form";
     $("#signin-alert span").text(message);
 
     //
     // Transition the screen
     //
-    transition(current, "#signin-alert").then(
-        function()
+    transition(current, "#signin-alert").then(() =>
         {
             $("#loading .meter").css("width", "0%");
             $("#signin-form").css("display", "block").animo({ animation: "flipInX", keep: true });
             state = State.Disconnected;
-        }
-    );
+        });
 };
 
 //
@@ -333,25 +301,19 @@ var error = function(message)
 // to complete. If to screen is undefined just animate out the
 // from screen.
 //
-var transition = function(from, to)
+function transition(from, to)
 {
-    var p = new Ice.Promise();
-
-    $(from).animo({ animation: "flipOutX", keep: true },
-        function()
+    const p = new Ice.Promise();
+    $(from).animo({ animation: "flipOutX", keep: true }, () =>
         {
             $(from).css("display", "none");
             if(to)
             {
-                $(to).css("display", "block").animo({ animation: "flipInX", keep: true },
-                                                    function()
-                                                    {
-                                                        p.succeed();
-                                                    });
+                $(to).css("display", "block").animo({ animation: "flipInX", keep: true }, () => p.resolve());
             }
             else
             {
-                p.succeed();
+                p.resolve();
             }
         });
     return p;
@@ -360,7 +322,7 @@ var transition = function(from, to)
 //
 // Event handler for Sign in button
 //
-$("#signin").click(function()
+$("#signin").click(() =>
                    {
                        signin();
                        return false;
@@ -382,12 +344,11 @@ function dismissError()
 var w = 0;
 var progress;
 
-var startProgress = function()
+function startProgress()
 {
     if(!progress)
     {
-        progress = setInterval(
-            function()
+        progress = setInterval(() =>
             {
                 w = w === 100 ? 0 : w + 5;
                 $("#loading .meter").css("width", w.toString() + "%");
@@ -396,7 +357,7 @@ var startProgress = function()
     }
 };
 
-var stopProgress = function(completed)
+function stopProgress(completed)
 {
     if(progress)
     {

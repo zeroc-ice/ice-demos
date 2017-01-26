@@ -12,8 +12,7 @@ public class Client
     // For files, show the contents of each file. The "depth"
     // parameter is the current nesting level (for indentation).
 
-    static void
-    listRecursive(DirectoryPrx dir, int depth)
+    static void listRecursive(DirectoryPrx dir, int depth)
     {
         char[] indentCh = new char[++depth];
         java.util.Arrays.fill(indentCh, '\t');
@@ -23,8 +22,8 @@ public class Client
 
         for(int i = 0; i < contents.length; ++i)
         {
-            DirectoryPrx subdir = DirectoryPrxHelper.checkedCast(contents[i]);
-            FilePrx file = FilePrxHelper.uncheckedCast(contents[i]);
+            DirectoryPrx subdir = DirectoryPrx.checkedCast(contents[i]);
+            FilePrx file = FilePrx.uncheckedCast(contents[i]);
             System.out.println(indent + contents[i].name() + (subdir != null ? " (directory):" : " (file):"));
             if(subdir != null)
             {
@@ -41,27 +40,27 @@ public class Client
         }
     }
 
-    public static void
-    main(String[] args)
+    public static void main(String[] args)
     {
         int status = 0;
-        Ice.Communicator ic = null;
+        com.zeroc.Ice.Communicator ic = null;
         try
         {
             //
             // Create a communicator
             //
-            ic = Ice.Util.initialize(args);
+            com.zeroc.Ice.Util.InitializeResult ir = com.zeroc.Ice.Util.initialize(args);
+            ic = ir.communicator;
 
             //
             // Create a proxy for the root directory
             //
-            Ice.ObjectPrx base = ic.stringToProxy("RootDir:default -h localhost -p 10000");
+            com.zeroc.Ice.ObjectPrx base = ic.stringToProxy("RootDir:default -h localhost -p 10000");
 
             //
             // Down-cast the proxy to a Directory proxy
             //
-            DirectoryPrx rootDir = DirectoryPrxHelper.checkedCast(base);
+            DirectoryPrx rootDir = DirectoryPrx.checkedCast(base);
             if(rootDir == null)
             {
                 throw new RuntimeException("Invalid proxy");
@@ -73,7 +72,7 @@ public class Client
             System.out.println("Contents of root directory:");
             listRecursive(rootDir, 0);
         }
-        catch(Ice.LocalException e)
+        catch(com.zeroc.Ice.LocalException e)
         {
             e.printStackTrace();
             status = 1;

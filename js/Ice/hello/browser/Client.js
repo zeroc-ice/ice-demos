@@ -6,32 +6,32 @@
 
 (function(){
 
-var communicator = Ice.initialize();
+const communicator = Ice.initialize();
 
-var flushEnabled = false;
-var batch = 0;
-var helloPrx = null;
+let flushEnabled = false;
+let batch = 0;
+let helloPrx = null;
 
 //
 // Create the hello proxy.
 //
 function updateProxy()
 {
-    var hostname = document.location.hostname || "127.0.0.1";
-    var proxy = communicator.stringToProxy("hello" +
+    const hostname = document.location.hostname || "127.0.0.1";
+    let proxy = communicator.stringToProxy("hello" +
                                            ":ws -h " + hostname + " -p 8080 -r /demows" +
                                            ":wss -h " + hostname + " -p 9090 -r /demowss");
 
     //
     // Set or clear the timeout.
     //
-    var timeout = $("#timeout").val();
+    const timeout = $("#timeout").val();
     proxy = proxy.ice_invocationTimeout(timeout > 0 ? timeout : -1);
 
     //
     // Set the mode and protocol
     //
-    var mode = $("#mode").val();
+    const mode = $("#mode").val();
     if(mode == "twoway")
     {
         proxy = proxy.ice_twoway();
@@ -112,43 +112,41 @@ function shutdown()
 // and resets the state to Idle when the promise returned by
 // the function is fulfilled.
 //
-var performEventHandler = function(fn)
+function performEventHandler(fn)
 {
     return function()
     {
-        Ice.Promise.try(
-            function()
+        Ice.Promise.try(() =>
             {
                 return fn.call();
             }
-        ).exception(
-            function(ex)
+        ).catch(ex =>
             {
                 $("#output").val(ex.toString());
             }
-        ).finally(
-            function()
+        ).finally(() =>
             {
                 setState(State.Idle);
-            }
-        );
+            });
         return false;
     };
-};
-var sayHelloClickHandler = performEventHandler(sayHello);
-var shutdownClickHandler = performEventHandler(shutdown);
-var flushClickHandler = performEventHandler(flush);
+}
+
+const sayHelloClickHandler = performEventHandler(sayHello);
+const shutdownClickHandler = performEventHandler(shutdown);
+const flushClickHandler = performEventHandler(flush);
 
 //
 // Handle the client state.
 //
-var State = {
+const State =
+{
     Idle:0,
     SendRequest:1,
     FlushBatchRequests:2
 };
 
-var state;
+let state;
 
 function setState(newState, ex)
 {
@@ -230,11 +228,10 @@ setState(State.Idle);
 //
 // Extract the url GET variables and put them in the _GET object.
 //
-var _GET = {};
+const _GET = {};
 if(window.location.search.length > 1)
 {
-    window.location.search.substr(1).split("&").forEach(
-        function(pair)
+    window.location.search.substr(1).split("&").forEach(pair=>
         {
             pair = pair.split("=");
             if(pair.length > 0)
@@ -256,16 +253,14 @@ if(_GET.mode)
 // If the user selects a secure mode, ensure that the page is loaded over HTTPS
 // so the web server SSL certificate is obtained.
 //
-$("#mode").on("change",
-    function(e)
+$("#mode").on("change", e =>
     {
-        var newMode = $(this).val();
-        var href;
+        const newMode = $(e.currentTarget).val();
         if(document.location.protocol === "http:" &&
            (newMode === "twoway-secure" || newMode === "oneway-secure" || newMode === "oneway-batch-secure"))
         {
-            href = document.location.protocol + "//" + document.location.host +
-                        document.location.pathname + "?mode=" + newMode;
+            let href = document.location.protocol + "//" + document.location.host +
+                       document.location.pathname + "?mode=" + newMode;
             href = href.replace("http", "https");
             href = href.replace("8080", "9090");
             document.location.assign(href);
@@ -273,21 +268,16 @@ $("#mode").on("change",
         else if (document.location.protocol === "https:" &&
            (newMode === "twoway" || newMode === "oneway" || newMode === "oneway-batch"))
         {
-            href = document.location.protocol + "//" + document.location.host +
-                        document.location.pathname + "?mode=" + newMode;
+            let href = document.location.protocol + "//" + document.location.host +
+                       document.location.pathname + "?mode=" + newMode;
             href = href.replace("https", "http");
             href = href.replace("9090", "8080");
             document.location.assign(href);
         }
-        console.log(newMode);
         updateProxy();
     });
 
-$("#timeout").on("change",
-    function(e)
-    {
-        updateProxy();
-    });
+$("#timeout").on("change", e => updateProxy());
 
 updateProxy();
 }());

@@ -6,12 +6,11 @@
 
 package Filesystem;
 
-public class FileI extends _FileDisp
+public class FileI implements File
 {
     // FileI constructor
 
-    public
-    FileI(Ice.Communicator communicator, String name, DirectoryI parent)
+    public FileI(com.zeroc.Ice.Communicator communicator, String name, DirectoryI parent)
     {
         _name = name;
         _parent = parent;
@@ -21,44 +20,40 @@ public class FileI extends _FileDisp
         //
         // Create an identity
         //
-        _id = new Ice.Identity();
+        _id = new com.zeroc.Ice.Identity();
         _id.name = java.util.UUID.randomUUID().toString();
     }
 
     // Slice Node::name() operation
 
-    public String
-    name(Ice.Current current)
+    public String name(com.zeroc.Ice.Current current)
     {
         return _name;
     }
 
     // Slice File::read() operation
 
-    public String[]
-    read(Ice.Current current)
+    public String[] read(com.zeroc.Ice.Current current)
     {
         return _lines;
     }
 
     // Slice File::write() operation
 
-    public void
-    write(String[] text, Ice.Current current)
+    public void write(String[] text, com.zeroc.Ice.Current current)
         throws GenericError
     {
         _lines = text;
     }
 
-    public void
-    activate(Ice.ObjectAdapter a)
+    public void activate(com.zeroc.Ice.ObjectAdapter a)
     {
-        NodePrx thisNode = NodePrxHelper.uncheckedCast(a.add(this, _id));
+        NodePrx thisNode = NodePrx.uncheckedCast(a.add(this, _id));
         _parent.addChild(thisNode);
     }
 
     private String _name;
     private DirectoryI _parent;
-    private Ice.Identity _id;
+    private com.zeroc.Ice.Identity _id;
     private String[] _lines;
 }

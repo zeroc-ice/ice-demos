@@ -45,8 +45,8 @@ void bidir::MainPage::startClient_Click(Platform::Object^ sender, Windows::UI::X
 
         _communicator = Ice::initialize(initData);
 
-        CallbackSenderPrx server = CallbackSenderPrx::checkedCast(
-            _communicator->stringToProxy("sender:tcp -h " + IceUtil::wstringToString(hostname->Text->Data()) + 
+        auto server = Ice::checkedCast<CallbackSenderPrx>(
+            _communicator->stringToProxy("sender:tcp -h " + Ice::wstringToString(hostname->Text->Data()) + 
                                          " -p 10000"));
 
         if(!server)
@@ -58,20 +58,28 @@ void bidir::MainPage::startClient_Click(Platform::Object^ sender, Windows::UI::X
         stopClient->IsEnabled = true;
         Ice::ObjectAdapterPtr adapter = _communicator->createObjectAdapter("");
         Ice::Identity ident;
-        ident.name = IceUtil::generateUUID();
+        ident.name = Ice::generateUUID();
         ident.category = "";
-        CallbackReceiverPtr cr = new CallbackReceiverI(this);
+        auto cr = make_shared<CallbackReceiverI>(this);
         adapter->add(cr, ident);
         adapter->activate();
         server->ice_getConnection()->setAdapter(adapter);
-        server->begin_addClient(ident, nullptr, [=](const Ice::Exception& ex)
-                                                    {
-                                                        ostringstream os;
-                                                        os << ex << endl;
-                                                        print(os.str());
-                                                        startClient->IsEnabled = true;
-                                                        stopClient->IsEnabled = false;
-                                                    });
+        server->addClientAsync(ident, nullptr, 
+            [=](const exception_ptr ex)
+            {
+                try
+                {
+                    rethrow_exception(ex);
+                }
+                catch (const exception& err)
+                {
+                    ostringstream os;
+                    os << err.what() << endl;
+                    print(os.str());
+                    startClient->IsEnabled = true;
+                    stopClient->IsEnabled = false;
+                }
+            });
     }
     catch(const Ice::Exception& ex)
     {
@@ -121,13 +129,9 @@ bidir::MainPage::print(const std::string& message)
                     ref new DispatchedHandler(
                             [=] ()
                                 {
-                                    output->Text += ref new String(IceUtil::stringToWstring(message).c_str());
+                                    output->Text += ref new String(Ice::stringToWstring(message).c_str());
                                     output->UpdateLayout();
-#if (_WIN32_WINNT > 0x0602)
                                     scroller->ChangeView(nullptr, scroller->ScrollableHeight, nullptr);
-#else
-                                    scroller->ScrollToVerticalOffset(scroller->ScrollableHeight);
-#endif
                                 }, 
                             CallbackContext::Any));
 }

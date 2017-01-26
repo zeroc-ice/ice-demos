@@ -11,8 +11,7 @@ class Scanner
         _parser = p;
     }
 
-    Token
-    nextToken()
+    Token nextToken()
     {
         String s = next();
         if(s == null)
@@ -78,8 +77,7 @@ class Scanner
     {
     }
 
-    private char
-    get()
+    private char get()
         throws EndOfInput
     {
         //
@@ -120,16 +118,14 @@ class Scanner
     //
     // unget only works with one character.
     //
-    private void
-    unget(char c)
+    private void unget(char c)
     {
         assert(!_unget);
         _unget = true;
         _ungetChar = c;
     }
 
-    private String
-    next()
+    private String next()
     {
         //
         // Eat any whitespace.

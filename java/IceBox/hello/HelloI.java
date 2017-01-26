@@ -6,11 +6,10 @@
 
 import Demo.*;
 
-public class HelloI extends _HelloDisp
+public class HelloI implements Hello
 {
     @Override
-    public void
-    sayHello(Ice.Current current)
+    public void sayHello(com.zeroc.Ice.Current current)
     {
         System.out.println("Hello World!");
     }

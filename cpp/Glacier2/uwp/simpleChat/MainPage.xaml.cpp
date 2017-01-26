@@ -27,20 +27,26 @@ using namespace std;
 
 MainPage^ MainPage::_instance = nullptr;
 
-Coordinator::Coordinator(CoreDispatcher^ dispatcher)
+Coordinator::Coordinator()
+{
+}
+
+void
+Coordinator::initialize(CoreDispatcher^ dispatcher)
 {
     Ice::InitializationData id;
     id.properties = Ice::createProperties();
-    id.dispatcher = Ice::newDispatcher(
-        [=](const Ice::DispatcherCallPtr& call, const Ice::ConnectionPtr&)
+    id.dispatcher = [=](function<void()> call, const shared_ptr<Ice::Connection>&)
+    {
+        dispatcher->RunAsync(
+            CoreDispatcherPriority::Normal, 
+            ref new DispatchedHandler([=]()
             {
-                dispatcher->RunAsync(
-                    CoreDispatcherPriority::Normal, ref new DispatchedHandler([=]()
-                        {
-                            call->run();
-                        }, CallbackContext::Any));
-            });
-    _factory = new Glacier2::SessionFactoryHelper(id, this);
+                call();
+            },
+            CallbackContext::Any));
+    };
+    _factory = make_shared<Glacier2::SessionFactoryHelper>(id, shared_from_this());
 
     Ice::Identity identity;
     identity.name = "router";
@@ -67,12 +73,19 @@ Coordinator::say(const std::string& msg)
 {
     try
     {
-        _chat->begin_say(msg, nullptr, [](const Ice::Exception& ex)
-                                            {
-                                                ostringstream os;
-                                                os << "Connect failed:\n" << ex << endl;
-                                                MainPage::instance()->setError(os.str());
-                                            });
+        _chat->sayAsync(msg, nullptr, [](const exception_ptr ex)
+            {
+                try
+                {
+                    rethrow_exception(ex);
+                }
+                catch(const std::exception& err)
+                {
+                    ostringstream os;
+                    os << "Connect failed:\n" << err.what() << endl;
+                    MainPage::instance()->setError(os.str());
+                }
+            });
     }
     catch(const Ice::CommunicatorDestroyedException& ex)
     {
@@ -96,18 +109,26 @@ Coordinator::connected(const Glacier2::SessionHelperPtr& session)
     }
     try
     {
-        _chat = Demo::ChatSessionPrx::uncheckedCast(session->session());
-        _chat->begin_setCallback(Demo::ChatCallbackPrx::uncheckedCast(_session->addWithUUID(this)),
-                                 []()
-                                    {
-                                         MainPage::instance()->setConnected(true);
-                                    },
-                                 [](const Ice::Exception& ex)
-                                    {
-                                        ostringstream os;
-                                        os << "Connect failed:\n" << ex << endl;
-                                        MainPage::instance()->setError(os.str());
-                                    });
+        _chat = Ice::uncheckedCast<Demo::ChatSessionPrx>(session->session());
+        _chat->setCallbackAsync(
+            Ice::uncheckedCast<Demo::ChatCallbackPrx>(_session->addWithUUID(shared_from_this())),
+            []()
+            {
+                MainPage::instance()->setConnected(true);
+            },
+            [](const exception_ptr ex)
+            {
+                try
+                {
+                    rethrow_exception(ex);
+                }
+                catch (const exception& err)
+                {
+                    ostringstream os;
+                    os << "Connect failed:\n" << err.what() << endl;
+                    MainPage::instance()->setError(os.str());
+                }
+            });
     }
     catch(const Ice::CommunicatorDestroyedException& ex)
     {
@@ -132,11 +153,11 @@ Coordinator::connectFailed(const Glacier2::SessionHelperPtr&, const Ice::Excepti
 }
 
 void
-Coordinator::message(const string& msg, const Ice::Current&)
+Coordinator::message(string msg, const Ice::Current&)
 {
     try
     {
-        MainPage::instance()->appendMessage(ref new String(IceUtil::stringToWstring(msg).c_str()));
+        MainPage::instance()->appendMessage(ref new String(Ice::stringToWstring(msg).c_str()));
     }
     catch(const Ice::CommunicatorDestroyedException& ex)
     {
@@ -166,7 +187,8 @@ MainPage::MainPage()
 {
     InitializeComponent();
     _instance = this;
-    _coordinator = new Coordinator(this->Dispatcher);
+    _coordinator = make_shared<Coordinator>();
+    _coordinator->initialize(this->Dispatcher);
     setConnected(false);
 }
 
@@ -205,7 +227,7 @@ void
 MainPage::setError(const std::string& err)
 {
     setConnected(false);
-    _loginView->setError(ref new String(IceUtil::stringToWstring(err).c_str()));
+    _loginView->setError(ref new String(Ice::stringToWstring(err).c_str()));
 }
 
 void

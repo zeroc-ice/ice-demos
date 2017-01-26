@@ -6,10 +6,9 @@
 
 import Demo.*;
 
-public final class ThroughputI extends _ThroughputDisp
+public final class ThroughputI implements Throughput
 {
-    public
-    ThroughputI()
+    public ThroughputI()
     {
         _byteSeq = new byte[ByteSeqSize.value];
 
@@ -38,8 +37,7 @@ public final class ThroughputI extends _ThroughputDisp
     }
 
     @Override
-    public boolean
-    needsWarmup(Ice.Current current)
+    public boolean needsWarmup(com.zeroc.Ice.Current current)
     {
         _warmup = false;
         return _needsWarmup;
@@ -47,28 +45,25 @@ public final class ThroughputI extends _ThroughputDisp
 
     @Override
     public void
-    startWarmup(Ice.Current current)
+    startWarmup(com.zeroc.Ice.Current current)
     {
         _warmup = true;
     }
 
     @Override
-    public void
-    endWarmup(Ice.Current current)
+    public void endWarmup(com.zeroc.Ice.Current current)
     {
         _warmup = false;
         _needsWarmup = false;
     }
 
     @Override
-    public void
-    sendByteSeq(byte[] seq, Ice.Current current)
+    public void sendByteSeq(byte[] seq, com.zeroc.Ice.Current current)
     {
     }
 
     @Override
-    public byte[]
-    recvByteSeq(Ice.Current current)
+    public byte[] recvByteSeq(com.zeroc.Ice.Current current)
     {
         if(_warmup)
         {
@@ -81,21 +76,18 @@ public final class ThroughputI extends _ThroughputDisp
     }
 
     @Override
-    public byte[]
-    echoByteSeq(byte[] seq, Ice.Current current)
+    public byte[] echoByteSeq(byte[] seq, com.zeroc.Ice.Current current)
     {
         return seq;
     }
 
     @Override
-    public void
-    sendStringSeq(String[] seq, Ice.Current current)
+    public void sendStringSeq(String[] seq, com.zeroc.Ice.Current current)
     {
     }
 
     @Override
-    public String[]
-    recvStringSeq(Ice.Current current)
+    public String[] recvStringSeq(com.zeroc.Ice.Current current)
     {
         if(_warmup)
         {
@@ -108,21 +100,18 @@ public final class ThroughputI extends _ThroughputDisp
     }
 
     @Override
-    public String[]
-    echoStringSeq(String[] seq, Ice.Current current)
+    public String[] echoStringSeq(String[] seq, com.zeroc.Ice.Current current)
     {
         return seq;
     }
 
     @Override
-    public void
-    sendStructSeq(StringDouble[] seq, Ice.Current current)
+    public void sendStructSeq(StringDouble[] seq, com.zeroc.Ice.Current current)
     {
     }
 
     @Override
-    public StringDouble[]
-    recvStructSeq(Ice.Current current)
+    public StringDouble[] recvStructSeq(com.zeroc.Ice.Current current)
     {
         if(_warmup)
         {
@@ -135,21 +124,18 @@ public final class ThroughputI extends _ThroughputDisp
     }
 
     @Override
-    public StringDouble[]
-    echoStructSeq(StringDouble[] seq, Ice.Current current)
+    public StringDouble[] echoStructSeq(StringDouble[] seq, com.zeroc.Ice.Current current)
     {
         return seq;
     }
 
     @Override
-    public void
-    sendFixedSeq(Fixed[] seq, Ice.Current current)
+    public void sendFixedSeq(Fixed[] seq, com.zeroc.Ice.Current current)
     {
     }
 
     @Override
-    public Fixed[]
-    recvFixedSeq(Ice.Current current)
+    public Fixed[] recvFixedSeq(com.zeroc.Ice.Current current)
     {
         if(_warmup)
         {
@@ -162,15 +148,13 @@ public final class ThroughputI extends _ThroughputDisp
     }
 
     @Override
-    public Fixed[]
-    echoFixedSeq(Fixed[] seq, Ice.Current current)
+    public Fixed[] echoFixedSeq(Fixed[] seq, com.zeroc.Ice.Current current)
     {
         return seq;
     }
 
     @Override
-    public void
-    shutdown(Ice.Current current)
+    public void shutdown(com.zeroc.Ice.Current current)
     {
         current.adapter.getCommunicator().shutdown();
     }

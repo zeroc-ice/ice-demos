@@ -2,9 +2,6 @@ To run the demo, first start the IceGrid service:
 
       icegridnode --Ice.Config=config.grid
 
-Note that for debug Windows builds you will need to use icegridnoded
-rather than icegridnode as the executable name.
-
 This demo contains two application descriptor files. The first
 descriptor, application-single.xml, contains a single server and
 object. This object is allocated by the client using the

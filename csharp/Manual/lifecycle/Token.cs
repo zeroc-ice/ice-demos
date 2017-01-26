@@ -4,8 +4,6 @@
 //
 // **********************************************************************
 
-using System;
-
 class Token
 {
     public const int TOK_HELP = 0;

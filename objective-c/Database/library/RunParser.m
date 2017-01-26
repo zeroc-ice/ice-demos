@@ -52,7 +52,7 @@
         timeout = t;
     }
     return self;
-} 
+}
 
 +(id)sessionRefreshThreadWithLogger:(id<ICELogger>)logger timeout:(long)timeout session:(id)session
 {
@@ -174,9 +174,7 @@ runParser(int argc, char* argv[], id<ICECommunicator> communicator)
                                                           timeout:timeout/2 session:session];
     [refresh start];
 
-    Parser* parser = [Parser parserWithLibrary:library];
-
-    int rc = [parser parse];
+    int rc = [[Parser parserWithLibrary:library] parse];
 
     [refresh cancel];
 

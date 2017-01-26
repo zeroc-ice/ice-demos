@@ -6,7 +6,7 @@
 
 import Demo.*;
 
-class SessionFactoryI extends _SessionFactoryDisp
+class SessionFactoryI implements SessionFactory
 {
     SessionFactoryI(ReapTask reaper)
     {
@@ -14,18 +14,16 @@ class SessionFactoryI extends _SessionFactoryDisp
     }
 
     @Override
-    public synchronized SessionPrx
-    create(String name, Ice.Current c)
+    public synchronized SessionPrx create(String name, com.zeroc.Ice.Current c)
     {
         SessionI session = new SessionI(name);
-        SessionPrx proxy = SessionPrxHelper.uncheckedCast(c.adapter.addWithUUID(session));
+        SessionPrx proxy = SessionPrx.uncheckedCast(c.adapter.addWithUUID(session));
         _reaper.add(proxy, session);
         return proxy;
     }
 
     @Override
-    public void
-    shutdown(Ice.Current c)
+    public void shutdown(com.zeroc.Ice.Current c)
     {
         System.out.println("Shutting down...");
         c.adapter.getCommunicator().shutdown();

@@ -21,8 +21,7 @@ class ReapTask implements Runnable
     }
 
     @Override
-    synchronized public void
-    run()
+    synchronized public void run()
     {
         java.util.Iterator<SessionProxyPair> p = _sessions.iterator();
         while(p.hasNext())
@@ -43,25 +42,23 @@ class ReapTask implements Runnable
                     p.remove();
                 }
             }
-            catch(Ice.ObjectNotExistException e)
+            catch(com.zeroc.Ice.ObjectNotExistException e)
             {
                 p.remove();
             }
         }
     }
 
-    synchronized public void
-    terminate()
+    synchronized public void terminate()
     {
         _sessions.clear();
     }
 
-    synchronized public void
-    add(SessionPrx proxy, SessionI session)
+    synchronized public void add(SessionPrx proxy, SessionI session)
     {
         _sessions.add(new SessionProxyPair(proxy, session));
     }
 
     private final long _timeout = 10 * 1000; // 10 seconds.
-    private java.util.List<SessionProxyPair> _sessions = new java.util.LinkedList<SessionProxyPair>();
+    private java.util.List<SessionProxyPair> _sessions = new java.util.LinkedList<>();
 }

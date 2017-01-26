@@ -41,7 +41,7 @@ public class Client
                 return 1;
             }
 
-            ContextPrx proxy = ContextPrxHelper.checkedCast(communicator().propertyToProxy("Context.Proxy"));
+            var proxy = ContextPrxHelper.checkedCast(communicator().propertyToProxy("Context.Proxy"));
             if(proxy == null)
             {
                 Console.Error.WriteLine("invalid proxy");
@@ -64,30 +64,26 @@ public class Client
                     }
                     if(line.Equals("1"))
                     {
-
                         proxy.call();
                     }
                     else if(line.Equals("2"))
                     {
-                        Dictionary<string, string> ctx = new Dictionary<string, string>();
-                        ctx["type"] = "Explicit";
+                        var ctx = new Dictionary<string, string>() { { "type", "Explicit" } };
                         proxy.call(ctx);
                     }
                     else if(line.Equals("3"))
                     {
-                        Dictionary<string, string> ctx = new Dictionary<string, string>();
-                        ctx["type"] = "Per-Proxy";
-                        ContextPrx proxy2 = ContextPrxHelper.uncheckedCast(proxy.ice_context(ctx));
-                        proxy2.call();
+                        var ctx = new Dictionary<string, string>() { { "type", "Per-Proxy" } };
+                        ContextPrxHelper.uncheckedCast(proxy.ice_context(ctx)).call();
                     }
                     else if(line.Equals("4"))
                     {
-                        Ice.ImplicitContext ic = communicator().getImplicitContext();
-                        Dictionary<string, string> ctx = new Dictionary<string, string>();
-                        ctx["type"] = "Implicit";
+                        var ic = communicator().getImplicitContext();
+                        var ctx = new Dictionary<string, string>() { { "type", "Implicit" } };
                         ic.setContext(ctx);
                         proxy.call();
-                        ic.setContext(new Dictionary<string, string>());
+                        ctx = new Dictionary<string, string>();
+                        ic.setContext(ctx);
                     }
                     else if(line.Equals("s"))
                     {
@@ -107,7 +103,7 @@ public class Client
                         menu();
                     }
                 }
-                catch(System.Exception ex)
+                catch(Exception ex)
                 {
                     Console.Error.WriteLine(ex);
                 }

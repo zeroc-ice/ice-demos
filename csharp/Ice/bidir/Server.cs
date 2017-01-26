@@ -23,16 +23,16 @@ public class Server
         {
             if(args.Length > 0)
             {
-                System.Console.Error.WriteLine(appName() + ": too many arguments");
+                Console.Error.WriteLine(appName() + ": too many arguments");
                 return 1;
             }
 
-            Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Callback.Server");
-            CallbackSenderI sender = new CallbackSenderI(communicator());
-            adapter.add(sender, communicator().stringToIdentity("sender"));
+            var adapter = communicator().createObjectAdapter("Callback.Server");
+            var sender = new CallbackSenderI(communicator());
+            adapter.add(sender, Ice.Util.stringToIdentity("sender"));
             adapter.activate();
 
-            Thread t = new Thread(new ThreadStart(sender.Run));
+            var t = new Thread(new ThreadStart(sender.Run));
             t.Start();
 
             try
@@ -51,7 +51,7 @@ public class Server
 
     public static int Main(string[] args)
     {
-        App app = new App();
+        var app = new App();
         return app.main(args, "config.server");
     }
 }

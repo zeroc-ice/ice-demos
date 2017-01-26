@@ -6,16 +6,16 @@
 
 public class Client
 {
-    public static void
-    main(String[] args)
+    public static void main(String[] args)
     {
         int status = 0;
-        Ice.Communicator ic = null;
+        com.zeroc.Ice.Communicator ic = null;
         try
         {
-            ic = Ice.Util.initialize(args);
-            Ice.ObjectPrx base = ic.stringToProxy("SimplePrinter:default -h localhost -p 10000");
-            Demo.PrinterPrx printer = Demo.PrinterPrxHelper.checkedCast(base);
+            com.zeroc.Ice.Util.InitializeResult ir = com.zeroc.Ice.Util.initialize(args);
+            ic = ir.communicator;
+            com.zeroc.Ice.ObjectPrx base = ic.stringToProxy("SimplePrinter:default -h localhost -p 10000");
+            Demo.PrinterPrx printer = Demo.PrinterPrx.checkedCast(base);
             if(printer == null)
             {
                 throw new Error("Invalid proxy");
@@ -23,7 +23,7 @@ public class Client
 
             printer.printString("Hello World!");
         }
-        catch(Ice.LocalException e)
+        catch(com.zeroc.Ice.LocalException e)
         {
             e.printStackTrace();
             status = 1;

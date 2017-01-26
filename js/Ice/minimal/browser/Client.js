@@ -9,53 +9,46 @@
 //
 // Initialize the communicator.
 //
-var communicator = Ice.initialize();
+const communicator = Ice.initialize();
 
 function sayHello()
 {
-    Ice.Promise.try(
-        function()
+    Ice.Promise.try(() =>
         {
             setState(State.Busy);
             
             //
             // Create a proxy for the hello object
             //
-            var hostname = document.location.hostname || "127.0.0.1";
-            var proxy = communicator.stringToProxy("hello:ws -h " + hostname + " -p 10000");
+            const hostname = document.location.hostname || "127.0.0.1";
+            const proxy = communicator.stringToProxy("hello:ws -h " + hostname + " -p 10000");
             
             //
             // Down-cast this proxy to the derived interface Demo::Hello
             // using checkedCast, and invoke the sayHello operation if 
             // the checkedCast succeeds.
             //
-            return Demo.HelloPrx.checkedCast(proxy).then(
-                function(hello)
-                {
-                    return hello.sayHello();
-                });
+            return Demo.HelloPrx.checkedCast(proxy).then(hello => hello.sayHello());
         }
-    ).exception(
-        function(ex)
+    ).catch(ex =>
         {
             //
             // Handle any exceptions thrown above.
             //
             $("#output").val(ex.toString());
         }
-    ).finally(
-        function()
+    ).finally(() =>
         {
             setState(State.Idle);
-        }
-    );
+        });
     return false;
 }
 
 //
 // Handle the client state
 //
-var State = {
+const State =
+{
     Idle: 0,
     Busy: 1
 };

@@ -31,7 +31,7 @@ public:
     virtual Glacier2::SessionPrx
     create(const string& userId, const Glacier2::SessionControlPrx&, const Ice::Current& current)
     {
-        Ice::Identity ident = { IceUtil::generateUUID(), "session" };
+        Ice::Identity ident = { Ice::generateUUID(), "session" };
         return Glacier2::SessionPrx::uncheckedCast(current.adapter->add(new ChatSessionI(userId), ident));
     }
 };
@@ -52,9 +52,9 @@ public:
         Ice::ObjectAdapterPtr adapter = communicator()->createObjectAdapter("ChatServer");
 
         Glacier2::PermissionsVerifierPtr dpv = new DummyPermissionsVerifierI;
-        adapter->add(dpv, communicator()->stringToIdentity("ChatSessionVerifier"));
+        adapter->add(dpv, Ice::stringToIdentity("ChatSessionVerifier"));
         Glacier2::SessionManagerPtr csm = new ChatSessionManagerI;
-        adapter->add(csm, communicator()->stringToIdentity("ChatSessionManager"));
+        adapter->add(csm, Ice::stringToIdentity("ChatSessionManager"));
         adapter->activate();
         communicator()->waitForShutdown();
 

@@ -5,7 +5,7 @@
 // **********************************************************************
 
 using Demo;
-
+using System;
 using System.Threading;
 using System.Collections.Generic;
 
@@ -15,7 +15,7 @@ public class Server : Ice.Application
     // The servant implements the Slice interface Demo::Props as well as the
     // native callback interface Ice.PropertiesAdminUpdateCallback.
     //
-    class PropsI : Demo.PropsDisp_, Ice.PropertiesAdminUpdateCallback
+    class PropsI : PropsDisp_, Ice.PropertiesAdminUpdateCallback
     {
         public PropsI()
         {
@@ -32,7 +32,7 @@ public class Server : Ice.Application
                 //
                 while(!_called)
                 {
-                    System.Threading.Monitor.Wait(this);
+                    Monitor.Wait(this);
                 }
 
                 _called = false;
@@ -51,7 +51,7 @@ public class Server : Ice.Application
             {
                 _changes = changes;
                 _called = true;
-                System.Threading.Monitor.Pulse(this);
+                Monitor.Pulse(this);
             }
         }
 
@@ -63,21 +63,21 @@ public class Server : Ice.Application
     {
         if(args.Length > 0)
         {
-            System.Console.Error.WriteLine(appName() + ": too many arguments");
+            Console.Error.WriteLine(appName() + ": too many arguments");
             return 1;
         }
 
-        PropsI props = new PropsI();
+        var props = new PropsI();
 
         //
         // Retrieve the PropertiesAdmin facet and register the servant as the update callback.
         //
-        Ice.Object obj = communicator().findAdminFacet("Properties");
-        Ice.NativePropertiesAdmin admin = (Ice.NativePropertiesAdmin)obj;
+        var obj = communicator().findAdminFacet("Properties");
+        var admin = (Ice.NativePropertiesAdmin)obj;
         admin.addUpdateCallback(props);
 
-        Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Props");
-        adapter.add(props, communicator().stringToIdentity("props"));
+        var adapter = communicator().createObjectAdapter("Props");
+        adapter.add(props, Ice.Util.stringToIdentity("props"));
         adapter.activate();
         communicator().waitForShutdown();
         return 0;
@@ -85,7 +85,7 @@ public class Server : Ice.Application
 
     public static int Main(string[] args)
     {
-        Server app = new Server();
+        var app = new Server();
         return app.main(args, "config.server");
     }
 }

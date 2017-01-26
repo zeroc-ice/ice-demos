@@ -165,7 +165,7 @@ class Client < Ice::Application
                     elsif currentType == '4'
                         print "fixed-length struct "
                     end
-                    
+
                     if c == 'o'
                         printf "sequences of size %d as oneway...\n", seqSize
                     else
@@ -248,6 +248,8 @@ class Client < Ice::Application
                     puts "unknown command `" + c + "'"
                     menu()
                 end
+            rescue Ice::Exception => ex
+                puts ex
             rescue EOFError
                 break
             end

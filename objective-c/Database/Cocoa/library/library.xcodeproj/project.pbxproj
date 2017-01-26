@@ -1,0 +1,451 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 47;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		14176C801A70FAC900331986 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14176C7F1A70FAC900331986 /* Security.framework */; };
+		14176C821A70FACE00331986 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14176C811A70FACE00331986 /* Cocoa.framework */; };
+		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
+		3447919F0FBBC4AC0037E9FA /* LoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3447919E0FBBC4AC0037E9FA /* LoginView.xib */; };
+		3447926A0FBC13940037E9FA /* LibraryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 344792690FBC13940037E9FA /* LibraryView.xib */; };
+		3478AF810FF2107100BD9F2B /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 3478AF800FF2107100BD9F2B /* README.md */; };
+		3488C4F10FC23DCF001C9F93 /* EditView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3488C4F00FC23DCF001C9F93 /* EditView.xib */; };
+		3488C52A0FC24104001C9F93 /* RentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3488C5290FC24104001C9F93 /* RentView.xib */; };
+		3488C52D0FC2414D001C9F93 /* SavingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3488C52C0FC2414D001C9F93 /* SavingView.xib */; };
+		34C5F2170FC514C900B226F7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C5F2080FC514C900B226F7 /* AppDelegate.m */; };
+		34C5F2180FC514C900B226F7 /* LoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C5F20A0FC514C900B226F7 /* LoginController.m */; };
+		34C5F2190FC514C900B226F7 /* EditController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C5F20C0FC514C900B226F7 /* EditController.m */; };
+		34C5F21A0FC514C900B226F7 /* Glacier2Session.ice in Sources */ = {isa = PBXBuildFile; fileRef = 34C5F20D0FC514C900B226F7 /* Glacier2Session.ice */; };
+		34C5F21B0FC514C900B226F7 /* Library.ice in Sources */ = {isa = PBXBuildFile; fileRef = 34C5F20E0FC514C900B226F7 /* Library.ice */; };
+		34C5F21C0FC514C900B226F7 /* LibraryController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C5F2100FC514C900B226F7 /* LibraryController.m */; };
+		34C5F21D0FC514C900B226F7 /* RentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C5F2120FC514C900B226F7 /* RentController.m */; };
+		34C5F21E0FC514C900B226F7 /* Router.ice in Sources */ = {isa = PBXBuildFile; fileRef = 34C5F2130FC514C900B226F7 /* Router.ice */; };
+		34C5F21F0FC514C900B226F7 /* SavingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C5F2150FC514C900B226F7 /* SavingController.m */; };
+		34C5F2200FC514C900B226F7 /* Session.ice in Sources */ = {isa = PBXBuildFile; fileRef = 34C5F2160FC514C900B226F7 /* Session.ice */; };
+		82AC63CD1738185D0040F03D /* cacert.pem in Resources */ = {isa = PBXBuildFile; fileRef = 82AC63CC1738185D0040F03D /* cacert.pem */; };
+		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
+		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
+		D8081A711AF14D8700F32A9D /* config.client in Resources */ = {isa = PBXBuildFile; fileRef = D8081A701AF14D8700F32A9D /* config.client */; };
+		D8BCC6A81C03801D001BC53D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D8BCC6A71C03801D001BC53D /* Images.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXBuildRule section */
+		D81F86F81D8999010076917C /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			filePatterns = "*.ice";
+			fileType = pattern.proxy;
+			isEditable = 1;
+			outputFiles = (
+				"$(DERIVED_FILE_DIR)/$(INPUT_FILE_BASE).h",
+				"$(DERIVED_FILE_DIR)/$(INPUT_FILE_BASE).m",
+			);
+			script = "#!/bin/bash\n# For Xcode < 8 we still use the Xcode plug-in\nif [ \"$XCODE_VERSION_MAJOR\" = \"0800\" ]; then\n    if [ -x /usr/local/bin/icebuilder ]; then\n        /usr/local/bin/icebuilder\n    else\n        echo \"Unable to find Ice Builder for Xcode. Visit https://github.com/zeroc-ice/ice-builder-xcode for installation instructions.\"\n        exit 1\n    fi\nfi";
+		};
+/* End PBXBuildRule section */
+
+/* Begin PBXFileReference section */
+		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		14176C7F1A70FAC900331986 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		14176C811A70FACE00331986 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		1DDD58150DA1D0A300B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		32CA4F630368D1EE00C91783 /* library_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = library_Prefix.pch; sourceTree = "<group>"; };
+		3447919E0FBBC4AC0037E9FA /* LoginView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginView.xib; sourceTree = "<group>"; };
+		344792690FBC13940037E9FA /* LibraryView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LibraryView.xib; sourceTree = "<group>"; };
+		3478AF800FF2107100BD9F2B /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		3488C4F00FC23DCF001C9F93 /* EditView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditView.xib; sourceTree = "<group>"; };
+		3488C5290FC24104001C9F93 /* RentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RentView.xib; sourceTree = "<group>"; };
+		3488C52C0FC2414D001C9F93 /* SavingView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SavingView.xib; sourceTree = "<group>"; };
+		34C5F2070FC514C900B226F7 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Classes/AppDelegate.h; sourceTree = "<group>"; };
+		34C5F2080FC514C900B226F7 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Classes/AppDelegate.m; sourceTree = "<group>"; };
+		34C5F2090FC514C900B226F7 /* LoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginController.h; path = Classes/LoginController.h; sourceTree = "<group>"; };
+		34C5F20A0FC514C900B226F7 /* LoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginController.m; path = Classes/LoginController.m; sourceTree = "<group>"; };
+		34C5F20B0FC514C900B226F7 /* EditController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EditController.h; path = Classes/EditController.h; sourceTree = "<group>"; };
+		34C5F20C0FC514C900B226F7 /* EditController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EditController.m; path = Classes/EditController.m; sourceTree = "<group>"; };
+		34C5F20D0FC514C900B226F7 /* Glacier2Session.ice */ = {isa = PBXFileReference; explicitFileType = sourcecode.slice; fileEncoding = 4; lastKnownFileType = text; name = Glacier2Session.ice; path = Classes/Glacier2Session.ice; sourceTree = "<group>"; };
+		34C5F20E0FC514C900B226F7 /* Library.ice */ = {isa = PBXFileReference; explicitFileType = sourcecode.slice; fileEncoding = 4; lastKnownFileType = text; name = Library.ice; path = Classes/Library.ice; sourceTree = "<group>"; };
+		34C5F20F0FC514C900B226F7 /* LibraryController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LibraryController.h; path = Classes/LibraryController.h; sourceTree = "<group>"; };
+		34C5F2100FC514C900B226F7 /* LibraryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LibraryController.m; path = Classes/LibraryController.m; sourceTree = "<group>"; };
+		34C5F2110FC514C900B226F7 /* RentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RentController.h; path = Classes/RentController.h; sourceTree = "<group>"; };
+		34C5F2120FC514C900B226F7 /* RentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RentController.m; path = Classes/RentController.m; sourceTree = "<group>"; };
+		34C5F2130FC514C900B226F7 /* Router.ice */ = {isa = PBXFileReference; explicitFileType = sourcecode.slice; fileEncoding = 4; lastKnownFileType = text; name = Router.ice; path = Classes/Router.ice; sourceTree = "<group>"; };
+		34C5F2140FC514C900B226F7 /* SavingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SavingController.h; path = Classes/SavingController.h; sourceTree = "<group>"; };
+		34C5F2150FC514C900B226F7 /* SavingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SavingController.m; path = Classes/SavingController.m; sourceTree = "<group>"; };
+		34C5F2160FC514C900B226F7 /* Session.ice */ = {isa = PBXFileReference; explicitFileType = sourcecode.slice; fileEncoding = 4; lastKnownFileType = text; name = Session.ice; path = Classes/Session.ice; sourceTree = "<group>"; };
+		82AC63CC1738185D0040F03D /* cacert.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = cacert.pem; path = ../../../../certs/cacert.pem; sourceTree = "<group>"; };
+		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8D1107320486CEB800E47090 /* Library.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Library.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D8081A701AF14D8700F32A9D /* config.client */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = config.client; sourceTree = "<group>"; };
+		D8BCC6A71C03801D001BC53D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D11072E0486CEB800E47090 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				14176C821A70FACE00331986 /* Cocoa.framework in Frameworks */,
+				14176C801A70FAC900331986 /* Security.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				34C5F20D0FC514C900B226F7 /* Glacier2Session.ice */,
+				34C5F20E0FC514C900B226F7 /* Library.ice */,
+				34C5F2130FC514C900B226F7 /* Router.ice */,
+				34C5F2160FC514C900B226F7 /* Session.ice */,
+				34C5F2070FC514C900B226F7 /* AppDelegate.h */,
+				34C5F2080FC514C900B226F7 /* AppDelegate.m */,
+				34C5F2090FC514C900B226F7 /* LoginController.h */,
+				34C5F20A0FC514C900B226F7 /* LoginController.m */,
+				34C5F20B0FC514C900B226F7 /* EditController.h */,
+				34C5F20C0FC514C900B226F7 /* EditController.m */,
+				34C5F20F0FC514C900B226F7 /* LibraryController.h */,
+				34C5F2100FC514C900B226F7 /* LibraryController.m */,
+				34C5F2110FC514C900B226F7 /* RentController.h */,
+				34C5F2120FC514C900B226F7 /* RentController.m */,
+				34C5F2140FC514C900B226F7 /* SavingController.h */,
+				34C5F2150FC514C900B226F7 /* SavingController.m */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D1107320486CEB800E47090 /* Library.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* library */ = {
+			isa = PBXGroup;
+			children = (
+				3478AF800FF2107100BD9F2B /* README.md */,
+				080E96DDFE201D6D7F000001 /* Classes */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = library;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				32CA4F630368D1EE00C91783 /* library_Prefix.pch */,
+				29B97316FDCFA39411CA2CEA /* main.m */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D8BCC6A71C03801D001BC53D /* Images.xcassets */,
+				82AC63CC1738185D0040F03D /* cacert.pem */,
+				3447919E0FBBC4AC0037E9FA /* LoginView.xib */,
+				8D1107310486CEB800E47090 /* Info.plist */,
+				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
+				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
+				344792690FBC13940037E9FA /* LibraryView.xib */,
+				3488C4F00FC23DCF001C9F93 /* EditView.xib */,
+				3488C5290FC24104001C9F93 /* RentView.xib */,
+				3488C52C0FC2414D001C9F93 /* SavingView.xib */,
+				D8081A701AF14D8700F32A9D /* config.client */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				14176C811A70FACE00331986 /* Cocoa.framework */,
+				14176C7F1A70FAC900331986 /* Security.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D1107260486CEB800E47090 /* library */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "library" */;
+			buildPhases = (
+				8D1107290486CEB800E47090 /* Resources */,
+				8D11072C0486CEB800E47090 /* Sources */,
+				8D11072E0486CEB800E47090 /* Frameworks */,
+			);
+			buildRules = (
+				D81F86F81D8999010076917C /* PBXBuildRule */,
+			);
+			dependencies = (
+			);
+			name = library;
+			productInstallPath = "$(HOME)/Applications";
+			productName = library;
+			productReference = 8D1107320486CEB800E47090 /* Library.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0800;
+				TargetAttributes = {
+					8D1107260486CEB800E47090 = {
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "library" */;
+			compatibilityVersion = "Xcode 6.3";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 29B97314FDCFA39411CA2CEA /* library */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D1107260486CEB800E47090 /* library */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D1107290486CEB800E47090 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
+				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
+				3447919F0FBBC4AC0037E9FA /* LoginView.xib in Resources */,
+				3447926A0FBC13940037E9FA /* LibraryView.xib in Resources */,
+				D8BCC6A81C03801D001BC53D /* Images.xcassets in Resources */,
+				3488C4F10FC23DCF001C9F93 /* EditView.xib in Resources */,
+				D8081A711AF14D8700F32A9D /* config.client in Resources */,
+				3488C52A0FC24104001C9F93 /* RentView.xib in Resources */,
+				3488C52D0FC2414D001C9F93 /* SavingView.xib in Resources */,
+				3478AF810FF2107100BD9F2B /* README.md in Resources */,
+				82AC63CD1738185D0040F03D /* cacert.pem in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D11072C0486CEB800E47090 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072D0486CEB800E47090 /* main.m in Sources */,
+				34C5F2170FC514C900B226F7 /* AppDelegate.m in Sources */,
+				34C5F2180FC514C900B226F7 /* LoginController.m in Sources */,
+				34C5F2190FC514C900B226F7 /* EditController.m in Sources */,
+				34C5F21A0FC514C900B226F7 /* Glacier2Session.ice in Sources */,
+				34C5F21B0FC514C900B226F7 /* Library.ice in Sources */,
+				34C5F21C0FC514C900B226F7 /* LibraryController.m in Sources */,
+				34C5F21D0FC514C900B226F7 /* RentController.m in Sources */,
+				34C5F21E0FC514C900B226F7 /* Router.ice in Sources */,
+				34C5F21F0FC514C900B226F7 /* SavingController.m in Sources */,
+				34C5F2200FC514C900B226F7 /* Session.ice in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				089C165DFE840E0CC02AAC07 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		1DDD58140DA1D0A300B32029 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1DDD58150DA1D0A300B32029 /* English */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C01FCF4B08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ADDITIONAL_SDKS = "/usr/local/lib/IceSDK/$(PLATFORM_NAME).sdk";
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = "";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_GC = unsupported;
+				GCC_MODEL_TUNING = "";
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				HEADER_SEARCH_PATHS = (
+					Classes,
+					generated,
+				);
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				OTHER_CFLAGS = "-fobjc-arc-exceptions";
+				OTHER_LDFLAGS = (
+					"-lc++",
+					"-liconv",
+					"-lbz2",
+					"-ObjC",
+					"-lIce",
+					"-lIceSSL",
+					"-lIceObjc",
+					"-lGlacier2Objc",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.zeroc.${PRODUCT_NAME:identifier}";
+				PRODUCT_NAME = Library;
+				PROVISIONING_PROFILE = "";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		C01FCF4C08A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ADDITIONAL_SDKS = "/usr/local/lib/IceSDK/$(PLATFORM_NAME).sdk";
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				GCC_ENABLE_OBJC_GC = unsupported;
+				GCC_MODEL_TUNING = "";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				HEADER_SEARCH_PATHS = (
+					Classes,
+					generated,
+				);
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = "-fobjc-arc-exceptions";
+				OTHER_LDFLAGS = (
+					"-lc++",
+					"-liconv",
+					"-lbz2",
+					"-ObjC",
+					"-lIce",
+					"-lIceSSL",
+					"-lIceObjc",
+					"-lGlacier2Objc",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.zeroc.${PRODUCT_NAME:identifier}";
+				PRODUCT_NAME = Library;
+				PROVISIONING_PROFILE = "";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = YES;
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "library" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4B08A954540054247B /* Debug */,
+				C01FCF4C08A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "library" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}

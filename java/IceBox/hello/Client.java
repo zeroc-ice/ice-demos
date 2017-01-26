@@ -6,27 +6,18 @@
 
 import Demo.*;
 
-public class Client extends Ice.Application
+public class Client extends com.zeroc.Ice.Application
 {
     class ShutdownHook extends Thread
     {
         @Override
-        public void
-        run()
+        public void run()
         {
-            try
-            {
-                communicator().destroy();
-            }
-            catch(Ice.LocalException ex)
-            {
-                ex.printStackTrace();
-            }
+            communicator().destroy();
         }
     }
 
-    private void
-    menu()
+    private void menu()
     {
         System.out.println(
             "usage:\n" +
@@ -41,8 +32,7 @@ public class Client extends Ice.Application
     }
 
     @Override
-    public int
-    run(String[] args)
+    public int run(String[] args)
     {
         if(args.length > 0)
         {
@@ -57,17 +47,17 @@ public class Client extends Ice.Application
         //
         setInterruptHook(new ShutdownHook());
 
-        HelloPrx twoway = HelloPrxHelper.checkedCast(
-            communicator().propertyToProxy("Hello.Proxy").ice_twoway().ice_timeout(-1).ice_secure(false));
+        HelloPrx twoway = HelloPrx.checkedCast(
+            communicator().propertyToProxy("Hello.Proxy")).ice_twoway().ice_timeout(-1).ice_secure(false);
         if(twoway == null)
         {
             System.err.println("invalid object reference");
             return 1;
         }
-        HelloPrx oneway = HelloPrxHelper.uncheckedCast(twoway.ice_oneway());
-        HelloPrx batchOneway = HelloPrxHelper.uncheckedCast(twoway.ice_batchOneway());
-        HelloPrx datagram = HelloPrxHelper.uncheckedCast(twoway.ice_datagram());
-        HelloPrx batchDatagram = HelloPrxHelper.uncheckedCast(twoway.ice_batchDatagram());
+        HelloPrx oneway = twoway.ice_oneway();
+        HelloPrx batchOneway = twoway.ice_batchOneway();
+        HelloPrx datagram = twoway.ice_datagram();
+        HelloPrx batchDatagram = twoway.ice_batchDatagram();
 
         menu();
 
@@ -128,7 +118,7 @@ public class Client extends Ice.Application
             {
                 ex.printStackTrace();
             }
-            catch(Ice.LocalException ex)
+            catch(com.zeroc.Ice.LocalException ex)
             {
                 ex.printStackTrace();
             }
@@ -138,8 +128,7 @@ public class Client extends Ice.Application
         return 0;
     }
 
-    public static void
-    main(String[] args)
+    public static void main(String[] args)
     {
         Client app = new Client();
         int status = app.main("Client", args, "config.client");

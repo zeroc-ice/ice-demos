@@ -2,283 +2,76 @@
 #
 # Copyright (c) 2003-2016 ZeroC, Inc. All rights reserved.
 #
+# This copy of Ice is licensed to you under the terms described in the
+# ICE_LICENSE file included in this distribution.
+#
 # **********************************************************************
-
-#
-# Define OPTIMIZE as yes if you want to build with
-# optimization. Otherwise Ice is build with debug information.
-#
-#OPTIMIZE		= yes
-
-#
-# The build architectures for gcc/llvm based builds. The format of
-# these build flags are OS dependent. For example, under OS X to
-# build binaries which support both i386 and x86_64 you would use
-# "-arch i386 -arch x86_64".  The default is OS version dependent. Be
-# aware that this value may conflict with the setting of LP64 above.
-#
-#OBJCARCHFLAGS		     = -arch i386 -arch x86_64
 
 # ----------------------------------------------------------------------
 # Don't change anything below this line!
 # ----------------------------------------------------------------------
 
-#
-# Common definitions
-#
-ice_language     = objc
-slice_translator = slice2objc
-
-SHELL		= /bin/sh
-VERSION_MAJOR   = 3
-VERSION_MINOR   = 6
-VERSION_PATCH   = 3
-VERSION         = 3.6.3
-SHORT_VERSION   = 3.6
-SOVERSION	= 36
-
-OBJEXT		= .o
-
-UNAME		:= $(shell uname)
-MACHINE_TYPE	:= $(shell uname -m)
+-include	$(lang_srcdir)/config/Make.rules.$(os)
 
 #
-# Ensure ice_language has been set by the file that includes this one.
+# Disable unused parameter warnings in Objective-C
 #
-ifndef ice_language
-$(error ice_language must be defined)
-endif
-
-usr_dir = /usr/local
-
-libsubdir		:= lib
-binsubdir		:= bin
+CXXFLAGS	+= -Wno-unused-parameter
 
 #
-# The following variables might also be defined:
+# Supported configurations
 #
-# - slice_translator: the name of the slice translator required for the build.
-#   Setting this variable is required when building source trees other than the
-#   the source distribution (e.g.: the demo sources).
-#
-ifeq ($(ICE_HOME),)
-    #
-    # /usr or /usr/local install.
-    #
-    ifndef slice_translator
-$(error slice_translator must be defined)
-    endif
-
-    ifneq ($(shell test -f $(usr_dir)/bin/$(slice_translator) && echo 0), 0)
-$(error Unable to find a valid Ice distribution, please verify ICE_HOME is properly configured and Ice is correctly installed.)
-    endif
-
-    ice_dir = $(usr_dir)
-    ice_cpp_dir = $(ice_dir)
-else
-    #
-    # Two cases here. Either an /opt style install, or a source tree.
-    #
-    ice_dir = $(ICE_HOME)
-    ifeq ($(shell test -f $(ICE_HOME)/$(binsubdir)/$(slice_translator) && echo 0), 0)
-        ice_cpp_dir = $(ice_dir)
-    else
-        ifeq ($(shell test -f $(ice_dir)/cpp/bin/$(slice_translator) && echo 0), 0)
-            ice_src_dist = 1
-            ice_cpp_dir = $(ice_dir)/cpp
-        else
-$(error Unable to find $(slice_translator) in $(ICE_HOME)/$(binsubdir), please verify ICE_HOME is properly configured and Ice is correctly installed.)
-        endif
-    endif
-endif
+supported-configs	= shared static arc-shared arc-static
 
 #
-# Set slicedir to the path of the directory containing the Slice files.
+# Define the arc configuration to build the tests with ARC support.
 #
-ifeq ($(ice_dir), $(usr_dir))
-    slicedir = $(usr_dir)/share/slice
-else
-    slicedir = $(ice_dir)/slice
-endif
+# Note that we clear the dependency variable to not include the "arc"
+# sub-configuration into the dependency name (for example, if "client"
+# depends on "IceObjC", client[osx-arc-shared] will still depend on
+# Ice[osx-shared] not Ice[osx-arc-shared]). This is necessary since
+# we don't have an ARC specific build of the libraries.
+#
+arc_projects		:= %
+arc_excludes		:= Database/library
+arc_cppflags 		:= -fobjc-arc -fobjc-arc-exceptions
+arc_dependency	 	:=
 
-#
-# TODO: Should this be:
-# $(ice_dir)/$(libsubdir)$(cpp11libdirsuffix)
-#
-ifdef ice_src_dist
-    ice_lib_dir = $(ice_cpp_dir)/$(libsubdir)
-    ice_bin_dir = $(ice_cpp_dir)/$(binsubdir)
-else
-    ifdef lib64subdir
-        ice_lib_dir = $(ice_dir)/$(lib64subdir)
-        ice_bin_dir = $(ice_dir)/$(bin64subdir)
-    else
-        ice_lib_dir = $(ice_dir)/$(libsubdir)
-        ice_bin_dir = $(ice_dir)/$(binsubdir)
-    endif
-endif
+# Objective-C dependencies
+objc-dependencies		:= IceObjC Glacier2ObjC IceGridObjC IceSSLObjC IceStormObjC
+IceObjC_dependencies 		:= Ice
+Glacier2ObjC_dependencies	:= IceObjC
+IceGridObjC_dependencies    	:= Glacier2ObjC IceObjC
+IcePatch2ObjC_dependencies  	:= IceObjC
+IceSSLObjC_dependencies     	:= IceObjC
+IceStormObjC_dependencies   	:= IceObjC
 
-#
-# Set environment variables for the Slice translator.
-#
-ifneq ($(ice_dir), $(usr_dir))
-    #
-    # We always set library path because the build needs to work
-    # whe slice compiler was built without RPATH
-    #
-    export DYLD_LIBRARY_PATH := $(ice_lib_dir):$(DYLD_LIBRARY_PATH)
-endif
+ice_configs			:= $(supported-configs)
+ice_includedir			?= $(ice_home)$(if $(ice_src_dist),/objective-c)/include
 
-all::
+$(foreach d,$(objc-dependencies),$(eval $$d_targetdir := $(ice_home)$(if $(ice_src_dist),/objective-c)/lib)\
+				 $(eval $(call create-component-targets,ice,$d,library)))
+
+slice2objc_targetext		= m
+slice2objc_path			= $(ice_bindir)/slice2objc
 
 #
-# Embed the runpath if ICE_HOME is defined, otherwise the install
-# is /usr or /usr/local.
+# $(call make-cpp-demo-project,$1=project)
 #
-ifneq ($(ICE_HOME),)
-    embedded_runpath = yes
-endif
-
-ifdef ice_src_dist
-    ice_objc_dir = $(ice_dir)/objective-c
-else
-    ice_objc_dir = $(ice_dir)
-endif
-
-libdir	        = $(ice_objc_dir)/lib
-includedir	= $(ice_objc_dir)/include
+define make-objc-demo-project
+$1_slicecompiler 	:= slice2objc
+$1_sliceflags		:= -I$(ice_slicedir) -I$1 $$($1_sliceflags)
+$1_cppflags		:= -I$(ice_includedir) $(if $(ice_src_dist),-I$(ice_includedir)/generated) \
+			   -I$1 -I$1/generated $$($1_cppflags)
+$1_ldflags              += -framework Foundation
+$(make-project)
+endef
 
 #
-# This file is included by Make.rules when uname is Darwin.
+# $(create-cpp-demo-project $1=demo)
 #
-
-OSX_TARGET_MIN_SDK_VERSION = 10.9
-
-CC     = xcrun clang
-
-CPPFLAGS		+= -pthread -fvisibility=hidden
-OBJCFLAGS		+= -Wall -Werror -mmacosx-version-min=$(OSX_TARGET_MIN_SDK_VERSION)
-
-
-#
-# By default we build x86_64 binaries.
-#
-ifeq ($(OBJCARCHFLAGS),)
-OBJCARCHFLAGS    := -arch x86_64
-endif
-
-ifeq ($(OPTIMIZE),yes)
-     OBJCFLAGS		:= $(OBJCARCHFLAGS) -O2 -DNDEBUG $(OBJCFLAGS)
-else
-     OBJCFLAGS		:= $(OBJCARCHFLAGS) -g $(OBJCFLAGS)
-endif
-
-#
-# If embedded_runpath is not set to yes we do not add
-# an rpath dir.
-#
-ifeq ($(embedded_runpath),yes)
-    LDEXEFLAGS		= -Wl,-rpath,$(libdir)
-endif
-
-#
-# Enable ARC for targets in demo/ and test/ subdirectories
-# when COMPILE_WITH_ARC is defined.
-#
-ifneq ($(findstring demo/,${CURDIR}),)
-    TARGET_SUPPORT_ARC 	= yes
-endif
-
-ifneq ($(findstring test/,${CURDIR}),)
-    TARGET_SUPPORT_ARC 	= yes
-endif
-
-ifeq ($(TARGET_SUPPORT_ARC),yes)
-    ifeq ($(COMPILE_WITH_ARC),yes)
-        #
-        # Don't add these to OBJCFLAGS flex and bison generated files used in
-        # some demos doesn't support ARC.
-        #
-        ARCFLAGS = -fobjc-arc -fobjc-arc-exceptions
-    endif
-endif
-
-mklib 		= libtool -static -o $(1) $(2)
-mkshlib		= $(CC) -dynamiclib $(LDFLAGS) -o $(1) -install_name @rpath/$(2) $(3) $(4)
-
-BASELIBS	= -L$(ice_cpp_dir)/$(libsubdir) -lIce -lIceUtil -framework Foundation
-LIBS		= -lIceObjC$(libsuffix) -framework Foundation
-ICESSL_LIBS     = -lIceSSLObjC$(libsuffix)
-TEST_LIBS	= -lTestCommon $(LIBS)
-ICECPPFLAGS	= -I$(slicedir)
-SLICE2OBJCFLAGS	= $(ICECPPFLAGS)
-FLEXFLAGS	=
-BISONFLAGS	= -dvt
-
-ifneq ($(ice_dir), $(usr_dir))
-    CPPFLAGS	+= -I$(includedir)
-    LDFLAGS	= $(OBJCFLAGS) -L$(libdir)
-endif
-
-SLICE2OBJC	= $(ice_bin_dir)/slice2objc
-
-# This cannot use .cpp:.o as we have multiple types of source files.
-
-EVERYTHING		= all clean
-EVERYTHING_EXCEPT_ALL   = clean
-
-.SUFFIXES:
-.SUFFIXES:		.m .o .c
-
-ifneq ($(SLICE_OBJS),)
--include $(addprefix .depend/, $(SLICE_OBJS:.o=.ice.d))
-endif
-
-ifneq ($(OBJS),)
--include $(addprefix .depend/, $(OBJS:.o=.d))
-endif
-
-ifeq ($(wildcard .depend/*.d),)
-$(OBJS): $(OBJS:.o=.m)
-endif
-
-all:: $(TARGETS)
-
-.m.o:
-	$(CC) -c $(ARCFLAGS) $(CPPFLAGS) $(OBJCFLAGS) $<
-	@mkdir -p .depend
-	@$(CC) -DMAKEDEPEND -M $(CPPFLAGS) $< | sed 's/$(subst /,\/,$(includedir))/$$\(includedir\)/' > .depend/$(*F).d
-
-%.h %.m: %.ice
-	rm -f $(*F).h $(*F).m
-	$(SLICE2OBJC) $(SLICE2OBJCFLAGS) $<
-	@touch $(*F).m
-	@mkdir -p .depend
-	@$(SLICE2OBJC) $(SLICE2OBJCFLAGS) --depend $(*F).ice > .depend/$(*F).ice.d
-
-ifeq ($(BISON_FLEX),yes)
-%.h %.m: %.y
-	rm -f $(*F).h $(*F).c
-	bison $(BISONFLAGS) $<
-	mv $(*F).tab.c $(*F).m
-	mv $(*F).tab.h $(*F).h
-	rm -f $(*F).output
-
-%.m: %.l
-	flex $(FLEXFLAGS) $<
-	rm -f $@
-	cat lex.yy.c >> $@
-	rm -f lex.yy.c
-endif
-
-clean::
-	-rm -f $(TARGETS)
-	-rm -f core *.o *.bak
-	-rm -rf .depend
-
-ifneq ($(SLICE_OBJS),)
-clean::
-	rm -f $(addsuffix .m, $(basename $(notdir $(SLICE_OBJS))))
-	rm -f $(addsuffix .h, $(basename $(notdir $(SLICE_OBJS))))
-endif
-
+define create-objc-demo-project
+$1_srcext		:= m
+$1_dependencies 	:= $$(or $$($1_dependencies),IceObjC)
+$(create-demo-project)
+endef

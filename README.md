@@ -9,12 +9,12 @@ The sample programs are grouped by programming language:
 * [C++](./cpp)
 * [C#](./csharp)
 * [Java](./java)
+* [Java-Compat](./java-compat)
 * [JavaScript](./js)
 * [Objective-C](./objective-c)
 * [PHP](./php)
 * [Python](./python)
 * [Ruby](./ruby)
-* [Visual Basic](./visualBasic)
 
 For example, the [cpp](./cpp) folder contains all the sample programs written
 in C++.

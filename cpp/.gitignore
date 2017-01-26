@@ -1,0 +1,7 @@
+packages
+Win32
+x64
+ARM
+*.VC.db
+*.iobj
+*.ipdb

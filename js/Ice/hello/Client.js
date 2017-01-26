@@ -4,8 +4,8 @@
 //
 // **********************************************************************
 
-var Ice = require("ice").Ice
-var Demo = require("./Hello").Demo;
+const Ice = require("ice").Ice
+const Demo = require("./Hello").Demo;
 
 function menu()
 {
@@ -17,37 +17,35 @@ function menu()
             "f: flush all batch requests\n" +
             "T: set a timeout\n" +
             "P: set a server delay\n" +
-            //"S: switch secure mode on/off\n" +
             "s: shutdown server\n" +
             "x: exit\n" +
             "?: help\n" +
             "\n");
 }
 
-var communicator;
-Ice.Promise.try(
-    function()
+let communicator;
+let completed = false;
+Ice.Promise.try(() =>
     {
         communicator = Ice.initialize(process.argv);
-        var proxy = communicator.stringToProxy("hello:default -p 10000").ice_twoway().ice_secure(false);
-        var secure = false;
-        var timeout = -1;
-        var delay = 0;
+        let proxy = communicator.stringToProxy("hello:default -p 10000").ice_twoway().ice_secure(false);
+        let timeout = -1;
+        let delay = 0;
 
-        return Demo.HelloPrx.checkedCast(proxy).then(
-            function(twoway)
+        return Demo.HelloPrx.checkedCast(proxy).then(twoway =>
             {
-                var oneway = twoway.ice_oneway();
-                var batchOneway = twoway.ice_batchOneway();
+                let oneway = twoway.ice_oneway();
+                let batchOneway = twoway.ice_batchOneway();
 
                 menu();
                 process.stdout.write("==> ");
-                var loop = new Ice.Promise();
+                let loop = new Ice.Promise();
                 function processKey(key)
                 {
                     if(key == "x")
                     {
-                        loop.succeed();
+                        completed = true;
+                        loop.resolve();
                         return;
                     }
 
@@ -134,43 +132,33 @@ Ice.Promise.try(
                 // keys we print the prompt and resume the standard input.
                 //
                 process.stdin.resume();
-                var promise = new Ice.Promise().succeed();
-                process.stdin.on("data",
-                                 function(buffer)
+                let p = Ice.Promise.resolve();
+                process.stdin.on("data", buffer =>
                                  {
                                      process.stdin.pause();
                                      var data = buffer.toString("utf-8").trim().split("");
                                      // Process each key
-                                     data.forEach(function(key)
-                                                  {
-                                                      promise = promise.then(
-                                                          function()
-                                                          {
-                                                              return processKey(key);
-                                                          }
-                                                      ).exception(
-                                                          function(ex)
-                                                          {
-                                                              console.log(ex.toString());
-                                                          });
-                                                  });
+                                     data.forEach(key =>
+                                        {
+                                            p = p.then(() => processKey(key)).catch(ex => console.log(ex.toString()));
+                                        });
+
                                      // Once we're done, print the prompt
-                                     promise.then(function()
-                                                  {
-                                                      if(!loop.completed())
-                                                      {
-                                                          process.stdout.write("==> ");
-                                                          process.stdin.resume();
-                                                      }
-                                                  });
+                                     p.then(() =>
+                                        {
+                                            if(!completed)
+                                            {
+                                                process.stdout.write("==> ");
+                                                process.stdin.resume();
+                                            }
+                                        });
                                      data = [];
                                  });
 
                 return loop;
             });
     }
-).finally(
-    function()
+).finally(() =>
     {
         if(communicator)
         {
@@ -178,11 +166,8 @@ Ice.Promise.try(
         }
     }
 ).then(
-    function()
-    {
-        process.exit(0);
-    },
-    function(ex)
+    () => process.exit(0),
+    ex =>
     {
         console.log(ex);
         process.exit(1);

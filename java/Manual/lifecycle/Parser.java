@@ -14,8 +14,7 @@ class Parser
         _dirs.addFirst(root);
     }
 
-    void
-    usage()
+    void usage()
     {
         System.err.print(
             "help                    Print this message.\n" +
@@ -31,21 +30,19 @@ class Parser
             "exit, quit              Exit this program.\n");
     }
 
-    void
-    list(boolean recursive)
+    void list(boolean recursive)
     {
         try
         {
             list(_dirs.get(0), recursive, 0);
         }
-        catch(Ice.LocalException ex)
+        catch(com.zeroc.Ice.LocalException ex)
         {
             error(ex.toString());
         }
     }
 
-    void
-    list(Filesystem.DirectoryPrx dir, boolean recursive, int depth)
+    void list(Filesystem.DirectoryPrx dir, boolean recursive, int depth)
     {
         StringBuilder b = new StringBuilder();
         for(int i = 0; i < depth; ++i)
@@ -60,7 +57,7 @@ class Parser
         {
             DirectoryPrx d
                 = contents[i].type == NodeType.DirType
-                    ? DirectoryPrxHelper.uncheckedCast(contents[i].proxy)
+                    ? DirectoryPrx.uncheckedCast(contents[i].proxy)
                     : null;
             System.out.print(indent + contents[i].name + (d != null ? " (directory)" : " (file)"));
             if(d != null && recursive)
@@ -75,8 +72,7 @@ class Parser
         }
     }
 
-    void
-    createFile(java.util.List<String> names)
+    void createFile(java.util.List<String> names)
     {
         DirectoryPrx dir = _dirs.getFirst();
 
@@ -99,8 +95,7 @@ class Parser
         }
     }
 
-    void
-    createDir(java.util.List<String> names)
+    void createDir(java.util.List<String> names)
     {
         DirectoryPrx dir = _dirs.getFirst();
 
@@ -123,8 +118,7 @@ class Parser
         }
     }
 
-    void
-    pwd()
+    void pwd()
     {
         if(_dirs.size() == 1)
         {
@@ -142,8 +136,7 @@ class Parser
         System.out.println();
     }
 
-    void
-    cd(String name)
+    void cd(String name)
     {
         if(name.equals("/"))
         {
@@ -179,11 +172,10 @@ class Parser
             System.out.println("`" + name + "': not a directory");
             return;
         }
-        _dirs.addFirst(DirectoryPrxHelper.uncheckedCast(d.proxy));
+        _dirs.addFirst(DirectoryPrx.uncheckedCast(d.proxy));
     }
 
-    void
-    cat(String name)
+    void cat(String name)
     {
         DirectoryPrx dir = _dirs.getFirst();
         NodeDesc d;
@@ -201,7 +193,7 @@ class Parser
             System.out.println("`" + name + "': not a file");
             return;
         }
-        FilePrx f = FilePrxHelper.uncheckedCast(d.proxy);
+        FilePrx f = FilePrx.uncheckedCast(d.proxy);
         String[] l = f.read();
         for(int i = 0; i < l.length; ++i)
         {
@@ -209,8 +201,7 @@ class Parser
         }
     }
 
-    void
-    write(java.util.LinkedList<String> args)
+    void write(java.util.LinkedList<String> args)
     {
         DirectoryPrx dir = _dirs.getFirst();
         String name = args.getFirst();
@@ -230,7 +221,7 @@ class Parser
             System.out.println("`" + name + "': not a file");
             return;
         }
-        FilePrx f = FilePrxHelper.uncheckedCast(d.proxy);
+        FilePrx f = FilePrx.uncheckedCast(d.proxy);
 
         String[] l = args.toArray(new String[0]);
         try
@@ -243,8 +234,7 @@ class Parser
         }
     }
 
-    void
-    destroy(java.util.List<String> names)
+    void destroy(java.util.List<String> names)
     {
         DirectoryPrx dir = _dirs.getFirst();
 
@@ -290,20 +280,17 @@ class Parser
         }
     }
 
-    void
-    error(String s)
+    void error(String s)
     {
         System.err.println("error: " + s);
     }
 
-    void
-    warning(String s)
+    void warning(String s)
     {
         System.err.println("warning: " + s);
     }
 
-    String
-    getInput()
+    String getInput()
     {
         System.out.print("> ");
         System.out.flush();
@@ -318,8 +305,7 @@ class Parser
         }
     }
 
-    int
-    parse()
+    int parse()
     {
         _in = new java.io.BufferedReader(new java.io.InputStreamReader(System.in));
 
@@ -329,8 +315,7 @@ class Parser
         return 0;
     }
 
-    int
-    parse(java.io.BufferedReader in)
+    int parse(java.io.BufferedReader in)
     {
         _in = in;
 

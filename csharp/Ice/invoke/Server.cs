@@ -26,8 +26,8 @@ public class Server
                 return 1;
             }
 
-            Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Printer");
-            adapter.add(new PrinterI(), communicator().stringToIdentity("printer"));
+            var adapter = communicator().createObjectAdapter("Printer");
+            adapter.add(new PrinterI(), Ice.Util.stringToIdentity("printer"));
             adapter.activate();
             communicator().waitForShutdown();
             return 0;
@@ -36,7 +36,7 @@ public class Server
 
     public static int Main(string[] args)
     {
-        App app = new App();
+        var app = new App();
         return app.main(args, "config.server");
     }
 }

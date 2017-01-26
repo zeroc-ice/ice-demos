@@ -38,7 +38,7 @@ ContextServer::run(int argc, char*[])
 
     Ice::ObjectAdapterPtr adapter = communicator()->createObjectAdapter("Context");
     Demo::ContextPtr hello = new ContextI;
-    adapter->add(hello, communicator()->stringToIdentity("context"));
+    adapter->add(hello, Ice::stringToIdentity("context"));
     adapter->activate();
     communicator()->waitForShutdown();
     return EXIT_SUCCESS;

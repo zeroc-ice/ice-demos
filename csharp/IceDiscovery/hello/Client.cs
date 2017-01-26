@@ -57,16 +57,16 @@ public class Client
             {
             }
 
-            HelloPrx twoway = HelloPrxHelper.checkedCast(communicator().stringToProxy("hello"));
+            var twoway = HelloPrxHelper.checkedCast(communicator().stringToProxy("hello"));
             if(twoway == null)
             {
                 Console.Error.WriteLine("invalid proxy");
                 return 1;
             }
-            HelloPrx oneway = (HelloPrx)twoway.ice_oneway();
-            HelloPrx batchOneway = (HelloPrx)twoway.ice_batchOneway();
-            HelloPrx datagram = (HelloPrx)twoway.ice_datagram();
-            HelloPrx batchDatagram =(HelloPrx)twoway.ice_batchDatagram();
+            var oneway = (HelloPrx)twoway.ice_oneway();
+            var batchOneway = (HelloPrx)twoway.ice_batchOneway();
+            var datagram = (HelloPrx)twoway.ice_datagram();
+            var batchDatagram =(HelloPrx)twoway.ice_batchDatagram();
 
             bool secure = false;
             int timeout = -1;
@@ -206,7 +206,7 @@ public class Client
                         menu();
                     }
                 }
-                catch(System.Exception ex)
+                catch(Exception ex)
                 {
                     Console.Error.WriteLine(ex);
                 }

@@ -6,7 +6,7 @@
 
 using Demo;
 using System;
-using System.Collections;
+using System.Collections.Generic;
 
 class CallbackSenderI : CallbackSenderDisp_
 {
@@ -14,16 +14,15 @@ class CallbackSenderI : CallbackSenderDisp_
     {
         _communicator = communicator;
         _destroy = false;
-        _clients = new ArrayList();
+        _clients = new List<CallbackReceiverPrx>();
     }
 
     public void destroy()
     {
         lock(this)
         {
-            System.Console.Out.WriteLine("destroying callback sender");
+            Console.Out.WriteLine("destroying callback sender");
             _destroy = true;
-            
             System.Threading.Monitor.Pulse(this);
         }
     }
@@ -32,11 +31,8 @@ class CallbackSenderI : CallbackSenderDisp_
     {
         lock(this)
         {
-            System.Console.Out.WriteLine("adding client `" + _communicator.identityToString(ident) + "'");
-
-            Ice.ObjectPrx @base = current.con.createProxy(ident);
-            CallbackReceiverPrx client = CallbackReceiverPrxHelper.uncheckedCast(@base);
-            _clients.Add(client);
+            Console.Out.WriteLine("adding client `" + Ice.Util.identityToString(ident) + "'");
+            _clients.Add(CallbackReceiverPrxHelper.uncheckedCast(current.con.createProxy(ident)));
         }
     }
 
@@ -45,7 +41,7 @@ class CallbackSenderI : CallbackSenderDisp_
         int num = 0;
         while(true)
         {
-            ArrayList clients;
+            List<CallbackReceiverPrx> clients;
             lock(this)
             {
                 System.Threading.Monitor.Wait(this, 2000);
@@ -54,13 +50,13 @@ class CallbackSenderI : CallbackSenderDisp_
                     break;
                 }
 
-                clients = new ArrayList(_clients);
+                clients = new List<CallbackReceiverPrx>(_clients);
             }
 
             if(clients.Count > 0)
             {
                 ++num;
-                foreach(CallbackReceiverPrx c in clients)
+                foreach(var c in clients)
                 {
                     try
                     {
@@ -69,7 +65,7 @@ class CallbackSenderI : CallbackSenderDisp_
                     catch(Ice.LocalException ex)
                     {
                         Console.Error.WriteLine("removing client `" +
-                                                _communicator.identityToString(c.ice_getIdentity()) + "':\n" + ex);
+                                                Ice.Util.identityToString(c.ice_getIdentity()) + "':\n" + ex);
 
                         lock(this)
                         {
@@ -83,5 +79,5 @@ class CallbackSenderI : CallbackSenderDisp_
 
     private Ice.Communicator _communicator;
     private bool _destroy;
-    private ArrayList _clients;
+    private List<CallbackReceiverPrx> _clients;
 }

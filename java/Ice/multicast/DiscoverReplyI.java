@@ -6,11 +6,10 @@
 
 import Demo.*;
 
-public class DiscoverReplyI extends _DiscoverReplyDisp
+public class DiscoverReplyI implements DiscoverReply
 {
     @Override
-    public synchronized void
-    reply(Ice.ObjectPrx obj, Ice.Current current)
+    public synchronized void reply(com.zeroc.Ice.ObjectPrx obj, com.zeroc.Ice.Current current)
     {
         if(_obj == null)
         {
@@ -19,8 +18,7 @@ public class DiscoverReplyI extends _DiscoverReplyDisp
         notify();
     }
 
-    public synchronized Ice.ObjectPrx
-    waitReply(long timeout)
+    public synchronized com.zeroc.Ice.ObjectPrx waitReply(long timeout)
     {
         long end = System.currentTimeMillis() + timeout;
         while(_obj == null)
@@ -44,5 +42,5 @@ public class DiscoverReplyI extends _DiscoverReplyDisp
         return _obj;
     }
 
-    private Ice.ObjectPrx _obj;
+    private com.zeroc.Ice.ObjectPrx _obj;
 }

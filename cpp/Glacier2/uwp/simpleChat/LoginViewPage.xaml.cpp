@@ -41,15 +41,15 @@ LoginViewPage::OnNavigatedTo(NavigationEventArgs^)
     LoginData loginData = MainPage::instance()->coordinator()->loginData();
     if(!loginData.hostname.empty())
     {
-        hostname->Text = ref new String(IceUtil::stringToWstring(loginData.hostname).c_str());
+        hostname->Text = ref new String(Ice::stringToWstring(loginData.hostname).c_str());
     }
     if(!loginData.username.empty())
     {
-        username->Text = ref new String(IceUtil::stringToWstring(loginData.username).c_str());
+        username->Text = ref new String(Ice::stringToWstring(loginData.username).c_str());
     }
     if(!loginData.password.empty())
     {
-        password->Password = ref new String(IceUtil::stringToWstring(loginData.password).c_str());
+        password->Password = ref new String(Ice::stringToWstring(loginData.password).c_str());
     }
 }
 
@@ -57,9 +57,9 @@ void
 LoginViewPage::signinClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
     LoginData loginData;
-    loginData.hostname = IceUtil::wstringToString(hostname->Text->Data());
-    loginData.username = IceUtil::wstringToString(username->Text->Data());
-    loginData.password = IceUtil::wstringToString(password->Password->Data());
+    loginData.hostname = Ice::wstringToString(hostname->Text->Data());
+    loginData.username = Ice::wstringToString(username->Text->Data());
+    loginData.password = Ice::wstringToString(password->Password->Data());
     signin->IsEnabled = false;
     error->Text = "";
     errorBorder->Visibility = Windows::UI::Xaml::Visibility::Collapsed;

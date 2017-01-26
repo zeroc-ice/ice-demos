@@ -1,0 +1,90 @@
+# **********************************************************************
+#
+# Copyright (c) 2003-2016 ZeroC, Inc. All rights reserved.
+#
+# This copy of Ice is licensed to you under the terms described in the
+# ICE_LICENSE file included in this distribution.
+#
+# **********************************************************************
+
+#
+# Define ICE_HOME if Ice is not installed in /usr (Linux) or
+# /usr/local (OS X)
+#
+#ICE_HOME		?= /opt/Ice-3.7a2
+
+#
+# Define OPTIMIZE as yes if you want to build with optimization.
+# Otherwise Ice is build with debug information.
+#
+#OPTIMIZE		= yes
+
+#
+# Define PLATFORMS to the list of platforms to build. This defaults
+# to the first supported platform for this system.
+#
+# Run `make print V=supported-platforms' to see the list of supported
+# platforms on this system.
+#
+PLATFORMS              	?= $(firstword $(supported-platforms))
+
+#
+# Configurations to build. This defaults to the first supported
+# configuration.
+#
+# Run `make print V=supported-configs` to see the list of supported
+# configurations.
+#
+CONFIGS			?= $(firstword $(supported-configs))
+
+
+# ----------------------------------------------------------------------
+# Don't change anything below this line!
+# ----------------------------------------------------------------------
+
+os			?= $(shell uname)
+embedded_runpath	:= yes
+
+include	$(top_srcdir)/make/Make.rules.$(os)
+include	$(top_srcdir)/make/Make.project.rules
+include	$(top_srcdir)/make/Make.demos.rules
+
+#
+# Ice installation
+#
+ice_home 		:= $(or $(ICE_HOME),$(if $(filter Darwin,$(os)),/usr/local,/usr))
+
+ifeq ($(ice_home),)
+$(error Can't find Ice distribution, please set ICE_HOME to the Ice installation directory)
+endif
+
+ice_bindir		?= $(ice_home)$(if $(ice_src_dist),/cpp)/bin
+ice_slicedir 		?= $(ice_home)$(if $(filter /usr%,$(ice_home)),/share/ice)/slice
+ice_src_dist 		:= $(wildcard $(ice_home)/config/Make.rules)
+
+#
+# The version/soversion variables are used for versionning plugins built with the demos.
+#
+version			= 3.7a4
+soversion		= 37a4
+compatversion		= $(version)
+
+static_projects		= %
+
+#
+# Support for 3rd party libraries
+#
+thirdparties		:= bz2
+bz2_home 		:= $(BZ2_HOME)
+
+$(foreach l,$(thirdparties),$(eval $(call make-lib,$l)))
+
+#
+# $(call create-demo-project-targets,$1=project)
+#
+define create-demo-project-targets
+# Default is to build executable in the <project>/build directory, we want them
+# to be in <project>/ directly.
+$1_targetdir		:= $1
+$(create-project-targets)
+endef

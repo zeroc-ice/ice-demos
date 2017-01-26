@@ -61,7 +61,7 @@ class Server(Ice.Application):
         admin.addUpdateCallback(servant);
 
         adapter = self.communicator().createObjectAdapter("Props")
-        adapter.add(servant, self.communicator().stringToIdentity("props"))
+        adapter.add(servant, Ice.stringToIdentity("props"))
         adapter.activate()
         self.communicator().waitForShutdown()
         return 0

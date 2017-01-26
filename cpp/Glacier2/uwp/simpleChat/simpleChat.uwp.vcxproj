@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\..\packages\zeroc.ice.uwp.3.7.0-alpha4\build\native\zeroc.ice.uwp.props" Condition="Exists('..\..\..\packages\zeroc.ice.uwp.3.7.0-alpha4\build\native\zeroc.ice.uwp.props') and '$(UseSrcDist)' != 'yes'" />
   <PropertyGroup Label="Globals">
     <ProjectGuid>{0f61c1a6-2a63-4044-94a6-ddba1d279300}</ProjectGuid>
     <RootNamespace>simpleChat</RootNamespace>
@@ -12,8 +13,9 @@
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
     <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
     <ProjectName>simpleChat</ProjectName>
-    <IceBuilderCppProps Condition="!Exists('$(IceBuilderCppProps)')">$([System.IO.Directory]::GetFiles('$(LocalAppData)\Microsoft\VisualStudio\$(VisualStudioVersion)\Extensions', 'IceBuilder.Cpp.props', SearchOption.AllDirectories))</IceBuilderCppProps>
-    <IceBuilderCppTargets Condition="!Exists('$(IceBuilderCppTargets)')">$([System.IO.Directory]::GetFiles('$(LocalAppData)\Microsoft\VisualStudio\$(VisualStudioVersion)\Extensions', 'IceBuilder.Cpp.targets', SearchOption.AllDirectories))</IceBuilderCppTargets>
+    <IceBuilderInstallDir>$([MSBuild]::GetRegistryValue('HKEY_CURRENT_USER\SOFTWARE\ZeroC\IceBuilder', 'InstallDir.$(VisualStudioVersion)'))</IceBuilderInstallDir>
+    <IceBuilderCppProps>$(IceBuilderInstallDir)\Resources\IceBuilder.Cpp.props</IceBuilderCppProps>
+    <IceBuilderCppTargets>$(IceBuilderInstallDir)\Resources\IceBuilder.Cpp.targets</IceBuilderCppTargets>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <ItemGroup Label="ProjectConfigurations">
@@ -97,12 +99,14 @@
   </PropertyGroup>
   <PropertyGroup Label="IceBuilder">
     <IceBuilderAdditionalOptions>--add-header pch.h</IceBuilderAdditionalOptions>
+    <IceBuilderOutputDir>$(Platform)\$(Configuration)\</IceBuilderOutputDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
       <PrecompiledHeader>Use</PrecompiledHeader>
+      <PreprocessorDefinitions>ICE_CPP11_MAPPING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -110,6 +114,7 @@
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
       <PrecompiledHeader>Use</PrecompiledHeader>
+      <PreprocessorDefinitions>ICE_CPP11_MAPPING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -117,6 +122,7 @@
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
       <PrecompiledHeader>Use</PrecompiledHeader>
+      <PreprocessorDefinitions>ICE_CPP11_MAPPING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -124,6 +130,7 @@
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
       <PrecompiledHeader>Use</PrecompiledHeader>
+      <PreprocessorDefinitions>ICE_CPP11_MAPPING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -133,13 +140,32 @@
     <ClInclude Include="LoginViewPage.xaml.h">
       <DependentUpon>LoginViewPage.xaml</DependentUpon>
     </ClInclude>
-    <ClInclude Include="generated\Chat.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="App.xaml.h">
       <DependentUpon>App.xaml</DependentUpon>
     </ClInclude>
     <ClInclude Include="MainPage.xaml.h">
       <DependentUpon>MainPage.xaml</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="Win32\Debug\Chat.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="Win32\Release\Chat.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="x64\Debug\Chat.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="x64\Release\Chat.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -165,6 +191,7 @@
     <None Include="..\..\..\..\certs\cacert.der">
       <DeploymentContent>true</DeploymentContent>
     </None>
+    <None Include="packages.config" />
     <None Include="README.md" />
     <None Include="simpleChat_TemporaryKey.pfx" />
   </ItemGroup>
@@ -187,7 +214,6 @@
     <ClCompile Include="LoginViewPage.xaml.cpp">
       <DependentUpon>LoginViewPage.xaml</DependentUpon>
     </ClCompile>
-    <ClCompile Include="generated\Chat.cpp" />
     <ClCompile Include="MainPage.xaml.cpp">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </ClCompile>
@@ -197,6 +223,26 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Win32\Debug\Chat.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Win32\Release\Chat.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="x64\Debug\Chat.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="x64\Release\Chat.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <IceBuilder Include="Chat.ice" />
@@ -204,5 +250,25 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Import Project="$(IceBuilderCppTargets)" Condition="Exists('$(IceBuilderCppTargets)')" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\..\..\packages\zeroc.ice.uwp.3.7.0-alpha4\build\native\zeroc.ice.uwp.targets" Condition="Exists('..\..\..\packages\zeroc.ice.uwp.3.7.0-alpha4\build\native\zeroc.ice.uwp.targets') and '$(UseIceHome)' != 'yes'" />
+    <Import Project="..\..\..\packages\zeroc.ice.uwp.arm.3.7.0-alpha4\build\native\zeroc.ice.uwp.arm.targets" Condition="Exists('..\..\..\packages\zeroc.ice.uwp.arm.3.7.0-alpha4\build\native\zeroc.ice.uwp.arm.targets') and '$(UseSrcDist)' != 'yes'" />
+    <Import Project="..\..\..\packages\zeroc.ice.uwp.x64.3.7.0-alpha4\build\native\zeroc.ice.uwp.x64.targets" Condition="Exists('..\..\..\packages\zeroc.ice.uwp.x64.3.7.0-alpha4\build\native\zeroc.ice.uwp.x64.targets') and '$(UseSrcDist)' != 'yes'" />
+    <Import Project="..\..\..\packages\zeroc.ice.uwp.x86.3.7.0-alpha4\build\native\zeroc.ice.uwp.x86.targets" Condition="Exists('..\..\..\packages\zeroc.ice.uwp.x86.3.7.0-alpha4\build\native\zeroc.ice.uwp.x86.targets') and '$(UseSrcDist)' != 'yes'" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild" Condition="'$(UseIceHome)' != 'yes'">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\..\packages\zeroc.ice.uwp.3.7.0-alpha4\build\native\zeroc.ice.uwp.targets') and '$(UseSrcDist)' != 'yes'" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\zeroc.ice.uwp.3.7.0-alpha4\build\native\zeroc.ice.uwp.targets'))" />
+    <Error Condition="!Exists('..\..\..\packages\zeroc.ice.uwp.arm.3.7.0-alpha4\build\native\zeroc.ice.uwp.arm.targets') and '$(UseSrcDist)' != 'yes'" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\zeroc.ice.uwp.arm.3.7.0-alpha4\build\native\zeroc.ice.uwp.arm.targets'))" />
+    <Error Condition="!Exists('..\..\..\packages\zeroc.ice.uwp.x64.3.7.0-alpha4\build\native\zeroc.ice.uwp.x64.targets') and '$(UseSrcDist)' != 'yes'" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\zeroc.ice.uwp.x64.3.7.0-alpha4\build\native\zeroc.ice.uwp.x64.targets'))" />
+    <Error Condition="!Exists('..\..\..\packages\zeroc.ice.uwp.x86.3.7.0-alpha4\build\native\zeroc.ice.uwp.x86.targets') and '$(UseSrcDist)' != 'yes'" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\zeroc.ice.uwp.x86.3.7.0-alpha4\build\native\zeroc.ice.uwp.x86.targets'))" />
+    <Error Condition="!Exists('..\..\..\packages\zeroc.ice.uwp.3.7.0-alpha4\build\native\zeroc.ice.uwp.props') and '$(UseSrcDist)' != 'yes'" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\zeroc.ice.uwp.3.7.0-alpha4\build\native\zeroc.ice.uwp.props'))" />
+  </Target>
+  <Target Name="EnsureIceBuilderImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project requires the Ice Builder for Visual Studio extension. Use "Tools &amp;gt; Extensions and Updates" to install it. For more information, see https://visualstudiogallery.msdn.microsoft.com/1a64e701-63f2-4740-8004-290e6c682ce0.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(IceBuilderCppProps)')" Text="$(ErrorText)" />
+  </Target>
 </Project>

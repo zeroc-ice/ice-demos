@@ -6,11 +6,12 @@
 
 import Demo.*;
 
-class BookQueryResultI extends _BookQueryResultDisp
+class BookQueryResultI implements BookQueryResult
 {
-    BookQueryResultI(SQLRequestContext context, java.sql.ResultSet rs, Ice.ObjectAdapter adapter) throws java.sql.SQLException
+    BookQueryResultI(SQLRequestContext context, java.sql.ResultSet rs, com.zeroc.Ice.ObjectAdapter adapter)
+        throws java.sql.SQLException
     {
-        _books = new java.util.Stack<BookDescription>();
+        _books = new java.util.Stack<>();
         for(int i = 0; i < MAX_BOOK_QUERY_RESULT; ++i)
         {
             _books.add(BookI.extractDescription(context, rs, adapter));
@@ -22,30 +23,30 @@ class BookQueryResultI extends _BookQueryResultDisp
     }
 
     @Override
-    synchronized public java.util.List<BookDescription>
-    next(int n, Ice.BooleanHolder destroyed, Ice.Current current)
+    synchronized public BookQueryResult.NextResult next(int n, com.zeroc.Ice.Current current)
     {
         if(_destroyed)
         {
-            throw new Ice.ObjectNotExistException();
+            throw new com.zeroc.Ice.ObjectNotExistException();
         }
-        destroyed.value = false;
-        java.util.List<BookDescription> l = new java.util.LinkedList<BookDescription>();
+        BookQueryResult.NextResult r = new BookQueryResult.NextResult();
+        r.destroyed = false;
+        r.returnValue = new java.util.LinkedList<>();
         if(n <= 0)
         {
-            return l;
+            return r;
         }
 
         for(int i = 0; i < n && _books.size() > 0; ++i)
         {
-            l.add(_books.pop());
+            r.returnValue.add(_books.pop());
         }
 
         if(_books.size() <= 0)
         {
             try
             {
-                destroyed.value = true;
+                r.destroyed = true;
                 destroy(current);
             }
             catch(Exception e)
@@ -54,16 +55,15 @@ class BookQueryResultI extends _BookQueryResultDisp
             }
         }
 
-        return l;
+        return r;
     }
 
     @Override
-    synchronized public void
-    destroy(Ice.Current current)
+    synchronized public void destroy(com.zeroc.Ice.Current current)
     {
         if(_destroyed)
         {
-            throw new Ice.ObjectNotExistException();
+            throw new com.zeroc.Ice.ObjectNotExistException();
         }
         _destroyed = true;
 
@@ -71,8 +71,7 @@ class BookQueryResultI extends _BookQueryResultDisp
     }
 
     // Called on application shutdown by the Library.
-    synchronized public void
-    shutdown()
+    synchronized public void shutdown()
     {
         if(!_destroyed)
         {
@@ -84,4 +83,3 @@ class BookQueryResultI extends _BookQueryResultDisp
     private boolean _destroyed = false;
     private static final int MAX_BOOK_QUERY_RESULT = 1000;
 }
-

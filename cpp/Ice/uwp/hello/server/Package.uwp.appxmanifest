@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="5d821818-df57-40b0-a277-eba4d1b55bb3" Publisher="CN=ZeroC" Version="1.0.0.0" />
+  <Identity Name="ice-hello-server" Publisher="CN=ZeroC" Version="1.0.0.0" />
   <mp:PhoneIdentity PhoneProductId="5d821818-df57-40b0-9bb4-0b3cf019b800" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Ice Hello Demo Server</DisplayName>
@@ -23,7 +23,6 @@
     </Application>
   </Applications>
   <Capabilities>
-    <Capability Name="internetClient" />
     <Capability Name="internetClientServer" />
     <Capability Name="privateNetworkClientServer" />
   </Capabilities>

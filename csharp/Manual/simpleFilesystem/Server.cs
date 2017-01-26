@@ -28,21 +28,20 @@ public class Server
             //
             // Create an object adapter.
             //
-            Ice.ObjectAdapter adapter =
+            var adapter =
                 communicator().createObjectAdapterWithEndpoints("SimpleFilesystem", "default -h localhost -p 10000");
 
             //
             // Create the root directory (with name "/" and no parent)
             //
-            DirectoryI root = new DirectoryI(communicator(), "/", null);
+            var root = new DirectoryI(communicator(), "/", null);
             root.activate(adapter);
 
             //
             // Create a file called "README" in the root directory
             //
-            FileI file = new FileI(communicator(), "README", root);
-            string[] text;
-            text = new string[]{ "This file system contains a collection of poetry." };
+            var file = new FileI(communicator(), "README", root);
+            var text = new string[]{ "This file system contains a collection of poetry." };
             try
             {
                 file.write(text);
@@ -56,7 +55,7 @@ public class Server
             //
             // Create a directory called "Coleridge" in the root directory
             //
-            DirectoryI coleridge = new DirectoryI(communicator(), "Coleridge", root);
+            var coleridge = new DirectoryI(communicator(), "Coleridge", root);
             coleridge.activate(adapter);
 
             //
@@ -99,7 +98,7 @@ public class Server
 
     public static int Main(string[] args)
     {
-        App app = new App();
+        var app = new App();
         return app.main(args);
     }
 }

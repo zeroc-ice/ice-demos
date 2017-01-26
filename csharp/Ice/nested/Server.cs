@@ -22,14 +22,14 @@ public class Server
         {
             if(args.Length > 0)
             {
-                System.Console.Error.WriteLine(appName() + ": too many arguments");
+                Console.Error.WriteLine(appName() + ": too many arguments");
                 return 1;
             }
 
-            Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Nested.Server");
-            NestedPrx self = 
-                NestedPrxHelper.uncheckedCast(adapter.createProxy(communicator().stringToIdentity("nestedServer")));
-            adapter.add(new NestedI(self), communicator().stringToIdentity("nestedServer"));
+            var adapter = communicator().createObjectAdapter("Nested.Server");
+            var self = 
+                NestedPrxHelper.uncheckedCast(adapter.createProxy(Ice.Util.stringToIdentity("nestedServer")));
+            adapter.add(new NestedI(self), Ice.Util.stringToIdentity("nestedServer"));
             adapter.activate();
             communicator().waitForShutdown();
             return 0;
@@ -38,7 +38,7 @@ public class Server
 
     public static int Main(string[] args)
     {
-        App app = new App();
+        var app = new App();
         return app.main(args, "config.server");
     }
 }

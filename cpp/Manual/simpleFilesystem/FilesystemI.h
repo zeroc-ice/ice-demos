@@ -20,12 +20,12 @@ namespace Filesystem
     class DirectoryI;
     typedef IceUtil::Handle<DirectoryI> DirectoryIPtr;
 
-    class NodeI : virtual public Node
+    class NodeI : public virtual Node
     {
     public:
 
         virtual std::string name(const Ice::Current&);
-        NodeI(const Ice::CommunicatorPtr&, const std::string&, const DirectoryIPtr&);
+        NodeI(const std::string&, const DirectoryIPtr&);
         void activate(const Ice::ObjectAdapterPtr&);
 
     private:
@@ -45,7 +45,7 @@ namespace Filesystem
         virtual Lines read(const Ice::Current&);
         virtual void write(const Lines&,
                            const Ice::Current& = Ice::Current());
-        FileI(const Ice::CommunicatorPtr&, const std::string&, const DirectoryIPtr&);
+        FileI(const std::string&, const DirectoryIPtr&);
 
     private:
 
@@ -58,7 +58,7 @@ namespace Filesystem
     public:
 
         virtual NodeSeq list(const Ice::Current&);
-        DirectoryI(const Ice::CommunicatorPtr&, const std::string&, const DirectoryIPtr&);
+        DirectoryI(const std::string&, const DirectoryIPtr&);
         void addChild(const Filesystem::NodePrx&);
 
     private:

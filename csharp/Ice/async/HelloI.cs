@@ -5,6 +5,7 @@
 // **********************************************************************
 
 using System;
+using System.Threading.Tasks;
 using Demo;
 
 public class HelloI : HelloDisp_
@@ -14,16 +15,16 @@ public class HelloI : HelloDisp_
         _workQueue = workQueue;
     }
 
-    public override void sayHello_async(AMD_Hello_sayHello cb, int delay, Ice.Current current)
+    public override Task sayHelloAsync(int delay, Ice.Current current)
     {
        if(delay == 0)
        {
            Console.Out.WriteLine("Hello World!");
-           cb.ice_response();
+           return null;
        }
        else
        {
-           _workQueue.Add(cb, delay);
+           return _workQueue.Add(delay);
        }
     }
 

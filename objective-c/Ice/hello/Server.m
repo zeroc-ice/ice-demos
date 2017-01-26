@@ -17,7 +17,7 @@ run(int argc, char* argv[], id<ICECommunicator> communicator)
         return EXIT_FAILURE;
     }
     id<ICEObjectAdapter> adapter = [communicator createObjectAdapter:@"Hello"];
-    [adapter add:[HelloI hello] identity:[communicator stringToIdentity:@"hello"]];
+    [adapter add:[HelloI hello] identity:[ICEUtil stringToIdentity:@"hello"]];
     [adapter activate];
     [communicator waitForShutdown];
     return EXIT_SUCCESS;
@@ -47,15 +47,7 @@ main(int argc, char* argv[])
 
         if(communicator != nil)
         {
-            @try
-            {
-                [communicator destroy];
-            }
-            @catch(ICELocalException* ex)
-            {
-                NSLog(@"%@", ex);
-                status = EXIT_FAILURE;
-            }
+            [communicator destroy];
         }
     }
     return status;

@@ -5,29 +5,36 @@
 // **********************************************************************
 
 subprojects {
-	project.group = "com.zeroc"
 
-	apply plugin: 'java'
-	apply from: "$rootProject.projectDir/gradle/ice.gradle"
+    project.group = "com.zeroc"
+    apply plugin: 'java'
 
-	project.version = slice.iceVersion
+    apply from: "$rootProject.projectDir/gradle/ice.gradle"
+    project.version = slice.iceVersion
 
-	repositories {
-		if (slice.jarDir) {
-			flatDir {
-		        name "local"
-		        dirs slice.jarDir
-		    }
-	    }
+    repositories {
+        if (slice.jarDir != null) {
+            flatDir {
+	        name "local"
+                dirs slice.jarDir
+            }
+        }
 
-	    if (!useLocalOnly) {
-		    maven {
-		        url "https://${iceMavenRepo}/nexus/content/repositories/thirdparty"
-		    }
-		    maven {
-		        url "https://${iceMavenRepo}/nexus/content/repositories/releases"
-		    }
-	    }
+        if (!useLocalOnly) {
+            if(this.devRepo) {
+                maven {
+                    url this.devRepo
+                }
+            }
+
+            maven {
+                url "https://${iceMavenRepo}/nexus/content/repositories/thirdparty"
+            }
+
+            maven {
+                url "https://${iceMavenRepo}/nexus/content/repositories/releases"
+            }
+        }
     }
 }
 
@@ -41,5 +48,5 @@ apply from: "$rootProject.projectDir/Manual/build.gradle"
 // Used to build the gradle wrapper to automatically download and install gradle.
 //
 task wrapper(type: Wrapper) {
-    gradleVersion = "2.6"
+    gradleVersion = "2.14"
 }

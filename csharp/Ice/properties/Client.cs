@@ -26,7 +26,7 @@ public class Client : Ice.Application
 
     private static void show(Ice.PropertiesAdminPrx admin)
     {
-        Dictionary<string, string> props = admin.getPropertiesForPrefix("Demo");
+        var props = admin.getPropertiesForPrefix("Demo");
         Console.Out.WriteLine("Server's current settings:");
         foreach(KeyValuePair<string, string> e in props)
         {
@@ -42,25 +42,28 @@ public class Client : Ice.Application
             return 1;
         }
 
-        PropsPrx props = PropsPrxHelper.checkedCast(communicator().propertyToProxy("Props.Proxy"));
+        var props = PropsPrxHelper.checkedCast(communicator().propertyToProxy("Props.Proxy"));
         if(props == null)
         {
             Console.Error.WriteLine("invalid proxy");
             return 1;
         }
 
-        Ice.PropertiesAdminPrx admin =
-            Ice.PropertiesAdminPrxHelper.checkedCast(communicator().propertyToProxy("Admin.Proxy"));
+        var admin = Ice.PropertiesAdminPrxHelper.checkedCast(communicator().propertyToProxy("Admin.Proxy"));
 
-        Dictionary<string, string> batch1 = new Dictionary<string, string>();
-        batch1.Add("Demo.Prop1", "1");
-        batch1.Add("Demo.Prop2", "2");
-        batch1.Add("Demo.Prop3", "3");
+        var batch1 = new Dictionary<string, string>()
+        {
+            { "Demo.Prop1", "1" },
+            { "Demo.Prop2", "2" },
+            { "Demo.Prop3", "3" }
+        };
 
-        Dictionary<string, string> batch2 = new Dictionary<string, string>();
-        batch2.Add("Demo.Prop1", "10");
-        batch2.Add("Demo.Prop2", ""); // An empty value removes this property
-        batch2.Add("Demo.Prop3", "30");
+        var batch2 = new Dictionary<string, string>()
+        {
+            { "Demo.Prop1", "10" },
+            { "Demo.Prop2", "" }, // An empty value removes this property
+            { "Demo.Prop3", "30" }
+        };
 
         show(admin);
         menu();
@@ -79,9 +82,9 @@ public class Client : Ice.Application
                 }
                 if(line.Equals("1") || line.Equals("2"))
                 {
-                    Dictionary<string, string> dict = line.Equals("1") ? batch1 : batch2;
+                    var dict = line.Equals("1") ? batch1 : batch2;
                     Console.Out.WriteLine("Sending:");
-                    foreach(KeyValuePair<string, string> e in dict)
+                    foreach(var e in dict)
                     {
                         if(e.Key.StartsWith("Demo"))
                         {
@@ -93,14 +96,14 @@ public class Client : Ice.Application
                     admin.setProperties(dict);
 
                     Console.Out.WriteLine("Changes:");
-                    Dictionary<string, string> changes = props.getChanges();
+                    var changes = props.getChanges();
                     if(changes.Count == 0)
                     {
                         Console.Out.WriteLine("  None.");
                     }
                     else
                     {
-                        foreach(KeyValuePair<string, string> e in changes)
+                        foreach(var e in changes)
                         {
                             Console.Out.Write("  " + e.Key);
                             if(e.Value.Length == 0)
@@ -136,7 +139,7 @@ public class Client : Ice.Application
                     menu();
                 }
             }
-            catch(System.Exception ex)
+            catch(Exception ex)
             {
                 Console.Error.WriteLine(ex);
             }
@@ -148,7 +151,7 @@ public class Client : Ice.Application
 
     public static int Main(string[] args)
     {
-        Client app = new Client();
+        var app = new Client();
         return app.main(args, "config.client");
     }
 }

@@ -34,11 +34,11 @@ public class Client
             // will be sent over the server connection matching the returned
             // endpoints.
             //
-            Ice.ObjectPrx obj = communicator().stringToProxy("hello");
+            var obj = communicator().stringToProxy("hello");
             obj = obj.ice_connectionCached(false);
             obj = obj.ice_locatorCacheTimeout(0);
 
-            HelloPrx hello = HelloPrxHelper.checkedCast(obj);
+            var hello = HelloPrxHelper.checkedCast(obj);
             if(hello == null)
             {
                 Console.Error.WriteLine("invalid proxy");
@@ -83,7 +83,7 @@ public class Client
 
     public static int Main(string[] args)
     {
-        App app = new App();
+        var app = new App();
         return app.main(args, "config.client");
     }
 }

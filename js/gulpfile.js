@@ -4,24 +4,24 @@
 //
 // **********************************************************************
 
-var bower       = require("bower");
-var browserSync = require("browser-sync");
-var concat      = require("gulp-concat");
-var del         = require("del");
-var extreplace  = require("gulp-ext-replace");
-var fs          = require("fs");
-var gulp        = require("gulp");
-var gzip        = require("gulp-gzip");
-var iceBuilder  = require("gulp-ice-builder");
-var minifycss   = require("gulp-minify-css");
-var newer       = require("gulp-newer");
-var npm         = require("npm");
-var open        = require("gulp-open");
-var path        = require("path");
-var paths       = require("vinyl-paths");
-var uglify      = require("gulp-uglify");
-
-var HttpServer  = require("./bin/HttpServer");
+var babel       = require("gulp-babel"),
+    bower       = require("bower"),
+    browserSync = require("browser-sync"),
+    concat      = require("gulp-concat"),
+    del         = require("del"),
+    extreplace  = require("gulp-ext-replace"),
+    fs          = require("fs"),
+    gulp        = require("gulp"),
+    gzip        = require("gulp-gzip"),
+    iceBuilder  = require("gulp-ice-builder"),
+    minifycss   = require("gulp-minify-css"),
+    newer       = require("gulp-newer"),
+    npm         = require("npm"),
+    open        = require("gulp-open"),
+    path        = require("path"),
+    paths       = require("vinyl-paths"),
+    uglify      = require("gulp-uglify"),
+    HttpServer  = require("./bin/HttpServer");
 
 //
 // Check ICE_HOME environment variable. If this is set and points to a source
@@ -85,10 +85,19 @@ gulp.task("dist:libs", ["npm", "bower"],
             .pipe(gulp.dest("lib"));
     });
 
+gulp.task("dist:libs-es5", ["npm", "bower"],
+    function()
+    {
+        var libs = ICE_HOME ? path.join(ICE_HOME, 'js', 'lib', 'es5', '*') : 'bower_components/ice/lib/es5/*';
+        return gulp.src([libs])
+            .pipe(newer("lib/es5"))
+            .pipe(gulp.dest("lib/es5"));
+    });
+
 gulp.task("dist:clean", [],
     function()
     {
-        del(["lib/*"]);
+        del(["lib/*", "lib/es5/*"]);
     });
 
 //
@@ -179,15 +188,20 @@ var demos = [
     "Chat"];
 
 function demoTaskName(name) { return "demo_" + name.replace("/", "_"); }
+function demoES5IceTask(name) { return demoTaskName(name) + ":ice-es5"; }
+function demoBabelTask(name) { return demoTaskName(name) + ":babel"; }
+function demoBrowserBabelTask(name) { return demoTaskName(name) + "-browser:babel"; }
+function demoBuildTask(name) { return demoTaskName(name) + ":build"; }
 function demoWatchTask(name) { return demoTaskName(name) + ":watch"; }
 function demoDependCleanTask(name) { return demoTaskName(name) + "-depend:clean"; }
 function demoCleanTask(name) { return demoTaskName(name) + ":clean"; }
+function demoBabelCleanTask(name) { return demoTaskName(name) + ":babel-clean"; }
 function demoGeneratedFile(file){ return path.join(path.basename(file, ".ice") + ".js"); }
 
 demos.forEach(
     function(name)
     {
-        gulp.task(demoTaskName(name), ['dist:libs'],
+        gulp.task(demoTaskName(name), ['dist:libs', 'dist:libs-es5'],
             function()
             {
                 return gulp.src(path.join(name, "*.ice"))
@@ -195,7 +209,39 @@ demos.forEach(
                     .pipe(gulp.dest(name));
             });
 
-        gulp.task(demoWatchTask(name), [demoTaskName(name)],
+        gulp.task(demoBabelTask(name), [demoTaskName(name)],
+            function()
+            {
+                return gulp.src(path.join(name, "*.js"))
+                    .pipe(babel({compact:false}))
+                    .pipe(gulp.dest(path.join(name, "es5")));
+            });
+
+        const depends = [demoBabelTask(name)];
+
+        if(fs.existsSync(path.join(name, "browser")))
+        {
+            gulp.task(demoBrowserBabelTask(name), [demoTaskName(name)],
+                function()
+                {
+                    return gulp.src(path.join(name, "browser", "*.js"))
+                        .pipe(babel({compact:false}))
+                        .pipe(gulp.dest(path.join(name, "browser", "es5")));
+                });
+            depends.push(demoBrowserBabelTask(name));
+        }
+
+        gulp.task(demoES5IceTask(name), [demoBabelTask(name)],
+            function()
+            {
+                return gulp.src(['node_modules/ice/src/es5/**/*']).pipe(
+                    gulp.dest(path.join(name, "es5", "node_modules")));
+            });
+        depends.push(demoES5IceTask(name));
+
+        gulp.task(demoBuildTask(name), depends, function(){});
+
+        gulp.task(demoWatchTask(name), [demoBuildTask(name)],
             function()
             {
                 gulp.watch(path.join(name, "*.ice"), [demoTaskName(name)]);
@@ -208,13 +254,22 @@ demos.forEach(
                     });
             });
 
+        gulp.task(demoBabelCleanTask(name), [],
+            function()
+            {
+                gulp.src([path.join(name, "es5", "*.js"),
+                         path.join(name, "es5", "node_modules"),
+                          path.join(name, "browser", "es5", "*.js")])
+                    .pipe(paths(del));
+            })
+
         gulp.task(demoDependCleanTask(name), [],
             function()
             {
                 gulp.src(path.join(name, ".depend")).pipe(paths(del));
             });
 
-        gulp.task(demoCleanTask(name), [demoDependCleanTask(name)],
+        gulp.task(demoCleanTask(name), [demoDependCleanTask(name), demoBabelCleanTask(name)],
             function()
             {
                 gulp.src(path.join(name, "*.ice"))
@@ -260,7 +315,7 @@ Object.keys(minDemos).forEach(
                 return gulp.src(demo.srcs)
                     .pipe(newer(path.join(demo.dest, "Client.min.js")))
                     .pipe(concat("Client.min.js"))
-                    .pipe(uglify())
+                    //.pipe(uglify()) TODO no es6 support in uglify
                     .pipe(gulp.dest(demo.dest))
                     .pipe(gzip())
                     .pipe(gulp.dest(demo.dest));
@@ -280,7 +335,7 @@ Object.keys(minDemos).forEach(
             });
     });
 
-gulp.task("demo:build", demos.map(demoTaskName).concat(Object.keys(minDemos).map(minDemoTaskName)));
+gulp.task("demo:build", demos.map(demoBuildTask).concat(Object.keys(minDemos).map(minDemoTaskName)));
 gulp.task("demo:watch", demos.map(demoWatchTask).concat(Object.keys(minDemos).map(minDemoWatchTaskName)));
 gulp.task("demo:clean", demos.map(demoCleanTask).concat(Object.keys(minDemos).map(minDemoCleanTaskName)));
 

@@ -34,7 +34,7 @@ ConverterServer::run(int argc, char*[])
 
     Ice::ObjectAdapterPtr adapter = communicator()->createObjectAdapter("Greet");
     Demo::GreetPtr greet = new GreetI;
-    adapter->add(greet, communicator()->stringToIdentity("greet"));
+    adapter->add(greet, Ice::stringToIdentity("greet"));
     adapter->activate();
     communicator()->waitForShutdown();
     return EXIT_SUCCESS;

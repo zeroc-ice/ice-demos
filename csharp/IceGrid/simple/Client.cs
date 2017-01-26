@@ -43,7 +43,7 @@ public class Client
             }
             catch(Ice.NotRegisteredException)
             {
-                IceGrid.QueryPrx query =
+                var query =
                     IceGrid.QueryPrxHelper.checkedCast(communicator().stringToProxy("DemoIceGrid/Query"));
                 hello = HelloPrxHelper.checkedCast(query.findObjectByType("::Demo::Hello"));
             }
@@ -102,7 +102,7 @@ public class Client
 
     public static int Main(string[] args)
     {
-        App app = new App();
+        var app = new App();
         return app.main(args, "config.client");
     }
 }

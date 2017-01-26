@@ -4,28 +4,19 @@
 //
 // **********************************************************************
 
-public class Client extends Ice.Application
+public class Client extends com.zeroc.Ice.Application
 {
     class ShutdownHook extends Thread
     {
         @Override
-        public void
-        run()
+        public void run()
         {
-            try
-            {
-                communicator().destroy();
-            }
-            catch(Ice.LocalException ex)
-            {
-                ex.printStackTrace();
-            }
+            communicator().destroy();
         }
     }
 
     @Override
-    public int
-    run(String[] args)
+    public int run(String[] args)
     {
         if(args.length > 1)
         {
@@ -43,8 +34,7 @@ public class Client extends Ice.Application
         return RunParser.runParser(appName(), args, communicator());
     }
 
-    static public void
-    main(String[] args)
+    static public void main(String[] args)
     {
         Client app = new Client();
         int status = app.main("demo.Database.library.Client", args, "config.client");

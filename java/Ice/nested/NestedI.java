@@ -6,7 +6,7 @@
 
 import Demo.*;
 
-class NestedI extends _NestedDisp
+class NestedI implements Nested
 {
     NestedI(NestedPrx self)
     {
@@ -14,8 +14,7 @@ class NestedI extends _NestedDisp
     }
 
     @Override
-    public void
-    nestedCall(int level, NestedPrx proxy, Ice.Current current)
+    public void nestedCall(int level, NestedPrx proxy, com.zeroc.Ice.Current current)
     {
         System.out.println("" + level);
         if(--level > 0)
@@ -25,7 +24,7 @@ class NestedI extends _NestedDisp
             // high and there are no more threads in the thread pool to
             // dispatch the call.
             //
-            ((NestedPrx)proxy.ice_invocationTimeout(5000)).nestedCall(level, _self);
+            proxy.ice_invocationTimeout(5000).nestedCall(level, _self);
         }
     }
 

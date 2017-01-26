@@ -15,7 +15,7 @@
        <property name="IceMX.Metrics.ByParent.GroupBy" value="parent"/>
        <property name="IceMX.Metrics.ByParent.Disabled" value="1"/>
      </properties>
-   
+
      <server-template id="IceStorm">
        <parameter name="index"/>
        <parameter name="topic-manager-endpoints" default="default -h localhost"/>
@@ -28,22 +28,20 @@
          <properties>
            <properties refid="mx"/>
          </properties>
-      
-         <service name="IceStorm" entry="IceStormService,36:createIceStorm">
 
-           <dbenv name="${service}"/>
+         <service name="IceStorm" entry="IceStormService,37a4:createIceStorm">
 
            <adapter name="${service}.TopicManager"
                     endpoints="${topic-manager-endpoints}"
                     replica-group="${instance-name}-TopicManagerReplicaGroup"/>
 
-      	   <adapter name="${service}.Publish" 
-                    endpoints="${publish-endpoints}" 
+      	   <adapter name="${service}.Publish"
+                    endpoints="${publish-endpoints}"
                     replica-group="${instance-name}-PublishReplicaGroup"/>
 
-     	   <adapter name="${service}.Node" 
+     	   <adapter name="${service}.Node"
                     endpoints="${node-endpoints}"/>
-           
+
            <properties>
              <properties refid="mx"/>
              <property name="${service}.InstanceName" value="${instance-name}"/>
@@ -52,6 +50,7 @@
              <property name="${service}.Trace.Subscriber" value="1"/>
              <property name="${service}.Trace.Election" value="1"/>
              <property name="${service}.NodeId" value="${index}"/>
+             <property name="${service}.LMDB.Path" value="${service.data}"/>
            </properties>
 
          </service>

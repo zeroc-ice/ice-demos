@@ -4,30 +4,25 @@
 //
 // **********************************************************************
 
-
-
-public class HelloPluginI implements Ice.Plugin
+public class HelloPluginI implements com.zeroc.Ice.Plugin
 {
-    public
-    HelloPluginI(Ice.Communicator communicator)
+    public HelloPluginI(com.zeroc.Ice.Communicator communicator)
     {
         _communicator = communicator;
     }
 
     @Override
-    public void
-    initialize()
+    public void initialize()
     {
-        Ice.ObjectAdapter adapter = _communicator.createObjectAdapter("Hello");
-        adapter.add(new HelloI(), _communicator.stringToIdentity("hello"));
+        com.zeroc.Ice.ObjectAdapter adapter = _communicator.createObjectAdapter("Hello");
+        adapter.add(new HelloI(), com.zeroc.Ice.Util.stringToIdentity("hello"));
         adapter.activate();
     }
 
     @Override
-    public void
-    destroy()
+    public void destroy()
     {
     }
 
-    private Ice.Communicator _communicator;
+    private com.zeroc.Ice.Communicator _communicator;
 }

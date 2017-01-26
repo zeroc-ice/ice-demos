@@ -22,14 +22,14 @@ public class Client
 
     static void listRecursive(DirectoryPrx dir, int depth)
     {
-        string indent = new string('\t', ++depth);
+        var indent = new string('\t', ++depth);
 
         NodePrx[] contents = dir.list();
 
-        foreach(NodePrx node in contents)
+        foreach(var node in contents)
         {
-            DirectoryPrx subdir = DirectoryPrxHelper.checkedCast(node);
-            FilePrx file = FilePrxHelper.uncheckedCast(node);
+            var subdir = DirectoryPrxHelper.checkedCast(node);
+            var file = FilePrxHelper.uncheckedCast(node);
             Console.WriteLine(indent + node.name() + (subdir != null ? " (directory):" : " (file):"));
             if(subdir != null)
             {
@@ -37,7 +37,7 @@ public class Client
             }
             else
             {
-                string[] text = file.read();
+                var text = file.read();
                 for(int j = 0; j < text.Length; ++j)
                 {
                     Console.WriteLine(indent + "\t" + text[j]);
@@ -52,7 +52,7 @@ public class Client
         Ice.Communicator ic = null;
         try
         {
-            Ice.InitializationData data = new Ice.InitializationData();
+            var data = new Ice.InitializationData();
 
             //
             // Create a communicator
@@ -62,12 +62,12 @@ public class Client
             //
             // Create a proxy for the root directory
             //
-            Ice.ObjectPrx obj = ic.stringToProxy("RootDir:default -h localhost -p 10000");
+            var obj = ic.stringToProxy("RootDir:default -h localhost -p 10000");
 
             //
             // Down-cast the proxy to a Directory proxy
             //
-            DirectoryPrx rootDir = DirectoryPrxHelper.checkedCast(obj);
+            var rootDir = DirectoryPrxHelper.checkedCast(obj);
             if(rootDir == null)
             {
                 throw new ApplicationException("Invalid proxy");

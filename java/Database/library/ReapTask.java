@@ -17,27 +17,26 @@ class ReapTask implements Runnable
             session = s;
         }
 
-        SessionProxyPair(Glacier2.SessionPrx p, SessionI s)
+        SessionProxyPair(com.zeroc.Glacier2.SessionPrx p, SessionI s)
         {
             glacier2proxy = p;
             proxy = null;
             session = s;
         }
 
-        Glacier2.SessionPrx glacier2proxy;
+        com.zeroc.Glacier2.SessionPrx glacier2proxy;
         Demo.SessionPrx proxy;
         SessionI session;
     }
 
-    ReapTask(Ice.Logger logger, long timeout)
+    ReapTask(com.zeroc.Ice.Logger logger, long timeout)
     {
         _logger = logger;
         _timeout = timeout;
     }
 
     @Override
-    synchronized public void
-    run()
+    synchronized public void run()
     {
         java.util.Iterator<SessionProxyPair> p = _sessions.iterator();
         while(p.hasNext())
@@ -53,8 +52,7 @@ class ReapTask implements Runnable
                 if((System.currentTimeMillis() - s.session.timestamp()) > _timeout * 1000)
                 {
                     _logger.trace("ReapTask", "The session " +
-                                  s.proxy.ice_getCommunicator().identityToString(s.proxy.ice_getIdentity()) +
-                                  " has timed out.");
+                                  com.zeroc.Ice.Util.identityToString(s.proxy.ice_getIdentity()) + " has timed out.");
                     if(s.proxy != null)
                     {
                         s.proxy.destroy();
@@ -66,15 +64,14 @@ class ReapTask implements Runnable
                     p.remove();
                 }
             }
-            catch(Ice.ObjectNotExistException e)
+            catch(com.zeroc.Ice.ObjectNotExistException e)
             {
                 p.remove();
             }
         }
     }
 
-    synchronized public void
-    terminate()
+    synchronized public void terminate()
     {
         // Destroy each of the sessions, releasing any resources they
         // may hold. This calls directly on the session, not via the
@@ -88,19 +85,17 @@ class ReapTask implements Runnable
         _sessions.clear();
     }
 
-    synchronized public void
-    add(SessionPrx proxy, SessionI session)
+    synchronized public void add(SessionPrx proxy, SessionI session)
     {
         _sessions.add(new SessionProxyPair(proxy, session));
     }
 
-    synchronized public void
-    add(Glacier2.SessionPrx proxy, SessionI session)
+    synchronized public void add(com.zeroc.Glacier2.SessionPrx proxy, SessionI session)
     {
         _sessions.add(new SessionProxyPair(proxy, session));
     }
 
     private final long _timeout;
-    private Ice.Logger _logger;
-    private java.util.List<SessionProxyPair> _sessions = new java.util.LinkedList<SessionProxyPair>();
+    private com.zeroc.Ice.Logger _logger;
+    private java.util.List<SessionProxyPair> _sessions = new java.util.LinkedList<>();
 }

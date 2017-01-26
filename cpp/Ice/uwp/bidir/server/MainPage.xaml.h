@@ -15,25 +15,28 @@ namespace bidir
 {
 ref class MainPage;
 
-class CallbackSenderI : public Demo::CallbackSender, public IceUtil::Thread, public IceUtil::Monitor<IceUtil::Mutex>
+class CallbackSenderI : public Demo::CallbackSender
 {
 public:
 
-    CallbackSenderI(MainPage^ page, const Ice::CommunicatorPtr& communicator) : _page(page),
-		_communicator(communicator)
+    CallbackSenderI(MainPage^ page, const std::shared_ptr<Ice::Communicator>& communicator) : _page(page),
+        _communicator(communicator)
     {
     }
 
-    virtual void addClient(const Ice::Identity&, const Ice::Current&);
-	virtual void run();
+    virtual void addClient(Ice::Identity, const Ice::Current&);
+    void start();
     
 private:
         
     MainPage^ _page;
-	Ice::CommunicatorPtr _communicator;
-	std::set<Demo::CallbackReceiverPrx> _clients;
+    std::shared_ptr<Ice::Communicator> _communicator;
+    bool _destroy;
+    std::set<std::shared_ptr<Demo::CallbackReceiverPrx>> _clients;
+    std::mutex _mutex;
+    std::condition_variable _cv;
+    std::thread _senderThread;
 };
-typedef IceUtil::Handle<CallbackSenderI> CallbackSenderIPtr;
 
 public ref class MainPage sealed
 {
@@ -46,8 +49,9 @@ private:
 
     void print(const std::string&);
 
-    Ice::CommunicatorPtr _communicator;
-	Ice::ObjectAdapterPtr _adapter;
+    std::shared_ptr<Ice::Communicator> _communicator;
+    std::shared_ptr<Ice::ObjectAdapter> _adapter;
+    std::shared_ptr<CallbackSenderI> _sender;
 };
 
 }

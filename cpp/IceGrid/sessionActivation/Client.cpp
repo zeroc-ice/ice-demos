@@ -95,7 +95,7 @@ HelloClient::run(int argc, char* argv[])
 
     try
     {
-        HelloPrx hello = HelloPrx::checkedCast(session->allocateObjectById(communicator()->stringToIdentity("hello")));
+        HelloPrx hello = HelloPrx::checkedCast(session->allocateObjectById(Ice::stringToIdentity("hello")));
 
         menu();
 

@@ -6,19 +6,17 @@
 
 import Demo.*;
 
-class SessionFactoryI extends _SessionFactoryDisp
+class SessionFactoryI implements SessionFactory
 {
     @Override
-    public synchronized SessionPrx
-    create(Ice.Current c)
+    public synchronized SessionPrx create(com.zeroc.Ice.Current c)
     {
         SessionI session = new SessionI(_logger, c.adapter);
-        _SessionTie servant = new _SessionTie(session);
 
-        SessionPrx proxy = SessionPrxHelper.uncheckedCast(c.adapter.addWithUUID(servant));
+        SessionPrx proxy = SessionPrx.uncheckedCast(c.adapter.addWithUUID(session));
 
         _logger.trace("SessionFactory", "create new session: " +
-                      c.adapter.getCommunicator().identityToString(proxy.ice_getIdentity()));
+                      com.zeroc.Ice.Util.identityToString(proxy.ice_getIdentity()));
 
         _reaper.add(proxy, session);
 
@@ -26,20 +24,19 @@ class SessionFactoryI extends _SessionFactoryDisp
     }
 
     @Override
-    public long
-    getSessionTimeout(Ice.Current c)
+    public long getSessionTimeout(com.zeroc.Ice.Current c)
     {
         return _timeout;
     }
 
-    SessionFactoryI(Ice.Logger logger, ReapTask reaper, long timeout)
+    SessionFactoryI(com.zeroc.Ice.Logger logger, ReapTask reaper, long timeout)
     {
         _logger = logger;
         _reaper = reaper;
         _timeout = timeout;
     }
 
-    private Ice.Logger _logger;
+    private com.zeroc.Ice.Logger _logger;
     private ReapTask _reaper;
     private long _timeout;
 }

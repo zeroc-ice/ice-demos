@@ -6,31 +6,31 @@
 
 import Demo.*;
 
-class Glacier2SessionManagerI extends Glacier2._SessionManagerDisp
+class Glacier2SessionManagerI implements com.zeroc.Glacier2.SessionManager
 {
     @Override
-    public Glacier2.SessionPrx
-    create(String userId, Glacier2.SessionControlPrx control, Ice.Current c)
+    public com.zeroc.Glacier2.SessionPrx create(String userId, com.zeroc.Glacier2.SessionControlPrx control,
+                                                com.zeroc.Ice.Current c)
     {
         SessionI session = new SessionI(_logger, c.adapter);
-        _Glacier2SessionTie servant = new _Glacier2SessionTie(session);
 
-        Glacier2.SessionPrx proxy = Glacier2.SessionPrxHelper.uncheckedCast(c.adapter.addWithUUID(servant));
+        com.zeroc.Glacier2.SessionPrx proxy =
+            com.zeroc.Glacier2.SessionPrx.uncheckedCast(c.adapter.addWithUUID(session));
 
         _logger.trace("SessionFactory", "create new session: " +
-                      c.adapter.getCommunicator().identityToString(proxy.ice_getIdentity()));
+                      com.zeroc.Ice.Util.identityToString(proxy.ice_getIdentity()));
 
         _reaper.add(proxy, session);
 
         return proxy;
     }
 
-    Glacier2SessionManagerI(Ice.Logger logger, ReapTask reaper)
+    Glacier2SessionManagerI(com.zeroc.Ice.Logger logger, ReapTask reaper)
     {
         _logger = logger;
         _reaper = reaper;
     }
 
-    private Ice.Logger _logger;
+    private com.zeroc.Ice.Logger _logger;
     private ReapTask _reaper;
 }

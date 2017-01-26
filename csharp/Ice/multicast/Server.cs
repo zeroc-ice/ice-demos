@@ -4,7 +4,6 @@
 //
 // **********************************************************************
 
-using Demo;
 using System;
 using System.Reflection;
 
@@ -22,11 +21,11 @@ public class Server
         {
             args = communicator().getProperties().parseCommandLineOptions("Discover", args);
 
-            Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Hello");
-            Ice.ObjectAdapter discoverAdapter = communicator().createObjectAdapter("Discover");
+            var adapter = communicator().createObjectAdapter("Hello");
+            var discoverAdapter = communicator().createObjectAdapter("Discover");
 
-            Ice.ObjectPrx hello = adapter.addWithUUID(new HelloI());
-            discoverAdapter.add(new DiscoverI(hello), communicator().stringToIdentity("discover"));
+            var hello = adapter.addWithUUID(new HelloI());
+            discoverAdapter.add(new DiscoverI(hello), Ice.Util.stringToIdentity("discover"));
 
             discoverAdapter.activate();        
             adapter.activate();
@@ -38,7 +37,7 @@ public class Server
 
     public static int Main(string[] args)
     {
-        App app = new App();
+        var app = new App();
         return app.main(args, "config.server");
     }
 }

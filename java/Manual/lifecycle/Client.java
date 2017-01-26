@@ -6,11 +6,10 @@
 
 import Filesystem.*;
 
-public class Client extends Ice.Application
+public class Client extends com.zeroc.Ice.Application
 {
     @Override
-    public int
-    run(String[] args)
+    public int run(String[] args)
     {
         //
         // Terminate cleanly on receipt of a signal.
@@ -20,12 +19,12 @@ public class Client extends Ice.Application
         //
         // Create a proxy for the root directory
         //
-        Ice.ObjectPrx base = communicator().stringToProxy("RootDir:default -h localhost -p 10000");
+        com.zeroc.Ice.ObjectPrx base = communicator().stringToProxy("RootDir:default -h localhost -p 10000");
 
         //
         // Down-cast the proxy to a Directory proxy.
         //
-        DirectoryPrx rootDir = DirectoryPrxHelper.checkedCast(base);
+        DirectoryPrx rootDir = DirectoryPrx.checkedCast(base);
         if(rootDir == null)
         {
             throw new Error("Invalid proxy");
@@ -35,8 +34,7 @@ public class Client extends Ice.Application
         return p.parse();
     }
 
-    static public void
-    main(String[] args)
+    static public void main(String[] args)
     {
         Client app = new Client();
         app.main("demo.book.lifecycle.Client", args);

@@ -25,7 +25,7 @@ main(int argc, char* argv[])
 
             id<ICEObjectAdapter> adapter = [communicator createObjectAdapterWithEndpoints:@"Hello"
                                                          endpoints:@"default -p 10000"];
-            [adapter add:[HelloI hello] identity:[communicator stringToIdentity:@"hello"]];
+            [adapter add:[HelloI hello] identity:[ICEUtil stringToIdentity:@"hello"]];
             [adapter activate];
             [communicator waitForShutdown];
         }
@@ -37,15 +37,7 @@ main(int argc, char* argv[])
 
         if(communicator != nil)
         {
-            @try
-            {
-                [communicator destroy];
-            }
-            @catch(ICELocalException* ex)
-            {
-                NSLog(@"%@", ex);
-                status = 1;
-            }
+            [communicator destroy];
         }
     }
     return status;

@@ -1,3 +1,0 @@
-Throughput.Throughput=throughput:default -p 10000 -h localhost
-
-Ice.ACM.Client.Timeout=0

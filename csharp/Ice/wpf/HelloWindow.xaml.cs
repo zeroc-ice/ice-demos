@@ -33,30 +33,30 @@ namespace Ice.wpf.client
             locateOnScreen(this);
         }
 
-        static String TWOWAY = "Twoway";
-        static String TWOWAY_SECURE = "Twoway Secure";
-        static String ONEWAY = "Oneway";
-        static String ONEWAY_BATCH = "Oneway Batch";
-        static String ONEWAY_SECURE = "Oneway Secure";
-        static String ONEWAY_SECURE_BATCH = "Oneway Secure Batch";
-        static String DATAGRAM = "Datagram";
-        static String DATAGRAM_BATCH = "Datagram Batch";
+        static string TWOWAY = "Twoway";
+        static string TWOWAY_SECURE = "Twoway Secure";
+        static string ONEWAY = "Oneway";
+        static string ONEWAY_BATCH = "Oneway Batch";
+        static string ONEWAY_SECURE = "Oneway Secure";
+        static string ONEWAY_SECURE_BATCH = "Oneway Secure Batch";
+        static string DATAGRAM = "Datagram";
+        static string DATAGRAM_BATCH = "Datagram Batch";
 
         private void Window_Loaded(object sender, EventArgs e)
         {
             try
             {
-                Ice.InitializationData initData = new Ice.InitializationData();
-                initData.properties = Ice.Util.createProperties();
+                var initData = new InitializationData();
+                initData.properties = Util.createProperties();
                 initData.properties.load("config.client");
-                initData.dispatcher = (System.Action action, Ice.Connection connection) =>
-                {
-                    Dispatcher.BeginInvoke(DispatcherPriority.Normal, action);
-                };
-                _communicator = Ice.Util.initialize(initData);
+                initData.dispatcher = (Action action, Connection connection) =>
+                    {
+                        Dispatcher.BeginInvoke(DispatcherPriority.Normal, action);
+                    };
+                _communicator = Util.initialize(initData);
                 updateProxy();
             }
-            catch(Ice.LocalException ex)
+            catch(LocalException ex)
             {
                 handleException(ex);
             }
@@ -76,8 +76,8 @@ namespace Ice.wpf.client
         private bool deliveryModeIsBatch()
         {
             return deliveryMode.Text.Equals(ONEWAY_BATCH) ||
-                    deliveryMode.Text.Equals(ONEWAY_SECURE_BATCH) ||
-                    deliveryMode.Text.Equals(DATAGRAM_BATCH);
+                   deliveryMode.Text.Equals(ONEWAY_SECURE_BATCH) ||
+                   deliveryMode.Text.Equals(DATAGRAM_BATCH);
         }
 
         private Ice.ObjectPrx deliveryModeApply(Ice.ObjectPrx prx)
@@ -118,40 +118,25 @@ namespace Ice.wpf.client
             return prx;
         }
 
-        private void sayHello_Click(object sender, RoutedEventArgs e)
+        private async void sayHello_Click(object sender, RoutedEventArgs e)
         {
             if(_helloPrx == null)
             {
                 updateProxy();
             }
 
-            int delay =(int)delaySlider.Value;
+            int delay = (int)delaySlider.Value;
             try
             {
                 if(!deliveryModeIsBatch())
                 {
                     status.Content = "Sending request";
                     bool haveResponse = false;
-                    _helloPrx.begin_sayHello(delay).whenCompleted(
-                        () =>
+                    await _helloPrx.sayHelloAsync(delay, progress:new Progress<bool>((value) =>
+                    {
+                        if(!haveResponse)
                         {
-                            Debug.Assert(!haveResponse);
-                            haveResponse = true;
-                            status.Content = "Ready";
-                        },
-                        (Ice.Exception ex) =>
-                        {
-                            Debug.Assert(!haveResponse);
-                            haveResponse = true;
-                            handleException(ex);
-                    }).whenSent(
-                        (bool sentSynchronously) =>
-                        {
-                            if (haveResponse)
-                            {
-                                return;
-                            }
-                            if (deliveryMode.Text.Equals(TWOWAY) || deliveryMode.Text.Equals(TWOWAY_SECURE))
+                            if(deliveryMode.Text.Equals(TWOWAY) || deliveryMode.Text.Equals(TWOWAY_SECURE))
                             {
                                 status.Content = "Waiting for response";
                             }
@@ -159,7 +144,11 @@ namespace Ice.wpf.client
                             {
                                 status.Content = "Ready";
                             }
-                        });
+                        }
+                    }));
+                    Debug.Assert(!haveResponse);
+                    haveResponse = true;
+                    status.Content = "Ready";
                 }
                 else
                 {
@@ -168,18 +157,18 @@ namespace Ice.wpf.client
                     status.Content = "Queued sayHello request";
                 }
             }
-            catch(Ice.LocalException ex)
+            catch(System.Exception ex)
             {
                 handleException(ex);
             }
         }
 
-        private void handleException(Exception ex)
+        private void handleException(System.Exception ex)
         {
             status.Content = ex.GetType();
         }
 
-        private void shutdown_Click(object sender, RoutedEventArgs e)
+        private async void shutdown_Click(object sender, RoutedEventArgs e)
         {
             if(_helloPrx == null)
             {
@@ -192,17 +181,9 @@ namespace Ice.wpf.client
             {
                 if(!deliveryModeIsBatch())
                 {
-                    AsyncResult<Demo.Callback_Hello_shutdown> result = _helloPrx.begin_shutdown();
+                    await _helloPrx.shutdownAsync();
                     status.Content = "Sending request";
-                    result.whenCompleted(
-                        () =>
-                        {
-                            status.Content = "Ready";
-                        },
-                        (Exception ex) =>
-                        {
-                            handleException(ex);
-                        });
+                    status.Content = "Ready";
                 }
                 else
                 {
@@ -211,7 +192,7 @@ namespace Ice.wpf.client
                     status.Content = "Queued shutdown request";
                 }
             }
-            catch(Ice.LocalException ex)
+            catch(System.Exception ex)
             {
                 handleException(ex);
             }
@@ -236,11 +217,11 @@ namespace Ice.wpf.client
             {
                 return;
             }
-            String host = hostname.Text.Trim();
+            var host = hostname.Text.Trim();
             Debug.Assert(host.Length > 0);
 
-            String s = "hello:tcp -h " + host + " -p 10000:ssl -h " + host + " -p 10001:udp -h " + host + " -p 10000";
-            Ice.ObjectPrx prx = _communicator.stringToProxy(s);
+            var s = "hello:tcp -h " + host + " -p 10000:ssl -h " + host + " -p 10001:udp -h " + host + " -p 10000";
+            var prx = _communicator.stringToProxy(s);
             prx = deliveryModeApply(prx);
             int timeout =(int)timeoutSlider.Value;
             if(timeout != 0)
@@ -270,11 +251,11 @@ namespace Ice.wpf.client
 
         static private void locateOnScreen(System.Windows.Window window)
         {
-            window.Left =(System.Windows.SystemParameters.PrimaryScreenWidth - window.Width) / 2;
-            window.Top =(System.Windows.SystemParameters.PrimaryScreenHeight - window.Height) / 2;
+            window.Left = (SystemParameters.PrimaryScreenWidth - window.Width) / 2;
+            window.Top = (SystemParameters.PrimaryScreenHeight - window.Height) / 2;
         }
 
-        private Ice.Communicator _communicator = null;
+        private Communicator _communicator = null;
         private Demo.HelloPrx _helloPrx = null;
 
         private void modeSelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -6,15 +6,14 @@
 
 import Demo.*;
 
-class CallbackReceiverI extends _CallbackReceiverDisp
+class CallbackReceiverI implements CallbackReceiver
 {
     CallbackReceiverI()
     {
     }
 
     @Override
-    public void
-    callback(int num, Ice.Current current)
+    public void callback(int num, com.zeroc.Ice.Current current)
     {
         System.out.println("received callback #" + num);
     }

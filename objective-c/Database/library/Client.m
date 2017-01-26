@@ -39,15 +39,7 @@ main(int argc, char* argv[])
 
         if(communicator != nil)
         {
-            @try
-            {
-                [communicator destroy];
-            }
-            @catch(ICELocalException* ex)
-            {
-                fprintf(stderr, "%s\n", [[ex description] UTF8String]);
-                status = 1;
-            }
+            [communicator destroy];
         }
     }
     return status;

@@ -7,7 +7,6 @@
 slice {
     java {
         include = ["${projectDir}"]
-        args = "--tie"
         srcDir = '.'
     }
 }

@@ -1,0 +1,49 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://${iceMavenRepo}/nexus/content/repositories/thirdparty"
+        }
+    }
+    dependencies {
+        classpath group: 'net.sourceforge', name: 'proguard', version: '5.0'
+    }
+}
+
+slice {
+    java {
+        include = ["${projectDir}"]
+        srcDir = '.'
+        include = ["${projectDir}"]
+    }
+}
+
+dependencies {
+    compile 'com.jgoodies:jgoodies-common:1.8.0'
+    compile 'com.jgoodies:jgoodies-looks:2.6.0'
+    compile 'com.jgoodies:jgoodies-forms:1.8.0'
+    compile localDependency("ice-compat")
+    compile localDependency("glacier2-compat")
+}
+
+jar {
+    archiveName = "ChatGUITEMP.jar"
+    manifest {
+        attributes 'Main-Class': "ChatDemoGUI.MainView"
+    }
+}
+
+def javaHome = System.properties['java.home']
+
+task proguard(type: proguard.gradle.ProGuardTask, dependsOn: jar) {
+    injars configurations.compile.resolve(), filter: '!META-INF/**'
+    injars "${buildDir}/libs/ChatGUITEMP.jar"
+    libraryjars "${javaHome}/lib/rt.jar"
+    libraryjars "${javaHome}/lib/jsse.jar"
+    outjars "ChatGUI.jar"
+    configuration "chatdemogui.pro"
+}
+assemble.dependsOn(proguard)
+
+clean {
+    delete("ChatGUI.jar")
+}

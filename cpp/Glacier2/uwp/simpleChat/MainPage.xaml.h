@@ -10,6 +10,7 @@
 #include "ChatViewPage.xaml.h"
 #include "LoginViewPage.xaml.h"
 
+#include <Ice/Ice.h>
 #include <Glacier2/Glacier2.h>
 #include <Chat.h>
 
@@ -22,11 +23,15 @@ struct LoginData
     std::string password;
 };
 
-class Coordinator : public Glacier2::SessionCallback, public Demo::ChatCallback
+class Coordinator : public Glacier2::SessionCallback,
+                    public Demo::ChatCallback, 
+                    public std::enable_shared_from_this<Coordinator>
 {
 public:
 
-    Coordinator(Windows::UI::Core::CoreDispatcher^);
+    Coordinator();
+
+    void initialize(Windows::UI::Core::CoreDispatcher^);
 
     void signIn(const LoginData&);
     LoginData loginData();
@@ -42,7 +47,7 @@ public:
     //
     // Chat callback
     //
-    virtual void message(const std::string& data, const Ice::Current&);
+    virtual void message(std::string data, const Ice::Current&);
 
     //
     // Chat session.
@@ -54,12 +59,11 @@ public:
 
 private:
 
-    Demo::ChatSessionPrx _chat;
-    Glacier2::SessionFactoryHelperPtr _factory;
-    Glacier2::SessionHelperPtr _session;
+    std::shared_ptr<Demo::ChatSessionPrx> _chat;
+    std::shared_ptr<Glacier2::SessionFactoryHelper> _factory;
+    std::shared_ptr<Glacier2::SessionHelper> _session;
     LoginData _loginData;
 };
-typedef IceUtil::Handle<Coordinator> CoordinatorPtr;
 
 public ref class MainPage sealed
 {
@@ -70,26 +74,26 @@ public:
     static MainPage^ instance();
     void setConnected(bool c);
     void appendMessage(Platform::String^ msg);
-	void suspended();
+    void suspended();
 
 private:
 
     virtual void setError(const std::string&);
 
-    CoordinatorPtr coordinator()
+    std::shared_ptr<Coordinator> coordinator()
     {
         return _coordinator;
     }
-    CoordinatorPtr _coordinator;
+    std::shared_ptr<Coordinator> _coordinator;
 
     static MainPage^ _instance;
 
     friend ref class LoginViewPage;
-	friend ref class ChatViewPage;
+    friend ref class ChatViewPage;
     friend class Coordinator;
 
-	LoginViewPage^ _loginView;
-	ChatViewPage^ _chatView;
+    LoginViewPage^ _loginView;
+    ChatViewPage^ _chatView;
     void signoutClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 };
 

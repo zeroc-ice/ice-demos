@@ -7,26 +7,23 @@
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import Glacier2.CannotCreateSessionException;
-import Glacier2.SessionControlPrx;
-import Glacier2.SessionPrx;
-import Glacier2._PermissionsVerifierDisp;
-import Glacier2._SessionManagerDisp;
-import Ice.Current;
-import Ice.LocalException;
-import Ice.NotRegisteredException;
-import Ice.ObjectNotExistException;
-import Ice.StringHolder;
-import Voip.Callback_Control_incomingCall;
+import com.zeroc.Glacier2.CannotCreateSessionException;
+import com.zeroc.Glacier2.SessionControlPrx;
+import com.zeroc.Glacier2.SessionPrx;
+import com.zeroc.Glacier2.PermissionsVerifier;
+import com.zeroc.Glacier2.SessionManager;
+import com.zeroc.Ice.Current;
+import com.zeroc.Ice.LocalException;
+import com.zeroc.Ice.NotRegisteredException;
+import com.zeroc.Ice.ObjectNotExistException;
 import Voip.ControlPrx;
-import Voip.SessionPrxHelper;
-import Voip._SessionDisp;
+import Voip.Session;
 
-public class Server extends Ice.Application
+public class Server extends com.zeroc.Ice.Application
 {
     private final ScheduledThreadPoolExecutor _executor = new ScheduledThreadPoolExecutor(1);
 
-    class SessionI extends _SessionDisp
+    class SessionI implements Session
     {
         private ControlPrx _ctrl;
         private long _timestamp = System.currentTimeMillis();
@@ -40,30 +37,23 @@ public class Server extends Ice.Application
         @Override
         public void simulateCall(int delay, Current current)
         {
-            _executor.schedule(new Runnable()
+            _executor.schedule(() ->
             {
-                @Override
-                public void run()
+                if(_ctrl != null)
                 {
-                    if(_ctrl != null)
-                    {
-                        System.out.println("calling incoming call");
-                        _ctrl.begin_incomingCall(new Callback_Control_incomingCall()
+                    System.out.println("calling incoming call");
+                    _ctrl.incomingCallAsync().whenComplete((result, ex) ->
+                        {
+                            if(ex == null)
                             {
-                                @Override
-                                public void exception(LocalException ex)
-                                {
-                                    System.out.println("incoming call failed");
-                                    ex.printStackTrace();
-                                }
-
-                                @Override
-                                public void response()
-                                {
-                                    System.out.println("incoming call succeeded");
-                                }
-                            });
-                    }
+                                System.out.println("incoming call succeeded");
+                            }
+                            else
+                            {
+                                System.out.println("incoming call failed");
+                                ex.printStackTrace();
+                            }
+                        });
                 }
             }, delay, TimeUnit.MILLISECONDS);
         }
@@ -93,46 +83,45 @@ public class Server extends Ice.Application
         }
     }
 
-    class PermissionsVerifierI extends _PermissionsVerifierDisp
+    class PermissionsVerifierI implements PermissionsVerifier
     {
         @Override
-        public boolean checkPermissions(String userId, String password, StringHolder reason, Current current)
+        public PermissionsVerifier.CheckPermissionsResult checkPermissions(String userId, String password,
+                                                                           Current current)
         {
-            return true;
+            PermissionsVerifier.CheckPermissionsResult r = new PermissionsVerifier.CheckPermissionsResult();
+            r.returnValue = true;
+            return r;
         }
     }
 
-    class SessionManagerI extends _SessionManagerDisp
+    class SessionManagerI implements SessionManager
     {
         @Override
-        public SessionPrx create(String userId, SessionControlPrx control,
-                Current current) throws CannotCreateSessionException
+        public SessionPrx create(String userId, SessionControlPrx control, Current current)
+            throws CannotCreateSessionException
         {
-             // The configured timeout must be greater than 600. This is 601 * 2.
+            // The configured timeout must be greater than 600. This is 601 * 2.
             final long sessionTimeout = 1202;
             final SessionI session = new SessionI();
-            final Ice.Identity ident = new Ice.Identity();
+            final com.zeroc.Ice.Identity ident = new com.zeroc.Ice.Identity();
             ident.name = java.util.UUID.randomUUID().toString();
             ident.category = "session";
-            final SessionPrx proxy = SessionPrxHelper.uncheckedCast(current.adapter.add(session, ident));
-            _executor.scheduleWithFixedDelay(new Runnable()
+            final SessionPrx proxy = SessionPrx.uncheckedCast(current.adapter.add(session, ident));
+            _executor.scheduleWithFixedDelay(() ->
                 {
-                    @Override
-                    public void run()
+                    // If the session has already been destroyed the ONE will
+                    // fall out of run canceling the task.
+                    if (System.currentTimeMillis() - session.getTimestamp() > (sessionTimeout * 1000L * 2))
                     {
-                        // If the session has already been destroyed the ONE will
-                        // fall out of run canceling the task.
-                        if (System.currentTimeMillis() - session.getTimestamp() > (sessionTimeout * 1000L * 2))
-                        {
-                            proxy.destroy();
-                            throw new ObjectNotExistException();
-                        }
+                        proxy.destroy();
+                        throw new ObjectNotExistException();
                     }
                 }, sessionTimeout, sessionTimeout, TimeUnit.SECONDS);
 
             return proxy;
         }
-    };
+    }
 
     Server()
     {
@@ -141,8 +130,7 @@ public class Server extends Ice.Application
     }
 
     @Override
-    public int
-    run(String[] args)
+    public int run(String[] args)
     {
         if(args.length > 0)
         {
@@ -150,21 +138,19 @@ public class Server extends Ice.Application
             return 1;
         }
 
-        Ice.ObjectAdapter adapter = communicator().createObjectAdapter("VoipServer");
-        adapter.add(new PermissionsVerifierI(), communicator().stringToIdentity("VoipVerifier"));
-        adapter.add(new SessionManagerI(), communicator().stringToIdentity("VoipSessionManager"));
+        com.zeroc.Ice.ObjectAdapter adapter = communicator().createObjectAdapter("VoipServer");
+        adapter.add(new PermissionsVerifierI(), com.zeroc.Ice.Util.stringToIdentity("VoipVerifier"));
+        adapter.add(new SessionManagerI(), com.zeroc.Ice.Util.stringToIdentity("VoipSessionManager"));
         adapter.activate();
         communicator().waitForShutdown();
         _executor.shutdown();
         return 0;
     }
 
-    public static void
-    main(String[] args)
+    public static void main(String[] args)
     {
         Server app = new Server();
         int status = app.main("Server", args, "config.server");
         System.exit(status);
     }
-
 }

@@ -6,17 +6,18 @@
 
 public class Server
 {
-    public static void
-    main(String[] args)
+    public static void main(String[] args)
     {
         int status = 0;
-        Ice.Communicator ic = null;
+        com.zeroc.Ice.Communicator ic = null;
         try
         {
-            ic = Ice.Util.initialize(args);
-            Ice.ObjectAdapter adapter = ic.createObjectAdapterWithEndpoints("SimplePrinterAdapter", "default -h localhost -p 10000");
-            Ice.Object object = new PrinterI();
-            adapter.add(object, ic.stringToIdentity("SimplePrinter"));
+            com.zeroc.Ice.Util.InitializeResult ir = com.zeroc.Ice.Util.initialize(args);
+            ic = ir.communicator;
+            com.zeroc.Ice.ObjectAdapter adapter =
+                ic.createObjectAdapterWithEndpoints("SimplePrinterAdapter", "default -h localhost -p 10000");
+            com.zeroc.Ice.Object object = new PrinterI();
+            adapter.add(object, com.zeroc.Ice.Util.stringToIdentity("SimplePrinter"));
             adapter.activate();
             ic.waitForShutdown();
         }

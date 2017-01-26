@@ -45,41 +45,31 @@ import javax.swing.text.DefaultEditorKit;
 import javax.swing.text.Document;
 import javax.swing.text.Element;
 
-import Glacier2.SessionFactoryHelper;
-import Glacier2.SessionHelper;
-import Glacier2.SessionCallback;
-import Glacier2.SessionNotExistException;
-import Ice.Current;
-import Ice.LocalException;
-import Ice.StringSeqHolder;
-import Ice.Util;
+import com.zeroc.Glacier2.SessionFactoryHelper;
+import com.zeroc.Glacier2.SessionHelper;
+import com.zeroc.Glacier2.SessionCallback;
+import com.zeroc.Glacier2.SessionNotExistException;
+import com.zeroc.Ice.Current;
+import com.zeroc.Ice.LocalException;
+import com.zeroc.Ice.Util;
 
 @SuppressWarnings("serial")
 public class Client extends JFrame
 {
-    public static void
-    main(final String[] args)
+    public static void main(final String[] args)
     {
-        SwingUtilities.invokeLater(new Runnable()
+        SwingUtilities.invokeLater(() ->
         {
-            @Override
-            public void
-            run()
+            try
             {
-                try
-                {
-                    //
-                    // Create and set up the window.
-                    //
-                    new Client(args);
-                }
-                catch(Ice.LocalException e)
-                {
-                    JOptionPane.showMessageDialog(null,
-                            e.toString(),
-                            "Initialization failed",
-                            JOptionPane.ERROR_MESSAGE);
-                }
+                //
+                // Create and set up the window.
+                //
+                new Client(args);
+            }
+            catch(com.zeroc.Ice.LocalException e)
+            {
+                JOptionPane.showMessageDialog(null, e.toString(), "Initialization failed", JOptionPane.ERROR_MESSAGE);
             }
         });
     }
@@ -98,8 +88,7 @@ public class Client extends JFrame
         _output.addMouseListener(new MouseAdapter()
         {
             @Override
-            public void
-            mousePressed(MouseEvent e)
+            public void mousePressed(MouseEvent e)
             {
                 if(e.isPopupTrigger())
                 {
@@ -115,8 +104,7 @@ public class Client extends JFrame
         _input.addKeyListener(new KeyListener()
         {
             @Override
-            public void
-            keyTyped(KeyEvent e)
+            public void keyTyped(KeyEvent e)
             {
                 if(e.getKeyChar() == KeyEvent.VK_ENTER)
                 {
@@ -126,17 +114,9 @@ public class Client extends JFrame
                         String msg = doc.getText(0, doc.getLength()).trim();
                         if(msg.length() > 0)
                         {
-                            _chat.begin_say(msg, new Demo.Callback_ChatSession_say()
+                            _chat.sayAsync(msg).whenComplete((result, ex) ->
                             {
-                                @Override
-                                public void
-                                response()
-                                {
-                                }
-
-                                @Override
-                                public void
-                                exception(final LocalException ex)
+                                if(ex != null)
                                 {
                                     appendMessage("<system-message> - " + ex);
                                 }
@@ -152,14 +132,12 @@ public class Client extends JFrame
             }
 
             @Override
-            public void
-            keyPressed(KeyEvent e)
+            public void keyPressed(KeyEvent e)
             {
             }
 
             @Override
-            public void
-            keyReleased(KeyEvent e)
+            public void keyReleased(KeyEvent e)
             {
             }
         });
@@ -187,27 +165,24 @@ public class Client extends JFrame
         _output.addComponentListener(new ComponentListener()
         {
             @Override
-            public void
-            componentResized(ComponentEvent e)
+            public void componentResized(ComponentEvent e)
             {
                 JScrollBar vertivalScrollbar = _outputScroll.getVerticalScrollBar();
                 vertivalScrollbar.setValue(vertivalScrollbar.getMaximum());
             }
+
             @Override
-            public void
-            componentHidden(ComponentEvent e)
+            public void componentHidden(ComponentEvent e)
             {
             }
 
             @Override
-            public void
-            componentMoved(ComponentEvent e)
+            public void componentMoved(ComponentEvent e)
             {
             }
 
             @Override
-            public void
-            componentShown(ComponentEvent e)
+            public void componentShown(ComponentEvent e)
             {
             }
         });
@@ -230,8 +205,7 @@ public class Client extends JFrame
         _login = new AbstractAction("Login")
         {
             @Override
-            public void
-            actionPerformed(ActionEvent e) 
+            public void actionPerformed(ActionEvent e) 
             {
                 login();
             }
@@ -240,8 +214,7 @@ public class Client extends JFrame
         _logout = new AbstractAction("Logout")
         {
             @Override
-            public void
-            actionPerformed(ActionEvent e) 
+            public void actionPerformed(ActionEvent e) 
             {
                 setEnabled(false);
                 _status.setText("Logging out");
@@ -254,8 +227,7 @@ public class Client extends JFrame
         _exit = new AbstractAction("Exit")
         {
             @Override
-            public void
-            actionPerformed(ActionEvent e) 
+            public void actionPerformed(ActionEvent e) 
             {
                 exit();
             }
@@ -277,8 +249,7 @@ public class Client extends JFrame
         addWindowListener(new WindowAdapter()
         {
             @Override
-            public void
-            windowClosing(WindowEvent e)
+            public void windowClosing(WindowEvent e)
             {
                 exit();
             }
@@ -316,30 +287,24 @@ public class Client extends JFrame
 
         _input.setEnabled(false);
 
-        Ice.InitializationData initData = new Ice.InitializationData();
+        com.zeroc.Ice.InitializationData initData = new com.zeroc.Ice.InitializationData();
 
         // Load the configuration file.
-        initData.properties = Ice.Util.createProperties();
+        initData.properties = com.zeroc.Ice.Util.createProperties();
         initData.properties.load("config.client");
-        StringSeqHolder argHolder = new StringSeqHolder(args);
-        initData.properties = Util.createProperties(argHolder, initData.properties);
+        Util.CreatePropertiesResult cpr = Util.createProperties(args, initData.properties);
+        initData.properties = cpr.properties;
 
         // Setup a dispatcher to dispath Ice and Glacier2 helper callbacks to the GUI thread.
-        initData.dispatcher = new Ice.Dispatcher()
+        initData.dispatcher = (runnable, connection) ->
         {
-            @Override
-            public void
-            dispatch(Runnable runnable, Ice.Connection connection)
-            {
-                SwingUtilities.invokeLater(runnable);
-            }
+            SwingUtilities.invokeLater(runnable);
         };
 
         _factory = new SessionFactoryHelper(initData, new SessionCallback()
         {
             @Override
-            public void
-            connected(SessionHelper session)
+            public void connected(SessionHelper session)
                 throws SessionNotExistException
             {
                 // If the session has been reassigned avoid the spurious callback.
@@ -351,24 +316,21 @@ public class Client extends JFrame
                 // The chat callback servant. We use an anonymous
                 // inner class since the implementation is very
                 // simple.
-                Demo._ChatCallbackDisp servant = new Demo._ChatCallbackDisp()
+                Demo.ChatCallback servant = new Demo.ChatCallback()
                 {
                     @Override
-                    public void
-                    message(final String data, Current current)
+                    public void message(final String data, Current current)
                     {                            
                         appendMessage(data);
                     }
                 };
 
-                Demo.ChatCallbackPrx callback = Demo.ChatCallbackPrxHelper.uncheckedCast(_session.addWithUUID(servant));
+                Demo.ChatCallbackPrx callback = Demo.ChatCallbackPrx.uncheckedCast(_session.addWithUUID(servant));
 
-                _chat = Demo.ChatSessionPrxHelper.uncheckedCast(_session.session());
-                _chat.begin_setCallback(callback, new Demo.Callback_ChatSession_setCallback()
+                _chat = Demo.ChatSessionPrx.uncheckedCast(_session.session());
+                _chat.setCallbackAsync(callback).whenComplete((result, ex) ->
                 {
-                    @Override
-                    public void
-                    response()
+                    if(ex == null)
                     {
                         assert _loginDialog != null;
                         _loginDialog.dispose();
@@ -380,10 +342,7 @@ public class Client extends JFrame
                         
                         _status.setText("Connected with " + _hostField.getText());
                     }
-
-                    @Override
-                    public void
-                    exception(LocalException ex)
+                    else
                     {
                         destroySession();
                     }
@@ -391,8 +350,7 @@ public class Client extends JFrame
             }
 
             @Override
-            public void
-            disconnected(SessionHelper session)
+            public void disconnected(SessionHelper session)
             {
                 // If the session has been reassigned avoid the spurious callback.
                 if(session != _session)
@@ -416,8 +374,7 @@ public class Client extends JFrame
             }
 
             @Override
-            public void
-            connectFailed(SessionHelper session, Throwable ex)
+            public void connectFailed(SessionHelper session, Throwable ex)
             {
                 // If the session has been reassigned avoid the
                 // spurious callback.
@@ -434,18 +391,16 @@ public class Client extends JFrame
             }
 
             @Override
-            public void
-            createdCommunicator(SessionHelper session)
+            public void createdCommunicator(SessionHelper session)
             {
             }
         });
-        _factory.setRouterIdentity(new Ice.Identity("router", "DemoGlacier2"));
+        _factory.setRouterIdentity(new com.zeroc.Ice.Identity("router", "DemoGlacier2"));
 
         login();
     }
 
-    protected void
-    login()
+    protected void login()
     {
         String[] options = {"Login", "Cancel" };
         // Show Login Dialog.
@@ -474,8 +429,7 @@ public class Client extends JFrame
         }
     }
 
-    private void
-    destroySession()
+    private void destroySession()
     {
         if(_session != null)
         {
@@ -484,16 +438,14 @@ public class Client extends JFrame
         }
     }
 
-    private void
-    exit()
+    private void exit()
     {
         destroySession();
         dispose();
         Runtime.getRuntime().exit(0);
     }
 
-    public void
-    appendMessage(String message)
+    public void appendMessage(String message)
     {
         Document doc = _output.getDocument();
         Element e = doc.getDefaultRootElement();
@@ -508,8 +460,7 @@ public class Client extends JFrame
         _output.setCaretPosition(doc.getLength());
     }
 
-    private static void
-    locateOnScreen(Component component)
+    private static void locateOnScreen(Component component)
     {
         Dimension paneSize = component.getSize();
         Dimension screenSize = component.getToolkit().getScreenSize();

@@ -18,6 +18,42 @@
     <Filter Include="Header Files">
       <UniqueIdentifier>{4acb61ac-95f4-4507-9c9f-088b345e9f6b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Win32">
+      <UniqueIdentifier>{dd503741-01cc-40ca-a259-e0e007f59900}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Win32\Debug">
+      <UniqueIdentifier>{442102fd-41d5-43b9-8c68-c4a37defd32a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Win32">
+      <UniqueIdentifier>{753ff233-640a-4158-9429-1d34a4f06d61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Win32\Debug">
+      <UniqueIdentifier>{16425d67-242b-449b-9cd1-240f65a3c08e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\x64">
+      <UniqueIdentifier>{73e59a15-584b-42d4-a39e-d1068d8848c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\x64\Debug">
+      <UniqueIdentifier>{6dabb29d-cb98-4828-9985-c22f23a4f524}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\x64">
+      <UniqueIdentifier>{9cf44ccc-0f88-4be1-b399-db6fbca83b0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\x64\Debug">
+      <UniqueIdentifier>{649a418e-d8dc-4649-913c-e621e5aa2aab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Win32\Release">
+      <UniqueIdentifier>{44b3fcfe-0383-4144-8278-919654f5b546}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Win32\Release">
+      <UniqueIdentifier>{ec849714-8ad5-42a2-b090-b0189d36059d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\x64\Release">
+      <UniqueIdentifier>{23e4fc23-6024-44b3-8417-c987db4ed1c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\x64\Release">
+      <UniqueIdentifier>{5ce89143-914d-40b3-8113-f71a82aad3d7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
@@ -25,26 +61,44 @@
   <ItemGroup>
     <ClCompile Include="App.xaml.cpp" />
     <ClCompile Include="MainPage.xaml.cpp" />
-    <ClCompile Include="generated\Chat.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ChatViewPage.xaml.cpp" />
     <ClCompile Include="LoginViewPage.xaml.cpp" />
+    <ClCompile Include="Win32\Debug\Chat.cpp">
+      <Filter>Source Files\Win32\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="x64\Debug\Chat.cpp">
+      <Filter>Source Files\x64\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Win32\Release\Chat.cpp">
+      <Filter>Source Files\Win32\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="x64\Release\Chat.cpp">
+      <Filter>Source Files\x64\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.xaml.h" />
     <ClInclude Include="MainPage.xaml.h" />
-    <ClInclude Include="generated\Chat.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ChatViewPage.xaml.h" />
     <ClInclude Include="LoginViewPage.xaml.h" />
+    <ClInclude Include="Win32\Debug\Chat.h">
+      <Filter>Header Files\Win32\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="x64\Debug\Chat.h">
+      <Filter>Header Files\x64\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Win32\Release\Chat.h">
+      <Filter>Header Files\Win32\Release</Filter>
+    </ClInclude>
+    <ClInclude Include="x64\Release\Chat.h">
+      <Filter>Header Files\x64\Release</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\LockScreenLogo.scale-200.png">
@@ -73,6 +127,7 @@
     <None Include="simpleChat_TemporaryKey.pfx" />
     <None Include="..\..\..\..\certs\cacert.der" />
     <None Include="README.md" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainPage.xaml" />

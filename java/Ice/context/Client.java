@@ -6,27 +6,18 @@
 
 import Demo.*;
 
-public class Client extends Ice.Application
+public class Client extends com.zeroc.Ice.Application
 {
     class ShutdownHook extends Thread
     {
         @Override
-        public void
-        run()
+        public void run()
         {
-            try
-            {
-                communicator().destroy();
-            }
-            catch(Ice.LocalException ex)
-            {
-                ex.printStackTrace();
-            }
+            communicator().destroy();
         }
     }
 
-    private static void
-    menu()
+    private static void menu()
     {
         System.out.println(
             "usage:\n" +
@@ -40,8 +31,7 @@ public class Client extends Ice.Application
     }
 
     @Override
-    public int
-    run(String[] args)
+    public int run(String[] args)
     {
         if(args.length > 0)
         {
@@ -56,7 +46,7 @@ public class Client extends Ice.Application
         //
         setInterruptHook(new ShutdownHook());
 
-        ContextPrx proxy = ContextPrxHelper.checkedCast(communicator().propertyToProxy("Context.Proxy"));
+        ContextPrx proxy = ContextPrx.checkedCast(communicator().propertyToProxy("Context.Proxy"));
         if(proxy == null)
         {
             System.err.println("invalid proxy");
@@ -91,19 +81,19 @@ public class Client extends Ice.Application
                 }
                 else if(line.equals("3"))
                 {
-                    java.util.Map<String, String> ctx = new java.util.HashMap<String, String>();
+                    java.util.Map<String, String> ctx = new java.util.HashMap<>();
                     ctx.put("type", "Per-Proxy");
-                    ContextPrx proxy2 = ContextPrxHelper.uncheckedCast(proxy.ice_context(ctx));
+                    ContextPrx proxy2 = proxy.ice_context(ctx);
                     proxy2.call();
                 }
                 else if(line.equals("4"))
                 {
-                    Ice.ImplicitContext ic = communicator().getImplicitContext();
-                    java.util.Map<String, String> ctx = new java.util.HashMap<String, String>();
+                    com.zeroc.Ice.ImplicitContext ic = communicator().getImplicitContext();
+                    java.util.Map<String, String> ctx = new java.util.HashMap<>();
                     ctx.put("type", "Implicit");
                     ic.setContext(ctx);
                     proxy.call();
-                    ic.setContext(new java.util.HashMap<String, String>());
+                    ic.setContext(new java.util.HashMap<>());
                 }
                 else if(line.equals("s"))
                 {
@@ -127,7 +117,7 @@ public class Client extends Ice.Application
             {
                 ex.printStackTrace();
             }
-            catch(Ice.LocalException ex)
+            catch(com.zeroc.Ice.LocalException ex)
             {
                 ex.printStackTrace();
             }
@@ -137,8 +127,7 @@ public class Client extends Ice.Application
         return 0;
     }
 
-    public static void
-    main(String[] args)
+    public static void main(String[] args)
     {
         Client app = new Client();
         int status = app.main("Client", args, "config.client");

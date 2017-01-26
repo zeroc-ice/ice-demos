@@ -4,111 +4,92 @@
 //
 // **********************************************************************
 
-var Ice = require("ice").Ice;
-var Glacier2 = require("ice").Glacier2;
-var Demo = require("./Chat").Demo;
+const Ice = require("ice").Ice;
+const Glacier2 = require("ice").Glacier2;
+const Demo = require("./Chat").Demo;
 
 //
 // Servant that implements the ChatCallback interface,
 // the message operation just writes the received data
 // to stdout.
 //
-var ChatCallbackI = Ice.Class(Demo.ChatCallback, {
-    message: function(data)
+class ChatCallbackI extends Demo._ChatCallbackDisp
+{
+    message(data)
     {
         console.log(data);
     }
-});
+}
 
-var communicator;
+let communicator;
 
 //
 // Destroy communicator on SIGINT so application
 // exit cleanly.
 //
-process.once("SIGINT", function() {
+process.once("SIGINT", () =>
+{
     if(communicator)
     {
-        communicator.destroy().finally(
-            function()
-            {
-                process.exit(0);
-            });
+        communicator.destroy().finally(() => process.exit(0));
     }
 });
 
-Ice.Promise.try(
-    function()
+Ice.Promise.try(() =>
     {
         //
         // Initialize the communicator with Ice.Default.Router property
         // set to the simple chat demo Glacier2 router.
         //
-        var id = new Ice.InitializationData();
-        id.properties = Ice.createProperties();
-        id.properties.setProperty("Ice.Default.Router", "DemoGlacier2/router:tcp -p 4063 -h localhost");
-        communicator = Ice.initialize(process.argv, id);
+        const initData = new Ice.InitializationData();
+        initData.properties = Ice.createProperties();
+        initData.properties.setProperty("Ice.Default.Router", "DemoGlacier2/router:tcp -p 4063 -h localhost");
+        communicator = Ice.initialize(process.argv, initData);
 
         function createSession()
         {
-            return Ice.Promise.try(
-                function()
+            return Ice.Promise.try(() =>
                 {
                     //
                     // Get a proxy to the default rotuer and down-cast it to Glacier2.Router
                     // interface to ensure Glacier2 server is available.
                     //
-                    var router = communicator.getDefaultRouter();
-                    var id;
-
-                    return Glacier2.RouterPrx.checkedCast(router).then(
-                        function(proxy)
+                    return Glacier2.RouterPrx.checkedCast(communicator.getDefaultRouter()).then(router =>
                         {
-                            router = proxy;
                             console.log("This demo accepts any user-id / password combination.");
                             process.stdout.write("user id: ");
-                            return getline();
-                        }
-                    ).then(
-                        function(str)
-                        {
-                            id = str;
-                            process.stdout.write("password: ");
-                            return getline();
-                        }
-                    ).then(
-                        function(password)
-                        {
-                            return router.createSession(id, password);
-                        }
-                    ).then(
-                        function(session)
-                        {
-                            return runWithSession(router, Demo.ChatSessionPrx.uncheckedCast(session));
-                        },
-                        function(ex)
-                        {
-                            if(ex instanceof Glacier2.PermissionDeniedException)
-                            {
-                                console.log("permission denied:\n" + ex.reason);
-                                return createSession();
-                            }
-                            else if(ex instanceof Glacier2.CannotCreateSessionException)
-                            {
-                                console.log("cannot create session:\n" + ex.reason);
-                                return createSession();
-                            }
-                            else
-                            {
-                                throw ex;
-                            }
+                            return getline().then(id =>
+                                {
+                                    process.stdout.write("password: ");
+                                    return getline().then(password => router.createSession(id, password));
+                                }).then(
+                                    session => runWithSession(router, Demo.ChatSessionPrx.uncheckedCast(session)),
+                                    ex =>
+                                    {
+                                        if(ex instanceof Glacier2.PermissionDeniedException)
+                                        {
+                                            console.log("permission denied:\n" + ex.reason);
+                                            return createSession();
+                                        }
+                                        else if(ex instanceof Glacier2.CannotCreateSessionException)
+                                        {
+                                            console.log("cannot create session:\n" + ex.reason);
+                                            return createSession();
+                                        }
+                                        else
+                                        {
+                                            throw ex;
+                                        }
+                                    });
                         });
                 });
         }
 
         function runWithSession(router, session)
         {
-            var p = new Ice.Promise();
+            const p = new Ice.Promise();
+            
+            let completed = false;
 
             //
             // Get the session timeout, the router client category and
@@ -117,40 +98,34 @@ Ice.Promise.try(
             // Use Ice.Promise.all to wait for the completion of all the
             // calls.
             //
-            Ice.Promise.all(
-                router.getACMTimeout(),
-                router.getCategoryForClient(),
-                communicator.createObjectAdapterWithRouter("", router)
-            ).then(
-                function(timeoutA, categoryA, adapterA)
+            Ice.Promise.all([router.getACMTimeout(),
+                             router.getCategoryForClient(),
+                             communicator.createObjectAdapterWithRouter("", router)]
+            ).then(values =>
                 {
-                    var timeout = timeoutA[0];
-                    var category = categoryA[0];
-                    var adapter = adapterA[0];
+                    let [timeout, category, adapter] = values;
 
                     //
                     // Use ACM heartbeat to keep session alive.
                     //
-                    var connection = router.ice_getCachedConnection();
+                    const connection = router.ice_getCachedConnection();
                     if(timeout > 0)
                     {
                         connection.setACM(timeout, undefined, Ice.ACMHeartbeat.HeartbeatAlways);
                     }
-                    connection.setCallback(
+
+                    connection.setCloseCallback(() =>
                         {
-                            closed: function()
+                            if(!completed)
                             {
                                 console.log("Connection lost");
-                            },
-                            heartbeat: function()
-                            {
                             }
                         });
 
                     //
                     // Create the ChatCallback servant and add it to the ObjectAdapter.
                     //
-                    var callback = Demo.ChatCallbackPrx.uncheckedCast(
+                    const callback = Demo.ChatCallbackPrx.uncheckedCast(
                         adapter.add(new ChatCallbackI(), new Ice.Identity("callback", category)));
 
                     //
@@ -158,8 +133,7 @@ Ice.Promise.try(
                     //
                     return session.setCallback(callback);
                 }
-            ).then(
-                function()
+            ).then(() =>
                 {
                     //
                     // The chat function sequantially reads stdin messages
@@ -168,12 +142,12 @@ Ice.Promise.try(
                     function chat()
                     {
                         process.stdout.write("==> ");
-                        return getline().then(
-                            function(msg)
+                        return getline().then(msg =>
                             {
                                 if(msg == "/quit")
                                 {
-                                    p.succeed();
+                                    completed = true;
+                                    p.resolve();
                                 }
                                 else if(msg.indexOf("/") === 0)
                                 {
@@ -184,19 +158,14 @@ Ice.Promise.try(
                                     return session.say(msg);
                                 }
                             }
-                        ).then(
-                            function()
+                        ).then(() =>
                             {
-                                if(!p.completed())
+                                if(!completed)
                                 {
                                     return chat();
                                 }
                             }
-                        ).exception(
-                            function(ex)
-                            {
-                                p.fail(ex);
-                            });
+                        ).catch(ex => p.reject(ex));
                     }
 
                     //
@@ -204,25 +173,14 @@ Ice.Promise.try(
                     //
                     return chat();
                 }
-            ).finally(
-                function()
-                {
-                    //
-                    // Destroy the session.
-                    //
-                    return router.destroySession();
-                }
-            ).exception(
-                function(ex)
-                {
-                    p.fail(ex);
-                });
+            ).finally(() => router.destroySession() // Destroy the session.
+            ).catch(ex => p.reject(ex));
+
             return p;
         }
         return createSession();
     }
-).finally(
-    function()
+).finally(() =>
     {
         //
         // Destroy the communicator if required.
@@ -233,31 +191,27 @@ Ice.Promise.try(
         }
     }
 ).then(
-    function()
-    {
-        process.exit(0);
-    },
-    function(ex)
+    () => process.exit(0),
+    ex =>
     {
         //
         // Handle any exceptions above.
         //
-        console.log(ex.toString());
+        console.log(ex);
         process.exit(1);
     });
 
 //
 // Asynchonously process stdin lines using a promise
 //
-var getline = function()
+function getline()
 {
-    var p = new Ice.Promise();
+    const p = new Ice.Promise();
     process.stdin.resume();
-    process.stdin.once("data",
-        function(buffer)
+    process.stdin.once("data", buffer =>
         {
             process.stdin.pause();
-            p.succeed(buffer.toString("utf-8").trim());
+            p.resolve(buffer.toString("utf-8").trim());
         });
     return p;
 };

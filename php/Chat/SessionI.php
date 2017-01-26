@@ -70,7 +70,7 @@ class Session
             //
             if($this->_communicator->getProperties()->getProperty("PollingChatSessionFactory.OverrideEndpoints") != "")
             {
-                $ident = $this->_communicator->identityToString($this->_chatsession->ice_getIdentity());
+                $ident = Ice_identityToString($this->_chatsession->ice_getIdentity());
                 $endpoints = $this->_communicator->getProperties()->getProperty(
                     "PollingChatSessionFactory.OverrideEndpoints");
                 $this->_chatsession = $this->_communicator->stringToProxy(

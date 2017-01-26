@@ -1,0 +1,24 @@
+
+apply from: "$rootProject.projectDir/../gradle/ice.gradle"
+project.version = slice.iceVersion
+
+// We set this early so that slice.jarDir is correct
+slice.compat = true
+
+repositories {
+    if (slice.jarDir != null) {
+        flatDir {
+        name "local"
+            dirs slice.jarDir
+        }
+    }
+
+    if (!useLocalOnly) {
+        maven {
+            url "https://${iceMavenRepo}/nexus/content/repositories/thirdparty"
+        }
+        maven {
+            url "https://${iceMavenRepo}/nexus/content/repositories/releases"
+        }
+    }
+}

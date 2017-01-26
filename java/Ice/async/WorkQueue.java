@@ -8,19 +8,18 @@ import Demo.*;
 
 public class WorkQueue extends Thread
 {
-    class CallbackEntry
+    class FutureEntry
     {
-        AMD_Hello_sayHello cb;
+        java.util.concurrent.CompletableFuture<Void> future;
         int delay;
     }
 
     @Override
-    public synchronized void
-    run()
+    public synchronized void run()
     {
         while(!_done)
         {
-            if(_callbacks.size() == 0)
+            if(_futures.size() == 0)
             {
                 try
                 {
@@ -31,12 +30,12 @@ public class WorkQueue extends Thread
                 }
             }
 
-            if(_callbacks.size() != 0)
+            if(_futures.size() != 0)
             {
                 //
                 // Get next work item.
                 //
-                CallbackEntry entry = _callbacks.getFirst();
+                FutureEntry entry = _futures.getFirst();
 
                 //
                 // Wait for the amount of time indicated in delay to
@@ -56,9 +55,9 @@ public class WorkQueue extends Thread
                     //
                     // Print greeting and send response.
                     //
-                    _callbacks.removeFirst();
+                    _futures.removeFirst();
                     System.err.println("Belated Hello World!");
-                    entry.cb.ice_response();
+                    entry.future.complete((Void)null);
                 }
             }
         }
@@ -66,46 +65,44 @@ public class WorkQueue extends Thread
         //
         // Throw exception for any outstanding requests.
         //
-        for(CallbackEntry p : _callbacks)
+        for(FutureEntry p : _futures)
         {
-            p.cb.ice_exception(new RequestCanceledException());
+            p.future.completeExceptionally(new RequestCanceledException());
         }
     }
 
-    public synchronized void
-    add(AMD_Hello_sayHello cb, int delay)
+    public synchronized void add(java.util.concurrent.CompletableFuture<Void> future, int delay)
     {
         if(!_done)
         {
             //
             // Add the work item.
             //
-            CallbackEntry entry = new CallbackEntry();
-            entry.cb = cb;
+            FutureEntry entry = new FutureEntry();
+            entry.future = future;
             entry.delay = delay;
 
-            if(_callbacks.size() == 0)
+            if(_futures.size() == 0)
             {
                 notify();
             }
-            _callbacks.add(entry);
+            _futures.add(entry);
         }
         else
         {
             //
             // Destroyed, throw exception.
             //
-            cb.ice_exception(new RequestCanceledException());
+            future.completeExceptionally(new RequestCanceledException());
         }
     }
 
-    public synchronized void
-    _destroy()                  // Thread.destroy is deprecated.
+    public synchronized void _destroy()                  // Thread.destroy is deprecated.
     {
         _done = true;
         notify();
     }
 
-    private java.util.LinkedList<CallbackEntry> _callbacks = new java.util.LinkedList<CallbackEntry>();
+    private java.util.LinkedList<FutureEntry> _futures = new java.util.LinkedList<>();
     private boolean _done = false;
 }

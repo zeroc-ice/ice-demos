@@ -6,28 +6,19 @@
 
 import Demo.*;
 
-public class Client extends Ice.Application
+public class Client extends com.zeroc.Ice.Application
 {
     class ShutdownHook extends Thread
     {
         @Override
-        public void
-        run()
+        public void run()
         {
             cleanup(true);
-            try
-            {
-                communicator().destroy();
-            }
-            catch(Ice.LocalException ex)
-            {
-                ex.printStackTrace();
-            }
+            communicator().destroy();
         }
     }
 
-    private static void
-    menu()
+    private static void menu()
     {
         System.out.println(
             "usage:\n" +
@@ -40,8 +31,7 @@ public class Client extends Ice.Application
     }
 
     @Override
-    public int
-    run(String[] args)
+    public int run(String[] args)
     {
         if(args.length > 0)
         {
@@ -74,8 +64,8 @@ public class Client extends Ice.Application
             return 0;
         }
 
-        Ice.ObjectPrx base = communicator().propertyToProxy("SessionFactory.Proxy");
-        SessionFactoryPrx factory = SessionFactoryPrxHelper.checkedCast(base);
+        com.zeroc.Ice.ObjectPrx base = communicator().propertyToProxy("SessionFactory.Proxy");
+        SessionFactoryPrx factory = SessionFactoryPrx.checkedCast(base);
         if(factory == null)
         {
             System.err.println("invalid proxy");
@@ -85,28 +75,22 @@ public class Client extends Ice.Application
         synchronized(this)
         {
             _session = factory.create(name);
-            _executor.scheduleAtFixedRate(new Runnable()
+            _executor.scheduleAtFixedRate(() ->
             {
-                @Override
-                public void
-                run()
+                try
                 {
-                    try
-                    {
-                        _session.refresh();
-                    }
-                    catch(Ice.LocalException ex)
-                    {
-                        communicator().getLogger().warning("SessionRefreshThread: " + ex);
-                        // Exceptions thrown from the executor task supress subsequent execution
-                        // of the task.
-                        throw ex;
-                    }
+                    _session.refresh();
+                }
+                catch(com.zeroc.Ice.LocalException ex)
+                {
+                    communicator().getLogger().warning("SessionRefreshThread: " + ex);
+                    // Exceptions thrown from the executor task suppress subsequent execution of the task.
+                    throw ex;
                 }
             }, 5, 5, java.util.concurrent.TimeUnit.SECONDS);
         }
-            
-        java.util.ArrayList<HelloPrx> hellos = new java.util.ArrayList<HelloPrx>();
+
+        java.util.ArrayList<HelloPrx> hellos = new java.util.ArrayList<>();
 
         menu();
 
@@ -189,7 +173,7 @@ public class Client extends Ice.Application
             {
                 cleanup(true);
             }
-            catch(Ice.LocalException e)
+            catch(com.zeroc.Ice.LocalException e)
             {
             }
             ex.printStackTrace();
@@ -198,14 +182,13 @@ public class Client extends Ice.Application
         return 0;
     }
 
-    synchronized private void
-    cleanup(boolean destroy)
+    synchronized private void cleanup(boolean destroy)
     {
         //
         // The refresher task must be terminated before destroy is
         // called, otherwise it might get ObjectNotExistException.
         //
-        _executor.shutdown();       
+        _executor.shutdown();
         if(destroy && _session != null)
         {
             _session.destroy();
@@ -213,14 +196,14 @@ public class Client extends Ice.Application
         _session = null;
     }
 
-    public static void
-    main(String[] args)
+    public static void main(String[] args)
     {
         Client app = new Client();
         int status = app.main("Client", args, "config.client");
         System.exit(status);
     }
 
-    private java.util.concurrent.ScheduledExecutorService _executor = java.util.concurrent.Executors.newScheduledThreadPool(1);
+    private java.util.concurrent.ScheduledExecutorService _executor =
+        java.util.concurrent.Executors.newScheduledThreadPool(1);
     private SessionPrx _session = null;
 }

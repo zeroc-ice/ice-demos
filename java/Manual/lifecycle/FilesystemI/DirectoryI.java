@@ -6,16 +6,15 @@
 
 package FilesystemI;
 
-import Ice.*;
+import com.zeroc.Ice.*;
 import Filesystem.*;
 
-public class DirectoryI extends _DirectoryDisp implements NodeI
+public class DirectoryI implements Directory, NodeI
 {
 
     // Slice name() operation.
 
-    public synchronized String
-    name(Current c)
+    public synchronized String name(Current c)
     {
         if(_destroyed)
         {
@@ -26,16 +25,14 @@ public class DirectoryI extends _DirectoryDisp implements NodeI
 
     // Return the object identity for this node.
 
-    public Identity
-    id()
+    public Identity id()
     {
         return _id;
     }
 
     // Slice list() operation.
 
-    public synchronized NodeDesc[]
-    list(Current c)
+    public synchronized NodeDesc[] list(Current c)
     {
         if(_destroyed)
         {
@@ -51,15 +48,15 @@ public class DirectoryI extends _DirectoryDisp implements NodeI
             ret[i] = new NodeDesc();
             ret[i].name = e.getKey();
             ret[i].type = p instanceof FileI ? NodeType.FileType : NodeType.DirType;
-            ret[i].proxy = NodePrxHelper.uncheckedCast(c.adapter.createProxy(p.id()));
+            ret[i].proxy = NodePrx.uncheckedCast(c.adapter.createProxy(p.id()));
         }
         return ret;
     }
 
     // Slice find() operation.
 
-    public synchronized NodeDesc
-    find(String name, Current c) throws NoSuchName
+    public synchronized NodeDesc find(String name, Current c)
+        throws NoSuchName
     {
         if(_destroyed)
         {
@@ -75,14 +72,14 @@ public class DirectoryI extends _DirectoryDisp implements NodeI
         NodeDesc d = new NodeDesc();
         d.name = name;
         d.type = p instanceof FileI ? NodeType.FileType : NodeType.DirType;
-        d.proxy = NodePrxHelper.uncheckedCast(c.adapter.createProxy(p.id()));
+        d.proxy = NodePrx.uncheckedCast(c.adapter.createProxy(p.id()));
         return d;
     }
 
     // Slice createFile() operation.
 
-    public synchronized FilePrx
-    createFile(String name, Current c) throws NameInUse
+    public synchronized FilePrx createFile(String name, Current c)
+        throws NameInUse
     {
         if(_destroyed)
         {
@@ -97,13 +94,13 @@ public class DirectoryI extends _DirectoryDisp implements NodeI
         FileI f = new FileI(name, this);
         ObjectPrx node = c.adapter.add(f, f.id());
         _contents.put(name, f);
-        return FilePrxHelper.uncheckedCast(node);
+        return FilePrx.uncheckedCast(node);
     }
 
     // Slice createDirectory() operation.
 
-    public synchronized DirectoryPrx
-    createDirectory(String name, Current c) throws NameInUse
+    public synchronized DirectoryPrx createDirectory(String name, Current c)
+        throws NameInUse
     {
         if(_destroyed)
         {
@@ -118,13 +115,13 @@ public class DirectoryI extends _DirectoryDisp implements NodeI
         DirectoryI d = new DirectoryI(name, this);
         ObjectPrx node = c.adapter.add(d, d.id());
         _contents.put(name, d);
-        return DirectoryPrxHelper.uncheckedCast(node);
+        return DirectoryPrx.uncheckedCast(node);
     }
 
     // Slice destroy() operation.
 
-    public void
-    destroy(Current c) throws PermissionDenied
+    public void destroy(Current c)
+        throws PermissionDenied
     {
         if(_parent == null)
         {
@@ -165,15 +162,14 @@ public class DirectoryI extends _DirectoryDisp implements NodeI
         _parent = parent;
         _id = new Identity();
         _destroyed = false;
-        _contents = new java.util.HashMap<String, NodeI>();
+        _contents = new java.util.HashMap<>();
 
         _id.name = parent == null ? "RootDir" : java.util.UUID.randomUUID().toString();
     }
 
     // Remove the entry from the _contents map.
 
-    public synchronized void
-    removeEntry(String name)
+    public synchronized void removeEntry(String name)
     {
         _contents.remove(name);
     }

@@ -6,10 +6,9 @@
 
 import Filesystem.*;
 
-public class Server extends Ice.Application
+public class Server extends com.zeroc.Ice.Application
 {
-    public int
-    run(String[] args)
+    public int run(String[] args)
     {
         //
         // Terminate cleanly on receipt of a signal
@@ -19,7 +18,7 @@ public class Server extends Ice.Application
         //
         // Create an object adapter.
         //
-        Ice.ObjectAdapter adapter =
+        com.zeroc.Ice.ObjectAdapter adapter =
             communicator().createObjectAdapterWithEndpoints("SimpleFilesystem", "default -h localhost -p 10000");
 
         //
@@ -87,8 +86,7 @@ public class Server extends Ice.Application
         return 0;
     }
 
-    public static void
-    main(String[] args)
+    public static void main(String[] args)
     {
         Server app = new Server();
         System.exit(app.main("Server", args));

@@ -1,0 +1,83 @@
+# **********************************************************************
+#
+# Copyright (c) 2003-2016 ZeroC, Inc. All rights reserved.
+#
+# This copy of Ice is licensed to you under the terms described in the
+# ICE_LICENSE file included in this distribution.
+#
+# **********************************************************************
+
+# ----------------------------------------------------------------------
+# Don't change anything below this line!
+# ----------------------------------------------------------------------
+
+-include	$(lang_srcdir)/config/Make.rules.$(os)
+
+#
+# Supported configurations
+#
+supported-configs	= shared static
+
+#
+# Support for Ice libraries
+#
+cpp-dependencies 		= Ice Glacier2 IceGrid IcePatch2 IceSSL IceDiscovery IceLocatorDiscovery IceStorm IceBox
+Ice_libs                	:= bz2
+Ice_system_libs         	:= $(ICE_OS_LIBS) $(ICEUTIL_OS_LIBS)
+Glacier2_dependencies		:= Ice
+IceGrid_dependencies    	:= Glacier2 Ice
+IcePatch2_dependencies  	:= Ice
+IcePatch2_libs          	:= bz2
+IceSSL_dependencies     	:= Ice
+IceSSL_system_libs      	:= $(SSL_OS_LIBS)
+IceDiscovery_dependencies 	:= Ice
+IceLocatorDiscovery_dependencies := Ice
+IceStorm_dependencies   	:= Ice
+IceBox_dependencies   		:= Ice
+
+ifneq ($(filter debian ubuntu,$(linux_id)),)
+cpp-dependencies 		+= IceBT
+IceBT_dependencies     		:= Ice
+IceBT_system_libs      		:= $(SSL_OS_LIBS) `pkg-config --libs dbus-1`
+endif
+
+ice_includedir			?= $(ice_home)$(if $(ice_src_dist),/cpp)/include
+
+# Create component dependency variables
+$(foreach d,$(cpp-dependencies),$(eval $$d++11_targetdir := $(ice_home)$(if $(ice_src_dist),/cpp)/lib)\
+				$(eval $(call create-component-targets,ice,$d++11,library)))
+
+slice2cpp_targetext		= cpp
+slice2cpp_path			= $(ice_bindir)/slice2cpp
+
+#
+# Don't set config/platform targetdir/targetname for demos. The executables are always
+# produced in the demo directory with the same name regardless of the config/platform.
+#
+$(foreach v,$(supported-configs) $(supported-platforms) platform config,$(eval $v_targetdir := )\
+									$(eval $v_targetname := ))
+
+#
+# $(call make-cpp-demo-project,$1=project)
+#
+define make-cpp-demo-project
+$1_slicecompiler 	:= slice2cpp
+$1_sliceflags		:= -I$(ice_slicedir) -I$1 $$($1_sliceflags)
+$1_cppflags		:= -DICE_CPP11_MAPPING -std=c++11 \
+			   -I$(ice_includedir) $(if $(ice_src_dist),-I$(ice_includedir)/generated) \
+			   -I$1 -I$1/generated $$($1_cppflags)
+$(make-project)
+endef
+
+#
+# $(create-cpp-demo-project $1=demo)
+#
+define create-cpp-demo-project
+$1_srcext		:= cpp
+$1_dependencies 	:= $$(or $$($1_dependencies),Ice++11)
+
+# Also link with IceSSL when compiling the project with the static configuration
+static_dependencies[$1]	:= $$(or $$($1_dependencies[static]),IceSSL++11)
+
+$(create-demo-project)
+endef

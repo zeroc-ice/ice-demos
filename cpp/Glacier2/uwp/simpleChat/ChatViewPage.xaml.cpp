@@ -55,7 +55,7 @@ ChatViewPage::inputKeyDown(Platform::Object^ sender, Windows::UI::Xaml::Input::K
 {
 	if (e->Key == Windows::System::VirtualKey::Enter && !input->Text->IsEmpty())
 	{
-		string msg = IceUtil::wstringToString(input->Text->Data());
+		string msg = Ice::wstringToString(input->Text->Data());
 		input->Text = "";
 		MainPage::instance()->coordinator()->say(msg);
 	}

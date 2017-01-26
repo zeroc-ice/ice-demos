@@ -6,34 +6,31 @@
 
 (function(){
 
-var ThroughputPrx = Demo.ThroughputPrx;
-
 //
 // Initialize sequences.
 //
-var i;
-var byteSeq = new Uint8Array(Demo.ByteSeqSize);
-for(i = 0; i < Demo.ByteSeqSize; ++i)
+const byteSeq = new Uint8Array(Demo.ByteSeqSize);
+for(let i = 0; i < Demo.ByteSeqSize; ++i)
 {
     byteSeq[i] = 0;
 }
 
-var stringSeq = [];
-for(i = 0; i < Demo.StringSeqSize; ++i)
+const stringSeq = [];
+for(let i = 0; i < Demo.StringSeqSize; ++i)
 {
     stringSeq[i] = "hello";
 }
 
-var structSeq = [];
-for(i = 0; i < Demo.StringDoubleSeqSize; ++i)
+const structSeq = [];
+for(let i = 0; i < Demo.StringDoubleSeqSize; ++i)
 {
     structSeq[i] = new Demo.StringDouble();
     structSeq[i].s = "hello";
     structSeq[i].d = 3.14;
 }
 
-var fixedSeq = [];
-for(i = 0; i < Demo.FixedSeqSize; ++i)
+const fixedSeq = [];
+for(let i = 0; i < Demo.FixedSeqSize; ++i)
 {
     fixedSeq[i] = new Demo.Fixed();
     fixedSeq[i].i = 0;
@@ -41,7 +38,7 @@ for(i = 0; i < Demo.FixedSeqSize; ++i)
     fixedSeq[i].d = 0;
 }
 
-var communicator = Ice.initialize();
+const communicator = Ice.initialize();
 
 //
 // Run the throughput test.
@@ -51,29 +48,27 @@ function run()
     //
     // Create a proxy to the throughput object.
     //
-    var hostname = document.location.hostname || "127.0.0.1";
-    var secure = document.location.protocol.indexOf("https") != -1;
-    var ref = secure ?
+    const hostname = document.location.hostname || "127.0.0.1";
+    const secure = document.location.protocol.indexOf("https") != -1;
+    const ref = secure ?
         "throughput:wss -h " + hostname + " -p 9090 -r /demowss" :
         "throughput:ws -h " + hostname + " -p 8080 -r /demows";
-    var proxy = communicator.stringToProxy(ref);
 
     //
     // Down-cast the proxy to the Demo.Throughput interface.
     //
-    return ThroughputPrx.checkedCast(proxy).then(
-        function(twoway)
+    return Demo.ThroughputPrx.checkedCast(communicator.stringToProxy(ref)).then(twoway =>
         {
-            var oneway = twoway.ice_oneway();
+            const oneway = twoway.ice_oneway();
+            const repetitions = 100;
+            
+            let seq;
+            let seqSize;
+            let wireSize;
+            let proxy;
+            let operation;
 
-            var seq;
-            var seqSize;
-            var wireSize;
-            var proxy;
-            var operation;
-            var repetitions = 100;
-
-            var data = $("#data").val();
+            const data = $("#data").val();
             //
             // Get the sequence data
             //
@@ -116,7 +111,7 @@ function run()
             //
             // Get the proxy and operation
             //
-            var test = $("#test").val();
+            const test = $("#test").val();
             if(test == "twoway" || test == "oneway")
             {
                 proxy = test == "twoway" ? twoway : oneway;
@@ -213,25 +208,23 @@ function run()
             // once the promise for the previous operation is
             // fulfilled.
             //
-            var start = new Date().getTime();
-            var args = test != "receive" ? [seq] : [];
-            return loop(
-                function()
+            const start = new Date().getTime();
+            const args = test != "receive" ? [seq] : [];
+            return loop(() =>
                 {
                     return operation.apply(proxy, args);
                 },
                 repetitions
-            ).then(
-                function()
+            ).then(() =>
                 {
                     //
                     // Write the results.
                     //
-                    var total = new Date().getTime() - start;
+                    const total = new Date().getTime() - start;
                     writeLine("time for " + repetitions + " sequences: " + total  + " ms");
                     writeLine("time per sequence: " + total / repetitions + " ms");
 
-                    var mbit = repetitions * seqSize * wireSize * 8.0 / total / 1000.0;
+                    let mbit = repetitions * seqSize * wireSize * 8.0 / total / 1000.0;
                     if(test == "echo")
                     {
                         mbit *= 2;
@@ -242,8 +235,7 @@ function run()
         });
 }
 
-$("#run").click(
-    function()
+$("#run").click(() =>
     {
         //
         // Run the throughput loop if not already running.
@@ -252,22 +244,18 @@ $("#run").click(
         {
             setState(State.Running);
 
-            Ice.Promise.try(
-                function()
+            Ice.Promise.try(() =>
                 {
                     return run();
                 }
-            ).exception(
-                function(ex)
+            ).catch(ex =>
                 {
                     $("#output").val(ex.toString());
                 }
-            ).finally(
-                function()
+            ).finally(() =>
                 {
                     setState(State.Idle);
-                }
-            );
+                });
         }
         return false;
     });
@@ -278,8 +266,8 @@ $("#run").click(
 //
 function loop(fn, repetitions)
 {
-    var i = 0;
-    var next = function()
+    let i = 0;
+    function next()
     {
         if(i++ < repetitions)
         {
@@ -306,7 +294,8 @@ function writeLine(msg)
 //
 // Handle the client state.
 //
-var State = {
+const State =
+{
     Idle:0,
     Running: 1
 };

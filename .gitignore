@@ -27,6 +27,7 @@
 core
 /*/dist
 generated
+build
 generated.test
 cgenerated
 sgenerated

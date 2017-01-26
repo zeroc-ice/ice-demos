@@ -1,0 +1,63 @@
+#
+# The server creates one single object adapter with the name "Talk".
+# The following line sets the endpoint for this object adapter.
+#
+# When no -a <addr> option is specified in the endpoints, the default
+# value from the Ice.Default.Host property is used. If this property
+# isn't set, the endpoint will listen on the system's default
+# Bluetooth adapter.
+#
+# The UUID is a unique identifier associated with this talk service.
+# Other talk apps must also know this identifier.
+#
+# The value for the --name option will appear in the Bluetooth SDP
+# registry but is only for informational purposes.
+#
+Talk.Endpoints=bt -u "6a193943-1754-4869-8d0a-ddc5f9a2b294" --name "Ice Bluetooth Talk Service":bts -u "043257a6-d67c-4000-aa62-2ffe4583d324" --name "Ice Bluetooth Talk Service (SSL)"
+
+#
+# Install the IceBT plug-in.
+#
+Ice.Plugin.IceBT=IceBT:createIceBT
+
+#
+# Warn about connection exceptions
+#
+Ice.Warn.Connections=1
+
+#
+# Network Tracing
+#
+# 0 = no network tracing
+# 1 = trace connection establishment and closure
+# 2 = like 1, but more detailed
+# 3 = like 2, but also trace data transfer
+#
+#Ice.Trace.Network=1
+
+#
+# Protocol Tracing
+#
+# 0 = no protocol tracing
+# 1 = trace protocol messages
+#
+#Ice.Trace.Protocol=1
+
+#
+# Security Tracing
+#
+# 0 = no security tracing
+# 1 = trace messages
+#
+#IceSSL.Trace.Security=1
+
+#
+# SSL Configuration
+#
+Ice.Plugin.IceSSL=IceSSL:createIceSSL
+IceSSL.DefaultDir=../../../certs
+IceSSL.CAs=cacert.pem
+IceSSL.CertFile=server.p12
+IceSSL.Password=password
+IceSSL.Keychain=server.keychain
+IceSSL.KeychainPassword=password

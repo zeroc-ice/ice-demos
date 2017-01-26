@@ -6,27 +6,18 @@
 
 import Demo.*;
 
-public class Client extends Ice.Application
+public class Client extends com.zeroc.Ice.Application
 {
     class ShutdownHook extends Thread
     {
         @Override
-        public void
-        run()
+        public void run()
         {
-            try
-            {
-                communicator().destroy();
-            }
-            catch(Ice.LocalException ex)
-            {
-                ex.printStackTrace();
-            }
+            communicator().destroy();
         }
     }
 
-    private static void
-    menu()
+    private static void menu()
     {
         System.out.println(
         "usage:\n" +
@@ -50,8 +41,7 @@ public class Client extends Ice.Application
     }
 
     @Override
-    public int
-    run(String[] args)
+    public int run(String[] args)
     {
         if(args.length > 0)
         {
@@ -66,13 +56,13 @@ public class Client extends Ice.Application
         //
         setInterruptHook(new ShutdownHook());
 
-        ThroughputPrx throughput = ThroughputPrxHelper.checkedCast(communicator().propertyToProxy("Throughput.Proxy"));
+        ThroughputPrx throughput = ThroughputPrx.checkedCast(communicator().propertyToProxy("Throughput.Proxy"));
         if(throughput == null)
         {
             System.err.println("invalid proxy");
             return 1;
         }
-        ThroughputPrx throughputOneway = ThroughputPrxHelper.uncheckedCast(throughput.ice_oneway());
+        ThroughputPrx throughputOneway = throughput.ice_oneway();
 
         byte[] byteSeq = new byte[ByteSeqSize.value];
 
@@ -128,14 +118,14 @@ public class Client extends Ice.Application
                 throughput.recvStringSeq();
                 throughput.recvStructSeq();
                 throughput.recvFixedSeq();
-                
+
                 throughput.echoByteSeq(emptyBytes);
                 throughput.echoStringSeq(emptyStrings);
                 throughput.echoStructSeq(emptyStructs);
                 throughput.echoFixedSeq(emptyFixed);
             }
             throughput.endWarmup();
-            
+
             System.out.println(" ok");
         }
 
@@ -148,7 +138,7 @@ public class Client extends Ice.Application
 
         // Initial ping to setup the connection.
         throughput.ice_ping();
-        
+
         String line = null;
         do
         {
@@ -212,20 +202,20 @@ public class Client extends Ice.Application
                             System.out.print("sending");
                             break;
                         }
-                        
+
                         case 'r':
                         {
                             System.out.print("receiving");
                             break;
                         }
-                        
+
                         case 'e':
                         {
                             System.out.print("sending and receiving");
                             break;
                         }
                     }
-                    
+
                     System.out.print(" " + repetitions);
                     switch(currentType)
                     {
@@ -253,16 +243,16 @@ public class Client extends Ice.Application
                             break;
                         }
                     }
-                    
+
                     System.out.print(" sequences of size " + seqSize);
-                    
+
                     if(c == 'o')
                     {
                         System.out.print(" as oneway");
                     }
-                    
+
                     System.out.println("...");
-                    
+
                     for(int i = 0; i < repetitions; ++i)
                     {
                         switch(currentType)
@@ -276,19 +266,19 @@ public class Client extends Ice.Application
                                         throughput.sendByteSeq(byteSeq);
                                         break;
                                     }
-                            
+
                                     case 'o':
                                     {
                                         throughputOneway.sendByteSeq(byteSeq);
                                         break;
                                     }
-                            
+
                                     case 'r':
                                     {
                                         throughput.recvByteSeq();
                                         break;
                                     }
-                            
+
                                     case 'e':
                                     {
                                         throughput.echoByteSeq(byteSeq);
@@ -307,19 +297,19 @@ public class Client extends Ice.Application
                                         throughput.sendStringSeq(stringSeq);
                                         break;
                                     }
-                            
+
                                     case 'o':
                                     {
                                         throughputOneway.sendStringSeq(stringSeq);
                                         break;
                                     }
-                            
+
                                     case 'r':
                                     {
                                         throughput.recvStringSeq();
                                         break;
                                     }
-                            
+
                                     case 'e':
                                     {
                                         throughput.echoStringSeq(stringSeq);
@@ -338,19 +328,19 @@ public class Client extends Ice.Application
                                         throughput.sendStructSeq(structSeq);
                                         break;
                                     }
-                            
+
                                     case 'o':
                                     {
                                         throughputOneway.sendStructSeq(structSeq);
                                         break;
                                     }
-                            
+
                                     case 'r':
                                     {
                                         throughput.recvStructSeq();
                                         break;
                                     }
-                            
+
                                     case 'e':
                                     {
                                         throughput.echoStructSeq(structSeq);
@@ -369,19 +359,19 @@ public class Client extends Ice.Application
                                         throughput.sendFixedSeq(fixedSeq);
                                         break;
                                     }
-                            
+
                                     case 'o':
                                     {
                                         throughputOneway.sendFixedSeq(fixedSeq);
                                         break;
                                     }
-                            
+
                                     case 'r':
                                     {
                                         throughput.recvFixedSeq();
                                         break;
                                     }
-                            
+
                                     case 'e':
                                     {
                                         throughput.echoFixedSeq(fixedSeq);
@@ -453,7 +443,7 @@ public class Client extends Ice.Application
             {
                 ex.printStackTrace();
             }
-            catch(Ice.LocalException ex)
+            catch(com.zeroc.Ice.LocalException ex)
             {
                 ex.printStackTrace();
             }
@@ -463,8 +453,7 @@ public class Client extends Ice.Application
         return 0;
     }
 
-    public static void
-    main(String[] args)
+    public static void main(String[] args)
     {
         Client app = new Client();
         int status = app.main("Client", args, "config.client");

@@ -1,0 +1,119 @@
+# **********************************************************************
+#
+# Copyright (c) 2003-2016 ZeroC, Inc. All rights reserved.
+#
+# This copy of Ice is licensed to you under the terms described in the
+# ICE_LICENSE file included in this distribution.
+#
+# **********************************************************************
+
+linux_id		= $(shell . /etc/os-release && echo $${ID})
+
+is-bin-program		= $(and $(filter-out %/build,$($4_targetdir)),$(filter $($1_target),program))
+
+ifneq ($(filter centos rhel fedora,$(linux_id)),)
+
+#
+# MultiLib Linux (x64 libraries go in the lib64 directory, x86 executable names are suffixed with 32)
+#
+supported-platforms     = x64 x86
+multilib-platform	= yes
+
+x64_cppflags            = -m64
+x64_ldflags             = $(x64_cppflags)
+x64_targetdir  		= $(if $(filter %/build,$5),/x64,$(if $(filter-out $($1_target),program),64))
+x64_installdir 		= $(if $(and $(filter-out $($1_target),program),$(filter-out %64,$5)),64)
+
+x86_cppflags            = -m32
+x86_ldflags             = $(x86_cppflags)
+x86_targetdir  		= $(if $(filter %/build,$5),/x86)
+x86_targetname		= $(if $(is-bin-program),32)
+
+else ifneq ($(filter debian ubuntu,$(linux_id)),)
+
+#
+# MultiArch Linux (libraries are installed in lib/<arch>, executables are installed in bin/<arch>
+# except for the build architecture where executables are installed in bin/).
+#
+build-platform		?= $(shell dpkg --print-architecture)
+foreign-platforms	?= $(shell dpkg --print-foreign-architectures)
+
+supported-platforms     = $(build-platform) $(foreign-platforms)
+
+dpkg-arch 		= $(shell dpkg-architecture -f -a$1 -q$2 2> /dev/null)
+
+# $(call make-platform-config,$1=platform)
+define make-platform-config
+$1_gnu_type	= $(call dpkg-arch,$1,DEB_HOST_GNU_TYPE)
+$1_multiarch	= $(call dpkg-arch,$1,DEB_HOST_MULTIARCH)
+
+$1_cc		= $$($1_gnu_type)-$(CC)
+$1_cxx		= $$($1_gnu_type)-$(CXX)
+$1_libtool	= $$($1_gnu_type)-$(AR)
+$1_targetdir 	= /$$($1_multiarch)
+$1_installdir 	= $$(if $$(and $(is-bin-program),$(usr_dir_install)),,/$$($1_multiarch))
+
+$1_excludes	= $(if $(filter-out $1,$(build-platform)),Slice)
+endef
+
+$(foreach p,$(supported-platforms),$(eval $(call make-platform-config,$p)))
+
+# For the build platform architecture, build and install executables in bin, libraries in lib/<arch>
+$(build-platform)_targetdir 	= $(if $(or $(filter %/build,$5),$(filter-out $($1_target),program)),/$($2_multiarch))
+$(build-platform)_installdir 	= $(if $(is-bin-program),,/$($2_multiarch))
+
+else
+
+#
+# Single architecture Linux
+#
+supported-platforms     = $(if $(filter x86_64,$(shell uname -m)),x64,x86)
+
+x64_targetdir  		= $(if $(filter %/build,$($1_targetdir)),/x64,$(if $(filter-out $($1_target),program),64))
+x64_installdir 		= $(if $(and $(filter-out $($1_target),program),$(filter-out %64,$($1_installdir))),64)
+
+x86_targetdir  		= $(if $(filter %/build,$($1_targetdir)),/x86)
+
+endif
+
+# If building objects for a shared library, enable fPIC
+shared_cppflags	= $(if $(filter-out program,$($1_target)),-fPIC)
+
+CXXFLAGS        += -fvisibility=hidden -Wall -Wextra -Wdeprecated -Wshadow -Wredundant-decls -Werror -pthread
+LDFLAGS         += -pthread
+
+ifeq ($(OPTIMIZE),yes)
+    CXXFLAGS    += -O2 -DNDEBUG
+else
+    CXXFLAGS    += -g
+endif
+
+nodeprecatedwarnings-cppflags := -Wno-deprecated-declarations
+
+loader_path     = \$$ORIGIN
+
+# $(call mklib,$1=target,$2=objects,$3=libname,$4=version,$5=soversion,$6=ldflags,$7=platform)
+mklib           = $(or $($7_ar),$(AR)) cr $1 $2
+
+# $(call mkshlib,$1=target,$2=objects,$3=libname,$4=version,$5=soversion,$6=ldflags,$7=platform)
+mkshlib         = $(or $($7_cxx),$(CXX)) -shared $(if $5,-Wl$(comma)-h$(comma)$(call mksoname,$3,$4,$5)) -o $1 $2 $6
+
+#
+# $(call mkxxx,$1=libname,$2=version,$3=soversion)
+#
+mksoname        = lib$(1).so$(if $3,.$3)
+mkshlibfilename = lib$(1).so$(if $2,.$2)
+mkshlibname     = lib$(1).so
+
+# Clear the iconv ldflags, iconv is part of libc on Linux
+iconv_ldflags   :=
+
+libbacktrace_fullpath := $(shell $(CXX) --print-file-name=libbacktrace.a)
+ifneq ($(libbacktrace_fullpath),libbacktrace.a)
+   libbacktrace = yes
+endif
+
+IceUtil_system_libs     			= -lrt -lcrypto $(if $(filter yes,$(libbacktrace)),-lbacktrace)
+Ice_system_libs         			= -ldl $(IceUtil_system_libs)
+IceSSL_system_libs				= -lssl -lcrypto
+Glacier2CryptPermissionsVerifier_system_libs 	= -lcrypt

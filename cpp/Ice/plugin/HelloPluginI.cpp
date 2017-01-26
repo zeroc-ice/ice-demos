@@ -44,7 +44,7 @@ public:
      initialize()
      {
          Ice::ObjectAdapterPtr adapter = _communicator->createObjectAdapter("Hello");
-         adapter->add(new HelloI, _communicator->stringToIdentity("hello"));
+         adapter->add(new HelloI, Ice::stringToIdentity("hello"));
          adapter->activate();
      }
 

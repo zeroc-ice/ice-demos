@@ -37,11 +37,11 @@ class Client(Ice.Application):
             return 1
 
         adapter = self.communicator().createObjectAdapter("Callback.Client")
-        adapter.add(CallbackReceiverI(), self.communicator().stringToIdentity("callbackReceiver"))
+        adapter.add(CallbackReceiverI(), Ice.stringToIdentity("callbackReceiver"))
         adapter.activate()
 
         receiver = Demo.CallbackReceiverPrx.uncheckedCast(
-            adapter.createProxy(self.communicator().stringToIdentity("callbackReceiver")))
+            adapter.createProxy(Ice.stringToIdentity("callbackReceiver")))
 
         menu()
 

@@ -21,12 +21,12 @@ public class Server
         {
             if(args.Length > 0)
             {
-                System.Console.Error.WriteLine(appName() + ": too many arguments");
+                Console.Error.WriteLine(appName() + ": too many arguments");
                 return 1;
             }
 
-            Ice.ObjectAdapter adapter = communicator().createObjectAdapter("ContactDB");
-            adapter.add(new ContactDBI(), communicator().stringToIdentity("contactdb"));
+            var adapter = communicator().createObjectAdapter("ContactDB");
+            adapter.add(new ContactDBI(), Ice.Util.stringToIdentity("contactdb"));
             adapter.activate();
             communicator().waitForShutdown();
             return 0;
@@ -35,7 +35,7 @@ public class Server
 
     public static int Main(string[] args)
     {
-        App app = new App();
+        var app = new App();
         return app.main(args, "config.server");
     }
 }

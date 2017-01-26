@@ -12,25 +12,30 @@ import javax.swing.event.*;
 
 public class Client extends JFrame
 {
+    static class Holder<T>
+    {
+        public Holder(T v)
+        {
+            value = v;
+        }
+
+        public T value;
+    }
+
     public static void main(final String[] args)
     {
-        SwingUtilities.invokeLater(new Runnable()
+        SwingUtilities.invokeLater(() ->
         {
-            @Override
-            public void run()
+            try
             {
-                try
-                {
-                    //
-                    // Create and set up the window.
-                    //
-                    new Client(args);
-                }
-                catch(Ice.LocalException e)
-                {
-                    JOptionPane.showMessageDialog(null, e.toString(), "Initialization failed",
-                                                  JOptionPane.ERROR_MESSAGE);
-                }
+                //
+                // Create and set up the window.
+                //
+                new Client(args);
+            }
+            catch(com.zeroc.Ice.LocalException e)
+            {
+                JOptionPane.showMessageDialog(null, e.toString(), "Initialization failed", JOptionPane.ERROR_MESSAGE);
             }
         });
     }
@@ -45,18 +50,8 @@ public class Client extends JFrame
         //
         // Destroy the Ice communicator.
         //
-        try
-        {
-            _communicator.destroy();
-        }
-        catch(Throwable ex)
-        {
-            ex.printStackTrace();
-        }
-        finally
-        {
-            _communicator = null;
-        }
+        _communicator.destroy();
+        _communicator = null;
     }
 
     Client(String[] args)
@@ -66,19 +61,14 @@ public class Client extends JFrame
         //
         try
         {
-            Ice.InitializationData initData = new Ice.InitializationData();
-            initData.properties = Ice.Util.createProperties();
+            com.zeroc.Ice.InitializationData initData = new com.zeroc.Ice.InitializationData();
+            initData.properties = com.zeroc.Ice.Util.createProperties();
             initData.properties.load("config.client");
-            initData.dispatcher = new Ice.Dispatcher()
+            initData.dispatcher = (runnable, connection) ->
             {
-                @Override
-                public void
-                dispatch(Runnable runnable, Ice.Connection connection)
-                {
-                    SwingUtilities.invokeLater(runnable);
-                }
+                SwingUtilities.invokeLater(runnable);
             };
-            _communicator = Ice.Util.initialize(args, initData);
+            _communicator = com.zeroc.Ice.Util.initialize(args, initData).communicator;
         }
         catch(Throwable ex)
         {
@@ -380,7 +370,7 @@ public class Client extends JFrame
         DATAGRAM,
         DATAGRAM_BATCH;
 
-        Ice.ObjectPrx apply(Ice.ObjectPrx prx)
+        com.zeroc.Ice.ObjectPrx apply(com.zeroc.Ice.ObjectPrx prx)
         {
             switch (this)
             {
@@ -449,14 +439,14 @@ public class Client extends JFrame
         }
 
         String s = "hello:tcp -h " + host + " -p 10000:ssl -h " + host + " -p 10001:udp -h " + host + " -p 10000";
-        Ice.ObjectPrx prx = _communicator.stringToProxy(s);
+        com.zeroc.Ice.ObjectPrx prx = _communicator.stringToProxy(s);
         prx = _deliveryMode.apply(prx);
         int timeout = _timeoutSlider.getValue();
         if(timeout != 0)
         {
             prx = prx.ice_invocationTimeout(timeout);
         }
-        _helloPrx = Demo.HelloPrxHelper.uncheckedCast(prx);
+        _helloPrx = Demo.HelloPrx.uncheckedCast(prx);
 
         //
         // The batch requests associated to the proxy are lost when we
@@ -481,37 +471,36 @@ public class Client extends JFrame
             {
                 _status.setText("Sending request");
                 final DeliveryMode mode = _deliveryMode;
-                _helloPrx.begin_sayHello(delay, new Demo.Callback_Hello_sayHello() {
-                    @Override
-                    public void response()
+                java.util.concurrent.CompletableFuture<Void> f = _helloPrx.sayHelloAsync(delay);
+                final Holder<Boolean> response = new Holder<Boolean>(false);
+                f.whenComplete((result, ex) ->
+                {
+                    if(ex == null)
                     {
-                        assert (!_response);
-                        _response = true;
+                        assert (!response.value);
+                        response.value = true;
                         _status.setText("Ready");
                     }
-
-                    @Override
-                    public void exception(final Ice.LocalException ex)
+                    else
                     {
-                        assert (!_response);
-                        _response = true;
+                        assert (!response.value);
+                        response.value = true;
                         handleException(ex);
                     }
-
-                    @Override
-                    public void sent(boolean ss)
+                });
+                com.zeroc.Ice.Util.getInvocationFuture(f).whenSent((ss, ex) ->
+                {
+                    if(ex == null)
                     {
                         if(mode.isOneway())
                         {
                             _status.setText("Ready");
                         }
-                        else if(!_response)
+                        else if(!response.value)
                         {
                             _status.setText("Waiting for response");
                         }
                     }
-
-                    private boolean _response = false;
                 });
             }
             else
@@ -521,7 +510,7 @@ public class Client extends JFrame
                 _status.setText("Queued sayHello request");
             }
         }
-        catch(Ice.LocalException ex)
+        catch(com.zeroc.Ice.LocalException ex)
         {
             handleException(ex);
         }
@@ -540,36 +529,34 @@ public class Client extends JFrame
             {
                 _status.setText("Sending request");
                 final DeliveryMode mode = _deliveryMode;
-                _helloPrx.begin_shutdown(new Demo.Callback_Hello_shutdown()
+                final Holder<Boolean> response = new Holder<Boolean>(false);
+                java.util.concurrent.CompletableFuture<Void> f = _helloPrx.shutdownAsync();
+                f.whenComplete((result, ex) ->
                 {
-                    @Override
-                    public void response()
+                    if(ex == null)
                     {
-                        _response = true;
+                        response.value = true;
                         _status.setText("Ready");
                     }
-
-                    @Override
-                    public void exception(final Ice.LocalException ex)
+                    else
                     {
-                        _response = true;
+                        response.value = true;
                         handleException(ex);
                     }
-
-                    @Override
-                    public void sent(boolean ss)
+                });
+                com.zeroc.Ice.Util.getInvocationFuture(f).whenSent((ss, ex) ->
+                {
+                    if(ex == null)
                     {
                         if(mode.isOneway())
                         {
                             _status.setText("Ready");
                         }
-                        else if(!_response)
+                        else if(!response.value)
                         {
                             _status.setText("Waiting for response");
                         }
                     }
-
-                    private boolean _response = false;
                 });
             }
             else
@@ -579,7 +566,7 @@ public class Client extends JFrame
                 _status.setText("Queued shutdown request");
             }
         }
-        catch(Ice.LocalException ex)
+        catch(com.zeroc.Ice.LocalException ex)
         {
             handleException(ex);
         }
@@ -592,10 +579,9 @@ public class Client extends JFrame
             return;
         }
 
-        _helloPrx.begin_ice_flushBatchRequests(new Ice.Callback_Object_ice_flushBatchRequests()
+        _helloPrx.ice_flushBatchRequestsAsync().whenComplete((result, ex) ->
             {
-                @Override
-                public void exception(final Ice.LocalException ex)
+                if(ex != null)
                 {
                     handleException(ex);
                 }
@@ -615,7 +601,7 @@ public class Client extends JFrame
     {
         // Ignore CommunicatorDestroyedException which could occur on
         // shutdown.
-        if(ex instanceof Ice.CommunicatorDestroyedException)
+        if(ex instanceof com.zeroc.Ice.CommunicatorDestroyedException)
         {
             return;
         }
@@ -662,7 +648,7 @@ public class Client extends JFrame
     private JButton _flush;
     private JLabel _status;
 
-    private Ice.Communicator _communicator;
+    private com.zeroc.Ice.Communicator _communicator;
     private DeliveryMode _deliveryMode;
     private Thread _shutdownHook;
 

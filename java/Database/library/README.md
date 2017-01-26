@@ -76,8 +76,8 @@ NOTES:
 
       http://dev.mysql.com/doc/refman/5.0/en/set-transaction.html
 
-6. Add the Ice jar (`ice-3.6.3.jar`) and the location of the demo classes
-   (`build/classes/main`) to your CLASSPATH.
+6. Add the Ice jar (ice-3.7a4.jar) and the location of the demo classes
+   (build/classes/main) to your CLASSPATH.
 
 
 Running the demo

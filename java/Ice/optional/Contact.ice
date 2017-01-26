@@ -30,8 +30,8 @@ interface ContactDB
     void updateContact(string name, optional(1) NumberType type, optional(2) string number, optional(3) int dialGroup);
 
     Contact query(string name);
-    ["java:optional"] optional(1) string queryNumber(string name);
-    ["java:optional"] void queryDialgroup(string name, out optional(1) int dialGroup);
+    optional(1) string queryNumber(string name);
+    void queryDialgroup(string name, out optional(1) int dialGroup);
 
     void shutdown();
 };

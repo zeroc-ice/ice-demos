@@ -7,6 +7,8 @@
 using Demo;
 using System;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 
 [assembly: CLSCompliant(true)]
 
@@ -29,6 +31,23 @@ public class Client
                 "?: help\n");
         }
 
+        private async void helloAsync(HelloPrx hello)
+        {
+            try
+            {
+                await hello.sayHelloAsync(5000);
+            }
+            catch(RequestCanceledException)
+            {
+                Console.Error.WriteLine("RequestCanceledException");
+            }
+            catch(Exception ex)
+            {
+                Console.Error.WriteLine("sayHello AMI call failed:");
+                Console.Error.WriteLine(ex);
+            }
+        }
+
         public override int run(string[] args)
         {
             if(args.Length > 0)
@@ -37,7 +56,7 @@ public class Client
                 return 1;
             }
 
-            HelloPrx hello = HelloPrxHelper.checkedCast(communicator().propertyToProxy("Hello.Proxy"));
+            var hello = HelloPrxHelper.checkedCast(communicator().propertyToProxy("Hello.Proxy"));
             if(hello == null)
             {
                 Console.Error.WriteLine("invalid proxy");
@@ -64,20 +83,7 @@ public class Client
                     }
                     else if(line.Equals("d"))
                     {
-                        hello.begin_sayHello(5000).whenCompleted(
-                            () => { },
-                            (Ice.Exception ex) =>
-                            {
-                                if(ex is RequestCanceledException)
-                                {
-                                    Console.Error.WriteLine("RequestCanceledException");
-                                }
-                                else
-                                {
-                                    Console.Error.WriteLine("sayHello AMI call failed:");
-                                    Console.Error.WriteLine(ex);
-                                }
-                            });
+                        helloAsync(hello);
                     }
                     else if(line.Equals("s"))
                     {
@@ -110,7 +116,7 @@ public class Client
 
     public static int Main(string[] args)
     {
-        App app = new App();
+        var app = new App();
         return app.main(args, "config.client");
     }
 }

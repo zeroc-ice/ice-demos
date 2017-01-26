@@ -6,7 +6,7 @@
 
 using System;
 using System.Threading;
-using System.Collections;
+using System.Collections.Generic;
 using Demo;
 
 public class ReapThread
@@ -25,9 +25,9 @@ public class ReapThread
 
     public ReapThread()
     {
-        _timeout = System.TimeSpan.FromSeconds(10);
+        _timeout = TimeSpan.FromSeconds(10);
         _terminated = false;
-        _sessions = new ArrayList();
+        _sessions = new List<SessionProxyPair>();
     }
 
     public void run()
@@ -36,11 +36,11 @@ public class ReapThread
         {
             while(!_terminated)
             {
-                System.Threading.Monitor.Wait(this, System.TimeSpan.FromSeconds(1));
+                Monitor.Wait(this, TimeSpan.FromSeconds(1));
                 if(!_terminated)
                 {
-                    ArrayList tmp = new ArrayList();
-                    foreach(SessionProxyPair p in _sessions)
+                    var tmp = new List<SessionProxyPair>();
+                    foreach(var p in _sessions)
                     {
                         try
                         {
@@ -49,7 +49,7 @@ public class ReapThread
                             // real-world example. Therefore the current time
                             // is computed for each iteration.
                             //
-                            if((System.DateTime.Now - p.session.timestamp()) > _timeout)
+                            if((DateTime.Now - p.session.timestamp()) > _timeout)
                             {
                                 string name = p.proxy.getName();
                                 p.proxy.destroy();
@@ -76,8 +76,7 @@ public class ReapThread
         lock(this)
         {
             _terminated = true;
-            System.Threading.Monitor.Pulse(this);
-
+            Monitor.Pulse(this);
             _sessions.Clear();
         }
     }
@@ -91,6 +90,6 @@ public class ReapThread
     }
 
     private bool _terminated;
-    private System.TimeSpan _timeout;
-    private ArrayList _sessions;
+    private TimeSpan _timeout;
+    private List<SessionProxyPair> _sessions;
 }

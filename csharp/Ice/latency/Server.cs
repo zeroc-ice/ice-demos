@@ -18,6 +18,9 @@ public class Server
 {
     public class App : Ice.Application
     {
+        class PingI : PingDisp_
+        {
+        }
         public override int run(string[] args)
         {
             if(args.Length > 0)
@@ -26,8 +29,8 @@ public class Server
                 return 1;
             }
 
-            Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Latency");
-            adapter.add(new Ping(), communicator().stringToIdentity("ping"));
+            var adapter = communicator().createObjectAdapter("Latency");
+            adapter.add(new PingI(), Ice.Util.stringToIdentity("ping"));
             adapter.activate();
             communicator().waitForShutdown();
             return 0;
@@ -36,7 +39,7 @@ public class Server
 
     public static int Main(string[] args)
     {
-        App app = new App();
+        var app = new App();
         return app.main(args, "config.server");
     }
 }

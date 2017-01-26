@@ -6,27 +6,18 @@
 
 import Demo.*;
 
-public class Client extends Ice.Application
+public class Client extends com.zeroc.Ice.Application
 {
     class ShutdownHook extends Thread
     {
         @Override
-        public void
-        run()
+        public void run()
         {
-            try
-            {
-                communicator().destroy();
-            }
-            catch(Ice.LocalException ex)
-            {
-                ex.printStackTrace();
-            }
+            communicator().destroy();
         }
     }
 
-    private static void
-    menu()
+    private static void menu()
     {
         System.out.println(
             "\n" +
@@ -39,8 +30,7 @@ public class Client extends Ice.Application
             "?: help\n");
     }
 
-    private static void
-    show(Ice.PropertiesAdminPrx admin)
+    private static void show(com.zeroc.Ice.PropertiesAdminPrx admin)
     {
         java.util.Map<String, String> props = admin.getPropertiesForPrefix("Demo");
         System.out.println("Server's current settings:");
@@ -51,8 +41,7 @@ public class Client extends Ice.Application
     }
 
     @Override
-    public int
-    run(String[] args)
+    public int run(String[] args)
     {
         if(args.length > 0)
         {
@@ -67,24 +56,24 @@ public class Client extends Ice.Application
         //
         setInterruptHook(new ShutdownHook());
 
-        PropsPrx props = PropsPrxHelper.checkedCast(communicator().propertyToProxy("Props.Proxy"));
+        PropsPrx props = PropsPrx.checkedCast(communicator().propertyToProxy("Props.Proxy"));
         if(props == null)
         {
             System.err.println("invalid proxy");
             return 1;
         }
 
-        Ice.PropertiesAdminPrx admin =
-            Ice.PropertiesAdminPrxHelper.checkedCast(communicator().propertyToProxy("Admin.Proxy"));
+        com.zeroc.Ice.PropertiesAdminPrx admin =
+            com.zeroc.Ice.PropertiesAdminPrx.checkedCast(communicator().propertyToProxy("Admin.Proxy"));
 
         java.util.List<String> keys = java.util.Arrays.asList("Demo.Prop1", "Demo.Prop2", "Demo.Prop3");
 
-        java.util.Map<String, String> batch1 = new java.util.HashMap<String, String>();
+        java.util.Map<String, String> batch1 = new java.util.HashMap<>();
         batch1.put("Demo.Prop1", "1");
         batch1.put("Demo.Prop2", "2");
         batch1.put("Demo.Prop3", "3");
 
-        java.util.Map<String, String> batch2 = new java.util.HashMap<String, String>();
+        java.util.Map<String, String> batch2 = new java.util.HashMap<>();
         batch2.put("Demo.Prop1", "10");
         batch2.put("Demo.Prop2", ""); // An empty value removes this property
         batch2.put("Demo.Prop3", "30");
@@ -171,7 +160,7 @@ public class Client extends Ice.Application
             {
                 ex.printStackTrace();
             }
-            catch(Ice.LocalException ex)
+            catch(com.zeroc.Ice.LocalException ex)
             {
                 ex.printStackTrace();
             }
@@ -181,8 +170,7 @@ public class Client extends Ice.Application
         return 0;
     }
 
-    public static void
-    main(String[] args)
+    public static void main(String[] args)
     {
         Client app = new Client();
         int status = app.main("Client", args, "config.client");

@@ -6,11 +6,14 @@
 
 import Demo.*;
 
-public class Server extends Ice.Application
+public class Server extends com.zeroc.Ice.Application
 {
+    class PingI implements com.zeroc.Ice.Object
+    {
+    }
+
     @Override
-    public int
-    run(String[] args)
+    public int run(String[] args)
     {
         if(args.length > 0)
         {
@@ -18,15 +21,14 @@ public class Server extends Ice.Application
             return 1;
         }
 
-        Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Latency");
-        adapter.add(new Ping(), communicator().stringToIdentity("ping"));
+        com.zeroc.Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Latency");
+        adapter.add(new PingI(), com.zeroc.Ice.Util.stringToIdentity("ping"));
         adapter.activate();
         communicator().waitForShutdown();
         return 0;
     }
 
-    public static void
-    main(String[] args)
+    public static void main(String[] args)
     {
         Server app = new Server();
         int status = app.main("Server", args, "config.server");

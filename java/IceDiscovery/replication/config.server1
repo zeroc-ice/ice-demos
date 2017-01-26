@@ -23,7 +23,7 @@ Ice.ProgramName=Server1
 #
 # Enable the Ice discovery plugin
 #
-Ice.Plugin.IceDiscovery=IceDiscovery:IceDiscovery.PluginFactory
+Ice.Plugin.IceDiscovery=IceDiscovery:com.zeroc.IceDiscovery.PluginFactory
 
 #
 # Ensure connection establishment doesn't take too long.

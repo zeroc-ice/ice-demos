@@ -30,7 +30,7 @@ class Server(Ice.Application):
             return 1
 
         adapter = self.communicator().createObjectAdapter("Context")
-        adapter.add(ContextI(), self.communicator().stringToIdentity("context"))
+        adapter.add(ContextI(), Ice.stringToIdentity("context"))
         adapter.activate()
         self.communicator().waitForShutdown()
         return 0

@@ -8,6 +8,7 @@
 #include <Filesystem.h>
 #include <iostream>
 #include <iterator>
+#include <stdexcept>
 
 using namespace std;
 using namespace Filesystem;
@@ -46,19 +47,17 @@ listRecursive(const DirectoryPrx& dir, int depth = 0)
 int
 main(int argc, char* argv[])
 {
-    int status = 0;
-    Ice::CommunicatorPtr ic;
     try
     {
         //
         // Create a communicator
         //
-        ic = Ice::initialize(argc, argv);
+        Ice::CommunicatorHolder icHolder = Ice::initialize(argc, argv);
 
         //
         // Create a proxy for the root directory
         //
-        Ice::ObjectPrx base = ic->stringToProxy("RootDir:default -h localhost -p 10000");
+        Ice::ObjectPrx base = icHolder->stringToProxy("RootDir:default -h localhost -p 10000");
 
         //
         // Down-cast the proxy to a Directory proxy
@@ -66,7 +65,7 @@ main(int argc, char* argv[])
         DirectoryPrx rootDir = DirectoryPrx::checkedCast(base);
         if(!rootDir)
         {
-            throw "Invalid proxy";
+            throw std::runtime_error("Invalid proxy");
         }
 
         //
@@ -75,32 +74,10 @@ main(int argc, char* argv[])
         cout << "Contents of root directory:" << endl;
         listRecursive(rootDir);
     }
-    catch(const Ice::Exception& ex)
+    catch(const std::exception& ex)
     {
-        cerr << ex << endl;
-        status = 1;
+        cerr << ex.what() << endl;
+        return 1;
     }
-    catch(const char* msg)
-    {
-        cerr << msg << endl;
-        status = 1;
-    }
-
-    //
-    // Clean up
-    //
-    if(ic)
-    {
-        try
-        {
-            ic->destroy();
-        }
-        catch(const Ice::Exception& e)
-        {
-            cerr << e << endl;
-            status = 1;
-        }
-    }
-
-    return status;
+    return 0;
 }

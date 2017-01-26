@@ -199,16 +199,9 @@ void
 CHelloClientDlg::OnClose()
 {
     //
-    // Destroy the communicator. If AMI calls are still in progress they will be
-    // interrupted with an Ice::CommunicatorDestroyedException.
+    // Destroy the communicator.
     //
-    try
-    {
-        _communicator->destroy();
-    }
-    catch(const IceUtil::Exception&)
-    {
-    }
+    _communicator->destroy();
 }
 
 // If you add a minimize button to your dialog, you will need the code below
@@ -409,7 +402,7 @@ CHelloClientDlg::updateProxy()
 {
     CString h;
     _host->GetWindowText(h);
-    string host = IceUtil::wstringToString(wstring(h), IceUtil::getProcessStringConverter());
+    string host = wstringToString(wstring(h), Ice::getProcessStringConverter());
     if(host.size() == 0)
     {
         _status->SetWindowText(CString(" No hostname"));
@@ -475,5 +468,5 @@ CHelloClientDlg::deliveryModeIsBatch()
 void
 CHelloClientDlg::handleException(const IceUtil::Exception& ex)
 {
-    _status->SetWindowText(CString(ex.ice_name().c_str()));
+    _status->SetWindowText(CString(ex.ice_id().c_str()));
 }

@@ -1,0 +1,32 @@
+// **********************************************************************
+//
+// Copyright (c) 2003-2016 ZeroC, Inc. All rights reserved.
+//
+// **********************************************************************
+
+slice {
+    java {
+        include = ["${projectDir}"]
+        srcDir = '.'
+    }
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir '.'
+        }
+    }
+}
+
+dependencies {
+    compile localDependency("ice-compat")
+    if (!useLocalOnly) {
+        runtime "org.apache.tools:bzip2:1.0"
+    }
+}
+
+// Don't create the default jar.
+jar.enabled = false
+
+demoJar("client")

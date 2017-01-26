@@ -1,28 +1,42 @@
 package Evictor;
 
-public abstract class EvictorBase implements Ice.ServantLocator
+public abstract class EvictorBase implements com.zeroc.Ice.ServantLocator
 {
-    public
-    EvictorBase()
+    public EvictorBase()
     {
         _size = 1000;
     }
 
-    public
-    EvictorBase(int size)
+    public EvictorBase(int size)
     {
         _size = size < 0 ? 1000 : size;
     }
 
-    public abstract Ice.Object
-    add(Ice.Current c, Ice.LocalObjectHolder cookie);
-
-    public abstract void
-    evict(Ice.Object servant, java.lang.Object cookie);
-
-    synchronized public final Ice.Object
-    locate(Ice.Current c, Ice.LocalObjectHolder cookie)
+    static public class AddResult
     {
+        public AddResult()
+        {
+        }
+
+        public AddResult(com.zeroc.Ice.Object r, java.lang.Object c)
+        {
+            returnValue = r;
+            cookie = c;
+        }
+
+        public com.zeroc.Ice.Object returnValue;
+        public java.lang.Object cookie;
+    }
+
+    public abstract AddResult add(com.zeroc.Ice.Current c);
+
+    public abstract void evict(com.zeroc.Ice.Object servant, java.lang.Object cookie);
+
+    @Override
+    synchronized public final com.zeroc.Ice.ServantLocator.LocateResult locate(com.zeroc.Ice.Current c)
+    {
+        com.zeroc.Ice.ServantLocator.LocateResult r = new com.zeroc.Ice.ServantLocator.LocateResult();
+
         //
         // Check if we have a servant in the map already.
         //
@@ -41,13 +55,13 @@ public abstract class EvictorBase implements Ice.ServantLocator
             // instantiate a servant and add a new entry to the map.
             //
             entry = new EvictorEntry();
-            Ice.LocalObjectHolder cookieHolder = new Ice.LocalObjectHolder();
-            entry.servant = add(c, cookieHolder); // Down-call
-            if(entry.servant == null)
+            AddResult ar = add(c); // Down-call
+            if(ar.returnValue == null)
             {
-                return null;
+                return r;
             }
-            entry.userCookie = cookieHolder.value;
+            entry.servant = ar.returnValue;
+            entry.userCookie = ar.cookie;
             entry.useCount = 0;
             _map.put(c.id, entry);
         }
@@ -61,13 +75,14 @@ public abstract class EvictorBase implements Ice.ServantLocator
         entry.queuePos = _queue.iterator();
         entry.queuePos.next(); // Position the iterator on the element.
 
-        cookie.value = entry;
+        r.cookie = entry;
+        r.returnValue = entry.servant;
 
-        return entry.servant;
+        return r;
     }
 
-    synchronized public final void
-    finished(Ice.Current c, Ice.Object o, java.lang.Object cookie)
+    @Override
+    synchronized public final void finished(com.zeroc.Ice.Current c, com.zeroc.Ice.Object o, java.lang.Object cookie)
     {
         EvictorEntry entry = (EvictorEntry)cookie;
 
@@ -79,8 +94,8 @@ public abstract class EvictorBase implements Ice.ServantLocator
         evictServants();
     }
 
-    synchronized public final void
-    deactivate(String category)
+    @Override
+    synchronized public final void deactivate(String category)
     {
         _size = 0;
         evictServants();
@@ -88,9 +103,9 @@ public abstract class EvictorBase implements Ice.ServantLocator
 
     private class EvictorEntry
     {
-        Ice.Object servant;
+        com.zeroc.Ice.Object servant;
         java.lang.Object userCookie;
-        java.util.Iterator<Ice.Identity> queuePos;
+        java.util.Iterator<com.zeroc.Ice.Identity> queuePos;
         int useCount;
     }
 
@@ -101,11 +116,11 @@ public abstract class EvictorBase implements Ice.ServantLocator
         // look at the excess elements to see whether any of them
         // can be evicted.
         //
-        java.util.Iterator<Ice.Identity> p = _queue.riterator();
+        java.util.Iterator<com.zeroc.Ice.Identity> p = _queue.riterator();
         int excessEntries = _map.size() - _size;
         for(int i = 0; i < excessEntries; ++i)
         {
-            Ice.Identity id = p.next();
+            com.zeroc.Ice.Identity id = p.next();
             EvictorEntry e = _map.get(id);
             if(e.useCount == 0)
             {
@@ -116,9 +131,7 @@ public abstract class EvictorBase implements Ice.ServantLocator
         }
     }
 
-    private java.util.Map<Ice.Identity, EvictorEntry> _map =
-        new java.util.HashMap<Ice.Identity, EvictorEntry>();
-    private Evictor.LinkedList<Ice.Identity> _queue =
-        new Evictor.LinkedList<Ice.Identity>();
+    private java.util.Map<com.zeroc.Ice.Identity, EvictorEntry> _map = new java.util.HashMap<>();
+    private Evictor.LinkedList<com.zeroc.Ice.Identity> _queue = new Evictor.LinkedList<>();
     private int _size;
 }

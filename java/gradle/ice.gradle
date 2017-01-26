@@ -4,21 +4,26 @@
 //
 // **********************************************************************
 
-if(!project.plugins.findPlugin(com.zeroc.gradle.icebuilder.slice.SlicePlugin)) {
+if (!project.plugins.findPlugin(com.zeroc.gradle.icebuilder.slice.SlicePlugin)) {
     project.apply(plugin: com.zeroc.gradle.icebuilder.slice.SlicePlugin)
 }
 
+if(this.cppPlatform) {
+    slice.cppPlatform = this.cppPlatform
+}
+
+if(this.cppConfiguration) {
+    slice.cppConfiguration = this.cppConfiguration
+}
+
+if(this.iceHome) {
+    slice.iceHome = this.iceHome
+}
+
 buildscript {
+
     ext.iceMavenRepo = System.env.ICE_MAVEN_REPOSITORY ? System.env.ICE_MAVEN_REPOSITORY : "repo.zeroc.com"
     ext.useLocalOnly = gradle.startParameter.isOffline()
-
-    repositories {
-        if (!useLocalOnly) {
-            maven {
-                url "https://${iceMavenRepo}/nexus/content/repositories/releases"
-            }
-        }
-    }
 
     //
     // If iceBuilderHome is set add its lib directory it to the local maven repositories
@@ -34,6 +39,14 @@ buildscript {
         }
     }
 
+    repositories {
+        if (!useLocalOnly) {
+            maven {
+                url "https://${iceMavenRepo}/nexus/content/repositories/releases"
+            }
+        }
+    }
+
     dependencies {
         classpath group: 'com.zeroc.gradle.ice-builder', name: 'slice', version: "${iceBuilderVersion}"
     }
@@ -41,16 +54,20 @@ buildscript {
 
 ext.generatedDir = "$project.buildDir/generated"
 
-def android = false
-try {
+// Android does not have a compileJava task
+if(!(project.hasProperty('android') && project.android.sourceSets)) {
     compileJava {
         options.debug = debug
     }
-} catch(MissingMethodException ex) {
-    //
-    // For Android builds: thrown if compileJava isn't available.
-    //
-    android = true
+}
+
+def env = System.getenv()
+
+// Check if we need to append version suffix to jar files
+ext.versionSuffix = ""
+def iceJar = new File("${slice.jarDir}/ice-${slice.iceVersion}.jar")
+if(iceJar.exists()) {
+    ext.versionSuffix = "-${slice.iceVersion}"
 }
 
 def demoJar(name) {
@@ -73,48 +90,15 @@ def demoJar(name) {
         archives jarTask
     }
 }
+
 ext {
     demoJar = this.&demoJar
 }
 
 def localDependency(artifactId) {
-    return "com.zeroc:${artifactId}:${project.version}"
+    return "com.zeroc:${artifactId}:${slice.iceVersion}"
 }
+
 ext {
     localDependency = this.&localDependency
-}
-
-if (!android) {
-    //
-    // Find BerkeleyDB JAR
-    //
-    if(dbHome) {
-        ext.dbJar = file("${dbHome}/db.jar")
-    } else {
-        def subdirs
-        def os = System.properties['os.name']
-        if(os.contains("Windows")) {
-            subdirs = [ "${slice.iceHome}/lib/",
-                        "${slice.iceHome}/cpp/third-party-packages/berkeley.db.java7/build/native/lib"]
-        } else {
-            subdirs = [
-                "/usr/local/opt/ice/libexec/lib/",
-                "/usr/local/opt/berkeley-db53/lib/",
-                "/usr/local/lib/",
-                "/usr/share/java/",
-                "/opt/Ice-${project.version}/lib/",
-                "/opt/db/lib/",
-                "/usr/lib/"]
-        }
-
-        ext.dbJar = subdirs.collect({
-            file(it).listFiles().findAll({
-                it.name in ["db-5.3.28.jar", "db-5.3.21.jar", "db.jar"]
-            }).collect()
-        }).flatten().find({true})
-    }
-
-    if(!ext.dbJar || !ext.dbJar.exists()) {
-        throw new GradleException("Unable to find Berkeley DB JAR file, you may have to install it or set dbHome in gradle.properties.");
-    }
 }

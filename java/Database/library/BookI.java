@@ -10,11 +10,10 @@ import Demo.*;
 // This servant is a default servant. The book identity is retrieved
 // from the Ice.Current object.
 //
-class BookI extends _BookDisp
+class BookI implements Book
 {
     @Override
-    public void
-    ice_ping(Ice.Current current)
+    public void ice_ping(com.zeroc.Ice.Current current)
     {
         SQLRequestContext context = SQLRequestContext.getCurrentContext();
         assert context != null;
@@ -27,7 +26,7 @@ class BookI extends _BookDisp
             java.sql.ResultSet rs = stmt.executeQuery();
             if(!rs.next())
             {
-                throw new Ice.ObjectNotExistException();
+                throw new com.zeroc.Ice.ObjectNotExistException();
             }
         }
         catch(java.sql.SQLException e)
@@ -39,8 +38,7 @@ class BookI extends _BookDisp
     }
 
     @Override
-    public BookDescription
-    describe(Ice.Current current)
+    public BookDescription describe(com.zeroc.Ice.Current current)
     {
         SQLRequestContext context = SQLRequestContext.getCurrentContext();
         assert context != null;
@@ -53,7 +51,7 @@ class BookI extends _BookDisp
             java.sql.ResultSet rs = stmt.executeQuery();
             if(!rs.next())
             {
-                throw new Ice.ObjectNotExistException();
+                throw new com.zeroc.Ice.ObjectNotExistException();
             }
             return extractDescription(context, rs, current.adapter);
         }
@@ -66,8 +64,7 @@ class BookI extends _BookDisp
     }
 
     @Override
-    public void
-    setTitle(String title, Ice.Current current)
+    public void setTitle(String title, com.zeroc.Ice.Current current)
     {
         SQLRequestContext context = SQLRequestContext.getCurrentContext();
         assert context != null;
@@ -81,7 +78,7 @@ class BookI extends _BookDisp
             int count = stmt.executeUpdate();
             if(count == 0)
             {
-                throw new Ice.ObjectNotExistException();
+                throw new com.zeroc.Ice.ObjectNotExistException();
             }
         }
         catch(java.sql.SQLException e)
@@ -93,8 +90,7 @@ class BookI extends _BookDisp
     }
 
     @Override
-    public void
-    setAuthors(java.util.List<String> authors, Ice.Current current)
+    public void setAuthors(java.util.List<String> authors, com.zeroc.Ice.Current current)
     {
         SQLRequestContext context = SQLRequestContext.getCurrentContext();
         assert context != null;
@@ -108,7 +104,7 @@ class BookI extends _BookDisp
             java.sql.ResultSet rs = stmt.executeQuery();
             if(!rs.next())
             {
-                throw new Ice.ObjectNotExistException();
+                throw new com.zeroc.Ice.ObjectNotExistException();
             }
 
             // Next destroy each of the authors_books records.
@@ -119,7 +115,7 @@ class BookI extends _BookDisp
             //
             // Convert the authors string to an id set.
             //
-            java.util.List<Integer> authIds = new java.util.LinkedList<Integer>();
+            java.util.List<Integer> authIds = new java.util.LinkedList<>();
             for(String author : authors)
             {
                 Integer authid;
@@ -170,8 +166,7 @@ class BookI extends _BookDisp
     }
 
     @Override
-    public void
-    destroy(Ice.Current current)
+    public void destroy(com.zeroc.Ice.Current current)
     {
         SQLRequestContext context = SQLRequestContext.getCurrentContext();
         assert context != null;
@@ -184,7 +179,7 @@ class BookI extends _BookDisp
             int count = stmt.executeUpdate();
             if(count == 0)
             {
-                throw new Ice.ObjectNotExistException();
+                throw new com.zeroc.Ice.ObjectNotExistException();
             }
         }
         catch(java.sql.SQLException e)
@@ -196,8 +191,7 @@ class BookI extends _BookDisp
     }
 
     @Override
-    public String
-    getRenter(Ice.Current current)
+    public String getRenter(com.zeroc.Ice.Current current)
         throws BookNotRentedException
     {
         SQLRequestContext context = SQLRequestContext.getCurrentContext();
@@ -211,7 +205,7 @@ class BookI extends _BookDisp
             java.sql.ResultSet rs = stmt.executeQuery();
             if(!rs.next())
             {
-                throw new Ice.ObjectNotExistException();
+                throw new com.zeroc.Ice.ObjectNotExistException();
             }
 
             int renterId = rs.getInt("renter_id");
@@ -241,8 +235,7 @@ class BookI extends _BookDisp
     //
     @SuppressWarnings("resource")
     @Override
-    public void
-    rentBook(String name, Ice.Current current)
+    public void rentBook(String name, com.zeroc.Ice.Current current)
         throws InvalidCustomerException, BookRentedException
     {
         SQLRequestContext context = SQLRequestContext.getCurrentContext();
@@ -261,7 +254,7 @@ class BookI extends _BookDisp
             java.sql.ResultSet rs = stmt.executeQuery();
             if(!rs.next())
             {
-                throw new Ice.ObjectNotExistException();
+                throw new com.zeroc.Ice.ObjectNotExistException();
             }
 
             Integer renterId = rs.getInt("renter_id");
@@ -312,8 +305,7 @@ class BookI extends _BookDisp
     }
 
     @Override
-    public void
-    returnBook(Ice.Current current)
+    public void returnBook(com.zeroc.Ice.Current current)
         throws BookNotRentedException
     {
         SQLRequestContext context = SQLRequestContext.getCurrentContext();
@@ -326,7 +318,7 @@ class BookI extends _BookDisp
             java.sql.ResultSet rs = stmt.executeQuery();
             if(!rs.next())
             {
-                throw new Ice.ObjectNotExistException();
+                throw new com.zeroc.Ice.ObjectNotExistException();
             }
             rs.getInt("renter_id");
             if(rs.wasNull())
@@ -351,17 +343,16 @@ class BookI extends _BookDisp
     {
     }
 
-    static Ice.Identity
-    createIdentity(Integer bookId)
+    static com.zeroc.Ice.Identity createIdentity(Integer bookId)
     {
-        Ice.Identity id = new Ice.Identity();
+        com.zeroc.Ice.Identity id = new com.zeroc.Ice.Identity();
         id.category = "book";
         id.name = bookId.toString();
         return id;
     }
 
-    static BookDescription
-    extractDescription(SQLRequestContext context, java.sql.ResultSet rs, Ice.ObjectAdapter adapter)
+    static BookDescription extractDescription(SQLRequestContext context, java.sql.ResultSet rs,
+                                              com.zeroc.Ice.ObjectAdapter adapter)
         throws java.sql.SQLException
     {
         Integer id = rs.getInt("id");
@@ -369,8 +360,8 @@ class BookI extends _BookDisp
         BookDescription desc = new BookDescription();
         desc.isbn = rs.getString("isbn");
         desc.title = rs.getString("title");
-        desc.authors = new java.util.LinkedList<String>();
-        desc.proxy = BookPrxHelper.uncheckedCast(adapter.createProxy(createIdentity(id)));
+        desc.authors = new java.util.LinkedList<>();
+        desc.proxy = BookPrx.uncheckedCast(adapter.createProxy(createIdentity(id)));
 
         java.sql.PreparedStatement stmt = null;
         // Query for the rentedBy.

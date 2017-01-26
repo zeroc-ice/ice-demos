@@ -109,7 +109,7 @@ class Server(Ice.Application):
             return 1
 
         adapter = self.communicator().createObjectAdapter("Throughput")
-        adapter.add(ThroughputI(), self.communicator().stringToIdentity("throughput"))
+        adapter.add(ThroughputI(), Ice.stringToIdentity("throughput"))
         adapter.activate()
         self.communicator().waitForShutdown()
         return 0

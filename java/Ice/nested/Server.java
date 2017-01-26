@@ -6,11 +6,10 @@
 
 import Demo.*;
 
-public class Server extends Ice.Application
+public class Server extends com.zeroc.Ice.Application
 {
     @Override
-    public int
-    run(String[] args)
+    public int run(String[] args)
     {
         if(args.length > 0)
         {
@@ -18,17 +17,16 @@ public class Server extends Ice.Application
             return 1;
         }
 
-        Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Nested.Server");
+        com.zeroc.Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Nested.Server");
         NestedPrx self =
-            NestedPrxHelper.uncheckedCast(adapter.createProxy(communicator().stringToIdentity("nestedServer")));
-        adapter.add(new NestedI(self), communicator().stringToIdentity("nestedServer"));
+            NestedPrx.uncheckedCast(adapter.createProxy(com.zeroc.Ice.Util.stringToIdentity("nestedServer")));
+        adapter.add(new NestedI(self), com.zeroc.Ice.Util.stringToIdentity("nestedServer"));
         adapter.activate();
         communicator().waitForShutdown();
         return 0;
     }
 
-    public static void
-    main(String[] args)
+    public static void main(String[] args)
     {
         Server app = new Server();
         int status = app.main("Server", args, "config.server");

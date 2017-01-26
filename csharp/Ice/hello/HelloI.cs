@@ -5,6 +5,7 @@
 // **********************************************************************
 
 using Demo;
+using System;
 
 public class HelloI : HelloDisp_
 {
@@ -14,12 +15,12 @@ public class HelloI : HelloDisp_
         {
             System.Threading.Thread.Sleep(delay);
         }
-        System.Console.Out.WriteLine("Hello World!");
+        Console.Out.WriteLine("Hello World!");
     }
     
     public override void shutdown(Ice.Current current)
     {
-        System.Console.Out.WriteLine("Shutting down...");
+        Console.Out.WriteLine("Shutting down...");
         current.adapter.getCommunicator().shutdown();
     }
 }

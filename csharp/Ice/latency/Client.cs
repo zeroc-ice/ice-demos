@@ -49,7 +49,7 @@ public class Client
                 Console.Error.WriteLine("ok");
             }
             
-            DateTime tv1 = DateTime.Now;
+            var tv1 = DateTime.Now;
             int repetitions = 100000;
             Console.Out.WriteLine("pinging server " + repetitions + " times (this may take a while)");
             for (int i = 0; i < repetitions; i++)
@@ -57,8 +57,8 @@ public class Client
                 ping.ice_ping();
             }
             
-            double total = (double)(DateTime.Now - tv1).TotalMilliseconds;
-            double perPing = total / repetitions;
+            var total = (DateTime.Now - tv1).TotalMilliseconds;
+            var perPing = total / repetitions;
             
             Console.Out.WriteLine("time for " + repetitions + " pings: " + total + "ms");
             Console.Out.WriteLine("time per ping: " + perPing + "ms");
@@ -69,7 +69,7 @@ public class Client
 
     public static int Main(string[] args)
     {
-        App app = new App();
+        var app = new App();
         return app.main(args, "config.client");
     }
 }
