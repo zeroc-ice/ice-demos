@@ -5,7 +5,7 @@ The ice-demos repository provides sample programs for Ice, Ice-E, and Ice Touch.
 ## Layout
 
 The sample programs are grouped by programming language:
-
+* [C++11](./cpp11)
 * [C++](./cpp)
 * [C#](./csharp)
 * [Java](./java)

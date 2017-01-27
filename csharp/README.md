@@ -27,8 +27,37 @@ Add this extension to Visual Studio before opening the solution.
 
 ### Building the Demos
 
+#### Building the demos using NuGet packages:
+
 Open the solution file `CSharp demos.sln` to build the sample programs.
-Right click on the desired demo in the Solution Explorer window and select "Build".
+
+The demos are configure to use Ice distribution from Nuget packages, this packages are
+automatically downloaded during build. If you have disabled the automatic download of
+Nuget packages in Visual Studio you need to restore the packages before you build.
+
+Packages can be restored from "Tools > NuGet Package Manager > Manage NuGet Packages for Solution..."
+command in Visual Studio.
+
+After restoring the packages right click on the desired demo in the Solution Explorer
+window and select "Build"
+
+#### Building the demos without using NuGet packages:
+
+- Build from command line:
+  * Open a Visual Studio command prompt
+
+            cd ice-demos\csharp
+            MSBuild /p:UseSrcDist=yes /p:IceHome:<Ice dist path> "CSharp demos.sln"
+
+- Build from Visual Studio
+  * Open a Visual Studio command prompt
+  
+            set UseSrcDist=yes
+            devenv
+
+  * When Visual Studio starts set IceHome in Ice Builder options, "Tools > Options > Projects and Solutions > Ice Builder"
+  * Disable automatic restoring of NuGet packages in Visual Studio from "Tools > Options > NuGet Package Manager"
+  * Right click on the desired demo in the Solution Explorer window and select "Build".
 
 ## Running the Demos
 
