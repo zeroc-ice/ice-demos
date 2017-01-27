@@ -15,7 +15,7 @@ if not slice_dir:
 Ice.loadSlice("'-I" + slice_dir + "' Props.ice")
 import Demo
 
-class PropsI(Demo.Props, Ice.PropertiesAdminUpdateCallback):
+class PropsI(Demo._PropsDisp, Ice.PropertiesAdminUpdateCallback):
     def __init__(self):
         self.called = False
         self.m = threading.Condition()

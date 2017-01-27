@@ -10,7 +10,7 @@ import sys, traceback, Ice
 Ice.loadSlice('Throughput.ice')
 import Demo
 
-class ThroughputI(Demo.Throughput):
+class ThroughputI(Demo._ThroughputDisp):
     def __init__(self):
         self.warmup = False
         

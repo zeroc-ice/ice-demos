@@ -15,7 +15,7 @@ if not slice_dir:
 Ice.loadSlice("'-I" + slice_dir + "' Callback.ice")
 import Demo
 
-class CallbackSenderI(Demo.CallbackSender, threading.Thread):
+class CallbackSenderI(Demo._CallbackSenderDisp, threading.Thread):
     def __init__(self, communicator):
         threading.Thread.__init__(self)
         self._communicator = communicator

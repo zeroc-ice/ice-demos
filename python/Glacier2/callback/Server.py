@@ -10,7 +10,7 @@ import sys, traceback, Ice
 Ice.loadSlice('Callback.ice')
 import Demo
 
-class CallbackI(Demo.Callback):
+class CallbackI(Demo._CallbackDisp):
     def initiateCallback(self, proxy, current=None):
         print("initiating callback to: " + current.adapter.getCommunicator().proxyToString(proxy))
         try:

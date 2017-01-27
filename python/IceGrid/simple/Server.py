@@ -10,7 +10,7 @@ import sys, traceback, Ice
 Ice.loadSlice('Hello.ice')
 import Demo
 
-class HelloI(Demo.Hello):
+class HelloI(Demo._HelloDisp):
     def __init__(self, name):
         self.name = name
 

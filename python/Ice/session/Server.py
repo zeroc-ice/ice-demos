@@ -10,7 +10,7 @@ import sys, time, traceback, threading, Ice
 Ice.loadSlice('Session.ice')
 import Demo
 
-class HelloI(Demo.Hello):
+class HelloI(Demo._HelloDisp):
     def __init__(self, name, id):
         self._name = name
         self._id = id
@@ -19,7 +19,7 @@ class HelloI(Demo.Hello):
         print("Hello object #" + str(self._id) + " for session `" + self._name + "' says:\n" + \
               "Hello " + self._name + "!")
 
-class SessionI(Demo.Session):
+class SessionI(Demo._SessionDisp):
     def __init__(self, name):
         self._timestamp = time.time()
         self._name = name
@@ -142,7 +142,7 @@ class ReapThread(threading.Thread):
         finally:
             self._cond.release()
 
-class SessionFactoryI(Demo.SessionFactory):
+class SessionFactoryI(Demo._SessionFactoryDisp):
     def __init__(self, reaper):
         self._reaper = reaper
         self._lock = threading.Lock()

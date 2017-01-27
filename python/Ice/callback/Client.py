@@ -19,7 +19,7 @@ x: exit
 ?: help
 """)
 
-class CallbackReceiverI(Demo.CallbackReceiver):
+class CallbackReceiverI(Demo._CallbackReceiverDisp):
     def callback(self, current=None):
         print("received callback")
 

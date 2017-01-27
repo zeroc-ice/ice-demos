@@ -15,7 +15,7 @@ if not slice_dir:
 Ice.loadSlice("'-I" + slice_dir + "' Callback.ice")
 import Demo
 
-class CallbackReceiverI(Demo.CallbackReceiver):
+class CallbackReceiverI(Demo._CallbackReceiverDisp):
     def callback(self, num, current=None):
         print("received callback #" + str(num))
 

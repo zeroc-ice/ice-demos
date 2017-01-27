@@ -17,7 +17,7 @@ class Server(Ice.Application):
             return 1
 
         adapter = self.communicator().createObjectAdapter("Latency")
-        adapter.add(Demo.Ping(), Ice.stringToIdentity("ping"))
+        adapter.add(Demo._PingDisp(), Ice.stringToIdentity("ping"))
         adapter.activate()
         self.communicator().waitForShutdown()
         return 0
