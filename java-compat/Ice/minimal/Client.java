@@ -9,20 +9,12 @@ import Demo.*;
 public class Client
 {
     public static void
-    main(String[] args)
+    main(String[] args) throws Exception
     {
-        try
+        try(Ice.Communicator com = Ice.Util.initialize(args))
         {
-            Ice.Communicator communicator = Ice.Util.initialize(args);
-            HelloPrx hello = HelloPrxHelper.checkedCast(
-                communicator.stringToProxy("hello:default -h localhost -p 10000"));
+            HelloPrx hello = HelloPrxHelper.checkedCast(com.stringToProxy("hello:default -h localhost -p 10000"));
             hello.sayHello();
-            communicator.destroy();
-        }
-        catch(Ice.LocalException ex)
-        {
-            ex.printStackTrace();
-            System.exit(1);
         }
     }
 }

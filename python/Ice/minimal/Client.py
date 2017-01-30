@@ -10,11 +10,6 @@ import sys, traceback, Ice
 Ice.loadSlice('Hello.ice')
 import Demo
 
-try:
-    communicator = Ice.initialize(sys.argv)
+with Ice.initialize(sys.argv) as communicator:
     hello = Demo.HelloPrx.checkedCast(communicator.stringToProxy("hello:default -h localhost -p 10000"))
     hello.sayHello()
-    communicator.destroy()
-except:
-    traceback.print_exc()
-    sys.exit(1)

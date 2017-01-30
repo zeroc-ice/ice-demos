@@ -14,13 +14,8 @@ class HelloI(Demo._HelloDisp):
     def sayHello(self, current=None):
         print("Hello World!")
 
-try:
-    communicator = Ice.initialize(sys.argv)
+with Ice.initialize(sys.argv) as communicator:
     adapter = communicator.createObjectAdapterWithEndpoints("Hello", "default -h localhost -p 10000")
     adapter.add(HelloI(), Ice.stringToIdentity("hello"))
     adapter.activate()
     communicator.waitForShutdown()
-    communicator.destroy()
-except:
-    traceback.print_exc()
-    sys.exit(1)
