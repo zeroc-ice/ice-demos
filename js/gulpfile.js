@@ -235,7 +235,7 @@ demos.forEach(
             function()
             {
                 return gulp.src(['node_modules/ice/src/es5/**/*']).pipe(
-                    gulp.dest(path.join(name, "es5", "node_modules")));
+                    gulp.dest(path.join(name, "es5", "node_modules", "ice")));
             });
         depends.push(demoES5IceTask(name));
 
