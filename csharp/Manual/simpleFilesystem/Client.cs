@@ -48,54 +48,36 @@ public class Client
 
     public static int Main(string[] args)
     {
-        int status = 0;
-        Ice.Communicator ic = null;
         try
         {
-            var data = new Ice.InitializationData();
-
-            //
-            // Create a communicator
-            //
-            ic = Ice.Util.initialize(ref args, data);
-
-            //
-            // Create a proxy for the root directory
-            //
-            var obj = ic.stringToProxy("RootDir:default -h localhost -p 10000");
-
-            //
-            // Down-cast the proxy to a Directory proxy
-            //
-            var rootDir = DirectoryPrxHelper.checkedCast(obj);
-            if(rootDir == null)
+            using(Ice.Communicator ic = Ice.Util.initialize(ref args))
             {
-                throw new ApplicationException("Invalid proxy");
-            }
+                //
+                // Create a proxy for the root directory
+                //
+                var obj = ic.stringToProxy("RootDir:default -h localhost -p 10000");
 
-            //
-            // Recursively list the contents of the root directory
-            //
-            Console.WriteLine("Contents of root directory:");
-            listRecursive(rootDir, 0);
+                //
+                // Down-cast the proxy to a Directory proxy
+                //
+                var rootDir = DirectoryPrxHelper.checkedCast(obj);
+                if(rootDir == null)
+                {
+                    throw new ApplicationException("Invalid proxy");
+                }
+
+                //
+                // Recursively list the contents of the root directory
+                //
+                Console.WriteLine("Contents of root directory:");
+                listRecursive(rootDir, 0);
+            }
         }
         catch(Exception e)
         {
             Console.Error.WriteLine(e);
-            status = 1;
+            return 1;
         }
-        if(ic != null)
-        {
-            try
-            {
-                ic.destroy();
-            }
-            catch(Exception e)
-            {
-                Console.Error.WriteLine(e);
-                status = 1;
-            }
-        }
-        return status;
+        return 0;
     }
 }
