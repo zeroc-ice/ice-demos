@@ -7,13 +7,10 @@
 public class Client
 {
     public static void
-    main(String[] args)
+    main(String[] args) throws Exception
     {
-        int status = 0;
-        Ice.Communicator ic = null;
-        try
+        try(Ice.Communicator ic = Ice.Util.initialize(args))
         {
-            ic = Ice.Util.initialize(args);
             Ice.ObjectPrx base = ic.stringToProxy("SimplePrinter:default -h localhost -p 10000");
             Demo.PrinterPrx printer = Demo.PrinterPrxHelper.checkedCast(base);
             if(printer == null)
@@ -23,28 +20,5 @@ public class Client
 
             printer.printString("Hello World!");
         }
-        catch(Ice.LocalException e)
-        {
-            e.printStackTrace();
-            status = 1;
-        }
-        catch(Exception e)
-        {
-            System.err.println(e.getMessage());
-            status = 1;
-        }
-        if(ic != null)
-        {
-            try
-            {
-                ic.destroy();
-            }
-            catch(Exception e)
-            {
-                System.err.println(e.getMessage());
-                status = 1;
-            }
-        }
-        System.exit(status);
     }
 }

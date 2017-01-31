@@ -8,7 +8,7 @@ import Filesystem.*;
 
 public class Client
 {
-    // Recursively print the contents of directory "dir" in tree fashion. 
+    // Recursively print the contents of directory "dir" in tree fashion.
     // For files, show the contents of each file. The "depth"
     // parameter is the current nesting level (for indentation).
 
@@ -40,18 +40,10 @@ public class Client
         }
     }
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws Exception
     {
-        int status = 0;
-        com.zeroc.Ice.Communicator ic = null;
-        try
+        try(com.zeroc.Ice.Communicator ic = com.zeroc.Ice.Util.initialize(args).communicator)
         {
-            //
-            // Create a communicator
-            //
-            com.zeroc.Ice.Util.InitializeResult ir = com.zeroc.Ice.Util.initialize(args);
-            ic = ir.communicator;
-
             //
             // Create a proxy for the root directory
             //
@@ -72,28 +64,5 @@ public class Client
             System.out.println("Contents of root directory:");
             listRecursive(rootDir, 0);
         }
-        catch(com.zeroc.Ice.LocalException e)
-        {
-            e.printStackTrace();
-            status = 1;
-        }
-        catch(Exception e)
-        {
-            System.err.println(e.getMessage());
-            status = 1;
-        }
-        if(ic != null)
-        {
-            try
-            {
-                ic.destroy();
-            }
-            catch(Exception e)
-            {
-                System.err.println(e.getMessage());
-                status = 1;
-            }
-        }
-        System.exit(status);
     }
 }

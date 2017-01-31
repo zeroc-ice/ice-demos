@@ -6,14 +6,10 @@
 
 public class Client
 {
-    public static void main(String[] args)
+    public static void main(String[] args) throws Exception
     {
-        int status = 0;
-        com.zeroc.Ice.Communicator ic = null;
-        try
+        try(com.zeroc.Ice.Communicator ic = com.zeroc.Ice.Util.initialize(args).communicator)
         {
-            com.zeroc.Ice.Util.InitializeResult ir = com.zeroc.Ice.Util.initialize(args);
-            ic = ir.communicator;
             com.zeroc.Ice.ObjectPrx base = ic.stringToProxy("SimplePrinter:default -h localhost -p 10000");
             Demo.PrinterPrx printer = Demo.PrinterPrx.checkedCast(base);
             if(printer == null)
@@ -23,28 +19,5 @@ public class Client
 
             printer.printString("Hello World!");
         }
-        catch(com.zeroc.Ice.LocalException e)
-        {
-            e.printStackTrace();
-            status = 1;
-        }
-        catch(Exception e)
-        {
-            System.err.println(e.getMessage());
-            status = 1;
-        }
-        if(ic != null)
-        {
-            try
-            {
-                ic.destroy();
-            }
-            catch(Exception e)
-            {
-                System.err.println(e.getMessage());
-                status = 1;
-            }
-        }
-        System.exit(status);
     }
 }

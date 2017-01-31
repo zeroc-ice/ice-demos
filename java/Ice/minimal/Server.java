@@ -6,15 +6,15 @@
 
 public class Server
 {
-    public static void main(String[] args)
+    public static void main(String[] args) throws Exception
     {
-        try(com.zeroc.Ice.Util.InitializeResult r = com.zeroc.Ice.Util.initialize(args))
+        try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args).communicator)
         {
             com.zeroc.Ice.ObjectAdapter adapter =
-                r.communicator.createObjectAdapterWithEndpoints("Hello", "default -h localhost -p 10000");
+                communicator.createObjectAdapterWithEndpoints("Hello", "default -h localhost -p 10000");
             adapter.add(new HelloI(), com.zeroc.Ice.Util.stringToIdentity("hello"));
             adapter.activate();
-            r.communicator.waitForShutdown();
+            communicator.waitForShutdown();
         }
     }
 }
