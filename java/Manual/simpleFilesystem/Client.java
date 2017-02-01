@@ -42,7 +42,7 @@ public class Client
 
     public static void main(String[] args) throws Exception
     {
-        try(com.zeroc.Ice.Communicator ic = com.zeroc.Ice.Util.initialize(args).communicator)
+        try(com.zeroc.Ice.Communicator ic = com.zeroc.Ice.Util.initialize(args))
         {
             //
             // Create a proxy for the root directory

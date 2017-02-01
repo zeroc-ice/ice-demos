@@ -68,7 +68,7 @@ public class Client extends JFrame
             {
                 SwingUtilities.invokeLater(runnable);
             };
-            _communicator = com.zeroc.Ice.Util.initialize(args, initData).communicator;
+            _communicator = com.zeroc.Ice.Util.initialize(args, initData);
         }
         catch(Throwable ex)
         {

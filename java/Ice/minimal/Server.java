@@ -8,7 +8,7 @@ public class Server
 {
     public static void main(String[] args) throws Exception
     {
-        try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args).communicator)
+        try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args))
         {
             com.zeroc.Ice.ObjectAdapter adapter =
                 communicator.createObjectAdapterWithEndpoints("Hello", "default -h localhost -p 10000");

@@ -54,9 +54,9 @@ class Coordinator
 
         com.zeroc.Ice.InitializationData initData = new com.zeroc.Ice.InitializationData();
 
-        com.zeroc.Ice.Util.CreatePropertiesResult cpr = com.zeroc.Ice.Util.createProperties(_args);
-        initData.properties = cpr.properties;
-        _args = cpr.args;
+        java.util.List<String> rArgs = new java.util.ArrayList<>();
+        initData.properties = com.zeroc.Ice.Util.createProperties(_args, rArgs);
+        _args = rArgs.toArray(new String[rArgs.size()]);
 
         initData.properties.setProperty("Ice.Plugin.IceSSL", "com.zeroc.IceSSL.PluginFactory");
 

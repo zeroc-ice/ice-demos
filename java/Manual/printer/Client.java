@@ -8,7 +8,7 @@ public class Client
 {
     public static void main(String[] args) throws Exception
     {
-        try(com.zeroc.Ice.Communicator ic = com.zeroc.Ice.Util.initialize(args).communicator)
+        try(com.zeroc.Ice.Communicator ic = com.zeroc.Ice.Util.initialize(args))
         {
             com.zeroc.Ice.ObjectPrx base = ic.stringToProxy("SimplePrinter:default -h localhost -p 10000");
             Demo.PrinterPrx printer = Demo.PrinterPrx.checkedCast(base);
