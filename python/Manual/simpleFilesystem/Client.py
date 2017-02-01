@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import sys, traceback, Ice
+import sys, Ice
 
 Ice.loadSlice('Filesystem.ice')
 import Filesystem
@@ -36,36 +36,20 @@ def listRecursive(dir, depth):
             for line in text:
                 print(indent + "\t" + line)
 
-status = 0
-ic = None
-try:
-    # Create a communicator
+with Ice.initialize(sys.argv) as ic:
     #
-    ice = Ice.initialize(sys.argv)
-
     # Create a proxy to the root directory
     #
-    obj = ice.stringToProxy("RootDir:default -h localhost -p 10000")
+    obj = ic.stringToProxy("RootDir:default -h localhost -p 10000")
 
+    #
     # Downcast the proxy to a Directory proxy
     #
     rootDir = Filesystem.DirectoryPrx.checkedCast(obj)
 
+    #
     # Recursively list the contents of the root directory
     #
     print("Contents of root directory:")
     listRecursive(rootDir, 0)
-except:
-    traceback.print_exc()
-    status = 1
 
-if ic:
-    # Clean up
-    #
-    try:
-        ic.destroy()
-    except:
-        traceback.print_exc()
-        status = 1
-
-sys.exit(status)
