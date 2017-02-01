@@ -60,7 +60,7 @@ public:
             Ice::ConnectionPtr con = peer->ice_getCachedConnection();
             if(con)
             {
-                con->close(false);
+                con->close(Ice::CloseGracefully);
             }
         }
         catch(const Ice::Exception& ex)
@@ -84,7 +84,7 @@ public:
 
         cout << ">>>> Peer disconnected" << endl;
 
-        curr.con->close(false);
+        curr.con->close(Ice::CloseGracefully);
     }
 
 protected:
