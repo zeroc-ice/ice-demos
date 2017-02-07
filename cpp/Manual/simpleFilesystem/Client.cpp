@@ -45,7 +45,11 @@ listRecursive(const DirectoryPrx& dir, int depth = 0)
 }
 
 int
+#ifdef _WIN32
+wmain(int argc, wchar_t* argv[])
+#else
 main(int argc, char* argv[])
+#endif
 {
     try
     {

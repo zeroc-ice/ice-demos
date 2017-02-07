@@ -12,7 +12,11 @@ using namespace std;
 using namespace Demo;
 
 int
-main(int argc, char * argv[])
+#ifdef _WIN32
+wmain(int argc, wchar_t* argv[])
+#else
+main(int argc, char* argv[])
+#endif
 {
     try
     {
