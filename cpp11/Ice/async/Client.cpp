@@ -29,7 +29,7 @@ AsyncClient::AsyncClient() :
     // Since this is an interactive demo we don't want any signal
     // handling.
     //
-    Ice::Application(Ice::NoSignalHandling)
+    Ice::Application(Ice::SignalPolicy::NoSignalHandling)
 {
 }
 
