@@ -47,13 +47,12 @@ BOOL CHelloServerApp::InitInstance()
     LogIPtr log;
     try
     {
-        int argc = 0;
         Ice::InitializationData initData;
         initData.properties = Ice::createProperties();
         initData.properties->load("config");
         log = new LogI;
         initData.logger = log;
-        communicator = Ice::initialize(argc, 0, initData);
+        communicator = Ice::initialize(initData);
         adapter = communicator->createObjectAdapter("Hello");
     }
     catch(const IceUtil::Exception& ex)
