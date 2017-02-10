@@ -10,6 +10,7 @@ IceGrid.Registry.Client.Endpoints=tcp -h localhost -p 4061:ssl -h localhost -p 4
 IceGrid.Registry.Server.Endpoints=ssl -h localhost
 IceGrid.Registry.Internal.Endpoints=ssl -h localhost
 IceGrid.Registry.LMDB.Path=db/master
+IceGrid.Registry.Discovery.Interface=127.0.0.1
 
 #
 # Ensure that nodes and slaves connecting to this registry have a name

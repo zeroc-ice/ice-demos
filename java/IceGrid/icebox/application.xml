@@ -56,6 +56,7 @@
          </server-instance>
          <icebox id="IceBox" activation="on-demand" exe="java">
             <description>A sample IceBox server</description>
+            <option>-server</option>
             <option>com.zeroc.IceBox.Server</option>
             <properties>
                <properties refid="mx"/>

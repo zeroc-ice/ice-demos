@@ -66,9 +66,9 @@ def env = System.getenv()
 
 // Check if we need to append version suffix to jar files
 ext.versionSuffix = ""
-def iceJar = new File("${slice.jarDir}/ice-compat-${slice.iceVersion}.jar")
+def iceJar = new File("${slice.jarDir}/ice-compat-${slice.iceArtifactVersion}.jar")
 if(iceJar.exists()) {
-    ext.versionSuffix = "-${slice.iceVersion}"
+    ext.versionSuffix = "-${slice.iceArtifactVersion}"
 }
 
 def demoJar(name) {
@@ -97,7 +97,7 @@ ext {
 }
 
 def localDependency(artifactId) {
-    return "com.zeroc:${artifactId}:${slice.iceVersion}"
+    return "com.zeroc:${artifactId}:${slice.iceArtifactVersion}"
 }
 
 ext {
