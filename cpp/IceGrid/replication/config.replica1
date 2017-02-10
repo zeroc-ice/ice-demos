@@ -21,6 +21,7 @@ IceGrid.Registry.LMDB.Path=db/replica1
 IceGrid.Registry.ReplicaName=Replica1
 IceGrid.Registry.PermissionsVerifier=ReplicationDemoIceGrid/NullPermissionsVerifier
 IceGrid.Registry.AdminPermissionsVerifier=ReplicationDemoIceGrid/NullPermissionsVerifier
+IceGrid.Registry.Discovery.Interface=127.0.0.1
 
 Ice.Default.Timeout=10000
 
