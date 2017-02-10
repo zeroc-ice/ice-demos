@@ -78,7 +78,7 @@ ext {
 }
 
 def localDependency(artifactId) {
-    return "com.zeroc:${artifactId}:${project.version}"
+    return "com.zeroc:${artifactId}:${slice.iceArtifactVersion}"
 }
 ext {
     localDependency = this.&localDependency
