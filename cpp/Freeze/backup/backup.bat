@@ -1,7 +1,7 @@
 @echo off
 rem ********************************************************************
 rem
-rem Copyright (c) 2003-2016 ZeroC, Inc. All rights reserved.
+rem Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
 rem
 rem ********************************************************************
 
