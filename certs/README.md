@@ -10,7 +10,7 @@ the same host. However, if you want to run them on separate hosts, you may need
 to regenerate the certificates. (This is especially true for the JavaScript
 examples.)
 
-We've included the Python script `makecerts.py` to simplify this task.
+We've included the Python script `makedemocerts.py` to simplify this task.
 
 ## Prerequisites
 
@@ -25,7 +25,7 @@ follows:
 Running the script with `-h` displays the following usage information:
 
 ```
-Usage: certs/makecerts.py [options]
+Usage: certs/makedemocerts.py [options]
 
 Options:
 -h               Show this message.

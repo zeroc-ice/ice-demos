@@ -24,3 +24,4 @@ Ice.StdOut=db/master/stdout.txt
 Ice.ProgramName=Master
 IceGrid.Registry.Trace.Node=2
 IceGrid.Registry.Trace.Replica=2
+IceGrid.Registry.Trace.Admin=1

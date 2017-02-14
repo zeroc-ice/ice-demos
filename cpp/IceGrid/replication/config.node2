@@ -28,3 +28,4 @@ Ice.StdOut=db/node2/stdout.txt
 #
 Ice.ProgramName=Node2
 IceGrid.Node.Trace.Replica=2
+IceGrid.Node.Trace.Admin=1

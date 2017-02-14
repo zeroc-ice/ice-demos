@@ -9,9 +9,10 @@ they could also use a secure endpoint if necessary.
 
 To run the demo, you first need to generate certificates for the
 IceGrid registry and node, the Glacier2 administrative router, and the
-server. Run the makecerts.py script to create these certificates:
+server. Run the `makedemocerts.py` python script in this directory to 
+create these certificates:
 
-      makecerts.py
+      makedemocerts.py
 
 Follow the instructions provided by the script. Note that to run the
 script you must install the zeroc-icecertutils package from the
@@ -22,10 +23,10 @@ this package with [pip](https://pip.pypa.io):
 
 The keytool utility from the Java Development Kit is also required to
 generate Java KeyStore files so you need to add the the JDK bin
-directory to your PATH (if it's not found, makecerts.py will print a
-warning).
+directory to your PATH (if it's not found, `makedemocerts.py` will print 
+a warning).
 
-For simplicity, the certificates created by makecerts.py are not
+For simplicity, the certificates created by `makedemocerts.py` are not
 protected with a password. In a real world deployment, to ensure that
 only privileged users can create new certificates and start the
 IceGrid components, you would typically use a password for the

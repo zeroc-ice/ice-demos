@@ -34,3 +34,4 @@ Ice.StdOut=db/replica1/stdout.txt
 Ice.ProgramName=Replica1
 IceGrid.Registry.Trace.Node=2
 IceGrid.Registry.Trace.Replica=2
+IceGrid.Registry.Trace.Admin=1

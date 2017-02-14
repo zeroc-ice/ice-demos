@@ -23,12 +23,12 @@ devices, you also need to regenerate the server certificate to ensure the
 certificate common name is set to the address used by the client to connect to
 the Glacier2 router.
 
-To regenerate the certificate, you can run the `makecerts.py` Python script
+To regenerate the certificate, you can run the `makedemocerts.py` Python script
 from the `certs` directory at the top of this distribution. For example:
 
 ```bash
 cd certs
-makecerts.py --ip 192.168.1.53 --dns 192.168.1.53
+makedemocerts.py --ip 192.168.1.53 --dns 192.168.1.53
 ```
 
 This will regenerate a server certificate with a common name, IP address and DNS

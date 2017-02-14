@@ -21,12 +21,12 @@ If you run the hello client and server on different computers or devices, you
 also need to regenerate the server certificate to ensure the certificate common
 name is set to the address used by the client to connect to the server.
 
-To regenerate the certificate, you can run the `makecerts.py` Python script from
+To regenerate the certificate, you can run the `makedemocerts.py` Python script from
 the `certs` directory at the top of this distribution. For example:
 
 ```bash
 cd certs
-makecerts.py --ip 192.168.1.53 --dns 192.168.1.53
+makedemocerts.py --ip 192.168.1.53 --dns 192.168.1.53
 ```
 
 This will regenerate a server certificate with a common name, IP address and DNS

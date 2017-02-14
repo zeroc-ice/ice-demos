@@ -83,7 +83,7 @@ the demos, and that the demo certificate authority be installed on your device.
 First you'll need to generate new certificates to match the IP address or DNS
 name of the computer hosting the demos:
 
-    > certs/makecerts.py --ip [IP address] --dns [DNS name] [--use-dns]
+    > certs/makedemocerts.py --ip [IP address] --dns [DNS name] [--use-dns]
 
 The option `--use-dns` specifies to use the DNS name instead of the IP address
 for the certificate common name. You can use either the IP address or DNS name
