@@ -33,6 +33,25 @@ if(process.env.ICE_HOME)
     ICE_HOME = fs.existsSync(path.join(process.env.ICE_HOME, "js", "package.json")) ? process.env.ICE_HOME : undefined;
 }
 
+function parseArg(argv, key)
+{
+    for(var i = 0; i < argv.length; ++i)
+    {
+        var e = argv[i];
+        if(e == key)
+        {
+            return argv[i + 1];
+        }
+        else if(e.indexOf(key + "=") == 0)
+        {
+            return e.substr(key.length + 1);
+        }
+    }
+}
+
+var platform = parseArg(process.argv, "--cppPlatform") || process.env.CPP_PLATFORM;
+var configuration = parseArg(process.argv, "--cppConfiguration") || process.env.CPP_CONFIGURATION;
+
 function slice2js(options)
 {
     var defaults = {};
@@ -42,7 +61,24 @@ function slice2js(options)
     defaults.dest = opts.dest;
     if(ICE_HOME)
     {
-        defaults.exe = path.join(ICE_HOME, 'cpp', 'bin', process.platform == "win32" ? "slice2js.exe" : "slice2js");
+        if(process.platform == "win32" && !opts.exe)
+        {
+            if(!platform || (platform != "Win32" && platform != "x64"))
+            {
+                console.log("Error: CPP_PLATFORM environment variable must be set to " +
+                            "`Win32' or `x64', in order to locate slice2js.exe");
+                process.exit(1);
+            }
+
+            if(!configuration || (configuration != "Debug" && configuration != "Release"))
+            {
+                console.log("Error: CPP_CONFIGURATION environment variable must be set to " +
+                            "`Debug' or `Release', in order to locate slice2js.exe");
+                process.exit(1);
+            }
+        }
+        defaults.exe = path.join(ICE_HOME, 'cpp', 'bin', process.platform == "win32" ? 
+            path.join(platform, configuration, "slice2js.exe") : "slice2js");
         defaults.args = defaults.args.concat(["-I" + path.join(ICE_HOME, 'slice')]);
     }
     return iceBuilder.compile(defaults);
