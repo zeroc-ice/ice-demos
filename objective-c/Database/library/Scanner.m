@@ -1,5 +1,4 @@
-
-#line 3 "lex.yy.c"
+#line 3 "<stdout>"
 
 #define  YY_INT_ALIGNED short int
 
@@ -492,8 +491,8 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "Scanner.l"
-#line 2 "Scanner.l"
+#line 1 "Database/library/Scanner.l"
+#line 2 "Database/library/Scanner.l"
 // **********************************************************************
 //
 // Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
@@ -512,7 +511,7 @@ char *yytext;
         result = [parser getInput: buf max: maxSize ]; \
     }
 
-#line 519 "lex.yy.c"
+#line 516 "<stdout>"
 
 #define INITIAL 0
 
@@ -694,10 +693,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 31 "Scanner.l"
+#line 28 "Database/library/Scanner.l"
 
 
-#line 704 "lex.yy.c"
+#line 701 "<stdout>"
 
 	if ( !(yy_init) )
 		{
@@ -782,118 +781,118 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 33 "Scanner.l"
+#line 30 "Database/library/Scanner.l"
 {
     // C++-style comment
     int c;
     do
     {
-	c = input();
+        c = input();
     }
     while(c != '\n' && c != EOF);
 }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 43 "Scanner.l"
+#line 40 "Database/library/Scanner.l"
 {
     // C-style comment
     while(true)
     {
-	int c = input();
-	if(c == '*')
-	{
-	    int next = input();
-	    if(next == '/')
-	    {
-		break;
-	    }
-	    else
-	    {
-		unput(next);
-	    }
-	}
-	else if(c == EOF)
-	{
-	    [parser warning: "EOF in comment"];
-	    break;
-	}
+        int c = input();
+        if(c == '*')
+        {
+            int next = input();
+            if(next == '/')
+            {
+                break;
+            }
+            else
+            {
+                unput(next);
+            }
+        }
+        else if(c == EOF)
+        {
+            [parser warning: "EOF in comment"];
+            break;
+        }
     }
 }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 68 "Scanner.l"
+#line 65 "Database/library/Scanner.l"
 {
     return TOK_HELP;
 }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 72 "Scanner.l"
+#line 69 "Database/library/Scanner.l"
 {
     return TOK_EXIT;
 }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 76 "Scanner.l"
+#line 73 "Database/library/Scanner.l"
 {
     return TOK_ADD_BOOK;
 }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 80 "Scanner.l"
+#line 77 "Database/library/Scanner.l"
 {
     return TOK_FIND_ISBN;
 }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 84 "Scanner.l"
+#line 81 "Database/library/Scanner.l"
 {
     return TOK_FIND_AUTHORS;
 }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 88 "Scanner.l"
+#line 85 "Database/library/Scanner.l"
 {
     return TOK_FIND_TITLE;
 }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 92 "Scanner.l"
+#line 89 "Database/library/Scanner.l"
 {
     return TOK_NEXT_FOUND_BOOK;
 }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 96 "Scanner.l"
+#line 93 "Database/library/Scanner.l"
 {
     return TOK_PRINT_CURRENT;
 }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 100 "Scanner.l"
+#line 97 "Database/library/Scanner.l"
 {
     return TOK_RENT_BOOK;
 }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 104 "Scanner.l"
+#line 101 "Database/library/Scanner.l"
 {
     return TOK_RETURN_BOOK;
 }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 108 "Scanner.l"
+#line 105 "Database/library/Scanner.l"
 {
     return TOK_REMOVE_CURRENT;
 }
@@ -901,171 +900,166 @@ YY_RULE_SETUP
 case 14:
 /* rule 14 can match eol */
 YY_RULE_SETUP
-#line 112 "Scanner.l"
+#line 109 "Database/library/Scanner.l"
 {
     size_t len = strlen(yytext);
     size_t i;
     for(i = 0; i < len; ++i)
     {
-	if(yytext[i] == '\\')
-	{
-	    [parser continueLine];
-	}
+        if(yytext[i] == '\\')
+        {
+            [parser continueLine];
+        }
     }
 }
 	YY_BREAK
 case 15:
 /* rule 15 can match eol */
 YY_RULE_SETUP
-#line 124 "Scanner.l"
+#line 121 "Database/library/Scanner.l"
 {
     return ';';
 }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 128 "Scanner.l"
+#line 125 "Database/library/Scanner.l"
 {
     // "..."-type strings
+
     NSMutableData* s = [ [ NSMutableData alloc] init];
     while(true)
     {
-	char c = (char)(input());
-	if(c == '"')
-	{
-	    break;
-	}
-	else if(c == EOF)
-	{
-	    [parser warning: "EOF in string"];
-	    break;
-	}
-	else if(c == '\\')
-	{
-	    char next = (char)(input());
-	    switch(next)
-	    {
-		case '\\':
-		case '"':
-		{
+        char c = (char)(input());
+        if(c == '"')
+        {
+            break;
+        }
+        else if(c == EOF)
+        {
+            [parser warning: "EOF in string"];
+            break;
+        }
+        else if(c == '\\')
+        {
+            char next = (char)(input());
+            switch(next)
+            {
+                case '\\':
+                case '"':
+                {
                     c = next;
-		    break;
-		}
-	    
-		case 'n':
-		{
-                    c = '\n';
-		    break;
-		}
-	    
-		case 'r':
-		{
-                    c = '\r';
-		    break;
-		}
+                    break;
+                }
 
-		case 't':
-		{
+                case 'n':
+                {
+                    c = '\n';
+                    break;
+                }
+
+                case 'r':
+                {
+                    c = '\r';
+                    break;
+                }
+
+                case 't':
+                {
                     c = '\t';
-		    break;
-		}
-	    
-		case 'v':
-		{
+                    break;
+                }
+
+                case 'v':
+                {
                     c = '\v';
-		    break;
-		}
-	    
-		case 'f':
-		{
+                    break;
+                }
+
+                case 'f':
+                {
                     c = '\f';
-		    break;
-		}
-	    
-		default:
-		{
-		    unput(next);
-		}
-	    }
-	}
+                    break;
+                }
+
+                default:
+                {
+                    unput(next);
+                }
+            }
+        }
         [s appendBytes: &c length: 1];
     }
 
     *yylvalp = [NSMutableArray array];
-    NSString* ss = [ [NSString alloc] initWithData: s encoding: NSUTF8StringEncoding ];
-    [s release];
-    [*yylvalp addObject: ss];
-    [ss release];
+    NSString* ss = [ [NSString alloc] initWithData:s encoding:NSUTF8StringEncoding ];
+    [*yylvalp addObject:ss];
     return TOK_STRING;
 }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 202 "Scanner.l"
+#line 198 "Database/library/Scanner.l"
 {
     // '...'-type strings
     NSMutableData* s = [ [ NSMutableData alloc] init];
     while(true)
     {
-	char c = (char)(input());
-	if(c == '\'')
-	{
-	    break;
-	}
-	else if(c == EOF)
-	{
+        char c = (char)(input());
+        if(c == '\'')
+        {
+            break;
+        }
+        else if(c == EOF)
+        {
             [parser warning: "EOF in string"];
-	    break;
-	}
-	else
-	{
+            break;
+        }
+        else
+        {
             [s appendBytes: &c length: 1];
-	}
+        }
     }
     *yylvalp = [NSMutableArray array];
-    NSString* ss = [ [NSString alloc] initWithData: s encoding: NSUTF8StringEncoding ];
-    [s release];
-    [*yylvalp addObject: ss];
-    [ss release];
+    NSString* ss = [ [NSString alloc] initWithData:s encoding:NSUTF8StringEncoding ];
+    [*yylvalp addObject:ss];
     return TOK_STRING;
 }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 230 "Scanner.l"
+#line 224 "Database/library/Scanner.l"
 {
     // Simple strings
     NSMutableData* s = [ [ NSMutableData alloc] init];
     [s appendBytes: yytext length: 1];
     while(true)
     {
-	char c = (char)(input());
-	if(c == EOF)
-	{
-	    break;
-	}
-	else if(isspace(c) || c == ';')
-	{
-	    unput(c);
-	    break;
-	}
-	
+        char c = (char)(input());
+        if(c == EOF)
+        {
+            break;
+        }
+        else if(isspace(c) || c == ';')
+        {
+            unput(c);
+            break;
+        }
+
         [s appendBytes: &c length: 1];
     }
     *yylvalp = [NSMutableArray array];
-    NSString* ss = [ [NSString alloc] initWithData: s encoding: NSUTF8StringEncoding ];
-    [s release];
-    [*yylvalp addObject: ss];
-    [ss release];
+    NSString* ss = [ [NSString alloc] initWithData:s encoding:NSUTF8StringEncoding ];
+    [*yylvalp addObject:ss];
     return TOK_STRING;
 }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 257 "Scanner.l"
+#line 249 "Database/library/Scanner.l"
 ECHO;
 	YY_BREAK
-#line 1072 "lex.yy.c"
+#line 1064 "<stdout>"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2058,7 +2052,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 257 "Scanner.l"
+#line 249 "Database/library/Scanner.l"
 
 
 

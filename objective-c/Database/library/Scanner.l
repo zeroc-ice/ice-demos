@@ -1,4 +1,4 @@
-%{ 
+%{
 // **********************************************************************
 //
 // Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
@@ -32,7 +32,7 @@ NL	[\n]
     int c;
     do
     {
-	c = input();
+        c = input();
     }
     while(c != '\n' && c != EOF);
 }
@@ -41,24 +41,24 @@ NL	[\n]
     // C-style comment
     while(true)
     {
-	int c = input();
-	if(c == '*')
-	{
-	    int next = input();
-	    if(next == '/')
-	    {
-		break;
-	    }
-	    else
-	    {
-		unput(next);
-	    }
-	}
-	else if(c == EOF)
-	{
-	    [parser warning: "EOF in comment"];
-	    break;
-	}
+        int c = input();
+        if(c == '*')
+        {
+            int next = input();
+            if(next == '/')
+            {
+                break;
+            }
+            else
+            {
+                unput(next);
+            }
+        }
+        else if(c == EOF)
+        {
+            [parser warning: "EOF in comment"];
+            break;
+        }
     }
 }
 
@@ -111,10 +111,10 @@ NL	[\n]
     size_t i;
     for(i = 0; i < len; ++i)
     {
-	if(yytext[i] == '\\')
-	{
-	    [parser continueLine];
-	}
+        if(yytext[i] == '\\')
+        {
+            [parser continueLine];
+        }
     }
 }
 
@@ -124,75 +124,74 @@ NL	[\n]
 
 \" {
     // "..."-type strings
+
     NSMutableData* s = [ [ NSMutableData alloc] init];
     while(true)
     {
-	char c = (char)(input());
-	if(c == '"')
-	{
-	    break;
-	}
-	else if(c == EOF)
-	{
-	    [parser warning: "EOF in string"];
-	    break;
-	}
-	else if(c == '\\')
-	{
-	    char next = (char)(input());
-	    switch(next)
-	    {
-		case '\\':
-		case '"':
-		{
+        char c = (char)(input());
+        if(c == '"')
+        {
+            break;
+        }
+        else if(c == EOF)
+        {
+            [parser warning: "EOF in string"];
+            break;
+        }
+        else if(c == '\\')
+        {
+            char next = (char)(input());
+            switch(next)
+            {
+                case '\\':
+                case '"':
+                {
                     c = next;
-		    break;
-		}
-	    
-		case 'n':
-		{
-                    c = '\n';
-		    break;
-		}
-	    
-		case 'r':
-		{
-                    c = '\r';
-		    break;
-		}
+                    break;
+                }
 
-		case 't':
-		{
+                case 'n':
+                {
+                    c = '\n';
+                    break;
+                }
+
+                case 'r':
+                {
+                    c = '\r';
+                    break;
+                }
+
+                case 't':
+                {
                     c = '\t';
-		    break;
-		}
-	    
-		case 'v':
-		{
+                    break;
+                }
+
+                case 'v':
+                {
                     c = '\v';
-		    break;
-		}
-	    
-		case 'f':
-		{
+                    break;
+                }
+
+                case 'f':
+                {
                     c = '\f';
-		    break;
-		}
-	    
-		default:
-		{
-		    unput(next);
-		}
-	    }
-	}
+                    break;
+                }
+
+                default:
+                {
+                    unput(next);
+                }
+            }
+        }
         [s appendBytes: &c length: 1];
     }
 
     *yylvalp = [NSMutableArray array];
-    NSString* ss = [ [NSString alloc] initWithData: s encoding: NSUTF8StringEncoding ];
-    [s release];
-    [*yylvalp addObject: ss];
-    [ss release];
+    NSString* ss = [ [NSString alloc] initWithData:s encoding:NSUTF8StringEncoding ];
+    [*yylvalp addObject:ss];
     return TOK_STRING;
 }
 
@@ -201,26 +200,24 @@ NL	[\n]
     NSMutableData* s = [ [ NSMutableData alloc] init];
     while(true)
     {
-	char c = (char)(input());
-	if(c == '\'')
-	{
-	    break;
-	}
-	else if(c == EOF)
-	{
+        char c = (char)(input());
+        if(c == '\'')
+        {
+            break;
+        }
+        else if(c == EOF)
+        {
             [parser warning: "EOF in string"];
-	    break;
-	}
-	else
-	{
+            break;
+        }
+        else
+        {
             [s appendBytes: &c length: 1];
-	}
+        }
     }
     *yylvalp = [NSMutableArray array];
-    NSString* ss = [ [NSString alloc] initWithData: s encoding: NSUTF8StringEncoding ];
-    [s release];
-    [*yylvalp addObject: ss];
-    [ss release];
+    NSString* ss = [ [NSString alloc] initWithData:s encoding:NSUTF8StringEncoding ];
+    [*yylvalp addObject:ss];
     return TOK_STRING;
 }
 
@@ -230,24 +227,22 @@ NL	[\n]
     [s appendBytes: yytext length: 1];
     while(true)
     {
-	char c = (char)(input());
-	if(c == EOF)
-	{
-	    break;
-	}
-	else if(isspace(c) || c == ';')
-	{
-	    unput(c);
-	    break;
-	}
-	
+        char c = (char)(input());
+        if(c == EOF)
+        {
+            break;
+        }
+        else if(isspace(c) || c == ';')
+        {
+            unput(c);
+            break;
+        }
+
         [s appendBytes: &c length: 1];
     }
     *yylvalp = [NSMutableArray array];
-    NSString* ss = [ [NSString alloc] initWithData: s encoding: NSUTF8StringEncoding ];
-    [s release];
-    [*yylvalp addObject: ss];
-    [ss release];
+    NSString* ss = [ [NSString alloc] initWithData:s encoding:NSUTF8StringEncoding ];
+    [*yylvalp addObject:ss];
     return TOK_STRING;
 }
 

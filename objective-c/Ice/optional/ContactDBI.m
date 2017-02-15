@@ -21,14 +21,6 @@
     return self;
 }
 
-#if defined(__clang__) && !__has_feature(objc_arc)
--(void) dealloc
-{
-    [self->contacts_ release];
-    [super dealloc];
-}
-#endif
-
 -(void) addContact:(NSMutableString*)name type:(id)type number:(id)number dialGroup:(id)dialGroup
            current:(ICECurrent*)current
 {

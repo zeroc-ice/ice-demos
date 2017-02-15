@@ -48,15 +48,4 @@
     id<FSNodePrx> thisNode = [FSNodePrx uncheckedCast:[a add:self identity:ident]];
     [parent addChild:thisNode];
 }
-
-#if defined(__clang__) && !__has_feature(objc_arc)
--(void) dealloc
-{
-    [myName release];
-    [parent release];
-    [ident release];
-    [contents release];
-    [super dealloc];
-}
-#endif
 @end

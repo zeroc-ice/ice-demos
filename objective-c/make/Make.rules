@@ -19,25 +19,18 @@
 CXXFLAGS	+= -Wno-unused-parameter
 
 #
+# These demos are ARC-only
+#
+CXXFLAGS        += -fobjc-arc -fobjc-arc-exceptions
+
+#
 # Supported configurations
 #
-supported-configs	= shared static arc-shared arc-static
+supported-configs               = shared static
 
 #
-# Define the arc configuration to build the tests with ARC support.
-#
-# Note that we clear the dependency variable to not include the "arc"
-# sub-configuration into the dependency name (for example, if "client"
-# depends on "IceObjC", client[osx-arc-shared] will still depend on
-# Ice[osx-shared] not Ice[osx-arc-shared]). This is necessary since
-# we don't have an ARC specific build of the libraries.
-#
-arc_projects		:= %
-arc_excludes		:= Database/library
-arc_cppflags 		:= -fobjc-arc -fobjc-arc-exceptions
-arc_dependency	 	:=
-
 # Objective-C dependencies
+#
 objc-dependencies		:= IceObjC Glacier2ObjC IceGridObjC IceSSLObjC IceStormObjC
 IceObjC_dependencies 		:= Ice
 Glacier2ObjC_dependencies	:= IceObjC
