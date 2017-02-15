@@ -10,11 +10,11 @@ Most of the subdirectories here correspond directly to Ice components, such as
 [Ice](./Ice) and [IceDiscovery](./IceDiscovery). We've also included the following
 additional subdirectories:
 
-- [Database](./Database)
-  Ice clients for our Java-based [Database library](../java/Database/library) demo.
+- [Database](./Database)<p>
+Ice clients for our Java-based [Database library](../java/Database/library) demo.
 
-- [Manual](./Manual)
-  Complete examples for some of the code snippets in the [Ice manual][1].
+- [Manual](./Manual)<p>
+Complete examples for some of the code snippets in the [Ice manual][1].
 
 ## Build Instructions
 
