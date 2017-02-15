@@ -16,9 +16,6 @@
       <FileRef
          location = "group:Ice/iOS/router/router.xcodeproj">
       </FileRef>
-      <FileRef
-         location = "group:Ice/iOS/voip/voip.xcodeproj">
-      </FileRef>
    </Group>
    <Group
       location = "container:"

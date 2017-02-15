@@ -10,19 +10,17 @@ Most of the subdirectories here correspond directly to Ice components, such as
 [Ice](./Ice) and [IceDiscovery](./IceDiscovery). We've also included the following
 additional subdirectories:
 
-- [Database](./Database) has an Ice Touch client for our Java-based
-[database](../java/Database/library) demo.
+- [Database](./Database)
+  Ice clients for our Java-based [Database library](../java/Database/library) demo.
 
-- [IceTouch](./IceTouch) contains a number of Cocoa and iOS examples.
-
-- [Manual](./Manual) contains complete examples for some of the code snippets
-in the [Ice manual][1].
+- [Manual](./Manual)
+  Complete examples for some of the code snippets in the [Ice manual][1].
 
 ## Build Instructions
 
 ### Prerequisites
 
-The Ice Touch sample programs require the [Ice Builder for Xcode][2].
+The iOS and Cocoa demos require the [Ice Builder for Xcode][2].
 
 The command-line demos require the Xcode Command Line Tools to be installed
 (use `xcode-select --install` to install them).
@@ -40,11 +38,11 @@ Run `make` to start the build:
 
     $ make
 
-To build the Cocoa or iOS examples, open `IceTouch/demos.xcworkspace` in Xcode.
+To build the iOS or Cocoa examples, open `Objective-C demos.xcworkspace` in Xcode.
 
 ## Running the Demos
 
-Refer to the README file in each demo directory for usage instructions.
+Refer to the README.md file in each demo directory for usage instructions.
 
 [1]: https://doc.zeroc.com/display/Ice37/Ice+Manual
 [2]: https://github.com/zeroc-ice/ice-builder-xcode
