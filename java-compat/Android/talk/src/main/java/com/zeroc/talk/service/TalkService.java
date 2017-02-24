@@ -628,7 +628,7 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
         Ice.Connection con = peer.ice_getCachedConnection();
         if(con != null)
         {
-            con.close(Ice.ConnectionClose.CloseGracefully); // Our connection callback will eventually be called.
+            con.close(Ice.ConnectionClose.Gracefully); // Our connection callback will eventually be called.
         }
     }
 
