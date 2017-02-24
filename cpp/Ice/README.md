@@ -56,6 +56,11 @@ Demos in this directory:
 
   This demo illustrates a minimal Ice application.
 
+- [mtalk](./mtalk)
+
+  A command-line client that uses multicast to locate another device on
+  Linux or Android and then chat over a secure peer-to-peer connection.
+
 - [multicast](./multicast)
 
   This demo illistrates the use of UDP multicast.
