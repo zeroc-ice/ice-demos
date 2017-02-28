@@ -158,16 +158,16 @@ private:
 class DiscoverThread : public IceUtil::Thread, public IceUtil::Monitor<IceUtil::Mutex>
 {
 public:
-    
-    DiscoverThread(const MTalk::DiscoveryPrx& discovery, const string& name, const MTalk::PeerPrx& proxy) :
-        _discovery(discovery), _name(name), _proxy(proxy), _destroy(false)
+
+    DiscoverThread(const MTalk::DiscoveryPrx& d, const string& n, const MTalk::PeerPrx& p) :
+        _discovery(d), _name(n), _proxy(p), _destroy(false)
     {
     }
 
     void destroy()
     {
         {
-            IceUtil::Monitor<IceUtil::Mutex>::Lock lock(*this);
+            IceUtil::Monitor<IceUtil::Mutex>::Lock lck(*this);
             _destroy = true;
             notify();
         }
@@ -180,7 +180,7 @@ public:
         while(true)
         {
             {
-                IceUtil::Monitor<IceUtil::Mutex>::Lock lock(*this);
+                IceUtil::Monitor<IceUtil::Mutex>::Lock lck(*this);
                 timedWait(IceUtil::Time::seconds(2));
 
                 if(_destroy)
