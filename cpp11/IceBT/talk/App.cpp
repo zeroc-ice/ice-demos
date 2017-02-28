@@ -57,7 +57,7 @@ public:
             auto con = peer->ice_getCachedConnection();
             if(con)
             {
-                con->close(Ice::CloseGracefully);
+                con->close(Ice::ConnectionClose::Gracefully);
             }
         }
         catch(const Ice::Exception& ex)
@@ -81,7 +81,7 @@ public:
 
         cout << ">>>> Peer disconnected" << endl;
 
-        curr.con->close(Ice::CloseGracefully);
+        curr.con->close(Ice::ConnectionClose::Gracefully);
     }
 
     virtual void closed()
@@ -171,7 +171,7 @@ public:
             {
                 self->closed();
             });
-        curr.con->setACM(30, Ice::CloseOff, Ice::HeartbeatAlways);
+        curr.con->setACM(30, Ice::ACMClose::CloseOff, Ice::ACMHeartbeat::HeartbeatAlways);
 
         _peer = Ice::uncheckedCast<Talk::PeerPrx>(curr.con->createProxy(id));
 
