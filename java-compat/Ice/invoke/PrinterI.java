@@ -65,7 +65,7 @@ public class PrinterI extends Ice.Blobject
         }
         else if(current.operation.equals("printStruct"))
         {
-            Demo.Structure s = Demo.Structure.ice_read(in, null);
+            Demo.Structure s = Demo.Structure.ice_read(in);
             in.endEncapsulation();
             System.out.println("Printing struct: name=" + s.name + ", value=" + s.value);
             return true;

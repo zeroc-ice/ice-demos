@@ -95,7 +95,7 @@ public class Client extends com.zeroc.Ice.Application
                     com.zeroc.Ice.OutputStream out = new com.zeroc.Ice.OutputStream(communicator());
                     out.startEncapsulation();
                     final String[] arr = { "The", "streaming", "API", "works!" };
-                    Demo.StringSeqHelper.write(out, arr);
+                    out.writeStringSeq(arr);
                     out.endEncapsulation();
 
                     //

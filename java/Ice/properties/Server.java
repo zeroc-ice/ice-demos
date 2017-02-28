@@ -10,7 +10,7 @@ public class Server extends com.zeroc.Ice.Application
     // The servant implements the Slice interface Demo::Props as well as the
     // native callback interface com.zeroc.Ice.PropertiesAdminUpdateCallback.
     //
-    static class PropsI implements Demo.Props, com.zeroc.Ice.PropertiesAdminUpdateCallback
+    static class PropsI implements Demo.Props, java.util.function.Consumer<java.util.Map<String, String>>
     {
         PropsI()
         {
@@ -46,7 +46,7 @@ public class Server extends com.zeroc.Ice.Application
         }
 
         @Override
-        public synchronized void updated(java.util.Map<String, String> changes)
+        public synchronized void accept(java.util.Map<String, String> changes)
         {
             _changes = changes;
             _called = true;

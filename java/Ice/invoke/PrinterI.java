@@ -25,7 +25,7 @@ public class PrinterI implements com.zeroc.Ice.Blobject
         }
         else if(current.operation.equals("printStringSequence"))
         {
-            String[] seq = Demo.StringSeqHelper.read(in);
+            String[] seq = in.readStringSeq();
             in.endEncapsulation();
             System.out.print("Printing string sequence {");
             for(int i = 0; i < seq.length; ++i)
@@ -63,7 +63,7 @@ public class PrinterI implements com.zeroc.Ice.Blobject
         }
         else if(current.operation.equals("printStruct"))
         {
-            Demo.Structure s = Demo.Structure.ice_read(in, null);
+            Demo.Structure s = Demo.Structure.ice_read(in);
             in.endEncapsulation();
             System.out.println("Printing struct: name=" + s.name + ", value=" + s.value);
         }
