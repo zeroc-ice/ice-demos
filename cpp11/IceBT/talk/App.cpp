@@ -9,230 +9,9 @@
 #include <IceBT/ConnectionInfo.h>
 #include <IceBT/Plugin.h>
 #include <Talk.h>
+#include <mutex>
 
 using namespace std;
-
-//
-// We use two implementations of Peer servants. PeerI is the common
-// base class for our servants.
-//
-// The program only supports one active connection at a time. That
-// connection can either be initiated by a peer (an "incoming"
-// connection) or it can be initiated by this program (an "outgoing"
-// connection. We use different servants for each type of connection.
-//
-class PeerI : public virtual Talk::Peer
-{
-public:
-
-    virtual void sendMessage(string message) = 0;
-
-    //
-    // Disconnect from the remote peer.
-    //
-    virtual void close()
-    {
-        shared_ptr<Talk::PeerPrx> peer;
-
-        {
-            IceUtil::Monitor<IceUtil::Mutex>::Lock lock(_lock);
-
-            if(!_connected)
-            {
-                cout << ">>>> Not connected!" << endl;
-                return;
-            }
-
-            _connected = false;
-            peer = _peer;
-            _peer = 0;
-        }
-
-        //
-        // Try to notify the remote peer that we are disconnecting.
-        //
-        try
-        {
-            peer->disconnect();
-            auto con = peer->ice_getCachedConnection();
-            if(con)
-            {
-                con->close(Ice::ConnectionClose::Gracefully);
-            }
-        }
-        catch(const Ice::Exception& ex)
-        {
-            cout << ">>>> Error: " << ex << endl;
-        }
-    }
-
-    virtual void send(string message, const Ice::Current&)
-    {
-        IceUtil::Monitor<IceUtil::Mutex>::Lock lock(_lock);
-
-        cout << "Peer says: " << message << endl;
-    }
-
-    virtual void disconnect(const Ice::Current& curr)
-    {
-        IceUtil::Monitor<IceUtil::Mutex>::Lock lock(_lock);
-
-        _connected = false;
-
-        cout << ">>>> Peer disconnected" << endl;
-
-        curr.con->close(Ice::ConnectionClose::Gracefully);
-    }
-
-    virtual void closed()
-    {
-        IceUtil::Monitor<IceUtil::Mutex>::Lock lock(_lock);
-
-        if(_connected)
-        {
-            _connected = false;
-            cout << ">>>> Lost connection to peer" << endl;
-        }
-    }
-
-protected:
-
-    PeerI() :
-        _connected(false)
-    {
-    }
-
-    PeerI(shared_ptr<Talk::PeerPrx> peer) :
-        _connected(false),
-        _peer(peer)
-    {
-    }
-
-    IceUtil::Monitor<IceUtil::Mutex> _lock;
-    bool _connected;
-    shared_ptr<Talk::PeerPrx> _peer;
-};
-
-//
-// This servant handles new incoming connections from peers.
-// There is only one instance of this servant. It must be registered
-// with a well-known object identity so that other peers can invoke
-// on it.
-//
-class IncomingPeerI : public PeerI, public enable_shared_from_this<PeerI>
-{
-public:
-
-    //
-    // Send a message to the remote peer.
-    //
-    virtual void sendMessage(string message)
-    {
-        {
-            IceUtil::Monitor<IceUtil::Mutex>::Lock lock(_lock);
-
-            if(!_connected)
-            {
-                cout << ">>>> Not connected!" << endl;
-                return;
-            }
-        }
-
-        try
-        {
-            _peer->send(message);
-        }
-        catch(const Ice::Exception& ex)
-        {
-            cout << ">>>> Error: " << ex << endl;
-        }
-    }
-
-    //
-    // A remote peer wants to connect to us.
-    //
-    virtual void connect(Ice::Identity id, const Ice::Current& curr)
-    {
-        IceUtil::Monitor<IceUtil::Mutex>::Lock lock(_lock);
-
-        if(_connected)
-        {
-            throw Talk::ConnectionException("already connected");
-        }
-
-        _connected = true;
-
-        //
-        // Install a connection callback and enable ACM heartbeats.
-        //
-        auto self = shared_from_this();
-        curr.con->setCloseCallback(
-            [self](shared_ptr<Ice::Connection>)
-            {
-                self->closed();
-            });
-        curr.con->setACM(30, Ice::ACMClose::CloseOff, Ice::ACMHeartbeat::HeartbeatAlways);
-
-        _peer = Ice::uncheckedCast<Talk::PeerPrx>(curr.con->createProxy(id));
-
-        auto info = curr.con->getInfo();
-        if(info->underlying)
-        {
-            info = info->underlying;
-        }
-        auto btInfo = dynamic_pointer_cast<IceBT::ConnectionInfo>(info);
-        assert(btInfo);
-        cout << ">>>> Incoming connection from " << btInfo->remoteAddress << endl;
-    }
-};
-
-//
-// We use a new instance of this servant class for each new outgoing
-// connection. Its primary purpose is to receive callbacks over the
-// bidirectional connection to the peer.
-//
-class OutgoingPeerI : public PeerI
-{
-public:
-
-    OutgoingPeerI(const shared_ptr<Ice::ObjectAdapter>& adapter, const Ice::Identity& id,
-                  const shared_ptr<Talk::PeerPrx>& peer) :
-        PeerI(peer),
-        _adapter(adapter),
-        _id(id)
-    {
-        _connected = true;
-    }
-
-    //
-    // Send a message to the remote peer.
-    //
-    virtual void sendMessage(string message)
-    {
-        _peer->send(message);
-    }
-
-    virtual void connect(Ice::Identity, const Ice::Current&)
-    {
-        //
-        // We established an outgoing connection to the peer, so there's no need for
-        // the peer to invoke connect() on this servant.
-        //
-        throw Talk::ConnectionException("already connected");
-    }
-
-    virtual void closed()
-    {
-        PeerI::closed();
-
-        _adapter->remove(_id);
-    }
-
-private:
-
-    shared_ptr<Ice::ObjectAdapter> _adapter;
-    Ice::Identity _id;
-};
 
 class TalkApp : public Ice::Application
 {
@@ -241,15 +20,88 @@ public:
     TalkApp();
     virtual int run(int, char*[]);
 
+    void connect(Ice::Identity, shared_ptr<Ice::Connection>);
+    void message(string);
+    void disconnect(Ice::Identity, shared_ptr<Ice::Connection>, bool);
+    void closed();
+
 private:
 
-    void connect(string);
-    void list();
+    void doConnect(string);
+    void doList();
+    void doDisconnect();
+    void doMessage(string);
+    void failed(const Ice::LocalException&);
     void usage();
 
     shared_ptr<Ice::ObjectAdapter> _adapter;
-    shared_ptr<PeerI> _incomingPeer;
-    shared_ptr<PeerI> _peer;
+    shared_ptr<Talk::PeerPrx> _local;
+    shared_ptr<Talk::PeerPrx> _remote;
+    mutex _mutex;
+};
+
+//
+// This servant listens for incoming connections from peers.
+//
+class IncomingPeerI : public Talk::Peer
+{
+public:
+
+    IncomingPeerI(TalkApp* app) :
+        _app(app)
+    {
+    }
+
+    virtual void connect(Ice::Identity id, const Ice::Current& current)
+    {
+        _app->connect(id, current.con);
+    }
+
+    virtual void send(string text, const Ice::Current&)
+    {
+        _app->message(text);
+    }
+
+    virtual void disconnect(const Ice::Current& current)
+    {
+        _app->disconnect(current.id, current.con, true);
+    }
+
+private:
+
+    TalkApp* _app;
+};
+
+//
+// This servant handles an outgoing session with a peer.
+//
+class OutgoingPeerI : public Talk::Peer
+{
+public:
+
+    OutgoingPeerI(TalkApp* app) :
+        _app(app)
+    {
+    }
+
+    virtual void connect(Ice::Identity, const Ice::Current&)
+    {
+        throw Talk::ConnectionException("already connected");
+    }
+
+    virtual void send(string text, const Ice::Current&)
+    {
+        _app->message(text);
+    }
+
+    virtual void disconnect(const Ice::Current& current)
+    {
+        _app->disconnect(current.id, current.con, false);
+    }
+
+private:
+
+    TalkApp* _app;
 };
 
 static string btUUID = "6a193943-1754-4869-8d0a-ddc5f9a2b294";
@@ -293,9 +145,8 @@ TalkApp::run(int argc, char*[])
     //
     // Install a servant with the well-known identity "peer".
     //
-    _incomingPeer = make_shared<IncomingPeerI>();
-    _peer = _incomingPeer;
-    _adapter->add(_peer, Ice::stringToIdentity("peer"));
+    _local = Ice::uncheckedCast<Talk::PeerPrx>(
+        _adapter->add(make_shared<IncomingPeerI>(this), Ice::stringToIdentity("peer")));
     _adapter->activate();
 
     usage();
@@ -314,16 +165,15 @@ TalkApp::run(int argc, char*[])
             {
                 if(s.size() > 8 && (s.substr(0, 8) == "/connect" || s.substr(0, 9) == "/sconnect"))
                 {
-                    connect(s);
+                    doConnect(s);
                 }
                 else if(s == "/disconnect")
                 {
-                    _peer->close();
-                    _peer = _incomingPeer;
+                    doDisconnect();
                 }
                 else if(s == "/list")
                 {
-                    list();
+                    doList();
                 }
                 else if(s == "/quit")
                 {
@@ -336,18 +186,99 @@ TalkApp::run(int argc, char*[])
             }
             else
             {
-                _peer->sendMessage(s);
+                doMessage(s);
             }
         }
     }
     while(cin.good());
 
+    //
+    // There may still be objects (connections and servants) that hold pointers to this object, so we destroy
+    // the communicator here to make sure they get cleaned up first.
+    //
     communicator()->destroy();
+
     return EXIT_SUCCESS;
 }
 
 void
-TalkApp::connect(string cmd)
+TalkApp::connect(Ice::Identity id, shared_ptr<Ice::Connection> con)
+{
+    //
+    // Called for a new incoming connection request.
+    //
+
+    unique_lock<mutex> lock(_mutex);
+
+    if(_remote)
+    {
+        throw Talk::ConnectionException("already connected");
+    }
+
+    //
+    // Install a connection callback and enable ACM heartbeats.
+    //
+    con->setCloseCallback(
+        [this](shared_ptr<Ice::Connection>)
+        {
+            this->closed();
+        });
+    con->setACM(30, Ice::ACMClose::CloseOff, Ice::ACMHeartbeat::HeartbeatAlways);
+
+    _remote = Ice::uncheckedCast<Talk::PeerPrx>(con->createProxy(id))->ice_invocationTimeout(10000);
+
+    shared_ptr<Ice::ConnectionInfo> info = con->getInfo();
+    if(info->underlying)
+    {
+        info = info->underlying;
+    }
+    shared_ptr<IceBT::ConnectionInfo> btInfo = dynamic_pointer_cast<IceBT::ConnectionInfo>(info);
+    assert(btInfo);
+    cout << ">>>> Incoming connection from " << btInfo->remoteAddress << endl;
+}
+
+void
+TalkApp::message(string text)
+{
+    unique_lock<mutex> lock(_mutex);
+
+    if(_remote)
+    {
+        cout << "Peer says: " << text << endl;
+    }
+}
+
+void
+TalkApp::disconnect(Ice::Identity id, shared_ptr<Ice::Connection> con, bool incoming)
+{
+    unique_lock<mutex> lock(_mutex);
+
+    if(_remote)
+    {
+        cout << ">>>> Peer disconnected" << endl;
+        _remote = 0;
+    }
+
+    if(!incoming)
+    {
+        _adapter->remove(id);
+    }
+
+    con->close(Ice::ConnectionClose::Gracefully);
+}
+
+void
+TalkApp::closed()
+{
+    unique_lock<mutex> lock(_mutex);
+
+    _remote = 0;
+
+    cout << ">>>> Connection to peer closed" << endl;
+}
+
+void
+TalkApp::doConnect(string cmd)
 {
     const bool secure = cmd.find("/sconnect") == 0;
 
@@ -371,24 +302,36 @@ TalkApp::connect(string cmd)
     // bidirectional connection.
     //
     Ice::Identity id = Ice::stringToIdentity(Ice::generateUUID());
-    shared_ptr<PeerI> servant;
+    shared_ptr<Talk::PeerPrx> remote;
 
     try
     {
-        string proxy = "peer:";
-        if(secure)
         {
-            proxy += "bts -a \"" + addr + "\" -u " + btsUUID;
+            unique_lock<mutex> lock(_mutex);
+
+            if(_remote)
+            {
+                cout << ">>>> Already connected" << endl;
+                return;
+            }
+
+            //
+            // Create a proxy for the remote peer using the address given by the user
+            // and the well-known UUID for the talk service.
+            //
+            string proxy = "peer:";
+            if(secure)
+            {
+                proxy += "bts -a \"" + addr + "\" -u " + btsUUID;
+            }
+            else
+            {
+                proxy += "bt -a \"" + addr + "\" -u " + btUUID;
+            }
+            remote = Ice::uncheckedCast<Talk::PeerPrx>(communicator()->stringToProxy(proxy));
+            _remote = remote;
         }
-        else
-        {
-            proxy += "bt -a \"" + addr + "\" -u " + btUUID;
-        }
-        //
-        // Create a proxy for the remote peer using the address given by the user
-        // and the well-known UUID for the talk service.
-        //
-        auto prx = Ice::uncheckedCast<Talk::PeerPrx>(communicator()->stringToProxy(proxy));
+
         cout << ">>>> Connecting to " << addr << endl;
 
         //
@@ -396,30 +339,67 @@ TalkApp::connect(string cmd)
         // us to receive callbacks via this connection. Calling ice_getConnection() blocks
         // until the connection to the peer is established.
         //
-        auto con = prx->ice_getConnection();
+        auto con = remote->ice_getConnection();
         con->setAdapter(_adapter);
-        servant = make_shared<OutgoingPeerI>(_adapter, id, prx);
-        _adapter->add(servant, id);
+        _adapter->add(make_shared<OutgoingPeerI>(this), id);
+
+        //
+        // Install a connection callback and enable ACM heartbeats.
+        //
+        con->setCloseCallback(
+            [this](shared_ptr<Ice::Connection>)
+            {
+                this->closed();
+            });
+        con->setACM(30, Ice::ACMClose::CloseOff, Ice::ACMHeartbeat::HeartbeatAlways);
+
 
         //
         // Now we're ready to notify the peer that we'd like to connect.
         //
-        prx->connect(id);
-        _peer = servant;
+        remote->connect(id);
         cout << ">>>> Connected to " << addr << endl;
+    }
+    catch(const Talk::ConnectionException& ex)
+    {
+        unique_lock<mutex> lock(_mutex);
+
+        cout << ">>>> Connection failed: " << ex.reason << endl;
+        try
+        {
+            _adapter->remove(id);
+        }
+        catch(const Ice::NotRegisteredException&)
+        {
+        }
+
+        if(_remote == remote)
+        {
+            _remote = 0;
+        }
     }
     catch(const Ice::Exception& ex)
     {
+        unique_lock<mutex> lock(_mutex);
+
         cout << ">>>> " << ex << endl;
-        if(servant)
+        try
         {
             _adapter->remove(id);
+        }
+        catch(const Ice::NotRegisteredException&)
+        {
+        }
+
+        if(_remote == remote)
+        {
+            _remote = 0;
         }
     }
 }
 
 void
-TalkApp::list()
+TalkApp::doList()
 {
     //
     // Obtain a reference to the IceBT plug-in.
@@ -451,6 +431,91 @@ TalkApp::list()
                 name = q->second;
             }
             cout << ">>>> " << name << " - " << p.first << endl;
+        }
+    }
+}
+
+void
+TalkApp::doDisconnect()
+{
+    shared_ptr<Talk::PeerPrx> peer;
+
+    {
+        unique_lock<mutex> lock(_mutex);
+
+        if(!_remote)
+        {
+            cout << ">>>> Not connected" << endl;
+            return;
+        }
+
+        peer = _remote;
+        _remote = 0;
+    }
+
+    shared_ptr<Ice::Connection> con = peer->ice_getCachedConnection();
+
+    try
+    {
+        peer->disconnect();
+    }
+    catch(const Ice::LocalException& ex)
+    {
+        failed(ex);
+    }
+
+    if(con)
+    {
+        con->close(Ice::ConnectionClose::Gracefully);
+    }
+}
+
+void
+TalkApp::doMessage(string text)
+{
+    shared_ptr<Talk::PeerPrx> peer;
+
+    {
+        unique_lock<mutex> lock(_mutex);
+
+        if(!_remote)
+        {
+            cout << ">>>> Not connected" << endl;
+            return;
+        }
+
+        peer = _remote;
+    }
+
+    try
+    {
+        peer->send(text);
+    }
+    catch(const Ice::LocalException& ex)
+    {
+        failed(ex);
+    }
+}
+
+void
+TalkApp::failed(const Ice::LocalException& ex)
+{
+    shared_ptr<Talk::PeerPrx> peer;
+
+    {
+        unique_lock<mutex> lock(_mutex);
+        peer = _remote;
+        _remote = 0;
+    }
+
+    cout << ">>>> Action failed:" << endl << ex << endl;
+
+    if(peer)
+    {
+        shared_ptr<Ice::Connection> con = peer->ice_getCachedConnection();
+        if(con)
+        {
+            con->close(Ice::ConnectionClose::Forcefully);
         }
     }
 }
