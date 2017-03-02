@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\..\..\..\packages\zeroc.ice.v140.3.7.0-alpha4\build\native\zeroc.ice.v140.props" Condition="Exists('..\..\..\..\packages\zeroc.ice.v140.3.7.0-alpha4\build\native\zeroc.ice.v140.props') and '$(UseSrcDist)' != 'yes'" />
+  <Import Project="..\..\..\..\packages\zeroc.ice.v140.3.7.0-alpha4\build\native\zeroc.ice.v140.props" Condition="Exists('..\..\..\..\packages\zeroc.ice.v140.3.7.0-alpha4\build\native\zeroc.ice.v140.props') and '$(ICE_SRC_DIST)' != 'yes'" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -56,7 +56,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <Import Project="$(IceBuilderCppProps)" Condition="Exists('$(IceBuilderCppProps)')" />
   <ImportGroup Label="ExtensionSettings">
-    <Import Project="..\..\..\..\packages\zeroc.ice.v140.3.7.0-alpha4\build\native\zeroc.ice.v140.targets" Condition="Exists('..\..\..\..\packages\zeroc.ice.v140.3.7.0-alpha4\build\native\zeroc.ice.v140.targets') and '$(UseSrcDist)' != 'yes'" />
+    <Import Project="..\..\..\..\packages\zeroc.ice.v140.3.7.0-alpha4\build\native\zeroc.ice.v140.targets" Condition="Exists('..\..\..\..\packages\zeroc.ice.v140.3.7.0-alpha4\build\native\zeroc.ice.v140.targets') and '$(ICE_SRC_DIST)' != 'yes'" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -248,8 +248,8 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\..\..\packages\zeroc.ice.v140.3.7.0-alpha4\build\native\zeroc.ice.v140.props') and '$(UseSrcDist)' != 'yes'" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.v140.3.7.0-alpha4\build\native\zeroc.ice.v140.props'))" />
-    <Error Condition="!Exists('..\..\..\..\packages\zeroc.ice.v140.3.7.0-alpha4\build\native\zeroc.ice.v140.targets') and '$(UseSrcDist)' != 'yes'" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.v140.3.7.0-alpha4\build\native\zeroc.ice.v140.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\packages\zeroc.ice.v140.3.7.0-alpha4\build\native\zeroc.ice.v140.props') and '$(ICE_SRC_DIST)' != 'yes'" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.v140.3.7.0-alpha4\build\native\zeroc.ice.v140.props'))" />
+    <Error Condition="!Exists('..\..\..\..\packages\zeroc.ice.v140.3.7.0-alpha4\build\native\zeroc.ice.v140.targets') and '$(ICE_SRC_DIST)' != 'yes'" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.v140.3.7.0-alpha4\build\native\zeroc.ice.v140.targets'))" />
   </Target>
   <Target Name="EnsureIceBuilderImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
