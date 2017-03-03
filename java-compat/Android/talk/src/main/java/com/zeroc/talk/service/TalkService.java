@@ -47,7 +47,8 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
             address = o.address;
             name = o.name;
             peer = o.peer;
-            servant = o.servant;
+            servantId = o.servantId;
+            connection = o.connection;
         }
 
         String getName()
@@ -57,11 +58,11 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
 
         void removeServant(Ice.ObjectAdapter adapter)
         {
-            if(servant != null)
+            if(servantId != null)
             {
                 try
                 {
-                    adapter.remove(servant);
+                    adapter.remove(servantId);
                 }
                 catch(Ice.NotRegisteredException ex)
                 {
@@ -73,7 +74,8 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
         String address;
         String name;
         Talk.PeerPrx peer;
-        Ice.Identity servant;
+        Ice.Identity servantId;
+        Ice.Connection connection;
     }
 
     //
@@ -297,7 +299,7 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
         // Register a unique servant with the OA for each outgoing connection. This servant receives
         // callbacks from the peer.
         //
-        info.servant = Ice.Util.stringToIdentity(java.util.UUID.randomUUID().toString());
+        info.servantId = Ice.Util.stringToIdentity(java.util.UUID.randomUUID().toString());
 
         _adapter.add(
             new Talk._PeerDisp()
@@ -317,7 +319,7 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
                 {
                     disconnected(info);
                 }
-            }, info.servant);
+            }, info.servantId);
 
         PeerInfo oldInfo = null;
 
@@ -468,7 +470,8 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
         PeerInfo info = new PeerInfo();
         info.peer = Talk.PeerPrxHelper.uncheckedCast(con.createProxy(id));
         info.address = btci.remoteAddress;
-        info.servant = null;
+        info.servantId = null;
+        info.connection = con;
 
         setState(STATE_CONNECTED); // Also notifies the activity.
         _peer = info;
@@ -496,7 +499,7 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
         }
         setState(STATE_CONNECTING); // Also notifies the activity.
 
-        info.peer.begin_connect(info.servant, new Ice.Callback()
+        info.peer.begin_connect(info.servantId, new Ice.Callback()
             {
                 @Override
                 public void completed(Ice.AsyncResult r)
@@ -544,7 +547,10 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
                         // Ignore.
                     }
 
-                    closeConnection(oldInfo.peer);
+                    if(oldInfo.connection != null)
+                    {
+                        oldInfo.connection.close(Ice.ConnectionClose.Gracefully);
+                    }
                 }
             });
     }
@@ -572,7 +578,10 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
     private void disconnected(PeerInfo info)
     {
         log("Peer is disconnecting");
-        closeConnection(info.peer);
+        if(info.connection != null)
+        {
+            info.connection.close(Ice.ConnectionClose.Gracefully);
+        }
     }
 
     synchronized private void connectFailed(PeerInfo info, String message)
@@ -602,7 +611,7 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
         if(fatal)
         {
             info.removeServant(_adapter);
-            closeConnection(info.peer);
+            info.connection.close(Ice.ConnectionClose.Gracefully);
         }
     }
 
@@ -621,15 +630,6 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
             });
         con.setACM(new Ice.IntOptional(30), new Ice.Optional<Ice.ACMClose>(Ice.ACMClose.CloseOff),
                    new Ice.Optional<Ice.ACMHeartbeat>(Ice.ACMHeartbeat.HeartbeatAlways));
-    }
-
-    private void closeConnection(Talk.PeerPrx peer)
-    {
-        Ice.Connection con = peer.ice_getCachedConnection();
-        if(con != null)
-        {
-            con.close(Ice.ConnectionClose.Gracefully); // Our connection callback will eventually be called.
-        }
     }
 
     synchronized private void connectionClosed(PeerInfo info)
