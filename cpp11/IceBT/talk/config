@@ -25,6 +25,8 @@ Ice.Plugin.IceBT=IceBT:createIceBT
 #
 Ice.Warn.Connections=1
 
+Ice.Default.Timeout=10000
+
 #
 # Network Tracing
 #
