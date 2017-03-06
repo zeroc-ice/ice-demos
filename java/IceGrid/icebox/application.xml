@@ -12,7 +12,7 @@
 
       <service-template id="HelloService">
          <parameter name="name"/>
-         <service name="${name}" entry="build/libs/server.jar:HelloServiceI">
+         <service name="${name}" entry="build/libs/service.jar:HelloServiceI">
             <description>A very simple service named after ${name}</description>
             <properties>
                <properties refid="mx"/>
@@ -57,7 +57,8 @@
          <icebox id="IceBox" activation="on-demand" exe="java">
             <description>A sample IceBox server</description>
             <option>-server</option>
-            <option>com.zeroc.IceBox.Server</option>
+            <option>-jar</option>
+            <option>build/libs/iceboxserver.jar</option>
             <properties>
                <properties refid="mx"/>
                <property name="IceBox.Trace.ServiceObserver" value="1"/>

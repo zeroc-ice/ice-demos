@@ -31,21 +31,5 @@ dependencies {
 jar.enabled = false
 
 demoJar("client")
-
-task serverJar(type: Jar) {
-    version = ""
-    baseName = "server"
-    from(sourceSets.main.output) {
-        include "**"
-    }
-}
-
-serverJar {
-    manifest {
-        attributes("Class-Path": configurations.compile.resolve().collect { it.toURI() }.join(' '))
-    }
-}
-
-artifacts {
-    archives serverJar;
-}
+demoJar("service", "")
+demoIceBoxServer()

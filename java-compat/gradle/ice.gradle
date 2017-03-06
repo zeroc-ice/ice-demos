@@ -71,7 +71,7 @@ if(iceJar.exists()) {
     ext.versionSuffix = "-${slice.iceArtifactVersion}"
 }
 
-def demoJar(name) {
+def demoJar(name, mainClass = name.capitalize()) {
     def taskName = name + "Jar"
     // Create a jar for the client & server which includes everything in the demo.
     def jarTask = tasks.create(name: taskName, type: Jar) {
@@ -83,7 +83,9 @@ def demoJar(name) {
     }
 
     jarTask.manifest {
-        attributes("Main-Class": name.capitalize())
+        if(mainClass) {
+            attributes("Main-Class": mainClass)
+        }
         attributes("Class-Path": configurations.runtime.resolve().collect { it.toURI() }.join(' '))
     }
 
@@ -94,6 +96,39 @@ def demoJar(name) {
 
 ext {
     demoJar = this.&demoJar
+}
+
+def demoIceBoxServer() {
+    configurations {
+        iceboxserver
+    }
+
+    dependencies {
+        iceboxserver localDependency("ice-compat")
+        iceboxserver localDependency("icebox-compat")
+        if (!useLocalOnly) {
+            iceboxserver "org.apache.tools:bzip2:1.0"
+        }
+    }
+
+    // Create a jar for the client & server which includes everything in the demo.
+    def jarTask = tasks.create(name: "IceBoxServerJar", type: Jar) {
+        version = ""
+        baseName = "iceboxserver"
+    }
+
+    jarTask.manifest {
+        attributes("Main-Class": "IceBox.Server")
+        attributes("Class-Path": configurations.iceboxserver.resolve().collect { it.toURI() }.join(' '))
+    }
+
+    artifacts {
+        archives jarTask
+    }
+}
+
+ext {
+    demoIceBoxServer = this.&demoIceBoxServer
 }
 
 def localDependency(artifactId) {
