@@ -6,7 +6,7 @@ The ice-demos repository provides sample programs for Ice, Ice-E, and Ice Touch.
 
 The sample programs are grouped by programming language:
 * [C++11](./cpp11)
-* [C++](./cpp)
+* [C++98](./cpp98)
 * [C#](./csharp)
 * [Java](./java)
 * [Java-Compat](./java-compat)
@@ -16,8 +16,8 @@ The sample programs are grouped by programming language:
 * [Python](./python)
 * [Ruby](./ruby)
 
-For example, the [cpp](./cpp) folder contains all the sample programs written
-in C++.
+For example, the [cpp11](./cpp11) folder contains all the sample programs written
+in C++ that demonstrate the Ice C++11 mapping.
 
 The [certs](./certs) folder contains X.509 certificates shared by some of these
 sample programs.
@@ -50,4 +50,4 @@ building and running the sample programs.
 ## License
 
 The sample programs are licensed under the GNU General Public License version 2
-([GPL v2](./LICENSE)).
+([GPLv2](./LICENSE)).
