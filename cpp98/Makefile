@@ -8,7 +8,7 @@
 # **********************************************************************
 
 top_srcdir 	:= ..
-lang_srcdir	:= $(top_srcdir)/cpp
+lang_srcdir	:= $(top_srcdir)/cpp98
 
 include $(top_srcdir)/make/Make.rules
 include $(lang_srcdir)/make/Make.rules
