@@ -96,12 +96,12 @@ Win32 or x64. Right click on the desired demo in the Solution Explorer window an
   * Open a Visual Studio command prompt
 
             cd ice-demos\cpp
-            MSBuild /p:UseIceHome=yes /p:IceHome:<Ice dist path> "C++ demos.sln"
+            MSBuild /p:ICE_SRC_DIST=all /p:IceHome:<Ice dist path> "C++ demos.sln"
 
 - Build from Visual Studio
   * Open a Visual Studio command prompt
   
-            set UseIceHome=yes
+            set ICE_SRC_DIST=all
             devenv
 
   * When Visual Studio starts set IceHome in Ice Builder options, "Tools > Options > Projects and Solutions > Ice Builder"
@@ -146,12 +146,12 @@ Win32, x64 or ARM. Right click on the desired demo in the Solution Explorer wind
   * Open a Visual Studio command prompt
 
             cd ice-demos\cpp
-            MSBuild /p:UseIceHome=yes /p:IceHome:<Ice dist path> "C++ demos.sln"
+            MSBuild /p:ICE_SRC_DIST=all /p:IceHome:<Ice dist path> "C++ demos.sln"
 
 - Build from Visual Studio
   * Open a Visual Studio command prompt
   
-            set UseIceHome=yes
+            set ICE_SRC_DIST=yes
             devenv
 
   * When Visual Studio starts set IceHome in Ice Builder options, "Tools > Options > Projects and Solutions > Ice Builder"

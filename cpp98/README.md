@@ -3,7 +3,6 @@
 - [Overview](#overview)
 - [Building and Running the Demos on Linux and OS X](#building-and-running-the-demos-on-linux-and-os-x)
 - [Building and Running the Demos on Windows](#building-and-running-the-demos-on-windows)
-- [Building the Demo Apps for Universal Windows Platform (UWP)](#building-the-demo-apps-for-universal-windows-platform-uwp)
 ## Overview
 
 This directory contains C++ sample programs for various Ice components. These
@@ -101,56 +100,6 @@ Win32 or x64. Right click on the desired demo in the Solution Explorer window an
   * Open a Visual Studio command prompt
   
             set UseSrcDist=yes
-            devenv
-
-  * When Visual Studio starts set IceHome in Ice Builder options, "Tools > Options > Projects and Solutions > Ice Builder"
-  * Disable automatic restoring of NuGet packages in Visual Studio from "Tools > Options > NuGet Package Manager"
-  * Select your target configuration: Debug or Release and platform Win32 or x64. Right click on the desired demo in the Solution Explorer window and select "Build".
-
-### Running the Demos
-
-Before running a demo, make sure you've configured your environment to use Ice
-as described in the [release notes][3].
-
-Refer to the README file in each demo directory for usage instructions.
-
-## Building the Demo Apps for Universal Windows Platform (UWP)
-
-### Prerequisites
-
-The projects for the sample programs require the [Ice Builder for Visual Studio][5].
-Add this extension to Visual Studio before opening the solution.
-
-UWP requires Windows 10 with Visual Studio 2015.
-
-### Building the Demos
-
-#### Building the demos using NuGet packages:
-
-Open the solution file `C++ demos (Universal Windows).sln`.
-
-The demos are configure to use Ice distribution from Nuget packages, this packages are
-automatically downloaded during build. If you have disabled the automatic download of
-Nuget packages in Visual Studio you need to restore the packages before you build.
-
-Packages can be restore from "Tools > NuGet Package Manager > Manage NuGet Packages for Solution..."
-command in Visual Studio.
-
-After restoring the packages select your target configuration: Debug or Release, and platform
-Win32, x64 or ARM. Right click on the desired demo in the Solution Explorer window and select "Build".
-
-#### Building the demos without using NuGet packages:
-
-- Build from command line:
-  * Open a Visual Studio command prompt
-
-            cd ice-demos\cpp
-            MSBuild /p:UseIceHome=yes /p:IceHome:<Ice dist path> "C++ demos.sln"
-
-- Build from Visual Studio
-  * Open a Visual Studio command prompt
-  
-            set UseIceHome=yes
             devenv
 
   * When Visual Studio starts set IceHome in Ice Builder options, "Tools > Options > Projects and Solutions > Ice Builder"
