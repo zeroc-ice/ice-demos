@@ -29,7 +29,7 @@
            <properties refid="mx"/>
          </properties>
 
-         <service name="IceStorm" entry="IceStormService,37a4:createIceStorm">
+         <service name="IceStorm" entry="IceStormService,37b0:createIceStorm">
 
            <adapter name="${service}.TopicManager"
                     endpoints="${topic-manager-endpoints}"

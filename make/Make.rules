@@ -65,8 +65,8 @@ ice_src_dist 		:= $(wildcard $(ice_home)/config/Make.rules)
 #
 # The version/soversion variables are used for versionning plugins built with the demos.
 #
-version			= 3.7a4
-soversion		= 37a4
+version			= 3.7b0
+soversion		= 37b0
 compatversion		= $(version)
 
 static_projects		= %
