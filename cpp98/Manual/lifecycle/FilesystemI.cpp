@@ -4,7 +4,6 @@
 //
 // **********************************************************************
 
-#include <IceUtil/IceUtil.h>
 #include <FilesystemI.h>
 
 using namespace std;
@@ -116,7 +115,7 @@ NodeDescSeq
 FilesystemI::DirectoryI::list(const Current& c)
 {
     IceUtil::Mutex::Lock lock(_m);
-    
+
     if(_destroyed)
     {
         throw ObjectNotExistException(__FILE__, __LINE__, c.id, c.facet, c.operation);
@@ -140,7 +139,7 @@ NodeDesc
 FilesystemI::DirectoryI::find(const string& nm, const Current& c)
 {
     IceUtil::Mutex::Lock lock(_m);
-    
+
     if(_destroyed)
     {
         throw ObjectNotExistException(__FILE__, __LINE__, c.id, c.facet, c.operation);

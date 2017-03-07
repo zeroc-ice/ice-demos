@@ -5,7 +5,6 @@
 // **********************************************************************
 
 #include <Ice/Ice.h>
-#include <IceUtil/IceUtil.h> // For generateUUID.
 #include <Glacier2/Glacier2.h>
 #include <ChatSessionI.h>
 

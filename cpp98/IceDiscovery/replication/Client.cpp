@@ -4,7 +4,6 @@
 //
 // **********************************************************************
 
-#include <IceUtil/IceUtil.h>
 #include <Ice/Ice.h>
 #include <IceGrid/IceGrid.h>
 #include <Hello.h>
@@ -99,7 +98,7 @@ HelloClient::run(int argc, char* argv[])
         {
             delay = 500; // 500 milli-seconds
         }
-        
+
         for(int i = 0; i < count; i++)
         {
             cout << hello->getGreeting() << endl;

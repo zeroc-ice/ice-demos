@@ -4,7 +4,6 @@
 //
 // **********************************************************************
 
-#include <IceUtil/IceUtil.h>
 #include <Ice/Ice.h>
 #include <IceStorm/IceStorm.h>
 
@@ -161,7 +160,7 @@ Subscriber::run(int argc, char* argv[])
 
     IceStorm::TopicPrx topic;
     try
-    {  
+    {
         topic = manager->retrieve(topicName);
     }
     catch(const IceStorm::NoSuchTopic&)

@@ -4,7 +4,6 @@
 //
 // **********************************************************************
 
-#include <IceUtil/IceUtil.h>
 #include <Ice/Ice.h>
 
 #include <PollingChat.h>
