@@ -12,9 +12,9 @@
 
     <node name="node1">
       <server id="SessionServer" exe="./server" activation="session">
-	<adapter name="Hello" endpoints="tcp -h localhost">
-	  <allocatable identity="hello" property="Identity"/>
-	</adapter>
+      <adapter name="Hello" endpoints="tcp -h localhost">
+        <allocatable identity="hello" property="Identity"/>
+      </adapter>
 
         <property name="IceMX.Metrics.Debug.GroupBy" value="id"/>
         <property name="IceMX.Metrics.Debug.Disabled" value="1"/>
