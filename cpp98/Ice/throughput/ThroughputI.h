@@ -18,23 +18,25 @@ public:
     virtual bool needsWarmup(const Ice::Current&);
     virtual void startWarmup(const Ice::Current&);
     virtual void endWarmup(const Ice::Current&);
-    
+
     virtual void sendByteSeq(const std::pair<const Ice::Byte*, const Ice::Byte*>&, const Ice::Current&);
     virtual void recvByteSeq_async(const Demo::AMD_Throughput_recvByteSeqPtr&, const Ice::Current&);
     virtual void echoByteSeq_async(const Demo::AMD_Throughput_echoByteSeqPtr&,
                                    const std::pair<const Ice::Byte*, const Ice::Byte*>&, const Ice::Current&);
-   
+
     virtual void sendStringSeq(const std::vector<Util::string_view>&, const Ice::Current&);
     virtual void recvStringSeq_async(const Demo::AMD_Throughput_recvStringSeqPtr&, const Ice::Current&);
-    virtual void echoStringSeq_async(const Demo::AMD_Throughput_echoStringSeqPtr&, 
+    virtual void echoStringSeq_async(const Demo::AMD_Throughput_echoStringSeqPtr&,
                                      const std::vector<Util::string_view>&, const Ice::Current&);
-    
+
     virtual void sendStructSeq(const Demo::StringDoubleSeq&, const Ice::Current&);
     virtual Demo::StringDoubleSeq recvStructSeq(const Ice::Current&);
     virtual Demo::StringDoubleSeq echoStructSeq(const Demo::StringDoubleSeq&, const Ice::Current&);
+
     virtual void sendFixedSeq(const Demo::FixedSeq&, const Ice::Current&);
     virtual Demo::FixedSeq recvFixedSeq(const Ice::Current&);
     virtual Demo::FixedSeq echoFixedSeq(const Demo::FixedSeq&, const Ice::Current&);
+
     virtual void shutdown(const Ice::Current& c);
 
 private:

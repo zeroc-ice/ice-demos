@@ -14,11 +14,8 @@ class ContactClient : public Ice::Application
 {
 public:
 
-    ContactClient();
-
     virtual int run(int, char*[]);
 };
-
 
 int
 main(int argc, char* argv[])
@@ -28,10 +25,6 @@ main(int argc, char* argv[])
 #endif
     ContactClient app;
     return app.main(argc, argv, "config.client");
-}
-
-ContactClient::ContactClient()
-{
 }
 
 int
@@ -67,7 +60,7 @@ ContactClient::run(int argc, char* argv[])
     //
     if(!number)
     {
-    	cout << "number is incorrect " << flush;
+        cout << "number is incorrect " << flush;
     }
 
     //
@@ -75,7 +68,7 @@ ContactClient::run(int argc, char* argv[])
     //
     if(number != johnNumber)
     {
-    	cout << "number is incorrect " << flush;
+        cout << "number is incorrect " << flush;
     }
 
     //
@@ -83,7 +76,7 @@ ContactClient::run(int argc, char* argv[])
     //
     if(number.get() != johnNumber)
     {
-    	cout << "number is incorrect " << flush;
+        cout << "number is incorrect " << flush;
     }
 
     //
@@ -92,7 +85,7 @@ ContactClient::run(int argc, char* argv[])
     //
     if(number->size() != johnNumber.size())
     {
-    	cout << "number is incorrect " << flush;
+        cout << "number is incorrect " << flush;
     }
 
     // Optional can also be used in an out parameter.
@@ -100,7 +93,7 @@ ContactClient::run(int argc, char* argv[])
     contactdb->queryDialgroup("john", dialgroup);
     if(!dialgroup || dialgroup != 0)
     {
-    	cout << "dialgroup is incorrect " << flush;
+        cout << "dialgroup is incorrect " << flush;
     }
 
     ContactPtr info = contactdb->query("john");
@@ -109,11 +102,11 @@ ContactClient::run(int argc, char* argv[])
     //
     if(!info->type || !info->number || !info->dialGroup)
     {
-    	cout << "info is incorrect " << flush;
+        cout << "info is incorrect " << flush;
     }
     if(info->type != HOME || info->number != johnNumber || info->dialGroup != 0)
     {
-    	cout << "info is incorrect " << flush;
+        cout << "info is incorrect " << flush;
     }
     cout << "ok" << endl;
 
@@ -131,7 +124,7 @@ ContactClient::run(int argc, char* argv[])
     number = contactdb->queryNumber("steve");
     if(number != steveNumber)
     {
-    	cout << "number is incorrect " << flush;
+        cout << "number is incorrect " << flush;
     }
 
     info = contactdb->query("steve");
@@ -140,18 +133,18 @@ ContactClient::run(int argc, char* argv[])
     //
     if(!info->type || info->type != HOME)
     {
-    	cout << "info is incorrect " << flush;
+        cout << "info is incorrect " << flush;
     }
 
     if(info->number != steveNumber || info->dialGroup != 1)
     {
-    	cout << "info is incorrect " << flush;
+        cout << "info is incorrect " << flush;
     }
 
     contactdb->queryDialgroup("steve", dialgroup);
     if(!dialgroup || dialgroup != 1)
     {
-    	cout << "dialgroup is incorrect " << flush;
+        cout << "dialgroup is incorrect " << flush;
     }
 
     cout << "ok" << endl;
@@ -167,7 +160,7 @@ ContactClient::run(int argc, char* argv[])
     number = contactdb->queryNumber("frank");
     if(number != frankNumber)
     {
-    	cout << "number is incorrect " << flush;
+        cout << "number is incorrect " << flush;
     }
 
     info = contactdb->query("frank");
@@ -176,17 +169,17 @@ ContactClient::run(int argc, char* argv[])
     //
     if(info->dialGroup)
     {
-    	cout << "info is incorrect " << flush;
+        cout << "info is incorrect " << flush;
     }
     if(info->type != CELL || info->number != frankNumber)
     {
-    	cout << "info is incorrect " << flush;
+        cout << "info is incorrect " << flush;
     }
 
     contactdb->queryDialgroup("frank", dialgroup);
     if(dialgroup)
     {
-    	cout << "dialgroup is incorrect " << flush;
+        cout << "dialgroup is incorrect " << flush;
     }
     cout << "ok" << endl;
 
@@ -199,7 +192,7 @@ ContactClient::run(int argc, char* argv[])
     number = contactdb->queryNumber("anne");
     if(number)
     {
-    	cout << "number is incorrect " << flush;
+        cout << "number is incorrect " << flush;
     }
 
     info = contactdb->query("anne");
@@ -208,17 +201,17 @@ ContactClient::run(int argc, char* argv[])
     //
     if(info->number)
     {
-    	cout << "info is incorrect " << flush;
+        cout << "info is incorrect " << flush;
     }
     if(info->type != OFFICE || info->dialGroup != 2)
     {
-    	cout << "info is incorrect " << flush;
+        cout << "info is incorrect " << flush;
     }
 
     contactdb->queryDialgroup("anne", dialgroup);
     if(!dialgroup || dialgroup != 2)
     {
-    	cout << "dialgroup is incorrect " << flush;
+        cout << "dialgroup is incorrect " << flush;
     }
 
     //
@@ -231,12 +224,12 @@ ContactClient::run(int argc, char* argv[])
     number = contactdb->queryNumber("anne");
     if(number != anneNumber)
     {
-    	cout << "number is incorrect " << flush;
+        cout << "number is incorrect " << flush;
     }
     info = contactdb->query("anne");
     if(info->number != anneNumber || info->type != OFFICE || info->dialGroup != 2)
     {
-    	cout << "info is incorrect " << flush;
+        cout << "info is incorrect " << flush;
     }
     cout << "ok" << endl;
 

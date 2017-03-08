@@ -57,6 +57,9 @@ slice2cpp_path			= $(ice_bindir)/slice2cpp
 $(foreach v,$(supported-configs) $(supported-platforms) platform config,$(eval $v_targetdir := )\
 									$(eval $v_targetname := ))
 
+
+shared_targetname               = $(if $(filter-out $($1_target),program),++11)
+
 #
 # $(call make-cpp-demo-project,$1=project)
 #

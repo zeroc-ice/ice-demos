@@ -11,22 +11,13 @@ ThroughputI::ThroughputI() :
     _byteSeq(Demo::ByteSeqSize),
     _stringSeq(Demo::StringSeqSize, "hello"),
     _stringViewSeq(Demo::StringSeqSize, "hello"),
-    _structSeq(Demo::StringDoubleSeqSize),
-    _fixedSeq(Demo::FixedSeqSize),
     _warmup(false)
 {
-    int i;
-    for(i = 0; i < Demo::StringDoubleSeqSize; ++i)
-    {
-        _structSeq[i].s = "hello";
-        _structSeq[i].d = 3.14;
-    }
-    for(i = 0; i < Demo::FixedSeqSize; ++i)
-    {
-        _fixedSeq[i].i = 0;
-        _fixedSeq[i].j = 0;
-        _fixedSeq[i].d = 0;
-    }
+    Demo::StringDouble stringDoubleVal = { "hello", 3.14 };
+    _structSeq = Demo::StringDoubleSeq(Demo::StringDoubleSeqSize, stringDoubleVal);
+
+    Demo::Fixed fixedVal = { 0, 0, 0.0 };
+    _fixedSeq = Demo::FixedSeq(Demo::FixedSeqSize, fixedVal);
 }
 
 bool
@@ -56,14 +47,8 @@ ThroughputI::sendByteSeq(const std::pair<const Ice::Byte*, const Ice::Byte*>&, c
 void
 ThroughputI::recvByteSeq_async(const Demo::AMD_Throughput_recvByteSeqPtr& cb, const Ice::Current&)
 {
-    std::pair<const Ice::Byte*, const Ice::Byte*> ret;
-    if(_warmup)
-    {
-        Demo::ByteSeq empty(1);
-        ret.first = &empty[0];
-        ret.second = ret.first + empty.size();
-    }
-    else
+    std::pair<const Ice::Byte*, const Ice::Byte*> ret(0, 0);
+    if(!_warmup)
     {
         ret.first = &_byteSeq[0];
         ret.second = ret.first + _byteSeq.size();
@@ -72,7 +57,7 @@ ThroughputI::recvByteSeq_async(const Demo::AMD_Throughput_recvByteSeqPtr& cb, co
 }
 
 void
-ThroughputI::echoByteSeq_async(const Demo::AMD_Throughput_echoByteSeqPtr& cb, 
+ThroughputI::echoByteSeq_async(const Demo::AMD_Throughput_echoByteSeqPtr& cb,
                          const std::pair<const Ice::Byte*, const Ice::Byte*>& seq, const Ice::Current&)
 {
     cb->ice_response(seq);
@@ -84,7 +69,7 @@ ThroughputI::sendStringSeq(const std::vector<Util::string_view>&, const Ice::Cur
 }
 
 void
-ThroughputI::recvStringSeq_async(const Demo::AMD_Throughput_recvStringSeqPtr& cb, 
+ThroughputI::recvStringSeq_async(const Demo::AMD_Throughput_recvStringSeqPtr& cb,
                                  const Ice::Current&)
 {
     if(_warmup)
@@ -98,7 +83,7 @@ ThroughputI::recvStringSeq_async(const Demo::AMD_Throughput_recvStringSeqPtr& cb
 }
 
 void
-ThroughputI::echoStringSeq_async(const Demo::AMD_Throughput_echoStringSeqPtr& cb, 
+ThroughputI::echoStringSeq_async(const Demo::AMD_Throughput_echoStringSeqPtr& cb,
                                  const std::vector<Util::string_view>& seq, const Ice::Current&)
 {
     cb->ice_response(seq);

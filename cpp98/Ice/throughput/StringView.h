@@ -13,8 +13,8 @@ namespace Util
 {
 
 //
-// A simplified version of boost::string_ref and the new
-// std::experimental::fundamentals_v1::string_view
+// A simplified C++98-compatible placeholder for std::string_view
+// http://en.cppreference.com/w/cpp/string/basic_string_view
 //
 
 class string_view
@@ -24,28 +24,26 @@ public:
     string_view() :
         _data(0),
         _size(0)
-    {}
+    {
+    }
 
     string_view(const string_view& sv) :
         _data(sv._data),
         _size(sv._size)
-    {}
-
-    string_view(const std::string& s) :
-        _data(s.data()),
-        _size(s.length())
-    {}
-
-    string_view(const char* str) :
-        _data(str),
-        _size(strlen(str))
     {
     }
 
     string_view(const char* str, size_t len) :
         _data(str),
         _size(len)
-    {}
+    {
+    }
+
+    string_view(const char* str) :
+        _data(str),
+        _size(strlen(str))
+    {
+    }
 
     string_view& operator=(const string_view& sv)
     {
@@ -72,17 +70,6 @@ public:
     const char* data() const
     {
         return _data;
-    }
-
-    void clear()
-    {
-        _data = 0;
-        _size = 0;
-    }
-
-    std::string to_string() const
-    {
-        return std::string(_data, _size);
     }
 
     int compare(string_view str) const
@@ -133,7 +120,7 @@ namespace Ice
 
 //
 // Describes how to marshal/unmarshal a Util::string_view
-// It would be the same for a string_ref or std...::string_view
+// It would be the same for a string_ref or std::string_view
 //
 
 template<>
@@ -150,9 +137,6 @@ struct StreamHelper<Util::string_view, StreamHelperCategoryBuiltin>
     template<class S> static inline void
     write(S* stream, const Util::string_view& v)
     {
-        //
-        // For consistency with the read, we don't string-convert
-        //
         stream->write(v.data(), v.size(), false);
     }
 
@@ -162,19 +146,8 @@ struct StreamHelper<Util::string_view, StreamHelperCategoryBuiltin>
         const char* vdata = 0;
         size_t vsize = 0;
 
-        //
-        // We ignore the string converter
-        //
         stream->read(vdata, vsize);
-
-        if(vsize > 0)
-        {
-            v = Util::string_view(vdata, vsize);
-        }
-        else
-        {
-            v.clear();
-        }
+        v = Util::string_view(vdata, vsize);
     }
 };
 

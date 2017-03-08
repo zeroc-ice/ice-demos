@@ -60,7 +60,7 @@ ThroughputClient::run(int argc, char* argv[])
         return EXIT_FAILURE;
     }
 
-    ThroughputPrx throughputOneway = ThroughputPrx::uncheckedCast(throughput->ice_oneway());
+    ThroughputPrx throughputOneway = throughput->ice_oneway();
 
     ByteSeq byteSeq(ByteSeqSize);
     pair<const Ice::Byte*, const Ice::Byte*> byteArr;
@@ -70,21 +70,11 @@ ThroughputClient::run(int argc, char* argv[])
     StringSeq stringSeq(StringSeqSize, "hello");
     vector<Util::string_view> stringViewSeq(StringSeqSize, "hello");
 
-    StringDoubleSeq structSeq(StringDoubleSeqSize);
-    for(int i = 0; i < StringDoubleSeqSize; ++i)
-    {
-        structSeq[i].s = "hello";
-        structSeq[i].d = 3.14;
-    }
+    StringDouble stringDoubleVal = { "hello", 3.14 };
+    StringDoubleSeq structSeq(StringDoubleSeqSize, stringDoubleVal);
 
-    FixedSeq fixedSeq(FixedSeqSize);
-    for(int i = 0; i < FixedSeqSize; ++i)
-    {
-        fixedSeq[i].i = 0;
-        fixedSeq[i].j = 0;
-        fixedSeq[i].d = 0;
-    }
-
+    Fixed fixedVal = { 0, 0, 0.0 };
+    FixedSeq fixedSeq(FixedSeqSize, fixedVal);
 
     //
     // To allow cross-language tests we may need to "warm up" the
@@ -97,22 +87,13 @@ ThroughputClient::run(int argc, char* argv[])
         throughput->startWarmup();
 
         ByteSeq emptyBytesBuf(1);
-        emptyBytesBuf.resize(1);
         pair<const Ice::Byte*, const Ice::Byte*> emptyBytes;
         emptyBytes.first = &emptyBytesBuf[0];
         emptyBytes.second = emptyBytes.first + emptyBytesBuf.size();
 
-        StringSeq emptyStrings(1);
-        emptyStrings.resize(1);
-
         vector<Util::string_view> emptyStringViews(1);
-        emptyStringViews.resize(1);
-
         StringDoubleSeq emptyStructs(1);
-        emptyStructs.resize(1);
-
         FixedSeq emptyFixed(1);
-        emptyFixed.resize(1);
 
         cout << "warming up the server... " << flush;
         for(int i = 0; i < 10000; i++)

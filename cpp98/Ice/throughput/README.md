@@ -30,8 +30,7 @@ We use a custom mapping for strings: instead of the default `std::string`,
 we use our own lightweight `Util::string_view` type, which does not 
 allocate memory.
  
-`string_view` is similar to `boost::string_ref` and to the proposed
-experimental C++14 `string_view`.
+`string_view` is similar to the C++17 `std::string_view`.
 
 The resulting behavior is similar to the `cpp:array` behavior for bytes 
 sequences, with the `string_view` "pointing" to the Ice marshaling buffer. 

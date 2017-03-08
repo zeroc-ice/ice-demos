@@ -19,7 +19,6 @@
 *.sdf
 *.opt
 *.opendb
-*.user
 *.res
 *.exp
 .gdb_history
@@ -91,7 +90,6 @@ xcshareddata
 
 # User-specific files
 *.suo
-*.user
 *.userosscache
 *.sln.docstates
 
