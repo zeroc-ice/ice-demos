@@ -25,7 +25,7 @@ IceSSL.DefaultDir=certs
 IceSSL.CAs=ca.pem
 IceSSL.CertFile=node.p12
 IceSSL.Password=password
-IceSSL.Keychain=node.keychain
+IceSSL.Keychain=../../../certs/node.keychain
 IceSSL.KeychainPassword=password
 
 IceSSL.TrustOnly.Client=CN="Server";CN="Master";CN="Slave"

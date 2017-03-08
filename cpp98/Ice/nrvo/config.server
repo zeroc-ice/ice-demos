@@ -18,5 +18,5 @@ IceSSL.DefaultDir=../../../certs
 IceSSL.CAs=cacert.pem
 IceSSL.CertFile=server.p12
 IceSSL.Password=password
-IceSSL.Keychain=server.keychain
+IceSSL.Keychain=../../../certs/server.keychain
 IceSSL.KeychainPassword=password

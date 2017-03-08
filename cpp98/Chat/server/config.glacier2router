@@ -6,7 +6,7 @@ Glacier2.InstanceName=DemoGlacier2
 #
 # The client-visible endpoint of Glacier2. This should be an endpoint
 # visible from the public Internet.
-# 
+#
 Glacier2.Client.Endpoints=ssl -p 4064 -t 10000 -h 127.0.0.1:tcp -p 4502 -t 10000 -h 127.0.0.1
 
 #
@@ -18,7 +18,7 @@ Glacier2.Client.Endpoints=ssl -p 4064 -t 10000 -h 127.0.0.1:tcp -p 4502 -t 10000
 #
 Glacier2.Server.Endpoints=tcp -h 127.0.0.1
 
-# 
+#
 # The proxy of the session manager.
 #
 Glacier2.SessionManager=ChatSessionManager:tcp -h 127.0.0.1 -p 10001
@@ -29,10 +29,10 @@ Glacier2.SessionManager=ChatSessionManager:tcp -h 127.0.0.1 -p 10001
 #
 Glacier2.Filter.Address.Accept=127.0.0.1:10001
 
-# 
+#
 # For this demo, we use the null permissions verifier. This permissions
 # verifier allows any user-id / password combination.
-# 
+#
 Glacier2.PermissionsVerifier=DemoGlacier2/NullPermissionsVerifier
 
 #
@@ -64,7 +64,7 @@ IceSSL.DefaultDir=../../../certs
 IceSSL.CAs=cacert.pem
 IceSSL.CertFile=server.p12
 IceSSL.Password=password
-IceSSL.Keychain=glacier2.keychain
+IceSSL.Keychain=../../../certs/glacier2.keychain
 IceSSL.KeychainPassword=password
 IceSSL.VerifyPeer=0
 

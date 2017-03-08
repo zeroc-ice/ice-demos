@@ -15,7 +15,7 @@
       <property name="IceSSL.CertFile" value="server.p12"/>
       <property name="IceSSL.Password" value="password"/>
       <property name="IceSSL.DefaultDir" value="certs"/>
-      <property name="IceSSL.Keychain" value="server.keychain"/>
+      <property name="IceSSL.Keychain" value="../../../certs/server.keychain"/>
       <property name="IceSSL.KeychainPassword" value="password"/>
 
       <property name="Ice.Admin.Endpoints" value="ssl -h localhost"/>
