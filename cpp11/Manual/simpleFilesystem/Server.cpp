@@ -37,7 +37,7 @@ public:
         //
         auto file = make_shared<FileI>("README", root);
         auto text = Lines({"This file system contains a collection of poetry."});
-        file->write(text);
+        file->write(text, Ice::emptyCurrent);
         file->activate(adapter);
 
         //
@@ -57,7 +57,7 @@ public:
             "Through caverns measureless to man",
             "Down to a sunless sea."
         };
-        file->write(text);
+        file->write(text, Ice::emptyCurrent);
         file->activate(adapter);
 
         //

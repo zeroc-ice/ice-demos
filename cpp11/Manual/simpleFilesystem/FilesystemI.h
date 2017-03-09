@@ -36,7 +36,7 @@ namespace Filesystem
     public:
 
         virtual Lines read(const Ice::Current&) override;
-        virtual void write(Lines, const Ice::Current& = Ice::Current()) override;
+        virtual void write(Lines, const Ice::Current&) override;
         
         FileI(const std::string&, const std::shared_ptr<DirectoryI>&);
 

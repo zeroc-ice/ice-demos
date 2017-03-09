@@ -43,8 +43,7 @@ namespace Filesystem
     public:
 
         virtual Lines read(const Ice::Current&);
-        virtual void write(const Lines&,
-                           const Ice::Current& = Ice::Current());
+        virtual void write(const Lines&, const Ice::Current& = Ice::emptyCurrent);
         FileI(const std::string&, const DirectoryIPtr&);
 
     private:
