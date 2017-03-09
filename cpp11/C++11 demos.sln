@@ -8,46 +8,70 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ice", "Ice", "{60A225B4-F05B-412D-82B6-50B9A1539B6A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "async", "async", "{7E2C9CDC-52B0-4027-94A5-1DCDB00A6300}"
+	ProjectSection(SolutionItems) = preProject
+		Ice\async\README.md = Ice\async\README.md
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\async\msbuild\server\server.vcxproj", "{966B1F47-A385-4CC7-9E13-27B34808152C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bidir", "bidir", "{A572ADB9-9FB2-4ABA-B3A9-063DA983A369}"
+	ProjectSection(SolutionItems) = preProject
+		Ice\bidir\README.md = Ice\bidir\README.md
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\bidir\msbuild\client\client.vcxproj", "{7074C2B1-CBA9-494C-BFE5-955721AE44B0}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\bidir\msbuild\server\server.vcxproj", "{FC895988-01DA-4B5C-8D38-C1CB68F93EF5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "callback", "callback", "{9F0424D4-62AB-4888-891C-7D69A9891274}"
+	ProjectSection(SolutionItems) = preProject
+		Ice\callback\README.md = Ice\callback\README.md
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\callback\msbuild\client\client.vcxproj", "{570A810E-6888-4D21-A6AD-976B0350F42E}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\callback\msbuild\server\server.vcxproj", "{5B71F2A4-0901-418C-8E11-986EE6362870}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "context", "context", "{701E7412-1639-4827-9185-34D62BC995F6}"
+	ProjectSection(SolutionItems) = preProject
+		Ice\context\README.md = Ice\context\README.md
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\context\msbuild\client\client.vcxproj", "{97DE0B9E-0DA8-4304-BAAC-CBC52339B14D}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\context\msbuild\server\server.vcxproj", "{2E565430-0E78-44F1-97CD-6995EEED4FCC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "hello", "hello", "{86DF5887-635F-4FE4-97B0-4B4476E30C36}"
+	ProjectSection(SolutionItems) = preProject
+		Ice\hello\README.md = Ice\hello\README.md
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\hello\msbuild\client\client.vcxproj", "{710A52F2-A014-4CB2-AF40-348D48DBCDDD}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\hello\msbuild\server\server.vcxproj", "{25843122-783A-45E0-8D42-612C72D3B183}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "invoke", "invoke", "{ACD0FE66-18ED-400E-9FC6-E65777A80B89}"
+	ProjectSection(SolutionItems) = preProject
+		Ice\invoke\README.md = Ice\invoke\README.md
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\invoke\msbuild\client\client.vcxproj", "{8ADDD766-8657-42B1-96A7-83AF4B70F2C3}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\invoke\msbuild\server\server.vcxproj", "{9D2F23B1-0049-4E6C-86A7-557A5B1F8597}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "latency", "latency", "{00F34354-5BCD-4CE7-BAFB-23F12817C8F1}"
+	ProjectSection(SolutionItems) = preProject
+		Ice\latency\README.md = Ice\latency\README.md
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\latency\msbuild\client\client.vcxproj", "{C9E196EB-AB36-48CE-93F4-2BA37BAA7E76}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\latency\msbuild\server\server.vcxproj", "{DF4C0DA9-DD64-44D1-B56E-FDC3C1CE4A44}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "locator", "locator", "{DAFA89E0-AB8B-44BA-AA35-E84410403C93}"
+	ProjectSection(SolutionItems) = preProject
+		Ice\locator\README.md = Ice\locator\README.md
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\locator\msbuild\client\client.vcxproj", "{51D56919-05A7-4282-A736-CD25ABC2179A}"
 EndProject
@@ -56,6 +80,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\locator\msbuild\server\server.vcxproj", "{60208663-4C32-4B9F-A3CA-DA103A56257F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "properties", "properties", "{D40F0E37-87A7-4681-A351-A7CC5EB1716E}"
+	ProjectSection(SolutionItems) = preProject
+		Ice\properties\README.md = Ice\properties\README.md
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\properties\msbuild\client\client.vcxproj", "{51FCF834-E154-445B-9911-1E9F769EABEC}"
 EndProject
@@ -64,18 +91,27 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Manual", "Manual", "{44504257-9751-4CA1-AF97-86995FE49C45}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "printer", "printer", "{8671D369-C8F1-4458-A1DA-EBE56CFEE218}"
+	ProjectSection(SolutionItems) = preProject
+		Manual\printer\README.md = Manual\printer\README.md
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Manual\printer\msbuild\client\client.vcxproj", "{4CCAF112-F152-422A-91BE-27C72F638092}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Manual\printer\msbuild\server\server.vcxproj", "{131C5C24-50C3-4AD6-A8D3-C57CEC50AFB9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "simpleFilesystem", "simpleFilesystem", "{8DC0050F-CACD-44E8-B707-34264F210DD7}"
+	ProjectSection(SolutionItems) = preProject
+		Manual\simpleFilesystem\README.md = Manual\simpleFilesystem\README.md
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Manual\simpleFilesystem\msbuild\client\client.vcxproj", "{4B2FC587-BB5D-4B19-85E0-56E7C7636294}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Manual\simpleFilesystem\msbuild\server\server.vcxproj", "{EFCFF55E-CCD2-451E-A0B5-604249ECE4D1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "plugin", "plugin", "{8E858E8E-985A-4196-8E22-D55A5B0C4D55}"
+	ProjectSection(SolutionItems) = preProject
+		Ice\plugin\README.md = Ice\plugin\README.md
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\plugin\msbuild\client\client.vcxproj", "{53C81483-7079-4456-A5C9-59858369D516}"
 EndProject
@@ -86,18 +122,33 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\plugin\msbuild\server\server.vcxproj", "{0DD23FDB-1BF9-4591-B096-43D925841E9E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "minimal", "minimal", "{4815E801-4F3B-451A-85B0-70EADE154C7D}"
+	ProjectSection(SolutionItems) = preProject
+		Ice\minimal\README.md = Ice\minimal\README.md
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\minimal\msbuild\client\client.vcxproj", "{82D5187D-67E4-4C2D-B270-6ECC665D426E}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\minimal\msbuild\server\server.vcxproj", "{E768F2F0-04F1-4721-A624-1265AAC40211}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "interleaved", "interleaved", "{916A88A6-CF55-4F05-8908-028C0E234663}"
+	ProjectSection(SolutionItems) = preProject
+		Ice\interleaved\README.md = Ice\interleaved\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "throughput", "throughput", "{2E338CD6-9EA4-49C8-89C3-6462E68A8472}"
+	ProjectSection(SolutionItems) = preProject
+		Ice\throughput\README.md = Ice\throughput\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nested", "nested", "{3E1035E0-D630-46F5-88AB-EB3B6E4111E9}"
+	ProjectSection(SolutionItems) = preProject
+		Ice\nested\README.md = Ice\nested\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "optional", "optional", "{7CBB7C17-D9E5-4060-9358-F55764140479}"
+	ProjectSection(SolutionItems) = preProject
+		Ice\optional\README.md = Ice\optional\README.md
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\interleaved\msbuild\client\client.vcxproj", "{798DC5EC-427F-49A6-9028-F2A420CCEA4B}"
 EndProject
@@ -116,6 +167,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\throughput\msbuild\server\server.vcxproj", "{383AB467-E29D-4A9D-A5D4-699E7A754A88}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "multicast", "multicast", "{35910F29-0E90-41FC-AAB2-58C72E7EC41D}"
+	ProjectSection(SolutionItems) = preProject
+		Ice\multicast\README.md = Ice\multicast\README.md
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\multicast\msbuild\client\client.vcxproj", "{2494165B-BD91-4805-B759-8F27983E9655}"
 EndProject

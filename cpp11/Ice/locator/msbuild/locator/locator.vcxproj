@@ -194,7 +194,6 @@
   <ItemGroup>
     <ClCompile Include="..\..\Locator.cpp" />
     <None Include="..\..\config.locator" />
-    <None Include="..\..\README.md" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

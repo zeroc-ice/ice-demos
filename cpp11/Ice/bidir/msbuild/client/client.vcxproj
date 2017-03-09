@@ -214,7 +214,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <None Include="..\..\config.client" />
-    <None Include="..\..\README.md" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

@@ -23,21 +23,11 @@ Demos in this directory:
 
   This demo shows how to use Ice request contexts.
 
-- [converter](./converter)
-
-  This demo shows how to use string converters.
-
 - [hello](./hello)
 
   This demo illustrates how to invoke ordinary (twoway) operations, as
   well as how to invoke oneway operations, use datagrams, secure
   invocations, and how to use batched invocations.
-
-- [interleaved](./interleaved)
-
-  A more advanced throughput demo that allows you to send sequences of
-  various types between client and server and to measure the maximum
-  bandwidth that can be achieved using asynchronous requests & replies.
 
 - [invoke](./invoke)
 
@@ -64,11 +54,6 @@ Demos in this directory:
 - [multicast](./multicast)
 
   This demo illistrates the use of UDP multicast.
-
-- [MFC](./MFC) (Windows Only)
-
-  Shows how to use Ice in conjunction with the Microsoft Foundation
-  Classes.
 
 - [nested](./nested)
 

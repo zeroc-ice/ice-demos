@@ -19,7 +19,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\config.client" />
-    <None Include="..\..\README.md" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

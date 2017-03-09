@@ -242,7 +242,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClInclude>
     <None Include="..\..\config.server" />
-    <None Include="..\..\README.md" />
     <IceBuilder Include="..\..\Context.ice" />
     <None Include="packages.config" />
   </ItemGroup>
