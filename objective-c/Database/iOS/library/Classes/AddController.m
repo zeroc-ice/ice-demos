@@ -21,11 +21,11 @@
 {
     self.title = @"New Book";
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]
-                                              initWithBarButtonSystemItem:UIBarButtonSystemItemCancel 
+                                              initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
                                               target:self
                                               action:@selector(cancel:)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]
-                                               initWithBarButtonSystemItem:UIBarButtonSystemItemSave 
+                                               initWithBarButtonSystemItem:UIBarButtonSystemItemSave
                                                target:self
                                                action:@selector(save:)];
     tableView.allowsSelectionDuringEditing = YES;
@@ -72,13 +72,14 @@
 						{
                             [self saving:NO];
 							// open an alert with just an OK button
-							UIAlertView *alert = [[UIAlertView alloc]
-												   initWithTitle:@"Error" message:@"That ISBN number already exists"
-												   delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-							[alert show];
+              UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Error"
+                                                                             message:@"That ISBN number already exists"
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+              [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+              [self presentViewController:alert animated:YES completion:nil];
 							return;
 						}
-						
+
 						[super exception:ex];
 					}];
 }

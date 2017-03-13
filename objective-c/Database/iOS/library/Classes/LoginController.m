@@ -42,8 +42,8 @@ static NSString* passwordKey = @"passwordKey";
     NSDictionary* appDefaults = [NSDictionary dictionaryWithObjectsAndKeys:@"", usernameKey,
                                  @"", passwordKey,
                                  nil];
-	
-    [[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];    
+
+    [[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
 }
 
 -(void)viewDidLoad
@@ -52,17 +52,17 @@ static NSString* passwordKey = @"passwordKey";
     ICEregisterIceSSL(YES);
 
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-    
+
     // Set the default values, and show the clear button in the text field.
     usernameField.clearButtonMode = UITextFieldViewModeWhileEditing;
     usernameField.text = [defaults stringForKey:usernameKey];
     passwordField.clearButtonMode = UITextFieldViewModeWhileEditing;
     passwordField.text = [defaults stringForKey:passwordKey];
-    
+
     mainController = [[MainController alloc] initWithNibName:@"MainView" bundle:nil];
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(applicationWillTerminate) 
+                                             selector:@selector(applicationWillTerminate)
                                                  name:UIApplicationWillTerminateNotification
                                                object:nil];
 }
@@ -122,7 +122,7 @@ static NSString* passwordKey = @"passwordKey";
 
     [theTextField resignFirstResponder];
     self.currentField = nil;
-    
+
     return YES;
 }
 
@@ -133,7 +133,7 @@ static NSString* passwordKey = @"passwordKey";
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [currentField resignFirstResponder];
-    currentField.text = oldFieldValue; 
+    currentField.text = oldFieldValue;
     self.currentField = nil;
     [super touchesBegan:touches withEvent:event];
 }
@@ -148,14 +148,13 @@ static NSString* passwordKey = @"passwordKey";
     // we try to login.
     [communicator destroy];
     self.communicator = nil;
-    
+
     // open an alert with just an OK button
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                     message:s
-                                                    delegate:self
-                                           cancelButtonTitle:@"OK"
-                                           otherButtonTitles:nil];
-    [alert show];
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Error"
+                                                                   message:s
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 -(void)connecting:(BOOL)connecting
@@ -182,9 +181,9 @@ static NSString* passwordKey = @"passwordKey";
 	{
 		@throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Invalid proxy" userInfo:nil];
 	}
-	
+
 	id<DemoSessionPrx> sess = [factory create];
-	
+
 	self.session = sess;
 	sessionTimeout = [factory getSessionTimeout];
 	self.library = [sess getLibrary];
@@ -194,10 +193,10 @@ static NSString* passwordKey = @"passwordKey";
 -(void)doGlacier2Login:(id)proxy
 {
     id<GLACIER2RouterPrx> glacier2router = [GLACIER2RouterPrx uncheckedCast:proxy];
-	
+
 	id<GLACIER2SessionPrx> glacier2session = [glacier2router createSession:usernameField.text password:passwordField.text];
 	id<DemoGlacier2SessionPrx> sess = [DemoGlacier2SessionPrx uncheckedCast:glacier2session];
-	
+
 	self.session = sess;
 	self.router = glacier2router;
 	sessionTimeout = [glacier2router getSessionTimeout];
@@ -211,7 +210,7 @@ static NSString* passwordKey = @"passwordKey";
     [initData.properties load:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"config.client"]];
     [initData.properties setProperty:@"Ice.ACM.Client.Timeout" value:@"0"];
     [initData.properties setProperty:@"Ice.RetryIntervals" value:@"-1"];
-    
+
     // Tracing properties.
     //[initData.properties setProperty:@"Ice.Trace.Network" value:@"1"];
     //[initData.properties setProperty:@"Ice.Trace.Protocol" value:@"1"];
@@ -219,15 +218,15 @@ static NSString* passwordKey = @"passwordKey";
     initData.dispatcher = ^(id<ICEDispatcherCall> call, id<ICEConnection> con) {
         dispatch_sync(dispatch_get_main_queue(), ^ { [call run]; });
     };
-    
-	
+
+
     id<ICEObjectPrx> proxy;
     SEL loginSelector;
     @try
     {
         NSAssert(communicator == nil, @"communicator == nil");
         self.communicator = [ICEUtil createCommunicator:initData];
-        
+
         if([[[communicator getProperties] getProperty:@"Ice.Default.Router"] length] > 0)
         {
             proxy = [communicator getDefaultRouter];
@@ -241,33 +240,31 @@ static NSString* passwordKey = @"passwordKey";
     }
     @catch(ICEEndpointParseException* ex)
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error parsing config"
-                                                        message:ex.reason
-                                                       delegate:self
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
-        
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Error parsing config"
+                                                                       message:ex.reason
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+        [self presentViewController:alert animated:YES completion:nil];
+
         [communicator destroy];
         self.communicator = nil;
         return;
     }
     @catch(...)
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error parsing config"
-                                                        message:@"Please check your config file"
-                                                       delegate:self
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
-        
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Error parsing config"
+                                                                       message:@"Please check your config file"
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+        [self presentViewController:alert animated:YES completion:nil];
+
         [communicator destroy];
         self.communicator = nil;
         return;
     }
-    
+
     [self connecting:YES];
-    
+
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^ {
         @try
         {
@@ -282,13 +279,13 @@ static NSString* passwordKey = @"passwordKey";
 								  router:router
 						  sessionTimeout:sessionTimeout
 								 library:library];
-				
+
 				// Clear internal state.
 				self.communicator = nil;
 				self.session = nil;
 				self.library = nil;
 				self.router = nil;
-				
+
 				[self.navigationController pushViewController:mainController animated:YES];
 			});
 		}
@@ -311,7 +308,7 @@ static NSString* passwordKey = @"passwordKey";
 			dispatch_async(dispatch_get_main_queue(), ^ {
 				[self exception:[ex description]];
 			});
-		}        
+		}
 		@catch(NSException *ex)
 		{
 			dispatch_async(dispatch_get_main_queue(), ^ {

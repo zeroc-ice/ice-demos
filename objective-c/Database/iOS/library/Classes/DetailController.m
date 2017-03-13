@@ -63,7 +63,7 @@ static EditController* editViewController_ = nil;
 {
     self.navigationItem.leftBarButtonItem.action = @selector(popBack);
     self.navigationItem.leftBarButtonItem.target = self;
-    
+
     // Remove any existing selection.
     [tableView deselectRowAtIndexPath:selectedIndexPath animated:NO];
     // Redisplay the data.
@@ -125,9 +125,9 @@ static EditController* editViewController_ = nil;
 
 
     [self.tableView deselectRowAtIndexPath:selectedIndexPath animated:NO];
-    
+
     NSString* s;
-    
+
     // Ignore ObjectNotExistExceptiojn
     if([ex isKindOfClass:[ICEObjectNotExistException class]])
     {
@@ -162,12 +162,18 @@ static EditController* editViewController_ = nil;
     }
 
     // open an alert with just an OK button
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                     message:s
-                                                    delegate:self
-                                           cancelButtonTitle:@"OK"
-                                           otherButtonTitles:nil];
-    [alert show];
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Error"
+                                                                   message:s
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                      handler:^(UIAlertAction * action) {
+                        if(fatal)
+                        {
+                            [delegate destroySession];
+                            [self.navigationController popToRootViewControllerAnimated:YES];
+                        }
+                      }]];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 #pragma mark Callbacks from EditView
@@ -193,9 +199,9 @@ static EditController* editViewController_ = nil;
 {
     self.book = updated;
     self.updated = nil;
-    
+
     changed = YES;
-    
+
     [self saving:NO];
 }
 
@@ -213,7 +219,7 @@ static EditController* editViewController_ = nil;
     [self saving:YES];
     self.updated = book;
     updated.title = title;
-    
+
     if(book.proxy != nil)
     {
         [[book proxy] begin_setTitle:title
@@ -232,7 +238,7 @@ static EditController* editViewController_ = nil;
     NSUInteger index = selectedIndexPath.row;
 
     self.updated = book;
-    
+
     NSMutableArray* arr = (NSMutableArray*)updated.authors;
     if(index == book.authors.count)
     {
@@ -242,7 +248,7 @@ static EditController* editViewController_ = nil;
     {
         [arr replaceObjectAtIndex:index withObject:value];
     }
-    
+
     if(book.proxy != nil)
     {
         [[book proxy] begin_setAuthors:arr
@@ -252,7 +258,7 @@ static EditController* editViewController_ = nil;
     else
     {
         [self commitEdit];
-    }    
+    }
 }
 
 -(void)rentBook:(NSString*)value
@@ -260,23 +266,12 @@ static EditController* editViewController_ = nil;
     [self saving:YES];
     self.updated = book;
     updated.rentedBy = value;
-    
+
     NSAssert(book.proxy != nil, @"book.proxy != nil");
-    
+
     [[book proxy] begin_rentBook:value
 						response:^ { [self commitEdit]; }
 					   exception:^(ICEException* ex) { [self exception:ex]; }];
-}
-
-#pragma mark UIAlertViewDelegate
-
--(void)alertView:(UIAlertView*)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    if(fatal)
-    {
-        [delegate destroySession];
-        [self.navigationController popToRootViewControllerAnimated:YES];
-    }
 }
 
 #pragma mark <UITableViewDelegate, UITableViewDataSource> Methods
@@ -334,7 +329,7 @@ static EditController* editViewController_ = nil;
         // Remove the author from the book.
         NSMutableArray* arr = (NSMutableArray*)updated.authors;
         [arr removeObjectAtIndex:indexPath.row];
-        
+
         if(book.proxy != nil)
         {
             [[book proxy] begin_setAuthors:arr
@@ -344,10 +339,10 @@ static EditController* editViewController_ = nil;
         else
         {
             [self commitEdit];
-        }    
-        
+        }
+
         // Animate the deletion from the table.
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] 
+        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
                          withRowAnimation:UITableViewRowAnimationFade];
     }
     else if(editingStyle == UITableViewCellEditingStyleInsert)
@@ -356,7 +351,7 @@ static EditController* editViewController_ = nil;
         self.selectedIndexPath = indexPath;
         NSString* auth = (indexPath.row >= book.authors.count) ? @"" : [book.authors objectAtIndex:indexPath.row];
         [controller startEdit:self selector:@selector(saveAuthors:) name:@"Author" value:auth];
-        
+
         [self.navigationController pushViewController:controller animated:YES];
     }
 }
@@ -378,7 +373,7 @@ static EditController* editViewController_ = nil;
         {
             return 44.f;
         }
-        
+
         // The width of the table is 320 - 20px of left & right padding. We don't want to let the title
         // go past 200px.
         CGSize rectSz = self.editing ? CGSizeMake(250.f, 200.0f) : CGSizeMake(260.f, 200.0f);
@@ -411,16 +406,16 @@ static EditController* editViewController_ = nil;
                 textView.textColor = [UIColor blackColor];
                 textView.font = [UIFont boldSystemFontOfSize:20];
             }
-            
+
             UILabel* textView = [cell.contentView.subviews objectAtIndex:0];
-            
+
             CGSize rectSz = self.editing ? CGSizeMake(250.f, 200.0f) : CGSizeMake(260.f, 200.0f);
             CGRect rect = [book.title boundingRectWithSize:rectSz options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:20] } context:nil];
             textView.frame = CGRectMake(10.f, 10.f, rect.size.width, rect.size.height);
             textView.text = book.title;
             break;
         }
-            
+
         case 3: // Remove book section OR rented by section
         {
             if(self.editing)
@@ -433,20 +428,20 @@ static EditController* editViewController_ = nil;
                     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                                    reuseIdentifier:@"RemoveBook"];
                     // Add a label to the frame,
-                    
+
                     UIImage *buttonBackground = [UIImage imageNamed:@"redButton.png"];
                     UIImage *newImage = [buttonBackground stretchableImageWithLeftCapWidth:12.0 topCapHeight:0.0];
-                    
+
                     UIButton* button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
                     button.tag = 100;
                     button.frame = CGRectMake(-30.f, 0.f, 300.f, 44.f);
-                    
+
                     [button setTitle:@"Remove Book" forState:UIControlStateNormal];
                     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                     [button setBackgroundImage:newImage forState:UIControlStateNormal];
-                    
+
                     [button addTarget:self action:@selector(removeBook:) forControlEvents:UIControlEventTouchUpInside];
-                    
+
                     button.enabled = !saving;
                     [cell.contentView addSubview:button];
                 }
@@ -459,7 +454,7 @@ static EditController* editViewController_ = nil;
             }
             // fall through
         }
-            
+
         default:
         {
             cell = [tableView dequeueReusableCellWithIdentifier:@"MyIdentifier"];
@@ -467,7 +462,7 @@ static EditController* editViewController_ = nil;
             {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MyIdentifier"];
             }
-            
+
             if(indexPath.section == 0)
             {
                 [cell.textLabel setText:book.isbn];
@@ -543,17 +538,17 @@ static EditController* editViewController_ = nil;
             {
                 return;
             }
-            
+
             [controller startEdit:self selector:@selector(saveIsbn:) name:@"ISBN" value:book.isbn];
             break;
         }
-            
+
         case 1:
         {
             [controller startEdit:self selector:@selector(saveTitle:)name:@"Title" value:book.title];
             break;
         }
-            
+
         case 2:
         {
             self.selectedIndexPath = indexPath;
@@ -561,7 +556,7 @@ static EditController* editViewController_ = nil;
             [controller startEdit:self selector:@selector(saveAuthors:) name:@"Author" value:auth];
             break;
         }
-            
+
         case 3:
         {
             // Its not possible to set the rented by field of a new book.
@@ -570,13 +565,29 @@ static EditController* editViewController_ = nil;
             if(book.rentedBy.length != 0)
             {
                 // Return the book.
-                UIActionSheet* sheet = [[UIActionSheet alloc] initWithTitle:@"Return Book"
-                                                                    delegate:self
-                                                           cancelButtonTitle:@"Cancel"
-                                                      destructiveButtonTitle:@"Return" 
-                                                           otherButtonTitles:nil];
-                [sheet showInView:self.view];
+                UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Return Book"
+                                                                               message:nil
+                                                                        preferredStyle:UIAlertControllerStyleActionSheet];
 
+                [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault
+                      handler:^(UIAlertAction * action) {
+                        [self.tableView deselectRowAtIndexPath:selectedIndexPath animated:NO];
+                      }]];
+                [alert addAction:[UIAlertAction actionWithTitle:@"Return" style:UIAlertActionStyleDefault
+                      handler:^(UIAlertAction * action) {
+                        [self.tableView deselectRowAtIndexPath:selectedIndexPath animated:NO];
+                        [self saving:YES];
+                        [[book proxy] begin_returnBook:^ {
+
+                            [self saving:NO];
+                            [self.tableView deselectRowAtIndexPath:selectedIndexPath animated:NO];
+
+                            book.rentedBy = @"";
+                            [self.tableView reloadData];
+                        }
+                        exception:^(ICEException* ex) { [self exception:ex]; }];
+                      }]];
+                [self presentViewController:alert animated:YES completion:nil];
                 self.selectedIndexPath = indexPath;
                 return;
             }
@@ -589,26 +600,6 @@ static EditController* editViewController_ = nil;
     self.selectedIndexPath = indexPath;
 
     [self.navigationController pushViewController:controller animated:YES];
-}
-
-#pragma mark - UIActionSheetDelegate
-
--(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    [self.tableView deselectRowAtIndexPath:selectedIndexPath animated:NO];
-    if(buttonIndex == 0)
-    {
-        [self saving:YES];
-        [[book proxy] begin_returnBook:^ {
-            
-            [self saving:NO];
-			[self.tableView deselectRowAtIndexPath:selectedIndexPath animated:NO];
-			
-			book.rentedBy = @"";
-			[tableView reloadData];
-		}
-        exception:^(ICEException* ex) { [self exception:ex]; }];
-    }
 }
 
 @end

@@ -173,12 +173,11 @@
                 NSString* s = [NSString stringWithFormat:@"Lost connection with session!\n%@", ex];
 
                 // open an alert with just an OK button
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                                message:s
-                                                               delegate:nil
-                                                      cancelButtonTitle:@"OK"
-                                                      otherButtonTitles:nil];
-                [alert show];
+                UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Error"
+                                                                               message:s
+                                                                        preferredStyle:UIAlertControllerStyleAlert];
+                [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+                [self presentViewController:alert animated:YES completion:nil];
             }];
     }
 }
@@ -243,22 +242,17 @@
     [self destroySession];
 
     // open an alert with just an OK button
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                     message:[ex description]
-                                                    delegate:self
-                                           cancelButtonTitle:@"OK"
-                                           otherButtonTitles:nil];
-    [alert show];
-}
-
-#pragma mark UIAlertViewDelegate
-
--(void)alertView:(UIAlertView*)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    if(session == nil)
-    {
-        [self.navigationController popToRootViewControllerAnimated:YES];
-    }
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Error"
+                                                                   message:[ex description]
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                      handler:^(UIAlertAction * action) {
+                        if(session == nil)
+                        {
+                            [self.navigationController popToRootViewControllerAnimated:YES];
+                        }
+                      }]];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 #pragma mark UISearchBarDelegate
@@ -297,12 +291,11 @@
 		if(nrows == 0)
 		{
 			// open an alert with just an OK button
-			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Results"
-															 message:@"The search returned no results"
-															delegate:self
-												   cancelButtonTitle:@"OK"
-												   otherButtonTitles:nil];
-			[alert show];
+            UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"No results"
+                                                                           message:@"The search returned no results"
+                                                                    preferredStyle:UIAlertControllerStyleAlert];
+            [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+            [self presentViewController:alert animated:YES completion:nil];
 			return;
 		}
 

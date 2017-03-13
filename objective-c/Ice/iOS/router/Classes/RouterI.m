@@ -420,9 +420,10 @@
     serverBlobject.routerDelegate = routerDelegate;
 }
 
--(id<ICEObjectPrx>) getClientProxy:(ICECurrent *)current
+-(id<ICEObjectPrx>) getClientProxy:(id*)hasRoutingTable current:(ICECurrent *)current
 {
     // Since we don't support pre-Ice 3.2 clients, return a nil proxy.
+    *hasRoutingTable = @(YES);
     return 0;
 }
 

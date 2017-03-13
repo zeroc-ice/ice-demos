@@ -23,7 +23,6 @@
     IBOutlet UISlider* delaySlider;
     IBOutlet UIActivityIndicatorView* activity;
 
-    BOOL showAlert;
     id<ICECommunicator> communicator;
 }
 

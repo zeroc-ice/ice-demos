@@ -49,7 +49,7 @@ static NSString* hostnameKey = @"hostnameKey";
     ICEregisterIceDiscovery(NO); // Register the plugin but don't load it on communicator initialization.
     ICEregisterIceSSL(YES);
     ICEregisterIceIAP(YES);
-    
+
     ICEInitializationData* initData = [ICEInitializationData initializationData];
     initData.properties = [ICEUtil createProperties];
     [initData.properties setProperty:@"Ice.Plugin.IceDiscovery" value:@"IceDiscovery:createIceDiscovery"];
@@ -97,8 +97,6 @@ static NSString* hostnameKey = @"hostnameKey";
     [timeoutSlider setShowValue:YES];
 
     statusLabel.text = @"Ready";
-
-    showAlert = NO;
 }
 
 -(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -114,28 +112,10 @@ static NSString* hostnameKey = @"hostnameKey";
 }
 
 
-#pragma mark UIAlertViewDelegate
-
--(void)didPresentAlertView:(UIAlertView *)alertView
-{
-    showAlert = YES;
-}
-
--(void)alertView:(UIAlertView*)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    showAlert = NO;
-}
-
 #pragma mark UITextFieldDelegate
 
 -(BOOL)textFieldShouldReturn:(UITextField *)theTextField
 {
-    // If we've already showing an invalid hostname alert, then we ignore enter.
-    if(showAlert)
-    {
-        return NO;
-    }
-
     // Close the text field.
     [theTextField resignFirstResponder];
     return YES;
@@ -221,12 +201,11 @@ static NSString* hostnameKey = @"hostnameKey";
 {
     NSString* s = [NSString stringWithFormat:@"%@", ex];
     // open an alert with just an OK button
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                     message:s
-                                                    delegate:self
-                                           cancelButtonTitle:@"OK"
-                                           otherButtonTitles:nil];
-    [alert show];
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Error"
+                                                                   message:s
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+    [self presentViewController:alert animated:YES completion:nil];
     [self ready];
 }
 
