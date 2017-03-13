@@ -13,9 +13,6 @@
       <FileRef
          location = "group:Database/iOS/library/library.xcodeproj">
       </FileRef>
-      <FileRef
-         location = "group:Ice/iOS/router/router.xcodeproj">
-      </FileRef>
    </Group>
    <Group
       location = "container:"
