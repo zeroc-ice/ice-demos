@@ -253,6 +253,7 @@
 					generated,
 				);
 				INFOPLIST_FILE = Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				OTHER_LDFLAGS = (
 					"-lIce",
 					"-lIceSSL",
@@ -285,6 +286,7 @@
 					generated,
 				);
 				INFOPLIST_FILE = Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				OTHER_LDFLAGS = (
 					"-lIce",
 					"-lIceSSL",

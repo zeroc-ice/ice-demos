@@ -273,6 +273,7 @@
 					generated,
 				);
 				INFOPLIST_FILE = Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_CFLAGS = "-objc-arc-exceptions";
 				OTHER_LDFLAGS = (
@@ -310,6 +311,7 @@
 					generated,
 				);
 				INFOPLIST_FILE = Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_CFLAGS = "-objc-arc-exceptions";
 				OTHER_LDFLAGS = (
