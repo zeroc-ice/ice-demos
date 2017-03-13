@@ -15,8 +15,8 @@ main(int argc, char* argv[])
 {  
     try
     {
-        Ice::CommunicatorHolder icHolder = Ice::initialize(argc, argv);
-        HelloPrx hello = HelloPrx::checkedCast(icHolder->stringToProxy("hello:default -h localhost -p 10000"));
+        Ice::CommunicatorHolder ich(argc, argv);
+        HelloPrx hello = HelloPrx::checkedCast(ich->stringToProxy("hello:default -h localhost -p 10000"));
         hello->sayHello();
     }
     catch(const std::exception& ex)

@@ -28,13 +28,13 @@ main(int argc, char* argv[])
 {
     try
     {
-        Ice::CommunicatorHolder icHolder = Ice::initialize(argc, argv);
+        Ice::CommunicatorHolder ich(argc, argv);
         Ice::ObjectAdapterPtr adapter =
-            icHolder->createObjectAdapterWithEndpoints("SimplePrinterAdapter", "default -h localhost -p 10000");
+            ich->createObjectAdapterWithEndpoints("SimplePrinterAdapter", "default -h localhost -p 10000");
         Ice::ObjectPtr object = new PrinterI;
         adapter->add(object, Ice::stringToIdentity("SimplePrinter"));
         adapter->activate();
-        icHolder->waitForShutdown();
+        ich->waitForShutdown();
     }
     catch(const std::exception& e)
     {

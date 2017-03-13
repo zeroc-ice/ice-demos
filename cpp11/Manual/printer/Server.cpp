@@ -25,12 +25,12 @@ int
 main(int argc, char* argv[])
 {
     try {
-        Ice::CommunicatorHolder icHolder = Ice::initialize(argc, argv);
-        auto adapter = icHolder->createObjectAdapterWithEndpoints("SimplePrinterAdapter", "default -p 10000");
+        Ice::CommunicatorHolder ich(argc, argv);
+        auto adapter = ich->createObjectAdapterWithEndpoints("SimplePrinterAdapter", "default -p 10000");
         auto servant = make_shared<PrinterI>();
         adapter->add(servant, Ice::stringToIdentity("SimplePrinter"));
         adapter->activate();
-        icHolder->waitForShutdown();
+        ich->waitForShutdown();
     } catch(const std::exception& e) {
         cerr << e.what() << endl;
         return 1;

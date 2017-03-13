@@ -15,8 +15,8 @@ int
 main(int argc, char* argv[])
 {
     try {
-        Ice::CommunicatorHolder icHolder = Ice::initialize(argc, argv);
-        auto base = icHolder->stringToProxy("SimplePrinter:default -p 10000");
+        Ice::CommunicatorHolder ich(argc, argv);
+        auto base = ich->stringToProxy("SimplePrinter:default -p 10000");
         auto printer = Ice::checkedCast<PrinterPrx>(base);
         if (!printer)
             throw std::runtime_error("Invalid proxy");

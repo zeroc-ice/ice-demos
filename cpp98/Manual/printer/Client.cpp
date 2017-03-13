@@ -16,8 +16,8 @@ main(int argc, char* argv[])
 {
     try
     {
-        Ice::CommunicatorHolder icHolder = Ice::initialize(argc, argv);
-        Ice::ObjectPrx base = icHolder->stringToProxy("SimplePrinter:default -h localhost -p 10000");
+        Ice::CommunicatorHolder ich(argc, argv);
+        Ice::ObjectPrx base = ich->stringToProxy("SimplePrinter:default -h localhost -p 10000");
         PrinterPrx printer = PrinterPrx::checkedCast(base);
         if(!printer)
         {

@@ -14,12 +14,12 @@ main(int argc, char* argv[])
 {
     try
     {
-        Ice::CommunicatorHolder icHolder = Ice::initialize(argc, argv);
+        Ice::CommunicatorHolder ich(argc, argv);
         Ice::ObjectAdapterPtr adapter =
-            icHolder->createObjectAdapterWithEndpoints("Hello", "default -h localhost -p 10000");
+            ich->createObjectAdapterWithEndpoints("Hello", "default -h localhost -p 10000");
         adapter->add(new HelloI, Ice::stringToIdentity("hello"));
         adapter->activate();
-        icHolder->waitForShutdown();
+        ich->waitForShutdown();
     }
     catch(const std::exception& ex)
     {

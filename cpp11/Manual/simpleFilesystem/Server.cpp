@@ -13,7 +13,7 @@ using namespace Filesystem;
 class FilesystemApp : public Ice::Application {
 public:
 
-    virtual int run(int, char*[])
+    virtual int run(int, char*[]) override
     {
         //
         // Terminate cleanly on receipt of a signal

@@ -45,11 +45,11 @@ main(int argc, char* argv[])
     try {
         // Create Ice communicator
         //
-        Ice::CommunicatorHolder icHolder = Ice::initialize(argc, argv);
+        Ice::CommunicatorHolder ich(argc, argv);
 
         // Create a proxy for the root directory
         //
-        auto base = icHolder->stringToProxy("RootDir:default -p 10000");
+        auto base = ich->stringToProxy("RootDir:default -p 10000");
         if (!base)
             throw std::runtime_error("Could not create proxy");
 

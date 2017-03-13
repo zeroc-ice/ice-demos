@@ -48,7 +48,7 @@ namespace Filesystem
     class DirectoryI : public Directory, public NodeI {
     public:
 
-        virtual NodeSeq list(const Ice::Current&);
+        virtual NodeSeq list(const Ice::Current&) override;
         DirectoryI(const std::string&, const std::shared_ptr<DirectoryI>&);
         void addChild(const std::shared_ptr<NodePrx>&);
 
