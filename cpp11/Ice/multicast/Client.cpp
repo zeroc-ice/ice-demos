@@ -40,7 +40,7 @@ public:
         unique_lock<mutex> lk(_mutex);
         bool timedOut = false;
         do
-        { 
+        {
             timedOut = _cond.wait_until(lk, until) == cv_status::timeout;
         } while(!_obj && !timedOut);
 
@@ -74,11 +74,8 @@ main(int argc, char* argv[])
 }
 
 int
-HelloClient::run(int argc, char* argv[])
+HelloClient::run(int, char* argv[])
 {
-    auto args = Ice::argsToStringSeq(argc, argv);
-    args = communicator()->getProperties()->parseCommandLineOptions("Discover", args);
-
     auto adapter = communicator()->createObjectAdapter("DiscoverReply");
     auto replyI = make_shared<DiscoverReplyI>();
     auto reply = Ice::uncheckedCast<DiscoverReplyPrx>(adapter->addWithUUID(replyI));

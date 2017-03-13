@@ -12,8 +12,6 @@ public class Client extends Ice.Application
     public int
     run(String[] args)
     {
-        args = communicator().getProperties().parseCommandLineOptions("Discover", args);
-
         Ice.ObjectAdapter adapter = communicator().createObjectAdapter("DiscoverReply");
         DiscoverReplyI replyI = new DiscoverReplyI();
         DiscoverReplyPrx reply = DiscoverReplyPrxHelper.uncheckedCast(adapter.addWithUUID(replyI));

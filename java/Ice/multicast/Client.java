@@ -11,8 +11,6 @@ public class Client extends com.zeroc.Ice.Application
     @Override
     public int run(String[] args)
     {
-        args = communicator().getProperties().parseCommandLineOptions("Discover", args);
-
         com.zeroc.Ice.ObjectAdapter adapter = communicator().createObjectAdapter("DiscoverReply");
         DiscoverReplyI replyI = new DiscoverReplyI();
         DiscoverReplyPrx reply = DiscoverReplyPrx.uncheckedCast(adapter.addWithUUID(replyI));

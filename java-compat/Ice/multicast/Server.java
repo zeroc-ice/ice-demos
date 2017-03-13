@@ -10,17 +10,15 @@ public class Server extends Ice.Application
     public int
     run(String[] args)
     {
-        args = communicator().getProperties().parseCommandLineOptions("Discover", args);
-
         Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Hello");
         Ice.ObjectAdapter discoverAdapter = communicator().createObjectAdapter("Discover");
 
         Ice.ObjectPrx hello = adapter.addWithUUID(new HelloI());
         discoverAdapter.add(new DiscoverI(hello), Ice.Util.stringToIdentity("discover"));
 
-        discoverAdapter.activate();        
+        discoverAdapter.activate();
         adapter.activate();
-        
+
         communicator().waitForShutdown();
         return 0;
     }

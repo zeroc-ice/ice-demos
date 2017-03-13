@@ -20,8 +20,6 @@ public class Client
     {
         public override int run(string[] args)
         {
-            args = communicator().getProperties().parseCommandLineOptions("Discover", args);
-
             var adapter = communicator().createObjectAdapter("DiscoverReply");
             var replyI = new DiscoverReplyI();
             var reply = DiscoverReplyPrxHelper.uncheckedCast(adapter.addWithUUID(replyI));

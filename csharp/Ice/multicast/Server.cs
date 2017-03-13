@@ -19,17 +19,15 @@ public class Server
     {
         public override int run(string[] args)
         {
-            args = communicator().getProperties().parseCommandLineOptions("Discover", args);
-
             var adapter = communicator().createObjectAdapter("Hello");
             var discoverAdapter = communicator().createObjectAdapter("Discover");
 
             var hello = adapter.addWithUUID(new HelloI());
             discoverAdapter.add(new DiscoverI(hello), Ice.Util.stringToIdentity("discover"));
 
-            discoverAdapter.activate();        
+            discoverAdapter.activate();
             adapter.activate();
-            
+
             communicator().waitForShutdown();
             return 0;
         }
