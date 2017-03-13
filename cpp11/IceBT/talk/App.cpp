@@ -20,17 +20,17 @@ public:
     TalkApp();
     virtual int run(int, char*[]);
 
-    void connect(Ice::Identity, shared_ptr<Ice::Connection>);
-    void message(string);
-    void disconnect(Ice::Identity, shared_ptr<Ice::Connection>, bool);
+    void connect(const Ice::Identity&, const shared_ptr<Ice::Connection>&);
+    void message(const string&);
+    void disconnect(const Ice::Identity&, const shared_ptr<Ice::Connection>&, bool);
     void closed();
 
 private:
 
-    void doConnect(string);
+    void doConnect(const string&);
     void doList();
     void doDisconnect();
-    void doMessage(string);
+    void doMessage(const string&);
     void failed(const Ice::LocalException&);
     void usage();
 
@@ -202,7 +202,7 @@ TalkApp::run(int argc, char*[])
 }
 
 void
-TalkApp::connect(Ice::Identity id, shared_ptr<Ice::Connection> con)
+TalkApp::connect(const Ice::Identity& id, const shared_ptr<Ice::Connection>& con)
 {
     //
     // Called for a new incoming connection request.
@@ -219,7 +219,7 @@ TalkApp::connect(Ice::Identity id, shared_ptr<Ice::Connection> con)
     // Install a connection callback and enable ACM heartbeats.
     //
     con->setCloseCallback(
-        [this](shared_ptr<Ice::Connection>)
+        [this](const shared_ptr<Ice::Connection>&)
         {
             this->closed();
         });
@@ -227,18 +227,18 @@ TalkApp::connect(Ice::Identity id, shared_ptr<Ice::Connection> con)
 
     _remote = Ice::uncheckedCast<Talk::PeerPrx>(con->createProxy(id))->ice_invocationTimeout(10000);
 
-    shared_ptr<Ice::ConnectionInfo> info = con->getInfo();
+    auto info = con->getInfo();
     if(info->underlying)
     {
         info = info->underlying;
     }
-    shared_ptr<IceBT::ConnectionInfo> btInfo = dynamic_pointer_cast<IceBT::ConnectionInfo>(info);
+    auto btInfo = dynamic_pointer_cast<IceBT::ConnectionInfo>(info);
     assert(btInfo);
     cout << ">>>> Incoming connection from " << btInfo->remoteAddress << endl;
 }
 
 void
-TalkApp::message(string text)
+TalkApp::message(const string& text)
 {
     unique_lock<mutex> lock(_mutex);
 
@@ -249,7 +249,7 @@ TalkApp::message(string text)
 }
 
 void
-TalkApp::disconnect(Ice::Identity id, shared_ptr<Ice::Connection> con, bool incoming)
+TalkApp::disconnect(const Ice::Identity& id, const shared_ptr<Ice::Connection>& con, bool incoming)
 {
     unique_lock<mutex> lock(_mutex);
 
@@ -278,7 +278,7 @@ TalkApp::closed()
 }
 
 void
-TalkApp::doConnect(string cmd)
+TalkApp::doConnect(const string& cmd)
 {
     const bool secure = cmd.find("/sconnect") == 0;
 
@@ -347,7 +347,7 @@ TalkApp::doConnect(string cmd)
         // Install a connection callback and enable ACM heartbeats.
         //
         con->setCloseCallback(
-            [this](shared_ptr<Ice::Connection>)
+            [this](const shared_ptr<Ice::Connection>&)
             {
                 this->closed();
             });
@@ -453,7 +453,7 @@ TalkApp::doDisconnect()
         _remote = 0;
     }
 
-    shared_ptr<Ice::Connection> con = peer->ice_getCachedConnection();
+    auto con = peer->ice_getCachedConnection();
 
     try
     {
@@ -471,7 +471,7 @@ TalkApp::doDisconnect()
 }
 
 void
-TalkApp::doMessage(string text)
+TalkApp::doMessage(const string& text)
 {
     shared_ptr<Talk::PeerPrx> peer;
 
@@ -512,7 +512,7 @@ TalkApp::failed(const Ice::LocalException& ex)
 
     if(peer)
     {
-        shared_ptr<Ice::Connection> con = peer->ice_getCachedConnection();
+        auto con = peer->ice_getCachedConnection();
         if(con)
         {
             con->close(Ice::ConnectionClose::Forcefully);

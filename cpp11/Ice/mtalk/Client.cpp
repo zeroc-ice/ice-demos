@@ -20,18 +20,18 @@ public:
     ChatApp();
     virtual int run(int, char*[]);
 
-    void discoveredPeer(string, shared_ptr<MTalk::PeerPrx>);
-    void connect(string, Ice::Identity, shared_ptr<Ice::Connection>);
-    void message(string);
-    void disconnect(Ice::Identity, shared_ptr<Ice::Connection>, bool);
+    void discoveredPeer(const string&, const shared_ptr<MTalk::PeerPrx>&);
+    void connect(const string&, const Ice::Identity&, const shared_ptr<Ice::Connection>&);
+    void message(const string&);
+    void disconnect(const Ice::Identity&, const shared_ptr<Ice::Connection>&, bool);
     void closed();
 
 private:
 
-    void doConnect(string);
+    void doConnect(const string&);
     void doList();
     void doDisconnect();
-    void doMessage(string);
+    void doMessage(const string&);
     void failed(const Ice::LocalException&);
     void usage();
 
@@ -316,7 +316,7 @@ ChatApp::run(int argc, char*[])
 }
 
 void
-ChatApp::discoveredPeer(string name, shared_ptr<MTalk::PeerPrx> peer)
+ChatApp::discoveredPeer(const string& name, const shared_ptr<MTalk::PeerPrx>& peer)
 {
     unique_lock<mutex> lock(_mutex);
 
@@ -341,7 +341,7 @@ ChatApp::discoveredPeer(string name, shared_ptr<MTalk::PeerPrx> peer)
 }
 
 void
-ChatApp::connect(string name, Ice::Identity id, shared_ptr<Ice::Connection> con)
+ChatApp::connect(const string& name, const Ice::Identity& id, const shared_ptr<Ice::Connection>& con)
 {
     //
     // Called for a new incoming connection request.
@@ -358,7 +358,7 @@ ChatApp::connect(string name, Ice::Identity id, shared_ptr<Ice::Connection> con)
     // Install a connection callback and enable ACM heartbeats.
     //
     con->setCloseCallback(
-        [this](shared_ptr<Ice::Connection>)
+        [this](const shared_ptr<Ice::Connection>&)
         {
             this->closed();
         });
@@ -377,7 +377,7 @@ ChatApp::connect(string name, Ice::Identity id, shared_ptr<Ice::Connection> con)
 }
 
 void
-ChatApp::message(string text)
+ChatApp::message(const string& text)
 {
     unique_lock<mutex> lock(_mutex);
 
@@ -388,7 +388,7 @@ ChatApp::message(string text)
 }
 
 void
-ChatApp::disconnect(Ice::Identity id, shared_ptr<Ice::Connection> con, bool incoming)
+ChatApp::disconnect(const Ice::Identity& id, const shared_ptr<Ice::Connection>& con, bool incoming)
 {
     unique_lock<mutex> lock(_mutex);
 
@@ -417,7 +417,7 @@ ChatApp::closed()
 }
 
 void
-ChatApp::doConnect(string cmd)
+ChatApp::doConnect(const string& cmd)
 {
     auto sp = cmd.find(' ');
     if(sp == string::npos)
@@ -477,7 +477,7 @@ ChatApp::doConnect(string cmd)
         // Install a connection callback and enable ACM heartbeats.
         //
         con->setCloseCallback(
-            [this](shared_ptr<Ice::Connection>)
+            [this](const shared_ptr<Ice::Connection>&)
             {
                 this->closed();
             });
@@ -563,7 +563,7 @@ ChatApp::doDisconnect()
 }
 
 void
-ChatApp::doMessage(string text)
+ChatApp::doMessage(const string& text)
 {
     shared_ptr<MTalk::PeerPrx> peer;
 
