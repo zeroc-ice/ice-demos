@@ -39,7 +39,7 @@ public:
             throw "Invalid proxy";
         }
 
-        auto p = make_shared<Parser>(rootDir);
+        unique_ptr<Parser> p(new Parser(rootDir));
         return p->parse();
     }
 };
