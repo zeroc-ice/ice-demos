@@ -10,7 +10,7 @@
 #include <string>
 #include <vector>
 
-#include <IceUtil/IceUtil.h>
+#include <Ice/Ice.h>
 #include <IceSSL/IceSSL.h>
 
 #include <Glacier2/Glacier2.h>

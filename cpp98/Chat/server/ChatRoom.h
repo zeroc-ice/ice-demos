@@ -8,7 +8,6 @@
 #define CHAT_ROOM_I_H
 
 #include <Ice/Ice.h>
-#include <IceUtil/IceUtil.h>
 #include <Ice/BuiltinSequences.h>
 
 #include <string>

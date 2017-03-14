@@ -8,7 +8,6 @@
 #define __FilesystemI_h__
 
 #include <Ice/Ice.h>
-#include <IceUtil/IceUtil.h>
 #include <Filesystem.h>
 #include <map>
 

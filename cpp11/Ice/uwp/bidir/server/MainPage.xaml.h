@@ -7,7 +7,6 @@
 #pragma once
 
 #include "MainPage.g.h"
-#include <IceUtil/IceUtil.h>
 #include <Ice/Ice.h>
 #include <Callback.h>
 

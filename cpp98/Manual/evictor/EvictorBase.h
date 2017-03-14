@@ -1,8 +1,7 @@
 #ifndef EVICTORBASE_H
 #define EVICTORBASE_H
 
-#include <Ice/ServantLocator.h>
-#include <IceUtil/IceUtil.h>
+#include <Ice/Ice.h>
 #include <map>
 #include <list>
 

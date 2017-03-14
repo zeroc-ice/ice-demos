@@ -7,7 +7,7 @@
 #ifndef CALLBACK_I_H
 #define CALLBACK_I_H
 
-#include <IceUtil/IceUtil.h>
+#include <Ice/Ice.h>
 #include <Callback.h>
 #include <set>
 

@@ -8,7 +8,7 @@
 #define WORK_QUEUE_H
 
 #include <Hello.h>
-#include <IceUtil/IceUtil.h>
+#include <Ice/Ice.h>
 
 #include <list>
 

@@ -5,7 +5,6 @@
 // **********************************************************************
 
 #include <Ice/Ice.h>
-#include <IceUtil/UUID.h>
 #include <IceBT/ConnectionInfo.h>
 #include <IceBT/Plugin.h>
 #include <Talk.h>

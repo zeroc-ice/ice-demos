@@ -5,7 +5,6 @@
 // **********************************************************************
 
 #include <Ice/Ice.h>
-#include <IceUtil/UUID.h>
 #include <MTalk.h>
 
 using namespace std;

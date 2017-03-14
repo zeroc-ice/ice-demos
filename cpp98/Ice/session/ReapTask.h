@@ -7,7 +7,7 @@
 #ifndef REAP_TASK_H
 #define REAP_TASK_H
 
-#include <IceUtil/IceUtil.h>
+#include <Ice/Ice.h>
 #include <SessionI.h>
 #include <list>
 

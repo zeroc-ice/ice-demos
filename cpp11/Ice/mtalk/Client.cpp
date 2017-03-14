@@ -5,7 +5,6 @@
 // **********************************************************************
 
 #include <Ice/Ice.h>
-#include <IceUtil/UUID.h>
 #include <condition_variable>
 #include <mutex>
 #include <thread>
