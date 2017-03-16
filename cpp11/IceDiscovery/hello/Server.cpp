@@ -13,7 +13,7 @@ class HelloServer : public Ice::Application
 {
 public:
 
-    virtual int run(int, char*[]);
+    virtual int run(int, char*[]) override;
 };
 
 int
@@ -36,8 +36,8 @@ HelloServer::run(int argc, char*[])
         return EXIT_FAILURE;
     }
 
-    Ice::ObjectAdapterPtr adapter = communicator()->createObjectAdapter("Hello");
-    Demo::HelloPtr hello = new HelloI;
+    auto adapter = communicator()->createObjectAdapter("Hello");
+    auto hello = make_shared<HelloI>();
     adapter->add(hello, Ice::stringToIdentity("hello"));
     adapter->activate();
     communicator()->waitForShutdown();

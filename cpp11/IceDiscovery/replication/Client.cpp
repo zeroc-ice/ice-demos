@@ -16,7 +16,7 @@ class HelloClient : public Ice::Application
 public:
 
     HelloClient();
-    virtual int run(int, char*[]);
+    virtual int run(int, char*[]) override;
 
 private:
 
@@ -39,7 +39,7 @@ HelloClient::HelloClient() :
     // Since this is an interactive demo we don't want any signal
     // handling.
     //
-    Ice::Application(Ice::NoSignalHandling)
+    Ice::Application(Ice::SignalPolicy::NoSignalHandling)
 {
 }
 
@@ -60,11 +60,11 @@ HelloClient::run(int argc, char* argv[])
     // will be sent over the server connection matching the returned
     // endpoints.
     //
-    Ice::ObjectPrx obj = communicator()->stringToProxy("hello");
+    auto obj = communicator()->stringToProxy("hello");
     obj = obj->ice_connectionCached(false);
     obj = obj->ice_locatorCacheTimeout(0);
 
-    HelloPrx hello = HelloPrx::checkedCast(obj);
+    auto hello = Ice::checkedCast<HelloPrx>(obj);
     if(!hello)
     {
         cerr << argv[0] << ": couldn't find a `::Demo::Hello' object." << endl;
@@ -88,7 +88,7 @@ HelloClient::run(int argc, char* argv[])
         for(int i = 0; i < count; i++)
         {
             cout << hello->getGreeting() << endl;
-            IceUtil::ThreadControl::sleep(IceUtil::Time::milliSeconds(delay));
+            this_thread::sleep_for(chrono::milliseconds(delay));
         }
     }
     while(cin.good() && s != "x");

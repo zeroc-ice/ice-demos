@@ -14,25 +14,14 @@ class Server : public Ice::Application
 public:
 
     virtual int run(int argc, char* argv[]);
-
 };
-
-#ifdef ICE_STATIC_LIBS
-extern "C"
-{
-
-Ice::Plugin* createIceSSL(const Ice::CommunicatorPtr&, const string&, const Ice::StringSeq&);
-Ice::Plugin* createIceDiscovery(const Ice::CommunicatorPtr&, const string&, const Ice::StringSeq&);
-
-}
-#endif
 
 int
 main(int argc, char* argv[])
 {
 #ifdef ICE_STATIC_LIBS
-    Ice::registerPluginFactory("IceSSL", createIceSSL, true);
-    Ice::registerPluginFactory("IceDiscovery", createIceDiscovery, false);
+    Ice::registerIceSSL();
+    Ice::registerIceDiscovery(false);
 #endif
     Server app;
     int status = app.main(argc, argv);

@@ -16,7 +16,7 @@ public:
 
     HelloClient();
 
-    virtual int run(int, char*[]);
+    virtual int run(int, char*[]) override;
 
 private:
 
@@ -39,7 +39,7 @@ HelloClient::HelloClient() :
     // Since this is an interactive demo we don't want any signal
     // handling.
     //
-    Ice::Application(Ice::NoSignalHandling)
+    Ice::Application(Ice::SignalPolicy::NoSignalHandling)
 {
 }
 
@@ -57,16 +57,16 @@ HelloClient::run(int argc, char* argv[])
     // only includes the Ice object identity. It's resolved using the Ice locator
     // implementation.
     //
-    HelloPrx twoway = HelloPrx::checkedCast(communicator()->stringToProxy("hello"));
+    auto twoway = Ice::checkedCast<HelloPrx>(communicator()->stringToProxy("hello"));
     if(!twoway)
     {
         cerr << argv[0] << ": invalid proxy" << endl;
         return EXIT_FAILURE;
     }
-    HelloPrx oneway = twoway->ice_oneway();
-    HelloPrx batchOneway = twoway->ice_batchOneway();
-    HelloPrx datagram = twoway->ice_datagram();
-    HelloPrx batchDatagram = twoway->ice_batchDatagram();
+    auto oneway = twoway->ice_oneway();
+    auto batchOneway = twoway->ice_batchOneway();
+    auto datagram = twoway->ice_datagram();
+    auto batchDatagram = twoway->ice_batchDatagram();
 
     bool secure = false;
     int timeout = -1;
