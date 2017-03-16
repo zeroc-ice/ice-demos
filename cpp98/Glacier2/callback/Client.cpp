@@ -108,8 +108,8 @@ CallbackClient::runWithSession(int argc, char*[])
 
     Ice::ObjectPrx base = communicator()->propertyToProxy("Callback.Proxy");
     CallbackPrx twoway = CallbackPrx::checkedCast(base);
-    CallbackPrx oneway = CallbackPrx::uncheckedCast(twoway->ice_oneway());
-    CallbackPrx batchOneway = CallbackPrx::uncheckedCast(twoway->ice_batchOneway());
+    CallbackPrx oneway = twoway->ice_oneway();
+    CallbackPrx batchOneway = twoway->ice_batchOneway();
 
     objectAdapter()->add(new CallbackReceiverI, callbackReceiverIdent);
 
@@ -118,7 +118,7 @@ CallbackClient::runWithSession(int argc, char*[])
 
     CallbackReceiverPrx twowayR = CallbackReceiverPrx::uncheckedCast(
                                            objectAdapter()->createProxy(callbackReceiverIdent));
-    CallbackReceiverPrx onewayR = CallbackReceiverPrx::uncheckedCast(twowayR->ice_oneway());
+    CallbackReceiverPrx onewayR = twowayR->ice_oneway();
 
     string override;
     bool fake = false;
