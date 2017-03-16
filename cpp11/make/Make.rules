@@ -41,8 +41,9 @@ endif
 ice_includedir			?= $(ice_home)$(if $(ice_src_dist),/cpp)/include
 
 # Create component dependency variables
-$(foreach d,$(cpp-dependencies),$(eval $$d++11_targetdir := $(ice_home)$(if $(ice_src_dist),/cpp)/lib)\
-				$(eval $(call create-component-targets,ice,$d++11,library)))
+$(foreach d,$(cpp-dependencies),$(eval $$d_targetdir := $(ice_home)$(if $(ice_src_dist),/cpp)/lib)\
+				$(eval $$d_targetname := $d++11)\
+				$(eval $(call create-component-targets,ice,$d,library)))
 
 slice2cpp_targetext		= cpp
 slice2cpp_path			= $(ice_bindir)/slice2cpp
@@ -74,10 +75,10 @@ endef
 #
 define create-cpp-demo-project
 $1_srcext		:= cpp
-$1_dependencies 	:= $$(or $$($1_dependencies),Ice++11)
+$1_dependencies 	:= $$(or $$($1_dependencies),Ice)
 
 # Also link with IceSSL when compiling the project with the static configuration
-static_dependencies[$1]	:= $$(or $$($1_dependencies[static]),IceSSL++11)
+static_dependencies[$1]	:= $$(or $$($1_dependencies[static]),IceSSL)
 
 $(create-demo-project)
 endef
