@@ -14,14 +14,14 @@ class HelloServiceI : public IceBox::Service
 public:
 
     virtual void start(const std::string&,
-                       const Ice::CommunicatorPtr&,
-                       const Ice::StringSeq&);
+                       const std::shared_ptr<Ice::Communicator>&,
+                       const Ice::StringSeq&) override;
 
-    virtual void stop();
+    virtual void stop() override;
 
 private:
 
-    Ice::ObjectAdapterPtr _adapter;
+    std::shared_ptr<Ice::ObjectAdapter> _adapter;
 };
 
 #endif
