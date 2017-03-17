@@ -11,172 +11,158 @@
 using namespace std;
 using namespace Demo;
 
-class ChatRoom;
-typedef IceUtil::Handle<ChatRoom> ChatRoomPtr;
+//
+// ChatRoom helper singleton
+//
 
-class ChatRoom : public IceUtil::Mutex, public IceUtil::Shared
+class ChatRoom
 {
 public:
 
-    ChatRoom();
-    ~ChatRoom();
+    static ChatRoom* instance();
 
-    static ChatRoomPtr& instance();
-
-    void enter(const Demo::ChatSessionPrx&, const Demo::ChatCallbackPrx&);
-    void leave(const Demo::ChatCallbackPrx&);
+    void enter(const Demo::ChatSessionPrx&, const Demo::ChatCallbackPrx&, const Ice::Current&);
+    void leave(const Demo::ChatCallbackPrx&, const Ice::Current&);
     void message(const string&) const;
-    void update(const Demo::ChatCallbackPrx&);
+    void deadRouter(const Ice::ConnectionPtr&);
+    void destroy();
 
-    struct MemberInfo
-    {
-        Demo::ChatSessionPrx session;
-        Demo::ChatCallbackPrx callback;
-        IceUtil::Time updateTime;
-    };
-    list<MemberInfo> members() const;
-
-    static IceUtil::Mutex* _instanceMutex;
 private:
-    
-    list<MemberInfo> _members;
-    IceUtil::TimerPtr _timer;
 
-    static ChatRoomPtr _instance;
+    IceUtil::Mutex _mutex;
+    list<ChatCallbackPrx> _callbacks;
+    map<Ice::ConnectionPtr, list<ChatSessionPrx> > _connectionMap;
 };
-
-ChatRoomPtr ChatRoom::_instance;
-IceUtil::Mutex* ChatRoom::_instanceMutex = 0;
 
 namespace
 {
 
-class Init
+class ClosedCallbackI : public Ice::CloseCallback
 {
 public:
 
-    Init()
+    //
+    // The Glacier2 router died or otherwise closed its connection
+    // to this server, so we cleanup all associated sessions
+    //
+    virtual void closed(const Ice::ConnectionPtr& con)
     {
-        ChatRoom::_instanceMutex = new IceUtil::Mutex;
-    }
-
-    ~Init()
-    {
-        delete ChatRoom::_instanceMutex;
-        ChatRoom::_instanceMutex = 0;
+        ChatRoom::instance()->deadRouter(con);
     }
 };
 
-Init init;
-
-class ReapTask : public IceUtil::TimerTask
+struct IdentityMatch
 {
-public:
-
-    virtual void runTimerTask()
+    IdentityMatch(const Ice::Identity& identity) :
+        _identity(identity)
     {
-        ChatRoomPtr chatRoom = ChatRoom::instance();
-        list<ChatRoom::MemberInfo> members = chatRoom->members();
-        IceUtil::Time now = IceUtil::Time::now();
-        for(list<ChatRoom::MemberInfo>::const_iterator p = members.begin(); p != members.end(); ++p)
-        {
-            if(now - p->updateTime > IceUtil::Time::secondsDouble(30 * 1.5)) // SessionTimeout * 1.5
-            {
-                try
-                {
-                    p->session->destroy();
-                }
-                catch(const Ice::Exception&)
-                {
-                    // Ignore
-                }
-            }
-        }
     }
+
+    bool operator()(const Ice::ObjectPrx& prx) const
+    {
+        return prx->ice_getIdentity() == _identity;
+    }
+
+    Ice::Identity _identity;
 };
 
 }
 
-ChatRoom::ChatRoom()
-{
-    _timer = new IceUtil::Timer();
-    _timer->scheduleRepeated(new ReapTask(), IceUtil::Time::seconds(30));
-}
-
-ChatRoom::~ChatRoom()
-{
-    _timer->destroy();
-}
-
-ChatRoomPtr&
+ChatRoom*
 ChatRoom::instance()
 {
-    IceUtil::Mutex::Lock sync(*_instanceMutex);
-    if(!_instance)
-    {
-        _instance = new ChatRoom();
-    }
-
-    return _instance;
+    //
+    // Assume a C++ compiler that implements thread-safe or "magic" local statics.
+    // If we use a C++ compiler without this guarantee, we need a different implementation.
+    //
+    static ChatRoom chatRoomInstance;
+    return &chatRoomInstance;
 }
 
 void
-ChatRoom::enter(const Demo::ChatSessionPrx& session, const ChatCallbackPrx& callback)
+ChatRoom::enter(const Demo::ChatSessionPrx& session, const ChatCallbackPrx& callback, const Ice::Current& current)
 {
-    Lock sync(*this);
-    MemberInfo info;
-    info.session = session;
-    info.callback = callback;
-    info.updateTime = IceUtil::Time::now();
-    _members.push_back(info);
+    IceUtil::Mutex::Lock sync(_mutex);
+    _callbacks.push_back(callback);
+
+    map<Ice::ConnectionPtr, list<ChatSessionPrx> >::iterator p = _connectionMap.find(current.con);
+    if(p == _connectionMap.end())
+    {
+        cout << "enter: create new entry in connection map" << endl;
+
+        _connectionMap[current.con].push_back(session);
+
+        //
+        // Never close this connection from Glacier2 and turn on heartbeats with a timeout of 30s
+        //
+        current.con->setACM(30, Ice::CloseOff, Ice::HeartbeatAlways);
+
+        current.con->setCloseCallback(new ClosedCallbackI);
+    }
+    else
+    {
+        cout << "enter: add session to existing connection map entry" << endl;
+        p->second.push_back(session);
+    }
 }
 
 void
-ChatRoom::leave(const ChatCallbackPrx& callback)
+ChatRoom::leave(const ChatCallbackPrx& callback, const Ice::Current& current)
 {
-    Lock sync(*this);
-    list<MemberInfo>::iterator p;
-    for(p = _members.begin(); p != _members.end(); ++p)
-    {
-        if(Ice::proxyIdentityEqual(callback, p->callback))
-        {
-            break;
-        }
-    }
+    IceUtil::Mutex::Lock sync(_mutex);
 
-    assert(p != _members.end());
-    _members.erase(p);
+    _callbacks.remove_if(IdentityMatch(callback->ice_getIdentity()));
+    _connectionMap[current.con].remove_if(IdentityMatch(current.id));
 }
 
 void
 ChatRoom::message(const string& data) const
 {
-    Lock sync(*this);
-    for(list<MemberInfo>::const_iterator p = _members.begin(); p != _members.end(); ++p)
+    IceUtil::Mutex::Lock sync(_mutex);
+    for(list<ChatCallbackPrx>::const_iterator p = _callbacks.begin(); p != _callbacks.end(); ++p)
     {
-        p->callback->begin_message(data);
+        (*p)->begin_message(data);
     }
 }
 
 void
-ChatRoom::update(const ChatCallbackPrx& callback)
+ChatRoom::deadRouter(const Ice::ConnectionPtr& con)
 {
-    Lock sync(*this);
-    for(list<MemberInfo>::iterator p = _members.begin(); p != _members.end(); ++p)
+    cout << "Detected dead router - destroying all associated sessions " << endl;
+
+    list<ChatSessionPrx> sessions;
     {
-        if(Ice::proxyIdentityEqual(callback, p->callback))
+        IceUtil::Mutex::Lock sync(_mutex);
+        map<Ice::ConnectionPtr, list<ChatSessionPrx> >::iterator p = _connectionMap.find(con);
+        if(p != _connectionMap.end())
         {
-            p->updateTime = IceUtil::Time::now();
-            break;
+            sessions.swap(p->second);
+            _connectionMap.erase(p);
         }
+    }
+    for(list<ChatSessionPrx>::const_iterator s = sessions.begin(); s != sessions.end(); ++s)
+    {
+        //
+        // Collocated calls to the Chat Sessions
+        //
+        (*s)->destroy();
     }
 }
 
-list<ChatRoom::MemberInfo>
-ChatRoom::members() const
+void
+ChatRoom::destroy()
 {
-    return _members;
+    //
+    // We could also destroy each session first
+    //
+    IceUtil::Mutex::Lock sync(_mutex);
+    _callbacks.clear();
+    _connectionMap.clear();
 }
+
+//
+// ChatSessionI
+//
 
 ChatSessionI::ChatSessionI(const string& userId) :
     _userId(userId)
@@ -184,44 +170,53 @@ ChatSessionI::ChatSessionI(const string& userId) :
 }
 
 void
-ChatSessionI::ice_ping(const Ice::Current&) const
-{
-    Lock sync(*this);
-    ChatRoom::instance()->update(_callback);
-}
-
-void
 ChatSessionI::setCallback(const ChatCallbackPrx& callback, const Ice::Current& current)
 {
-    Lock sync(*this);
+    IceUtil::Mutex::Lock sync(_mutex);
     if(!_callback)
     {
         _callback = callback;
-        ChatRoomPtr chatRoom = ChatRoom::instance();
+        ChatRoom* chatRoom = ChatRoom::instance();
         chatRoom->message(_userId + " has entered the chat room.");
-        chatRoom->enter(ChatSessionPrx::uncheckedCast(current.adapter->createProxy(current.id)), callback);
+        chatRoom->enter(ChatSessionPrx::uncheckedCast(current.adapter->createProxy(current.id)), callback, current);
     }
 }
 
 void
 ChatSessionI::say(const string& data, const Ice::Current&)
 {
-    Lock sync(*this);
-    ChatRoomPtr chatRoom = ChatRoom::instance();
-    chatRoom->message(_userId + " says: " + data);
-    chatRoom->update(_callback);
+    IceUtil::Mutex::Lock sync(_mutex);
+    ChatRoom::instance()->message(_userId + " says: " + data);
 }
 
 void
 ChatSessionI::destroy(const Ice::Current& current)
 {
-    Lock sync(*this);
+    cout << "Destroying session for " << _userId << endl;
+    IceUtil::Mutex::Lock sync(_mutex);
     if(_callback)
     {
-        ChatRoomPtr chatRoom = ChatRoom::instance();
-        chatRoom->leave(_callback);
+        ChatRoom* chatRoom = ChatRoom::instance();
+        chatRoom->leave(_callback, current);
         _callback = 0;
         chatRoom->message(_userId + " has left the chat room.");
     }
     current.adapter->remove(current.id);
+}
+
+//
+// ChatSessionManagerI
+//
+
+Glacier2::SessionPrx
+ChatSessionManagerI::create(const string& userId, const Glacier2::SessionControlPrx&, const Ice::Current& current)
+{
+    Ice::Identity ident = { Ice::generateUUID(), "session" };
+    return Glacier2::SessionPrx::uncheckedCast(current.adapter->add(new ChatSessionI(userId), ident));
+}
+
+void
+ChatSessionManagerI::destroy()
+{
+    ChatRoom::instance()->destroy();
 }

@@ -23,18 +23,6 @@ public:
     }
 };
 
-class ChatSessionManagerI : public Glacier2::SessionManager
-{
-public:
-
-    virtual Glacier2::SessionPrx
-    create(const string& userId, const Glacier2::SessionControlPrx&, const Ice::Current& current)
-    {
-        Ice::Identity ident = { Ice::generateUUID(), "session" };
-        return Glacier2::SessionPrx::uncheckedCast(current.adapter->add(new ChatSessionI(userId), ident));
-    }
-};
-
 class ChatServer : public Ice::Application
 {
 public:
@@ -52,10 +40,11 @@ public:
 
         Glacier2::PermissionsVerifierPtr dpv = new DummyPermissionsVerifierI;
         adapter->add(dpv, Ice::stringToIdentity("ChatSessionVerifier"));
-        Glacier2::SessionManagerPtr csm = new ChatSessionManagerI;
+        ChatSessionManagerIPtr csm = new ChatSessionManagerI;
         adapter->add(csm, Ice::stringToIdentity("ChatSessionManager"));
         adapter->activate();
         communicator()->waitForShutdown();
+        csm->destroy();
 
         return EXIT_SUCCESS;
     }
