@@ -5,7 +5,7 @@
 # **********************************************************************
 
 $(demo)_programs	= talk
-$(demo)_dependencies	= IceBT++11 Ice++11
+$(demo)_dependencies	= IceBT Ice
 
 $(demo)_talk_sources	= App.cpp Talk.ice
 
