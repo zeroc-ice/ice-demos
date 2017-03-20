@@ -13,7 +13,6 @@ public class SessionI : SessionDisp_
     public SessionI(string name)
     {
         _name = name;
-        _timestamp = System.DateTime.Now;
         _nextId = 0;
         _destroy = false;
         _objs = new ArrayList();
@@ -21,7 +20,7 @@ public class SessionI : SessionDisp_
         Console.Out.WriteLine("The session " + _name + " is now created.");
     }
 
-    public override HelloPrx createHello(Ice.Current c)
+    public override HelloPrx createHello(Ice.Current current)
     {
         lock(this)
         {
@@ -30,22 +29,9 @@ public class SessionI : SessionDisp_
                 throw new Ice.ObjectNotExistException();
             }
             
-            HelloPrx hello = HelloPrxHelper.uncheckedCast(c.adapter.addWithUUID(new HelloI(_name, _nextId++)));
+            HelloPrx hello = HelloPrxHelper.uncheckedCast(current.adapter.addWithUUID(new HelloI(_name, _nextId++)));
             _objs.Add(hello);
             return hello;
-        }
-    }
-
-    public override void refresh(Ice.Current c)
-    {
-        lock(this)
-        {
-            if(_destroy)
-            {
-                throw new Ice.ObjectNotExistException();
-            }
-            
-            _timestamp = System.DateTime.Now;
         }
     }
 
@@ -62,7 +48,7 @@ public class SessionI : SessionDisp_
         }
     }
 
-    public override void destroy(Ice.Current c)
+    public override void destroy(Ice.Current current)
     {
         lock(this)
         {
@@ -76,10 +62,10 @@ public class SessionI : SessionDisp_
             Console.Out.WriteLine("The session " + _name +  " is now destroyed.");
             try
             {
-                c.adapter.remove(c.id);
+                current.adapter.remove(current.id);
                 foreach(HelloPrx p in _objs)
                 {
-                    c.adapter.remove(p.ice_getIdentity());
+                    current.adapter.remove(p.ice_getIdentity());
                 }
             }
             catch(Ice.ObjectAdapterDeactivatedException)
@@ -91,21 +77,8 @@ public class SessionI : SessionDisp_
 
         _objs.Clear();
     }
-
-    public System.DateTime timestamp() 
-    {
-        lock(this)
-        {
-            if(_destroy)
-            {
-                throw new Ice.ObjectNotExistException();
-            }
-            return _timestamp;
-        }
-    }
-
+    
     private string _name;
-    private System.DateTime _timestamp; // The last time the session was refreshed.
     private int _nextId; // The per-session id of the next hello object. This is used for tracing purposes.
     private ArrayList _objs; // List of per-session allocated hello objects.
     private bool _destroy;

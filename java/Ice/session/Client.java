@@ -8,26 +8,7 @@ import Demo.*;
 
 public class Client extends Ice.Application
 {
-    class ShutdownHook extends Thread
-    {
-        @Override
-        public void
-        run()
-        {
-            cleanup(true);
-            try
-            {
-                communicator().destroy();
-            }
-            catch(Ice.LocalException ex)
-            {
-                ex.printStackTrace();
-            }
-        }
-    }
-
-    private static void
-    menu()
+    private static void menu()
     {
         System.out.println(
             "usage:\n" +
@@ -39,22 +20,20 @@ public class Client extends Ice.Application
             "?:     help\n");
     }
 
+    public Client()
+    {
+        // We let CTRL-C kill the client
+        super(Ice.SignalPolicy.NoSignalHandling);
+    }
+
     @Override
-    public int
-    run(String[] args)
+    public int run(String[] args)
     {
         if(args.length > 0)
         {
             System.err.println(appName() + ": too many arguments");
             return 1;
         }
-
-        //
-        // Since this is an interactive demo we want to clear the
-        // Application installed interrupt callback and install our
-        // own shutdown hook.
-        //
-        setInterruptHook(new ShutdownHook());
 
         java.io.BufferedReader in = new java.io.BufferedReader(new java.io.InputStreamReader(System.in));
         String name;
@@ -71,7 +50,7 @@ public class Client extends Ice.Application
         catch(java.io.IOException ex)
         {
             ex.printStackTrace();
-            return 0;
+            return 1;
         }
 
         Ice.ObjectPrx base = communicator().propertyToProxy("SessionFactory.Proxy");
@@ -82,145 +61,103 @@ public class Client extends Ice.Application
             return 1;
         }
 
-        synchronized(this)
-        {
-            _session = factory.create(name);
-            _executor.scheduleAtFixedRate(new Runnable()
-            {
-                @Override
-                public void
-                run()
-                {
-                    try
-                    {
-                        _session.refresh();
-                    }
-                    catch(Ice.LocalException ex)
-                    {
-                        communicator().getLogger().warning("SessionRefreshThread: " + ex);
-                        // Exceptions thrown from the executor task supress subsequent execution
-                        // of the task.
-                        throw ex;
-                    }
-                }
-            }, 5, 5, java.util.concurrent.TimeUnit.SECONDS);
-        }
-            
-        java.util.ArrayList<HelloPrx> hellos = new java.util.ArrayList<HelloPrx>();
+        SessionPrx session = factory.create(name);
+
+        java.util.ArrayList<HelloPrx> hellos = new java.util.ArrayList<>();
 
         menu();
 
-        try
+        boolean destroy = true;
+        boolean shutdown = false;
+        while(true)
         {
-            boolean destroy = true;
-            boolean shutdown = false;
-            while(true)
+            System.out.print("==> ");
+            System.out.flush();
+            String line = null;
+            try
             {
-                System.out.print("==> ");
-                System.out.flush();
-                String line = in.readLine();
-                if(line == null)
+                line = in.readLine();
+            }
+            catch(java.io.IOException ex)
+            {
+                ex.printStackTrace();
+                return 1;
+            }
+            if(line == null)
+            {
+                break;
+            }
+            if(line.length() > 0 && Character.isDigit(line.charAt(0)))
+            {
+                int index;
+                try
                 {
-                    break;
+                    index = Integer.parseInt(line);
                 }
-                if(line.length() > 0 && Character.isDigit(line.charAt(0)))
-                {
-                    int index;
-                    try
-                    {
-                        index = Integer.parseInt(line);
-                    }
-                    catch(NumberFormatException e)
-                    {
-                        menu();
-                        continue;
-                    }
-                    if(index < hellos.size())
-                    {
-                        HelloPrx hello = hellos.get(index);
-                        hello.sayHello();
-                    }
-                    else
-                    {
-                        System.out.println("Index is too high. " + hellos.size() + " exist so far. " +
-                                           "Use 'c' to create a new hello object.");
-                    }
-                }
-                else if(line.equals("c"))
-                {
-                    hellos.add(_session.createHello());
-                    System.out.println("created hello object " + (hellos.size() - 1));
-                }
-                else if(line.equals("s"))
-                {
-                    destroy = false;
-                    shutdown = true;
-                    break;
-                }
-                else if(line.equals("x"))
-                {
-                    break;
-                }
-                else if(line.equals("t"))
-                {
-                    destroy = false;
-                    break;
-                }
-                else if(line.equals("?"))
+                catch(NumberFormatException e)
                 {
                     menu();
+                    continue;
+                }
+                if(index < hellos.size())
+                {
+                    HelloPrx hello = hellos.get(index);
+                    hello.sayHello();
                 }
                 else
                 {
-                    System.out.println("unknown command `" + line + "'");
-                    menu();
+                    System.out.println("Index is too high. " + hellos.size() + " exist so far. " +
+                                       "Use 'c' to create a new hello object.");
                 }
             }
-
-            cleanup(destroy);
-            if(shutdown)
+            else if(line.equals("c"))
             {
-                factory.shutdown();
+                hellos.add(session.createHello());
+                System.out.println("created hello object " + (hellos.size() - 1));
+            }
+            else if(line.equals("s"))
+            {
+                destroy = false;
+                shutdown = true;
+                break;
+            }
+            else if(line.equals("x"))
+            {
+                break;
+            }
+            else if(line.equals("t"))
+            {
+                destroy = false;
+                break;
+            }
+            else if(line.equals("?"))
+            {
+                menu();
+            }
+            else
+            {
+                System.out.println("unknown command `" + line + "'");
+                menu();
             }
         }
-        catch(Exception ex)
+
+        if(destroy)
         {
-            try
-            {
-                cleanup(true);
-            }
-            catch(Ice.LocalException e)
-            {
-            }
-            ex.printStackTrace();
+            session.destroy();
+        }
+
+        if(shutdown)
+        {
+            factory.shutdown();
         }
 
         return 0;
     }
 
-    synchronized private void
-    cleanup(boolean destroy)
-    {
-        //
-        // The refresher task must be terminated before destroy is
-        // called, otherwise it might get ObjectNotExistException.
-        //
-        _executor.shutdown();       
-        if(destroy && _session != null)
-        {
-            _session.destroy();
-        }
-        _session = null;
-    }
-
-    public static void
-    main(String[] args)
+    public static void main(String[] args)
     {
         Client app = new Client();
         int status = app.main("Client", args, "config.client");
         System.exit(status);
     }
-
-    private java.util.concurrent.ScheduledExecutorService _executor = java.util.concurrent.Executors.newScheduledThreadPool(1);
-    private SessionPrx _session = null;
 }

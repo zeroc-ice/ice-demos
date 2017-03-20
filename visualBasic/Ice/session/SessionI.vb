@@ -14,7 +14,6 @@ Public Class SessionI
     Public Sub New(ByVal name As String)
 
         _name = name
-        _timestamp = System.DateTime.Now
         _nextId = 0
         _destroy = False
         _objs = New ArrayList
@@ -37,15 +36,6 @@ Public Class SessionI
         End SyncLock
     End Function
 
-    Public Overloads Overrides Sub refresh(ByVal c As Ice.Current)
-        SyncLock Me
-            If _destroy Then
-                Throw New Ice.ObjectNotExistException
-            End If
-
-            _timestamp = System.DateTime.Now
-        End SyncLock
-    End Sub
     Public Overloads Overrides Function getName(ByVal c As Ice.Current) As String
         SyncLock Me
             If _destroy Then
@@ -76,22 +66,11 @@ Public Class SessionI
                 ' This method is called on shutdown of the server, in which
                 ' case this exception is expected.
             End Try
+            _objs.Clear()
         End SyncLock
-
-        _objs.Clear()
     End Sub
 
-    Public Function timestamp() As System.DateTime
-        SyncLock Me
-            If _destroy Then
-                Throw New Ice.ObjectNotExistException
-            End If
-            Return _timestamp
-        End SyncLock
-    End Function
-
     Private _name As String
-    Private _timestamp As System.DateTime ' The last time the session was refreshed.
     Private _nextId As Integer ' The per-session id of the next hello object. This is used for tracing purposes.
     Private _objs As ArrayList  ' List of per-session allocated hello objects.
     Private _destroy As Boolean

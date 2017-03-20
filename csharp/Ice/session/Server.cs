@@ -27,26 +27,19 @@ public class Server
                 return 1;
             }
 
-            Ice.ObjectAdapter adapter = communicator().createObjectAdapter("SessionFactory");
+            var adapter = communicator().createObjectAdapter("SessionFactory");
 
-            ReapThread reaper = new ReapThread();
-            Thread reaperThread = new Thread(new ThreadStart(reaper.run));
-            reaperThread.Start();
-
-            adapter.add(new SessionFactoryI(reaper), communicator().stringToIdentity("SessionFactory"));
+            adapter.add(new SessionFactoryI(), communicator().stringToIdentity("SessionFactory"));
             adapter.activate();
             communicator().waitForShutdown();
-
-            reaper.terminate();
-            reaperThread.Join();
-
+            
             return 0;
         }
     }
 
     public static int Main(string[] args)
     {
-        App app = new App();
+        var app = new App();
         return app.main(args, "config.server");
     }
 }

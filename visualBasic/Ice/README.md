@@ -2,7 +2,7 @@ Demos in this directory:
 
 - [async](./async)
 
-  This demo illustrates the use of Asynchronous Message Invocation
+  This demo illustrates the use of Asynchronous Method Invocation
   (AMI) and Asynchronous Message Dispatch (AMD).
 
 - [bidir](./bidir)

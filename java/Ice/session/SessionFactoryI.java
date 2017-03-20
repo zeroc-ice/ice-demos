@@ -8,28 +8,77 @@ import Demo.*;
 
 class SessionFactoryI extends _SessionFactoryDisp
 {
-    SessionFactoryI(ReapTask reaper)
-    {
-        _reaper = reaper;
-    }
-
     @Override
-    public synchronized SessionPrx
-    create(String name, Ice.Current c)
+    public SessionPrx create(String name, Ice.Current current)
     {
         SessionI session = new SessionI(name);
-        SessionPrx proxy = SessionPrxHelper.uncheckedCast(c.adapter.addWithUUID(session));
-        _reaper.add(proxy, session);
+        SessionPrx proxy = SessionPrxHelper.uncheckedCast(current.adapter.addWithUUID(session));
+
+        synchronized(this)
+        {
+            //
+            // With this demo, the connection cannot have an old session associated with it
+            //
+            assert(_connectionMap.get(current.con) == null);
+            _connectionMap.put(current.con, proxy);
+        }
+
+        //
+        // Never close this connection from the client and turn on heartbeats with a timeout of 30s
+        //
+        current.con.setACM(Ice.Optional.O(30),
+                           Ice.Optional.O(Ice.ACMClose.CloseOff),
+                           Ice.Optional.O(Ice.ACMHeartbeat.HeartbeatAlways));
+        current.con.setCallback(new Ice.ConnectionCallback()
+            {
+                @Override
+                public void heartbeat(Ice.Connection con)
+                {
+                    // ignored
+                }
+
+                @Override
+                public void closed(Ice.Connection con)
+                {
+                    deadClient(con);
+                }
+            });
+
         return proxy;
     }
 
     @Override
-    public void
-    shutdown(Ice.Current c)
+    public void shutdown(Ice.Current current)
     {
         System.out.println("Shutting down...");
-        c.adapter.getCommunicator().shutdown();
+        current.adapter.getCommunicator().shutdown();
     }
 
-    private ReapTask _reaper;
+    void deadClient(Ice.Connection con)
+    {
+        SessionPrx session = null;
+        synchronized(this)
+        {
+            session = _connectionMap.remove(con);
+        }
+
+        if(session != null)
+        {
+            try
+            {
+                session.destroy();
+                System.out.println("Cleaned up dead client.");
+            }
+            catch(Ice.ObjectNotExistException ex)
+            {
+                // The client already destroyed this session
+            }
+            catch(Ice.ConnectionRefusedException ex)
+            {
+                // Server is shutting down
+            }
+        }
+    }
+
+    private java.util.Map<Ice.Connection, SessionPrx> _connectionMap = new java.util.HashMap<>();
 }

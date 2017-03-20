@@ -17,7 +17,6 @@ COBJS		= $(SLICE_OBJS) \
 		  Client.o
 
 SOBJS		= $(SLICE_OBJS) \
-		  ReapTask.o \
 		  Server.o \
 		  SessionFactoryI.o \
 		  SessionI.o

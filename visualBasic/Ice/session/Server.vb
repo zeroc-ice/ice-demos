@@ -5,7 +5,6 @@
 ' **********************************************************************
 
 Imports System
-Imports System.Threading
 
 Module SessionS
     Class Server
@@ -19,16 +18,9 @@ Module SessionS
 
             Dim adapter As Ice.ObjectAdapter = communicator().createObjectAdapter("SessionFactory")
 
-            Dim reaper As ReapThread = New ReapThread
-            Dim reaperThread As Thread = New Thread(New ThreadStart(AddressOf reaper.run))
-            reaperThread.Start()
-
-            adapter.add(New SessionFactoryI(reaper), communicator().stringToIdentity("SessionFactory"))
+            adapter.add(New SessionFactoryI(), communicator().stringToIdentity("SessionFactory"))
             adapter.activate()
             communicator().waitForShutdown()
-
-            reaper.terminate()
-            reaperThread.Join()
 
             Return 0
         End Function

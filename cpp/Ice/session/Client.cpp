@@ -4,51 +4,11 @@
 //
 // **********************************************************************
 
-#include <IceUtil/IceUtil.h>
 #include <Ice/Ice.h>
 #include <Session.h>
 
-#ifdef _WIN32
-const DWORD SIGHUP = CTRL_LOGOFF_EVENT;
-#else
-#   include <csignal>
-#endif
-
 using namespace std;
 using namespace Demo;
-
-class RefreshTask : public IceUtil::TimerTask
-{
-public:
-
-    RefreshTask(const Ice::LoggerPtr& logger, const SessionPrx& session) :
-        _logger(logger),
-        _session(session)
-    {
-    }
-
-    virtual void
-    runTimerTask()
-    {
-        try
-        {
-            _session->refresh();
-        }
-        catch(const Ice::Exception& ex)
-        {
-            Ice::Warning warn(_logger);
-            warn << "RefreshTask: " << ex;
-        }
-    }
-
-private:
-
-    // Required to prevent compiler warnings with MSVC++
-    RefreshTask& operator=(const RefreshTask&);
-
-    const Ice::LoggerPtr _logger;
-    const SessionPrx _session;
-};
 
 class SessionClient : public Ice::Application
 {
@@ -60,17 +20,7 @@ public:
 private:
 
     void menu();
-    void cleanup(bool);
-
-    //
-    // The interrupt callback and main can run concurrently with one
-    // another so shared variables must be mutex protected.
-    //
-    IceUtil::Mutex _mutex;
-    IceUtil::TimerPtr _timer;
-    SessionPrx _session;
 };
-
 
 int
 main(int argc, char* argv[])
@@ -116,119 +66,79 @@ SessionClient::run(int argc, char* argv[])
         return EXIT_FAILURE;
     }
 
-    {
-        IceUtil::Mutex::Lock sync(_mutex);
-        _session = factory->create(name);
-
-        _timer = new IceUtil::Timer();
-        _timer->scheduleRepeated(new RefreshTask(communicator()->getLogger(), _session), IceUtil::Time::seconds(5));
-    }
+    SessionPrx session = factory->create(name);
 
     vector<HelloPrx> hellos;
 
     menu();
 
-    try
+    bool destroy = true;
+    bool shutdown = false;
+    do
     {
-        bool destroy = true;
-        bool shutdown = false;
-        do
+        cout << "==> ";
+        char c;
+        cin >> c;
+        if(cin.good())
         {
-            cout << "==> ";
-            char c;
-            cin >> c;
-            if(cin.good())
+            if(isdigit(c))
             {
-                if(isdigit(c))
+                string s;
+                s += c;
+                vector<HelloPrx>::size_type index = atoi(s.c_str());
+                if(index < hellos.size())
                 {
-                    string s;
-                    s += c;
-                    vector<HelloPrx>::size_type index = atoi(s.c_str());
-                    if(index < hellos.size())
-                    {
-                        hellos[index]->sayHello();
-                    }
-                    else
-                    {
-                        cout << "Index is too high. " << hellos.size() << " hello objects exist so far.\n"
-                             << "Use `c' to create a new hello object." << endl;
-                    }
-                }
-                else if(c == 'c')
-                {
-                    hellos.push_back(_session->createHello());
-                    cout << "Created hello object " << hellos.size() - 1 << endl;
-                }
-                else if(c == 's')
-                {
-                    destroy = false;
-                    shutdown = true;
-                    break;
-                }
-                else if(c == 'x')
-                {
-                    break;
-                }
-                else if(c == 't')
-                {
-                    destroy = false;
-                    break;
-                }
-                else if(c == '?')
-                {
-                    menu();
+                    hellos[index]->sayHello();
                 }
                 else
                 {
-                    cout << "Unknown command `" << c << "'." << endl;
-                    menu();
+                    cout << "Index is too high. " << hellos.size() << " hello objects exist so far.\n"
+                         << "Use `c' to create a new hello object." << endl;
                 }
             }
-        } while(cin.good());
+            else if(c == 'c')
+            {
+                hellos.push_back(session->createHello());
+                cout << "Created hello object " << hellos.size() - 1 << endl;
+            }
+            else if(c == 's')
+            {
+                destroy = false;
+                shutdown = true;
+                break;
+            }
+            else if(c == 'x')
+            {
+                break;
+            }
+            else if(c == 't')
+            {
+                destroy = false;
+                break;
+            }
+            else if(c == '?')
+            {
+                menu();
+            }
+            else
+            {
+                cout << "Unknown command `" << c << "'." << endl;
+                menu();
+            }
+        }
+    } while(cin.good());
 
-        cleanup(destroy);
-        if(shutdown)
-        {
-            factory->shutdown();
-        }
-    }
-    catch(...)
+    if(cin.good() && destroy)
     {
-        try
-        {
-            cleanup(true);
-        }
-        catch(...)
-        {
-        }
-        throw;
+        session->destroy();
+    }
+
+    if(shutdown)
+    {
+        factory->shutdown();
     }
 
     return EXIT_SUCCESS;
-}
-
-void
-SessionClient::cleanup(bool destroy)
-{
-    IceUtil::Mutex::Lock sync(_mutex);
-
-    //
-    // The refresher thread must be terminated before destroy is
-    // called, otherwise it might get ObjectNotExistException. refresh
-    // is set to 0 so that if session->destroy() raises an exception
-    // the thread will not be re-terminated and re-joined.
-    //
-    if(_timer)
-    {
-        _timer->destroy();
-        _timer = 0;
-    }
-
-    if(destroy && _session)
-    {
-        _session->destroy();
-    }
-    _session = 0;
 }
 
 void
