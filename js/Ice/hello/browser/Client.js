@@ -231,7 +231,7 @@ setState(State.Idle);
 const _GET = {};
 if(window.location.search.length > 1)
 {
-    window.location.search.substr(1).split("&").forEach(pair=>
+    window.location.search.substr(1).split("&").forEach(pair =>
         {
             pair = pair.split("=");
             if(pair.length > 0)

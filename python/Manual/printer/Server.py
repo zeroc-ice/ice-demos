@@ -10,7 +10,7 @@ import sys, traceback, Ice
 Ice.loadSlice('Printer.ice')
 import Demo
 
-class PrinterI(Demo._PrinterDisp):
+class PrinterI(Demo.Printer):
     def printString(self, s, current=None):
         print(s)
 

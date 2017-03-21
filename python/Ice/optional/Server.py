@@ -10,7 +10,7 @@ import sys, traceback, Ice, threading
 Ice.loadSlice("Contact.ice")
 import Demo
 
-class ContactDBI(Demo._ContactDBDisp):
+class ContactDBI(Demo.ContactDB):
     def __init__(self):
         self._contacts = {}
 

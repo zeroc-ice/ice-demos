@@ -26,7 +26,7 @@ let hasError = false;
 // The message operation just writes the received data
 // to the output textarea.
 //
-class ChatCallbackI extends Chat._ChatRoomCallbackDisp
+class ChatCallbackI extends Chat.ChatRoomCallback
 {
     init(users)
     {

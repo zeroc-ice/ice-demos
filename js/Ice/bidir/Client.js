@@ -11,7 +11,7 @@ const Demo = require("./Callback").Demo;
 // Define a servant class that implements Demo.CallbackReceiver
 // interface.
 //
-class CallbackReceiverI extends Demo._CallbackReceiverDisp
+class CallbackReceiverI extends Demo.CallbackReceiver
 {
     callback(num, current)
     {

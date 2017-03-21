@@ -10,7 +10,7 @@ import sys, traceback, Ice, IceStorm, getopt
 Ice.loadSlice('Clock.ice')
 import Demo
 
-class ClockI(Demo._ClockDisp):
+class ClockI(Demo.Clock):
     def tick(self, date, current=None):
         print(date)
 

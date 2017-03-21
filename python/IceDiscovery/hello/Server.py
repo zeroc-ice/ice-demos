@@ -11,7 +11,7 @@ Ice.loadSlice('Hello.ice')
 Ice.updateModules()
 import Demo
 
-class HelloI(Demo._HelloDisp):
+class HelloI(Demo.Hello):
     def sayHello(self, delay, current=None):
         if delay != 0:
             time.sleep(delay / 1000.0)

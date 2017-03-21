@@ -13,7 +13,7 @@ const Demo = require("./Chat").Demo;
 // the message operation just writes the received data
 // to stdout.
 //
-class ChatCallbackI extends Demo._ChatCallbackDisp
+class ChatCallbackI extends Demo.ChatCallback
 {
     message(data)
     {

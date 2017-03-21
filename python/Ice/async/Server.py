@@ -56,7 +56,7 @@ class WorkQueue(threading.Thread):
             self._done = True
             self._cond.notify()
 
-class HelloI(Demo._HelloDisp):
+class HelloI(Demo.Hello):
     def __init__(self, workQueue):
         self._workQueue = workQueue
 

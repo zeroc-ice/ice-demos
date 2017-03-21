@@ -10,7 +10,7 @@ import sys, threading, Ice
 Ice.loadSlice('Filesystem.ice')
 import Filesystem
 
-class DirectoryI(Filesystem._DirectoryDisp):
+class DirectoryI(Filesystem.Directory):
     def __init__(self, communicator, name, parent):
         self._name = name
         self._parent = parent
@@ -47,7 +47,7 @@ class DirectoryI(Filesystem._DirectoryDisp):
         if self._parent:
             self._parent.addChild(thisNode)
 
-class FileI(Filesystem._FileDisp):
+class FileI(Filesystem.File):
     def __init__(self, communicator, name, parent):
         self._name = name
         self._parent = parent

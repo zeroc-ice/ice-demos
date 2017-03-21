@@ -11,7 +11,7 @@ Ice.loadSlice('Context.ice')
 Ice.updateModules()
 import Demo
 
-class ContextI(Demo._ContextDisp):
+class ContextI(Demo.Context):
     def call(self, current=None):
         sys.stdout.write("Type = ")
         if 'type' in current.ctx:
