@@ -1,5 +1,5 @@
 This demo illustrates the use of Asynchronous Method Invocation (AMI)
-and Asynchronous Message Dispatch (AMD).
+and Asynchronous Method Dispatch (AMD).
 
 To run the demo, first start the server:
 
