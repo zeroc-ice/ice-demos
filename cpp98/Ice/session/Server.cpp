@@ -16,7 +16,6 @@ public:
     virtual int run(int, char*[]);
 };
 
-
 int
 main(int argc, char* argv[])
 {
@@ -37,17 +36,10 @@ SessionServer::run(int argc, char*[])
     }
 
     Ice::ObjectAdapterPtr adapter = communicator()->createObjectAdapter("SessionFactory");
-
-    IceUtil::TimerPtr timer = new IceUtil::Timer();
-    ReapTaskPtr reapTask = new ReapTask;
-    timer->scheduleRepeated(reapTask, IceUtil::Time::seconds(1));
-
-    SessionFactoryPtr factory = new SessionFactoryI(reapTask);
+    SessionFactoryPtr factory = new SessionFactoryI;
     adapter->add(factory, Ice::stringToIdentity("SessionFactory"));
     adapter->activate();
     communicator()->waitForShutdown();
-
-    timer->destroy();
 
     return EXIT_SUCCESS;
 }

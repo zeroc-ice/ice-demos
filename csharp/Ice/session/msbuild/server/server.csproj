@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <Import Project="..\..\..\..\packages\zeroc.ice.net.3.7.0-beta0\build\zeroc.ice.net.props" Condition="Exists('..\..\..\..\packages\zeroc.ice.net.3.7.0-beta0\build\zeroc.ice.net.props') and '$(ICE_SRC_DIST)' != 'yes'" />
   <PropertyGroup Label="Globals">
@@ -102,9 +102,6 @@
   <ItemGroup>
     <Compile Include="..\..\HelloI.cs">
       <Link>HelloI.cs</Link>
-    </Compile>
-    <Compile Include="..\..\ReapThread.cs">
-      <Link>ReapThread.cs</Link>
     </Compile>
     <Compile Include="..\..\Server.cs">
       <Link>Server.cs</Link>

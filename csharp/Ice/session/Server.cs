@@ -28,18 +28,10 @@ public class Server
             }
 
             var adapter = communicator().createObjectAdapter("SessionFactory");
-
-            var reaper = new ReapThread();
-            var reaperThread = new Thread(new ThreadStart(reaper.run));
-            reaperThread.Start();
-
-            adapter.add(new SessionFactoryI(reaper), Ice.Util.stringToIdentity("SessionFactory"));
+            adapter.add(new SessionFactoryI(), communicator().stringToIdentity("SessionFactory"));
             adapter.activate();
             communicator().waitForShutdown();
-
-            reaper.terminate();
-            reaperThread.Join();
-
+            
             return 0;
         }
     }

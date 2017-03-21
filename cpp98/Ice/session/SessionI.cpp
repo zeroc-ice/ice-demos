@@ -42,7 +42,6 @@ private:
 
 SessionI::SessionI(const string& name) :
     _name(name),
-    _timestamp(IceUtil::Time::now(IceUtil::Time::Monotonic)),
     _nextId(0),
     _destroy(false)
 {
@@ -52,7 +51,7 @@ SessionI::SessionI(const string& name) :
 HelloPrx
 SessionI::createHello(const Ice::Current& c)
 {
-    Lock sync(*this);
+    IceUtil::Mutex::Lock sync(_mutex);
     if(_destroy)
     {
         throw Ice::ObjectNotExistException(__FILE__, __LINE__);
@@ -63,22 +62,10 @@ SessionI::createHello(const Ice::Current& c)
     return hello;
 }
 
-void
-SessionI::refresh(const Ice::Current&)
-{
-    Lock sync(*this);
-    if(_destroy)
-    {
-        throw Ice::ObjectNotExistException(__FILE__, __LINE__);
-    }
-
-    _timestamp = IceUtil::Time::now(IceUtil::Time::Monotonic);
-}
-
 string
 SessionI::getName(const Ice::Current&)
 {
-    Lock sync(*this);
+    IceUtil::Mutex::Lock sync(_mutex);
     if(_destroy)
     {
         throw Ice::ObjectNotExistException(__FILE__, __LINE__);
@@ -90,7 +77,7 @@ SessionI::getName(const Ice::Current&)
 void
 SessionI::destroy(const Ice::Current& c)
 {
-    Lock sync(*this);
+    IceUtil::Mutex::Lock sync(_mutex);
     if(_destroy)
     {
         throw Ice::ObjectNotExistException(__FILE__, __LINE__);
@@ -114,15 +101,4 @@ SessionI::destroy(const Ice::Current& c)
     }
 
     _objs.clear();
-}
-
-IceUtil::Time
-SessionI::timestamp() const
-{
-    Lock sync(*this);
-    if(_destroy)
-    {
-        throw Ice::ObjectNotExistException(__FILE__, __LINE__);
-    }
-    return _timestamp;
 }

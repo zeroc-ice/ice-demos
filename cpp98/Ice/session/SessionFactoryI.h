@@ -9,23 +9,22 @@
 
 #include <Ice/Ice.h>
 #include <Session.h>
-#include <ReapTask.h>
 
 class SessionFactoryI : public Demo::SessionFactory
 {
 public:
 
-    SessionFactoryI(const ReapTaskPtr&);
-
     virtual Demo::SessionPrx create(const std::string&, const Ice::Current&);
     virtual void shutdown(const Ice::Current&);
 
-
-    SessionFactoryI& operator=(const SessionFactoryI&) { return *this; }
+    void deadClient(const Ice::ConnectionPtr&);
 
 private:
 
-    const ReapTaskPtr _reaper;
+    IceUtil::Mutex _mutex;
+    std::map<Ice::ConnectionPtr, Demo::SessionPrx> _connectionMap;
 };
+
+typedef IceUtil::Handle<SessionFactoryI> SessionFactoryIPtr;
 
 #endif

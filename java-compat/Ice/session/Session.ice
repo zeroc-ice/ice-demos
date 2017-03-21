@@ -16,8 +16,7 @@ interface Hello
 
 //
 // The session object. This is used to create per-session objects on
-// behalf of the client. If the session is not refreshed on a periodic
-// basis, it will be automatically destroyed.
+// behalf of the client.
 //
 interface Session
 {
@@ -26,12 +25,6 @@ interface Session
     // be automatically destroyed when the session is destroyed.
     //
     Hello* createHello();
-
-    //
-    // Refresh a session. If a session is not refreshed on a regular
-    // basis by the client, it will be automatically destroyed.
-    //
-    idempotent void refresh();
 
     idempotent string getName();
 
