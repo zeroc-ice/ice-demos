@@ -72,55 +72,37 @@ class SessionI(Demo.Session):
 
 
 class SessionFactoryI(Demo.SessionFactory):
-    def __init__(self):
-        self._lock = threading.Lock()
-        self._connectionMap = {}
-
     def create(self, name, current):
+
+        def destroySession(session):
+            try:
+                session.destroy()
+                print("Cleaned up dead client.")
+            except Ice.LocalException as ex:
+                # The client already destroyed this session, or the server is shutting down
+                pass
 
         session = SessionI(name)
         proxy = Demo.SessionPrx.uncheckedCast(current.adapter.addWithUUID(session))
 
-        self._lock.acquire()
-        try:
-            #
-            # With this demo, the connection cannot have an old session associated with it
-            #
-            assert current.con not in self._connectionMap
-            self._connectionMap[current.con] = proxy
-        finally:
-            self._lock.release()
+        #
+        # Remove endpoints to ensure that calls are collocated-only
+        # This way, if we invoke on the proxy during shutdown, the invocation fails immediately
+        # without attempting to establish any connection
+        #
+        collocProxy = proxy.ice_endpoints([])
 
         #
         # Never close this connection from the client and turn on heartbeats with a timeout of 30s
         #
         current.con.setACM(30, Ice.ACMClose.CloseOff, Ice.ACMHeartbeat.HeartbeatAlways)
-        current.con.setCloseCallback(lambda con: self.deadClient(con))
+        current.con.setCloseCallback(lambda con: destroySession(collocProxy))
+
         return proxy
 
     def shutdown(self, current):
         print("Shutting down...")
         current.adapter.getCommunicator().shutdown()
-
-
-    def deadClient(self, con):
-        session = None
-        self._lock.acquire()
-        try:
-            session = self._connectionMap.pop(con, None)
-        finally:
-            self._lock.release()
-
-        if(session != None):
-            try:
-                session.destroy()
-                print("Cleaned up dead client.")
-            except Ice.ObjectNotExistException as ex:
-                # The client already destroyed this session
-                pass
-            except Ice.ConnectionRefusedException as ex:
-                # during server shutdown
-                pass
 
 class Server(Ice.Application):
     def run(self, args):

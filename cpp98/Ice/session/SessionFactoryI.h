@@ -18,11 +18,6 @@ public:
     virtual void shutdown(const Ice::Current&);
 
     void deadClient(const Ice::ConnectionPtr&);
-
-private:
-
-    IceUtil::Mutex _mutex;
-    std::map<Ice::ConnectionPtr, Demo::SessionPrx> _connectionMap;
 };
 
 typedef IceUtil::Handle<SessionFactoryI> SessionFactoryIPtr;
