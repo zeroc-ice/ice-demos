@@ -14,14 +14,12 @@ class SessionFactoryI extends _SessionFactoryDisp
         SessionI session = new SessionI(name);
         SessionPrx proxy = SessionPrxHelper.uncheckedCast(current.adapter.addWithUUID(session));
 
-        synchronized(this)
-        {
-            //
-            // With this demo, the connection cannot have an old session associated with it
-            //
-            assert(_connectionMap.get(current.con) == null);
-            _connectionMap.put(current.con, proxy);
-        }
+        //
+        // Remove endpoints to ensure that calls are collocated-only
+        // This way, if we invoke on the proxy during shutdown, the invocation fails immediately
+        // without attempting to establish any connection
+        //
+        SessionPrx collocProxy = SessionPrxHelper.uncheckedCast(proxy.ice_endpoints(new Ice.Endpoint[0]));
 
         //
         // Never close this connection from the client and turn on heartbeats with a timeout of 30s
@@ -40,7 +38,15 @@ class SessionFactoryI extends _SessionFactoryDisp
                 @Override
                 public void closed(Ice.Connection con)
                 {
-                    deadClient(con);
+                    try
+                    {
+                        collocProxy.destroy();
+                        System.out.println("Cleaned up dead client.");
+                    }
+                    catch(Ice.LocalException ex)
+                    {
+                        // The client already destroyed this session, or the server is shutting down
+                    }
                 }
             });
 
@@ -53,32 +59,4 @@ class SessionFactoryI extends _SessionFactoryDisp
         System.out.println("Shutting down...");
         current.adapter.getCommunicator().shutdown();
     }
-
-    void deadClient(Ice.Connection con)
-    {
-        SessionPrx session = null;
-        synchronized(this)
-        {
-            session = _connectionMap.remove(con);
-        }
-
-        if(session != null)
-        {
-            try
-            {
-                session.destroy();
-                System.out.println("Cleaned up dead client.");
-            }
-            catch(Ice.ObjectNotExistException ex)
-            {
-                // The client already destroyed this session
-            }
-            catch(Ice.ConnectionRefusedException ex)
-            {
-                // Server is shutting down
-            }
-        }
-    }
-
-    private java.util.Map<Ice.Connection, SessionPrx> _connectionMap = new java.util.HashMap<>();
 }

@@ -13,12 +13,12 @@ using namespace Demo;
 namespace
 {
 
-class ClosedCallbackI : public Ice::ConnectionCallback
+class CloseCallbackI : public Ice::ConnectionCallback
 {
 public:
 
-    ClosedCallbackI(const SessionFactoryIPtr& sessionFactory) :
-        _sessionFactory(sessionFactory)
+    CloseCallbackI(const SessionPrx& session) :
+        _session(session)
     {
     }
 
@@ -28,17 +28,25 @@ public:
     }
 
     //
-    // The client died or otherwise closed its connection
-    // to this server, so we cleanup the associated session
+    // The client died or otherwise closed its connection to this server, so we
+    // cleanup the associated session
     //
-    virtual void closed(const Ice::ConnectionPtr& con)
+    virtual void closed(const Ice::ConnectionPtr&)
     {
-        _sessionFactory->deadClient(con);
+        try
+        {
+            _session->destroy();
+            cout << "Cleaned up dead client." << endl;
+        }
+        catch(const Ice::LocalException&)
+        {
+            // The client already destroyed this session, or the server is shutting down
+        }
     }
 
 private:
 
-    SessionFactoryIPtr _sessionFactory;
+    SessionPrx _session;
 };
 
 }
@@ -49,22 +57,18 @@ SessionFactoryI::create(const string& name, const Ice::Current& current)
     SessionIPtr session = new SessionI(name);
     SessionPrx proxy = SessionPrx::uncheckedCast(current.adapter->addWithUUID(session));
 
-    {
-        IceUtil::Mutex::Lock sync(_mutex);
-
-        //
-        // With this demo, the connection cannot have an old session associated with it
-        //
-        assert(!_connectionMap[current.con]);
-
-        _connectionMap[current.con] = proxy;
-    }
+    //
+    // Remove endpoints to ensure that calls are collocated-only
+    // This way, if we invoke on the proxy during shutdown, the invocation fails immediately
+    // without attempting to establish any connection
+    //
+    SessionPrx collocProxy = proxy->ice_endpoints(Ice::EndpointSeq());
 
     //
     // Never close this connection from the client and turn on heartbeats with a timeout of 30s
     //
     current.con->setACM(30, Ice::CloseOff, Ice::HeartbeatAlways);
-    current.con->setCallback(new ClosedCallbackI(this));
+    current.con->setCallback(new CloseCallbackI(collocProxy));
 
     return proxy;
 }
@@ -74,36 +78,4 @@ SessionFactoryI::shutdown(const Ice::Current& current)
 {
     cout << "Shutting down..." << endl;
     current.adapter->getCommunicator()->shutdown();
-}
-
-void
-SessionFactoryI::deadClient(const Ice::ConnectionPtr& con)
-{
-    SessionPrx session;
-    {
-        IceUtil::Mutex::Lock sync(_mutex);
-        std::map<Ice::ConnectionPtr, Demo::SessionPrx>::iterator p = _connectionMap.find(con);
-        if(p != _connectionMap.end())
-        {
-            session = p->second;
-            _connectionMap.erase(p);
-        }
-    }
-
-    if(session)
-    {
-        try
-        {
-            session->destroy();
-            cout << "Cleaned up dead client." << endl;
-        }
-        catch(const Ice::ObjectNotExistException&)
-        {
-            // The client already destroyed this session
-        }
-        catch(const Ice::ConnectionRefusedException&)
-        {
-            // Server is shutting down
-        }
-    }
 }
