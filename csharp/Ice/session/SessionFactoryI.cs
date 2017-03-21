@@ -67,6 +67,10 @@ public class SessionFactoryI : SessionFactoryDisp_
             {
                 // Server is shutting down
             }
+            catch(Ice.CommunicatorDestroyedException)
+            {
+                // Server is shutting down
+            }
         }
     }
 

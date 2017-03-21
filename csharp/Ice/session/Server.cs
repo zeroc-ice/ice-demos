@@ -28,7 +28,7 @@ public class Server
             }
 
             var adapter = communicator().createObjectAdapter("SessionFactory");
-            adapter.add(new SessionFactoryI(), communicator().stringToIdentity("SessionFactory"));
+            adapter.add(new SessionFactoryI(), Ice.Util.stringToIdentity("SessionFactory"));
             adapter.activate();
             communicator().waitForShutdown();
             
