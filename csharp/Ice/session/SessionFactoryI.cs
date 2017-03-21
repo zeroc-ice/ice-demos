@@ -25,16 +25,18 @@ public class SessionFactoryI : SessionFactoryDisp_
         // Never close this connection from the client and turn on heartbeats with a timeout of 30s
         //
         current.con.setACM(30, Ice.ACMClose.CloseOff, Ice.ACMHeartbeat.HeartbeatAlways);
-        current.con.setCallback(_ => 
-                                try
-                                {
-                                    collocProxy.destroy();
-                                    Console.Out.WriteLine("Cleaned up dead client.");
-                                }
-                                catch(Ice.LocalException)
-                                {
-                                    // The client already destroyed this session, or the server is shutting down
-                                });
+        current.con.setCloseCallback(_ =>
+            {
+                try
+                {
+                    collocProxy.destroy();
+                    Console.Out.WriteLine("Cleaned up dead client.");
+                }
+                catch (Ice.LocalException)
+                {
+                    // The client already destroyed this session, or the server is shutting down
+                }
+            });
         return proxy;
     }
 
