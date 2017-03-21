@@ -6,8 +6,6 @@
 
 Imports Demo
 Imports System
-Imports System.Collections.Generic
-Imports System.Diagnostics
 
 Public Class SessionFactoryI
     Inherits SessionFactoryDisp_
@@ -17,19 +15,18 @@ Public Class SessionFactoryI
         Dim session As New SessionI(name)
         Dim proxy As SessionPrx = SessionPrxHelper.uncheckedCast(current.adapter.addWithUUID(session))
 
-        SyncLock Me
-            '
-            ' With this demo, the connection cannot have an old session associated with it
-            '
-            Debug.Assert(Not _connectionMap.ContainsKey(current.con))
-            _connectionMap(current.con) = proxy
-        End SyncLock
+        '
+        ' Remove endpoints to ensure that calls are collocated-only
+        ' This way, if we invoke on the proxy during shutdown, the invocation fails immediately
+        ' without attempting to establish any connection
+        '
+        Dim collocProxy As SessionPrx = SessionPrxHelper.uncheckedCast(proxy.ice_endpoints(New Ice.Endpoint() {}))
 
         '
         ' Never close this connection from the client and turn on heartbeats with a timeout of 30s
         '
         current.con.setACM(30, Ice.ACMClose.CloseOff, Ice.ACMHeartbeat.HeartbeatAlways)
-        current.con.setCallback(New ClosedCallbackI(Me))
+        current.con.setCallback(New CloseCallbackI(collocProxy))
 
         Return proxy
     End Function
@@ -39,44 +36,27 @@ Public Class SessionFactoryI
         current.adapter.getCommunicator().shutdown()
     End Sub
 
-    Sub deadClient(ByVal con as Ice.Connection)
-        Dim session As SessionPrx = Nothing
-        SyncLock Me
-            If(_connectionMap.ContainsKey(con)) Then
-                session = _connectionMap(con)
-                _connectionMap.Remove(con)
-            End If
-        End SyncLock
-        If Not session Is Nothing Then
-            Try
-                session.destroy()
-                Console.WriteLine("Cleaned up dead client.")
-            Catch ex as Ice.ObjectNotExistException
-                ' The client already destroyed this session
-            Catch ex as Ice.ConnectionRefusedException
-                ' Server is shutting down
-            End Try
-        End If
-    End Sub
-
-    Class ClosedCallbackI
+    Class CloseCallbackI
         Implements Ice.ConnectionCallback
 
-        Sub New(ByVal sessionFactory as SessionFactoryI)
-            _sessionFactory = sessionFactory
+        Sub New(ByVal session As SessionPrx)
+            _session = session
         End Sub
 
-        Public Sub heartbeat(Byval con As Ice.Connection) Implements Ice.ConnectionCallback.heartbeat
+        Public Sub heartbeat(ByVal con As Ice.Connection) Implements Ice.ConnectionCallback.heartbeat
             ' ignored
         End Sub
 
         Public Sub closed(ByVal con As Ice.Connection) Implements Ice.ConnectionCallback.closed
-            _sessionFactory.deadClient(con)
+            Try
+                _session.destroy()
+                Console.WriteLine("Cleaned up dead client.")
+            Catch ex As Ice.LocalException
+                ' The client already destroyed this session, or the server is shutting down
+            End Try
         End Sub
 
-        Private _sessionFactory As SessionFactoryI
+        Private _session As SessionPrx
     End Class
-
-    Private _connectionMap As New Dictionary(Of Ice.Connection, SessionPrx)
 
 End Class

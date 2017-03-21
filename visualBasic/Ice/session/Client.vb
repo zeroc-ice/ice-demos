@@ -64,7 +64,7 @@ Module SessionC
                 If line.Length > 0 AndAlso Char.IsDigit(line.Chars(0)) Then
                     Dim index As Int32 = Int32.Parse(line)
                     If index < hellos.Count Then
-                        Dim hello As Hello = hellos.Item(index)
+                        Dim hello As HelloPrx = hellos.Item(index)
                         hello.sayHello()
                     Else
                         Console.Out.WriteLine("Index is too high. " & hellos.Count & " hello objects exist so far.")

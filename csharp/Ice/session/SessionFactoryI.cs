@@ -6,8 +6,6 @@
 
 using Demo;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 
 public class SessionFactoryI : SessionFactoryDisp_
 {
@@ -16,20 +14,18 @@ public class SessionFactoryI : SessionFactoryDisp_
         var session = new SessionI(name);
         var proxy = SessionPrxHelper.uncheckedCast(current.adapter.addWithUUID(session));
 
-        lock(this)
-        {
-            //
-            // With this demo, the connection cannot have an old session associated with it
-            //
-            Debug.Assert(!_connectionMap.ContainsKey(current.con));
-            _connectionMap[current.con] = proxy;
-        }
+        //
+        // Remove endpoints to ensure that calls are collocated-only
+        // This way, if we invoke on the proxy during shutdown, the invocation fails immediately
+        // without attempting to establish any connection
+        //
+        var collocProxy = SessionPrxHelper.uncheckedCast(proxy.ice_endpoints(new Ice.Endpoint[0]));
 
         //
         // Never close this connection from the client and turn on heartbeats with a timeout of 30s
         //
         current.con.setACM(30, Ice.ACMClose.CloseOff, Ice.ACMHeartbeat.HeartbeatAlways);
-        current.con.setCallback(new ClosedCallbackI(this));
+        current.con.setCallback(new CloseCallbackI(collocProxy));
 
         return proxy;
     }
@@ -40,41 +36,11 @@ public class SessionFactoryI : SessionFactoryDisp_
         current.adapter.getCommunicator().shutdown();
     }
 
-    void deadClient(Ice.Connection con)
+    class CloseCallbackI : Ice.ConnectionCallback
     {
-        SessionPrx session = null;
-        lock(this)
+        internal CloseCallbackI(SessionPrx session)
         {
-            if(_connectionMap.ContainsKey(con))
-            {
-                session = _connectionMap[con];
-                _connectionMap.Remove(con);
-            }
-        }
-
-        if(session != null)
-        {
-            try
-            {
-                session.destroy();
-                Console.Out.WriteLine("Cleaned up dead client.");
-            }
-            catch(Ice.ObjectNotExistException)
-            {
-                // The client already destroyed this session
-            }
-            catch(Ice.ConnectionRefusedException)
-            {
-                // Server is shutting down
-            }
-        }
-    }
-
-    class ClosedCallbackI : Ice.ConnectionCallback
-    {
-        internal ClosedCallbackI(SessionFactoryI sessionFactory)
-        {
-            _sessionFactory = sessionFactory;
+            _session = session;
         }
 
         public void heartbeat(Ice.Connection con)
@@ -84,11 +50,17 @@ public class SessionFactoryI : SessionFactoryDisp_
 
         public void closed(Ice.Connection con)
         {
-            _sessionFactory.deadClient(con);
+            try
+            {
+                _session.destroy();
+                Console.Out.WriteLine("Cleaned up dead client.");
+            }
+            catch (Ice.LocalException)
+            {
+                // The client already destroyed this session, or the server is shutting down
+            }
         }
 
-        private SessionFactoryI _sessionFactory;
+        private SessionPrx _session;
     }
-
-    private Dictionary<Ice.Connection, SessionPrx> _connectionMap = new Dictionary<Ice.Connection, SessionPrx>();
 }
