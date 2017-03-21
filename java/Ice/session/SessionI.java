@@ -11,7 +11,6 @@ class SessionI implements Session
     public SessionI(String name)
     {
         _name = name;
-        _timestamp = System.currentTimeMillis();
         System.out.println("The session " + _name + " is now created.");
     }
 
@@ -25,16 +24,6 @@ class SessionI implements Session
         HelloPrx hello = HelloPrx.uncheckedCast(c.adapter.addWithUUID(new HelloI(_name, _nextId++)));
         _objs.add(hello);
         return hello;
-    }
-
-    @Override
-    synchronized public void refresh(com.zeroc.Ice.Current c)
-    {
-        if(_destroy)
-        {
-            throw new com.zeroc.Ice.ObjectNotExistException();
-        }
-        _timestamp = System.currentTimeMillis();
     }
 
     @Override
@@ -73,18 +62,8 @@ class SessionI implements Session
         _objs.clear();
     }
 
-    synchronized public long timestamp()
-    {
-        if(_destroy)
-        {
-            throw new com.zeroc.Ice.ObjectNotExistException();
-        }
-        return _timestamp;
-    }
-
     private String _name;
     private boolean _destroy = false; // true if destroy() was called, false otherwise.
-    private long _timestamp; // The last time the session was refreshed.
     private int _nextId = 0; // The id of the next hello object. This is used for tracing purposes.
     private java.util.List<HelloPrx> _objs =
         new java.util.LinkedList<>(); // List of per-client allocated Hello objects.

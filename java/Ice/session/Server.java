@@ -17,17 +17,9 @@ public class Server extends com.zeroc.Ice.Application
 
         com.zeroc.Ice.ObjectAdapter adapter = communicator().createObjectAdapter("SessionFactory");
 
-        java.util.concurrent.ScheduledExecutorService executor =
-            java.util.concurrent.Executors.newScheduledThreadPool(1);
-        ReapTask reaper = new ReapTask();
-        executor.scheduleAtFixedRate(reaper, 1, 1, java.util.concurrent.TimeUnit.SECONDS);
-
-        adapter.add(new SessionFactoryI(reaper), com.zeroc.Ice.Util.stringToIdentity("SessionFactory"));
+        adapter.add(new SessionFactoryI(), com.zeroc.Ice.Util.stringToIdentity("SessionFactory"));
         adapter.activate();
         communicator().waitForShutdown();
-
-        executor.shutdown();
-        reaper.terminate();
 
         return 0;
     }
