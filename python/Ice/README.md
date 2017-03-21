@@ -3,7 +3,7 @@ Demos in this directory:
 - [async](./async)
 
   This demo illustrates the use of Asynchronous Method Invocation
-  (AMI) and Asynchronous Message Dispatch (AMD).
+  (AMI) and Asynchronous Method Dispatch (AMD).
 
 - [bidir](./bidir)
 
