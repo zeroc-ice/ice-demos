@@ -4,6 +4,11 @@
 //
 // **********************************************************************
 
+#ifdef _MSC_VER
+// For localtime warning
+#  define _CRT_SECURE_NO_WARNINGS
+#endif
+
 #include <Ice/Ice.h>
 #include <IceStorm/IceStorm.h>
 #include <Clock.h>
