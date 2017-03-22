@@ -4,7 +4,7 @@
 //
 // **********************************************************************
 
-['callback', 'simpleChat', 'voip'].each {
+['callback', 'simpleChat'].each {
     def name = it
     project(":demoGlacier2${it.capitalize()}") {
         slice {
@@ -32,11 +32,6 @@
 
         // Don't create the default jar.
         jar.enabled = false
-
-        // The voip demo has no clientJar.
-        if(name != "voip") {
-            demoJar("client")
-        }
 
         // The simpleChat demo has no serverJar.
         if(name != "simpleChat") {
