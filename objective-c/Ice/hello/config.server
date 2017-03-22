@@ -17,9 +17,9 @@ Hello.Endpoints=tcp -p 10000:udp -p 10000:ssl -p 10001:ws -p 10002:wss -p 10003
 Ice.Default.Host=localhost
 
 #
-# For secure WebSocket (WSS) clients and Windows Store App clients,
-# you should disable this property. JavaScript browser clients and
-# Windows Store App clients don't use client-side authentication.
+# For JavaScript browser clients using a secure WebSocket (WSS), 
+# you should disable this property. Client-side authentication
+# is not supported with JavaScript browser clients.
 #
 #IceSSL.VerifyPeer=0
 

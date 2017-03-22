@@ -27,11 +27,6 @@ IceSSL.Keychain=../../../certs/server.keychain
 IceSSL.KeychainPassword=password
 
 #
-# For secure web sockets we need to disable VerifyPeer.
-#
-IceSSL.VerifyPeer=0
-
-#
 # IceMX configuration.
 #
 #Ice.Admin.Endpoints=tcp -h localhost -p 10004
