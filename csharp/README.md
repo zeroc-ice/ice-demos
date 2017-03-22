@@ -47,7 +47,7 @@ window and select "Build"
   * Open a Visual Studio command prompt
 
             cd ice-demos\csharp
-            MSBuild /p:ICE_SRC_DIST=all /p:IceHome:<Ice dist path> "CSharp demos.sln"
+            MSBuild /p:ICE_SRC_DIST=all /p:IceHome=<Ice dist path> "CSharp demos.sln"
 
 - Build from Visual Studio
   * Open a Visual Studio command prompt

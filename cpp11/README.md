@@ -96,7 +96,7 @@ Win32 or x64. Right click on the desired demo in the Solution Explorer window an
   * Open a Visual Studio command prompt
 
             cd ice-demos\cpp
-            MSBuild /p:ICE_SRC_DIST=all /p:IceHome:<Ice dist path> "C++ demos.sln"
+            MSBuild /p:ICE_SRC_DIST=all /p:IceHome=<Ice dist path> "C++ demos.sln"
 
 - Build from Visual Studio
   * Open a Visual Studio command prompt
