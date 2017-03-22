@@ -8,6 +8,12 @@
 <H1>Session Demo</H1>
 
 <?php
+
+//
+// Enable error reporting
+//
+error_reporting(E_ERROR | E_WARNING | E_PARSE);
+
 require_once 'Ice.php';
 require_once 'Glacier2.php';
 require_once 'Hello.php';
@@ -20,8 +26,8 @@ try
     // Attempt to retrieve the communicator that was registered in login.php
     // for the session ID.
     //
-    $ICE = Ice_find(session_id());
-    if(!isset($_SESSION['authenticated']) || $ICE == null)
+    $communicator = Ice\find(session_id());
+    if(!isset($_SESSION['authenticated']) || $communicator == null)
     {
         echo "<P><HR><B>\n";
         echo "No active session found. Visit the <a href=\"login.php\">login</a> page to proceed.\n";
@@ -33,7 +39,7 @@ try
     {
         if(isset($_POST["sayHello"]))
         {
-            $hello = Demo_HelloPrxHelper::uncheckedCast($ICE->stringToProxy("hello:tcp -p 10000"));
+            $hello = Demo\HelloPrxHelper::uncheckedCast($communicator->stringToProxy("hello:tcp -p 10000"));
             $hello->sayHello(0);
             echo "<P><HR><I>Success.</I><HR></P>\n";
         }
@@ -41,10 +47,10 @@ try
         {
             try
             {
-                $router = Glacier2_RouterPrxHelper::uncheckedCast($ICE->getDefaultRouter());
+                $router = Glacier2\RouterPrxHelper::uncheckedCast($communicator->getDefaultRouter());
                 $router->destroySession();
             }
-            catch(Glacier2_SessionNotExistException $ex)
+            catch(Glacier2\SessionNotExistException $ex)
             {
                 //
                 // This exception is expected if the session has expired.
@@ -55,7 +61,7 @@ try
                 // Ignore.
             }
             unset($_SESSION['authenticated']);
-            Ice_unregister(session_id());
+            Ice\unregister(session_id());
             echo "<P><HR><B>\n";
             echo "Session destroyed. Visit the <a href=\"login.php\">login</a> page to proceed.\n";
             echo "</B><HR></P>\n";
@@ -63,7 +69,7 @@ try
         }
     }
 }
-catch(Ice_Exception $ex)
+catch(Ice\Exception $ex)
 {
     echo "<P><HR><B>\n";
     echo "<PRE>\n";
@@ -74,7 +80,7 @@ catch(Ice_Exception $ex)
     echo "Visit the <a href=\"login.php\">login</a> page to proceed.\n";
     echo "</B><HR></P>\n";
     unset($_SESSION['authenticated']);
-    Ice_unregister(session_id());
+    Ice\unregister(session_id());
     exit();
 }
 ?>

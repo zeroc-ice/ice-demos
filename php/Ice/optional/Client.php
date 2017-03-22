@@ -5,21 +5,26 @@
 //
 // **********************************************************************
 
+//
+// Enable error reporting
+//
+error_reporting(E_ERROR | E_WARNING | E_PARSE);
+
 require_once 'Ice.php';
 require_once 'Contact.php';
 
-$ICE = Ice_initialize();
+$communicator = Ice\initialize();
 
 try
 {
-    $base = $ICE->stringToProxy("contactdb:default -h localhost -p 10000");
-    $contactdb = Demo_ContactDBPrxHelper::checkedCast($base);
+    $base = $communicator->stringToProxy("contactdb:default -h localhost -p 10000");
+    $contactdb = Demo\ContactDBPrxHelper::checkedCast($base);
 
     //
     // Add a contact for "john". All parameters are provided.
     //
     $johnNumber = "123-456-7890";
-    $contactdb->addContact("john", Demo_NumberType::HOME, $johnNumber, 0);
+    $contactdb->addContact("john", Demo\NumberType::HOME, $johnNumber, 0);
 
     echo "Checking john... ";
 
@@ -33,7 +38,7 @@ try
     }
 
     // Optional can also be used in an out parameter.
-    $dialgroup = Ice_Unset;
+    $dialgroup = Ice\None;
     $contactdb->queryDialgroup("john", $dialgroup);
     if($dialgroup != 0)
     {
@@ -44,7 +49,7 @@ try
     //
     // All of the info parameters should be set.
     //
-    if($info->type != Demo_NumberType::HOME || $info->number != $johnNumber || $info->dialGroup != 0)
+    if($info->type != Demo\NumberType::HOME || $info->number != $johnNumber || $info->dialGroup != 0)
     {
         echo "info is incorrect ";
     }
@@ -58,7 +63,7 @@ try
     // the default value.
     //
     $steveNumber = "234-567-8901";
-    $contactdb->addContact("steve", Ice_Unset, $steveNumber, 1);
+    $contactdb->addContact("steve", Ice\None, $steveNumber, 1);
 
     echo "Checking steve... ";
     $number = $contactdb->queryNumber("steve");
@@ -71,7 +76,7 @@ try
     //
     // Check the value for the NumberType.
     //
-    if($info->type != Demo_NumberType::HOME)
+    if($info->type != Demo\NumberType::HOME)
     {
         echo "info is incorrect ";
     }
@@ -93,7 +98,7 @@ try
     // Add a contact from "frank". Here the dialGroup field isn't set.
     //
     $frankNumber = "345-678-9012";
-    $contactdb->addContact("frank", Demo_NumberType::CELL, $frankNumber, Ice_Unset);
+    $contactdb->addContact("frank", Demo\NumberType::CELL, $frankNumber, Ice\None);
 
     echo "Checking frank... ";
 
@@ -107,17 +112,17 @@ try
     //
     // The dial group field should be unset.
     //
-    if($info->dialGroup != Ice_Unset)
+    if($info->dialGroup != Ice\None)
     {
         echo "info is incorrect ";
     }
-    if($info->type != Demo_NumberType::CELL || $info->number != $frankNumber)
+    if($info->type != Demo\NumberType::CELL || $info->number != $frankNumber)
     {
         echo "info is incorrect ";
     }
 
     $contactdb->queryDialgroup("frank", $dialgroup);
-    if($dialgroup != Ice_Unset)
+    if($dialgroup != Ice\None)
     {
         echo "dialgroup is incorrect ";
     }
@@ -126,11 +131,11 @@ try
     //
     // Add a contact from "anne". The number field isn't set.
     //
-    $contactdb->addContact("anne", Demo_NumberType::OFFICE, Ice_Unset, 2);
+    $contactdb->addContact("anne", Demo\NumberType::OFFICE, Ice\None, 2);
 
     echo "Checking anne... ";
     $number = $contactdb->queryNumber("anne");
-    if($number != Ice_Unset)
+    if($number != Ice\None)
     {
         echo "number is incorrect ";
     }
@@ -139,11 +144,11 @@ try
     //
     // The number field should be unset.
     //
-    if($info->number != Ice_Unset)
+    if($info->number != Ice\None)
     {
         echo "info is incorrect ";
     }
-    if($info->type != Demo_NumberType::OFFICE || $info->dialGroup != 2)
+    if($info->type != Demo\NumberType::OFFICE || $info->dialGroup != 2)
     {
         echo "info is incorrect ";
     }
@@ -160,14 +165,14 @@ try
     // the remainder of the fields are unchanged.
     //
     $anneNumber = "456-789-0123";
-    $contactdb->updateContact("anne", Ice_Unset, $anneNumber, Ice_Unset);
+    $contactdb->updateContact("anne", Ice\None, $anneNumber, Ice\None);
     $number = $contactdb->queryNumber("anne");
     if($number != $anneNumber)
     {
         echo "number is incorrect ";
     }
     $info = $contactdb->query("anne");
-    if($info->number != $anneNumber || $info->type != Demo_NumberType::OFFICE || $info->dialGroup != 2)
+    if($info->number != $anneNumber || $info->type != Demo\NumberType::OFFICE || $info->dialGroup != 2)
     {
         echo "info is incorrect ";
     }
@@ -175,7 +180,7 @@ try
 
     $contactdb->shutdown();
 }
-catch(Ice_LocalException $ex)
+catch(\Ice\LocalException $ex)
 {
     print_r($ex);
 }

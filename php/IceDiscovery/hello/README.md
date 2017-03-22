@@ -9,7 +9,7 @@ Follow these steps to install the demo:
 2) Install the following files in your Web server's document
    directory:
 
-   * `client.php` (or `client_ns.php`, if using PHP namespaces)
+   * `client.php`
    * `Hello.php`
 
    The file `Hello.php` is generated from `Hello.ice` when you run make or
@@ -26,27 +26,11 @@ Follow these steps to install the demo:
    require 'Ice.php';
    ...
 ```
-4) Edit your `php.ini` and look for the line where Ice for PHP extension
-   is loaded, it looks like:
 
-     extension=IcePHP.so
+4) In a command window on the Web server host, start IceDiscovery hello
+   server. You can use a server from any Ice language mapping.
 
-   Add the following line bellow:
-
-     ice.options="--Ice.Plugin.IceDiscovery=IceDiscovery:createIceDiscovery"
-
-  Note in Linux when using a binary distribution that is configured in its
-  own ini file:
-
-    /etc/php5/mods-available/ice.ini (Ubuntu)
-    /etc/php.d/ice.ini (Red Hat and Suse)
-
-  You need to restart the web server for the changes to take effect
-
-5) In a command window on the Web server host, start a hello server.
-   You can use a server from any Ice language mapping.
-
-6) Start a Web browser and open the client page to begin using the
+5) Start a Web browser and open the client page to begin using the
    demo. Note that support for secure invocations via SSL are disabled
    by default. If you have configured SSL for the Ice extension, edit
    client.php and set the have_ssl variable to true.

@@ -6,6 +6,11 @@
 #
 # **********************************************************************
 
+//
+// Enable error reporting
+//
+error_reporting(E_ERROR | E_WARNING | E_PARSE);
+
 class JavaScriptSession
 {
     public $jsontype;
@@ -39,7 +44,7 @@ class Session
         if($this->isConnected())
         {
             $this->_chatsession = $this->_communicator->stringToProxy($_SESSION["chatsession"]);
-            $this->_chatsession = $this->_chatsession->ice_uncheckedCast("::PollingChat::PollingChatSession");
+            $this->_chatsession = PollingChat\PollingChatSessionPrxHlper::uncheckedCast($this->_chatsession);
         }
     }
 
@@ -58,7 +63,7 @@ class Session
             //
             // Cast the proxy to the appropriate type.
             //
-            $chatsessionfactory = $chatsessionfactory->ice_uncheckedCast("::PollingChat::PollingChatSessionFactory");
+            $chatsessionfactory = PollingChat\PollingChatSessionFactoryPrxHelper::uncheckedCast($chatsessionfactory);
 
             //
             // Create a new session.
@@ -70,7 +75,7 @@ class Session
             //
             if($this->_communicator->getProperties()->getProperty("PollingChatSessionFactory.OverrideEndpoints") != "")
             {
-                $ident = Ice_identityToString($this->_chatsession->ice_getIdentity());
+                $ident = Ice\identityToString($this->_chatsession->ice_getIdentity());
                 $endpoints = $this->_communicator->getProperties()->getProperty(
                     "PollingChatSessionFactory.OverrideEndpoints");
                 $this->_chatsession = $this->_communicator->stringToProxy(
@@ -85,7 +90,7 @@ class Session
 
             return new JavaScriptSession(session_id()); // Return the sessionId to the client.
         }
-        catch(Ice_Exception $ex)
+        catch(Ice\Exception $ex)
         {
             $ex->jsontype = get_class($ex);
             return $ex;
@@ -103,7 +108,7 @@ class Session
             {
                 $this->_chatsession->destroy();
             }
-            catch(Ice_Exception $ex)
+            catch(Ice\Exception $ex)
             {
             }
             $this->setConnected(false);
@@ -120,7 +125,7 @@ class Session
         {
             return $this->_chatsession->send($message);
         }
-        catch(Ice_Exception $ex)
+        catch(Ice\Exception $ex)
         {
             $ex->jsontype = get_class($ex);
             return $ex;
@@ -137,7 +142,7 @@ class Session
         {
             return $this->_chatsession->getInitialUsers();
         }
-        catch(Ice_Exception $ex)
+        catch(Ice\Exception $ex)
         {
             $ex->jsontype = get_class($ex);
             return $ex;
@@ -168,7 +173,7 @@ class Session
             }
             return $data;
         }
-        catch(Ice_Exception $ex)
+        catch(Ice\Exception $ex)
         {
             $ex->jsontype = get_class($ex);
             return $ex;
@@ -228,7 +233,7 @@ class Session
     {
         if(!$this->isConnected())
         {
-            $ex = new Ice_ObjectNotExistException();
+            $ex = new Ice\ObjectNotExistException();
             $ex->jsontype = get_class($ex);
             throw $ex;
         }

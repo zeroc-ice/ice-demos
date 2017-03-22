@@ -13,6 +13,3 @@ any changes are needed for your environment, and then run the PHP
 client:
 
       php -c php.ini -f Client.php
-
-An alternate version of the client that uses PHP namespaces is
-provided as `Client_ns.php`.

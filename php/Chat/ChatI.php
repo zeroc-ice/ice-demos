@@ -1,23 +1,23 @@
 <?php
 
+//
+// Enable error reporting
+//
+error_reporting(E_ERROR | E_WARNING | E_PARSE);
+
 # **********************************************************************
 #
 # Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
 #
 # **********************************************************************
 
-//
-// Required for JSON encoding
-//
-require_once dirname(__FILE__) . '/JSON.php';
 
 //
 // Encode the param $data as Json and send it to the client browser.
 //
 function printJson($data)
 {
-    $json = new Services_JSON();
-    print($json->encode($data));
+    print(json_encode($data));
 }
 
 //
@@ -34,8 +34,8 @@ require_once 'Ice.php';
 require_once dirname(__FILE__) . '/SessionI.php';
 require_once dirname(__FILE__) . '/PollingChat.php';
 
-$data = new Ice_InitializationData;
-$data->properties = Ice_getProperties();
+$data = new \Ice\InitializationData;
+$data->properties = \Ice\getProperties();
 if($data->properties->getProperty("PollingChatSessionFactory") == '')
 {
     $data->properties->setProperty("Ice.Plugin.IceSSL", "IceSSL:createIceSSL");
@@ -45,7 +45,7 @@ if($data->properties->getProperty("PollingChatSessionFactory") == '')
                                    "PollingChatSessionFactory:wss -h zeroc.com -p 443 -r /demo-proxy/chat/poll");
 }
 
-$communicator = Ice_initialize($data);
+$communicator = \Ice\initialize($data);
 
 //
 // Disable session cookie.

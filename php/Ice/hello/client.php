@@ -13,10 +13,15 @@
 //
 // **********************************************************************
 
+//
+// Enable error reporting
+//
+error_reporting(E_ERROR | E_WARNING | E_PARSE);
+
 require_once 'Ice.php';
 require_once 'Hello.php';
 
-$ICE = Ice_initialize();
+$communicator = Ice\initialize();
 
 //
 // Change this to true if SSL is configured for the PHP extension.
@@ -31,11 +36,11 @@ if(isset($_POST["submitted"]))
     {
         if($have_ssl)
         {
-            $p = $ICE->stringToProxy("hello:tcp -h localhost -p 10000:udp -h localhost -p 10000:ssl -h localhost -p 10001");
+            $p = $communicator->stringToProxy("hello:tcp -h localhost -p 10000:udp -h localhost -p 10000:ssl -h localhost -p 10001");
         }
         else
         {
-            $p = $ICE->stringToProxy("hello:tcp -h localhost -p 10000:udp -h localhost -p 10000");
+            $p = $communicator->stringToProxy("hello:tcp -h localhost -p 10000:udp -h localhost -p 10000");
         }
 
         if(isset($_POST["mode"]))
@@ -58,7 +63,7 @@ if(isset($_POST["submitted"]))
         }
         if(isset($_POST["timeout"]) and $_POST["timeout"] == "yes")
         {
-            $p = $p->ice_timeout(2000);
+            $p = $p->ice_invocationTimeout(2000);
         }
         if(isset($_POST["delay"]) and $_POST["delay"] == "yes")
         {
@@ -67,11 +72,11 @@ if(isset($_POST["submitted"]))
 
         if($p->ice_isTwoway())
         {
-            $hello = Demo_HelloPrxHelper::checkedCast($p);
+            $hello = Demo\HelloPrxHelper::checkedCast($p);
         }
         else
         {
-            $hello = Demo_HelloPrxHelper::uncheckedCast($p);
+            $hello = Demo\HelloPrxHelper::uncheckedCast($p);
         }
 
         if(isset($_POST["sayHello"]))
@@ -85,7 +90,7 @@ if(isset($_POST["submitted"]))
 
         echo "OK\n";
     }
-    catch(Ice_LocalException $ex)
+    catch(Ice\LocalException $ex)
     {
         echo "<pre>\n";
         print_r($ex);

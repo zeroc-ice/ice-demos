@@ -7,6 +7,12 @@
 <H1>Session Demo - Login</H1>
 
 <?php
+
+//
+// Enable error reporting
+//
+error_reporting(E_ERROR | E_WARNING | E_PARSE);
+
 require_once 'Ice.php';
 require_once 'Glacier2.php';
 
@@ -17,11 +23,11 @@ try
     //
     // Check for an existing session.
     //
-    $ICE = Ice_find(session_id());
-    if(isset($_SESSION['authenticated']) || $ICE != null)
+    $communicator = \Ice\find(session_id());
+    if(isset($_SESSION['authenticated']) || $communicator != null)
     {
         unset($_SESSION['authenticated']);
-        Ice_unregister(session_id());
+        \Ice\unregister(session_id());
         echo "<P><HR><I>Destroyed previous session.</I><HR></P>\n";
     }
 
@@ -35,17 +41,17 @@ try
         //
         // Initialize a communicator using the default properties.
         //
-        $initData = new Ice_InitializationData;
-        $initData->properties = Ice_createProperties();
+        $initData = new \Ice\InitializationData;
+        $initData->properties = \Ice\createProperties();
         $initData->properties->setProperty("Ice.Default.Router", "DemoGlacier2/router:tcp -p 4063 -h localhost");
-        $ICE = Ice_initialize($initData);
+        $communicator = \Ice\initialize($initData);
 
         try
         {
             //
             // Verify that we are using a Glacier2 router.
             //
-            $router = Glacier2_RouterPrxHelper::checkedCast($ICE->getDefaultRouter());
+            $router = \Glacier2\RouterPrxHelper::checkedCast($communicator->getDefaultRouter());
             if($router == null)
             {
                 echo "<P><HR><B>Configured router is not a Glacier2 router.</B><HR></P>\n";
@@ -68,7 +74,7 @@ try
             {
                 $router->createSession($user, $password);
                 $_SESSION['authenticated'] = 'true';
-                Ice_register($ICE, session_id(), session_cache_expire());
+                \Ice\register($communicator, session_id(), session_cache_expire());
                 header("Location: session.php"); // Redirect.
                 exit();
             }

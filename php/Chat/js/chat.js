@@ -152,20 +152,20 @@ var Coordinator = Class.create(
                     coordinator._username = formatUsername(username);
                     return;
                 }
-                if(response.jsontype == "PollingChat_CannotCreateSessionException")
+                if(response.jsontype == "PollingChat\\CannotCreateSessionException")
                 {
                     coordinator._chatView.appendError("Login failed:", response.reason);
                     $('txtUserName').focus();
                     return;
                 }
-                if(response.jsontype == "Ice_ConnectionRefusedException")
+                if(response.jsontype == "Ice\\ConnectionRefusedException")
                 {
-                    coordinator._chatView.appendError("Communication with server failed (Ice_ConnectionRefusedException) ", "");
+                    coordinator._chatView.appendError("Communication with server failed (Ice\\ConnectionRefusedException) ", "");
                     return;
                 }
-                if(response.jsontype == "Ice_UnknownLocalException")
+                if(response.jsontype == "Ice\\UnknownLocalException")
                 {
-                    coordinator._chatView.appendError("Communication with server failed (Ice_UnknownLocalException)",
+                    coordinator._chatView.appendError("Communication with server failed (Ice\\UnknownLocalException)",
                                                       response.unknown);
                     $('txtUserName').focus();
                     return;
@@ -225,14 +225,14 @@ var Coordinator = Class.create(
                     var response = transport.responseText.evalJSON(true);
                     if(response.jsontype !== undefined)
                     {
-                        if(response.jsontype == "Ice_ConnectionRefusedException")
+                        if(response.jsontype == "Ice\\ConnectionRefusedException")
                         {
                             coordinator.connectionLost("Communication with server failed (Ice_ConnectionRefusedException) ");
                             return;
                         }
-                        if(response.jsontype == "Ice_UnknownLocalException")
+                        if(response.jsontype == "Ice\\UnknownLocalException")
                         {
-                            coordinator.connectionLost("(Ice_UnknownLocalException) " + response.unknown);
+                            coordinator.connectionLost("(Ice\\UnknownLocalException) " + response.unknown);
                             return;
                         }
                         coordinator.connectionLost(transport.responseText);
@@ -291,14 +291,14 @@ var Coordinator = Class.create(
 
                 if(response.jsontype !== undefined)
                 {
-                    if(response.jsontype == "Ice_ConnectionRefusedException")
+                    if(response.jsontype == "Ice\\ConnectionRefusedException")
                     {
                         coordinator.connectionLost("Communication with server failed (Ice_ConnectionRefusedException) ");
                         return;
                     }
-                    if(response.jsontype == "Ice_UnknownLocalException")
+                    if(response.jsontype == "Ice\\UnknownLocalException")
                     {
-                        coordinator.connectionLost("(Ice_UnknownLocalException) " + response.unknown);
+                        coordinator.connectionLost("(Ice\\UnknownLocalException) " + response.unknown);
                         return;
                     }
 
@@ -317,7 +317,7 @@ var Coordinator = Class.create(
                 {
                     switch(response[i].jsontype)
                     {
-                        case "PollingChat_InitialUserEvent":
+                        case "PollingChat\\InitialUserEvent":
                             for(var j = 0; j < response[i].users.length; j++)
                             {
                                 var user = new Element('li', { 'id': '_' + response[i].users[j] }).update(
@@ -326,7 +326,7 @@ var Coordinator = Class.create(
                             }
                             break;
 
-                        case "PollingChat_UserJoinedEvent":
+                        case "PollingChat\\UserJoinedEvent":
                             var user = new Element('li', { 'id': '_' + response[i].name }).update(response[i].name);
                             $('userList').insert(user);
                             coordinator._chatView.addMessage("<p>" + formatDate(response[i].timestamp) +
@@ -334,14 +334,14 @@ var Coordinator = Class.create(
                                                              " joined.</p>");
                             break;
 
-                        case "PollingChat_UserLeftEvent":
+                        case "PollingChat\\UserLeftEvent":
                             $('_' + response[i].name).remove();
                             coordinator._chatView.addMessage("<p>" + formatDate(response[i].timestamp) +
                                                              " - &lt;system-message&gt; - " + response[i].name +
                                                              " left.</p>");
                             break;
 
-                        case "PollingChat_MessageEvent":
+                        case "PollingChat\\MessageEvent":
                             if(response[i].name != coordinator._username)
                             {
                                 coordinator._chatView.addMessage("<p>" + formatDate(response[i].timestamp) +
@@ -385,19 +385,19 @@ var Coordinator = Class.create(
 
                 if(response.jsontype !== undefined)
                 {
-                    if(response.jsontype == "Chat_InvalidMessageException")
+                    if(response.jsontype == "Chat\\InvalidMessageException")
                     {
                         coordinator._chatView.addMessage("<p>&lt;system-message&gt; - " + response.reason + "</p>");
                         return;
                     }
-                    if(response.jsontype == "Ice_ConnectionRefusedException")
+                    if(response.jsontype == "Ice\\ConnectionRefusedException")
                     {
                         coordinator.connectionLost("Communication with server failed (Ice_ConnectionRefusedException) ");
                         return;
                     }
-                    if(response.jsontype == "Ice_UnknownLocalException")
+                    if(response.jsontype == "Ice\\UnknownLocalException")
                     {
-                        coordinator.connectionLost("(Ice_UnknownLocalException) " + response.unknown);
+                        coordinator.connectionLost("(Ice\\UnknownLocalException) " + response.unknown);
                         return;
                     }
                     coordinator.connectionLost(transport.responseText);

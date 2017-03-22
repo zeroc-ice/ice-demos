@@ -9,7 +9,7 @@ Follow these steps to install the demo:
 2) Install the following files in your Web server's document
    directory:
 
-   * `client.php` (or `client_ns.php`, if using PHP namespaces)
+   * `client.php`
    * `Hello.php`
 
    The file `Hello.php` is generated from `Hello.ice` when you run make or
