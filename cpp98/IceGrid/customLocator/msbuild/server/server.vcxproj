@@ -246,8 +246,6 @@
   <ItemGroup>
     <None Include="packages.config" />
     <Xml Include="..\..\application.xml" />
-    <Xml Include="..\..\application_with_replication.xml" />
-    <Xml Include="..\..\application_with_template.xml" />
     <None Include="..\..\config.grid" />
   </ItemGroup>
   <ItemGroup>

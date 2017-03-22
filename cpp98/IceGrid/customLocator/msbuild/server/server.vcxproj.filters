@@ -102,7 +102,5 @@
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\..\application.xml" />
-    <Xml Include="..\..\application_with_replication.xml" />
-    <Xml Include="..\..\application_with_template.xml" />
   </ItemGroup>
 </Project>
