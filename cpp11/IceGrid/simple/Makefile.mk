@@ -1,0 +1,9 @@
+# **********************************************************************
+#
+# Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+#
+# **********************************************************************
+
+$(demo)_client_dependencies	= IceGrid Glacier2 Ice
+
+demos += $(demo)
