@@ -45,8 +45,6 @@ run `make`:
 
 ## Build Instructions for Windows
 
-## Building and Running the Demos on Windows
-
 ### Prerequisites
 
 The projects for the sample programs require the [Ice Builder for Visual Studio][3].

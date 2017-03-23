@@ -23,6 +23,9 @@ require_once 'Hello.php';
 
 $initData = new Ice\InitializationData;
 $initData->properties = Ice\getProperties();
+//
+// IceDiscovery configuration
+//
 $initData->properties->setProperty("Ice.Plugin.IceDiscovery", "IceDiscovery:createIceDiscovery");
 $initData->properties->setProperty("IceDiscovery.Interface", "127.0.0.1");
 $communicator = Ice\initialize($initData);

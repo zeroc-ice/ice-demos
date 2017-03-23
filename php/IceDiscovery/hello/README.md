@@ -20,7 +20,7 @@ Follow these steps to install the demo:
 
 4) You may need to edit `Client.php` so that the script is able to
    include the Ice run time files. For example, if you installed Ice
-   in `C:\Ice`, add a call to `ini_set` as shown below:
+   in `C:\Ice`, add a call to `set_include_path` as shown below:
 ```
    <?php
    set_include_path(get_include_path() . PATH_SEPARATOR . 'C:/Ice/php');
@@ -34,6 +34,6 @@ Follow these steps to install the demo:
 6) Start a Web browser and open the client page to begin using the
    demo. Note that support for secure invocations via SSL are disabled
    by default. If you have configured SSL for the Ice extension, edit
-   client.php and set the have_ssl variable to true.
+   Client.php and set the have_ssl variable to true.
 
 [1]: https://doc.zeroc.com/display/Ice37/Using+the+Linux+Binary+Distributions#UsingtheLinuxBinaryDistributions-PHP

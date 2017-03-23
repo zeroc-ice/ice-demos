@@ -15,13 +15,12 @@ Follow these steps to install the demo:
    * `Client.php`
    * `Hello.php`
 
-   The file `Hello.php` is generated from `Hello.ice` when you run make or
-   nmake in this directory. Verify that the files have appropriate access 
-   rights.
+   The file `Hello.php` is generated from `Hello.ice` when you build the
+   demos. Verify that the files have appropriate access rights.
 
 4) You may need to edit `Client.php` so that the script is able to
    include the Ice run time files. For example, if you installed Ice
-   in `C:\Ice`, add a call to `ini_set` as shown below:
+   in `C:\Ice`, add a call to `set_include_path` as shown below:
 ```
    <?php
    set_include_path(get_include_path() . PATH_SEPARATOR . 'C:/Ice/php');
