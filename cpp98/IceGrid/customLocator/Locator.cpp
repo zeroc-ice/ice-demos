@@ -11,105 +11,74 @@ using namespace std;
 namespace
 {
 
-class SetAdapterDirectProxyCallback : public IceUtil::Shared
+//
+// AMI type-safe callbacks that forward to AMD callbacks
+
+//
+// Template for void response
+//
+template<class T>
+class AMICallback : public IceUtil::Shared
 {
 public:
 
-    SetAdapterDirectProxyCallback(const Ice::AMD_LocatorRegistry_setAdapterDirectProxyPtr& cb) :
+    AMICallback(const T& cb) :
         _cb(cb)
     {
     }
 
-    void
-    finished(const Ice::AsyncResultPtr& r)
+    void ice_response()
     {
-        Ice::LocatorRegistryPrx registry = Ice::LocatorRegistryPrx::uncheckedCast(r->getProxy());
-        try
-        {
-            registry->end_setAdapterDirectProxy(r);
-            _cb->ice_response();
-        }
-        catch(const Ice::Exception& ex)
-        {
-            _cb->ice_exception(ex);
-        }
+        _cb->ice_response();
+    }
+
+    void ice_exception(const Ice::Exception& ex)
+    {
+        _cb->ice_exception(ex);
     }
 
 private:
 
     // Required to prevent compiler warning with MSVC++
-    SetAdapterDirectProxyCallback& operator=(const SetAdapterDirectProxyCallback&);
+    AMICallback& operator=(const AMICallback&);
 
-    const Ice::AMD_LocatorRegistry_setAdapterDirectProxyPtr _cb;
+    const T _cb;
 };
-typedef IceUtil::Handle<SetAdapterDirectProxyCallback> SetAdapterDirectProxyCallbackPtr;
 
-class SetReplicatedAdapterDirectProxyCallback : public IceUtil::Shared
+//
+// Template for response = one proxy
+//
+template<class T>
+class AMICallbackObjectPrx : public IceUtil::Shared
 {
 public:
 
-    SetReplicatedAdapterDirectProxyCallback(const Ice::AMD_LocatorRegistry_setReplicatedAdapterDirectProxyPtr& cb) :
+    AMICallbackObjectPrx(const T& cb) :
         _cb(cb)
     {
     }
 
-    void
-    finished(const Ice::AsyncResultPtr& r)
+    void ice_response(const Ice::ObjectPrx& proxy)
     {
-        Ice::LocatorRegistryPrx registry = Ice::LocatorRegistryPrx::uncheckedCast(r->getProxy());
-        try
-        {
-            registry->end_setReplicatedAdapterDirectProxy(r);
-            _cb->ice_response();
-        }
-        catch(const Ice::Exception& ex)
-        {
-            _cb->ice_exception(ex);
-        }
+        _cb->ice_response(proxy);
+    }
+
+    void ice_exception(const Ice::Exception& ex)
+    {
+        _cb->ice_exception(ex);
     }
 
 private:
 
     // Required to prevent compiler warning with MSVC++
-    SetReplicatedAdapterDirectProxyCallback& operator=(const SetReplicatedAdapterDirectProxyCallback&);
+    AMICallbackObjectPrx& operator=(const AMICallbackObjectPrx&);
 
-    const Ice::AMD_LocatorRegistry_setReplicatedAdapterDirectProxyPtr _cb;
+    const T _cb;
 };
-typedef IceUtil::Handle<SetReplicatedAdapterDirectProxyCallback> SetReplicatedAdapterDirectProxyCallbackPtr;
 
-class SetServerProcessProxyCallback : public IceUtil::Shared
-{
-public:
-
-    SetServerProcessProxyCallback(const Ice::AMD_LocatorRegistry_setServerProcessProxyPtr& cb) :
-        _cb(cb)
-    {
-    }
-
-    void
-    finished(const Ice::AsyncResultPtr& r)
-    {
-        Ice::LocatorRegistryPrx registry = Ice::LocatorRegistryPrx::uncheckedCast(r->getProxy());
-        try
-        {
-            registry->end_setServerProcessProxy(r);
-            _cb->ice_response();
-        }
-        catch(const Ice::Exception& ex)
-        {
-            _cb->ice_exception(ex);
-        }
-    }
-
-private:
-
-    // Required to prevent compiler warning with MSVC++
-    SetServerProcessProxyCallback& operator=(const SetServerProcessProxyCallback&);
-
-    const Ice::AMD_LocatorRegistry_setServerProcessProxyPtr _cb;
-};
-typedef IceUtil::Handle<SetServerProcessProxyCallback> SetServerProcessProxyCallbackPtr;
-
+//
+// LocatorRegistry implementation
+//
 class LocatorRegistryI : public Ice::LocatorRegistry
 {
 public:
@@ -125,8 +94,14 @@ public:
                                 const Ice::ObjectPrx& proxy,
                                 const Ice::Current&)
     {
+        typedef AMICallback<Ice::AMD_LocatorRegistry_setAdapterDirectProxyPtr> SetAdapterDirectProxyCallback;
+        typedef IceUtil::Handle<SetAdapterDirectProxyCallback> SetAdapterDirectProxyCallbackPtr;
+
         SetAdapterDirectProxyCallbackPtr callback = new SetAdapterDirectProxyCallback(cb);
-        Ice::CallbackPtr d = Ice::newCallback(callback, &SetAdapterDirectProxyCallback::finished);
+        Ice::Callback_LocatorRegistry_setAdapterDirectProxyPtr d =
+            Ice::newCallback_LocatorRegistry_setAdapterDirectProxy(callback,
+                                                                   &SetAdapterDirectProxyCallback::ice_response,
+                                                                   &SetAdapterDirectProxyCallback::ice_exception);
         _registry->begin_setAdapterDirectProxy(id, proxy, d);
     }
 
@@ -137,8 +112,14 @@ public:
                                           const Ice::ObjectPrx& proxy,
                                           const Ice::Current&)
     {
+        typedef AMICallback<Ice::AMD_LocatorRegistry_setReplicatedAdapterDirectProxyPtr> SetReplicatedAdapterDirectProxyCallback;
+        typedef IceUtil::Handle<SetReplicatedAdapterDirectProxyCallback> SetReplicatedAdapterDirectProxyCallbackPtr;
+
         SetReplicatedAdapterDirectProxyCallbackPtr callback = new SetReplicatedAdapterDirectProxyCallback(cb);
-        Ice::CallbackPtr d = Ice::newCallback(callback, &SetReplicatedAdapterDirectProxyCallback::finished);
+        Ice::Callback_LocatorRegistry_setReplicatedAdapterDirectProxyPtr d =
+            Ice::newCallback_LocatorRegistry_setReplicatedAdapterDirectProxy(callback,
+                                                                             &SetReplicatedAdapterDirectProxyCallback::ice_response,
+                                                                             &SetReplicatedAdapterDirectProxyCallback::ice_exception);
         _registry->begin_setReplicatedAdapterDirectProxy(id, group, proxy, d);
     }
 
@@ -148,8 +129,14 @@ public:
                                 const Ice::ProcessPrx& proxy,
                                 const Ice::Current&)
     {
+        typedef AMICallback<Ice::AMD_LocatorRegistry_setServerProcessProxyPtr> SetServerProcessProxyCallback;
+        typedef IceUtil::Handle<SetServerProcessProxyCallback> SetServerProcessProxyCallbackPtr;
+
         SetServerProcessProxyCallbackPtr callback = new SetServerProcessProxyCallback(cb);
-        Ice::CallbackPtr d = Ice::newCallback(callback, &SetServerProcessProxyCallback::finished);
+        Ice::Callback_LocatorRegistry_setServerProcessProxyPtr d =
+            Ice::newCallback_LocatorRegistry_setServerProcessProxy(callback,
+                                                                   &SetServerProcessProxyCallback::ice_response,
+                                                                   &SetServerProcessProxyCallback::ice_exception);
         _registry->begin_setServerProcessProxy(id, proxy, d);
     }
 
@@ -161,72 +148,10 @@ private:
     const Ice::LocatorRegistryPrx _registry;
 };
 
-class FindObjectByIdCallback : public IceUtil::Shared
-{
-public:
 
-    FindObjectByIdCallback(const Ice::AMD_Locator_findObjectByIdPtr& cb) :
-        _cb(cb)
-    {
-    }
-
-    void
-    finished(const Ice::AsyncResultPtr& r)
-    {
-        Ice::LocatorPrx locator = Ice::LocatorPrx::uncheckedCast(r->getProxy());
-        try
-        {
-            Ice::ObjectPrx obj = locator->end_findObjectById(r);
-            _cb->ice_response(obj);
-        }
-        catch(const Ice::Exception& ex)
-        {
-            _cb->ice_exception(ex);
-        }
-    }
-
-private:
-
-    // Required to prevent compiler warning with MSVC++
-    FindObjectByIdCallback& operator=(const FindObjectByIdCallback&);
-
-    const Ice::AMD_Locator_findObjectByIdPtr _cb;
-};
-typedef IceUtil::Handle<FindObjectByIdCallback> FindObjectByIdCallbackPtr;
-
-class FindAdapterByIdCallback : public IceUtil::Shared
-{
-public:
-
-    FindAdapterByIdCallback(const Ice::AMD_Locator_findAdapterByIdPtr& cb) :
-        _cb(cb)
-    {
-    }
-
-    void
-    finished(const Ice::AsyncResultPtr& r)
-    {
-        Ice::LocatorPrx locator = Ice::LocatorPrx::uncheckedCast(r->getProxy());
-        try
-        {
-            Ice::ObjectPrx obj = locator->end_findAdapterById(r);
-            _cb->ice_response(obj);
-        }
-        catch(const Ice::Exception& ex)
-        {
-            _cb->ice_exception(ex);
-        }
-    }
-
-private:
-
-    // Required to prevent compiler warning with MSVC++
-    FindAdapterByIdCallback& operator=(const FindAdapterByIdCallback&);
-
-    const Ice::AMD_Locator_findAdapterByIdPtr _cb;
-};
-typedef IceUtil::Handle<FindAdapterByIdCallback> FindAdapterByIdCallbackPtr;
-
+//
+// Locator implementation
+//
 class LocatorI : public Ice::Locator
 {
 public:
@@ -246,8 +171,14 @@ public:
         Ice::Context::const_iterator p = curr.ctx.find("SECRET");
         if(p != curr.ctx.end() && p->second == "LetMeIn")
         {
+            typedef AMICallbackObjectPrx<Ice::AMD_Locator_findObjectByIdPtr> FindObjectByIdCallback;
+            typedef IceUtil::Handle<FindObjectByIdCallback> FindObjectByIdCallbackPtr;
+
             FindObjectByIdCallbackPtr callback = new FindObjectByIdCallback(cb);
-            Ice::CallbackPtr d = Ice::newCallback(callback, &FindObjectByIdCallback::finished);
+            Ice::Callback_Locator_findObjectByIdPtr d =
+                Ice::newCallback_Locator_findObjectById(callback,
+                                                        &FindObjectByIdCallback::ice_response,
+                                                        &FindObjectByIdCallback::ice_exception);
             _locator->begin_findObjectById(id, d);
         }
         else
@@ -255,7 +186,6 @@ public:
             cb->ice_response(0);
         }
     }
-
 
     virtual void
     findAdapterById_async(const Ice::AMD_Locator_findAdapterByIdPtr& cb,
@@ -265,8 +195,14 @@ public:
         Ice::Context::const_iterator p = curr.ctx.find("SECRET");
         if(p != curr.ctx.end() && p->second == "LetMeIn")
         {
+            typedef AMICallbackObjectPrx<Ice::AMD_Locator_findAdapterByIdPtr> FindAdapterByIdCallback;
+            typedef IceUtil::Handle<FindAdapterByIdCallback> FindAdapterByIdCallbackPtr;
+
             FindAdapterByIdCallbackPtr callback = new FindAdapterByIdCallback(cb);
-            Ice::CallbackPtr d = Ice::newCallback(callback, &FindAdapterByIdCallback::finished);
+            Ice::Callback_Locator_findAdapterByIdPtr d =
+                Ice::newCallback_Locator_findAdapterById(callback,
+                                                         &FindAdapterByIdCallback::ice_response,
+                                                         &FindAdapterByIdCallback::ice_exception);
             _locator->begin_findAdapterById(id, d);
         }
         else
@@ -294,7 +230,7 @@ private:
 
 class LocatorServer : public Ice::Application
 {
-
+public:
 
     virtual int run(int, char*[]);
 };
