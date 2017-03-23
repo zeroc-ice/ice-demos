@@ -17,7 +17,7 @@ class TalkApp : public Ice::Application
 public:
 
     TalkApp();
-    virtual int run(int, char*[]);
+    virtual int run(int, char*[]) override;
 
     void connect(const Ice::Identity&, const shared_ptr<Ice::Connection>&);
     void message(const string&);
@@ -207,7 +207,7 @@ TalkApp::connect(const Ice::Identity& id, const shared_ptr<Ice::Connection>& con
     // Called for a new incoming connection request.
     //
 
-    unique_lock<mutex> lock(_mutex);
+    lock_guard<mutex> lock(_mutex);
 
     if(_remote)
     {
@@ -239,7 +239,7 @@ TalkApp::connect(const Ice::Identity& id, const shared_ptr<Ice::Connection>& con
 void
 TalkApp::message(const string& text)
 {
-    unique_lock<mutex> lock(_mutex);
+    lock_guard<mutex> lock(_mutex);
 
     if(_remote)
     {
@@ -250,12 +250,12 @@ TalkApp::message(const string& text)
 void
 TalkApp::disconnect(const Ice::Identity& id, const shared_ptr<Ice::Connection>& con, bool incoming)
 {
-    unique_lock<mutex> lock(_mutex);
+    lock_guard<mutex> lock(_mutex);
 
     if(_remote)
     {
         cout << ">>>> Peer disconnected" << endl;
-        _remote = 0;
+        _remote = nullptr;
     }
 
     if(!incoming)
@@ -269,9 +269,9 @@ TalkApp::disconnect(const Ice::Identity& id, const shared_ptr<Ice::Connection>& 
 void
 TalkApp::closed()
 {
-    unique_lock<mutex> lock(_mutex);
+    lock_guard<mutex> lock(_mutex);
 
-    _remote = 0;
+    _remote = nullptr;
 
     cout << ">>>> Connection to peer closed" << endl;
 }
@@ -306,7 +306,7 @@ TalkApp::doConnect(const string& cmd)
     try
     {
         {
-            unique_lock<mutex> lock(_mutex);
+            lock_guard<mutex> lock(_mutex);
 
             if(_remote)
             {
@@ -361,7 +361,7 @@ TalkApp::doConnect(const string& cmd)
     }
     catch(const Talk::ConnectionException& ex)
     {
-        unique_lock<mutex> lock(_mutex);
+        lock_guard<mutex> lock(_mutex);
 
         cout << ">>>> Connection failed: " << ex.reason << endl;
         try
@@ -374,12 +374,12 @@ TalkApp::doConnect(const string& cmd)
 
         if(_remote == remote)
         {
-            _remote = 0;
+            _remote = nullptr;
         }
     }
     catch(const Ice::Exception& ex)
     {
-        unique_lock<mutex> lock(_mutex);
+        lock_guard<mutex> lock(_mutex);
 
         cout << ">>>> " << ex << endl;
         try
@@ -392,7 +392,7 @@ TalkApp::doConnect(const string& cmd)
 
         if(_remote == remote)
         {
-            _remote = 0;
+            _remote = nullptr;
         }
     }
 }
@@ -440,7 +440,7 @@ TalkApp::doDisconnect()
     shared_ptr<Talk::PeerPrx> peer;
 
     {
-        unique_lock<mutex> lock(_mutex);
+        lock_guard<mutex> lock(_mutex);
 
         if(!_remote)
         {
@@ -449,7 +449,7 @@ TalkApp::doDisconnect()
         }
 
         peer = _remote;
-        _remote = 0;
+        _remote = nullptr;
     }
 
     auto con = peer->ice_getCachedConnection();
@@ -475,7 +475,7 @@ TalkApp::doMessage(const string& text)
     shared_ptr<Talk::PeerPrx> peer;
 
     {
-        unique_lock<mutex> lock(_mutex);
+        lock_guard<mutex> lock(_mutex);
 
         if(!_remote)
         {
@@ -502,9 +502,9 @@ TalkApp::failed(const Ice::LocalException& ex)
     shared_ptr<Talk::PeerPrx> peer;
 
     {
-        unique_lock<mutex> lock(_mutex);
+        lock_guard<mutex> lock(_mutex);
         peer = _remote;
-        _remote = 0;
+        _remote = nullptr;
     }
 
     cout << ">>>> Action failed:" << endl << ex << endl;

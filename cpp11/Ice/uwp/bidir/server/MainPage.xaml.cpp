@@ -27,7 +27,7 @@ using namespace Windows::UI::Xaml::Navigation;
 void
 CallbackSenderI::addClient(Ice::Identity ident, const Ice::Current& current)
 {
-    unique_lock<mutex> lock(_mutex);
+    lock_guard<mutex> lock(_mutex);
 
     ostringstream os;
     os << "adding client `";
@@ -73,7 +73,7 @@ CallbackSenderI::start()
                             os << "\n";
                             _page->print(os.str());
 
-                            unique_lock<mutex> lock(_mutex);
+                            lock_guard<mutex> lock(_mutex);
                             this->_clients.erase(p);
                         }
                     }

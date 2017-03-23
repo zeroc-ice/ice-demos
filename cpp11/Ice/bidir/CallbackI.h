@@ -13,23 +13,23 @@
 class CallbackSenderI : public Demo::CallbackSender
 {
 public:
-    
+
     CallbackSenderI(std::shared_ptr<Ice::Communicator>);
 
     void destroy();
     void start();
 
-    virtual void addClient(Ice::Identity, const Ice::Current&);
+    virtual void addClient(Ice::Identity, const Ice::Current&) override;
 
 private:
 
     std::shared_ptr<Ice::Communicator> _communicator;
-    bool _destroy;
+    bool _destroy = false;
     std::set<std::shared_ptr<Demo::CallbackReceiverPrx>> _clients;
-    
+
     std::mutex _mutex;
     std::condition_variable _cv;
-    std::thread _senderThread;
+    std::future<void> _result;
 };
 
 #endif

@@ -16,7 +16,8 @@ class PropsI : public Demo::Props
 {
 public:
 
-    PropsI() : _called(false)
+    PropsI() :
+        _called(false)
     {
     }
 
@@ -44,7 +45,7 @@ public:
 
     void updated(const Ice::PropertyDict& changes)
     {
-        unique_lock<mutex> lock(_mutex);
+        lock_guard<mutex> lock(_mutex);
 
         _changes = changes;
         _called = true;

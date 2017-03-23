@@ -12,8 +12,7 @@ using namespace Ice;
 using namespace Demo;
 
 CallbackSenderI::CallbackSenderI(shared_ptr<Communicator> communicator) :
-    _communicator(move(communicator)),
-    _destroy(false)
+    _communicator(move(communicator))
 {
 }
 
@@ -21,19 +20,23 @@ void
 CallbackSenderI::destroy()
 {
     {
-        unique_lock<mutex> lock(_mutex);
+        lock_guard<mutex> lock(_mutex);
         cout << "destroying callback sender" << endl;
         _destroy = true;
-        _cv.notify_one();
     }
+    _cv.notify_one();
 
-    _senderThread.join();
+    if(_result.valid())
+    {
+        // wait for async task to complete
+        _result.get();
+    }
 }
 
 void
 CallbackSenderI::addClient(Identity ident, const Current& current)
 {
-    unique_lock<mutex> lock(_mutex);
+    lock_guard<mutex> lock(_mutex);
     cout << "adding client `" << Ice::identityToString(ident) << "'"<< endl;
     _clients.insert(Ice::uncheckedCast<CallbackReceiverPrx>(current.con->createProxy(ident)));
 }
@@ -41,46 +44,49 @@ CallbackSenderI::addClient(Identity ident, const Current& current)
 void
 CallbackSenderI::start()
 {
-    thread t([this]()
-        {
-            int num = 0;
-            bool destroyed = false;
-            while(!destroyed)
-            {
-                set<shared_ptr<CallbackReceiverPrx>> clients;
-                {
-                    unique_lock<mutex> lock(this->_mutex);
-                    this->_cv.wait_for(lock, chrono::seconds(2));
+    assert(!_result.valid()); // start should only be called once
 
-                    if(this->_destroy)
-                    {
-                        destroyed = true;
-                        continue;
-                    }
+    _result =
+        async(launch::async,
+              [this]
+              {
+                  int num = 0;
+                  bool destroyed = false;
+                  while(!destroyed)
+                  {
+                      set<shared_ptr<CallbackReceiverPrx>> clients;
+                      {
+                          unique_lock<mutex> lock(_mutex);
+                          _cv.wait_for(lock, chrono::seconds(2));
 
-                    clients = this->_clients;
-                }
+                          if(_destroy)
+                          {
+                              destroyed = true;
+                              continue;
+                          }
 
-                if(!clients.empty())
-                {
-                    ++num;
-                    for(auto p : clients)
-                    {
-                        try
-                        {
-                            p->callback(num);
-                        }
-                        catch(const Exception& ex)
-                        {
-                            cerr << "removing client `" << Ice::identityToString(p->ice_getIdentity()) << "':\n"
-                                 << ex << endl;
+                          clients = _clients;
+                      }
 
-                            unique_lock<mutex> lock(_mutex);
-                            this->_clients.erase(p);
-                        }
-                    }
-                }
-            }
-        });
-    _senderThread = move(t);
+                      if(!clients.empty())
+                      {
+                          ++num;
+                          for(auto p : clients)
+                          {
+                              try
+                              {
+                                  p->callback(num);
+                              }
+                              catch(const Exception& ex)
+                              {
+                                  cerr << "removing client `" << Ice::identityToString(p->ice_getIdentity()) << "':\n"
+                                       << ex << endl;
+
+                                  lock_guard<mutex> lock(_mutex);
+                                  _clients.erase(p);
+                              }
+                          }
+                      }
+                  }
+              });
 }

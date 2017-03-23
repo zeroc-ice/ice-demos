@@ -15,7 +15,7 @@ class CallbackReceiverI : public CallbackReceiver
 public:
 
     virtual void
-    callback(Ice::Int num, const Ice::Current&)
+    callback(Ice::Int num, const Ice::Current&) override
     {
         cout << "received callback #" << num << endl;
     }
@@ -25,7 +25,7 @@ class CallbackClient : public Ice::Application
 {
 public:
 
-    virtual int run(int, char*[]);
+    virtual int run(int, char*[]) override;
 };
 
 int
