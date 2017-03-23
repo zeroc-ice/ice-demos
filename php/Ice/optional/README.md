@@ -1,3 +1,7 @@
+
+If you have not build the demos yet, please refer to the top level
+   [php/README.md](../../README.md) file for build instructions.
+
 This is a PHP version of the Ice "optional" demo client.
 
 First, start the optional demo server, using any of the supported

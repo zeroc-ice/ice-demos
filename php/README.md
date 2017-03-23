@@ -45,22 +45,18 @@ run `make`:
 
 ## Build Instructions for Windows
 
+## Building and Running the Demos on Windows
+
 ### Prerequisites
 
-Building the demos requires Microsoft NMAKE. If you do not already have NMAKE
-installed, you can download it as part of the [Windows Platform SDK][2].
-
-If you've installed Ice in a non-standard location, you'll need to set the
-`ICE_HOME` environment variable with the path name of the
-installation directory:
-
-    > set ICE_HOME=C:\Ice
+The projects for the sample programs require the [Ice Builder for Visual Studio][3].
+Add this extension to Visual Studio before building the demos.
 
 ### Building the Demos
 
-When you're ready to start the build, run `nmake`:
+When you're ready to start the build, run `MSBuild`:
 
-    > nmake /f Makefile.mak
+    > MSBuild msbuild\ice.proj /p:IceHome=C:\Ice-3.7.0
 
 ## Running the Demos
 
@@ -68,3 +64,4 @@ Refer to the README file in each demo directory for usage instructions.
 
 [1]: https://zeroc.com/chat/index.html
 [2]: http://www.microsoft.com/downloads/details.aspx?FamilyId=E6E1C3DF-A74F-4207-8586-711EBE331CDC&displaylang=en
+[3]: https://github.com/zeroc-ice/ice-builder-visualstudio
