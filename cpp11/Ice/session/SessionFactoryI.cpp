@@ -32,6 +32,7 @@ SessionFactoryI::create(string name, const Ice::Current& current)
                                       try
                                       {
                                           collocProxy->destroy();
+                                          cout << "Cleaned up dead client." << endl;
                                       }
                                       catch(const Ice::LocalException&)
                                       {
