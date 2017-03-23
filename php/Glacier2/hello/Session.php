@@ -23,14 +23,14 @@ session_start();
 try
 {
     //
-    // Attempt to retrieve the communicator that was registered in login.php
+    // Attempt to retrieve the communicator that was registered in Login.php
     // for the session ID.
     //
     $communicator = Ice\find(session_id());
     if(!isset($_SESSION['authenticated']) || $communicator == null)
     {
         echo "<P><HR><B>\n";
-        echo "No active session found. Visit the <a href=\"login.php\">login</a> page to proceed.\n";
+        echo "No active session found. Visit the <a href=\"Login.php\">login</a> page to proceed.\n";
         echo "</B><HR></P>\n";
         exit();
     }
@@ -63,7 +63,7 @@ try
             unset($_SESSION['authenticated']);
             Ice\unregister(session_id());
             echo "<P><HR><B>\n";
-            echo "Session destroyed. Visit the <a href=\"login.php\">login</a> page to proceed.\n";
+            echo "Session destroyed. Visit the <a href=\"Login.php\">login</a> page to proceed.\n";
             echo "</B><HR></P>\n";
             exit();
         }
@@ -77,7 +77,7 @@ catch(Ice\Exception $ex)
     echo "</PRE>\n";
     echo "</P>\n";
     echo "<P>\n";
-    echo "Visit the <a href=\"login.php\">login</a> page to proceed.\n";
+    echo "Visit the <a href=\"Login.php\">login</a> page to proceed.\n";
     echo "</B><HR></P>\n";
     unset($_SESSION['authenticated']);
     Ice\unregister(session_id());

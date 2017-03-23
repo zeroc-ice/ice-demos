@@ -3,10 +3,10 @@ a PHP session can register an Ice communicator and use it in
 subsequent page requests.
 
 To use the application, a user must first log in by providing any
-username and password combination (see `login.php`). Clicking the
+username and password combination (see `Login.php`). Clicking the
 'Login' button causes the application to create a communicator,
 establish a Glacier2 session, and redirect the user to the session
-page (see `session.php`). From this page the user can invoke the
+page (see `Session.php`). From this page the user can invoke the
 'sayHello' operation on a hello server via the Glacier2 session.
 
 NOTE: As explained in the Ice manual, the ability to register a
@@ -57,8 +57,8 @@ Follow these steps to install the demo:
 
 If you want to run the Glacier2 router on a different host than the
 Web server, you will need to modify the router's endpoint in
-`config.glacier2` and `login.php`. To run the hello server on a different
-host, modify the endpoint in `session.php`.
+`config.glacier2` and `Login.php`. To run the hello server on a different
+host, modify the endpoint in `Session.php`.
 
 
 ======================================================================

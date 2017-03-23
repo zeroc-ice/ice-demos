@@ -75,7 +75,7 @@ try
                 $router->createSession($user, $password);
                 $_SESSION['authenticated'] = 'true';
                 \Ice\register($communicator, session_id(), session_cache_expire());
-                header("Location: session.php"); // Redirect.
+                header("Location: Session.php"); // Redirect.
                 exit();
             }
         }
