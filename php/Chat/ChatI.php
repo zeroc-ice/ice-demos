@@ -43,6 +43,7 @@ if($data->properties->getProperty("PollingChatSessionFactory") == '')
     $data->properties->setProperty("IceSSL.CheckCertName", "1");
     $data->properties->setProperty("PollingChatSessionFactory",
                                    "PollingChatSessionFactory:wss -h zeroc.com -p 443 -r /demo-proxy/chat/poll");
+    $data->properties->setProperty("OverrideSessionEndpoints", "1");
 }
 
 $communicator = \Ice\initialize($data);

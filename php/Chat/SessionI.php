@@ -44,7 +44,7 @@ class Session
         if($this->isConnected())
         {
             $this->_chatsession = $this->_communicator->stringToProxy($_SESSION["chatsession"]);
-            $this->_chatsession = PollingChat\PollingChatSessionPrxHlper::uncheckedCast($this->_chatsession);
+            $this->_chatsession = PollingChat\PollingChatSessionPrxHelper::uncheckedCast($this->_chatsession);
         }
     }
 
@@ -73,15 +73,10 @@ class Session
             //
             // Override session proxy's endpoints if necessary
             //
-            if($this->_communicator->getProperties()->getProperty("PollingChatSessionFactory.OverrideEndpoints") != "")
+            if($this->_communicator->getPropertyAsInt("OverrideSessionEndpoints") > 0)
             {
-                $ident = Ice\identityToString($this->_chatsession->ice_getIdentity());
-                $endpoints = $this->_communicator->getProperties()->getProperty(
-                    "PollingChatSessionFactory.OverrideEndpoints");
-                $this->_chatsession = $this->_communicator->stringToProxy(
-                    $ident . ":wss -h zeroc.com -p 443 -r /demo-proxy/chat/poll");
+                $this->_chatsession = $this->_chatsession->ice_endpoints($chatsessionfactory->ice_getEndpoints());
             }
-
 
             //
             // Mark the PHP session as connected.
