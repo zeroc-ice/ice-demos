@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/icons">
-        <file alias="logo.png">resources/icons/logo.png</file>
-        <file alias="user.png">resources/icons/user.png</file>
-        <file alias="logout.png">resources/icons/logout.png</file>
-        <file alias="exit.png">resources/icons/exit.png</file>
-    </qresource>
-</RCC>

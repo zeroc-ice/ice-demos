@@ -18,18 +18,16 @@ following additional subdirectories:
 - [Manual](./Manual) contains complete examples for some of the code snippets
 in the [Ice manual][1].
 
-- [Chat](./Chat) contains the C++ server, a command-line client,
-and a QT client for the ZeroC [Chat Demo][2].
+- [Chat](./Chat) contains the C++ server, and two command-line clients
+for the ZeroC [Chat Demo][2].
 
-- [IceTouch](./IceTouch) contains iPhone demos for the Ice Touch SDKs.
-
-## Building and Running the Demos on Linux and OS X
+## Building and Running the Demos on Linux and macOS
 
 ### Prerequisites
 
 The makefiles require GNU make 3.80 or later.
 
-On OS X, the command-line demos require the Xcode Command Line Tools to be
+On macOS, the command-line demos require the Xcode Command Line Tools to be
 installed (use `xcode-select --install` to install them). The Ice Touch sample
 programs require the [Ice Builder for Xcode][3].
 
@@ -56,13 +54,13 @@ Before running a demo, make sure you've configured your environment to use Ice
 as described in the [release notes][4].
 
 If you've installed Ice in a non-standard location, you'll need to set
-`LD_LIBRARY_PATH` (Linux) or `DYLD_LIBRARY_PATH` (OS X)
+`LD_LIBRARY_PATH` (Linux) or `DYLD_LIBRARY_PATH` (macOS)
 with the library directory of your Ice installation:
 
 ```bash
 export LD_LIBRARY_PATH=$ICE_HOME/lib     (Linux x86)
 export LD_LIBRARY_PATH=$ICE_HOME/lib64   (Linux x64)
-export DYLD_LIBRARY_PATH=$ICE_HOME/lib   (OS X)
+export DYLD_LIBRARY_PATH=$ICE_HOME/lib   (macOS)
 ```
 
 Refer to the README file in each demo directory for usage instructions.
@@ -100,7 +98,7 @@ Win32 or x64. Right click on the desired demo in the Solution Explorer window an
 
 - Build from Visual Studio
   * Open a Visual Studio command prompt
-  
+
             set ICE_SRC_DIST=all
             devenv
 
@@ -111,7 +109,7 @@ Win32 or x64. Right click on the desired demo in the Solution Explorer window an
 ### Running the Demos
 
 Before running a demo, make sure you've configured your environment to use Ice
-as described in the [release notes][3].
+as described in the [release notes][4].
 
 Refer to the README file in each demo directory for usage instructions.
 
@@ -150,7 +148,7 @@ Win32, x64 or ARM. Right click on the desired demo in the Solution Explorer wind
 
 - Build from Visual Studio
   * Open a Visual Studio command prompt
-  
+
             set ICE_SRC_DIST=yes
             devenv
 
@@ -161,12 +159,12 @@ Win32, x64 or ARM. Right click on the desired demo in the Solution Explorer wind
 ### Running the Demos
 
 Before running a demo, make sure you've configured your environment to use Ice
-as described in the [release notes][3].
+as described in the [release notes][4].
 
 Refer to the README file in each demo directory for usage instructions.
 
 [1]: https://doc.zeroc.com/display/Ice37/Ice+Manual
-[2]: https://zeroc.com/chat/index.html
+[2]: https://doc.zeroc.com/display/Doc/Chat+Demo
 [3]: https://github.com/zeroc-ice/ice-builder-xcode
 [4]: https://doc.zeroc.com/display/Ice37/Ice+Release+Notes
 [5]: https://github.com/zeroc-ice/ice-builder-visualstudio
