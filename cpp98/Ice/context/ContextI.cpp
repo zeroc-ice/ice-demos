@@ -16,11 +16,11 @@ ContextI::call(const Ice::Current& c)
     Ice::Context::const_iterator p = c.ctx.find("type");
     if (p != c.ctx.end())
     {
-    	cout << p->second;
+        cout << p->second;
     }
     else
     {
-    	cout << "None";
+        cout << "None";
     }
     cout << endl;
 }

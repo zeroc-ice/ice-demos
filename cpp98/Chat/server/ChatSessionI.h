@@ -22,8 +22,8 @@ public:
 
 private:
 
-	// Required to prevent compiler warnings with MSVC++
-	ChatSessionI& operator=(const ChatSessionI&);
+    // Required to prevent compiler warnings with MSVC++
+    ChatSessionI& operator=(const ChatSessionI&);
 
     const ChatRoomPtr _chatRoom;
     const std::string _name;

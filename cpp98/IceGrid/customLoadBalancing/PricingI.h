@@ -19,8 +19,8 @@ public:
 
 private:
 
-	// Required to prevent compiler warnings with MSVC++
-	PricingI& operator=(const PricingI&);
+    // Required to prevent compiler warnings with MSVC++
+    PricingI& operator=(const PricingI&);
 
     const Ice::StringSeq _currencies;
 };

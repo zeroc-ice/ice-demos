@@ -110,8 +110,8 @@ public:
 
 private:
 
-	// Required to prevent compiler warning with MSVC++
-	LocatorI& operator=(const LocatorI&);
+    // Required to prevent compiler warning with MSVC++
+    LocatorI& operator=(const LocatorI&);
 
     const LocatorRegistryIPtr _registry;
     const Ice::LocatorRegistryPrx _registryPrx;

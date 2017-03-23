@@ -28,35 +28,35 @@ using namespace std;
 
 ChatViewPage::ChatViewPage()
 {
-	InitializeComponent();
-	MainPage::instance()->_chatView = this;
+    InitializeComponent();
+    MainPage::instance()->_chatView = this;
 }
 
 void
 ChatViewPage::setError(String^ err)
 {
-	appendMessage(L"<system-message> " + err);
+    appendMessage(L"<system-message> " + err);
 }
 
 void
 ChatViewPage::appendMessage(String^ message)
 {
-	messages->Text += message + L"\n";
-	messages->UpdateLayout();
+    messages->Text += message + L"\n";
+    messages->UpdateLayout();
 #if (_WIN32_WINNT > 0x0602)
-	Scroller->ChangeView(nullptr, Scroller->ScrollableHeight, nullptr);
+    Scroller->ChangeView(nullptr, Scroller->ScrollableHeight, nullptr);
 #else
-	Scroller->ScrollToVerticalOffset(Scroller->ScrollableHeight);
+    Scroller->ScrollToVerticalOffset(Scroller->ScrollableHeight);
 #endif
 }
 
 void
 ChatViewPage::inputKeyDown(Platform::Object^ sender, Windows::UI::Xaml::Input::KeyRoutedEventArgs^ e)
 {
-	if (e->Key == Windows::System::VirtualKey::Enter && !input->Text->IsEmpty())
-	{
-		string msg = Ice::wstringToString(input->Text->Data());
-		input->Text = "";
-		MainPage::instance()->coordinator()->say(msg);
-	}
+    if (e->Key == Windows::System::VirtualKey::Enter && !input->Text->IsEmpty())
+    {
+        string msg = Ice::wstringToString(input->Text->Data());
+        input->Text = "";
+        MainPage::instance()->coordinator()->say(msg);
+    }
 }

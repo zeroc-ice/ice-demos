@@ -16,7 +16,7 @@ public ref class LoginViewPage sealed
 {
 public:
 
-	LoginViewPage();
+    LoginViewPage();
     void setError(Platform::String^ msg);
     void signinCompleted()
     {

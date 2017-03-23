@@ -37,8 +37,8 @@ public:
 
 private:
 
-	// Required to prevent compiler warning with MSVC++
-	SetAdapterDirectProxyCallback& operator=(const SetAdapterDirectProxyCallback&);
+    // Required to prevent compiler warning with MSVC++
+    SetAdapterDirectProxyCallback& operator=(const SetAdapterDirectProxyCallback&);
 
     const Ice::AMD_LocatorRegistry_setAdapterDirectProxyPtr _cb;
 };
@@ -70,8 +70,8 @@ public:
 
 private:
 
-	// Required to prevent compiler warning with MSVC++
-	SetReplicatedAdapterDirectProxyCallback& operator=(const SetReplicatedAdapterDirectProxyCallback&);
+    // Required to prevent compiler warning with MSVC++
+    SetReplicatedAdapterDirectProxyCallback& operator=(const SetReplicatedAdapterDirectProxyCallback&);
 
     const Ice::AMD_LocatorRegistry_setReplicatedAdapterDirectProxyPtr _cb;
 };
@@ -103,8 +103,8 @@ public:
 
 private:
 
-	// Required to prevent compiler warning with MSVC++
-	SetServerProcessProxyCallback& operator=(const SetServerProcessProxyCallback&);
+    // Required to prevent compiler warning with MSVC++
+    SetServerProcessProxyCallback& operator=(const SetServerProcessProxyCallback&);
 
     const Ice::AMD_LocatorRegistry_setServerProcessProxyPtr _cb;
 };
@@ -155,8 +155,8 @@ public:
 
 private:
 
-	// Required to prevent compiler warning with MSVC++
-	LocatorRegistryI& operator=(const LocatorRegistryI&);
+    // Required to prevent compiler warning with MSVC++
+    LocatorRegistryI& operator=(const LocatorRegistryI&);
 
     const Ice::LocatorRegistryPrx _registry;
 };
@@ -187,8 +187,8 @@ public:
 
 private:
 
-	// Required to prevent compiler warning with MSVC++
-	FindObjectByIdCallback& operator=(const FindObjectByIdCallback&);
+    // Required to prevent compiler warning with MSVC++
+    FindObjectByIdCallback& operator=(const FindObjectByIdCallback&);
 
     const Ice::AMD_Locator_findObjectByIdPtr _cb;
 };
@@ -220,8 +220,8 @@ public:
 
 private:
 
-	// Required to prevent compiler warning with MSVC++
-	FindAdapterByIdCallback& operator=(const FindAdapterByIdCallback&);
+    // Required to prevent compiler warning with MSVC++
+    FindAdapterByIdCallback& operator=(const FindAdapterByIdCallback&);
 
     const Ice::AMD_Locator_findAdapterByIdPtr _cb;
 };
@@ -283,8 +283,8 @@ public:
 
 private:
 
-	// Required to prevent compiler warning with MSVC++
-	LocatorI& operator=(const LocatorI&);
+    // Required to prevent compiler warning with MSVC++
+    LocatorI& operator=(const LocatorI&);
 
     const Ice::LocatorPrx _locator;
     const Ice::LocatorRegistryPrx _registry;

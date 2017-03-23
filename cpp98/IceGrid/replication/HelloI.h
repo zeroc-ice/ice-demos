@@ -20,8 +20,8 @@ public:
 
 private:
 
-	// Required to prevent compiler warnings with MSVC++
-	HelloI& operator=(const HelloI&);
+    // Required to prevent compiler warnings with MSVC++
+    HelloI& operator=(const HelloI&);
 
     const std::string _name;
 };
