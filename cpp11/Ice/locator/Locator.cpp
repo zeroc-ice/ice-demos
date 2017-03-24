@@ -15,15 +15,11 @@ class LocatorRegistryI : public Ice::LocatorRegistry
 {
 public:
 
-    LocatorRegistryI()
-    {
-    }
-
     virtual void
     setAdapterDirectProxyAsync(string id, shared_ptr<Ice::ObjectPrx> proxy,
-                               function<void ()> response,
-                               function<void (exception_ptr)>,
-                               const Ice::Current&)
+                               function<void()> response,
+                               function<void(exception_ptr)>,
+                               const Ice::Current&) override
     {
         if(!proxy)
         {
@@ -37,16 +33,16 @@ public:
     }
 
     virtual void
-    setReplicatedAdapterDirectProxyAsync(string, string, shared_ptr<Ice::ObjectPrx>, function<void ()> response,
-                                         function<void (exception_ptr)>, const Ice::Current&)
+    setReplicatedAdapterDirectProxyAsync(string, string, shared_ptr<Ice::ObjectPrx>, function<void()> response,
+                                         function<void(exception_ptr)>, const Ice::Current&) override
     {
         assert(false); // Not used by this demo
         response();
     }
 
     virtual void
-    setServerProcessProxyAsync(string, shared_ptr<Ice::ProcessPrx>, function<void ()> response,
-                               function<void (exception_ptr)>, const Ice::Current&)
+    setServerProcessProxyAsync(string, shared_ptr<Ice::ProcessPrx>, function<void()> response,
+                               function<void(exception_ptr)>, const Ice::Current&) override
     {
         assert(false); // Not used by this demo
         response();
@@ -67,7 +63,6 @@ private:
 
     map<string, shared_ptr<Ice::ObjectPrx>> _adapters;
 };
-typedef IceInternal::Handle<LocatorRegistryI> LocatorRegistryIPtr;
 
 class LocatorI : public Ice::Locator
 {
@@ -82,9 +77,9 @@ public:
 
     virtual void
     findObjectByIdAsync(Ice::Identity,
-                        function<void (const shared_ptr<Ice::ObjectPrx>&)> response,
-                        function<void (exception_ptr)>,
-                        const Ice::Current&) const
+                        function<void(const shared_ptr<Ice::ObjectPrx>&)> response,
+                        function<void(exception_ptr)>,
+                        const Ice::Current&) const override
     {
         response(nullptr);
     }
@@ -92,15 +87,15 @@ public:
 
     virtual void
     findAdapterByIdAsync(string id,
-                         function<void (const shared_ptr<Ice::ObjectPrx>&)> response,
-                         function<void (exception_ptr)>,
-                         const Ice::Current&) const
+                         function<void(const shared_ptr<Ice::ObjectPrx>&)> response,
+                         function<void(exception_ptr)>,
+                         const Ice::Current&) const override
     {
         response(_registry->getAdapter(id));
     }
 
     virtual shared_ptr<Ice::LocatorRegistryPrx>
-    getRegistry(const Ice::Current&) const
+    getRegistry(const Ice::Current&) const override
     {
         return _registryPrx;
     }
@@ -117,7 +112,7 @@ class LocatorServer : public Ice::Application
 {
 public:
 
-    virtual int run(int, char*[]);
+    virtual int run(int, char*[]) override;
 };
 
 int

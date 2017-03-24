@@ -56,7 +56,7 @@ public:
     {
     }
 
-    virtual void announce(string name, shared_ptr<MTalk::PeerPrx> peer, const Ice::Current&)
+    virtual void announce(string name, shared_ptr<MTalk::PeerPrx> peer, const Ice::Current&) override
     {
         _app->discoveredPeer(name, peer);
     }
@@ -78,17 +78,17 @@ public:
     {
     }
 
-    virtual void connect(string name, Ice::Identity id, const Ice::Current& current)
+    virtual void connect(string name, Ice::Identity id, const Ice::Current& current) override
     {
         _app->connect(name, id, current.con);
     }
 
-    virtual void message(string text, const Ice::Current&)
+    virtual void message(string text, const Ice::Current&) override
     {
         _app->message(text);
     }
 
-    virtual void disconnect(const Ice::Current& current)
+    virtual void disconnect(const Ice::Current& current) override
     {
         _app->disconnect(current.id, current.con, true);
     }
@@ -110,17 +110,17 @@ public:
     {
     }
 
-    virtual void connect(string, Ice::Identity, const Ice::Current&)
+    virtual void connect(string, Ice::Identity, const Ice::Current&) override
     {
         throw MTalk::ConnectionException("already connected");
     }
 
-    virtual void message(string text, const Ice::Current&)
+    virtual void message(string text, const Ice::Current&) override
     {
         _app->message(text);
     }
 
-    virtual void disconnect(const Ice::Current& current)
+    virtual void disconnect(const Ice::Current& current) override
     {
         _app->disconnect(current.id, current.con, false);
     }

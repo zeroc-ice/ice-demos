@@ -23,11 +23,11 @@ public:
     {
     }
 
-    virtual void addClient(Ice::Identity, const Ice::Current&);
+    virtual void addClient(Ice::Identity, const Ice::Current&) override;
     void start();
-    
+
 private:
-        
+
     MainPage^ _page;
     std::shared_ptr<Ice::Communicator> _communicator;
     bool _destroy;

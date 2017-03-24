@@ -16,7 +16,7 @@ public:
 
     ContextClient();
 
-    virtual int run(int, char*[]);
+    virtual int run(int, char*[]) override;
 
 private:
 

@@ -51,17 +51,17 @@ public:
     {
     }
 
-    virtual void connect(Ice::Identity id, const Ice::Current& current)
+    virtual void connect(Ice::Identity id, const Ice::Current& current) override
     {
         _app->connect(id, current.con);
     }
 
-    virtual void send(string text, const Ice::Current&)
+    virtual void send(string text, const Ice::Current&) override
     {
         _app->message(text);
     }
 
-    virtual void disconnect(const Ice::Current& current)
+    virtual void disconnect(const Ice::Current& current) override
     {
         _app->disconnect(current.id, current.con, true);
     }
@@ -83,17 +83,17 @@ public:
     {
     }
 
-    virtual void connect(Ice::Identity, const Ice::Current&)
+    virtual void connect(Ice::Identity, const Ice::Current&) override
     {
         throw Talk::ConnectionException("already connected");
     }
 
-    virtual void send(string text, const Ice::Current&)
+    virtual void send(string text, const Ice::Current&) override
     {
         _app->message(text);
     }
 
-    virtual void disconnect(const Ice::Current& current)
+    virtual void disconnect(const Ice::Current& current) override
     {
         _app->disconnect(current.id, current.con, false);
     }

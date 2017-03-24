@@ -13,7 +13,7 @@ class HelloServer : public Ice::Application
 {
 public:
 
-    virtual int run(int, char*[]);
+    virtual int run(int, char*[]) override;
 };
 
 

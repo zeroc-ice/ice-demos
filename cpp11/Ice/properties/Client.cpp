@@ -17,7 +17,7 @@ public:
 
     PropsClient();
 
-    virtual int run(int, char*[]);
+    virtual int run(int, char*[]) override;
 
 private:
 

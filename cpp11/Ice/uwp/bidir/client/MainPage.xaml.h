@@ -23,10 +23,10 @@ public:
     }
 
     virtual void
-    callback(Ice::Int, const Ice::Current&);
-    
+    callback(int, const Ice::Current&) override;
+
 private:
-        
+
     MainPage^ _page;
 };
 

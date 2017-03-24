@@ -13,8 +13,8 @@ class CallbackSenderI : public Demo::CallbackSender
 {
 public:
 
-    virtual void initiateCallback(std::shared_ptr<Demo::CallbackReceiverPrx>, const Ice::Current&);
-    virtual void shutdown(const Ice::Current&);
+    virtual void initiateCallback(std::shared_ptr<Demo::CallbackReceiverPrx>, const Ice::Current&) override;
+    virtual void shutdown(const Ice::Current&) override;
 };
 
 #endif
