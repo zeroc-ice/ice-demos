@@ -39,15 +39,7 @@ CallbackServer::run(int argc, char*[])
     adapter->activate();
 
     sender->start();
-    try
-    {
-        communicator()->waitForShutdown();
-    }
-    catch(...)
-    {
-        sender->destroy();
-        throw;
-    }
+    communicator()->waitForShutdown();
     sender->destroy();
 
     return EXIT_SUCCESS;

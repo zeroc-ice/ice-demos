@@ -23,6 +23,8 @@ public:
 
 private:
 
+    void removeClient(const std::shared_ptr<Demo::CallbackReceiverPrx>&, std::exception_ptr);
+
     std::shared_ptr<Ice::Communicator> _communicator;
     bool _destroy = false;
     std::set<std::shared_ptr<Demo::CallbackReceiverPrx>> _clients;
