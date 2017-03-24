@@ -13,7 +13,7 @@
 #include <IceStorm/IceStorm.h>
 #include <Clock.h>
 #include <chrono>
-#include <iomanip>
+#include <ctime>
 
 using namespace std;
 using namespace Demo;
@@ -142,9 +142,12 @@ Publisher::run(int argc, char* argv[])
         while(!stop)
         {
             auto now = chrono::system_clock::to_time_t(chrono::system_clock::now());
-            ostringstream os;
-            os << put_time(localtime(&now), "%F %T");
-            clock->tick(os.str());
+            char timeString[100];
+            if(strftime(timeString, sizeof(timeString), "%c", localtime(&now)) == 0)
+            {
+                timeString[0] = '\0';
+            }
+            clock->tick(timeString);
             this_thread::sleep_for(chrono::seconds(1));
         }
     }
