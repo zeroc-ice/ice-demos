@@ -84,7 +84,6 @@ public:
         response(nullptr);
     }
 
-
     virtual void
     findAdapterByIdAsync(string id,
                          function<void(const shared_ptr<Ice::ObjectPrx>&)> response,

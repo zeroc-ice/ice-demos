@@ -9,8 +9,7 @@
 
 using namespace std;
 
-
-typedef pair<const string, const string> HtmlEntity;
+using HtmlEntity = pair<const string, const string>;
 
 static const HtmlEntity htmlEntities[] = { HtmlEntity("&quot;", "\""),
                                            HtmlEntity("&#39;", "'"),
