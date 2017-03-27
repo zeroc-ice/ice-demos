@@ -18,7 +18,8 @@ class CallbackSenderI : public Demo::CallbackSender
 {
 public:
 
-    CallbackSenderI(MainPage^ page, const std::shared_ptr<Ice::Communicator>& communicator) : _page(page),
+    CallbackSenderI(MainPage^ page, const std::shared_ptr<Ice::Communicator>& communicator) :
+        _page(page),
         _communicator(communicator)
     {
     }
@@ -28,13 +29,15 @@ public:
 
 private:
 
+    void removeClient(const std::shared_ptr<Demo::CallbackReceiverPrx>&, std::exception_ptr);
+
     MainPage^ _page;
     std::shared_ptr<Ice::Communicator> _communicator;
     bool _destroy;
     std::set<std::shared_ptr<Demo::CallbackReceiverPrx>> _clients;
     std::mutex _mutex;
     std::condition_variable _cv;
-    std::thread _senderThread;
+    std::future<void> _result;
 };
 
 public ref class MainPage sealed

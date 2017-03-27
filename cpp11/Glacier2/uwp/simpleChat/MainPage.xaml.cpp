@@ -116,13 +116,13 @@ Coordinator::connected(const Glacier2::SessionHelperPtr& session)
             {
                 MainPage::instance()->setConnected(true);
             },
-            [](const exception_ptr ex)
+            [](exception_ptr ex)
             {
                 try
                 {
                     rethrow_exception(ex);
                 }
-                catch (const exception& err)
+                catch(const exception& err)
                 {
                     ostringstream os;
                     os << "Connect failed:\n" << err.what() << endl;

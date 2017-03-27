@@ -43,11 +43,7 @@ ChatViewPage::appendMessage(String^ message)
 {
     messages->Text += message + L"\n";
     messages->UpdateLayout();
-#if (_WIN32_WINNT > 0x0602)
     Scroller->ChangeView(nullptr, Scroller->ScrollableHeight, nullptr);
-#else
-    Scroller->ScrollToVerticalOffset(Scroller->ScrollableHeight);
-#endif
 }
 
 void

@@ -25,9 +25,11 @@ using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
 
 void
-CallbackReceiverI::callback(Ice::Int num, const Ice::Current& current)
+CallbackReceiverI::callback(Ice::Int num, const Ice::Current&)
 {
-    _page->callback(num, current);
+    ostringstream os;
+    os << "received callback #" << num << endl;
+    _page->print(os.str());
 }
 
 MainPage::MainPage()
@@ -42,6 +44,15 @@ void bidir::MainPage::startClient_Click(Platform::Object^ sender, Windows::UI::X
         Ice::InitializationData initData;
         initData.properties = Ice::createProperties();
         initData.properties->setProperty("Ice.Warn.Connections", "1");
+        initData.dispatcher = [=](function<void()> call, const shared_ptr<Ice::Connection>&)
+            {
+                this->Dispatcher->RunAsync(
+                    CoreDispatcherPriority::Normal, 
+                    ref new DispatchedHandler([=]()
+                        {
+                            call();
+                        }, CallbackContext::Any));
+            };
 
         _communicator = Ice::initialize(initData);
 
@@ -71,11 +82,9 @@ void bidir::MainPage::startClient_Click(Platform::Object^ sender, Windows::UI::X
                 {
                     rethrow_exception(ex);
                 }
-                catch (const exception& err)
+                catch(const exception& err)
                 {
-                    ostringstream os;
-                    os << err.what() << endl;
-                    print(os.str());
+                    print(err.what());
                     startClient->IsEnabled = true;
                     stopClient->IsEnabled = false;
                 }
@@ -83,9 +92,7 @@ void bidir::MainPage::startClient_Click(Platform::Object^ sender, Windows::UI::X
     }
     catch(const Ice::Exception& ex)
     {
-        ostringstream os;
-        os << ex << endl;
-        print(os.str());
+        print(ex.what());
         startClient->IsEnabled = true;
         stopClient->IsEnabled = false;
     }
@@ -99,39 +106,21 @@ void bidir::MainPage::stopClient_Click(Platform::Object^ sender, Windows::UI::Xa
         if(_communicator)
         {
             _communicator->destroy();
-            _communicator = 0;
+            _communicator = nullptr;
         }
-        startClient->IsEnabled = true;
-        stopClient->IsEnabled = false;
     }
     catch(const Ice::Exception& ex)
     {
-        ostringstream os;
-        os << ex << endl;
-        print(os.str());
-        startClient->IsEnabled = true;
-        stopClient->IsEnabled = false;
+        print(ex.what());
     }
-}
-
-void
-bidir::MainPage::callback(Ice::Int num, const Ice::Current&)
-{
-    ostringstream os;
-    os << "received callback #" << num << endl;
-    print(os.str());
+    startClient->IsEnabled = true;
+    stopClient->IsEnabled = false;
 }
 
 void 
 bidir::MainPage::print(const std::string& message)
 {
-    this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, 
-                    ref new DispatchedHandler(
-                            [=] ()
-                                {
-                                    output->Text += ref new String(Ice::stringToWstring(message).c_str());
-                                    output->UpdateLayout();
-                                    scroller->ChangeView(nullptr, scroller->ScrollableHeight, nullptr);
-                                }, 
-                            CallbackContext::Any));
+    output->Text += ref new String(Ice::stringToWstring(message).c_str());
+    output->UpdateLayout();
+    scroller->ChangeView(nullptr, scroller->ScrollableHeight, nullptr);
 }

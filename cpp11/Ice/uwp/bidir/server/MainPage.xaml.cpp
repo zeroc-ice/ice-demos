@@ -42,46 +42,54 @@ CallbackSenderI::addClient(Ice::Identity ident, const Ice::Current& current)
 void
 CallbackSenderI::start()
 {
-    thread t([this]()
-        {
-            int num = 0;
-            while(true)
-            {
-                set<shared_ptr<Demo::CallbackReceiverPrx>> clients;
-                {
-                    unique_lock<mutex> lock(this->_mutex);
-                    this->_cv.wait_for(lock, chrono::seconds(2));
-                    clients = this->_clients;
-                }
+    assert(!_result.valid()); // start should only be called once
 
-                if(!clients.empty())
-                {
-                    ++num;
-                    for(auto p : clients)
+    _result = async(launch::async,
+                    [this]
                     {
-                        try
+                        int num = 0;
+                        unique_lock<mutex> lock(_mutex);
+                        while(!_destroy)
                         {
-                            p->callback(num);
-                        }
-                        catch(const Ice::Exception& ex)
-                        {
-                            ostringstream os;
-                            os << "removing client `";
-                            os << Ice::identityToString(p->ice_getIdentity());
-                            os << "':\n";
-                            os << ex;
-                            os << "\n";
-                            _page->print(os.str());
+                            _cv.wait_for(lock, chrono::seconds(2));
 
-                            lock_guard<mutex> lock(_mutex);
-                            this->_clients.erase(p);
+                            if(!_destroy && !_clients.empty())
+                            {
+                                ++num;
+
+                                //
+                                // Invoke callback on all clients; it's safe to do it with _mutex locked
+                                // because Ice guarantees these async invocations never block the calling thread
+                                //
+                                // The exception callback, if called, is called by a thread from the Ice client
+                                // thread pool, and never the calling thread
+                                for(const auto& p: _clients)
+                                {
+                                    p->callbackAsync(num, nullptr,
+                                                     [this, p](exception_ptr eptr) { removeClient(p, eptr); });
+                                }
+                            }
                         }
-                    }
-                }
-            }
-        });
-    _senderThread = move(t);
+                    });
 }
+
+void
+CallbackSenderI::removeClient(const shared_ptr<CallbackReceiverPrx>& client, exception_ptr eptr)
+{
+    try
+    {
+        rethrow_exception(eptr);
+    }
+    catch(const Ice::Exception& ex)
+    {
+        cerr << "removing client `" << Ice::identityToString(client->ice_getIdentity()) << "':\n"
+             << ex << endl;
+    }
+
+    lock_guard<mutex> lock(_mutex);
+    _clients.erase(client);
+}
+
 
 MainPage::MainPage()
 {
