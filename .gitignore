@@ -41,6 +41,16 @@ sgenerated
 /cppe/lib
 /cs/bin
 /cs/Assemblies
+
+#
+# UWP generated packages
+#
+AppPackages
+#
+# UWP XAML generated files
+#
+Generated\ Files
+
 *#
 .#*
 *~
