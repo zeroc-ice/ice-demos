@@ -33,6 +33,9 @@ x: exit
 """)
 
 class Client(Ice.Application):
+    def __init__(self):
+        Ice.Application.__init__(self, Ice.Application.NoSignalHandling)
+
     def run(self, args):
         if len(args) > 1:
             print(self.appName() + ": too many arguments")
