@@ -27,6 +27,15 @@ IceGrid.Registry.AdminSessionManager.Endpoints=ssl -h localhost
 IceGrid.Registry.AdminPermissionsVerifier=DemoIceGrid/NullPermissionsVerifier
 
 #
+# IceMX configuration
+#
+IceMX.Metrics.Debug.GroupBy=id
+IceMX.Metrics.Debug.Disabled=1
+IceMX.Metrics.Debug.Reject.parent=Ice\.Admin
+IceMX.Metrics.ByParent.GroupBy=parent
+IceMX.Metrics.ByParent.Disabled=1
+
+#
 # Trace properties.
 #
 Ice.ProgramName=Master

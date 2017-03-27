@@ -19,6 +19,15 @@ Ice.StdErr=db/master/stderr.txt
 Ice.StdOut=db/master/stdout.txt
 
 #
+# IceMX configuration
+#
+IceMX.Metrics.Debug.GroupBy=id
+IceMX.Metrics.Debug.Disabled=1
+IceMX.Metrics.Debug.Reject.parent=Ice\.Admin
+IceMX.Metrics.ByParent.GroupBy=parent
+IceMX.Metrics.ByParent.Disabled=1
+
+#
 # Trace properties.
 #
 Ice.ProgramName=Master

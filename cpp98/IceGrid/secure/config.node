@@ -11,6 +11,15 @@ IceGrid.Node.Endpoints=ssl -h localhost
 IceGrid.Node.Data=db/node
 
 #
+# IceMX configuration
+#
+IceMX.Metrics.Debug.GroupBy=id
+IceMX.Metrics.Debug.Disabled=1
+IceMX.Metrics.Debug.Reject.parent=Ice\.Admin
+IceMX.Metrics.ByParent.GroupBy=parent
+IceMX.Metrics.ByParent.Disabled=1
+
+#
 # Trace properties.
 #
 Ice.ProgramName=Node
