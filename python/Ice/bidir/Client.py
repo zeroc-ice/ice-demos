@@ -20,6 +20,7 @@ class CallbackReceiverI(Demo.CallbackReceiver):
         print("received callback #" + str(num))
 
 class Client(Ice.Application):
+
     def run(self, args):
         if len(args) > 1:
             print(self.appName() + ": too many arguments")

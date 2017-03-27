@@ -29,6 +29,9 @@ class CallbackReceiverI(Demo.CallbackReceiver):
         print("received callback")
 
 class Client(Glacier2.Application):
+    def __init__(self):
+        Glacier2.Application.__init__(self, Ice.Application.NoSignalHandling)
+
     def createSession(self):
         session = None
         while True:
