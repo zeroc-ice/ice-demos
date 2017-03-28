@@ -33,6 +33,8 @@
         // Don't create the default jar.
         jar.enabled = false
 
+        demoJar("client")
+
         // The simpleChat demo has no serverJar.
         if(name != "simpleChat") {
             demoJar("server")

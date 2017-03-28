@@ -9,7 +9,3 @@ Demos in this directory:
 
    A swing application that shows how to use write a graphical Glacier2
    simple chat client.
-
-- [voip](./voip)
-
-   This demo contains the server side for the Ice Touch VOIP demo.
