@@ -30,17 +30,6 @@ build
 generated.test
 cgenerated
 sgenerated
-/java/depcache
-/java/lib
-/android/lib
-/cpp/bin
-/cpp/lib
-/javae/jdk/lib
-/javae/midp/lib
-/cppe/bin
-/cppe/lib
-/cs/bin
-/cs/Assemblies
 
 #
 # UWP generated packages
@@ -65,15 +54,9 @@ obj
 ClientBin
 vcproj
 .metadata
-java/Freeze/casino/db/__Freeze
 # VIM swap file
 *.swp
 .keychain
-
-cpp/ipch
-cpp/Debug
-
-cpp/test/IceBox/configuration/build.txt
 
 js/lib
 js/node_modules
@@ -86,9 +69,6 @@ js/npm-debug.log
 
 .depend
 
-cpp/src/Ice/EventLoggerMsg.h
-cpp/src/Ice/EventLoggerMsg.rc
-cpp/src/Ice/EventLoggerMsg.res
 *.bin
 
 xcuserdata
@@ -164,10 +144,5 @@ UpgradeLog*.htm
 
 csharp/**/*.xml
 visualBasic/**/*.xml
-
-#
-# WinRT Generated
-#
-cpp/**/Generated Files
 
 Thumbs.db
