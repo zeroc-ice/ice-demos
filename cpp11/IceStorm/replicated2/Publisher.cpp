@@ -143,7 +143,7 @@ Publisher::run(int argc, char* argv[])
         {
             auto now = chrono::system_clock::to_time_t(chrono::system_clock::now());
             char timeString[100];
-            if(strftime(timeString, sizeof(timeString), "%c", localtime(&now)) == 0)
+            if(strftime(timeString, sizeof(timeString), "%x", localtime(&now)) == 0)
             {
                 timeString[0] = '\0';
             }

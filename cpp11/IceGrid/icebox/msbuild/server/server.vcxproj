@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\..\..\..\packages\zeroc.ice.v140.3.7.0-beta0\build\native\zeroc.ice.v140.props" Condition="Exists('..\..\..\..\packages\zeroc.ice.v140.3.7.0-beta0\build\native\zeroc.ice.v140.props') and '$(ICE_SRC_DIST)' != 'all'" />
   <ItemGroup Label="ProjectConfigurations">
@@ -85,10 +85,10 @@
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\..\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">helloserviced</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">helloserviced</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">helloservice</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">helloservice</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">helloservice++11d</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">helloservice++11d</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">helloservice++11</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">helloservice++11</TargetName>
   </PropertyGroup>
   <PropertyGroup Label="IceBuilder">
     <IceBuilderOutputDir>$(Platform)\$(Configuration)</IceBuilderOutputDir>
