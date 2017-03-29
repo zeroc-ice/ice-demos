@@ -19,16 +19,6 @@ class SessionI implements Glacier2Session
     }
 
     @Override
-    synchronized public void refresh(com.zeroc.Ice.Current c)
-    {
-        if(_destroyed)
-        {
-            throw new com.zeroc.Ice.ObjectNotExistException();
-        }
-        _timestamp = System.currentTimeMillis();
-    }
-
-    @Override
     synchronized public void destroy(com.zeroc.Ice.Current c)
     {
         if(_destroyed)
@@ -55,19 +45,9 @@ class SessionI implements Glacier2Session
         }
     }
 
-    synchronized public long timestamp()
-    {
-        if(_destroyed)
-        {
-            throw new com.zeroc.Ice.ObjectNotExistException();
-        }
-        return _timestamp;
-    }
-
     SessionI(com.zeroc.Ice.Logger logger, com.zeroc.Ice.ObjectAdapter adapter)
     {
         _logger = logger;
-        _timestamp = System.currentTimeMillis();
         _libraryI = new LibraryI();
         _library = LibraryPrx.uncheckedCast(adapter.addWithUUID(new DispatchInterceptorI(_libraryI)));
     }

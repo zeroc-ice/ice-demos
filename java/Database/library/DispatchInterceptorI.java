@@ -24,7 +24,11 @@ class DispatchInterceptorI extends DispatchInterceptor
         SQLRequestContext context = new SQLRequestContext();
         try
         {
-            return _servant.ice_dispatch(request);
+            CompletionStage<OutputStream> stage = _servant.ice_dispatch(request);
+            assert(stage == null); // We don't use asynchronous dispatch (AMD) with this demo 
+            context.destroyFromDispatch(true);
+            return stage;
+            
         }
         catch(JDBCException ex)
         {

@@ -26,6 +26,8 @@ subprojects {
                     url this.devRepo
                 }
             }
+            
+            mavenCentral()
 
             maven {
                 url "https://${iceMavenRepo}/nexus/content/repositories/thirdparty"
@@ -35,6 +37,11 @@ subprojects {
                 url "https://${iceMavenRepo}/nexus/content/repositories/releases"
             }
         }
+    }
+    
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-Xlint:unchecked" << "-Xlint:-options"
+        options.encoding = "UTF-8"
     }
 }
 

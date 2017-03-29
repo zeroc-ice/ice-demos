@@ -6,6 +6,9 @@
 
 import Demo.*;
 
+import com.zeroc.Ice.ACMClose;
+import com.zeroc.Ice.ACMHeartbeat;
+
 class RunParser
 {
     //
@@ -15,8 +18,6 @@ class RunParser
     {
         public LibraryPrx getLibrary();
         public void destroy();
-        public void refresh();
-        public long getTimeout();
     }
 
     static SessionAdapter createSession(String appName, com.zeroc.Ice.Communicator communicator)
@@ -47,7 +48,15 @@ class RunParser
                     try
                     {
                         glacier2session = router.createSession(id, pw);
-                        timeout = router.getSessionTimeout() / 2;
+                        final int acmTimeout = router.getACMTimeout();
+                        if(acmTimeout > 0)
+                        {
+                            com.zeroc.Ice.Connection connection = router.ice_getCachedConnection();
+                            assert(connection != null);
+                            connection.setACM(
+                                java.util.OptionalInt.of(acmTimeout), null,
+                                java.util.Optional.of(ACMHeartbeat.HeartbeatAlways));
+                        }
                         break;
                     }
                     catch(com.zeroc.Glacier2.PermissionDeniedException ex)
@@ -64,7 +73,7 @@ class RunParser
                     ex.printStackTrace();
                 }
             }
-            final long to = timeout;
+
             final Glacier2SessionPrx sess = Glacier2SessionPrx.uncheckedCast(glacier2session);
             session = new SessionAdapter()
             {
@@ -91,18 +100,6 @@ class RunParser
                         //
                     }
                 }
-
-                @Override
-                public void refresh()
-                {
-                    sess.refresh();
-                }
-
-                @Override
-                public long getTimeout()
-                {
-                    return to;
-                }
             };
         }
         else
@@ -116,7 +113,6 @@ class RunParser
             }
 
             final SessionPrx sess = factory.create();
-            final long timeout = factory.getSessionTimeout()/2;
             session = new SessionAdapter()
             {
                 @Override
@@ -130,18 +126,6 @@ class RunParser
                 {
                     sess.destroy();
                 }
-
-                @Override
-                public void refresh()
-                {
-                    sess.refresh();
-                }
-
-                @Override
-                public long getTimeout()
-                {
-                    return timeout;
-                }
             };
         }
         return session;
@@ -154,23 +138,6 @@ class RunParser
         {
             return 1;
         }
-
-        java.util.concurrent.ScheduledExecutorService executor =
-            java.util.concurrent.Executors.newScheduledThreadPool(1);
-        executor.scheduleAtFixedRate(() ->
-            {
-                try
-                {
-                    session.refresh();
-                }
-                catch(com.zeroc.Ice.LocalException ex)
-                {
-                    communicator.getLogger().warning("SessionRefreshThread: " + ex);
-                    // Exceptions thrown from the executor task supress subsequent execution
-                    // of the task.
-                    throw ex;
-                }
-            }, session.getTimeout(), session.getTimeout(), java.util.concurrent.TimeUnit.SECONDS);
 
         LibraryPrx library = session.getLibrary();
 
@@ -188,7 +155,6 @@ class RunParser
             rc = parser.parse();
         }
 
-        executor.shutdown();
         session.destroy();
 
         return rc;

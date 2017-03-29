@@ -10,6 +10,7 @@ through a JDBC API and demonstrates the following techniques:
    requests.
  - Using an Ice servant locator.
  - Using a dispatch interceptor.
+ - Accessing a server with and without Glacier2
 
 
 Setting up the demo
@@ -17,23 +18,7 @@ Setting up the demo
 
 1. Install mysql or MariaDB as necessary.
 
-2. Download version 5.1.31 of the mysql JDBC connector here:
-
-   http://dev.mysql.com/downloads/connector/j/5.1.html
-
-   After extracting the archive, add mysql-connector-java-5.1.31-bin.jar
-   to your CLASSPATH.
-
-   Alternatively, for MariaDB Download version 1.1.7 of the MariaDB Client
-   Library for Java Applications here:
-
-   https://downloads.mariadb.org/client-java/+releases/
-
-   After downloading the jar, add mariadb-java-client-1.1.7.jar to your
-   CLASSPATH. You must also edit `config.server` and change the JDBC.Url and
-   JDBC.DriverClassName to the MariaDB configurations.
-
-3. Create a database named "library" and grant privileges to a user. In
+2. Create a database named "library" and grant privileges to a user. In
    the commands below, replace USER with the name you have chosen and
    PASSWORD with a suitable password:
 ```
@@ -53,11 +38,11 @@ Setting up the demo
 
    mysql> EXIT
 ```
-4. Create the SQL tables using the script createTypes.sql:
+3. Create the SQL tables using the script createTypes.sql:
 ```
    $ mysql --user=USER --password=PASSWORD library < createTypes.sql
 ```
-5. Edit the JDBC properties in config.server to reflect your selected
+4. Edit the JDBC properties in config.server to reflect your selected
    user name and password:
 ```
    JDBC.Username=USER
@@ -76,23 +61,20 @@ NOTES:
 
       http://dev.mysql.com/doc/refman/5.0/en/set-transaction.html
 
-6. Add the Ice jar (ice-3.7b0.jar) and the location of the demo classes
-   (build/classes/main) to your CLASSPATH.
-
 
 Running the demo
 ----------------
 
 To run the demo, first start the server:
 
-      java Server
+      java -jar build/libs/server.jar
 
 The demo includes a text file named "books" containing a series of
 commands that populate the server's database with a collection of
 books. Pass this file as an argument the first time you run the
 client. In another window:
 
-      java Client books
+      java -jar build/libs/client.jar books
 
 Type "help" to get a list of valid commands.
 
@@ -107,7 +89,7 @@ The demo also supports a Glacier2 deployment. You will need to edit
 
 To run the demo using Glacier2, first start the server:
 
-    java Server
+    java -jar build/libs/server.jar
 
 In a separate window, start the Glacier2 router:
 
@@ -115,7 +97,7 @@ In a separate window, start the Glacier2 router:
 
 In a separate window, start the client:
 
-    java Client books
+    java -jar build/libs/client.jar books
 
 Omit the "books" argument if you have already populated the server's
 database.

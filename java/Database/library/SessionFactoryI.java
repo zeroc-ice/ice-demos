@@ -6,37 +6,55 @@
 
 import Demo.*;
 
+import com.zeroc.Ice.ACMClose;
+import com.zeroc.Ice.ACMHeartbeat;
+
 class SessionFactoryI implements SessionFactory
 {
     @Override
-    public synchronized SessionPrx create(com.zeroc.Ice.Current c)
+    public synchronized SessionPrx create(com.zeroc.Ice.Current current)
     {
-        SessionI session = new SessionI(_logger, c.adapter);
+        SessionI session = new SessionI(_logger, current.adapter);
 
-        SessionPrx proxy = SessionPrx.uncheckedCast(c.adapter.addWithUUID(session));
+        SessionPrx proxy = SessionPrx.uncheckedCast(current.adapter.addWithUUID(session));
 
         _logger.trace("SessionFactory", "create new session: " +
                       com.zeroc.Ice.Util.identityToString(proxy.ice_getIdentity()));
 
-        _reaper.add(proxy, session);
+        //
+        // Remove endpoints to ensure that calls are collocated-only
+        // This way, if we invoke on the proxy during shutdown, the invocation fails immediately
+        // without attempting to establish any connection
+        //
+        final SessionPrx collocProxy = proxy.ice_endpoints(new com.zeroc.Ice.Endpoint[0]);
+
+        //
+        // Never close this connection from the client and turn on heartbeats
+        //
+        current.con.setACM(java.util.OptionalInt.of(30), 
+                           java.util.Optional.of(ACMClose.CloseOff),
+                           java.util.Optional.of(ACMHeartbeat.HeartbeatAlways));
+
+        current.con.setCloseCallback((con) ->
+                                    {
+                                        try
+                                        {
+                                            collocProxy.destroy();
+                                            _logger.trace("SessionFactory", "Cleaned up dead client.");
+                                        }
+                                        catch(com.zeroc.Ice.LocalException ex)
+                                        {
+                                            // The client already destroyed this session, or the server is shutting down
+                                        }
+                                    });
 
         return proxy;
     }
 
-    @Override
-    public long getSessionTimeout(com.zeroc.Ice.Current c)
-    {
-        return _timeout;
-    }
-
-    SessionFactoryI(com.zeroc.Ice.Logger logger, ReapTask reaper, long timeout)
+    SessionFactoryI(com.zeroc.Ice.Logger logger)
     {
         _logger = logger;
-        _reaper = reaper;
-        _timeout = timeout;
     }
 
-    private com.zeroc.Ice.Logger _logger;
-    private ReapTask _reaper;
-    private long _timeout;
+    final private com.zeroc.Ice.Logger _logger;
 }

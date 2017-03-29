@@ -42,7 +42,7 @@ Glacier2.SessionTimeout=30
 # 0 = no security tracing
 # 1 = trace messages
 #
-IceSSL.Trace.Security=1
+#IceSSL.Trace.Security=1
 
 #
 # SSL Configuration
