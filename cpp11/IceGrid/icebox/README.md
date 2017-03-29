@@ -42,7 +42,7 @@ log into the IceGrid registry and view the application you deployed above:
 
   - Select `Direct Connection` and click `Next`.
 
-  - Enter `DemoIceGrid` for the IceGrid instance name and click next.
+  - Enter `DemoIceGrid` for the IceGrid instance name and click `Next`.
 
   - In `Endpoint Configuration`, select `A hostname and port number?`
     and click `Next`.
