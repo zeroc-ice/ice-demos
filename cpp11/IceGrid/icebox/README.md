@@ -5,10 +5,9 @@ The demo also demonstrates how to use an environment variable in a
 server descriptor.
 
 In `application.xml`, `<env>LANG=en</env>` defines an environment variable
-named "LANG" with value "en". The Hello object implementation HelloI
-reads the value of "LANG" and shows the message in the corresponding
-language; you can try to update the value to fr, de, es or it.
-
+named `LANG` with value `en`. The Hello object implementation HelloI
+reads the value of `LANG` and shows the message in the corresponding
+language; you can try to update the value to `fr`, `de`, `es` or `it`.
 
 Setup
 -----
@@ -17,26 +16,21 @@ Start the IceGrid registry and node:
 
     icegridnode --Ice.Config=config.grid
 
-Note that for debug Windows builds you will need to use icegridnoded
-rather than icegridnode as the executable name.
-
 Deploy the `HelloSimpsons` application (in file `application.xml`) with
-the IceGrid Admin graphical tool. If you prefer to use the command-
-line utility, use:
+the IceGridGUI (see below). If you prefer to use the command-line utility, use:
 
     icegridadmin --Ice.Config=config.grid -e "application add application.xml"
 
 Using the IceGridGUI
 ---------------------
 
-We suggest using the graphical IceGridGUI tool with this demo. Follow 
-these steps to log into the IceGrid registry and view the application 
-you deployed above:
+We suggest using the IceGridGUI tool with this demo. Follow these steps to 
+log into the IceGrid registry and view the application you deployed above:
 
   - Launch the application. Windows users can use the IceGridGUI
     icon from the Start menu, macOS users can use the IceGridGUI
     icon from the Finder Applications folder, and users with a Linux
-    installation can use the icegridgui script to start the
+    installation can use the `icegridgui` script to start the
     program:
 ```
     icegridgui
