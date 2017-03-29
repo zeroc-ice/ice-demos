@@ -94,7 +94,7 @@ class Parser
 
             System.out.println(r.nrows + " results");
             if(r.nrows == 0)
-            {   
+            {
                 return;
             }
 
@@ -136,7 +136,7 @@ class Parser
 
             System.out.println(r.nrows + " results");
             if(r.nrows == 0)
-            {   
+            {
                 return;
             }
 
@@ -178,7 +178,7 @@ class Parser
 
             System.out.println(r.nrows + " results");
             if(r.nrows == 0)
-            {   
+            {
                 return;
             }
 

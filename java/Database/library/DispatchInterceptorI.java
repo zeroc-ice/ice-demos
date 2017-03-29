@@ -25,10 +25,9 @@ class DispatchInterceptorI extends DispatchInterceptor
         try
         {
             CompletionStage<OutputStream> stage = _servant.ice_dispatch(request);
-            assert(stage == null); // We don't use asynchronous dispatch (AMD) with this demo 
+            assert(stage == null); // We don't use asynchronous dispatch (AMD) with this demo
             context.destroyFromDispatch(true);
             return stage;
-            
         }
         catch(JDBCException ex)
         {

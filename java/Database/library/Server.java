@@ -84,7 +84,7 @@ class Server extends com.zeroc.Ice.Application
             System.err.println("failed to create connection pool: SQLException:\n" + sw.toString());
             return 1;
         }
-        
+
         //
         // Create an object adapter
         //
@@ -92,7 +92,7 @@ class Server extends com.zeroc.Ice.Application
 
         SQLRequestContext.initialize(logger, pool);
         adapter.addServantLocator(new LocatorI(new BookI()), "book");
-        
+
         adapter.add(new SessionFactoryI(logger),
                     com.zeroc.Ice.Util.stringToIdentity("SessionFactory"));
         adapter.add(new Glacier2SessionManagerI(logger),
