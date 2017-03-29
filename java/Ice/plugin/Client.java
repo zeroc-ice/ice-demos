@@ -43,7 +43,7 @@ public class Client extends com.zeroc.Ice.Application
         //
         setInterruptHook(new ShutdownHook());
 
-        HelloPrx hello = HelloPrx.checkedCast(communicator().propertyToProxy("Hello.Proxy"));
+        HelloPrx hello = HelloPrxHelper.checkedCast(communicator().propertyToProxy("Hello.Proxy"));
         if(hello == null)
         {
             System.err.println("invalid proxy");
