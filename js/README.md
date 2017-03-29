@@ -29,9 +29,16 @@ With Node.js in your PATH, go to this directory (ice-demos/js) and run the
 following command to install several dependencies:
 
     npm install
-
+    
 This command builds the Slice-to-JavaScript compiler (`slice2js`) from
 source and requires a supported C++ compiler.
+
+If you want to build the demos using the Ice source distribution, you must set
+`ICE_HOME` environment variable with the path name of the Ice source directory
+and pass `--only=dev` argument to `npm install`:
+
+    > export ICE_HOME=~/ice
+    > npm install --only=dev
 
 Now use gulp to build the demos:
 
@@ -41,10 +48,10 @@ Now use gulp to build the demos:
 
 Ice provides only client demos in JavaScript since Ice for JavaScript does not support
 full server-side activities. In order to run a sample client, you must first start its
-corresponding server from another Ice language mapping. For example, start the C++
+corresponding server from another Ice language mapping. For example, start the C++11
 "hello" server:
 
-    > cd cpp/Ice/hello
+    > cd cpp11/Ice/hello
     > server
 
 To run the client, open another terminal window, change to the corresponding
@@ -60,7 +67,7 @@ full server-side activities. The browser clients require an HTTP server that sup
 WebSocket connections. For your convenience, this distribution includes a Node.js
 HTTP server pre-configured for the demos. Open another terminal window and run:
 
-    $ npm run gulp:watch
+    > npm run gulp:watch
 
 This will load http://127.0.0.1:8080/index.html in the default browser. From this page
 you can select the client that you want to run.
