@@ -24,7 +24,7 @@ the IceGridGUI (see below). If you prefer to use the command-line utility, use:
 Using the IceGridGUI
 ---------------------
 
-We suggest using the IceGridGUI tool with this demo. Follow these steps to 
+We suggest using the IceGridGUI tool with this demo. Follow these steps to
 log into the IceGrid registry and view the application you deployed above:
 
   - Launch the application. Windows users can use the IceGridGUI
@@ -97,8 +97,8 @@ Follow these steps:
 ```
    icegridadmin --Ice.Default.Router="DemoGlacier2/router:tcp -h localhost -p 4063"
 ```
-   In the IceGridGUI, use the `Routed` tab of the `Login` dialog. 
-   Change the Glacier2 instance name to `DemoGlacier2` and the endpoints 
+   In the IceGridGUI, use the `Routed` tab of the `Login` dialog.
+   Change the Glacier2 instance name to `DemoGlacier2` and the endpoints
    to `tcp -h localhost -p 4063`.
 
    DemoGlacier2 is configured to use a built-in permissions verifier
