@@ -27,12 +27,8 @@ public class Client
                 "O: send greeting as batch oneway\n" +
                 "d: send greeting as datagram\n" +
                 "D: send greeting as batch datagram\n" +
-                "f: flush all batch requests\n");
-            if(_haveSSL)
-            {
-                Console.Write("S: switch secure mode on/off\n");
-            }
-            Console.WriteLine(
+                "f: flush all batch requests\n" +
+                "S: switch secure mode on/off\n" +
                 "x: exit\n" +
                 "?: help\n");
         }
@@ -43,15 +39,6 @@ public class Client
             {
                 Console.Error.WriteLine(appName() + ": too many arguments");
                 return 1;
-            }
-
-            try
-            {
-                communicator().getPluginManager().getPlugin("IceSSL");
-                _haveSSL = true;
-            }
-            catch(Ice.NotRegisteredException)
-            {
             }
 
             var twoway = HelloPrxHelper.checkedCast(
@@ -121,7 +108,7 @@ public class Client
                         batchOneway.ice_flushBatchRequests();
                         batchDatagram.ice_flushBatchRequests();
                     }
-                    else if(_haveSSL && line.Equals("S"))
+                    else if(line.Equals("S"))
                     {
                         secure = !secure;
 
@@ -163,8 +150,6 @@ public class Client
 
             return 0;
         }
-
-        private static bool _haveSSL = false;
     }
 
     public static int Main(string[] args)
