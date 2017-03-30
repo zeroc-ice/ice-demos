@@ -24,7 +24,6 @@ main(int argc, char* argv[])
     return app.main(argc, argv, "config.client");
 }
 
-
 int
 HelloClient::run(int argc, char* argv[])
 {
@@ -40,8 +39,8 @@ HelloClient::run(int argc, char* argv[])
         cerr << argv[0] << ": invalid or missing Hello.Proxy property" << endl;
         return EXIT_FAILURE;
     }
-    
+
     hello->sayHello();
-    
+
     return EXIT_SUCCESS;
 }

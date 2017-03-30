@@ -117,162 +117,7 @@ private:
     condition_variable _cond;
 };
 
-class ChatClient : public Ice::Application
-{
-public:
-
-    ChatClient() :
-        //
-        // Since this is an interactive demo we don't want any signal
-        // handling.
-        //
-        Application(Ice::SignalPolicy::NoSignalHandling)
-    {
-    }
-
-    virtual int
-    run(int argc, char*[]) override
-    {
-        if(argc > 1)
-        {
-            cerr << appName() << ": too many arguments" << endl;
-            return EXIT_FAILURE;
-        }
-
-       auto sessionFactory =
-           Ice::checkedCast<PollingChat::PollingChatSessionFactoryPrx>(
-               communicator()->propertyToProxy("PollingChatSessionFactory"));
-
-        if(!sessionFactory)
-        {
-            cerr << "PollingChatSessionFactory proxy is not properly configured" << endl;
-            return EXIT_FAILURE;
-        }
-
-        shared_ptr<PollingChat::PollingChatSessionPrx> session;
-        while(!session)
-        {
-            cout << "This demo accepts any user ID and password.\n";
-
-            string id;
-            cout << "user id: " << flush;
-            getline(cin, id);
-            id = ChatUtils::trim(id);
-
-            string pw;
-            cout << "password: " << flush;
-            getline(cin, pw);
-            pw = ChatUtils::trim(pw);
-
-            try
-            {
-                session = sessionFactory->create(id, pw);
-            }
-            catch(const PollingChat::CannotCreateSessionException& ex)
-            {
-                cout << "Login failed:\n" << ex.reason << endl;
-            }
-            catch(const Ice::LocalException& ex)
-            {
-                cout << "Communication with the server failed:\n" << ex << endl;
-            }
-
-            if(session)
-            {
-                break;
-            }
-        }
-
-        //
-        // Override session proxy's endpoints if necessary
-        //
-        if(communicator()->getProperties()->getPropertyAsInt("OverrideSessionEndpoints") != 0)
-        {
-            session = session->ice_endpoints(sessionFactory->ice_getEndpoints());
-        }
-
-        GetUpdatesTask getUpdatesTask(session);
-        getUpdatesTask.run(1);
-
-        menu();
-
-        auto users = session->getInitialUsers();
-        cout << "Users: ";
-        for(auto it = users.begin(); it != users.end();)
-        {
-            cout << *it;
-            it++;
-            if(it != users.end())
-            {
-                cout << ", ";
-            }
-        }
-        cout << endl;
-
-        try
-        {
-            do
-            {
-                string s;
-                cout << "";
-                getline(cin, s);
-                s = ChatUtils::trim(s);
-                if(!s.empty())
-                {
-                    if(s[0] == '/')
-                    {
-                        if(s == "/quit")
-                        {
-                            break;
-                        }
-                        menu();
-                    }
-                    else
-                    {
-                        if(s.size() > maxMessageSize)
-                        {
-                            cout << "Message length exceeded, maximum length is " << maxMessageSize << " characters.";
-                        }
-                        else
-                        {
-                            session->send(s);
-                        }
-                    }
-                }
-            }
-            while(cin.good() && !getUpdatesTask.isDone());
-        }
-        catch(const Ice::LocalException& ex)
-        {
-            cerr << "Communication with the server failed:\n" << ex << endl;
-            try
-            {
-                session->destroy();
-            }
-            catch(const Ice::LocalException&)
-            {
-            }
-            return EXIT_FAILURE;
-        }
-
-        try
-        {
-            session->destroy();
-        }
-        catch(const Ice::LocalException&)
-        {
-        }
-        return EXIT_SUCCESS;
-    }
-
-private:
-
-    void
-    menu()
-    {
-        cout << "enter /quit to exit." << endl;
-    }
-};
+int run(const shared_ptr<Ice::Communicator>&);
 
 int
 main(int argc, char* argv[])
@@ -280,23 +125,182 @@ main(int argc, char* argv[])
 #ifdef ICE_STATIC_LIBS
     Ice::registerIceSSL();
 #endif
-    Ice::InitializationData initData;
-    initData.properties = Ice::createProperties(argc, argv);
 
-    //
-    // Set PollingChatSessionFactory if not set
-    //
-    if(initData.properties->getProperty("PollingChatSessionFactory").empty())
+    int status = EXIT_SUCCESS;
+
+    try
     {
-        initData.properties->setProperty("Ice.Plugin.IceSSL","IceSSL:createIceSSL");
-        initData.properties->setProperty("IceSSL.UsePlatformCAs", "1");
-        initData.properties->setProperty("IceSSL.CheckCertName", "1");
-        initData.properties->setProperty("PollingChatSessionFactory",
-                                         "PollingChatSessionFactory:wss -h zeroc.com -p 443 -r /demo-proxy/chat/poll");
-        initData.properties->setProperty("OverrideSessionEndpoints", "1");
+        Ice::InitializationData initData;
+        initData.properties = Ice::createProperties(argc, argv);
+
+        //
+        // Set PollingChatSessionFactory if not set
+        //
+        if(initData.properties->getProperty("PollingChatSessionFactory").empty())
+        {
+            initData.properties->setProperty("Ice.Plugin.IceSSL","IceSSL:createIceSSL");
+            initData.properties->setProperty("IceSSL.UsePlatformCAs", "1");
+            initData.properties->setProperty("IceSSL.CheckCertName", "1");
+            initData.properties->setProperty("PollingChatSessionFactory",
+                "PollingChatSessionFactory:wss -h zeroc.com -p 443 -r /demo-proxy/chat/poll");
+            initData.properties->setProperty("OverrideSessionEndpoints", "1");
+         }
+
+        Ice::CommunicatorHolder ich(argc, argv, initData);
+
+        if(argc > 1)
+        {
+            cerr << argv[0] << ": too many arguments" << endl;
+            status = EXIT_FAILURE;
+        }
+        else
+        {
+            status = run(ich.communicator());
+        }
+    }
+    catch(const std::exception& ex)
+    {
+        cerr << argv[0] << ": " << ex.what() << endl;
+        status = EXIT_FAILURE;
     }
 
-    ChatClient app;
-    return app.main(argc, argv, initData);
-
+    return status;
 }
+
+void menu();
+
+int
+run(const shared_ptr<Ice::Communicator>& communicator)
+{
+    auto sessionFactory =
+        Ice::checkedCast<PollingChat::PollingChatSessionFactoryPrx>(
+            communicator->propertyToProxy("PollingChatSessionFactory"));
+
+    if(!sessionFactory)
+    {
+        cerr << "PollingChatSessionFactory proxy is not properly configured" << endl;
+        return EXIT_FAILURE;
+    }
+
+    shared_ptr<PollingChat::PollingChatSessionPrx> session;
+    while(!session)
+    {
+        cout << "This demo accepts any user ID and password.\n";
+
+        string id;
+        cout << "user id: " << flush;
+        getline(cin, id);
+        id = ChatUtils::trim(id);
+
+        string pw;
+        cout << "password: " << flush;
+        getline(cin, pw);
+        pw = ChatUtils::trim(pw);
+
+        try
+        {
+            session = sessionFactory->create(id, pw);
+        }
+        catch(const PollingChat::CannotCreateSessionException& ex)
+        {
+            cout << "Login failed:\n" << ex.reason << endl;
+        }
+        catch(const Ice::LocalException& ex)
+        {
+            cout << "Communication with the server failed:\n" << ex << endl;
+        }
+
+        if(session)
+        {
+            break;
+        }
+    }
+
+    //
+    // Override session proxy's endpoints if necessary
+    //
+    if(communicator->getProperties()->getPropertyAsInt("OverrideSessionEndpoints") != 0)
+    {
+        session = session->ice_endpoints(sessionFactory->ice_getEndpoints());
+    }
+
+    GetUpdatesTask getUpdatesTask(session);
+    getUpdatesTask.run(1);
+
+    menu();
+
+    auto users = session->getInitialUsers();
+    cout << "Users: ";
+    for(auto it = users.begin(); it != users.end();)
+    {
+        cout << *it;
+        it++;
+        if(it != users.end())
+        {
+            cout << ", ";
+        }
+    }
+    cout << endl;
+
+    try
+    {
+        do
+        {
+            string s;
+            cout << "";
+            getline(cin, s);
+            s = ChatUtils::trim(s);
+            if(!s.empty())
+            {
+                if(s[0] == '/')
+                {
+                    if(s == "/quit")
+                    {
+                        break;
+                    }
+                    menu();
+                }
+                else
+                {
+                    if(s.size() > maxMessageSize)
+                    {
+                        cout << "Message length exceeded, maximum length is " << maxMessageSize << " characters.";
+                    }
+                    else
+                    {
+                        session->send(s);
+                    }
+                }
+            }
+        }
+        while(cin.good() && !getUpdatesTask.isDone());
+    }
+    catch(const Ice::LocalException& ex)
+    {
+        cerr << "Communication with the server failed:\n" << ex << endl;
+        try
+        {
+            session->destroy();
+        }
+        catch(const Ice::LocalException&)
+        {
+        }
+        return EXIT_FAILURE;
+    }
+
+    try
+    {
+        session->destroy();
+    }
+    catch(const Ice::LocalException&)
+    {
+    }
+    return EXIT_SUCCESS;
+}
+
+void
+menu()
+{
+    cout << "enter /quit to exit." << endl;
+}
+

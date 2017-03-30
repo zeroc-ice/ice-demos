@@ -10,17 +10,7 @@
 using namespace std;
 using namespace Demo;
 
-class SessionClient : public Ice::Application
-{
-public:
-
-    SessionClient();
-    virtual int run(int, char*[]);
-
-private:
-
-    void menu();
-};
+int run(const Ice::CommunicatorPtr&);
 
 int
 main(int argc, char* argv[])
@@ -28,28 +18,44 @@ main(int argc, char* argv[])
 #ifdef ICE_STATIC_LIBS
     Ice::registerIceSSL();
 #endif
-    SessionClient app;
-    return app.main(argc, argv, "config.client");
-}
 
-SessionClient::SessionClient() :
-    //
-    // Since this is an interactive demo we don't want any signal
-    // handling.
-    //
-    Ice::Application(Ice::NoSignalHandling)
-{
-}
+    int status = EXIT_SUCCESS;
 
-int
-SessionClient::run(int argc, char* argv[])
-{
-    if(argc > 1)
+    try
     {
-        cerr << appName() << ": too many arguments" << endl;
-        return EXIT_FAILURE;
+        //
+        // CommunicatorHolder's ctor initializes an Ice communicator,
+        // and its dtor destroys this communicator.
+        //
+        Ice::CommunicatorHolder ich(argc, argv, "config.client");
+
+        //
+        // The communicator initialization removes all Ice-related arguments from argc/argv
+        //
+        if(argc > 1)
+        {
+            cerr << argv[0] << ": too many arguments" << endl;
+            status = EXIT_FAILURE;
+        }
+        else
+        {
+            status = run(ich.communicator());
+        }
+    }
+    catch(const std::exception& ex)
+    {
+        cerr << argv[0] << ": " << ex.what() << endl;
+        status = EXIT_FAILURE;
     }
 
+    return status;
+}
+
+void menu();
+
+int
+run(const Ice::CommunicatorPtr& communicator)
+{
     string name;
     cout << "Please enter your name ==> ";
     cin >> name;
@@ -58,11 +64,11 @@ SessionClient::run(int argc, char* argv[])
         return EXIT_FAILURE;
     }
 
-    Ice::ObjectPrx base = communicator()->propertyToProxy("SessionFactory.Proxy");
+    Ice::ObjectPrx base = communicator->propertyToProxy("SessionFactory.Proxy");
     SessionFactoryPrx factory = SessionFactoryPrx::checkedCast(base);
     if(!factory)
     {
-        cerr << argv[0] << ": invalid proxy" << endl;
+        cerr << "invalid proxy" << endl;
         return EXIT_FAILURE;
     }
 
@@ -142,7 +148,7 @@ SessionClient::run(int argc, char* argv[])
 }
 
 void
-SessionClient::menu()
+menu()
 {
     cout <<
         "usage:\n"

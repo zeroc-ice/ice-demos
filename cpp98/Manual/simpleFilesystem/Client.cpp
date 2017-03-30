@@ -13,7 +13,7 @@
 using namespace std;
 using namespace Filesystem;
 
-// Recursively print the contents of directory "dir" in tree fashion. 
+// Recursively print the contents of directory "dir" in tree fashion.
 // For files, show the contents of each file. The "depth"
 // parameter is the current nesting level (for indentation).
 

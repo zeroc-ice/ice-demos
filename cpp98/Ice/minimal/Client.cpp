@@ -12,7 +12,7 @@ using namespace Demo;
 
 int
 main(int argc, char* argv[])
-{  
+{
     try
     {
         Ice::CommunicatorHolder ich(argc, argv);

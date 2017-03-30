@@ -11,52 +11,60 @@
 using namespace std;
 using namespace Demo;
 
-class HelloClient : public Ice::Application
-{
-public:
-
-    HelloClient();
-    virtual int run(int, char*[]);
-
-private:
-
-    void cleanup();
-    void menu();
-    string trim(const string&);
-};
+int run(const Ice::CommunicatorPtr&);
 
 int
 main(int argc, char* argv[])
 {
-    HelloClient app;
-    return app.main(argc, argv, "config.client");
-}
-
-HelloClient::HelloClient() :
-    //
-    // Since this is an interactive demo we don't want any signal
-    // handling.
-    //
-    Ice::Application(Ice::NoSignalHandling)
-{
-}
-
-int
-HelloClient::run(int argc, char* argv[])
-{
-    if(argc > 1)
-    {
-        cerr << appName() << ": too many arguments" << endl;
-        return EXIT_FAILURE;
-    }
+#ifdef ICE_STATIC_LIBS
+    Ice::registerIceSSL();
+#endif
 
     int status = EXIT_SUCCESS;
 
+    try
+    {
+        //
+        // CommunicatorHolder's ctor initializes an Ice communicator,
+        // and its dtor destroys this communicator.
+        //
+        Ice::CommunicatorHolder ich(argc, argv, "config.client");
+
+        //
+        // The communicator initialization removes all Ice-related arguments from argc/argv
+        //
+        if(argc > 1)
+        {
+            cerr << argv[0] << ": too many arguments" << endl;
+            status = EXIT_FAILURE;
+        }
+        else
+        {
+            status = run(ich.communicator());
+        }
+    }
+    catch(const std::exception& ex)
+    {
+        cerr << argv[0] << ": " << ex.what() << endl;
+        status = EXIT_FAILURE;
+    }
+
+    return status;
+}
+
+void menu();
+string trim(const string&);
+
+int
+run(const Ice::CommunicatorPtr& communicator)
+{
+    int status = EXIT_SUCCESS;
+
     IceGrid::RegistryPrx registry = IceGrid::RegistryPrx::checkedCast(
-        communicator()->stringToProxy("DemoIceGrid/Registry"));
+        communicator->stringToProxy("DemoIceGrid/Registry"));
     if(!registry)
     {
-        cerr << argv[0] << ": could not contact registry" << endl;
+        cerr << "could not contact registry" << endl;
         return EXIT_FAILURE;
     }
 
@@ -150,7 +158,7 @@ HelloClient::run(int argc, char* argv[])
     }
     catch(const IceGrid::AllocationException& ex)
     {
-        cerr << argv[0] << ": could not allocate object: " << ex.reason << endl;
+        cerr << "could not allocate object: " << ex.reason << endl;
         status = EXIT_FAILURE;
     }
     catch(...)
@@ -165,7 +173,7 @@ HelloClient::run(int argc, char* argv[])
 }
 
 void
-HelloClient::menu()
+menu()
 {
     cout <<
         "usage:\n"
@@ -176,7 +184,7 @@ HelloClient::menu()
 }
 
 string
-HelloClient::trim(const string& s)
+trim(const string& s)
 {
     static const string delims = "\t\r\n ";
     string::size_type last = s.find_last_not_of(delims);

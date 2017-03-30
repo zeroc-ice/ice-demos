@@ -29,19 +29,7 @@ operator<<(ostream& out, Color c)
     return out;
 }
 
-class InvokeClient : public Ice::Application
-{
-public:
-
-    InvokeClient();
-    virtual int run(int, char*[]) override;
-
-private:
-
-    void usage(const string&);
-    void menu();
-};
-
+int run(const shared_ptr<Ice::Communicator>&);
 
 int
 main(int argc, char* argv[])
@@ -49,29 +37,45 @@ main(int argc, char* argv[])
 #ifdef ICE_STATIC_LIBS
     Ice::registerIceSSL();
 #endif
-    InvokeClient app;
-    return app.main(argc, argv, "config.client");
-}
 
-InvokeClient::InvokeClient() :
-    //
-    // Since this is an interactive demo we don't want any signal
-    // handling.
-    //
-    Ice::Application(Ice::SignalPolicy::NoSignalHandling)
-{
-}
+    int status = EXIT_SUCCESS;
 
-int
-InvokeClient::run(int argc, char*[])
-{
-    if(argc > 1)
+    try
     {
-        cerr << appName() << ": too many arguments" << endl;
-        return EXIT_FAILURE;
+        //
+        // CommunicatorHolder's ctor initializes an Ice communicator,
+        // and its dtor destroys this communicator.
+        //
+        Ice::CommunicatorHolder ich(argc, argv, "config.client");
+
+        //
+        // The communicator initialization removes all Ice-related arguments from argc/argv
+        //
+        if(argc > 1)
+        {
+            cerr << argv[0] << ": too many arguments" << endl;
+            status = EXIT_FAILURE;
+        }
+        else
+        {
+            status = run(ich.communicator());
+        }
+    }
+    catch(const std::exception& ex)
+    {
+        cerr << argv[0] << ": " << ex.what() << endl;
+        status = EXIT_FAILURE;
     }
 
-    auto obj = communicator()->propertyToProxy("Printer.Proxy");
+    return status;
+}
+
+void menu();
+
+int
+run(const shared_ptr<Ice::Communicator>& communicator)
+{
+    auto obj = communicator->propertyToProxy("Printer.Proxy");
 
     menu();
 
@@ -88,7 +92,7 @@ InvokeClient::run(int argc, char*[])
                 // Marshal the in parameter.
                 //
                 Ice::ByteSeq inParams, outParams;
-                Ice::OutputStream out(communicator());
+                Ice::OutputStream out(communicator);
                 out.startEncapsulation();
                 out.write("The streaming API works!");
                 out.endEncapsulation();
@@ -108,7 +112,7 @@ InvokeClient::run(int argc, char*[])
                 // Marshal the in parameter.
                 //
                 Ice::ByteSeq inParams, outParams;
-                Ice::OutputStream out(communicator());
+                Ice::OutputStream out(communicator);
                 out.startEncapsulation();
                 Demo::StringSeq arr({"The", "streaming", "API", "works!"});
                 out.write(arr);
@@ -129,7 +133,7 @@ InvokeClient::run(int argc, char*[])
                 // Marshal the in parameter.
                 //
                 Ice::ByteSeq inParams, outParams;
-                Ice::OutputStream out(communicator());
+                Ice::OutputStream out(communicator);
                 out.startEncapsulation();
                 Demo::StringDict dict
                     {
@@ -154,7 +158,7 @@ InvokeClient::run(int argc, char*[])
                 // Marshal the in parameter.
                 //
                 Ice::ByteSeq inParams, outParams;
-                Ice::OutputStream out(communicator());
+                Ice::OutputStream out(communicator);
                 out.startEncapsulation();
                 out.write(Color::green);
                 out.endEncapsulation();
@@ -174,7 +178,7 @@ InvokeClient::run(int argc, char*[])
                 // Marshal the in parameter.
                 //
                 Ice::ByteSeq inParams, outParams;
-                Ice::OutputStream out(communicator());
+                Ice::OutputStream out(communicator);
                 out.startEncapsulation();
                 Demo::Structure s;
                 s.name = "red";
@@ -197,7 +201,7 @@ InvokeClient::run(int argc, char*[])
                 // Marshal the in parameter.
                 //
                 Ice::ByteSeq inParams, outParams;
-                Ice::OutputStream out(communicator());
+                Ice::OutputStream out(communicator);
                 out.startEncapsulation();
                 Demo::StructureSeq arr;
                 arr.push_back(Demo::Structure());
@@ -227,7 +231,7 @@ InvokeClient::run(int argc, char*[])
                 // Marshal the in parameter.
                 //
                 Ice::ByteSeq inParams, outParams;
-                Ice::OutputStream out(communicator());
+                Ice::OutputStream out(communicator);
                 out.startEncapsulation();
                 auto c = make_shared<Demo::C>();
                 c->s.name = "blue";
@@ -260,7 +264,7 @@ InvokeClient::run(int argc, char*[])
                 //
                 // Unmarshal the results.
                 //
-                Ice::InputStream in(communicator(), outParams);
+                Ice::InputStream in(communicator, outParams);
                 in.startEncapsulation();
                 Demo::CPtr c;
                 in.read(c);
@@ -283,7 +287,7 @@ InvokeClient::run(int argc, char*[])
                     continue;
                 }
 
-                Ice::InputStream in(communicator(), outParams);
+                Ice::InputStream in(communicator, outParams);
                 in.startEncapsulation();
                 try
                 {
@@ -329,7 +333,7 @@ InvokeClient::run(int argc, char*[])
 }
 
 void
-InvokeClient::menu()
+menu()
 {
     cout <<
         "usage:\n"

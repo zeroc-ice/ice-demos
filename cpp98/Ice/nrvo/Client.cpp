@@ -12,18 +12,7 @@
 using namespace std;
 using namespace Demo;
 
-class NrvoClient : public Ice::Application
-{
-public:
-
-    NrvoClient();
-    virtual int run(int, char*[]);
-
-private:
-
-    void menu();
-};
-
+int run(const Ice::CommunicatorPtr&);
 
 int
 main(int argc, char* argv[])
@@ -31,32 +20,48 @@ main(int argc, char* argv[])
 #ifdef ICE_STATIC_LIBS
     Ice::registerIceSSL();
 #endif
-    NrvoClient app;
-    return app.main(argc, argv, "config.client");
-}
 
-NrvoClient::NrvoClient() :
-    //
-    // Since this is an interactive demo we don't want any signal
-    // handling.
-    //
-    Ice::Application(Ice::NoSignalHandling)
-{
-}
+    int status = EXIT_SUCCESS;
 
-int
-NrvoClient::run(int argc, char* argv[])
-{
-    if(argc > 1)
+    try
     {
-        cerr << appName() << ": too many arguments" << endl;
-        return EXIT_FAILURE;
+        //
+        // CommunicatorHolder's ctor initializes an Ice communicator,
+        // and its dtor destroys this communicator.
+        //
+        Ice::CommunicatorHolder ich(argc, argv, "config.client");
+
+        //
+        // The communicator initialization removes all Ice-related arguments from argc/argv
+        //
+        if(argc > 1)
+        {
+            cerr << argv[0] << ": too many arguments" << endl;
+            status = EXIT_FAILURE;
+        }
+        else
+        {
+            status = run(ich.communicator());
+        }
+    }
+    catch(const std::exception& ex)
+    {
+        cerr << argv[0] << ": " << ex.what() << endl;
+        status = EXIT_FAILURE;
     }
 
-    NrvoPrx nrvo = NrvoPrx::checkedCast(communicator()->propertyToProxy("Nrvo.Proxy"));
+    return status;
+}
+
+void menu();
+
+int
+run(const Ice::CommunicatorPtr& communicator)
+{
+    NrvoPrx nrvo = NrvoPrx::checkedCast(communicator->propertyToProxy("Nrvo.Proxy"));
     if(!nrvo)
     {
-        cerr << argv[0] << ": invalid proxy" << endl;
+        cerr << "invalid proxy" << endl;
         return EXIT_FAILURE;
     }
 
@@ -135,7 +140,7 @@ NrvoClient::run(int argc, char* argv[])
 }
 
 void
-NrvoClient::menu()
+menu()
 {
     cout <<
         "usage:\n"

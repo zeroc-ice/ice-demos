@@ -11,24 +11,23 @@
 using namespace std;
 using namespace Filesystem;
 
-class FilesystemClient : public Ice::Application
+int
+main(int argc, char* argv[])
 {
-public:
-    FilesystemClient() :
-        //
-        // Since this is an interactive demo we don't want any signal
-        // handling.
-        //
-        Ice::Application(Ice::SignalPolicy::NoSignalHandling)
-    {
-    }
+    int status = EXIT_SUCCESS;
 
-    virtual int run(int, char*[]) override
+    try
     {
+        //
+        // CommunicatorHolder's ctor initializes an Ice communicator,
+        // and its dtor destroys this communicator.
+        //
+        Ice::CommunicatorHolder ich(argc, argv);
+
         //
         // Create a proxy for the root directory
         //
-        auto base = communicator()->stringToProxy("RootDir:default -p 10000");
+        auto base = ich->stringToProxy("RootDir:default -p 10000");
 
         //
         // Down-cast the proxy to a Directory proxy.
@@ -36,17 +35,20 @@ public:
         auto rootDir = Ice::checkedCast<DirectoryPrx>(base);
         if(!rootDir)
         {
-            throw "Invalid proxy";
+            cerr << "Invalid proxy" << endl;
+            status = EXIT_FAILURE;
         }
-
-        unique_ptr<Parser> p(new Parser(rootDir));
-        return p->parse();
+        else
+        {
+            unique_ptr<Parser> p(new Parser(rootDir));
+            status = p->parse();
+        }
     }
-};
+    catch(const std::exception& ex)
+    {
+        cerr << argv[0] << ": " << ex.what() << endl;
+        status = EXIT_FAILURE;
+    }
 
-int
-main(int argc, char* argv[])
-{
-    FilesystemClient client;
-    return client.main(argc, argv);
+    return status;
 }

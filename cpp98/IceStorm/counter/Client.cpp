@@ -11,52 +11,68 @@
 using namespace std;
 using namespace Demo;
 
-class Client : public Ice::Application
-{
-public:
-
-    virtual int run(int, char*[]);
-private:
-
-    void menu(const MTPrinterPtr& printer);
-};
+int run(const Ice::CommunicatorPtr&);
 
 int
 main(int argc, char* argv[])
 {
-    Client app;
-    return app.main(argc, argv, "config.client");
-}
+    int status = EXIT_SUCCESS;
 
-int
-Client::run(int argc, char*[])
-{
-    if(argc > 1)
+    try
     {
-        cerr << appName() << ": too many arguments" << endl;
-        return EXIT_FAILURE;
+        //
+        // CommunicatorHolder's ctor initializes an Ice communicator,
+        // and its dtor destroys this communicator.
+        //
+        Ice::CommunicatorHolder ich(argc, argv, "config.client");
+
+        //
+        // The communicator initialization removes all Ice-related arguments from argc/argv
+        //
+        if(argc > 1)
+        {
+            cerr << argv[0] << ": too many arguments" << endl;
+            status = EXIT_FAILURE;
+        }
+        else
+        {
+            status = run(ich.communicator());
+        }
+    }
+    catch(const std::exception& ex)
+    {
+        cerr << argv[0] << ": " << ex.what() << endl;
+        status = EXIT_FAILURE;
     }
 
-    Ice::PropertiesPtr properties = communicator()->getProperties();
+    return status;
+}
+
+void menu(const MTPrinterPtr&);
+
+int
+run(const Ice::CommunicatorPtr& communicator)
+{
+    Ice::PropertiesPtr properties = communicator->getProperties();
 
     const string proxyProperty = "Counter.Proxy";
     string proxy = properties->getProperty(proxyProperty);
     if(proxy.empty())
     {
-        cerr << appName() << ": property `" << proxyProperty << "' not set" << endl;
+        cerr << "property `" << proxyProperty << "' not set" << endl;
         return EXIT_FAILURE;
     }
 
-    CounterPrx counter = CounterPrx::uncheckedCast(communicator()->stringToProxy(proxy));
+    CounterPrx counter = CounterPrx::uncheckedCast(communicator->stringToProxy(proxy));
     if(!counter)
     {
-        cerr << appName() << ": invalid proxy" << endl;
+        cerr << "invalid proxy" << endl;
         return EXIT_FAILURE;
     }
 
     MTPrinterPtr printer = new MTPrinter();
 
-    Ice::ObjectAdapterPtr adapter = communicator()->createObjectAdapterWithEndpoints("Observer", "tcp");
+    Ice::ObjectAdapterPtr adapter = communicator->createObjectAdapterWithEndpoints("Observer", "tcp");
     CounterObserverPrx observer =
         CounterObserverPrx::uncheckedCast(adapter->addWithUUID(new CounterObserverI(printer)));
     adapter->activate();
@@ -107,7 +123,7 @@ Client::run(int argc, char*[])
 }
 
 void
-Client::menu(const MTPrinterPtr& printer)
+menu(const MTPrinterPtr& printer)
 {
     printer->print(
         "usage:\n"

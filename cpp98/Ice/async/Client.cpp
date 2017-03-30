@@ -25,49 +25,52 @@ public:
 };
 typedef IceUtil::Handle<Callback> CallbackPtr;
 
-class AsyncClient : public Ice::Application
-{
-public:
-
-    AsyncClient();
-
-    virtual int run(int, char*[]);
-
-private:
-
-    void exception(const Ice::Exception&);
-    void menu();
-};
-
-AsyncClient::AsyncClient() :
-    //
-    // Since this is an interactive demo we don't want any signal
-    // handling.
-    //
-    Ice::Application(Ice::NoSignalHandling)
-{
-}
+int run(const Ice::CommunicatorPtr&);
 
 int
 main(int argc, char* argv[])
 {
-    AsyncClient app;
-    return app.main(argc, argv, "config.client");
-}
+    int status = EXIT_SUCCESS;
 
-int
-AsyncClient::run(int argc, char* argv[])
-{
-    if(argc > 1)
+    try
     {
-        cerr << appName() << ": too many arguments" << endl;
-        return EXIT_FAILURE;
+        //
+        // CommunicatorHolder's ctor initializes an Ice communicator,
+        // and its dtor destroys this communicator.
+        //
+        Ice::CommunicatorHolder ich(argc, argv, "config.client");
+
+        //
+        // The communicator initialization removes all Ice-related arguments from argc/argv
+        //
+        if(argc > 1)
+        {
+            cerr << argv[0] << ": too many arguments" << endl;
+            status = EXIT_FAILURE;
+        }
+        else
+        {
+            status = run(ich.communicator());
+        }
+    }
+    catch(const std::exception& ex)
+    {
+        cerr << argv[0] << ": " << ex.what() << endl;
+        status = EXIT_FAILURE;
     }
 
-    HelloPrx hello = HelloPrx::checkedCast(communicator()->propertyToProxy("Hello.Proxy"));
+    return status;
+}
+
+void menu();
+
+int
+run(const Ice::CommunicatorPtr& communicator)
+{
+    HelloPrx hello = HelloPrx::checkedCast(communicator->propertyToProxy("Hello.Proxy"));
     if(!hello)
     {
-        cerr << argv[0] << ": invalid proxy" << endl;
+        cerr << "invalid proxy" << endl;
         return EXIT_FAILURE;
     }
 
@@ -119,7 +122,7 @@ AsyncClient::run(int argc, char* argv[])
 }
 
 void
-AsyncClient::menu()
+menu()
 {
     cout <<
         "usage:\n"

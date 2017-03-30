@@ -10,19 +10,7 @@
 using namespace std;
 using namespace Demo;
 
-class ContextClient : public Ice::Application
-{
-public:
-
-    ContextClient();
-
-    virtual int run(int, char*[]) override;
-
-private:
-
-    void menu();
-};
-
+int run(const shared_ptr<Ice::Communicator>&);
 
 int
 main(int argc, char* argv[])
@@ -30,32 +18,47 @@ main(int argc, char* argv[])
 #ifdef ICE_STATIC_LIBS
     Ice::registerIceSSL();
 #endif
-    ContextClient app;
-    return app.main(argc, argv, "config.client");
-}
 
-ContextClient::ContextClient() :
-    //
-    // Since this is an interactive demo we don't want any signal
-    // handling.
-    //
-    Ice::Application(Ice::SignalPolicy::NoSignalHandling)
-{
-}
+    int status = EXIT_SUCCESS;
 
-int
-ContextClient::run(int argc, char* argv[])
-{
-    if(argc > 1)
+    try
     {
-        cerr << appName() << ": too many arguments" << endl;
-        return EXIT_FAILURE;
+        //
+        // CommunicatorHolder's ctor initializes an Ice communicator,
+        // and its dtor destroys this communicator.
+        //
+        Ice::CommunicatorHolder ich(argc, argv, "config.client");
+
+        //
+        // The communicator initialization removes all Ice-related arguments from argc/argv
+        //
+        if(argc > 1)
+        {
+            cerr << argv[0] << ": too many arguments" << endl;
+            status = EXIT_FAILURE;
+        }
+        else
+        {
+            status = run(ich.communicator());
+        }
+    }
+    catch(const std::exception& ex)
+    {
+        cerr << argv[0] << ": " << ex.what() << endl;
+        status = EXIT_FAILURE;
     }
 
-    auto proxy = Ice::checkedCast<ContextPrx>(communicator()->propertyToProxy("Context.Proxy"));
+    return status;
+}
+
+void menu();
+
+int run(const shared_ptr<Ice::Communicator>& communicator)
+{
+    auto proxy = Ice::checkedCast<ContextPrx>(communicator->propertyToProxy("Context.Proxy"));
     if(!proxy)
     {
-        cerr << argv[0] << ": invalid proxy" << endl;
+        cerr << "invalid proxy" << endl;
         return EXIT_FAILURE;
     }
 
@@ -87,7 +90,7 @@ ContextClient::run(int argc, char* argv[])
             }
             else if(c == '4')
             {
-                auto ic = communicator()->getImplicitContext();
+                auto ic = communicator->getImplicitContext();
                 Ice::Context ctx;
                 ctx["type"] = "Implicit";
                 ic->setContext(ctx);
@@ -123,7 +126,7 @@ ContextClient::run(int argc, char* argv[])
 }
 
 void
-ContextClient::menu()
+menu()
 {
     cout <<
         "usage:\n"

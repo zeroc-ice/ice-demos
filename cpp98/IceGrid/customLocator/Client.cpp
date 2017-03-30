@@ -11,76 +11,81 @@
 using namespace std;
 using namespace Demo;
 
-class HelloClient : public Ice::Application
-{
-public:
-
-    HelloClient();
-    virtual int run(int, char*[]);
-
-private:
-
-    void menu();
-    void usage();
-};
+int run(const Ice::CommunicatorPtr&, bool);
 
 int
 main(int argc, char* argv[])
 {
-    HelloClient app;
-    return app.main(argc, argv, "config.client");
-}
+    int status = EXIT_SUCCESS;
 
-HelloClient::HelloClient() :
-    //
-    // Since this is an interactive demo we don't want any signal
-    // handling.
-    //
-    Ice::Application(Ice::NoSignalHandling)
-{
-}
-
-int
-HelloClient::run(int argc, char* argv[])
-{
-    if(argc > 2)
+    try
     {
-        usage();
-        return EXIT_FAILURE;
-    }
+        //
+        // CommunicatorHolder's ctor initializes an Ice communicator,
+        // and its dtor destroys this communicator.
+        //
+        Ice::CommunicatorHolder ich(argc, argv, "config.client");
 
-    bool addContext = false;
-    if(argc == 2)
-    {
-        if(string(argv[1]) == "--context")
+        //
+        // The communicator initialization removes all Ice-related arguments from argc/argv
+        //
+        if(argc > 2)
         {
-            addContext = true;
+            cerr << argv[0] << ": too many arguments" << endl;
+            status = EXIT_FAILURE;
         }
         else
         {
-            usage();
-            return EXIT_FAILURE;
+            if(argc == 2)
+            {
+                if(string(argv[1]) == "--context")
+                {
+                    status = run(ich.communicator(), true);
+                }
+                else
+                {
+                    cerr << "Usage: " << argv[0] << " [--context]" << endl;
+                    status = EXIT_FAILURE;
+                }
+            }
+            else
+            {
+                status = run(ich.communicator(), false);
+            }
         }
     }
+    catch(const std::exception& ex)
+    {
+        cerr << argv[0] << ": " << ex.what() << endl;
+        status = EXIT_FAILURE;
+    }
 
+    return status;
+}
+
+void menu();
+
+int
+run(const Ice::CommunicatorPtr& communicator, bool addContext)
+{
     //
     // Add the context entry that allows the client to use the locator
     //
     if(addContext)
     {
-        Ice::LocatorPrx locator = communicator()->getDefaultLocator();
+        Ice::LocatorPrx locator = communicator->getDefaultLocator();
         Ice::Context ctx;
         ctx["SECRET"] = "LetMeIn";
-        communicator()->setDefaultLocator(locator->ice_context(ctx));
+        communicator->setDefaultLocator(locator->ice_context(ctx));
     }
 
     //
     // Now we try to connect to the object with the `hello' identity.
     //
-    HelloPrx hello = HelloPrx::checkedCast(communicator()->stringToProxy("hello"));
+    HelloPrx hello = HelloPrx::checkedCast(communicator->stringToProxy("hello"));
     if(!hello)
     {
-        cerr << argv[0] << ": couldn't find a `hello' object." << endl;
+        cerr << "couldn't find a `hello' object." << endl;
         return EXIT_FAILURE;
     }
 
@@ -130,7 +135,7 @@ HelloClient::run(int argc, char* argv[])
 }
 
 void
-HelloClient::menu()
+menu()
 {
     cout <<
         "usage:\n"
@@ -139,10 +144,3 @@ HelloClient::menu()
         "x: exit\n"
         "?: help\n";
 }
-
-void
-HelloClient::usage()
-{
-     cerr << "Usage: " << appName() << " [--context]" << endl;
-}
-

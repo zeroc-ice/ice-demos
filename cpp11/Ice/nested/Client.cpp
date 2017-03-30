@@ -11,51 +11,54 @@ using namespace std;
 using namespace Demo;
 
 
-class NestedClient : public Ice::Application
-{
-public:
-
-    NestedClient();
-    virtual int run(int, char*[]) override;
-};
-
+int run(const shared_ptr<Ice::Communicator>&);
 
 int
-#ifdef _WIN32
-wmain(int argc, wchar_t* argv[])
-#else
 main(int argc, char* argv[])
-#endif
 {
 #ifdef ICE_STATIC_LIBS
     Ice::registerIceSSL();
 #endif
-    NestedClient app;
-    return app.main(argc, argv, "config.client");
-}
 
-NestedClient::NestedClient() :
-    //
-    // Since this is an interactive demo we don't want any signal
-    // handling.
-    //
-    Ice::Application(Ice::SignalPolicy::NoSignalHandling)
-{
+    int status = EXIT_SUCCESS;
+
+    try
+    {
+        //
+        // CommunicatorHolder's ctor initializes an Ice communicator,
+        // and its dtor destroys this communicator.
+        //
+        Ice::CommunicatorHolder ich(argc, argv, "config.client");
+
+        //
+        // The communicator initialization removes all Ice-related arguments from argc/argv
+        //
+        if(argc > 1)
+        {
+            cerr << argv[0] << ": too many arguments" << endl;
+            status = EXIT_FAILURE;
+        }
+        else
+        {
+            status = run(ich.communicator());
+        }
+    }
+    catch(const std::exception& ex)
+    {
+        cerr << argv[0] << ": " << ex.what() << endl;
+        status = EXIT_FAILURE;
+    }
+
+    return status;
 }
 
 int
-NestedClient::run(int argc, char*[])
+run(const shared_ptr<Ice::Communicator>& communicator)
 {
-    if(argc > 1)
-    {
-        cerr << appName() << ": too many arguments" << endl;
-        return EXIT_FAILURE;
-    }
-
-    auto nested = Ice::checkedCast<NestedPrx>(communicator()->propertyToProxy("Nested.Proxy"));
+    auto nested = Ice::checkedCast<NestedPrx>(communicator->propertyToProxy("Nested.Proxy"));
     if(!nested)
     {
-        cerr << appName() << ": invalid proxy" << endl;
+        cerr << "invalid proxy" << endl;
         return EXIT_FAILURE;
     }
 
@@ -66,7 +69,7 @@ NestedClient::run(int argc, char*[])
     //
     nested = nested->ice_invocationTimeout(5000);
 
-    auto adapter = communicator()->createObjectAdapter("Nested.Client");
+    auto adapter = communicator->createObjectAdapter("Nested.Client");
     auto self = Ice::uncheckedCast<NestedPrx>(adapter->createProxy(Ice::stringToIdentity("nestedClient")));
     auto servant = make_shared<NestedI>(self);
     adapter->add(servant, Ice::stringToIdentity("nestedClient"));

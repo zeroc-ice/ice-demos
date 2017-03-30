@@ -11,17 +11,7 @@
 using namespace std;
 using namespace Demo;
 
-class HelloClient : public Ice::Application
-{
-public:
-
-    HelloClient();
-    virtual int run(int, char*[]);
-
-private:
-
-    void menu();
-};
+int run(const Ice::CommunicatorPtr&);
 
 int
 main(int argc, char* argv[])
@@ -30,28 +20,42 @@ main(int argc, char* argv[])
     Ice::registerIceSSL();
     Ice::registerIceDiscovery(false);
 #endif
-    HelloClient app;
-    return app.main(argc, argv, "config.client");
-}
 
-HelloClient::HelloClient() :
-    //
-    // Since this is an interactive demo we don't want any signal
-    // handling.
-    //
-    Ice::Application(Ice::NoSignalHandling)
-{
+    int status = EXIT_SUCCESS;
+
+    try
+    {
+        //
+        // CommunicatorHolder's ctor initializes an Ice communicator,
+        // and its dtor destroys this communicator.
+        //
+        Ice::CommunicatorHolder ich(argc, argv, "config.client");
+
+        //
+        // The communicator initialization removes all Ice-related arguments from argc/argv
+        //
+        if(argc > 1)
+        {
+            cerr << argv[0] << ": too many arguments" << endl;
+            status = EXIT_FAILURE;
+        }
+        else
+        {
+            status = run(ich.communicator());
+        }
+    }
+    catch(const std::exception& ex)
+    {
+        cerr << argv[0] << ": " << ex.what() << endl;
+        status = EXIT_FAILURE;
+    }
+
+    return status;
 }
 
 int
-HelloClient::run(int argc, char* argv[])
+run(const Ice::CommunicatorPtr& communicator)
 {
-    if(argc > 1)
-    {
-        cerr << appName() << ": too many arguments" << endl;
-        return EXIT_FAILURE;
-    }
-
     //
     // Get the hello proxy. We configure the proxy to not cache the
     // server connection with the proxy and to disable the locator
@@ -60,14 +64,14 @@ HelloClient::run(int argc, char* argv[])
     // will be sent over the server connection matching the returned
     // endpoints.
     //
-    Ice::ObjectPrx obj = communicator()->stringToProxy("hello");
+    Ice::ObjectPrx obj = communicator->stringToProxy("hello");
     obj = obj->ice_connectionCached(false);
     obj = obj->ice_locatorCacheTimeout(0);
 
     HelloPrx hello = HelloPrx::checkedCast(obj);
     if(!hello)
     {
-        cerr << argv[0] << ": couldn't find a `::Demo::Hello' object." << endl;
+        cerr << "couldn't find a `::Demo::Hello' object." << endl;
         return EXIT_FAILURE;
     }
 

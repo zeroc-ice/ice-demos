@@ -20,57 +20,58 @@ public:
     }
 };
 
-class CallbackClient : public Ice::Application
-{
-public:
 
-    CallbackClient();
-
-    virtual int run(int, char*[]);
-
-private:
-
-    void menu();
-};
-
+int run(const Ice::CommunicatorPtr&);
 
 int
 main(int argc, char* argv[])
 {
-#ifdef ICE_STATIC_LIBS
-    Ice::registerIceSSL();
-#endif
-    CallbackClient app;
-    return app.main(argc, argv, "config.client");
+    int status = EXIT_SUCCESS;
+
+    try
+    {
+        //
+        // CommunicatorHolder's ctor initializes an Ice communicator,
+        // and its dtor destroys this communicator.
+        //
+        Ice::CommunicatorHolder ich(argc, argv, "config.client");
+
+        //
+        // The communicator initialization removes all Ice-related arguments from argc/argv
+        //
+        if(argc > 1)
+        {
+            cerr << argv[0] << ": too many arguments" << endl;
+            status = EXIT_FAILURE;
+        }
+        else
+        {
+            status = run(ich.communicator());
+        }
+    }
+    catch(const std::exception& ex)
+    {
+        cerr << argv[0] << ": " << ex.what() << endl;
+        status = EXIT_FAILURE;
+    }
+
+    return status;
 }
 
-CallbackClient::CallbackClient() :
-    //
-    // Since this is an interactive demo we don't want any signal
-    // handling.
-    //
-    Ice::Application(Ice::NoSignalHandling)
-{
-}
+void menu();
 
 int
-CallbackClient::run(int argc, char*[])
+run(const Ice::CommunicatorPtr& communicator)
 {
-    if(argc > 1)
-    {
-        cerr << appName() << ": too many arguments" << endl;
-        return EXIT_FAILURE;
-    }
-
     CallbackSenderPrx sender = CallbackSenderPrx::checkedCast(
-        communicator()->propertyToProxy("CallbackSender.Proxy")->ice_twoway()->ice_timeout(-1)->ice_secure(false));
+        communicator->propertyToProxy("CallbackSender.Proxy")->ice_twoway()->ice_timeout(-1)->ice_secure(false));
     if(!sender)
     {
-        cerr << appName() << ": invalid proxy" << endl;
+        cerr << "invalid proxy" << endl;
         return EXIT_FAILURE;
     }
 
-    Ice::ObjectAdapterPtr adapter = communicator()->createObjectAdapter("Callback.Client");
+    Ice::ObjectAdapterPtr adapter = communicator->createObjectAdapter("Callback.Client");
     CallbackReceiverPtr cr = new CallbackReceiverI;
     adapter->add(cr, Ice::stringToIdentity("callbackReceiver"));
     adapter->activate();
@@ -120,7 +121,7 @@ CallbackClient::run(int argc, char*[])
 }
 
 void
-CallbackClient::menu()
+menu()
 {
     cout <<
         "usage:\n"

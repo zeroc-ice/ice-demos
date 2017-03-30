@@ -10,58 +10,58 @@
 using namespace std;
 using namespace Demo;
 
-class PropsClient : public Ice::Application
-{
-public:
-
-    PropsClient();
-
-    virtual int run(int, char*[]);
-
-private:
-
-    void menu();
-    void show(const Ice::PropertiesAdminPrx&);
-};
-
+int run(const Ice::CommunicatorPtr&);
 
 int
 main(int argc, char* argv[])
 {
-#ifdef ICE_STATIC_LIBS
-    Ice::registerIceSSL();
-#endif
-    PropsClient app;
-    return app.main(argc, argv, "config.client");
-}
+    int status = EXIT_SUCCESS;
 
-PropsClient::PropsClient() :
-    //
-    // Since this is an interactive demo we don't want any signal
-    // handling.
-    //
-    Ice::Application(Ice::NoSignalHandling)
-{
-}
-
-int
-PropsClient::run(int argc, char* argv[])
-{
-    if(argc > 1)
+    try
     {
-        cerr << appName() << ": too many arguments" << endl;
-        return EXIT_FAILURE;
+        //
+        // CommunicatorHolder's ctor initializes an Ice communicator,
+        // and its dtor destroys this communicator.
+        //
+        Ice::CommunicatorHolder ich(argc, argv, "config.client");
+
+        //
+        // The communicator initialization removes all Ice-related arguments from argc/argv
+        //
+        if(argc > 1)
+        {
+            cerr << argv[0] << ": too many arguments" << endl;
+            status = EXIT_FAILURE;
+        }
+        else
+        {
+            status = run(ich.communicator());
+        }
+    }
+    catch(const std::exception& ex)
+    {
+        cerr << argv[0] << ": " << ex.what() << endl;
+        status = EXIT_FAILURE;
     }
 
-    PropsPrx props = PropsPrx::checkedCast(communicator()->propertyToProxy("Props.Proxy"));
+    return status;
+}
+
+void menu();
+void show(const Ice::PropertiesAdminPrx&);
+
+int
+run(const Ice::CommunicatorPtr& communicator)
+{
+    PropsPrx props = PropsPrx::checkedCast(communicator->propertyToProxy("Props.Proxy"));
     if(!props)
     {
-        cerr << argv[0] << ": invalid proxy" << endl;
+        cerr << "invalid proxy" << endl;
         return EXIT_FAILURE;
     }
 
     Ice::PropertiesAdminPrx admin =
-        Ice::PropertiesAdminPrx::checkedCast(communicator()->propertyToProxy("Admin.Proxy"));
+        Ice::PropertiesAdminPrx::checkedCast(communicator->propertyToProxy("Admin.Proxy"));
 
     Ice::PropertyDict batch1;
     batch1["Demo.Prop1"] = "1";
@@ -153,7 +153,7 @@ PropsClient::run(int argc, char* argv[])
 }
 
 void
-PropsClient::menu()
+menu()
 {
     cout << endl <<
         "usage:\n"
@@ -166,7 +166,7 @@ PropsClient::menu()
 }
 
 void
-PropsClient::show(const Ice::PropertiesAdminPrx& admin)
+show(const Ice::PropertiesAdminPrx& admin)
 {
     Ice::PropertyDict props = admin->getPropertiesForPrefix("Demo");
     cout << "Server's current settings:" << endl;

@@ -10,51 +10,67 @@
 using namespace std;
 using namespace Demo;
 
-class Client : public Ice::Application
-{
-public:
-
-    virtual int run(int, char*[]) override;
-
-private:
-
-    void menu();
-};
+int run(const shared_ptr<Ice::Communicator>&);
 
 int
 main(int argc, char* argv[])
 {
-    Client app;
-    return app.main(argc, argv, "config.client");
-}
+    int status = EXIT_SUCCESS;
 
-int
-Client::run(int argc, char*[])
-{
-    if(argc > 1)
+    try
     {
-        cerr << appName() << ": too many arguments" << endl;
-        return EXIT_FAILURE;
+        //
+        // CommunicatorHolder's ctor initializes an Ice communicator,
+        // and its dtor destroys this communicator.
+        //
+        Ice::CommunicatorHolder ich(argc, argv, "config.client");
+
+        //
+        // The communicator initialization removes all Ice-related arguments from argc/argv
+        //
+        if(argc > 1)
+        {
+            cerr << argv[0] << ": too many arguments" << endl;
+            status = EXIT_FAILURE;
+        }
+        else
+        {
+            status = run(ich.communicator());
+        }
+    }
+    catch(const std::exception& ex)
+    {
+        cerr << argv[0] << ": " << ex.what() << endl;
+        status = EXIT_FAILURE;
     }
 
-    auto properties = communicator()->getProperties();
+    return status;
+}
+
+void menu();
+
+int
+run(const shared_ptr<Ice::Communicator>& communicator)
+{
+
+    auto properties = communicator->getProperties();
 
     const string proxyProperty = "Counter.Proxy";
     auto proxy = properties->getProperty(proxyProperty);
     if(proxy.empty())
     {
-        cerr << appName() << ": property `" << proxyProperty << "' not set" << endl;
+        cerr << "property `" << proxyProperty << "' not set" << endl;
         return EXIT_FAILURE;
     }
 
-    auto counter = Ice::uncheckedCast<CounterPrx>(communicator()->stringToProxy(proxy));
+    auto counter = Ice::uncheckedCast<CounterPrx>(communicator->stringToProxy(proxy));
     if(!counter)
     {
-        cerr << appName() << ": invalid proxy" << endl;
+        cerr << "invalid proxy" << endl;
         return EXIT_FAILURE;
     }
 
-    auto adapter = communicator()->createObjectAdapterWithEndpoints("Observer", "tcp");
+    auto adapter = communicator->createObjectAdapterWithEndpoints("Observer", "tcp");
     auto observer =
         Ice::uncheckedCast<CounterObserverPrx>(adapter->addWithUUID(make_shared<CounterObserverI>()));
     adapter->activate();
@@ -105,7 +121,7 @@ Client::run(int argc, char*[])
 }
 
 void
-Client::menu()
+menu()
 {
     print("usage:\n"
           "i: increment the counter\n"

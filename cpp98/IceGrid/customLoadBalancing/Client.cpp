@@ -11,37 +11,54 @@
 using namespace std;
 using namespace Demo;
 
-class PricingClient : public Ice::Application
-{
-public:
-
-    virtual int run(int, char*[]);
-};
+int run(const Ice::CommunicatorPtr&);
 
 int
 main(int argc, char* argv[])
 {
-    PricingClient app;
-    return app.main(argc, argv, "config.client");
+    int status = EXIT_SUCCESS;
+
+    try
+    {
+        //
+        // CommunicatorHolder's ctor initializes an Ice communicator,
+        // and its dtor destroys this communicator.
+        //
+        Ice::CommunicatorHolder ich(argc, argv, "config.client");
+
+        //
+        // The communicator initialization removes all Ice-related arguments from argc/argv
+        //
+        if(argc > 1)
+        {
+            cerr << argv[0] << ": too many arguments" << endl;
+            status = EXIT_FAILURE;
+        }
+        else
+        {
+            status = run(ich.communicator());
+        }
+    }
+    catch(const std::exception& ex)
+    {
+        cerr << argv[0] << ": " << ex.what() << endl;
+        status = EXIT_FAILURE;
+    }
+
+    return status;
 }
 
 int
-PricingClient::run(int argc, char* argv[])
+run(const Ice::CommunicatorPtr& communicator)
 {
-    if(argc > 1)
-    {
-        cerr << appName() << ": too many arguments" << endl;
-        return EXIT_FAILURE;
-    }
-
     //
     // Create a proxy to the well-known object with the `pricing'
     // identity.
     //
-    PricingEnginePrx pricing = PricingEnginePrx::uncheckedCast(communicator()->stringToProxy("pricing"));
+    PricingEnginePrx pricing = PricingEnginePrx::uncheckedCast(communicator->stringToProxy("pricing"));
     if(!pricing)
     {
-        cerr << argv[0] << ": couldn't find a `::Demo::PricingEngine' object." << endl;
+        cerr << "couldn't find a `::Demo::PricingEngine' object." << endl;
         return EXIT_FAILURE;
     }
 
@@ -51,17 +68,17 @@ PricingClient::run(int argc, char* argv[])
     // `config.client' file in this directory), ask for the preferred
     // currency.
     //
-    Ice::Context ctx = communicator()->getDefaultLocator()->ice_getContext();
+    Ice::Context ctx = communicator->getDefaultLocator()->ice_getContext();
     if(ctx["currency"].empty())
     {
         cout << "enter your preferred currency (USD, EUR, GBP, INR, AUD, JPY): ";
         string currency;
         cin >> currency;
-        
+
         //
         // Setup a locator proxy with a currency context.
         //
-        Ice::LocatorPrx locator = communicator()->getDefaultLocator();
+        Ice::LocatorPrx locator = communicator->getDefaultLocator();
         ctx["currency"] = currency;
         pricing = pricing->ice_locator(locator->ice_context(ctx));
     }

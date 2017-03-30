@@ -11,43 +11,48 @@
 using namespace std;
 using namespace Demo;
 
-class HelloClient : public Ice::Application
-{
-public:
-
-    HelloClient();
-    virtual int run(int, char*[]);
-
-private:
-
-    void menu();
-};
+int run(const Ice::CommunicatorPtr&);
 
 int
 main(int argc, char* argv[])
 {
-    HelloClient app;
-    return app.main(argc, argv, "config.client");
-}
+    int status = EXIT_SUCCESS;
 
-HelloClient::HelloClient() :
-    //
-    // Since this is an interactive demo we don't want any signal
-    // handling.
-    //
-    Ice::Application(Ice::NoSignalHandling)
-{
-}
-
-int
-HelloClient::run(int argc, char* argv[])
-{
-    if(argc > 1)
+    try
     {
-        cerr << appName() << ": too many arguments" << endl;
-        return EXIT_FAILURE;
+        //
+        // CommunicatorHolder's ctor initializes an Ice communicator,
+        // and its dtor destroys this communicator.
+        //
+        Ice::CommunicatorHolder ich(argc, argv, "config.client");
+
+        //
+        // The communicator initialization removes all Ice-related arguments from argc/argv
+        //
+        if(argc > 1)
+        {
+            cerr << argv[0] << ": too many arguments" << endl;
+            status = EXIT_FAILURE;
+        }
+        else
+        {
+            status = run(ich.communicator());
+        }
+    }
+    catch(const std::exception& ex)
+    {
+        cerr << argv[0] << ": " << ex.what() << endl;
+        status = EXIT_FAILURE;
     }
 
+    return status;
+}
+
+void menu();
+
+int
+run(const Ice::CommunicatorPtr& communicator)
+{
     //
     // First we try to connect to the object with the `hello'
     // identity. If it's not registered with the registry, we
@@ -56,16 +61,16 @@ HelloClient::run(int argc, char* argv[])
     HelloPrx hello;
     try
     {
-        hello = HelloPrx::checkedCast(communicator()->stringToProxy("hello"));
+        hello = HelloPrx::checkedCast(communicator->stringToProxy("hello"));
     }
     catch(const Ice::NotRegisteredException&)
     {
-        IceGrid::QueryPrx query = IceGrid::QueryPrx::checkedCast(communicator()->stringToProxy("DemoIceGrid/Query"));
+        IceGrid::QueryPrx query = IceGrid::QueryPrx::checkedCast(communicator->stringToProxy("DemoIceGrid/Query"));
         hello = HelloPrx::checkedCast(query->findObjectByType("::Demo::Hello"));
     }
     if(!hello)
     {
-        cerr << argv[0] << ": couldn't find a `::Demo::Hello' object." << endl;
+        cerr << "couldn't find a `::Demo::Hello' object." << endl;
         return EXIT_FAILURE;
     }
 
@@ -111,7 +116,7 @@ HelloClient::run(int argc, char* argv[])
 }
 
 void
-HelloClient::menu()
+menu()
 {
     cout <<
         "usage:\n"
