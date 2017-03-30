@@ -125,7 +125,6 @@ x: exit
 ?: help
 """)
 
-
 status = 0
 with Ice.initialize(sys.argv, "config.client") as communicator:
     if len(sys.argv) > 1:

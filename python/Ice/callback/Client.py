@@ -10,6 +10,50 @@ import sys, Ice
 Ice.loadSlice('Callback.ice')
 import Demo
 
+class CallbackReceiverI(Demo.CallbackReceiver):
+    def callback(self, current=None):
+        print("received callback")
+
+def run(communicator):
+    sender = Demo.CallbackSenderPrx.checkedCast(
+        communicator.propertyToProxy('CallbackSender.Proxy').
+        ice_twoway().ice_timeout(-1).ice_secure(False))
+    if not sender:
+        print("invalid proxy")
+        return 1
+
+    adapter = communicator.createObjectAdapter("Callback.Client")
+    adapter.add(CallbackReceiverI(), Ice.stringToIdentity("callbackReceiver"))
+    adapter.activate()
+
+    receiver = Demo.CallbackReceiverPrx.uncheckedCast(
+        adapter.createProxy(Ice.stringToIdentity("callbackReceiver")))
+
+    menu()
+
+    c = None
+    while c != 'x':
+        try:
+            sys.stdout.write("==> ")
+            sys.stdout.flush()
+            c = sys.stdin.readline().strip()
+            if c == 't':
+                sender.initiateCallback(receiver)
+            elif c == 's':
+                sender.shutdown()
+            elif c == 'x':
+                pass # Nothing to do
+            elif c == '?':
+                menu()
+            else:
+                print("unknown command `" + c + "'")
+                menu()
+        except EOFError:
+            return 1
+        except KeyboardInterrupt:
+            return 1
+    return 0
+
 def menu():
     print("""
 usage:
@@ -19,58 +63,11 @@ x: exit
 ?: help
 """)
 
-class CallbackReceiverI(Demo.CallbackReceiver):
-    def callback(self, current=None):
-        print("received callback")
-
-class Client(Ice.Application):
-    def __init__(self):
-        Ice.Application.__init__(self, Ice.Application.NoSignalHandling)
-
-    def run(self, args):
-        if len(args) > 1:
-            print(self.appName() + ": too many arguments")
-            return 1
-
-        sender = Demo.CallbackSenderPrx.checkedCast(
-            self.communicator().propertyToProxy('CallbackSender.Proxy').
-            ice_twoway().ice_timeout(-1).ice_secure(False))
-        if not sender:
-            print(self.appName() + ": invalid proxy")
-            return 1
-
-        adapter = self.communicator().createObjectAdapter("Callback.Client")
-        adapter.add(CallbackReceiverI(), Ice.stringToIdentity("callbackReceiver"))
-        adapter.activate()
-
-        receiver = Demo.CallbackReceiverPrx.uncheckedCast(
-            adapter.createProxy(Ice.stringToIdentity("callbackReceiver")))
-
-        menu()
-
-        c = None
-        while c != 'x':
-            try:
-                sys.stdout.write("==> ")
-                sys.stdout.flush()
-                c = sys.stdin.readline().strip()
-                if c == 't':
-                    sender.initiateCallback(receiver)
-                elif c == 's':
-                    sender.shutdown()
-                elif c == 'x':
-                    pass # Nothing to do
-                elif c == '?':
-                    menu()
-                else:
-                    print("unknown command `" + c + "'")
-                    menu()
-            except EOFError:
-                break
-            except KeyboardInterrupt:
-                break
-
-        return 0
-
-app = Client()
-sys.exit(app.main(sys.argv, "config.client"))
+status = 0
+with Ice.initialize(sys.argv, "config.client") as communicator:
+    if len(sys.argv) > 1:
+        print(sys.argv[0] + ": too many arguments")
+        status = 1
+    else:
+        status = run(communicator)
+sys.exit(status)

@@ -10,82 +10,71 @@ import sys, Ice
 Ice.loadSlice('Session.ice')
 import Demo
 
-class Client(Ice.Application):
+def run(communicator):
+    while True:
+        sys.stdout.write("Please enter your name ==> ")
+        sys.stdout.flush()
+        name = sys.stdin.readline().strip()
+        if len(name) != 0:
+            break
 
-    def __init__(self):
-        Ice.Application.__init__(self, Ice.Application.NoSignalHandling)
+    base = communicator.propertyToProxy('SessionFactory.Proxy')
+    factory = Demo.SessionFactoryPrx.checkedCast(base)
+    if not factory:
+        print(args[0] + ": invalid proxy")
+        return 1
+    session = factory.create(name)
 
-    def run(self, args):
-        if len(args) > 1:
-            print(self.appName() + ": too many arguments")
-            return 1
+    hellos = []
 
-        while True:
-            sys.stdout.write("Please enter your name ==> ")
+    menu()
+
+    destroy = True
+    shutdown = False
+    while True:
+        try:
+            sys.stdout.write("==> ")
             sys.stdout.flush()
-            name = sys.stdin.readline().strip()
-            if len(name) != 0:
-                break
-
-        base = self.communicator().propertyToProxy('SessionFactory.Proxy')
-        factory = Demo.SessionFactoryPrx.checkedCast(base)
-        if not factory:
-            print(args[0] + ": invalid proxy")
-            return 1
-
-        session = factory.create(name)
-
-        hellos = []
-
-        self.menu()
-
-        destroy = True
-        shutdown = False
-        while True:
-            try:
-                sys.stdout.write("==> ")
-                sys.stdout.flush()
-                c = sys.stdin.readline().strip()
-                s = str(c)
-                if s.isdigit():
-                    index = int(s)
-                    if index < len(hellos):
-                        hello = hellos[index]
-                        hello.sayHello()
-                    else:
-                        print("Index is too high. " + str(len(hellos)) + " hello objects exist so far.\n" +\
-                                  "Use `c' to create a new hello object.")
-                elif c == 'c':
-                    hellos.append(session.createHello())
-                    print("Created hello object",len(hellos) - 1)
-                elif c == 's':
-                    destroy = False
-                    shutdown = True
-                    break
-                elif c == 'x':
-                    break
-                elif c == 't':
-                    destroy = False
-                    break
-                elif c == '?':
-                    self.menu()
+            c = sys.stdin.readline().strip()
+            s = str(c)
+            if s.isdigit():
+                index = int(s)
+                if index < len(hellos):
+                    hello = hellos[index]
+                    hello.sayHello()
                 else:
-                    print("unknown command `" + c + "'")
-                    self.menu()
-            except EOFError:
+                    print("Index is too high. " + str(len(hellos)) + " hello objects exist so far.\n" +\
+                              "Use `c' to create a new hello object.")
+            elif c == 'c':
+                hellos.append(session.createHello())
+                print("Created hello object",len(hellos) - 1)
+            elif c == 's':
+                destroy = False
+                shutdown = True
                 break
-            except KeyboardInterrupt:
+            elif c == 'x':
                 break
+            elif c == 't':
+                destroy = False
+                break
+            elif c == '?':
+                menu()
+            else:
+                print("unknown command `" + c + "'")
+                menu()
+        except EOFError:
+            break
+        except KeyboardInterrupt:
+            break
 
-        if destroy:
-            session.destroy()
-        if shutdown:
-            factory.shutdown()
+    if destroy:
+        session.destroy()
+    if shutdown:
+        factory.shutdown()
+    return 0
 
-        return 0
-
-    def menu(self):
-        print("""
+def menu():
+    print("""
 usage:
 c:     create a new per-client hello object
 0-9:   send a greeting to a hello object
@@ -95,5 +84,11 @@ t:     exit without destroying the session
 ?:     help
 """)
 
-app = Client()
-sys.exit(app.main(sys.argv, "config.client"))
+status = 0
+with Ice.initialize(sys.argv, "config.client") as communicator:
+    if len(sys.argv) > 1:
+        print(sys.argv[0] + ": too many arguments")
+        status = 1
+    else:
+        status = run(communicator)
+sys.exit(status)

@@ -10,6 +10,42 @@ import sys, traceback, Ice, IceGrid
 Ice.loadSlice('Hello.ice')
 import Demo
 
+def run(communicator):
+    hello = None
+    try:
+        hello = Demo.HelloPrx.checkedCast(communicator.stringToProxy("hello"))
+    except Ice.NotRegisteredException:
+        query = IceGrid.QueryPrx.checkedCast(communicator.stringToProxy("DemoIceGrid/Query"))
+        hello = Demo.HelloPrx.checkedCast(query.findObjectByType("::Demo::Hello"))
+
+    if not hello:
+        print("couldn't find a `::Demo::Hello' object.")
+        return 1
+
+    menu()
+
+    c = None
+    while c != 'x':
+        try:
+            sys.stdout.write("==> ")
+            sys.stdout.flush()
+            c = sys.stdin.readline().strip()
+            if c == 't':
+                hello.sayHello()
+            elif c == 's':
+                hello.shutdown()
+            elif c == 'x':
+                pass # Nothing to do
+            elif c == '?':
+                menu()
+            else:
+                print("unknown command `" + c + "'")
+                menu()
+        except EOFError:
+            return 1
+        except KeyboardInterrupt:
+            return 1
+    return 0
 
 def menu():
     print("""
@@ -20,48 +56,11 @@ x: exit
 ?: help
 """)
 
-class Client(Ice.Application):
-    def run(self, args):
-        if len(args) > 1:
-            print(self.appName() + ": too many arguments")
-            return 1
-
-        hello = None
-        try:
-            hello = Demo.HelloPrx.checkedCast(self.communicator().stringToProxy("hello"))
-        except Ice.NotRegisteredException:
-            query = IceGrid.QueryPrx.checkedCast(self.communicator().stringToProxy("DemoIceGrid/Query"))
-            hello = Demo.HelloPrx.checkedCast(query.findObjectByType("::Demo::Hello"))
-
-        if not hello:
-            print(self.appName() + ": couldn't find a `::Demo::Hello' object.")
-            return 1
-
-        menu()
-
-        c = None
-        while c != 'x':
-            try:
-                sys.stdout.write("==> ")
-                sys.stdout.flush()
-                c = sys.stdin.readline().strip()
-                if c == 't':
-                    hello.sayHello()
-                elif c == 's':
-                    hello.shutdown()
-                elif c == 'x':
-                    pass # Nothing to do
-                elif c == '?':
-                    menu()
-                else:
-                    print("unknown command `" + c + "'")
-                    menu()
-            except EOFError:
-                break
-            except KeyboardInterrupt:
-                break
-
-        return 0
-
-app = Client()
-sys.exit(app.main(sys.argv, "config.client"))
+status = 0
+with Ice.initialize(sys.argv, "config.client") as communicator:
+    if len(sys.argv) > 1:
+        print(sys.argv[0] + ": too many arguments")
+        status = 1
+    else:
+        status = run(communicator)
+sys.exit(status)

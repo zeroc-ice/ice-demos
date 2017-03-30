@@ -10,6 +10,52 @@ import sys, traceback, Ice
 Ice.loadSlice('Context.ice')
 import Demo
 
+def run(communicator):
+    proxy = Demo.ContextPrx.checkedCast(communicator.propertyToProxy('Context.Proxy'))
+    if not proxy:
+        print(args[0] + ": invalid proxy")
+        return 1
+
+    menu()
+
+    c = None
+    while c != 'x':
+        try:
+            sys.stdout.write("==> ")
+            sys.stdout.flush()
+            c = sys.stdin.readline().strip()
+            if c == '1':
+                proxy.call()
+            elif c == '2':
+                ctx = {'type': 'Explicit'}
+                proxy.call(ctx)
+            elif c == '3':
+                ctx = {'type': 'Per-Proxy'}
+                proxy2 = Demo.ContextPrx.uncheckedCast(proxy.ice_context(ctx))
+                proxy2.call()
+            elif c == '4':
+                ic = communicator.getImplicitContext()
+                ctx = {'type': 'Implicit'}
+                ic.setContext(ctx)
+                proxy.call()
+                ic.setContext({})
+            elif c == 's':
+                proxy.shutdown()
+            elif c == 'x':
+                pass # Nothing to do
+            elif c == '?':
+                menu()
+            else:
+                print("unknown command `" + c + "'")
+                menu()
+        except KeyboardInterrupt:
+            return 1
+        except EOFError:
+            return 1
+        except Ice.Exception as ex:
+            print(ex)
+    return 0
+
 def menu():
     print("""
 usage:
@@ -22,60 +68,11 @@ x: exit
 ?: help
 """)
 
-class Client(Ice.Application):
-    def __init__(self):
-        Ice.Application.__init__(self, Ice.Application.NoSignalHandling)
-
-    def run(self, args):
-        if len(args) > 1:
-            print(self.appName() + ": too many arguments")
-            return 1
-
-        proxy = Demo.ContextPrx.checkedCast(self.communicator().propertyToProxy('Context.Proxy'))
-        if not proxy:
-            print(args[0] + ": invalid proxy")
-            return 1
-
-        menu()
-
-        c = None
-        while c != 'x':
-            try:
-                sys.stdout.write("==> ")
-                sys.stdout.flush()
-                c = sys.stdin.readline().strip()
-                if c == '1':
-                    proxy.call()
-                elif c == '2':
-                    ctx = {'type': 'Explicit'}
-                    proxy.call(ctx)
-                elif c == '3':
-                    ctx = {'type': 'Per-Proxy'}
-                    proxy2 = Demo.ContextPrx.uncheckedCast(proxy.ice_context(ctx))
-                    proxy2.call()
-                elif c == '4':
-                    ic = self.communicator().getImplicitContext()
-                    ctx = {'type': 'Implicit'}
-                    ic.setContext(ctx)
-                    proxy.call()
-                    ic.setContext({})
-                elif c == 's':
-                    proxy.shutdown()
-                elif c == 'x':
-                    pass # Nothing to do
-                elif c == '?':
-                    menu()
-                else:
-                    print("unknown command `" + c + "'")
-                    menu()
-            except KeyboardInterrupt:
-                break
-            except EOFError:
-                break
-            except Ice.Exception as ex:
-                print(ex)
-
-        return 0
-
-app = Client()
-sys.exit(app.main(sys.argv, "config.client"))
+status = 0
+with Ice.initialize(sys.argv, "config.client") as communicator:
+    if len(sys.argv) > 1:
+        print(sys.argv[0] + ": too many arguments")
+        status = 1
+    else:
+        status = run(communicator)
+sys.exit(status)

@@ -36,11 +36,11 @@ def listRecursive(dir, depth):
             for line in text:
                 print(indent + "\t" + line)
 
-with Ice.initialize(sys.argv) as ic:
+with Ice.initialize(sys.argv) as communicator:
     #
     # Create a proxy to the root directory
     #
-    obj = ic.stringToProxy("RootDir:default -h localhost -p 10000")
+    obj = communicator.stringToProxy("RootDir:default -h localhost -p 10000")
 
     #
     # Downcast the proxy to a Directory proxy
