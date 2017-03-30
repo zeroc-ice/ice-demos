@@ -10,19 +10,7 @@
 using namespace std;
 using namespace Demo;
 
-class HelloClient : public Ice::Application
-{
-public:
-
-    HelloClient();
-
-    virtual int run(int, char*[]) override;
-
-private:
-
-    void menu();
-};
-
+int run(const shared_ptr<Ice::Communicator>&);
 
 int
 main(int argc, char* argv[])
@@ -30,33 +18,49 @@ main(int argc, char* argv[])
 #ifdef ICE_STATIC_LIBS
     Ice::registerIceSSL();
 #endif
-    HelloClient app;
-    return app.main(argc, argv, "config.client");
-}
 
-HelloClient::HelloClient() :
-    //
-    // Since this is an interactive demo we don't want any signal
-    // handling.
-    //
-    Ice::Application(Ice::SignalPolicy::NoSignalHandling)
-{
-}
+    int status = EXIT_SUCCESS;
 
-int
-HelloClient::run(int argc, char* argv[])
-{
-    if(argc > 1)
+    try
     {
-        cerr << appName() << ": too many arguments" << endl;
-        return EXIT_FAILURE;
+        //
+        // CommunicatorHolder's ctor initializes an Ice communicator,
+        // and its dtor destroys this communicator.
+        //
+        Ice::CommunicatorHolder ich(argc, argv, "config.client");
+
+        //
+        // The communicator initialization removes all Ice-related arguments from argc/argv
+        //
+        if(argc > 1)
+        {
+            cerr << argv[0] << ": too many arguments" << endl;
+            status = EXIT_FAILURE;
+        }
+        else
+        {
+            status = run(ich.communicator());
+        }
+    }
+    catch(const std::exception& ex)
+    {
+        cerr << argv[0] << ": " << ex.what() << endl;
+        status = EXIT_FAILURE;
     }
 
+    return status;
+}
+
+void menu();
+
+int
+run(const shared_ptr<Ice::Communicator>& communicator)
+{
     auto twoway = Ice::checkedCast<HelloPrx>(
-        communicator()->propertyToProxy("Hello.Proxy")->ice_twoway()->ice_secure(false));
+        communicator->propertyToProxy("Hello.Proxy")->ice_twoway()->ice_secure(false));
     if(!twoway)
     {
-        cerr << argv[0] << ": invalid proxy" << endl;
+        cerr << "invalid proxy" << endl;
         return EXIT_FAILURE;
     }
     auto oneway = twoway->ice_oneway();
@@ -208,7 +212,7 @@ HelloClient::run(int argc, char* argv[])
 }
 
 void
-HelloClient::menu()
+menu()
 {
     cout <<
         "usage:\n"

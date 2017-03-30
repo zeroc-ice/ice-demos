@@ -10,6 +10,104 @@ import sys, traceback, Ice
 Ice.loadSlice('Hello.ice')
 import Demo
 
+def run(communicator):
+    twoway = Demo.HelloPrx.checkedCast(\
+        communicator.propertyToProxy('Hello.Proxy').ice_twoway().ice_secure(False))
+    if not twoway:
+        print("invalid proxy")
+        return 1
+
+    oneway = Demo.HelloPrx.uncheckedCast(twoway.ice_oneway())
+    batchOneway = Demo.HelloPrx.uncheckedCast(twoway.ice_batchOneway())
+    datagram = Demo.HelloPrx.uncheckedCast(twoway.ice_datagram())
+    batchDatagram = Demo.HelloPrx.uncheckedCast(twoway.ice_batchDatagram())
+
+    secure = False
+    timeout = -1
+    delay = 0
+
+    menu()
+
+    c = None
+    while c != 'x':
+        try:
+            sys.stdout.write("==> ")
+            sys.stdout.flush()
+            c = sys.stdin.readline().strip()
+            if c == 't':
+                twoway.sayHello(delay)
+            elif c == 'o':
+                oneway.sayHello(delay)
+            elif c == 'O':
+                batchOneway.sayHello(delay)
+            elif c == 'd':
+                if secure:
+                    print("secure datagrams are not supported")
+                else:
+                    datagram.sayHello(delay)
+            elif c == 'D':
+                if secure:
+                    print("secure datagrams are not supported")
+                else:
+                    batchDatagram.sayHello(delay)
+            elif c == 'f':
+                batchOneway.ice_flushBatchRequests()
+                batchDatagram.ice_flushBatchRequests()
+            elif c == 'T':
+                if timeout == -1:
+                    timeout = 2000
+                else:
+                    timeout = -1
+
+                    twoway = Demo.HelloPrx.uncheckedCast(twoway.ice_invocationTimeout(timeout))
+                    oneway = Demo.HelloPrx.uncheckedCast(oneway.ice_invocationTimeout(timeout))
+                    batchOneway = Demo.HelloPrx.uncheckedCast(batchOneway.ice_invocationTimeout(timeout))
+
+                    if timeout == -1:
+                        print("timeout is now switched off")
+                    else:
+                        print("timeout is now set to 2000ms")
+            elif c == 'P':
+                if delay == 0:
+                    delay = 2500
+                else:
+                    delay = 0
+
+                    if delay == 0:
+                        print("server delay is now deactivated")
+                    else:
+                        print("server delay is now set to 2500ms")
+            elif c == 'S':
+                secure = not secure
+
+                twoway = Demo.HelloPrx.uncheckedCast(twoway.ice_secure(secure))
+                oneway = Demo.HelloPrx.uncheckedCast(oneway.ice_secure(secure))
+                batchOneway = Demo.HelloPrx.uncheckedCast(batchOneway.ice_secure(secure))
+                datagram = Demo.HelloPrx.uncheckedCast(datagram.ice_secure(secure))
+                batchDatagram = Demo.HelloPrx.uncheckedCast(batchDatagram.ice_secure(secure))
+
+                if secure:
+                    print("secure mode is now on")
+                else:
+                    print("secure mode is now off")
+            elif c == 's':
+                twoway.shutdown()
+            elif c == 'x':
+                pass # Nothing to do
+            elif c == '?':
+                menu()
+            else:
+                print("unknown command `" + c + "'")
+                menu()
+        except KeyboardInterrupt:
+            return 1
+        except EOFError:
+            return 1
+        except Ice.Exception as ex:
+            print(ex)
+
+    return 0
+
 def menu():
     print("""
 usage:
@@ -27,111 +125,12 @@ x: exit
 ?: help
 """)
 
-class Client(Ice.Application):
-    def __init__(self):
-        Ice.Application.__init__(self, Ice.Application.NoSignalHandling)
 
-    def run(self, args):
-        if len(args) > 1:
-            print(self.appName() + ": too many arguments")
-            return 1
-
-        twoway = Demo.HelloPrx.checkedCast(\
-            self.communicator().propertyToProxy('Hello.Proxy').ice_twoway().ice_secure(False))
-        if not twoway:
-            print(args[0] + ": invalid proxy")
-            return 1
-
-        oneway = Demo.HelloPrx.uncheckedCast(twoway.ice_oneway())
-        batchOneway = Demo.HelloPrx.uncheckedCast(twoway.ice_batchOneway())
-        datagram = Demo.HelloPrx.uncheckedCast(twoway.ice_datagram())
-        batchDatagram = Demo.HelloPrx.uncheckedCast(twoway.ice_batchDatagram())
-
-        secure = False
-        timeout = -1
-        delay = 0
-
-        menu()
-
-        c = None
-        while c != 'x':
-            try:
-                sys.stdout.write("==> ")
-                sys.stdout.flush()
-                c = sys.stdin.readline().strip()
-                if c == 't':
-                    twoway.sayHello(delay)
-                elif c == 'o':
-                    oneway.sayHello(delay)
-                elif c == 'O':
-                    batchOneway.sayHello(delay)
-                elif c == 'd':
-                    if secure:
-                        print("secure datagrams are not supported")
-                    else:
-                        datagram.sayHello(delay)
-                elif c == 'D':
-                    if secure:
-                        print("secure datagrams are not supported")
-                    else:
-                        batchDatagram.sayHello(delay)
-                elif c == 'f':
-                    batchOneway.ice_flushBatchRequests()
-                    batchDatagram.ice_flushBatchRequests()
-                elif c == 'T':
-                    if timeout == -1:
-                        timeout = 2000
-                    else:
-                        timeout = -1
-
-                    twoway = Demo.HelloPrx.uncheckedCast(twoway.ice_invocationTimeout(timeout))
-                    oneway = Demo.HelloPrx.uncheckedCast(oneway.ice_invocationTimeout(timeout))
-                    batchOneway = Demo.HelloPrx.uncheckedCast(batchOneway.ice_invocationTimeout(timeout))
-
-                    if timeout == -1:
-                        print("timeout is now switched off")
-                    else:
-                        print("timeout is now set to 2000ms")
-                elif c == 'P':
-                    if delay == 0:
-                        delay = 2500
-                    else:
-                        delay = 0
-
-                    if delay == 0:
-                        print("server delay is now deactivated")
-                    else:
-                        print("server delay is now set to 2500ms")
-                elif c == 'S':
-                    secure = not secure
-
-                    twoway = Demo.HelloPrx.uncheckedCast(twoway.ice_secure(secure))
-                    oneway = Demo.HelloPrx.uncheckedCast(oneway.ice_secure(secure))
-                    batchOneway = Demo.HelloPrx.uncheckedCast(batchOneway.ice_secure(secure))
-                    datagram = Demo.HelloPrx.uncheckedCast(datagram.ice_secure(secure))
-                    batchDatagram = Demo.HelloPrx.uncheckedCast(batchDatagram.ice_secure(secure))
-
-                    if secure:
-                        print("secure mode is now on")
-                    else:
-                        print("secure mode is now off")
-                elif c == 's':
-                    twoway.shutdown()
-                elif c == 'x':
-                    pass # Nothing to do
-                elif c == '?':
-                    menu()
-                else:
-                    print("unknown command `" + c + "'")
-                    menu()
-            except KeyboardInterrupt:
-                break
-            except EOFError:
-                break
-            except Ice.Exception as ex:
-                print(ex)
-
-        return 0
-
-app = Client()
-sys.exit(app.main(sys.argv, "config.client"))
+status = 0
+with Ice.initialize(sys.argv, "config.client") as communicator:
+    if len(sys.argv) > 1:
+        print(sys.argv[0] + ": too many arguments")
+        status = 1
+    else:
+        status = run(communicator)
+sys.exit(status)

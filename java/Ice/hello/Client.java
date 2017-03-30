@@ -6,53 +6,40 @@
 
 import Demo.*;
 
-public class Client extends com.zeroc.Ice.Application
+public class Client
 {
-    class ShutdownHook extends Thread
+    public static void main(String[] args)
     {
-        @Override
-        public void run()
-        {
-            communicator().destroy();
-        }
-    }
+        int status = 0;
+        java.util.List<String> extraArgs = new java.util.ArrayList<>();
 
-    private static void menu()
-    {
-        System.out.println(
-            "usage:\n" +
-            "t: send greeting as twoway\n" +
-            "o: send greeting as oneway\n" +
-            "O: send greeting as batch oneway\n" +
-            "d: send greeting as datagram\n" +
-            "D: send greeting as batch datagram\n" +
-            "f: flush all batch requests\n" +
-            "T: set a timeout\n" +
-            "P: set a server delay\n" +
-            "S: switch secure mode on/off\n" +
-            "s: shutdown server\n" +
-            "x: exit\n" +
-            "?: help\n");
-    }
-
-    @Override
-    public int run(String[] args)
-    {
-        if(args.length > 0)
+        //
+        // try with resource block - communicator is automatically destroyed
+        // at the end of this try block
+        //
+        try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.client", extraArgs))
         {
-            System.err.println(appName() + ": too many arguments");
-            return 1;
+            if(!extraArgs.isEmpty())
+            {
+                System.err.println("too many arguments");
+                status = 1;
+            }
+            else
+            {
+                status = run(communicator);
+            }
         }
 
         //
-        // Since this is an interactive demo we want to clear the
-        // Application installed interrupt callback and install our
-        // own shutdown hook.
+        // Exit outside the try block
         //
-        setInterruptHook(new ShutdownHook());
+        System.exit(status);
+    }
 
+    private static int run(com.zeroc.Ice.Communicator communicator)
+    {
         HelloPrx twoway = HelloPrx.checkedCast(
-            communicator().propertyToProxy("Hello.Proxy")).ice_twoway().ice_secure(false);
+            communicator.propertyToProxy("Hello.Proxy")).ice_twoway().ice_secure(false);
         if(twoway == null)
         {
             System.err.println("invalid proxy");
@@ -217,10 +204,21 @@ public class Client extends com.zeroc.Ice.Application
         return 0;
     }
 
-    public static void main(String[] args)
+    private static void menu()
     {
-        Client app = new Client();
-        int status = app.main("Client", args, "config.client");
-        System.exit(status);
+        System.out.println(
+            "usage:\n" +
+            "t: send greeting as twoway\n" +
+            "o: send greeting as oneway\n" +
+            "O: send greeting as batch oneway\n" +
+            "d: send greeting as datagram\n" +
+            "D: send greeting as batch datagram\n" +
+            "f: flush all batch requests\n" +
+            "T: set a timeout\n" +
+            "P: set a server delay\n" +
+            "S: switch secure mode on/off\n" +
+            "s: shutdown server\n" +
+            "x: exit\n" +
+            "?: help\n");
     }
 }
