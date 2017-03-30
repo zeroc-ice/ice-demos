@@ -315,21 +315,6 @@ class LibraryI implements Library
         }
     }
 
-    synchronized public void shutdown()
-    {
-        if(_destroyed)
-        {
-            return;
-        }
-        _destroyed = true;
-
-        // Shutdown each of the associated query objects.
-        for(QueryProxyPair p : _queries)
-        {
-            p.impl.shutdown();
-        }
-    }
-
     synchronized private void add(BookQueryResultPrx proxy, BookQueryResultI impl)
     {
         // If the session has been destroyed, then destroy the book

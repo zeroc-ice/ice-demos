@@ -9,12 +9,12 @@ import Demo.*;
 import com.zeroc.Ice.ACMClose;
 import com.zeroc.Ice.ACMHeartbeat;
 
-class SessionFactoryI implements SessionFactory
+class SessionFactoryI implements SessionFactory, SessionManager
 {
     @Override
     public synchronized SessionPrx create(com.zeroc.Ice.Current current)
     {
-        SessionI session = new SessionI(_logger, current.adapter);
+        SessionI session = new SessionI(_logger, current.adapter, this);
 
         SessionPrx proxy = SessionPrx.uncheckedCast(current.adapter.addWithUUID(session));
 
@@ -49,6 +49,11 @@ class SessionFactoryI implements SessionFactory
                                     });
 
         return proxy;
+    }
+    
+    @Override
+    public void destroy(com.zeroc.Ice.Current current)
+    {
     }
 
     SessionFactoryI(com.zeroc.Ice.Logger logger)

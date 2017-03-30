@@ -11,12 +11,12 @@ import com.zeroc.Glacier2.SessionControlPrx;
 import com.zeroc.Ice.ACMClose;
 import com.zeroc.Ice.ACMHeartbeat;
 
-class Glacier2SessionManagerI implements com.zeroc.Glacier2.SessionManager
+class Glacier2SessionManagerI implements com.zeroc.Glacier2.SessionManager, SessionManager
 {
     @Override
     public synchronized SessionPrx create(String userId, SessionControlPrx control, com.zeroc.Ice.Current current)
     {
-        SessionI session = new SessionI(_logger, current.adapter);
+        SessionI session = new SessionI(_logger, current.adapter, this);
 
         SessionPrx proxy = SessionPrx.uncheckedCast(current.adapter.addWithUUID(session));
 
@@ -29,7 +29,7 @@ class Glacier2SessionManagerI implements com.zeroc.Glacier2.SessionManager
             _logger.trace("SessionFactory", "enter: create new entry in connection map");
 
             sessions = new java.util.ArrayList<SessionPrx>();
-            sessions.add(proxy);
+            sessions.add(proxy.ice_endpoints(new com.zeroc.Ice.Endpoint[0]));
             _connectionMap.put(current.con, sessions);
 
             //
@@ -54,7 +54,7 @@ class Glacier2SessionManagerI implements com.zeroc.Glacier2.SessionManager
         else
         {
             _logger.trace("SessionFactory", "create: add session to existing connection map entry");
-            sessions.add(proxy);
+            sessions.add(proxy.ice_endpoints(new com.zeroc.Ice.Endpoint[0]));
         }
 
         return proxy;
@@ -81,6 +81,16 @@ class Glacier2SessionManagerI implements com.zeroc.Glacier2.SessionManager
             s.destroy();
         }
     }
+    
+    @Override
+    public synchronized void destroy(com.zeroc.Ice.Current current)
+    {
+        java.util.List<SessionPrx> sessions = _connectionMap.get(current.con);
+        if(sessions != null)
+        {
+            sessions.removeIf(s -> s.ice_getIdentity().equals(current.id));
+        }
+    }
 
     Glacier2SessionManagerI(com.zeroc.Ice.Logger logger)
     {
@@ -88,6 +98,7 @@ class Glacier2SessionManagerI implements com.zeroc.Glacier2.SessionManager
     }
 
     final private com.zeroc.Ice.Logger _logger;
+
     //
     // Map of connection from Glacier2 to proxies of Sessions in this server
     //

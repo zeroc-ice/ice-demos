@@ -70,15 +70,6 @@ class BookQueryResultI implements BookQueryResult
         current.adapter.remove(current.id);
     }
 
-    // Called on application shutdown by the Library.
-    synchronized public void shutdown()
-    {
-        if(!_destroyed)
-        {
-            _destroyed = true;
-        }
-    }
-
     private java.util.Stack<BookDescription> _books;
     private boolean _destroyed = false;
     private static final int MAX_BOOK_QUERY_RESULT = 1000;
