@@ -14,7 +14,7 @@ The following subdirectories contain sample programs:
 
 - [Ice](./Ice) has several examples that illustrate fundamental Ice concepts.
 
-Refer to the [C++ demos](../cpp) for more examples that use Ice services
+Refer to the [C++11 demos](../cpp11) for more examples that use Ice services
 such as IceGrid and IceStorm.
 
 ## Build Instructions
@@ -48,11 +48,11 @@ Now use gulp to build the demos:
 
 Ice provides only client demos in JavaScript since Ice for JavaScript does not support
 full server-side activities. In order to run a sample client, you must first start its
-corresponding server from another Ice language mapping. For example, start the C++11
+corresponding server from another Ice language mapping. For example, start the python
 "hello" server:
 
-    > cd cpp11/Ice/hello
-    > server
+    > cd python/Ice/hello
+    > python Server.py
 
 To run the client, open another terminal window, change to the corresponding
 JavaScript demo directory, and run:

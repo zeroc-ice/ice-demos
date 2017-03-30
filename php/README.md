@@ -17,7 +17,7 @@ The following subdirectories contain sample programs:
 - [IceDiscovery](./IceDiscovery) demonstrates the use of our multicast service
 discovery plug-in.
 
-Refer to the [C++ demos](../cpp) for more examples that use Ice services
+Refer to the [C++11 demos](../cpp11) for more examples that use Ice services
 such as IceGrid and IceStorm.
 
 ## Build Instructions for Linux & OS X

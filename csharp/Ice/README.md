@@ -19,10 +19,6 @@ Demos in this directory:
   call back into an object provided by the client as part of that
   invocation.
 
-- [compact](./compact)
-
-  A simple graphical client that uses Ice for .NET Compact Framework.
-
 - [context](./context)
 
   This demo shows how to use Ice request contexts.

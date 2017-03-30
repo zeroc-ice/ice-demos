@@ -23,10 +23,6 @@ Demos in this directory:
 
   This demo shows how to use Ice request contexts.
 
-- [converter](./converter)
-
-  This demo shows how to use string converters.
-
 - [hello](./hello)
 
   This demo illustrates how to invoke ordinary (twoway) operations, as

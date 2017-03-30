@@ -17,7 +17,7 @@ in the [Ice manual][1].
 
 - [Android](./Android) contains examples of Android applications.
 
-Refer to the [C++ demos](../cpp) for more examples that use the Ice services
+Refer to the [C++11 demos](../cpp11) for more examples that use the Ice services
 (Glacier2, IceGrid, IceStorm).
 
 ## Build Instructions

@@ -21,7 +21,7 @@ demo.
 Follow these steps to install the demo:
 
 1) Install the Ice extension and run-time files as described in the
-   [manual](1). Restart the Web server if necessary.
+   [manual][1]. Restart the Web server if necessary.
 
 2) If you have not build the demos yet, please refer to the top level
    [php/README.md](../../README.md) file for build instructions.
