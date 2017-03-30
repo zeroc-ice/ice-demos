@@ -155,7 +155,7 @@ window and select `Build`.
 - Build from Visual Studio
   * Open a Visual Studio command prompt
 
-            set ICE_SRC_DIST=yes
+            set ICE_SRC_DIST=all
             devenv
 
   * When Visual Studio starts set IceHome in the Ice Builder options
