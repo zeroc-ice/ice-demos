@@ -6,61 +6,36 @@
 
 import Demo.*;
 
-public class Client extends Ice.Application
+public class Client
 {
-    class ShutdownHook extends Thread
+    public static void main(String[] args)
     {
-        @Override
-        public void
-        run()
-        {
-            communicator().destroy();
-        }
-    }
-
-    private static void
-    menu()
-    {
-        System.out.println(
-            "\n" +
-            "usage:\n" +
-            "1: set properties (batch 1)\n" +
-            "2: set properties (batch 2)\n" +
-            "c: show current properties\n" +
-            "s: shutdown server\n" +
-            "x: exit\n" +
-            "?: help\n");
-    }
-
-    private static void
-    show(Ice.PropertiesAdminPrx admin)
-    {
-        java.util.Map<String, String> props = admin.getPropertiesForPrefix("Demo");
-        System.out.println("Server's current settings:");
-        for(java.util.Map.Entry<String, String> e : props.entrySet())
-        {
-            System.out.println("  " + e.getKey() + "=" + e.getValue());
-        }
-    }
-
-    @Override
-    public int
-    run(String[] args)
-    {
-        if(args.length > 0)
-        {
-            System.err.println(appName() + ": too many arguments");
-            return 1;
-        }
+        int status = 0;
+        Ice.StringSeqHolder argsHolder = new Ice.StringSeqHolder(args);
 
         //
-        // Since this is an interactive demo we want to clear the
-        // Application installed interrupt callback and install our
-        // own shutdown hook.
+        // try with resource block - communicator is automatically destroyed
+        // at the end of this try block
         //
-        setInterruptHook(new ShutdownHook());
+        try(Ice.Communicator communicator = Ice.Util.initialize(argsHolder, "config.client"))
+        {
+            if(argsHolder.value.length > 0)
+            {
+                System.err.println("too many arguments");
+                status = 1;
+            }
+            else
+            {
+                status = run(communicator);
+            }
+        }
 
-        PropsPrx props = PropsPrxHelper.checkedCast(communicator().propertyToProxy("Props.Proxy"));
+        System.exit(status);
+    }
+
+    private static int run(Ice.Communicator communicator)
+    {
+        PropsPrx props = PropsPrxHelper.checkedCast(communicator.propertyToProxy("Props.Proxy"));
         if(props == null)
         {
             System.err.println("invalid proxy");
@@ -68,7 +43,7 @@ public class Client extends Ice.Application
         }
 
         Ice.PropertiesAdminPrx admin =
-            Ice.PropertiesAdminPrxHelper.checkedCast(communicator().propertyToProxy("Admin.Proxy"));
+            Ice.PropertiesAdminPrxHelper.checkedCast(communicator.propertyToProxy("Admin.Proxy"));
 
         java.util.List<String> keys = java.util.Arrays.asList("Demo.Prop1", "Demo.Prop2", "Demo.Prop3");
 
@@ -174,11 +149,26 @@ public class Client extends Ice.Application
         return 0;
     }
 
-    public static void
-    main(String[] args)
+    private static void menu()
     {
-        Client app = new Client();
-        int status = app.main("Client", args, "config.client");
-        System.exit(status);
+        System.out.println(
+            "\n" +
+            "usage:\n" +
+            "1: set properties (batch 1)\n" +
+            "2: set properties (batch 2)\n" +
+            "c: show current properties\n" +
+            "s: shutdown server\n" +
+            "x: exit\n" +
+            "?: help\n");
+    }
+
+    private static void show(Ice.PropertiesAdminPrx admin)
+    {
+        java.util.Map<String, String> props = admin.getPropertiesForPrefix("Demo");
+        System.out.println("Server's current settings:");
+        for(java.util.Map.Entry<String, String> e : props.entrySet())
+        {
+            System.out.println("  " + e.getKey() + "=" + e.getValue());
+        }
     }
 }

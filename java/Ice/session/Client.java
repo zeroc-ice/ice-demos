@@ -6,35 +6,35 @@
 
 import Demo.*;
 
-public class Client extends com.zeroc.Ice.Application
+public class Client
 {
-    private static void menu()
+    public static void main(String[] args)
     {
-        System.out.println(
-            "usage:\n" +
-            "c:     create a new per-client hello object\n" +
-            "0-9:   send a greeting to a hello object\n" +
-            "s:     shutdown the server and exit\n" +
-            "x:     exit\n" +
-            "t:     exit without destroying the session\n" +
-            "?:     help\n");
-    }
+        int status = 0;
+        java.util.List<String> extraArgs = new java.util.ArrayList<>();
 
-    public Client()
-    {
-        // We let CTRL-C kill the client
-        super(com.zeroc.Ice.SignalPolicy.NoSignalHandling);
-    }
-
-    @Override
-    public int run(String[] args)
-    {
-        if(args.length > 0)
+        //
+        // try with resource block - communicator is automatically destroyed
+        // at the end of this try block
+        //
+        try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.client", extraArgs))
         {
-            System.err.println(appName() + ": too many arguments");
-            return 1;
+            if(!extraArgs.isEmpty())
+            {
+                System.err.println("too many arguments");
+                status = 1;
+            }
+            else
+            {
+                status = run(communicator);
+            }
         }
 
+        System.exit(status);
+    }
+
+    private static int run(com.zeroc.Ice.Communicator communicator)
+    {
         java.io.BufferedReader in = new java.io.BufferedReader(new java.io.InputStreamReader(System.in));
         String name;
         try
@@ -53,7 +53,7 @@ public class Client extends com.zeroc.Ice.Application
             return 1;
         }
 
-        com.zeroc.Ice.ObjectPrx base = communicator().propertyToProxy("SessionFactory.Proxy");
+        com.zeroc.Ice.ObjectPrx base = communicator.propertyToProxy("SessionFactory.Proxy");
         SessionFactoryPrx factory = SessionFactoryPrx.checkedCast(base);
         if(factory == null)
         {
@@ -154,10 +154,15 @@ public class Client extends com.zeroc.Ice.Application
         return 0;
     }
 
-    public static void main(String[] args)
+    private static void menu()
     {
-        Client app = new Client();
-        int status = app.main("Client", args, "config.client");
-        System.exit(status);
+        System.out.println(
+            "usage:\n" +
+            "c:     create a new per-client hello object\n" +
+            "0-9:   send a greeting to a hello object\n" +
+            "s:     shutdown the server and exit\n" +
+            "x:     exit\n" +
+            "t:     exit without destroying the session\n" +
+            "?:     help\n");
     }
 }

@@ -4,40 +4,32 @@
 //
 // **********************************************************************
 
-public class Client extends com.zeroc.Ice.Application
+public class Client
 {
-    class ShutdownHook extends Thread
+    public static void main(String[] args)
     {
-        @Override
-        public void run()
-        {
-            communicator().destroy();
-        }
-    }
+        int status = 0;
+        java.util.List<String> extraArgs = new java.util.ArrayList<>();
 
-    @Override
-    public int run(String[] args)
-    {
-        if(args.length > 1)
-        {
-            System.err.println("Usage: " + appName() + " [file]");
-            return 1;
-        }
+        final String appName = "demo.Database.library.Client";
 
         //
-        // Since this is an interactive demo we want to clear the
-        // Application installed interrupt callback and install our
-        // own shutdown hook.
+        // try with resource block - communicator is automatically destroyed
+        // at the end of this try block
         //
-        setInterruptHook(new ShutdownHook());
+        try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.client", extraArgs))
+        {
+            if(extraArgs.size() > 1)
+            {
+                System.err.println("Usage: " + appName + " [file]");
+                status = 1;
+            }
+            else
+            {
+                status = RunParser.runParser(appName, args, communicator);
+            }
+        }
 
-        return RunParser.runParser(appName(), args, communicator());
-    }
-
-    static public void main(String[] args)
-    {
-        Client app = new Client();
-        int status = app.main("demo.Database.library.Client", args, "config.client");
         System.exit(status);
     }
 }

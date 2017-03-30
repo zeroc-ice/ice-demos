@@ -14,48 +14,37 @@ import java.util.concurrent.Future;
 import Demo.*;
 import com.zeroc.Ice.LocalException;
 
-public class Client extends com.zeroc.Ice.Application
+public class Client
 {
-    class ShutdownHook extends Thread
+    public static void main(String[] args)
     {
-        @Override
-        public void run()
-        {
-            communicator().destroy();
-        }
-    }
-
-    private static void
-    menu()
-    {
-        System.out.println(
-            "usage:\n" +
-            "t: start a task\n" +
-            "b: start a blocking task\n" +
-            "i: interrupt the blocking task\n" +
-            "s: shutdown server\n" +
-            "x: exit\n" +
-            "?: help\n");
-    }
-
-    @Override
-    public int run(String[] args)
-    {
-        if(args.length > 0)
-        {
-            System.err.println(appName() + ": too many arguments");
-            return 1;
-        }
+        int status = 0;
+        java.util.List<String> extraArgs = new java.util.ArrayList<>();
 
         //
-        // Since this is an interactive demo we want to clear the
-        // Application installed interrupt callback and install our
-        // own shutdown hook.
+        // try with resource block - communicator is automatically destroyed
+        // at the end of this try block
         //
-        setInterruptHook(new ShutdownHook());
+        try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.client", extraArgs))
+        {
+            if(!extraArgs.isEmpty())
+            {
+                System.err.println("too many arguments");
+                status = 1;
+            }
+            else
+            {
+                status = run(communicator);
+            }
+        }
 
+        System.exit(status);
+    }
+
+    private static int run(com.zeroc.Ice.Communicator communicator)
+    {
         final TaskManagerPrx taskManager =
-            TaskManagerPrx.checkedCast(communicator().propertyToProxy("TaskManager.Proxy"));
+            TaskManagerPrx.checkedCast(communicator.propertyToProxy("TaskManager.Proxy"));
         if(taskManager == null)
         {
             System.err.println("invalid proxy");
@@ -172,11 +161,16 @@ public class Client extends com.zeroc.Ice.Application
         return 0;
     }
 
-    public static void main(String[] args)
+    private static void menu()
     {
-        Client app = new Client();
-        int status = app.main("Client", args, "config.client");
-        System.exit(status);
+        System.out.println(
+            "usage:\n" +
+            "t: start a task\n" +
+            "b: start a blocking task\n" +
+            "i: interrupt the blocking task\n" +
+            "s: shutdown server\n" +
+            "x: exit\n" +
+            "?: help\n");
     }
 }
 

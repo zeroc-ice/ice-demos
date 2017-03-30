@@ -9,16 +9,6 @@ import Ice.Optional;
 
 public class Client extends Ice.Application
 {
-    class ShutdownHook extends Thread
-    {
-        @Override
-        public void
-        run()
-        {
-            communicator().destroy();
-        }
-    }
-
     @Override
     public int
     run(String[] args)

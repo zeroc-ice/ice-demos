@@ -6,43 +6,35 @@
 
 import Demo.*;
 
-public class Client extends com.zeroc.Ice.Application
+public class Client
 {
-    class ShutdownHook extends Thread
+    public static void main(String[] args)
     {
-        @Override
-        public void run()
-        {
-            communicator().destroy();
-        }
-    }
-
-    private void menu()
-    {
-        System.out.println(
-            "usage:\n" +
-            "t: send greeting\n" +
-            "s: shutdown server\n" +
-            "x: exit\n" +
-            "?: help\n");
-    }
-
-    @Override
-    public int run(String[] args)
-    {
-        if(args.length > 0)
-        {
-            System.err.println(appName() + ": too many arguments");
-            return 1;
-        }
+        int status = 0;
+        java.util.List<String> extraArgs = new java.util.ArrayList<>();
 
         //
-        // Since this is an interactive demo we want to clear the
-        // Application installed interrupt callback and install our
-        // own shutdown hook.
+        // try with resource block - communicator is automatically destroyed
+        // at the end of this try block
         //
-        setInterruptHook(new ShutdownHook());
+        try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.client", extraArgs))
+        {
+            if(!extraArgs.isEmpty())
+            {
+                System.err.println("too many arguments");
+                status = 1;
+            }
+            else
+            {
+                status = run(communicator);
+            }
+        }
 
+        System.exit(status);
+    }
+
+    private static int run(com.zeroc.Ice.Communicator communicator)
+    {
         //
         // First we try to connect to the object with the `hello'
         // identity. If it's not registered with the registry, we
@@ -51,12 +43,12 @@ public class Client extends com.zeroc.Ice.Application
         HelloPrx hello = null;
         try
         {
-            hello = HelloPrx.checkedCast(communicator().stringToProxy("hello"));
+            hello = HelloPrx.checkedCast(communicator.stringToProxy("hello"));
         }
         catch(com.zeroc.Ice.NotRegisteredException ex)
         {
             com.zeroc.IceGrid.QueryPrx query =
-                com.zeroc.IceGrid.QueryPrx.checkedCast(communicator().stringToProxy("DemoIceGrid/Query"));
+                com.zeroc.IceGrid.QueryPrx.checkedCast(communicator.stringToProxy("DemoIceGrid/Query"));
             hello = HelloPrx.checkedCast(query.findObjectByType("::Demo::Hello"));
         }
         if(hello == null)
@@ -117,10 +109,13 @@ public class Client extends com.zeroc.Ice.Application
         return 0;
     }
 
-    public static void main(String[] args)
+    private static void menu()
     {
-        Client app = new Client();
-        int status = app.main("Client", args, "config.client");
-        System.exit(status);
+        System.out.println(
+            "usage:\n" +
+            "t: send greeting\n" +
+            "s: shutdown server\n" +
+            "x: exit\n" +
+            "?: help\n");
     }
 }

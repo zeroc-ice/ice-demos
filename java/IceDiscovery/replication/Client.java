@@ -6,33 +6,35 @@
 
 import Demo.*;
 
-public class Client extends com.zeroc.Ice.Application
+public class Client
 {
-    class ShutdownHook extends Thread
+    public static void main(String[] args)
     {
-        @Override
-        public void run()
+        int status = 0;
+        java.util.List<String> extraArgs = new java.util.ArrayList<>();
+
+        //
+        // try with resource block - communicator is automatically destroyed
+        // at the end of this try block
+        //
+        try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.client", extraArgs))
         {
-            communicator().destroy();
+            if(!extraArgs.isEmpty())
+            {
+                System.err.println("too many arguments");
+                status = 1;
+            }
+            else
+            {
+                status = run(communicator);
+            }
         }
+
+        System.exit(status);
     }
 
-    @Override
-    public int run(String[] args)
+    private static int run(com.zeroc.Ice.Communicator communicator)
     {
-        if(args.length > 0)
-        {
-            System.err.println(appName() + ": too many arguments");
-            return 1;
-        }
-
-        //
-        // Since this is an interactive demo we want to clear the
-        // Application installed interrupt callback and install our
-        // own shutdown hook.
-        //
-        setInterruptHook(new ShutdownHook());
-
         //
         // Get the hello proxy. We configure the proxy to not cache the
         // server connection with the proxy and to disable the locator
@@ -41,7 +43,7 @@ public class Client extends com.zeroc.Ice.Application
         // will be sent over the server connection matching the returned
         // endpoints.
         //
-        com.zeroc.Ice.ObjectPrx obj = communicator().stringToProxy("hello");
+        com.zeroc.Ice.ObjectPrx obj = communicator.stringToProxy("hello");
         obj = obj.ice_connectionCached(false);
         obj = obj.ice_locatorCacheTimeout(0);
 
@@ -110,12 +112,5 @@ public class Client extends com.zeroc.Ice.Application
         }
 
         return 0;
-    }
-
-    public static void main(String[] args)
-    {
-        Client app = new Client();
-        int status = app.main("Client", args, "config.client");
-        System.exit(status);
     }
 }

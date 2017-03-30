@@ -6,42 +6,36 @@
 
 import Demo.*;
 
-public class Client extends Ice.Application
+public class Client
 {
-    class ShutdownHook extends Thread
+    public static void main(String[] args)
     {
-        @Override
-        public void
-        run()
+        int status = 0;
+        Ice.StringSeqHolder argsHolder = new Ice.StringSeqHolder(args);
+
+        //
+        // try with resource block - communicator is automatically destroyed
+        // at the end of this try block
+        //
+        try(Ice.Communicator communicator = Ice.Util.initialize(argsHolder, "config.client"))
         {
-            /*
-             * For this demo we won't destroy the communicator since it has to
-             * wait for any outstanding invocations to complete which may take
-             * some time if the nesting level is exceeded.
-             *
-             communicator().destroy();
-            */
+            if(argsHolder.value.length > 0)
+            {
+                System.err.println("too many arguments");
+                status = 1;
+            }
+            else
+            {
+                status = run(communicator);
+            }
         }
+
+        System.exit(status);
     }
 
-    @Override
-    public int
-    run(String[] args)
+    private static int run(Ice.Communicator communicator)
     {
-        if(args.length > 0)
-        {
-            System.err.println(appName() + ": too many arguments");
-            return 1;
-        }
-
-        //
-        // Since this is an interactive demo we want to clear the
-        // Application installed interrupt callback and install our
-        // own shutdown hook.
-        //
-        setInterruptHook(new ShutdownHook());
-
-        NestedPrx nested = NestedPrxHelper.checkedCast(communicator().propertyToProxy("Nested.Proxy"));
+        NestedPrx nested = NestedPrxHelper.checkedCast(communicator.propertyToProxy("Nested.Proxy"));
         if(nested == null)
         {
             System.err.println("invalid proxy");
@@ -55,7 +49,7 @@ public class Client extends Ice.Application
         //
         nested = (NestedPrx)nested.ice_invocationTimeout(5000);
 
-        Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Nested.Client");
+        Ice.ObjectAdapter adapter = communicator.createObjectAdapter("Nested.Client");
         NestedPrx self =
             NestedPrxHelper.uncheckedCast(adapter.createProxy(Ice.Util.stringToIdentity("nestedClient")));
         adapter.add(new NestedI(self), Ice.Util.stringToIdentity("nestedClient"));
@@ -102,13 +96,5 @@ public class Client extends Ice.Application
         while(!s.equals("x"));
 
         return 0;
-    }
-
-    public static void
-    main(String[] args)
-    {
-        Client app = new Client();
-        int status = app.main("Client", args, "config.client");
-        System.exit(status);
     }
 }

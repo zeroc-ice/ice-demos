@@ -6,19 +6,34 @@
 
 import Demo.*;
 
-public class Client extends Ice.Application
+public class Client
 {
-    class ShutdownHook extends Thread
+    public static void main(String[] args)
     {
-        @Override
-        public void
-        run()
+        int status = 0;
+        Ice.StringSeqHolder argsHolder = new Ice.StringSeqHolder(args);
+
+        //
+        // try with resource block - communicator is automatically destroyed
+        // at the end of this try block
+        //
+        try(Ice.Communicator communicator = Ice.Util.initialize(argsHolder, "config.client"))
         {
-            communicator().destroy();
+            if(argsHolder.value.length > 0)
+            {
+                System.err.println("too many arguments");
+                status = 1;
+            }
+            else
+            {
+                status = run(communicator);
+            }
         }
+
+        System.exit(status);
     }
 
-    public class Callback_Hello_sayHelloI extends Callback_Hello_sayHello
+    public static class Callback_Hello_sayHelloI extends Callback_Hello_sayHello
     {
         @Override
         public void response()
@@ -46,36 +61,9 @@ public class Client extends Ice.Application
         }
     }
 
-    private static void
-    menu()
+    private static int run(Ice.Communicator communicator)
     {
-        System.out.println(
-            "usage:\n" +
-            "i: send immediate greeting\n" +
-            "d: send delayed greeting\n" +
-            "s: shutdown the server\n" +
-            "x: exit\n" +
-            "?: help\n");
-    }
-
-    @Override
-    public int
-    run(String[] args)
-    {
-        if(args.length > 0)
-        {
-            System.err.println(appName() + ": too many arguments");
-            return 1;
-        }
-
-        //
-        // Since this is an interactive demo we want to clear the
-        // Application installed interrupt callback and install our
-        // own shutdown hook.
-        //
-        setInterruptHook(new ShutdownHook());
-
-        HelloPrx hello = HelloPrxHelper.checkedCast(communicator().propertyToProxy("Hello.Proxy"));
+        HelloPrx hello = HelloPrxHelper.checkedCast(communicator.propertyToProxy("Hello.Proxy"));
         if(hello == null)
         {
             System.err.println("invalid proxy");
@@ -138,11 +126,14 @@ public class Client extends Ice.Application
         return 0;
     }
 
-    public static void
-    main(String[] args)
+    private static void menu()
     {
-        Client app = new Client();
-        int status = app.main("Client", args, "config.client");
-        System.exit(status);
+        System.out.println(
+            "usage:\n" +
+            "i: send immediate greeting\n" +
+            "d: send delayed greeting\n" +
+            "s: shutdown the server\n" +
+            "x: exit\n" +
+            "?: help\n");
     }
 }

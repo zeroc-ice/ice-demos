@@ -6,43 +6,38 @@
 
 import Filesystem.*;
 
-public class Client extends Ice.Application
+public class Client
 {
-    @Override
-    public int
-    run(String[] args)
+    public static void main(String[] args)
     {
+        int status = 0;
         //
-        // Terminate cleanly on receipt of a signal.
+        // try with resource block - communicator is automatically destroyed
+        // at the end of this try block
         //
-        shutdownOnInterrupt();
-
-        //
-        // Create a proxy for the root directory
-        //
-        Ice.ObjectPrx base = communicator().stringToProxy("RootDir:default -h localhost -p 10000");
-
-        //
-        // Down-cast the proxy to a Directory proxy.
-        //
-        DirectoryPrx rootDir = DirectoryPrxHelper.checkedCast(base);
-        if(rootDir == null)
+        try(Ice.Communicator communicator = Ice.Util.initialize(args))
         {
-            throw new Error("Invalid proxy");
+            //
+            // Create a proxy for the root directory
+            //
+            Ice.ObjectPrx base = communicator.stringToProxy("RootDir:default -h localhost -p 10000");
+
+            //
+            // Down-cast the proxy to a Directory proxy.
+            //
+            DirectoryPrx rootDir = DirectoryPrxHelper.checkedCast(base);
+            if(rootDir == null)
+            {
+                throw new Error("Invalid proxy");
+            }
+
+            Parser p = new Parser(rootDir);
+            status = p.parse();
         }
-
-        Parser p = new Parser(rootDir);
-        return p.parse();
+        System.exit(status);
     }
 
-    static public void
-    main(String[] args)
-    {
-        Client app = new Client();
-        app.main("demo.book.lifecycle.Client", args);
-    }
-
-    static private class Error extends RuntimeException
+    private static class Error extends RuntimeException
     {
         public Error(String msg)
         {

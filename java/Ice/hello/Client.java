@@ -30,9 +30,6 @@ public class Client
             }
         }
 
-        //
-        // Exit outside the try block
-        //
         System.exit(status);
     }
 

@@ -6,50 +6,36 @@
 
 import Demo.*;
 
-public class Client extends Ice.Application
+public class Client
 {
-    class ShutdownHook extends Thread
+    public static void main(String[] args)
     {
-        @Override
-        public void
-        run()
-        {
-            communicator().destroy();
-        }
-    }
-
-    private static void
-    menu()
-    {
-        System.out.println(
-            "usage:\n" +
-            "1: call with no request context\n" +
-            "2: call with explicit request context\n" +
-            "3: call with per-proxy request context\n" +
-            "4: call with implicit request context\n" +
-            "s: shutdown server\n" +
-            "x: exit\n" +
-            "?: help\n");
-    }
-
-    @Override
-    public int
-    run(String[] args)
-    {
-        if(args.length > 0)
-        {
-            System.err.println(appName() + ": too many arguments");
-            return 1;
-        }
+        int status = 0;
+        Ice.StringSeqHolder argsHolder = new Ice.StringSeqHolder(args);
 
         //
-        // Since this is an interactive demo we want to clear the
-        // Application installed interrupt callback and install our
-        // own shutdown hook.
+        // try with resource block - communicator is automatically destroyed
+        // at the end of this try block
         //
-        setInterruptHook(new ShutdownHook());
+        try(Ice.Communicator communicator = Ice.Util.initialize(argsHolder, "config.client"))
+        {
+            if(argsHolder.value.length > 0)
+            {
+                System.err.println("too many arguments");
+                status = 1;
+            }
+            else
+            {
+                status = run(communicator);
+            }
+        }
 
-        ContextPrx proxy = ContextPrxHelper.checkedCast(communicator().propertyToProxy("Context.Proxy"));
+        System.exit(status);
+    }
+
+    private static int run(Ice.Communicator communicator)
+    {
+        ContextPrx proxy = ContextPrxHelper.checkedCast(communicator.propertyToProxy("Context.Proxy"));
         if(proxy == null)
         {
             System.err.println("invalid proxy");
@@ -91,7 +77,7 @@ public class Client extends Ice.Application
                 }
                 else if(line.equals("4"))
                 {
-                    Ice.ImplicitContext ic = communicator().getImplicitContext();
+                    Ice.ImplicitContext ic = communicator.getImplicitContext();
                     java.util.Map<String, String> ctx = new java.util.HashMap<String, String>();
                     ctx.put("type", "Implicit");
                     ic.setContext(ctx);
@@ -130,12 +116,18 @@ public class Client extends Ice.Application
         return 0;
     }
 
-    public static void
-    main(String[] args)
+    private static void menu()
     {
-        Client app = new Client();
-        int status = app.main("Client", args, "config.client");
-        System.exit(status);
+        System.out.println(
+            "usage:\n" +
+            "1: call with no request context\n" +
+            "2: call with explicit request context\n" +
+            "3: call with per-proxy request context\n" +
+            "4: call with implicit request context\n" +
+            "s: shutdown server\n" +
+            "x: exit\n" +
+            "?: help\n");
     }
+
 }
 

@@ -6,35 +6,35 @@
 
 import Demo.*;
 
-public class Client extends Ice.Application
+public class Client
 {
-    class ShutdownHook extends Thread
+    public static void main(String[] args)
     {
-        @Override
-        public void
-        run()
+        int status = 0;
+        Ice.StringSeqHolder argsHolder = new Ice.StringSeqHolder(args);
+
+        //
+        // try with resource block - communicator is automatically destroyed
+        // at the end of this try block
+        //
+        try(Ice.Communicator communicator = Ice.Util.initialize(argsHolder, "config.client"))
         {
-            communicator().destroy();
+            if(argsHolder.value.length > 0)
+            {
+                System.err.println("too many arguments");
+                status = 1;
+            }
+            else
+            {
+                status = run(communicator);
+            }
         }
+
+        System.exit(status);
     }
 
-    @Override
-    public int
-    run(String[] args)
+    private static int run(Ice.Communicator communicator)
     {
-        if(args.length > 0)
-        {
-            System.err.println(appName() + ": too many arguments");
-            return 1;
-        }
-
-        //
-        // Since this is an interactive demo we want to clear the
-        // Application installed interrupt callback and install our
-        // own shutdown hook.
-        //
-        setInterruptHook(new ShutdownHook());
-
         //
         // Get the hello proxy. We configure the proxy to not cache the
         // server connection with the proxy and to disable the locator
@@ -43,7 +43,7 @@ public class Client extends Ice.Application
         // will be sent over the server connection matching the returned
         // endpoints.
         //
-        Ice.ObjectPrx obj = communicator().stringToProxy("hello");
+        Ice.ObjectPrx obj = communicator.stringToProxy("hello");
         obj = obj.ice_connectionCached(false);
         obj = obj.ice_locatorCacheTimeout(0);
 
@@ -112,13 +112,5 @@ public class Client extends Ice.Application
         }
 
         return 0;
-    }
-
-    public static void
-    main(String[] args)
-    {
-        Client app = new Client();
-        int status = app.main("Client", args, "config.client");
-        System.exit(status);
     }
 }

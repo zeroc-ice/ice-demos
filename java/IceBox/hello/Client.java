@@ -6,49 +6,38 @@
 
 import Demo.*;
 
-public class Client extends com.zeroc.Ice.Application
-{
-    class ShutdownHook extends Thread
+public class Client
+{ 
+    public static void main(String[] args)
     {
-        @Override
-        public void run()
-        {
-            communicator().destroy();
-        }
-    }
-
-    private void menu()
-    {
-        System.out.println(
-            "usage:\n" +
-            "t: send greeting as twoway\n" +
-            "o: send greeting as oneway\n" +
-            "O: send greeting as batch oneway\n" +
-            "d: send greeting as datagram\n" +
-            "D: send greeting as batch datagram\n" +
-            "f: flush all batch requests\n" +
-            "x: exit\n" +
-            "?: help\n");
-    }
-
-    @Override
-    public int run(String[] args)
-    {
-        if(args.length > 0)
-        {
-            System.err.println(appName() + ": too many arguments");
-            return 1;
-        }
+        int status = 0;
+        java.util.List<String> extraArgs = new java.util.ArrayList<>();
 
         //
-        // Since this is an interactive demo we want to clear the
-        // Application installed interrupt callback and install our
-        // own shutdown hook.
+        // try with resource block - communicator is automatically destroyed
+        // at the end of this try block
         //
-        setInterruptHook(new ShutdownHook());
+        try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.client", extraArgs))
+        {
+            if(!extraArgs.isEmpty())
+            {
+                System.err.println("too many arguments");
+                status = 1;
+            }
+            else
+            {
+                status = run(communicator);
+            }
+        }
+
+        System.exit(status);
+    }
+
+    private static int run(com.zeroc.Ice.Communicator communicator)
+    {
 
         HelloPrx twoway = HelloPrx.checkedCast(
-            communicator().propertyToProxy("Hello.Proxy")).ice_twoway().ice_timeout(-1).ice_secure(false);
+            communicator.propertyToProxy("Hello.Proxy")).ice_twoway().ice_timeout(-1).ice_secure(false);
         if(twoway == null)
         {
             System.err.println("invalid object reference");
@@ -128,10 +117,17 @@ public class Client extends com.zeroc.Ice.Application
         return 0;
     }
 
-    public static void main(String[] args)
+    private static void menu()
     {
-        Client app = new Client();
-        int status = app.main("Client", args, "config.client");
-        System.exit(status);
+        System.out.println(
+            "usage:\n" +
+            "t: send greeting as twoway\n" +
+            "o: send greeting as oneway\n" +
+            "O: send greeting as batch oneway\n" +
+            "d: send greeting as datagram\n" +
+            "D: send greeting as batch datagram\n" +
+            "f: flush all batch requests\n" +
+            "x: exit\n" +
+            "?: help\n");
     }
 }
