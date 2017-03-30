@@ -14,12 +14,12 @@ Setup
 
 Start the IceGrid registry and node:
 
-    $ icegridnode --Ice.Config=config.grid
+    icegridnode --Ice.Config=config.grid
 
 Deploy the `HelloSimpsons` application (in file `application.xml`) with
 the IceGridGUI. If you prefer to use the command-line utility, use:
 
-    $ icegridadmin --Ice.Config=config.grid -e "application add application.xml"
+    icegridadmin --Ice.Config=config.grid -e "application add application.xml"
 
 
 Using the IceGridGUI
