@@ -8,10 +8,6 @@ registries and start more later):
     $ icegridnode --Ice.Config=config.node1
     $ icegridnode --Ice.Config=config.node2
 
-Note that for debug Windows builds you will need to use icegridnoded
-and icegridregistryd rather than icegridnode and icegridregistry as
-the executable name.
-
 In a separate window:
 
      icegridadmin --Ice.Config=config.client -e "application add application.xml"
@@ -28,7 +24,7 @@ locator to retrieve the endpoints of the object (you can set
 
 While the client is running and invoking on the server, you can try to
 shutdown some of the registries with the `registry shutdown`
-icegridadmin command or from the IceGrid Admin GUI. You can of course
+icegridadmin command or from the IceGridGUI. You can of course
 also try to kill them. As long as one IceGrid registry is still
 running, the client will continue to work.
 
@@ -39,5 +35,5 @@ Finally, the registries and nodes are configured to redirect their
 standard error and output to files in their data directories named
 `stderr.txt` and `stdout.txt`. You can view these files using the
 icegridadmin `registry show` or `node show` commands or with the
-IceGrid Admin GUI. The standard error files contain the registry and
+IceGridGUI. The standard error files contain the registry and
 node traces.

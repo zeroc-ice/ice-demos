@@ -9,7 +9,7 @@ they could also use a secure endpoint if necessary.
 
 To run the demo, you first need to generate certificates for the
 IceGrid registry and node, the Glacier2 administrative router, and the
-server. Run the `makedemocerts.py` python script in this directory to 
+server. Run the `makedemocerts.py` python script in this directory to
 create these certificates:
 
       makedemocerts.py
@@ -23,7 +23,7 @@ this package with [pip](https://pip.pypa.io):
 
 The keytool utility from the Java Development Kit is also required to
 generate Java KeyStore files so you need to add the the JDK bin
-directory to your PATH (if it's not found, `makedemocerts.py` will print 
+directory to your PATH (if it's not found, `makedemocerts.py` will print
 a warning).
 
 For simplicity, the certificates created by `makedemocerts.py` are not
@@ -47,10 +47,6 @@ registries, node, and Glacier2 router:
      $ icegridregistry --Ice.Config=config.slave
      $ icegridnode --Ice.Config=config.node
      $ glacier2router --Ice.Config=config.glacier2
-
-Note that for debug Windows builds you will need to use icegridnoded
-and icegridregistryd rather than icegridnode and icegridregistry as
-the executable name.
 
 In a separate window:
 

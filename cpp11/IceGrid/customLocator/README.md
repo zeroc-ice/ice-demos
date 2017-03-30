@@ -2,9 +2,6 @@ To run the demo, first start the IceGrid service:
 
       icegridnode --Ice.Config=config.grid
 
-Note that for debug Windows builds you will need to use icegridnoded
-rather than icegridnode as the executable name.
-
 In a separate window start the custom locator:
 
       locator
