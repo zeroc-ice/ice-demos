@@ -9,19 +9,47 @@
 
 #import <stdio.h>
 
-int
-run(int argc, char* argv[], id<ICECommunicator> communicator)
-{
-    if(argc > 1)
-    {
-        fprintf(stderr, "%s: too many arguments\n", argv[0]);
-        return EXIT_FAILURE;
-    }
+int run(id<ICECommunicator> communicator);
 
+int
+main(int argc, char* argv[])
+{
+    int status = EXIT_SUCCESS;
+    @autoreleasepool
+    {
+        id<ICECommunicator> communicator = nil;
+        @try
+        {
+            communicator = [ICEUtil createCommunicator:&argc argv:argv configFile:@"config.client"];
+
+            if(argc > 1)
+            {
+                NSLog(@"%s: too many arguments", argv[0]);
+                status = EXIT_FAILURE;
+            }
+            else
+            {
+                status = run(communicator);
+            }
+        }
+        @catch(ICELocalException* ex)
+        {
+            NSLog(@"%@", ex);
+            status = EXIT_FAILURE;
+        }
+
+        [communicator destroy];
+    }
+    return status;
+}
+
+int
+run(id<ICECommunicator> communicator)
+{
     id<DemoContactDBPrx> contactdb = [DemoContactDBPrx checkedCast:[communicator propertyToProxy:@"ContactDB.Proxy"]];
     if(contactdb == nil)
     {
-        fprintf(stderr, "%s: invalid proxy\n", argv[0]);
+        fprintf(stderr, "invalid proxy\n");
         return EXIT_FAILURE;
     }
 
@@ -204,32 +232,3 @@ run(int argc, char* argv[], id<ICECommunicator> communicator)
     return EXIT_SUCCESS;
 }
 
-int
-main(int argc, char* argv[])
-{
-    int status = EXIT_SUCCESS;
-    @autoreleasepool
-    {
-        id<ICECommunicator> communicator = nil;
-        @try
-        {
-            ICEInitializationData* initData = [ICEInitializationData initializationData];
-            initData.properties = [ICEUtil createProperties];
-            [initData.properties load:@"config.client"];
-
-            communicator = [ICEUtil createCommunicator:&argc argv:argv initData:initData];
-            status = run(argc, argv, communicator);
-        }
-        @catch(ICELocalException* ex)
-        {
-            NSLog(@"%@", ex);
-            status = EXIT_FAILURE;
-        }
-
-        if(communicator != nil)
-        {
-            [communicator destroy];
-        }
-    }
-    return status;
-}

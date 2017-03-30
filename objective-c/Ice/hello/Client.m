@@ -23,7 +23,7 @@ main(int argc, char* argv[])
 
             if(argc > 1)
             {
-                fprintf(stderr, "%s: too many arguments\n", argv[0]);
+                NSLog(@"%s: too many arguments", argv[0]);
                 status = EXIT_FAILURE;
             }
             else

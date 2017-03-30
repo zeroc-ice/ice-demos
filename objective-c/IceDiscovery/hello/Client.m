@@ -6,36 +6,47 @@
 
 #import <objc/Ice.h>
 #import <Hello.h>
-
 #import <stdio.h>
 
-void
-menu()
-{
-    printf("usage:\n"
-           "t: send greeting as twoway\n"
-           "o: send greeting as oneway\n"
-           "O: send greeting as batch oneway\n"
-           "d: send greeting as datagram\n"
-           "D: send greeting as batch datagram\n"
-           "f: flush all batch requests\n"
-           "T: set a timeout\n"
-           "P: set server delay\n"
-           "S: switch secure mode on/off\n"
-           "s: shutdown server\n"
-           "x: exit\n"
-           "?: help\n");
-}
+
+int run(id<ICECommunicator>);
 
 int
-run(int argc, char* argv[], id<ICECommunicator> communicator)
+main(int argc, char* argv[])
 {
-    if(argc > 1)
+    int status = EXIT_SUCCESS;
+    @autoreleasepool
     {
-        fprintf(stderr, "%s: too many arguments\n", argv[0]);
-        return EXIT_FAILURE;
-    }
+        id<ICECommunicator> communicator = nil;
+        @try
+        {
+            communicator = [ICEUtil createCommunicator:&argc argv:argv configFile:@"config.client"];
+            if(argc > 1)
+            {
+                NSLog(@"%s: too many arguments", argv[0]);
+                status = EXIT_FAILURE;
+            }
+            else
+            {
+                status = run(communicator);
+            }
+        }
+        @catch(ICELocalException* ex)
+        {
+            NSLog(@"%@", ex);
+            status = EXIT_FAILURE;
+        }
 
+        [communicator destroy];
+    }
+    return status;
+}
+
+void menu();
+
+int
+run(id<ICECommunicator> communicator)
+{
     //
     // Create a well-known proxy for the `hello' Ice object. A well-known proxy
     // only includes the Ice object identity. It's resolved using the Ice locator
@@ -44,7 +55,7 @@ run(int argc, char* argv[], id<ICECommunicator> communicator)
     id<DemoHelloPrx> twoway = [DemoHelloPrx checkedCast:[communicator stringToProxy:@"hello"]];
     if(!twoway)
     {
-        fprintf(stderr, "%s: invalid proxy\n", argv[0]);
+        fprintf(stderr, "invalid proxy\n");
         return EXIT_FAILURE;
     }
     id<DemoHelloPrx> oneway = [twoway ice_oneway];
@@ -209,32 +220,20 @@ run(int argc, char* argv[], id<ICECommunicator> communicator)
     return EXIT_SUCCESS;
 }
 
-int
-main(int argc, char* argv[])
+void
+menu()
 {
-    int status = EXIT_SUCCESS;
-    @autoreleasepool
-    {
-        id<ICECommunicator> communicator = nil;
-        @try
-        {
-            ICEInitializationData* initData = [ICEInitializationData initializationData];
-            initData.properties = [ICEUtil createProperties];
-            [initData.properties load:@"config.client"];
-
-            communicator = [ICEUtil createCommunicator:&argc argv:argv initData:initData];
-            status = run(argc, argv, communicator);
-        }
-        @catch(ICELocalException* ex)
-        {
-            NSLog(@"%@", ex);
-            status = EXIT_FAILURE;
-        }
-
-        if(communicator != nil)
-        {
-            [communicator destroy];
-        }
-    }
-    return status;
+    printf("usage:\n"
+           "t: send greeting as twoway\n"
+           "o: send greeting as oneway\n"
+           "O: send greeting as batch oneway\n"
+           "d: send greeting as datagram\n"
+           "D: send greeting as batch datagram\n"
+           "f: flush all batch requests\n"
+           "T: set a timeout\n"
+           "P: set server delay\n"
+           "S: switch secure mode on/off\n"
+           "s: shutdown server\n"
+           "x: exit\n"
+           "?: help\n");
 }

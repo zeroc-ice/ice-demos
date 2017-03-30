@@ -39,10 +39,7 @@ main(int argc, char* argv[])
             status = EXIT_FAILURE;
         }
 
-        if(communicator != nil)
-        {
-            [communicator destroy];
-        }
+        [communicator destroy];
     }
     return status;
 }

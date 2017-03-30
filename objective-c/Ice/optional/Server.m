@@ -7,21 +7,7 @@
 #import <objc/Ice.h>
 #import <ContactDBI.h>
 
-
-int
-run(int argc, char* argv[], id<ICECommunicator> communicator)
-{
-    if(argc > 1)
-    {
-        NSLog(@"%s: too many arguments", argv[0]);
-        return EXIT_FAILURE;
-    }
-    id<ICEObjectAdapter> adapter = [communicator createObjectAdapter:@"ContactDB"];
-    [adapter add:[ContactDBI contactDB] identity:[ICEUtil stringToIdentity:@"contactdb"]];
-    [adapter activate];
-    [communicator waitForShutdown];
-    return EXIT_SUCCESS;
-}
+int run(id<ICECommunicator>);
 
 int
 main(int argc, char* argv[])
@@ -32,12 +18,16 @@ main(int argc, char* argv[])
         id<ICECommunicator> communicator = nil;
         @try
         {
-            ICEInitializationData* initData = [ICEInitializationData initializationData];
-            initData.properties = [ICEUtil createProperties];
-            [initData.properties load:@"config.server"];
-
-            communicator = [ICEUtil createCommunicator:&argc argv:argv initData:initData];
-            status = run(argc, argv, communicator);
+            communicator = [ICEUtil createCommunicator:&argc argv:argv configFile:@"config.server"];
+            if(argc > 1)
+            {
+                NSLog(@"%s: too many arguments", argv[0]);
+                status = EXIT_FAILURE;
+            }
+            else
+            {
+                status = run(communicator);
+            }
         }
         @catch(ICELocalException* ex)
         {
@@ -45,10 +35,17 @@ main(int argc, char* argv[])
             status = EXIT_FAILURE;
         }
 
-        if(communicator != nil)
-        {
-            [communicator destroy];
-        }
+        [communicator destroy];
     }
     return status;
+}
+
+int
+run(id<ICECommunicator> communicator)
+{
+    id<ICEObjectAdapter> adapter = [communicator createObjectAdapter:@"ContactDB"];
+    [adapter add:[ContactDBI contactDB] identity:[ICEUtil stringToIdentity:@"contactdb"]];
+    [adapter activate];
+    [communicator waitForShutdown];
+    return EXIT_SUCCESS;
 }

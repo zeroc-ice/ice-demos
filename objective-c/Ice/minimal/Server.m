@@ -20,14 +20,16 @@ main(int argc, char* argv[])
             if(argc > 1)
             {
                 NSLog(@"%s: too many arguments", argv[0]);
-                return 1;
+                status = 1;
             }
-
-            id<ICEObjectAdapter> adapter = [communicator createObjectAdapterWithEndpoints:@"Hello"
-                                                         endpoints:@"default -p 10000"];
-            [adapter add:[HelloI hello] identity:[ICEUtil stringToIdentity:@"hello"]];
-            [adapter activate];
-            [communicator waitForShutdown];
+            else
+            {
+                id<ICEObjectAdapter> adapter = [communicator createObjectAdapterWithEndpoints:@"Hello"
+                                                                                    endpoints:@"default -p 10000"];
+                [adapter add:[HelloI hello] identity:[ICEUtil stringToIdentity:@"hello"]];
+                [adapter activate];
+                [communicator waitForShutdown];
+            }
         }
         @catch(ICELocalException* ex)
         {
@@ -35,10 +37,7 @@ main(int argc, char* argv[])
             status = 1;
         }
 
-        if(communicator != nil)
-        {
-            [communicator destroy];
-        }
+        [communicator destroy];
     }
     return status;
 }

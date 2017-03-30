@@ -6,9 +6,6 @@
 
 #import <objc/Ice.h>
 
-#import <stdio.h>
-
-
 int runParser(int, char**, id<ICECommunicator>);
 
 int
@@ -20,27 +17,24 @@ main(int argc, char* argv[])
         id<ICECommunicator> communicator = nil;
         @try
         {
-            ICEInitializationData* initData = [ICEInitializationData initializationData];
-            initData.properties = [ICEUtil createProperties ];
-            [initData.properties load: @"config.client" ];
-            communicator = [ICEUtil createCommunicator:&argc argv:argv initData:initData];
+            communicator = [ICEUtil createCommunicator:&argc argv:argv configFile:@"config.client"];
             if(argc > 1)
             {
-                fprintf(stderr, "%s: too many arguments\n", argv[0]);
-                return 1;
+                NSLog(@"%s: too many arguments", argv[0]);
+                status = 1;
             }
-            runParser(argc, argv, communicator);
+            else
+            {
+                status = runParser(argc, argv, communicator);
+            }
         }
         @catch(ICELocalException* ex)
         {
-            fprintf(stderr, "%s\n", [[ex description] UTF8String]);
+            NSLog(@"%@", ex);
             status = 1;
         }
 
-        if(communicator != nil)
-        {
-            [communicator destroy];
-        }
+        [communicator destroy];
     }
     return status;
 }
