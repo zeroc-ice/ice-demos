@@ -8,32 +8,17 @@
 require 'Ice'
 Ice::loadSlice('Printer.ice')
 
-status = 0
-ic = nil
 begin
-    ic = Ice::initialize(ARGV)
-    base = ic.stringToProxy("SimplePrinter:default -h localhost -p 10000")
+    communicator = Ice::initialize(ARGV)
+    base = communicator.stringToProxy("SimplePrinter:default -h localhost -p 10000")
     printer = Demo::PrinterPrx::checkedCast(base)
     if not printer
         raise "Invalid proxy"
     end
 
     printer.printString("Hello World!")
-rescue
-    puts $!
-    puts $!.backtrace.join("\n")
-    status = 1
-end
-
-if ic
-    # Clean up
-    begin
-        ic.destroy()
-    rescue
-        puts $!
-        puts $!.backtrace.join("\n")
-        status = 1
+ensure
+    if defined? communicator and communicator != nil
+        communicator.destroy()
     end
 end
-
-exit(status)

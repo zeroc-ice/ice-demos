@@ -39,16 +39,14 @@ def listRecursive(dir, depth)
     end
 end
 
-status = 0
-ic = nil
 begin
     # Create a communicator
     #
-    ic = Ice::initialize(ARGV)
+    communicator = Ice::initialize(ARGV)
 
     # Create a proxy for the root directory
     #
-    obj = ic.stringToProxy("RootDir:default -h localhost -p 10000")
+    obj = communicator.stringToProxy("RootDir:default -h localhost -p 10000")
 
     # Down-cast the proxy to a Directory proxy
     #
@@ -58,22 +56,11 @@ begin
     #
     puts "Contents of root directory:"
     listRecursive(rootDir, 0)
-rescue => ex
-    puts ex
-    print ex.backtrace.join("\n")
-    status = 1
-end
-
-if ic
-    # Clean up
+ensure
+    # Cleanup
     #
-    begin
-        ic.destroy()
-    rescue => ex
-        puts ex
-        print ex.backtrace.join("\n")
-        status = 1
+    if defined? communicator and communicator != nil
+        communicator.destroy()
     end
 end
 
-exit(status)

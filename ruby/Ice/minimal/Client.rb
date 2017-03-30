@@ -13,9 +13,8 @@ begin
     communicator = Ice::initialize(ARGV)
     hello = Demo::HelloPrx::checkedCast(communicator.stringToProxy("hello:default -h localhost -p 10000"))
     hello.sayHello()
-    communicator.destroy()
-rescue => ex
-    puts $!
-    puts ex.backtrace.join("\n")
-    exit(1)
+ensure
+    if defined? communicator and communicator != nil
+        communicator.destroy()
+    end
 end
