@@ -15,7 +15,7 @@ public class Server : Ice.Application
     // The servant implements the Slice interface Demo::Props as well as the
     // native callback interface Ice.PropertiesAdminUpdateCallback.
     //
-    class PropsI : PropsDisp_, Ice.PropertiesAdminUpdateCallback
+    class PropsI : PropsDisp_
     {
         public PropsI()
         {
@@ -39,7 +39,7 @@ public class Server : Ice.Application
                 return _changes;
             }
         }
-        
+
         override public void shutdown(Ice.Current current)
         {
             current.adapter.getCommunicator().shutdown();
@@ -70,11 +70,11 @@ public class Server : Ice.Application
         var props = new PropsI();
 
         //
-        // Retrieve the PropertiesAdmin facet and register the servant as the update callback.
+        // Retrieve the PropertiesAdmin facet and use props.updated as the update callback.
         //
         var obj = communicator().findAdminFacet("Properties");
         var admin = (Ice.NativePropertiesAdmin)obj;
-        admin.addUpdateCallback(props);
+        admin.addUpdateCallback(props.updated);
 
         var adapter = communicator().createObjectAdapter("Props");
         adapter.add(props, Ice.Util.stringToIdentity("props"));

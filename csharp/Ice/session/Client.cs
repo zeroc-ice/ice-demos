@@ -17,129 +17,149 @@ using System.Reflection;
 
 public class Client
 {
-    public class App : Ice.Application
+    public static int Main(string[] args)
     {
-        public override int run(string[] args)
+        int status = 0;
+
+        try
         {
-            if(args.Length > 0)
+            //
+            // The new communicator is automatically destroyed (disposed) at the end of the
+            // using statement
+            //
+            using(var communicator = Ice.Util.initialize(ref args, "config.client"))
             {
-                Console.Error.WriteLine(appName() + ": too many arguments");
-                return 1;
-            }
-
-            string name;
-            do
-            {
-                Console.Out.Write("Please enter your name ==> ");
-                Console.Out.Flush();
-
-                name = Console.In.ReadLine();
-                if(name == null)
+                //
+                // The communicator initialization removes all Ice-related arguments from args
+                //
+                if(args.Length > 0)
                 {
-                    return 1;
-                }
-                name = name.Trim();
-            }
-            while(name.Length == 0);
-
-            var basePrx = communicator().propertyToProxy("SessionFactory.Proxy");
-            var factory = SessionFactoryPrxHelper.checkedCast(basePrx);
-            if(factory == null)
-            {
-                Console.Error.WriteLine("invalid proxy");
-                return 1;
-            }
-
-            var session = factory.create(name);
-
-            var hellos = new List<HelloPrx>();
-
-            menu();
-
-            bool destroy = true;
-            bool shutdown = false;
-            while(true)
-            {
-                Console.Out.Write("==> ");
-                Console.Out.Flush();
-                string line = Console.In.ReadLine();
-                if(line == null)
-                {
-                    break;
-                }
-                if(line.Length > 0 && Char.IsDigit(line[0]))
-                {
-                    int index = Int32.Parse(line);
-                    if(index < hellos.Count)
-                    {
-                        var hello = hellos[index];
-                        hello.sayHello();
-                    }
-                    else
-                    {
-                        Console.Out.WriteLine("Index is too high. " + hellos.Count +
-                                              " hello objects exist so far.\n" +
-                                              "Use `c' to create a new hello object.");
-                    }
-                }
-                else if(line.Equals("c"))
-                {
-                    hellos.Add(session.createHello());
-                    Console.Out.WriteLine("Created hello object " + (hellos.Count - 1));
-                }
-                else if(line.Equals("s"))
-                {
-                    destroy = false;
-                    shutdown = true;
-                    break;
-                }
-                else if(line.Equals("x"))
-                {
-                    break;
-                }
-                else if(line.Equals("t"))
-                {
-                    destroy = false;
-                    break;
-                }
-                else if(line.Equals("?"))
-                {
-                    menu();
+                    Console.Error.WriteLine("too many arguments");
+                    status = 1;
                 }
                 else
                 {
-                    Console.Out.WriteLine("Unknown command `" + line + "'.");
-                    menu();
+                    status = run(communicator);
                 }
             }
-
-            if(destroy)
-            {
-                session.destroy();
-            }
-            if(shutdown)
-            {
-                factory.shutdown();
-            }
-            return 0;
         }
-
-        private static void menu()
+        catch(Exception ex)
         {
-            Console.Out.WriteLine(
-                "usage:\n" +
-                "c:     create a new per-client hello object\n" +
-                "0-9:   send a greeting to a hello object\n" +
-                "s:     shutdown the server and exit\n" +
-                "x:     exit\n" +
-                "t:     exit without destroying the session\n" +
-                "?:     help\n");
+            Console.Error.WriteLine(ex);
+            status = 1;
         }
+
+        return status;
     }
 
-    public static int Main(string[] args)
+    private static int run(Ice.Communicator communicator)
     {
-        var app = new App();
-        return app.main(args, "config.client");
+        string name;
+        do
+        {
+            Console.Out.Write("Please enter your name ==> ");
+            Console.Out.Flush();
+
+            name = Console.In.ReadLine();
+            if(name == null)
+            {
+                return 1;
+            }
+            name = name.Trim();
+        }
+        while(name.Length == 0);
+
+        var basePrx = communicator.propertyToProxy("SessionFactory.Proxy");
+        var factory = SessionFactoryPrxHelper.checkedCast(basePrx);
+        if(factory == null)
+        {
+            Console.Error.WriteLine("invalid proxy");
+            return 1;
+        }
+
+        var session = factory.create(name);
+
+        var hellos = new List<HelloPrx>();
+
+        menu();
+
+        bool destroy = true;
+        bool shutdown = false;
+        while(true)
+        {
+            Console.Out.Write("==> ");
+            Console.Out.Flush();
+            string line = Console.In.ReadLine();
+            if(line == null)
+            {
+                break;
+            }
+            if(line.Length > 0 && Char.IsDigit(line[0]))
+            {
+                int index = Int32.Parse(line);
+                if(index < hellos.Count)
+                {
+                    var hello = hellos[index];
+                    hello.sayHello();
+                }
+                else
+                {
+                    Console.Out.WriteLine("Index is too high. " + hellos.Count +
+                                          " hello objects exist so far.\n" +
+                                          "Use `c' to create a new hello object.");
+                }
+            }
+            else if(line.Equals("c"))
+            {
+                hellos.Add(session.createHello());
+                Console.Out.WriteLine("Created hello object " + (hellos.Count - 1));
+            }
+            else if(line.Equals("s"))
+            {
+                destroy = false;
+                shutdown = true;
+                break;
+            }
+            else if(line.Equals("x"))
+            {
+                break;
+            }
+            else if(line.Equals("t"))
+            {
+                destroy = false;
+                break;
+            }
+            else if(line.Equals("?"))
+            {
+                menu();
+            }
+            else
+            {
+                Console.Out.WriteLine("Unknown command `" + line + "'.");
+                menu();
+            }
+        }
+
+        if(destroy)
+        {
+            session.destroy();
+        }
+        if(shutdown)
+        {
+            factory.shutdown();
+        }
+        return 0;
+    }
+
+    private static void menu()
+    {
+        Console.Out.WriteLine(
+            "usage:\n" +
+            "c:     create a new per-client hello object\n" +
+            "0-9:   send a greeting to a hello object\n" +
+            "s:     shutdown the server and exit\n" +
+            "x:     exit\n" +
+            "t:     exit without destroying the session\n" +
+            "?:     help\n");
     }
 }

@@ -47,6 +47,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "session", "session", "{53EB17BB-C28A-4ED7-B280-ABB2A524458E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "throughput", "throughput", "{A3E025BF-BFD5-4BAE-9E5C-91585CCBEAF5}"
+	ProjectSection(SolutionItems) = preProject
+		Ice\throughput\README.md = Ice\throughput\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "wpf", "wpf", "{97AAFBFB-C014-409D-8F1B-C942DF6E9582}"
 EndProject

@@ -114,6 +114,7 @@
     <None Include="config.client">
       <Link>config.client</Link>
     </None>
+    <None Include="config.client" />
     <None Include="packages.config" />
     <None Include="README.md">
       <Link>README.md</Link>

@@ -16,46 +16,46 @@ using System.Reflection;
 
 public class Client
 {
-    public class App : Ice.Application
+    public static int Main(string[] args)
     {
-        public override int run(String[] args)
+        try
         {
             //
-            // Terminate cleanly on receipt of a signal.
+            // The new communicator is automatically destroyed (disposed) at the end of the
+            // using statement
             //
-            shutdownOnInterrupt();
-
-            //
-            // Create a proxy for the root directory
-            //
-            var @base = communicator().stringToProxy("RootDir:default -h localhost -p 10000");
-
-            //
-            // Down-cast the proxy to a Directory proxy.
-            //
-            var rootDir = DirectoryPrxHelper.checkedCast(@base);
-            if(rootDir == null)
+            using(var communicator = Ice.Util.initialize(ref args))
             {
-                throw new Error("Invalid proxy");
-            }
+                //
+                // Create a proxy for the root directory
+                //
+                var @base = communicator.stringToProxy("RootDir:default -h localhost -p 10000");
 
-            var p = new Parser(rootDir);
-            return p.parse();
+                //
+                // Down-cast the proxy to a Directory proxy.
+                //
+                var rootDir = DirectoryPrxHelper.checkedCast(@base);
+                if(rootDir == null)
+                {
+                    throw new Error("Invalid proxy");
+                }
+
+                var p = new Parser(rootDir);
+                return p.parse();
+            }
         }
-
-        private class Error : SystemException
+        catch(Exception ex)
         {
-            public Error(String msg)
-                : base(msg)
-            {
-            }
+            Console.Error.WriteLine(ex);
+            return 1;
         }
     }
 
-    static public int Main(String[] args)
+    private class Error : SystemException
     {
-        var app = new App();
-        var data = new Ice.InitializationData();
-        return app.main(args, data);
+        public Error(String msg)
+            : base(msg)
+        {
+        }
     }
 }

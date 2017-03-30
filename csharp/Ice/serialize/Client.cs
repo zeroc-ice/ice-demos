@@ -16,101 +16,121 @@ using System.Reflection;
 
 public class Client
 {
-    public class App : Ice.Application
+    public static int Main(string[] args)
     {
-        private static void menu()
+        int status = 0;
+
+        try
         {
-            Console.Write(
-                "usage:\n" +
-                "g: send greeting\n" +
-                "t: toggle null greeting\n" +
-                "s: shutdown server\n" +
-                "x: exit\n" +
-                "?: help\n");
+            //
+            // The new communicator is automatically destroyed (disposed) at the end of the
+            // using statement
+            //
+            using(var communicator = Ice.Util.initialize(ref args, "config.client"))
+            {
+                //
+                // The communicator initialization removes all Ice-related arguments from args
+                //
+                if(args.Length > 0)
+                {
+                    Console.Error.WriteLine("too many arguments");
+                    status = 1;
+                }
+                else
+                {
+                    status = run(communicator);
+                }
+            }
+        }
+        catch(Exception ex)
+        {
+            Console.Error.WriteLine(ex);
+            status = 1;
         }
 
-        public override int run(string[] args)
+        return status;
+    }
+
+    private static int run(Ice.Communicator communicator)
+    {
+        var greet = GreetPrxHelper.checkedCast(communicator.propertyToProxy("Greet.Proxy"));
+        if(greet == null)
         {
-            if(args.Length > 0)
+            Console.Error.WriteLine("invalid proxy");
+            return 1;
+        }
+
+        var greeting = new MyGreeting();
+        greeting.text = "Hello there!";
+        MyGreeting nullGreeting = null;
+
+        bool sendNull = false;
+
+        menu();
+
+        string line = null;
+        do
+        {
+            try
             {
-                Console.Error.WriteLine(appName() + ": too many arguments");
-                return 1;
-            }
-
-            var greet = GreetPrxHelper.checkedCast(communicator().propertyToProxy("Greet.Proxy"));
-            if(greet == null)
-            {
-                Console.Error.WriteLine("invalid proxy");
-                return 1;
-            }
-
-            var greeting = new MyGreeting();
-            greeting.text = "Hello there!";
-            MyGreeting nullGreeting = null;
-
-            bool sendNull = false;
-
-            menu();
-
-            string line = null;
-            do 
-            {
-                try
+                Console.Out.Write("==> ");
+                Console.Out.Flush();
+                line = Console.In.ReadLine();
+                if(line == null)
                 {
-                    Console.Out.Write("==> ");
-                    Console.Out.Flush();
-                    line = Console.In.ReadLine();
-                    if(line == null)
+                    break;
+                }
+                if(line.Equals("g"))
+                {
+                    if(sendNull)
                     {
-                        break;
-                    }
-                    if(line.Equals("g"))
-                    {
-                        if(sendNull)
-                        {
-                            greet.sendGreeting(nullGreeting);
-                        }
-                        else
-                        {
-                            greet.sendGreeting(greeting);
-                        }
-                    }
-                    else if(line.Equals("t"))
-                    {
-                        sendNull = !sendNull;
-                    }
-                    else if(line.Equals("s"))
-                    {
-                        greet.shutdown();
-                    }
-                    else if(line.Equals("x"))
-                    {
-                        // Nothing to do
-                    }
-                    else if(line.Equals("?"))
-                    {
-                        menu();
+                        greet.sendGreeting(nullGreeting);
                     }
                     else
                     {
-                        Console.WriteLine("unknown command `" + line + "'");
-                        menu();
+                        greet.sendGreeting(greeting);
                     }
                 }
-                catch(Exception ex)
+                else if(line.Equals("t"))
                 {
-                    Console.Error.WriteLine(ex);
+                    sendNull = !sendNull;
+                }
+                else if(line.Equals("s"))
+                {
+                    greet.shutdown();
+                }
+                else if(line.Equals("x"))
+                {
+                    // Nothing to do
+                }
+                else if(line.Equals("?"))
+                {
+                    menu();
+                }
+                else
+                {
+                    Console.WriteLine("unknown command `" + line + "'");
+                    menu();
                 }
             }
-            while (!line.Equals("x"));
-            
-            return 0;
+            catch(Exception ex)
+            {
+                Console.Error.WriteLine(ex);
+            }
         }
+        while (!line.Equals("x"));
+
+        return 0;
     }
 
-    public static int Main(string[] args)
+    private static void menu()
     {
-        var app = new App();
-        return app.main(args, "config.client");
+        Console.Write(
+            "usage:\n" +
+            "g: send greeting\n" +
+            "t: toggle null greeting\n" +
+            "s: shutdown server\n" +
+            "x: exit\n" +
+            "?: help\n");
     }
 }
