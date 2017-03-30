@@ -22,7 +22,7 @@ the IceGridGUI (see below). If you prefer to use the command-line utility, use:
     icegridadmin --Ice.Config=config.grid -e "application add application.xml"
 
 Using the IceGridGUI
----------------------
+--------------------
 
 We suggest using the IceGridGUI tool with this demo. Follow these steps to
 log into the IceGrid registry and view the application you deployed above:

@@ -64,22 +64,21 @@ following command:
 Alternatively, you can edit the `config.admin` file and uncomment the
 `Ice.Default.Router` property definition.
 
-You can also manage this IceGrid deployment with the IceGrid Admin
-graphical tool.
+You can also manage this IceGrid deployment with the IceGridGUI.
 
 The IceSSL configuration in `config.master`, `config.slave` and
 `config.glacier2` is:
 
     IceSSL.VerifyPeer=1
 
-which means that a client, such as IceGrid Admin, does not need to
+which means that a client, such as IceGridGUI, does not need to
 provide an X.509 certificate. As a result, connecting with IceGrid
 Admin is straightforward: you just need to create an SSL connection
 with no associated X.509 certificate.
 
-When using IceGrid Admin, we recommend importing `certs/ca.jks` into the
-IceGrid Admin trusted CAs Key Store using the IceGrid Admin
-certificate manager. This will ensure IceGrid Admin connects to the
+When using IceGridGUI, we recommend importing `certs/ca.jks` into the
+IceGridGUI trusted CAs Key Store using the IceGridGUI
+certificate manager. This will ensure IceGridGUI connects to the
 correct IceGrid Registry or Glacier2 Router.
 
 The icegridadmin command line tool configuration in `config.admin` sets
