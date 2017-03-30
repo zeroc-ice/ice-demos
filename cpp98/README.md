@@ -3,6 +3,7 @@
 - [Overview](#overview)
 - [Building and Running the Demos on Linux and macOS](#building-and-running-the-demos-on-linux-and-macos)
 - [Building and Running the Demos on Windows](#building-and-running-the-demos-on-windows)
+
 ## Overview
 
 This directory contains C++ sample programs for various Ice components; they all
@@ -30,7 +31,7 @@ If you've installed Ice in a non-standard location, you'll need to set the
 `ICE_HOME` environment variable with the path name of the
 installation directory:
 
-    export ICE_HOME=~/testing/Ice
+    export ICE_HOME=~/testing/ice
 
 ### Building the Demos
 
@@ -40,7 +41,7 @@ to build with optimization.
 When you're ready to start the build, run `make`, for example:
 
     make V=1
-    
+
 `V=1` in the example above turns on verbose output.
 
 The `clean` and `distclean` targets allow you clean all the demos. `clean`
@@ -76,15 +77,15 @@ Add this extension to Visual Studio before opening the solution.
 Open the solution file `C++98 demos.sln` to build the sample programs.
 
 The demos are configured to use Ice C++ binary distribution, packaged with
-Nuget. The build downloads automatically the Ice Nuget package. 
+Nuget. The build downloads automatically the Ice Nuget package.
 
 If you have disabled the automatic download of Nuget packages by Visual Studio,
-you need to restore the packages before you build using 
+you need to restore the packages before you build using
 `Tools > Options > NuGet Package Manager > Manage NuGet Packages for Solution...` in
 Visual Studio.
 
-Then, select your target configuration (Debug or Release) and platform (Win32
-or x64). Right click on the desired demo in the Solution Explorer window and 
+Then select your target configuration (Debug or Release) and platform (Win32
+or x64). Right click on the desired demo in the Solution Explorer window and
 select `Build`.
 
 #### Building the demos without using NuGet packages
@@ -92,8 +93,8 @@ select `Build`.
 - Build from command line:
   * Open a Visual Studio command prompt
 
-            cd ice-demos\cpp
-            MSBuild /p:ICE_SRC_DIST=all /p:IceHome=<Ice dist path> "C++ demos.sln"
+            cd ice-demos\cpp98
+            MSBuild /p:ICE_SRC_DIST=all /p:IceHome=<Ice dist path> "C++98 demos.sln"
 
 - Build from Visual Studio
   * Open a Visual Studio command prompt
@@ -105,7 +106,7 @@ select `Build`.
     `Tools > Options > Projects and Solutions > Ice Builder`
   * Disable automatic restoring of NuGet packages in Visual Studio
     `"Tools > Options > NuGet Package Manager"`
-  * Select your target configuration (Debug or Release) and platform (Win32 or x64). 
+  * Select your target configuration (Debug or Release) and platform (Win32 or x64).
     Right click on the desired demo in the Solution Explorer window and select `Build`.
 
 ### Running the Demos
@@ -113,7 +114,7 @@ select `Build`.
 Before running a demo, make sure you've configured your environment to use Ice
 as described in the [release notes][3].
 
-Refer to the README file in each demo directory for usage instructions.
+Refer to the README.d file in each demo directory for usage instructions.
 
 [1]: https://doc.zeroc.com/display/Ice37/Ice+Manual
 [2]: https://github.com/zeroc-ice/ice-builder-xcode
