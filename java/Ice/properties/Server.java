@@ -7,10 +7,9 @@
 public class Server extends com.zeroc.Ice.Application
 {
     //
-    // The servant implements the Slice interface Demo::Props as well as the
-    // native callback interface com.zeroc.Ice.PropertiesAdminUpdateCallback.
+    // The servant implements the Slice interface Demo::Props
     //
-    static class PropsI implements Demo.Props, java.util.function.Consumer<java.util.Map<String, String>>
+    static class PropsI implements Demo.Props
     {
         PropsI()
         {
@@ -45,8 +44,7 @@ public class Server extends com.zeroc.Ice.Application
             current.adapter.getCommunicator().shutdown();
         }
 
-        @Override
-        public synchronized void accept(java.util.Map<String, String> changes)
+        synchronized void updated(java.util.Map<String, String> changes)
         {
             _changes = changes;
             _called = true;
@@ -73,7 +71,7 @@ public class Server extends com.zeroc.Ice.Application
         //
         com.zeroc.Ice.Object obj = communicator().findAdminFacet("Properties");
         com.zeroc.Ice.NativePropertiesAdmin admin = (com.zeroc.Ice.NativePropertiesAdmin)obj;
-        admin.addUpdateCallback(props);
+        admin.addUpdateCallback(changes -> props.updated(changes));
 
         com.zeroc.Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Props");
         adapter.add(props, com.zeroc.Ice.Util.stringToIdentity("props"));
