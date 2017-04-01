@@ -7,12 +7,6 @@
 using System;
 using System.Reflection;
 
-[assembly: CLSCompliant(true)]
-
-[assembly: AssemblyTitle("IceDiscoveryReplicationServer")]
-[assembly: AssemblyDescription("IceDiscovery replication demo server")]
-[assembly: AssemblyCompany("ZeroC, Inc.")]
-
 public class Server
 {
     class App : Ice.Application

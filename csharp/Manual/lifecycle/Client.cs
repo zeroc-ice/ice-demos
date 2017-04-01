@@ -8,12 +8,6 @@ using Filesystem;
 using System;
 using System.Reflection;
 
-[assembly: CLSCompliant(true)]
-
-[assembly: AssemblyTitle("IceLifecycleClient")]
-[assembly: AssemblyDescription("Ice lifecycle demo client")]
-[assembly: AssemblyCompany("ZeroC, Inc.")]
-
 public class Client
 {
     public static int Main(string[] args)

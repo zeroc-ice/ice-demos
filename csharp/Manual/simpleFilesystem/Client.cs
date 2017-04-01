@@ -8,12 +8,6 @@ using Filesystem;
 using System;
 using System.Reflection;
 
-[assembly: CLSCompliant(true)]
-
-[assembly: AssemblyTitle("IceSimpleLifecycleClient")]
-[assembly: AssemblyDescription("Ice simple lifecycle demo client")]
-[assembly: AssemblyCompany("ZeroC, Inc.")]
-
 public class Client
 {
     // Recursively print the contents of directory "dir" in tree fashion.

@@ -104,6 +104,7 @@
       <Link>Client.cs</Link>
     </Compile>
     <Compile Include="Hello.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Hello.ice">

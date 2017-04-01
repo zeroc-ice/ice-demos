@@ -10,12 +10,6 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
 
-[assembly: CLSCompliant(true)]
-
-[assembly: AssemblyTitle("IceStormClockPublisher")]
-[assembly: AssemblyDescription("IceStorm clock demo publisher")]
-[assembly: AssemblyCompany("ZeroC, Inc.")]
-
 public class Publisher
 {
     public class App : Ice.Application

@@ -111,17 +111,18 @@
     <Compile Include="Throughput.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="config.client">
+    <None Include="..\..\config.client">
       <Link>config.client</Link>
     </None>
-    <None Include="config.client" />
     <None Include="packages.config" />
-    <None Include="README.md">
+    <None Include="..\..\README.md">
       <Link>README.md</Link>
     </None>
     <None Include="..\..\Throughput.ice">
       <Link>Throughput.ice</Link>
     </None>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <AppDesigner Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(IceBuilderCsharpProps)" Condition="Exists('$(IceBuilderCsharpProps)')" />

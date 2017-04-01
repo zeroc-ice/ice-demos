@@ -10,12 +10,6 @@ using System.Threading;
 using System.Collections.Generic;
 using System.Reflection;
 
-[assembly: CLSCompliant(true)]
-
-[assembly: AssemblyTitle("Glacier2CallbackClient")]
-[assembly: AssemblyDescription("Glacier2 callback demo client")]
-[assembly: AssemblyCompany("ZeroC, Inc.")]
-
 public class Client
 {
     public class App : Glacier2.Application

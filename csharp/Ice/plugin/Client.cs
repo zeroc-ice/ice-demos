@@ -8,12 +8,6 @@ using Demo;
 using System;
 using System.Reflection;
 
-[assembly: CLSCompliant(true)]
-
-[assembly: AssemblyTitle("IcePluginClient")]
-[assembly: AssemblyDescription("Ice plugin demo client")]
-[assembly: AssemblyCompany("ZeroC, Inc.")]
-
 public class Client
 {
     public static int Main(string[] args)

@@ -7,12 +7,6 @@
 using System;
 using System.Reflection;
 
-[assembly: CLSCompliant(true)]
-
-[assembly: AssemblyTitle("IceGridSimpleServer")]
-[assembly: AssemblyDescription("IceGrid simple demo server")]
-[assembly: AssemblyCompany("ZeroC, Inc.")]
-
 public class Server
 {
     public class App : Ice.Application

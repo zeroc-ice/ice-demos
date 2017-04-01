@@ -9,12 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-[assembly: CLSCompliant(true)]
-
-[assembly: AssemblyTitle("IceStormClockSubscriber")]
-[assembly: AssemblyDescription("IceStorm clock demo subscriber")]
-[assembly: AssemblyCompany("ZeroC, Inc.")]
-
 public class Subscriber
 {
     public class App : Ice.Application

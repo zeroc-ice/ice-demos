@@ -9,12 +9,6 @@ using System;
 using System.Threading;
 using System.Reflection;
 
-[assembly: CLSCompliant(true)]
-
-[assembly: AssemblyTitle("IceSessionServer")]
-[assembly: AssemblyDescription("Ice session demo server")]
-[assembly: AssemblyCompany("ZeroC, Inc.")]
-
 public class Server
 {
     public class App : Ice.Application

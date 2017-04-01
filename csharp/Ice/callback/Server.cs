@@ -8,12 +8,6 @@ using Demo;
 using System;
 using System.Reflection;
 
-[assembly: CLSCompliant(true)]
-
-[assembly: AssemblyTitle("IceCallbackServer")]
-[assembly: AssemblyDescription("Ice callback demo server")]
-[assembly: AssemblyCompany("ZeroC, Inc.")]
-
 public class Server
 {
     public class App : Ice.Application

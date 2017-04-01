@@ -8,12 +8,6 @@ using Demo;
 using System;
 using System.Reflection;
 
-[assembly: CLSCompliant(true)]
-
-[assembly: AssemblyTitle("IceNestedServer")]
-[assembly: AssemblyDescription("Ice nested demo server")]
-[assembly: AssemblyCompany("ZeroC, Inc.")]
-
 public class Server
 {
     public class App : Ice.Application

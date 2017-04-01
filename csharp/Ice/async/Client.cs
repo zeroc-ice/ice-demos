@@ -10,12 +10,6 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
-[assembly: CLSCompliant(true)]
-
-[assembly: AssemblyTitle("IceAsyncClient")]
-[assembly: AssemblyDescription("Ice async demo client")]
-[assembly: AssemblyCompany("ZeroC, Inc.")]
-
 public class Client
 {
     public static int Main(string[] args)

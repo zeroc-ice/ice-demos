@@ -135,24 +135,17 @@
     <Compile Include="..\..\LoginDialog.xaml.cs">
       <DependentUpon>LoginDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="..\..\Properties\AssemblyInfo.cs">
-      <Link>Properties\AssemblyInfo.cs</Link>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="..\..\Properties\Resources.Designer.cs">
-      <Link>Properties\Resources.Designer.cs</Link>
+    <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="..\..\Properties\Settings.Designer.cs">
-      <Link>Properties\Settings.Designer.cs</Link>
+    <Compile Include="Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="..\..\Properties\Resources.resx">
-      <Link>Properties\Resources.resx</Link>
+    <EmbeddedResource Include="Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
@@ -165,13 +158,12 @@
     <None Include="..\..\README.md">
       <Link>README.md</Link>
     </None>
-    <None Include="..\..\Properties\Settings.settings">
-      <Link>Properties\Settings.settings</Link>
+    <None Include="Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-      <Link>Settings.settings</Link>
     </None>
-    <AppDesigner Include="..\..\Properties\" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <AppDesigner Include="Properties\" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

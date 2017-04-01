@@ -117,6 +117,8 @@
       <Link>README.md</Link>
     </None>
     <None Include="packages.config" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

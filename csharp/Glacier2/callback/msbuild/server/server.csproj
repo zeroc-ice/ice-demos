@@ -135,6 +135,8 @@
       <Link>README.md</Link>
     </None>
     <None Include="packages.config" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">

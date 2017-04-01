@@ -9,12 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-[assembly: CLSCompliant(true)]
-
-[assembly: AssemblyTitle("IceSessionClient")]
-[assembly: AssemblyDescription("Ice session demo client")]
-[assembly: AssemblyCompany("ZeroC, Inc.")]
-
 public class Client
 {
     public static int Main(string[] args)

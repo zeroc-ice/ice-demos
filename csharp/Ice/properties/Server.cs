@@ -1,3 +1,4 @@
+
 // **********************************************************************
 //
 // Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
@@ -9,7 +10,7 @@ using System;
 using System.Threading;
 using System.Collections.Generic;
 
-public class Server : Ice.Application
+public class Server
 {
     //
     // The servant implements the Slice interface Demo::Props as well as the
@@ -59,33 +60,36 @@ public class Server : Ice.Application
         private bool _called;
     }
 
-    override public int run(string[] args)
+    public class App : Ice.Application
     {
-        if(args.Length > 0)
+        override public int run(string[] args)
         {
-            Console.Error.WriteLine(appName() + ": too many arguments");
-            return 1;
+            if(args.Length > 0)
+            {
+                Console.Error.WriteLine(appName() + ": too many arguments");
+                return 1;
+            }
+
+            var props = new PropsI();
+
+            //
+            // Retrieve the PropertiesAdmin facet and use props.updated as the update callback.
+            //
+            var obj = communicator().findAdminFacet("Properties");
+            var admin = (Ice.NativePropertiesAdmin)obj;
+            admin.addUpdateCallback(props.updated);
+
+            var adapter = communicator().createObjectAdapter("Props");
+            adapter.add(props, Ice.Util.stringToIdentity("props"));
+            adapter.activate();
+            communicator().waitForShutdown();
+            return 0;
         }
-
-        var props = new PropsI();
-
-        //
-        // Retrieve the PropertiesAdmin facet and use props.updated as the update callback.
-        //
-        var obj = communicator().findAdminFacet("Properties");
-        var admin = (Ice.NativePropertiesAdmin)obj;
-        admin.addUpdateCallback(props.updated);
-
-        var adapter = communicator().createObjectAdapter("Props");
-        adapter.add(props, Ice.Util.stringToIdentity("props"));
-        adapter.activate();
-        communicator().waitForShutdown();
-        return 0;
     }
 
     public static int Main(string[] args)
     {
-        var app = new Server();
+        var app = new App();
         return app.main(args, "config.server");
     }
 }

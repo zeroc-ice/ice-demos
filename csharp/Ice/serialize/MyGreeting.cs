@@ -6,8 +6,6 @@
 
 using System;
 
-[assembly: CLSCompliant(true)]
-
 namespace Demo
 {
 

@@ -111,14 +111,15 @@
     <None Include="..\..\Printer.ice">
       <Link>Printer.ice</Link>
     </None>
-    <None Include="config.server">
-      <Link>..\..\config.server</Link>
+    <None Include="..\..\config.server">
+      <Link>config.server</Link>
     </None>
     <None Include="..\..\README.md">
       <Link>README.md</Link>
     </None>
-    <None Include="config.server" />
     <None Include="packages.config" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <AppDesigner Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(IceBuilderCsharpProps)" Condition="Exists('$(IceBuilderCsharpProps)')" />

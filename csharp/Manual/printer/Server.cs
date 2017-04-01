@@ -7,12 +7,6 @@
 using System;
 using System.Reflection;
 
-[assembly: CLSCompliant(true)]
-
-[assembly: AssemblyTitle("IcePrinterServer")]
-[assembly: AssemblyDescription("Ice printer demo server")]
-[assembly: AssemblyCompany("ZeroC, Inc.")]
-
 public class PrinterI : Demo.PrinterDisp_
 {
     public override void printString(string s, Ice.Current current)

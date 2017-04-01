@@ -8,12 +8,6 @@ using Filesystem;
 using System;
 using System.Reflection;
 
-[assembly: CLSCompliant(true)]
-
-[assembly: AssemblyTitle("IceSimpleLifecycleServer")]
-[assembly: AssemblyDescription("Ice simple lifecycle demo server")]
-[assembly: AssemblyCompany("ZeroC, Inc.")]
-
 public class Server
 {
     public class App : Ice.Application

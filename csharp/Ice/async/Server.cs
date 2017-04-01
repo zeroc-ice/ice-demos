@@ -5,13 +5,6 @@
 // **********************************************************************
 
 using System;
-using System.Reflection;
-
-[assembly: CLSCompliant(true)]
-
-[assembly: AssemblyTitle("IceAsyncServer")]
-[assembly: AssemblyDescription("Ice async demo server")]
-[assembly: AssemblyCompany("ZeroC, Inc.")]
 
 public class Server
 {
