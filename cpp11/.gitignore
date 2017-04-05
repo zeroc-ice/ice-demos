@@ -1,2 +1,10 @@
 packages
+Win32
+x64
 *.VC.db
+
+client
+server
+subscriber
+publisher
+locator
