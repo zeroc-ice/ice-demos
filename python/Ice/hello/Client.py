@@ -59,24 +59,24 @@ def run(communicator):
                 else:
                     timeout = -1
 
-                    twoway = Demo.HelloPrx.uncheckedCast(twoway.ice_invocationTimeout(timeout))
-                    oneway = Demo.HelloPrx.uncheckedCast(oneway.ice_invocationTimeout(timeout))
-                    batchOneway = Demo.HelloPrx.uncheckedCast(batchOneway.ice_invocationTimeout(timeout))
+                twoway = Demo.HelloPrx.uncheckedCast(twoway.ice_invocationTimeout(timeout))
+                oneway = Demo.HelloPrx.uncheckedCast(oneway.ice_invocationTimeout(timeout))
+                batchOneway = Demo.HelloPrx.uncheckedCast(batchOneway.ice_invocationTimeout(timeout))
 
-                    if timeout == -1:
-                        print("timeout is now switched off")
-                    else:
-                        print("timeout is now set to 2000ms")
+                if timeout == -1:
+                    print("timeout is now switched off")
+                else:
+                    print("timeout is now set to 2000ms")
             elif c == 'P':
                 if delay == 0:
                     delay = 2500
                 else:
                     delay = 0
 
-                    if delay == 0:
-                        print("server delay is now deactivated")
-                    else:
-                        print("server delay is now set to 2500ms")
+                if delay == 0:
+                    print("server delay is now deactivated")
+                else:
+                    print("server delay is now set to 2500ms")
             elif c == 'S':
                 secure = not secure
 
