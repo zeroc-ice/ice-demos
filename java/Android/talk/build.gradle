@@ -7,7 +7,6 @@
 apply plugin: 'com.android.application'
 apply from: "$rootProject.projectDir/gradle/ice.gradle"
 
-
 project.slice.output = project.file("${project.buildDir}/generated/source/ice")
 
 slice {
@@ -26,9 +25,12 @@ android {
         applicationId "com.zeroc.talk"
         minSdkVersion ice_minSdkVersion.toInteger()
         targetSdkVersion ice_targetSdkVersion.toInteger()
+        jackOptions {
+            enabled true
+        }
         compileOptions {
-            sourceCompatibility JavaVersion.VERSION_1_6
-            targetCompatibility JavaVersion.VERSION_1_6
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
         }
     }
 

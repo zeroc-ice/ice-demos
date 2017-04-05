@@ -15,6 +15,22 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 
+import com.zeroc.Ice.ACMClose;
+import com.zeroc.Ice.ACMHeartbeat;
+import com.zeroc.Ice.Communicator;
+import com.zeroc.Ice.Connection;
+import com.zeroc.Ice.ConnectionClose;
+import com.zeroc.Ice.Current;
+import com.zeroc.Ice.Identity;
+import com.zeroc.Ice.InitializationData;
+import com.zeroc.Ice.LocalException;
+import com.zeroc.Ice.NotRegisteredException;
+import com.zeroc.Ice.ObjectAdapter;
+import com.zeroc.Ice.Util;
+
+import java.util.Optional;
+import java.util.OptionalInt;
+
 import com.zeroc.talk.TalkActivity;
 import com.zeroc.talk.R;
 
@@ -22,8 +38,8 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
 {
     private Handler _handler;
     private int _state;
-    private Ice.Communicator _communicator;
-    private Ice.ObjectAdapter _adapter;
+    private Communicator _communicator;
+    private ObjectAdapter _adapter;
 
     //
     // The well-known Bluetooth service UUIDs for the Ice talk service.
@@ -47,7 +63,8 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
             address = o.address;
             name = o.name;
             peer = o.peer;
-            servant = o.servant;
+            servantId = o.servantId;
+            connection = o.connection;
         }
 
         String getName()
@@ -55,15 +72,15 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
             return name != null ? name : address;
         }
 
-        void removeServant(Ice.ObjectAdapter adapter)
+        void removeServant(ObjectAdapter adapter)
         {
-            if(servant != null)
+            if(servantId != null)
             {
                 try
                 {
-                    adapter.remove(servant);
+                    adapter.remove(servantId);
                 }
-                catch(Ice.NotRegisteredException ex)
+                catch(NotRegisteredException ex)
                 {
                     // Ignore.
                 }
@@ -73,30 +90,31 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
         String address;
         String name;
         Talk.PeerPrx peer;
-        Ice.Identity servant;
+        Identity servantId;
+        Connection connection;
     }
 
     //
     // We use this servant to handle new incoming connections. We use a different servant implementation
     // for outgoing connections.
     //
-    private class PeerImpl extends Talk._PeerDisp
+    private class PeerImpl implements Talk.Peer
     {
         @Override
-        public void connect(Ice.Identity id, Ice.Current current)
+        public void connect(Identity id, Current current)
             throws Talk.ConnectionException
         {
             info = incoming(id, current.con);
         }
 
         @Override
-        public void send(String message, Ice.Current current)
+        public void send(String message, Current current)
         {
             received(info, message);
         }
 
         @Override
-        public void disconnect(Ice.Current current)
+        public void disconnect(Current current)
         {
             disconnected(info);
         }
@@ -171,21 +189,17 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
 
         try
         {
-            Ice.InitializationData initData = new Ice.InitializationData();
+            InitializationData initData = new InitializationData();
 
             //
             // Install a dispatcher to ensure Ice calls are dispatched by the main thread.
             //
-            initData.dispatcher = new Ice.Dispatcher()
-            {
-                @Override
-                public void dispatch(Runnable runnable, Ice.Connection connection)
+            initData.dispatcher = (Runnable runnable, Connection connection) ->
                 {
                     _handler.post(runnable);
-                }
-            };
+                };
 
-            initData.properties = Ice.Util.createProperties();
+            initData.properties = Util.createProperties();
 
             //
             // You can enable network tracing by setting Ice.Trace.Network to 1, 2 or 3. The output
@@ -201,7 +215,7 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
             initData.properties.setProperty("IceSSL.TruststoreType", "BKS");
             initData.properties.setProperty("IceSSL.Password", "password");
             initData.properties.setProperty("Ice.InitPlugins", "0");
-            initData.properties.setProperty("Ice.Plugin.IceSSL", "IceSSL.PluginFactory");
+            initData.properties.setProperty("Ice.Plugin.IceSSL", "com.zeroc.IceSSL.PluginFactory");
 
             //
             // SDK versions < 21 only support TLSv1 with SSLEngine.
@@ -214,12 +228,12 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
             //
             // Install the IceBT transport.
             //
-            initData.properties.setProperty("Ice.Plugin.IceBT", "IceBT.PluginFactory");
+            initData.properties.setProperty("Ice.Plugin.IceBT", "com.zeroc.IceBT.PluginFactory");
 
             //
             // Initialize the communicator.
             //
-            _communicator = Ice.Util.initialize(initData);
+            _communicator = Util.initialize(initData);
 
             //
             // Complete initialization of the IceSSL plug-in.
@@ -229,7 +243,8 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
             // little faster since the plugin will not initialize
             // two keystores.
             //
-            IceSSL.Plugin plugin = (IceSSL.Plugin)_communicator.getPluginManager().getPlugin("IceSSL");
+            com.zeroc.IceSSL.Plugin plugin =
+                (com.zeroc.IceSSL.Plugin)_communicator.getPluginManager().getPlugin("IceSSL");
             java.io.InputStream certs = getResources().openRawResource(R.raw.client);
             plugin.setKeystoreStream(certs);
             plugin.setTruststoreStream(certs);
@@ -246,10 +261,10 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
             //
             // Install a servant for handling incoming connections from peers.
             //
-            _adapter.add(new PeerImpl(), Ice.Util.stringToIdentity("peer"));
+            _adapter.add(new PeerImpl(), Util.stringToIdentity("peer"));
             _adapter.activate();
         }
-        catch(Ice.LocalException ex)
+        catch(LocalException ex)
         {
             ex.printStackTrace();
 
@@ -291,33 +306,33 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
         // Create a proxy for the peer. The identity of the remote object is "peer". The UUID in the
         // proxy is the well-known Bluetooth service ID for the Talk service.
         //
-        info.peer = Talk.PeerPrxHelper.uncheckedCast(_communicator.stringToProxy(proxy));
+        info.peer = Talk.PeerPrx.uncheckedCast(_communicator.stringToProxy(proxy));
 
         //
         // Register a unique servant with the OA for each outgoing connection. This servant receives
         // callbacks from the peer.
         //
-        info.servant = Ice.Util.stringToIdentity(java.util.UUID.randomUUID().toString());
+        info.servantId = Util.stringToIdentity(java.util.UUID.randomUUID().toString());
 
         _adapter.add(
-            new Talk._PeerDisp()
+            new Talk.Peer()
             {
-                public void connect(Ice.Identity id, Ice.Current current)
+                public void connect(Identity id, Current current)
                     throws Talk.ConnectionException
                 {
                     throw new Talk.ConnectionException("already connected");
                 }
 
-                public void send(String message, Ice.Current current)
+                public void send(String message, Current current)
                 {
                     received(info, message);
                 }
 
-                public void disconnect(Ice.Current current)
+                public void disconnect(Current current)
                 {
                     disconnected(info);
                 }
-            }, info.servant);
+            }, info.servantId);
 
         PeerInfo oldInfo = null;
 
@@ -375,21 +390,16 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
 
         final PeerInfo info = _peer;
 
-        info.peer.begin_send(message, new Ice.Callback()
+        info.peer.sendAsync(message).whenComplete((result, ex) ->
             {
-                @Override
-                public void completed(Ice.AsyncResult r)
+                if(ex != null)
                 {
-                    try
-                    {
-                        info.peer.end_send(r);
-                        TalkService.this.sent(info, message);
-                    }
-                    catch(Ice.LocalException ex)
-                    {
-                        sendFailed(info, "Send failed: " + ex.getClass().getName(), true);
-                        ex.printStackTrace();
-                    }
+                    sendFailed(info, "Send failed: " + ex.getClass().getName(), true);
+                    ex.printStackTrace();
+                }
+                else
+                {
+                    TalkService.this.sent(info, message);
                 }
             });
     }
@@ -447,7 +457,7 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
         }
     }
 
-    synchronized private PeerInfo incoming(Ice.Identity id, Ice.Connection con)
+    synchronized private PeerInfo incoming(Identity id, Connection con)
         throws Talk.ConnectionException
     {
         //
@@ -458,17 +468,18 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
             throw new Talk.ConnectionException("Peer is busy");
         }
 
-        Ice.ConnectionInfo ci = con.getInfo();
+        com.zeroc.Ice.ConnectionInfo ci = con.getInfo();
         if(ci.underlying != null)
         {
             ci = ci.underlying;
         }
-        IceBT.ConnectionInfo btci = (IceBT.ConnectionInfo)ci;
+        com.zeroc.IceBT.ConnectionInfo btci = (com.zeroc.IceBT.ConnectionInfo)ci;
 
         PeerInfo info = new PeerInfo();
-        info.peer = Talk.PeerPrxHelper.uncheckedCast(con.createProxy(id));
+        info.peer = Talk.PeerPrx.uncheckedCast(con.createProxy(id));
         info.address = btci.remoteAddress;
-        info.servant = null;
+        info.servantId = null;
+        info.connection = con;
 
         setState(STATE_CONNECTED); // Also notifies the activity.
         _peer = info;
@@ -496,25 +507,24 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
         }
         setState(STATE_CONNECTING); // Also notifies the activity.
 
-        info.peer.begin_connect(info.servant, new Ice.Callback()
+        info.peer.connectAsync(info.servantId).whenComplete((result, ex) ->
             {
-                @Override
-                public void completed(Ice.AsyncResult r)
+                if(ex != null)
                 {
-                    try
+                    if(ex instanceof Talk.ConnectionException)
                     {
-                        info.peer.end_connect(r);
-                        connected(info);
+                        connectFailed(info, "Connection to " + info.getName() + " failed: " +
+                                      ((Talk.ConnectionException)ex).reason);
                     }
-                    catch(Talk.ConnectionException ex)
-                    {
-                        connectFailed(info, "Connection to " + info.getName() + " failed: " + ex.reason);
-                    }
-                    catch(Ice.LocalException ex)
+                    else
                     {
                         connectFailed(info, "Connection to " + info.getName() + " failed: " + ex.getClass().getName());
                         ex.printStackTrace();
                     }
+                }
+                else
+                {
+                    connected(info);
                 }
             });
     }
@@ -530,21 +540,11 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
         //
         // Try to gracefully disconnect from the old peer.
         //
-        oldInfo.peer.begin_disconnect(new Ice.Callback()
+        oldInfo.peer.disconnectAsync().whenComplete((result, ex) ->
             {
-                @Override
-                public void completed(Ice.AsyncResult r)
+                if(oldInfo.connection != null)
                 {
-                    try
-                    {
-                        oldInfo.peer.end_disconnect(r);
-                    }
-                    catch(Ice.LocalException ex)
-                    {
-                        // Ignore.
-                    }
-
-                    closeConnection(oldInfo.peer);
+                    oldInfo.connection.close(ConnectionClose.Gracefully);
                 }
             });
     }
@@ -558,7 +558,7 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
             //
             // Configure the connection for bidirectional connections.
             //
-            Ice.Connection con = info.peer.ice_getCachedConnection();
+            Connection con = info.peer.ice_getCachedConnection();
             con.setAdapter(_adapter);
             configureConnection(con, info);
             log("Connected to " + info.getName());
@@ -572,7 +572,10 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
     private void disconnected(PeerInfo info)
     {
         log("Peer is disconnecting");
-        closeConnection(info.peer);
+        if(info.connection != null)
+        {
+            info.connection.close(ConnectionClose.Gracefully);
+        }
     }
 
     synchronized private void connectFailed(PeerInfo info, String message)
@@ -602,34 +605,20 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
         if(fatal)
         {
             info.removeServant(_adapter);
-            closeConnection(info.peer);
+            info.connection.close(ConnectionClose.Gracefully);
         }
     }
 
-    private void configureConnection(Ice.Connection con, final PeerInfo info)
+    private void configureConnection(Connection con, final PeerInfo info)
     {
         //
         // Set a callback to detect connection closure and configure active connection management settings.
         //
-        con.setCloseCallback(new Ice.CloseCallback()
+        con.setCloseCallback((c) ->
             {
-                @Override
-                public void closed(Ice.Connection c)
-                {
-                    connectionClosed(info);
-                }
+                connectionClosed(info);
             });
-        con.setACM(new Ice.IntOptional(30), new Ice.Optional<Ice.ACMClose>(Ice.ACMClose.CloseOff),
-                   new Ice.Optional<Ice.ACMHeartbeat>(Ice.ACMHeartbeat.HeartbeatAlways));
-    }
-
-    private void closeConnection(Talk.PeerPrx peer)
-    {
-        Ice.Connection con = peer.ice_getCachedConnection();
-        if(con != null)
-        {
-            con.close(Ice.ConnectionClose.CloseGracefully); // Our connection callback will eventually be called.
-        }
+        con.setACM(OptionalInt.of(30), Optional.of(ACMClose.CloseOff), Optional.of(ACMHeartbeat.HeartbeatAlways));
     }
 
     synchronized private void connectionClosed(PeerInfo info)
