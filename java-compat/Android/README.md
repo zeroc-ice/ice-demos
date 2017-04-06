@@ -17,6 +17,11 @@ This directory contains the following Android examples:
   A front-end for remotely querying and manipulating a
   relational database implemented using JDBC.
 
+- [mtalk](./mtalk)
+
+  An app that allows two devices to locate each other via UDP multicast
+  and then start a private chat.
+
 - [talk](./talk)
 
   An app that allows two devices to talk via Bluetooth.
