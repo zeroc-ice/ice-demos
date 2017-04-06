@@ -14,8 +14,12 @@ This directory contains the following Android examples:
 
 - [library](./library)
 
-  A front-end for remotely querying and manipulating a
-  relational database implemented using JDBC.
+  A front-end for remotely querying and manipulating a database.
+
+- [mtalk](./mtalk)
+
+  An app that allows two devices to locate each other via UDP multicast
+  and then start a private chat.
 
 - [talk](./talk)
 
@@ -34,19 +38,15 @@ This Android Studio project uses Gradle for its build system.
 Building any Ice application for Android requires Android Studio and the Android
 SDK build tools. We tested with the following components:
 
-- Android Studio 1.2.1
-- Android SDK Build-tools 21.1.1
+- Android Studio 2.4 (preview)
+- Android SDK Build-tools 26.0.0 rc1
 
-Ice requires at minimum API level 17:
+Ice for Java requires at minimum API level 24:
 
-- Android 4.2.2 (API17)
+- Android Nougat 7.0 (API24)
 
-If you want to target a later version of the Android API level, edit
-`gradle.properties` and change the following variables:
-
-    ice_compileSdkVersion
-    ice_minSdkVersion
-    ice_targetSdkVersion
+If you want to target a different version of the Android API level, edit
+`gradle.properties`.
 
 ### Ice Development Kit
 

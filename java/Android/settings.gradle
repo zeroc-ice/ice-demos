@@ -5,10 +5,8 @@
 // **********************************************************************
 
 // Main source
-//include ':hello', ':talk', ':chat', ':library'
-//project(':hello').projectDir = new File('hello')
-//project(':talk').projectDir = new File('talk')
-//project(':chat').projectDir = new File('chat')
-//project(':library').projectDir = new File('library')
-include ':talk'
+include ':chat', ':hello', ':library', ':talk'
+project(':chat').projectDir = new File('chat')
+project(':hello').projectDir = new File('hello')
+project(':library').projectDir = new File('library')
 project(':talk').projectDir = new File('talk')

@@ -7,14 +7,24 @@
 package com.zeroc.library.controller;
 
 import android.os.Build;
-import com.zeroc.library.R;
-
 import android.content.res.Resources;
 import android.os.Handler;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+
+import com.zeroc.Ice.Communicator;
+import com.zeroc.Ice.Connection;
+import com.zeroc.Ice.InitializationData;
+import com.zeroc.Ice.LocalException;
+import com.zeroc.Ice.ObjectPrx;
+import com.zeroc.Ice.Util;
+import com.zeroc.Glacier2.CannotCreateSessionException;
+import com.zeroc.Glacier2.PermissionDeniedException;
+import com.zeroc.Glacier2.SessionPrx;
+import com.zeroc.Glacier2.SessionNotExistException;
+import com.zeroc.library.R;
 
 public class LoginController
 {
@@ -27,7 +37,7 @@ public class LoginController
 
     private boolean _destroyed = false;
     private Handler _handler;
-    private Ice.Communicator _communicator;
+    private Communicator _communicator;
     private String _loginError;
     private Listener _loginListener;
     private SessionController _sessionController;
@@ -62,19 +72,14 @@ public class LoginController
                 {
                     long refreshTimeout;
 
-                    Ice.InitializationData initData = new Ice.InitializationData();
+                    InitializationData initData = new InitializationData();
 
-                    initData.dispatcher = new Ice.Dispatcher()
+                    initData.dispatcher = (Runnable runnable, Connection connection) ->
                     {
-                        @Override
-                        public void
-                        dispatch(Runnable runnable, Ice.Connection connection)
-                        {
-                            _handler.post(runnable);
-                        }
+                        _handler.post(runnable);
                     };
 
-                    initData.properties = Ice.Util.createProperties();
+                    initData.properties = Util.createProperties();
 
                     InputStream inputStream = resources.getAssets().open("config.properties");
                     Properties properties = new Properties();
@@ -90,7 +95,7 @@ public class LoginController
                     //
                     initData.properties.setProperty("Ice.Trace.Network", "0");
                     initData.properties.setProperty("IceSSL.Trace.Security", "0");
-                    initData.properties.setProperty("Ice.Plugin.IceSSL", "IceSSL.PluginFactory");
+                    initData.properties.setProperty("Ice.Plugin.IceSSL", "com.zeroc.IceSSL.PluginFactory");
 
                     // SDK versions < 21 only support TLSv1 with SSLEngine.
                     if(Build.VERSION.SDK_INT < 21)
@@ -101,36 +106,35 @@ public class LoginController
                     //
                     // Check for Ice.Default.Router. If we find it use it, otherwise use a direct connection
                     //
-
                     if(!initData.properties.getProperty("Ice.Default.Router").isEmpty())
                     {
                         initData.properties.setProperty("Ice.RetryIntervals", "-1");
                     }
 
-
                     if(initData.properties.getPropertyAsIntWithDefault("IceSSL.UsePlatformCAs", 0) == 0)
                     {
                         initData.properties.setProperty("Ice.InitPlugins", "0");
                         java.io.InputStream certStream = resources.openRawResource(R.raw.client);
-                        _communicator = Ice.Util.initialize(initData);
+                        _communicator = Util.initialize(initData);
 
-                        IceSSL.Plugin plugin = (IceSSL.Plugin)_communicator.getPluginManager().getPlugin("IceSSL");
+                        com.zeroc.IceSSL.Plugin plugin =
+                            (com.zeroc.IceSSL.Plugin)_communicator.getPluginManager().getPlugin("IceSSL");
                         plugin.setTruststoreStream(certStream);
 
                         _communicator.getPluginManager().initializePlugins();
                     }
                     else
                     {
-                    _communicator = Ice.Util.initialize(initData);
+                        _communicator = Util.initialize(initData);
                     }
-
 
                     SessionAdapter session = null;
 
+                    com.zeroc.Ice.Connection con = null;
                     if(_communicator.getDefaultRouter() != null)
                     {
-                        final Ice.RouterPrx r = _communicator.getDefaultRouter();
-                        final Glacier2.RouterPrx router =  Glacier2.RouterPrxHelper.checkedCast(r);
+                        final com.zeroc.Ice.RouterPrx r = _communicator.getDefaultRouter();
+                        final com.zeroc.Glacier2.RouterPrx router = com.zeroc.Glacier2.RouterPrx.checkedCast(r);
 
                         if(router == null)
                         {
@@ -138,12 +142,12 @@ public class LoginController
                             return;
                         }
 
-                        Glacier2.SessionPrx glacier2session = router.createSession(username, password);
+                        SessionPrx glacier2session = router.createSession(username, password);
 
-                        final Demo.Glacier2SessionPrx sess =
-                            Demo.Glacier2SessionPrxHelper.uncheckedCast(glacier2session);
+                        final Demo.Glacier2SessionPrx sess = Demo.Glacier2SessionPrx.uncheckedCast(glacier2session);
                         final Demo.LibraryPrx library = sess.getLibrary();
-                        refreshTimeout = (router.getSessionTimeout() * 1000) / 2;
+                        refreshTimeout = router.getSessionTimeout();
+                        con = sess.ice_getConnection();
 
                         session = new SessionAdapter()
                         {
@@ -153,14 +157,9 @@ public class LoginController
                                 {
                                     router.destroySession();
                                 }
-                                catch(Glacier2.SessionNotExistException e)
+                                catch(SessionNotExistException e)
                                 {
                                 }
-                            }
-
-                            public void refresh()
-                            {
-                                sess.refresh();
                             }
 
                             public Demo.LibraryPrx getLibrary()
@@ -171,9 +170,9 @@ public class LoginController
                     }
                     else
                     {
-                        Ice.ObjectPrx proxy = _communicator.stringToProxy("LibraryDemo.Proxy");
+                        ObjectPrx proxy = _communicator.stringToProxy("LibraryDemo.Proxy");
 
-                        Demo.SessionFactoryPrx factory = Demo.SessionFactoryPrxHelper.checkedCast(proxy);
+                        Demo.SessionFactoryPrx factory = Demo.SessionFactoryPrx.checkedCast(proxy);
                         if(factory == null)
                         {
                             postLoginFailure("SessionFactory proxy is invalid.");
@@ -182,18 +181,14 @@ public class LoginController
 
                         final Demo.SessionPrx sess = factory.create();
                         final Demo.LibraryPrx library = sess.getLibrary();
-                        refreshTimeout = (factory.getSessionTimeout() * 1000) / 2;
+                        refreshTimeout = factory.getSessionTimeout();
+                        con = sess.ice_getConnection();
 
                         session = new SessionAdapter()
                         {
                             public void destroy()
                             {
                                 sess.destroy();
-                            }
-
-                            public void refresh()
-                            {
-                                sess.refresh();
                             }
 
                             public Demo.LibraryPrx getLibrary()
@@ -203,12 +198,18 @@ public class LoginController
                         };
                     }
 
+                    //
+                    // Configure the connection to send heartbeats in order to keep our session alive.
+                    //
+                    con.setACM(java.util.OptionalInt.of((int)refreshTimeout),
+                               java.util.Optional.of(com.zeroc.Ice.ACMClose.CloseOff),
+                               java.util.Optional.of(com.zeroc.Ice.ACMHeartbeat.HeartbeatAlways));
+
                     synchronized(LoginController.this)
                     {
                         if(_destroyed)
                         {
-                            // Here the app was terminated while session
-                            // establishment was in progress.
+                            // Here the app was terminated while session establishment was in progress.
                             try
                             {
                                 session.destroy();
@@ -221,7 +222,7 @@ public class LoginController
                             return;
                         }
 
-                        _sessionController = new SessionController(_handler, _communicator, session, username, refreshTimeout);
+                        _sessionController = new SessionController(_handler, _communicator, session, username);
                         if(_loginListener != null)
                         {
                             final Listener listener = _loginListener;
@@ -235,17 +236,17 @@ public class LoginController
                         }
                     }
                 }
-                catch(final Glacier2.CannotCreateSessionException ex)
+                catch(CannotCreateSessionException ex)
                 {
                     ex.printStackTrace();
                     postLoginFailure(String.format("Session creation failed: %s", ex.reason));
                 }
-                catch(Glacier2.PermissionDeniedException ex)
+                catch(PermissionDeniedException ex)
                 {
                     ex.printStackTrace();
                     postLoginFailure(String.format("Login failed: %s", ex.reason));
                 }
-                catch(Ice.LocalException ex)
+                catch(LocalException ex)
                 {
                     ex.printStackTrace();
                     postLoginFailure(String.format("Login failed: %s", ex.toString()));

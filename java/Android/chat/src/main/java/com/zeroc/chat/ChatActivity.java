@@ -37,6 +37,7 @@ public class ChatActivity extends SessionActivity
     private EditText _text;
     private ArrayAdapter<String> _adapter;
     private LinkedList<String> _strings = new LinkedList<String>();
+
     final private ChatRoomListener _listener = new ChatRoomListener()
     {
         public void init(final List<String> users)

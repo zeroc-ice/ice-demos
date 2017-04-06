@@ -6,7 +6,8 @@
 
 package com.zeroc.hello;
 
-import Ice.LocalException;
+import com.zeroc.Ice.LocalException;
+
 import android.app.*;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -79,7 +80,8 @@ public class HelloWorld extends Activity
     }
 
     // These two arrays match.
-    private final static DeliveryMode DELIVERY_MODES[] = {
+    private final static DeliveryMode DELIVERY_MODES[] =
+    {
         DeliveryMode.TWOWAY,
         DeliveryMode.TWOWAY_SECURE,
         DeliveryMode.ONEWAY,
@@ -90,7 +92,8 @@ public class HelloWorld extends Activity
         DeliveryMode.DATAGRAM_BATCH,
     };
 
-    private final static String DELIVERY_MODE_DESC[] = new String[] {
+    private final static String DELIVERY_MODE_DESC[] = new String[]
+    {
             "Twoway",
             "Twoway Secure",
             "Oneway",
@@ -207,8 +210,8 @@ public class HelloWorld extends Activity
             }
         });
 
-        ArrayAdapter<String> modeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,
-                DELIVERY_MODE_DESC);
+        ArrayAdapter<String> modeAdapter =
+            new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, DELIVERY_MODE_DESC);
         modeSpinner.setAdapter(modeAdapter);
         modeSpinner.setOnItemSelectedListener(new android.widget.AdapterView.OnItemSelectedListener()
         {
@@ -287,16 +290,17 @@ public class HelloWorld extends Activity
                     case HelloApp.MSG_READY:
                     {
                         // Hide the initializing dialog if it is on the stack.
-                        DialogFragment initDialog = (DialogFragment) getFragmentManager().findFragmentByTag(INITIALIZE_TAG);
+                        DialogFragment initDialog =
+                            (DialogFragment)getFragmentManager().findFragmentByTag(INITIALIZE_TAG);
                         if(initDialog != null)
                         {
                             initDialog.dismiss();
                         }
 
-                        HelloApp.MessageReady ready = (HelloApp.MessageReady) m.obj;
+                        HelloApp.MessageReady ready = (HelloApp.MessageReady)m.obj;
                         if(ready.ex != null)
                         {
-                            LocalException ex = (LocalException) ready.ex;
+                            LocalException ex = (LocalException)ready.ex;
                             DialogFragment dialog = ErrorDialogFragment.newInstance(ex.toString(), true);
                             dialog.show(getFragmentManager(), ERROR_TAG);
                         }
@@ -309,7 +313,7 @@ public class HelloWorld extends Activity
                         statusTextView.setText("Ready");
                         activityProgressBar.setVisibility(View.GONE);
 
-                        LocalException ex = (LocalException) m.obj;
+                        LocalException ex = (LocalException)m.obj;
                         DialogFragment dialog = ErrorDialogFragment.newInstance(ex.toString(), false);
                         dialog.show(getFragmentManager(), ERROR_TAG);
                         break;
@@ -323,7 +327,7 @@ public class HelloWorld extends Activity
                     }
                     case HelloApp.MSG_SENT:
                     {
-                        DeliveryMode mode = (DeliveryMode) m.obj;
+                        DeliveryMode mode = (DeliveryMode)m.obj;
                         activityProgressBar.setVisibility(View.VISIBLE);
                         statusTextView.setText("Waiting for response");
                         break;

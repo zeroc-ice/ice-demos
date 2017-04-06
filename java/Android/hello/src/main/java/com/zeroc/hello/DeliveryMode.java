@@ -3,7 +3,10 @@
 // Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
 //
 // **********************************************************************
+
 package com.zeroc.hello;
+
+import com.zeroc.Ice.ObjectPrx;
 
 enum DeliveryMode
 {
@@ -16,7 +19,7 @@ enum DeliveryMode
     DATAGRAM,
     DATAGRAM_BATCH;
 
-    Ice.ObjectPrx apply(Ice.ObjectPrx prx)
+    ObjectPrx apply(ObjectPrx prx)
     {
         switch (this)
         {
@@ -52,6 +55,7 @@ enum DeliveryMode
     {
         return this == ONEWAY || this == ONEWAY_SECURE || this == DATAGRAM;
     }
+
     public boolean isBatch()
     {
         return this == ONEWAY_BATCH || this == DATAGRAM_BATCH || this == ONEWAY_SECURE_BATCH;

@@ -70,8 +70,7 @@ public class EditActivity extends SessionActivity
         }
     }
 
-    private void
-    discardOk()
+    private void discardOk()
     {
         setResult(RESULT_CANCELED);
         finish();
@@ -282,6 +281,4 @@ public class EditActivity extends SessionActivity
             finish();
         }
     }
-
-
 }

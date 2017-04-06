@@ -25,7 +25,6 @@ import com.zeroc.library.controller.SessionController;
 
 public class LoginActivity extends Activity
 {
-
     private static final String USERNAME_KEY = "username";
     private static final String PASSWORD_KEY = "password";
     private static final String ERROR_TAG = "error";
@@ -96,7 +95,6 @@ public class LoginActivity extends Activity
             edit.putString(PASSWORD_KEY, password);
         }
 
-
         edit.apply();
 
         LibraryApp app = (LibraryApp)getApplication();
@@ -157,8 +155,6 @@ public class LoginActivity extends Activity
                 setLoginState();
             }
         });
-
-        _prefs = getPreferences(MODE_PRIVATE);
 
         _prefs = getPreferences(MODE_PRIVATE);
         if(savedInstanceState == null)

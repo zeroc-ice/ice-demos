@@ -110,7 +110,8 @@ public class QueryController
         _library = library;
     }
 
-    QueryController(Handler handler, Demo.LibraryPrx library, final Listener listener, final QueryType _type, final String _queryString)
+    QueryController(Handler handler, Demo.LibraryPrx library, final Listener listener, final QueryType _type,
+                    final String _queryString)
     {
         _handler = handler;
         _listener = listener;
@@ -122,59 +123,46 @@ public class QueryController
 
         if(_type == QueryType.ISBN)
         {
-            Demo.Callback_Library_queryByIsbn cb = new Demo.Callback_Library_queryByIsbn()
-            {
-                @Override
-                public void exception(Ice.LocalException ex)
+            _library.queryByIsbnAsync(_queryString, 10).whenComplete((result, ex) ->
                 {
-                    postError(ex.toString());
-                }
+                    if(ex != null)
+                    {
+                        postError(ex.toString());
+                    }
+                    else
+                    {
+                        queryResponse(result.first, result.nrows, result.result);
+                    }
+                });
 
-                @Override
-                public void response(List<Demo.BookDescription> first, int nrows, Demo.BookQueryResultPrx result)
-                {
-                    queryResponse(first, nrows, result);
-                }
-            };
-
-            _library.begin_queryByIsbn(_queryString, 10, cb);
         }
         else if(_type == QueryType.AUTHOR)
         {
-            Demo.Callback_Library_queryByAuthor cb = new Demo.Callback_Library_queryByAuthor()
-            {
-                @Override
-                public void exception(Ice.LocalException ex)
+            _library.queryByAuthorAsync(_queryString, 10).whenComplete((result, ex) ->
                 {
-                    postError(ex.toString());
-                }
-
-                @Override
-                public void response(List<Demo.BookDescription> first, int nrows, Demo.BookQueryResultPrx result)
-                {
-                    queryResponse(first, nrows, result);
-                }
-            };
-
-            _library.begin_queryByAuthor(_queryString, 10, cb);
+                    if(ex != null)
+                    {
+                        postError(ex.toString());
+                    }
+                    else
+                    {
+                        queryResponse(result.first, result.nrows, result.result);
+                    }
+                });
         }
         else
         {
-            Demo.Callback_Library_queryByTitle cb = new Demo.Callback_Library_queryByTitle()
-            {
-                @Override
-                public void exception(Ice.LocalException ex)
+            _library.queryByTitleAsync(_queryString, 10).whenComplete((result, ex) ->
                 {
-                    postError(ex.toString());
-                }
-
-                @Override
-                public void response(List<Demo.BookDescription> first, int nrows, Demo.BookQueryResultPrx result)
-                {
-                    queryResponse(first, nrows, result);
-                }
-            };
-            _library.begin_queryByTitle(_queryString, 10, cb);
+                    if(ex != null)
+                    {
+                        postError(ex.toString());
+                    }
+                    else
+                    {
+                        queryResponse(result.first, result.nrows, result.result);
+                    }
+                });
         }
     }
 
@@ -182,18 +170,7 @@ public class QueryController
     {
         if(_query != null)
         {
-            _query.begin_destroy(new Demo.Callback_BookQueryResult_destroy()
-            {
-                @Override
-                public void exception(Ice.LocalException ex)
-                {
-                }
-
-                @Override
-                public void response()
-                {
-                }
-            });
+            _query.destroyAsync();
             _query = null;
         }
     }
@@ -226,25 +203,21 @@ public class QueryController
             return;
         }
 
-        Demo.Callback_BookQueryResult_next cb = new Demo.Callback_BookQueryResult_next()
-        {
-            @Override
-            public void exception(Ice.LocalException ex)
+        _query.nextAsync(10).whenComplete((result, ex) ->
             {
-                postError(ex.toString());
-            }
-
-            @Override
-            public void response(final List<Demo.BookDescription> ret, final boolean destroyed)
-            {
-                synchronized(QueryController.this)
+                if(ex != null)
                 {
-                    _books.addAll(ret);
-                    postDataChanged(false);
+                    postError(ex.toString());
                 }
-            }
-        };
-        _query.begin_next(10, cb);
+                else
+                {
+                    synchronized(this)
+                    {
+                        _books.addAll(result.returnValue);
+                        postDataChanged(false);
+                    }
+                }
+            });
         _rowsQueried += 10;
     }
 
@@ -262,117 +235,94 @@ public class QueryController
     {
         assert _currentBook != NO_BOOK;
         final Demo.BookDescription desc = _books.get(_currentBook);
-        Demo.Callback_Book_returnBook returnBookCB = new Demo.Callback_Book_returnBook()
-        {
-            @Override
-            public void exception(Ice.LocalException ex)
+        desc.proxy.returnBookAsync().whenComplete((result, ex) ->
             {
-                postError(ex.toString());
-            }
-
-            @Override
-            public void exception(Ice.UserException ex)
-            {
-                final String error;
-                if(ex instanceof Demo.BookNotRentedException)
+                if(ex != null)
                 {
-                    error = "The book is no longer rented.";
+                    final String error;
+                    if(ex instanceof Demo.BookNotRentedException)
+                    {
+                        error = "The book is no longer rented.";
 
-                    desc.rentedBy = "";
-                    postDataChanged(false);
+                        desc.rentedBy = "";
+                        postDataChanged(false);
+                    }
+                    else
+                    {
+                        error = "An error occurred: " + ex.toString();
+                    }
+                    postError(error);
                 }
                 else
                 {
-                    error = "An error occurred: " + ex.toString();
+                    synchronized(this)
+                    {
+                        desc.rentedBy = "";
+                        postDataChanged(false);
+                    }
                 }
-                postError(error);
-            }
-
-            @Override
-            public void response()
-            {
-                synchronized(QueryController.this)
-                {
-                    desc.rentedBy = "";
-                    postDataChanged(false);
-                }
-            }
-        };
-        desc.proxy.begin_returnBook(returnBookCB);
+            });
     }
 
     synchronized public void rentBook(final String r)
     {
         assert _currentBook != NO_BOOK;
         final Demo.BookDescription desc = _books.get(_currentBook);
-        Demo.Callback_Book_rentBook rentBookCB = new Demo.Callback_Book_rentBook()
-        {
-            @Override
-            public void exception(final Ice.LocalException ex)
+        desc.proxy.rentBookAsync(r).whenComplete((result, ex) ->
             {
-                postError(ex.toString());
-            }
-
-            @Override
-            public void exception(Ice.UserException ex)
-            {
-                final String error;
-                if(ex instanceof Demo.InvalidCustomerException)
+                if(ex != null)
                 {
-                    error = "The customer name is invalid.";
-                }
-                else if(ex instanceof Demo.BookRentedException)
-                {
-                    error = "That book is already rented.";
+                    final String error;
+                    if(ex instanceof Demo.InvalidCustomerException)
+                    {
+                        error = "The customer name is invalid.";
+                    }
+                    else if(ex instanceof Demo.BookRentedException)
+                    {
+                        error = "That book is already rented.";
 
-                    Demo.BookRentedException bre = (Demo.BookRentedException)ex;
-                    desc.rentedBy = bre.renter;
-                    postDataChanged(false);
+                        Demo.BookRentedException bre = (Demo.BookRentedException)ex;
+                        desc.rentedBy = bre.renter;
+                        postDataChanged(false);
+                    }
+                    else
+                    {
+                        error = "An error occurred: " + ex.toString();
+                    }
+                    postError(error);
                 }
                 else
                 {
-                    error = "An error occurred: " + ex.toString();
+                    synchronized(this)
+                    {
+                        desc.rentedBy = r;
+                        postDataChanged(false);
+                    }
                 }
-                postError(error);
-            }
-
-            @Override
-            public void response()
-            {
-                synchronized(QueryController.this)
-                {
-                    desc.rentedBy = r;
-                    postDataChanged(false);
-                }
-            }
-        };
-        desc.proxy.begin_rentBook(r, rentBookCB);
+            });
     }
 
     synchronized public void deleteBook()
     {
         assert _currentBook != NO_BOOK;
         final Demo.BookDescription desc = _books.get(_currentBook);
-        desc.proxy.begin_destroy(new Demo.Callback_Book_destroy()
-        {
-            @Override
-            public void exception(Ice.LocalException ex)
+        desc.proxy.destroyAsync().whenComplete((result, ex) ->
             {
-                postError(ex.toString());
-            }
-
-            @Override
-            public void response()
-            {
-                synchronized(QueryController.this)
+                if(ex != null)
                 {
-                    _books.remove(_currentBook);
-                    _currentBook = NO_BOOK;
-                    --_nrows;
-                    postDataChanged(false);
+                    postError(ex.toString());
                 }
-            }
-        });
+                else
+                {
+                    synchronized(this)
+                    {
+                        _books.remove(_currentBook);
+                        _currentBook = NO_BOOK;
+                        --_nrows;
+                        postDataChanged(false);
+                    }
+                }
+            });
     }
 
     synchronized public boolean saveBook(final Demo.BookDescription newDesc)
@@ -380,39 +330,28 @@ public class QueryController
         assert _currentBook != NO_BOOK;
         if(_currentBook == NEW_BOOK)
         {
-            _library.begin_createBook(newDesc.isbn, newDesc.title, newDesc.authors,
-                                      new Demo.Callback_Library_createBook()
-            {
-                @Override
-                public void exception(Ice.LocalException ex)
+            _library.createBookAsync(newDesc.isbn, newDesc.title, newDesc.authors).whenComplete((result, ex) ->
                 {
-                    postError(ex.toString());
-                }
-
-                @Override
-                public void exception(Ice.UserException ex)
-                {
-                    if(ex instanceof Demo.BookExistsException)
+                    if(ex != null)
                     {
-                        postError("That ISBN is already in the library.");
+                        if(ex instanceof Demo.BookExistsException)
+                        {
+                            postError("That ISBN is already in the library.");
+                        }
+                        else
+                        {
+                            postError("Unknown error: " + ex.toString());
+                        }
                     }
                     else
                     {
-                        postError("Unknown error: " + ex.toString());
+                        synchronized(this)
+                        {
+                            _currentBook = NO_BOOK;
+                            postDataChanged(true);
+                        }
                     }
-                }
-
-                @Override
-                public void response(Demo.BookPrx ret)
-                {
-                    synchronized(QueryController.this)
-                    {
-                        _currentBook = NO_BOOK;
-                        postDataChanged(true);
-                    }
-                }
-
-            });
+                });
 
             return true;
         }
@@ -428,9 +367,7 @@ public class QueryController
             return false;
         }
 
-        Runnable r = new Runnable()
-        {
-            public void run()
+        Runnable r = () ->
             {
                 try
                 {
@@ -446,12 +383,11 @@ public class QueryController
                     }
                     postDataChanged(true);
                 }
-                catch(Ice.LocalException ex)
+                catch(com.zeroc.Ice.LocalException ex)
                 {
                     postError(ex.toString());
                 }
-            }
-        };
+            };
         new Thread(r).start();
         return true;
     }

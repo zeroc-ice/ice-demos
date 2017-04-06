@@ -16,7 +16,7 @@ public class SessionController
     }
 
     private Handler _handler;
-    private Ice.Communicator _communicator;
+    private com.zeroc.Ice.Communicator _communicator;
     private QueryController _queryController;
     private Listener _sessionListener;
     private boolean _fatal = false;
@@ -25,51 +25,6 @@ public class SessionController
     String _username;
 
     private SessionAdapter _session;
-
-    class SessionRefreshThread extends Thread
-    {
-        SessionRefreshThread(long timeout)
-        {
-            _timeout = timeout; // seconds.
-        }
-
-        synchronized public void run()
-        {
-            while(!_terminated)
-            {
-                // check idle.
-                try
-                {
-                    wait(_timeout);
-                }
-                catch(InterruptedException e)
-                {
-                }
-                if(!_terminated)
-                {
-                    try
-                    {
-                        _session.refresh();
-                    }
-                    catch(Ice.LocalException ex)
-                    {
-                        postSessionDestroyed();
-                        _terminated = true;
-                    }
-                }
-            }
-        }
-
-        synchronized private void terminate()
-        {
-            _terminated = true;
-            notify();
-        }
-
-        final private long _timeout;
-        private boolean _terminated = false;
-    }
-    private SessionRefreshThread _refresh;
 
     synchronized private void postSessionDestroyed()
     {
@@ -87,14 +42,11 @@ public class SessionController
         }
     }
 
-    SessionController(Handler handler, Ice.Communicator communicator, SessionAdapter session, String username, long refreshTimeout)
+    SessionController(Handler handler, com.zeroc.Ice.Communicator communicator, SessionAdapter session, String username)
     {
         _communicator = communicator;
         _session = session;
         _handler = handler;
-
-        _refresh = new SessionRefreshThread(refreshTimeout);
-        _refresh.start();
 
         _username = username;
 
@@ -110,23 +62,9 @@ public class SessionController
         _destroyed = true;
         _username = null;
 
-        new Thread(new Runnable()
-        {
-            public void run()
+        new Thread(() ->
             {
                 _queryController.destroy();
-
-                _refresh.terminate();
-                while(_refresh.isAlive())
-                {
-                    try
-                    {
-                        _refresh.join();
-                    }
-                    catch(InterruptedException e)
-                    {
-                    }
-                }
 
                 try
                 {
@@ -137,8 +75,7 @@ public class SessionController
                 }
 
                 _communicator.destroy();
-            }
-        }).start();
+            }).start();
     }
 
     synchronized public String getUsername()

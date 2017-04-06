@@ -6,13 +6,21 @@
 
 package com.zeroc.hello;
 
-import Ice.Communicator;
+import com.zeroc.Ice.Communicator;
+import com.zeroc.Ice.Connection;
+import com.zeroc.Ice.InitializationData;
+import com.zeroc.Ice.InvocationFuture;
+import com.zeroc.Ice.LocalException;
+import com.zeroc.Ice.ObjectPrx;
+import com.zeroc.Ice.Util;
+
 import android.app.Application;
 import android.os.Build.VERSION;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 
+import java.util.concurrent.CompletableFuture;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -20,14 +28,14 @@ public class HelloApp extends Application
 {
     static class MessageReady
     {
-        MessageReady(Communicator c, Ice.LocalException e)
+        MessageReady(Communicator c, LocalException e)
         {
             communicator = c;
             ex = e;
         }
 
         Communicator communicator;
-        Ice.LocalException ex;
+        LocalException ex;
     }
 
     @Override
@@ -73,19 +81,14 @@ public class HelloApp extends Application
             {
                 try
                 {
-                    Ice.InitializationData initData = new Ice.InitializationData();
+                    InitializationData initData = new InitializationData();
 
-                    initData.dispatcher = new Ice.Dispatcher()
+                    initData.dispatcher = (Runnable runnable, Connection connection) ->
                     {
-                        @Override
-                        public void
-                        dispatch(Runnable runnable, Ice.Connection connection)
-                        {
-                            _uiHandler.post(runnable);
-                        }
+                        _uiHandler.post(runnable);
                     };
 
-                    initData.properties = Ice.Util.createProperties();
+                    initData.properties = Util.createProperties();
                     initData.properties.setProperty("Ice.Trace.Network", "3");
 
                     initData.properties.setProperty("IceSSL.Trace.Security", "3");
@@ -93,7 +96,7 @@ public class HelloApp extends Application
                     initData.properties.setProperty("IceSSL.TruststoreType", "BKS");
                     initData.properties.setProperty("IceSSL.Password", "password");
                     initData.properties.setProperty("Ice.InitPlugins", "0");
-                    initData.properties.setProperty("Ice.Plugin.IceSSL", "IceSSL.PluginFactory");
+                    initData.properties.setProperty("Ice.Plugin.IceSSL", "com.zeroc.IceSSL.PluginFactory");
 
                     // SDK versions < 21 only support TLSv1 with SSLEngine.
                     if(VERSION.SDK_INT < 21)
@@ -101,8 +104,8 @@ public class HelloApp extends Application
                         initData.properties.setProperty("IceSSL.Protocols", "tls1_0");
                     }
 
-                    Ice.Communicator c = Ice.Util.initialize(initData);
-                    IceSSL.Plugin plugin = (IceSSL.Plugin)c.getPluginManager().getPlugin("IceSSL");
+                    Communicator c = Util.initialize(initData);
+                    com.zeroc.IceSSL.Plugin plugin = (com.zeroc.IceSSL.Plugin)c.getPluginManager().getPlugin("IceSSL");
                     //
                     // Be sure to pass the same input stream to the SSL plug-in for
                     // both the keystore and the truststore. This makes startup a
@@ -116,7 +119,7 @@ public class HelloApp extends Application
 
                     _uiHandler.sendMessage(Message.obtain(_uiHandler, MSG_READY, new MessageReady(c, null)));
                 }
-                catch(Ice.LocalException e)
+                catch(LocalException e)
                 {
                     _uiHandler.sendMessage(Message.obtain(_uiHandler, MSG_READY, new MessageReady(null, e)));
                 }
@@ -182,16 +185,19 @@ public class HelloApp extends Application
     {
         if(_proxy != null)
         {
-            _proxy.begin_ice_flushBatchRequests(new Ice.Callback_Object_ice_flushBatchRequests() {
-                @Override
-                public void exception(final Ice.LocalException ex)
+            _proxy.ice_flushBatchRequestsAsync().whenComplete((result, ex) ->
                 {
-                    _uiHandler.sendMessage(_uiHandler.obtainMessage(MSG_EXCEPTION, ex));
-                }
-            });
+                    if(ex != null)
+                    {
+                        _uiHandler.sendMessage(_uiHandler.obtainMessage(MSG_EXCEPTION, ex));
+                    }
+                });
         }
     }
 
+    //
+    // Called for a batch proxy.
+    //
     void shutdown()
     {
         try
@@ -201,13 +207,24 @@ public class HelloApp extends Application
             {
                 return;
             }
-            _proxy.shutdown();
+            _proxy.shutdownAsync().whenComplete((result, ex) ->
+                {
+                    if(ex != null)
+                    {
+                        _uiHandler.sendMessage(_uiHandler.obtainMessage(MSG_EXCEPTION, ex));
+                    }
+                });
         }
-        catch(Ice.LocalException ex)
+        catch(LocalException ex)
         {
             _uiHandler.sendMessage(_uiHandler.obtainMessage(MSG_EXCEPTION, ex));
         }
 
+    }
+
+    static class BooleanHolder
+    {
+        boolean value;
     }
 
     void shutdownAsync()
@@ -221,45 +238,48 @@ public class HelloApp extends Application
             }
 
             _resultMode = _mode;
+            final BooleanHolder response = new BooleanHolder();
             _uiHandler.sendMessage(_uiHandler.obtainMessage(MSG_SENDING));
-            _result = _proxy.begin_shutdown(new Demo.Callback_Hello_shutdown()
-            {
-                @Override
-                synchronized public void exception(final Ice.LocalException ex)
+            CompletableFuture<Void> r = _proxy.shutdownAsync();
+            r.whenComplete((result, ex) ->
                 {
-                    _response = true;
-                    _uiHandler.sendMessage(_uiHandler.obtainMessage(MSG_EXCEPTION, ex));
-                }
-
-                @Override
-                synchronized public void response()
-                {
-                    _response = true;
-                    _uiHandler.sendMessage(_uiHandler.obtainMessage(MSG_RESPONSE));
-                }
-
-                @Override
-                synchronized public void sent(boolean sentSynchronously)
-                {
-                    if(_resultMode.isOneway())
+                    // There is no ordering guarantee between sent, response/exception.
+                    response.value = true;
+                    if(ex != null)
+                    {
+                        _uiHandler.sendMessage(_uiHandler.obtainMessage(MSG_EXCEPTION, ex));
+                    }
+                    else
                     {
                         _uiHandler.sendMessage(_uiHandler.obtainMessage(MSG_RESPONSE));
                     }
-                    else if(!_response)
+                });
+
+            _result = Util.getInvocationFuture(r);
+            _result.whenSent((sentSynchronously, ex) ->
+                {
+                    if(ex == null)
                     {
-                        _uiHandler.sendMessage(_uiHandler.obtainMessage(MSG_SENT, _resultMode));
+                        if(_resultMode.isOneway())
+                        {
+                            _uiHandler.sendMessage(_uiHandler.obtainMessage(MSG_RESPONSE));
+                        }
+                        else if(!response.value)
+                        {
+                            _uiHandler.sendMessage(_uiHandler.obtainMessage(MSG_SENT, _resultMode));
+                        }
                     }
-                }
-                // There is no ordering guarantee between sent, response/exception.
-                private boolean _response = false;
-            });
+                });
         }
-        catch(Ice.LocalException ex)
+        catch(LocalException ex)
         {
             _uiHandler.sendMessage(_uiHandler.obtainMessage(MSG_EXCEPTION, ex));
         }
     }
 
+    //
+    // Called for a batch proxy.
+    //
     void sayHello(int delay)
     {
         try
@@ -270,9 +290,15 @@ public class HelloApp extends Application
                 return;
             }
 
-            _proxy.begin_sayHello(delay);
+            _proxy.sayHelloAsync(delay).whenComplete((result, ex) ->
+                {
+                    if(ex != null)
+                    {
+                        _uiHandler.sendMessage(_uiHandler.obtainMessage(MSG_EXCEPTION, ex));
+                    }
+                });
         }
-        catch(Ice.LocalException ex)
+        catch(LocalException ex)
         {
             _uiHandler.sendMessage(_uiHandler.obtainMessage(MSG_EXCEPTION, ex));
         }
@@ -289,41 +315,40 @@ public class HelloApp extends Application
             }
 
             _resultMode = _mode;
+            final BooleanHolder response = new BooleanHolder();
             _uiHandler.sendMessage(_uiHandler.obtainMessage(MSG_SENDING));
-            _result = _proxy.begin_sayHello(delay,
-                    new Demo.Callback_Hello_sayHello()
+            CompletableFuture<Void> r = _proxy.sayHelloAsync(delay);
+            r.whenComplete((result, ex) ->
+                {
+                    // There is no ordering guarantee between sent, response/exception.
+                    response.value = true;
+                    if(ex != null)
                     {
-                        @Override
-                        synchronized public void exception(final Ice.LocalException ex)
-                        {
-                            _response = true;
-                            _uiHandler.sendMessage(_uiHandler.obtainMessage(MSG_EXCEPTION, ex));
-                        }
+                        _uiHandler.sendMessage(_uiHandler.obtainMessage(MSG_EXCEPTION, ex));
+                    }
+                    else
+                    {
+                        _uiHandler.sendMessage(_uiHandler.obtainMessage(MSG_RESPONSE));
+                    }
+                });
 
-                        @Override
-                        synchronized public void response()
+            _result = Util.getInvocationFuture(r);
+            _result.whenSent((sentSynchronously, ex) ->
+                {
+                    if(ex == null)
+                    {
+                        if(_resultMode.isOneway())
                         {
-                            _response = true;
                             _uiHandler.sendMessage(_uiHandler.obtainMessage(MSG_RESPONSE));
                         }
-
-                        @Override
-                        synchronized public void sent(boolean sentSynchronously)
+                        else if(!response.value)
                         {
-                            if(_resultMode.isOneway())
-                            {
-                                _uiHandler.sendMessage(_uiHandler.obtainMessage(MSG_RESPONSE));
-                            }
-                            else if(!_response)
-                            {
-                                _uiHandler.sendMessage(_uiHandler.obtainMessage(MSG_SENT, _resultMode));
-                            }
+                            _uiHandler.sendMessage(_uiHandler.obtainMessage(MSG_SENT, _resultMode));
                         }
-                        // There is no ordering guarantee between sent, response/exception.
-                        private boolean _response = false;
-                    });
+                    }
+                });
         }
-        catch(Ice.LocalException ex)
+        catch(LocalException ex)
         {
             _uiHandler.sendMessage(_uiHandler.obtainMessage(MSG_EXCEPTION, ex));
         }
@@ -337,14 +362,14 @@ public class HelloApp extends Application
         }
 
         String s = "hello:tcp -h " + _host + " -p 10000:ssl -h " + _host + " -p 10001:udp -h " + _host  + " -p 10000";
-        Ice.ObjectPrx prx = _communicator.stringToProxy(s);
+        ObjectPrx prx = _communicator.stringToProxy(s);
         prx = _mode.apply(prx);
         if(_timeout != 0)
         {
             prx = prx.ice_invocationTimeout(_timeout);
         }
 
-        _proxy = Demo.HelloPrxHelper.uncheckedCast(prx);
+        _proxy = Demo.HelloPrx.uncheckedCast(prx);
     }
 
     DeliveryMode getDeliveryMode()
@@ -363,15 +388,15 @@ public class HelloApp extends Application
     private Handler _uiHandler;
 
     private boolean _initialized;
-    private Ice.Communicator _communicator;
+    private Communicator _communicator;
     private Demo.HelloPrx _proxy = null;
 
     // The current request if any.
-    private Ice.AsyncResult _result;
+    private InvocationFuture<?> _result;
     // The mode of the current request.
     private DeliveryMode _resultMode;
 
-    private Ice.LocalException _ex;
+    private LocalException _ex;
     private Handler _handler;
 
     // Proxy settings.

@@ -110,7 +110,6 @@ public class DeviceActivity extends Activity
     {
         super.onCreate(savedInstanceState);
 
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.device);
 
         _scanButton = (Button)findViewById(R.id.scan);
@@ -179,7 +178,6 @@ public class DeviceActivity extends Activity
 
     private void runDiscovery()
     {
-        setProgressBarIndeterminateVisibility(true);
         setTitle(R.string.scanning);
 
         if(_adapter.isDiscovering())
@@ -269,7 +267,6 @@ public class DeviceActivity extends Activity
             }
             else if(BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action))
             {
-                setProgressBarIndeterminateVisibility(false);
                 setTitle(R.string.choose_peer);
 
                 if(_devices.getCount() == 1)

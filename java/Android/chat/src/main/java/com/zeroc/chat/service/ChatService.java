@@ -3,6 +3,7 @@
 // Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
 //
 // **********************************************************************
+
 package com.zeroc.chat.service;
 
 import android.app.Notification;
@@ -104,7 +105,8 @@ public class ChatService extends Service implements com.zeroc.chat.service.Servi
         }
     }
 
-    synchronized public void login(final String username, final String password) {
+    synchronized public void login(final String username, final String password)
+    {
         assert _session == null;
         assert !_loginInProgress;
 
@@ -121,7 +123,8 @@ public class ChatService extends Service implements com.zeroc.chat.service.Servi
         }
     }
 
-    synchronized public String addChatRoomListener(ChatRoomListener listener, boolean replay) throws NoSessionException
+    synchronized public String addChatRoomListener(ChatRoomListener listener, boolean replay)
+        throws NoSessionException
     {
         if(_session == null)
         {
@@ -183,7 +186,7 @@ public class ChatService extends Service implements com.zeroc.chat.service.Servi
                 .setSmallIcon(R.drawable.stat_notify)
                 .setContentText("Logged In")
                 .setWhen(System.currentTimeMillis())
-                .setContentTitle("You are logged into server")
+                .setContentTitle("You are logged into the server")
                 .setContentIntent(PendingIntent.getActivity(this, 0, new Intent(this, ChatActivity.class), 0))
                 .build();
         NotificationManager n = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
@@ -205,8 +208,7 @@ public class ChatService extends Service implements com.zeroc.chat.service.Servi
     private void sessionDestroyed()
     {
         NotificationManager n = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-        // Cancel the notification -- we use the same ID that we had used to
-        // start it
+        // Cancel the notification -- we use the same ID that we used to start it
         n.cancel(CHATACTIVE_NOTIFICATION);
     }
 }

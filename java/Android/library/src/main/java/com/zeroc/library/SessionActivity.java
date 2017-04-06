@@ -114,5 +114,4 @@ public class SessionActivity extends Activity
 
         _queryController = _sessionController.getCurrentQuery();
     }
-
 }
