@@ -60,5 +60,6 @@ clean {
 
 dependencies {
     compile localDependency('ice')
+    compile localDependency('icessl')
     compile localDependency('glacier2')
 }

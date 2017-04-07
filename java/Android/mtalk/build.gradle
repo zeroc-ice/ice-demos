@@ -53,4 +53,5 @@ android {
 
 dependencies {
     compile localDependency('ice')
+    compile localDependency('icessl')
 }
