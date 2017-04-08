@@ -17,7 +17,7 @@ extern "C"
 // Factory function
 //
 ICE_DECLSPEC_EXPORT IceBox::Service*
-create(const Ice::CommunicatorPtr&)
+create(Ice::CommunicatorPtr)
 {
     return new HelloServiceI;
 }
@@ -29,7 +29,7 @@ HelloServiceI::start(const string& name, const Ice::CommunicatorPtr& communicato
 {
     _adapter = communicator->createObjectAdapter("Hello-" + name);
 
-    
+
     string helloIdentity = communicator->getProperties()->getProperty("Hello.Identity");
 
     Demo::HelloPtr hello = new HelloI(name);
