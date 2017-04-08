@@ -29,7 +29,7 @@ operator<<(ostream& out, Color c)
 }
 
 bool
-PrinterI::ice_invoke(const vector<Ice::Byte>& inParams, vector<Ice::Byte>& outParams, const Ice::Current& current)
+PrinterI::ice_invoke(vector<Ice::Byte> inParams, vector<Ice::Byte>& outParams, const Ice::Current& current)
 {
     auto communicator = current.adapter->getCommunicator();
 

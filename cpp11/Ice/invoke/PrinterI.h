@@ -13,7 +13,7 @@ class PrinterI : public Ice::Blobject
 {
 public:
 
-    virtual bool ice_invoke(const std::vector<Ice::Byte>&, std::vector<Ice::Byte>&,
+    virtual bool ice_invoke(std::vector<Ice::Byte>, std::vector<Ice::Byte>&,
                             const Ice::Current&) override;
 };
 
