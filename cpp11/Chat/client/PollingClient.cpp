@@ -41,64 +41,64 @@ public:
         }
     }
 
-    void run(int period)
+    void start(int period)
     {
         assert(!_asyncResult.valid()); // run must be called just once
+        _asyncResult = async(launch::async, [this, period] { run(period); });
+    }
 
-        _asyncResult =
-            async(launch::async, [&, period]
-                  {
-                      unique_lock<mutex> lock(_mutex);
-                      while(!_done)
-                      {
-                          lock.unlock();
-                          try
-                          {
-                              auto updates = _session->getUpdates();
-                              for(const auto& u : updates)
-                              {
-                                  auto joinedEvt = dynamic_pointer_cast<PollingChat::UserJoinedEvent>(u);
-                                  if(joinedEvt)
-                                  {
-                                      cout << ">>>> " << joinedEvt->name << " joined." << endl;
-                                  }
-                                  else
-                                  {
-                                      auto leftEvt = dynamic_pointer_cast<PollingChat::UserLeftEvent>(u);
-                                      if(leftEvt)
-                                      {
-                                          cout << ">>>> " << leftEvt->name << " left." << endl;
-                                      }
-                                      else
-                                      {
-                                          auto messageEvt = dynamic_pointer_cast<PollingChat::MessageEvent>(u);
-                                          if(messageEvt)
-                                          {
-                                              cout << messageEvt->name << " > " << ChatUtils::unstripHtml(messageEvt->message) << endl;
-                                          }
-                                      }
-                                  }
-                              }
-                          }
-                          catch(const Ice::LocalException& ex)
-                          {
-                              {
-                                  lock_guard<mutex> lkg(_mutex);
-                                  _done = true;
-                              }
-                              if(!dynamic_cast<const Ice::ObjectNotExistException*>(&ex))
-                              {
-                                  cerr << "session lost:" << ex << endl;
-                              }
-                          }
+    void run(int period)
+    {
+        unique_lock<mutex> lock(_mutex);
+        while(!_done)
+        {
+            lock.unlock();
+            try
+            {
+                auto updates = _session->getUpdates();
+                for(const auto& u : updates)
+                {
+                    auto joinedEvt = dynamic_pointer_cast<PollingChat::UserJoinedEvent>(u);
+                    if(joinedEvt)
+                    {
+                        cout << ">>>> " << joinedEvt->name << " joined." << endl;
+                    }
+                    else
+                    {
+                        auto leftEvt = dynamic_pointer_cast<PollingChat::UserLeftEvent>(u);
+                        if(leftEvt)
+                        {
+                            cout << ">>>> " << leftEvt->name << " left." << endl;
+                        }
+                        else
+                        {
+                            auto messageEvt = dynamic_pointer_cast<PollingChat::MessageEvent>(u);
+                            if(messageEvt)
+                            {
+                                cout << messageEvt->name << " > " << ChatUtils::unstripHtml(messageEvt->message) << endl;
+                            }
+                        }
+                    }
+                }
+            }
+            catch(const Ice::LocalException& ex)
+            {
+                {
+                    lock_guard<mutex> lkg(_mutex);
+                    _done = true;
+                }
+                if(!dynamic_cast<const Ice::ObjectNotExistException*>(&ex))
+                {
+                    cerr << "session lost:" << ex << endl;
+                }
+            }
 
-                          lock.lock();
-                          if(!_done)
-                          {
-                              _cond.wait_for(lock, chrono::seconds(period));
-                          }
-                      }
-                  });
+            lock.lock();
+            if(!_done)
+            {
+                _cond.wait_for(lock, chrono::seconds(period));
+            }
+        }
     }
 
     bool isDone() const
@@ -225,7 +225,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
     }
 
     GetUpdatesTask getUpdatesTask(session);
-    getUpdatesTask.run(1);
+    getUpdatesTask.start(1);
 
     menu();
 

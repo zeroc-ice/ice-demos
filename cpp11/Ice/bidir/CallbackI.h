@@ -23,11 +23,12 @@ public:
 
 private:
 
+    void invokeClient();
     void removeClient(const std::shared_ptr<Demo::CallbackReceiverPrx>&, std::exception_ptr);
 
     std::shared_ptr<Ice::Communicator> _communicator;
     bool _destroy = false;
-    std::set<std::shared_ptr<Demo::CallbackReceiverPrx>> _clients;
+    std::vector<std::shared_ptr<Demo::CallbackReceiverPrx>> _clients;
 
     std::mutex _mutex;
     std::condition_variable _cv;
