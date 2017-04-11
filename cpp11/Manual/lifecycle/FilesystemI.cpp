@@ -36,13 +36,13 @@ FilesystemI::NodeI::id() const
 
 // NodeI constructor.
 
-FilesystemI::NodeI::NodeI(const string& nm, const shared_ptr<DirectoryI>& parent) :
-    _name(nm), _parent(parent), _destroyed(false)
+FilesystemI::NodeI::NodeI(const string& nm, const shared_ptr<DirectoryI>& parent)
+    : _name(nm), _parent(parent), _destroyed(false)
 {
     //
     // Create an identity. The root directory has the fixed identity "RootDir".
     //
-    if(parent != 0)
+    if(parent != nullptr)
     {
         _id.name = Ice::generateUUID();
     }

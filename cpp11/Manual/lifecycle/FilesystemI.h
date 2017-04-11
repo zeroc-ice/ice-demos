@@ -19,60 +19,61 @@
 
 namespace FilesystemI
 {
-    class DirectoryI;
 
-    class NodeI : virtual public Filesystem::Node
-    {
-    public:
+class DirectoryI;
 
-        virtual std::string name(const Ice::Current&) override;
-        Ice::Identity id() const;
+class NodeI : public virtual Filesystem::Node
+{
+public:
 
-    protected:
+    virtual std::string name(const Ice::Current&) override;
+    Ice::Identity id() const;
 
-        NodeI(const std::string&, const std::shared_ptr<DirectoryI>&);
+protected:
 
-        const std::string _name;
-        const std::shared_ptr<DirectoryI> _parent;
-        bool _destroyed;
-        Ice::Identity _id;
-        std::mutex _mutex;
-    };
+    NodeI(const std::string&, const std::shared_ptr<DirectoryI>&);
 
-    class FileI : public Filesystem::File, public NodeI
-    {
-    public:
+    const std::string _name;
+    const std::shared_ptr<DirectoryI> _parent;
+    bool _destroyed;
+    Ice::Identity _id;
+    std::mutex _mutex;
+};
 
-        virtual Filesystem::Lines read(const Ice::Current&) override;
-        virtual void write(Filesystem::Lines, const Ice::Current&) override;
-        virtual void destroy(const Ice::Current&) override;
+class FileI : public Filesystem::File, public NodeI
+{
+public:
 
-        FileI(const std::string&, const std::shared_ptr<DirectoryI>&);
+    virtual Filesystem::Lines read(const Ice::Current&) override;
+    virtual void write(Filesystem::Lines, const Ice::Current&) override;
+    virtual void destroy(const Ice::Current&) override;
 
-    private:
+    FileI(const std::string&, const std::shared_ptr<DirectoryI>&);
 
-        Filesystem::Lines _lines;
-    };
+private:
 
-class DirectoryI :  public NodeI, public Filesystem::Directory, public std::enable_shared_from_this<DirectoryI>
-    {
-    public:
+    Filesystem::Lines _lines;
+};
 
-        virtual Filesystem::NodeDescSeq list(const Ice::Current&) override;
-        virtual Filesystem::NodeDesc find(std::string, const Ice::Current&) override;
-        std::shared_ptr<Filesystem::FilePrx> createFile(std::string, const Ice::Current&) override;
-        std::shared_ptr<Filesystem::DirectoryPrx> createDirectory(std::string, const Ice::Current&) override;
-        virtual void destroy(const Ice::Current&) override;
+class DirectoryI : public NodeI, public Filesystem::Directory, public std::enable_shared_from_this<DirectoryI>
+{
+public:
 
-        DirectoryI(const std::string& = "/", const std::shared_ptr<DirectoryI>& = nullptr);
+    virtual Filesystem::NodeDescSeq list(const Ice::Current&) override;
+    virtual Filesystem::NodeDesc find(std::string, const Ice::Current&) override;
+    std::shared_ptr<Filesystem::FilePrx> createFile(std::string, const Ice::Current&) override;
+    std::shared_ptr<Filesystem::DirectoryPrx> createDirectory(std::string, const Ice::Current&) override;
+    virtual void destroy(const Ice::Current&) override;
 
-        void removeEntry(const std::string&);
+    DirectoryI(const std::string& = "/", const std::shared_ptr<DirectoryI>& = nullptr);
 
-    private:
+    void removeEntry(const std::string&);
 
-        using Contents = std::map<std::string, std::shared_ptr<NodeI>>;
-        Contents _contents;
-    };
+private:
+
+    using Contents = std::map<std::string, std::shared_ptr<NodeI>>;
+    Contents _contents;
+};
 }
 
 #ifdef _MSC_VER

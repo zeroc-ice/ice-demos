@@ -11,7 +11,7 @@ EvictorBase::EvictorBase(int size) :
     }
 }
 
-Ice::ObjectPtr
+shared_ptr<Ice::Object>
 EvictorBase::locate(const Ice::Current& c, shared_ptr<void>& cookie)
 {
     lock_guard<mutex> lk(_mutex);

@@ -18,7 +18,7 @@ public:
 
 protected:
 
-    virtual Ice::ObjectPtr add(const Ice::Current&, std::shared_ptr<void>&) = 0;
+    virtual std::shared_ptr<Ice::Object> add(const Ice::Current&, std::shared_ptr<void>&) = 0;
     virtual void evict(const std::shared_ptr<Ice::Object>&, const std::shared_ptr<void>&) = 0;
 
 private:
