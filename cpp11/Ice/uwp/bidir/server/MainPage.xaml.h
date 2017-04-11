@@ -25,10 +25,11 @@ public:
     }
 
     virtual void addClient(Ice::Identity, const Ice::Current&) override;
-    void start();
+    void start();    
 
 private:
 
+    void invokeClient();
     void removeClient(const std::shared_ptr<Demo::CallbackReceiverPrx>&, std::exception_ptr);
 
     MainPage^ _page;

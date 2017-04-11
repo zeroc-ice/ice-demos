@@ -47,30 +47,36 @@ CallbackSenderI::start()
     _result = async(launch::async,
                     [this]
                     {
-                        int num = 0;
-                        unique_lock<mutex> lock(_mutex);
-                        while(!_destroy)
-                        {
-                            _cv.wait_for(lock, chrono::seconds(2));
-
-                            if(!_destroy && !_clients.empty())
-                            {
-                                ++num;
-
-                                //
-                                // Invoke callback on all clients; it's safe to do it with _mutex locked
-                                // because Ice guarantees these async invocations never block the calling thread
-                                //
-                                // The exception callback, if called, is called by a thread from the Ice client
-                                // thread pool, and never the calling thread
-                                for(const auto& p: _clients)
-                                {
-                                    p->callbackAsync(num, nullptr,
-                                                     [this, p](exception_ptr eptr) { removeClient(p, eptr); });
-                                }
-                            }
-                        }
+                        invokeClient();
                     });
+}
+
+void
+CallbackSenderI::invokeClient()
+{
+    int num = 0;
+    unique_lock<mutex> lock(_mutex);
+    while(!_destroy)
+    {
+        _cv.wait_for(lock, chrono::seconds(2));
+
+        if(!_destroy && !_clients.empty())
+        {
+            ++num;
+
+            //
+            // Invoke callback on all clients; it's safe to do it with _mutex locked
+            // because Ice guarantees these async invocations never block the calling thread
+            //
+            // The exception callback, if called, is called by a thread from the Ice client
+            // thread pool, and never the calling thread
+            for(const auto& p: _clients)
+            {
+                p->callbackAsync(num, nullptr,
+                                 [this, p](exception_ptr eptr) { removeClient(p, eptr); });
+            }
+        }
+    }
 }
 
 void

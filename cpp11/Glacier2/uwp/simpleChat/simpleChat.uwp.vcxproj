@@ -41,25 +41,25 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>$(DefaultPlatformToolset)</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>$(DefaultPlatformToolset)</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>$(DefaultPlatformToolset)</PlatformToolset>
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>$(DefaultPlatformToolset)</PlatformToolset>
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -252,17 +252,15 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Import Project="$(IceBuilderCppTargets)" Condition="Exists('$(IceBuilderCppTargets)')" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\..\..\packages\zeroc.ice.uwp.v140.3.7.0-beta0\build\native\zeroc.ice.uwp.v140.targets" Condition="Exists('..\..\..\packages\zeroc.ice.uwp.v140.3.7.0-beta0\build\native\zeroc.ice.uwp.v140.targets') and '$(UseIceHome)' != 'all'" />
     <Import Project="..\..\..\packages\zeroc.ice.uwp.v141.x86.3.7.0-beta0\build\native\zeroc.ice.uwp.v141.x86.targets" Condition="Exists('..\..\..\packages\zeroc.ice.uwp.v141.x86.3.7.0-beta0\build\native\zeroc.ice.uwp.v141.x86.targets') and '$(ICE_SRC_DIST)' != 'all'" />
     <Import Project="..\..\..\packages\zeroc.ice.uwp.v140.x64.3.7.0-beta0\build\native\zeroc.ice.uwp.v140.x64.targets" Condition="Exists('..\..\..\packages\zeroc.ice.uwp.v140.x64.3.7.0-beta0\build\native\zeroc.ice.uwp.v140.x64.targets') and '$(ICE_SRC_DIST)' != 'all'" />
     <Import Project="..\..\..\packages\zeroc.ice.uwp.v140.x86.3.7.0-beta0\build\native\zeroc.ice.uwp.v140.x86.targets" Condition="Exists('..\..\..\packages\zeroc.ice.uwp.v140.x86.3.7.0-beta0\build\native\zeroc.ice.uwp.v140.x86.targets') and '$(ICE_SRC_DIST)' != 'all'" />
     <Import Project="..\..\..\packages\zeroc.ice.uwp.v141.x64.3.7.0-beta0\build\native\zeroc.ice.uwp.v141.x64.targets" Condition="Exists('..\..\..\packages\zeroc.ice.uwp.v141.x64.3.7.0-beta0\build\native\zeroc.ice.uwp.v141.x64.targets') and '$(ICE_SRC_DIST)' != 'all'" />
   </ImportGroup>
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild" Condition="'$(UseIceHome)' != 'all'">
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\..\packages\zeroc.ice.uwp.v140.3.7.0-beta0\build\native\zeroc.ice.uwp.v140.targets') and '$(ICE_SRC_DIST)' != 'all'" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\zeroc.ice.uwp.v140.3.7.0-beta0\build\native\zeroc.ice.uwp.v140.targets'))" />
     <Error Condition="!Exists('..\..\..\packages\zeroc.ice.uwp.v140.x64.3.7.0-beta0\build\native\zeroc.ice.uwp.v140.x64.targets') and '$(ICE_SRC_DIST)' != 'all'" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\zeroc.ice.uwp.v140.x64.3.7.0-beta0\build\native\zeroc.ice.uwp.v140.x64.targets'))" />
     <Error Condition="!Exists('..\..\..\packages\zeroc.ice.uwp.v140.x86.3.7.0-beta0\build\native\zeroc.ice.uwp.v140.x86.targets') and '$(ICE_SRC_DIST)' != 'all'" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\zeroc.ice.uwp.v140.x86.3.7.0-beta0\build\native\zeroc.ice.uwp.v140.x86.targets'))" />
     <Error Condition="!Exists('..\..\..\packages\zeroc.ice.uwp.v140.3.7.0-beta0\build\native\zeroc.ice.uwp.v140.props') and '$(ICE_SRC_DIST)' != 'all'" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\zeroc.ice.uwp.v140.3.7.0-beta0\build\native\zeroc.ice.uwp.v140.props'))" />
