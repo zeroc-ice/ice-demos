@@ -119,8 +119,8 @@
     <None Include="README.md" />
     <None Include="..\..\..\..\..\certs\cacert.der" />
     <None Include="client_TemporaryKey.pfx" />
-    <None Include="packages.config" />
     <None Include="..\..\..\..\..\certs\client.p12" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainPage.xaml" />
