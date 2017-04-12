@@ -80,8 +80,9 @@ CallbackSenderI::invokeCallback()
             // thread pool, and never the calling thread
             for(const auto& p : _clients)
             {
+                auto self = shared_from_this();
                 p->callbackAsync(num, nullptr,
-                    [this, p](exception_ptr eptr) { removeClient(p, eptr); });
+                    [self, p](exception_ptr eptr) { self->removeClient(p, eptr); });
             }
         }
     }

@@ -10,7 +10,8 @@
 #include <Callback.h>
 #include <set>
 
-class CallbackSenderI : public Demo::CallbackSender
+class CallbackSenderI : public Demo::CallbackSender,
+                        public std::enable_shared_from_this<CallbackSenderI>
 {
 public:
 
