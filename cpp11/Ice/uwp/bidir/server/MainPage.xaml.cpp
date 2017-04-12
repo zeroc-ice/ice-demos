@@ -36,7 +36,7 @@ CallbackSenderI::addClient(Ice::Identity ident, const Ice::Current& current)
     _page->print(os.str());
 
     auto client = Ice::uncheckedCast<CallbackReceiverPrx>(current.con->createProxy(ident));
-    _clients.insert(client);
+    _clients.push_back(client);
 }
 
 void
@@ -47,12 +47,12 @@ CallbackSenderI::start()
     _result = async(launch::async,
                     [this]
                     {
-                        invokeClient();
+                        invokeCallback();
                     });
 }
 
 void
-CallbackSenderI::invokeClient()
+CallbackSenderI::invokeCallback()
 {
     int num = 0;
     unique_lock<mutex> lock(_mutex);
@@ -93,7 +93,9 @@ CallbackSenderI::removeClient(const shared_ptr<CallbackReceiverPrx>& client, exc
     }
 
     lock_guard<mutex> lock(_mutex);
-    _clients.erase(client);
+    auto p = find(_clients.begin(), _clients.end(), client);
+    assert(p != _clients.end());
+    _clients.erase(p);
 }
 
 

@@ -23,7 +23,7 @@ public:
 
 private:
 
-    void invokeClient();
+    void invokeCallback();
     void removeClient(const std::shared_ptr<Demo::CallbackReceiverPrx>&, std::exception_ptr);
 
     std::shared_ptr<Ice::Communicator> _communicator;

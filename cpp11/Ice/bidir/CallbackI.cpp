@@ -56,11 +56,11 @@ void
 CallbackSenderI::start()
 {
     assert(!_result.valid()); // start should only be called once
-    _result = async(launch::async, [this] { invokeClient(); });
+    _result = async(launch::async, [this] { invokeCallback(); });
 }
 
 void
-CallbackSenderI::invokeClient()
+CallbackSenderI::invokeCallback()
 {
     int num = 0;
     unique_lock<mutex> lock(_mutex);
@@ -68,7 +68,7 @@ CallbackSenderI::invokeClient()
     {
         _cv.wait_for(lock, chrono::seconds(2));
 
-        if(!_destroy && !this->_clients.empty())
+        if(!_destroy && !_clients.empty())
         {
             ++num;
 
@@ -78,7 +78,7 @@ CallbackSenderI::invokeClient()
             //
             // The exception callback, if called, is called by a thread from the Ice client
             // thread pool, and never the calling thread
-            for(const auto& p : this->_clients)
+            for(const auto& p : _clients)
             {
                 p->callbackAsync(num, nullptr,
                     [this, p](exception_ptr eptr) { removeClient(p, eptr); });
@@ -101,5 +101,7 @@ CallbackSenderI::removeClient(const shared_ptr<CallbackReceiverPrx>& client, exc
     }
 
     lock_guard<mutex> lock(_mutex);
-    _clients.erase(remove(_clients.begin(), _clients.end(), client));
+    auto p = find(_clients.begin(), _clients.end(), client);
+    assert(p != _clients.end());
+    _clients.erase(p);
 }
