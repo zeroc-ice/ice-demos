@@ -11,7 +11,7 @@ module Demo
 
 exception RequestCanceledException
 {
-};
+}
 
 interface Hello
 {
@@ -19,6 +19,6 @@ interface Hello
         throws RequestCanceledException;
 
     void shutdown();
-};
+}
 
-};
+}

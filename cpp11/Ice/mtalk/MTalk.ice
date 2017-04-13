@@ -29,7 +29,7 @@ exception ConnectionException
      *
      **/
     string reason;
-};
+}
 
 /**
  *
@@ -67,7 +67,7 @@ interface Peer
      *
      **/
     void disconnect();
-};
+}
 
 /**
  *
@@ -85,6 +85,6 @@ interface Discovery
      *
      **/
     void announce(string name, Peer* peer);
-};
+}
 
-};
+}

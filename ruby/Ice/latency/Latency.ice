@@ -11,6 +11,6 @@ module Demo
 
 interface Ping
 {
-};
+}
 
-};
+}

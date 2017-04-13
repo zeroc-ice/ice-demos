@@ -19,7 +19,7 @@ module Demo
  **/
 local exception JDBCException
 {
-};
+}
 
 /**
  *
@@ -28,7 +28,7 @@ local exception JDBCException
  **/
 exception BookExistsException
 {
-};
+}
 
 /**
  *
@@ -38,7 +38,7 @@ exception BookExistsException
 exception BookRentedException
 {
     string renter;
-};
+}
 
 /**
  *
@@ -47,7 +47,7 @@ exception BookRentedException
  **/
 exception InvalidCustomerException
 {
-};
+}
 
 /**
  *
@@ -56,7 +56,7 @@ exception InvalidCustomerException
  **/
 exception InvalidISBNException
 {
-};
+}
 
 /**
  *
@@ -65,7 +65,7 @@ exception InvalidISBNException
  **/
 exception BookNotRentedException
 {
-};
+}
 
 /** Forward declaration for the interface Book. */
 interface Book;
@@ -91,7 +91,7 @@ struct BookDescription
     
     /** A proxy to the associated book. */
     Book* proxy;
-};
+}
 
 /** A sequence of book descriptions. */
 ["java:type:java.util.LinkedList<BookDescription>:java.util.List<BookDescription>"]
@@ -176,7 +176,7 @@ interface Book
      *
      **/
     void destroy();
-};
+}
 
 /**
  *
@@ -205,7 +205,7 @@ interface BookQueryResult
      *
      **/
     void destroy();
-};
+}
 
 /**
  *
@@ -286,6 +286,6 @@ interface Library
     Book* createBook(string isbn, string title,
                      ["java:type:java.util.LinkedList<String>:java.util.List<String>"] Ice::StringSeq authors)
         throws BookExistsException, InvalidISBNException;
-};
+}
 
-};
+}

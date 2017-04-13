@@ -12,7 +12,7 @@ module Demo
 interface Hello
 {
     idempotent void sayHello();
-};
+}
 
-};
+}
 

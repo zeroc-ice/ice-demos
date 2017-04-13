@@ -14,6 +14,6 @@ module Demo
 interface PricingEngine
 {
     idempotent Ice::StringSeq getPreferredCurrencies();
-};
+}
 
-};
+}

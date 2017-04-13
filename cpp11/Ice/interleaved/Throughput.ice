@@ -17,6 +17,6 @@ interface Throughput
     ["marshaled-result", "cpp:array"] ByteSeq echoByteSeq(["cpp:array"] ByteSeq seq);
 
     void shutdown();
-};
+}
 
-};
+}

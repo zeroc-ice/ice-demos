@@ -72,7 +72,7 @@ interface ChatRoomCallback
      *
      **/
     void leave(long timestamp, string name);
-};
+}
 
 /**
  *
@@ -114,6 +114,6 @@ interface ChatSession extends Glacier2::Session
      *
      **/
     long send(string message) throws InvalidMessageException;
-};
+}
 
-};
+}

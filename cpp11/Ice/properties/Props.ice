@@ -16,8 +16,8 @@ interface Props
 {
     idempotent Ice::PropertyDict getChanges();
     void shutdown();
-};
+}
 
-};
+}
 
 #endif

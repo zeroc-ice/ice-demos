@@ -29,7 +29,7 @@ exception ConnectionException
      *
      **/
     string reason;
-};
+}
 
 /**
  *
@@ -66,6 +66,6 @@ interface Peer
      *
      **/
     void disconnect();
-};
+}
 
-};
+}

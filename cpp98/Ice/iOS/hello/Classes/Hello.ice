@@ -14,8 +14,8 @@ module Demo
 {
     idempotent void sayHello(int delay);
     void shutdown();
-};
+}
 
-};
+}
 
 #endif

@@ -60,6 +60,6 @@ interface Router extends Ice::Router
                                out string category, out int sessionTimeout,
                                out Glacier2::Session* sess)
         throws Glacier2::PermissionDeniedException, Glacier2::CannotCreateSessionException;
-};
+}
 
-};
+}

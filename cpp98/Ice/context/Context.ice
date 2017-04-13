@@ -13,7 +13,7 @@ interface Context
 {
     idempotent void call();
     void shutdown();
-};
+}
 
-};
+}
 

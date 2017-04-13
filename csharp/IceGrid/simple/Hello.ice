@@ -13,6 +13,6 @@ interface Hello
 {
     idempotent void sayHello();
     void shutdown();
-};
+}
 
-};
+}

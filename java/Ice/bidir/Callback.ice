@@ -14,11 +14,11 @@ module Demo
 interface CallbackReceiver
 {
     void callback(int num);
-};
+}
 
 interface CallbackSender
 {
     void addClient(Ice::Identity ident);
-};
+}
 
-};
+}

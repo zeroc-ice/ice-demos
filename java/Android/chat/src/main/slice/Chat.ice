@@ -30,6 +30,6 @@ exception InvalidMessageException
      *
      **/
     string reason;
-};
+}
 
-};
+}

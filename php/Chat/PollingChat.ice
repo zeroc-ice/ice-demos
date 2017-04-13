@@ -31,7 +31,7 @@ class ChatRoomEvent
     long timestamp;
     /** The name of the user. */
     string name;
-};
+}
 
 /**
  *
@@ -51,7 +51,7 @@ sequence<ChatRoomEvent> ChatRoomEventSeq;
  **/
 class UserJoinedEvent extends ChatRoomEvent
 {
-};
+}
 
 /**
  *
@@ -62,7 +62,7 @@ class UserJoinedEvent extends ChatRoomEvent
  **/
 class UserLeftEvent extends ChatRoomEvent
 {
-};
+}
 
 /**
  *
@@ -76,7 +76,7 @@ class MessageEvent extends ChatRoomEvent
 {
     /** The contents of the message. */
     string message;
-};
+}
 
 /**
  *
@@ -127,7 +127,7 @@ interface PollingChatSession
      *
      **/
     void destroy();
-};
+}
 
 /**
  *
@@ -138,7 +138,7 @@ interface PollingChatSession
 exception CannotCreateSessionException
 {
     string reason;
-};
+}
 
 /**
  *
@@ -153,8 +153,8 @@ interface PollingChatSessionFactory
      *
      **/
     PollingChatSession* create(string name, string password) throws CannotCreateSessionException;
-};
+}
 
-};
+}
 
 #endif

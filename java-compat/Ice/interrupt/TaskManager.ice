@@ -13,6 +13,6 @@ interface TaskManager
 {
     void run(int id);
     void shutdown();
-};
+}
 
-};
+}

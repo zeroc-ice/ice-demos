@@ -15,6 +15,6 @@ interface Greet
 {
     idempotent void sendGreeting(Greeting g);
     void shutdown();
-};
+}
 
-};
+}

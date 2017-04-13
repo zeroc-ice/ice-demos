@@ -19,7 +19,7 @@ interface Nrvo
     StringSeq op2();
     StringSeq op3(int size);
     void shutdown();
-};
+}
 
-};
+}
 

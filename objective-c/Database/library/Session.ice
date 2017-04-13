@@ -43,7 +43,7 @@ interface Session
      *
      **/
     void destroy();
-};
+}
 
 /**
  *
@@ -70,6 +70,6 @@ interface SessionFactory
      *
      **/
     ["nonmutating", "cpp:const"] idempotent long getSessionTimeout();
-};
+}
 
-};
+}

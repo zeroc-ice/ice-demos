@@ -31,8 +31,8 @@ exception InvalidMessageException
      *
      **/
     string reason;
-};
+}
 
-};
+}
 
 #endif

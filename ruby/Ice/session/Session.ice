@@ -12,7 +12,7 @@ module Demo
 interface Hello
 {
     idempotent void sayHello();
-};
+}
 
 //
 // The session object. This is used to create per-session objects on
@@ -32,7 +32,7 @@ interface Session
     // Destroy the session explicitly.
     //
     void destroy();
-};
+}
 
 interface SessionFactory
 {
@@ -44,6 +44,6 @@ interface SessionFactory
     Session* create(string name);
 
     void shutdown();
-};
+}
 
-};
+}

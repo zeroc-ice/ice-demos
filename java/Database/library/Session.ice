@@ -35,7 +35,7 @@ interface Session
      *
      **/
     void destroy();
-};
+}
 
 /**
  *
@@ -52,6 +52,6 @@ interface SessionFactory
      *
      **/
     Session* create();
-};
+}
 
-};
+}

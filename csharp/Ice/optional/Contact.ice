@@ -14,7 +14,7 @@ enum NumberType
     HOME,
     OFFICE,
     CELL
-};
+}
 
 class Contact
 {
@@ -22,7 +22,7 @@ class Contact
     optional(1) NumberType type = HOME;
     optional(2) string number;
     optional(3) int dialGroup;
-};
+}
 
 interface ContactDB
 {
@@ -34,7 +34,7 @@ interface ContactDB
     void queryDialgroup(string name, out optional(1) int dialGroup);
 
     void shutdown();
-};
+}
 
-};
+}
 

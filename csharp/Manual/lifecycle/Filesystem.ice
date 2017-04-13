@@ -11,16 +11,16 @@ module Filesystem
     exception GenericError
     {
         string reason;
-    };
-    exception PermissionDenied extends GenericError {};
-    exception NameInUse extends GenericError {};
-    exception NoSuchName extends GenericError {};
+    }
+    exception PermissionDenied extends GenericError {}
+    exception NameInUse extends GenericError {}
+    exception NoSuchName extends GenericError {}
 
     interface Node
     {
         idempotent string name();
         void destroy() throws PermissionDenied;
-    };
+    }
 
     sequence<string> Lines;
 
@@ -28,16 +28,16 @@ module Filesystem
     {
         idempotent Lines read();
         idempotent void write(Lines text) throws GenericError;
-    };
+    }
 
-    enum NodeType { DirType, FileType };
+    enum NodeType { DirType, FileType }
 
     struct NodeDesc
     {
         string name;
         NodeType type;
         Node* proxy;
-    };
+    }
 
     sequence<NodeDesc> NodeDescSeq;
 
@@ -47,5 +47,5 @@ module Filesystem
         idempotent NodeDesc find(string name) throws NoSuchName;
         File* createFile(string name) throws NameInUse;
         Directory* createDirectory(string name) throws NameInUse;
-    };
-};
+    }
+}

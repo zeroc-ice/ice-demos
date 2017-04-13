@@ -12,7 +12,7 @@ module Demo
 interface Nested
 {
     void nestedCall(int level, Nested* proxy);
-};
+}
 
-};
+}
 

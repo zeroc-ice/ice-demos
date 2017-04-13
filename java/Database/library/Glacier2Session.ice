@@ -29,6 +29,6 @@ interface Glacier2Session extends Glacier2::Session
      *
      **/
     Library* getLibrary();
-};
+}
 
-};
+}
