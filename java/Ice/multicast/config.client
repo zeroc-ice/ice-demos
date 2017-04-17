@@ -9,7 +9,7 @@ Discover.Proxy=discover:udp -h 239.255.1.1 -p 10000
 # "DiscoverReply". The following line sets the endpoints for this
 # adapter.
 #
-DiscoverReply.Endpoints=tcp
+DiscoverReply.Endpoints=tcp -h 127.0.0.1
 
 #
 # Alternative IPv6 configuration
