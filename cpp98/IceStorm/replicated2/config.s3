@@ -56,6 +56,11 @@ IceStorm.Publish.Endpoints=default -p 10021:udp -p 10021
 IceStorm.ReplicatedPublishEndpoints=default -p 10001:default -p 10011:default -p 10021:udp -p 10001:udp -p 10011:udp -p 10021
 
 #
+# Only listen on the localhost interface by default.
+#
+Ice.Default.Host=localhost
+
+#
 # TopicManager Tracing
 #
 # 0 = no tracing
