@@ -71,8 +71,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
     }
 
     auto adapter = communicator->createObjectAdapterWithEndpoints("Observer", "tcp");
-    auto observer =
-        Ice::uncheckedCast<CounterObserverPrx>(adapter->addWithUUID(make_shared<CounterObserverI>()));
+    auto observer = Ice::uncheckedCast<CounterObserverPrx>(adapter->addWithUUID(make_shared<CounterObserverI>()));
     adapter->activate();
 
     counter->subscribe(observer);

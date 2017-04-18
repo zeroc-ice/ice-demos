@@ -27,8 +27,7 @@ CounterI::subscribe(shared_ptr<CounterObserverPrx> observer, const Ice::Current&
     // object which is then used to send the initialize event to just
     // the given subscriber.
     //
-    auto o = Ice::uncheckedCast<CounterObserverPrx>(
-        _topic->subscribeAndGetPublisher(IceStorm::QoS(), observer));
+    auto o = Ice::uncheckedCast<CounterObserverPrx>(_topic->subscribeAndGetPublisher(IceStorm::QoS(), observer));
     o->init(_value);
 }
 
