@@ -8,7 +8,7 @@ Discover.Endpoints=udp -h 239.255.1.1 -p 10000
 # The server creates an object adapter with the name "Hello". The
 # following line sets the endpoints for this adapter.
 #
-Hello.Endpoints=tcp
+Hello.Endpoints=tcp -h 127.0.0.1
 
 #
 # Alternative IPv6 configuration
