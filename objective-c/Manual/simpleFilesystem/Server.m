@@ -20,7 +20,7 @@ main(int argc, char* argv[])
             communicator = [ICEUtil createCommunicator:&argc argv:argv];
 
             id<ICEObjectAdapter> adapter = [communicator createObjectAdapterWithEndpoints:@"SimpleFilesystem"
-                                                                                endpoints:@"default -p 10000"];
+                                                                           endpoints:@"default -h localhost -p 10000"];
 
             //
             // Create the root directory (with name "/" and no parent)

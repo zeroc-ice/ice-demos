@@ -9,7 +9,7 @@ CallbackSender.Proxy=callbackSender:default -h localhost -p 10000
 # "Callback.Client". The following line sets the endpoints for this
 # adapter.
 #
-Callback.Client.Endpoints=default
+Callback.Client.Endpoints=default -h localhost
 
 #
 # Warn about connection exceptions
