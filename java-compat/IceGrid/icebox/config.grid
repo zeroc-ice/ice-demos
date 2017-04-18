@@ -18,7 +18,7 @@ IceGrid.Registry.Internal.Endpoints=default -h localhost
 #
 # Enable the admin session manager for use with Glacier2.
 #
-IceGrid.Registry.AdminSessionManager.Endpoints=default
+IceGrid.Registry.AdminSessionManager.Endpoints=default -h localhost
 
 IceGrid.Registry.LMDB.Path=db/registry
 IceGrid.Registry.PermissionsVerifier=DemoIceGrid/NullPermissionsVerifier
