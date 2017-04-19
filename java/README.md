@@ -42,7 +42,10 @@ and all other required components.
 
 To build the demos, open a command window and run:
 
-    gradlew build
+    gradlew -PdevRepo=https://dev.zeroc.com/nexus/repository/maven.ice-v3.7.0-beta0 build
+
+The `-PdevRepo` option is necessary only when the Ice JAR files are not
+installed on your computer.
 
 ## Running the Demos
 
