@@ -26,7 +26,7 @@ Refer to the [C++11 demos](../cpp11) for more examples that use the Ice services
 
 If you've installed Ice in a non-standard location, you'll need to set the
 `ICE_HOME` environment variable with the path name of the
-installation directory. For example, on Linux or OS X:
+installation directory. For example, on Linux or macOS:
 
     $ export ICE_HOME=~/testing/Ice
 

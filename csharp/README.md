@@ -31,9 +31,9 @@ Add this extension to Visual Studio before opening the solution.
 
 Open the solution file `CSharp demos.sln` to build the sample programs.
 
-The demos are configure to use Ice distribution from Nuget packages, this packages are
+The demos are configure to use Ice distribution from NuGet packages, this packages are
 automatically downloaded during build. If you have disabled the automatic download of
-Nuget packages in Visual Studio you need to restore the packages before you build.
+NuGet packages in Visual Studio you need to restore the packages before you build.
 
 Packages can be restored from "Tools > NuGet Package Manager > Manage NuGet Packages for Solution..."
 command in Visual Studio.
@@ -51,7 +51,7 @@ window and select "Build"
 
 - Build from Visual Studio
   * Open a Visual Studio command prompt
-  
+
             set ICE_SRC_DIST=all
             devenv
 

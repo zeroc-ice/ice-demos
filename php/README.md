@@ -20,7 +20,7 @@ discovery plug-in.
 Refer to the [C++11 demos](../cpp11) for more examples that use Ice services
 such as IceGrid and IceStorm.
 
-## Build Instructions for Linux & OS X
+## Build Instructions for Linux and macOS
 
 ### Prerequisites
 
@@ -38,7 +38,7 @@ installation directory:
 
 ### Building the Demos
 
-Review the settings in `make/Make.rules`. When you're ready to start the build,
+Review the settings in `../make/Make.rules`. When you're ready to start the build,
 run `make`:
 
     $ make

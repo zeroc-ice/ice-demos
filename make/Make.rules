@@ -6,7 +6,7 @@
 
 #
 # Define ICE_HOME if Ice is not installed in /usr (Linux) or
-# /usr/local (OS X)
+# /usr/local (macOS)
 #
 #ICE_HOME		?= /opt/Ice-3.7b0
 
