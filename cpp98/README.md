@@ -24,8 +24,7 @@ in the [Ice manual][1].
 The makefiles require GNU make 3.80 or later.
 
 On macOS, the command-line demos require the Xcode Command Line Tools to be
-installed (use `xcode-select --install` to install them). The Xcode sample
-program for iOS require the [Ice Builder for Xcode][2].
+installed (use `xcode-select --install` to install them).
 
 If you've installed Ice in a non-standard location, you'll need to set the
 `ICE_HOME` environment variable with the path name of the
@@ -54,12 +53,10 @@ for example:
     make V=1 Ice/hello
     make Ice/hello_distclean
 
-To build the Xcode iOS example, open `C++98 demos (iOS).xcworkspace` in Xcode.
-
 ### Running the Demos
 
 Before running a demo, make sure you've configured your environment to use Ice
-as described in the [release notes][3].
+as described in the [release notes][2].
 
 Refer to the README.md file in each demo directory for usage instructions.
 
@@ -67,7 +64,7 @@ Refer to the README.md file in each demo directory for usage instructions.
 
 ### Prerequisites
 
-The projects for the sample programs require the [Ice Builder for Visual Studio][4].
+The projects for the sample programs require the [Ice Builder for Visual Studio][3].
 Add this extension to Visual Studio before opening the solution.
 
 ### Building the Demos
@@ -112,11 +109,10 @@ select `Build`.
 ### Running the Demos
 
 Before running a demo, make sure you've configured your environment to use Ice
-as described in the [release notes][3].
+as described in the [release notes][2].
 
 Refer to the README.d file in each demo directory for usage instructions.
 
 [1]: https://doc.zeroc.com/display/Ice37/Ice+Manual
-[2]: https://github.com/zeroc-ice/ice-builder-xcode
-[3]: https://doc.zeroc.com/display/Ice37/Ice+Release+Notes
-[4]: https://github.com/zeroc-ice/ice-builder-visualstudio
+[2]: https://doc.zeroc.com/display/Ice37/Ice+Release+Notes
+[3]: https://github.com/zeroc-ice/ice-builder-visualstudio
