@@ -4,18 +4,14 @@
 //
 // **********************************************************************
 
-#ifndef HELLO_ICE
-#define HELLO_ICE
+#import <UIKit/UIKit.h>
 
-module Demo
-{
+@class HelloController;
 
-interface Hello
+@interface AppDelegate : NSObject <UIApplicationDelegate>
 {
-    idempotent void sayHello(int delay);
-    void shutdown();
+    IBOutlet UIWindow *window;
+    IBOutlet HelloController *viewController;
 }
 
-}
-
-#endif
+@end

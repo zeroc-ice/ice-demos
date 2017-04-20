@@ -4,18 +4,12 @@
 //
 // **********************************************************************
 
-#ifndef HELLO_ICE
-#define HELLO_ICE
+#import <UIKit/UIKit.h>
 
-module Demo
+int main(int argc, char *argv[])
 {
-
-interface Hello
-{
-    idempotent void sayHello(int delay);
-    void shutdown();
+    @autoreleasepool
+    {
+        return UIApplicationMain(argc, argv, nil, nil);
+    }
 }
-
-}
-
-#endif

@@ -6,6 +6,8 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol ICECommunicator;
+
 @interface HelloController : UIViewController<UITextFieldDelegate, UIAlertViewDelegate, UIPickerViewDataSource,
                                                   UIPickerViewDelegate >
 {
