@@ -92,6 +92,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\properties\msbuild\server\server.vcxproj", "{C6F1C2A3-9817-4021-97D0-1D3FA9E95EA3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Manual", "Manual", "{44504257-9751-4CA1-AF97-86995FE49C45}"
+	ProjectSection(SolutionItems) = preProject
+		Manual\README.md = Manual\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "printer", "printer", "{8671D369-C8F1-4458-A1DA-EBE56CFEE218}"
 	ProjectSection(SolutionItems) = preProject
@@ -377,6 +380,13 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{E1BA57C1-CD76-4A9F-A049-2448D4363A38}"
 	ProjectSection(SolutionItems) = preProject
 		Chat\server\README.md = Chat\server\README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "evictor", "evictor", "{E0D028F5-7111-465F-B7AB-3E1F60BC29D7}"
+	ProjectSection(SolutionItems) = preProject
+		Manual\evictor\EvictorBase.cpp = Manual\evictor\EvictorBase.cpp
+		Manual\evictor\EvictorBase.h = Manual\evictor\EvictorBase.h
+		Manual\evictor\README.md = Manual\evictor\README.md
 	EndProjectSection
 EndProject
 Global
@@ -1141,5 +1151,6 @@ Global
 		{5FD8BF89-9EC2-4F9A-B192-2752BF6FC160} = {E1BA57C1-CD76-4A9F-A049-2448D4363A38}
 		{6C3AA14B-D9D8-4AE5-86F7-25F1E19BA6C0} = {0D51FD79-E230-4EC7-A1FC-32D41CD76C1E}
 		{E1BA57C1-CD76-4A9F-A049-2448D4363A38} = {0D51FD79-E230-4EC7-A1FC-32D41CD76C1E}
+		{E0D028F5-7111-465F-B7AB-3E1F60BC29D7} = {44504257-9751-4CA1-AF97-86995FE49C45}
 	EndGlobalSection
 EndGlobal

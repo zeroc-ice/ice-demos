@@ -7,5 +7,5 @@ evict() is called when the evictor has decided to evict a servant.
 Note that you can pass information from add() to the corresponding
 call to evict() via the cookie argument.
 
-For more details on this evictor, see the section "Server
-Implementation Techniques" in the Ice Manual.
+For more details on this evictor, see
+[Servant Evictors(https://doc.zeroc.com/display/Ice37/Servant+Evictors).
