@@ -5,8 +5,7 @@
 // **********************************************************************
 
 #include <Ice/Ice.h>
-#include <IceBT/ConnectionInfo.h>
-#include <IceBT/Plugin.h>
+#include <IceBT/IceBT.h>
 #include <Talk.h>
 
 using namespace std;
