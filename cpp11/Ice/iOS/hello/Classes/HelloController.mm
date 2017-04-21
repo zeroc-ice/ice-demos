@@ -324,8 +324,7 @@ public:
 private:
 
     HelloController* _controller;
-    Ice::CommunicatorHolder _ich = shared_ptr<Ice::Communicator>(nullptr); // Must be default-initialized, since the default
-                                            // ctor creates a communicator
+    Ice::CommunicatorHolder _ich;
     bool _response;
     shared_ptr<HelloPrx> _helloPrx;
     int _deliveryMode;
