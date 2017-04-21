@@ -28,6 +28,10 @@ let completed = false;
 Ice.Promise.try(() =>
     {
         communicator = Ice.initialize(process.argv);
+        if(process.argv.length > 2)
+        {
+            throw("too many arguments");
+        }
         let proxy = communicator.stringToProxy("hello:default -p 10000").ice_twoway().ice_secure(false);
         let timeout = -1;
         let delay = 0;

@@ -15,6 +15,10 @@ Ice.Promise.try(() =>
         // Initialize the communicator and create a proxy to the hello object.
         //
         communicator = Ice.initialize(process.argv);
+        if(process.argv.length > 2)
+        {
+            throw("too many arguments");
+        }
         
         //
         // Down-cast the proxy to the hello object interface and invoke 

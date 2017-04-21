@@ -19,10 +19,7 @@ class CallbackReceiverI extends Demo.CallbackReceiver
     }
 }
 
-const id = new Ice.InitializationData();
-id.properties = Ice.createProperties();
-
-const communicator = Ice.initialize(process.argv, id);
+let communicator;
 
 //
 // Exit on SIGINT or SIGBREAK
@@ -37,6 +34,11 @@ process.on(process.platform == "win32" ? "SIGBREAK" : "SIGINT", () =>
 
 Ice.Promise.try(() =>
     {
+        communicator = Ice.initialize(process.argv);
+        if(process.argv.length > 2)
+        {
+            throw("too many arguments");
+        }
         //
         // Initialize the communicator and create a proxy to the sender object.
         //

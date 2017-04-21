@@ -7,8 +7,6 @@
 const Ice = require("ice").Ice;
 const Demo = require("./Latency").Demo;
 
-var communicator;
-
 //
 // Asynchronous loop, each call to the given function returns a
 // promise that when fulfilled runs the next iteration.
@@ -26,6 +24,7 @@ function loop(fn, repetitions)
     return next();
 }
 
+let communicator;
 Ice.Promise.try(
     function()
     {
@@ -34,6 +33,10 @@ Ice.Promise.try(
         // ping object.
         //
         communicator = Ice.initialize(process.argv);
+        if(process.argv.length > 2)
+        {
+            throw("too many arguments");
+        }
         const repetitions = 1000;
         const proxy = communicator.stringToProxy("ping:default -p 10000");
 

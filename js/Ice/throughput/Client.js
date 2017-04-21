@@ -90,6 +90,10 @@ Ice.Promise.try(() =>
         // Initialize the communicator.
         //
         communicator = Ice.initialize(process.argv);
+        if(process.argv.length > 2)
+        {
+            throw("too many arguments");
+        }
 
         //
         // Create a proxy to the throughput object and down-cast the 
