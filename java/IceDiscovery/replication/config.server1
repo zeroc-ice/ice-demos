@@ -3,7 +3,7 @@
 #
 # The following configures the object adapter. We set endpoints with
 # no fixed port and we assign it a unique adapter ID that will be
-# embedded in indirect proxies. 
+# embedded in indirect proxies.
 #
 # We also configure the replica group ID, object adapters sharing the
 # same replica group ID are part of the same replica group. When the
@@ -24,6 +24,14 @@ Ice.ProgramName=Server1
 # Enable the Ice discovery plugin
 #
 Ice.Plugin.IceDiscovery=IceDiscovery:com.zeroc.IceDiscovery.PluginFactory
+
+#
+# Use the loopback interface by default for discovery.
+#
+# Change this property to the IP address of a network interface if
+# you want the client to discover servers on your local network.
+#
+IceDiscovery.Interface=127.0.0.1
 
 #
 # Ensure connection establishment doesn't take too long.
