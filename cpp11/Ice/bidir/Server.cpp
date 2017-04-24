@@ -34,7 +34,7 @@ CallbackServer::run(int argc, char*[])
     }
 
     auto adapter = communicator()->createObjectAdapter("Callback.Server");
-    auto sender = make_shared<CallbackSenderI>(communicator());
+    auto sender = make_shared<CallbackSenderI>();
     adapter->add(sender, Ice::stringToIdentity("sender"));
     adapter->activate();
 

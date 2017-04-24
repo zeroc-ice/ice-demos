@@ -11,8 +11,8 @@ using namespace std;
 using namespace Ice;
 using namespace Demo;
 
-CallbackSenderI::CallbackSenderI(const Ice::CommunicatorPtr& communicator) :
-    _communicator(communicator), _destroy(false)
+CallbackSenderI::CallbackSenderI() :
+    _destroy(false)
 {
 }
 

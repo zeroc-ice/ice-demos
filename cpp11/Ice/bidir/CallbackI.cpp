@@ -11,9 +11,12 @@ using namespace std;
 using namespace Ice;
 using namespace Demo;
 
-CallbackSenderI::CallbackSenderI(shared_ptr<Communicator> communicator) :
-    _communicator(move(communicator))
+void
+CallbackSenderI::addClient(Identity ident, const Current& current)
 {
+    lock_guard<mutex> lock(_mutex);
+    cout << "adding client `" << Ice::identityToString(ident) << "'"<< endl;
+    _clients.push_back(Ice::uncheckedCast<CallbackReceiverPrx>(current.con->createProxy(ident)));
 }
 
 void
@@ -42,14 +45,6 @@ CallbackSenderI::destroy()
             cerr << "sender task failed with: " << ex.what() << endl;
         }
     }
-}
-
-void
-CallbackSenderI::addClient(Identity ident, const Current& current)
-{
-    lock_guard<mutex> lock(_mutex);
-    cout << "adding client `" << Ice::identityToString(ident) << "'"<< endl;
-    _clients.push_back(Ice::uncheckedCast<CallbackReceiverPrx>(current.con->createProxy(ident)));
 }
 
 void

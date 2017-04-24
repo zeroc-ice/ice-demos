@@ -17,8 +17,8 @@ typedef IceUtil::Handle<CallbackSenderI> CallbackSenderIPtr;
 class CallbackSenderI : public Demo::CallbackSender, public IceUtil::Thread, public IceUtil::Monitor<IceUtil::Mutex>
 {
 public:
-    
-    CallbackSenderI(const Ice::CommunicatorPtr&);
+
+    CallbackSenderI();
 
     void destroy();
 
@@ -28,7 +28,6 @@ public:
 
 private:
 
-    Ice::CommunicatorPtr _communicator;
     bool _destroy;
     std::set<Demo::CallbackReceiverPrx> _clients;
 };
