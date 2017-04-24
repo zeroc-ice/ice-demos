@@ -34,7 +34,7 @@ installation directory:
 
 ### Building the Demos
 
-Review the settings in `make/Make.rules`. For example, set `OPTIMIZE=yes`
+Review the settings in `../make/Make.rules`. For example, set `OPTIMIZE=yes`
 to build with optimization.
 
 When you're ready to start the build, run `make`, for example:
@@ -74,9 +74,9 @@ Add this extension to Visual Studio before opening the solution.
 Open the solution file `C++98 demos.sln` to build the sample programs.
 
 The demos are configured to use Ice C++ binary distribution, packaged with
-Nuget. The build downloads automatically the Ice Nuget package.
+NuGet. The build downloads automatically the Ice NuGet package.
 
-If you have disabled the automatic download of Nuget packages by Visual Studio,
+If you have disabled the automatic download of NuGet packages by Visual Studio,
 you need to restore the packages before you build using
 `Tools > Options > NuGet Package Manager > Manage NuGet Packages for Solution...` in
 Visual Studio.

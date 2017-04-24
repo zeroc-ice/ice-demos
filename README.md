@@ -1,6 +1,6 @@
 # Ice Demos
 
-The ice-demos repository provides sample programs for Ice, Ice-E, and Ice Touch.
+The ice-demos repository provides sample programs for Ice.
 
 ## Layout
 
@@ -30,13 +30,16 @@ tested on any other platform.
 
 ## Building and Running the Sample Programs
 
-The README file in each language subdirectory provides instructions for
+The README.md file in each language subdirectory provides instructions for
 building and running the sample programs.
 
 ## Branches
 
 - `master`
   Primary development branch (unstable, frequently updated)
+
+- `3.7`
+  Demos for Ice 3.7 (unstable, frequently updated)
 
 - `3.6`
   Demos for Ice 3.6.x plus various patches (stable, frequently updated)

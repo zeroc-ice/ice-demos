@@ -26,7 +26,7 @@ Refer to the [C++11 demos](../cpp11) for more examples that use the Ice services
 
 If you've installed Ice in a non-standard location, you'll need to set the
 `ICE_HOME` environment variable with the path name of the
-installation directory. For example, on Linux or OS X:
+installation directory. For example, on Linux or macOS:
 
     $ export ICE_HOME=~/testing/Ice
 
@@ -42,7 +42,10 @@ and all other required components.
 
 To build the demos, open a command window and run:
 
-    gradlew build
+    gradlew -PdevRepo=https://dev.zeroc.com/nexus/repository/maven.ice-v3.7.0-beta0 build
+
+The `-PdevRepo` option is necessary only when the Ice JAR files are not
+installed on your computer.
 
 ## Running the Demos
 

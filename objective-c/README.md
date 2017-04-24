@@ -28,7 +28,7 @@ The command-line demos require the Xcode Command Line Tools to be installed
 ### Building the Demos
 
 To build the command-line examples, first review the settings found in
-`make/Make.rules` and adjust any you want changed. If you've installed Ice
+`../make/Make.rules` and adjust any you want changed. If you've installed Ice
 in a non-standard location, you'll also need to set the `ICE_HOME` environment
 variable with the path name of the installation directory:
 
