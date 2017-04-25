@@ -5,22 +5,10 @@
 // **********************************************************************
 
 import Demo.*;
+import java.util.concurrent.*;
 
-class CallbackSenderI implements CallbackSender, java.lang.Runnable
+class CallbackSenderI implements CallbackSender
 {
-    CallbackSenderI(com.zeroc.Ice.Communicator communicator)
-    {
-        _communicator = communicator;
-    }
-
-    synchronized public void destroy()
-    {
-        System.out.println("destroying callback sender");
-        _destroy = true;
-
-        this.notify();
-    }
-
     @Override
     synchronized public void addClient(com.zeroc.Ice.Identity ident, com.zeroc.Ice.Current current)
     {
@@ -31,59 +19,63 @@ class CallbackSenderI implements CallbackSender, java.lang.Runnable
         _clients.add(client);
     }
 
-    @Override
-    public void run()
+    public void destroy()
     {
-        int num = 0;
-        while(true)
+        System.out.println("destroying callback sender");
+        _executorService.shutdown();
+        try
         {
-            java.util.List<CallbackReceiverPrx> clients;
-            synchronized(this)
+            _executorService.awaitTermination(10, TimeUnit.SECONDS);
+        }
+        catch(InterruptedException interrupted)
+        {
+            // ignored
+        }
+    }
+
+    public void start()
+    {
+        _executorService.scheduleAtFixedRate(() -> invokeCallback(), 2, 2, TimeUnit.SECONDS);
+    }
+
+    synchronized private void invokeCallback()
+    {
+        if(!_clients.isEmpty())
+        {
+            _num++;
+
+            //
+            // Invoke callback on all clients; it's safe to do it within the synchronization
+            // because Ice guarantees these async invocations never block the calling thread.
+            //
+            // We use whenCompleteAsync instead of whenComplete to ensure that if the
+            // call completes immediately we delay the removeClient until after the iteration.
+            //
+            for(CallbackReceiverPrx p : _clients)
             {
-                try
-                {
-                    this.wait(2000);
-                }
-                catch(java.lang.InterruptedException ex)
-                {
-                }
-
-                if(_destroy)
-                {
-                    break;
-                }
-
-                clients = new java.util.ArrayList<>(_clients);
-            }
-
-            if(!clients.isEmpty())
-            {
-                ++num;
-
-                for(CallbackReceiverPrx p : clients)
-                {
-                    try
+                p.callbackAsync(_num).whenCompleteAsync(
+                    (r, t) ->
                     {
-                        p.callback(num);
-                    }
-                    catch(Exception ex)
-                    {
-                        System.out.println("removing client `" +
-                                           com.zeroc.Ice.Util.identityToString(p.ice_getIdentity()) +
-                                           "':");
-                        ex.printStackTrace();
-
-                        synchronized(this)
+                        if(t != null)
                         {
-                            _clients.remove(p);
+                            removeClient(p, t);
                         }
-                    }
-                }
+                    },
+                    _executorService);
             }
         }
     }
 
-    private com.zeroc.Ice.Communicator _communicator;
-    private boolean _destroy = false;
+    synchronized private void removeClient(CallbackReceiverPrx p, Throwable t)
+    {
+        System.err.println("removing client `" +
+                           com.zeroc.Ice.Util.identityToString(p.ice_getIdentity()) +
+                           "':");
+        t.printStackTrace();
+        _clients.remove(p);
+    }
+
+    private ScheduledExecutorService _executorService = Executors.newSingleThreadScheduledExecutor();
     private java.util.List<CallbackReceiverPrx> _clients = new java.util.ArrayList<>();
+    private int _num = 0;
 }
