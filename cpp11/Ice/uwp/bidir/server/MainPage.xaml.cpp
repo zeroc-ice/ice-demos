@@ -24,6 +24,11 @@ using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
 
+CallbackSenderI::CallbackSenderI(MainPage^ page) :
+    _page(page)
+{
+}
+
 void
 CallbackSenderI::addClient(Ice::Identity ident, const Ice::Current& current)
 {
@@ -112,7 +117,7 @@ MainPage::MainPage()
 
         _communicator = Ice::initialize(id);
         _adapter = _communicator->createObjectAdapter("Callback.Server");
-        _sender = make_shared<CallbackSenderI>(this, _communicator);
+        _sender = make_shared<CallbackSenderI>(this);
         _adapter->add(_sender, Ice::stringToIdentity("sender"));
         _adapter->activate();
 
