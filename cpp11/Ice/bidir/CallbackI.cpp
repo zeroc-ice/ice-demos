@@ -69,10 +69,10 @@ CallbackSenderI::invokeCallback()
 
             //
             // Invoke callback on all clients; it's safe to do it with _mutex locked
-            // because Ice guarantees these async invocations never block the calling thread
+            // because Ice guarantees these async invocations never block the calling thread.
             //
-            // The exception callback, if called, is called by a thread from the Ice client
-            // thread pool, and never the calling thread
+            // The exception callback, if called, is called by an Ice thread, and never the
+            // calling thread.
             for(const auto& p : _clients)
             {
                 auto self = shared_from_this();

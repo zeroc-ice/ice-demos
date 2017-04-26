@@ -5,7 +5,8 @@
 #
 # **********************************************************************
 
-import os, sys, traceback, threading, Ice
+import os, sys, threading, Ice
+
 
 slice_dir = Ice.getSliceDir()
 if not slice_dir:
@@ -16,65 +17,50 @@ Ice.loadSlice("'-I" + slice_dir + "' Callback.ice")
 import Demo
 
 class CallbackSenderI(Demo.CallbackSender, threading.Thread):
-    def __init__(self, communicator):
+    def __init__(self):
         threading.Thread.__init__(self)
-        self._communicator = communicator
         self._destroy = False
         self._clients = []
         self._cond = threading.Condition()
 
     def destroy(self):
-        self._cond.acquire()
-
-        print("destroying callback sender")
-        self._destroy = True
-
-        try:
+        with self._cond:
+            print("destroying callback sender")
+            self._destroy = True
             self._cond.notify()
-        finally:
-            self._cond.release()
 
         self.join()
 
     def addClient(self, ident, current=None):
-        self._cond.acquire()
-
-        print("adding client `" + Ice.identityToString(ident) + "'")
-
-        client = Demo.CallbackReceiverPrx.uncheckedCast(current.con.createProxy(ident))
-        self._clients.append(client)
-
-        self._cond.release()
+        with self._cond:
+            print("adding client `" + Ice.identityToString(ident) + "'")
+            client = Demo.CallbackReceiverPrx.uncheckedCast(current.con.createProxy(ident))
+            self._clients.append(client)
 
     def run(self):
         num = 0
-
-        while True:
-
-            self._cond.acquire()
-            try:
+        with self._cond:
+            while not self._destroy:
                 self._cond.wait(2)
-                if self._destroy:
-                    break
-                clients = self._clients[:]
-            finally:
-                self._cond.release()
 
-            if len(clients) > 0:
-                num = num + 1
+                if not self._destroy and len(self._clients) > 0:
+                    num = num + 1
+                    #
+                    # Call clients within synchronization. This is safe because (a) Ice guarantees
+                    # these async invocations never block and (b) add_done_callback_async on an
+                    # Ice.InvocationFuture returned by callbackAsync always executes the done callback
+                    # in an Ice thread.
+                    #
+                    for p in self._clients:
+                        p.callbackAsync(num).add_done_callback_async(
+                            lambda f, client = p: self.removeClient(client, f.exception()) if f.exception() else None)
 
-                for p in clients:
-                    try:
-                        p.callback(num)
-                    except:
-                        print("removing client `" + Ice.identityToString(p.ice_getIdentity()) + "':")
-                        traceback.print_exc()
+    def removeClient(self, client, ex):
+        with self._cond:
+            print("removing client `" + Ice.identityToString(client.ice_getIdentity()) +
+                  "':\n" + str(ex))
+            self._clients.remove(client)
 
-                        self._cond.acquire()
-                        try:
-                            self._clients.remove(p)
-                        finally:
-                            self._cond.release()
 
 class Server(Ice.Application):
     def run(self, args):
@@ -83,15 +69,13 @@ class Server(Ice.Application):
             return 1
 
         adapter = self.communicator().createObjectAdapter("Callback.Server")
-        sender = CallbackSenderI(self.communicator())
+        sender = CallbackSenderI()
         adapter.add(sender, Ice.stringToIdentity("sender"))
         adapter.activate()
 
         sender.start()
-        try:
-            self.communicator().waitForShutdown()
-        finally:
-            sender.destroy()
+        self.communicator().waitForShutdown()
+        sender.destroy()
 
         return 0
 
