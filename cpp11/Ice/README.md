@@ -5,6 +5,12 @@ Demos in this directory:
   This demo illustrates the use of Asynchronous Method Invocation
   (AMI) and Asynchronous Method Dispatch (AMD).
 
+- [asyncInvocation](./asyncInvocation)
+
+  This demo illustrates the use of Asynchronous Method Invocation
+  (AMI), with both futures and callbacks.
+
+
 - [bidir](./bidir)
 
   This demo shows how to use bidirectional connections for callbacks.

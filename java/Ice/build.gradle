@@ -4,7 +4,7 @@
 //
 // **********************************************************************
 
-['async', 'bidir', 'callback', 'hello', 'invoke',
+['async', 'asyncInvocation', 'bidir', 'callback', 'hello', 'invoke',
  'interrupt', 'latency', 'minimal', 'multicast', 'nested',
  'plugin', 'properties', 'serialize','session',
  'throughput', 'optional','context'].each {
