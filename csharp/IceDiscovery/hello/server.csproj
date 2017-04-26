@@ -87,17 +87,17 @@
     <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Ice, Version=3.6.3.0, Culture=neutral, PublicKeyToken=1f998c50fec78381, processorArchitecture=MSIL">
+    <Reference Include="Ice, Version=3.6.4.0, Culture=neutral, PublicKeyToken=1f998c50fec78381, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
       <HintPath>$(IceAssembliesDir)\Ice.dll</HintPath>
     </Reference>
-    <Reference Include="IceDiscovery, Version=3.6.3.0, Culture=neutral, PublicKeyToken=1f998c50fec78381, processorArchitecture=MSIL">
+    <Reference Include="IceDiscovery, Version=3.6.4.0, Culture=neutral, PublicKeyToken=1f998c50fec78381, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
       <HintPath>$(IceAssembliesDir)\IceDiscovery.dll</HintPath>
     </Reference>
-    <Reference Include="IceSSL, Version=3.6.3.0, Culture=neutral, PublicKeyToken=1f998c50fec78381, processorArchitecture=MSIL">
+    <Reference Include="IceSSL, Version=3.6.4.0, Culture=neutral, PublicKeyToken=1f998c50fec78381, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
       <HintPath>$(IceAssembliesDir)\IceSSL.dll</HintPath>

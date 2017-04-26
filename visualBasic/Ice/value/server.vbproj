@@ -73,7 +73,7 @@
     <DebugType>none</DebugType>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Ice, Version=3.6.3.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Ice, Version=3.6.4.0, Culture=neutral, processorArchitecture=MSIL">
       <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
     </Reference>

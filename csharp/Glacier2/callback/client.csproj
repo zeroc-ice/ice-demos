@@ -85,17 +85,17 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Glacier2, Version=3.6.3.0, Culture=neutral, PublicKeyToken=1f998c50fec78381, processorArchitecture=MSIL">
+    <Reference Include="Glacier2, Version=3.6.4.0, Culture=neutral, PublicKeyToken=1f998c50fec78381, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
       <HintPath>$(IceAssembliesDir)\Glacier2.dll</HintPath>
     </Reference>
-    <Reference Include="Ice, Version=3.6.3.0, Culture=neutral, PublicKeyToken=1f998c50fec78381, processorArchitecture=MSIL">
+    <Reference Include="Ice, Version=3.6.4.0, Culture=neutral, PublicKeyToken=1f998c50fec78381, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
       <HintPath>$(IceAssembliesDir)\Ice.dll</HintPath>
     </Reference>
-    <Reference Include="IceSSL, Version=3.6.3.0, Culture=neutral, PublicKeyToken=1f998c50fec78381, processorArchitecture=MSIL">
+    <Reference Include="IceSSL, Version=3.6.4.0, Culture=neutral, PublicKeyToken=1f998c50fec78381, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
       <HintPath>$(IceAssembliesDir)\IceSSL.dll</HintPath>
