@@ -8,7 +8,7 @@ import Demo.*;
 
 public class Client extends Glacier2.Application
 {
-    class ShutdownHook extends Thread
+    class ShutdownHook implements Runnable
     {
         @Override
         public void

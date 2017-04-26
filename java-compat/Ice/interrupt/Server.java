@@ -18,38 +18,39 @@ public class Server extends Ice.Application
             System.err.println(appName() + ": too many arguments");
             return 1;
         }
-        
+
         //
         // If ^C is pressed we want to interrupt all running upcalls from the
         // dispatcher and destroy the communicator.
         //
-        setInterruptHook(new Thread() {
-            @Override
-            public void
-            run()
+        setInterruptHook(new Runnable()
             {
-                //
-                // Call shutdownNow on the executor. This interrupts all
-                // executor threads causing any running servant dispatch threads
-                // to terminate quickly.
-                //
-                _executor.shutdownNow();
-                try
+                @Override
+                public void
+                run()
                 {
-                    communicator().shutdown();
+                    //
+                    // Call shutdownNow on the executor. This interrupts all
+                    // executor threads causing any running servant dispatch threads
+                    // to terminate quickly.
+                    //
+                    _executor.shutdownNow();
+                    try
+                    {
+                        communicator().shutdown();
+                    }
+                    catch(Ice.LocalException ex)
+                    {
+                        ex.printStackTrace();
+                    }
                 }
-                catch(Ice.LocalException ex)
-                {
-                    ex.printStackTrace();
-                }
-            }
-        });
+            });
 
         Ice.ObjectAdapter adapter = communicator().createObjectAdapter("TaskManager");
         adapter.add(new TaskManagerI(_executor), Ice.Util.stringToIdentity("manager"));
         adapter.activate();
         communicator().waitForShutdown();
-        
+
         return 0;
     }
 
@@ -74,11 +75,11 @@ public class Server extends Ice.Application
                 app.getExecutor().submit(runnable);
             }
         };
-        
+
         int status = app.main("Server", args, initData);
         System.exit(status);
     }
-    
+
     ExecutorService getExecutor()
     {
         return _executor;

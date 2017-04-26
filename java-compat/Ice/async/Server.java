@@ -6,7 +6,7 @@
 
 public class Server extends Ice.Application
 {
-    class ShutdownHook extends Thread
+    class ShutdownHook implements Runnable
     {
         @Override
         public void
