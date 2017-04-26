@@ -38,14 +38,15 @@ public class TaskManagerI implements TaskManager
     public void shutdown(com.zeroc.Ice.Current current)
     {
         System.out.println("Shutting down...");
+        current.adapter.getCommunicator().shutdown();
+
         //
         // Call shutdownNow on the executor. This interrupts all
         // executor threads causing any running upcalls to terminate
         // quickly.
         //
         _executor.shutdownNow();
-        current.adapter.getCommunicator().shutdown();
     }
-    
+
     private ExecutorService _executor;
 }

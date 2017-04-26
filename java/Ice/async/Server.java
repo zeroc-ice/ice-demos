@@ -6,16 +6,6 @@
 
 public class Server extends com.zeroc.Ice.Application
 {
-    class ShutdownHook extends Thread
-    {
-        @Override
-        public void run()
-        {
-            _workQueue._destroy();
-            communicator().shutdown();
-        }
-    }
-
     @Override
     public int run(String[] args)
     {
@@ -25,12 +15,16 @@ public class Server extends com.zeroc.Ice.Application
             return 1;
         }
 
-        setInterruptHook(new ShutdownHook());
-
         com.zeroc.Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Hello");
         _workQueue = new WorkQueue();
         adapter.add(new HelloI(_workQueue), com.zeroc.Ice.Util.stringToIdentity("hello"));
         _workQueue.start();
+        setInterruptHook(() ->
+                         {
+                             _workQueue._destroy();
+                             communicator().shutdown();
+                         });
+        
         adapter.activate();
 
         communicator().waitForShutdown();

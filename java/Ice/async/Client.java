@@ -66,14 +66,17 @@ public class Client
                 {
                     hello.sayHelloAsync(5000).whenComplete((result, ex) ->
                         {
-                            if(ex instanceof Demo.RequestCanceledException)
+                            if(ex != null)
                             {
-                                System.out.println("Demo.RequestCanceledException");
-                            }
-                            else
-                            {
-                                System.err.println("sayHello AMI call failed:");
-                                ex.printStackTrace();
+                                if(ex instanceof Demo.RequestCanceledException)
+                                {
+                                    System.out.println("Demo.RequestCanceledException");
+                                }
+                                else
+                                {
+                                    System.err.println("sayHello AMI call failed:");
+                                    ex.printStackTrace();
+                                }
                             }
                         });
                 }

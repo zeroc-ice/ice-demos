@@ -8,15 +8,6 @@ import Demo.*;
 
 public class Client extends com.zeroc.Glacier2.Application
 {
-    class ShutdownHook extends Thread
-    {
-        @Override
-        public void run()
-        {
-            communicator().destroy();
-        }
-    }
-
     private static void menu()
     {
         System.out.println(
@@ -98,7 +89,7 @@ public class Client extends com.zeroc.Glacier2.Application
         // Application installed interrupt callback and install our
         // own shutdown hook.
         //
-        setInterruptHook(new ShutdownHook());
+        setInterruptHook(() -> communicator().destroy());
 
         try
         {
