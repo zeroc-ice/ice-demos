@@ -67,6 +67,10 @@ private:
 int
 main(int argc, char* argv[])
 {
+#ifdef ICE_STATIC_LIBS
+    Ice::registerIceUDP();
+#endif
+
     HelloClient app;
     return app.main(argc, argv, "config.client");
 }

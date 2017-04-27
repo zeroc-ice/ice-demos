@@ -22,6 +22,8 @@ main(int argc, char* argv[])
 {
 #ifdef ICE_STATIC_LIBS
     Ice::registerIceSSL();
+    Ice::registerIceUDP();
+    Ice::registerIceWS();
 #endif
     HelloServer app;
     return app.main(argc, argv, "config.server");

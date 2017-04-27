@@ -20,6 +20,10 @@ public:
 int
 main(int argc, char* argv[])
 {
+#ifdef ICE_STATIC_LIBS
+    Ice::registerIceLocatorDiscovery();
+#endif
+
     HelloClient app;
     return app.main(argc, argv, "config.client");
 }
@@ -40,8 +44,8 @@ HelloClient::run(int argc, char* argv[])
         cerr << argv[0] << ": invalid or missing Hello.Proxy property" << endl;
         return EXIT_FAILURE;
     }
-    
+
     hello->sayHello();
-    
+
     return EXIT_SUCCESS;
 }

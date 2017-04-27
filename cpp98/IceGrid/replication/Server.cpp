@@ -20,6 +20,10 @@ public:
 int
 main(int argc, char* argv[])
 {
+#ifdef ICE_STATIC_LIBS
+    Ice::registerIceLocatorDiscovery();
+#endif
+
     Server app;
     int status = app.main(argc, argv);
     return status;

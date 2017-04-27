@@ -187,6 +187,7 @@ main(int argc, char* argv[])
 {
 #ifdef ICE_STATIC_LIBS
     Ice::registerIceSSL();
+    Ice::registerIceWS();
 #endif
     Ice::InitializationData initData;
     initData.properties = Ice::createProperties(argc, argv);

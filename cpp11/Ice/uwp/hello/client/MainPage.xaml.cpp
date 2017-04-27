@@ -26,14 +26,18 @@ using namespace Windows::UI::Xaml::Navigation;
 MainPage::MainPage()
 {
     InitializeComponent();
+
     Ice::registerIceSSL();
+    Ice::registerIceUDP();
+    Ice::registerIceDiscovery(false); // Register the plugin but don't load it on initialization
+
     mode->SelectedIndex = 0;
     Ice::InitializationData id;
     id.properties = Ice::createProperties();
     id.properties->setProperty("Ice.Plugin.IceDiscovery", "1"); // Enable the IceDiscovery plugin
     id.properties->setProperty("IceSSL.CertFile", "ms-appx:///client.p12");
     id.properties->setProperty("IceSSL.Password", "password");
-    id.dispatcher = 
+    id.dispatcher =
         [=](function<void()> call, const shared_ptr<Ice::Connection>&)
             {
                 this->Dispatcher->RunAsync(
@@ -62,20 +66,20 @@ MainPage::MainPage()
 void
 hello::MainPage::updateProxy()
 {
-    if (!_communicator)
+    if(!_communicator)
     {
         return;
     }
 
     string h = Ice::wstringToString(hostname->Text->Data());
-    if (h.empty() && !useDiscovery->IsChecked->Value)
+    if(h.empty() && !useDiscovery->IsChecked->Value)
     {
         print("Host is empty.");
         _helloPrx = 0;
         return;
     }
     shared_ptr<Ice::ObjectPrx> prx;
-    if (useDiscovery->IsChecked->Value)
+    if(useDiscovery->IsChecked->Value)
     {
         prx = _communicator->stringToProxy("hello");
     }

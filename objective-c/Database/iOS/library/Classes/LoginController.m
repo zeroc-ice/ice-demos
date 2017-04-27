@@ -48,8 +48,9 @@ static NSString* passwordKey = @"passwordKey";
 
 -(void)viewDidLoad
 {
-    // Register IceSSL plugin and load it on communicator initialization.
+    // Register IceSSL/IceWS plugins and load them on communicator initialization.
     ICEregisterIceSSL(YES);
+    ICEregisterIceWS(YES);
 
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
 

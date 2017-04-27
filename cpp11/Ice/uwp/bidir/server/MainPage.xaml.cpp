@@ -108,6 +108,7 @@ CallbackSenderI::removeClient(const shared_ptr<CallbackReceiverPrx>& client, exc
 MainPage::MainPage()
 {
     InitializeComponent();
+    Ice::registerIceWS();
     try
     {
         Ice::InitializationData id;
@@ -132,16 +133,16 @@ MainPage::MainPage()
     }
 }
 
-void 
+void
 bidir::MainPage::print(const std::string& message)
 {
-    this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal, 
+    this->Dispatcher->RunAsync(CoreDispatcherPriority::Normal,
                     ref new DispatchedHandler(
                             [=] ()
                                 {
                                     output->Text += ref new String(Ice::stringToWstring(message).c_str());
                                     output->UpdateLayout();
                                     scroller->ChangeView(nullptr, scroller->ScrollableHeight, nullptr);
-                                }, 
+                                },
                             CallbackContext::Any));
 }

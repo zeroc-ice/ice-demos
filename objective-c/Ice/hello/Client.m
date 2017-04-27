@@ -13,6 +13,12 @@ int run(id<ICECommunicator>);
 int
 main(int argc, char* argv[])
 {
+#ifdef ICE_STATIC_LIBS
+    ICEregisterIceUDP(YES);
+    ICEregisterIceSSL(YES);
+    ICEregisterIceWS(YES);
+#endif
+
     int status = EXIT_SUCCESS;
     @autoreleasepool
     {

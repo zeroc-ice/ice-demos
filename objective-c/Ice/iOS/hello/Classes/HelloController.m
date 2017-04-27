@@ -48,6 +48,7 @@ static NSString* hostnameKey = @"hostnameKey";
 {
     ICEregisterIceDiscovery(NO); // Register the plugin but don't load it on communicator initialization.
     ICEregisterIceSSL(YES);
+    ICEreigsterIceUDP(YES);
     ICEregisterIceIAP(YES);
 
     ICEInitializationData* initData = [ICEInitializationData initializationData];
@@ -241,7 +242,8 @@ static NSString* hostnameKey = @"hostnameKey";
     }
     else
     {
-        s = [NSString stringWithFormat:@"hello:tcp -h \"%@\" -p 10000:ssl -h \"%@\" -p 10001:udp -h \"%@\" -p 10000", hostname, hostname, hostname];
+        s = [NSString stringWithFormat:@"hello:tcp -h \"%@\" -p 10000:ssl -h \"%@\" -p 10001:udp -h \"%@\" -p 10000",
+                                       hostname, hostname, hostname];
     }
 
     [[NSUserDefaults standardUserDefaults] setObject:hostname forKey:hostnameKey];

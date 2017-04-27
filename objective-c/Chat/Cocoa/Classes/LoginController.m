@@ -26,7 +26,7 @@ NSString* const passwordKey = @"passwordKey";
                                  @"", usernameKey,
                                  @"", passwordKey,
                                  nil];
-    
+
     [[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
 }
 
@@ -37,12 +37,13 @@ NSString* const passwordKey = @"passwordKey";
 
 -(void)awakeFromNib
 {
-    // Register and load the IceSSL plugin on communicator initialization.
+    // Register IceSSL/IceWS plugins and load them on communicator initialization.
     ICEregisterIceSSL(YES);
+    ICEregisterIceWS(YES);
 
     // Restore the field values from the app defaults.
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-	
+
     usernameField.stringValue = [defaults stringForKey:usernameKey];
     passwordField.stringValue = [defaults stringForKey:passwordKey];
 }
@@ -62,7 +63,7 @@ NSString* const passwordKey = @"passwordKey";
         acmTiemout = (ICEInt)[router getSessionTimeout];
     }
     NSString* category = [router getCategoryForClient];
-    
+
     return [[ChatController alloc] initWithCommunicator:communicator
 												session:session
 										     acmTiemout:acmTiemout
@@ -77,32 +78,32 @@ NSString* const passwordKey = @"passwordKey";
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:usernameField.stringValue forKey:usernameKey];
     [defaults setObject:passwordField.stringValue forKey:passwordKey];
-    
+
     ICEInitializationData* initData = [ICEInitializationData initializationData];
     initData.properties = [ICEUtil createProperties];
     [initData.properties load:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"config.client"]];
     [initData.properties setProperty:@"Ice.ACM.Client.Timeout" value:@"0"];
     [initData.properties setProperty:@"Ice.RetryIntervals" value:@"-1"];
-    
+
     initData.dispatcher = ^(id<ICEDispatcherCall> call, id<ICEConnection> con)
     {
         dispatch_sync(dispatch_get_main_queue(), ^ { [call run]; });
     };
-	
+
     [initData.properties setProperty:@"IceSSL.DefaultDir" value:[[NSBundle mainBundle] resourcePath]];
 
     NSAssert(communicator == nil, @"communicator == nil");
     communicator = [ICEUtil createCommunicator:initData];
 
     SEL loginSelector = @selector(doGlacier2Login:);
-    
-    [NSApp beginSheet:connectingSheet 
+
+    [NSApp beginSheet:connectingSheet
        modalForWindow:self.window
-        modalDelegate:nil 
-       didEndSelector:NULL 
+        modalDelegate:nil
+       didEndSelector:NULL
           contextInfo:NULL];
     [progress startAnimation:self];
-    
+
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^ {
 		NSString* msg;
 		@try
@@ -116,10 +117,10 @@ NSString* const passwordKey = @"passwordKey";
 				[NSApp endSheet:connectingSheet];
 				[connectingSheet orderOut:self.window];
 				[progress stopAnimation:self];
-				
+
 				// The communicator is now owned by the ChatController.
 				communicator = nil;
-				
+
 				// Close the connecting window, show the main window.
 				[self.window close];
 				[chatController showWindow:self];
@@ -146,19 +147,19 @@ NSString* const passwordKey = @"passwordKey";
 		{
 			msg = [ex reason];
 		}
-		
+
 		dispatch_async(dispatch_get_main_queue(), ^ {
 			// Hide the connecting sheet.
-			[NSApp endSheet:connectingSheet]; 
+			[NSApp endSheet:connectingSheet];
 			[connectingSheet orderOut:self.window];
 			[progress stopAnimation:self];
-			
+
 			[communicator destroy];
 			communicator = nil;
-			
+
 			NSRunAlertPanel(@"Error", @"%@", @"OK", nil, nil, msg);
 		});
-    });    
+    });
 }
 
 @end

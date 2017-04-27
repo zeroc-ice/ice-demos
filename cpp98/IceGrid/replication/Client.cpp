@@ -16,6 +16,10 @@ int run(const Ice::CommunicatorPtr&);
 int
 main(int argc, char* argv[])
 {
+#ifdef ICE_STATIC_LIBS
+    Ice::registerIceLocatorDiscovery();
+#endif
+
     int status = EXIT_SUCCESS;
 
     try

@@ -77,8 +77,8 @@ define create-cpp-demo-project
 $1_srcext		:= cpp
 $1_dependencies 	:= $$(or $$($1_dependencies),Ice)
 
-# Also link with IceSSL when compiling the project with the static configuration
-static_dependencies[$1]	:= $$(or $$($1_dependencies[static]),IceSSL)
+# Also link with IceSSL, IceDiscovery and IceLocatorDiscovery when compiling the project with the static configuration
+$1[static]_dependencies	:= $$(or $$($1_dependencies[static]),IceSSL IceDiscovery IceLocatorDiscovery)
 
 $(create-demo-project)
 endef

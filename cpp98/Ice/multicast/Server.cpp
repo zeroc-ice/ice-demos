@@ -63,6 +63,10 @@ public:
 int
 main(int argc, char* argv[])
 {
+#ifdef ICE_STATIC_LIBS
+    Ice::registerIceUDP();
+#endif
+
     HelloServer app;
     return app.main(argc, argv, "config.server");
 }

@@ -25,7 +25,7 @@ using namespace Windows::UI::Xaml::Navigation;
 
 namespace
 {
-    
+
 class HelloI : public Hello
 {
 public:
@@ -66,6 +66,7 @@ private:
 MainPage::MainPage()
 {
     InitializeComponent();
+    Ice::registerIceUDP();
 
     try
     {
@@ -88,7 +89,7 @@ MainPage::MainPage()
         wstring msg = Ice::stringToWstring(os.str());
         print(ref new String(msg.c_str()));
     }
-}   
+}
 
 void
 MainPage::clear_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)

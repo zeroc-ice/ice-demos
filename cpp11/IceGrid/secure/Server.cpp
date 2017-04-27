@@ -19,6 +19,10 @@ public:
 int
 main(int argc, char* argv[])
 {
+#ifdef ICE_STATIC_LIBS
+    Ice::registerIceSSL();
+#endif
+
     //
     // Set the 'BuildId' property displayed in the IceGridAdmin GUI
     //

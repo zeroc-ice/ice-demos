@@ -39,6 +39,7 @@ public:
     {
         Ice::registerIceDiscovery(false); // Register the plugin but don't load it on initialization
         Ice::registerIceSSL();
+        Ice::registerIceUDP();
 
         Ice::InitializationData initData;
         initData.properties = Ice::createProperties();

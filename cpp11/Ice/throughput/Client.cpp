@@ -18,6 +18,7 @@ main(int argc, char* argv[])
 {
 #ifdef ICE_STATIC_LIBS
     Ice::registerIceSSL();
+    Ice::registerIceWS();
 #endif
 
     int status = EXIT_SUCCESS;

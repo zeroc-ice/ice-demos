@@ -36,14 +36,15 @@ static NSString* sslKey = @"sslKey";
                                  @"", passwordKey,
                                  @"YES", sslKey,
                                  nil];
-    
+
     [[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
 }
 
 - (void)viewDidLoad
 {
-    // Register IceSSL plugin and load it on communicator initialization.
+    // Register IceSSL/IceWS plugins and load them on communicator initialization.
     ICEregisterIceSSL(YES);
+    ICEregisterIceWS(YES);
 
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
 
@@ -52,11 +53,11 @@ static NSString* sslKey = @"sslKey";
     usernameField.clearButtonMode = UITextFieldViewModeWhileEditing;
     passwordField.text = [defaults stringForKey:passwordKey];
     passwordField.clearButtonMode = UITextFieldViewModeWhileEditing;
-    
+
     chatController = [[ChatController alloc] initWithNibName:@"ChatView" bundle:nil];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(applicationDidEnterBackground) 
+                                             selector:@selector(applicationDidEnterBackground)
                                                  name:UIApplicationDidEnterBackgroundNotification
                                                object:nil];
 }
@@ -119,10 +120,10 @@ static NSString* sslKey = @"sslKey";
 -(BOOL)textFieldShouldReturn:(UITextField*)theTextField
 {
     NSAssert(theTextField == currentField, @"theTextField == currentTextField");
-    
+
     // When the user presses return, take focus away from the text
     // field so that the keyboard is dismissed.
-    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults]; 
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     if(theTextField == usernameField)
     {
         [defaults setObject:theTextField.text forKey:usernameKey];
@@ -147,7 +148,7 @@ static NSString* sslKey = @"sslKey";
 -(void)touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event
 {
     [currentField resignFirstResponder];
-    currentField.text = oldFieldValue; 
+    currentField.text = oldFieldValue;
     self.currentField = nil;
     [super touchesBegan:touches withEvent:event];
 }
@@ -170,10 +171,10 @@ static NSString* sslKey = @"sslKey";
     // we try to login.
     [communicator destroy];
     self.communicator = nil;
- 
+
     loginButton.enabled = usernameField.text.length > 0;
     [loginButton setAlpha:loginButton.enabled ? 1.0 : 0.5];
-    
+
     // open an alert with just an OK button
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Error"
                                                                    message:s
@@ -185,22 +186,22 @@ static NSString* sslKey = @"sslKey";
 -(IBAction)login:(id)sender
 {
     ICEInitializationData* initData = [ICEInitializationData initializationData];
-    
+
     initData.properties = [ICEUtil createProperties];
     [initData.properties load:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"config.client"]];
     [initData.properties setProperty:@"Ice.ACM.Client.Timeout" value:@"0"];
     [initData.properties setProperty:@"Ice.RetryIntervals" value:@"-1"];
-    
+
     initData.dispatcher = ^(id<ICEDispatcherCall> call, id<ICEConnection> con)
     {
         dispatch_sync(dispatch_get_main_queue(), ^ { [call run]; });
     };
-    
+
     NSAssert(communicator == nil, @"communicator == nil");
     self.communicator = [ICEUtil createCommunicator:initData];
-    
+
     [self connecting:TRUE];
-    
+
     NSString* username = usernameField.text;
     NSString* password = passwordField.text;
 
@@ -210,13 +211,13 @@ static NSString* sslKey = @"sslKey";
             id<GLACIER2RouterPrx> router = [GLACIER2RouterPrx checkedCast:[communicator getDefaultRouter]];
             id<GLACIER2SessionPrx> glacier2session = [router createSession:username password:password];
             id<ChatChatSessionPrx> sess = [ChatChatSessionPrx uncheckedCast:glacier2session];
-            
+
             ICEInt acmTiemout = [router getACMTimeout];
             if(acmTiemout <= 0)
             {
                 acmTiemout = (ICEInt)[router getSessionTimeout];
             }
-            
+
             [chatController setup:communicator
                           session:sess
                        acmTimeout:acmTiemout
@@ -224,10 +225,10 @@ static NSString* sslKey = @"sslKey";
                          category:[router getCategoryForClient]];
             dispatch_async(dispatch_get_main_queue(), ^ {
                 [self connecting:FALSE];
-                
+
                 // The communicator is now owned by the ChatController.
                 self.communicator = nil;
-                
+
                 [chatController activate:@"Chat"];
                 [self.navigationController pushViewController:chatController animated:YES];
             });
@@ -258,7 +259,7 @@ static NSString* sslKey = @"sslKey";
             dispatch_async(dispatch_get_main_queue(), ^ {
                 [self exception:[ex description]];
             });
-        }        
+        }
     });
 }
 
