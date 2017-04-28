@@ -22,7 +22,8 @@ public:
     CallbackSenderI(MainPage^ page);
 
     virtual void addClient(Ice::Identity, const Ice::Current&) override;
-    void start();    
+    void start();
+    void stop();
 
 private:
 
@@ -41,6 +42,8 @@ public ref class MainPage sealed
 {
 public:
     MainPage();
+    void resume();
+    void suspend();
 
 private:
 
@@ -48,8 +51,7 @@ private:
 
     void print(const std::string&);
 
-    std::shared_ptr<Ice::Communicator> _communicator;
-    std::shared_ptr<Ice::ObjectAdapter> _adapter;
+    Ice::CommunicatorHolder _communicator;
     std::shared_ptr<CallbackSenderI> _sender;
 };
 

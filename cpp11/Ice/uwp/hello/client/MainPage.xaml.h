@@ -33,7 +33,7 @@ private:
     void hostname_TextChanged(Platform::Object^ sender, Windows::UI::Xaml::Controls::TextChangedEventArgs^ e);
     void useDiscovery_Changed(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 
-    std::shared_ptr<Ice::Communicator> _communicator;
+    Ice::CommunicatorHolder _communicator;
     std::shared_ptr<Demo::HelloPrx> _helloPrx;
     bool _response;
 };

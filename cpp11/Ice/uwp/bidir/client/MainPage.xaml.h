@@ -43,7 +43,7 @@ private:
     void print(const std::string&);
     void startClient_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
     void stopClient_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
-    Ice::CommunicatorPtr _communicator;
+    Ice::CommunicatorHolder _communicator;
 };
 
 }

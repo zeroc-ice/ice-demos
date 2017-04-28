@@ -67,27 +67,35 @@ MainPage::MainPage()
 {
     InitializeComponent();
     Ice::registerIceUDP();
+}
 
-    try
+void
+MainPage::resume()
+{
+    if(!_communicator)
     {
-        Ice::InitializationData id;
-        id.properties = Ice::createProperties();
-        id.properties->setProperty("Hello.Endpoints", "tcp -p 10000:udp -p 10000");
-        id.properties->setProperty("Ice.Trace.Network", "2");
+        try
+        {
 
-        _communicator = Ice::initialize(id);
-        _adapter = _communicator->createObjectAdapter("Hello");
-        _adapter->add(make_shared<HelloI>(this), Ice::stringToIdentity("hello"));
-        _adapter->activate();
-        print(ref new String(L"Ready to receive requests\n"));
-    }
-    catch(const std::exception& ex)
-    {
-        ostringstream os;
-        os << "Server initialization failed with exception:\n";
-        os << ex.what();
-        wstring msg = Ice::stringToWstring(os.str());
-        print(ref new String(msg.c_str()));
+            Ice::InitializationData id;
+            id.properties = Ice::createProperties();
+            id.properties->setProperty("Hello.Endpoints", "tcp -p 10000:udp -p 10000");
+            id.properties->setProperty("Ice.Trace.Network", "2");
+
+            _communicator = Ice::initialize(id);
+            auto adapter = _communicator->createObjectAdapter("Hello");
+            adapter->add(make_shared<HelloI>(this), Ice::stringToIdentity("hello"));
+            adapter->activate();
+            print(ref new String(L"Ready to receive requests\n"));
+        }
+        catch(const std::exception& ex)
+        {
+            ostringstream os;
+            os << "Server initialization failed with exception:\n";
+            os << ex.what();
+            wstring msg = Ice::stringToWstring(os.str());
+            print(ref new String(msg.c_str()));
+        }
     }
 }
 

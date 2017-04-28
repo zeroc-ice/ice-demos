@@ -16,6 +16,8 @@ ref class App sealed
 public:
     App();
     virtual void OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEventArgs^) override;
+    void enteredBackground(Platform::Object^, Windows::ApplicationModel::EnteredBackgroundEventArgs^);
+    void leavingBackground(Platform::Object^, Windows::ApplicationModel::LeavingBackgroundEventArgs^);
 };
 
 }

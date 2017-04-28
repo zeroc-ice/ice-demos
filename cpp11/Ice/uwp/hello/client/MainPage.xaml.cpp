@@ -30,37 +30,6 @@ MainPage::MainPage()
     Ice::registerIceSSL();
     Ice::registerIceUDP();
     Ice::registerIceDiscovery(false); // Register the plugin but don't load it on initialization
-
-    mode->SelectedIndex = 0;
-    Ice::InitializationData id;
-    id.properties = Ice::createProperties();
-    id.properties->setProperty("Ice.Plugin.IceDiscovery", "1"); // Enable the IceDiscovery plugin
-    id.properties->setProperty("IceSSL.CertFile", "ms-appx:///client.p12");
-    id.properties->setProperty("IceSSL.Password", "password");
-    id.dispatcher =
-        [=](function<void()> call, const shared_ptr<Ice::Connection>&)
-            {
-                this->Dispatcher->RunAsync(
-                    CoreDispatcherPriority::Normal, ref new DispatchedHandler([=]()
-                        {
-                            call();
-                        }, CallbackContext::Any));
-            };
-    try
-    {
-        _communicator = Ice::initialize(id);
-    }
-    catch(const Ice::PluginInitializationException&)
-    {
-        //
-        // Disable the IceDiscovery plugin if it fails loading. On Windows 10, this can
-        // fail if another process binds to the multicast address/port.
-        //
-        id.properties->setProperty("Ice.Plugin.IceDiscovery", "");
-        useDiscovery->IsEnabled = false;
-        _communicator = Ice::initialize(id);
-    }
-    updateProxy();
 }
 
 void
@@ -68,7 +37,35 @@ hello::MainPage::updateProxy()
 {
     if(!_communicator)
     {
-        return;
+        mode->SelectedIndex = 0;
+        Ice::InitializationData id;
+        id.properties = Ice::createProperties();
+        id.properties->setProperty("Ice.Plugin.IceDiscovery", "1"); // Enable the IceDiscovery plugin
+        id.properties->setProperty("IceSSL.CertFile", "ms-appx:///client.p12");
+        id.properties->setProperty("IceSSL.Password", "password");
+        id.dispatcher =
+            [=](function<void()> call, const shared_ptr<Ice::Connection>&)
+                {
+                    this->Dispatcher->RunAsync(
+                        CoreDispatcherPriority::Normal, ref new DispatchedHandler([=]()
+                            {
+                                call();
+                            }, CallbackContext::Any));
+                };
+        try
+        {
+            _communicator = Ice::initialize(id);
+        }
+        catch(const Ice::PluginInitializationException&)
+        {
+            //
+            // Disable the IceDiscovery plugin if it fails loading. On Windows 10, this can
+            // fail if another process binds to the multicast address/port.
+            //
+            id.properties->setProperty("Ice.Plugin.IceDiscovery", "");
+            useDiscovery->IsEnabled = false;
+            _communicator = Ice::initialize(id);
+        }
     }
 
     string h = Ice::wstringToString(hostname->Text->Data());

@@ -18,15 +18,14 @@ public ref class MainPage sealed
 public:
 
     MainPage();
-
+    void resume();
     void print(Platform::String^ message);
 
 private:
 
     void clear_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
 
-    Ice::CommunicatorPtr _communicator;
-    Ice::ObjectAdapterPtr _adapter;
+    Ice::CommunicatorHolder _communicator;
 };
 
 }

@@ -27,27 +27,58 @@ using namespace Windows::UI::Xaml::Navigation;
 App::App()
 {
     InitializeComponent();
+
+    this->EnteredBackground += ref new EnteredBackgroundEventHandler(this, &App::enteredBackground);
+    this->LeavingBackground += ref new LeavingBackgroundEventHandler(this, &App::leavingBackground);
 }
 
 
-void App::OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEventArgs^ pArgs)
+void
+App::OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEventArgs^ e)
 {
-    // Do not repeat app initialization when already running, just ensure that
-    // the window is active
-    if (pArgs->PreviousExecutionState == ApplicationExecutionState::Running)
+    auto rootFrame = dynamic_cast<Frame^>(Window::Current->Content);
+    if(rootFrame == nullptr)
     {
-            Window::Current->Activate();
-            return;
+        rootFrame = ref new Frame();
+        if(rootFrame->Content == nullptr)
+        {
+            rootFrame->Navigate(TypeName(MainPage::typeid), e->Arguments);
+        }
+        Window::Current->Content = rootFrame;
+        Window::Current->Activate();
     }
-
-    // Create a Frame to act navigation context and navigate to the first page
-    auto rootFrame = ref new Frame();
-    if (!rootFrame->Navigate(TypeName(MainPage::typeid)))
+    else
     {
-            throw ref new FailureException("Failed to create initial page");
+        if(rootFrame->Content == nullptr)
+        {
+            rootFrame->Navigate(TypeName(MainPage::typeid), e->Arguments);
+        }
+        Window::Current->Activate();
     }
+}
 
-    // Place the frame in the current Window and ensure that it is active
-    Window::Current->Content = rootFrame;
-    Window::Current->Activate();
+void App::enteredBackground(Platform::Object^ sender, EnteredBackgroundEventArgs^ e)
+{
+    auto rootFrame = dynamic_cast<Frame^>(Window::Current->Content);
+    if(rootFrame != nullptr)
+    {
+        auto mainPage = dynamic_cast<MainPage^>(rootFrame->Content);
+        if(mainPage != nullptr)
+        {
+            mainPage->suspend();
+        }
+    }
+}
+
+void App::leavingBackground(Platform::Object^ sender, LeavingBackgroundEventArgs^ e)
+{
+    auto rootFrame = dynamic_cast<Frame^>(Window::Current->Content);
+    if(rootFrame != nullptr)
+    {
+        auto mainPage = dynamic_cast<MainPage^>(rootFrame->Content);
+        if(mainPage != nullptr)
+        {
+            mainPage->resume();
+        }
+    }
 }

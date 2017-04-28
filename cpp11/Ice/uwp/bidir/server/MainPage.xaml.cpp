@@ -25,7 +25,8 @@ using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
 
 CallbackSenderI::CallbackSenderI(MainPage^ page) :
-    _page(page)
+    _page(page),
+    _destroy(false)
 {
 }
 
@@ -47,13 +48,27 @@ CallbackSenderI::addClient(Ice::Identity ident, const Ice::Current& current)
 void
 CallbackSenderI::start()
 {
-    assert(!_result.valid()); // start should only be called once
-
+    unique_lock<mutex> lock(_mutex);
+    _destroy = false;
     _result = async(launch::async,
                     [this]
                     {
                         invokeCallback();
                     });
+}
+
+void
+CallbackSenderI::stop()
+{
+    {
+        unique_lock<mutex> lock(_mutex);
+        if(_destroy)
+        {
+            return;
+        }
+        _destroy = true;
+    }
+    _result.wait();
 }
 
 void
@@ -109,19 +124,26 @@ MainPage::MainPage()
 {
     InitializeComponent();
     Ice::registerIceWS();
+}
+
+void
+MainPage::resume()
+{
     try
     {
-        Ice::InitializationData id;
-        id.properties = Ice::createProperties();
-        id.properties->setProperty("Callback.Server.Endpoints", "tcp -p 10000:ws -p 10002");
-        id.properties->setProperty("Ice.Trace.Network", "2");
+        if(!_communicator)
+        {
+            Ice::InitializationData id;
+            id.properties = Ice::createProperties();
+            id.properties->setProperty("Callback.Server.Endpoints", "tcp -p 10000:ws -p 10002");
+            id.properties->setProperty("Ice.Trace.Network", "2");
 
-        _communicator = Ice::initialize(id);
-        _adapter = _communicator->createObjectAdapter("Callback.Server");
-        _sender = make_shared<CallbackSenderI>(this);
-        _adapter->add(_sender, Ice::stringToIdentity("sender"));
-        _adapter->activate();
-
+            _communicator = move(Ice::initialize(id));
+            auto adapter = _communicator->createObjectAdapter("Callback.Server");
+            _sender = make_shared<CallbackSenderI>(this);
+            adapter->add(_sender, Ice::stringToIdentity("sender"));
+            adapter->activate();
+        }
         _sender->start();
     }
     catch(const std::exception& ex)
@@ -131,6 +153,12 @@ MainPage::MainPage()
         os << ex.what();
         print(os.str());
     }
+}
+
+void
+MainPage::suspend()
+{
+    _sender->stop();
 }
 
 void
