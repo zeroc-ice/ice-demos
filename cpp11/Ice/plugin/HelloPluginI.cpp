@@ -16,13 +16,13 @@ class HelloI : public Demo::Hello
 {
 public:
 
-    virtual void 
+    virtual void
     sayHello(const Ice::Current& current) override
     {
         current.adapter->getCommunicator()->getLogger()->print("Hello World!");
     }
 
-    virtual void 
+    virtual void
     shutdown(const Ice::Current& current) override
     {
         current.adapter->getCommunicator()->getLogger()->print("Shutting down...");
@@ -35,7 +35,7 @@ class HelloPluginI : public Ice::Plugin
 {
 public:
 
-    HelloPluginI(const shared_ptr<Ice::Communicator>& communicator) : 
+    HelloPluginI(const shared_ptr<Ice::Communicator>& communicator) :
         _communicator(communicator)
     {
     }
@@ -47,12 +47,12 @@ public:
         adapter->add(make_shared<HelloI>(), Ice::stringToIdentity("hello"));
         adapter->activate();
     }
-    
+
     void
     destroy() override
     {
     }
-    
+
 private:
 
     shared_ptr<Ice::Communicator> _communicator;

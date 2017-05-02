@@ -2,7 +2,7 @@
 
 using namespace std;
 
-EvictorBase::EvictorBase(int size) : 
+EvictorBase::EvictorBase(int size) :
     _size(size)
 {
     if (_size < 0)

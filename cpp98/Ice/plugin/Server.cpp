@@ -12,7 +12,7 @@ class PluginServer : public Ice::Application
 {
 public:
 
-    virtual int 
+    virtual int
     run(int argc, char*[])
     {
         if(argc > 1)

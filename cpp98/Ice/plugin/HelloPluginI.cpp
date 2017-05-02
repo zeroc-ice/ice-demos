@@ -16,13 +16,13 @@ class HelloI : public Demo::Hello
 {
 public:
 
-    virtual void 
+    virtual void
     sayHello(const Ice::Current& current)
     {
         current.adapter->getCommunicator()->getLogger()->print("Hello World!");
     }
 
-    virtual void 
+    virtual void
     shutdown(const Ice::Current& current)
     {
         current.adapter->getCommunicator()->getLogger()->print("Shutting down...");
@@ -35,7 +35,7 @@ class HelloPluginI : public Ice::Plugin
 {
 public:
 
-     HelloPluginI(const Ice::CommunicatorPtr& communicator) : 
+     HelloPluginI(const Ice::CommunicatorPtr& communicator) :
          _communicator(communicator)
      {
      }

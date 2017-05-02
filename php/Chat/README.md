@@ -1,7 +1,7 @@
-This demo is a PHP client for the [ZeroC Chat Demo](https://zeroc.com/chat/index.html). This demo connects to a single chat room, 
+This demo is a PHP client for the [ZeroC Chat Demo](https://zeroc.com/chat/index.html). This demo connects to a single chat room,
 allowing you to chat with other chat room participants.
 
-By default, the demo connects to the chat server hosted on demo.zeroc.com through a 
+By default, the demo connects to the chat server hosted on demo.zeroc.com through a
 WebSocket reverse proxy hosted on zeroc.com.
 
 Follow these steps to install the demo:
@@ -12,7 +12,7 @@ Follow these steps to install the demo:
 2) If you have not build the demos yet, please refer to the top level
    [php/README.md](../../README.md) file for build instructions.
 
-3) Configure your PHP-enabled web server to serve the directoy where this file 
+3) Configure your PHP-enabled web server to serve the directoy where this file
    exists.
 
 4) Start a Web browser and open the index.html page to begin using the

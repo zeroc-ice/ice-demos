@@ -31,7 +31,7 @@ class SessionFactoryI implements SessionFactory, SessionManager
         //
         // Never close this connection from the client and turn on heartbeats
         //
-        current.con.setACM(java.util.OptionalInt.of(30), 
+        current.con.setACM(java.util.OptionalInt.of(30),
                            java.util.Optional.of(ACMClose.CloseOff),
                            java.util.Optional.of(ACMHeartbeat.HeartbeatAlways));
 
@@ -50,7 +50,7 @@ class SessionFactoryI implements SessionFactory, SessionManager
 
         return proxy;
     }
-    
+
     @Override
     public void destroy(com.zeroc.Ice.Current current)
     {

@@ -12,7 +12,7 @@ class NestedI : NestedDisp_
     {
         _self = self;
     }
-    
+
     public override void nestedCall(int level, NestedPrx proxy, Ice.Current current)
     {
         System.Console.Out.WriteLine("" + level);
@@ -26,6 +26,6 @@ class NestedI : NestedDisp_
             ((NestedPrx)proxy.ice_invocationTimeout(5000)).nestedCall(level, _self);
         }
     }
-    
+
     private NestedPrx _self;
 }

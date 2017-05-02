@@ -28,7 +28,7 @@ public class SessionI : SessionDisp_
             {
                 throw new Ice.ObjectNotExistException();
             }
-            
+
             var hello = HelloPrxHelper.uncheckedCast(current.adapter.addWithUUID(new HelloI(_name, _nextId++)));
             _objs.Add(hello);
             return hello;
@@ -43,7 +43,7 @@ public class SessionI : SessionDisp_
             {
                 throw new Ice.ObjectNotExistException();
             }
-            
+
             return _name;
         }
     }
@@ -56,9 +56,9 @@ public class SessionI : SessionDisp_
             {
                 throw new Ice.ObjectNotExistException();
             }
-            
+
             _destroy = true;
-            
+
             Console.Out.WriteLine("The session " + _name +  " is now destroyed.");
             try
             {
@@ -77,7 +77,7 @@ public class SessionI : SessionDisp_
 
         _objs.Clear();
     }
-    
+
     private string _name;
     private int _nextId; // The per-session id of the next hello object. This is used for tracing purposes.
     private List<HelloPrx> _objs; // List of per-session allocated hello objects.

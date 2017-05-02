@@ -74,7 +74,7 @@ Follow these steps to import the project into Android Studio:
 2. Select Open Project
 3. Navigate to the "Android" subdirectory
 4. If presented with an "Import Project from Gradle" dialog, select
-   "Use default gradle wrapper" and press OK 
+   "Use default gradle wrapper" and press OK
 5. Select one of the subprojects from the drop down menu
 
 [1]: https://zeroc.com/download.html

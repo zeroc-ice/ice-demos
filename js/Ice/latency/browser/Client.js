@@ -56,15 +56,15 @@ $("#run").click(() =>
         {
             setState(State.Running);
 
-            Ice.Promise.try(() => 
+            Ice.Promise.try(() =>
                 {
                     return run();
                 }
-            ).catch(ex => 
+            ).catch(ex =>
                 {
                     $("#output").val(ex.toString());
                 }
-            ).finally(() => 
+            ).finally(() =>
                 {
                     setState(State.Idle);
                 });

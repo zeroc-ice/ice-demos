@@ -26,7 +26,7 @@ public class Client
                 Console.Error.WriteLine("invalid proxy");
                 return 1;
             }
-            
+
             //
             // A method needs to be invoked thousands of times before the JIT compiler
             // will convert it to native code. To ensure an accurate latency measurement,
@@ -42,7 +42,7 @@ public class Client
                 }
                 Console.Error.WriteLine("ok");
             }
-            
+
             var tv1 = DateTime.Now;
             int repetitions = 100000;
             Console.Out.WriteLine("pinging server " + repetitions + " times (this may take a while)");
@@ -50,13 +50,13 @@ public class Client
             {
                 ping.ice_ping();
             }
-            
+
             var total = (DateTime.Now - tv1).TotalMilliseconds;
             var perPing = total / repetitions;
-            
+
             Console.Out.WriteLine("time for " + repetitions + " pings: " + total + "ms");
             Console.Out.WriteLine("time per ping: " + perPing + "ms");
-            
+
             return 0;
         }
     }

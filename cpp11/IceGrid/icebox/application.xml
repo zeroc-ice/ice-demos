@@ -18,7 +18,7 @@
                <properties refid="mx"/>
                <property name="Hello.Identity" value="hello"/>
             </properties>
-            <adapter name="Hello-${name}" endpoints="default -h localhost" id="Hello-${name}" 
+            <adapter name="Hello-${name}" endpoints="default -h localhost" id="Hello-${name}"
                      replica-group="HelloGroup" server-lifetime="false"/>
          </service>
       </service-template>
@@ -46,8 +46,8 @@
 
       <node name="node1">
 
-         <server-instance template="Glacier2" 
-                          instance-name="DemoGlacier2" 
+         <server-instance template="Glacier2"
+                          instance-name="DemoGlacier2"
                           client-endpoints="tcp -h localhost -p 4063"
                           server-endpoints="tcp -h localhost">
             <properties>

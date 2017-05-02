@@ -22,11 +22,11 @@
     IBOutlet UIActivityIndicatorView* statusActivity;
     UITextField* currentField;
     NSString* oldFieldValue;
-    
+
     MainController *mainController;
 
     WaitAlert* waitAlert;
-    
+
     id<ICECommunicator> communicator;
     id session;
     id<GLACIER2RouterPrx> router;

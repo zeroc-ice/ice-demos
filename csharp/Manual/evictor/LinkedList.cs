@@ -198,7 +198,7 @@ namespace Evictor
         {
             Debug.Assert(n != null);
             Debug.Assert(_count != 0);
-            
+
             if(n.prev != null)
             {
                 n.prev.next = n.next;

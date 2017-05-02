@@ -13,7 +13,7 @@
     IBOutlet NSTextField* isbnField;
     IBOutlet NSTextView* titleField;
     IBOutlet NSTableView* authorsTable;
-    
+
     DemoBookDescription* __weak orig;
     DemoBookDescription* result;
     NSMutableArray* authors;

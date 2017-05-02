@@ -35,7 +35,7 @@ public class HelloI extends _HelloDisp
         else if(lang.equals("it"))
         {
             greeting = "Ciao, ";
-        }        
+        }
         System.out.println(greeting + _serviceName);
     }
 

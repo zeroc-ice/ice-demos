@@ -10,9 +10,9 @@
 @interface EditController : UIViewController
 {
 @private
-    
+
     IBOutlet UITextField* __unsafe_unretained textField;
-    
+
     id obj;
     SEL selector;
     NSString* value;

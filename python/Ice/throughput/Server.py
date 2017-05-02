@@ -13,7 +13,7 @@ import Demo
 class ThroughputI(Demo.Throughput):
     def __init__(self):
         self.warmup = False
-        
+
         if sys.version_info[0] == 2:
             b = []
             b[0:Demo.ByteSeqSize] = range(0, Demo.ByteSeqSize)
@@ -50,7 +50,7 @@ class ThroughputI(Demo.Throughput):
 
     def endWarmup(self, current=None):
         self.warmup = False
-        
+
     def sendByteSeq(self, seq, current=None):
         pass
 

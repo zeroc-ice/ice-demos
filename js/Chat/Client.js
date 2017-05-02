@@ -133,7 +133,7 @@ function signin()
                     const username = $("#username").val();
                     const password = $("#password").val();
 
-                    return router.createSession(username, password).then(session => 
+                    return router.createSession(username, password).then(session =>
                         {
                             return run(router, ChatSessionPrx.uncheckedCast(session))
                         });
@@ -276,7 +276,7 @@ function run(router, session)
             //
             // Exit the chat loop accepting the chat promise.
             //
-            $("#signout").click(() => 
+            $("#signout").click(() =>
                 {
                     completed = true;
                     chat.resolve();
@@ -423,7 +423,7 @@ function setState(newState, error)
                         {
                             hasError = true;
                             $("#signin-alert span").text(error);
-                            
+
                             stopProgress(false);
                             return transition(state === State.Connecting ? "#loading" : "#chat-form", "#signin-alert").then(
                                 () =>

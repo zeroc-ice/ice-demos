@@ -25,7 +25,7 @@ public class Server
             adapter.add(new SessionFactoryI(), Ice.Util.stringToIdentity("SessionFactory"));
             adapter.activate();
             communicator().waitForShutdown();
-            
+
             return 0;
         }
     }

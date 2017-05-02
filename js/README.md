@@ -25,11 +25,11 @@ The JavaScript sample programs require an installation of [Node.js][2].
 
 ### Building the Demos
 
-With Node.js in your PATH, go to this directory (ice-demos/js) and run the 
+With Node.js in your PATH, go to this directory (ice-demos/js) and run the
 following command to install several dependencies:
 
     npm install
-    
+
 This command builds the Slice-to-JavaScript compiler (`slice2js`) from
 source and requires a supported C++ compiler.
 

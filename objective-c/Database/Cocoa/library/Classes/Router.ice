@@ -57,7 +57,7 @@ interface Router extends Ice::Router
      * cannot be created.
      *
      */
-    
+
     void createGlacier2Session(Ice::Router* router, string userId, string password,
                                out string category, out long sessionTimeout,
                                out Glacier2::Session* sess)

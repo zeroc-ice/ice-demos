@@ -18,7 +18,7 @@ namespace Glacier2.simpleChat.client
     /// </summary>
     public partial class App : System.Windows.Application
     {
-    
+
         public void start(object sender, StartupEventArgs e)
         {
             ChatWindow window = new ChatWindow();

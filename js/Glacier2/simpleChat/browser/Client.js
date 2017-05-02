@@ -90,7 +90,7 @@ function signin()
                 {
                     const username = $("#username").val();
                     const password = $("#password").val();
-                    
+
                     return router.createSession(username, password).then(
                         session =>
                         {

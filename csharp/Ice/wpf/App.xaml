@@ -10,6 +10,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     StartupUri="HelloWindow.xaml">
     <Application.Resources>
-         
+
     </Application.Resources>
 </Application>

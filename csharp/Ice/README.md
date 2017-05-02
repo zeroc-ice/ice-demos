@@ -67,7 +67,7 @@ Demos in this directory:
 
 - [serialize](./serialize)
 
-  This demo illistrates how to transfer serializable .NET objects 
+  This demo illistrates how to transfer serializable .NET objects
   with Ice.
 
 - [session](./session)

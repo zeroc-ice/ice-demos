@@ -12,7 +12,7 @@ public class HelloI : HelloDisp_
     {
         current.adapter.getCommunicator().getLogger().print("Hello World!");
     }
-    
+
     public override void shutdown(Ice.Current current)
     {
         current.adapter.getCommunicator().getLogger().print("Shutting down...");

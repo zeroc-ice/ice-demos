@@ -48,7 +48,7 @@ public:
     virtual Ice::LoggerPtr
     cloneWithPrefix(const std::string&)
     {
-        return new LoggerI;   
+        return new LoggerI;
     }
 };
 

@@ -38,11 +38,11 @@
 
             <!-- Define a text box to show chat messages. -->
             <TextBox Grid.Column="0" Grid.Row="0" x:Name="txtMessages"
-                 FontSize="12" Text="" TextWrapping="Wrap" IsEnabled="True"    
-                 ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" 
+                 FontSize="12" Text="" TextWrapping="Wrap" IsEnabled="True"
+                 ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto"
                  ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnly="True"
                  MinLines="4" SizeChanged="scrollDown"/>
-        
+
         <!-- Define another splitter to separate the upper view and the text box used
             for input messages. -->
         <GridSplitter Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Height="2"
@@ -52,7 +52,7 @@
         <TextBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3"
                  Name="input"
                  IsEnabled="False"
-                 TextWrapping="Wrap" 
+                 TextWrapping="Wrap"
                  ScrollViewer.CanContentScroll="True"
                  HorizontalScrollBarVisibility="Hidden"
                  VerticalScrollBarVisibility="Auto"

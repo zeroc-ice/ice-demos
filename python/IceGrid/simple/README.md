@@ -10,7 +10,7 @@ In a separate window:
      icegridadmin --Ice.Config=config.grid -e "application add application.xml"
      python Client.py
 
-This will deploy the application described in the file `application.xml` and 
+This will deploy the application described in the file `application.xml` and
 start the client.
 
 Messages will be displayed in the IceGrid service window.

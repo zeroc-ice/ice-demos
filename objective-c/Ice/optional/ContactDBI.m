@@ -41,7 +41,7 @@
     [contacts_ setObject:contact forKey:name];
 }
 
--(void) updateContact:(NSMutableString*)name type:(id)type number:(id)number dialGroup:(id)dialGroup 
+-(void) updateContact:(NSMutableString*)name type:(id)type number:(id)number dialGroup:(id)dialGroup
               current:(ICECurrent *)current
 {
     DemoContact* contact = [contacts_ objectForKey:name];

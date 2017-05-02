@@ -15,7 +15,7 @@ public class HelloI : HelloDisp_
         _id = id;
     }
 
-    public override void sayHello(Ice.Current c) 
+    public override void sayHello(Ice.Current c)
     {
         Console.Out.WriteLine("Hello object #" + _id + " for session `" + _name + "' says:\n" +
                               "Hello " + _name + "!");

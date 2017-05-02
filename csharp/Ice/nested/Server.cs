@@ -21,7 +21,7 @@ public class Server
             }
 
             var adapter = communicator().createObjectAdapter("Nested.Server");
-            var self = 
+            var self =
                 NestedPrxHelper.uncheckedCast(adapter.createProxy(Ice.Util.stringToIdentity("nestedServer")));
             adapter.add(new NestedI(self), Ice.Util.stringToIdentity("nestedServer"));
             adapter.activate();

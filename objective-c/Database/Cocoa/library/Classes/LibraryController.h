@@ -27,14 +27,14 @@
     IBOutlet NSTextView* titleField;
     IBOutlet NSTextField* renterField;
     IBOutlet NSTableView* authorsTable;
-    
+
     IBOutlet NSToolbar* toolbar;
     IBOutlet NSProgressIndicator* searchIndicator;
-    
+
     RentController* rentController;
     EditController* editController;
     SavingController* savingController;
-    
+
     NSTimer* refreshTimer;
 
     id<ICECommunicator> communicator;
@@ -49,7 +49,7 @@
     int rowsQueried;
     int nrows;
     NSInteger searchType; // Equivalent to the tag of the menu item.
-    
+
     DemoBookDescription* selection;
     DemoBookDescription* updated;
 }

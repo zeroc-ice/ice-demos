@@ -9,7 +9,7 @@ In a separate window, start the client:
 
       python Client.py
 
-To test timeouts you can use 'T' to set a timeout on the client proxy 
+To test timeouts you can use 'T' to set a timeout on the client proxy
 and 'P' to set a delayed response in the server to cause a timeout.
 You will notice that two "Hello World!" messages will be printed by
 the server in this case. This is because the sayHello method is marked

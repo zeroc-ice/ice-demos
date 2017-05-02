@@ -26,7 +26,7 @@
     textField.placeholder = self.title;
     textField.enabled = YES;
     textField.text = value;
-    
+
     [textField becomeFirstResponder];
 }
 
@@ -51,7 +51,7 @@
 {
     obj = o;
     selector = sel;
-    
+
     self.title = name;
     value = v;
 }
@@ -61,7 +61,7 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
     [obj performSelector:selector withObject:textField.text];
-#pragma clang diagnostic pop    
+#pragma clang diagnostic pop
     [self.navigationController popViewControllerAnimated:YES];
 }
 

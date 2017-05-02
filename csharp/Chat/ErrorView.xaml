@@ -7,13 +7,13 @@
     <StackPanel VerticalAlignment="Center" Orientation="Vertical" Margin="7,7,7,7">
         <!-- Define a text box to show error messages. -->
         <TextBox Grid.Row="0" Grid.Column="2" x:Name="txtErrorMessage"
-                 FontSize="12" Text="" TextWrapping="Wrap" IsEnabled="True"    
-                 ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" 
+                 FontSize="12" Text="" TextWrapping="Wrap" IsEnabled="True"
+                 ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto"
                  ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnly="True"
                  MinLines="4" MaxLines="4" Style="{StaticResource PageBackground}"/>
 
         <!-- The close button -->
-        <Button MaxWidth="60" Click="close" IsDefault="True" 
+        <Button MaxWidth="60" Click="close" IsDefault="True"
                 Style="{StaticResource ToolBarButton}">Close</Button>
     </StackPanel>
 </Window>

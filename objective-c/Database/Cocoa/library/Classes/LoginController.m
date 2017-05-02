@@ -40,7 +40,7 @@ NSString* const passwordKey = @"passwordKey";
 {
     // Register and load the IceSSL plugin on communicator initialization.
     ICEregisterIceSSL(YES);
-    
+
     // Initialize the fields from the application defaults.
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
 

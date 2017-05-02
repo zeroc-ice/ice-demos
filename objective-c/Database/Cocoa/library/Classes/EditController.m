@@ -47,7 +47,7 @@
     [authorsTable reloadData];
 
     // Immediately start editing the author.
-    [authorsTable editColumn:0 row:authors.count-1  withEvent:nil select:YES]; 
+    [authorsTable editColumn:0 row:authors.count-1  withEvent:nil select:YES];
 }
 
 -(void)remove:(id)sender
@@ -78,7 +78,7 @@
         }
     }
     result.authors = c;
-    
+
     [NSApp endSheet:self.window returnCode:1];
 }
 

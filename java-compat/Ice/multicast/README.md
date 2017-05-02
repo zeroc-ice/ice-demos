@@ -10,7 +10,7 @@ In a separate window, start a client:
     $ java -jar build/libs/client.jar
 
 On startup the client will send out a broadcast message containing a
-callback proxy and waits for a response. Any servers that are up and 
+callback proxy and waits for a response. Any servers that are up and
 listening on the broadcast port will then contact the client using the
 callback saying they are available. The client selects a server and
 proceeds.

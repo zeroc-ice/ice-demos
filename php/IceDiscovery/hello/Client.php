@@ -103,7 +103,7 @@ if(isset($_POST["submitted"]))
 
     <P>
     <FORM method="POST" action="<?php echo basename($_SERVER["PHP_SELF"]); ?>">
-        <P>Mode: 
+        <P>Mode:
         <INPUT type="radio" name="mode" value="twoway"
             <?php if(!isset($_POST["mode"]) or $_POST["mode"] == "twoway") echo " checked "; ?>
         > Twoway
@@ -114,7 +114,7 @@ if(isset($_POST["submitted"]))
             <?php if(isset($_POST["mode"]) and $_POST["mode"] == "datagram") echo " checked "; ?>
         > Datagram
         </P>
-        <P>Options: 
+        <P>Options:
         <INPUT type="checkbox" name="secure" value="yes"
             <?php if(isset($_POST["secure"]) and $_POST["secure"] == "yes") echo " checked "; ?>
             <?php if(!$have_ssl) echo " disabled "; ?>

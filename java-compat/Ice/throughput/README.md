@@ -10,7 +10,7 @@ In a separate window, start the client:
 
     $ java -jar build/libs/client.jar
 
-The performance for byte sequences is expected to be greater than 
+The performance for byte sequences is expected to be greater than
 for other types because the cost of marshaling and unmarshaling is
 lower than for more complex types. With byte sequences there is no
 need to allocate and deallocate objects, which adds overhead.

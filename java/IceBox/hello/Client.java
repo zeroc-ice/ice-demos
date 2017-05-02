@@ -7,7 +7,7 @@
 import Demo.*;
 
 public class Client
-{ 
+{
     public static void main(String[] args)
     {
         int status = 0;

@@ -20,7 +20,7 @@ public class GreetI : GreetDisp_
             Console.Out.WriteLine("Received null greeting!");
         }
     }
-    
+
     public override void shutdown(Ice.Current current)
     {
         Console.Out.WriteLine("Shutting down...");

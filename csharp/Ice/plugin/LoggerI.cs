@@ -12,17 +12,17 @@ public class LoggerI : Ice.Logger
     {
         Console.WriteLine("PRINT: " + message);
     }
-    
+
     public void trace(string category, string message)
     {
         Console.WriteLine("TRACE(" + category + "): " + message);
     }
-    
+
     public void warning(string message)
     {
         Console.WriteLine("WARNING: " + message);
     }
-    
+
     public void error(string message)
     {
         Console.WriteLine("ERROR: " + message);

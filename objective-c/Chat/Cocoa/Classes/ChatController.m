@@ -18,7 +18,7 @@
     if(session != nil)
     {
         [self destroySession];
-        
+
         NSRunAlertPanel(@"Error", @"%@", @"OK", nil, nil, @"Lost connection with session!\n");
     }
 }
@@ -33,53 +33,53 @@
                acmTiemout:(int)t
                    router:(id<GLACIER2RouterPrx>)r
                  category:(NSString*)category
-{ 
+{
     if(self = [super initWithWindowNibName:@"ChatView"])
     {
         communicator = c;
         session = s;
         router = r;
         acmTimeout = t;
-        
+
         // Set up the adapter, and register the callback object, and setup the session ping.
         id<ICEObjectAdapter> adapter = [communicator createObjectAdapterWithRouter:@"ChatDemo.Client" router:router];
         [adapter activate];
-		
+
         ICEIdentity* callbackId = [ICEIdentity identity:[ICEUtil generateUUID] category:category];
-        
+
         // Here we tie the chat view controller to the ChatRoomCallback servant.
         ChatChatRoomCallback* callbackImpl = [ChatChatRoomCallback objectWithDelegate:self];
-        
+
         id<ICEObjectPrx> proxy = [adapter add:callbackImpl identity:callbackId];
-		
+
         // The callback is registered in awakeFromNib, otherwise the callbacks can arrive
         // prior to the IBOutlet connections being setup.
         callbackProxy = [ChatChatRoomCallbackPrx uncheckedCast:proxy];
-		
+
         users = [NSMutableArray array];
-		
+
         dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateStyle:NSDateFormatterNoStyle];
         [dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
-        
+
         // Cached attributes for the text view.
         whoTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
                              [NSColor blueColor],
                              NSForegroundColorAttributeName,
                              nil];
-        
+
         dateTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
                               [NSColor blackColor],
                               NSForegroundColorAttributeName,
                               nil];
-        
+
         textAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
                           [NSColor lightGrayColor],
                           NSForegroundColorAttributeName,
                           nil];
     }
-	
-    return self; 
+
+    return self;
 }
 
 -(void)append:(NSString*)text who:(NSString*)who timestamp:(NSDate*)timestamp
@@ -102,9 +102,9 @@
                            withString:replace[i+1] options:NSCaseInsensitiveSearch
                                 range:NSMakeRange(0, s.length)];
     }
-    
+
     text = s;
-    
+
     [chatView.textStorage appendAttributedString:[[NSAttributedString alloc]
                                                   initWithString:[dateFormatter stringFromDate:timestamp]
                                                   attributes:dateTextAttributes]];
@@ -120,7 +120,7 @@
                                                   attributes:textAttributes]];
     [chatView.textStorage appendAttributedString:[[NSAttributedString alloc]
                                                   initWithString:@"\n"]];
-    
+
     // Scroll the chatView to the end.
     [chatView scrollRangeToVisible:NSMakeRange(chatView.string.length, 0)];
 }
@@ -139,17 +139,17 @@
     }
     router = nil;
     session = nil;
-    
+
     // Clean up the communicator.
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^ {
             // Destroy might block so we call it from a separate thread.
             [communicator destroy];
             communicator = nil;
-            
+
             dispatch_async(dispatch_get_main_queue(), ^ {
                     [self append:@"<disconnected>" who:@"system message" timestamp:[NSDate date]];
                     [inputField setEnabled:NO];
-                    
+
                     NSApplication* app = [NSApplication sharedApplication];
                     AppDelegate* delegate = (AppDelegate*)[app delegate];
                     [delegate setChatActive:NO];
@@ -160,7 +160,7 @@
 -(void)exception:(ICEException*)ex
 {
     [self destroySession];
-        
+
     NSRunAlertPanel(@"Error", @"%@", @"OK", nil, nil, [ex description]);
 }
 
@@ -169,7 +169,7 @@
     NSApplication* app = [NSApplication sharedApplication];
     AppDelegate* delegate = (AppDelegate*)[app delegate];
     [delegate setChatActive:YES];
-    
+
     id<ICEConnection> conn = [router ice_getCachedConnection];
     id heartbeat = @(ICEHeartbeatAlways);
     id timeout = [NSNumber numberWithInteger:acmTimeout];
@@ -177,9 +177,9 @@
     [conn setCloseCallback:^(id<ICEConnection> connection) {
         [self closed:connection];
     }];
-    
+
     [chatView.textStorage deleteCharactersInRange:NSMakeRange(0, chatView.textStorage.length)];
-    
+
     // Register the chat callback.
     [session begin_setCallback:callbackProxy response:nil exception:^(ICEException* ex) { [self exception:ex]; }];
 }
@@ -210,13 +210,13 @@
     {
         s = [s substringToIndex:1024];
     }
-    
+
     NSAssert(s.length <= 1024, @"s.length <= 1024");
     if(s.length > 0)
     {
         [session begin_send:s response:^(ICELong t) { } exception:^(ICEException* ex) { [self exception:ex]; }];
     }
-	
+
     inputField.stringValue = @"";
 }
 
@@ -239,7 +239,7 @@
 {
     [users addObject:name];
     [userTable reloadData];
-	
+
     [self append:[NSString stringWithFormat:@"%@ joined.", name]
              who:@"system message"
        timestamp:[NSDate dateWithTimeIntervalSinceReferenceDate:(timestamp/ 1000.f) - NSTimeIntervalSince1970]];
@@ -253,7 +253,7 @@
         [users removeObjectAtIndex:index];
         [userTable reloadData];
     }
-	
+
     [self append:[NSString stringWithFormat:@"%@ left.", name]
              who:@"system message"
        timestamp:[NSDate dateWithTimeIntervalSinceReferenceDate:(timestamp/ 1000.f) - NSTimeIntervalSince1970]];
@@ -261,15 +261,15 @@
 
 #pragma mark NSTableView delegate
 
-- (int)numberOfRowsInTableView:(NSTableView *)tv 
-{ 
+- (int)numberOfRowsInTableView:(NSTableView *)tv
+{
     return users.count;
 }
 
--(id) tableView:(NSTableView *)tv 
-objectValueForTableColumn:(NSTableColumn *)tableColumn 
-            row:(int)row 
-{ 
+-(id) tableView:(NSTableView *)tv
+objectValueForTableColumn:(NSTableColumn *)tableColumn
+            row:(int)row
+{
     return [users objectAtIndex:row];
 }
 

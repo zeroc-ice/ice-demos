@@ -11,7 +11,7 @@
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application
 {
-    // Override point for customization after app launch	
+    // Override point for customization after app launch
     [window setRootViewController:viewController];
     [window makeKeyAndVisible];
 }

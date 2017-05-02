@@ -12,7 +12,7 @@ page (see `Session.php`). From this page the user can invoke the
 As explained in the Ice manual, the ability to register a communicator
 for use by a PHP session is only useful when the session's page requests
 are serviced by the same web server process. In order to use this demo
-effectively, you may need to modify your Web server configuration 
+effectively, you may need to modify your Web server configuration
 (e.g., to use a single persistent process).
 
 Non-persistent Web server models (e.g., CGI) cannot be used with this
@@ -38,7 +38,7 @@ Follow these steps to install the demo:
 
 4) You may need to edit Login.php and Session.php so that the scripts
    are able to include the Ice run time files. For example, if you
-   installed Ice in C:\Ice, add a call to set_include_path as shown 
+   installed Ice in C:\Ice, add a call to set_include_path as shown
    below:
 ```
    <?php

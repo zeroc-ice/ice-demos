@@ -14,7 +14,7 @@
 @interface AddController : DetailController
 {
 @private
-    
+
     id<DemoLibraryPrx> library;
 }
 

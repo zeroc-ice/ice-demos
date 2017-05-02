@@ -96,7 +96,7 @@ Ice.Promise.try(() =>
         }
 
         //
-        // Create a proxy to the throughput object and down-cast the 
+        // Create a proxy to the throughput object and down-cast the
         // proxy to the Demo.Throughput interface.
         //
         return Demo.ThroughputPrx.checkedCast(communicator.stringToProxy("throughput:default -p 10000")).then(twoway =>

@@ -84,7 +84,7 @@ public class ContactDBI : ContactDBDisp_
             dialGroup = Ice.Util.None;
         }
     }
-    
+
     public override void shutdown(Ice.Current current)
     {
         System.Console.Out.WriteLine("Shutting down...");

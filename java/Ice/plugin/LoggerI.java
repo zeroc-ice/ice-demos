@@ -11,13 +11,13 @@ public class LoggerI implements com.zeroc.Ice.Logger
     {
         System.out.println("PRINT: " + message);
     }
-    
+
     @Override
     public void trace(String category, String message)
     {
         System.out.println("TRACE(" + category + "): " + message);
     }
-    
+
     @Override
     public void warning(String message)
     {

@@ -77,7 +77,7 @@ function slice2js(options)
                 process.exit(1);
             }
         }
-        defaults.exe = path.join(ICE_HOME, 'cpp', 'bin', process.platform == "win32" ? 
+        defaults.exe = path.join(ICE_HOME, 'cpp', 'bin', process.platform == "win32" ?
             path.join(platform, configuration, "slice2js.exe") : "slice2js");
         defaults.args = defaults.args.concat(["-I" + path.join(ICE_HOME, 'slice')]);
     }

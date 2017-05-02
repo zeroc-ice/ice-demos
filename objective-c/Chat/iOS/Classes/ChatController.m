@@ -55,9 +55,9 @@
              withString:replace[i+1] options:NSCaseInsensitiveSearch
              range:NSMakeRange(0, s.length)];
         }
-        
+
         text = s;
-        
+
         // The ChatMessage timestamp is ms since the UNIX epoch.
         timestamp = [NSDate dateWithTimeIntervalSinceReferenceDate:(ts/ 1000.f) - NSTimeIntervalSince1970];
     }
@@ -96,34 +96,34 @@
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier])
     {
         who = [[UILabel alloc] initWithFrame:CGRectZero];
-        
+
         who.textAlignment = NSTextAlignmentLeft;
         who.textColor = [UIColor blueColor];
         who.font = [UIFont boldSystemFontOfSize:12];
         who.numberOfLines = 0;
-        
+
         timestamp = [[UILabel alloc] initWithFrame:CGRectZero];
         timestamp.textAlignment = NSTextAlignmentRight;
         timestamp.textColor = [UIColor blackColor];
         timestamp.highlightedTextColor = [UIColor darkGrayColor];
         timestamp.font = [UIFont boldSystemFontOfSize:12];
         timestamp.numberOfLines = 0;
-        
+
         body = [[UILabel alloc] initWithFrame:CGRectZero];
 
         body.textColor = [UIColor lightGrayColor];
         body.font = [UIFont boldSystemFontOfSize:14];
         body.numberOfLines = 0;
-        
+
         [self.contentView addSubview:timestamp];
         [self.contentView addSubview:who];
         [self.contentView addSubview:body];
-        
+
         dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateStyle:NSDateFormatterShortStyle];
         [dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
     }
-    
+
     return self;
 }
 
@@ -133,16 +133,16 @@
     // The width of the table is 320 - 20px of left & right padding. We don't want to let the body
     // text go past 200px.
     CGRect body = [[message text] boundingRectWithSize:CGSizeMake(300.f, 200.0f) options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:14] } context:nil];
-    
+
     return body.size.height + 20.f; // 20px padding.
 }
 
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    
+
     CGRect contentRect = self.contentView.bounds;
-    
+
     CGRect timestampFrame = CGRectMake(160.f, 0.0f, 150.f, 20.f);
     CGRect whoFrame = CGRectMake(10.f, 0.0f, 150.f, 20.f);
 
@@ -158,7 +158,7 @@
     message = m;
     timestamp.text = [dateFormatter stringFromDate:message.timestamp];
     who.text = message.who;
-    body.text = message.text;    
+    body.text = message.text;
 }
 
 @end
@@ -182,22 +182,22 @@
 -(void)viewDidLoad
 {
     messages = [NSMutableArray array];
-    
+
     self.navigationItem.rightBarButtonItem =
     [[UIBarButtonItem alloc] initWithTitle:@"Users"
                                       style:UIBarButtonItemStylePlain
                                      target:self action:@selector(users:)];
-    
+
     self.navigationItem.leftBarButtonItem =
     [[UIBarButtonItem alloc] initWithTitle:@"Logout"
                                       style:UIBarButtonItemStylePlain
                                      target:self action:@selector(logout:)];
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(enterBackground)
                                                  name:UIApplicationDidEnterBackgroundNotification
                                                object:nil];
-    
+
     userController = [[UserController alloc] initWithNibName:@"UserView" bundle:nil];
 }
 
@@ -212,7 +212,7 @@
 -(void)destroySession
 {
     self.session = nil;
-    
+
     // Destroy the session and destroy the communicator from another thread since these
     // calls block.
     id<ICECommunicator> c = communicator;
@@ -228,7 +228,7 @@
         }
 
         @try
-        {            
+        {
             [c destroy];
         }
         @catch (ICEException* ex) {
@@ -244,9 +244,9 @@
                                                             preferredStyle:UIAlertControllerStyleAlert];
     [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
     [self presentViewController:alert animated:YES completion:nil];
-    
+
     [self destroySession];
-    
+
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -264,10 +264,10 @@
     id<ICEObjectAdapter> adapter = [communicator createObjectAdapterWithRouter:@"ChatDemo.Client"
                                                                         router:router];
     [adapter activate];
-    
+
     // Here we tie the chat view controller to the ChatRoomCallback servant.
     ChatChatRoomCallback* callbackImpl = [ChatChatRoomCallback objectWithDelegate:self];
-    
+
     ICEIdentity* callbackId = [ICEIdentity identity:[ICEUtil generateUUID] category:category];
 
     // The callback is registered in clear:, otherwise the callbacks can arrive
@@ -281,14 +281,14 @@
     if(self.session != nil)
     {
         [self.navigationController popToRootViewControllerAnimated:YES];
-        
+
         // The session is invalid, clear.
         self.session = nil;
         self.router = nil;
-        
+
         // Clean up the remainder.
         [self destroySession];
-        
+
         // open an alert with just an OK button
         UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Error"
                                                                        message:@"Lost connection with session!\n"
@@ -302,10 +302,10 @@
 -(void)activate:(NSString*)t
 {
     self.title = t;
-    
+
     [messages removeAllObjects];
     [chatView reloadData];
-    
+
     id<ICEConnection> conn = [router ice_getCachedConnection];
     id heartbeat = @(ICEHeartbeatAlways);
     id timeout = [NSNumber numberWithInteger:acmTimeout];
@@ -314,7 +314,7 @@
         [self closed:connection];
     }];
 
-    
+
     // Register the chat callback.
     [session begin_setCallback:callbackProxy response:nil exception:^(ICEException* ex) { [self exception:ex]; }];
 }
@@ -331,26 +331,26 @@
 {
     // Register for keyboard show/hide notifications.
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillShow:) 
+                                             selector:@selector(keyboardWillShow:)
                                                  name:UIKeyboardWillShowNotification
-                                               object:self.view.window]; 
+                                               object:self.view.window];
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillHide:) 
+                                             selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification
-                                               object:self.view.window]; 
+                                               object:self.view.window];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     // Unregister for keyboard show/hide notifications.
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil]; 
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil]; 
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [inputField resignFirstResponder];
-    inputField.text = @""; 
+    inputField.text = @"";
     [super touchesBegan:touches withEvent:event];
 }
 
@@ -377,13 +377,13 @@
     [messages addObject:message];
     [chatView reloadData];
     NSUInteger path[] = {0, messages.count-1};
-    [chatView scrollToRowAtIndexPath:[NSIndexPath indexPathWithIndexes:path length:2] 
+    [chatView scrollToRowAtIndexPath:[NSIndexPath indexPathWithIndexes:path length:2]
                     atScrollPosition:UITableViewScrollPositionBottom animated:NO];
 }
 
 -(void)users:(id)sender
 {
-    [self.navigationController pushViewController:userController animated:YES];    
+    [self.navigationController pushViewController:userController animated:YES];
 }
 
 - (void)setViewMovedUp:(BOOL)movedUp bounds:(CGRect)bounds
@@ -401,7 +401,7 @@
         rect.origin.y += CGRectGetHeight(bounds);
     }
     self.view.frame = rect;
-    
+
     [UIView commitAnimations];
 }
 
@@ -424,22 +424,22 @@
 #pragma mark UITextFieldDelegate
 
 -(BOOL)textFieldShouldReturn:(UITextField*)theTextField
-{    
+{
     NSString* s  = [theTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     if(s.length > 1024)
     {
         s = [s substringToIndex:1024];
     }
-    
+
     NSAssert(s.length <= 1024, @"s.length <= 1024");
     if(s.length > 0)
     {
         [session begin_send:s response:^(ICELong t) { } exception:^(ICEException* ex) { [self exception:ex]; }];
     }
-    
+
     theTextField.text = @"";
     [theTextField resignFirstResponder];
-    
+
     return YES;
 }
 
@@ -466,7 +466,7 @@
 
     [userController.users addObject:name];
     [userController.usersTableView reloadData];
-    
+
     self.navigationItem.rightBarButtonItem.title = [NSString stringWithFormat:@"%lu %@",
                                                     (unsigned long)userController.users.count,
                                                     (userController.users.count > 1 ? @"users" : @"user")];
@@ -476,7 +476,7 @@
 {
     NSString* s = [NSString stringWithFormat:@"%@ left.\n", name];
     [self append:[ChatMessage chatMessageWithText:s who:@"system message" timestamp:timestamp]];
-    
+
     NSUInteger index = [userController.users indexOfObject:name];
     if(index != NSNotFound)
     {

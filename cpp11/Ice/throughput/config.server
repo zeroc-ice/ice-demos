@@ -12,7 +12,7 @@ Throughput.Endpoints=tcp -p 10000:ssl -p 10001:ws -p 10002:wss -p 10003
 Ice.Default.Host=localhost
 
 #
-# For JavaScript browser clients using a secure WebSocket (WSS), 
+# For JavaScript browser clients using a secure WebSocket (WSS),
 # you should disable this property. Client-side authentication
 # is not supported with JavaScript browser clients.
 #

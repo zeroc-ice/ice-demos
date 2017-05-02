@@ -24,7 +24,7 @@ struct LoginData
 };
 
 class Coordinator : public Glacier2::SessionCallback,
-                    public Demo::ChatCallback, 
+                    public Demo::ChatCallback,
                     public std::enable_shared_from_this<Coordinator>
 {
 public:

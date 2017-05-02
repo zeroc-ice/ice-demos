@@ -48,6 +48,6 @@ public class TaskManagerI extends _TaskManagerDisp
         _executor.shutdownNow();
         current.adapter.getCommunicator().shutdown();
     }
-    
+
     private ExecutorService _executor;
 }

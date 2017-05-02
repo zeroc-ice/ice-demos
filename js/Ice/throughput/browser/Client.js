@@ -61,7 +61,7 @@ function run()
         {
             const oneway = twoway.ice_oneway();
             const repetitions = 100;
-            
+
             let seq;
             let seqSize;
             let wireSize;

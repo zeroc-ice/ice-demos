@@ -81,7 +81,7 @@ class Glacier2SessionManagerI implements com.zeroc.Glacier2.SessionManager, Sess
             s.destroy();
         }
     }
-    
+
     @Override
     public synchronized void destroy(com.zeroc.Ice.Current current)
     {

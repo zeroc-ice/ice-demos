@@ -18,7 +18,7 @@
 @property(nonatomic, retain) DirectoryI *parent;
 @property(nonatomic, retain) ICEIdentity *ident;
 @property(nonatomic, retain) NSMutableArray *contents;
-        
+
 +(id) directoryi:(NSString *)name parent:(DirectoryI *)parent;
 -(void) addChild:(id<FSNodePrx>)child;
 -(void) activate:(id<ICEObjectAdapter>)a;

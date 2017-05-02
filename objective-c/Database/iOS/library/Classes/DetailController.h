@@ -22,13 +22,13 @@
 @protected
     DemoBookDescription* book;
     DemoBookDescription* updated;
-    
+
     IBOutlet UITableView *tableView;
     IBOutlet UIActivityIndicatorView *statusActivity;
     IBOutlet UILabel *statusLabel;
     NSIndexPath* selectedIndexPath;
     WaitAlert* waitAlert;
-    
+
     id<DetailControllerDelegate> delegate;
     bool saving;
     bool changed;

@@ -39,7 +39,7 @@ Coordinator::initialize(CoreDispatcher^ dispatcher)
     id.dispatcher = [=](function<void()> call, const shared_ptr<Ice::Connection>&)
     {
         dispatcher->RunAsync(
-            CoreDispatcherPriority::Normal, 
+            CoreDispatcherPriority::Normal,
             ref new DispatchedHandler([=]()
             {
                 call();

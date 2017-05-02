@@ -16,7 +16,7 @@ public class Subscriber extends com.zeroc.Ice.Application
             System.out.println(date);
         }
     }
-    
+
     public void usage()
     {
         System.out.println("Usage: " + appName() + " [--batch] [--datagram|--twoway|--ordered|--oneway] " +
@@ -113,7 +113,7 @@ public class Subscriber extends com.zeroc.Ice.Application
                 return 1;
             }
         }
-        
+
         if(batch && (option.equals("Twoway") || option.equals("Ordered")))
         {
             System.err.println(appName() + ": batch can only be set with oneway or datagram");

@@ -12,16 +12,16 @@ public class HelloI extends _HelloDisp
     {
         _name = name;
     }
-    
+
     @Override
     public String
     getGreeting(Ice.Current current)
     {
         return _name + " says Hello World!";
     }
-    
+
     @Override
-    public void 
+    public void
     shutdown(Ice.Current current)
     {
         System.out.println("Shutting down...");

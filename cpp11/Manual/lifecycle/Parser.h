@@ -55,10 +55,10 @@ public:
     void destroy(const std::list<std::string>&);
 
     //
-    // With older flex version <= 2.5.35 YY_INPUT second 
+    // With older flex version <= 2.5.35 YY_INPUT second
     // paramenter is of type int&, in newer versions it
     // changes to size_t&
-    // 
+    //
     void getInput(char*, int&, size_t);
     void getInput(char*, size_t&, size_t);
     void continueLine();

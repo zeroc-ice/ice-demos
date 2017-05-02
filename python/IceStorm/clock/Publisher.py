@@ -84,7 +84,7 @@ class Publisher(Ice.Application):
         except Ice.CommunicatorDestroyedException:
             # Ignore
             pass
-                
+
         return 0
 
 app = Publisher()

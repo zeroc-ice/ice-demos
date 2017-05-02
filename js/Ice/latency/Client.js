@@ -48,7 +48,7 @@ Ice.Promise.try(
             {
                 console.log("pinging server " + repetitions + " times (this may take a while)");
                 const start = new Date().getTime();
-                
+
                 return loop(() => obj.ice_ping(), repetitions).then(() =>
                     {
                         //

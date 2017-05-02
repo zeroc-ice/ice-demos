@@ -16,16 +16,16 @@ function sayHello()
     Ice.Promise.try(() =>
         {
             setState(State.Busy);
-            
+
             //
             // Create a proxy for the hello object
             //
             const hostname = document.location.hostname || "127.0.0.1";
             const proxy = communicator.stringToProxy("hello:ws -h " + hostname + " -p 10000");
-            
+
             //
             // Down-cast this proxy to the derived interface Demo::Hello
-            // using checkedCast, and invoke the sayHello operation if 
+            // using checkedCast, and invoke the sayHello operation if
             // the checkedCast succeeds.
             //
             return Demo.HelloPrx.checkedCast(proxy).then(hello => hello.sayHello());
@@ -77,7 +77,7 @@ function setState(newState)
             //
             $("#progress").hide();
             $("body").removeClass("waiting");
-            
+
             //
             // Enable buttons
             //
@@ -92,12 +92,12 @@ function setState(newState)
             // Clear any previous error messages.
             //
             $("#output").val("");
-            
+
             //
             // Disable buttons.
             //
             $("#hello").addClass("disabled").off("click");
-            
+
             //
             // Display the progress indicator and set the wait cursor.
             //

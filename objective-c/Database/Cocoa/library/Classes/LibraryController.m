@@ -29,7 +29,7 @@
         session = s;
         router = r;
         library = l;
-        
+
         books = [NSMutableArray array];
         rowsQueried = 0;
         nrows = 0;
@@ -44,7 +44,7 @@
     NSApplication* app = [NSApplication sharedApplication];
     AppDelegate* delegate = (AppDelegate*)[app delegate];
     [delegate setLibraryActive:YES];
-    
+
     // Setup the session refresh timer.
     refreshTimer = [NSTimer timerWithTimeInterval:sessionTimeout/2
                                            target:self
@@ -69,12 +69,12 @@
     {
         return YES;
     }
-    
+
     if(!selection)
     {
         return NO;
     }
-    
+
     if(toolbarItem.action == @selector(rentBook:))
     {
         return selection.rentedBy.length == 0;
@@ -95,7 +95,7 @@
         [refreshTimer invalidate];
         refreshTimer = nil;
     }
-    
+
     // Destroy the session.
     if(router)
     {
@@ -107,13 +107,13 @@
     }
     router = nil;
     session = nil;
-    
+
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^ {
-		
+
 		// Destroy might block so we call it from a separate thread.
 		[communicator destroy];
 		communicator = nil;
-		
+
 		dispatch_async(dispatch_get_main_queue(), ^ {
 			NSApplication* app = [NSApplication sharedApplication];
 			AppDelegate* delegate = (AppDelegate*)[app delegate];
@@ -152,13 +152,13 @@
     {
         // Hide the saving sheet.
         [NSApp endSheet:savingController.window];
-        [savingController.window orderOut:self]; 
-		
+        [savingController.window orderOut:self];
+
         savingController = nil;
     }
-	
+
     NSString* s;
-    
+
     if([ex isKindOfClass:[ICEObjectNotExistException class]])
     {
         if(selection)
@@ -172,7 +172,7 @@
     {
         DemoBookRentedException* ex2 = (DemoBookRentedException*)ex;
         s = @"The book has already been rented";
-        
+
         NSAssert(selection != nil, @"selection != nil");
         selection.rentedBy = ex2.renter;
         [self setSelection:selection]; // Update detail
@@ -181,7 +181,7 @@
     else if([ex isKindOfClass:[DemoBookNotRentedException class]])
     {
         s = @"The book has already been returned.";
-        NSAssert(selection != nil, @"selection != nil");        
+        NSAssert(selection != nil, @"selection != nil");
         selection.rentedBy = @"";
         [self setSelection:selection]; // Update detail
         [queryTable reloadData];
@@ -192,15 +192,15 @@
         s = [ex description];
         [self destroySession];
     }
-    
+
     NSRunAlertPanel(@"Error", @"%@", @"OK", nil, nil, s);
-    
+
     if(editController && session)
     {
-        [NSApp beginSheet:editController.window 
+        [NSApp beginSheet:editController.window
            modalForWindow:self.window
-            modalDelegate:self 
-           didEndSelector:@selector(editFinished:returnCode:contextInfo:) 
+            modalDelegate:self
+           didEndSelector:@selector(editFinished:returnCode:contextInfo:)
               contextInfo:NULL];
     }
 }
@@ -216,7 +216,7 @@
                 {
                     // Hide the saving sheet.
                     [NSApp endSheet:savingController.window];
-                    [savingController.window orderOut:self]; 
+                    [savingController.window orderOut:self];
                     savingController = nil;
                 }
                 NSRunAlertPanel(@"Error", @"%@", @"OK", nil, nil, [ex description]);
@@ -238,12 +238,12 @@
         [self setSelection:updated];
     }
     updated = nil;
-    
+
     // Close the saving controller.
     NSAssert(savingController != nil, @"savingController != nil");
     [NSApp endSheet:savingController.window];
     [savingController.window orderOut:self];
-	
+
     // Clear the state variables.
     savingController = nil;
     editController = nil;
@@ -255,16 +255,16 @@
 - (void)addFinished:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
 {
     [sheet orderOut:self];
-	
+
     if(returnCode)
     {
         savingController = [[SavingController alloc] init];
         [NSApp beginSheet:savingController.window
            modalForWindow:self.window
-            modalDelegate:nil 
-           didEndSelector:NULL 
+            modalDelegate:nil
+           didEndSelector:NULL
               contextInfo:NULL];
-        
+
         DemoBookDescription* result = editController.result;
         [library begin_createBook:result.isbn
 							title:result.title
@@ -284,7 +284,7 @@
     [NSApp beginSheet:editController.window
        modalForWindow:self.window
         modalDelegate:self
-       didEndSelector:@selector(addFinished:returnCode:contextInfo:) 
+       didEndSelector:@selector(addFinished:returnCode:contextInfo:)
           contextInfo:NULL];
 }
 
@@ -299,12 +299,12 @@
 			{
 				[searchIndicator stopAnimation:self];
 				return;
-			}	    
+			}
 			[self exception:ex];
 		}];
-        
+
         // Remove the book, and the row from the table.
-        [books removeObjectAtIndex:queryTable.selectedRow];        
+        [books removeObjectAtIndex:queryTable.selectedRow];
         --nrows;
         [queryTable reloadData];
     }
@@ -322,7 +322,7 @@
 {
     if([item action] == @selector(setSearchType:))
     {
-        [item setState:(item.tag == searchType) ? NSOnState : NSOffState];        
+        [item setState:(item.tag == searchType) ? NSOnState : NSOffState];
     }
     if ([item action] == @selector(logout:))
     {
@@ -340,7 +340,7 @@
     [books removeAllObjects];
     // No need to call setSelection: since the selection will change to none automatically.
     [queryTable reloadData];
-    
+
     NSString* s = searchField.stringValue;
     s = [s stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     if(s.length == 0)
@@ -348,10 +348,10 @@
         return;
     }
     [searchIndicator startAnimation:self];
-    
+
     // Run the query.
-    void(^queryResponse)(NSMutableArray*, int, id<DemoBookQueryResultPrx>) = 
-    ^(NSMutableArray* seq, int n, id<DemoBookQueryResultPrx> q) 
+    void(^queryResponse)(NSMutableArray*, int, id<DemoBookQueryResultPrx>) =
+    ^(NSMutableArray* seq, int n, id<DemoBookQueryResultPrx> q)
     {
 		[searchIndicator stopAnimation:self];
 		nrows = n;
@@ -359,12 +359,12 @@
 		{
 			return;
 		}
-		
+
 		[books addObjectsFromArray:seq];
 		query = q;
 		[queryTable reloadData];
     };
-    
+
     switch(searchType)
     {
         case 0: // ISBN
@@ -403,18 +403,18 @@
 - (void)editFinished:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
 {
     [sheet orderOut:self];
-    
+
     if(returnCode)
     {
         savingController = [[SavingController alloc] init];
         [NSApp beginSheet:savingController.window
            modalForWindow:self.window
-            modalDelegate:nil 
-           didEndSelector:NULL 
+            modalDelegate:nil
+           didEndSelector:NULL
               contextInfo:NULL];
-		
+
         updated = editController.result;
-		
+
 		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 			@try
 			{
@@ -455,11 +455,11 @@
 -(void)edit:(id)sender
 {
     editController = [[EditController alloc] initWithDesc:selection];
-	
-    [NSApp beginSheet:editController.window 
+
+    [NSApp beginSheet:editController.window
        modalForWindow:self.window
-        modalDelegate:self 
-       didEndSelector:@selector(editFinished:returnCode:contextInfo:) 
+        modalDelegate:self
+       didEndSelector:@selector(editFinished:returnCode:contextInfo:)
           contextInfo:NULL];
 }
 
@@ -473,13 +473,13 @@
         savingController = [[SavingController alloc] init];
         [NSApp beginSheet:savingController.window
            modalForWindow:self.window
-            modalDelegate:nil 
-           didEndSelector:NULL 
+            modalDelegate:nil
+           didEndSelector:NULL
               contextInfo:NULL];
-		
+
         updated = [selection copy];
         updated.rentedBy = rentController.renter;
-		
+
         [selection.proxy begin_rentBook:rentController.renter
                                response:^ { [self asyncRequestReply]; }
                               exception:^(ICEException* ex) { [self exception:ex]; }];
@@ -495,10 +495,10 @@
     if(selection)
     {
         rentController = [[RentController alloc] init];
-        [NSApp beginSheet:rentController.window 
+        [NSApp beginSheet:rentController.window
            modalForWindow:self.window
-            modalDelegate:self 
-           didEndSelector:@selector(rentFinished:returnCode:contextInfo:) 
+            modalDelegate:self
+           didEndSelector:@selector(rentFinished:returnCode:contextInfo:)
               contextInfo:NULL];
     }
 }
@@ -510,13 +510,13 @@
         savingController = [[SavingController alloc] init];
         [NSApp beginSheet:savingController.window
            modalForWindow:self.window
-            modalDelegate:nil 
-           didEndSelector:NULL 
+            modalDelegate:nil
+           didEndSelector:NULL
               contextInfo:NULL];
-        
+
         updated = [selection copy];
         updated.rentedBy = @"";
-        
+
         [selection.proxy begin_returnBook:^ { [self asyncRequestReply]; }
 								exception:^(ICEException* ex) { [self exception:ex]; }];
     }
@@ -567,7 +567,7 @@
                 [searchIndicator startAnimation:self];
                 NSAssert(query != nil, @"query != nil");
                 [query begin_next:10
-						 response:^(NSMutableArray* seq, BOOL destroyed) { 
+						 response:^(NSMutableArray* seq, BOOL destroyed) {
 							 [searchIndicator stopAnimation:self];
 							 [books addObjectsFromArray:seq];
 							 // The query has returned all available results.
@@ -580,7 +580,7 @@
                         exception:^(ICEException* ex) { [self exception:ex]; } ];
                 rowsQueried += 10;
             }
-            
+
             return @"<loading>";
         }
         else
@@ -595,7 +595,7 @@
             {
                 return book.title;
             }
-            
+
         }
     }
     else

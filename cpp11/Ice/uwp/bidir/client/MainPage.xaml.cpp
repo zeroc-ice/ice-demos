@@ -47,7 +47,7 @@ void bidir::MainPage::startClient_Click(Platform::Object^ sender, Windows::UI::X
         initData.dispatcher = [=](function<void()> call, const shared_ptr<Ice::Connection>&)
             {
                 this->Dispatcher->RunAsync(
-                    CoreDispatcherPriority::Normal, 
+                    CoreDispatcherPriority::Normal,
                     ref new DispatchedHandler([=]()
                         {
                             call();
@@ -57,7 +57,7 @@ void bidir::MainPage::startClient_Click(Platform::Object^ sender, Windows::UI::X
         _communicator = Ice::initialize(initData);
 
         auto server = Ice::checkedCast<CallbackSenderPrx>(
-            _communicator->stringToProxy("sender:tcp -h " + Ice::wstringToString(hostname->Text->Data()) + 
+            _communicator->stringToProxy("sender:tcp -h " + Ice::wstringToString(hostname->Text->Data()) +
                                          " -p 10000"));
 
         if(!server)
@@ -75,7 +75,7 @@ void bidir::MainPage::startClient_Click(Platform::Object^ sender, Windows::UI::X
         adapter->add(cr, ident);
         adapter->activate();
         server->ice_getConnection()->setAdapter(adapter);
-        server->addClientAsync(ident, nullptr, 
+        server->addClientAsync(ident, nullptr,
             [=](const exception_ptr ex)
             {
                 try
@@ -117,7 +117,7 @@ void bidir::MainPage::stopClient_Click(Platform::Object^ sender, Windows::UI::Xa
     stopClient->IsEnabled = false;
 }
 
-void 
+void
 bidir::MainPage::print(const std::string& message)
 {
     output->Text += ref new String(Ice::stringToWstring(message).c_str());

@@ -47,7 +47,7 @@
                         Margin="0, 5, 0, 0"/>
                 <Border Grid.Row="2" BorderThickness="2" BorderBrush="Gray" Background="Gray"
                         Margin="0, 5, 0, 0">
-                    <ScrollViewer x:Name="scroller"  VerticalScrollBarVisibility="Auto" 
+                    <ScrollViewer x:Name="scroller"  VerticalScrollBarVisibility="Auto"
                                   HorizontalScrollBarVisibility="Disabled" Width="Auto" Height="Auto" ZoomMode="Disabled">
                         <TextBlock x:Name="output" Style="{StaticResource OutputStyle}" Padding="5, 5, 5, 5"/>
                     </ScrollViewer>
@@ -60,7 +60,7 @@
         </Border>
         <!-- Footer -->
         <StackPanel Grid.Row="2" VerticalAlignment="Bottom">
-            <TextBlock Margin="5, 5, 5, 5"  Style="{StaticResource FooterStyle}" 
+            <TextBlock Margin="5, 5, 5, 5"  Style="{StaticResource FooterStyle}"
                        Text="Copyright © 2012-2017 ZeroC, Inc. All rights reserved."/>
         </StackPanel>
     </Grid>

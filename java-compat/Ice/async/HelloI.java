@@ -8,7 +8,7 @@ import Demo.*;
 
 public class HelloI extends _HelloDisp
 {
-    public 
+    public
     HelloI(WorkQueue workQueue)
     {
         _workQueue = workQueue;

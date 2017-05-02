@@ -16,19 +16,19 @@
     IBOutlet NSTextView* chatView;
     IBOutlet NSTableView* userTable;
     IBOutlet NSTextField* inputField;
-    
+
     id<ICECommunicator> communicator;
     id<ChatChatSessionPrx>  session;
     id<ChatChatRoomCallbackPrx> callbackProxy;
     int acmTimeout;
     id<GLACIER2RouterPrx> router;
-    
+
     NSTimer* refreshTimer;
-    
+
     NSMutableArray* users;
 
     NSDateFormatter* dateFormatter;
-    
+
     NSDictionary *whoTextAttributes;
     NSDictionary *dateTextAttributes;
     NSDictionary *textAttributes;

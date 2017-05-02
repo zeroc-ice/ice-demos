@@ -1,7 +1,7 @@
 # SimpleChat Demo Client App (Universal Windows)
 
 This demo is a graphical client app written in C++/CX. This client
-works with the Glacier2/simpleChat server provided in C++, and demonstrates 
+works with the Glacier2/simpleChat server provided in C++, and demonstrates
 the use of Glacier2 session helpers.
 
 ## Running the demo
@@ -13,10 +13,10 @@ or right click on the project and select `Debug -> Start new instance`.
 
 ### SSL
 
-The Ice ssl transport for UWP currently does not support client-side 
-authentication. In order to successfully connect with SSL, you need to edit 
-the Glacier2 router configuration file (`config.glacier2`) and uncomment the 
-`IceSSL.VerifyPeer=0` property. 
+The Ice ssl transport for UWP currently does not support client-side
+authentication. In order to successfully connect with SSL, you need to edit
+the Glacier2 router configuration file (`config.glacier2`) and uncomment the
+`IceSSL.VerifyPeer=0` property.
 
 If you run the chat client and Glacier2 router on different computers or
 devices, you also need to regenerate the server certificate to ensure the

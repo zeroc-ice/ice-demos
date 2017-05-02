@@ -16,13 +16,13 @@ public:
     MTPrinter()
     {
     }
-    
+
     void print(const std::string& data)
     {
         IceUtil::Mutex::Lock sync(_mutex);
         std::cout << data << std::flush;
     }
-    
+
 private:
 
     IceUtil::Mutex _mutex;

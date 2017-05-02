@@ -5,7 +5,7 @@ Demos in this directory:
   This demo shows how to use the allocation feature of IceGrid.
 
 - [customLocator](./customLocator)
-  
+
   This demo shows how to implement a custom locator that delegates
   to the IceGrid locator.
 
@@ -27,6 +27,6 @@ Demos in this directory:
 
 - [simple](./simple)
 
-  This demo illustrates the basics of using IceGrid, including the 
+  This demo illustrates the basics of using IceGrid, including the
   use of templates and object adapter replication.
 

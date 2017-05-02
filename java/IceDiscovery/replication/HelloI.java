@@ -12,13 +12,13 @@ public class HelloI implements Hello
     {
         _name = name;
     }
-    
+
     @Override
     public String getGreeting(com.zeroc.Ice.Current current)
     {
         return _name + " says Hello World!";
     }
-    
+
     @Override
     public void shutdown(com.zeroc.Ice.Current current)
     {

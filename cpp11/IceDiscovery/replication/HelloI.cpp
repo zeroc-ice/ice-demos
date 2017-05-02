@@ -9,7 +9,7 @@
 
 using namespace std;
 
-HelloI::HelloI(const string& name) : 
+HelloI::HelloI(const string& name) :
     _name(name)
 {
 }

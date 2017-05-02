@@ -115,7 +115,7 @@ public class Publisher extends Ice.Application
             java.text.SimpleDateFormat date = new java.text.SimpleDateFormat("MM/dd/yy HH:mm:ss:SSS");
             while(true)
             {
-                
+
                 clock.tick(date.format(new java.util.Date()));
 
                 try

@@ -33,7 +33,7 @@ class PropsI(Demo.Props, Ice.PropertiesAdminUpdateCallback):
             return self.changes
         finally:
             self.m.release()
-        
+
     def shutdown(self, current = None):
         current.adapter.getCommunicator().shutdown();
 
@@ -53,7 +53,7 @@ class Server(Ice.Application):
             return 1
 
         servant = PropsI()
- 
+
         #
         # Retrieve the PropertiesAdmin facet and register the servant as the update callback.
         #

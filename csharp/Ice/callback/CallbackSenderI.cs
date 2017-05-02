@@ -21,7 +21,7 @@ public sealed class CallbackSenderI : CallbackSenderDisp_
             Console.Error.WriteLine(ex);
         }
     }
-    
+
     public override void shutdown(Ice.Current current)
     {
         Console.Out.WriteLine("Shutting down...");

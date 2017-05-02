@@ -34,7 +34,7 @@
         </Border>
         <!-- Footer -->
         <StackPanel Grid.Row="2" VerticalAlignment="Bottom">
-            <TextBlock Margin="5, 5, 5, 5"  Style="{StaticResource FooterStyle}" 
+            <TextBlock Margin="5, 5, 5, 5"  Style="{StaticResource FooterStyle}"
                        Text="Copyright © 2012-2017 ZeroC, Inc. All rights reserved."/>
         </StackPanel>
     </Grid>

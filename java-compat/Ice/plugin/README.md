@@ -13,5 +13,5 @@ Both the client and server use a custom logger which is loaded as
 a logger plugin. The server also uses a plugin to implement the
 servant for this demo.
 
-Please Look in the client and sever configuration files to see the 
+Please Look in the client and sever configuration files to see the
 plugin configuration.

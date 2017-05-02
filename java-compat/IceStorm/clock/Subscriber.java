@@ -17,7 +17,7 @@ public class Subscriber extends Ice.Application
             System.out.println(date);
         }
     }
-    
+
     public void
     usage()
     {
@@ -116,7 +116,7 @@ public class Subscriber extends Ice.Application
                 return 1;
             }
         }
-        
+
         if(batch && (option.equals("Twoway") || option.equals("Ordered")))
         {
             System.err.println(appName() + ": batch can only be set with oneway or datagram");

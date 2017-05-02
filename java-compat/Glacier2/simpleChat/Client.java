@@ -177,7 +177,7 @@ public class Client extends JFrame
         JScrollPane conversationInputScroll = new JScrollPane(_input);
         conversationInputScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         conversationInputScroll.setBorder(null);
-        
+
         conversationInputScroll.setMinimumSize(new Dimension(100, 100));
         conversationInputScroll.setPreferredSize(new Dimension(100, 100));
         verticalSplit.setBottomComponent(conversationInputScroll);
@@ -221,7 +221,7 @@ public class Client extends JFrame
 
         statusPanel.add(statusPanelSeparator, BorderLayout.NORTH);
         statusPanel.add(_status, BorderLayout.SOUTH);
-        
+
         add(statusPanel, BorderLayout.SOUTH);
 
         JMenuBar menuBar = new JMenuBar();
@@ -231,7 +231,7 @@ public class Client extends JFrame
         {
             @Override
             public void
-            actionPerformed(ActionEvent e) 
+            actionPerformed(ActionEvent e)
             {
                 login();
             }
@@ -241,7 +241,7 @@ public class Client extends JFrame
         {
             @Override
             public void
-            actionPerformed(ActionEvent e) 
+            actionPerformed(ActionEvent e)
             {
                 setEnabled(false);
                 _status.setText("Logging out");
@@ -255,7 +255,7 @@ public class Client extends JFrame
         {
             @Override
             public void
-            actionPerformed(ActionEvent e) 
+            actionPerformed(ActionEvent e)
             {
                 exit();
             }
@@ -310,7 +310,7 @@ public class Client extends JFrame
         fieldPanel.setLayout(new GridLayout(0, 1));
         fieldPanel.add(_hostField);
         fieldPanel.add(_userNameField);
-        fieldPanel.add(_passwordField);         
+        fieldPanel.add(_passwordField);
         _connectionPanel.add(labelPanel);
         _connectionPanel.add(fieldPanel);
 
@@ -356,7 +356,7 @@ public class Client extends JFrame
                     @Override
                     public void
                     message(final String data, Current current)
-                    {                            
+                    {
                         appendMessage(data);
                     }
                 };
@@ -372,12 +372,12 @@ public class Client extends JFrame
                     {
                         assert _loginDialog != null;
                         _loginDialog.dispose();
-                        
+
                         _login.setEnabled(false);
                         _logout.setEnabled(true);
-                        
+
                         _input.setEnabled(true);
-                        
+
                         _status.setText("Connected with " + _hostField.getText());
                     }
 
@@ -515,12 +515,12 @@ public class Client extends JFrame
         Dimension screenSize = component.getToolkit().getScreenSize();
         component.setLocation((screenSize.width - paneSize.width) / 2, (screenSize.height - paneSize.height) / 2);
     }
-    
+
     private JLabel _status;
     private JTextArea _output;
     private JTextArea _input;
     private JScrollPane _outputScroll;
- 
+
      // Login/Logout actions.
     private AbstractAction _login;
     private AbstractAction _logout;

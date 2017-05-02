@@ -10,7 +10,7 @@ class Scanner
     {
         _parser = p;
     }
-    
+
     Token nextToken()
     {
         String s = next();
@@ -196,31 +196,31 @@ class Scanner
                                     buf.append(next);
                                     break;
                                 }
-                            
+
                                 case 'n':
                                 {
                                     buf.append('\n');
                                     break;
                                 }
-                            
+
                                 case 'r':
                                 {
                                     buf.append('\r');
                                     break;
                                 }
-                            
+
                                 case 't':
                                 {
                                     buf.append('\t');
                                     break;
                                 }
-                            
+
                                 case 'f':
                                 {
                                     buf.append('\f');
                                     break;
                                 }
-                            
+
                                 default:
                                 {
                                     buf.append(c);
@@ -264,7 +264,7 @@ class Scanner
             {
             }
         }
-        
+
         return buf.toString();
     }
 

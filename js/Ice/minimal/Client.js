@@ -6,9 +6,9 @@
 
 const Ice = require("ice").Ice;
 const Demo = require("./Hello").Demo;
-    
+
 let communicator;
- 
+
 Ice.Promise.try(() =>
     {
         //
@@ -19,9 +19,9 @@ Ice.Promise.try(() =>
         {
             throw("too many arguments");
         }
-        
+
         //
-        // Down-cast the proxy to the hello object interface and invoke 
+        // Down-cast the proxy to the hello object interface and invoke
         // the sayHello method.
         //
         return Demo.HelloPrx.checkedCast(communicator.stringToProxy("hello:tcp -h localhost -p 10000")).then(

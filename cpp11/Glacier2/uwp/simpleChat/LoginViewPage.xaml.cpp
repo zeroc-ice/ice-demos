@@ -35,7 +35,7 @@ LoginViewPage::setError(String^ err)
     error->Text = err;
 }
 
-void 
+void
 LoginViewPage::OnNavigatedTo(NavigationEventArgs^)
 {
     LoginData loginData = MainPage::instance()->coordinator()->loginData();
@@ -53,7 +53,7 @@ LoginViewPage::OnNavigatedTo(NavigationEventArgs^)
     }
 }
 
-void 
+void
 LoginViewPage::signinClick(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
     LoginData loginData;

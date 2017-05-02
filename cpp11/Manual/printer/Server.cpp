@@ -15,7 +15,7 @@ public:
     virtual void printString(string s, const Ice::Current&) override;
 };
 
-void 
+void
 PrinterI::printString(string s, const Ice::Current&)
 {
     cout << s << endl;

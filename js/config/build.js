@@ -48,7 +48,7 @@ if(process.platform == "linux")
                 }
             }
             catch(e)
-            {                
+            {
             }
             return false;
         });

@@ -19,16 +19,16 @@ class Token
     public static final int TOK_REMOVE_CURRENT = 10;
     public static final int TOK_STRING = 11;
     public static final int TOK_SEMI = 12;
-    
+
     int type;
     String value;
-    
+
     Token(int t)
     {
         type = t;
         value = null;
     }
-    
+
     Token(int t, String v)
     {
         type = t;

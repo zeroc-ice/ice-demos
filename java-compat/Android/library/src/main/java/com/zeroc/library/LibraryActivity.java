@@ -147,20 +147,20 @@ public class LibraryActivity extends SessionActivity
             {
             }
         });
-        _text.setOnEditorActionListener(new EditText.OnEditorActionListener() 
+        _text.setOnEditorActionListener(new EditText.OnEditorActionListener()
         {
 
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
             {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) 
+                if (actionId == EditorInfo.IME_ACTION_SEARCH)
                 {
                     _search.performClick();
                     _search.setPressed(true);
-                    new Handler().postDelayed(new Runnable() 
+                    new Handler().postDelayed(new Runnable()
                     {
                         @Override
-                        public void run() 
+                        public void run()
                         {
                             _search.setPressed(false);
                         }
@@ -169,7 +169,7 @@ public class LibraryActivity extends SessionActivity
                 }
                 return false;
             }
-            
+
         });
 
         _search = (Button)findViewById(R.id.search);

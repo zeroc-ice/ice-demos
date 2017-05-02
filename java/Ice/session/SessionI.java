@@ -35,7 +35,7 @@ class SessionI implements Session
         }
         return _name;
     }
-    
+
     @Override
     synchronized public void destroy(com.zeroc.Ice.Current c)
     {

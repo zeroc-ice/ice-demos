@@ -118,7 +118,7 @@ Parser* parser;
 
         self.current = [results objectAtIndex:0];
         self.query = q;
-        
+
         [self printCurrent];
     }
     @catch(ICELocalException* ex)
@@ -416,7 +416,7 @@ Parser* parser;
     NSString* ss = [[NSString alloc] initWithData:line encoding:NSUTF8StringEncoding];
     int len;
     const char* utf8 = [ss UTF8String];
-    
+
     len = strlen(utf8);
     if(len > max)
     {

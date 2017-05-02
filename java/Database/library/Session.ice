@@ -46,7 +46,7 @@ interface SessionFactory
 {
     /**
      *
-     * Create a session. 
+     * Create a session.
      *
      * @return A proxy to the session.
      *

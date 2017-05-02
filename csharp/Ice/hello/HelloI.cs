@@ -17,7 +17,7 @@ public class HelloI : HelloDisp_
         }
         Console.Out.WriteLine("Hello World!");
     }
-    
+
     public override void shutdown(Ice.Current current)
     {
         Console.Out.WriteLine("Shutting down...");

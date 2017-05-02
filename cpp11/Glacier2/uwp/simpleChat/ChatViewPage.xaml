@@ -20,15 +20,15 @@
         <Border Grid.Row="0" Grid.Column="0" Padding="5, 5, 5, 5" BorderBrush="Gray"
                 Margin="5, 0, 0, 0" BorderThickness="5" CornerRadius="5">
             <Border Background="{StaticResource TextBoxButtonPointerOverBackgroundThemeBrush}">
-                <ScrollViewer x:Name="Scroller"  VerticalScrollBarVisibility="Auto" 
-                        HorizontalScrollBarVisibility="Disabled" 
+                <ScrollViewer x:Name="Scroller"  VerticalScrollBarVisibility="Auto"
+                        HorizontalScrollBarVisibility="Disabled"
                         Width="Auto" Height="Auto"
                         ZoomMode="Disabled">
                     <TextBlock x:Name="messages" Style="{StaticResource OutputStyle}" Padding="5, 5, 5, 5" TextWrapping="Wrap"/>
                 </ScrollViewer>
             </Border>
         </Border>
-        <Border Grid.Row="1" Grid.Column="0" Padding="5, 5, 5, 5" BorderThickness="5" BorderBrush="Gray" 
+        <Border Grid.Row="1" Grid.Column="0" Padding="5, 5, 5, 5" BorderThickness="5" BorderBrush="Gray"
                 Margin="0, 5, 0, 0" CornerRadius="5">
             <TextBox x:Name="input" TextWrapping="Wrap" KeyDown="inputKeyDown"/>
         </Border>

@@ -34,7 +34,7 @@ WorkQueue::run()
             CallbackEntry entry = _callbacks.front();
 
             //
-            // Wait for the amount of time indicated in delay to 
+            // Wait for the amount of time indicated in delay to
             // emulate a process that takes a significant period of
             // time to complete.
             //
@@ -62,7 +62,7 @@ WorkQueue::run()
     }
 }
 
-void 
+void
 WorkQueue::add(const Demo::AMD_Hello_sayHelloPtr& cb, int delay)
 {
     IceUtil::Monitor<IceUtil::Mutex>::Lock lock(_monitor);

@@ -79,7 +79,7 @@ struct BookDescription
 
     /** The customer name of the renter. */
     string rentedBy;
-    
+
     /** A proxy to the associated book. */
     Book* proxy;
 }

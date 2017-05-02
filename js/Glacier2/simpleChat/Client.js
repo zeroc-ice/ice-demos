@@ -88,7 +88,7 @@ Ice.Promise.try(() =>
         function runWithSession(router, session)
         {
             const p = new Ice.Promise();
-            
+
             let completed = false;
 
             //

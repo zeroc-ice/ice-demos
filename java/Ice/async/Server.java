@@ -24,7 +24,7 @@ public class Server extends com.zeroc.Ice.Application
                              _workQueue._destroy();
                              communicator().shutdown();
                          });
-        
+
         adapter.activate();
 
         communicator().waitForShutdown();

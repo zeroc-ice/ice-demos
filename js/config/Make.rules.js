@@ -147,7 +147,7 @@ index.html: $(GEN_SRCS) $(top_srcdir)/test/Common/index.html
 $(libdir)/$(LIBNAME).js: $(SRCS)
 	@rm -f $(libdir)/$(LIBNAME).js
 	$(NODE) $(top_srcdir)/config/makebundle.js "$(MODULES)" $(SRCS) > $(libdir)/$(LIBNAME).js
-        
+
 $(libdir)/$(LIBNAME).js.gz: $(libdir)/$(LIBNAME).js
 	@rm -f $(libdir)/$(LIBNAME).js.gz
 	gzip -c9 $(libdir)/$(LIBNAME).js > $(libdir)/$(LIBNAME).js.gz
@@ -156,7 +156,7 @@ ifeq ($(OPTIMIZE),yes)
 $(libdir)/$(LIBNAME).min.js: $(libdir)/$(LIBNAME).js
 	@rm -f $(libdir)/$(LIBNAME).min.js
 	java -jar $(CLOSURE_COMPILER) $(CLOSUREFLAGS) --js $(libdir)/$(LIBNAME).js --js_output_file $(libdir)/$(LIBNAME).min.js
-        
+
 $(libdir)/$(LIBNAME).min.js.gz: $(libdir)/$(LIBNAME).min.js
 	@rm -f $(libdir)/$(LIBNAME).min.js.gz
 	gzip -c9 $(libdir)/$(LIBNAME).min.js > $(libdir)/$(LIBNAME).min.js.gz

@@ -17,7 +17,7 @@ public:
     virtual void printString(const string &, const Ice::Current&);
 };
 
-void 
+void
 PrinterI::printString(const string &s, const Ice::Current&)
 {
     cout << s << endl;

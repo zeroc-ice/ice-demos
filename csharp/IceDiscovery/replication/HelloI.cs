@@ -12,12 +12,12 @@ public class HelloI : HelloDisp_
     {
         _name = name;
     }
-    
+
     public override string getGreeting(Ice.Current current)
     {
         return _name + " says Hello World!";
     }
-    
+
     public override void shutdown(Ice.Current current)
     {
         System.Console.Out.WriteLine("Shutting down...");

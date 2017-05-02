@@ -7,7 +7,7 @@ your class into a byte sequence and then pass that sequence to your
 operations to be deserialized by the receiver. You can now accomplish
 the same thing more conveniently via metadata.
 
-In your Slice definitions, you must declare a byte sequence using the 
+In your Slice definitions, you must declare a byte sequence using the
 `java:serializable` metadata and specify the Java class name, as shown
 below:
 

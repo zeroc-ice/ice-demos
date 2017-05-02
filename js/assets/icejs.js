@@ -30,7 +30,7 @@ $(".source").each(
     {
         $.ajax(
             {
-                url: $(e).attr("data-code"), 
+                url: $(e).attr("data-code"),
                 //
                 // Use text data type to avoid problems interpreting the data.
                 //
@@ -61,10 +61,10 @@ $("#viewSource").click(
 if(document.location.protocol === "file:")
 {
     var setupDialog = "<div id=\"setup-modal\" class=\"reveal-modal\" data-reveal>" +
-        "<p>The Ice for JavaScript demos require a web server. Please refer to the Sample Programs page from the " + 
+        "<p>The Ice for JavaScript demos require a web server. Please refer to the Sample Programs page from the " +
         "Ice for JavaScript <a href=\"http://doc.zeroc.com/display/Rel/Ice+3.6b+Release+Notes\">" +
         " release notes</a> for instructions on how to run the web server included with your distribution.</p></div>";
-    
+
     $("body").append(setupDialog);
     $("#setup-modal").foundation({
         reveal:
@@ -81,7 +81,7 @@ if(document.location.protocol === "file:")
 
 //
 // Check if the corresponding generated files can be access, if they
-// cannot be access display the build-required-modal otherwhise do 
+// cannot be access display the build-required-modal otherwhise do
 // nothing.
 //
 function checkGenerated(files)
@@ -89,20 +89,20 @@ function checkGenerated(files)
     var dialog = "<div id=\"build-required-modal\" class=\"reveal-modal\" data-reveal>" +
         "<p>Couldn't find generated file `%FILENAME%'. This is expected if you didn't build the JavaScript demos. " +
         "Please refer to the Sample Programs page from the Ice for JavaScript " +
-        "<a href=\"http://doc.zeroc.com/display/Rel/Ice+3.6b+Release+Note\">release notes</a> " + 
+        "<a href=\"http://doc.zeroc.com/display/Rel/Ice+3.6b+Release+Note\">release notes</a> " +
         "for instructions on how to build the demos.</p>" +
         "</div>";
-    
+
     var basePath = document.location.pathname;
     basePath = basePath.substr(0, basePath.lastIndexOf("/"));
-    
+
     var error = false;
     files.forEach(
         function(f)
         {
             $.ajax(
                 {
-                    headers: {method: "HEAD"}, 
+                    headers: {method: "HEAD"},
                     url: basePath + "/" + f,
                     //
                     // Use text data type to avoid problems interpreting the data.
