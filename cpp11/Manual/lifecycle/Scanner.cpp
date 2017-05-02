@@ -1,6 +1,7 @@
 #include <IceUtil/ScannerConfig.h>
+#line 2 "Manual/lifecycle/Scanner.cpp"
 
-#line 3 "lex.yy.c"
+#line 4 "Manual/lifecycle/Scanner.cpp"
 
 #define  YY_INT_ALIGNED short int
 
@@ -9,7 +10,7 @@
 #define FLEX_SCANNER
 #define YY_FLEX_MAJOR_VERSION 2
 #define YY_FLEX_MINOR_VERSION 5
-#define YY_FLEX_SUBMINOR_VERSION 39
+#define YY_FLEX_SUBMINOR_VERSION 37
 #if YY_FLEX_SUBMINOR_VERSION > 0
 #define FLEX_BETA
 #endif
@@ -142,15 +143,7 @@ typedef unsigned int flex_uint32_t;
 
 /* Size of default input buffer. */
 #ifndef YY_BUF_SIZE
-#ifdef __ia64__
-/* On IA-64, the buffer size is 16k, not 8k.
- * Moreover, YY_BUF_SIZE is 2*YY_READ_BUF_SIZE in the general case.
- * Ditto for the __ia64__ case accordingly.
- */
-#define YY_BUF_SIZE 32768
-#else
 #define YY_BUF_SIZE 16384
-#endif /* __ia64__ */
 #endif
 
 /* The state buf must be large enough to hold one state per character in the main buffer.
@@ -176,7 +169,6 @@ extern FILE *yyin, *yyout;
 #define EOB_ACT_LAST_MATCH 2
 
     #define YY_LESS_LINENO(n)
-    #define YY_LINENO_REWIND_TO(ptr)
     
 /* Return all but the first "n" matched characters back to the input stream. */
 #define yyless(n) \
@@ -495,8 +487,8 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "Scanner.l"
-#line 2 "Scanner.l"
+#line 1 "Manual/lifecycle/Scanner.l"
+#line 2 "Manual/lifecycle/Scanner.l"
 
 // **********************************************************************
 //
@@ -527,6 +519,10 @@ char *yytext;
 #   pragma warning( disable : 4127)
 #endif
 
+#if defined(__GNUC__)
+#   pragma GCC diagnostic ignored "-Wsign-compare"
+#endif
+
 using namespace std;
 
 #ifdef _MSC_VER
@@ -549,7 +545,7 @@ using namespace std;
 
 #define YY_INPUT(buf, result, maxSize) parser->getInput(buf, result, maxSize)
 
-#line 552 "lex.yy.c"
+#line 548 "Manual/lifecycle/Scanner.cpp"
 
 #define INITIAL 0
 
@@ -630,12 +626,7 @@ static int input (void );
 
 /* Amount of stuff to slurp up with each read. */
 #ifndef YY_READ_BUF_SIZE
-#ifdef __ia64__
-/* On IA-64, the buffer size is 16k, not 8k */
-#define YY_READ_BUF_SIZE 16384
-#else
 #define YY_READ_BUF_SIZE 8192
-#endif /* __ia64__ */
 #endif
 
 /* Copy whatever the last rule matched to the standard output. */
@@ -736,6 +727,11 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
+#line 66 "Manual/lifecycle/Scanner.l"
+
+
+#line 733 "Manual/lifecycle/Scanner.cpp"
+
 	if ( !(yy_init) )
 		{
 		(yy_init) = 1;
@@ -762,12 +758,6 @@ YY_DECL
 		yy_load_buffer_state( );
 		}
 
-	{
-#line 62 "Scanner.l"
-
-
-#line 769 "lex.yy.c"
-
 	while ( 1 )		/* loops until end-of-file is reached */
 		{
 		yy_cp = (yy_c_buf_p);
@@ -784,7 +774,7 @@ YY_DECL
 yy_match:
 		do
 			{
-			register YY_CHAR yy_c = yy_ec[YY_SC_TO_UI(*yy_cp)] ;
+			register YY_CHAR yy_c = yy_ec[YY_SC_TO_UI(*yy_cp)];
 			if ( yy_accept[yy_current_state] )
 				{
 				(yy_last_accepting_state) = yy_current_state;
@@ -825,118 +815,118 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 64 "Scanner.l"
+#line 68 "Manual/lifecycle/Scanner.l"
 {
     // C++-style comment
     int c;
     do
     {
-	c = yyinput();
+        c = yyinput();
     }
     while(c != '\n' && c != EOF);
 }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 74 "Scanner.l"
+#line 78 "Manual/lifecycle/Scanner.l"
 {
     // C-style comment
     while(true)
     {
-	int c = yyinput();
-	if(c == '*')
-	{
-	    int next = yyinput();
-	    if(next == '/')
-	    {
-		break;
-	    }
-	    else
-	    {
-		unput(next);
-	    }
-	}
-	else if(c == EOF)
-	{
-	    parser->warning("EOF in comment");
-	    break;
-	}
+        int c = yyinput();
+        if(c == '*')
+        {
+            int next = yyinput();
+            if(next == '/')
+            {
+                break;
+            }
+            else
+            {
+                unput(next);
+            }
+        }
+        else if(c == EOF)
+        {
+            parser->warning("EOF in comment");
+            break;
+        }
     }
 }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 99 "Scanner.l"
+#line 103 "Manual/lifecycle/Scanner.l"
 {
     return TOK_HELP;
 }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 103 "Scanner.l"
+#line 107 "Manual/lifecycle/Scanner.l"
 {
     return TOK_EXIT;
 }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 107 "Scanner.l"
+#line 111 "Manual/lifecycle/Scanner.l"
 {
     return TOK_LIST;
 }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 111 "Scanner.l"
+#line 115 "Manual/lifecycle/Scanner.l"
 {
     return TOK_LIST_RECURSIVE;
 }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 115 "Scanner.l"
+#line 119 "Manual/lifecycle/Scanner.l"
 {
     return TOK_CREATE_FILE;
 }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 119 "Scanner.l"
+#line 123 "Manual/lifecycle/Scanner.l"
 {
     return TOK_CREATE_DIR;
 }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 123 "Scanner.l"
+#line 127 "Manual/lifecycle/Scanner.l"
 {
     return TOK_PWD;
 }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 127 "Scanner.l"
+#line 131 "Manual/lifecycle/Scanner.l"
 {
     return TOK_CD;
 }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 131 "Scanner.l"
+#line 135 "Manual/lifecycle/Scanner.l"
 {
     return TOK_CAT;
 }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 135 "Scanner.l"
+#line 139 "Manual/lifecycle/Scanner.l"
 {
     return TOK_WRITE;
 }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 139 "Scanner.l"
+#line 143 "Manual/lifecycle/Scanner.l"
 {
     return TOK_RM;
 }
@@ -944,97 +934,97 @@ YY_RULE_SETUP
 case 14:
 /* rule 14 can match eol */
 YY_RULE_SETUP
-#line 143 "Scanner.l"
+#line 147 "Manual/lifecycle/Scanner.l"
 {
     size_t len = strlen(yytext);
     for(size_t i = 0; i < len; ++i)
     {
-	if(yytext[i] == '\\')
-	{
-	    parser->continueLine();
-	}
+        if(yytext[i] == '\\')
+        {
+            parser->continueLine();
+        }
     }
 }
 	YY_BREAK
 case 15:
 /* rule 15 can match eol */
 YY_RULE_SETUP
-#line 154 "Scanner.l"
+#line 158 "Manual/lifecycle/Scanner.l"
 {
     return ';';
 }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 158 "Scanner.l"
+#line 162 "Manual/lifecycle/Scanner.l"
 {
     // "..."-type strings
     string s;
     while(true)
     {
-	int c = yyinput();
-	if(c == '"')
-	{
-	    break;
-	}
-	else if(c == EOF)
-	{
-	    parser->warning("EOF in string");
-	    break;
-	}
-	else if(c == '\\')
-	{
-	    int next = yyinput();
-	    switch(next)
-	    {
-		case '\\':
-		case '"':
-		{
-		    s += next;
-		    break;
-		}
+        int c = yyinput();
+        if(c == '"')
+        {
+            break;
+        }
+        else if(c == EOF)
+        {
+            parser->warning("EOF in string");
+            break;
+        }
+        else if(c == '\\')
+        {
+            int next = yyinput();
+            switch(next)
+            {
+                case '\\':
+                case '"':
+                {
+                    s += next;
+                    break;
+                }
 
-		case 'n':
-		{
-		    s += '\n';
-		    break;
-		}
+                case 'n':
+                {
+                    s += '\n';
+                    break;
+                }
 
-		case 'r':
-		{
-		    s += '\r';
-		    break;
-		}
+                case 'r':
+                {
+                    s += '\r';
+                    break;
+                }
 
-		case 't':
-		{
-		    s += '\t';
-		    break;
-		}
+                case 't':
+                {
+                    s += '\t';
+                    break;
+                }
 
-		case 'v':
-		{
-		    s += '\v';
-		    break;
-		}
+                case 'v':
+                {
+                    s += '\v';
+                    break;
+                }
 
-		case 'f':
-		{
-		    s += '\f';
-		    break;
-		}
+                case 'f':
+                {
+                    s += '\f';
+                    break;
+                }
 
-		default:
-		{
-		    s += c;
-		    unput(next);
-		}
-	    }
-	}
-	else
-	{
-	    s += c;
-	}
+                default:
+                {
+                    s += c;
+                    unput(next);
+                }
+            }
+        }
+        else
+        {
+            s += c;
+        }
     }
     yylvalp->clear();
     yylvalp->push_back(s);
@@ -1043,26 +1033,26 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 232 "Scanner.l"
+#line 236 "Manual/lifecycle/Scanner.l"
 {
     // '...'-type strings
     string s;
     while(true)
     {
-	int c = yyinput();
-	if(c == '\'')
-	{
-	    break;
-	}
-	else if(c == EOF)
-	{
-	    parser->warning("EOF in string");
-	    break;
-	}
-	else
-	{
-	    s += c;
-	}
+        int c = yyinput();
+        if(c == '\'')
+        {
+            break;
+        }
+        else if(c == EOF)
+        {
+            parser->warning("EOF in string");
+            break;
+        }
+        else
+        {
+            s += c;
+        }
     }
     yylvalp->clear();
     yylvalp->push_back(s);
@@ -1071,25 +1061,25 @@ YY_RULE_SETUP
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 257 "Scanner.l"
+#line 261 "Manual/lifecycle/Scanner.l"
 {
     // Simple strings
     string s;
     s += yytext[0];
     while(true)
     {
-	int c = yyinput();
-	if(c == EOF)
-	{
-	    break;
-	}
-	else if(isspace(c) || c == ';')
-	{
-	    unput(c);
-	    break;
-	}
+        int c = yyinput();
+        if(c == EOF)
+        {
+            break;
+        }
+        else if(isspace(c) || c == ';')
+        {
+            unput(c);
+            break;
+        }
 
-	s += c;
+        s += c;
     }
     yylvalp->clear();
     yylvalp->push_back(s);
@@ -1098,10 +1088,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 281 "Scanner.l"
+#line 285 "Manual/lifecycle/Scanner.l"
 ECHO;
 	YY_BREAK
-#line 1104 "lex.yy.c"
+#line 1094 "Manual/lifecycle/Scanner.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1232,7 +1222,6 @@ case YY_STATE_EOF(INITIAL):
 			"fatal flex scanner internal error--no action found" );
 	} /* end of action switch */
 		} /* end of scanning one token */
-	} /* end of user's declarations */
 } /* end of yylex */
 
 /* yy_get_next_buffer - try to read in a new buffer
@@ -1866,7 +1855,7 @@ YY_BUFFER_STATE yy_scan_bytes  (yyconst char * yybytes, yy_size_t  _yybytes_len 
 	YY_BUFFER_STATE b;
 	char *buf;
 	yy_size_t n;
-	yy_size_t i;
+	int i;
     
 	/* Get memory for full buffer, including space for trailing EOB's. */
 	n = _yybytes_len + 2;
@@ -2096,7 +2085,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 280 "Scanner.l"
+#line 285 "Manual/lifecycle/Scanner.l"
 
 
 

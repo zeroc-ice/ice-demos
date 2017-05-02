@@ -171,15 +171,18 @@ endef
 
 ifeq ($(BISON_FLEX),yes)
 %.h %.cpp: %.y
-	$(RM) $*.h $*.cpp
+	@$(RM) $*.h $*.cpp
 	bison -dvt -o $*.cpp $<
-	$(MV) $*.hpp $*.h
-	$(RM) $*.output
+	@$(MV) $*.hpp $*.h
+	@$(RM) $*.output
 
 %.cpp: %.l
-	$(RM) $@
-	echo '#include <IceUtil/ScannerConfig.h>' >> $@
-	flex -t $< >> $@
+	@$(RM) $@
+	flex -o $@ $<
+	@$(MV) $@ $@.tail
+	@echo '#include <IceUtil/ScannerConfig.h>' >> $@
+	@cat $@.tail >> $@
+	@$(RM) $@.tail
 else
 %.h %.cpp: %.y
 

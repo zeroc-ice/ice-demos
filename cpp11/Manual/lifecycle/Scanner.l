@@ -29,6 +29,10 @@
 #   pragma warning( disable : 4127)
 #endif
 
+#if defined(__GNUC__)
+#   pragma GCC diagnostic ignored "-Wsign-compare"
+#endif
+
 using namespace std;
 
 #ifdef _MSC_VER
@@ -53,8 +57,8 @@ using namespace std;
 
 %}
 
-WS	[ \t\v\f\r]
-NL	[\n]
+WS      [ \t\v\f\r]
+NL      [\n]
 
 %option noyywrap
 %option always-interactive
@@ -66,7 +70,7 @@ NL	[\n]
     int c;
     do
     {
-	c = yyinput();
+        c = yyinput();
     }
     while(c != '\n' && c != EOF);
 }
@@ -75,24 +79,24 @@ NL	[\n]
     // C-style comment
     while(true)
     {
-	int c = yyinput();
-	if(c == '*')
-	{
-	    int next = yyinput();
-	    if(next == '/')
-	    {
-		break;
-	    }
-	    else
-	    {
-		unput(next);
-	    }
-	}
-	else if(c == EOF)
-	{
-	    parser->warning("EOF in comment");
-	    break;
-	}
+        int c = yyinput();
+        if(c == '*')
+        {
+            int next = yyinput();
+            if(next == '/')
+            {
+                break;
+            }
+            else
+            {
+                unput(next);
+            }
+        }
+        else if(c == EOF)
+        {
+            parser->warning("EOF in comment");
+            break;
+        }
     }
 }
 
@@ -144,10 +148,10 @@ NL	[\n]
     size_t len = strlen(yytext);
     for(size_t i = 0; i < len; ++i)
     {
-	if(yytext[i] == '\\')
-	{
-	    parser->continueLine();
-	}
+        if(yytext[i] == '\\')
+        {
+            parser->continueLine();
+        }
     }
 }
 
@@ -160,69 +164,69 @@ NL	[\n]
     string s;
     while(true)
     {
-	int c = yyinput();
-	if(c == '"')
-	{
-	    break;
-	}
-	else if(c == EOF)
-	{
-	    parser->warning("EOF in string");
-	    break;
-	}
-	else if(c == '\\')
-	{
-	    int next = yyinput();
-	    switch(next)
-	    {
-		case '\\':
-		case '"':
-		{
-		    s += next;
-		    break;
-		}
+        int c = yyinput();
+        if(c == '"')
+        {
+            break;
+        }
+        else if(c == EOF)
+        {
+            parser->warning("EOF in string");
+            break;
+        }
+        else if(c == '\\')
+        {
+            int next = yyinput();
+            switch(next)
+            {
+                case '\\':
+                case '"':
+                {
+                    s += next;
+                    break;
+                }
 
-		case 'n':
-		{
-		    s += '\n';
-		    break;
-		}
+                case 'n':
+                {
+                    s += '\n';
+                    break;
+                }
 
-		case 'r':
-		{
-		    s += '\r';
-		    break;
-		}
+                case 'r':
+                {
+                    s += '\r';
+                    break;
+                }
 
-		case 't':
-		{
-		    s += '\t';
-		    break;
-		}
+                case 't':
+                {
+                    s += '\t';
+                    break;
+                }
 
-		case 'v':
-		{
-		    s += '\v';
-		    break;
-		}
+                case 'v':
+                {
+                    s += '\v';
+                    break;
+                }
 
-		case 'f':
-		{
-		    s += '\f';
-		    break;
-		}
+                case 'f':
+                {
+                    s += '\f';
+                    break;
+                }
 
-		default:
-		{
-		    s += c;
-		    unput(next);
-		}
-	    }
-	}
-	else
-	{
-	    s += c;
-	}
+                default:
+                {
+                    s += c;
+                    unput(next);
+                }
+            }
+        }
+        else
+        {
+            s += c;
+        }
     }
     yylvalp->clear();
     yylvalp->push_back(s);
@@ -234,20 +238,20 @@ NL	[\n]
     string s;
     while(true)
     {
-	int c = yyinput();
-	if(c == '\'')
-	{
-	    break;
-	}
-	else if(c == EOF)
-	{
-	    parser->warning("EOF in string");
-	    break;
-	}
-	else
-	{
-	    s += c;
-	}
+        int c = yyinput();
+        if(c == '\'')
+        {
+            break;
+        }
+        else if(c == EOF)
+        {
+            parser->warning("EOF in string");
+            break;
+        }
+        else
+        {
+            s += c;
+        }
     }
     yylvalp->clear();
     yylvalp->push_back(s);
@@ -260,18 +264,18 @@ NL	[\n]
     s += yytext[0];
     while(true)
     {
-	int c = yyinput();
-	if(c == EOF)
-	{
-	    break;
-	}
-	else if(isspace(c) || c == ';')
-	{
-	    unput(c);
-	    break;
-	}
+        int c = yyinput();
+        if(c == EOF)
+        {
+            break;
+        }
+        else if(isspace(c) || c == ';')
+        {
+            unput(c);
+            break;
+        }
 
-	s += c;
+        s += c;
     }
     yylvalp->clear();
     yylvalp->push_back(s);

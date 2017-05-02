@@ -19,8 +19,8 @@
 
 %}
 
-WS	[ \t\v\f\r]
-NL	[\n]
+WS      [ \t\v\f\r]
+NL      [\n]
 
 %option noyywrap
 %option always-interactive
