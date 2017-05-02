@@ -1,4 +1,6 @@
-#line 3 "<stdout>"
+#line 2 "Database/library/Scanner.m"
+
+#line 4 "Database/library/Scanner.m"
 
 #define  YY_INT_ALIGNED short int
 
@@ -511,7 +513,7 @@ char *yytext;
         result = [parser getInput: buf max: maxSize ]; \
     }
 
-#line 516 "<stdout>"
+#line 517 "Database/library/Scanner.m"
 
 #define INITIAL 0
 
@@ -696,7 +698,7 @@ YY_DECL
 #line 28 "Database/library/Scanner.l"
 
 
-#line 701 "<stdout>"
+#line 702 "Database/library/Scanner.m"
 
 	if ( !(yy_init) )
 		{
@@ -1059,7 +1061,7 @@ YY_RULE_SETUP
 #line 249 "Database/library/Scanner.l"
 ECHO;
 	YY_BREAK
-#line 1064 "<stdout>"
+#line 1065 "Database/library/Scanner.m"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
