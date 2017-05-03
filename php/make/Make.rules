@@ -8,8 +8,8 @@
 # Don't change anything below this line!
 # ----------------------------------------------------------------------
 
-slice2php_targetext	= php
-slice2php_path		= $(ice_bindir)/slice2php
+slice2php_targetext     = php
+slice2php_path          = $(ice_bindir)/slice2php
 
 #
 # $(call make-php-demo-project,$1=demodir)

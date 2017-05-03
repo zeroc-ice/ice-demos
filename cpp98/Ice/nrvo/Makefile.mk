@@ -4,7 +4,7 @@
 #
 # **********************************************************************
 
-$(demo)_server_sources	= Server.cpp Nrvo.ice MyStringSeq.cpp NrvoI.cpp
-$(demo)_client_sources	= Client.cpp Nrvo.ice MyStringSeq.cpp
+$(demo)_server_sources  = Server.cpp Nrvo.ice MyStringSeq.cpp NrvoI.cpp
+$(demo)_client_sources  = Client.cpp Nrvo.ice MyStringSeq.cpp
 
 demos += $(demo)

@@ -8,12 +8,12 @@
 # Select an installation base directory. The directory will be created
 # if it does not exist.
 #
-prefix		?= /opt/Ice-$(VERSION)
+prefix          ?= /opt/Ice-$(VERSION)
 
 #
 # Define to yes for an optimized build.
 #
-OPTIMIZE 	?= no
+OPTIMIZE        ?= no
 
 #
 # Google Closure Compiler
@@ -23,17 +23,17 @@ CLOSURE_COMPILER    ?= /opt/closure/compiler.jar
 #
 # Closure Flags
 #
-CLOSUREFLAGS	= --language_in ECMASCRIPT5
+CLOSUREFLAGS    = --language_in ECMASCRIPT5
 
 #
 # jslint flags
 #
-LINTFLAGS 	= --verbose
+LINTFLAGS       = --verbose
 
 #
 # NodeJS executable
 #
-NODE 		?= node
+NODE            ?= node
 
 # ----------------------------------------------------------------------
 # Don't change anything below this line!
@@ -78,40 +78,40 @@ else
     endif
 endif
 
-install_libdir 	  = $(prefix)/lib
+install_libdir    = $(prefix)/lib
 install_moduledir = $(prefix)/node_modules/icejs
 
 ifeq ($(OPTIMIZE),yes)
-mklibtargets	= $(libdir)/$(1).js $(libdir)/$(1).js.gz \
-		  $(libdir)/$(1).min.js $(libdir)/$(1).min.js.gz
+mklibtargets    = $(libdir)/$(1).js $(libdir)/$(1).js.gz \
+                  $(libdir)/$(1).min.js $(libdir)/$(1).min.js.gz
 
-installlib	= $(INSTALL) $(2)/$(3).min.js $(1); \
-		  $(INSTALL) $(2)/$(3).min.js.gz $(1); \
-		  $(INSTALL) $(2)/$(3).js $(1); \
-		  $(INSTALL) $(2)/$(3).js.gz $(1)
+installlib      = $(INSTALL) $(2)/$(3).min.js $(1); \
+                  $(INSTALL) $(2)/$(3).min.js.gz $(1); \
+                  $(INSTALL) $(2)/$(3).js $(1); \
+                  $(INSTALL) $(2)/$(3).js.gz $(1)
 else
-mklibtargets	= $(libdir)/$(1).js $(libdir)/$(1).js.gz
+mklibtargets    = $(libdir)/$(1).js $(libdir)/$(1).js.gz
 
-installlib	= $(INSTALL) $(2)/$(3).js $(1); \
-		  $(INSTALL) $(2)/$(3).js.gz $(1)
+installlib      = $(INSTALL) $(2)/$(3).js $(1); \
+                  $(INSTALL) $(2)/$(3).js.gz $(1)
 endif
 
-installmodule	= if test ! -d $(1)/$(3) ; \
-					then \
-			echo "Creating $(1)/$(3)..." ; \
-			mkdir -p $(1)/$(3) ; \
-			chmod a+rx $(1)/$(3) ; \
-			fi ; \
-			for f in "$(2)"; \
-			do \
-			 cp $$f $(1)/$(3); \
-			done;
+installmodule   = if test ! -d $(1)/$(3) ; \
+                                        then \
+                        echo "Creating $(1)/$(3)..." ; \
+                        mkdir -p $(1)/$(3) ; \
+                        chmod a+rx $(1)/$(3) ; \
+                        fi ; \
+                        for f in "$(2)"; \
+                        do \
+                         cp $$f $(1)/$(3); \
+                        done;
 
 ifdef ice_src_dist
-	SLICE2JS = $(ice_cpp_dir)/bin/slice2js
-	SLICEPARSERLIB = $(ice_cpp_dir)/$(libsubdir)/$(call mklibfilename,Slice,$(VERSION))
+        SLICE2JS = $(ice_cpp_dir)/bin/slice2js
+        SLICEPARSERLIB = $(ice_cpp_dir)/$(libsubdir)/$(call mklibfilename,Slice,$(VERSION))
 else
-	SLICE2JS = $(ice_dir)/$(binsubdir)/slice2js
+        SLICE2JS = $(ice_dir)/$(binsubdir)/slice2js
 endif
 
 all:: $(TARGETS)
@@ -168,5 +168,5 @@ install::
 
 include $(wildcard .depend/*.d)
 
-EVERYTHING		= all clean install lint
-EVERYTHING_EXCEPT_ALL	= install clean lint
+EVERYTHING              = all clean install lint
+EVERYTHING_EXCEPT_ALL   = install clean lint

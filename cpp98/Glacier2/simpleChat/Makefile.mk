@@ -4,6 +4,6 @@
 #
 # **********************************************************************
 
-$(demo)_dependencies	= Ice Glacier2
+$(demo)_dependencies    = Ice Glacier2
 
 demos += $(demo)

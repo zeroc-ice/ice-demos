@@ -4,8 +4,8 @@
 #
 # **********************************************************************
 
-$(demo)_dependencies	= IceStorm Ice
+$(demo)_dependencies    = IceStorm Ice
 
-$(demo)_client_sources	= Client.cpp Counter.ice CounterObserverI.cpp
+$(demo)_client_sources  = Client.cpp Counter.ice CounterObserverI.cpp
 
 demos += $(demo)

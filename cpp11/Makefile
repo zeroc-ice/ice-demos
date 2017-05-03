@@ -4,8 +4,8 @@
 #
 # **********************************************************************
 
-top_srcdir 	:= ..
-lang_srcdir	:= $(top_srcdir)/cpp11
+top_srcdir      := ..
+lang_srcdir     := $(top_srcdir)/cpp11
 
 include $(top_srcdir)/make/Make.rules
 include $(lang_srcdir)/make/Make.rules

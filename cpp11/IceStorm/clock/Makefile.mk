@@ -4,6 +4,6 @@
 #
 # **********************************************************************
 
-$(demo)_dependencies	= IceStorm Ice
+$(demo)_dependencies    = IceStorm Ice
 
 demos += $(demo)

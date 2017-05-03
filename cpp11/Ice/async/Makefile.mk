@@ -4,6 +4,6 @@
 #
 # **********************************************************************
 
-$(demo)_server_sources 	= Server.cpp Hello.ice HelloI.cpp WorkQueue.cpp
+$(demo)_server_sources  = Server.cpp Hello.ice HelloI.cpp WorkQueue.cpp
 
 demos += $(demo)

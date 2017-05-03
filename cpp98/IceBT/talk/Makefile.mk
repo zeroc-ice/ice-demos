@@ -4,10 +4,10 @@
 #
 # **********************************************************************
 
-$(demo)_programs	= talk
-$(demo)_dependencies	= IceBT Ice
+$(demo)_programs        = talk
+$(demo)_dependencies    = IceBT Ice
 
-$(demo)_talk_sources	= App.cpp Talk.ice
+$(demo)_talk_sources    = App.cpp Talk.ice
 
 ifneq ($(filter debian ubuntu,$(linux_id)),)
 demos += $(demo)

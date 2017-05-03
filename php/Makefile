@@ -4,8 +4,8 @@
 #
 # **********************************************************************
 
-top_srcdir	:= ..
-lang_srcdir	:= $(top_srcdir)/php
+top_srcdir      := ..
+lang_srcdir     := $(top_srcdir)/php
 
 include $(top_srcdir)/make/Make.rules
 include $(lang_srcdir)/make/Make.rules
