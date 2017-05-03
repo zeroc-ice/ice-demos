@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\..\..\..\packages\zeroc.ice.v100.3.7.0-beta0\build\native\zeroc.ice.v100.props" Condition="Exists('..\..\..\..\packages\zeroc.ice.v100.3.7.0-beta0\build\native\zeroc.ice.v100.props') and '$(ICE_SRC_DIST)' != 'all'" />
-  <Import Project="..\..\..\..\packages\zeroc.ice.v141.3.7.0-beta0\build\native\zeroc.ice.v141.props" Condition="Exists('..\..\..\..\packages\zeroc.ice.v141.3.7.0-beta0\build\native\zeroc.ice.v141.props') and '$(ICE_SRC_DIST)' != 'all'" />
-  <Import Project="..\..\..\..\packages\zeroc.ice.v140.3.7.0-beta0\build\native\zeroc.ice.v140.props" Condition="Exists('..\..\..\..\packages\zeroc.ice.v140.3.7.0-beta0\build\native\zeroc.ice.v140.props') and '$(ICE_SRC_DIST)' != 'all'" />
-  <Import Project="..\..\..\..\packages\zeroc.ice.v120.3.7.0-beta0\build\native\zeroc.ice.v120.props" Condition="Exists('..\..\..\..\packages\zeroc.ice.v120.3.7.0-beta0\build\native\zeroc.ice.v120.props') and '$(ICE_SRC_DIST)' != 'all'" />
+  <Import Project="..\..\..\..\packages\zeroc.ice.v100.3.7.0\build\native\zeroc.ice.v100.props" Condition="Exists('..\..\..\..\packages\zeroc.ice.v100.3.7.0\build\native\zeroc.ice.v100.props') and '$(ICE_SRC_DIST)' != 'all'" />
+  <Import Project="..\..\..\..\packages\zeroc.ice.v141.3.7.0\build\native\zeroc.ice.v141.props" Condition="Exists('..\..\..\..\packages\zeroc.ice.v141.3.7.0\build\native\zeroc.ice.v141.props') and '$(ICE_SRC_DIST)' != 'all'" />
+  <Import Project="..\..\..\..\packages\zeroc.ice.v140.3.7.0\build\native\zeroc.ice.v140.props" Condition="Exists('..\..\..\..\packages\zeroc.ice.v140.3.7.0\build\native\zeroc.ice.v140.props') and '$(ICE_SRC_DIST)' != 'all'" />
+  <Import Project="..\..\..\..\packages\zeroc.ice.v120.3.7.0\build\native\zeroc.ice.v120.props" Condition="Exists('..\..\..\..\packages\zeroc.ice.v120.3.7.0\build\native\zeroc.ice.v120.props') and '$(ICE_SRC_DIST)' != 'all'" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -62,10 +62,10 @@
   <Import Project="$(MSBuildThisFileDirectory)\..\..\..\..\msbuild\common.props" Condition="Exists('$(MSBuildThisFileDirectory)\..\..\..\..\msbuild\common.props')" />
   <Import Project="$(IceBuilderCppProps)" Condition="Exists('$(IceBuilderCppProps)')" />
   <ImportGroup Label="ExtensionSettings">
-    <Import Project="..\..\..\..\packages\zeroc.ice.v120.3.7.0-beta0\build\native\zeroc.ice.v120.targets" Condition="Exists('..\..\..\..\packages\zeroc.ice.v120.3.7.0-beta0\build\native\zeroc.ice.v120.targets') and '$(ICE_SRC_DIST)' != 'all'" />
-    <Import Project="..\..\..\..\packages\zeroc.ice.v140.3.7.0-beta0\build\native\zeroc.ice.v140.targets" Condition="Exists('..\..\..\..\packages\zeroc.ice.v140.3.7.0-beta0\build\native\zeroc.ice.v140.targets') and '$(ICE_SRC_DIST)' != 'all'" />
-    <Import Project="..\..\..\..\packages\zeroc.ice.v141.3.7.0-beta0\build\native\zeroc.ice.v141.targets" Condition="Exists('..\..\..\..\packages\zeroc.ice.v141.3.7.0-beta0\build\native\zeroc.ice.v141.targets') and '$(ICE_SRC_DIST)' != 'all'" />
-    <Import Project="..\..\..\..\packages\zeroc.ice.v100.3.7.0-beta0\build\native\zeroc.ice.v100.targets" Condition="Exists('..\..\..\..\packages\zeroc.ice.v100.3.7.0-beta0\build\native\zeroc.ice.v100.targets') and '$(ICE_SRC_DIST)' != 'all'" />
+    <Import Project="..\..\..\..\packages\zeroc.ice.v120.3.7.0\build\native\zeroc.ice.v120.targets" Condition="Exists('..\..\..\..\packages\zeroc.ice.v120.3.7.0\build\native\zeroc.ice.v120.targets') and '$(ICE_SRC_DIST)' != 'all'" />
+    <Import Project="..\..\..\..\packages\zeroc.ice.v140.3.7.0\build\native\zeroc.ice.v140.targets" Condition="Exists('..\..\..\..\packages\zeroc.ice.v140.3.7.0\build\native\zeroc.ice.v140.targets') and '$(ICE_SRC_DIST)' != 'all'" />
+    <Import Project="..\..\..\..\packages\zeroc.ice.v141.3.7.0\build\native\zeroc.ice.v141.targets" Condition="Exists('..\..\..\..\packages\zeroc.ice.v141.3.7.0\build\native\zeroc.ice.v141.targets') and '$(ICE_SRC_DIST)' != 'all'" />
+    <Import Project="..\..\..\..\packages\zeroc.ice.v100.3.7.0\build\native\zeroc.ice.v100.targets" Condition="Exists('..\..\..\..\packages\zeroc.ice.v100.3.7.0\build\native\zeroc.ice.v100.targets') and '$(ICE_SRC_DIST)' != 'all'" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -94,10 +94,10 @@
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\..\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">loggerplugin37b0d</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">loggerplugin37b0d</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">loggerplugin37b0</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">loggerplugin37b0</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">loggerplugin37d</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">loggerplugin37d</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">loggerplugin37</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">loggerplugin37</TargetName>
   </PropertyGroup>
   <PropertyGroup Label="IceBuilder">
     <IceBuilderOutputDir>$(Platform)\$(Configuration)</IceBuilderOutputDir>
@@ -129,7 +129,7 @@
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
-      <ImportLibrary>loggerplugin37b0d.lib</ImportLibrary>
+      <ImportLibrary>loggerplugin37d.lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
@@ -160,7 +160,7 @@
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
-      <ImportLibrary>loggerplugin37b0d.lib</ImportLibrary>
+      <ImportLibrary>loggerplugin37d.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
@@ -190,7 +190,7 @@
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
-      <ImportLibrary>loggerplugin37b0.lib</ImportLibrary>
+      <ImportLibrary>loggerplugin37.lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
@@ -220,7 +220,7 @@
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
-      <ImportLibrary>loggerplugin37b0.lib</ImportLibrary>
+      <ImportLibrary>loggerplugin37.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
@@ -242,13 +242,13 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\..\..\packages\zeroc.ice.v120.3.7.0-beta0\build\native\zeroc.ice.v120.props') and '$(ICE_SRC_DIST)' != 'all'" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.v120.3.7.0-beta0\build\native\zeroc.ice.v120.props'))" />
-    <Error Condition="!Exists('..\..\..\..\packages\zeroc.ice.v120.3.7.0-beta0\build\native\zeroc.ice.v120.targets') and '$(ICE_SRC_DIST)' != 'all'" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.v120.3.7.0-beta0\build\native\zeroc.ice.v120.targets'))" />
-    <Error Condition="!Exists('..\..\..\..\packages\zeroc.ice.v140.3.7.0-beta0\build\native\zeroc.ice.v140.props') and '$(ICE_SRC_DIST)' != 'all'" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.v140.3.7.0-beta0\build\native\zeroc.ice.v140.props'))" />
-    <Error Condition="!Exists('..\..\..\..\packages\zeroc.ice.v140.3.7.0-beta0\build\native\zeroc.ice.v140.targets') and '$(ICE_SRC_DIST)' != 'all'" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.v140.3.7.0-beta0\build\native\zeroc.ice.v140.targets'))" />
-    <Error Condition="!Exists('..\..\..\..\packages\zeroc.ice.v141.3.7.0-beta0\build\native\zeroc.ice.v141.props') and '$(ICE_SRC_DIST)' != 'all'" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.v141.3.7.0-beta0\build\native\zeroc.ice.v141.props'))" />
-    <Error Condition="!Exists('..\..\..\..\packages\zeroc.ice.v141.3.7.0-beta0\build\native\zeroc.ice.v141.targets') and '$(ICE_SRC_DIST)' != 'all'" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.v141.3.7.0-beta0\build\native\zeroc.ice.v141.targets'))" />
-    <Error Condition="!Exists('..\..\..\..\packages\zeroc.ice.v100.3.7.0-beta0\build\native\zeroc.ice.v100.props') and '$(ICE_SRC_DIST)' != 'all'" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.v100.3.7.0-beta0\build\native\zeroc.ice.v100.props') and '$(ICE_SRC_DIST)' != 'all')" />
-    <Error Condition="!Exists('..\..\..\..\packages\zeroc.ice.v100.3.7.0-beta0\build\native\zeroc.ice.v100.targets') and '$(ICE_SRC_DIST)' != 'all'" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.v100.3.7.0-beta0\build\native\zeroc.ice.v100.targets') and '$(ICE_SRC_DIST)' != 'all')" />
+    <Error Condition="!Exists('..\..\..\..\packages\zeroc.ice.v120.3.7.0\build\native\zeroc.ice.v120.props') and '$(ICE_SRC_DIST)' != 'all'" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.v120.3.7.0\build\native\zeroc.ice.v120.props'))" />
+    <Error Condition="!Exists('..\..\..\..\packages\zeroc.ice.v120.3.7.0\build\native\zeroc.ice.v120.targets') and '$(ICE_SRC_DIST)' != 'all'" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.v120.3.7.0\build\native\zeroc.ice.v120.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\packages\zeroc.ice.v140.3.7.0\build\native\zeroc.ice.v140.props') and '$(ICE_SRC_DIST)' != 'all'" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.v140.3.7.0\build\native\zeroc.ice.v140.props'))" />
+    <Error Condition="!Exists('..\..\..\..\packages\zeroc.ice.v140.3.7.0\build\native\zeroc.ice.v140.targets') and '$(ICE_SRC_DIST)' != 'all'" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.v140.3.7.0\build\native\zeroc.ice.v140.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\packages\zeroc.ice.v141.3.7.0\build\native\zeroc.ice.v141.props') and '$(ICE_SRC_DIST)' != 'all'" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.v141.3.7.0\build\native\zeroc.ice.v141.props'))" />
+    <Error Condition="!Exists('..\..\..\..\packages\zeroc.ice.v141.3.7.0\build\native\zeroc.ice.v141.targets') and '$(ICE_SRC_DIST)' != 'all'" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.v141.3.7.0\build\native\zeroc.ice.v141.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\packages\zeroc.ice.v100.3.7.0\build\native\zeroc.ice.v100.props') and '$(ICE_SRC_DIST)' != 'all'" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.v100.3.7.0\build\native\zeroc.ice.v100.props') and '$(ICE_SRC_DIST)' != 'all')" />
+    <Error Condition="!Exists('..\..\..\..\packages\zeroc.ice.v100.3.7.0\build\native\zeroc.ice.v100.targets') and '$(ICE_SRC_DIST)' != 'all'" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.v100.3.7.0\build\native\zeroc.ice.v100.targets') and '$(ICE_SRC_DIST)' != 'all')" />
   </Target>
 </Project>
