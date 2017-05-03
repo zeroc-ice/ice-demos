@@ -10,9 +10,9 @@
 {
     @private
         NSString *myName;
-	DirectoryI *parent;
-	ICEIdentity *ident;
-	NSMutableArray *contents;
+        DirectoryI *parent;
+        ICEIdentity *ident;
+        NSMutableArray *contents;
 }
 @property(nonatomic, retain) NSString *myName;
 @property(nonatomic, retain) DirectoryI *parent;

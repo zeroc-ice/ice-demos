@@ -33,11 +33,11 @@ static EditController* editViewController_ = nil;
 
 -(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-	if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])
+    if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])
     {
         self.title = @"Info";
-	}
-	return self;
+    }
+    return self;
 }
 
 -(void)popBack
@@ -80,14 +80,14 @@ static EditController* editViewController_ = nil;
 
 -(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-	// Return YES for supported orientations
-	return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    // Return YES for supported orientations
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 -(void)didReceiveMemoryWarning
 {
-	[super didReceiveMemoryWarning]; // Releases the view if it doesn't have a superview
-	// Release anything that's not essential, such as cached data
+    [super didReceiveMemoryWarning]; // Releases the view if it doesn't have a superview
+    // Release anything that's not essential, such as cached data
 }
 
 
@@ -224,8 +224,8 @@ static EditController* editViewController_ = nil;
     {
         [[book proxy] begin_setTitle:title
                             response:^ { [self commitEdit]; }
-						   exception:^(ICEException* ex) { [self exception:ex]; }];
-	}
+                           exception:^(ICEException* ex) { [self exception:ex]; }];
+    }
     else
     {
         [self commitEdit];
@@ -252,8 +252,8 @@ static EditController* editViewController_ = nil;
     if(book.proxy != nil)
     {
         [[book proxy] begin_setAuthors:arr
-							  response:^ { [self commitEdit]; }
-							 exception:^(ICEException* ex) { [self exception:ex]; }];
+                              response:^ { [self commitEdit]; }
+                             exception:^(ICEException* ex) { [self exception:ex]; }];
     }
     else
     {
@@ -270,8 +270,8 @@ static EditController* editViewController_ = nil;
     NSAssert(book.proxy != nil, @"book.proxy != nil");
 
     [[book proxy] begin_rentBook:value
-						response:^ { [self commitEdit]; }
-					   exception:^(ICEException* ex) { [self exception:ex]; }];
+                        response:^ { [self commitEdit]; }
+                       exception:^(ICEException* ex) { [self exception:ex]; }];
 }
 
 #pragma mark <UITableViewDelegate, UITableViewDataSource> Methods
@@ -333,8 +333,8 @@ static EditController* editViewController_ = nil;
         if(book.proxy != nil)
         {
             [[book proxy] begin_setAuthors:arr
-								  response:^ { [self commitEdit]; }
-								 exception:^(ICEException* ex) { [self exception:ex]; }];
+                                  response:^ { [self commitEdit]; }
+                                 exception:^(ICEException* ex) { [self exception:ex]; }];
         }
         else
         {

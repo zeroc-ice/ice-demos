@@ -41,11 +41,11 @@
 
 -(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-	if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])
+    if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])
     {
         self.title = @"Search"; // Hostname?
 
-		// Initialization code
+        // Initialization code
         books = [NSMutableArray array];
         nrows = 0;
         rowsQueried = 0;
@@ -54,8 +54,8 @@
         detailController.delegate = self;
 
         addController = [[AddController alloc] initWithNibName:@"DetailView" bundle:nil];
-	}
-	return self;
+    }
+    return self;
 }
 
 -(void)viewDidLoad
@@ -88,14 +88,14 @@
 
 -(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-	// Return YES for supported orientations
-	return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    // Return YES for supported orientations
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 -(void)didReceiveMemoryWarning
 {
-	[super didReceiveMemoryWarning]; // Releases the view if it doesn't have a superview
-	// Release anything that's not essential, such as cached data
+    [super didReceiveMemoryWarning]; // Releases the view if it doesn't have a superview
+    // Release anything that's not essential, such as cached data
 }
 
 
@@ -143,7 +143,7 @@
     router = nil;
     session = nil;
 
-	// Destroy the communicator from another thread since this call blocks.
+    // Destroy the communicator from another thread since this call blocks.
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^ {
         [communicator destroy];
         communicator = nil;
@@ -187,16 +187,16 @@
     DemoBookDescription *book = (DemoBookDescription *)[books objectAtIndex:currentIndexPath.row];
 
     [[book proxy] begin_destroy:nil exception:^(ICEException* ex) {
-		[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 
-		// Ignore ICEObjectNotExistException
-		if([ex isKindOfClass:[ICEObjectNotExistException class]])
-		{
-			return;
-		}
+        // Ignore ICEObjectNotExistException
+        if([ex isKindOfClass:[ICEObjectNotExistException class]])
+        {
+            return;
+        }
 
-		[self exception:ex];
-	}];
+        [self exception:ex];
+    }];
 
     // Remove the book, and the row from the table.
     [books removeObjectAtIndex:currentIndexPath.row];
@@ -283,40 +283,40 @@
     [searchTableView reloadData];
 
     // Run the query.
-	void(^queryResponse)(NSMutableArray*, int, id<DemoBookQueryResultPrx>) =
+    void(^queryResponse)(NSMutableArray*, int, id<DemoBookQueryResultPrx>) =
     ^(NSMutableArray* seq, int n, id<DemoBookQueryResultPrx> q)
     {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-		nrows = n;
-		if(nrows == 0)
-		{
-			// open an alert with just an OK button
+        nrows = n;
+        if(nrows == 0)
+        {
+            // open an alert with just an OK button
             UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"No results"
                                                                            message:@"The search returned no results"
                                                                     preferredStyle:UIAlertControllerStyleAlert];
             [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
             [self presentViewController:alert animated:YES completion:nil];
-			return;
-		}
+            return;
+        }
 
-		[books addObjectsFromArray:seq];
-		self.query = q;
+        [books addObjectsFromArray:seq];
+        self.query = q;
 
-		[searchTableView reloadData];
+        [searchTableView reloadData];
     };
 
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     if(searchMode == 0) // ISBN
     {
         [library begin_queryByIsbn:search
-								 n:10
+                                 n:10
                           response:queryResponse
                          exception:^(ICEException* ex) { [self exception:ex]; }];
     }
     else if(searchMode == 1) // Authors
     {
         [library begin_queryByAuthor:search
-								   n:10
+                                   n:10
                             response:queryResponse
                            exception:^(ICEException* ex) { [self exception:ex]; }];
     }
@@ -324,7 +324,7 @@
     {
 
         [library begin_queryByTitle:search
-								  n:10
+                                  n:10
                            response:queryResponse
                           exception:^(ICEException* ex) { [self exception:ex]; }];
     }
@@ -390,16 +390,16 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
             NSAssert(query != nil, @"query != nil");
             [query begin_next:10
                      response:^(NSMutableArray* seq, BOOL destroyed) {
-						 [books addObjectsFromArray:seq];
-						 // The query has returned all available results.
-						 if(destroyed)
-						 {
-							 self.query = nil;
-						 }
+                         [books addObjectsFromArray:seq];
+                         // The query has returned all available results.
+                         if(destroyed)
+                         {
+                             self.query = nil;
+                         }
 
-						 [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-						 [searchTableView reloadData];
-					 }
+                         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+                         [searchTableView reloadData];
+                     }
                     exception:^(ICEException* ex) { [self exception:ex]; }];
             rowsQueried += 10;
         }

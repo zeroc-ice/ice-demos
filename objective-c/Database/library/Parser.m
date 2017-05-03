@@ -106,15 +106,15 @@ Parser* parser;
         }
 
         id<DemoBookQueryResultPrx> q;
-	DemoMutableBookDescriptionSeq *results;
-	int nrows;
+        DemoMutableBookDescriptionSeq *results;
+        int nrows;
         [library queryByIsbn:[args objectAtIndex:0] n:1 first:&results nrows:&nrows result:&q];
 
-	printf("%d results\n", nrows);
-	if(nrows == 0)
-	{
+        printf("%d results\n", nrows);
+        if(nrows == 0)
+        {
             return;
-	}
+        }
 
         self.current = [results objectAtIndex:0];
         self.query = q;
@@ -152,15 +152,15 @@ Parser* parser;
         }
 
         id<DemoBookQueryResultPrx> q;
-	DemoMutableBookDescriptionSeq *results;
-	int nrows;
+        DemoMutableBookDescriptionSeq *results;
+        int nrows;
         [library queryByAuthor:[args objectAtIndex:0] n:1 first:&results nrows:&nrows result:&q];
 
-	printf("%d results\n", nrows);
-	if(nrows == 0)
-	{
+        printf("%d results\n", nrows);
+        if(nrows == 0)
+        {
             return;
-	}
+        }
 
         self.current = [results objectAtIndex:0];
         self.query = q;
@@ -198,15 +198,15 @@ Parser* parser;
         }
 
         id<DemoBookQueryResultPrx> q;
-	DemoMutableBookDescriptionSeq *results;
-	int nrows;
+        DemoMutableBookDescriptionSeq *results;
+        int nrows;
         [library queryByTitle:[args objectAtIndex:0] n:1 first:&results nrows:&nrows result:&q];
 
-	printf("%d results\n", nrows);
-	if(nrows == 0)
-	{
+        printf("%d results\n", nrows);
+        if(nrows == 0)
+        {
             return;
-	}
+        }
 
         self.current = [results objectAtIndex:0];
         self.query = q;

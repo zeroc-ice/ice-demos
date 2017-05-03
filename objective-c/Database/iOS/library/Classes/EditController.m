@@ -32,14 +32,14 @@
 
 -(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-	// Return YES for supported orientations
-	return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    // Return YES for supported orientations
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 -(void)didReceiveMemoryWarning
 {
-	[super didReceiveMemoryWarning]; // Releases the view if it doesn't have a superview
-	// Release anything that's not essential, such as cached data
+    [super didReceiveMemoryWarning]; // Releases the view if it doesn't have a superview
+    // Release anything that's not essential, such as cached data
 }
 
 -(IBAction)cancel:(id)sender

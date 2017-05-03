@@ -77,7 +77,7 @@ static NSString* passwordKey = @"passwordKey";
 {
     loginButton.enabled = usernameField.text.length > 0;
     [loginButton setAlpha:loginButton.enabled ? 1.0 : 0.5];
-	[super viewWillAppear:animated];
+    [super viewWillAppear:animated];
 }
 
 -(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -177,17 +177,17 @@ static NSString* passwordKey = @"passwordKey";
 // Runs in a separate thread, called only by NSInvocationOperation.
 -(void)doLogin:(id)proxy
 {
-	id<DemoSessionFactoryPrx> factory = [DemoSessionFactoryPrx checkedCast:proxy];
-	if(factory == nil)
-	{
-		@throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Invalid proxy" userInfo:nil];
-	}
+    id<DemoSessionFactoryPrx> factory = [DemoSessionFactoryPrx checkedCast:proxy];
+    if(factory == nil)
+    {
+        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Invalid proxy" userInfo:nil];
+    }
 
-	id<DemoSessionPrx> sess = [factory create];
+    id<DemoSessionPrx> sess = [factory create];
 
-	self.session = sess;
-	sessionTimeout = [factory getSessionTimeout];
-	self.library = [sess getLibrary];
+    self.session = sess;
+    sessionTimeout = [factory getSessionTimeout];
+    self.library = [sess getLibrary];
 }
 
 // Runs in a separate thread, called only by NSInvocationOperation.
@@ -195,13 +195,13 @@ static NSString* passwordKey = @"passwordKey";
 {
     id<GLACIER2RouterPrx> glacier2router = [GLACIER2RouterPrx uncheckedCast:proxy];
 
-	id<GLACIER2SessionPrx> glacier2session = [glacier2router createSession:usernameField.text password:passwordField.text];
-	id<DemoGlacier2SessionPrx> sess = [DemoGlacier2SessionPrx uncheckedCast:glacier2session];
+    id<GLACIER2SessionPrx> glacier2session = [glacier2router createSession:usernameField.text password:passwordField.text];
+    id<DemoGlacier2SessionPrx> sess = [DemoGlacier2SessionPrx uncheckedCast:glacier2session];
 
-	self.session = sess;
-	self.router = glacier2router;
-	sessionTimeout = [glacier2router getSessionTimeout];
-	self.library = [sess getLibrary];
+    self.session = sess;
+    self.router = glacier2router;
+    sessionTimeout = [glacier2router getSessionTimeout];
+    self.library = [sess getLibrary];
 }
 
 -(IBAction)login:(id)sender
@@ -271,51 +271,51 @@ static NSString* passwordKey = @"passwordKey";
         {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-			[self performSelector:loginSelector withObject:proxy];
+            [self performSelector:loginSelector withObject:proxy];
 #pragma clang diagnostic pop
-			dispatch_async(dispatch_get_main_queue(), ^ {
+            dispatch_async(dispatch_get_main_queue(), ^ {
                 [self connecting:NO];
-				[mainController activate:communicator
-								 session:session
-								  router:router
-						  sessionTimeout:sessionTimeout
-								 library:library];
+                [mainController activate:communicator
+                                 session:session
+                                  router:router
+                          sessionTimeout:sessionTimeout
+                                 library:library];
 
-				// Clear internal state.
-				self.communicator = nil;
-				self.session = nil;
-				self.library = nil;
-				self.router = nil;
+                // Clear internal state.
+                self.communicator = nil;
+                self.session = nil;
+                self.library = nil;
+                self.router = nil;
 
-				[self.navigationController pushViewController:mainController animated:YES];
-			});
-		}
-		@catch(GLACIER2CannotCreateSessionException* ex)
-		{
-			NSString* s = [NSString stringWithFormat:@"Session creation failed: %@", ex.reason_];
-			dispatch_async(dispatch_get_main_queue(), ^ {
-				[self exception:s];
-			});
-		}
-		@catch(GLACIER2PermissionDeniedException* ex)
-		{
-			NSString* s = [NSString stringWithFormat:@"Login failed: %@", ex.reason_];
-			dispatch_async(dispatch_get_main_queue(), ^ {
-				[self exception:s];
-			});
-		}
-		@catch(ICEException* ex)
-		{
-			dispatch_async(dispatch_get_main_queue(), ^ {
-				[self exception:[ex description]];
-			});
-		}
-		@catch(NSException *ex)
-		{
-			dispatch_async(dispatch_get_main_queue(), ^ {
-				[self exception:[ex reason]];
-			});
-		}
-	});
+                [self.navigationController pushViewController:mainController animated:YES];
+            });
+        }
+        @catch(GLACIER2CannotCreateSessionException* ex)
+        {
+            NSString* s = [NSString stringWithFormat:@"Session creation failed: %@", ex.reason_];
+            dispatch_async(dispatch_get_main_queue(), ^ {
+                [self exception:s];
+            });
+        }
+        @catch(GLACIER2PermissionDeniedException* ex)
+        {
+            NSString* s = [NSString stringWithFormat:@"Login failed: %@", ex.reason_];
+            dispatch_async(dispatch_get_main_queue(), ^ {
+                [self exception:s];
+            });
+        }
+        @catch(ICEException* ex)
+        {
+            dispatch_async(dispatch_get_main_queue(), ^ {
+                [self exception:[ex description]];
+            });
+        }
+        @catch(NSException *ex)
+        {
+            dispatch_async(dispatch_get_main_queue(), ^ {
+                [self exception:[ex reason]];
+            });
+        }
+    });
 }
 @end

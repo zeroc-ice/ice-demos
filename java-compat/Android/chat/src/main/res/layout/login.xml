@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:padding="5dip"
+	android:orientation="vertical"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:padding="5dip"
 	>
 
 	<LinearLayout
@@ -14,11 +14,11 @@
 		>
 
 		<TextView
-		    android:layout_width="0dip"
-		    android:layout_height="wrap_content"
-		    android:layout_weight="25"
-		    android:text="Username"
-		    />
+			android:layout_width="0dip"
+			android:layout_height="wrap_content"
+			android:layout_weight="25"
+			android:text="Username"
+			/>
 
 		<EditText
 			android:id ="@+id/username"
@@ -27,10 +27,10 @@
 			android:layout_width="0dip"
 			android:layout_weight="75"
 			android:layout_height="wrap_content"
-            android:lines="1"
-            android:maxLines="1"
-            android:inputType="text"
-            />
+			android:lines="1"
+			android:maxLines="1"
+			android:inputType="text"
+			/>
 
 	</LinearLayout>
 
@@ -41,11 +41,11 @@
 		android:paddingBottom="5dip">
 
 		<TextView
-		    android:layout_width="0dip"
-		    android:layout_height="wrap_content"
-		    android:layout_weight="25"
-		    android:text="Password"
-		    />
+			android:layout_width="0dip"
+			android:layout_height="wrap_content"
+			android:layout_weight="25"
+			android:text="Password"
+			/>
 
 		<EditText
 			android:id ="@+id/password"
@@ -54,11 +54,11 @@
 			android:layout_width="0dip"
 			android:layout_weight="75"
 			android:layout_height="wrap_content"
-            android:lines="1"
-            android:maxLines="1"
-            android:inputType="text"
-            android:password="true"
-        />
+			android:lines="1"
+			android:maxLines="1"
+			android:inputType="text"
+			android:password="true"
+		/>
 
 	</LinearLayout>
 
@@ -72,10 +72,10 @@
 
 		<Button
 			android:id="@+id/login"
-		    android:layout_height="wrap_content"
-		    android:layout_width="wrap_content"
-		    android:text="Login"
-		    />
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:text="Login"
+			/>
 
 	</LinearLayout>
 </LinearLayout>

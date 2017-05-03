@@ -41,14 +41,14 @@
 
 -(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-	// Return YES for supported orientations
-	return (interfaceOrientation == UIInterfaceOrientationPortrait);
+  // Return YES for supported orientations
+  return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 -(void)didReceiveMemoryWarning
 {
-	[super didReceiveMemoryWarning]; // Releases the view if it doesn't have a superview
-	// Release anything that's not essential, such as cached data
+  [super didReceiveMemoryWarning]; // Releases the view if it doesn't have a superview
+  // Release anything that's not essential, such as cached data
 }
 
 
@@ -65,23 +65,23 @@
                       authors:book.authors
                      response:^(id<DemoBookPrx> prx) {
                          [self saving:NO];
-						 [self.navigationController popViewControllerAnimated:YES];
-					 }
+             [self.navigationController popViewControllerAnimated:YES];
+           }
                     exception:^(ICEException* ex) {
-						if([ex isKindOfClass:[DemoBookExistsException class]])
-						{
+            if([ex isKindOfClass:[DemoBookExistsException class]])
+            {
                             [self saving:NO];
-							// open an alert with just an OK button
+              // open an alert with just an OK button
               UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Error"
                                                                              message:@"That ISBN number already exists"
                                                                       preferredStyle:UIAlertControllerStyleAlert];
               [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
               [self presentViewController:alert animated:YES completion:nil];
-							return;
-						}
+              return;
+            }
 
-						[super exception:ex];
-					}];
+            [super exception:ex];
+          }];
 }
 
 -(void)startEdit:(DemoBookDescription*)b library:(id<DemoLibraryPrx>)l

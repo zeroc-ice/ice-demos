@@ -152,7 +152,7 @@ runParser(int argc, char* argv[], id<ICECommunicator> communicator)
                 printf("cannot create session:\n%s\n", [ex.reason UTF8String]);
             }
         }
-	timeout = [router getSessionTimeout]/2;
+        timeout = [router getSessionTimeout]/2;
         library = [session getLibrary];
     }
     else
@@ -186,24 +186,24 @@ runParser(int argc, char* argv[], id<ICECommunicator> communicator)
 
     if(router)
     {
-	@try
-	{
-	    [router destroySession];
-	}
-	@catch(GLACIER2SessionNotExistException* ex)
-	{
-	    NSLog(@"%@\n", [ex description]);
-	}
-	@catch(ICEConnectionLostException* ex)
-	{
-	    //
-	    // Expected: the router closed the connection.
-	    //
-	}
+        @try
+        {
+            [router destroySession];
+        }
+        @catch(GLACIER2SessionNotExistException* ex)
+        {
+            NSLog(@"%@\n", [ex description]);
+        }
+        @catch(ICEConnectionLostException* ex)
+        {
+            //
+            // Expected: the router closed the connection.
+            //
+        }
     }
     else
     {
-	[session destroy];
+        [session destroy];
     }
 
     return rc;

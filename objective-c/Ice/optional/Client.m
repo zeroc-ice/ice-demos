@@ -71,7 +71,7 @@ run(id<ICECommunicator> communicator)
     //
     if(number == ICENone)
     {
-    	printf("number is incorrect ");
+        printf("number is incorrect ");
     }
 
     //
@@ -79,7 +79,7 @@ run(id<ICECommunicator> communicator)
     //
     if(![number isEqual:johnNumber])
     {
-    	printf("number is incorrect ");
+        printf("number is incorrect ");
     }
 
     // Optional can also be used in an out parameter.
@@ -96,11 +96,11 @@ run(id<ICECommunicator> communicator)
     //
     if(![info hasType] || ![info hasNumber] || ![info hasDialGroup])
     {
-    	printf("info is incorrect ");
+        printf("info is incorrect ");
     }
     else if(info.type != DemoHOME || ![info.number isEqual:johnNumber] || info.dialGroup != 0)
     {
-    	printf("info is incorrect ");
+        printf("info is incorrect ");
     }
     printf("ok\n");
 
@@ -118,7 +118,7 @@ run(id<ICECommunicator> communicator)
     number = [contactdb queryNumber:@"steve"];
     if(![number isEqual:steveNumber])
     {
-    	printf("number is incorrect ");
+        printf("number is incorrect ");
     }
 
     info = [contactdb query:@"steve"];
@@ -127,18 +127,18 @@ run(id<ICECommunicator> communicator)
     //
     if(![info hasType] || info.type != DemoHOME)
     {
-    	printf("info is incorrect ");
+        printf("info is incorrect ");
     }
 
     if(![info.number isEqual:steveNumber] || info.dialGroup != 1)
     {
-    	printf("info is incorrect ");
+        printf("info is incorrect ");
     }
 
     [contactdb queryDialgroup:@"steve" dialGroup:&dialgroup];
     if(dialgroup == ICENone || [dialgroup intValue] != 1)
     {
-    	printf("dialgroup is incorrect ");
+        printf("dialgroup is incorrect ");
     }
 
     printf("ok\n");
@@ -154,7 +154,7 @@ run(id<ICECommunicator> communicator)
     number = [contactdb queryNumber:@"frank"];
     if(![number isEqual:frankNumber])
     {
-    	printf("number is incorrect ");
+        printf("number is incorrect ");
     }
 
     info = [contactdb query:@"frank"];
@@ -163,17 +163,17 @@ run(id<ICECommunicator> communicator)
     //
     if([info hasDialGroup])
     {
-    	printf("info is incorrect ");
+        printf("info is incorrect ");
     }
     if(info.type != DemoCELL || ![info.number isEqual:frankNumber])
     {
-    	printf("info is incorrect ");
+        printf("info is incorrect ");
     }
 
     [contactdb queryDialgroup:@"frank" dialGroup:&dialgroup];
     if(dialgroup != ICENone)
     {
-    	printf("dialgroup is incorrect ");
+        printf("dialgroup is incorrect ");
     }
     printf("ok\n");
 
@@ -186,7 +186,7 @@ run(id<ICECommunicator> communicator)
     number = [contactdb queryNumber:@"anne"];
     if(number != ICENone)
     {
-	printf("number is incorrect ");
+        printf("number is incorrect ");
     }
 
     info = [contactdb query:@"anne"];
@@ -195,17 +195,17 @@ run(id<ICECommunicator> communicator)
     //
     if([info hasNumber])
     {
-    	printf("info is incorrect ");
+        printf("info is incorrect ");
     }
     if(info.type != DemoOFFICE || info.dialGroup != 2)
     {
-    	printf("info is incorrect ");
+        printf("info is incorrect ");
     }
 
     [contactdb queryDialgroup:@"anne" dialGroup:&dialgroup];
     if(dialgroup == ICENone || [dialgroup intValue] != 2)
     {
-    	printf("dialgroup is incorrect ");
+        printf("dialgroup is incorrect ");
     }
 
     //
@@ -218,12 +218,12 @@ run(id<ICECommunicator> communicator)
     number = [contactdb queryNumber:@"anne"];
     if(![number isEqual:anneNumber])
     {
-    	printf("number is incorrect ");
+        printf("number is incorrect ");
     }
     info = [contactdb query:@"anne"];
     if(![info.number isEqual:anneNumber] || info.type != DemoOFFICE || info.dialGroup != 2)
     {
-    	printf("info is incorrect ");
+        printf("info is incorrect ");
     }
     printf("ok\n");
 

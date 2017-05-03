@@ -12,9 +12,9 @@
 {
     @private
         NSString *myName;
-	DirectoryI *parent;
-	ICEIdentity *ident;
-	NSArray *lines;
+        DirectoryI *parent;
+        ICEIdentity *ident;
+        NSArray *lines;
 }
 
 @property(nonatomic, retain) NSString *myName;

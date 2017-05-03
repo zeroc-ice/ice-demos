@@ -54,7 +54,7 @@ NSString* const passwordKey = @"passwordKey";
 {
     id<GLACIER2RouterPrx> router = [GLACIER2RouterPrx checkedCast:[communicator getDefaultRouter]];;
     id<GLACIER2SessionPrx> glacier2session = [router createSession:usernameField.stringValue
-														  password:passwordField.stringValue];
+                                                          password:passwordField.stringValue];
     id<ChatChatSessionPrx> session = [ChatChatSessionPrx uncheckedCast:glacier2session];
 
     ICEInt acmTiemout = [router getACMTimeout];
@@ -65,10 +65,10 @@ NSString* const passwordKey = @"passwordKey";
     NSString* category = [router getCategoryForClient];
 
     return [[ChatController alloc] initWithCommunicator:communicator
-												session:session
-										     acmTiemout:acmTiemout
-												 router:router
-											   category:category];
+                                                session:session
+                                             acmTiemout:acmTiemout
+                                                 router:router
+                                               category:category];
 }
 
 #pragma mark Login
@@ -105,60 +105,60 @@ NSString* const passwordKey = @"passwordKey";
     [progress startAnimation:self];
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^ {
-		NSString* msg;
-		@try
-		{
+        NSString* msg;
+        @try
+        {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-			ChatController* chatController = [self performSelector:loginSelector withObject:communicator];
+            ChatController* chatController = [self performSelector:loginSelector withObject:communicator];
 #pragma clang diagnostic pop
-			dispatch_async(dispatch_get_main_queue(), ^ {
-				// Hide the connecting sheet.
-				[NSApp endSheet:connectingSheet];
-				[connectingSheet orderOut:self.window];
-				[progress stopAnimation:self];
+            dispatch_async(dispatch_get_main_queue(), ^ {
+                // Hide the connecting sheet.
+                [NSApp endSheet:connectingSheet];
+                [connectingSheet orderOut:self.window];
+                [progress stopAnimation:self];
 
-				// The communicator is now owned by the ChatController.
-				communicator = nil;
+                // The communicator is now owned by the ChatController.
+                communicator = nil;
 
-				// Close the connecting window, show the main window.
-				[self.window close];
-				[chatController showWindow:self];
-			});
-			return;
-		}
-		@catch(GLACIER2CannotCreateSessionException* ex)
-		{
-			msg = [NSString stringWithFormat:@"Session creation failed: %@", ex.reason_];
-		}
-		@catch(GLACIER2PermissionDeniedException* ex)
-		{
-			msg = [NSString stringWithFormat:@"Login failed: %@", ex.reason_];
-		}
+                // Close the connecting window, show the main window.
+                [self.window close];
+                [chatController showWindow:self];
+            });
+            return;
+        }
+        @catch(GLACIER2CannotCreateSessionException* ex)
+        {
+            msg = [NSString stringWithFormat:@"Session creation failed: %@", ex.reason_];
+        }
+        @catch(GLACIER2PermissionDeniedException* ex)
+        {
+            msg = [NSString stringWithFormat:@"Login failed: %@", ex.reason_];
+        }
         @catch(ICEEndpointParseException* ex)
         {
             msg = [ex description];
         }
-		@catch(ICEException* ex)
-		{
-			msg = [ex description];
-		}
-		@catch(NSException *ex)
-		{
-			msg = [ex reason];
-		}
+        @catch(ICEException* ex)
+        {
+            msg = [ex description];
+        }
+        @catch(NSException *ex)
+        {
+            msg = [ex reason];
+        }
 
-		dispatch_async(dispatch_get_main_queue(), ^ {
-			// Hide the connecting sheet.
-			[NSApp endSheet:connectingSheet];
-			[connectingSheet orderOut:self.window];
-			[progress stopAnimation:self];
+        dispatch_async(dispatch_get_main_queue(), ^ {
+            // Hide the connecting sheet.
+            [NSApp endSheet:connectingSheet];
+            [connectingSheet orderOut:self.window];
+            [progress stopAnimation:self];
 
-			[communicator destroy];
-			communicator = nil;
+            [communicator destroy];
+            communicator = nil;
 
-			NSRunAlertPanel(@"Error", @"%@", @"OK", nil, nil, msg);
-		});
+            NSRunAlertPanel(@"Error", @"%@", @"OK", nil, nil, msg);
+        });
     });
 }
 

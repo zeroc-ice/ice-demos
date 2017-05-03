@@ -85,13 +85,13 @@ public class Client extends Ice.Application
 
         //
         // Add a contact for "steve". Here we have to construct Optional parameters
-	// since we are not passing the NumberType parameter.
-	//
-	// The behavior of the server is to default construct the
-	// Contact, and then assign  all set parameters.  Since the
-	// default value of NumberType in the slice definition is
-	// NumberType.HOME and in this case the NumberType is unset
-	// it will take the default value.
+        // since we are not passing the NumberType parameter.
+        //
+        // The behavior of the server is to default construct the
+        // Contact, and then assign  all set parameters.  Since the
+        // default value of NumberType in the slice definition is
+        // NumberType.HOME and in this case the NumberType is unset
+        // it will take the default value.
         //
         // The java mapping permits null to be passed to unset optional values.
         //

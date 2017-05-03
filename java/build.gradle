@@ -15,7 +15,7 @@ subprojects {
     repositories {
         if (slice.jarDir != null) {
             flatDir {
-	        name "local"
+                name "local"
                 dirs slice.jarDir
             }
         }
