@@ -46,4 +46,3 @@ interface Printer
     void shutdown();
 }
 }
-

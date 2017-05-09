@@ -61,4 +61,3 @@ project(":demoIceGridIcebox") {
     demoJar("service")
     demoIceBoxServer()
 }
-

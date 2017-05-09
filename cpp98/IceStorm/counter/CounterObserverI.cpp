@@ -35,4 +35,3 @@ CounterObserverI::inc(int value, const Ice::Current&)
     ostr << "int: " << value << " total: " << _value << endl;
     _printer->print(ostr.str());
 }
-

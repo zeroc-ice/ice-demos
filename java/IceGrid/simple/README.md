@@ -37,4 +37,3 @@ based on the `SimpleServer` template. For example, you can use the
 following command to deploy a new server:
 
     $ icegridadmin --Ice.Config=config.grid -e "server template instantiate Simple node1 SimpleServer index=4"
-

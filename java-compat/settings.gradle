@@ -37,4 +37,3 @@ demos.each {
 
 include ":demoChat"
 project(":demoChat").projectDir = new File("Chat")
-

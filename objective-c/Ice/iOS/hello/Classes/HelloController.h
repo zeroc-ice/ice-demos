@@ -37,4 +37,3 @@
 - (IBAction)useDiscovery:(id)sender;
 - (IBAction)shutdown: (id)sender;
 @end
-

@@ -46,4 +46,3 @@ public class Client
         return app.main(args, "config.client");
     }
 }
-

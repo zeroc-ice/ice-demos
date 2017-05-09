@@ -10,4 +10,3 @@ To run the demo, first start the server:
 In a separate window, start the client:
 
       python Client.py
-

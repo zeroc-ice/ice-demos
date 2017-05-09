@@ -63,4 +63,3 @@ ensure
         communicator.destroy()
     end
 end
-

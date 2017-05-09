@@ -52,4 +52,3 @@ with Ice.initialize(sys.argv) as communicator:
     #
     print("Contents of root directory:")
     listRecursive(rootDir, 0)
-

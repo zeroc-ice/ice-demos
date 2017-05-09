@@ -45,4 +45,3 @@ ChatUtils::trim(const string& s)
     }
     return s;
 }
-

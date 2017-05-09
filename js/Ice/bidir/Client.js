@@ -84,4 +84,3 @@ Ice.Promise.try(() =>
             }
         ).finally(() => process.exit(1));
     });
-

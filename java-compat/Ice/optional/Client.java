@@ -224,4 +224,3 @@ public class Client extends Ice.Application
         System.exit(status);
     }
 }
-
