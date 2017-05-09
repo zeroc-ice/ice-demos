@@ -10,9 +10,8 @@
 {
 @private
 
-	IBOutlet UIWindow *window;
-	IBOutlet UINavigationController *navigationController;
+    IBOutlet UIWindow *window;
+    IBOutlet UINavigationController *navigationController;
 }
 
 @end
-
