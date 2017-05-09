@@ -5,6 +5,7 @@
 // **********************************************************************
 
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
 import java.util.concurrent.ExecutionException;
 import Demo.*;
 
@@ -29,10 +30,10 @@ public class Client extends com.zeroc.Ice.Application
         }
 
         // Async division
-        CompletableFuture<Calculator.DivideResult> result = calculator.divideAsync(13, 5);
+        CompletableFuture<Calculator.DivideResult> result1 = calculator.divideAsync(13, 5);
 
         // Pass lambda to process result when available
-        result.whenComplete((completed, exception) ->
+        result1.whenComplete((completed, exception) ->
                             {
                                 if(exception != null)
                                 {
@@ -50,10 +51,18 @@ public class Client extends com.zeroc.Ice.Application
                                     System.out.println("13 / 5 is " + completed.returnValue + " with a remainder of " + completed.remainder);
                                 }
                             });
+        // Wait to ensure result1 has completed
+        try
+        {
+            result1.join();
+        }
+        catch(CompletionException e)
+        {
+            //ignored
+        }
 
         // Same with divide by 0:
         CompletableFuture<Calculator.DivideResult> result2 = calculator.divideAsync(13, 0);
-
         result2.whenComplete((completed, exception) ->
                              {
                                  if(exception != null)
@@ -72,15 +81,34 @@ public class Client extends com.zeroc.Ice.Application
                                      System.out.println("13 / 0 is " + completed.returnValue + " with a remainder of " + completed.remainder);
                                  }
                              });
+        
+        // Wait to ensure result2 has completed
+        try
+        {
+            result2.join();
+        }
+        catch(CompletionException e)
+        {
+            //ignored
+        }
 
         // Combine async calls
         try
         {
             CompletableFuture<Integer> side1 = calculator.squareAsync(6);
             CompletableFuture<Integer> side2 = calculator.squareAsync(8);
-            CompletableFuture<Integer> sum = side1.thenCombineAsync(side2, calculator::addAsync).get();
-
-            CompletableFuture<Double> hypotenuse = calculator.squareRootAsync(sum.get());
+            CompletableFuture<Double> hypotenuse = side1.thenCombineAsync(side2, calculator::addAsync).thenApply(result -> 
+                                                        {
+                                                            try
+                                                            {
+                                                                return calculator.squareRootAsync(result.get()).get();
+                                                            }
+                                                            catch(ExecutionException|InterruptedException e)
+                                                            {
+                                                                // Propagate the exception
+                                                                throw new CompletionException(e);
+                                                            }
+                                                        });
             System.out.println("The hypotenuse of a triangle with side lengths of 6 and 8 is " + hypotenuse.get());
         }
         catch(ExecutionException exception)
