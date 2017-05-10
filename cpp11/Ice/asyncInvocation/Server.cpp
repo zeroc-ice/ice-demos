@@ -4,8 +4,9 @@
 //
 // **********************************************************************
 
+#include <memory>
 #include <Ice/Ice.h>
-#include <CalculatorI.h>
+#include "CalculatorI.h"
 
 using namespace std;
 

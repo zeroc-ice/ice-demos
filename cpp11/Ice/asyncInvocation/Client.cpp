@@ -4,8 +4,10 @@
 //
 // **********************************************************************
 
+#include <mutex>
+#include <condition_variable>
 #include <Ice/Ice.h>
-#include <Calculator.h>
+#include "Calculator.h"
 
 using namespace std;
 using namespace Demo;
@@ -40,18 +42,30 @@ Client::run(int argc, char* argv[])
         return EXIT_FAILURE;
     }
 
-    // async substraction returns a std::future
+    // Calculate 10 - 4 with future-based async operations which return a std::future
     auto fut1 = calculator->subtractAsync(10, 4);
     cout << "10 minus 4 is " << fut1.get() << endl;
 
-    // async division that returns a std::future
+    // Calculate 13 / 5
     auto fut2 = calculator->divideAsync(13, 5);
-    // Since 'divide' has output parameters, first retrieve the result, which is a struct
+    // Since the 'divide' operation has output parameters, the result of 'get' is a struct
     auto result = fut2.get();
     cout << "13 / 5 is " << result.returnValue << " with a remainder of " << result.remainder << endl;
 
-    // Have the calculator find the hypotenuse of a triangle with side lengths of 6 and 8 using the Pythagorean theorem
-    // and future based asynchronous invocation
+    //same with 13 / 0, which throw an exception
+    try
+    {
+        auto fut3 = calculator->divideAsync(13, 0);
+        auto result = fut3.get();
+        cout << "13 / 0 is " << result.returnValue << " with a remainder of " << result.remainder << endl;
+    }
+    catch(const Demo::DivideByZeroException&)
+    {
+        cout << "You cannot divide by 0" << endl;
+    }
+
+    // Calculate the hypotenuse of a right triangle with side lengths of 6 and 8 using the Pythagorean Theorem
+    // by chaining asynchronous futures
     try
     {
         auto side1 = calculator->squareAsync(6);
@@ -65,47 +79,134 @@ Client::run(int argc, char* argv[])
         cout << "You cannot take the square root of a negative number";
     }
 
-    // Have the calculator compute 10 - 4 using callback based asynchronous invocation; the result is given to
-    // the response function parameter after the in parameters:
+    mutex mx;
+    condition_variable cv;
+    bool finished = false;
+
+    // Calculate 10 - 4 with callback-based async operations which take 'std::function's as callback parameters, the first
+    // of which gets called when the operation is completed
     calculator->subtractAsync(10, 4,
-                              [](int answer) { cout << "10 - 4 is " << answer << endl; });
-
-    // Have the calculator compute 13 / 5 using callback based asynchronous invocation, by passing in a response
-    // function and an exception function after the in parameters:
-    calculator->divideAsync(13, 5,
-                            [](int answer, int remainder)
-                            {
-                                cout << "13 / 5 is " << answer << " with a remainder of " << remainder << endl;
-                            },
-                            [](exception_ptr eptr)
-                            {
-                                try
+                                [&mx, &cv, &finished](int answer)
                                 {
-                                    rethrow_exception(eptr);
-                                }
-                                catch(const std::exception& ex)
-                                {
-                                    cerr << "Request failed: " << ex.what() << endl;
-                                }
-                            });
+                                    cout << "10 minus 4 is " << answer << endl;
+                                    //notify that the operation has finished
+                                    lock_guard<mutex> lock(mx);
+                                    finished = true;
+                                    cv.notify_one();
+                                });
+    //wait to ensure the operation has completed
+    unique_lock<mutex> lock(mx);
+    cv.wait(lock, [&finished] { return finished; });
 
+    finished = false;
     // Same with 13 / 0:
     calculator->divideAsync(13, 0,
-                            [](int answer, int remainder)
+                            [&mx, &cv, &finished](int answer, int remainder)
                             {
                                 cout << "13 / 0 is " << answer << " with a remainder of " << remainder << endl;
+
+                                lock_guard<mutex> lock(mx);
+                                finished = true;
+                                cv.notify_one();
                             },
-                            [](exception_ptr eptr)
+                            [&mx, &cv, &finished](exception_ptr eptr)
                             {
                                 try
                                 {
                                     rethrow_exception(eptr);
                                 }
-                                catch(const std::exception& ex)
+                                catch (const Demo::DivideByZeroException&)
                                 {
-                                    cout << "13 / 0 raised: " << ex.what() << endl;
+                                    cout << "You cannot divide by 0" << endl;
                                 }
+
+                                lock_guard<mutex> lock(mx);
+                                finished = true;
+                                cv.notify_one();
                             });
+    cv.wait(lock, [&finished] { return finished; });
+    
+    
+    class HypotenuseHelper
+    {
+    public:
+        HypotenuseHelper(const shared_ptr<Demo::CalculatorPrx> calculator) : _calculator(calculator){}
+
+        void findHypotenuse(int x, int y)
+        {
+            _finished = false;
+            _otherOperationFinished = false;
+            _calculator->squareAsync(x,
+                                    [this](int answer)
+                                    {
+                                        this->afterSquared(answer);
+                                    });
+            _calculator->squareAsync(y,
+                                    [this](int answer)
+                                    {
+                                        this->afterSquared(answer);
+                                    });
+        }
+
+        double getHypotenuse()
+        {
+            unique_lock<mutex> lock(_hypotenuseMx);
+            _hypotenuseCv.wait(lock, [this] { return this->_finished; });
+            return _hypotenuse;
+        }
+
+    private:
+        shared_ptr<Demo::CalculatorPrx> _calculator;
+        mutex _hypotenuseMx;
+        condition_variable _hypotenuseCv;
+        bool _otherOperationFinished;
+        int _otherAnswer;
+        double _hypotenuse;
+        bool _finished;
+
+        void afterSquared(int answer)
+        {
+            lock_guard<mutex> lock(_hypotenuseMx);
+            if(_otherOperationFinished)
+            {
+                _calculator->addAsync(answer, _otherAnswer,
+                                    [this](int sum)
+                                    {
+                                        this->afterSum(sum);
+                                    });
+            }
+            else
+            {
+                _otherOperationFinished = true;
+                _otherAnswer = answer;
+            }
+        }
+
+        void afterSum(int sum)
+        {
+            _calculator->squareRootAsync(sum,
+                                        [this](double hypotenuse)
+                                        {
+                                            this->finished(hypotenuse);
+                                        });
+        }
+
+        void finished(double hypotenuse)
+        {
+            _otherOperationFinished = false;
+            _hypotenuse = hypotenuse;
+            _finished = true;
+            lock_guard<mutex> lock(_hypotenuseMx);
+            _hypotenuseCv.notify_one();
+        }
+    };
+    
+    // Calculate the hypotenuse of a right triangle with side lengths of 6 and 8 using the Pythagorean Theorem
+    // and chained callbacks in the HypotenuseHelper class
+    HypotenuseHelper helper(calculator);
+    helper.findHypotenuse(6, 8);
+    auto hypotenuseAnswer = helper.getHypotenuse();
+    cout << "The hypotenuse of a triangle with side lengths of 6 and 8 is " << hypotenuseAnswer << endl;
 
     calculator->shutdown();
     return EXIT_SUCCESS;
