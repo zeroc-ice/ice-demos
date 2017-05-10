@@ -224,4 +224,3 @@ public class Client extends com.zeroc.Ice.Application
         System.exit(status);
     }
 }
-

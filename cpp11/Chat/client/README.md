@@ -14,4 +14,3 @@ the appropriate custom configuration file when launching the client:
 
      chatgl2client --Ice.Config=config.gl2client
      chatpollclient --Ice.Config=config.pollclient
-

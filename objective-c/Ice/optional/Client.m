@@ -231,4 +231,3 @@ run(id<ICECommunicator> communicator)
 
     return EXIT_SUCCESS;
 }
-

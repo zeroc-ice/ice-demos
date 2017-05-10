@@ -6,4 +6,3 @@ If you wish to run your own server you can specify a custom configuration file w
 
 
       java -jar ChatGUI.jar --Ice.Config=config.client
-

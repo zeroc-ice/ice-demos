@@ -34,4 +34,3 @@ public class ChatUtils
         return dtf.format(new Date(timestamp));
     }
 }
-

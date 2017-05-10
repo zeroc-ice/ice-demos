@@ -60,4 +60,3 @@ clean {
 dependencies {
     compile localDependency('ice-compat')
 }
-

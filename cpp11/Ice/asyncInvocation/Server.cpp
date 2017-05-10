@@ -40,4 +40,3 @@ Server::run(int argc, char*[])
     communicator()->waitForShutdown();
     return EXIT_SUCCESS;
 }
-

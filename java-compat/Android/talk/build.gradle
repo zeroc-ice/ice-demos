@@ -55,4 +55,3 @@ dependencies {
     compile localDependency('ice-compat')
     compile localDependency('icebt-compat')
 }
-
