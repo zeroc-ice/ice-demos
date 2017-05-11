@@ -5,7 +5,7 @@
 // **********************************************************************
 
 const Ice = require("ice").Ice;
-const Demo = require("./Throughput").Demo;
+const Demo = require("./generated/Throughput").Demo;
 
 function menu()
 {

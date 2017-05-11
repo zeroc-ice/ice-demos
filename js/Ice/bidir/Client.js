@@ -5,7 +5,7 @@
 // **********************************************************************
 
 const Ice = require("ice").Ice;
-const Demo = require("./Callback").Demo;
+const Demo = require("./generated/Callback").Demo;
 
 //
 // Define a servant class that implements Demo.CallbackReceiver

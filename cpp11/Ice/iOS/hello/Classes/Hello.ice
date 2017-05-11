@@ -4,8 +4,7 @@
 //
 // **********************************************************************
 
-#ifndef HELLO_ICE
-#define HELLO_ICE
+#pragma once
 
 module Demo
 {
@@ -17,5 +16,3 @@ interface Hello
 }
 
 }
-
-#endif

@@ -4,8 +4,7 @@
 //
 // **********************************************************************
 
-#ifndef POLLING_CHAT_ICE
-#define POLLING_CHAT_ICE
+#pragma once
 
 #include <Ice/BuiltinSequences.ice>
 #include <Chat.ice>
@@ -156,5 +155,3 @@ interface PollingChatSessionFactory
 }
 
 }
-
-#endif

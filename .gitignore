@@ -1,3 +1,21 @@
+# Ignore executables
+client
+server
+locator
+publisher
+subscriber
+talk
+
+!**/msbuild/client
+!**/msbuild/server
+!**/msbuild/locator
+!**/msbuild/publisher
+!**/msbuild/subscriber
+!**/msbuild/locator
+
+.gradle
+*.jar
+
 # Ignore objects and archives.
 *.[oa]
 *.obj
@@ -129,6 +147,7 @@ dlldata.c
 *.pidb
 *.svclog
 *.scc
+*.VC.db
 
 # Backup & report files from converting an old project file
 # to a newer Visual Studio version. Backup files are not needed,
@@ -146,3 +165,20 @@ csharp/**/*.xml
 visualBasic/**/*.xml
 
 Thumbs.db
+
+# Js
+*.min.js
+*.js.gz
+*.css.gz
+es5
+
+**/db/*
+
+*.d
+
+#
+# Nuget packages
+#
+cpp11/packages
+cpp97/packages
+csharp/packages

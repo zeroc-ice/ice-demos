@@ -8,7 +8,7 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <IceBuilderOutputDir>..</IceBuilderOutputDir>
+    <IceBuilderOutputDir>..\generated</IceBuilderOutputDir>
   </PropertyGroup>
 
   <Target Name="Build"></Target>

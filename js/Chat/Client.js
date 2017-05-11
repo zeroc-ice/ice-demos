@@ -132,11 +132,8 @@ function signin()
                     //
                     const username = $("#username").val();
                     const password = $("#password").val();
-
-                    return router.createSession(username, password).then(session =>
-                        {
-                            return run(router, ChatSessionPrx.uncheckedCast(session))
-                        });
+                    return router.createSession(username, password).then(
+                        session => run(router, ChatSessionPrx.uncheckedCast(session)));
                 });
         })
     .catch(ex =>
@@ -161,7 +158,7 @@ function signin()
                 setState(State.Disconnected, ex.toString());
             }
         });
-};
+}
 
 function run(router, session)
 {
@@ -308,7 +305,7 @@ function run(router, session)
             //
             setState(State.Disconnected, ex.toString());
         });
-};
+}
 
 //
 // Do a transition from "from" screen to "to" screen. Return
@@ -333,7 +330,7 @@ function transition(from, to)
             }
         });
     return p;
-};
+}
 
 //
 // Set default height of output textarea
@@ -357,7 +354,7 @@ function startProgress()
             },
             20);
     }
-};
+}
 
 function stopProgress(completed)
 {
@@ -370,7 +367,7 @@ function stopProgress(completed)
             $("#loading .meter").css("width", "100%");
         }
     }
-};
+}
 
 //
 // Dismiss error message on click.

@@ -6,7 +6,7 @@
 
 const Ice = require("ice").Ice;
 const Glacier2 = require("ice").Glacier2;
-const Demo = require("./Chat").Demo;
+const Demo = require("./generated/Chat").Demo;
 
 //
 // Servant that implements the ChatCallback interface,
@@ -214,4 +214,4 @@ function getline()
             p.resolve(buffer.toString("utf-8").trim());
         });
     return p;
-};
+}

@@ -103,7 +103,7 @@
     <Compile Include="..\..\Client.cs">
       <Link>Client.cs</Link>
     </Compile>
-    <Compile Include="Hello.cs" />
+    <Compile Include="generated\Hello.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -121,7 +121,7 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(IceBuilderCsharpProps)" Condition="Exists('$(IceBuilderCsharpProps)')" />
   <PropertyGroup Label="IceBuilder">
-    <IceBuilderOutputDir>$(MSBuildThisFileDirectory)</IceBuilderOutputDir>
+    <IceBuilderOutputDir>$(MSBuildThisFileDirectory)generated</IceBuilderOutputDir>
     <IceBuilderIncludeDirectories>$(IceHome)\slice</IceBuilderIncludeDirectories>
   </PropertyGroup>
   <Import Project="$(IceBuilderCsharpTargets)" Condition="Exists('$(IceBuilderCsharpTargets)')" />

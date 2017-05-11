@@ -5,7 +5,7 @@
 // **********************************************************************
 
 const Ice = require("ice").Ice;
-const Demo = require("./Latency").Demo;
+const Demo = require("./generated/Latency").Demo;
 
 //
 // Asynchronous loop, each call to the given function returns a
@@ -20,7 +20,7 @@ function loop(fn, repetitions)
         {
             return fn.call().then(next);
         }
-    };
+    }
     return next();
 }
 

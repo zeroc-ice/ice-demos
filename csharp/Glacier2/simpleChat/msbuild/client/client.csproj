@@ -121,7 +121,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Chat.cs" />
     <Compile Include="..\..\ChatWindow.xaml.cs">
       <DependentUpon>ChatWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -135,6 +134,7 @@
     <Compile Include="..\..\LoginDialog.xaml.cs">
       <DependentUpon>LoginDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="generated\Chat.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -170,7 +170,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(IceBuilderCsharpProps)" Condition="Exists('$(IceBuilderCsharpProps)')" />
   <PropertyGroup Label="IceBuilder">
-    <IceBuilderOutputDir>$(MSBuildThisFileDirectory)</IceBuilderOutputDir>
+    <IceBuilderOutputDir>$(MSBuildThisFileDirectory)generated</IceBuilderOutputDir>
     <IceBuilderIncludeDirectories>$(IceHome)\slice</IceBuilderIncludeDirectories>
   </PropertyGroup>
   <Import Project="$(IceBuilderCsharpTargets)" Condition="Exists('$(IceBuilderCsharpTargets)')" />

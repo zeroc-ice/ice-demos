@@ -6,7 +6,7 @@
     <title>Bidir Demo | Ice for JavaScript</title>
     <!-- Bundle with all the stylesheets used to build the user interface,
          see assets/Makefile in your distribution for details -->
-    <link rel="stylesheet" type="text/css" href="../../../assets/common.css" />
+    <link rel="stylesheet" type="text/css" href="../../../assets/generated/common.css" />
     <link rel="icon" type="image/x-icon" href="../../../assets/favicon.ico">
   </head>
   <body>
@@ -116,14 +116,14 @@
     </section>
     <!-- Bundle with all the scripts used to build the user interface,
          see assets/Makefile in your distribution for details -->
-    <script type="text/javascript" src="../../../assets/common.min.js"></script>
+    <script type="text/javascript" src="../../../assets/generated/common.min.js"></script>
     <!-- Babel dependencies -->
     <script type="text/javascript" src="../../../node_modules/babel-polyfill/dist/polyfill.js"></script>
     <script type="text/javascript" src="../../../node_modules/regenerator-runtime/runtime.js"></script>
     <!-- Ice.js (Ice run-time library) -->
     <script type="text/javascript" src="../../../lib/es5/Ice.js"></script>
     <!-- Callback.js (Demo generated code) -->
-    <script type="text/javascript" src="es5/Callback.js"></script>
+    <script type="text/javascript" src="generated/es5/Callback.js"></script>
     <!-- browser/Client.js (Bidir Demo Application) -->
     <script type="text/javascript" src="browser/es5/Client.js"></script>
     <script type="text/javascript">
@@ -149,7 +149,7 @@
         }
         else if(document.location.protocol === "http:")
         {
-            checkGenerated(["Callback.js"]);
+            checkGenerated(["generated/es5/Callback.js"]);
         }
     </script>
   </body>

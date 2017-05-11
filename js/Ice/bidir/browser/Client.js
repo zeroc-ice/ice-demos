@@ -69,7 +69,7 @@ function stop()
     // Close the connection, the server will unregister the client
     // when it tries to invoke on the bi-dir proxy.
     //
-    return connection.close(false);
+    return connection.close(Ice.ConnectionClose.GracefullyWithWait);
 }
 
 //
@@ -128,7 +128,7 @@ function writeLine(msg)
 {
     $("#output").val($("#output").val() + msg + "\n");
     $("#output").scrollTop($("#output").get(0).scrollHeight);
-};
+}
 
 let state;
 
@@ -181,7 +181,7 @@ function setState(s)
             break;
         }
     }
-};
+}
 
 setState(State.Disconnected);
 

@@ -5,7 +5,7 @@
 // **********************************************************************
 
 const Ice = require("ice").Ice;
-const Demo = require("./Hello").Demo;
+const Demo = require("./generated/Hello").Demo;
 
 let communicator;
 

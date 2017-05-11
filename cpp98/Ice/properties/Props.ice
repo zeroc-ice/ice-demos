@@ -4,9 +4,7 @@
 //
 // **********************************************************************
 
-#ifndef DEMO_ICE
-#define DEMO_ICE
-
+#pragma once
 #include <Ice/Properties.ice>
 
 module Demo
@@ -19,5 +17,3 @@ interface Props
 }
 
 }
-
-#endif
