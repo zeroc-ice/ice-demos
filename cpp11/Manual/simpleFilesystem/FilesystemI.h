@@ -23,6 +23,7 @@ class DirectoryI;
 class NodeI : public virtual Node, public std::enable_shared_from_this<NodeI>
 {
 public:
+
     virtual std::string name(const Ice::Current&) override;
     NodeI(const std::string&, const std::shared_ptr<DirectoryI>&);
     void activate(const std::shared_ptr<Ice::ObjectAdapter>&);

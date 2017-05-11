@@ -17,7 +17,6 @@ Filesystem::NodeI::name(const Ice::Current&)
 }
 
 // NodeI constructor
-
 Filesystem::NodeI::NodeI(const string& nm, const shared_ptr<DirectoryI>& parent) :
     _name(nm),
     _parent(parent)
@@ -27,18 +26,17 @@ Filesystem::NodeI::NodeI(const string& nm, const shared_ptr<DirectoryI>& parent)
 }
 
 // NodeI activate() member function
-
 void
 Filesystem::NodeI::activate(const shared_ptr<Ice::ObjectAdapter>& adapter)
 {
     auto self = Ice::uncheckedCast<NodePrx>(adapter->add(shared_from_this(), _id));
-    if(_parent) {
+    if(_parent)
+    {
         _parent->addChild(self);
     }
 }
 
 // Slice File::read() operation
-
 Filesystem::Lines
 Filesystem::FileI::read(const Ice::Current&)
 {
@@ -46,7 +44,6 @@ Filesystem::FileI::read(const Ice::Current&)
 }
 
 // Slice File::write() operation
-
 void
 Filesystem::FileI::write(Filesystem::Lines text, const Ice::Current&)
 {
@@ -54,14 +51,12 @@ Filesystem::FileI::write(Filesystem::Lines text, const Ice::Current&)
 }
 
 // FileI constructor
-
 Filesystem::FileI::FileI(const string& nm, const shared_ptr<DirectoryI>& parent) :
     NodeI(nm, parent)
 {
 }
 
 // Slice Directory::list() operation
-
 Filesystem::NodeSeq
 Filesystem::DirectoryI::list(const Ice::Current&)
 {
@@ -69,7 +64,6 @@ Filesystem::DirectoryI::list(const Ice::Current&)
 }
 
 // DirectoryI constructor
-
 Filesystem::DirectoryI::DirectoryI(const string& nm, const shared_ptr<DirectoryI>& parent) :
     NodeI(nm, parent)
 {
@@ -77,7 +71,6 @@ Filesystem::DirectoryI::DirectoryI(const string& nm, const shared_ptr<DirectoryI
 
 // addChild is called by the child in order to add
 // itself to the _contents member of the parent
-
 void
 Filesystem::DirectoryI::addChild(const shared_ptr<NodePrx>& child)
 {

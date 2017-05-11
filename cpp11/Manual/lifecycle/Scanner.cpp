@@ -517,6 +517,10 @@ char *yytext;
 // conditional expression is constant
 //
 #   pragma warning( disable : 4127)
+//
+//  '<': signed/unsigned mismatch
+//
+#   pragma warning(disable: 4018)
 #endif
 
 #if defined(__GNUC__)
