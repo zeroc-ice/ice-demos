@@ -55,8 +55,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <Import Project="$(MSBuildThisFileDirectory)\..\..\..\..\msbuild\common.props"
-          Condition="Exists('$(MSBuildThisFileDirectory)\..\..\..\..\msbuild\common.props')" />
+  <Import Project="$(MSBuildThisFileDirectory)\..\..\..\..\msbuild\common.props" Condition="Exists('$(MSBuildThisFileDirectory)\..\..\..\..\msbuild\common.props')" />
   <Import Project="$(IceBuilderCppProps)" Condition="Exists('$(IceBuilderCppProps)')" />
   <ImportGroup Label="ExtensionSettings">
     <Import Project="..\..\..\..\packages\zeroc.ice.v140.3.7.0\build\native\zeroc.ice.v140.targets" Condition="Exists('..\..\..\..\packages\zeroc.ice.v140.3.7.0\build\native\zeroc.ice.v140.targets') and '$(ICE_SRC_DIST)' != 'all'" />
@@ -108,7 +107,6 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <AdditionalDependencies>setargv.obj;%(AdditionalDependencies)</AdditionalDependencies>
-      <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention />
     </Link>
   </ItemDefinitionGroup>
@@ -125,7 +123,6 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <AdditionalDependencies>setargv.obj;%(AdditionalDependencies)</AdditionalDependencies>
-      <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
     </Link>
