@@ -11,7 +11,7 @@
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
 require_once 'Ice.php';
-require_once 'Contact.php';
+require_once 'generated/Contact.php';
 
 $communicator = Ice\initialize();
 

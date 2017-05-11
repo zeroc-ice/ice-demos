@@ -103,8 +103,8 @@
     <Compile Include="..\..\DiscoverI.cs">
       <Link>DiscoverI.cs</Link>
     </Compile>
-    <Compile Include="Discovery.cs" />
-    <Compile Include="Hello.cs" />
+    <Compile Include="generated\Discovery.cs" />
+    <Compile Include="generated\Hello.cs" />
     <Compile Include="..\..\HelloI.cs">
       <Link>HelloI.cs</Link>
     </Compile>
@@ -130,7 +130,7 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(IceBuilderCsharpProps)" Condition="Exists('$(IceBuilderCsharpProps)')" />
   <PropertyGroup Label="IceBuilder">
-    <IceBuilderOutputDir>$(MSBuildThisFileDirectory)</IceBuilderOutputDir>
+    <IceBuilderOutputDir>$(MSBuildThisFileDirectory)generated</IceBuilderOutputDir>
     <IceBuilderIncludeDirectories>$(IceHome)\slice</IceBuilderIncludeDirectories>
   </PropertyGroup>
   <Import Project="$(IceBuilderCsharpTargets)" Condition="Exists('$(IceBuilderCsharpTargets)')" />

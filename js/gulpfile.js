@@ -14,13 +14,16 @@ var babel       = require("gulp-babel"),
     gulp        = require("gulp"),
     gzip        = require("gulp-gzip"),
     iceBuilder  = require("gulp-ice-builder"),
+    jshint      = require("gulp-jshint"),
     minifycss   = require("gulp-minify-css"),
     newer       = require("gulp-newer"),
     npm         = require("npm"),
     open        = require("gulp-open"),
     path        = require("path"),
     paths       = require("vinyl-paths"),
-    uglify      = require("gulp-uglify"),
+    pump        = require("pump"),
+    uglify      = require('uglify-js'),
+    minifier    = require('gulp-uglify/minifier'),
     HttpServer  = require("./bin/HttpServer");
 
 //
@@ -42,7 +45,7 @@ function parseArg(argv, key)
         {
             return argv[i + 1];
         }
-        else if(e.indexOf(key + "=") == 0)
+        else if(e.indexOf(key + "=") === 0)
         {
             return e.substr(key.length + 1);
         }
@@ -108,26 +111,32 @@ var common =
     ]
 };
 
+function getIceLibs(es5)
+{
+    return  path.join(ICE_HOME ? path.join(ICE_HOME, 'js', 'lib') : path.join('bower_components', 'ice', 'lib'),
+                      es5 ? 'es5/*' : '*');
+}
+
 //
 // Deploy Ice for JavaScript browser libraries from bower or from ICE_HOME depending
 // on whenever or not ICE_HOME is set.
 //
 gulp.task("dist:libs", ["npm", "bower"],
-    function()
+    function(cb)
     {
-        var libs = ICE_HOME ? path.join(ICE_HOME, 'js', 'lib', '*') : 'bower_components/ice/lib/*';
-        return gulp.src([libs])
-            .pipe(newer("lib"))
-            .pipe(gulp.dest("lib"));
+        pump([
+            gulp.src([getIceLibs(false)]),
+            newer("lib"),
+            gulp.dest("lib")], cb);
     });
 
 gulp.task("dist:libs-es5", ["npm", "bower"],
-    function()
+    function(cb)
     {
-        var libs = ICE_HOME ? path.join(ICE_HOME, 'js', 'lib', 'es5', '*') : 'bower_components/ice/lib/es5/*';
-        return gulp.src([libs])
-            .pipe(newer("lib/es5"))
-            .pipe(gulp.dest("lib/es5"));
+        pump([
+            gulp.src([getIceLibs(true)]),
+            newer("lib/es5"),
+            gulp.dest("lib/es5")], cb);
     });
 
 gulp.task("dist:clean", [],
@@ -165,165 +174,38 @@ gulp.task("bower", ["npm"],
     });
 
 gulp.task("common:js", ["bower"],
-    function()
+    function(cb)
     {
-        return gulp.src(common.scripts)
-            .pipe(newer("assets/common.min.js"))
-            .pipe(concat("common.min.js"))
-            .pipe(uglify())
-            .pipe(gulp.dest("assets"))
-            .pipe(gzip())
-            .pipe(gulp.dest("assets"));
-    });
-
-gulp.task("common:js:watch", ["common:js"],
-    function()
-    {
-        gulp.watch(common.scripts, function(e){
-            gulp.start("common:js", function(){
-                browserSync.reload(e.path);
-            });
-        });
+        pump([
+            gulp.src(common.scripts),
+            newer("assets/generated/common.min.js"),
+            concat("common.min.js"),
+            minifier({compress:false}, uglify),
+            gulp.dest("assets/generated"),
+            gzip(),
+            gulp.dest("assets/generated")], cb);
     });
 
 gulp.task("common:css", ["bower"],
-    function()
-    {
-        return gulp.src(common.styles)
-            .pipe(newer("assets/common.css"))
-            .pipe(concat("common.css"))
-            .pipe(minifycss())
-            .pipe(gulp.dest("assets"))
-            .pipe(gzip())
-            .pipe(gulp.dest("assets"));
+    function(cb){
+        pump([
+            gulp.src(common.styles),
+            newer("assets/generated/common.css"),
+            concat("common.css"),
+            minifycss(),
+            gulp.dest("assets/generated"),
+            gzip(),
+            gulp.dest("assets/generated")], cb);
     });
 
-gulp.task("common:css:watch", ["common:css"],
-    function()
-    {
-        gulp.watch(common.styles, function(e){
-            gulp.start("common:css", function(){
-                browserSync.reload(e.path);
-            });
-        });
-    });
 
 gulp.task("common:clean", [],
-    function()
-    {
-        del(["assets/common.css", "assets/common.min.js"]);
+    function(){
+        del(["assets/generated/common.css", "assets/generated/common.min.js"]);
     });
 
-var demos = [
-    "Ice/hello",
-    "Ice/throughput",
-    "Ice/minimal",
-    "Ice/latency",
-    "Ice/bidir",
-    "Glacier2/simpleChat",
-    "Chat"];
-
-function demoTaskName(name) { return "demo_" + name.replace("/", "_"); }
-function demoES5IceTask(name) { return demoTaskName(name) + ":ice-es5"; }
-function demoBabelTask(name) { return demoTaskName(name) + ":babel"; }
-function demoBrowserBabelTask(name) { return demoTaskName(name) + "-browser:babel"; }
-function demoBuildTask(name) { return demoTaskName(name) + ":build"; }
-function demoWatchTask(name) { return demoTaskName(name) + ":watch"; }
-function demoDependCleanTask(name) { return demoTaskName(name) + "-depend:clean"; }
-function demoCleanTask(name) { return demoTaskName(name) + ":clean"; }
-function demoBabelCleanTask(name) { return demoTaskName(name) + ":babel-clean"; }
-function demoGeneratedFile(file){ return path.join(path.basename(file, ".ice") + ".js"); }
-
-demos.forEach(
-    function(name)
-    {
-        gulp.task(demoTaskName(name), ['dist:libs', 'dist:libs-es5'],
-            function()
-            {
-                return gulp.src(path.join(name, "*.ice"))
-                    .pipe(slice2js({args: ["-I" + name], dest: name}))
-                    .pipe(gulp.dest(name));
-            });
-
-        gulp.task(demoBabelTask(name), [demoTaskName(name)],
-            function()
-            {
-                return gulp.src(path.join(name, "*.js"))
-                    .pipe(babel({compact:false}))
-                    .pipe(gulp.dest(path.join(name, "es5")));
-            });
-
-        const depends = [demoBabelTask(name)];
-
-        if(fs.existsSync(path.join(name, "browser")))
-        {
-            gulp.task(demoBrowserBabelTask(name), [demoTaskName(name)],
-                function()
-                {
-                    return gulp.src(path.join(name, "browser", "*.js"))
-                        .pipe(babel({compact:false}))
-                        .pipe(gulp.dest(path.join(name, "browser", "es5")));
-                });
-            depends.push(demoBrowserBabelTask(name));
-        }
-
-        gulp.task(demoES5IceTask(name), [demoBabelTask(name)],
-            function()
-            {
-                return gulp.src(['node_modules/ice/src/es5/**/*']).pipe(
-                    gulp.dest(path.join(name, "es5", "node_modules", "ice")));
-            });
-        depends.push(demoES5IceTask(name));
-
-        gulp.task(demoBuildTask(name), depends, function(){});
-
-        gulp.task(demoWatchTask(name), [demoBuildTask(name)],
-            function()
-            {
-                gulp.watch(path.join(name, "*.ice"), [demoTaskName(name)]);
-
-                gulp.watch([path.join(name, "*.js"),
-                            path.join(name, "browser", "*.js"),
-                            path.join(name, "*.html")],
-                    function(e){
-                        browserSync.reload(e.path);
-                    });
-            });
-
-        gulp.task(demoBabelCleanTask(name), [],
-            function()
-            {
-                gulp.src([path.join(name, "es5", "*.js"),
-                         path.join(name, "es5", "node_modules"),
-                          path.join(name, "browser", "es5", "*.js")])
-                    .pipe(paths(del));
-            })
-
-        gulp.task(demoDependCleanTask(name), [],
-            function()
-            {
-                gulp.src(path.join(name, ".depend")).pipe(paths(del));
-            });
-
-        gulp.task(demoCleanTask(name), [demoDependCleanTask(name), demoBabelCleanTask(name)],
-            function()
-            {
-                gulp.src(path.join(name, "*.ice"))
-                    .pipe(extreplace(".js"))
-                    .pipe(paths(del));
-            });
-    });
-
-var minDemos =
+var demos =
 {
-    "Ice/minimal":
-    {
-        srcs: [
-            "lib/Ice.min.js",
-            "Ice/minimal/Hello.js",
-            "Ice/minimal/browser/Client.js"],
-        dest: "Ice/minimal/browser/"
-    },
     "Chat":
     {
         srcs: [
@@ -333,56 +215,175 @@ var minDemos =
             "Chat/ChatSession.js",
             "Chat/Client.js"],
         dest: "Chat"
-    }
+    },
+    "Glacier2/simpleChat":
+    {
+        srcs: [
+            "lib/Ice.min.js",
+            "lib/Glacier2.min.js",
+            "Glacier2/simpleChat/generated/Chat.js",
+            "Glacier2/simpleChat/browser/Client.js"],
+        dest: "Glacier2/simpleChat/browser/"
+    },
+    "Ice/bidir":
+    {
+        srcs: [
+            "lib/Ice.min.js",
+            "Ice/bidir/generated/Callback.js",
+            "Ice/bidir/browser/Client.js"],
+        dest: "Ice/bidir/browser"
+    },
+    "Ice/hello":
+    {
+        srcs: [
+            "lib/Ice.min.js",
+            "Ice/hello/generated/Hello.js",
+            "Ice/hello/browser/Client.js"],
+        dest: "Ice/hello/browser"
+    },
+    "Ice/latency":
+    {
+        srcs: [
+            "lib/Ice.min.js",
+            "Ice/latency/generated/Latency.js",
+            "Ice/latency/browser/Client.js"],
+        dest: "Ice/latency/browser"
+    },
+    "Ice/minimal":
+    {
+        srcs: [
+            "lib/Ice.min.js",
+            "Ice/minimal/generated/Hello.js",
+            "Ice/minimal/browser/Client.js"],
+        dest: "Ice/minimal/browser/"
+    },
+    "Ice/throughput":
+    {
+        srcs: [
+            "lib/Ice.min.js",
+            "Ice/throughput/generated/Throughput.js",
+            "Ice/throughput/browser/Client.js"],
+        dest: "Ice/throughput/browser/"
+    },
 };
-
+function demoTaskName(name) { return "demo_" + name.replace("/", "_"); }
+function demoES5IceTask(name) { return demoTaskName(name) + ":ice-es5"; }
+function demoBabelTask(name) { return demoTaskName(name) + ":babel"; }
+function demoGeneratedBabelTask(name) { return demoTaskName(name) + "-generated:babel"; }
+function demoBrowserBabelTask(name) { return demoTaskName(name) + "-browser:babel"; }
+function demoBuildTask(name) { return demoTaskName(name) + ":build"; }
+function demoDependCleanTask(name) { return demoTaskName(name) + "-depend:clean"; }
+function demoCleanTask(name) { return demoTaskName(name) + ":clean"; }
+function demoBabelCleanTask(name) { return demoTaskName(name) + ":babel-clean"; }
+function demoGeneratedFile(file){ return path.join(path.basename(file, ".ice") + ".js"); }
 function minDemoTaskName(name) { return demoTaskName(name) + ":min"; }
-function minDemoWatchTaskName(name) { return minDemoTaskName(name) + ":watch"; }
 function minDemoCleanTaskName(name) { return minDemoTaskName(name) + ":clean"; }
 
-Object.keys(minDemos).forEach(
-    function(name)
-    {
-        var demo = minDemos[name];
+Object.keys(demos).forEach(
+    function(name){
+        var demo = demos[name];
 
-        gulp.task(minDemoTaskName(name), [demoTaskName(name), "dist:libs", "common:css", "common:js"],
-            function()
-            {
-                return gulp.src(demo.srcs)
-                    .pipe(newer(path.join(demo.dest, "Client.min.js")))
-                    .pipe(concat("Client.min.js"))
-                    //.pipe(uglify()) TODO no es6 support in uglify
-                    .pipe(gulp.dest(demo.dest))
-                    .pipe(gzip())
-                    .pipe(gulp.dest(demo.dest));
+        gulp.task(demoTaskName(name), ['dist:libs', 'dist:libs-es5'],
+            function(cb){
+                pump([
+                    gulp.src(path.join(name, "*.ice")),
+                    slice2js({args: ["-I" + name], dest: path.join(name, "generated")}),
+                    gulp.dest(path.join(name, "generated"))], cb);
             });
 
-        gulp.task(minDemoWatchTaskName(name), [minDemoTaskName(name)],
-            function()
-            {
-                gulp.watch(demo.srcs, [minDemoTaskName(name)]);
+        gulp.task(minDemoTaskName(name), [demoTaskName(name), "dist:libs", "common:css", "common:js"],
+            function(cb){
+                pump([gulp.src(demo.srcs),
+                    newer(path.join(demo.dest, "Client.min.js")),
+                    concat("Client.min.js"),
+                    minifier({compress:false}, uglify),
+                    gulp.dest(demo.dest),
+                    gzip(),
+                    gulp.dest(demo.dest)], cb);
             });
 
         gulp.task(minDemoCleanTaskName(name), [],
-            function()
-            {
+            function(){
                 del([path.join(demo.dest, "Client.min.js"),
                      path.join(demo.dest, "Client.min.js.gz")]);
             });
+
+        gulp.task(demoGeneratedBabelTask(name), [minDemoTaskName(name)],
+            function(cb){
+                pump([
+                    gulp.src([path.join(name, "generated", "*.js")]),
+                    babel({compact:false}),
+                    gulp.dest(path.join(name, "generated", "es5"))], cb);
+            });
+
+        gulp.task(demoBabelTask(name), [demoGeneratedBabelTask(name)],
+            function(cb){
+                pump([
+                    gulp.src([path.join(name, "*.js")]),
+                    babel({compact:false}),
+                    gulp.dest(path.join(name, "es5"))], cb);
+            });
+
+        const depends = [demoBabelTask(name)];
+
+        if(fs.existsSync(path.join(name, "browser"))){
+            gulp.task(demoBrowserBabelTask(name), [demoTaskName(name)],
+                function(cb){
+                    pump([
+                        gulp.src(path.join(name, "browser", "*.js")),
+                        babel({compact:false}),
+                        gulp.dest(path.join(name, "browser", "es5"))], cb);
+                });
+            depends.push(demoBrowserBabelTask(name));
+        }
+
+        gulp.task(demoES5IceTask(name), [demoBabelTask(name)],
+            function(cb){
+                pump([
+                    gulp.src(['node_modules/ice/src/es5/**/*']),
+                    gulp.dest(path.join(name, "es5", "node_modules", "ice"))], cb);
+            });
+        depends.push(demoES5IceTask(name));
+
+        gulp.task(demoBuildTask(name), depends, function(){});
+
+        gulp.task(demoCleanTask(name), [],
+            function(){
+                gulp.src([
+                    path.join(name, ".depend"),
+                    path.join(name, "es5"),
+                    path.join(name, "es5"),
+                    path.join(name, "browser", "es5"),
+                    path.join(name, "generated")])
+                    .pipe(paths(del));
+            });
     });
 
-gulp.task("demo:build", demos.map(demoBuildTask).concat(Object.keys(minDemos).map(minDemoTaskName)));
-gulp.task("demo:watch", demos.map(demoWatchTask).concat(Object.keys(minDemos).map(minDemoWatchTaskName)));
-gulp.task("demo:clean", demos.map(demoCleanTask).concat(Object.keys(minDemos).map(minDemoCleanTaskName)));
+
+gulp.task("lint:js", ["build"],
+    function(cb){
+        pump([
+            gulp.src(["gulpfile.js",
+                      "**/*.js",
+                      "!**/es5/*.js",
+                      "!config/*.js",
+                      "!lib/*.js",
+                      "!**/*.min.js",
+                      "!bower_components/**/*.js",
+                      "!node_modules/**/*.js"]),
+            jshint(),
+            jshint.reporter("default")], cb);
+    });
+
+gulp.task("demo:build", Object.keys(demos).map(demoBuildTask));
+gulp.task("demo:clean", Object.keys(demos).map(demoCleanTask));
 
 gulp.task("build", ["demo:build"]);
 
-gulp.task("watch", ["demo:build", "dist:libs", "demo:watch", "common:css:watch", "common:js:watch"],
-    function()
-    {
-        browserSync();
+gulp.task("run", ["demo:build", "dist:libs"],
+    function(){
         HttpServer();
-        return gulp.src("./index.html").pipe(open("", {url: "http://127.0.0.1:8080/index.html"}));
+        return gulp.src("").pipe(open({uri: "http://127.0.0.1:8080/index.html"}));
     });
 gulp.task("clean", ["demo:clean", "common:clean", "dist:clean"]);
 gulp.task("default", ["build"]);

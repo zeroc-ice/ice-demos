@@ -6,7 +6,7 @@
     <title>Chat Demo | Ice for JavaScript</title>
     <!-- Bundle with all the stylesheets used to build the user interface,
          see assets/Makefile in your distribution for details -->
-    <link rel="stylesheet" type="text/css" href="../../assets/common.css" />
+    <link rel="stylesheet" type="text/css" href="../../assets/generated/common.css" />
     <link rel="icon" type="image/x-icon" href="../../assets/favicon.ico">
   </head>
   <body>
@@ -204,27 +204,27 @@
     </section>
     <!-- Bundle with all the scripts used to build the user interface,
          see assets/Makefile in your distribution for details -->
-    <script type="text/javascript" src="../../assets/common.min.js"></script>
+    <script type="text/javascript" src="../../assets/generated/common.min.js"></script>
     <!-- Babel dependencies -->
     <script type="text/javascript" src="../../../node_modules/babel-polyfill/dist/polyfill.js"></script>
     <script type="text/javascript" src="../../../node_modules/regenerator-runtime/runtime.js"></script>
     <!-- Scripts used during development, for optimized builds
-         comment the following scripts and uncomment Client.min.js
+         comment the following scripts and uncomment es5/Client.min.js
          below -->
     <!-- Ice.js (Ice run-time library) -->
     <script type="text/javascript" src="../../lib/es5/Ice.js"></script>
     <!-- Glacier2.js (Glacier2 run-time library) -->
     <script type="text/javascript" src="../../lib/es5/Glacier2.js"></script>
     <!-- Chat.js (Demo generated code) -->
-    <script type="text/javascript" src="es5/Chat.js"></script>
+    <script type="text/javascript" src="generated/es5/Chat.js"></script>
     <!-- ChatSession.js (Demo generated code) -->
-    <script type="text/javascript" src="es5/ChatSession.js"></script>
+    <script type="text/javascript" src="generated/es5/ChatSession.js"></script>
     <!-- Client.js (Chat Demo Application) -->
     <script type="text/javascript" src="es5/Client.js"></script>
     <!-- Uncomment the following script to use a minified version of the
          scripts that includes: the Ice and Glacier2 run-time libraries,
          the generated code and the demo application. -->
-    <!--<script type="text/javascript" src="Client.min.js"></script>-->
+    <!--<script type="text/javascript" src="es5/Client.min.js"></script>-->
 
     <script type="text/javascript">
         $(".chatbutton").click(
@@ -239,7 +239,7 @@
         /* global checkGenerated: false */
         if(["http:", "https:"].indexOf(document.location.protocol) !== -1)
         {
-            checkGenerated(["Chat.js"]);
+            checkGenerated(["generated/es5/Chat.js", "generated/es5/ChatSession.js"]);
         }
     </script>
   </body>

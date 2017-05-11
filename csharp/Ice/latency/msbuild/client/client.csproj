@@ -108,7 +108,7 @@
     <Compile Include="..\..\Client.cs">
       <Link>Client.cs</Link>
     </Compile>
-    <Compile Include="Latency.cs" />
+    <Compile Include="generated\Latency.cs" />
     <None Include="..\..\Latency.ice">
     </None>
     <None Include="..\..\config.client">
@@ -124,7 +124,7 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(IceBuilderCsharpProps)" Condition="Exists('$(IceBuilderCsharpProps)')" />
   <PropertyGroup Label="IceBuilder">
-    <IceBuilderOutputDir>$(MSBuildThisFileDirectory)</IceBuilderOutputDir>
+    <IceBuilderOutputDir>$(MSBuildThisFileDirectory)generated</IceBuilderOutputDir>
     <IceBuilderIncludeDirectories>$(IceHome)\slice</IceBuilderIncludeDirectories>
   </PropertyGroup>
   <Import Project="$(IceBuilderCsharpTargets)" Condition="Exists('$(IceBuilderCsharpTargets)')" />

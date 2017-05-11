@@ -125,7 +125,7 @@ function signin()
                 communicator.destroy();
             }
         });
-};
+}
 
 function run(communicator, router, session)
 {
@@ -271,7 +271,7 @@ function run(communicator, router, session)
             error(ex);
             communicator.destroy();
         });
-};
+}
 
 //
 // Switch to Disconnected state and display the error
@@ -293,7 +293,7 @@ function error(message)
             $("#signin-form").css("display", "block").animo({ animation: "flipInX", keep: true });
             state = State.Disconnected;
         });
-};
+}
 
 //
 // Do a transition from "from" screen to "to" screen, return
@@ -317,7 +317,7 @@ function transition(from, to)
             }
         });
     return p;
-};
+}
 
 //
 // Event handler for Sign in button
@@ -355,7 +355,7 @@ function startProgress()
             },
             20);
     }
-};
+}
 
 function stopProgress(completed)
 {
@@ -368,7 +368,7 @@ function stopProgress(completed)
             $("#loading .meter").css("width", "100%");
         }
     }
-};
+}
 
 $("#username").focus();
 

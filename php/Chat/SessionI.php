@@ -73,7 +73,7 @@ class Session
             //
             // Override session proxy's endpoints if necessary
             //
-            if($this->_communicator->getPropertyAsInt("OverrideSessionEndpoints") > 0)
+            if($this->_communicator->getProperties()->getPropertyAsInt("OverrideSessionEndpoints") > 0)
             {
                 $this->_chatsession = $this->_chatsession->ice_endpoints($chatsessionfactory->ice_getEndpoints());
             }

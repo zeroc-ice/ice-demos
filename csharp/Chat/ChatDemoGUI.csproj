@@ -115,8 +115,8 @@
     <Compile Include="ErrorView.xaml.cs">
       <DependentUpon>ErrorView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Chat.cs" />
-    <Compile Include="ChatSession.cs" />
+    <Compile Include="generated\Chat.cs" />
+    <Compile Include="generated\ChatSession.cs" />
     <Compile Include="LoginInfo.cs" />
     <Compile Include="LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
@@ -192,8 +192,8 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(IceBuilderCsharpTargets)" Condition="Exists('$(IceBuilderCsharpTargets)')" />
   <PropertyGroup Label="IceBuilder">
-    <IceBuilderOutputDir>$(MSBuildThisFileDirectory)</IceBuilderOutputDir>
-    <IceBuilderIncludeDirectories>$(IceHome)\slice;$(ProjectDir)</IceBuilderIncludeDirectories>
+    <IceBuilderOutputDir>$(MSBuildThisFileDirectory)generated</IceBuilderOutputDir>
+    <IceBuilderIncludeDirectories>$(IceHome)\slice;$(MSBuildThisFileDirectory);$(MSBuildThisFileDirectory)generated</IceBuilderIncludeDirectories>
   </PropertyGroup>
   <Target Name="EnsureIceBuilderImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

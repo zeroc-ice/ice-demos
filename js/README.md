@@ -67,7 +67,7 @@ full server-side activities. The browser clients require an HTTP server that sup
 WebSocket connections. For your convenience, this distribution includes a Node.js
 HTTP server pre-configured for the demos. Open another terminal window and run:
 
-    > npm run gulp:watch
+    > npm run gulp:run
 
 This will load http://127.0.0.1:8080/index.html in the default browser. From this page
 you can select the client that you want to run.

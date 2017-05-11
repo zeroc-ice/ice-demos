@@ -4,8 +4,8 @@
 //
 // **********************************************************************
 
-const Ice = require("ice").Ice
-const Demo = require("./Hello").Demo;
+const Ice = require("ice").Ice;
+const Demo = require("./generated/Hello").Demo;
 
 function menu()
 {
