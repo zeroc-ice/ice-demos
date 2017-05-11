@@ -10,11 +10,11 @@ module Demo
 {
     exception DivideByZeroException
     {
-    };
+    }
 
     exception NegativeRootException
     {
-    };
+    }
 
     interface Calculator
     {
@@ -29,5 +29,5 @@ module Demo
         idempotent double squareRoot(int x) throws NegativeRootException;
 	
         void shutdown();
-    };
-};
+    }
+}

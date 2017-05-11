@@ -7,7 +7,7 @@
 
 import math, sys, Ice
 
-Ice.loadSlice('C:\\Users\\austin\\Desktop\\workspace\\python_AMI_demo\\Calculator.ice')
+Ice.loadSlice('Calculator.ice')
 Ice.updateModules()
 import Demo
 
