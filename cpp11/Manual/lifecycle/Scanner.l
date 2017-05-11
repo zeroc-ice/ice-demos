@@ -16,17 +16,21 @@
 // '=' : conversion from 'size_t' to 'int', possible loss of data
 // The result of fread() is a size_t and gets inserted into an int
 //
-#   pragma warning( disable : 4267)
+#   pragma warning(disable:4267)
 #endif
 //
 // 'initializing' : conversion from '__int64' to 'int', possible loss of data
 // Puts a pointer-difference into an int
 //
-#   pragma warning( disable : 4244)
+#   pragma warning(disable:4244)
 //
 // conditional expression is constant
 //
-#   pragma warning( disable : 4127)
+#   pragma warning(disable:4127)
+//
+// '<': signed/unsigned mismatch
+//
+#   pragma warning(disable:4018)
 #endif
 
 #if defined(__GNUC__)

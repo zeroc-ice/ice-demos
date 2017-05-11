@@ -506,21 +506,21 @@ char *yytext;
 // '=' : conversion from 'size_t' to 'int', possible loss of data
 // The result of fread() is a size_t and gets inserted into an int
 //
-#   pragma warning( disable : 4267)
+#   pragma warning(disable:4267)
 #endif
 //
 // 'initializing' : conversion from '__int64' to 'int', possible loss of data
 // Puts a pointer-difference into an int
 //
-#   pragma warning( disable : 4244)
+#   pragma warning(disable:4244)
 //
 // conditional expression is constant
 //
-#   pragma warning( disable : 4127)
+#   pragma warning(disable:4127)
 //
-//  '<': signed/unsigned mismatch
+// '<': signed/unsigned mismatch
 //
-#   pragma warning(disable: 4018)
+#   pragma warning(disable:4018)
 #endif
 
 #if defined(__GNUC__)
@@ -549,7 +549,7 @@ using namespace std;
 
 #define YY_INPUT(buf, result, maxSize) parser->getInput(buf, result, maxSize)
 
-#line 548 "Manual/lifecycle/Scanner.cpp"
+#line 552 "Manual/lifecycle/Scanner.cpp"
 
 #define INITIAL 0
 
@@ -731,10 +731,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 66 "Manual/lifecycle/Scanner.l"
+#line 70 "Manual/lifecycle/Scanner.l"
 
 
-#line 733 "Manual/lifecycle/Scanner.cpp"
+#line 737 "Manual/lifecycle/Scanner.cpp"
 
 	if ( !(yy_init) )
 		{
@@ -819,7 +819,7 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 68 "Manual/lifecycle/Scanner.l"
+#line 72 "Manual/lifecycle/Scanner.l"
 {
     // C++-style comment
     int c;
@@ -832,7 +832,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 78 "Manual/lifecycle/Scanner.l"
+#line 82 "Manual/lifecycle/Scanner.l"
 {
     // C-style comment
     while(true)
@@ -860,77 +860,77 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 103 "Manual/lifecycle/Scanner.l"
+#line 107 "Manual/lifecycle/Scanner.l"
 {
     return TOK_HELP;
 }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 107 "Manual/lifecycle/Scanner.l"
+#line 111 "Manual/lifecycle/Scanner.l"
 {
     return TOK_EXIT;
 }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 111 "Manual/lifecycle/Scanner.l"
+#line 115 "Manual/lifecycle/Scanner.l"
 {
     return TOK_LIST;
 }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 115 "Manual/lifecycle/Scanner.l"
+#line 119 "Manual/lifecycle/Scanner.l"
 {
     return TOK_LIST_RECURSIVE;
 }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 119 "Manual/lifecycle/Scanner.l"
+#line 123 "Manual/lifecycle/Scanner.l"
 {
     return TOK_CREATE_FILE;
 }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 123 "Manual/lifecycle/Scanner.l"
+#line 127 "Manual/lifecycle/Scanner.l"
 {
     return TOK_CREATE_DIR;
 }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 127 "Manual/lifecycle/Scanner.l"
+#line 131 "Manual/lifecycle/Scanner.l"
 {
     return TOK_PWD;
 }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 131 "Manual/lifecycle/Scanner.l"
+#line 135 "Manual/lifecycle/Scanner.l"
 {
     return TOK_CD;
 }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 135 "Manual/lifecycle/Scanner.l"
+#line 139 "Manual/lifecycle/Scanner.l"
 {
     return TOK_CAT;
 }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 139 "Manual/lifecycle/Scanner.l"
+#line 143 "Manual/lifecycle/Scanner.l"
 {
     return TOK_WRITE;
 }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 143 "Manual/lifecycle/Scanner.l"
+#line 147 "Manual/lifecycle/Scanner.l"
 {
     return TOK_RM;
 }
@@ -938,7 +938,7 @@ YY_RULE_SETUP
 case 14:
 /* rule 14 can match eol */
 YY_RULE_SETUP
-#line 147 "Manual/lifecycle/Scanner.l"
+#line 151 "Manual/lifecycle/Scanner.l"
 {
     size_t len = strlen(yytext);
     for(size_t i = 0; i < len; ++i)
@@ -953,14 +953,14 @@ YY_RULE_SETUP
 case 15:
 /* rule 15 can match eol */
 YY_RULE_SETUP
-#line 158 "Manual/lifecycle/Scanner.l"
+#line 162 "Manual/lifecycle/Scanner.l"
 {
     return ';';
 }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 162 "Manual/lifecycle/Scanner.l"
+#line 166 "Manual/lifecycle/Scanner.l"
 {
     // "..."-type strings
     string s;
@@ -1037,7 +1037,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 236 "Manual/lifecycle/Scanner.l"
+#line 240 "Manual/lifecycle/Scanner.l"
 {
     // '...'-type strings
     string s;
@@ -1065,7 +1065,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 261 "Manual/lifecycle/Scanner.l"
+#line 265 "Manual/lifecycle/Scanner.l"
 {
     // Simple strings
     string s;
@@ -1092,10 +1092,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 285 "Manual/lifecycle/Scanner.l"
+#line 289 "Manual/lifecycle/Scanner.l"
 ECHO;
 	YY_BREAK
-#line 1094 "Manual/lifecycle/Scanner.cpp"
+#line 1098 "Manual/lifecycle/Scanner.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2089,7 +2089,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 285 "Manual/lifecycle/Scanner.l"
+#line 289 "Manual/lifecycle/Scanner.l"
 
 
 
