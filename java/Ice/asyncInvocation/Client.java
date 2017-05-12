@@ -134,7 +134,7 @@ public class Client extends com.zeroc.Ice.Application
     public static void main(String[] args)
     {
         Client app = new Client();
-        int status = app.main("Computation Client", args, "config.client");
+        int status = app.main("Client", args, "config.client");
 
         System.exit(status);
     }

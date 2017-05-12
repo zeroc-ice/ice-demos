@@ -38,11 +38,7 @@ class Client(Ice.Application):
         # Continue the operation with a lambda that is run when 'divideAsync' completes
         fut2.add_done_callback(handleDivideFuture)
         # Wait until the future has been fully completed
-        try:
-            fut2.result();
-        except:
-            # Ignored
-            pass;
+        fut2.result();
         
         # Same with 13 / 0
         fut3 = calculator.divideAsync(13, 0)
@@ -50,7 +46,7 @@ class Client(Ice.Application):
         try:
             fut3.result();
         except:
-            # Ignored
+            # Ignored, already caught by 'handleDivideFuture'
             pass;
         
         # Have the calculator find the hypotenuse of a triangle with side lengths of 6 and 8 using the
@@ -70,6 +66,9 @@ class Client(Ice.Application):
             result = await Ice.wrap_future(calculator.subtractAsync(x, subtrahend))
             print(x, "minus", subtrahend, "is", result)
             
+        #Runs 'doSubtractAsync' until it's completed
+        loop.run_until_complete(doSubtractAsync(10, 4))
+            
         async def doDivideAsync(numerator, denominator):
             try:
                 result = await Ice.wrap_future(calculator.divideAsync(numerator, denominator))
@@ -77,8 +76,7 @@ class Client(Ice.Application):
             except Demo.DivideByZeroException:
                 print("You cannot divide by 0")
                 
-        # Runs doSubtractAsync and doDivideAsync concurrently until they've both completed
-        loop.run_until_complete(asyncio.gather(doSubtractAsync(10, 4), doDivideAsync(13, 5)))
+        loop.run_until_complete(doDivideAsync(13, 5))
                 
         async def doHypotenuseAsync(x, y):
             squareFuture = asyncio.gather(Ice.wrap_future(calculator.squareAsync(x)), Ice.wrap_future(calculator.squareAsync(y)))
@@ -90,7 +88,6 @@ class Client(Ice.Application):
             except Demo.NegativeRootException:
                 print("You cannot take the square root of a negative number")
         
-        #Runs doHypotenuseAsync until it's completed
         loop.run_until_complete(doHypotenuseAsync(6, 8))
         
         loop.close()

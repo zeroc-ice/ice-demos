@@ -7,7 +7,7 @@
 #ifndef CALCULATOR_I_H_
 #define CALCULATOR_I_H_
 
-#include "Calculator.h"
+#include <Calculator.h>
 
 class CalculatorI : public Demo::Calculator
 {

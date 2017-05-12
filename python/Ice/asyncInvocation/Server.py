@@ -5,13 +5,13 @@
 #
 # **********************************************************************
 
-import math, sys, Ice
+import math, sys, Ice;
 
 Ice.loadSlice('Calculator.ice')
 Ice.updateModules()
 import Demo
 
-class CalculatorI(Demo._CalculatorDisp):
+class CalculatorI(Demo.Calculator):
     async def add(self, x, y, current=None):
         return x + y
     

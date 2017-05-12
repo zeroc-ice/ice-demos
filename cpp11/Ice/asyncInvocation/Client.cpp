@@ -7,7 +7,7 @@
 #include <mutex>
 #include <condition_variable>
 #include <Ice/Ice.h>
-#include "Calculator.h"
+#include <Calculator.h>
 
 using namespace std;
 using namespace Demo;
@@ -94,7 +94,7 @@ Client::run(int argc, char* argv[])
                                     finished = true;
                                     cv.notify_one();
                                 });
-    //wait to ensure the operation has completed
+    // Wait to ensure the operation has completed
     unique_lock<mutex> lock(mx);
     cv.wait(lock, [&finished] { return finished; });
 
@@ -126,11 +126,14 @@ Client::run(int argc, char* argv[])
                             });
     cv.wait(lock, [&finished] { return finished; });
     
-    
+    // Helper class that computes the hypotenuse using chained asynchronous calls with callbacks
     class HypotenuseHelper
     {
     public:
-        HypotenuseHelper(const shared_ptr<Demo::CalculatorPrx> calculator) : _calculator(calculator){}
+        HypotenuseHelper(const shared_ptr<Demo::CalculatorPrx> calculator) :
+			_calculator(calculator)
+		{
+		}
 
         void findHypotenuse(int x, int y)
         {
@@ -139,40 +142,33 @@ Client::run(int argc, char* argv[])
             _calculator->squareAsync(x,
                                     [this](int answer)
                                     {
-                                        this->afterSquared(answer);
+                                        this->squareResponse(answer);
                                     });
             _calculator->squareAsync(y,
                                     [this](int answer)
                                     {
-                                        this->afterSquared(answer);
+                                        this->squareResponse(answer);
                                     });
         }
 
         double getHypotenuse()
         {
-            unique_lock<mutex> lock(_hypotenuseMx);
-            _hypotenuseCv.wait(lock, [this] { return this->_finished; });
+            unique_lock<mutex> lock(_mutex);
+			_cv.wait(lock, [this] { return this->_finished; });
             return _hypotenuse;
         }
 
     private:
-        shared_ptr<Demo::CalculatorPrx> _calculator;
-        mutex _hypotenuseMx;
-        condition_variable _hypotenuseCv;
-        bool _otherOperationFinished;
-        int _otherAnswer;
-        double _hypotenuse;
-        bool _finished;
 
-        void afterSquared(int answer)
+		void squareResponse(int answer)
         {
-            lock_guard<mutex> lock(_hypotenuseMx);
+            lock_guard<mutex> lock(_mutex);
             if(_otherOperationFinished)
             {
                 _calculator->addAsync(answer, _otherAnswer,
                                     [this](int sum)
                                     {
-                                        this->afterSum(sum);
+                                        this->addResponse(sum);
                                     });
             }
             else
@@ -182,23 +178,31 @@ Client::run(int argc, char* argv[])
             }
         }
 
-        void afterSum(int sum)
+        void addResponse(int sum)
         {
             _calculator->squareRootAsync(sum,
                                         [this](double hypotenuse)
                                         {
-                                            this->finished(hypotenuse);
+                                            this->squareRootResponse(hypotenuse);
                                         });
         }
 
-        void finished(double hypotenuse)
+        void squareRootResponse(double hypotenuse)
         {
             _otherOperationFinished = false;
             _hypotenuse = hypotenuse;
             _finished = true;
-            lock_guard<mutex> lock(_hypotenuseMx);
-            _hypotenuseCv.notify_one();
+            lock_guard<mutex> lock(_mutex);
+			_cv.notify_one();
         }
+
+		shared_ptr<Demo::CalculatorPrx> _calculator;
+		mutex _mutex;
+		condition_variable _cv;
+		bool _otherOperationFinished;
+		int _otherAnswer;
+		double _hypotenuse;
+		bool _finished;
     };
     
     // Calculate the hypotenuse of a right triangle with side lengths of 6 and 8 using the Pythagorean Theorem
