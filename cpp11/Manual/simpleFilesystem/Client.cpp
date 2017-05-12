@@ -22,17 +22,22 @@ listRecursive(const shared_ptr<DirectoryPrx>& dir, int depth = 0)
 {
     string indent(++depth, '\t');
 
-    NodeSeq contents = dir->list();
+    auto contents = dir->list();
 
-    for(const auto& node : contents) {
+    for(const auto& node : contents)
+    {
         auto subdir = Ice::checkedCast<DirectoryPrx>(node);
         cout << indent << node->name() << (subdir ? " (directory):" : " (file):") << endl;
-        if(subdir) {
+        if(subdir)
+        {
             listRecursive(subdir, depth);
-        } else {
+        }
+        else
+        {
             auto file = Ice::uncheckedCast<FilePrx>(node);
             auto text = file->read();
-            for(const auto& line : text) {
+            for(const auto& line : text)
+            {
                 cout << indent << "\t" << line << endl;
             }
         }
@@ -42,7 +47,8 @@ listRecursive(const shared_ptr<DirectoryPrx>& dir, int depth = 0)
 int
 main(int argc, char* argv[])
 {
-    try {
+    try
+    {
         // Create Ice communicator
         //
         Ice::CommunicatorHolder ich(argc, argv);
@@ -50,21 +56,23 @@ main(int argc, char* argv[])
         // Create a proxy for the root directory
         //
         auto base = ich->stringToProxy("RootDir:default -p 10000");
-        if (!base)
-            throw std::runtime_error("Could not create proxy");
 
         // Down-cast the proxy to a Directory proxy
         //
         auto rootDir = Ice::checkedCast<DirectoryPrx>(base);
-        if (!rootDir)
+        if(!rootDir)
+        {
             throw std::runtime_error("Invalid proxy");
+        }
 
         // Recursively list the contents of the root directory
         //
         cout << "Contents of root directory:" << endl;
         listRecursive(rootDir);
 
-    } catch(const std::exception& e) {
+    }
+    catch(const std::exception& e)
+    {
         cerr << e.what() << endl;
         return 1;
     }
