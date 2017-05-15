@@ -12,7 +12,7 @@
     <ProjectType>Local</ProjectType>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{734CA026-A3F4-BD3E-04FE-08615EEF0910}</ProjectGuid>
+    <ProjectGuid>{0A8D2FCA-6175-7374-696E-BD261BC89E3B}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ApplicationIcon>
@@ -100,10 +100,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\Client.cs">
+    <Compile Include="..\..\Calculator.cs">
       <Link>Client.cs</Link>
     </Compile>
-    <Compile Include="generated\Calculator.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="..\..\Calculator.ice">
       <Link>Calculator.ice</Link>
     </None>
@@ -114,6 +115,7 @@
       <Link>README.md</Link>
     </None>
     <None Include="packages.config" />
+    <Compile Include="generated\Calculator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <AppDesigner Include="Properties\" />
   </ItemGroup>

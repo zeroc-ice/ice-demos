@@ -12,7 +12,7 @@
     <ProjectType>Local</ProjectType>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{49523760-6142-4105-B5BF-724BAE595BCE}</ProjectGuid>
+    <ProjectGuid>{72616D61-CA01-EBD3-8895-EA3072A8C296}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ApplicationIcon>
@@ -100,7 +100,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="generated\Calculator.cs" />
     <Compile Include="..\..\CalculatorI.cs">
       <Link>CalculatorI.cs</Link>
     </Compile>
@@ -117,6 +116,7 @@
       <Link>README.md</Link>
     </None>
     <None Include="packages.config" />
+    <Compile Include="generated\Calculator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <AppDesigner Include="Properties\" />
   </ItemGroup>
