@@ -8,41 +8,41 @@
 
 module Demo
 {
-exception PrintFailure
-{
-    string reason;
-}
+    exception PrintFailure
+    {
+        string reason;
+    }
 
-sequence<string> StringSeq;
+    sequence<string> StringSeq;
 
-dictionary<string, string> StringDict;
+    dictionary<string, string> StringDict;
 
-enum Color { red, green, blue }
+    enum Color { red, green, blue }
 
-struct Structure
-{
-    string name;
-    Color value;
-}
+    struct Structure
+    {
+        string name;
+        Color value;
+    }
 
-sequence<Structure> StructureSeq;
+    sequence<Structure> StructureSeq;
 
-class C
-{
-    Structure s;
-}
+    class C
+    {
+        Structure s;
+    }
 
-interface Printer
-{
-    void printString(string message);
-    void printStringSequence(StringSeq seq);
-    void printDictionary(StringDict dict);
-    void printEnum(Color c);
-    void printStruct(Structure st);
-    void printStructSequence(StructureSeq seq);
-    void printClass(C cls);
-    C getValues(out string str);
-    void throwPrintFailure() throws PrintFailure;
-    void shutdown();
-}
+    interface Printer
+    {
+        void printString(string message);
+        void printStringSequence(StringSeq seq);
+        void printDictionary(StringDict dict);
+        void printEnum(Color c);
+        void printStruct(Structure st);
+        void printStructSequence(StructureSeq seq);
+        void printClass(C cls);
+        C getValues(out string str);
+        void throwPrintFailure() throws PrintFailure;
+        void shutdown();
+    }
 }

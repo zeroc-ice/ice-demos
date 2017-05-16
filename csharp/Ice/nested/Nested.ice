@@ -8,10 +8,8 @@
 
 module Demo
 {
-
-interface Nested
-{
-    void nestedCall(int level, Nested* proxy);
-}
-
+    interface Nested
+    {
+        void nestedCall(int level, Nested* proxy);
+    }
 }

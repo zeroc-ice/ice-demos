@@ -10,10 +10,8 @@
 
 module Demo
 {
-
-interface PricingEngine
-{
-    idempotent Ice::StringSeq getPreferredCurrencies();
-}
-
+    interface PricingEngine
+    {
+        idempotent Ice::StringSeq getPreferredCurrencies();
+    }
 }

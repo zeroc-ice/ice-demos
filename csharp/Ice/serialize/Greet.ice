@@ -8,13 +8,11 @@
 
 module Demo
 {
+    ["clr:serializable:Demo.MyGreeting"] sequence<byte> Greeting;
 
-["clr:serializable:Demo.MyGreeting"] sequence<byte> Greeting;
-
-interface Greet
-{
-    idempotent void sendGreeting(Greeting g);
-    void shutdown();
-}
-
+    interface Greet
+    {
+        idempotent void sendGreeting(Greeting g);
+        void shutdown();
+    }
 }

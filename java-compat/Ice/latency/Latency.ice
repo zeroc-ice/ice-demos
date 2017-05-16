@@ -8,9 +8,7 @@
 
 module Demo
 {
-
-class Ping
-{
-}
-
+    class Ping
+    {
+    }
 }

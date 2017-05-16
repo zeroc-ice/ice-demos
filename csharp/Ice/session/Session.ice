@@ -8,42 +8,40 @@
 
 module Demo
 {
-
-interface Hello
-{
-    idempotent void sayHello();
-}
-
-//
-// The session object. This is used to create per-session objects on
-// behalf of the client.
-//
-interface Session
-{
-    //
-    // Create a new per-session hello object. The created object will
-    // be automatically destroyed when the session is destroyed.
-    //
-    Hello* createHello();
-
-    idempotent string getName();
+    interface Hello
+    {
+        idempotent void sayHello();
+    }
 
     //
-    // Destroy the session explicitly.
+    // The session object. This is used to create per-session objects on
+    // behalf of the client.
     //
-    void destroy();
-}
+    interface Session
+    {
+        //
+        // Create a new per-session hello object. The created object will
+        // be automatically destroyed when the session is destroyed.
+        //
+        Hello* createHello();
 
-interface SessionFactory
-{
-    //
-    // Create a session with the given name. Note that the name is
-    // only used for diagnostic purposes. It is not used as unique
-    // session id.
-    //
-    Session* create(string name);
+        idempotent string getName();
 
-    void shutdown();
-}
+        //
+        // Destroy the session explicitly.
+        //
+        void destroy();
+    }
 
+    interface SessionFactory
+    {
+       //
+        // Create a session with the given name. Note that the name is
+        // only used for diagnostic purposes. It is not used as unique
+        // session id.
+        //
+        Session* create(string name);
+
+        void shutdown();
+    }
 }

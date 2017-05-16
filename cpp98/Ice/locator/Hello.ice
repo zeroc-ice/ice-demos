@@ -8,11 +8,9 @@
 
 module Demo
 {
-
-interface Hello
-{
-    void sayHello();
-    void shutdown();
-}
-
+    interface Hello
+    {
+        void sayHello();
+        void shutdown();
+    }
 }
