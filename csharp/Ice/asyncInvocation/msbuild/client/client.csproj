@@ -100,7 +100,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\Calculator.cs">
+    <Compile Include="..\..\Client.cs">
       <Link>Client.cs</Link>
     </Compile>
   </ItemGroup>

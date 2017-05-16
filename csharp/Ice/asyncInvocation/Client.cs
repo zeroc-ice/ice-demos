@@ -17,6 +17,7 @@ public class Client
             if(args.Length > 0)
             {
                 Console.Error.WriteLine(appName() + ": too many arguments");
+                return 1;
             }
 
             var calculator = CalculatorPrxHelper.checkedCast(communicator().propertyToProxy("Calculator.Proxy"));
@@ -107,16 +108,15 @@ public class Client
                 Console.WriteLine("You cannot take the square root of a negative number");
             }
 
-            // Executes all the tasks parallel asynchronously and waits until they've all completed
-            Task.WaitAll(new Task[]
-                            {
-                                doSubtractAsync(calculator, 10, 4),
-                                doDivideAsync(calculator, 13, 5),
-                                doDivideAsync(calculator, 13, 0),
-                                doHypotenuseAsync(calculator, 6, 8),
-                            });
+            doSubtractAsync(calculator, 10, 4).Wait();
 
-            //calculator.shutdown();
+            doDivideAsync(calculator, 13, 5).Wait();
+
+            doDivideAsync(calculator, 13, 0).Wait();
+
+            doHypotenuseAsync(calculator, 6, 8).Wait();
+
+            calculator.shutdown();
             return 0;
         }
 
@@ -131,7 +131,8 @@ public class Client
             try
             {
                 var result = await calculator.divideAsync(numerator, denominator);
-                Console.WriteLine(numerator + " / " + denominator + " is " + result.returnValue + " with a remainder of " + result.remainder);
+                Console.WriteLine(numerator + " / " + denominator + " is " + result.returnValue +
+                                  " with a remainder of " + result.remainder);
             }
             catch(Demo.DivideByZeroException)
             {
@@ -147,7 +148,8 @@ public class Client
                 var squareResult = await Task.WhenAll(calculator.squareAsync(x), calculator.squareAsync(y));
                 var sumTask = calculator.addAsync(squareResult[0], squareResult[1]);
                 var hypotenuseTask = calculator.squareRootAsync(await sumTask);
-                Console.WriteLine("The hypotenuse of a triangle with side lengths of " + x + " and " + y + " is " + (await hypotenuseTask));
+                Console.WriteLine("The hypotenuse of a triangle with side lengths of " + x +
+                                  " and " + y + " is " + (await hypotenuseTask));
             }
             catch(Demo.NegativeRootException)
             {

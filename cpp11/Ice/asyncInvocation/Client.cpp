@@ -52,7 +52,7 @@ Client::run(int argc, char* argv[])
     auto result = fut2.get();
     cout << "13 / 5 is " << result.returnValue << " with a remainder of " << result.remainder << endl;
 
-    //same with 13 / 0, which throw an exception
+    //same with 13 / 0, which throws an exception
     try
     {
         auto fut3 = calculator->divideAsync(13, 0);
@@ -83,8 +83,8 @@ Client::run(int argc, char* argv[])
     condition_variable cv;
     bool finished = false;
 
-    // Calculate 10 - 4 with callback-based async operations which take 'std::function's as callback parameters, the first
-    // of which gets called when the operation is completed
+    // Calculate 10 - 4 with callback-based async operations which takes 'std::function's as callback parameters, the first
+    // of which is called when the operation is completed
     calculator->subtractAsync(10, 4,
                                 [&mx, &cv, &finished](int answer)
                                 {
@@ -132,8 +132,8 @@ Client::run(int argc, char* argv[])
     public:
         HypotenuseHelper(const shared_ptr<Demo::CalculatorPrx> calculator) :
 			_calculator(calculator)
-		{
-		}
+        {
+        }
 
         void findHypotenuse(int x, int y)
         {
@@ -154,13 +154,13 @@ Client::run(int argc, char* argv[])
         double getHypotenuse()
         {
             unique_lock<mutex> lock(_mutex);
-			_cv.wait(lock, [this] { return this->_finished; });
+                        _cv.wait(lock, [this] { return this->_finished; });
             return _hypotenuse;
         }
 
     private:
 
-		void squareResponse(int answer)
+        void squareResponse(int answer)
         {
             lock_guard<mutex> lock(_mutex);
             if(_otherOperationFinished)
@@ -193,18 +193,18 @@ Client::run(int argc, char* argv[])
             _hypotenuse = hypotenuse;
             _finished = true;
             lock_guard<mutex> lock(_mutex);
-			_cv.notify_one();
+                        _cv.notify_one();
         }
 
-		shared_ptr<Demo::CalculatorPrx> _calculator;
-		mutex _mutex;
-		condition_variable _cv;
-		bool _otherOperationFinished;
-		int _otherAnswer;
-		double _hypotenuse;
-		bool _finished;
+        shared_ptr<Demo::CalculatorPrx> _calculator;
+        mutex _mutex;
+        condition_variable _cv;
+        bool _otherOperationFinished;
+        int _otherAnswer;
+        double _hypotenuse;
+        bool _finished;
     };
-    
+
     // Calculate the hypotenuse of a right triangle with side lengths of 6 and 8 using the Pythagorean Theorem
     // and chained callbacks in the HypotenuseHelper class
     HypotenuseHelper helper(calculator);

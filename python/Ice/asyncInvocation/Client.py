@@ -28,6 +28,7 @@ class Client(Ice.Application):
         
         def handleDivideFuture(future):
             try:
+                # Since divideAsync has output parameters, the result is a list
                 result = future.result()
                 print("13 / 5 is", result[0], "with a remainder of", result[1])
             except Demo.DivideByZeroException:
@@ -35,19 +36,19 @@ class Client(Ice.Application):
         
         # Calculate 13 / 5 with asynchronous futures
         fut2 = calculator.divideAsync(13, 5)
-        # Continue the operation with a lambda that is run when 'divideAsync' completes
+        # Continue the operation with a callback function that is run when 'divideAsync' completes
         fut2.add_done_callback(handleDivideFuture)
         # Wait until the future has been fully completed
-        fut2.result();
+        fut2.result()
         
         # Same with 13 / 0
         fut3 = calculator.divideAsync(13, 0)
         fut3.add_done_callback(handleDivideFuture)
         try:
-            fut3.result();
+            fut3.result()
         except:
             # Ignored, already caught by 'handleDivideFuture'
-            pass;
+            pass
         
         # Have the calculator find the hypotenuse of a triangle with side lengths of 6 and 8 using the
         # Pythagorean theorem and chained futures
@@ -79,6 +80,7 @@ class Client(Ice.Application):
         loop.run_until_complete(doDivideAsync(13, 5))
                 
         async def doHypotenuseAsync(x, y):
+            # Combines multiple futures into one, which executes the underlying futures concurrently when run
             squareFuture = asyncio.gather(Ice.wrap_future(calculator.squareAsync(x)), Ice.wrap_future(calculator.squareAsync(y)))
             # gather returns all the future's results in a list
             sumFuture = Ice.wrap_future(calculator.addAsync(*(await squareFuture)))
@@ -92,7 +94,7 @@ class Client(Ice.Application):
         
         loop.close()
         
-        calculator.shutdown();
+        calculator.shutdown()
         return 0
         
 app = Client()

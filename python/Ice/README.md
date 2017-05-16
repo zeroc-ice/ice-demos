@@ -6,6 +6,7 @@ Demos in this directory:
   (AMI) and Asynchronous Method Dispatch (AMD).
 
 - [asyncInvocation](./asyncInvocation)
+
   This demo illustrates the use of Asynchronous Method Invocation
   (AMI).
 

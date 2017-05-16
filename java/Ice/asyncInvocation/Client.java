@@ -14,14 +14,25 @@ public class Client extends com.zeroc.Ice.Application
     @Override
     public int run(String[] args)
     {
-        CalculatorPrx calculator = CalculatorPrx.checkedCast(communicator().propertyToProxy("Calculator.Proxy"));
+        if(args.length > 0)
+        {
+            System.err.println(appName() + ": too many arguments");
+            return 1;
+        }
 
-        // Asynchronously calculate a difference
+        CalculatorPrx calculator = CalculatorPrx.checkedCast(communicator().propertyToProxy("Calculator.Proxy"));
+        if(calculator == null)
+        {
+            System.err.println("invalid proxy");
+            return 1;
+        }
+
+        // Calculate 10 - 4 with an asynchronous call
         try
         {
             CompletableFuture<Integer> result = calculator.subtractAsync(10, 4);
 
-            // Block until the call is completed
+            // 'get' blocks until the call is completed
             System.out.println("10 minus 4 is " + result.get());
         }
         catch(ExecutionException | InterruptedException exception)
@@ -29,10 +40,10 @@ public class Client extends com.zeroc.Ice.Application
             exception.printStackTrace();
         }
 
-        // Async division
+        // Calculate 13 / 5 asynchronously
         CompletableFuture<Calculator.DivideResult> result1 = calculator.divideAsync(13, 5);
 
-        // Pass lambda to process result when available
+        // Pass a lambda to run when the future completes
         result1.whenComplete((completed, exception) ->
                             {
                                 if(exception != null)
@@ -92,7 +103,8 @@ public class Client extends com.zeroc.Ice.Application
             //ignored
         }
 
-        // Combine async calls
+        // Have the calculator find the hypotenuse of a triangle with side lengths of 6 and 8
+        // using the Pythagorean theorem and chaining async calls
         try
         {
             CompletableFuture<Integer> side1 = calculator.squareAsync(6);
@@ -135,7 +147,6 @@ public class Client extends com.zeroc.Ice.Application
     {
         Client app = new Client();
         int status = app.main("Client", args, "config.client");
-
         System.exit(status);
     }
 }
