@@ -29,8 +29,9 @@ If you enable secure invocations, oneway and twoway operations are
 sent using the SSL transport. It is not possible to secure datagram
 invocations.
 
-All invocations use asynchronous method invocations (AMI) to avoid
-blocking the GUI thread and ensure a responsive user experience.
+All invocations use asynchronous method invocations (AMI) or batch
+invocations to avoid blocking the GUI thread and ensure a responsive 
+user experience.
 
 This demo runs against any hello server, such as the [Objective-C
 server](../../../Ice/hello).

@@ -35,25 +35,19 @@ static NSString* hostnameKey = @"hostnameKey";
 
     [[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
 }
--(void) dealloc
-{
-    NSLog(@"dealloc");
-}
 -(void)applicationWillTerminate
 {
-    NSLog(@"destroying");
     [communicator destroy];
 }
 -(void)viewDidLoad
 {
-    ICEregisterIceDiscovery(NO); // Register the plugin but don't load it on communicator initialization.
+    ICEregisterIceDiscovery(YES);
     ICEregisterIceSSL(YES);
-    ICEreigsterIceUDP(YES);
+    ICEregisterIceUDP(YES);
     ICEregisterIceIAP(YES);
 
     ICEInitializationData* initData = [ICEInitializationData initializationData];
     initData.properties = [ICEUtil createProperties];
-    [initData.properties setProperty:@"Ice.Plugin.IceDiscovery" value:@"IceDiscovery:createIceDiscovery"];
     [initData.properties setProperty:@"IceSSL.CheckCertName" value:@"0"];
     [initData.properties setProperty:@"IceSSL.CAs" value:@"cacert.der"];
     [initData.properties setProperty:@"IceSSL.CertFile" value:@"client.p12"];
@@ -64,20 +58,7 @@ static NSString* hostnameKey = @"hostnameKey";
     {
         dispatch_sync(dispatch_get_main_queue(), ^ { [call run]; });
     };
-
-    @try
-    {
-        communicator = [ICEUtil createCommunicator:initData];
-    }
-    @catch(ICEPluginInitializationException*)
-    {
-        //
-        // IceDiscovery might fail to join the multicast group if there's no network supporting
-        // multicast, disable it and try again.
-        //
-        [initData.properties setProperty:@"Ice.Plugin.IceDiscovery" value:@""];
-        communicator = [ICEUtil createCommunicator:initData];
-    }
+    communicator = [ICEUtil createCommunicator:initData];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(applicationWillTerminate)

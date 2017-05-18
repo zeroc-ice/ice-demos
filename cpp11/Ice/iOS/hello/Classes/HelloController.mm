@@ -37,7 +37,7 @@ public:
     HelloClient(HelloController* controller) :
         _controller(controller), _response(false)
     {
-        Ice::registerIceDiscovery(false); // Register the plugin but don't load it on initialization
+        Ice::registerIceDiscovery();
         Ice::registerIceSSL();
         Ice::registerIceUDP();
 
@@ -47,7 +47,6 @@ public:
         initData.properties->setProperty("IceSSL.CAs", "cacert.der");
         initData.properties->setProperty("IceSSL.CertFile", "client.p12");
         initData.properties->setProperty("IceSSL.Password", "password");
-        initData.properties->setProperty("Ice.Plugin.IceDiscovery", "1");
 
         //
         // Dispatch AMI callbacks in the main thread
@@ -62,22 +61,8 @@ public:
                                   }
                               });
             };
-
-        try
-        {
-            Ice::CommunicatorHolder ich(initData);
-            _ich = move(ich);
-        }
-        catch(const Ice::PluginInitializationException& ex)
-        {
-            //
-            // IceDiscovery might fail to join the multicast group if there's no network supporting
-            // multicast, disable it and try again.
-            //
-            initData.properties->setProperty("Ice.Plugin.IceDiscovery", "");
-            Ice::CommunicatorHolder ich(initData);
-            _ich = move(ich);
-        }
+        Ice::CommunicatorHolder ich(initData);
+        _ich = move(ich);
     }
 
     void updateProxy(const string& hostname, int deliveryMode, int timeout, bool discovery)
@@ -361,6 +346,7 @@ static NSString* hostnameKey = @"hostnameKey";
     if(client)
     {
         client->destroy();
+        client = nullptr;
     }
 }
 
@@ -486,20 +472,6 @@ static NSString* hostnameKey = @"hostnameKey";
 {
     [super didReceiveMemoryWarning]; // Releases the view if it doesn't have a superview
     // Release anything that's not essential, such as cached data
-}
-
--(void)dealloc
-{
-    [sayHelloButton release];
-    [shutdownButton release];
-    [flushButton release];
-    [hostnameTextField release];
-    [statusLabel release];
-    [timeoutSlider release];
-    [delaySlider release];
-    [activity release];
-    [modePicker release];
-    [super dealloc];
 }
 
 #pragma mark UITextFieldDelegate
