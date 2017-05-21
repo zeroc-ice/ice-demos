@@ -49,7 +49,7 @@ PollingChatSessionFactoryI::create(string name, string, const Ice::Current& curr
     //
     // Close connection if the connection is idle for _timeout seconds
     //
-    current.con->setACM(_timeout, Ice::ACMClose::CloseOnInvocationAndIdle, Ice::ACMHeartbeat::HeartbeatOnInvocation);
+    current.con->setACM(_timeout, Ice::ACMClose::CloseOnInvocationAndIdle, Ice::ACMHeartbeat::HeartbeatOnDispatch);
 
     auto trace = _trace;
     auto logger = _logger;
