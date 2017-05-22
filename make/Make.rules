@@ -56,7 +56,7 @@ $(error Can't find Ice distribution, please set ICE_HOME to the Ice installation
 endif
 
 ice_src_dist            := $(wildcard $(ice_home)/config/Make.rules)
-usr_dir_install		:= $(filter /usr%,$(ice_home))
+usr_dir_install         := $(filter /usr%,$(ice_home))
 ice_bindir              ?= $(ice_home)$(if $(ice_src_dist),/cpp)/bin
 ice_slicedir            ?= $(ice_home)$(if $(usr_dir_install),/share/ice)/slice
 

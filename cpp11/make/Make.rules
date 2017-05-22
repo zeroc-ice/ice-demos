@@ -63,7 +63,7 @@ $1_slicecompiler        := slice2cpp
 $1_sliceflags           := -I$(ice_slicedir) -I$1 $$($1_sliceflags)
 $1_cppflags             := -DICE_CPP11_MAPPING -std=c++11 \
                            $(if $(usr_dir_install),,-I$(ice_includedir)) \
-			   $(if $(ice_src_dist),-I$(ice_includedir)/generated) \
+                           $(if $(ice_src_dist),-I$(ice_includedir)/generated) \
                            -I$1 -I$1/generated $$($1_cppflags)
 $(make-project)
 endef
