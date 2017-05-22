@@ -2,6 +2,9 @@
 #
 # Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
 #
+# This copy of Ice is licensed to you under the terms described in the
+# ICE_LICENSE file included in this distribution.
+#
 # **********************************************************************
 
 #
@@ -15,9 +18,9 @@ project = $(patsubst $(lang_srcdir)/%,%,$(if $1,$1,$(currentdir)))
 #
 # The platforms, configs and languages to build.
 #
-platforms               = $(if $(filter all,$(PLATFORMS)),$(supported-platforms),$(PLATFORMS))
-configs                 = $(if $(filter all,$(CONFIGS)),$(supported-configs),$(CONFIGS))
-languages               = $(if $(filter all,$(or $(LANGUAGES),all)),$(supported-languages),$(LANGUAGES))
+platforms               = $(filter-out $(SKIP),$(if $(filter all,$(PLATFORMS)),$(supported-platforms),$(PLATFORMS)))
+configs                 = $(filter-out $(SKIP),$(if $(filter all,$(CONFIGS)),$(supported-configs),$(CONFIGS)))
+languages               = $(filter-out $(SKIP),$(if $(filter all,$(or $(LANGUAGES),all)),$(supported-languages),$(LANGUAGES)))
 build-platform          := $(or $(build-platform),$(firstword $(supported-platforms)))
 
 #
@@ -26,8 +29,8 @@ build-platform          := $(or $(build-platform),$(firstword $(supported-platfo
 # component is either included/excluded for this platform based on the <platform>_excludes,
 # <platform>_components and <platform>_projects variables.
 #
-component-platforms     = $(call unique,$(foreach p,$(platforms),\
-                            $(if $(and $(if $(filter $($p_excludes),$1 $2),,true),\
+component-platforms    = $(call unique,$(foreach p,$(platforms),\
+                                $(if $(and $(if $(filter $($p_excludes),$1 $2),,true),\
                                          $(or $(filter $($p_components),$2),\
                                            $(filter $(or $($p_projects),$(if $($p_components),,%)),$1))),\
                               $(strip $p))))
@@ -97,11 +100,16 @@ $(addprefix $3/,$(call source-to-object,$4)): $(addprefix $2/,$(call generated-t
 					      $(foreach d,$5,$($d_targets))
 endif
 
+# Add a dedependency on generated headers from dependencies. This will only work if dependency
+# Makefile.mk are loaded before this component Makefile.mk.
+$(addprefix $3/,$(call source-to-object,$4)): | $(foreach d,$5,$($($d_component)_generated_headers))
+
 .PRECIOUS: $3/%.d
 
-ifeq ($(filter %clean,$(MAKECMDGOALS)),)
+ifeq ($(filter %clean print,$(MAKECMDGOALS)),)
     # Include the dependencies
     -include $(addprefix $3/,$(call source-to-dependency,$4))
+    -include $(addprefix $3/,$(call source-to-dependency,$(call generated-to-source,$4,$7)))
 endif
 
 ifneq ($(filter %.ice $2/%.$7,$4),)
@@ -109,8 +117,8 @@ ifneq ($(filter %.ice $2/%.$7,$4),)
 $3/%.o: $2/%.$7
 $3/%.o: $2/%.$7
 	$(E) "Compiling [$8-$9] $$<"
-	$(Q)$(or $($8_cxx),$(platform_cxx)) $(strip $6) $(call depend-cppflags,$3/$$*.Td,$$@) \
-	$(CXXFLAGS) $(CPPFLAGS) -c $$< -o $$@
+	$(Q)$(or $($8_cxx),$(platform_cxx)) $(CXXFLAGS) $(call depend-cppflags,$3/$$*.Td,$$@) \
+	$(strip $6) $(CPPFLAGS) -c $$< -o $$@
 	$(Q)$(MV) $3/$$*.Td $3/$$*.$7.d
 endif
 
@@ -119,8 +127,8 @@ ifneq ($(filter %.cpp,$4),)
 $3/%.o: $1/%.cpp
 $3/%.o: $1/%.cpp
 	$(E) "Compiling [$8-$9] $$<"
-	$(Q)$(or $($8_cxx),$(platform_cxx)) $(strip $6) $(call depend-cppflags,$3/$$*.Td,$$@) \
-	$(CXXFLAGS) $(CPPFLAGS) -c $$< -o $$@
+	$(Q)$(or $($8_cxx),$(platform_cxx)) $(CXXFLAGS) $(call depend-cppflags,$3/$$*.Td,$$@) \
+	$(strip $6) $(CPPFLAGS) -c $$< -o $$@
 	$(Q)$(MV) $3/$$*.Td $3/$$*.cpp.d
 endif
 
@@ -129,18 +137,18 @@ ifneq ($(filter %.mm,$4),)
 $3/%.o: $1/%.mm
 $3/%.o: $1/%.mm
 	$(E) "Compiling [$8-$9] $$<"
-	$(Q)$(or $($8_cxx),$(platform_cxx)) $(strip $6) $(call depend-cppflags,$3/$$*.Td,$$@) \
-	$(CXXFLAGS) $(CPPFLAGS) -c $$< -o $$@
+	$(Q)$(or $($8_cxx),$(platform_cxx)) $(CXXFLAGS) $(call depend-cppflags,$3/$$*.Td,$$@) \
+	$(strip $6) $(CPPFLAGS) -c $$< -o $$@
 	$(Q)$(MV) $3/$$*.Td $3/$$*.mm.d
 endif
 
 ifneq ($(filter %.m,$4),)
-# Rules to build Objetive-C sources from <srcdir>
+# Rules to build Objective-C sources from <srcdir>
 $3/%.o: $1/%.m
 $3/%.o: $1/%.m
 	$(E) "Compiling [$8-$9] $$<"
-	$(Q)$(or $($8_cxx),$(platform_cxx)) $(strip $6) $(call depend-cppflags,$3/$$*.Td,$$@) \
-	$(CXXFLAGS) $(CPPFLAGS) -c $$< -o $$@
+	$(Q)$(or $($8_cxx),$(platform_cxx)) $(CXXFLAGS) $(call depend-cppflags,$3/$$*.Td,$$@) \
+	$(strip $6) $(CPPFLAGS) -c $$< -o $$@
 	$(Q)$(MV) $3/$$*.Td $3/$$*.m.d
 endif
 
@@ -155,7 +163,7 @@ define make-slices
 
 .PRECIOUS: $2/%.ice.d
 
-ifeq ($(filter %clean,$(MAKECMDGOALS)),)
+ifeq ($(filter %clean print,$(MAKECMDGOALS)),)
     # Include the dependencies
     -include $(addprefix $2/,$(call source-to-dependency,$4))
 endif
@@ -163,32 +171,36 @@ endif
 $3/%.h $2/%.$($6_targetext): $1/%.ice $($6_path) | $3
 	$(E) "Compiling $$<"
 	$(Q)$(RM) $3/$$*.h $2/$$*.$($6_targetext)
-	$(Q)$($6_path) $(strip $5) --depend $$< > $2/$$*.ice.d
+	$(Q)$($6_path) $(strip $5) --depend $$< | sed 's|\(.*:\)|$3/$$*.h $2/$$*.$($6_targetext):|' > $2/$$*.ice.d
 	$(Q)$($6_path) $(strip $5) --output-dir $2 $$<
 	$(if $(filter-out $2,$3),$(Q)$(MV) $2/$$*.h $3/)
 
 endef
 
-ifeq ($(BISON_FLEX),yes)
-%.h %.cpp: %.y
-	@$(RM) $*.h $*.cpp
-	bison -dvt -o $*.cpp $<
-	@$(MV) $*.hpp $*.h
-	@$(RM) $*.output
+#
+# $(call make-bison,$1=srcdir,$2=flags)
+#
+define make-bison
+$1/%.h $1/%.cpp: $1/%.y
+	@$(RM) $$*.h $$*.cpp
+	bison -dvt $2 -o $1/$$*.cpp $$<
+	@$(MV) $1/$$*.hpp $1/$$*.h
+	@$(RM) $1/$$*.output
+endef
 
-%.cpp: %.l
-	@$(RM) $@
-	flex -o $@ $<
-	@$(MV) $@ $@.tail
-	@echo '#include <IceUtil/ScannerConfig.h>' >> $@
-	@cat $@.tail >> $@
-	@$(RM) $@.tail
-else
-%.h %.cpp: %.y
+#
+# $(call make-flex,$1=srcdir,$2=flags)
+#
+define make-flex
+$1/%.cpp: $1/%.l
+	@$(RM) $$@
+	flex $2 -o $$@ $$<
+	@$(MV) $$@ $$@.tail
+	@echo '#include <IceUtil/ScannerConfig.h>' >> $$@
+	@cat $$@.tail >> $$@
+	@$(RM) $$@.tail
+endef
 
-%.cpp: %.l
-
-endif
 
 #
 # $(call make-static-library,$1=libname,$2=libdir,$3=version,$4=soversion,$5=objects,$6=dependencies,$7=ldflags,
@@ -322,6 +334,11 @@ get-program-targets = $2/$1$(EXE_EXT)
 #
 define create-component-with-config-targets
 
+$5_component    := $2
+$5_platform     := $3
+$5_config       := $4
+$2_components   := $5
+
 #
 # Compute the target and installation directories.
 #
@@ -341,7 +358,7 @@ $5_soversion    := $$(call var-value,soversion,$1,$2,$3,$4)
 #
 # Transform the dependencies to [platform-configuration] specific dependencies.
 #
-$5_dependencies := $$(call var-compound,dependencies,$1,$2,$3,$4,make-deps)
+$5_dependencies := $$(call var-rcompound,dependencies,$1,$2,$3,$4,make-deps)
 $5_libs         := $$(call var-compound,libs,$1,$2,$3,$4,make-unique)
 $5_system_libs  := $$(call var-compound,system_libs,$1,$2,$3,$4)
 
@@ -372,8 +389,8 @@ $2_project      := $1
 $2_target       := $$(call var-with-default,$2_target,$3)
 $2_targetname   := $$(call var-with-default,$2_targetname,$(patsubst $1_%,%,$2))
 
-$2_platforms    := $$(call unique,$$(or $$($2_platforms),$$($1_platforms),$(call component-platforms,$1,$2)))
-$2_configs      := $$(call unique,$$(or $$($2_configs),$$($1_configs),$(call component-configs,$1,$2)))
+$2_platforms    := $$(filter $(platforms) $$($2_always_enable_platforms),$$(call unique,$$($2_always_enable_platforms) $$(or $$($2_platforms),$$($1_platforms),$(call component-platforms,$1,$2))))
+$2_configs      := $$(filter $(configs) $$($2_always_enable_configs),$$(call unique,$$($2_always_enable_configs) $$(or $$($2_configs),$$($1_configs),$(call component-configs,$1,$2))))
 
 #
 # The installation directory (install_bindir if program, install_libdir otherwise)
@@ -384,10 +401,6 @@ $$(foreach p,$$($2_platforms),\
     $$(foreach c,$$(filter $$(or $$($$p_configs),%),$$($2_configs)),\
         $$(if $$(filter $(SKIP),$2[$$p-$$c]),,\
             $$(eval $$(call create-component-with-config-targets,$1,$2,$$p,$$c,$2[$$p-$$c])))))
-
-$$(foreach c,$$($2_always_enable_configs),\
-    $$(if $$($2[$(build-platform)-$$c]_config),,\
-        $$(eval $$(call create-component-with-config-targets,$1,$2,$(build-platform),$$c,$2[$(build-platform)-$$c]))))
 
 endef
 
@@ -415,9 +428,6 @@ endef
 #
 define make-component-with-config
 
-$5_platform     := $3
-$5_config       := $4
-
 #
 # Compute the compiler/linker flags.
 #
@@ -433,7 +443,7 @@ $5_ldflags      := $$(call var-compound,ldflags,$1,$2,$3,$4,make-flags)
 #
 $5_objdir       := $$(call var-value,objdir,$1,$2,$3,$4,make-dirwsuffix)
 $5_objdir       := $$($5_objdir)$$(if $$(and $$($1_multicomp),\
-                        $$(filter-out $$(call var-compound,cppflags,$1,,$3,$4,make-flags),$$($5_cppflags))),/$2)
+                $$(filter-out $$(call var-compound,cppflags,$1,,$3,$4,make-flags),$$($5_cppflags))),/$$($2_targetname))
 $1_objdirs      += $$($5_objdir)
 
 $5_sources      := $$(patsubst $(lang_srcdir)/%,%,$$(call unique,$$(call var-compound,extra_sources,$1,$2,$3,$4) \
@@ -542,6 +552,8 @@ $2_srcdir       := $$(or $$($2_srcdir),$$($1_srcdir))
 # Combine settings set at the project and component levels.
 #
 $2_sliceflags   := $$($2_sliceflags) $$($1_sliceflags)
+$2_bisonflags   := $$($2_bisonflags) $$($1_bisonflags)
+$2_flexflags    := $$($2_flexflags) $$($1_flexflags)
 
 #
 # If we're compiling a library, we check for a ../slice/<component> directory.
@@ -592,7 +604,7 @@ $1_slices       += $$(filter-out $$($2_slicedir)/%,$$($2_slices))
 # Define slice rules for the component Slice files from $(slicedir)/<component>
 # if it exists. Rules for other slice files are specified at the project level.
 #
-ifneq ($$($2_slicedir),)
+ifneq ($$(and $$($2_components),$$($2_slicedir)),)
 
 # Add an order-only prerequisities on the directory to trigger its creation if it doesn't exist.
 $$($1_generated_srcdir)/$$(call source-to-dependency,$$($2_slices)): | $$($1_generated_srcdir)
@@ -611,6 +623,11 @@ $1_generated += $$($2_generated_headers)
 
 endif
 
+ifeq ($(BISON_FLEX),yes)
+$$(eval $$(call make-bison,$$($2_srcdir),$$($2_bisonflags)))
+$$(eval $$(call make-flex,$$($2_srcdir),$$($2_flexflags)))
+endif
+
 ifneq ($$($1_component_extensions),)
 $$(foreach e,$$($1_component_extensions),$$(eval $$(call $$e,$1,$2,$3)))
 endif
@@ -622,10 +639,6 @@ $$(foreach p,$$($2_platforms),\
     $$(foreach c,$$(filter $$(or $$($$p_configs),%),$$($2_configs)),\
         $$(if $$(filter $(SKIP),$2[$$p-$$c]),,\
             $$(eval $$(call make-component-with-config,$1,$2,$$p,$$c,$2[$$p-$$c])))))
-
-$$(foreach c,$$($2_always_enable_configs),\
-    $$(if $$($2[$(build-platform)-$$c]_config),,\
-        $$(eval $$(call make-component-with-config,$1,$2,$(build-platform),$$c,$2[$(build-platform)-$$c]))))
 
 #
 # Component targets to build the component with the specified platforms/configurations
@@ -640,7 +653,7 @@ $2_distclean::
 #
 # Install public header files if building a library
 #
-ifneq ($(and $(filter library,$3),$$(filter $(includedir)/%,$$($2_includedir))),)
+ifneq ($$(and $$($2_components),$(filter library,$3),$$(filter $(includedir)/%,$$($2_includedir))),)
 $$(eval $$(call install-data-files,$$(wildcard $$($2_includedir)/*.h),$(includedir),$(install_includedir),$2_install))
 ifneq ($$($2_generated_headers),)
 $$(eval $$(call install-data-files,$$($2_generated_headers),$(includedir)/generated,$(install_includedir),$2_install))
@@ -701,7 +714,7 @@ $1_objdirs      := $$(call unique,$$($1_objdirs))
 #
 # Create object directories and generated directory if we're not cleaning.
 #
-ifeq ($(filter %clean,$(MAKECMDGOALS)),)
+ifeq ($(filter %clean print,$(MAKECMDGOALS)),)
 
 ifneq ($$($1_objdirs),)
 $$($1_objdirs):
@@ -742,6 +755,8 @@ endif
 .PHONY: $1 $1_clean $1_install $1_distclean
 
 $1::
+
+$(abspath $1): $1
 
 $1_clean::
 	$(E) "Cleaning $1"
@@ -797,10 +812,17 @@ $1_targetdir    := $(call bindir,$1)
 
 #
 # Only build the translator with the static configuration
-# and on the default platform.
 #
-$1_configs      := static
-$1_platforms    := $(build-platform)
+$1_configs              := static
+
+# Make sure the static/$(build-platform) are always enabled, the native translators
+# are required to build the sources for foreign architectures
+$(notdir $1)_always_enable_configs      := static
+$(notdir $1)_always_enable_platforms    := $(build-platform)
+
+# However, don't always install the translator for the $(build-platforms) if it's
+# not explicitly listed in $(PLATFORMS)
+$1_install_platforms    := $(call component-platforms,$1,$(notdir $1))
 
 #
 # Defines the target extension and path of the slice translator
@@ -808,7 +830,7 @@ $1_platforms    := $(build-platform)
 # on the translator for slice files.
 #
 $(notdir $1)_targetext  := $$(or $$($(notdir $1)_targetext),$(patsubst slice2%,%,$(or $2,$(notdir $1))))
-$(notdir $1)_path       = $$($(notdir $1)[$$(firstword $$(supported-platforms))-static]_targetdir)/$(notdir $1)
+$(notdir $1)_path       = $$($(notdir $1)[$(build-platform)-static]_targetdir)/$(notdir $1)
 
 projects        += $(project)
 endef
@@ -829,8 +851,8 @@ endef
 #
 # Create the targets for the given projects and then make the project rules.
 #
-make-projects = $(foreach p,$1,$(eval $(call $(or $3,create-project-targets),$p)))\
-                $(foreach p,$1,$(eval $(call $(or $2,make-project),$p)))
+make-projects = $(foreach p,$1,$(eval $(call $(or $(if $($p_type),create-$($p_type)-project-targets),$3,create-project-targets),$p)))\
+                $(foreach p,$1,$(eval $(call $(or $(if $($p_type),make-$($p_type)-project),$2,make-project),$p)))
 
 #
 # $(call depend_cppflags,$1=dependencyfile,$2=targetfile)
@@ -870,9 +892,8 @@ mappingdir      = $(patsubst $(lang_srcdir)/%,%,$(if $(filter-out ../%,$1),$2,$(
 # $(call subconfigs,$1=config)
 subconfigs = $(subst -,$(space),$1)
 
-# $(call var-names,$1=varname,$2=project,$3=component,$4=platform,$5=config)
-var-names = $(if $3,$3[$4-$5]_$1 $3[$4]_$1 $(foreach c,$(call subconfigs,$5),$3[$c]_$1) $3_$1) \
-            $2[$4-$5]_$1 $2[$4]_$1 $(foreach c,$(call subconfigs,$5),$2[$c]_$1) $2_$1
+# $(call var-names,$1=varname,$2=project-or-comp,$3=platform,$4=config)
+var-names  = $(if $2,$2[$3-$4]_$1 $2[$3]_$1 $(foreach c,$(call subconfigs,$4),$2[$c]_$1) $2_$1)
 
 #
 # $(call var-value,$1=varname,$2=project,$3=component,$4=platform,$5=config,$6=fn)
@@ -884,14 +905,18 @@ var-names = $(if $3,$3[$4-$5]_$1 $3[$4]_$1 $(foreach c,$(call subconfigs,$5),$3[
 #
 var-valu1 = $(if $(and $1,$(filter undefined,$(origin $(firstword $1)))),$(call var-valu1,$(wordlist 2,$(words $1),$1)),$($(firstword $1)))
 var-valu2 = $6
-var-value = $(call $(or $6,var-valu2),$1,$3,$4,$5,$3[$4-$5],$(call var-valu1,$(var-names)))
+var-value-names = $(call var-names,$1,$3,$4,$5) $(call var-names,$1,$2,$4,$5) $1
+var-value = $(call $(or $6,var-valu2),$1,$3,$4,$5,$3[$4-$5],$(call var-valu1,$(var-value-names)))
 
 #
 # $(call var-compound,$1=varname,$2=project,$3=component,$4=platform,$5=config,$6=fn)
 # Returns the combination of all the values for the given variable name defined at the
-# project/component /platform/configuration level.
+# project/component/platform/configuration level.
 #
-var-compound    = $(call $(or $6,var-valu2),$1,$3,$4,$5,$3[$4-$5],$(strip $(foreach v,$(var-names),$($v))))
+var-comp-names  = $1 $(call var-names,$1,$2,$4,$5) $(call var-names,$1,$3,$4,$5)
+var-rcomp-names = $(call var-names,$1,$3,$4,$5) $(call var-names,$1,$2,$4,$5) $1
+var-compound    = $(call $(or $6,var-valu2),$1,$3,$4,$5,$3[$4-$5],$(strip $(foreach v,$(var-comp-names),$($v))))
+var-rcompound   = $(call $(or $6,var-valu2),$1,$3,$4,$5,$3[$4-$5],$(strip $(foreach v,$(var-rcomp-names),$($v))))
 
 #
 # Return the given value after applying platform/configuration customization.
@@ -928,11 +953,13 @@ ifeq ($(embedded_runpath_prefix),)
 make-rpath-ldflag = $(if $(filter-out $1,$2),\
                         $(if $(filter /%,$1),\
                             $(call rpath-ldflag,$1),\
-                            $(call rpath-ldflag,$(loader_path)/$(call relpathfromdir,$(patsubst $(lang_srcdir)/%,%,$2))/$1)))
+                            $(call rpath-ldflag,$(loader_path)/$(call relpathfromdir,$(patsubst $(lang_srcdir)/%,%,$2))/$1)),\
+                        $(call rpath-ldflag,$(loader_path)))
 make-shared-dep-ldflags = $(call make-rpath-ldflag,$($1_targetdir),$($2_targetdir)) -L$($1_targetdir) -l$($1_targetname)
 else
 # Add rpath with $(embedded_runpath_prefix) if linking with library installed in different directory.
-make-rpath-ldflag = $(if $(filter-out $1,$2),$(call rpath-ldflag,$(patsubst $(prefix)/%,$(embedded_runpath_prefix)/%,$1)))
+make-rpath-ldflag = $(if $(filter-out $1,$2),\
+                        $(call rpath-ldflag,$(patsubst $(prefix)/%,$(embedded_runpath_prefix)/%,$1)))
 make-shared-dep-ldflags = $(call make-rpath-ldflag,$($1_installdir),$($2_installdir)) -L$($1_targetdir) -l$($1_targetname)
 endif
 else
@@ -996,7 +1023,7 @@ platform-and-config-var = $(strip $(platform-var) $(config-var))
 #
 # Functions to transform a list of source filenames to generated source/header, object or dependency filenames.
 # 
-generated-extensions := ice $(if $(filter yes,$(BISON_FLEX)),y l)
+generated-extensions := ice
 source-extensions    := ice y l cpp m mm
 
 generated-to-source  = $(notdir $(foreach ext,$(generated-extensions),$(patsubst %.$(ext),%.$2,$(filter %.$(ext),$1))))
@@ -1024,7 +1051,7 @@ static_ldflags          += $$(call unique,$$(foreach d,$$(call get-all-deps,$4),
 
 # Shared configuration for shared builds
 shared_projects         = %
-shared_objdir           = $(if $(filter-out program,$($1_target)),shared/pic,shared/nopic)
+shared_objdir           = $(if $(filter-out program,$($1_target)),shared/pic,shared/pie)
 shared_targetrule       = $(if $(filter-out program,$($1_target)),shared)
 shared_cppflags         += $(strip $(call make-lib-cppflags,$4))
 shared_ldflags          += $$(call unique,$$(foreach d,$($4_dependencies),$$(call make-shared-dep-ldflags,$$d,$4)))\

@@ -2,10 +2,13 @@
 #
 # Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
 #
+# This copy of Ice is licensed to you under the terms described in the
+# ICE_LICENSE file included in this distribution.
+#
 # **********************************************************************
 
 supported-platforms             = macosx iphoneos iphonesimulator
-supported-languages             = cpp java python js ruby php objective-c
+supported-languages             = cpp java java-compat python js ruby php objective-c
 
 macosx_ar                       = libtool
 macosx_cppflags                 = -mmacosx-version-min=10.9 -arch x86_64
@@ -29,14 +32,11 @@ iphonesimulator_configs         = %xcodesdk
 iphonesimulator_targetdir       = $(if $(filter %/build,$5),/iphonesimulator)
 
 # If building objects for a shared library, enable fPIC
-shared_cppflags = $(if $(filter-out program,$($1_target)),-fPIC)
+shared_cppflags = $(if $(filter-out program,$($1_target)),-fPIC) -fvisibility=hidden
 
-CXXFLAGS        += -fvisibility=hidden -Wall -Wextra -Wshadow -Wredundant-decls -Wdeprecated -Werror -pthread
-
-ifeq ($(OPTIMIZE),yes)
-    CXXFLAGS	+= -O2 -DNDEBUG
-else
-    CXXFLAGS	+= -g
+cppflags        = -Wall -Wdeprecated -Werror -pthread $(if $(filter yes,$(OPTIMIZE)),-O2 -DNDEBUG,-g)
+ifeq ($(MAXWARN),yes)
+    cppflags	+= -Wextra -Wshadow -Wredundant-decls -Wweak-vtables
 endif
 
 nodeprecatedwarnings-cppflags := -Wno-deprecated-declarations
@@ -65,17 +65,25 @@ mkshlibnametarget = $(mkshlibfilename)
 
 mkpymodulename  = $1.so
 mkrbmodulename  = $1.bundle
-mkphpmodulename = $1.dy
+mkphpmodulename = $1.so
 
 #
 # System libraries
 #
 Ice_system_libs := -ldl
 
+# Frameworks for macos
 IceSSL[macosx]_system_libs := -framework Security -framework CoreFoundation
-IceSSL[iphoneos]_system_libs := -framework ExternalAccessory \
-                                -framework UIKit -framework CFNetwork -framework Security -framework Foundation
+
+# Frameworks requires for iphoneos
+Ice[iphoneos]_system_libs := -framework CFNetwork -framework UIKit -framework Foundation
+IceSSL[iphoneos]_system_libs := -framework Security
+IceIAP[iphoneos]_system_libs := -framework ExternalAccessory
+
+# Same frameworks as iphoneos for iphonesimulator
+Ice[iphonesimulator]_system_libs := $(Ice[iphoneos]_system_libs)
 IceSSL[iphonesimulator]_system_libs := $(IceSSL[iphoneos]_system_libs)
+IceIAP[iphonesimulator]_system_libs := $(IceIAP[iphoneos]_system_libs)
 
 Glacier2CryptPermissionsVerifier[macosx]_system_libs := $(IceSSL[macosx]_system_libs)
 Glacier2CryptPermissionsVerifier[iphoneos]_system_libs := $(IceSSL[iphoneos]_system_libs)
