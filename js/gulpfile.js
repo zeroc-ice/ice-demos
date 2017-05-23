@@ -313,7 +313,7 @@ Object.keys(demos).forEach(
                 pump([
                     gulp.src([path.join(name, "generated", "*.js")]),
                     babel({compact:false}),
-                    gulp.dest(path.join(name, "generated", "es5"))], cb);
+                    gulp.dest(path.join(name, "es5", "generated"))], cb);
             });
 
         gulp.task(demoBabelTask(name), [demoGeneratedBabelTask(name)],
@@ -332,7 +332,7 @@ Object.keys(demos).forEach(
                     pump([
                         gulp.src(path.join(name, "browser", "*.js")),
                         babel({compact:false}),
-                        gulp.dest(path.join(name, "browser", "es5"))], cb);
+                        gulp.dest(path.join(name, "es5", "browser"))], cb);
                 });
             depends.push(demoBrowserBabelTask(name));
         }
