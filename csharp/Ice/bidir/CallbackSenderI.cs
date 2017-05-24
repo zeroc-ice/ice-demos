@@ -39,41 +39,42 @@ class CallbackSenderI : CallbackSenderDisp_
     public void Run()
     {
         int num = 0;
-        while(true)
+        lock(this)
         {
-            List<CallbackReceiverPrx> clients;
-            lock(this)
+            while(!_destroy)
             {
                 System.Threading.Monitor.Wait(this, 2000);
-                if(_destroy)
+
+                if(!_destroy && _clients.Count > 0)
                 {
-                    break;
-                }
+                    ++num;
 
-                clients = new List<CallbackReceiverPrx>(_clients);
-            }
-
-            if(clients.Count > 0)
-            {
-                ++num;
-                foreach(var c in clients)
-                {
-                    try
+                    //
+                    // Invoke callback on all clients; it's safe to do it with _mutex locked
+                    // because Ice guarantees these async invocations never block the calling thread.
+                    //
+                    // The exception callback, if called, is called by an Ice thread, and never the
+                    // calling thread.
+                    foreach(var c in _clients)
                     {
-                        c.callback(num);
-                    }
-                    catch(Ice.LocalException ex)
-                    {
-                        Console.Error.WriteLine("removing client `" +
-                                                Ice.Util.identityToString(c.ice_getIdentity()) + "':\n" + ex);
-
-                        lock(this)
-                        {
-                            _clients.Remove(c);
-                        }
+                        c.callbackAsync(num).ContinueWith(t => {
+                                if(t.Exception != null)
+                                {
+                                    removeClient(c, t.Exception.InnerException);
+                                }
+                            });
                     }
                 }
             }
+        }
+    }
+
+    private void removeClient(CallbackReceiverPrx c, Exception ex)
+    {
+        Console.Error.WriteLine("removing client `" + Ice.Util.identityToString(c.ice_getIdentity()) + "':\n" + ex);
+        lock(this)
+        {
+            _clients.Remove(c);
         }
     }
 

@@ -34,55 +34,51 @@ class CallbackSenderI extends _CallbackSenderDisp implements java.lang.Runnable
     }
 
     @Override
-    public void
+    synchronized public void
     run()
     {
         int num = 0;
-        while(true)
+        while(!_destroy)
         {
-            java.util.List<CallbackReceiverPrx> clients;
-            synchronized(this)
+            try
             {
-                try
-                {
-                    this.wait(2000);
-                }
-                catch(java.lang.InterruptedException ex)
-                {
-                }
-
-                if(_destroy)
-                {
-                    break;
-                }
-
-                clients = new java.util.ArrayList<CallbackReceiverPrx>(_clients);
+                this.wait(2000);
+            }
+            catch(java.lang.InterruptedException ex)
+            {
             }
 
-            if(!clients.isEmpty())
+            if(!_destroy && !_clients.isEmpty())
             {
                 ++num;
 
-                for(CallbackReceiverPrx p : clients)
+                for(CallbackReceiverPrx p : _clients)
                 {
-                    try
-                    {
-                        p.callback(num);
-                    }
-                    catch(Exception ex)
-                    {
-                        System.out.println("removing client `" + Ice.Util.identityToString(p.ice_getIdentity()) +
-                                           "':");
-                        ex.printStackTrace();
-
-                        synchronized(this)
+                    p.begin_callback(num, new Callback_CallbackReceiver_callback() {
+                        @Override
+                        public void
+                        response()
                         {
-                            _clients.remove(p);
                         }
-                    }
+
+                        @Override
+                        public void
+                        exception(Ice.LocalException ex)
+                        {
+                            removeClient(p, ex);
+                        }
+                    });
                 }
             }
         }
+    }
+
+    synchronized private void
+    removeClient(CallbackReceiverPrx client, Exception ex)
+    {
+        System.out.println("removing client `" + Ice.Util.identityToString(client.ice_getIdentity()) + "':");
+        ex.printStackTrace();
+        _clients.remove(client);
     }
 
     private Ice.Communicator _communicator;
