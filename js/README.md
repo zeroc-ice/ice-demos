@@ -44,6 +44,19 @@ Now use gulp to build the demos:
 
     npm run gulp:build
 
+On Windows you need to set the platform and configuration in order to locate
+slice2js, for example if you have build C++ x64 Release mode you can use
+the following command to build
+
+    > npm run gulp:build -- --cppPlatform x64 --cppConfiguration Release
+
+alternativelly you can use the CPP_PLATFORM and CPP_CONFIGURATION enviroment
+variables:
+
+    > set CPP_PLATFORM=x64
+    > set CPP_CONFIGURATION=Debug
+    > npm run gulp:build
+
 ## Running the Node.js JavaScript Demos
 
 Ice provides only client demos in JavaScript since Ice for JavaScript does not support
