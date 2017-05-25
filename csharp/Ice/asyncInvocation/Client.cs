@@ -36,7 +36,7 @@ public class Client
                     try
                     {
                         // Since the divide operation has output parameters, 'Result' gives a DivideResult object here
-                        Console.WriteLine("13 / 5 is {0} with a remainder of {1}", 
+                        Console.WriteLine("13 / 5 is {0} with a remainder of {1}",
                                           t.Result.returnValue, t.Result.remainder);
                     }
                     catch (AggregateException ex)

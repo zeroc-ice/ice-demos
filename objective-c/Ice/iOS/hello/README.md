@@ -30,7 +30,7 @@ sent using the SSL transport. It is not possible to secure datagram
 invocations.
 
 All invocations use asynchronous method invocations (AMI) or batch
-invocations to avoid blocking the GUI thread and ensure a responsive 
+invocations to avoid blocking the GUI thread and ensure a responsive
 user experience.
 
 This demo runs against any hello server, such as the [Objective-C

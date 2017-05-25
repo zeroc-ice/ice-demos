@@ -23,11 +23,11 @@ module Demo
         idempotent int subtract(int x, int subtrahend);
 
         idempotent int divide(int numerator, int denominator, out int remainder) throws DivideByZeroException;
-	
+
         idempotent int square(int x);
 
         idempotent double squareRoot(int x) throws NegativeRootException;
-	
+
         void shutdown();
     }
 }

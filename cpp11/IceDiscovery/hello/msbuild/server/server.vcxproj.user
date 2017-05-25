@@ -15,5 +15,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LocalDebuggerWorkingDirectory>..\..</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+    <LocalDebuggerMergeEnvironment>false</LocalDebuggerMergeEnvironment>
+    <LocalDebuggerEnvironment>PATH=D:\3.7\ice-demos\cpp11\packages\zeroc.ice.v140.3.7.0\build\native\..\..\build\native\bin\$(Platform)\$(Configuration)</LocalDebuggerEnvironment>
   </PropertyGroup>
 </Project>

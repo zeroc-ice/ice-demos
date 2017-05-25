@@ -12,7 +12,7 @@ module Demo
     {
         idempotent void sayHello();
     }
-    
+
     //
     // The session object. This is used to create per-session objects on
     // behalf of the client.

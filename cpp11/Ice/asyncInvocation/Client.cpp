@@ -139,7 +139,7 @@ Client::run(int argc, char* argv[])
     calculator->addAsync(a2.get_future().get(), b2.get_future().get(),
         [&calculator, &hypotenuse](int addResponse)
         {
-            calculator->squareRootAsync(addResponse, 
+            calculator->squareRootAsync(addResponse,
                 [&hypotenuse](double squareRootResponse)
                 {
                     hypotenuse.set_value(squareRootResponse);

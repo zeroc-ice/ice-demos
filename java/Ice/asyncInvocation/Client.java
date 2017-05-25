@@ -122,7 +122,7 @@ public class Client extends com.zeroc.Ice.Application
                 {
                     return result;
                 }).get();
-            
+
             System.out.println("The hypotenuse of a triangle with side lengths of 6 and 8 is " + h);
         }
         catch(ExecutionException ex)
