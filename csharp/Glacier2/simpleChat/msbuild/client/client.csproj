@@ -53,6 +53,7 @@
     </Reference>
     <Reference Include="Ice, Version=3.7.0.0, Culture=neutral, PublicKeyToken=1f998c50fec78381, processorArchitecture=MSIL">
       <HintPath>$(IceAssembliesDir)\Ice.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
     </Reference>
     <Reference Include="IceSSL, Version=3.7.0.0, Culture=neutral, PublicKeyToken=1f998c50fec78381, processorArchitecture=MSIL">
