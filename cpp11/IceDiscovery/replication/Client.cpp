@@ -5,7 +5,6 @@
 // **********************************************************************
 
 #include <Ice/Ice.h>
-#include <IceGrid/IceGrid.h>
 #include <Hello.h>
 
 using namespace std;
@@ -60,10 +59,8 @@ run(const shared_ptr<Ice::Communicator>& communicator)
     //
     // Get the hello proxy. We configure the proxy to not cache the
     // server connection with the proxy and to disable the locator
-    // cache. With this configuration, the IceGrid locator will be
-    // queried for each invocation on the proxy and the invocation
-    // will be sent over the server connection matching the returned
-    // endpoints.
+    // cache. With this configuration, the IceDiscovery locator will be
+    // queried for each invocation on the proxy.
     //
     auto obj = communicator->stringToProxy("hello");
     obj = obj->ice_connectionCached(false);
@@ -72,7 +69,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
     auto hello = Ice::checkedCast<HelloPrx>(obj);
     if(!hello)
     {
-        cerr << "couldn't find a `::Demo::Hello' object." << endl;
+        cerr << "couldn't find object `hello'." << endl;
         return EXIT_FAILURE;
     }
 
