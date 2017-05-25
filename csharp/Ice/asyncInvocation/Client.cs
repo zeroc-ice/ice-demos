@@ -16,7 +16,7 @@ public class Client
         {
             if(args.Length > 0)
             {
-                Console.Error.WriteLine(appName() + ": too many arguments");
+                Console.Error.WriteLine("{0}: too many arguments", appName());
                 return 1;
             }
 
@@ -28,17 +28,16 @@ public class Client
             }
 
             // Calculate 10 - 4 with an asynchronous call which in this case returns a Task<int>
-            var task1 = calculator.subtractAsync(10, 4);
-            Console.WriteLine("10 minus 4 is " + task1.Result);
+            Console.WriteLine("10 minus 4 is {0}", calculator.subtractAsync(10, 4).Result);
 
             // Calculate 13 / 5 asynchronously, and continue it with a lambda that is run when 'divideAsync' completes
-            var task2 = calculator.divideAsync(13, 5).ContinueWith((t) =>
+            calculator.divideAsync(13, 5).ContinueWith(t =>
                 {
                     try
                     {
                         // Since the divide operation has output parameters, 'Result' gives a DivideResult object here
-                        var r = t.Result;
-                        Console.WriteLine("13 / 5 is " + r.returnValue + " with a remainder of " + r.remainder);
+                        Console.WriteLine("13 / 5 is {0} with a remainder of {1}", 
+                                          t.Result.returnValue, t.Result.remainder);
                     }
                     catch (AggregateException ex)
                     {
@@ -52,23 +51,21 @@ public class Client
                             }
                             else
                             {
-                                Console.WriteLine("Request failed: " + e.Message);
+                                Console.WriteLine("Request failed: {0}", e.Message);
                                 // Allow this exception to terminate the program's execution
                                 return false;
                             }
                         });
                     }
-                });
-            // Wait until task2 has finished completely
-            task2.Wait();
+                }).Wait();
 
             // Same with 13 / 0
-            var task3 = calculator.divideAsync(13, 0).ContinueWith((t) =>
+            calculator.divideAsync(13, 0).ContinueWith(t =>
                 {
                     try
                     {
-                        var r = t.Result;
-                        Console.WriteLine("13 / 0 is " + r.returnValue + " with a remainder of " + r.remainder);
+                        Console.WriteLine("13 / 0 is {0} with a remainder of {1}",
+                                          t.Result.returnValue, t.Result.remainder);
                     }
                     catch(AggregateException ex)
                     {
@@ -81,80 +78,73 @@ public class Client
                             }
                             else
                             {
-                                Console.WriteLine("Request failed: " + e.Message);
+                                Console.WriteLine("Request failed: {0}", e.Message);
                                 return false;
                             }
                         });
                     }
-                });
-            task3.Wait();
+                }).Wait();
 
+            //
             // Have the calculator find the hypotenuse of a triangle with side lengths of 6 and 8
-            // using the Pythagorean theorem and chained asynchronous tasks through TaskFactory
+            // using the Pythagorean theorem and chained asynchronous tasks.
+            //
             try
             {
-                TaskFactory taskFactory = new TaskFactory();
-                var side1 = calculator.squareAsync(6);
-                var side2 = calculator.squareAsync(8);
-                var sum = taskFactory.ContinueWhenAll(new Task[] { side1, side2 },
-                                                tasks => calculator.addAsync(side1.Result, side2.Result));
-                var hypotenuse = sum.ContinueWith(
-                                                sumAnswer => calculator.squareRootAsync(sumAnswer.Result.Result));
-                Console.WriteLine("The hypotenuse of a triangle with side lengths of 6 and 8 is "
-                                                                                      + hypotenuse.Result.Result);
+                var h = Task.WhenAll(calculator.squareAsync(6), calculator.squareAsync(8)).ContinueWith(
+                    t => calculator.addAsync(t.Result[0], t.Result[1])).Unwrap().ContinueWith(
+                    t => calculator.squareRootAsync(t.Result)).Unwrap().Result;
+
+                Console.WriteLine("The hypotenuse of a triangle with side lengths of 6 and 8 is {0}", h);
             }
             catch(NegativeRootException)
             {
                 Console.WriteLine("You cannot take the square root of a negative number");
             }
 
-            doSubtractAsync(calculator, 10, 4).Wait();
+            //
+            // Do the same calculations using async functions and await
+            //
+            Task.Run(async () =>
+                {
+                    Console.WriteLine("10 minus 4 is {0}", await calculator.subtractAsync(10, 4));
 
-            doDivideAsync(calculator, 13, 5).Wait();
+                    try
+                    {
+                        var r = await calculator.divideAsync(13, 5);
+                        Console.WriteLine("13 / 5  is {0} with a remainder of {1}", r.returnValue, r.remainder);
+                    }
+                    catch (Demo.DivideByZeroException)
+                    {
+                        Console.WriteLine("You cannot divide by 0");
+                    }
 
-            doDivideAsync(calculator, 13, 0).Wait();
+                    try
+                    {
+                        var r = await calculator.divideAsync(13, 0);
+                        Console.WriteLine("13 / 0  is {0} with a remainder of {1}", r.returnValue, r.remainder);
+                    }
+                    catch (Demo.DivideByZeroException)
+                    {
+                        Console.WriteLine("You cannot divide by 0");
+                    }
 
-            doHypotenuseAsync(calculator, 6, 8).Wait();
+                    try
+                    {
+                        // This returns an array with the results from each operation
+                        var squares = await Task.WhenAll(calculator.squareAsync(6), calculator.squareAsync(8));
+                        var h = await calculator.squareRootAsync(await calculator.addAsync(squares[0], squares[1]));
+                        Console.WriteLine("The hypotenuse of a triangle with side lengths of 6 and 8 is {0}", h);
+                    }
+                    catch (NegativeRootException)
+                    {
+                        Console.WriteLine("You Cannot take the square root of a negative number");
+                    }
+
+                }).Wait();
 
             calculator.shutdown();
             return 0;
-        }
-
-        public async Task doSubtractAsync(CalculatorPrx calculator, int x, int subtrahend)
-        {
-            var result = await calculator.subtractAsync(x, subtrahend);
-            Console.WriteLine(x + " minus " + subtrahend + " is " + result);
-        }
-
-        public async Task doDivideAsync(CalculatorPrx calculator, int numerator, int denominator)
-        {
-            try
-            {
-                var result = await calculator.divideAsync(numerator, denominator);
-                Console.WriteLine(numerator + " / " + denominator + " is " + result.returnValue +
-                                  " with a remainder of " + result.remainder);
-            }
-            catch(Demo.DivideByZeroException)
-            {
-                Console.WriteLine("You cannot divide by 0");
-            }
-        }
-
-        public async Task doHypotenuseAsync(CalculatorPrx calculator, int x, int y)
-        {
-            try
-            {
-                // This returns an array with the results from each operation
-                var squareResult = await Task.WhenAll(calculator.squareAsync(x), calculator.squareAsync(y));
-                var sumTask = calculator.addAsync(squareResult[0], squareResult[1]);
-                var hypotenuseTask = calculator.squareRootAsync(await sumTask);
-                Console.WriteLine("The hypotenuse of a triangle with side lengths of " + x +
-                                  " and " + y + " is " + (await hypotenuseTask));
-            }
-            catch(Demo.NegativeRootException)
-            {
-                Console.WriteLine("You Cannot take the square root of a negative number");
-            }
         }
     }
 

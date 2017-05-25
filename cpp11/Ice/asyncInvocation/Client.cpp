@@ -4,9 +4,10 @@
 //
 // **********************************************************************
 
-#include <mutex>
-#include <condition_variable>
 #include <Ice/Ice.h>
+
+#include <tuple>
+
 #include <Calculator.h>
 
 using namespace std;
@@ -49,8 +50,10 @@ Client::run(int argc, char* argv[])
     // Calculate 13 / 5
     auto fut2 = calculator->divideAsync(13, 5);
     // Since the 'divide' operation has output parameters, the result of 'get' is a struct
-    auto result = fut2.get();
-    cout << "13 / 5 is " << result.returnValue << " with a remainder of " << result.remainder << endl;
+    {
+        auto result = fut2.get();
+        cout << "13 / 5 is " << result.returnValue << " with a remainder of " << result.remainder << endl;
+    }
 
     //same with 13 / 0, which throws an exception
     try
@@ -79,138 +82,70 @@ Client::run(int argc, char* argv[])
         cout << "You cannot take the square root of a negative number";
     }
 
-    mutex mx;
-    condition_variable cv;
-    bool finished = false;
-
     // Calculate 10 - 4 with callback-based async operations which takes 'std::function's as callback parameters, the first
     // of which is called when the operation is completed
-    calculator->subtractAsync(10, 4,
-                                [&mx, &cv, &finished](int answer)
-                                {
-                                    cout << "10 minus 4 is " << answer << endl;
-                                    //notify that the operation has finished
-                                    lock_guard<mutex> lock(mx);
-                                    finished = true;
-                                    cv.notify_one();
-                                });
-    // Wait to ensure the operation has completed
-    unique_lock<mutex> lock(mx);
-    cv.wait(lock, [&finished] { return finished; });
-
-    finished = false;
-    // Same with 13 / 0:
-    calculator->divideAsync(13, 0,
-                            [&mx, &cv, &finished](int answer, int remainder)
-                            {
-                                cout << "13 / 0 is " << answer << " with a remainder of " << remainder << endl;
-
-                                lock_guard<mutex> lock(mx);
-                                finished = true;
-                                cv.notify_one();
-                            },
-                            [&mx, &cv, &finished](exception_ptr eptr)
-                            {
-                                try
-                                {
-                                    rethrow_exception(eptr);
-                                }
-                                catch (const Demo::DivideByZeroException&)
-                                {
-                                    cout << "You cannot divide by 0" << endl;
-                                }
-
-                                lock_guard<mutex> lock(mx);
-                                finished = true;
-                                cv.notify_one();
-                            });
-    cv.wait(lock, [&finished] { return finished; });
-    
-    // Helper class that computes the hypotenuse using chained asynchronous calls with callbacks
-    class HypotenuseHelper
     {
-    public:
-        HypotenuseHelper(const shared_ptr<Demo::CalculatorPrx> calculator) :
-			_calculator(calculator)
-        {
-        }
-
-        void findHypotenuse(int x, int y)
-        {
-            _finished = false;
-            _otherOperationFinished = false;
-            _calculator->squareAsync(x,
-                                    [this](int answer)
+        promise<int> p;
+        calculator->subtractAsync(10, 4,
+                                    [&p](int answer)
                                     {
-                                        this->squareResponse(answer);
+                                        p.set_value(answer);
                                     });
-            _calculator->squareAsync(y,
-                                    [this](int answer)
-                                    {
-                                        this->squareResponse(answer);
-                                    });
-        }
+        // Wait for the operation result using a future
+        cout << "10 minus 4 is " << p.get_future().get() << endl;
+    }
 
-        double getHypotenuse()
+    // Same with 13 / 0:
+    {
+        promise<tuple<int, int>> p;
+        calculator->divideAsync(13, 0,
+                                [&p](int answer, int remainder)
+                                {
+                                    assert(false);
+                                    p.set_value(make_tuple(answer, remainder));
+                                },
+                                [&p](exception_ptr ex)
+                                {
+                                    p.set_exception(ex);
+                                });
+        try
         {
-            unique_lock<mutex> lock(_mutex);
-                        _cv.wait(lock, [this] { return this->_finished; });
-            return _hypotenuse;
+            auto result = p.get_future().get();
+            cout << "13 / 0 is " << get<0>(result) << " with a remainder of " << get<1>(result) << endl;
         }
-
-    private:
-
-        void squareResponse(int answer)
+        catch(const Demo::DivideByZeroException&)
         {
-            lock_guard<mutex> lock(_mutex);
-            if(_otherOperationFinished)
-            {
-                _calculator->addAsync(answer, _otherAnswer,
-                                    [this](int sum)
-                                    {
-                                        this->addResponse(sum);
-                                    });
-            }
-            else
-            {
-                _otherOperationFinished = true;
-                _otherAnswer = answer;
-            }
+            cout << "You cannot divide by 0" << endl;
         }
-
-        void addResponse(int sum)
-        {
-            _calculator->squareRootAsync(sum,
-                                        [this](double hypotenuse)
-                                        {
-                                            this->squareRootResponse(hypotenuse);
-                                        });
-        }
-
-        void squareRootResponse(double hypotenuse)
-        {
-            _otherOperationFinished = false;
-            _hypotenuse = hypotenuse;
-            _finished = true;
-            lock_guard<mutex> lock(_mutex);
-                        _cv.notify_one();
-        }
-
-        shared_ptr<Demo::CalculatorPrx> _calculator;
-        mutex _mutex;
-        condition_variable _cv;
-        bool _otherOperationFinished;
-        int _otherAnswer;
-        double _hypotenuse;
-        bool _finished;
-    };
+    }
 
     // Calculate the hypotenuse of a right triangle with side lengths of 6 and 8 using the Pythagorean Theorem
-    // and chained callbacks in the HypotenuseHelper class
-    HypotenuseHelper helper(calculator);
-    helper.findHypotenuse(6, 8);
-    auto hypotenuseAnswer = helper.getHypotenuse();
-    cout << "The hypotenuse of a triangle with side lengths of 6 and 8 is " << hypotenuseAnswer << endl;
+    // and chained callbacks
+    promise<int> a2;
+    calculator->squareAsync(6,
+        [&a2](int answer)
+        {
+            a2.set_value(answer);
+        });
+
+    promise<int> b2;
+    calculator->squareAsync(8,
+        [&b2](int answer)
+        {
+            b2.set_value(answer);
+        });
+
+    promise<double> hypotenuse;
+    calculator->addAsync(a2.get_future().get(), b2.get_future().get(),
+        [&calculator, &hypotenuse](int addResponse)
+        {
+            calculator->squareRootAsync(addResponse, 
+                [&hypotenuse](double squareRootResponse)
+                {
+                    hypotenuse.set_value(squareRootResponse);
+                });
+        });
+    cout << "The hypotenuse of a triangle with side lengths of 6 and 8 is " << hypotenuse.get_future().get() << endl;
 
     calculator->shutdown();
     return EXIT_SUCCESS;

@@ -4,9 +4,9 @@
 //
 // **********************************************************************
 
-#include <math.h>
 #include <Ice/Ice.h>
 #include <CalculatorI.h>
+#include <math.h>
 
 using namespace std;
 

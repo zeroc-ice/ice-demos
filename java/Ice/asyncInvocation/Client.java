@@ -40,32 +40,28 @@ public class Client extends com.zeroc.Ice.Application
             exception.printStackTrace();
         }
 
-        // Calculate 13 / 5 asynchronously
-        CompletableFuture<Calculator.DivideResult> result1 = calculator.divideAsync(13, 5);
-
-        // Pass a lambda to run when the future completes
-        result1.whenComplete((completed, exception) ->
-                            {
-                                if(exception != null)
-                                {
-                                    if(exception instanceof DivideByZeroException)
-                                    {
-                                        System.out.println("You cannot divide by 0");
-                                    }
-                                    else
-                                    {
-                                        exception.printStackTrace();
-                                    }
-                                }
-                                else
-                                {
-                                    System.out.println("13 / 5 is " + completed.returnValue + " with a remainder of " + completed.remainder);
-                                }
-                            });
-        // Wait to ensure result1 has completed
+        // Calculate 13 / 5 asynchronously using a lambda to process the result
         try
         {
-            result1.join();
+            calculator.divideAsync(13, 5).whenComplete(
+                (completed, exception) ->
+                {
+                    if(exception != null)
+                    {
+                        if(exception instanceof DivideByZeroException)
+                        {
+                            System.out.println("You cannot divide by 0");
+                        }
+                        else
+                        {
+                            exception.printStackTrace();
+                        }
+                    }
+                    else
+                    {
+                        System.out.println("13 / 5 is " + completed.returnValue + " with a remainder of " + completed.remainder);
+                    }
+                }).join();
         }
         catch(CompletionException e)
         {
@@ -73,30 +69,27 @@ public class Client extends com.zeroc.Ice.Application
         }
 
         // Same with divide by 0:
-        CompletableFuture<Calculator.DivideResult> result2 = calculator.divideAsync(13, 0);
-        result2.whenComplete((completed, exception) ->
-                             {
-                                 if(exception != null)
-                                 {
-                                     if(exception instanceof DivideByZeroException)
-                                     {
-                                         System.out.println("You cannot divide by 0");
-                                     }
-                                     else
-                                     {
-                                         exception.printStackTrace();
-                                     }
-                                 }
-                                 else
-                                 {
-                                     System.out.println("13 / 0 is " + completed.returnValue + " with a remainder of " + completed.remainder);
-                                 }
-                             });
-        
-        // Wait to ensure result2 has completed
         try
         {
-            result2.join();
+            calculator.divideAsync(13, 0).whenComplete(
+                (completed, exception) ->
+                {
+                    if(exception != null)
+                    {
+                        if(exception instanceof DivideByZeroException)
+                        {
+                            System.out.println("You cannot divide by 0");
+                        }
+                        else
+                        {
+                            exception.printStackTrace();
+                        }
+                    }
+                    else
+                    {
+                        System.out.println("13 / 0 is " + completed.returnValue + " with a remainder of " + completed.remainder);
+                    }
+                }).join();
         }
         catch(CompletionException e)
         {
@@ -109,34 +102,42 @@ public class Client extends com.zeroc.Ice.Application
         {
             CompletableFuture<Integer> side1 = calculator.squareAsync(6);
             CompletableFuture<Integer> side2 = calculator.squareAsync(8);
-            CompletableFuture<Double> hypotenuse = side1.thenCombineAsync(side2, calculator::addAsync).thenApply(result -> 
-                                                        {
-                                                            try
-                                                            {
-                                                                return calculator.squareRootAsync(result.get()).get();
-                                                            }
-                                                            catch(ExecutionException|InterruptedException e)
-                                                            {
-                                                                // Propagate the exception
-                                                                throw new CompletionException(e);
-                                                            }
-                                                        });
-            System.out.println("The hypotenuse of a triangle with side lengths of 6 and 8 is " + hypotenuse.get());
+
+            double h = CompletableFuture.allOf(side1, side2).thenComposeAsync((result) ->
+                {
+                    try
+                    {
+                        return calculator.addAsync(side1.get(), side2.get());
+                    }
+                    catch(Exception ex)
+                    {
+                        throw new CompletionException(ex);
+                    }
+                }
+            ).thenComposeAsync((result) ->
+                {
+                    return calculator.squareRootAsync(result);
+                }
+            ).handle((result, throwable) ->
+                {
+                    return result;
+                }).get();
+            
+            System.out.println("The hypotenuse of a triangle with side lengths of 6 and 8 is " + h);
         }
-        catch(ExecutionException exception)
+        catch(ExecutionException ex)
         {
-            if(exception.getCause() instanceof NegativeRootException)
+            if(ex.getCause() instanceof NegativeRootException)
             {
                 System.out.println("You cannot take the square root of negative numbers");
             }
             else
             {
-                exception.printStackTrace();
+                ex.printStackTrace();
             }
         }
-        catch(InterruptedException exception)
+        catch(InterruptedException ex)
         {
-            // Ignored
         }
 
         calculator.shutdown();

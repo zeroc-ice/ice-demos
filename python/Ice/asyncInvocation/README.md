@@ -4,8 +4,8 @@ call for the calculations without blocking.
 
 To run the demo, first start the server:
 
-        python Server.py
+    python Server.py
 
 In a second window, start the client:
 
-        python Client.py
+    python Client.py

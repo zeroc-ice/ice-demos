@@ -23,8 +23,7 @@ class Client(Ice.Application):
             return 1
         
         # Calculate 10 - 4 with an asynchronous call that returns a future object
-        fut1 = calculator.subtractAsync(10, 4)
-        print("10 minus 4 is ", fut1.result())
+        print("10 minus 4 is ", calculator.subtractAsync(10, 4).result())
         
         def handleDivideFuture(future):
             try:
