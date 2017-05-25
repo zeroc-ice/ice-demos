@@ -8,11 +8,9 @@
 
 module Demo
 {
-
-interface Context
-{
-    idempotent void call();
-    void shutdown();
-}
-
+    interface Context
+    {
+        idempotent void call();
+        void shutdown();
+    }
 }

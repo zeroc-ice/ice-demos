@@ -10,11 +10,9 @@
 
 module Demo
 {
-
-interface Props
-{
-    idempotent Ice::PropertyDict getChanges();
-    void shutdown();
-}
-
+    interface Props
+    {
+        idempotent Ice::PropertyDict getChanges();
+        void shutdown();
+    }s
 }

@@ -8,15 +8,13 @@
 
 module Demo
 {
+    sequence<byte> ByteSeq;
+    const int ByteSeqSize = 500000;
 
-sequence<byte> ByteSeq;
-const int ByteSeqSize = 500000;
+    interface Throughput
+    {
+        ["marshaled-result", "cpp:array"] ByteSeq echoByteSeq(["cpp:array"] ByteSeq seq);
 
-interface Throughput
-{
-    ["marshaled-result", "cpp:array"] ByteSeq echoByteSeq(["cpp:array"] ByteSeq seq);
-
-    void shutdown();
-}
-
+        void shutdown();
+    }
 }

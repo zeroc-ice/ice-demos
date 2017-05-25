@@ -8,10 +8,8 @@
 
 module Demo
 {
-
-interface Hello
-{
-    idempotent void sayHello();
-}
-
+    interface Hello
+    {
+        idempotent void sayHello();
+    }
 }

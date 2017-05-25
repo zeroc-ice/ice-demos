@@ -8,13 +8,11 @@
 
 module Demo
 {
+    ["java:serializable:Demo.MyGreeting"] sequence<byte> Greeting;
 
-["java:serializable:Demo.MyGreeting"] sequence<byte> Greeting;
-
-interface Greet
-{
-    idempotent void sendGreeting(Greeting g);
-    void shutdown();
-}
-
+    interface Greet
+    {
+        idempotent void sendGreeting(Greeting g);
+        void shutdown();
+    }
 }

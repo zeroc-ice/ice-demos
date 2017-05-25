@@ -8,11 +8,9 @@
 
 module Demo
 {
-
-interface TaskManager
-{
-    void run(int id);
-    void shutdown();
-}
-
+    interface TaskManager
+    {
+        void run(int id);
+        void shutdown();
+    }
 }

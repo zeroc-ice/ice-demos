@@ -10,7 +10,6 @@ import Demo.*;
 
 public class CalculatorI implements Calculator
 {
-
     @Override
     public int add(int x, int y, Current current)
     {

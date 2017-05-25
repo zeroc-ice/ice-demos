@@ -8,9 +8,7 @@
 
 module Demo
 {
-
-interface Ping
-{
-}
-
+    interface Ping
+    {
+    }
 }

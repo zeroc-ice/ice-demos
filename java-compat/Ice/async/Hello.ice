@@ -8,17 +8,15 @@
 
 module Demo
 {
+    exception RequestCanceledException
+    {
+    }
 
-exception RequestCanceledException
-{
-}
+    interface Hello
+    {
+        ["amd"] idempotent void sayHello(int delay)
+            throws RequestCanceledException;
 
-interface Hello
-{
-    ["amd"] idempotent void sayHello(int delay)
-        throws RequestCanceledException;
-
-    void shutdown();
-}
-
+        void shutdown();
+    }
 }

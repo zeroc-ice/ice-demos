@@ -10,16 +10,14 @@
 
 module Demo
 {
+    interface ChatCallback
+    {
+        void message(string data);
+    }
 
-interface ChatCallback
-{
-    void message(string data);
-}
-
-interface ChatSession extends Glacier2::Session
-{
-    void setCallback(ChatCallback* callback);
-    void say(string data);
-}
-
+    interface ChatSession extends Glacier2::Session
+    {
+        void setCallback(ChatCallback* callback);
+        void say(string data);
+    }
 }

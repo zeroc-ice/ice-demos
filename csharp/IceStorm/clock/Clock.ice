@@ -8,10 +8,8 @@
 
 module Demo
 {
-
-interface Clock
-{
-    void tick(string time);
-}
-
+    interface Clock
+    {
+        void tick(string time);
+    }
 }
