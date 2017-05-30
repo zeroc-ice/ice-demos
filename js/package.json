@@ -40,5 +40,15 @@
     "pump": "^1.0.2",
     "uglify-js": "github:mishoo/UglifyJS2#harmony-v2.8.22",
     "vinyl-paths": "^2.1.0"
+  },
+  "scripts": {
+    "build": "gulp",
+    "dist": "gulp dist",
+    "clean": "gulp clean",
+    "test": "gulp test",
+    "lint": "gulp lint",
+    "test:browser": "gulp test:browser",
+    "test:browser-es5": "gulp test:browser-es5",
+    "test:node": "gulp test:node"
   }
 }
