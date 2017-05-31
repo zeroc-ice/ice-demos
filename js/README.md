@@ -42,20 +42,20 @@ and pass `--only=dev` argument to `npm install`:
 
 Now use gulp to build the demos:
 
-    npm run gulp:build
+    npm run build
 
 On Windows you need to set the platform and configuration in order to locate
 slice2js, for example if you have build C++ x64 Release mode you can use
 the following command to build
 
-    > npm run gulp:build -- --cppPlatform x64 --cppConfiguration Release
+    > npm run build -- --cppPlatform x64 --cppConfiguration Release
 
 alternativelly you can use the CPP_PLATFORM and CPP_CONFIGURATION enviroment
 variables:
 
     > set CPP_PLATFORM=x64
     > set CPP_CONFIGURATION=Debug
-    > npm run gulp:build
+    > npm run build
 
 ## Running the Node.js JavaScript Demos
 
@@ -80,7 +80,7 @@ full server-side activities. The browser clients require an HTTP server that sup
 WebSocket connections. For your convenience, this distribution includes a Node.js
 HTTP server pre-configured for the demos. Open another terminal window and run:
 
-    > npm run gulp:run
+    > npm run run
 
 This will load http://127.0.0.1:8080/index.html in the default browser. From this page
 you can select the client that you want to run.
