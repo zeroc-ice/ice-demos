@@ -128,14 +128,3 @@ function checkGenerated(files)
                 });
         });
 }
-
-//
-// Browser sync doesn't work well with HTTPS as it open WS insecure socket and some
-// browsers refuse that when document has been loaded from HTTPS.
-//
-if(document.location.protocol === "http:")
-{
-    var script = document.createElement("script");
-    script.src = "//" + location.hostname + ":3000/browser-sync/browser-sync-client.js";
-    $("body").append(script);
-}

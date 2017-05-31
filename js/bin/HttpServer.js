@@ -6,6 +6,7 @@
 
 var crypto    = require("crypto");
 var fs        = require("fs");
+var hogan     = require("hogan.js");
 var http      = require("http");
 var httpProxy = require("http-proxy");
 var https     = require("https");
@@ -45,6 +46,26 @@ function Init()
             return f + ".map";
         });
 
+    var DemoData = {
+        cssDeps: [
+            "https://cdnjs.cloudflare.com/ajax/libs/animo.js/1.0.3/animate-animo.min.css",
+            "https://cdnjs.cloudflare.com/ajax/libs/foundation/5.3.3/css/foundation.min.css",
+            "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/vs.min.css",
+            "https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/7.0.10/jquery.nouislider.min.css"
+        ],
+        jsDeps: [
+            "https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js",
+            "https://cdnjs.cloudflare.com/ajax/libs/animo.js/1.0.3/animo.min.js",
+            "https://cdnjs.cloudflare.com/ajax/libs/foundation/5.3.3/js/foundation.min.js",
+            "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js",
+            "https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js",
+            "https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/7.0.10/jquery.nouislider.all.min.js",
+            "https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js",
+            "https://cdnjs.cloudflare.com/ajax/libs/URI.js/1.18.10/URI.min.js",
+            "http://spin.js.org/jquery.spin.js"
+        ]
+    }
+
     var HttpServer = function(host, ports)
     {
         this._host = host;
@@ -59,6 +80,39 @@ function Init()
         var iceLib = libraries.indexOf(req.url.pathname) !== -1;
         var iceLibMap = libraryMaps.indexOf(req.url.pathname) !== -1;
         filePath = path.resolve(path.join(this._basePath, req.url.pathname));
+
+
+        if(req.url.pathname.match("/index\.html$"))
+        {
+
+             fs.stat(filePath,
+                    function(err, stats)
+                    {
+                        if(err)
+                        {
+                            if(err.code === "ENOENT")
+                            {
+                                res.writeHead(404);
+                                res.end("404 Page Not Found");
+                                console.log("HTTP/404 (Page Not Found)" + req.method + " " + req.url.pathname + " -> " + filePath);
+                            }
+                            else
+                            {
+                                res.writeHead(500);
+                                res.end("500 Internal Server Error");
+                                console.log("HTTP/500 (Internal Server Error) " + req.method + " " + req.url.pathname + " -> " +
+                                            filePath);
+                            }
+                        }
+                        else
+                        {
+                            var template = hogan.compile(fs.readFileSync(filePath, "utf8"));
+                            res.writeHead(200, {"Content-Type": "text/html"});
+                            res.end(template.render(DemoData));
+                        }
+                    });
+            return
+        }
 
         //
         // If OPTIMIZE is set resolve Ice libraries to the corresponding minified

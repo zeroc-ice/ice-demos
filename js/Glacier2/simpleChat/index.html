@@ -4,10 +4,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Simple Chat Demo | Ice for JavaScript</title>
-    <!-- Bundle with all the stylesheets used to build the user interface,
-         see assets/Makefile in your distribution for details -->
-    <link rel="stylesheet" type="text/css" href="../../../assets/generated/common.css" />
     <link rel="icon" type="image/x-icon" href="../../../assets/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="../../../assets/common.css" />
+    {{#cssDeps}}
+    <link rel="stylesheet" type="text/css" href="{{.}}"/>
+    {{/cssDeps}}
   </head>
   <body>
     <!-- Header section that contains title and navigation bar -->
@@ -170,9 +171,11 @@
             <h6>Copyright &copy; 2003-2017 ZeroC, Inc. All rights reserved.</h6>
         </div>
     </section>
-    <!-- Bundle with all the scripts used to build the user interface,
-         see assets/Makefile in your distribution for details -->
-    <script type="text/javascript" src="../../../assets/generated/common.min.js"></script>
+    <!-- Common dependencies -->
+    {{#jsDeps}}
+    <script src="{{.}}"></script>
+    {{/jsDeps}}
+    <script type="text/javascript" src="../../../assets/common.js"></script>
     <!-- Babel dependencies -->
     <script type="text/javascript" src="../../../node_modules/babel-polyfill/dist/polyfill.js"></script>
     <script type="text/javascript" src="../../../node_modules/regenerator-runtime/runtime.js"></script>

@@ -5,8 +5,6 @@
 // **********************************************************************
 
 var babel       = require("gulp-babel"),
-    bower       = require("bower"),
-    browserSync = require("browser-sync"),
     concat      = require("gulp-concat"),
     del         = require("del"),
     extreplace  = require("gulp-ext-replace"),
@@ -87,41 +85,17 @@ function slice2js(options)
     return iceBuilder.compile(defaults);
 }
 
-var common =
-{
-    "scripts":
-    [
-        "bower_components/foundation/js/vendor/modernizr.js",
-        "bower_components/foundation/js/vendor/jquery.js",
-        "bower_components/foundation/js/foundation.min.js",
-        "bower_components/nouislider/distribute/jquery.nouislider.all.js",
-        "bower_components/animo.js/animo.js",
-        "bower_components/spin.js/spin.js",
-        "bower_components/spin.js/jquery.spin.js",
-        "bower_components/highlightjs/highlight.pack.js",
-        "assets/icejs.js"
-    ],
-    "styles":
-    [
-        "bower_components/foundation/css/foundation.css",
-        "bower_components/animo.js/animate-animo.css",
-        "bower_components/highlightjs/styles/vs.css",
-        "bower_components/nouislider/distribute/jquery.nouislider.min.css",
-        "assets/icejs.css"
-    ]
-};
-
 function getIceLibs(es5)
 {
-    return  path.join(ICE_HOME ? path.join(ICE_HOME, 'js', 'lib') : path.join('bower_components', 'ice', 'lib'),
+    return  path.join(ICE_HOME ? path.join(ICE_HOME, 'js', 'lib') : path.join('node_modules', 'ice', 'lib'),
                       es5 ? 'es5/*' : '*');
 }
 
 //
-// Deploy Ice for JavaScript browser libraries from bower or from ICE_HOME depending
+// Deploy Ice for JavaScript browser libraries from ice or from ICE_HOME depending
 // on whenever or not ICE_HOME is set.
 //
-gulp.task("dist:libs", ["npm", "bower"],
+gulp.task("dist:libs", ["npm"],
     function(cb)
     {
         pump([
@@ -130,7 +104,7 @@ gulp.task("dist:libs", ["npm", "bower"],
             gulp.dest("lib")], cb);
     });
 
-gulp.task("dist:libs-es5", ["npm", "bower"],
+gulp.task("dist:libs-es5", ["npm"],
     function(cb)
     {
         pump([
@@ -152,7 +126,7 @@ gulp.task("dist:clean", [],
 gulp.task("npm", [],
     function(cb)
     {
-        npm.load({loglevel: 'silent'}, function(err, npm) {
+        npm.load({loglevel: 'silent', progress: false}, function(err, npm) {
             if(ICE_HOME)
             {
                 npm.commands.install([path.join(ICE_HOME, 'js')], function(err, data)
@@ -165,43 +139,6 @@ gulp.task("npm", [],
                 cb();
             }
         });
-    });
-
-gulp.task("bower", ["npm"],
-    function(cb)
-    {
-        bower.commands.install().on("end", function(){ cb(); });
-    });
-
-gulp.task("common:js", ["bower"],
-    function(cb)
-    {
-        pump([
-            gulp.src(common.scripts),
-            newer("assets/generated/common.min.js"),
-            concat("common.min.js"),
-            minifier({compress:false}, uglify),
-            gulp.dest("assets/generated"),
-            gzip(),
-            gulp.dest("assets/generated")], cb);
-    });
-
-gulp.task("common:css", ["bower"],
-    function(cb){
-        pump([
-            gulp.src(common.styles),
-            newer("assets/generated/common.css"),
-            concat("common.css"),
-            minifycss(),
-            gulp.dest("assets/generated"),
-            gzip(),
-            gulp.dest("assets/generated")], cb);
-    });
-
-
-gulp.task("common:clean", [],
-    function(){
-        del(["assets/generated/common.css", "assets/generated/common.min.js"]);
     });
 
 var demos =
@@ -291,7 +228,7 @@ Object.keys(demos).forEach(
                     gulp.dest(path.join(name, "generated"))], cb);
             });
 
-        gulp.task(minDemoTaskName(name), [demoTaskName(name), "dist:libs", "common:css", "common:js"],
+        gulp.task(minDemoTaskName(name), [demoTaskName(name), "dist:libs"],
             function(cb){
                 pump([gulp.src(demo.srcs),
                     newer(path.join(demo.dest, "Client.min.js")),
@@ -369,7 +306,6 @@ gulp.task("lint:js", ["build"],
                       "!config/*.js",
                       "!lib/*.js",
                       "!**/*.min.js",
-                      "!bower_components/**/*.js",
                       "!node_modules/**/*.js"]),
             jshint(),
             jshint.reporter("default")], cb);
@@ -385,5 +321,5 @@ gulp.task("run", ["demo:build", "dist:libs"],
         HttpServer();
         return gulp.src("").pipe(open({uri: "http://127.0.0.1:8080/index.html"}));
     });
-gulp.task("clean", ["demo:clean", "common:clean", "dist:clean"]);
+gulp.task("clean", ["demo:clean", "dist:clean"]);
 gulp.task("default", ["build"]);
