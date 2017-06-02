@@ -181,8 +181,8 @@ namespace Ice.wpf.client
             {
                 if(!deliveryModeIsBatch())
                 {
-                    await _helloPrx.shutdownAsync();
                     status.Content = "Sending request";
+                    await _helloPrx.shutdownAsync();
                     status.Content = "Ready";
                 }
                 else
@@ -198,16 +198,22 @@ namespace Ice.wpf.client
             }
         }
 
-        private void flush_Click(object sender, RoutedEventArgs e)
+        private async void flush_Click(object sender, RoutedEventArgs e)
         {
             if(_helloPrx == null)
             {
                 return;
             }
-            _helloPrx.begin_ice_flushBatchRequests().whenCompleted(handleException);
-
-            flush.IsEnabled = false;
-            status.Content = "Flushed batch requests";
+            try
+            {
+                await _helloPrx.ice_flushBatchRequestsAsync();
+                flush.IsEnabled = false;
+                status.Content = "Flushed batch requests";
+            }
+            catch(System.Exception ex)
+            {
+                handleException(ex);
+            }
         }
 
         void
