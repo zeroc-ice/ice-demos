@@ -473,7 +473,7 @@ public class Client extends JFrame
                 final DeliveryMode mode = _deliveryMode;
                 java.util.concurrent.CompletableFuture<Void> f = _helloPrx.sayHelloAsync(delay);
                 final Holder<Boolean> response = new Holder<Boolean>(false);
-                f.whenComplete((result, ex) ->
+                f.whenCompleteAsync((result, ex) ->
                 {
                     if(ex == null)
                     {
@@ -487,7 +487,8 @@ public class Client extends JFrame
                         response.value = true;
                         handleException(ex);
                     }
-                });
+                },
+                _helloPrx.ice_executor());
                 com.zeroc.Ice.Util.getInvocationFuture(f).whenSent((ss, ex) ->
                 {
                     if(ex == null)
@@ -531,7 +532,7 @@ public class Client extends JFrame
                 final DeliveryMode mode = _deliveryMode;
                 final Holder<Boolean> response = new Holder<Boolean>(false);
                 java.util.concurrent.CompletableFuture<Void> f = _helloPrx.shutdownAsync();
-                f.whenComplete((result, ex) ->
+                f.whenCompleteAsync((result, ex) ->
                 {
                     if(ex == null)
                     {
@@ -543,7 +544,8 @@ public class Client extends JFrame
                         response.value = true;
                         handleException(ex);
                     }
-                });
+                },
+                _helloPrx.ice_executor());
                 com.zeroc.Ice.Util.getInvocationFuture(f).whenSent((ss, ex) ->
                 {
                     if(ex == null)
@@ -579,13 +581,14 @@ public class Client extends JFrame
             return;
         }
 
-        _helloPrx.ice_flushBatchRequestsAsync().whenComplete((result, ex) ->
+        _helloPrx.ice_flushBatchRequestsAsync().whenCompleteAsync((result, ex) ->
             {
                 if(ex != null)
                 {
                     handleException(ex);
                 }
-            });
+            },
+            _helloPrx.ice_executor());
 
         _flush.setEnabled(false);
         _status.setText("Flushed batch requests");

@@ -112,7 +112,7 @@ class Coordinator
                     _chat = Chat.ChatSessionPrx.uncheckedCast(_session.session());
                     try
                     {
-                        _chat.setCallbackAsync(callback).whenComplete((result, ex) ->
+                        _chat.setCallbackAsync(callback).whenCompleteAsync((result, ex) ->
                             {
                                 if(ex == null)
                                 {
@@ -124,7 +124,8 @@ class Coordinator
                                 {
                                     destroySession();
                                 }
-                            });
+                            },
+                            _chat.ice_executor());
                     }
                     catch(com.zeroc.Ice.CommunicatorDestroyedException ex)
                     {
@@ -270,7 +271,7 @@ class Coordinator
             {
                 try
                 {
-                    _chat.sendAsync(message).whenComplete((timestamp, ex) ->
+                    _chat.sendAsync(message).whenCompleteAsync((timestamp, ex) ->
                         {
                             if(ex == null)
                             {
@@ -285,7 +286,8 @@ class Coordinator
                             {
                                 destroySession();
                             }
-                        });
+                        },
+                        _chat.ice_executor());
                 }
                 catch(com.zeroc.Ice.CommunicatorDestroyedException ex)
                 {

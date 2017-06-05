@@ -114,13 +114,14 @@ public class Client extends JFrame
                         String msg = doc.getText(0, doc.getLength()).trim();
                         if(msg.length() > 0)
                         {
-                            _chat.sayAsync(msg).whenComplete((result, ex) ->
+                            _chat.sayAsync(msg).whenCompleteAsync((result, ex) ->
                             {
                                 if(ex != null)
                                 {
                                     appendMessage("<system-message> - " + ex);
                                 }
-                            });
+                            },
+                            _chat.ice_executor());
                         }
                     }
                     catch(BadLocationException e1)
@@ -345,7 +346,8 @@ public class Client extends JFrame
                     {
                         destroySession();
                     }
-                });
+                },
+                _chat.ice_executor());
             }
 
             @Override
