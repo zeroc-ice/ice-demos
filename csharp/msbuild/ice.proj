@@ -1,0 +1,22 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <!-- Custom task to download files -->
+    <!-- Nuget executable -->
+    <PropertyGroup>
+      <NugetExe>$(MSBuildThisFileDirectory)NuGet.exe</NugetExe>
+      <NugetURL>https://dist.nuget.org/win-x86-commandline/v3.4.4/NuGet.exe</NugetURL>
+    </PropertyGroup>
+
+    <!-- Download nuget.exe if not present -->
+    <Target Name="GetNuget" Condition="!Exists('$(NugetExe)')">
+      <Exec Command="powershell -ExecutionPolicy ByPass -Command &quot;(New-Object Net.WebClient).DownloadFile('$(NugetURL)', '$(NugetExe)')&quot;"/>
+    </Target>
+
+    <Target Name="NuGetRestore" DependsOnTargets="GetNuGet">
+      <Exec Command="$(NuGetExe) restore &quot;$(MSBuildThisFileDirectory)..\CSharp demos.sln&quot;"/>
+    </Target>
+
+    <Target Name="DownloadSymbols" DependsOnTargets="NuGetRestore">
+        <MakeDir Directories="$(TEMP)\SymbolCache" />
+        <Exec Command="symchk /r $(MSBuildThisFileDirectory)..\packages\zeroc.ice.net.3.7.0\lib\* /s SRV*$(TEMP)\SymbolCache*https://dev.zeroc.com/share/ice/master/nuget/zeroc.ice.net.store/" />
+    </Target>
+</Project>
