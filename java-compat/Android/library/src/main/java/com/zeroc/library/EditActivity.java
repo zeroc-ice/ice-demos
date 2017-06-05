@@ -282,6 +282,4 @@ public class EditActivity extends SessionActivity
             finish();
         }
     }
-
-
 }

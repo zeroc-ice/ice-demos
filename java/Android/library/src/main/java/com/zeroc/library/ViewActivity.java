@@ -183,14 +183,17 @@ public class ViewActivity extends SessionActivity
     {
         switch (item.getItemId())
         {
-        case EDIT_ID:
-            startActivity(new Intent(this, EditActivity.class));
-            return true;
-
-        case DELETE_ID:
-            DialogFragment dialog = new DeleteBookDialogFragment();
-            dialog.show(getFragmentManager(), DELETE_TAG);
-            return true;
+            case EDIT_ID:
+            {
+                startActivity(new Intent(this, EditActivity.class));
+                return true;
+            }
+            case DELETE_ID:
+            {
+                DialogFragment dialog = new DeleteBookDialogFragment();
+                dialog.show(getFragmentManager(), DELETE_TAG);
+                return true;
+            }
         }
 
         return super.onOptionsItemSelected(item);

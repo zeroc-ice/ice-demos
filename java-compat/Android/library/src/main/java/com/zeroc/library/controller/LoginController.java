@@ -92,12 +92,6 @@ public class LoginController
                     initData.properties.setProperty("IceSSL.Trace.Security", "0");
                     initData.properties.setProperty("Ice.Plugin.IceSSL", "IceSSL.PluginFactory");
 
-                    // SDK versions < 21 only support TLSv1 with SSLEngine.
-                    if(Build.VERSION.SDK_INT < 21)
-                    {
-                        initData.properties.setProperty("IceSSL.Protocols", "tls1_0");
-                    }
-
                     //
                     // Check for Ice.Default.Router. If we find it use it, otherwise use a direct connection
                     //
@@ -121,7 +115,7 @@ public class LoginController
                     }
                     else
                     {
-                    _communicator = Ice.Util.initialize(initData);
+                        _communicator = Ice.Util.initialize(initData);
                     }
 
 

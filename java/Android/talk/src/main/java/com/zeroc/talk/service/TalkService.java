@@ -218,14 +218,6 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
             initData.properties.setProperty("Ice.Plugin.IceSSL", "com.zeroc.IceSSL.PluginFactory");
 
             //
-            // SDK versions < 21 only support TLSv1 with SSLEngine.
-            //
-            if(VERSION.SDK_INT < 21)
-            {
-                initData.properties.setProperty("IceSSL.Protocols", "tls1_0");
-            }
-
-            //
             // Install the IceBT transport.
             //
             initData.properties.setProperty("Ice.Plugin.IceBT", "com.zeroc.IceBT.PluginFactory");

@@ -261,14 +261,6 @@ public class MTalkService extends Service implements com.zeroc.mtalk.service.Ser
             initData.properties.setProperty("Ice.Plugin.IceSSL", "com.zeroc.IceSSL.PluginFactory");
 
             //
-            // SDK versions < 21 only support TLSv1 with SSLEngine.
-            //
-            if(Build.VERSION.SDK_INT < 21)
-            {
-                initData.properties.setProperty("IceSSL.Protocols", "tls1_0");
-            }
-
-            //
             // Initialize the communicator.
             //
             _communicator = Util.initialize(initData);

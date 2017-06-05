@@ -77,12 +77,6 @@ public class AppSession
         initData.properties.setProperty("Ice.Trace.Network", "0");
         initData.properties.setProperty("Ice.Plugin.IceSSL", "IceSSL.PluginFactory");
 
-        // SDK versions < 21 only support TLSv1 with SSLEngine.
-        if(Build.VERSION.SDK_INT < 21)
-        {
-            initData.properties.setProperty("IceSSL.Protocols", "tls1_0");
-        }
-
         if(initData.properties.getPropertyAsIntWithDefault("IceSSL.UsePlatformCAs", 0) == 0)
         {
             initData.properties.setProperty("Ice.InitPlugins", "0");

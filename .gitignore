@@ -182,3 +182,11 @@ es5
 cpp11/packages
 cpp97/packages
 csharp/packages
+
+#
+# Android Studio
+#
+*.iml
+local.properties
+*.idea
+**/res/raw/*.bks

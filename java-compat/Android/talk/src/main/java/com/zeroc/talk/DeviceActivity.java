@@ -228,69 +228,69 @@ public class DeviceActivity extends Activity
     };
 
     private final BroadcastReceiver _receiver = new BroadcastReceiver()
-    {
-        @Override
-        public void onReceive(Context context, Intent intent)
         {
-            String action = intent.getAction();
-
-            if(BluetoothDevice.ACTION_FOUND.equals(action))
+            @Override
+            public void onReceive(Context context, Intent intent)
             {
-                //
-                // Remove the placeholder message (if any).
-                //
-                if(_devices.getCount() == 1)
-                {
-                    DeviceInfo info = _devices.getItem(0);
-                    if(!info.hasDevice())
-                    {
-                        _devices.clear();
-                    }
-                }
+                String action = intent.getAction();
 
-                //
-                // Add a device if it's not already in the list.
-                //
-                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                DeviceInfo info = new DeviceInfo(device);
-                int pos = _devices.getPosition(info);
-                if(pos < 0)
-                {
-                    _devices.add(new DeviceInfo(device));
-                }
-                else
+                if(BluetoothDevice.ACTION_FOUND.equals(action))
                 {
                     //
-                    // The device is already present but we force a refresh in case its state
-                    // has changed.
+                    // Remove the placeholder message (if any).
                     //
-                    _devices.notifyDataSetChanged();
-                }
-            }
-            else if(BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action))
-            {
-                setProgressBarIndeterminateVisibility(false);
-                setTitle(R.string.choose_peer);
-
-                if(_devices.getCount() == 1)
-                {
-                    DeviceInfo info = _devices.getItem(0);
-                    if(!info.hasDevice())
+                    if(_devices.getCount() == 1)
                     {
-                        _devices.clear();
+                        DeviceInfo info = _devices.getItem(0);
+                        if(!info.hasDevice())
+                        {
+                            _devices.clear();
+                        }
+                    }
+
+                    //
+                    // Add a device if it's not already in the list.
+                    //
+                    BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                    DeviceInfo info = new DeviceInfo(device);
+                    int pos = _devices.getPosition(info);
+                    if(pos < 0)
+                    {
+                        _devices.add(new DeviceInfo(device));
+                    }
+                    else
+                    {
+                        //
+                        // The device is already present but we force a refresh in case its state
+                        // has changed.
+                        //
+                        _devices.notifyDataSetChanged();
                     }
                 }
-
-                //
-                // Add a placeholder entry.
-                //
-                if(_devices.getCount() == 0)
+                else if(BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action))
                 {
-                    _devices.add(new DeviceInfo(getResources().getText(R.string.none_found).toString()));
-                }
+                    setProgressBarIndeterminateVisibility(false);
+                    setTitle(R.string.choose_peer);
 
-                _scanButton.setEnabled(true);
+                    if(_devices.getCount() == 1)
+                    {
+                        DeviceInfo info = _devices.getItem(0);
+                        if(!info.hasDevice())
+                        {
+                            _devices.clear();
+                        }
+                    }
+
+                    //
+                    // Add a placeholder entry.
+                    //
+                    if(_devices.getCount() == 0)
+                    {
+                        _devices.add(new DeviceInfo(getResources().getText(R.string.none_found).toString()));
+                    }
+
+                    _scanButton.setEnabled(true);
+                }
             }
-        }
-    };
+        };
 }

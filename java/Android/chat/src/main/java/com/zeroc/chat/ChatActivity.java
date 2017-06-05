@@ -139,6 +139,7 @@ public class ChatActivity extends SessionActivity
                 sendText();
             }
         });
+
         _text.setOnEditorActionListener(new TextView.OnEditorActionListener()
         {
             @Override
@@ -170,14 +171,17 @@ public class ChatActivity extends SessionActivity
     {
         switch (item.getItemId())
         {
-        case USERS_ID:
-            startActivity(new Intent(ChatActivity.this, UserViewActivity.class));
-            return true;
-
-        case LOGOUT_ID:
-            _service.logout();
-            finish();
-            return true;
+            case USERS_ID:
+            {
+                startActivity(new Intent(ChatActivity.this, UserViewActivity.class));
+                return true;
+            }
+            case LOGOUT_ID:
+            {
+                _service.logout();
+                finish();
+                return true;
+            }
         }
 
         return super.onOptionsItemSelected(item);

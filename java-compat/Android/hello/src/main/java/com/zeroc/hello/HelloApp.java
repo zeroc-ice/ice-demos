@@ -95,12 +95,6 @@ public class HelloApp extends Application
                     initData.properties.setProperty("Ice.InitPlugins", "0");
                     initData.properties.setProperty("Ice.Plugin.IceSSL", "IceSSL.PluginFactory");
 
-                    // SDK versions < 21 only support TLSv1 with SSLEngine.
-                    if(VERSION.SDK_INT < 21)
-                    {
-                        initData.properties.setProperty("IceSSL.Protocols", "tls1_0");
-                    }
-
                     Ice.Communicator c = Ice.Util.initialize(initData);
                     IceSSL.Plugin plugin = (IceSSL.Plugin)c.getPluginManager().getPlugin("IceSSL");
                     //

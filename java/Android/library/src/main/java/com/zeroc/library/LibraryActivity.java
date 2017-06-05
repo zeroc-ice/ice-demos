@@ -263,14 +263,17 @@ public class LibraryActivity extends SessionActivity
     {
         switch (item.getItemId())
         {
-        case ADD_ID:
-            _queryController.setCurrentBook(QueryController.NEW_BOOK);
-            startActivity(new Intent(LibraryActivity.this, EditActivity.class));
-            return true;
-
-        case LOGOUT_ID:
-            logout();
-            return true;
+            case ADD_ID:
+            {
+                _queryController.setCurrentBook(QueryController.NEW_BOOK);
+                startActivity(new Intent(LibraryActivity.this, EditActivity.class));
+                return true;
+            }
+            case LOGOUT_ID:
+            {
+                logout();
+                return true;
+            }
         }
 
         return super.onOptionsItemSelected(item);

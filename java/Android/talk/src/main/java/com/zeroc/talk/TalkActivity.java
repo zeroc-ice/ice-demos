@@ -69,28 +69,40 @@ public class TalkActivity extends Activity
         {
             switch(m.what)
             {
-            case Service.MESSAGE_STATE_CHANGE:
-                switch(m.arg1)
+                case Service.MESSAGE_STATE_CHANGE:
                 {
-                case Service.STATE_NOT_CONNECTED:
-                    _activity.get().setStatus(R.string.not_connected);
-                    break;
-                case Service.STATE_CONNECTING:
-                    _activity.get().setStatus(R.string.connecting);
-                    break;
-                case Service.STATE_CONNECTED:
-                    _activity.get().setStatus(R.string.connected);
+                    switch(m.arg1)
+                    {
+                        case Service.STATE_NOT_CONNECTED:
+                        {
+                            _activity.get().setStatus(R.string.not_connected);
+                            break;
+                        }
+                        case Service.STATE_CONNECTING:
+                        {
+                            _activity.get().setStatus(R.string.connecting);
+                            break;
+                        }
+                        case Service.STATE_CONNECTED:
+                        {
+                            _activity.get().setStatus(R.string.connected);
+                            break;
+                        }
+                    }
                     break;
                 }
-                break;
-            case Service.MESSAGE_RECEIVED:
-            case Service.MESSAGE_SENT:
-            case Service.MESSAGE_LOG:
-                _activity.get().addMessage(m.getData().getString(Service.KEY_TEXT));
-                break;
-            case Service.MESSAGE_TOAST:
-                Toast.makeText(_activity.get(), m.getData().getString(Service.KEY_TEXT), Toast.LENGTH_SHORT).show();
-                break;
+                case Service.MESSAGE_RECEIVED:
+                case Service.MESSAGE_SENT:
+                case Service.MESSAGE_LOG:
+                {
+                    _activity.get().addMessage(m.getData().getString(Service.KEY_TEXT));
+                    break;
+                }
+                case Service.MESSAGE_TOAST:
+                {
+                    Toast.makeText(_activity.get(), m.getData().getString(Service.KEY_TEXT), Toast.LENGTH_SHORT).show();
+                    break;
+                }
             }
         }
 
@@ -179,43 +191,43 @@ public class TalkActivity extends Activity
     {
         switch (item.getItemId())
         {
-        case R.id.connect:
-        {
-            Intent intent = new Intent(this, DeviceActivity.class);
-            startActivityForResult(intent, REQUEST_CONNECT_DEVICE);
-            return true;
-        }
-
-        case R.id.connectSSL:
-        {
-            Intent intent = new Intent(this, DeviceActivity.class);
-            startActivityForResult(intent, REQUEST_CONNECT_DEVICE_SSL);
-            return true;
-        }
-
-        case R.id.disconnect:
-        {
-            disconnect();
-            return true;
-        }
-
-        case R.id.discoverable:
-        {
-            if(BluetoothAdapter.getDefaultAdapter().getScanMode() !=
-                BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE)
+            case R.id.connect:
             {
-                Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-                intent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
-                startActivity(intent);
+                Intent intent = new Intent(this, DeviceActivity.class);
+                startActivityForResult(intent, REQUEST_CONNECT_DEVICE);
+                return true;
             }
-            return true;
-        }
 
-        case R.id.clear:
-        {
-            _adapter.clear();
-            return true;
-        }
+            case R.id.connectSSL:
+            {
+                Intent intent = new Intent(this, DeviceActivity.class);
+                startActivityForResult(intent, REQUEST_CONNECT_DEVICE_SSL);
+                return true;
+            }
+
+            case R.id.disconnect:
+            {
+                disconnect();
+                return true;
+            }
+
+            case R.id.discoverable:
+            {
+                if(BluetoothAdapter.getDefaultAdapter().getScanMode() !=
+                    BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE)
+                {
+                    Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+                    intent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
+                    startActivity(intent);
+                }
+                return true;
+            }
+
+            case R.id.clear:
+            {
+                _adapter.clear();
+                return true;
+            }
         }
 
         return false;
@@ -226,32 +238,38 @@ public class TalkActivity extends Activity
     {
         switch(req)
         {
-        case REQUEST_CONNECT_DEVICE:
-            if(res == Activity.RESULT_OK)
+            case REQUEST_CONNECT_DEVICE:
             {
-                connect(data, false);
-            }
-            break;
-        case REQUEST_CONNECT_DEVICE_SSL:
-            if(res == Activity.RESULT_OK)
-            {
-                connect(data, true);
-            }
-            break;
-        case REQUEST_ENABLE_BT:
-            if(res == Activity.RESULT_OK)
-            {
-                if(_text == null)
+                if(res == Activity.RESULT_OK)
                 {
-                    setup();
+                    connect(data, false);
                 }
+                break;
             }
-            else
+            case REQUEST_CONNECT_DEVICE_SSL:
             {
-                Toast.makeText(this, R.string.no_bluetooth, Toast.LENGTH_SHORT).show();
-                finish();
+                if(res == Activity.RESULT_OK)
+                {
+                    connect(data, true);
+                }
+                break;
             }
-            break;
+            case REQUEST_ENABLE_BT:
+            {
+                if(res == Activity.RESULT_OK)
+                {
+                    if(_text == null)
+                    {
+                        setup();
+                    }
+                }
+                else
+                {
+                    Toast.makeText(this, R.string.no_bluetooth, Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+                break;
+            }
         }
     }
 

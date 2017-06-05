@@ -131,7 +131,6 @@ public class HelloWorld extends Activity
                     flushButton.setEnabled(true);
                     _app.sayHello(delaySeekBar.getProgress());
                     statusTextView.setText("Queued hello request");
-
                 }
                 else
                 {

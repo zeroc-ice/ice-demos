@@ -72,14 +72,18 @@ public class MainActivity extends Activity
         {
             switch(m.what)
             {
-            case Service.MESSAGE_RECEIVED:
-            case Service.MESSAGE_SENT:
-            case Service.MESSAGE_LOG:
-                _activity.get().addMessage(m.getData().getString(Service.KEY_TEXT));
-                break;
-            case Service.MESSAGE_TOAST:
-                Toast.makeText(_activity.get(), m.getData().getString(Service.KEY_TEXT), Toast.LENGTH_SHORT).show();
-                break;
+                case Service.MESSAGE_RECEIVED:
+                case Service.MESSAGE_SENT:
+                case Service.MESSAGE_LOG:
+                {
+                    _activity.get().addMessage(m.getData().getString(Service.KEY_TEXT));
+                    break;
+                }
+                case Service.MESSAGE_TOAST:
+                {
+                    Toast.makeText(_activity.get(), m.getData().getString(Service.KEY_TEXT), Toast.LENGTH_SHORT).show();
+                    break;
+                }
             }
         }
 
