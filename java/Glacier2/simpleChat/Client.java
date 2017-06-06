@@ -328,7 +328,7 @@ public class Client extends JFrame
                 Demo.ChatCallbackPrx callback = Demo.ChatCallbackPrx.uncheckedCast(_session.addWithUUID(servant));
 
                 _chat = Demo.ChatSessionPrx.uncheckedCast(_session.session());
-                _chat.setCallbackAsync(callback).whenComplete((result, ex) ->
+                _chat.setCallbackAsync(callback).whenCompleteAsync((result, ex) ->
                 {
                     if(ex == null)
                     {
