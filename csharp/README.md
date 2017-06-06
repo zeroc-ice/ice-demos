@@ -47,12 +47,13 @@ window and select "Build"
   * Open a Visual Studio command prompt
 
             cd ice-demos\csharp
-            MSBuild /p:ICE_SRC_DIST=all /p:IceHome=<Ice dist path> "CSharp demos.sln"
+            MSBuild /p:ICE_SRC_DIST=all /p:"Any CPU" /p:IceHome=<Ice dist path> "CSharp demos.sln"
 
 - Build from Visual Studio
   * Open a Visual Studio command prompt
 
             set ICE_SRC_DIST=all
+            set IceHome=<Ice dist path>
             devenv
 
   * When Visual Studio starts set IceHome in Ice Builder options, "Tools > Options > Projects and Solutions > Ice Builder"
