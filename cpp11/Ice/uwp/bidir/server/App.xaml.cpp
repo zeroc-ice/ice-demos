@@ -4,7 +4,6 @@
 //
 // **********************************************************************
 
-
 #include "pch.h"
 #include "MainPage.xaml.h"
 
@@ -31,7 +30,6 @@ App::App()
     this->EnteredBackground += ref new EnteredBackgroundEventHandler(this, &App::enteredBackground);
     this->LeavingBackground += ref new LeavingBackgroundEventHandler(this, &App::leavingBackground);
 }
-
 
 void
 App::OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEventArgs^ e)

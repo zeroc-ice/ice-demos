@@ -119,7 +119,6 @@ public class Client extends Glacier2.Application
                 objectAdapter().add(new CallbackReceiverI(), callbackReceiverIdent));
             CallbackReceiverPrx onewayR = CallbackReceiverPrxHelper.uncheckedCast(twowayR.ice_oneway());
 
-
             menu();
 
             String line = null;

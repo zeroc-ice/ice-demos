@@ -114,7 +114,6 @@ operator!=(string_view lhs, string_view rhs)
 
 }
 
-
 namespace Ice
 {
 

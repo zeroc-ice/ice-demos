@@ -4,8 +4,6 @@
 //
 // **********************************************************************
 
-
-
 public class LoggerPluginFactoryI implements Ice.PluginFactory
 {
      @Override

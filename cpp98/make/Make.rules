@@ -41,7 +41,6 @@ ice_includedir                  ?= $(ice_home)$(if $(ice_src_dist),/cpp)/include
 $(foreach d,$(cpp-dependencies),$(eval $$d_targetdir := $(ice_home)$(if $(ice_src_dist),/cpp)/lib)\
                                 $(eval $(call create-component-targets,ice,$d,library)))
 
-
 slice2cpp_targetext             = cpp
 slice2cpp_path                  = $(ice_bindir)/slice2cpp
 

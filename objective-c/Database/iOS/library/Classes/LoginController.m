@@ -92,7 +92,6 @@ static NSString* passwordKey = @"passwordKey";
     // Release anything that's not essential, such as cached data
 }
 
-
 #pragma mark UITextFieldDelegate
 
 -(BOOL)textFieldShouldBeginEditing:(UITextField*)field
@@ -219,7 +218,6 @@ static NSString* passwordKey = @"passwordKey";
     initData.dispatcher = ^(id<ICEDispatcherCall> call, id<ICEConnection> con) {
         dispatch_sync(dispatch_get_main_queue(), ^ { [call run]; });
     };
-
 
     id<ICEObjectPrx> proxy;
     SEL loginSelector;

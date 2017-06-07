@@ -6,7 +6,6 @@
 
 #import <UIKit/UIKit.h>
 
-
 @interface EditController : UIViewController
 {
 @private

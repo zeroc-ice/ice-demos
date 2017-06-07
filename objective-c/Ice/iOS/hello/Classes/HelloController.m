@@ -93,7 +93,6 @@ static NSString* hostnameKey = @"hostnameKey";
     // Release anything that's not essential, such as cached data
 }
 
-
 #pragma mark UITextFieldDelegate
 
 -(BOOL)textFieldShouldReturn:(UITextField *)theTextField

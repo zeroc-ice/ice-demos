@@ -19,7 +19,6 @@ In another window:
 While the publisher continues to run, "tick" messages should be
 displayed in the subscriber window.
 
-
 Options
 -------
 
@@ -84,7 +83,6 @@ publisher --datagram
 publisher --twoway
 
   The publisher sends events as twoway messages.
-
 
 Running the demo on several hosts
 ---------------------------------

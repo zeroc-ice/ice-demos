@@ -134,7 +134,6 @@ ChatRoom::destroy()
     _connectionMap.clear();
 }
 
-
 //
 // ChatSessionI
 //
@@ -178,7 +177,6 @@ ChatSessionI::destroy(const Ice::Current& current)
     }
     current.adapter->remove(current.id);
 }
-
 
 //
 // ChatSessionManagerI

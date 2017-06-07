@@ -21,7 +21,6 @@ In another window:
 While the publisher continues to run, "tick" messages should be
 displayed in the subscriber window.
 
-
 Options
 -------
 
@@ -86,7 +85,6 @@ java -jar build/libs/publisher.jar --datagram
 java -jar build/libs/publisher.jar --twoway
 
   The publisher sends events as twoway messages.
-
 
 Running the demo on several hosts
 ---------------------------------

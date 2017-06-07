@@ -24,5 +24,4 @@ private:
     std::shared_ptr<WorkQueue> _workQueue;
 };
 
-
 #endif

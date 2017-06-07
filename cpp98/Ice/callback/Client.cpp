@@ -20,7 +20,6 @@ public:
     }
 };
 
-
 int run(const Ice::CommunicatorPtr&);
 
 int

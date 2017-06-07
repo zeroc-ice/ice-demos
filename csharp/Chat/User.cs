@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-
 namespace ChatDemoGUI
 {
     // This class models the users of a chat room.

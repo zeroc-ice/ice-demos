@@ -331,7 +331,6 @@ public class Client extends JFrame
             }
         });
 
-
         setTitle("Ice - Hello World!");
         pack();
         locateOnScreen(this);

@@ -34,7 +34,6 @@ PLATFORMS               ?= $(firstword $(supported-platforms))
 #
 CONFIGS                 ?= $(firstword $(supported-configs))
 
-
 # ----------------------------------------------------------------------
 # Don't change anything below this line!
 # ----------------------------------------------------------------------

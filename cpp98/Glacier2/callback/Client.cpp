@@ -21,7 +21,6 @@ public:
     virtual Glacier2::SessionPrx createSession();
 };
 
-
 int
 main(int argc, char* argv[])
 {
@@ -218,7 +217,6 @@ CallbackClient::runWithSession(int argc, char*[])
         }
     }
     while(cin.good() && c != 'x');
-
 
     return EXIT_SUCCESS;
 }

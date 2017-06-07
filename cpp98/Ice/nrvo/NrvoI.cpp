@@ -40,7 +40,6 @@ NrvoI::op2(const Ice::Current&)
     return _stringSeq;
 }
 
-
 //
 // Operation with multiple return paths.
 //

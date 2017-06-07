@@ -4,8 +4,6 @@
 //
 // **********************************************************************
 
-
-
 public class LoggerI implements Ice.Logger
 {
     @Override

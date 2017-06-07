@@ -6,7 +6,6 @@
 
 #import <RentController.h>
 
-
 @implementation RentController
 
 -(id)init

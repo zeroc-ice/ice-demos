@@ -51,7 +51,6 @@
   // Release anything that's not essential, such as cached data
 }
 
-
 -(IBAction)cancel:(id)sender
 {
     [self.navigationController popViewControllerAnimated:YES];

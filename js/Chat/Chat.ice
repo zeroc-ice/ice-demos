@@ -6,7 +6,6 @@
 
 #pragma once
 
-
 /**
  *
  * The Chat module defines types shared by definitions from

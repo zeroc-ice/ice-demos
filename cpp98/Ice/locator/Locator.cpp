@@ -93,7 +93,6 @@ public:
         cb->ice_response(0);
     }
 
-
     virtual void
     findAdapterById_async(const Ice::AMD_Locator_findAdapterByIdPtr& cb,
                           const string& id,

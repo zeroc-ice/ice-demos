@@ -10,7 +10,6 @@
 using namespace std;
 using namespace Demo;
 
-
 int run(const shared_ptr<Ice::Communicator>&);
 
 int

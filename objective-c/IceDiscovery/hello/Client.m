@@ -8,7 +8,6 @@
 #import <Hello.h>
 #import <stdio.h>
 
-
 int run(id<ICECommunicator>);
 
 int

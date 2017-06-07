@@ -81,7 +81,6 @@ class FileI(Filesystem.File):
         thisNode = Filesystem.FilePrx.uncheckedCast(a.add(self, self._id))
         self._parent.addChild(thisNode)
 
-
 class Server(Ice.Application):
     def run(self, args):
         # Terminate cleanly on receipt of a signal

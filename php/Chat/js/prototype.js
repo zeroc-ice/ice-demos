@@ -56,9 +56,7 @@ var Prototype = {
 if (Prototype.Browser.MobileSafari)
   Prototype.BrowserFeatures.SpecificElementExtensions = false;
 
-
 var Abstract = { };
-
 
 var Try = {
   these: function() {
@@ -223,7 +221,6 @@ var Class = (function() {
     return _toString.call(object) == "[object Array]";
   }
 
-
   function isHash(object) {
     return object instanceof Hash;
   }
@@ -351,7 +348,6 @@ Object.extend(Function.prototype, (function() {
   }
 })());
 
-
 Date.prototype.toJSON = function() {
   return '"' + this.getUTCFullYear() + '-' +
     (this.getUTCMonth() + 1).toPaddedString(2) + '-' +
@@ -360,7 +356,6 @@ Date.prototype.toJSON = function() {
     this.getUTCMinutes().toPaddedString(2) + ':' +
     this.getUTCSeconds().toPaddedString(2) + 'Z"';
 };
-
 
 RegExp.prototype.match = RegExp.prototype.test;
 
@@ -502,7 +497,6 @@ Object.extend(String.prototype, (function() {
   function unescapeHTML() {
     return this.stripTags().replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&');
   }
-
 
   function toQueryParams(separator) {
     var match = this.strip().match(/([^?#]*)(#.*)?$/);
@@ -902,14 +896,6 @@ var Enumerable = (function() {
     return '#<Enumerable:' + this.toArray().inspect() + '>';
   }
 
-
-
-
-
-
-
-
-
   return {
     each:       each,
     eachSlice:  eachSlice,
@@ -958,7 +944,6 @@ function $w(string) {
 }
 
 Array.from = $A;
-
 
 (function() {
   var arrayProto = Array.prototype,
@@ -1023,7 +1008,6 @@ Array.from = $A;
       return array.detect(function(value) { return item === value });
     });
   }
-
 
   function clone() {
     return slice.call(this, 0);
@@ -1308,8 +1292,6 @@ var ObjectRange = Class.create(Enumerable, (function() {
   };
 })());
 
-
-
 var Ajax = {
   getTransport: function() {
     return Try.these(
@@ -1545,13 +1527,6 @@ Ajax.Request = Class.create(Ajax.Base, {
 Ajax.Request.Events =
   ['Uninitialized', 'Loading', 'Loaded', 'Interactive', 'Complete'];
 
-
-
-
-
-
-
-
 Ajax.Response = Class.create({
   initialize: function(request){
     this.request = request;
@@ -1704,8 +1679,6 @@ Ajax.PeriodicalUpdater = Class.create(Ajax.Base, {
   }
 });
 
-
-
 function $(element) {
   if (arguments.length > 1) {
     for (var i = 0, elements = [], length = arguments.length; i < length; i++)
@@ -1748,7 +1721,6 @@ if (!Node.ELEMENT_NODE) {
     NOTATION_NODE: 12
   });
 }
-
 
 (function(global) {
 
@@ -1797,7 +1769,6 @@ Element.Methods = {
     Element[Element.visible(element) ? 'hide' : 'show'](element);
     return element;
   },
-
 
   hide: function(element) {
     element = $(element);
@@ -2054,7 +2025,6 @@ Element.Methods = {
     return Object.isNumber(expression) ? nextSiblings[expression] :
       Selector.findElement(nextSiblings, expression, index);
   },
-
 
   select: function(element) {
     var args = Array.prototype.slice.call(arguments, 1);
@@ -3049,7 +3019,6 @@ Element.addMethods = function(methods) {
   Element.cache = { };
 };
 
-
 document.viewport = {
 
   getDimensions: function() {
@@ -3089,7 +3058,6 @@ document.viewport = {
 
   viewport.getHeight = define.curry('Height');
 })(document.viewport);
-
 
 Element.Storage = {
   UID: 1
@@ -4033,7 +4001,6 @@ Form.Methods = {
 
 /*--------------------------------------------------------------------------*/
 
-
 Form.Element = {
   focus: function(element) {
     $(element).focus();
@@ -4178,7 +4145,6 @@ Form.Element.Serializers = {
 };
 
 /*--------------------------------------------------------------------------*/
-
 
 Abstract.TimedObserver = Class.create(PeriodicalExecuter, {
   initialize: function($super, element, frequency, callback) {
@@ -4360,7 +4326,6 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
        (docElement.clientTop || 0));
   }
 
-
   function stop(event) {
     Event.extend(event);
     event.preventDefault();
@@ -4383,7 +4348,6 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
 
     stop: stop
   };
-
 
   var methods = Object.keys(Event.Methods).inject({ }, function(m, name) {
     m[name] = Event.Methods[name].methodize();
@@ -4503,7 +4467,6 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
   if (Prototype.Browser.WebKit)
     window.addEventListener('unload', Prototype.emptyFunction, false);
 
-
   var _getDOMEventName = Prototype.K;
 
   if (!MOUSEENTER_MOUSELEAVE_EVENTS_SUPPORTED) {
@@ -4622,7 +4585,6 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
 
     return Event.extend(event);
   }
-
 
   Object.extend(Event, Event.Methods);
 
@@ -4773,7 +4735,6 @@ var Position = {
       return ((this.offset[0] + element.offsetWidth) - this.xcomp) /
         element.offsetWidth;
   },
-
 
   cumulativeOffset: Element.Methods.cumulativeOffset,
 

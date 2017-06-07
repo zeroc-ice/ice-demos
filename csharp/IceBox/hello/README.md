@@ -11,7 +11,6 @@ To shut down IceBox, use iceboxadmin:
 
       iceboxadmin --Ice.Config=config.admin shutdown
 
-
 Note for 64 bit Windows:
 
 In order to run this demo under 64 bit Windows you must add

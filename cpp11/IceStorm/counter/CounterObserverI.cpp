@@ -17,7 +17,6 @@ void print(const string& str)
     cout << str << flush;
 }
 
-
 void
 CounterObserverI::init(int value, const Ice::Current&)
 {

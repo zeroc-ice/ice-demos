@@ -351,7 +351,6 @@ TalkApp::doConnect(const string& cmd)
             });
         con->setACM(30, Ice::ACMClose::CloseOff, Ice::ACMHeartbeat::HeartbeatAlways);
 
-
         //
         // Now we're ready to notify the peer that we'd like to connect.
         //

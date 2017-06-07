@@ -136,7 +136,6 @@
 
 		</LinearLayout>
 
-
 		<!-- The edit items -->
 		<LinearLayout android:id="@+id/authorsList"
 			android:layout_width="fill_parent"

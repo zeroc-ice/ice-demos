@@ -90,7 +90,6 @@ static EditController* editViewController_ = nil;
     // Release anything that's not essential, such as cached data
 }
 
-
 + (EditController *)editViewController
 {
     // Instantiate the edit view controller if necessary.
@@ -122,7 +121,6 @@ static EditController* editViewController_ = nil;
     [self saving:NO];
     // Discard the edit.
     self.updated = nil;
-
 
     [self.tableView deselectRowAtIndexPath:selectedIndexPath animated:NO];
 

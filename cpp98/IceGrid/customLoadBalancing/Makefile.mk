@@ -11,6 +11,4 @@ $(demo)_RegistryPlugin_dependencies     = IceGrid Glacier2 Ice
 
 $(demo)_client_dependencies             = IceGrid Glacier2 Ice
 
-
-
 demos += $(demo)

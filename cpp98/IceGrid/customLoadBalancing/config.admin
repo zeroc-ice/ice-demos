@@ -8,7 +8,6 @@ IceGrid.InstanceName=DemoIceGrid
 #
 Ice.Default.Locator=DemoIceGrid/Locator:default -h localhost -p 4061
 
-
 #
 # Dummy username and password for icegridadmin.
 #

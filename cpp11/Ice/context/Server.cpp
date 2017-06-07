@@ -16,7 +16,6 @@ public:
     virtual int run(int, char*[]) override;
 };
 
-
 int
 main(int argc, char* argv[])
 {

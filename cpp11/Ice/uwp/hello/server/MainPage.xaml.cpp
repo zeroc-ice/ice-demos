@@ -30,7 +30,6 @@ class HelloI : public Hello
 {
 public:
 
-
     HelloI(MainPage^ page) : _page(page)
     {
     }

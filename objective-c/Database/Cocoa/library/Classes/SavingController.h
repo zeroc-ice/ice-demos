@@ -6,7 +6,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-
 @interface SavingController : NSWindowController
 {
     IBOutlet NSProgressIndicator* progress;

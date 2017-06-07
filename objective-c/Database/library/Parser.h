@@ -33,7 +33,6 @@ int yyparse();
 //
 #define yyoverflow(a, b, c, d, e, f) yyerror(a)
 
-
 @interface Parser : NSObject
 {
 @private

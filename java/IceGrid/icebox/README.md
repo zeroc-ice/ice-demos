@@ -9,7 +9,6 @@ named `LANG` with value `en`. The Hello object implementation HelloI
 reads the value of `LANG` and shows the message in the corresponding
 language; you can try changing the value to `fr`, `de`, `es` or `it`.
 
-
 Setup
 -----
 
@@ -21,7 +20,6 @@ Deploy the `HelloSimpsons` application (in file `application.xml`) with
 the IceGridGUI. If you prefer to use the command-line utility, use:
 
     icegridadmin --Ice.Config=config.grid -e "application add application.xml"
-
 
 Using the IceGridGUI
 --------------------
@@ -65,7 +63,6 @@ Running the Client
 
 The client simply calls 'sayHello' on the replicated 'hello' object.
 
-
 Stopping and restarting IceBox services
 ---------------------------------------
 
@@ -76,7 +73,6 @@ the 'Lisa' service:
     icegridadmin --Ice.Config=config.grid
     >>> service stop IceBox Lisa
     >>> service start IceBox Lisa
-
 
 Administration through Glacier2
 -------------------------------

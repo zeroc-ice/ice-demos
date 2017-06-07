@@ -449,7 +449,6 @@ class Coordinator
             textMenu.add(new DefaultEditorKit.CopyAction());
             textMenu.pack();
 
-
             txtErrorMessage.addMouseListener(new MouseAdapter()
                 {
                     public void mousePressed(MouseEvent e)

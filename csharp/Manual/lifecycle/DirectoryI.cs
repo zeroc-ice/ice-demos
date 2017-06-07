@@ -71,7 +71,6 @@ namespace FilesystemI
                     throw new ObjectNotExistException();
                 }
 
-
                 NodeI p;
                 if(!_contents.TryGetValue(name, out p))
                 {

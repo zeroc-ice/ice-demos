@@ -76,7 +76,6 @@ if(document.location.protocol === "file:")
     $("#setup-modal").foundation("reveal", "open");
 }
 
-
 }());
 
 //

@@ -30,7 +30,6 @@ public:
     }
 };
 
-
 class HelloPluginI : public Ice::Plugin
 {
 public:

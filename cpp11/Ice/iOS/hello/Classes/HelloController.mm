@@ -423,7 +423,6 @@ static NSString* hostnameKey = @"hostnameKey";
     statusLabel.text = @"Flushed batch requests";
 }
 
-
 -(IBAction)sayHello:(id)sender
 {
     client->sayHello([hostnameTextField.text cStringUsingEncoding:[NSString defaultCStringEncoding]],

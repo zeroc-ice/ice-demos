@@ -33,7 +33,6 @@ script must match the value of the `Ice.Admin.Endpoints` and
 `Ice.Admin.InstanceName` properties configured for the application to
 monitor.
 
-
 Enable IceMX with the Ice demos
 -------------------------------
 
@@ -52,7 +51,6 @@ configuration file of the demo application you wish to monitor:
     Ice.Admin.Endpoints
 
 Once this property is enabled, restart the client or server.
-
 
 Enable IceMX with your application
 ----------------------------------

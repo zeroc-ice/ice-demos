@@ -12,7 +12,6 @@ through a JDBC API and demonstrates the following techniques:
  - Using a dispatch interceptor.
  - Accessing a server with and without Glacier2
 
-
 Setting up the demo
 -------------------
 
@@ -61,7 +60,6 @@ NOTES:
 
       http://dev.mysql.com/doc/refman/5.0/en/set-transaction.html
 
-
 Running the demo
 ----------------
 
@@ -77,7 +75,6 @@ client. In another window:
       java -jar build/libs/client.jar books
 
 Type "help" to get a list of valid commands.
-
 
 Running the demo with Glacier2
 ------------------------------

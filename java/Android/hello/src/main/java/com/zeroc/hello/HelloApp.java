@@ -98,7 +98,6 @@ public class HelloApp extends Application
                     initData.properties.setProperty("Ice.InitPlugins", "0");
                     initData.properties.setProperty("Ice.Plugin.IceSSL", "com.zeroc.IceSSL.PluginFactory");
 
-
                     Communicator c = Util.initialize(initData);
                     com.zeroc.IceSSL.Plugin plugin = (com.zeroc.IceSSL.Plugin)c.getPluginManager().getPlugin("IceSSL");
                     //

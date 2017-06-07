@@ -75,7 +75,6 @@ IceSSL.VerifyPeer=0
 #Ice.Warn.Connections=1
 #Ice.Trace.Protocol=1
 
-
 #
 # We configure the server thread pool as we want the glacier2router
 # to be multi threaded.

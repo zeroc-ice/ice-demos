@@ -4,8 +4,6 @@
 //
 // **********************************************************************
 
-
-
 public class HelloPluginI implements Ice.Plugin
 {
     public

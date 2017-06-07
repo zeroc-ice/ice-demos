@@ -7,7 +7,6 @@
 
 import os, sys, threading, Ice
 
-
 slice_dir = Ice.getSliceDir()
 if not slice_dir:
     print(sys.argv[0] + ': Slice directory not found.')
@@ -59,7 +58,6 @@ class CallbackSenderI(Demo.CallbackSender, threading.Thread):
         with self._cond:
             print("removing client `" + Ice.identityToString(client.ice_getIdentity()) + "':\n" + str(ex))
             self._clients.remove(client)
-
 
 class Server(Ice.Application):
     def run(self, args):

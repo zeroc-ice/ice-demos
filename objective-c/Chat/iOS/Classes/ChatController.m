@@ -314,7 +314,6 @@
         [self closed:connection];
     }];
 
-
     // Register the chat callback.
     [session begin_setCallback:callbackProxy response:nil exception:^(ICEException* ex) { [self exception:ex]; }];
 }

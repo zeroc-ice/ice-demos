@@ -16,7 +16,6 @@ public:
     virtual int run(int, char*[]) override;
 };
 
-
 int
 #ifdef _WIN32
 wmain(int argc, wchar_t* argv[])

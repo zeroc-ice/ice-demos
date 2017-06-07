@@ -181,7 +181,6 @@ public class AppSession
         _session = null;
     }
 
-
     synchronized public String getError()
     {
         return _error;

@@ -148,7 +148,6 @@ private:
     const Ice::LocatorRegistryPrx _registry;
 };
 
-
 //
 // Locator implementation
 //

@@ -160,7 +160,6 @@ public class HelloWorld extends Activity
             }
         });
 
-
         hostEditText.addTextChangedListener(new TextWatcher()
         {
             @Override

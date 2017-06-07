@@ -21,7 +21,6 @@ public:
     virtual shared_ptr<Glacier2::SessionPrx> createSession() override;
 };
 
-
 int
 main(int argc, char* argv[])
 {
@@ -217,7 +216,6 @@ CallbackClient::runWithSession(int argc, char*[])
         }
     }
     while(cin.good() && c != 'x');
-
 
     return EXIT_SUCCESS;
 }

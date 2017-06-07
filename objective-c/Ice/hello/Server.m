@@ -7,7 +7,6 @@
 #import <objc/Ice.h>
 #import <HelloI.h>
 
-
 int run(id<ICECommunicator>);
 
 int

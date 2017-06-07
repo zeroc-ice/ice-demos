@@ -101,7 +101,6 @@ public class LoginController
                         initData.properties.setProperty("Ice.RetryIntervals", "-1");
                     }
 
-
                     if(initData.properties.getPropertyAsIntWithDefault("IceSSL.UsePlatformCAs", 0) == 0)
                     {
                         initData.properties.setProperty("Ice.InitPlugins", "0");
@@ -117,7 +116,6 @@ public class LoginController
                     {
                         _communicator = Ice.Util.initialize(initData);
                     }
-
 
                     SessionAdapter session = null;
 

@@ -93,7 +93,6 @@ namespace ChatDemoGUI
             }
         }
 
-
         #region INotifyPropertyChanged Members
         protected virtual void OnPropertyChanged(PropertyChangedEventArgs args)
         {

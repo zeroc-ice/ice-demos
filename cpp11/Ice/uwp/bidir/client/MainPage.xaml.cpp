@@ -98,7 +98,6 @@ void bidir::MainPage::startClient_Click(Platform::Object^ sender, Windows::UI::X
     }
 }
 
-
 void bidir::MainPage::stopClient_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
     try

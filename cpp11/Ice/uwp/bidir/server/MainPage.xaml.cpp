@@ -119,7 +119,6 @@ CallbackSenderI::removeClient(const shared_ptr<CallbackReceiverPrx>& client, exc
     _clients.erase(p);
 }
 
-
 MainPage::MainPage()
 {
     InitializeComponent();

@@ -90,7 +90,6 @@ public:
 
         Ice::Identity callbackReceiverIdent = createCallbackIdentity("callbackReceiver");
 
-
         ChatCallbackPtr cb = new ChatCallbackI;
         ChatCallbackPrx callback = ChatCallbackPrx::uncheckedCast(objectAdapter()->add(cb, callbackReceiverIdent));
 
@@ -148,7 +147,6 @@ private:
         return s;
     }
 };
-
 
 int
 main(int argc, char* argv[])

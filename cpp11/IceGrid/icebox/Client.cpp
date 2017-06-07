@@ -28,7 +28,6 @@ main(int argc, char* argv[])
     return app.main(argc, argv, "config.client");
 }
 
-
 int
 HelloClient::run(int argc, char* argv[])
 {

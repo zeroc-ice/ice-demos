@@ -81,7 +81,6 @@ function Init()
         var iceLibMap = libraryMaps.indexOf(req.url.pathname) !== -1;
         filePath = path.resolve(path.join(this._basePath, req.url.pathname));
 
-
         if(req.url.pathname.match("/index\.html$"))
         {
 

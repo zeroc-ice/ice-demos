@@ -24,5 +24,4 @@ private:
     WorkQueuePtr _workQueue;
 };
 
-
 #endif

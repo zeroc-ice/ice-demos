@@ -142,7 +142,6 @@ if(!srcDist || useBinDist)
     }
 }
 
-
 var sliceDir = iceHome ? (iceHome == "/usr" ? path.join(iceHome, "share", iceDist, "slice") : path.join(iceHome, "slice")) :
                          path.join(__dirname, "..", "..", "slice");
 

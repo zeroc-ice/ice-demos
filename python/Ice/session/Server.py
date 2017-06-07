@@ -70,7 +70,6 @@ class SessionI(Demo.Session):
         finally:
             self._lock.release()
 
-
 class SessionFactoryI(Demo.SessionFactory):
     def create(self, name, current):
 

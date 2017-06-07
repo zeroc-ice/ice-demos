@@ -90,7 +90,6 @@ public class Client
                 return 1;
             }
 
-
             Ice.Identity callbackReceiverIdent = createCallbackIdentity("callbackReceiver");
             Ice.Identity callbackReceiverFakeIdent = new Ice.Identity("fake", "callbackReceiver");
 

@@ -21,7 +21,6 @@ the IceGridGUI. If you prefer to use the command-line utility, use:
 
     icegridadmin --Ice.Config=config.grid -e "application add application.xml"
 
-
 Using the IceGridGUI
 ---------------------
 
@@ -57,14 +56,12 @@ log into the IceGrid registry and view the application you deployed above:
   - Next time you want to connect, the connection will appear in the
     `Saved Connections` dialog, just select it and click `Connect`.
 
-
 Running the Client
 ------------------
 
       client.exe
 
 The client simply calls 'sayHello' on the replicated 'hello' object.
-
 
 Stopping and restarting IceBox services
 ---------------------------------------
@@ -76,7 +73,6 @@ the 'Lisa' service:
     icegridadmin --Ice.Config=config.grid
     >>> service stop IceBox Lisa
     >>> service start IceBox Lisa
-
 
 Administration through Glacier2
 -------------------------------

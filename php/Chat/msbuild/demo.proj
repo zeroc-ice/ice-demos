@@ -13,7 +13,6 @@
   <Target Name="Build"></Target>
   <Target Name="Clean"></Target>
 
-
   <Target Name="EnsureIceBuilderImports" BeforeTargets="Build">
     <PropertyGroup>
       <ErrorText>This project requires the Ice Builder for Visual Studio extension. Use "Tools &amp;gt; Extensions and Updates" to install it. For more information, see https://visualstudiogallery.msdn.microsoft.com/1a64e701-63f2-4740-8004-290e6c682ce0.</ErrorText>

@@ -98,7 +98,6 @@
     // Release anything that's not essential, such as cached data
 }
 
-
 #pragma mark SessionManagement
 
 -(void)activate:(id<ICECommunicator>)c

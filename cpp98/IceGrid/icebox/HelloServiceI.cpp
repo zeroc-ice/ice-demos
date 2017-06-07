@@ -29,7 +29,6 @@ HelloServiceI::start(const string& name, const Ice::CommunicatorPtr& communicato
 {
     _adapter = communicator->createObjectAdapter("Hello-" + name);
 
-
     string helloIdentity = communicator->getProperties()->getProperty("Hello.Identity");
 
     Demo::HelloPtr hello = new HelloI(name);

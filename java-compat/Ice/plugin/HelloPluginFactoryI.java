@@ -4,8 +4,6 @@
 //
 // **********************************************************************
 
-
-
 public class HelloPluginFactoryI implements Ice.PluginFactory
 {
      @Override

@@ -54,7 +54,6 @@ private:
     condition_variable _cond;
 };
 
-
 class HelloClient : public Ice::Application
 {
 public:

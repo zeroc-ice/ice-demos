@@ -96,7 +96,6 @@ public class LoginActivity extends Activity
             edit.putString(PASSWORD_KEY, password);
         }
 
-
         edit.apply();
 
         LibraryApp app = (LibraryApp)getApplication();

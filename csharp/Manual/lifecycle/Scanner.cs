@@ -216,7 +216,6 @@ class Scanner
                                     break;
                                 }
 
-
                                 case 'f':
                                 {
                                     buf.Append('\f');

@@ -28,7 +28,6 @@ operator<<(ostream& out, Demo::Color c)
     return out;
 }
 
-
 int run(const Ice::CommunicatorPtr&);
 
 int
