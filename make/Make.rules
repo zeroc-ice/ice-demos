@@ -48,15 +48,18 @@ include $(top_srcdir)/make/Make.demos.rules
 #
 # Ice installation
 #
-ice_home                := $(or $(ICE_HOME),$(if $(filter Darwin,$(os)),/usr/local,/usr))
+# The OECORE_ environment variables are set only when cross-compiling
+# with Yocto/Poky.
+#
+ice_home                := $(or $(ICE_HOME),$(if $(filter Darwin,$(os)),/usr/local,$(OECORE_TARGET_SYSROOT)/usr))
 
 ifeq ($(ice_home),)
 $(error Can't find Ice distribution, please set ICE_HOME to the Ice installation directory)
 endif
 
 ice_src_dist            := $(wildcard $(ice_home)/config/Make.rules)
-usr_dir_install         := $(filter /usr%,$(ice_home))
-ice_bindir              ?= $(ice_home)$(if $(ice_src_dist),/cpp)/bin
+usr_dir_install         := $(filter $(OECORE_TARGET_SYSROOT)/usr%,$(ice_home))
+ice_bindir              ?= $(if $(ice_src_dist),$(ice_home)/cpp/bin$(if $(OECORE_SDK_VERSION),/$(build-platform)),$(if $(OECORE_NATIVE_SYSROOT),$(OECORE_NATIVE_SYSROOT)/usr/bin,$(ice_home)/bin))
 ice_slicedir            ?= $(ice_home)$(if $(usr_dir_install),/share/ice)/slice
 
 #
