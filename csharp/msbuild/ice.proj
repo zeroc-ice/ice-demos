@@ -12,6 +12,7 @@
     </Target>
 
     <Target Name="NuGetRestore" DependsOnTargets="GetNuGet">
+      <Exec Command="rmdir /s /q $(MSBuildThisFileDirectory)..\packages" Condition="Exists('$(MSBuildThisFileDirectory)..\packages')">
       <Exec Command="$(NuGetExe) restore &quot;$(MSBuildThisFileDirectory)..\CSharp demos.sln&quot;"/>
     </Target>
 
