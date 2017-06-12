@@ -12,7 +12,7 @@
     </Target>
 
     <Target Name="RemovePackages">
-      <Exec Command="rmdir /s /q $(MSBuildThisFileDirectory)..\packages" Condition="Exists('$(MSBuildThisFileDirectory)..\packages')">
+      <Exec Command="rmdir /s /q $(MSBuildThisFileDirectory)..\packages" Condition="Exists('$(MSBuildThisFileDirectory)..\packages')"/>
     </Target>
 
     <Target Name="NuGetRestore" DependsOnTargets="GetNuGet">
