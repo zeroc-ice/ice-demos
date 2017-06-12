@@ -18,8 +18,11 @@
       <Exec Command="powershell -ExecutionPolicy ByPass -Command &quot;(New-Object Net.WebClient).DownloadFile('$(NugetURL)', '$(NugetExe)')&quot;"/>
     </Target>
 
-    <Target Name="NuGetRestore" DependsOnTargets="GetNuGet">
+    <Target Name="RemovePackages">
       <Exec Command="rmdir /s /q $(MSBuildThisFileDirectory)..\packages" Condition="Exists('$(MSBuildThisFileDirectory)..\packages')" />
+    </Target>
+
+    <Target Name="NuGetRestore" DependsOnTargets="GetNuGet">
       <Exec Command="$(NuGetExe) restore &quot;$(MSBuildThisFileDirectory)..\C++11 demos.sln&quot;"/>
     </Target>
 
