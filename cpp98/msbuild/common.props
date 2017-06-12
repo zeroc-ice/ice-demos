@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <ProgramDataBaseFileName>$(IntDir)$(TargetName)-objs.pdb</ProgramDataBaseFileName>
+    </ClCompile>
+  </ItemDefinitionGroup>
   <!--
       GenerateDebugInformation supported values change from v120 to v140 and v141,
       we set it conditionally to the platform tool set.
   -->
+  <ItemDefinitionGroup>
+    <Link>
+      <GenerateDebugInformation>Yes</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(DefaultPlatformToolset)'=='v140'">
     <Link>
       <FullProgramDatabaseFile>true</FullProgramDatabaseFile>
       <GenerateDebugInformation>Debug</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-
   <ItemDefinitionGroup Condition="'$(DefaultPlatformToolset)'=='v141'">
     <Link>
       <FullProgramDatabaseFile>true</FullProgramDatabaseFile>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
-    </Link>
-  </ItemDefinitionGroup>
-
-  <ItemDefinitionGroup Condition="'$(DefaultPlatformToolset)'=='v120' OR '$(DefaultPlatformToolset)'=='v100'">
-    <Link>
-      <GenerateDebugInformation>Yes</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
 </Project>
