@@ -5,25 +5,19 @@
       <ProgramDataBaseFileName>$(IntDir)$(TargetName)-objs.pdb</ProgramDataBaseFileName>
     </ClCompile>
   </ItemDefinitionGroup>
-  <!--
-      GenerateDebugInformation supported values change from v120 to v140 and v141,
-      we set it conditionally to the platform tool set.
-  -->
+
+  <!-- Switch on DEBUG:fastlink -->
   <ItemDefinitionGroup>
     <Link>
-      <GenerateDebugInformation>Yes</GenerateDebugInformation>
+      <FullProgramDatabaseFile>false</FullProgramDatabaseFile>
+      <GenerateDebugInformation>DebugFastLink</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(DefaultPlatformToolset)'=='v140'">
+
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
     <Link>
-      <FullProgramDatabaseFile>true</FullProgramDatabaseFile>
-      <GenerateDebugInformation>Debug</GenerateDebugInformation>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(DefaultPlatformToolset)'=='v141'">
-    <Link>
-      <FullProgramDatabaseFile>true</FullProgramDatabaseFile>
-      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
     </Link>
   </ItemDefinitionGroup>
 </Project>
