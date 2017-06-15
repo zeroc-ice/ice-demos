@@ -10,5 +10,5 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 [assembly: CLSCompliant(true)]
 [assembly: AssemblyProductAttribute("Ice")]
-[assembly: AssemblyVersionAttribute("3.7.60.0")]
-[assembly: AssemblyFileVersionAttribute("3.7.60.0")]
+[assembly: AssemblyVersionAttribute("1.0.0.0")]
+[assembly: AssemblyFileVersionAttribute("1.0.0.0")]
