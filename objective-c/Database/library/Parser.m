@@ -13,9 +13,9 @@ Parser* parser;
 
 @interface Parser()
 
-@property(nonatomic, retain) DemoBookQueryResultPrx* query;
-@property(nonatomic, retain) DemoBookDescription* current;
-@property(nonatomic, retain) id<DemoLibraryPrx> library;
+@property(nonatomic, strong) DemoBookQueryResultPrx* query;
+@property(nonatomic, strong) DemoBookDescription* current;
+@property(nonatomic, strong) id<DemoLibraryPrx> library;
 
 @end
 

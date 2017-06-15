@@ -17,10 +17,10 @@
         NSArray *lines;
 }
 
-@property(nonatomic, retain) NSString *myName;
-@property(nonatomic, retain) DirectoryI *parent;
-@property(nonatomic, retain) ICEIdentity *ident;
-@property(nonatomic, retain) NSArray *lines;
+@property(nonatomic, strong) NSString *myName;
+@property(nonatomic, strong) DirectoryI *parent;
+@property(nonatomic, strong) ICEIdentity *ident;
+@property(nonatomic, strong) NSArray *lines;
 
 +(id) filei:(NSString *)name parent:(DirectoryI *)parent;
 -(void) write:(NSMutableArray *)text current:(ICECurrent *)current;

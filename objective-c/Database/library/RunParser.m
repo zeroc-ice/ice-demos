@@ -31,9 +31,9 @@
 @end
 
 @interface SessionRefreshThread()
-@property (nonatomic, retain) id<ICELogger> logger;
-@property (nonatomic, retain) id session;
-@property (nonatomic, retain) NSCondition* cond;
+@property (nonatomic, strong) id<ICELogger> logger;
+@property (nonatomic, strong) id session;
+@property (nonatomic, strong) NSCondition* cond;
 @end
 
 @implementation SessionRefreshThread

@@ -14,10 +14,10 @@
         ICEIdentity *ident;
         NSMutableArray *contents;
 }
-@property(nonatomic, retain) NSString *myName;
-@property(nonatomic, retain) DirectoryI *parent;
-@property(nonatomic, retain) ICEIdentity *ident;
-@property(nonatomic, retain) NSMutableArray *contents;
+@property(nonatomic, strong) NSString *myName;
+@property(nonatomic, strong) DirectoryI *parent;
+@property(nonatomic, strong) ICEIdentity *ident;
+@property(nonatomic, strong) NSMutableArray *contents;
 
 +(id) directoryi:(NSString *)name parent:(DirectoryI *)parent;
 -(void) addChild:(id<FSNodePrx>)child;
