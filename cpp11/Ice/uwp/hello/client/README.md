@@ -46,11 +46,6 @@ To test timeouts you can use the timeout slider to set a timeout in
 the client proxy and the delay slider to set a delayed response in
 the server to cause a timeout.
 
-You will notice that two "Hello World!" messages will be printed by
-the server in this case. This is because the sayHello method is marked
-as idempotent in the Slice, meaning that Ice does not need to follow
-the at-most-once retry semantics.
-
 See the manual for more information about retry behavior.
 
 ### IceDiscovery
