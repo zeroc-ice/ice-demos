@@ -24,7 +24,7 @@ dependencies {
     compile localDependency("icessl")
     compile localDependency("icestorm")
     if (!useLocalOnly) {
-        runtime "org.apache.tools:bzip2:1.0"
+        runtime "org.apache.commons:commons-compress:1.14"
     }
 }
 

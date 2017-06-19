@@ -107,7 +107,7 @@ def demoIceBoxServer() {
         iceboxserver localDependency("ice-compat")
         iceboxserver localDependency("icebox-compat")
         if (!useLocalOnly) {
-            iceboxserver "org.apache.tools:bzip2:1.0"
+            iceboxserver "org.apache.commons:commons-compress:1.14"
         }
     }
 

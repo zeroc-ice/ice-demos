@@ -32,10 +32,6 @@ subprojects {
             }
 
             maven {
-                url "https://${iceMavenRepo}/nexus/content/repositories/thirdparty"
-            }
-
-            maven {
                 url "https://${iceMavenRepo}/nexus/content/repositories/releases"
             }
         }

@@ -26,7 +26,7 @@ def demoIceGridProject(name) {
             compile localDependency("icegrid-compat")
             compile localDependency("icelocatordiscovery-compat")
             if (!useLocalOnly) {
-                runtime "org.apache.tools:bzip2:1.0"
+                runtime "org.apache.commons:commons-compress:1.14"
             }
         }
 
