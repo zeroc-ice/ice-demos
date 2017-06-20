@@ -26,7 +26,12 @@
       <Exec Command="$(NuGetExe) restore &quot;$(MSBuildThisFileDirectory)..\C++11 demos.sln&quot;"/>
     </Target>
 
+    <PropertyGroup>
+      <SymbolServer Condition="'$(SymbolServer)' == ''">$(SYMBOL_SERVER)</SymbolServer>
+      <SymbolServer Condition="'$(SymbolServer)' == ''">http://symbols.zeroc.com</SymbolServer>
+    </PropertyGroup>
+
     <Target Name="DownloadSymbols" DependsOnTargets="NuGetRestore">
-        <Exec Command="symchk /r $(MSBuildThisFileDirectory)..\packages\zeroc.ice.$(DefaultPlatformToolset).3.7.0\build\native\bin\$(Platform)\$(Configuration)\* /s SRV*$(TEMP)\SymbolCache*http://dev.zeroc.com/share/ice/master/nuget/zeroc.ice.$(DefaultPlatformToolset).store/" />
+        <Exec Command="symchk /r $(MSBuildThisFileDirectory)..\packages\zeroc.ice.$(DefaultPlatformToolset).3.7.0\build\native\bin\$(Platform)\$(Configuration)\* /s SRV*$(TEMP)\SymbolCache*$(SymbolServer)" />
     </Target>
 </Project>
