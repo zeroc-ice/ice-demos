@@ -140,7 +140,7 @@ public class Client
                 }
 
                 long tmsec = DateTime.Now.Ticks / 10000;
-                const int repetitions = 100;
+                int repetitions = 100;
 
                 if(line.Equals("1") || line.Equals("2") || line.Equals("3") || line.Equals("4"))
                 {
@@ -175,6 +175,11 @@ public class Client
                 }
                 else if(line.Equals("t") || line.Equals("o") || line.Equals("r") || line.Equals("e"))
                 {
+                    if(currentType == '1')
+                    {
+                        repetitions = 1000; // Use more iterations for  byte sequences as it's a lot faster
+                    }
+
                     char c = line[0];
                     switch (c)
                     {

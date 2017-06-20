@@ -146,7 +146,7 @@ run(const Ice::CommunicatorPtr& communicator)
             cin >> c;
 
             IceUtil::Time tm = IceUtil::Time::now(IceUtil::Time::Monotonic);
-            const int repetitions = 1000;
+            int repetitions = 100;
 
             if(c == '1' || c == '2' || c == '3' || c == '4')
             {
@@ -184,6 +184,11 @@ run(const Ice::CommunicatorPtr& communicator)
             }
             else if(c == 't' || c == 'o' || c == 'r' || c == 'e')
             {
+                if(currentType == '1')
+                {
+                    repetitions = 1000; // Use more iterations for byte sequences as it's a lot faster
+                }
+
                 switch(c)
                 {
                     case 't':

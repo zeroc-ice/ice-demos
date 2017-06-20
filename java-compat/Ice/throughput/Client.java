@@ -132,7 +132,7 @@ public class Client
                 }
 
                 long tmsec = System.currentTimeMillis();
-                final int repetitions = 100;
+                int repetitions = 100;
 
                 if(line.equals("1") || line.equals("2") || line.equals("3") || line.equals("4"))
                 {
@@ -171,6 +171,11 @@ public class Client
                 }
                 else if(line.equals("t") || line.equals("o") || line.equals("r") || line.equals("e"))
                 {
+                    if(currentType == '1')
+                    {
+                        repetitions = 1000; // Use more iterations for  byte sequences as it's a lot faster
+                    }
+
                     char c = line.charAt(0);
 
                     switch(c)

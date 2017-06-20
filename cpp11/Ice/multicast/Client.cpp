@@ -84,8 +84,7 @@ HelloClient::run(int, char* argv[])
     auto reply = Ice::uncheckedCast<DiscoverReplyPrx>(adapter->addWithUUID(replyI));
     adapter->activate();
 
-    auto discover = Ice::uncheckedCast<DiscoverPrx>(
-        communicator()->propertyToProxy("Discover.Proxy")->ice_datagram());
+    auto discover = Ice::uncheckedCast<DiscoverPrx>(communicator()->propertyToProxy("Discover.Proxy")->ice_datagram());
     discover->lookup(reply);
     auto base = replyI->waitReply(2);
     if(!base)
