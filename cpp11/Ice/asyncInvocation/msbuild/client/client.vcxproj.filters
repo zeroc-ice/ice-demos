@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\Client.cpp" />
+    <ClCompile Include="Win32\Debug\Calculator.cpp" />
+    <ClCompile Include="Win32\Release\Calculator.cpp" />
+    <ClCompile Include="x64\Debug\Calculator.cpp" />
+    <ClCompile Include="x64\Release\Calculator.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Win32\Debug\Calculator.h" />
+    <ClInclude Include="Win32\Release\Calculator.h" />
+    <ClInclude Include="x64\Debug\Calculator.h" />
+    <ClInclude Include="x64\Release\Calculator.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <IceBuilder Include="..\..\Calculator.ice" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\config.client" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Slice Files">
+      <UniqueIdentifier>{1e9fd751-ca43-4d2b-880d-4de4bbd5ff04}</UniqueIdentifier>
+      <Extensions>ice</Extensions>
+    </Filter>
+  </ItemGroup>
+</Project>
