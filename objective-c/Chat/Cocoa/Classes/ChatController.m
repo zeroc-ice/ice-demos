@@ -263,7 +263,7 @@
 
 - (int)numberOfRowsInTableView:(NSTableView *)tv
 {
-    return users.count;
+    return (int)users.count;
 }
 
 -(id) tableView:(NSTableView *)tv

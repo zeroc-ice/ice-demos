@@ -38,8 +38,9 @@ NSString* const passwordKey = @"passwordKey";
 
 -(void)awakeFromNib
 {
-    // Register and load the IceSSL plugin on communicator initialization.
+    // Register and load the IceSSL and IceWS plugins on communicator initialization.
     ICEregisterIceSSL(YES);
+    ICEregisterIceWS(YES);
 
     // Initialize the fields from the application defaults.
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
@@ -61,7 +62,7 @@ NSString* const passwordKey = @"passwordKey";
     }
 
     id<DemoSessionPrx> session = [factory create];
-    int sessionTimeout = [factory getSessionTimeout];
+    ICELong sessionTimeout = [factory getSessionTimeout];
     id<DemoLibraryPrx> library = [session getLibrary];
     return [[LibraryController alloc]
             initWithCommunicator:[proxy ice_getCommunicator]
@@ -79,7 +80,7 @@ NSString* const passwordKey = @"passwordKey";
                                                           password:passwordField.stringValue];
     id<DemoGlacier2SessionPrx> session = [DemoGlacier2SessionPrx uncheckedCast:glacier2session];
 
-    int sessionTimeout = [router getSessionTimeout];
+    ICELong sessionTimeout = [router getSessionTimeout];
 
     id<DemoLibraryPrx> library = [session getLibrary];
 
@@ -104,7 +105,7 @@ NSString* const passwordKey = @"passwordKey";
     }
 
     id<DemoSessionPrx> session = [factory create];
-    int sessionTimeout = [factory getSessionTimeout];
+    ICELong sessionTimeout = [factory getSessionTimeout];
     id<DemoLibraryPrx> library = [session getLibrary];
     return [[LibraryController alloc]
             initWithCommunicator:[proxy ice_getCommunicator]
@@ -280,8 +281,6 @@ NSString* const passwordKey = @"passwordKey";
 
 -(void)closeAdvancedSheet:(id)sender
 {
-//    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-
     [NSApp endSheet:advancedSheet];
     [advancedSheet orderOut:sender];
 }
