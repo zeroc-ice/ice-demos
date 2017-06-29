@@ -18,4 +18,4 @@ Follow these steps to install the demo:
 4) Start a Web browser and open the index.html page to begin using the
    demo.
 
-[1]: https://doc.zeroc.com/display/Ice37/Using+the+Linux+Binary+Distributions#UsingtheLinuxBinaryDistributions-PHP
+[1]: https://doc.zeroc.com/display/Rel/Ice+3.7.0+Release+Notes
