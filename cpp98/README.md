@@ -91,7 +91,7 @@ select `Build`.
   * Open a Visual Studio command prompt
 
             cd ice-demos\cpp98
-            MSBuild /p:ICE_SRC_DIST=all /p:IceHome=<Ice dist path> "C++98 demos.sln"
+            MSBuild /p:ICE_SRC_DIST=all /p:IceHome=<Ice dist path> /p:Configuration=<Release or Debug> "C++98 demos.sln"
 
 - Build from Visual Studio
   * Open a Visual Studio command prompt
