@@ -1,5 +1,4 @@
-This demo is a C++ commandline client for the
-[ZeroC Chat Demo](https://doc.zeroc.com/display/Doc/Chat+Demo).
+This demo is a C++ commandline client for the [ZeroC Chat Demo](https://doc.zeroc.com/display/Doc/Chat+Demo).
 This demo connects to a single chat room, allowing you to chat with other chat
 room participants.
 
