@@ -31,15 +31,15 @@ Add this extension to Visual Studio before opening the solution.
 
 Open the solution file `CSharp demos.sln` to build the sample programs.
 
-The demos are configure to use Ice distribution from NuGet packages, this packages are
-automatically downloaded during build. If you have disabled the automatic download of
-NuGet packages in Visual Studio you need to restore the packages before you build.
+The demos are configured to use the Ice distribution from NuGet packages. These packages are
+automatically downloaded during the build. If you have disabled the automatic download of
+NuGet packages in Visual Studio, you need to restore the packages before you build.
 
-Packages can be restored from "Tools > NuGet Package Manager > Manage NuGet Packages for Solution..."
-command in Visual Studio.
+Packages can be restored via "Tools > NuGet Package Manager > Manage NuGet Packages for Solution..."
+in Visual Studio.
 
-After restoring the packages right click on the desired demo in the Solution Explorer
-window and select "Build"
+After restoring the packages, right click on the desired demo in the Solution Explorer
+window and select "Build".
 
 #### Building the demos without using NuGet packages:
 
@@ -49,14 +49,14 @@ window and select "Build"
             cd ice-demos\csharp
             MSBuild /p:ICE_SRC_DIST=all /p:Platform="Any CPU" /p:IceHome=<Ice dist path> "CSharp demos.sln"
 
-- Build from Visual Studio
+- Build from Visual Studio:
   * Open a Visual Studio command prompt
 
             set ICE_SRC_DIST=all
             set IceHome=<Ice dist path>
             devenv
 
-  * When Visual Studio starts set IceHome in Ice Builder options, "Tools > Options > Projects and Solutions > Ice Builder"
+  * When Visual Studio starts, set IceHome in Ice Builder options, "Tools > Options > Projects and Solutions > Ice Builder"
   * Disable automatic restoring of NuGet packages in Visual Studio from "Tools > Options > NuGet Package Manager"
   * Right click on the desired demo in the Solution Explorer window and select "Build".
 
