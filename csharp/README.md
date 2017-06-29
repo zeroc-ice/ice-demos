@@ -70,4 +70,4 @@ Refer to the README file in each demo directory for usage instructions.
 [1]: https://doc.zeroc.com/display/Ice37/Ice+Manual
 [2]: https://zeroc.com/chat/index.html
 [3]: https://github.com/zeroc-ice/ice-builder-visualstudio
-[4]: https://doc.zeroc.com/display/Ice37/Ice+Release+Notes
+[4]: https://doc.zeroc.com/display/Rel/Ice+3.7.0+Release+Notes

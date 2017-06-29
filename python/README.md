@@ -23,4 +23,4 @@ Our [documentation][2] describes how to install the Python packages.
 Refer to the README file in each demo directory for usage instructions.
 
 [1]: https://doc.zeroc.com/display/Ice37/Ice+Manual
-[2]: https://doc.zeroc.com/display/Ice37/Using+the+Python+Distribution
+[2]: https://doc.zeroc.com/display/Rel/Using+the+Python+Distribution+for+Ice+3.7.0

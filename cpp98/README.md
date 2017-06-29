@@ -114,5 +114,5 @@ as described in the [release notes][2].
 Refer to the README.d file in each demo directory for usage instructions.
 
 [1]: https://doc.zeroc.com/display/Ice37/Ice+Manual
-[2]: https://doc.zeroc.com/display/Ice37/Ice+Release+Notes
+[2]: https://doc.zeroc.com/display/Rel/Ice+3.7.0+Release+Notes
 [3]: https://github.com/zeroc-ice/ice-builder-visualstudio
