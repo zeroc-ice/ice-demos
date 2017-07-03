@@ -13,6 +13,14 @@
 using namespace std;
 static const unsigned int maxMessageSize = 1024;
 
+namespace
+{
+
+// mutex to prevent intertwined cout output
+mutex coutMutex;
+
+}
+
 class GetUpdatesTask
 {
 public:
@@ -61,6 +69,7 @@ public:
                     auto joinedEvt = dynamic_pointer_cast<PollingChat::UserJoinedEvent>(u);
                     if(joinedEvt)
                     {
+                        lock_guard<mutex> lkg(coutMutex);
                         cout << ">>>> " << joinedEvt->name << " joined." << endl;
                     }
                     else
@@ -68,6 +77,7 @@ public:
                         auto leftEvt = dynamic_pointer_cast<PollingChat::UserLeftEvent>(u);
                         if(leftEvt)
                         {
+                            lock_guard<mutex> lkg(coutMutex);
                             cout << ">>>> " << leftEvt->name << " left." << endl;
                         }
                         else
@@ -75,6 +85,7 @@ public:
                             auto messageEvt = dynamic_pointer_cast<PollingChat::MessageEvent>(u);
                             if(messageEvt)
                             {
+                                lock_guard<mutex> lkg(coutMutex);
                                 cout << messageEvt->name << " > " << ChatUtils::unstripHtml(messageEvt->message) << endl;
                             }
                         }
@@ -231,17 +242,20 @@ run(const shared_ptr<Ice::Communicator>& communicator)
     menu();
 
     auto users = session->getInitialUsers();
-    cout << "Users: ";
-    for(auto it = users.begin(); it != users.end();)
     {
-        cout << *it;
-        it++;
-        if(it != users.end())
+        lock_guard<mutex> lock(coutMutex);
+        cout << "Users: ";
+        for(auto it = users.begin(); it != users.end();)
         {
-            cout << ", ";
+            cout << *it;
+            it++;
+            if(it != users.end())
+            {
+                cout << ", ";
+            }
         }
+        cout << endl;
     }
-    cout << endl;
 
     try
     {
@@ -265,6 +279,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 {
                     if(s.size() > maxMessageSize)
                     {
+                        lock_guard<mutex> lock(coutMutex);
                         cout << "Message length exceeded, maximum length is " << maxMessageSize << " characters.";
                     }
                     else
@@ -302,5 +317,6 @@ run(const shared_ptr<Ice::Communicator>& communicator)
 void
 menu()
 {
+    lock_guard<mutex> lock(coutMutex);
     cout << "enter /quit to exit." << endl;
 }
