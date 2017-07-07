@@ -54,6 +54,7 @@ class CallbackSenderI extends _CallbackSenderDisp implements java.lang.Runnable
 
                 for(CallbackReceiverPrx p : _clients)
                 {
+                    final CallbackReceiverPrx prx = p;
                     p.begin_callback(num, new Callback_CallbackReceiver_callback() {
                         @Override
                         public void
@@ -65,7 +66,7 @@ class CallbackSenderI extends _CallbackSenderDisp implements java.lang.Runnable
                         public void
                         exception(Ice.LocalException ex)
                         {
-                            removeClient(p, ex);
+                            removeClient(prx, ex);
                         }
                     });
                 }

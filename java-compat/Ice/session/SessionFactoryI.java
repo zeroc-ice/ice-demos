@@ -19,7 +19,7 @@ class SessionFactoryI extends _SessionFactoryDisp
         // This way, if we invoke on the proxy during shutdown, the invocation fails immediately
         // without attempting to establish any connection
         //
-        SessionPrx collocProxy = SessionPrxHelper.uncheckedCast(proxy.ice_endpoints(new Ice.Endpoint[0]));
+        final SessionPrx collocProxy = SessionPrxHelper.uncheckedCast(proxy.ice_endpoints(new Ice.Endpoint[0]));
 
         //
         // Never close this connection from the client and turn on heartbeats with a timeout of 30s
@@ -27,18 +27,22 @@ class SessionFactoryI extends _SessionFactoryDisp
         current.con.setACM(Ice.Optional.O(30),
                            Ice.Optional.O(Ice.ACMClose.CloseOff),
                            Ice.Optional.O(Ice.ACMHeartbeat.HeartbeatAlways));
-        current.con.setCloseCallback(con ->
-                                {
-                                    try
-                                    {
-                                        collocProxy.destroy();
-                                        System.out.println("Cleaned up dead client.");
-                                    }
-                                    catch(Ice.LocalException ex)
-                                    {
-                                        // The client already destroyed this session, or the server is shutting down
-                                    }
-                                });
+        current.con.setCloseCallback(new Ice.CloseCallback()
+                {
+                    @Override
+                    public void closed(Ice.Connection con)
+                    {
+                        try
+                        {
+                            collocProxy.destroy();
+                            System.out.println("Cleaned up dead client.");
+                        }
+                        catch(Ice.LocalException ex)
+                        {
+                            // The client already destroyed this session, or the server is shutting down
+                        }
+                    }
+                });
         return proxy;
     }
 
