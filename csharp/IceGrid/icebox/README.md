@@ -29,14 +29,8 @@ Using IceGridGUI
 We suggest using the IceGridGUI tool with this demo. Follow these steps to
 log into the IceGrid registry and view the application you deployed above:
 
-  - Launch the application. Windows users can use the IceGridGUI
-    icon from the Start menu, macOS users can use the IceGridGUI
-    icon from the Finder Applications folder, and users with a Linux
-    installation can use the `icegridgui` script to start the
-    program:
-    ```
-    icegridgui
-    ```
+  - Launch the IceGridGUI application.
+  
   - Select `Login...` from the `File menu`.
 
   - In the `Saved Connections` dialog, click `New Connection` to open
