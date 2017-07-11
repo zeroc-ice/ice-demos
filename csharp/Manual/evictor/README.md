@@ -11,5 +11,4 @@ The evictor implementation relies on a linked list that allows items
 to be added and removed without invalidating iterators. Such an
 implementation is provided in `LinkedList.cs`.
 
-For more details on this evictor, see the section "Server
-Implementation Techniques" in the Ice documentation.
+Refer to the Ice Manual for more details on this evictor.
