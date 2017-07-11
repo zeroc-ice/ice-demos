@@ -37,7 +37,7 @@ public class Client extends com.zeroc.Ice.Application
         System.out.print("Checking john... ");
 
         //
-        // Find the phone number for "john". Note the use of the Ice.Optional
+        // Find the phone number for "john". Note the use of the java.util.Optional
         // for non-generic types.
         //
         Optional<String> number = contactdb.queryNumber("john");
@@ -59,7 +59,7 @@ public class Client extends com.zeroc.Ice.Application
         }
 
         // Optional can also be used in an out parameter. Note that
-        // primitive types don't use Ice.Optional.
+        // primitive types don't use java.util.Optional.
         OptionalInt dialgroup = contactdb.queryDialgroup("john");
         if(!dialgroup.isPresent() || dialgroup.getAsInt() != 0)
         {
