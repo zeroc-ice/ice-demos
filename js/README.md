@@ -44,9 +44,9 @@ Now use gulp to build the demos:
 
     npm run build
 
-On Windows you need to set the platform and configuration in order to locate
-slice2js, for example if you have build C++ x64 Release mode you can use
-the following command to build
+On Windows if you are using Ice source distribution you need to set the platform
+and configuration in order to locate slice2js, for example if you have build C++
+x64 Release mode you can use the following command to build
 
     > npm run build -- --cppPlatform x64 --cppConfiguration Release
 

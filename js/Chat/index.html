@@ -127,20 +127,17 @@
         <h4>Chat Demo Readme</h4>
         <hr/>
         <p>This demo implements a push client for the
-            <a href="https://doc.zeroc.com/display/Doc/Chat+Demo">ZeroC's Chat Demo Application</a>. By default it will connect to a chat server running on demo.zeroc.com though a proxy on https://zeroc.com. There is also a <a href="#" class="chatbutton">Live Client</a> which connects to the same server.
-        </p>
-
-        <p>To set up your own server follow the instructions from the C++ Chat Demo README to start the server.</p>
+            <a href="https://doc.zeroc.com/display/Doc/Chat+Demo">ZeroC's Chat Demo Application</a>. By default it will connect to a chat server running on demo.zeroc. To set up your own server follow the instructions from the C++11 Chat Demo README to start the server.</p>
 
         <p>Once you have configured and started the Chat Demo server and router, edit <code>Ice.Default.Router</code> property in <code>js/Chat/config.json</code>. You will then be able to log into your chat server using this page.</p>
 
         <h4>Using the minified scripts</h4>
-        <p>The minified script <code>browser/Client.min.js</code> includes:</p>
+        <p>The minified script <code>es5/Client.min.js</code> includes:</p>
         <ul>
-            <li><code>Ice.js</code> (The Ice run-time library)</li>
-            <li><code>Glacier2.js</code> (The Glacier2 library)</li>
-            <li><code>Chat.js</code> and <code>ChatSession.js</code> (The generated code for this demo)</li>
-            <li><code>Client.js</code> (The client application)</li>
+            <li><code>es5/Ice.js</code> (The Ice run-time library)</li>
+            <li><code>es5/Glacier2.js</code> (The Glacier2 library)</li>
+            <li><code>es5/generated/Chat.js</code> and <code>es5/generated/ChatSession.js</code> (The generated code for this demo)</li>
+            <li><code>es5/Client.js</code> (The client application)</li>
         </ul>
         <p>To use the minified version you should edit the <code>js/Chat/index.html</code>
         file and comment out the non-optimized scripts:</p>
@@ -149,22 +146,22 @@
          comment the following scripts and uncomment browser/Client.min.js
          below -->
     &lt;!-- Ice.js (Ice run-time library) --&gt;
-    &lt;script type="text/javascript" src="../../../lib/Ice.js"&gt;&lt;/script&gt;
+    &lt;script type="text/javascript" src="../../../lib/es5/Ice.js"&gt;&lt;/script&gt;
     &lt;!-- Glacier2.js (Glacier2 run-time library) --&gt;
-    &lt;script type="text/javascript" src="../../../lib/Glacier2.js"&gt;&lt;/script&gt;
+    &lt;script type="text/javascript" src="../../../lib/es5/Glacier2.js"&gt;&lt;/script&gt;
     &lt;!-- Chat.js (Demo generated code) --&gt;
-    &lt;script type="text/javascript" src="Chat.js"&gt;&lt;/script&gt;
+    &lt;script type="text/javascript" src="es5/generated/Chat.js"&gt;&lt;/script&gt;
     &lt;!-- ChatSession.js (Demo generated code) --&gt;
-    &lt;script type="text/javascript" src="ChatSession.js"&gt;&lt;/script&gt;
+    &lt;script type="text/javascript" src="es5/generated/ChatSession.js"&gt;&lt;/script&gt;
     &lt;!-- Client.js (Chat Demo Application) --&gt;
-    &lt;script type="text/javascript" src="Client.js"&gt;&lt;/script&gt;
+    &lt;script type="text/javascript" src="es5/Client.js"&gt;&lt;/script&gt;
         </pre>
         <p>Then uncomment the script tag for the minified version</p>
         <pre>
     &lt;!-- Uncomment the following script to use a minified version of the
          scripts that includes: the Ice and Glacier2 run-time libraries,
          the generated code and the demo application. --&gt;
-    &lt;!--&lt;script src="Client.min.js"&gt;&lt;/script&gt;--&gt;
+    &lt;!--&lt;script src="es5/Client.min.js"&gt;&lt;/script&gt;--&gt;
         </pre>
         <a class="close-reveal-modal">&#215;</a>
     </div>
