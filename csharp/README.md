@@ -41,33 +41,38 @@ in Visual Studio.
 After restoring the packages, right click on the desired demo in the Solution Explorer
 window and select "Build".
 
-#### Building the demos without using NuGet packages:
+#### Building the demos using a source build:
 
 - Build from command line:
   * Open a Visual Studio command prompt
-
-            cd ice-demos\csharp
-            MSBuild /p:ICE_SRC_DIST=all /p:Platform="Any CPU" /p:IceHome=<Ice dist path> "CSharp demos.sln"
+  ```
+  cd ice-demos\csharp
+  MSBuild /p:ICE_SRC_DIST=all /p:Platform="Any CPU" /p:IceHome=<Ice dist path> "CSharp demos.sln"
+  ```
 
 - Build from Visual Studio:
   * Open a Visual Studio command prompt
+  ``` 
+  set ICE_SRC_DIST=all
+  set IceHome=<Ice dist path>
+  devenv
+  ```
 
-            set ICE_SRC_DIST=all
-            set IceHome=<Ice dist path>
-            devenv
-
-  * When Visual Studio starts, set IceHome in Ice Builder options, "Tools > Options > Projects and Solutions > Ice Builder"
+  * When Visual Studio starts, set the `Ice home directory` in "Tools > Options > Projects and Solutions > Ice Builder"
   * Disable automatic restoring of NuGet packages in Visual Studio from "Tools > Options > NuGet Package Manager"
   * Right click on the desired demo in the Solution Explorer window and select "Build".
 
 ## Running the Demos
 
-Before running a demo, make sure you've configured your environment to use Ice
-as described in the [release notes][4].
+For most demos, you can simply run `client` and `server` in separate Command Prompt windows. 
+Refer to the README.md file in each demo directory for the exact usage instructions.
 
-Refer to the README file in each demo directory for usage instructions.
+Some demos require Ice services such as IceGrid and IceStorm that are not included in the
+`zeroc.ice.net` NuGet package. To run these demos, the simplest is to first install the Ice MSI
+and add its bin directory to your PATH. Please refer to [Using the Windows Binary Distributions][4]
+for additional information.
 
 [1]: https://doc.zeroc.com/display/Ice37/Ice+Manual
 [2]: https://zeroc.com/chat/index.html
 [3]: https://github.com/zeroc-ice/ice-builder-visualstudio
-[4]: https://doc.zeroc.com/display/Rel/Ice+3.7.0+Release+Notes
+[4]: https://doc.zeroc.com/display/Rel/Ice+3.7.0+Using+the+Windows+Binary+Distributions
