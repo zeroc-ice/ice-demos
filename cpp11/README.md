@@ -129,7 +129,7 @@ Then refer to the README.md file in each demo directory for usage instructions.
 
 ### Prerequisites
 
-The projects for the sample programs require the [Ice Builder for Visual Studio][5].
+The projects for the sample programs require the [Ice Builder for Visual Studio][4].
 Add this extension to Visual Studio before opening the solution.
 
 ### Building the Demos
@@ -177,5 +177,4 @@ Refer to the README.md file in each demo directory for usage instructions.
 [1]: https://doc.zeroc.com/display/Ice37/Ice+Manual
 [2]: https://doc.zeroc.com/display/Doc/Chat+Demo
 [3]: https://github.com/zeroc-ice/ice-builder-xcode
-[4]: https://doc.zeroc.com/display/Rel/Ice+3.7.0+Release+Notes
-[5]: https://github.com/zeroc-ice/ice-builder-visualstudio
+[4]: https://github.com/zeroc-ice/ice-builder-visualstudio
