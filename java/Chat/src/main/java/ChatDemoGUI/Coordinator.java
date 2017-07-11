@@ -219,7 +219,16 @@ class Coordinator
         _mainView.dispose();
         if(communicator != null)
         {
-            communicator.waitForShutdown();
+            try
+            {
+                communicator.waitForShutdown();
+            }
+            catch(com.zeroc.Ice.CommunicatorDestroyedException ex)
+            {
+                //
+                // Can happen if the communicator is already destroyed
+                //
+            }
         }
         System.exit(0);
     }

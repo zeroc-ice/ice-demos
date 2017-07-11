@@ -234,7 +234,16 @@ namespace ChatDemoGUI
             destroySession();
             if(communicator != null)
             {
-                communicator.waitForShutdown();
+                try
+                {
+                    communicator.waitForShutdown();
+                }
+                catch(Ice.CommunicatorDestroyedException)
+                {
+                    //
+                    // Can happen if the communicator is already destroyed
+                    //
+                }
             }
         }
 

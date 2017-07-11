@@ -22,6 +22,7 @@ dependencies {
     compile 'com.jgoodies:jgoodies-looks:2.6.0'
     compile 'com.jgoodies:jgoodies-forms:1.8.0'
     compile localDependency("ice")
+    compile localDependency("icessl")
     compile localDependency("glacier2")
 }
 

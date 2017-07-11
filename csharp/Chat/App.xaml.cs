@@ -27,11 +27,8 @@ namespace ChatDemoGUI
 
         protected override void OnExit(ExitEventArgs e)
         {
-            if(_hasNetFramework)
-            {
-                _coordinator.storeWindowPrefs();
-                _coordinator.exit();
-            }
+            _coordinator.storeWindowPrefs();
+            _coordinator.exit();
         }
 
         public Coordinator getCoordinator()
@@ -41,57 +38,9 @@ namespace ChatDemoGUI
 
         private void AppStartup(object sender, StartupEventArgs e)
         {
-            PlatformID id = Environment.OSVersion.Platform;
-            bool windows = id == PlatformID.Win32NT || id  == PlatformID.Win32S || id == PlatformID.Win32Windows ||
-                           id == PlatformID.WinCE;
-            if(windows)
-            {
-                RegistryKey netKey = Registry.LocalMachine.OpenSubKey(
-                                                        "SOFTWARE\\Microsoft\\NET Framework Setup\\NDP\\v4\\Client");
-                if(netKey != null)
-                {
-                    _hasNetFramework = (int)netKey.GetValue("Install") == 1;
-                }
-
-                if(!_hasNetFramework)
-                {
-                    netKey = Registry.LocalMachine.OpenSubKey(
-                                                        "SOFTWARE\\Microsoft\\NET Framework Setup\\NDP\\v4\\Full");
-                    if(netKey != null)
-                    {
-                        _hasNetFramework = (int)netKey.GetValue("Install") == 1;
-                    }
-                }
-
-                if(!_hasNetFramework)
-                {
-                    netKey = Registry.LocalMachine.OpenSubKey("SOFTWARE\\Microsoft\\NET Framework Setup\\NDP\\v3.5");
-                    if(netKey != null)
-                    {
-                        _hasNetFramework = (int)netKey.GetValue("Install") == 1;
-                    }
-                }
-            }
-
-            if(_hasNetFramework)
-            {
-                _coordinator = new Coordinator(e.Args);
-            }
-            else
-            {
-                string errorMessage = "Chat Demo \n" +
-                    "You need to install Microsoft .NET Framework v3.5 or higher on a Windows OS in order to run " +
-                    "this application.\n" +
-                    "Refer to the README file in your Chat Demo distribution for more information.";
-                string caption = "Chat Demo - Error";
-                MessageBoxImage icon = MessageBoxImage.Error;
-                MessageBoxButton button = MessageBoxButton.OK;
-                MessageBox.Show(errorMessage, caption, button, icon);
-                Shutdown(-1);
-            }
+            _coordinator = new Coordinator(e.Args);
         }
 
         private Coordinator _coordinator = null;
-        private bool _hasNetFramework = false;
     }
 }
