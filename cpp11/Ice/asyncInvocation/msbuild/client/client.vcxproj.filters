@@ -2,19 +2,18 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="..\..\Client.cpp" />
-    <ClCompile Include="Win32\Debug\Calculator.cpp" />
-    <ClCompile Include="Win32\Release\Calculator.cpp" />
-    <ClCompile Include="x64\Debug\Calculator.cpp" />
-    <ClCompile Include="x64\Release\Calculator.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Win32\Debug\Calculator.h" />
-    <ClInclude Include="Win32\Release\Calculator.h" />
-    <ClInclude Include="x64\Debug\Calculator.h" />
-    <ClInclude Include="x64\Release\Calculator.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <IceBuilder Include="..\..\Calculator.ice" />
+    <ClCompile Include="Win32\Debug\Calculator.cpp">
+      <Filter>Source Files\Win32\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="x64\Debug\Calculator.cpp">
+      <Filter>Source Files\x64\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Win32\Release\Calculator.cpp">
+      <Filter>Source Files\Win32\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="x64\Release\Calculator.cpp">
+      <Filter>Source Files\x64\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\config.client" />
@@ -25,5 +24,66 @@
       <UniqueIdentifier>{1e9fd751-ca43-4d2b-880d-4de4bbd5ff04}</UniqueIdentifier>
       <Extensions>ice</Extensions>
     </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{9e285fff-6b7b-44d6-8f8a-439379ebe9bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Win32">
+      <UniqueIdentifier>{50aedf0d-3c36-44cc-8192-8638d68a3814}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Win32\Debug">
+      <UniqueIdentifier>{1d6d9ad6-cc23-4e89-ae83-211e118dee2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{0be32f0e-3595-46de-b839-0b9ceb2cbe3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Win32">
+      <UniqueIdentifier>{390dff52-92b9-407f-847b-16cf37d68efd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Win32\Debug">
+      <UniqueIdentifier>{92f0a98a-8c24-45ce-8013-8d7c3f63f421}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\x64">
+      <UniqueIdentifier>{461b99bc-8730-46f5-aa2f-903ee46e17c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\x64\Debug">
+      <UniqueIdentifier>{8cfbcf8e-8b62-46b1-92fb-e6b97c8ab8cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\x64">
+      <UniqueIdentifier>{93cdf99a-e194-4c9d-8553-895c78c0ad65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\x64\Debug">
+      <UniqueIdentifier>{84a23776-86d0-4d24-9edf-d6ec54e08342}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Win32\Release">
+      <UniqueIdentifier>{2589ce45-c54f-47e5-80b2-135aea9da46d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Win32\Release">
+      <UniqueIdentifier>{a09d7297-559b-4117-9c02-ebb1abfedffc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\x64\Release">
+      <UniqueIdentifier>{c4572586-9410-4d72-a5c9-b45b76a9730b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\x64\Release">
+      <UniqueIdentifier>{d6e13a88-9fab-4ca7-8205-0f3a952a4f90}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <IceBuilder Include="..\..\Calculator.ice">
+      <Filter>Slice Files</Filter>
+    </IceBuilder>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Win32\Debug\Calculator.h">
+      <Filter>Header Files\Win32\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="x64\Debug\Calculator.h">
+      <Filter>Header Files\x64\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Win32\Release\Calculator.h">
+      <Filter>Header Files\Win32\Release</Filter>
+    </ClInclude>
+    <ClInclude Include="x64\Release\Calculator.h">
+      <Filter>Header Files\x64\Release</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
