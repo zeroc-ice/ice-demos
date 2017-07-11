@@ -12,6 +12,11 @@ language; you can try changing the value to `fr`, `de`, `es` or `it`.
 Setup
 -----
 
+Add `iceboxnet`'s folder to your PATH, with a command similar to:
+```
+set PATH=%USERPROFILE%\ice-demos\csharp\packages\zeroc.ice.net.3.7.0\tools;%PATH%
+```
+
 Start the IceGrid registry and node:
 ```
 icegridnode --Ice.Config=config.grid
@@ -30,7 +35,7 @@ We suggest using the IceGridGUI tool with this demo. Follow these steps to
 log into the IceGrid registry and view the application you deployed above:
 
   - Launch the IceGridGUI application.
-  
+
   - Select `Login...` from the `File menu`.
 
   - In the `Saved Connections` dialog, click `New Connection` to open
