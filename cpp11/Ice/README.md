@@ -34,6 +34,11 @@ Demos in this directory:
   well as how to invoke oneway operations, use datagrams, secure
   invocations, and how to use batched invocations.
 
+- [interleaved](./interleaved)
+
+  This demo is a variant of the throughput demo that uses asynchronous requests
+  to send "echo" requests to the server.
+
 - [invoke](./invoke)
 
   This demo illustrates the use of the Ice streaming API.

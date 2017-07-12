@@ -48,7 +48,7 @@ InterleavedClient::run(int argc, char* argv[])
     }
 
     ByteSeq byteSeq(ByteSeqSize);
-    pair<const Ice::Byte*, const Ice::Byte*> byteArr = make_pair(byteSeq.data(), byteSeq.data() + byteSeq.size());
+    auto byteArr = make_pair(byteSeq.data(), byteSeq.data() + byteSeq.size());
 
     throughput->ice_ping(); // Initial ping to setup the connection.
 
@@ -75,7 +75,6 @@ InterleavedClient::run(int argc, char* argv[])
         {
             if(p->wait_for(std::chrono::seconds(0)) == std::future_status::ready)
             {
-                // cout << "e" << flush;
                 p = results.erase(p);
             }
             else
@@ -88,7 +87,6 @@ InterleavedClient::run(int argc, char* argv[])
         // number of threads, or the server process requests slower than then client can send them.
         while(maxOutstanding != -1 && static_cast<int>(results.size()) > maxOutstanding)
         {
-            // cout << "w" << flush;
             results.front().wait();
             results.pop_front();
         }
@@ -98,7 +96,6 @@ InterleavedClient::run(int argc, char* argv[])
     //
     while(results.size() > 0)
     {
-        // cout << "W" << flush;
         results.front().wait();
         results.pop_front();
     }
