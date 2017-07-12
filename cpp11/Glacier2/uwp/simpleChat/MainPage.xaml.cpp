@@ -29,6 +29,7 @@ MainPage^ MainPage::_instance = nullptr;
 
 Coordinator::Coordinator()
 {
+    Ice::registerIceSSL();
 }
 
 void
