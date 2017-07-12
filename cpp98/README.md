@@ -99,13 +99,13 @@ select `Build`.
   set ICE_SRC_DIST=all
   devenv
   ```
-  
+
   * When Visual Studio starts set `Ice home directory` in
     `Tools > Options > Projects and Solutions > Ice Builder`
   * Disable automatic restoring of NuGet packages in Visual Studio
     `Tools > Options > NuGet Package Manager`
   * Select your target configuration (Debug or Release) and platform (Win32 or
-    x64). Right click on the desired demo in the Solution Explorer window and 
+    x64). Right click on the desired demo in the Solution Explorer window and
     select `Build`.
 
 ### Running the Demos

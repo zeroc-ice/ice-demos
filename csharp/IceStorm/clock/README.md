@@ -109,7 +109,7 @@ Host <P>: publisher
 Host <S>: subscriber
 Host <I>: IceStorm
 ```
-Replace `<P>`, `<S>`, and `<I>` with the appropriate host names or IP addresses 
+Replace `<P>`, `<S>`, and `<I>` with the appropriate host names or IP addresses
 in the steps below:
 
 1. Edit the subscriber's configuration file, `config.sub`, and change
@@ -136,7 +136,7 @@ in the steps below:
    IceStorm.TopicManager.Endpoints=default -h <I> -p 10000
    IceStorm.Publish.Endpoints=tcp -h <I> -p 10001:udp -h <I> -p 10001
    ```
-   
+
 If you experience any network delays or errors, edit all of the
 configuration files and enable the `Ice.Trace.Network` property. Running
 the processes with this property enabled displays a log of Ice's
