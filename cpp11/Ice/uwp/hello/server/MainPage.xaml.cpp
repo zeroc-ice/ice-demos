@@ -39,7 +39,7 @@ public:
     {
         if(delay > 0)
         {
-            IceUtil::ThreadControl::sleep(IceUtil::Time::milliSeconds(delay));
+            this_thread::sleep_for(chrono::milliseconds(delay));
         }
 
         _page->Dispatcher->RunAsync(
