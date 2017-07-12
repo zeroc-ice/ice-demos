@@ -30,40 +30,52 @@ The JavaScript sample programs require an installation of [Node.js][2].
 With Node.js in your PATH, go to this directory (ice-demos/js) and run the
 following command to install several dependencies:
 
-    npm install
+```
+npm install
+```
 
 This command builds the Slice-to-JavaScript compiler (`slice2js`) from
 source and requires a supported C++ compiler.
 
 Now use gulp to build the demos:
 
-    npm run build
+```
+npm run build
+```
 
 #### Building the demos with the Ice source distribution
 
 If you want to build the demos using the Ice source distribution, you must set
-`ICE_HOME` environment variable with the path name of the Ice source directory
-and pass `--only=dev` argument to `npm install`:
+the `ICE_HOME` environment variable with the path name of the Ice source
+directory and pass the `--only=dev` argument to `npm install`:
 
-    > export ICE_HOME=~/ice
-    > npm install --only=dev
+```
+export ICE_HOME=~/ice
+npm install --only=dev
+```
 
 Now use gulp to build the demos:
 
-    npm run build
+```
+npm run build
+```
 
-On Windows if you are using Ice source distribution you need to set the platform
-and configuration in order to locate slice2js, for example if you have build C++
-x64 Release mode you can use the following command to build
+On Windows you need to set the platform and configuration in order to locate
+slice2js. For example, if you have built C++ x64 Release mode, you can use the
+following command to build:
 
-    > npm run build -- --cppPlatform x64 --cppConfiguration Release
+```
+npm run build -- --cppPlatform x64 --cppConfiguration Release
+```
 
 Alternatively, you can use the CPP_PLATFORM and CPP_CONFIGURATION environment
 variables:
 
-    > set CPP_PLATFORM=x64
-    > set CPP_CONFIGURATION=Debug
-    > npm run build
+```
+set CPP_PLATFORM=x64
+set CPP_CONFIGURATION=Debug
+npm run build
+```
 
 ## Running the Node.js JavaScript Demos
 
@@ -72,14 +84,18 @@ support full server-side activities. In order to run a sample client, you must
 first start its corresponding server from another Ice language mapping. For
 example, start the python "hello" server:
 
-    cd python/Ice/hello
-    python Server.py
+```
+cd python/Ice/hello
+python Server.py
+```
 
 To run the client, open another terminal window, change to the corresponding
 JavaScript demo directory, and run:
 
-    cd js/Ice/hello
-    node Client
+```
+cd js/Ice/hello
+node Client
+```
 
 ## Running the Browser JavaScript Demos
 
@@ -89,7 +105,9 @@ that supports WebSocket connections. For your convenience, this distribution
 includes a Node.js HTTP server pre-configured for the demos. Open another
 terminal window and run:
 
-    npm run run
+```
+npm run run
+```
 
 This will load http://127.0.0.1:8080/index.html in the default browser. From
 this page you can select the client that you want to run.
@@ -112,7 +130,9 @@ the demos, and that the demo certificate authority be installed on your device.
 First you'll need to generate new certificates to match the IP address or DNS
 name of the computer hosting the demos:
 
-    > certs/makedemocerts.py --ip [IP address] --dns [DNS name] [--use-dns]
+```
+certs/makedemocerts.py --ip [IP address] --dns [DNS name] [--use-dns]
+```
 
 The option `--use-dns` specifies to use the DNS name instead of the IP address
 for the certificate common name. You can use either the IP address or DNS name
