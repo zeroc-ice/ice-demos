@@ -67,11 +67,11 @@ CallbackClient::createSession()
 
         string id;
         cout << "user id: " << flush;
-        cin >> id;
+        getline(cin, id);
 
         string pw;
         cout << "password: " << flush;
-        cin >> pw;
+        getline(cin, pw);
 
         try
         {
