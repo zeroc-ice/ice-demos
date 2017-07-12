@@ -7,20 +7,19 @@
 #include <FilesystemI.h>
 
 using namespace std;
-using namespace Ice;
 using namespace Filesystem;
 using namespace FilesystemI;
 
 // Slice Node::name() operation.
 
 std::string
-FilesystemI::NodeI::name(const Current& c)
+FilesystemI::NodeI::name(const Ice::Current& c)
 {
     lock_guard<mutex> lock(_mutex);
 
     if(_destroyed)
     {
-        throw ObjectNotExistException(__FILE__, __LINE__, c.id, c.facet, c.operation);
+        throw Ice::ObjectNotExistException(__FILE__, __LINE__, c.id, c.facet, c.operation);
     }
 
     return _name;
@@ -28,7 +27,7 @@ FilesystemI::NodeI::name(const Current& c)
 
 // Return the object identity for this node.
 
-Identity
+Ice::Identity
 FilesystemI::NodeI::id() const
 {
     return _id;
@@ -55,13 +54,13 @@ FilesystemI::NodeI::NodeI(const string& nm, const shared_ptr<DirectoryI>& parent
 // Slice File::read() operation.
 
 Lines
-FilesystemI::FileI::read(const Current& c)
+FilesystemI::FileI::read(const Ice::Current& c)
 {
     lock_guard<mutex> lock(_mutex);
 
     if(_destroyed)
     {
-        throw ObjectNotExistException(__FILE__, __LINE__, c.id, c.facet, c.operation);
+        throw Ice::ObjectNotExistException(__FILE__, __LINE__, c.id, c.facet, c.operation);
     }
 
     return _lines;
@@ -70,13 +69,13 @@ FilesystemI::FileI::read(const Current& c)
 // Slice File::write() operation.
 
 void
-FilesystemI::FileI::write(Lines text, const Current& c)
+FilesystemI::FileI::write(Lines text, const Ice::Current& c)
 {
     lock_guard<mutex> lock(_mutex);
 
     if(_destroyed)
     {
-        throw ObjectNotExistException(__FILE__, __LINE__, c.id, c.facet, c.operation);
+        throw Ice::ObjectNotExistException(__FILE__, __LINE__, c.id, c.facet, c.operation);
     }
 
     _lines = move(text);
@@ -85,14 +84,14 @@ FilesystemI::FileI::write(Lines text, const Current& c)
 // Slice File::destroy() operation.
 
 void
-FilesystemI::FileI::destroy(const Current& c)
+FilesystemI::FileI::destroy(const Ice::Current& c)
 {
     {
         lock_guard<mutex> lock(_mutex);
 
         if(_destroyed)
         {
-            throw ObjectNotExistException(__FILE__, __LINE__, c.id, c.facet, c.operation);
+            throw Ice::ObjectNotExistException(__FILE__, __LINE__, c.id, c.facet, c.operation);
         }
 
         c.adapter->remove(id());
@@ -112,13 +111,13 @@ FilesystemI::FileI::FileI(const string& nm, const shared_ptr<DirectoryI>& parent
 // Slice Directory::list() operation.
 
 NodeDescSeq
-FilesystemI::DirectoryI::list(const Current& c)
+FilesystemI::DirectoryI::list(const Ice::Current& c)
 {
     lock_guard<mutex> lock(_mutex);
 
     if(_destroyed)
     {
-        throw ObjectNotExistException(__FILE__, __LINE__, c.id, c.facet, c.operation);
+        throw Ice::ObjectNotExistException(__FILE__, __LINE__, c.id, c.facet, c.operation);
     }
 
     NodeDescSeq ret;
@@ -136,13 +135,13 @@ FilesystemI::DirectoryI::list(const Current& c)
 // Slice Directory::find() operation.
 
 NodeDesc
-FilesystemI::DirectoryI::find(string nm, const Current& c)
+FilesystemI::DirectoryI::find(string nm, const Ice::Current& c)
 {
     lock_guard<mutex> lock(_mutex);
 
     if(_destroyed)
     {
-        throw ObjectNotExistException(__FILE__, __LINE__, c.id, c.facet, c.operation);
+        throw Ice::ObjectNotExistException(__FILE__, __LINE__, c.id, c.facet, c.operation);
     }
 
     auto pos = _contents.find(nm);
@@ -162,13 +161,13 @@ FilesystemI::DirectoryI::find(string nm, const Current& c)
 // Slice Directory::createFile() operation.
 
 shared_ptr<FilePrx>
-FilesystemI::DirectoryI::createFile(string nm, const Current& c)
+FilesystemI::DirectoryI::createFile(string nm, const Ice::Current& c)
 {
     lock_guard<mutex> lock(_mutex);
 
     if(_destroyed)
     {
-        throw ObjectNotExistException(__FILE__, __LINE__, c.id, c.facet, c.operation);
+        throw Ice::ObjectNotExistException(__FILE__, __LINE__, c.id, c.facet, c.operation);
     }
 
     if(nm.empty() || _contents.find(nm) != _contents.end())
@@ -185,13 +184,13 @@ FilesystemI::DirectoryI::createFile(string nm, const Current& c)
 // Slice Directory::createDirectory() operation.
 
 shared_ptr<DirectoryPrx>
-FilesystemI::DirectoryI::createDirectory(string nm, const Current& c)
+FilesystemI::DirectoryI::createDirectory(string nm, const Ice::Current& c)
 {
     lock_guard<mutex> lock(_mutex);
 
     if(_destroyed)
     {
-        throw ObjectNotExistException(__FILE__, __LINE__, c.id, c.facet, c.operation);
+        throw Ice::ObjectNotExistException(__FILE__, __LINE__, c.id, c.facet, c.operation);
     }
 
     if(nm.empty() || _contents.find(nm) != _contents.end())
@@ -208,7 +207,7 @@ FilesystemI::DirectoryI::createDirectory(string nm, const Current& c)
 // Slice Directory::destroy() operation.
 
 void
-FilesystemI::DirectoryI::destroy(const Current& c)
+FilesystemI::DirectoryI::destroy(const Ice::Current& c)
 {
     if(!_parent)
     {
@@ -220,7 +219,7 @@ FilesystemI::DirectoryI::destroy(const Current& c)
 
         if(_destroyed)
         {
-            throw ObjectNotExistException(__FILE__, __LINE__, c.id, c.facet, c.operation);
+            throw Ice::ObjectNotExistException(__FILE__, __LINE__, c.id, c.facet, c.operation);
         }
 
         if(!_contents.empty())

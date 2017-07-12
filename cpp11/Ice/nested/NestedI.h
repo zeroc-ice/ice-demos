@@ -14,7 +14,7 @@ class NestedI : public Demo::Nested
 public:
 
     NestedI(std::shared_ptr<Demo::NestedPrx>);
-    virtual void nestedCall(Ice::Int, std::shared_ptr<Demo::NestedPrx>, const Ice::Current&) override;
+    virtual void nestedCall(int, std::shared_ptr<Demo::NestedPrx>, const Ice::Current&) override;
 
 private:
 

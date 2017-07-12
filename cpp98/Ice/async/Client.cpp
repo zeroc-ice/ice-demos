@@ -8,7 +8,6 @@
 #include <Hello.h>
 
 using namespace std;
-using namespace Demo;
 
 class Callback : public IceUtil::Shared
 {
@@ -67,7 +66,7 @@ void menu();
 int
 run(const Ice::CommunicatorPtr& communicator)
 {
-    HelloPrx hello = HelloPrx::checkedCast(communicator->propertyToProxy("Hello.Proxy"));
+    Demo::HelloPrx hello = Demo::HelloPrx::checkedCast(communicator->propertyToProxy("Hello.Proxy"));
     if(!hello)
     {
         cerr << "invalid proxy" << endl;
@@ -91,7 +90,7 @@ run(const Ice::CommunicatorPtr& communicator)
             }
             else if(c == 'd')
             {
-                hello->begin_sayHello(5000, newCallback_Hello_sayHello(cb, &Callback::response, &Callback::exception));
+                hello->begin_sayHello(5000, Demo::newCallback_Hello_sayHello(cb, &Callback::response, &Callback::exception));
             }
             else if(c == 's')
             {

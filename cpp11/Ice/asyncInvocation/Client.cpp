@@ -11,7 +11,6 @@
 #include <Calculator.h>
 
 using namespace std;
-using namespace Demo;
 
 class Client : public Ice::Application
 {
@@ -36,7 +35,7 @@ Client::run(int argc, char* argv[])
         return EXIT_FAILURE;
     }
 
-    auto calculator = Ice::checkedCast<CalculatorPrx>(communicator()->propertyToProxy("Calculator.Proxy"));
+    auto calculator = Ice::checkedCast<Demo::CalculatorPrx>(communicator()->propertyToProxy("Calculator.Proxy"));
     if(!calculator)
     {
         cerr << argv[0] << ": invalid proxy" << endl;

@@ -8,32 +8,31 @@
 #include <CallbackSenderI.h>
 
 using namespace std;
-using namespace Ice;
 using namespace Demo;
 
 void
-CallbackSenderI::initiateCallback(shared_ptr<CallbackReceiverPrx> proxy, const Current&)
+CallbackSenderI::initiateCallback(shared_ptr<CallbackReceiverPrx> proxy, const Ice::Current&)
 {
     cout << "initiating callback" << endl;
     try
     {
         proxy->callback();
     }
-    catch(const Exception& ex)
+    catch(const Ice::Exception& ex)
     {
         cout << ex << endl;
     }
 }
 
 void
-CallbackSenderI::shutdown(const Current& c)
+CallbackSenderI::shutdown(const Ice::Current& c)
 {
     cout << "shutting down..." << endl;
     try
     {
         c.adapter->getCommunicator()->shutdown();
     }
-    catch(const Exception& ex)
+    catch(const Ice::Exception& ex)
     {
         cout << ex << endl;
     }

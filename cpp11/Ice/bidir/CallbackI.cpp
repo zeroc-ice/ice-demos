@@ -8,11 +8,10 @@
 #include <CallbackI.h>
 
 using namespace std;
-using namespace Ice;
 using namespace Demo;
 
 void
-CallbackSenderI::addClient(Identity ident, const Current& current)
+CallbackSenderI::addClient(Ice::Identity ident, const Ice::Current& current)
 {
     lock_guard<mutex> lock(_mutex);
     cout << "adding client `" << Ice::identityToString(ident) << "'"<< endl;

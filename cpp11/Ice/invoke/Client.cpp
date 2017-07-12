@@ -8,7 +8,6 @@
 #include <Printer.h>
 
 using namespace std;
-using namespace Ice;
 using namespace Demo;
 
 static ostream&
@@ -101,7 +100,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 //
                 // Invoke operation.
                 //
-                if(!obj->ice_invoke("printString", OperationMode::Normal, inParams, outParams))
+                if(!obj->ice_invoke("printString", Ice::OperationMode::Normal, inParams, outParams))
                 {
                     cout << "Unknown user exception" << endl;
                 }
@@ -122,7 +121,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 //
                 // Invoke operation.
                 //
-                if(!obj->ice_invoke("printStringSequence", OperationMode::Normal, inParams, outParams))
+                if(!obj->ice_invoke("printStringSequence", Ice::OperationMode::Normal, inParams, outParams))
                 {
                     cout << "Unknown user exception" << endl;
                 }
@@ -147,7 +146,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 //
                 // Invoke operation.
                 //
-                if(!obj->ice_invoke("printDictionary", OperationMode::Normal, inParams, outParams))
+                if(!obj->ice_invoke("printDictionary", Ice::OperationMode::Normal, inParams, outParams))
                 {
                     cout << "Unknown user exception" << endl;
                 }
@@ -167,7 +166,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 //
                 // Invoke operation.
                 //
-                if(!obj->ice_invoke("printEnum", OperationMode::Normal, inParams, outParams))
+                if(!obj->ice_invoke("printEnum", Ice::OperationMode::Normal, inParams, outParams))
                 {
                     cout << "Unknown user exception" << endl;
                 }
@@ -190,7 +189,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 //
                 // Invoke operation.
                 //
-                if(!obj->ice_invoke("printStruct", OperationMode::Normal, inParams, outParams))
+                if(!obj->ice_invoke("printStruct", Ice::OperationMode::Normal, inParams, outParams))
                 {
                     cout << "Unknown user exception" << endl;
                 }
@@ -220,7 +219,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 //
                 // Invoke operation.
                 //
-                if(!obj->ice_invoke("printStructSequence", OperationMode::Normal, inParams, outParams))
+                if(!obj->ice_invoke("printStructSequence", Ice::OperationMode::Normal, inParams, outParams))
                 {
                     cout << "Unknown user exception" << endl;
                 }
@@ -244,7 +243,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 //
                 // Invoke operation.
                 //
-                if(!obj->ice_invoke("printClass", OperationMode::Normal, inParams, outParams))
+                if(!obj->ice_invoke("printClass", Ice::OperationMode::Normal, inParams, outParams))
                 {
                     cout << "Unknown user exception" << endl;
                 }
@@ -255,7 +254,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 // Invoke operation.
                 //
                 Ice::ByteSeq inParams, outParams;
-                if(!obj->ice_invoke("getValues", OperationMode::Normal, inParams, outParams))
+                if(!obj->ice_invoke("getValues", Ice::OperationMode::Normal, inParams, outParams))
                 {
                     cout << "Unknown user exception" << endl;
                     continue;
@@ -281,7 +280,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 // Invoke operation.
                 //
                 Ice::ByteSeq inParams, outParams;
-                if(obj->ice_invoke("throwPrintFailure", OperationMode::Normal, inParams, outParams))
+                if(obj->ice_invoke("throwPrintFailure", Ice::OperationMode::Normal, inParams, outParams))
                 {
                     cout << "Expected exception" << endl;
                     continue;
@@ -306,7 +305,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
             else if(ch == 's')
             {
                 Ice::ByteSeq inParams, outParams;
-                obj->ice_invoke("shutdown", OperationMode::Normal, inParams, outParams);
+                obj->ice_invoke("shutdown", Ice::OperationMode::Normal, inParams, outParams);
             }
             else if(ch == 'x')
             {

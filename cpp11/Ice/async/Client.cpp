@@ -9,7 +9,6 @@
 #include <exception>
 
 using namespace std;
-using namespace Demo;
 
 int run(const shared_ptr<Ice::Communicator>&);
 
@@ -53,7 +52,7 @@ void menu();
 int
 run(const shared_ptr<Ice::Communicator>& communicator)
 {
-    auto hello = Ice::checkedCast<HelloPrx>(communicator->propertyToProxy("Hello.Proxy"));
+    auto hello = Ice::checkedCast<Demo::HelloPrx>(communicator->propertyToProxy("Hello.Proxy"));
     if(!hello)
     {
         cerr << "invalid proxy" << endl;

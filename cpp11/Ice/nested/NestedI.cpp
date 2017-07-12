@@ -8,7 +8,6 @@
 #include <NestedI.h>
 
 using namespace std;
-using namespace Ice;
 using namespace Demo;
 
 NestedI::NestedI(shared_ptr<NestedPrx> self) :
@@ -17,7 +16,7 @@ NestedI::NestedI(shared_ptr<NestedPrx> self) :
 }
 
 void
-NestedI::nestedCall(Int level, shared_ptr<NestedPrx> proxy, const Ice::Current&)
+NestedI::nestedCall(int level, shared_ptr<NestedPrx> proxy, const Ice::Current&)
 {
     cout << level << endl;
     if(--level > 0)

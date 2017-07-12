@@ -11,7 +11,6 @@ using namespace bidir;
 
 using namespace std;
 using namespace Demo;
-using namespace Ice;
 using namespace Platform;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
