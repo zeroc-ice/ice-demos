@@ -53,7 +53,7 @@ Explorer window and select `Build`.
 
 - Build from Visual Studio:
   * Open a Visual Studio command prompt
-  ``` 
+  ```
   set ICE_SRC_DIST=all
   set IceHome=<Ice dist path>
   devenv
@@ -61,9 +61,9 @@ Explorer window and select `Build`.
 
   * When Visual Studio starts set `Ice home directory` in
     `Tools > Options > Projects and Solutions > Ice Builder`
-  * Disable automatic restoring of NuGet packages in Visual Studio from 
+  * Disable automatic restoring of NuGet packages in Visual Studio from
     `Tools > Options > NuGet Package Manager`
-  * Right click on the desired demo in the Solution Explorer window and select 
+  * Right click on the desired demo in the Solution Explorer window and select
     `Build`.
 
 ## Running the Demos
@@ -80,4 +80,4 @@ refer to [Using the Windows Binary Distributions][4] for additional information.
 [1]: https://doc.zeroc.com/display/Ice37/Ice+Manual
 [2]: https://zeroc.com/chat/index.html
 [3]: https://github.com/zeroc-ice/ice-builder-visualstudio
-[4]: https://doc.zeroc.com/display/Rel/Ice+3.7.0+Using+the+Windows+Binary+Distributions
+[4]: https://doc.zeroc.com/display/Rel/Using+the+Windows+Binary+Distributions+for+Ice+3.7.0
