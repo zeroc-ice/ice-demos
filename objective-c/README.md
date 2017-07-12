@@ -39,8 +39,8 @@ Run `make` to start the build:
     $ make
 
 To build the iOS or Cocoa examples, open `Objective-C demos.xcworkspace` in
-Xcode. To build the Cocoa examples, you will need to select a development team
-in the Xcode project `General` settings of each demo.
+Xcode. You will need to select a development team in the Xcode project `General`
+settings of each demo to test the demos on an iOS device or macOS.
 
 ## Running the Demos
 
