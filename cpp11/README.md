@@ -107,7 +107,7 @@ select `Build`.
   devenv
   ```
 
-  * When Visual Studio starts set IceHome in the Ice Builder options
+  * When Visual Studio starts set `Ice home directory` in
     `Tools > Options > Projects and Solutions > Ice Builder`
   * Disable automatic restoring of NuGet packages in Visual Studio
     `Tools > Options > NuGet Package Manager`
