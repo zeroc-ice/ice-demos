@@ -27,8 +27,8 @@ Using the IceGridGUI
 We suggest using the IceGridGUI tool with this demo. Follow these steps to
 log into the IceGrid registry and view the application you deployed above:
 
-  - Launch the application. Windows users can use the IceGridGUI
-    icon from the Start menu, macOS users can use the IceGridGUI
+  - Launch the application. Windows users can use the IceGrid GUI
+    icon from the Start menu, macOS users can use the IceGrid GUI
     icon from the Finder Applications folder, and users with a Linux
     installation can use the `icegridgui` script to start the
     program:
@@ -42,13 +42,14 @@ log into the IceGrid registry and view the application you deployed above:
 
   - Select `Direct Connection` and click `Next`.
 
-  - Enter `DemoIceGrid` for the IceGrid instance name and click `Next`.
-
-  - In `Endpoint Configuration`, select `A hostname and port number?`
+  - Let the default value `Connect to Master Registry` checked
     and click `Next`.
 
-  - Enter `localhost` for the `Hostname`. You can leave the port empty
-    as the demo uses the default port. Click `Next`.
+  - On the `Discovered Registries` list select `DemoIceGrid/locator...` and
+    click `Next`.
+
+  - In next Window let the pre fill `IceGrid Registry Endpoint(s)` and click
+    `Next`.
 
   - Enter any username and password combination and click `Finish`
     to log in.
