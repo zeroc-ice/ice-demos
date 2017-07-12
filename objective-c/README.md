@@ -3,12 +3,12 @@
 ## Overview
 
 This directory contains Objective-C sample programs for various Ice components.
-These examples are provided to get you started on using a particular Ice feature or
-coding technique.
+These examples are provided to get you started on using a particular Ice feature
+or coding technique.
 
 Most of the subdirectories here correspond directly to Ice components, such as
-[Ice](./Ice) and [IceDiscovery](./IceDiscovery). We've also included the following
-additional subdirectories:
+[Ice](./Ice) and [IceDiscovery](./IceDiscovery). We've also included the
+following additional subdirectories:
 
 - [Database](./Database)<p>
 Ice clients for our Java-based [Database library](../java/Database/library) demo.
@@ -38,7 +38,8 @@ Run `make` to start the build:
 
     $ make
 
-To build the iOS or Cocoa examples, open `Objective-C demos.xcworkspace` in Xcode.
+To build the iOS or Cocoa examples, open `Objective-C demos.xcworkspace` in
+Xcode.
 
 ## Running the Demos
 

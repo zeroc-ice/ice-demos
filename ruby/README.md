@@ -3,8 +3,8 @@
 ## Overview
 
 This directory contains Ruby sample programs for various Ice components. These
-examples are provided to get you started on using a particular Ice feature or coding
-technique.
+examples are provided to get you started on using a particular Ice feature or
+coding technique.
 
 The following subdirectories contain sample programs:
 

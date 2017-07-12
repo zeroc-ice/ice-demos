@@ -7,8 +7,8 @@
 ## Overview
 
 This directory contains C++ sample programs for various Ice components; they all
-use the Ice C++98 mapping. These examples are provided to get you started on using
-a particular Ice feature or coding technique.
+use the Ice C++98 mapping. These examples are provided to get you started on
+using a particular Ice feature or coding technique.
 
 Most of the subdirectories here correspond directly to Ice components, such as
 [IceGrid](./IceGrid), [Glacier2](./Glacier2), and so on. We've also included the
@@ -77,9 +77,8 @@ The demos are configured to use Ice C++ binary distribution, packaged with
 NuGet. The build downloads automatically the Ice NuGet package.
 
 If you have disabled the automatic download of NuGet packages by Visual Studio,
-you need to restore the packages before you build using
-`Tools > Options > NuGet Package Manager > Manage NuGet Packages for Solution...` in
-Visual Studio.
+you need to restore the packages before you build using `Tools > NuGet Package
+Manager > Manage NuGet Packages for Solution...` in Visual Studio.
 
 Then select your target configuration (Debug or Release) and platform (Win32
 or x64). Right click on the desired demo in the Solution Explorer window and
@@ -105,8 +104,9 @@ select `Build`.
     `Tools > Options > Projects and Solutions > Ice Builder`
   * Disable automatic restoring of NuGet packages in Visual Studio
     `Tools > Options > NuGet Package Manager`
-  * Select your target configuration (Debug or Release) and platform (Win32 or x64).
-    Right click on the desired demo in the Solution Explorer window and select `Build`.
+  * Select your target configuration (Debug or Release) and platform (Win32 or
+    x64). Right click on the desired demo in the Solution Explorer window and 
+    select `Build`.
 
 ### Running the Demos
 

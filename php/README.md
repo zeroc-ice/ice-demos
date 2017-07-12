@@ -3,8 +3,8 @@
 ## Overview
 
 This directory contains PHP sample programs for various Ice components. These
-examples are provided to get you started on using a particular Ice feature or coding
-technique.
+examples are provided to get you started on using a particular Ice feature or
+coding technique.
 
 The following subdirectories contain sample programs:
 
@@ -38,8 +38,8 @@ installation directory:
 
 ### Building the Demos
 
-Review the settings in `../make/Make.rules`. When you're ready to start the build,
-run `make`:
+Review the settings in `../make/Make.rules`. When you're ready to start the
+build, run `make`:
 
     $ make
 
@@ -47,8 +47,8 @@ run `make`:
 
 ### Prerequisites
 
-The projects for the sample programs require the [Ice Builder for Visual Studio][3].
-Add this extension to Visual Studio before building the demos.
+The projects for the sample programs require the [Ice Builder for Visual
+Studio][2]. Add this extension to Visual Studio before building the demos.
 
 ### Building the Demos
 
@@ -61,5 +61,4 @@ When you're ready to start the build, run `MSBuild`:
 Refer to the README file in each demo directory for usage instructions.
 
 [1]: https://zeroc.com/chat/index.html
-[2]: http://www.microsoft.com/downloads/details.aspx?FamilyId=E6E1C3DF-A74F-4207-8586-711EBE331CDC&displaylang=en
-[3]: https://github.com/zeroc-ice/ice-builder-visualstudio
+[2]: https://github.com/zeroc-ice/ice-builder-visualstudio

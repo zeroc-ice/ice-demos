@@ -2,9 +2,9 @@
 
 ## Overview
 
-This directory contains JavaScript sample programs for various Ice components. These
-examples are provided to get you started on using a particular Ice feature or coding
-technique.
+This directory contains JavaScript sample programs for various Ice components.
+These examples are provided to get you started on using a particular Ice feature
+or coding technique.
 
 The following subdirectories contain sample programs:
 
@@ -25,6 +25,8 @@ The JavaScript sample programs require an installation of [Node.js][2].
 
 ### Building the Demos
 
+#### Building the demos with the NPM packages
+
 With Node.js in your PATH, go to this directory (ice-demos/js) and run the
 following command to install several dependencies:
 
@@ -32,6 +34,12 @@ following command to install several dependencies:
 
 This command builds the Slice-to-JavaScript compiler (`slice2js`) from
 source and requires a supported C++ compiler.
+
+Now use gulp to build the demos:
+
+    npm run build
+
+#### Building the demos with the Ice source distribution
 
 If you want to build the demos using the Ice source distribution, you must set
 `ICE_HOME` environment variable with the path name of the Ice source directory
@@ -50,7 +58,7 @@ x64 Release mode you can use the following command to build
 
     > npm run build -- --cppPlatform x64 --cppConfiguration Release
 
-alternativelly you can use the CPP_PLATFORM and CPP_CONFIGURATION enviroment
+Alternatively, you can use the CPP_PLATFORM and CPP_CONFIGURATION environment
 variables:
 
     > set CPP_PLATFORM=x64
@@ -59,37 +67,38 @@ variables:
 
 ## Running the Node.js JavaScript Demos
 
-Ice provides only client demos in JavaScript since Ice for JavaScript does not support
-full server-side activities. In order to run a sample client, you must first start its
-corresponding server from another Ice language mapping. For example, start the python
-"hello" server:
+Ice provides only client demos in JavaScript since Ice for JavaScript does not
+support full server-side activities. In order to run a sample client, you must
+first start its corresponding server from another Ice language mapping. For
+example, start the python "hello" server:
 
-    > cd python/Ice/hello
-    > python Server.py
+    cd python/Ice/hello
+    python Server.py
 
 To run the client, open another terminal window, change to the corresponding
 JavaScript demo directory, and run:
 
-    > cd js/Ice/hello
-    > node Client
+    cd js/Ice/hello
+    node Client
 
 ## Running the Browser JavaScript Demos
 
-Ice provides only client demos in JavaScript since Ice for JavaScript does not support
-full server-side activities. The browser clients require an HTTP server that supports
-WebSocket connections. For your convenience, this distribution includes a Node.js
-HTTP server pre-configured for the demos. Open another terminal window and run:
+Ice provides only client demos in JavaScript since Ice for JavaScript does not
+support full server-side activities. The browser clients require an HTTP server
+that supports WebSocket connections. For your convenience, this distribution
+includes a Node.js HTTP server pre-configured for the demos. Open another
+terminal window and run:
 
-    > npm run run
+    npm run run
 
-This will load http://127.0.0.1:8080/index.html in the default browser. From this page
-you can select the client that you want to run.
+This will load http://127.0.0.1:8080/index.html in the default browser. From
+this page you can select the client that you want to run.
 
 Next, start the corresponding server from another Ice language mapping. Open a
-terminal window, change to the desired server directory, and start the server. The
-client page provides a README link which might include additional instructions for
-running the server; please refer to the README of each client before starting the
-server.
+terminal window, change to the desired server directory, and start the server.
+The client page provides a README link which might include additional
+instructions for running the server; please refer to the README of each client
+before starting the server.
 
 To try a different client, terminate the server that you started earlier, change
 to the new server directory and start the new server.

@@ -3,12 +3,12 @@
 ## Overview
 
 This directory contains Java sample programs for various Ice components. These
-examples are provided to get you started on using a particular Ice feature or coding
-technique.
+examples are provided to get you started on using a particular Ice feature or
+coding technique.
 
 Most of the subdirectories here correspond directly to Ice components, such as
-[IceGrid](./IceGrid), [Glacier2](./Glacier2), and so on. We've also included the following
-additional subdirectories:
+[IceGrid](./IceGrid), [Glacier2](./Glacier2), and so on. We've also included the
+following additional subdirectories:
 
 - [Manual](./Manual) contains complete examples for some of the code snippets
 in the [Ice manual][1].
