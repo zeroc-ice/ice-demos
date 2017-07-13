@@ -142,6 +142,11 @@ If you have disabled the automatic download of NuGet packages by Visual Studio,
 you need to restore the packages before you build using `Tools > NuGet Package
 Manager > Manage NuGet Packages for Solution...` in Visual Studio.
 
+The NuGet packages for UWP consist mostly of static libraries and PDB files
+and are very large (about 300 MB compressed for each compiler). As a result, the
+first restore can take a long time; subsequent restores on the same computer are
+faster as they use the local NuGet cache.
+
 Then select your target configuration (Debug or Release), and platform
 (Win32, x64 or ARM). Right click on the desired demo in the Solution Explorer
 window and select `Build`.
