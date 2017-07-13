@@ -30,6 +30,7 @@ MainPage::MainPage()
     Ice::registerIceSSL();
     Ice::registerIceUDP();
     Ice::registerIceDiscovery(false); // Register the plugin but don't load it on initialization
+    mode->SelectedIndex = 0;
 }
 
 void
