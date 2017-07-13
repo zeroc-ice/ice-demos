@@ -4,9 +4,9 @@ This demo is a graphical client app written in C++/CX. This client
 works with the UWP hello server as well as the Ice/hello servers provided by
 other language mappings, such as C++, C#, Java and Python.
 
-Note that if you use the UWP server, this server cannot run on same machine as
-the client due to UWP restrictions, SSL secure connections are also not supported
-with UWP servers.
+If you want to run the server on the same computer as your UWP client,
+you cannot use the UWP server (due to UWP restrictions). You can however
+use any other hello server (C++, C# etc.).
 
 ## Running the demo
 
