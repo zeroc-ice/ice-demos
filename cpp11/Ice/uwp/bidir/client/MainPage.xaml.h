@@ -9,6 +9,7 @@
 #include "MainPage.g.h"
 #include <Ice/Ice.h>
 #include <Callback.h>
+#include <future>
 
 namespace bidir
 {
@@ -43,7 +44,9 @@ private:
     void print(const std::string&);
     void startClient_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
     void stopClient_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+    void dispatch(std::function<void()>);
     Ice::CommunicatorHolder _communicator;
+    std::future<void> _start;
 };
 
 }

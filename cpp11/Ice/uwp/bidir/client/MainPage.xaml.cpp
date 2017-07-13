@@ -37,71 +37,95 @@ MainPage::MainPage()
     InitializeComponent();
 }
 
+void
+bidir::MainPage::dispatch(function<void()> call)
+{
+    this->Dispatcher->RunAsync(
+                            CoreDispatcherPriority::Normal,
+                            ref new DispatchedHandler([=]()
+                                {
+                                    call();
+                                },
+                            CallbackContext::Any));
+}
+
 void bidir::MainPage::startClient_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
-    try
-    {
-        Ice::InitializationData initData;
-        initData.properties = Ice::createProperties();
-        initData.properties->setProperty("Ice.Warn.Connections", "1");
-        initData.dispatcher = [=](function<void()> call, const shared_ptr<Ice::Connection>&)
-            {
-                this->Dispatcher->RunAsync(
-                    CoreDispatcherPriority::Normal,
-                    ref new DispatchedHandler([=]()
-                        {
-                            call();
-                        }, CallbackContext::Any));
-            };
-
-        _communicator = Ice::initialize(initData);
-
-        auto server = Ice::checkedCast<CallbackSenderPrx>(
-            _communicator->stringToProxy("sender:tcp -h " + Ice::wstringToString(hostname->Text->Data()) +
-                                         " -p 10000"));
-
-        if(!server)
+    Ice::InitializationData initData;
+    initData.properties = Ice::createProperties();
+    initData.properties->setProperty("Ice.Warn.Connections", "1");
+    initData.dispatcher = [=](function<void()> call, const shared_ptr<Ice::Connection>&)
         {
-            print("invalid proxy\n");
-            return;
-        }
-        startClient->IsEnabled = false;
-        stopClient->IsEnabled = true;
-        Ice::ObjectAdapterPtr adapter = _communicator->createObjectAdapter("");
-        Ice::Identity ident;
-        ident.name = Ice::generateUUID();
-        ident.category = "";
-        auto cr = make_shared<CallbackReceiverI>(this);
-        adapter->add(cr, ident);
-        adapter->activate();
-        server->ice_getConnection()->setAdapter(adapter);
-        server->addClientAsync(ident, nullptr,
-            [=](const exception_ptr ex)
+            dispatch(call);
+        };
+
+    startClient->IsEnabled = false;
+    stopClient->IsEnabled = true;
+
+    string endpoint = "sender:tcp -h " + Ice::wstringToString(hostname->Text->Data()) + " -p 10000";
+
+    _start = async(launch::async, [this, initData, endpoint]
+        {
+            try
             {
-                try
+                _communicator = Ice::initialize(initData);
+                auto server = Ice::checkedCast<CallbackSenderPrx>(_communicator->stringToProxy(endpoint));
+
+                if(!server)
                 {
-                    rethrow_exception(ex);
+                    dispatch([this]() { print("invalid proxy\n"); });
+                    return;
                 }
-                catch(const exception& err)
-                {
-                    print(err.what());
-                    startClient->IsEnabled = true;
-                    stopClient->IsEnabled = false;
-                }
-            });
-    }
-    catch(const Ice::Exception& ex)
-    {
-        print(ex.what());
-        startClient->IsEnabled = true;
-        stopClient->IsEnabled = false;
-    }
+
+                Ice::ObjectAdapterPtr adapter = _communicator->createObjectAdapter("");
+                Ice::Identity ident;
+                ident.name = Ice::generateUUID();
+                ident.category = "";
+                auto cr = make_shared<CallbackReceiverI>(this);
+                adapter->add(cr, ident);
+                adapter->activate();
+                server->ice_getConnection()->setAdapter(adapter);
+                server->addClientAsync(ident, nullptr,
+                    [=](const exception_ptr ex)
+                    {
+                        try
+                        {
+                            rethrow_exception(ex);
+                        }
+                        catch(const exception& err)
+                        {
+                            print(err.what());
+                            startClient->IsEnabled = true;
+                            stopClient->IsEnabled = false;
+                        }
+                    });
+            }
+            catch(Platform::Exception^ ex)
+            {
+                dispatch([this, ex]()
+                    {
+                        print(wstringToString(ex->Message->Data()));
+                        startClient->IsEnabled = true;
+                        stopClient->IsEnabled = false;
+                    });
+            }
+            catch(const Ice::Exception& ex)
+            {
+                dispatch([this, &ex]()
+                    {
+                        print(ex.what());
+                        startClient->IsEnabled = true;
+                        stopClient->IsEnabled = false;
+                    });
+            }
+        });
 }
 
 void bidir::MainPage::stopClient_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
     try
     {
+        _start.get();
         if(_communicator)
         {
             _communicator->destroy();
