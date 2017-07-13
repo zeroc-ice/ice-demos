@@ -22,38 +22,57 @@ Refer to the [C++11 demos](../cpp11) for more examples that use the Ice services
 
 ## Build Instructions
 
-### Prerequisites
-
-If you've installed Ice in a non-standard location, you'll need to set the
-`ICE_HOME` environment variable with the path name of the
-installation directory. For example, on Linux or macOS:
-
-    $ export ICE_HOME=~/testing/Ice
-
-On Windows:
-
-    > set ICE_HOME=C:\Ice
-
-### Building the Demos
-
 The build system for the Java sample programs uses [Gradle](http://gradle.org)
 and includes a wrapper script or batch file that automatically downloads Gradle
 and all other required components.
 
+### Building the Demos on Windows
+
+We recommending installing the Ice MSI, which includes the Slice-to-Java
+compiler.
+
 To build the demos, open a command window and run:
 
-    gradlew -PdevRepo=https://dev.zeroc.com/nexus/repository/maven.ice-v3.7.0 build
+```
+gradlew build
+```
 
-The `-PdevRepo` option is necessary only when the Ice JAR files are not
-installed on your computer.
+The default build assumes the Slice-to-Java compiler is installed in a standard
+location. The build also downloads the Ice JAR files from Maven Central.
+
+If you've built the Slice-to-Java compiler and Ice for Java in a source tree,
+you'll need to pass some additional options to Gradle:
+
+```
+gradlew -PiceHome=<path to source tree> -PcppConfiguration=<Release|Debug> \
+    -PcppPlatform=<Win32|x64> build
+```
+
+### Building the Demos on Linux and macOS
+
+We recommending installing the binary distribution for your platform, which
+includes the Slice-to-Java compiler.
+
+To build the demos, open a command window and run:
+
+```
+gradlew build
+```
+
+The default build assumes the Slice-to-Java compiler is installed in a standard
+location. The build also downloads the Ice JAR files from Maven Central if your
+distribution did not include them.
+
+If you've built the Slice-to-Java compiler and Ice for Java in a source tree,
+you'll need to pass an additional option to Gradle:
+
+```
+gradlew -PiceHome=<path to source tree> build
+```
 
 ## Running the Demos
-
-Before running a demo, make sure you've configured your environment to use Ice
-as described in the [release notes][3].
 
 Refer to the README file in each demo directory for usage instructions.
 
 [1]: https://doc.zeroc.com/display/Ice37/Ice+Manual
 [2]: https://zeroc.com/chat/index.html
-[3]: https://doc.zeroc.com/display/Rel/Ice+3.7.0+Release+Notes
