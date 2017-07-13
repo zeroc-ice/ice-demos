@@ -22,30 +22,29 @@ Refer to the [C++11 demos](../cpp11) for more examples that use the Ice services
 
 ## Build Instructions
 
-### Prerequisites
-
-If you've installed Ice in a non-standard location, you'll need to set the
-`ICE_HOME` environment variable with the path name of the
-installation directory. For example, on Linux or macOS:
-
-    $ export ICE_HOME=~/testing/Ice
-
-On Windows:
-
-    > set ICE_HOME=C:\Ice
-
-### Building the Demos
-
 The build system for the Java sample programs uses [Gradle](http://gradle.org)
 and includes a wrapper script or batch file that automatically downloads Gradle
 and all other required components.
 
 To build the demos, open a command window and run:
 
-    gradlew -PdevRepo=https://dev.zeroc.com/nexus/repository/maven.ice-v3.7.0 build
+```
+gradlew build
+```
 
-The `-PdevRepo` option is necessary only when the Ice JAR files are not
-installed on your computer.
+The build will use a local Ice installation if it resides in a standard
+location.
+
+If you've installed Ice in a non-standard location, you'll first need to set the
+`ICE_HOME` environment variable with the path name of the installation
+directory.
+
+To use a custom Maven repository for the Ice JAR files, pass the
+`-PdevRepo` option to Gradle:
+
+```
+gradlew -PdevRepo=<URL> build
+```
 
 ## Running the Demos
 
