@@ -12,7 +12,8 @@
 
 #
 # Define OPTIMIZE as yes if you want to build with optimization.
-# Otherwise Ice is build with debug information.
+# The default for the demos is to build with debug information and no
+# optimization.
 #
 #OPTIMIZE               = yes
 
@@ -21,7 +22,9 @@
 # to the first supported platform for this system.
 #
 # Run `make print V=supported-platforms' to see the list of supported
-# platforms on this system.
+# platforms on this system. For example, set PLATFORMS to x86 to build
+# for the x86 platform (assuming it's among the supported plaftorms
+# on this system).
 #
 PLATFORMS               ?= $(firstword $(supported-platforms))
 
