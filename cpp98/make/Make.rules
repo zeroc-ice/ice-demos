@@ -30,7 +30,7 @@ IceLocatorDiscovery_dependencies := Ice
 IceStorm_dependencies           := Ice
 IceBox_dependencies             := Ice
 
-ifneq ($(filter debian ubuntu,$(linux_id)),)
+ifeq ($(shell pkg-config --exists bluez dbus-1 2> /dev/null && echo yes),yes)
 cpp-dependencies                += IceBT
 IceBT_dependencies              := Ice
 endif
