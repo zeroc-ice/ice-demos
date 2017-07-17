@@ -69,14 +69,18 @@
 
         <p>
            To run the demo, first you need to start an Ice minimal server from
-           another language mapping (Java, C++, C#, or Python). Please refer to
-           the README in the server subdirectory for more information on starting
-           the server.
+           another language mapping (Java, C++, C#, or Python) with
+           web socket support. For example with Python, run:
+           <pre>
+             python Server.py --Ice.Default.Protocol=ws
+           </pre>
+           Please refer to the README.md in the server subdirectory
+           for more information on starting the server.
         </p>
 
         <p>After starting the server, run the client by clicking the <strong>"Hello World!"</strong> button.</p>
         <div class="panel callout radius">
-            <p>Note that this demo hardwires port 10000. If port 10000 is not
+            <p>Note that this demo hardwires port 10,000. If port 10,000 is not
             available on your machine, you need to edit both client and server
             to use a free port.</p>
         </div>
