@@ -128,8 +128,8 @@ set PATH=%USERPROFILE%\ice-demos\cpp11\packages\zeroc.ice.v140.3.7.0\build\nativ
 This is required because the Debug `bin` directories provide only a subset of all
 Ice services and tools. For example, they don't provide `glacier2router`.
 
-If you building Release, you should add only the Release `bin` directory to your
-PATH with a command similar to:
+If you are building Release, you should add only the Release `bin` directory to
+your PATH with a command similar to:
 ```
 set PATH=%USERPROFILE%\ice-demos\cpp11\packages\zeroc.ice.v140.3.7.0\build\native\bin\x64\Release;%PATH%
 ```
