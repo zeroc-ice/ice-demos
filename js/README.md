@@ -27,7 +27,7 @@ The JavaScript sample programs require an installation of [Node.js][2].
 
 #### Building the demos with the NPM packages
 
-With Node.js in your PATH, go to this directory (ice-demos/js) and run the
+With Node.js in your PATH, go to the [js directory](../js) and run the
 following command to install several dependencies:
 
 ```
@@ -35,7 +35,7 @@ npm install
 ```
 
 This command builds the Slice-to-JavaScript compiler (`slice2js`) from
-source and requires a supported C++ compiler.
+source and requires a C++ compiler such as Visual Studio 2015.
 
 Now use gulp to build the demos:
 
@@ -114,53 +114,48 @@ this page you can select the client that you want to run.
 
 Next, start the corresponding server from another Ice language mapping. Open a
 terminal window, change to the desired server directory, and start the server.
-The client page provides a README link which might include additional
-instructions for running the server; please refer to the README of each client
-before starting the server.
+The client page provides a Readme link which might include additional
+instructions for running the server.
 
 To try a different client, terminate the server that you started earlier, change
-to the new server directory and start the new server.
+to the new server directory and start the server for the new client.
 
 #### Secure WebSockets
 
-The demos are setup to use secure WebSocket (WSS) when access the demo pages
-using HTTPS https://127.0.0.1:9090/index.html an non-secure WebSocket when
-access using HTTP http://127.0.0.1:8080/index.html. For demos that allow both
-secure and non-secure WebSocket connections there is a **"protocol"** select box
-that can be used to switch betwen secure and non-secure WebSockets.
+The demos use secure WebSocket (WSS) when you access the demo pages through
+https://127.0.0.1:9090/index.html, and non-secure WebSocket when you access
+them through http://127.0.0.1:8080/index.html. For demos that allow both
+secure and non-secure WebSocket connections, there is a `protocol` checkbox
+that allows you to switch betwen secure and non-secure WebSocket.
 
 ##### Self-Signed Certificate
 
-The browser-based demos allow you to choose whether to run the over
-non-secure WebSocket (WS) or secure WebSocket (WSS) connections. This
-distribution includes a self-signed certificate used for securing WSS
-connections, located in `certs/cacert.pem`. If you are using WSS, the page
-will automatically reload if necessary to connect to HTTPS port 9090.
-To successfully run the demos that use WSS, additional action may be necessary
+The secure WebSocket (WSS) connections in these demos rely on a self-signed
+certificate, `cacert`, proided in the certs(../certs) directory.
+
+To successfully run the demos with WSS, additional action may be necessary
 depending on the browser you're using:
 
 - Chrome
    You'll be presented with a warning about the site's security certificate.
-   Click the "Proceed anyway" button to temporarily accept the certificate.
+   Click the `Proceed anyway` button to temporarily accept the certificate.
 
 - Firefox
    You'll see a warning saying "This Connection is Untrusted". Open Firefox's
    Preferences or Options dialog, click on the Advanced section, select the
    Certificates tab and click on the "View Certificates..." button. In the
-   Authorities tab, click the "Import..." button, navigate to the cacert.pem
+   Authorities tab, click the "Import..." button, navigate to the `cacert.pem`
    file, and add it as a certificate authority (CA) for trusting web sites.
-   After closing the dialogs, reload the test page to continue. It is recomended
-   that you unistall the ZeroC certificate from your certificate Authorities once
-   you are done using the demos.
+   After closing the dialogs, reload the test page to continue. You should
+   uninstall this certificate after running the demos.
 
 - Internet Explorer and Microsoft Edge
    Run the management console (mmc.exe) and add the Certificates snap-in for
-   the computer account. In the console window, open the Certificates folder.
-   From the Action menu, choose All Tasks and Import. Navigate to the
-   cacert.pem file and import it into the Trusted Root Certification Authorities
-   store. Reload the test page to continue. It is recomended that you unistall
-   the ZeroC certificate from your Trusted Root Certification Authorities once
-   you are done using the demos.
+   the computer account. Then select Console Root > Certificates (Local Computer)
+   \> Trusted Root Certificate Authorities. In the Action menu, choose All Tasks
+   and Import. Navigate to the `cacert.der` file and import it into the Trusted
+   Root Certificate Authorities. Reload the test page to continue. You should
+   uninstall this certificate after running the demos.
 
 To use WSS on iOS and Android it may be required (depending on browser and
 platform) that the server certificate's common name matches the computer hosting
