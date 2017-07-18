@@ -131,7 +131,7 @@ that allows you to switch betwen secure and non-secure WebSocket.
 ##### Self-Signed Certificate
 
 The secure WebSocket (WSS) connections in these demos rely on a self-signed
-certificate, `cacert`, proided in the certs(../certs) directory.
+certificate, `cacert`, provided in the certs(../certs) directory.
 
 To successfully run the demos with WSS, additional action may be necessary
 depending on the browser you're using:
