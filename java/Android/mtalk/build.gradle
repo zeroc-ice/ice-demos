@@ -18,8 +18,8 @@ slice {
 }
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '26.0.0 rc1'
+    compileSdkVersion ice_compileSdkVersion.toInteger()
+    buildToolsVersion ice_buildToolsVersion
 
     defaultConfig {
         applicationId "com.zeroc.mtalk"
