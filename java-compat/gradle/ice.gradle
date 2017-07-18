@@ -39,6 +39,14 @@ buildscript {
         }
     }
 
+    if(new File("/usr/share/maven-repo").exists()){
+        repositories {
+            maven {
+                url "file:///usr/share/maven-repo"
+            }
+        }
+    }
+
     repositories {
         if (!useLocalOnly) {
             maven {
