@@ -62,7 +62,7 @@ function Init()
             "https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/7.0.10/jquery.nouislider.all.min.js",
             "https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js",
             "https://cdnjs.cloudflare.com/ajax/libs/URI.js/1.18.10/URI.min.js",
-            "http://spin.js.org/jquery.spin.js"
+            "/assets/jquery.spin.js"
         ]
     }
 

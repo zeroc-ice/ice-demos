@@ -44,6 +44,23 @@ $(".source").each(
             });
     });
 
+$("#protocol").val(document.location.protocol == "http:" ? "ws" : "wss");
+
+$("#protocol").on("change",
+    function(e)
+    {
+        if((document.location.protocol == "http:" && $(this).val() == "wss") ||
+            (document.location.protocol == "https:" && $(this).val() == "ws"))
+        {
+            document.location.assign(
+                new URI()
+                .protocol($(this).val() == "ws" ? "http" : "https")
+                .hostname(document.location.hostname)
+                .port($(this).val() == "ws" ? 8080 : 9090));
+            return false;
+        }
+    });
+
 //
 // Show source code modal dialog.
 //

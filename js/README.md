@@ -121,7 +121,46 @@ before starting the server.
 To try a different client, terminate the server that you started earlier, change
 to the new server directory and start the new server.
 
-#### Secure WebSockets on iOS and Android
+#### Secure WebSockets
+
+The demos are setup to use secure WebSocket (WSS) when access the demo pages
+using HTTPS https://127.0.0.1:9090/index.html an non-secure WebSocket when
+access using HTTP http://127.0.0.1:8080/index.html. For demos that allow both
+secure and non-secure WebSocket connections there is a **"protocol"** select box
+that can be used to switch betwen secure and non-secure WebSockets.
+
+##### Self-Signed Certificate
+
+The browser-based demos allow you to choose whether to run the over
+non-secure WebSocket (WS) or secure WebSocket (WSS) connections. This
+distribution includes a self-signed certificate used for securing WSS
+connections, located in `certs/cacert.pem`. If you are using WSS, the page
+will automatically reload if necessary to connect to HTTPS port 9090.
+To successfully run the demos that use WSS, additional action may be necessary
+depending on the browser you're using:
+
+- Chrome
+   You'll be presented with a warning about the site's security certificate.
+   Click the "Proceed anyway" button to temporarily accept the certificate.
+
+- Firefox
+   You'll see a warning saying "This Connection is Untrusted". Open Firefox's
+   Preferences or Options dialog, click on the Advanced section, select the
+   Certificates tab and click on the "View Certificates..." button. In the
+   Authorities tab, click the "Import..." button, navigate to the cacert.pem
+   file, and add it as a certificate authority (CA) for trusting web sites.
+   After closing the dialogs, reload the test page to continue. It is recomended
+   that you unistall the ZeroC certificate from your certificate Authorities once
+   you are done using the demos.
+
+- Internet Explorer and Microsoft Edge
+   Run the management console (mmc.exe) and add the Certificates snap-in for
+   the computer account. In the console window, open the Certificates folder.
+   From the Action menu, choose All Tasks and Import. Navigate to the
+   cacert.pem file and import it into the Trusted Root Certification Authorities
+   store. Reload the test page to continue. It is recomended that you unistall
+   the ZeroC certificate from your Trusted Root Certification Authorities once
+   you are done using the demos.
 
 To use WSS on iOS and Android it may be required (depending on browser and
 platform) that the server certificate's common name matches the computer hosting
