@@ -126,7 +126,7 @@ The demos use secure WebSocket (WSS) when you access the demo pages through
 https://127.0.0.1:9090/index.html, and non-secure WebSocket when you access
 them through http://127.0.0.1:8080/index.html. For demos that allow both
 secure and non-secure WebSocket connections, there is a `protocol` checkbox
-that allows you to switch betwen secure and non-secure WebSocket.
+that allows you to switch between secure and non-secure WebSocket.
 
 ##### Self-Signed Certificate
 
