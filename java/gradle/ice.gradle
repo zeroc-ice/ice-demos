@@ -48,15 +48,13 @@ buildscript {
     }
 
     repositories {
-        if (!useLocalOnly) {
-            maven {
-                url "https://${iceMavenRepo}/nexus/content/repositories/releases"
-            }
+        maven {
+            url "https://plugins.gradle.org/m2/"
         }
     }
 
     dependencies {
-        classpath group: 'com.zeroc.gradle.ice-builder', name: 'slice', version: "${iceBuilderVersion}"
+        classpath group: "${iceBuilderClassPath}", name: 'slice', version: "${iceBuilderVersion}"
     }
 }
 
@@ -73,9 +71,9 @@ def env = System.getenv()
 
 // Check if we need to append version suffix to jar files
 ext.versionSuffix = ""
-def iceJar = new File("${slice.jarDir}/ice-${slice.iceArtifactVersion}.jar")
+def iceJar = new File("${slice.jarDir}/ice-${slice.iceVersion}.jar")
 if(iceJar.exists()) {
-    ext.versionSuffix = "-${slice.iceArtifactVersion}"
+    ext.versionSuffix = "-${slice.iceVersion}"
 }
 
 def demoJar(name, mainClass = name.capitalize()) {
@@ -140,7 +138,7 @@ ext {
 }
 
 def localDependency(artifactId) {
-    return "com.zeroc:${artifactId}:${slice.iceArtifactVersion}"
+    return "com.zeroc:${artifactId}:${slice.iceVersion}"
 }
 
 ext {

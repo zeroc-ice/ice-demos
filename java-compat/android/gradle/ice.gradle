@@ -14,9 +14,8 @@ repositories {
     }
 
     if (!useLocalOnly) {
-        maven {
-            url "https://${iceMavenRepo}/nexus/content/repositories/thirdparty"
-        }
+        mavenCentral()
+
         maven {
             url "https://${iceMavenRepo}/nexus/content/repositories/releases"
         }
