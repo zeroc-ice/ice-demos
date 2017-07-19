@@ -18,4 +18,4 @@ below:
 
   https://zeroc.com/chat/index.html
 
-Refer to the [parent directory](../README.md) for build instructions.
+Refer to the [java-compat README.md](../../README.md) for build instructions.

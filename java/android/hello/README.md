@@ -5,4 +5,4 @@ of the same name. In order to use this client, you must run a hello
 server and enter the server's address in the client's "Hostname"
 field. You can use a server from your Ice installation.
 
-Refer to the [parent directory](../README.md) for build instructions.
+Refer to the [java README.md](../../README.md) for build instructions.

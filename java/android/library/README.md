@@ -10,4 +10,4 @@ on "demo2.zeroc.com". If you prefer, you can run your own library
 server; the Java source code for this server can be found in the
 Database/library subdirectory.
 
-Refer to the [parent directory](../README.md) for build instructions.
+Refer to the [java README.md](../../README.md) for build instructions.

@@ -16,4 +16,4 @@ Android developers:
    remote peer
  * Proper separation of UI and application logic
 
-Refer to the [parent directory](../README.md) for build instructions.
+Refer to the [java README.md](../../README.md) for build instructions.
