@@ -19,13 +19,13 @@ slice {
 }
 
 android {
-    compileSdkVersion ice_compileSdkVersion.toInteger()
-    buildToolsVersion ice_buildToolsVersion
+    compileSdkVersion 21
+    buildToolsVersion "25.0.3"
 
     defaultConfig {
         applicationId "com.zeroc.library"
-        minSdkVersion ice_minSdkVersion.toInteger()
-        targetSdkVersion ice_targetSdkVersion.toInteger()
+        minSdkVersion 21
+        targetSdkVersion 21
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_7
             targetCompatibility JavaVersion.VERSION_1_7
@@ -59,6 +59,6 @@ clean {
 }
 
 dependencies {
-    compile localDependency('ice-compat')
-    compile localDependency('glacier2-compat')
+    compile 'com.zeroc:ice-compat:3.7.0'
+    compile 'com.zeroc:glacier2-compat:3.7.0'
 }

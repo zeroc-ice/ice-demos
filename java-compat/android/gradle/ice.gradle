@@ -1,4 +1,3 @@
-
 apply from: "$rootProject.projectDir/../gradle/ice.gradle"
 project.version = slice.iceVersion
 
@@ -8,16 +7,22 @@ slice.compat = true
 repositories {
     if (slice.jarDir != null) {
         flatDir {
-        name "local"
+            name "local"
             dirs slice.jarDir
         }
     }
 
     if (!useLocalOnly) {
+        if(this.devRepo) {
+            maven {
+                url this.devRepo
+            }
+        }
+
         mavenCentral()
 
         maven {
-            url "https://${iceMavenRepo}/nexus/content/repositories/releases"
+            url "https://repo.zeroc.com/nexus/content/repositories/releases"
         }
     }
 }

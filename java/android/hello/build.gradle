@@ -18,13 +18,13 @@ slice {
 }
 
 android {
-    compileSdkVersion ice_compileSdkVersion.toInteger()
-    buildToolsVersion ice_buildToolsVersion
+    compileSdkVersion 24
+    buildToolsVersion "26.0.0"
 
     defaultConfig {
         applicationId "com.zeroc.hello"
-        minSdkVersion ice_minSdkVersion.toInteger()
-        targetSdkVersion ice_targetSdkVersion.toInteger()
+        minSdkVersion 24
+        targetSdkVersion 24
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_8
             targetCompatibility JavaVersion.VERSION_1_8
@@ -58,6 +58,6 @@ clean {
 }
 
 dependencies {
-    compile localDependency('ice')
-    compile localDependency('icessl')
+    implementation 'com.zeroc:ice:3.7.0'
+    implementation 'com.zeroc:icessl:3.7.0'
 }

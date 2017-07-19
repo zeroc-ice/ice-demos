@@ -48,10 +48,8 @@ buildscript {
     }
 
     repositories {
-        if (!useLocalOnly) {
-            maven {
-                url "https://${iceMavenRepo}/nexus/content/repositories/releases"
-            }
+        maven {
+            url "https://plugins.gradle.org/m2/"
         }
     }
 
