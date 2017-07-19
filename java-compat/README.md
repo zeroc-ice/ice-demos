@@ -1,4 +1,4 @@
-# Java Comat Demos
+# Java Compat Demos
 
 ## Overview
 
