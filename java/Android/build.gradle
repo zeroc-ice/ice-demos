@@ -24,7 +24,8 @@ subprojects {
 // the version of gradle needed to build Ice.
 //
 task wrapper(type: Wrapper) {
-    gradleVersion = "3.5"
+    gradleVersion = "4.0.1"
+    distributionType = Wrapper.DistributionType.ALL
 }
 
 allprojects {
