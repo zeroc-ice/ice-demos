@@ -1,5 +1,3 @@
-# Overview
-
 This directory contains the following Android examples:
 
 - [chat](./chat)
