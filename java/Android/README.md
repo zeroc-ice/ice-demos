@@ -39,38 +39,42 @@ Building any Ice application for Android requires Android Studio and the Android
 SDK build tools. We tested with the following components:
 
 - Android Studio 3.0 preview
-- Android SDK 25
+- Android SDK 24
 - Android Build Tools 26.0.0
+
+Android Studio 3.0 is required for its Java 8 support. Ice for Java cannot be
+used with Android Studio 2.x.
 
 Ice for Java requires at minimum API level 24:
 
 - Android Nougat 7.0 (API24)
 
-If you want to target a different version of the Android API level, edit
-`gradle.properties`.
+If you want to target a different version of the Android API level, edit the
+project settings in Android Studio.
 
-### Ice Development Kit
+### Slice-to-Java Compiler
 
-An Ice Development Kit is also required. Specifically, this project needs the
-Ice JAR files along with the Slice to Java translator. The Gradle build system
-will automatically search for your Ice Development Kit in the default
-installation directories used by our [binary distributions][1]. If you've
-installed Ice into a non-standard directory, or you're using a repository build,
-edit `gradle.properties` and set the following variable:
+The easiest way to obtain the Slice-to-Java compiler is to install a [binary
+Ice distribution][1] for your platform. The build assumes the distribution is
+installed in a standard location. If you've installed it elsewhere, or you
+want to use a source build instead, edit `gradle.properties` and set
+`iceHome` to the location of your Ice installation.
 
-    iceHome=<path to your Ice installation>
+### Ice JAR Files
 
-This path name must only use forward slashes, even on Windows.
+The build automatically downloads the Ice JAR files from Maven Central. If
+you want to use Ice JAR files from a local installation, such as a source
+build, edit `gradle.properties` and set `iceHome` to the location of your Ice
+installation.
 
 ## Building the Project
 
-Follow these steps to import the project into Android Studio:
+Follow these steps to open the project in Android Studio:
 
 1. Start Android Studio
-2. Select Open Project
-3. Navigate to the "Android" subdirectory
-4. If presented with an "Import Project from Gradle" dialog, select
-   "Use default gradle wrapper" and press OK
+2. Select "Open an existing Android Studio project"
+3. Navigate to and select the "Android" subdirectory
+4. Click OK and wait for the project to open and build
 5. Select one of the subprojects from the drop down menu
 
 [1]: https://zeroc.com/download.html
