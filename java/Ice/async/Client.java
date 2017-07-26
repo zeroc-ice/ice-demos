@@ -88,6 +88,10 @@ public class Client
                 {
                     // Nothing to do
                 }
+                else if(line.equals("?"))
+                {
+                	menu();
+                }
                 else
                 {
                     System.out.println("unknown command `" + line + "'");
