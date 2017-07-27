@@ -314,6 +314,8 @@ class Parser
         _in = new StreamReader(new StreamReader(Console.OpenStandardInput(), Encoding.Default).BaseStream,
                                new StreamReader(Console.OpenStandardInput(), Encoding.Default).CurrentEncoding);
 
+        usage();
+
         Grammar g = new Grammar(this);
         g.parse();
 

@@ -438,6 +438,8 @@ Parser::parse(bool debug)
 
     _continue = false;
 
+    usage();
+
     int status = yyparse();
     if(_errors)
     {
