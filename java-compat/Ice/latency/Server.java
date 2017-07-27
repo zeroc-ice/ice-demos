@@ -8,6 +8,10 @@ import Demo.*;
 
 public class Server extends Ice.Application
 {
+    static class PingI extends _PingDisp
+    {
+    }
+
     @Override
     public int
     run(String[] args)
@@ -19,7 +23,7 @@ public class Server extends Ice.Application
         }
 
         Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Latency");
-        adapter.add(new Ping(), Ice.Util.stringToIdentity("ping"));
+        adapter.add(new PingI(), Ice.Util.stringToIdentity("ping"));
         adapter.activate();
         communicator().waitForShutdown();
         return 0;
