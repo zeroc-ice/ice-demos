@@ -10,13 +10,12 @@
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:orientation="horizontal"
-		android:paddingBottom="5dip"
-		>
+		android:paddingBottom="10dip">
 
 		<TextView
 			android:layout_width="0dip"
 			android:layout_height="wrap_content"
-			android:layout_weight="25"
+			android:layout_weight="20"
 			android:text="Host"
 			android:id="@+id/hostLabel"/>
 
@@ -24,7 +23,7 @@
 			android:id ="@+id/host"
 			android:hint="IP or Hostname"
 			android:layout_width="0dip"
-			android:layout_weight="75"
+			android:layout_weight="80"
 			android:layout_height="wrap_content"
 			android:lines="1"
 			android:maxLines="1"
@@ -37,48 +36,65 @@
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:orientation="horizontal"
-		android:paddingBottom="5dip"
-		>
+		android:paddingBottom="10dip">
 
 		<TextView
 			android:layout_width="0dip"
-			android:layout_weight="25"
+			android:layout_height="wrap_content"
+			android:layout_weight="20"
+			android:text=""
+			android:id="@+id/emptyLabel"/>
+
+		<CheckBox
+			android:id="@+id/useDiscovery"
+			android:text="Use IceDiscovery"
+			android:layout_width="0dip"
+			android:layout_weight="80"
+			android:layout_height="wrap_content"
+                        android:checked="false"/>
+	</LinearLayout>
+
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:paddingBottom="10dip">
+
+		<TextView
+			android:layout_width="0dip"
+			android:layout_weight="20"
 			android:layout_height="wrap_content"
 			android:text="Mode"
-			android:layout_gravity="center_vertical"
-			/>
+			android:layout_gravity="center_vertical"/>
 
 		<Spinner
 			android:id="@+id/mode"
 			android:layout_width="0dip"
-			android:layout_weight="75"
+			android:layout_weight="80"
 			android:layout_height="wrap_content"
 			android:drawSelectorOnTop="false"/>
 
 	</LinearLayout>
 
 	<LinearLayout
-	android:layout_width="fill_parent"
-	android:layout_height="wrap_content"
-	android:orientation="horizontal"
-	android:paddingBottom="5dip"
-	>
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal"
+	        android:paddingBottom="10dip">
 
 		<TextView
 			android:layout_height="wrap_content"
 			android:layout_width="0dip"
-			android:layout_weight="25"
+			android:layout_weight="20"
 			android:layout_gravity="center_vertical"
-			android:text="Timeout"
-			/>
+			android:text="Timeout"/>
 
 		<SeekBar
 			android:id="@+id/timeout"
 			android:layout_height="wrap_content"
 			android:layout_width="0dip"
-			android:layout_weight="65"
-			android:max="9900"
-			/>
+			android:layout_weight="70"
+			android:max="9900"/>
 
 		 <TextView
 			android:id="@+id/timeoutView"
@@ -87,8 +103,7 @@
 			android:layout_weight="10"
 			android:layout_gravity="center_vertical"
 			android:paddingLeft="5dip"
-			android:text="0.0"
-			/>
+			android:text="0.0"/>
 
 	</LinearLayout>
 
@@ -96,22 +111,20 @@
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:orientation="horizontal"
-		android:paddingBottom="5dip"
-		>
+		android:paddingBottom="10dip">
 
 		<TextView
 			android:layout_height="wrap_content"
 			android:layout_width="0dip"
-			android:layout_weight="25"
+			android:layout_weight="20"
 			android:layout_gravity="center_vertical"
-			android:text="Delay"
-			/>
+			android:text="Delay"/>
 
 		<SeekBar
 			android:id="@+id/delay"
 			android:layout_height="wrap_content"
 			android:layout_width="0dip"
-			android:layout_weight="65"
+			android:layout_weight="70"
 			android:max="9900"/>
 
 		 <TextView
@@ -121,8 +134,7 @@
 			android:layout_weight="10"
 			android:layout_gravity="center_vertical"
 			android:paddingLeft="5dip"
-			android:text="0.0"
-			/>
+			android:text="0.0"/>
 
 	</LinearLayout>
 
@@ -137,44 +149,39 @@
 			android:id="@+id/sayHello"
 			android:text="Hello World!"
 			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			/>
+			android:layout_height="wrap_content"/>
 
 		<Button
 			android:id="@+id/shutdown"
 			android:text="Shutdown"
 			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			/>
+			android:layout_height="wrap_content"/>
 
 		<Button
 			android:layout_height="wrap_content"
 			android:layout_width="wrap_content"
 			android:id="@+id/flush"
-			android:text="Flush"
-			/>
+			android:text="Flush"/>
 
 	</LinearLayout>
 
 	<LinearLayout
-			android:layout_width="fill_parent"
-			android:layout_height="fill_parent"
-			android:layout_marginTop="20dip"
-			android:orientation="horizontal">
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="20dip"
+                android:orientation="horizontal">
 
 		<LinearLayout
-				android:layout_width="0dip"
-				android:layout_weight="25"
-				android:layout_height="fill_parent"
-				>
+                        android:layout_width="0dip"
+                        android:layout_weight="25"
+                        android:layout_height="fill_parent">
 
 			<ProgressBar
 				android:id="@+id/activity"
 				android:layout_height="wrap_content"
 				android:layout_width="wrap_content"
 				android:layout_gravity="center"
-				android:layout_marginLeft="15dip"
-				/>
+				android:layout_marginLeft="15dip"/>
 		</LinearLayout>
 
 		<TextView
@@ -183,8 +190,7 @@
 			android:layout_width="0dip"
 			android:layout_weight="75"
 			android:layout_height="wrap_content"
-			android:text=""
-			/>
+			android:text=""/>
 
 	</LinearLayout>
 

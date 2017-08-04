@@ -22,6 +22,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
@@ -115,6 +116,7 @@ public class HelloWorld extends Activity
         final ProgressBar activityProgressBar = (ProgressBar)findViewById(R.id.activity);
         final Button shutdownButton = (Button)findViewById(R.id.shutdown);
         final EditText hostEditText = (EditText)findViewById(R.id.host);
+        final CheckBox useDiscoveryCheckBox = (CheckBox)findViewById(R.id.useDiscovery);
         final Button flushButton = (Button)findViewById(R.id.flush);
         final TextView statusTextView = (TextView)findViewById(R.id.status);
         final Spinner modeSpinner = (Spinner)findViewById(R.id.mode);
@@ -124,6 +126,29 @@ public class HelloWorld extends Activity
         final SharedPreferences prefs = getPreferences(MODE_PRIVATE);
 
         _app = (HelloApp)getApplication();
+
+        useDiscoveryCheckBox.setOnClickListener(new OnClickListener()
+        {
+            public void onClick(android.view.View v)
+            {
+                final boolean checked = ((CheckBox)v).isChecked();
+
+                _app.setUseDiscovery(checked);
+
+                if(checked)
+                {
+                    hostEditText.setEnabled(false);
+                    hostEditText.setText("");
+                    sayHelloButton.setEnabled(true);
+                    shutdownButton.setEnabled(true);
+                }
+                else
+                {
+                    hostEditText.setEnabled(true);
+                    hostEditText.setText(prefs.getString(HOSTNAME_KEY, DEFAULT_HOST));
+                }
+            }
+        });
 
         sayHelloButton.setOnClickListener(new OnClickListener()
         {
@@ -165,26 +190,29 @@ public class HelloWorld extends Activity
             @Override
             public void afterTextChanged(Editable s)
             {
-                String host = hostEditText.getText().toString().trim();
-                if(host.isEmpty())
+                if(!useDiscoveryCheckBox.isChecked())
                 {
-                    sayHelloButton.setEnabled(false);
-                    shutdownButton.setEnabled(false);
-                }
-                else
-                {
-                    sayHelloButton.setEnabled(true);
-                    shutdownButton.setEnabled(true);
-                }
+                    String host = hostEditText.getText().toString().trim();
+                    if(host.isEmpty())
+                    {
+                        sayHelloButton.setEnabled(false);
+                        shutdownButton.setEnabled(false);
+                    }
+                    else
+                    {
+                        sayHelloButton.setEnabled(true);
+                        shutdownButton.setEnabled(true);
+                    }
 
-                _app.setHost(host);
+                    _app.setHost(host);
 
-                // Change the preferences if necessary.
-                if(!prefs.getString(HOSTNAME_KEY, DEFAULT_HOST).equals(host))
-                {
-                    SharedPreferences.Editor edit = prefs.edit();
-                    edit.putString(HOSTNAME_KEY, host);
-                    edit.apply();
+                    // Change the preferences if necessary.
+                    if(!prefs.getString(HOSTNAME_KEY, DEFAULT_HOST).equals(host))
+                    {
+                        SharedPreferences.Editor edit = prefs.edit();
+                        edit.putString(HOSTNAME_KEY, host);
+                        edit.apply();
+                    }
                 }
             }
 
@@ -355,7 +383,11 @@ public class HelloWorld extends Activity
     {
         super.onRestoreInstanceState(savedInstanceState);
 
+        final CheckBox useDiscoveryCheckBox = (CheckBox)findViewById(R.id.useDiscovery);
+        final EditText hostEditText = (EditText)findViewById(R.id.host);
         final SeekBar delaySeekBar = (SeekBar)findViewById(R.id.delay);
+        final Button sayHelloButton = (Button)findViewById(R.id.sayHello);
+        final Button shutdownButton = (Button)findViewById(R.id.shutdown);
         final Button flushButton = (Button)findViewById(R.id.flush);
         final Spinner modeSpinner = (Spinner)findViewById(R.id.mode);
         final SeekBar timeoutSeekBar = (SeekBar)findViewById(R.id.timeout);
@@ -369,6 +401,14 @@ public class HelloWorld extends Activity
         statusTextView.setText(savedInstanceState.getString(BUNDLE_KEY_STATUS));
         activityProgressBar.setVisibility(
                 savedInstanceState.getBoolean(BUNDLE_KEY_PROGRESS) ? View.VISIBLE : View.GONE);
+
+        if(useDiscoveryCheckBox.isChecked())
+        {
+            hostEditText.setEnabled(false);
+            hostEditText.setText("");
+            sayHelloButton.setEnabled(true);
+            shutdownButton.setEnabled(true);
+        }
     }
 
     @Override
