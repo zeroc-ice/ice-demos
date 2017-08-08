@@ -46,16 +46,9 @@ make sure to copy these certificates (the `certs` directory) to the other system
 
 ### Timeouts
 
-To test timeouts you can use the timeout slider to set a timeout in
-the client proxy and the delay slider to set a delayed response in
-the server to cause a timeout.
-
-You will notice that two "Hello World!" messages will be printed by
-the server in this case. This is because the sayHello method is marked
-as idempotent in the Slice, meaning that Ice does not need to follow
-the at-most-once retry semantics.
-
-See the manual for more information about retry behavior.
+To test timeouts, use the "Timeout" slider to set an invocation timeout on the
+client proxy and the "Delay" slider to force the server to delay its response
+long enough to trigger the timeout in the client.
 
 ### IceDiscovery
 
