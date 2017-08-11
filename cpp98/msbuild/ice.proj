@@ -32,7 +32,6 @@
     </PropertyGroup>
 
     <Target Name="DownloadSymbols" DependsOnTargets="NuGetRestore">
-        <MakeDir Directories="$(TEMP)\SymbolCache" />
         <Exec IgnoreExitCode="True"
               Command="symchk /r $(MSBuildThisFileDirectory)..\packages\zeroc.ice.$(DefaultPlatformToolset).3.7.0\build\native\bin\$(Platform)\$(Configuration)\* /s $(SymbolServer)">
               <Output TaskParameter="ExitCode" PropertyName="ErrorCode"/>
