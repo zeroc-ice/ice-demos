@@ -19,7 +19,7 @@ class SessionFactoryI extends _SessionFactoryDisp
         // This way, if we invoke on the proxy during shutdown, the invocation fails immediately
         // without attempting to establish any connection
         //
-        SessionPrx collocProxy = SessionPrxHelper.uncheckedCast(proxy.ice_endpoints(new Ice.Endpoint[0]));
+        final SessionPrx collocProxy = SessionPrxHelper.uncheckedCast(proxy.ice_endpoints(new Ice.Endpoint[0]));
 
         //
         // Never close this connection from the client and turn on heartbeats with a timeout of 30s
