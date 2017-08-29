@@ -74,17 +74,13 @@ the following:
 
 - Allow httpd to open network connections:
 ```
-  # setsebool httpd_can_network_connect=1 
+  # setsebool httpd_can_network_connect=1
 ```
   (add the -P option to make this setting persistent across reboots)
 
-- Make sure any .php file used by your application can be read by 
+- Make sure any .php file used by your application can be read by
   httpd. The enclosing directory also needs to be accessible. For
   example:
 ```
   # chcon -R -t httpd_sys_content_t /opt/MyApp
 ```
-For more information on SELinux in Red Hat Enterprise Linux, refer
-to the link below:
-
-  http://www.redhat.com/f/pdf/sec/WHP001USselinux.pdf

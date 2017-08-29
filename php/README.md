@@ -20,7 +20,7 @@ discovery plug-in.
 Refer to the [C++ demos](../cpp) for more examples that use Ice services
 such as IceGrid and IceStorm.
 
-## Build Instructions for Linux & OS X
+## Build Instructions for Linux & macOS
 
 ### Prerequisites
 
@@ -47,8 +47,7 @@ run `make`:
 
 ### Prerequisites
 
-Building the demos requires Microsoft NMAKE. If you do not already have NMAKE
-installed, you can download it as part of the [Windows Platform SDK][2].
+Building the demos requires Microsoft NMAKE.
 
 If you've installed Ice in a non-standard location, you'll need to set the
 `ICE_HOME` environment variable with the path name of the
@@ -67,4 +66,3 @@ When you're ready to start the build, run `nmake`:
 Refer to the README file in each demo directory for usage instructions.
 
 [1]: https://doc.zeroc.com/display/Doc/Chat+Demo
-[2]: http://www.microsoft.com/downloads/details.aspx?FamilyId=E6E1C3DF-A74F-4207-8586-711EBE331CDC&displaylang=en

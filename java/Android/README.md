@@ -68,4 +68,4 @@ Follow these steps to import the project into Android Studio:
    "Use default gradle wrapper" and press OK 
 5. Select one of the subprojects from the drop down menu
 
-[1]: https://zeroc.com/download.html
+[1]: https://zeroc.com/downloads/ice
