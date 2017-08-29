@@ -42,5 +42,5 @@ client.
 
 The client can also invoke `op3` such that RVO (Return Value Optimization)
 is applied for a return statement with in-place construction. (See
-http://www.efnetcpp.org/wiki/Return_value_optimization for information
+https://en.wikipedia.org/wiki/Return_value_optimization for information
 on RVO.)
