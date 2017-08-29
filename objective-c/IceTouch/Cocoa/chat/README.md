@@ -1,5 +1,5 @@
 This demo is a Cocoa client for the
-[ZeroC Chat Demo](https://zeroc.com/chat/index.html). This demo
+[ZeroC Chat Demo](https://doc.zeroc.com/display/Doc/Chat+Demo). This demo
 connects to a single chat room, allowing you to chat with other chat
 room participants.
 

@@ -108,5 +108,5 @@ Download the certificate (`cacert.pem`) to the device from an email client.
 Next go to _Settings -> Security -> Install from storage_, and choose
 `cacert.pem`. Enter a name and press OK.
 
-[1]: https://zeroc.com/chat/index.html
+[1]: https://doc.zeroc.com/display/Doc/Chat+Demo
 [2]: http://nodejs.org

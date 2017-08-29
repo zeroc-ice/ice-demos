@@ -38,6 +38,6 @@ as described in the [release notes][4].
 Refer to the README file in each demo directory for usage instructions.
 
 [1]: https://doc.zeroc.com/display/Ice36/Ice+Manual
-[2]: https://zeroc.com/chat/index.html
+[2]: https://doc.zeroc.com/display/Doc/Chat+Demo
 [3]: https://github.com/zeroc-ice/ice-builder-visualstudio
 [4]: https://doc.zeroc.com/display/Ice36/Ice+Release+Notes

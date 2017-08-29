@@ -66,5 +66,5 @@ When you're ready to start the build, run `nmake`:
 
 Refer to the README file in each demo directory for usage instructions.
 
-[1]: https://zeroc.com/chat/index.html
+[1]: https://doc.zeroc.com/display/Doc/Chat+Demo
 [2]: http://www.microsoft.com/downloads/details.aspx?FamilyId=E6E1C3DF-A74F-4207-8586-711EBE331CDC&displaylang=en
