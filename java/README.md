@@ -26,13 +26,15 @@ Refer to the [C++ demos](../cpp) for more examples that use the Ice services
 
 If you've installed Ice in a non-standard location, you'll need to set the
 `ICE_HOME` environment variable with the path name of the
-installation directory. For example, on Linux or OS X:
-
-    $ export ICE_HOME=~/testing/Ice
+installation directory. For example, on Linux or macOS:
+```
+export ICE_HOME=~/testing/Ice
+```
 
 On Windows:
-
-    > set ICE_HOME=C:\Ice
+```
+set ICE_HOME=C:\Ice
+```
 
 ### Building the Demos
 
@@ -41,8 +43,9 @@ and includes a wrapper script or batch file that automatically downloads Gradle
 and all other required components.
 
 To build the demos, open a command window and run:
-
-    gradlew build
+```
+gradlew build
+```
 
 ## Running the Demos
 
@@ -52,5 +55,5 @@ as described in the [release notes][3].
 Refer to the README file in each demo directory for usage instructions.
 
 [1]: https://doc.zeroc.com/display/Ice36/Ice+Manual
-[2]: https://zeroc.com/chat/index.html
+[2]: https://doc.zeroc.com/display/Doc/Chat+Demo
 [3]: https://doc.zeroc.com/display/Ice36/Ice+Release+Notes
