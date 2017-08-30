@@ -114,8 +114,8 @@
   <Import Project="$(IceBuilderCsharpProps)" Condition="Exists('$(IceBuilderCsharpProps)')" />
   <PropertyGroup Label="IceBuilder">
     <IceBuilderOutputDir>generated\client</IceBuilderOutputDir>
-    <IceBuilderStream>yes</IceBuilderStream>
     <IceBuilderIncludeDirectories>$(IceHome)\slice</IceBuilderIncludeDirectories>
+    <IceBuilderAdditionalOptions>--stream</IceBuilderAdditionalOptions>
   </PropertyGroup>
   <Import Project="$(IceBuilderCsharpTargets)" Condition="Exists('$(IceBuilderCsharpTargets)')" />
   <PropertyGroup>
