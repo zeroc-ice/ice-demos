@@ -9,7 +9,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.0'
+        classpath 'com.android.tools.build:gradle:2.3.3'
     }
 }
 
@@ -18,13 +18,14 @@ subprojects {
     project.group = "com.zeroc"
 
     apply plugin: 'idea'
-    apply from: "$rootProject.projectDir/gradle/props.gradle"
+    apply plugin: 'com.android.application'
+    apply from: "$rootProject.projectDir/../gradle/ice.gradle"
 
     repositories {
-        if (distJarDir != null) {
+        if(slice.jarDir != null) {
             flatDir {
                 name "local"
-                dirs distJarDir
+                dirs slice.jarDir
             }
         }
 
