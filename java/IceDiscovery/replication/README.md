@@ -1,8 +1,8 @@
 To run the demo, start the 3 servers:
 
-     server.exe --Ice.Config=config.server1
-     server.exe --Ice.Config=config.server2
-     server.exe --Ice.Config=config.server3
+     java -jar build/libs/server.jar --Ice.Config=config.server1
+     java -jar build/libs/server.jar --Ice.Config=config.server2
+     java -jar build/libs/server.jar --Ice.Config=config.server3
 
 In a separate window:
 
