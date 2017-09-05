@@ -8,7 +8,7 @@
 # The proxy to the Glacier2 router for all outgoing connections. This
 # must match the value of Glacier2.Client.Endpoints in config.glacier2.
 #
-Ice.Default.Router=DemoGlacier2/router:ssl -p 4064 -h demo2.zeroc.com -t 10000
+Ice.Default.Router=DemoGlacier2/router:wss -p 443 -h zeroc.com -r /demo-proxy/library/glacier2 -t 10000
 
 #
 # If you want to use a local demo server, uncomment this line and change
@@ -62,7 +62,6 @@ Ice.RetryIntervals=-1
 #
 # SSL Configuration
 #
-IceSSL.CAs=cacert.pem
-IceSSL.DefaultDir=../../../certs
-IceSSL.TrustOnly.Client=CN="127.0.0.1"
-IceSSL.CheckCertName=0
+Ice.Plugin.IceSSL=IceSSL:createIceSSL
+IceSSL.UsePlatformCAs=1
+IceSSL.CheckCertName=1
