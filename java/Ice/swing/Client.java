@@ -619,7 +619,6 @@ public class Client extends JFrame
         {
             return;
         }
-        ex.printStackTrace();
         _status.setText(ex.getClass().getName());
     }
 
