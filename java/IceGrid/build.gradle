@@ -32,7 +32,7 @@
             }
         }
 
-        task makeDbDirs << {
+        task makeDbDirs {
             file('db/registry').mkdirs()
             file('db/node').mkdirs()
         }
