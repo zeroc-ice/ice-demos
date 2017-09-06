@@ -122,6 +122,8 @@ class Client(Glacier2.Application):
                     else:
                         twowayR = Demo.CallbackReceiverPrx.uncheckedCast(twowayR.ice_identity(callbackReceiverIdent))
                         onewayR = Demo.CallbackReceiverPrx.uncheckedCast(twowayR.ice_identity(callbackReceiverIdent))
+
+                    print("callback receiver " + self.communicator().identityToString(twowayR.ice_getIdentity()));
                 elif c == 's':
                     twoway.shutdown()
                 elif c == 'r':
