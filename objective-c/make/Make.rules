@@ -11,62 +11,55 @@
 -include        $(lang_srcdir)/config/Make.rules.$(os)
 
 #
-# Disable unused parameter warnings in Objective-C
-#
-CXXFLAGS        += -Wno-unused-parameter
-
-#
-# These demos are ARC-only
-#
-CXXFLAGS        += -fobjc-arc -fobjc-arc-exceptions
-
-#
 # Supported configurations
 #
 supported-configs               = shared static
 
+# Validate platforms and configs
+$(eval $(call validate-config))
+
 #
 # Objective-C dependencies
 #
-cpp-dependencies                := Ice IceSSL IceDiscovery
-Ice_libs                        := bz2
-objc-dependencies               := IceObjC Glacier2ObjC IceGridObjC IceSSLObjC IceStormObjC
-IceObjC_dependencies            := Ice
-Glacier2ObjC_dependencies       := IceObjC
-IceGridObjC_dependencies        := Glacier2ObjC IceObjC
-IcePatch2ObjC_dependencies      := IceObjC
-IceSSLObjC_dependencies         := IceObjC
-IceStormObjC_dependencies       := IceObjC
+cpp-dependencies                = Ice IceSSL IceDiscovery
+Ice_libs                        = bz2
+objc-dependencies               = IceObjC Glacier2ObjC IceGridObjC IceSSLObjC IceStormObjC
+IceObjC_dependencies            = Ice
+Glacier2ObjC_dependencies       = IceObjC
+IceGridObjC_dependencies        = Glacier2ObjC IceObjC
+IcePatch2ObjC_dependencies      = IceObjC
+IceSSLObjC_dependencies         = IceObjC
+IceStormObjC_dependencies       = IceObjC
 
-ice_configs                     := $(supported-configs)
-ice_includedir                  ?= $(ice_home)$(if $(ice_src_dist),/objective-c)/include
-
-$(foreach d,$(cpp-dependencies),$(eval $$d_targetdir := $(ice_home)$(if $(ice_src_dist),/cpp)/lib)\
-                                 $(eval $(call create-component-targets,ice,$d,library)))
-$(foreach d,$(objc-dependencies),$(eval $$d_targetdir := $(ice_home)$(if $(ice_src_dist),/objective-c)/lib)\
-                                 $(eval $(call create-component-targets,ice,$d,library)))
+# Create component dependency variables
+$(eval $(call create-project-dependencies,ice,$(ICE_HOME),cpp,$(cpp-dependencies)))
+$(eval $(call create-project-dependencies,ice,$(ICE_HOME),objective-c,$(objc-dependencies)))
 
 slice2objc_targetext            = m
 slice2objc_path                 = $(ice_bindir)/slice2objc
 
-#
-# $(call make-cpp-demo-project,$1=project)
-#
-define make-objc-demo-project
-$1_slicecompiler        := slice2objc
-$1_sliceflags           := -I$(ice_slicedir) -I$1 $$($1_sliceflags)
-$1_cppflags             := -I$(ice_includedir) $(if $(ice_src_dist),-I$(ice_includedir)/generated) \
-                           -I$1 -I$1/generated $$($1_cppflags)
-$1_ldflags              += -framework Foundation
-$(make-project)
-endef
+ifeq ($(wildcard $(slice2objc_path)),)
+$(error Can't find Ice distribution, please set ICE_HOME to the Ice installation directory)
+endif
 
 #
 # $(create-cpp-demo-project $1=demo)
 #
 define create-objc-demo-project
+$1_targetdir            := $1
 $1_srcext               := m
 $1_dependencies         := $$(or $$($1_dependencies),IceObjC)
+$1_slicecompiler        := slice2objc
+$1_sliceflags           += -I$(ice_slicedir) -I$1
+$1_cppflags             += -I$1 -I$1/generated $(ice_cppflags)
+$1_ldflags              += -framework Foundation
+$1_caninstall           := no
+
+# Disable unused parameter warnings in Objective-C
+$1_cppflags             += -Wno-unused-parameter
+
+# These demos are ARC-only
+$1_cppflags             += -fobjc-arc -fobjc-arc-exceptions
 
 $1[static]_ldflags      := -ObjC
 

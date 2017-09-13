@@ -8,7 +8,6 @@
 # **********************************************************************
 
 supported-platforms             = macosx iphoneos iphonesimulator
-supported-languages             = cpp java java-compat python js ruby php objective-c
 
 macosx_ar                       = libtool
 macosx_cppflags                 = -mmacosx-version-min=10.9 -arch x86_64
@@ -55,6 +54,9 @@ mkshlib         = $(or $($7_cxx),$(CXX)) -dynamiclib $(if $5,-install_name @rpat
                      $(call machoversion,$(if $(filter $4,$(version)),$(compatversion),$4))) \
                   -o $1 $2 $6
 
+# system install directory
+system-install-dir = /usr/local
+
 #
 # $(call mkxxx,$1=libname,$2=version,$3=soversion)
 #
@@ -66,6 +68,9 @@ mkshlibnametarget = $(mkshlibfilename)
 mkpymodulename  = $1.so
 mkrbmodulename  = $1.bundle
 mkphpmodulename = $1.so
+
+escape-ldflags   = $(subst -framework$(space),-framework+,$1)
+unescape-ldflags = $(subst -framework+,-framework$(space),$1)
 
 #
 # System libraries
