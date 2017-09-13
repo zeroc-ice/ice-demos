@@ -39,7 +39,7 @@ IceBT_dependencies              = Ice
 endif
 
 # Create component dependency variables
-$(eval $(call create-project-dependencies,ice,$(ICE_HOME),cpp,$(cpp-dependencies)))
+$(eval $(call create-project-dependencies,ice,$(ICE_HOME),cpp,cpp,$(cpp-dependencies)))
 
 slice2cpp_targetext             = cpp
 slice2cpp_path                  = $(ice_bindir)/slice2cpp

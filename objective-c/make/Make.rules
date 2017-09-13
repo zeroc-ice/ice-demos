@@ -32,8 +32,7 @@ IceSSLObjC_dependencies         = IceObjC
 IceStormObjC_dependencies       = IceObjC
 
 # Create component dependency variables
-$(eval $(call create-project-dependencies,ice,$(ICE_HOME),cpp,$(cpp-dependencies)))
-$(eval $(call create-project-dependencies,ice,$(ICE_HOME),objective-c,$(objc-dependencies)))
+$(eval $(call create-project-dependencies,ice,$(ICE_HOME),cpp,objective-c,$(cpp-dependencies) $(objc-dependencies)))
 
 slice2objc_targetext            = m
 slice2objc_path                 = $(ice_bindir)/slice2objc
