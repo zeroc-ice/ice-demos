@@ -49,6 +49,13 @@ $(error Can't find Ice distribution, please set ICE_HOME to the Ice installation
 endif
 
 #
+# Don't set config/platform targetdir/targetname for demos. The executables are always
+# produced in the demo directory with the same name regardless of the config/platform.
+#
+$(foreach v,$(supported-configs) $(supported-platforms) platform config,$(eval $v_targetdir := )\
+                                                                        $(eval $v_targetname := ))
+
+#
 # $(create-cpp-demo-project $1=demo)
 #
 define create-cpp-demo-project
