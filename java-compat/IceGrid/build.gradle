@@ -30,9 +30,11 @@ def demoIceGridProject(name) {
             }
         }
 
-        task makeDbDirs << {
-            file('db/registry').mkdirs()
-            file('db/node').mkdirs()
+        task makeDbDirs {
+            doLast {
+                file('db/registry').mkdirs()
+                file('db/node').mkdirs()
+            }
         }
         compileJava.dependsOn(makeDbDirs)
 
