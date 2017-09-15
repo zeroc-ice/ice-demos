@@ -120,7 +120,10 @@ run(const shared_ptr<Ice::Communicator>& communicator)
             else if(c == 'f')
             {
                 batchOneway->ice_flushBatchRequests();
-                batchDatagram->ice_flushBatchRequests();
+                if(!secure)
+                {
+                    batchDatagram->ice_flushBatchRequests();
+                }
             }
             else if(c == 'T')
             {
