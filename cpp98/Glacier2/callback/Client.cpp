@@ -200,6 +200,7 @@ CallbackClient::runWithSession(int argc, char*[])
         }
         else if(c == 'r')
         {
+            cin.ignore(); // Ignore the new line
             restart();
         }
         else if(c == 'x')
