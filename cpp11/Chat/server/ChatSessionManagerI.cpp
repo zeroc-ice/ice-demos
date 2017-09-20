@@ -29,14 +29,14 @@ ChatSessionManagerI::create(string name,
         vname = validateName(name);
         _chatRoom->reserve(vname);
     }
-    catch(const string& reason)
+    catch(const exception& ex)
     {
         if(_trace)
         {
             Ice::Trace out(_logger, "info");
-            out << "Cannot create push session:\n" << reason;
+            out << "Cannot create push session:\n" << ex;
         }
-        throw Glacier2::CannotCreateSessionException(reason);
+        throw Glacier2::CannotCreateSessionException(ex.what());
     }
 
     shared_ptr<Glacier2::SessionPrx> proxy;

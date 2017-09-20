@@ -29,14 +29,14 @@ PollingChatSessionFactoryI::create(string name, string, const Ice::Current& curr
         vname = validateName(name);
         _chatRoom->reserve(vname);
     }
-    catch(const string& reason)
+    catch(const exception& ex)
     {
         if(_trace)
         {
             Ice::Trace out(_logger, "info");
-            out << "Cannot create poll session:\n" << reason;
+            out << "Cannot create poll session:\n" << ex;
         }
-        throw PollingChat::CannotCreateSessionException(reason);
+        throw PollingChat::CannotCreateSessionException(ex.what());
     }
 
     shared_ptr<PollingChat::PollingChatSessionPrx> proxy;

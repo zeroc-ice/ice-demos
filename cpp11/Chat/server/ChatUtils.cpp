@@ -26,11 +26,11 @@ validateName(const string& in)
     {
         ostringstream msg;
         msg << "Your name must be between " << minNameSize << " and " << maxNameSize << " characters in length.";
-        throw msg.str();
+        throw invalid_argument(msg.str());
     }
     if(in.find_last_not_of(nameRange) != string::npos)
     {
-        throw string("Invalid character in name. Valid characters are letter and digits.");
+        throw invalid_argument("Invalid character in name. Valid characters are letter and digits.");
     }
     string out = in;
     transform(out.begin(), out.end(), out.begin(), ::tolower);
@@ -46,17 +46,13 @@ validateMessage(const string& in)
 {
     if(in.size() > maxMessageSize)
     {
-        Chat::InvalidMessageException ex;
-        ostringstream msg;
-        msg << "Message length exceeded, maximum length is " << maxMessageSize << " characters.";
-        ex.reason = msg.str();
-        throw ex;
+        ostringstream os;
+        os << "Message length exceeded, maximum length is " << maxMessageSize << " characters.";
+        throw Chat::InvalidMessageException(os.str());
     }
     if(in.find_last_not_of(isEmptyTokens) == string::npos)
     {
-        ostringstream msg;
-        msg << "Your message is empty and was ignored.";
-        throw msg.str();
+        throw invalid_argument("Your message is empty and was ignored.");
     }
     // Strip html codes in the message
     string out;
