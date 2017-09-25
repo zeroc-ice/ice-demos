@@ -12,7 +12,7 @@ Ice.updateModules()
 import Demo
 
 class ContextI(Demo.Context):
-    def call(self, current=None):
+    def call(self, current):
         sys.stdout.write("Type = ")
         if 'type' in current.ctx:
             sys.stdout.write(current.ctx['type'])
@@ -20,7 +20,7 @@ class ContextI(Demo.Context):
             sys.stdout.write('None')
         sys.stdout.write("\n")
 
-    def shutdown(self, current=None):
+    def shutdown(self, current):
         current.adapter.getCommunicator().shutdown()
 
 class Server(Ice.Application):

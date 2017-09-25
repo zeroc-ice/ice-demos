@@ -11,14 +11,14 @@ Ice.loadSlice('Callback.ice')
 import Demo
 
 class CallbackSenderI(Demo.CallbackSender):
-    def initiateCallback(self, proxy, current=None):
+    def initiateCallback(self, proxy, current):
         print("initiating callback")
         try:
             proxy.callback()
         except:
             traceback.print_exc()
 
-    def shutdown(self, current=None):
+    def shutdown(self, current):
         print("Shutting down...")
         try:
             current.adapter.getCommunicator().shutdown()

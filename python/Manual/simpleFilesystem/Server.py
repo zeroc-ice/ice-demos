@@ -26,12 +26,12 @@ class DirectoryI(Filesystem.Directory):
 
     # Slice Node::name() operation
 
-    def name(self, current=None):
+    def name(self, current):
         return self._name
 
     # Slice Directory::list() operation
 
-    def list(self, current=None):
+    def list(self, current):
         return self._contents
 
     # addChild is called by the child in order to add
@@ -62,17 +62,17 @@ class FileI(Filesystem.File):
 
     # Slice Node::name() operation
 
-    def name(self, current=None):
+    def name(self, current):
         return self._name
 
     # Slice File::read() operation
 
-    def read(self, current=None):
+    def read(self, current):
         return self._lines
 
     # Slice File::write() operation
 
-    def write(self, text, current=None):
+    def write(self, text, current):
         self._lines = text
 
     # Add servant to ASM and Parent's _contents map.
@@ -102,7 +102,7 @@ class Server(Ice.Application):
         file = FileI(self.communicator(), "README", root)
         text = [ "This file system contains a collection of poetry." ]
         try:
-            file.write(text)
+            file.write(text, None)
         except Filesystem.GenericError as e:
             print(e.reason)
         file.activate(adapter)
@@ -121,7 +121,7 @@ class Server(Ice.Application):
                  "Through caverns measureless to man",
                  "Down to a sunless sea." ]
         try:
-            file.write(text)
+            file.write(text, None)
         except Filesystem.GenericError as e:
             print(e.reason)
         file.activate(adapter)
