@@ -4,59 +4,166 @@
 //
 // **********************************************************************
 
-(function(){
-
-//
-// Servant that implements the ChatCallback interface.
-// The message operation just writes the received data
-// to the output textarea.
-//
-class ChatCallbackI extends Demo.ChatCallback
+(function()
 {
-    message(data)
+
+    //
+    // Servant that implements the ChatCallback interface.
+    // The message operation just writes the received data
+    // to the output textarea.
+    //
+    class ChatCallbackI extends Demo.ChatCallback
     {
-        $("#output").val($("#output").val() + data + "\n");
-        $("#output").scrollTop($("#output").get(0).scrollHeight);
+        message(data)
+        {
+            $("#output").val($("#output").val() + data + "\n");
+            $("#output").scrollTop($("#output").get(0).scrollHeight);
+        }
     }
-}
 
-//
-// Chat client state
-//
-const State =
-{
-    Disconnected: 0,
-    Connecting: 1,
-    Connected:2
-};
+    //
+    // Chat client state
+    //
+    const State =
+          {
+              Disconnected: 0,
+              Connecting: 1,
+              Connected:2
+          };
 
-let state = State.Disconnected;
-let hasError = false;
+    let state = State.Disconnected;
+    let hasError = false;
 
-function signin()
-{
-    let communicator;
-    Ice.Promise.try(() =>
+    async function runWithSession(router, session)
+    {
+        try
+        {
+            //
+            // Get the session timeout and the router client category, and
+            // create the client object adapter.
+            //
+            // Use Promise.all to wait for the completion of all the
+            // calls.
+            //
+            let [timeout, category, adapter] = await Promise.all([router.getACMTimeout(),
+                                                                  router.getCategoryForClient(),
+                                                                  router.ice_getCommunicator().createObjectAdapterWithRouter("", router)]);
+            //
+            // Use ACM heartbeat to keep session alive.
+            //
+            const connection = router.ice_getCachedConnection();
+            if(timeout > 0)
+            {
+                connection.setACM(timeout, undefined, Ice.ACMHeartbeat.HeartbeatAlways);
+            }
+
+            connection.setCloseCallback(() => error("Connection lost"));
+
+            //
+            // Create the ChatCallback servant and add it to the
+            // ObjectAdapter.
+            //
+            const callback = Demo.ChatCallbackPrx.uncheckedCast(
+                adapter.add(new ChatCallbackI(), new Ice.Identity("callback", category)));
+
+            //
+            // Set the chat session callback.
+            //
+            await session.setCallback(callback);
+
+            //
+            // Stop animating the loading progress bar and
+            // transition to the chat screen.
+            //
+            stopProgress(true);
+            await transition("#loading", "#chat-form");
+
+            $("#loading .meter").css("width", "0%");
+            state = State.Connected;
+            $("#input").focus();
+
+            //
+            // Keep processing input events in the input textbox until signout is click
+            // or there is an error sending a message.
+            //
+            await new Promise(
+                (resolve, reject) =>
+                    {
+                        $("#input").keypress(
+                            (e) =>
+                                {
+                                    //
+                                    // When the enter key is pressed, we send a new
+                                    // message using the session say operation and
+                                    // reset the textbox contents.
+                                    //
+                                    if(e.which === 13)
+                                    {
+                                        (async function()
+                                        {
+                                            const message = $(e.currentTarget).val();
+                                            $(e.currentTarget).val("");
+                                            try
+                                            {
+                                                await session.say(message);
+                                            }
+                                            catch(ex)
+                                            {
+                                                reject(ex);
+                                            }
+                                        }());
+                                        return false;
+                                    }
+                                });
+
+                        $("#signout").click(() =>
+                                            {
+                                                connection.setCloseCallback(null);
+                                                resolve();
+                                            });
+                    });
+            //
+            // Destroy the session.
+            //
+            await router.destroySession();
+        }
+        finally
+        {
+            //
+            // Reset the input text box and chat output
+            // textarea.
+            //
+            $("#input").val("");
+            $("#input").off("keypress");
+            $("#signout").off("click");
+            $("#output").val("");
+
+            await transition("#chat-form", "#signin-form");
+            $("#username").focus();
+            state = State.Disconnected;
+        }
+    }
+
+    async function signin()
+    {
+        let communicator;
+        try
         {
             state = State.Connecting;
             //
             // Dismiss any previous error message.
             //
-            if(hasError)
-            {
-                dismissError();
-            }
+            await transition("#signin-alert");
+
             //
             // Transition to loading screen
             //
-            return transition("#signin-form", "#loading");
-        }
-    ).then(() =>
-        {
+            await transition("#signin-form", "#loading");
+
             //
             // Start animating the loading progress bar.
             //
-            startProgress();
+            await startProgress();
 
             const hostname = document.location.hostname || "127.0.0.1";
             //
@@ -69,8 +176,8 @@ function signin()
             // port and host.
             //
             const secure = document.location.protocol.indexOf("https") != -1;
-            const router = secure ? "DemoGlacier2/router:wss -p 9090 -h " + hostname + " -r /chatwss" :
-                                    "DemoGlacier2/router:ws -p 8080 -h " + hostname + " -r /chatws";
+            const proxy = secure ? "DemoGlacier2/router:wss -p 9090 -h " + hostname + " -r /chatwss" :
+                  "DemoGlacier2/router:ws -p 8080 -h " + hostname + " -r /chatws";
 
             //
             // Initialize the communicator with the Ice.Default.Router property
@@ -78,298 +185,133 @@ function signin()
             //
             const initData = new Ice.InitializationData();
             initData.properties = Ice.createProperties();
-            initData.properties.setProperty("Ice.Default.Router", router);
+            initData.properties.setProperty("Ice.Default.Router", proxy);
             communicator = Ice.initialize(initData);
 
             //
             // Get a proxy to the Glacier2 router using checkedCast to ensure
             // the Glacier2 server is available.
             //
-            return Glacier2.RouterPrx.checkedCast(communicator.getDefaultRouter()).then(
-                router =>
-                {
-                    const username = $("#username").val();
-                    const password = $("#password").val();
-
-                    return router.createSession(username, password).then(
-                        session =>
-                        {
-                            return run(communicator, router, Demo.ChatSessionPrx.uncheckedCast(session));
-                        });
-                });
+            const router = await Glacier2.RouterPrx.checkedCast(communicator.getDefaultRouter());
+            const session = await router.createSession($("#username").val(), $("#password").val());
+            await runWithSession(router, Demo.ChatSessionPrx.uncheckedCast(session));
         }
-    ).catch(ex =>
+        catch(ex)
         {
             //
             // Handle any exceptions that occurred during session creation.
             //
             if(ex instanceof Glacier2.PermissionDeniedException)
             {
-                error("permission denied:\n" + ex.reason);
+                await error("permission denied:\n" + ex.reason);
             }
             else if(ex instanceof Glacier2.CannotCreateSessionException)
             {
-                error("cannot create session:\n" + ex.reason);
+                await error("cannot create session:\n" + ex.reason);
             }
             else if(ex instanceof Ice.ConnectFailedException)
             {
-                error("connection to server failed");
+                await error("connection to server failed");
             }
             else
             {
-                error(ex.toString());
+                await error(ex.toString());
             }
-
+        }
+        finally
+        {
             if(communicator)
             {
-                communicator.destroy();
+                await communicator.destroy();
             }
-        });
-}
-
-function run(communicator, router, session)
-{
-    //
-    // The chat promise is used to wait for the completion of chatting
-    // state. The completion could happen because the user signed out,
-    // or because an exception was raised.
-    //
-    const chat = new Ice.Promise();
-    let completed = false;
-
-    //
-    // Get the session timeout and the router client category, and
-    // create the client object adapter.
-    //
-    // Use Ice.Promise.all to wait for the completion of all the
-    // calls.
-    //
-    Ice.Promise.all(
-        [router.getACMTimeout(),
-         router.getCategoryForClient(),
-         communicator.createObjectAdapterWithRouter("", router)]
-    ).then(values =>
-        {
-            let [timeout, category, adapter] = values;
-
-            //
-            // Use ACM heartbeat to keep session alive.
-            //
-            const connection = router.ice_getCachedConnection();
-            if(timeout > 0)
-            {
-                connection.setACM(timeout, undefined, Ice.ACMHeartbeat.HeartbeatAlways);
-            }
-
-            connection.setCloseCallback(() =>
-                {
-                    if(!completed)
-                    {
-                        error("Connection lost");
-                    }
-                });
-
-            //
-            // Create the ChatCallback servant and add it to the
-            // ObjectAdapter.
-            //
-            const callback = Demo.ChatCallbackPrx.uncheckedCast(
-                adapter.add(new ChatCallbackI(), new Ice.Identity("callback", category)));
-
-            //
-            // Set the chat session callback.
-            //
-            return session.setCallback(callback);
-        }
-    ).then(() =>
-        {
-            //
-            // Stop animating the loading progress bar and
-            // transition to the chat screen.
-            //
-            stopProgress(true);
-            return transition("#loading", "#chat-form");
-        }
-    ).then(() =>
-        {
-            $("#loading .meter").css("width", "0%");
-            state = State.Connected;
-            $("#input").focus();
-
-            //
-            // Process input events in the input textbox until the chat
-            // promise is completed.
-            //
-            $("#input").keypress(e =>
-                {
-                    if(!completed)
-                    {
-                        //
-                        // When the enter key is pressed, we send a new
-                        // message using the session say operation and
-                        // reset the textbox contents.
-                        //
-                        if(e.which === 13)
-                        {
-                            var msg = $(e.currentTarget).val();
-                            $(e.currentTarget).val("");
-                            session.say(msg).catch(ex => chat.reject(ex));
-                            return false;
-                        }
-                    }
-                });
-
-            //
-            // Exit the chat loop by accepting the chat
-            // promise.
-            //
-            $("#signout").click(() =>
-                {
-                    completed = true;
-                    chat.resolve();
-                    return false;
-                });
-
-            return chat;
-        }
-    ).finally(() =>
-        {
-            //
-            // Reset the input text box and chat output
-            // textarea.
-            //
-            $("#input").val("");
-            $("#input").off("keypress");
-            $("#signout").off("click");
-            $("#output").val("");
-
-            //
-            // Destroy the session.
-            //
-            return router.destroySession();
-        }
-    ).then(() =>
-        {
-            //
-            // Destroy the communicator and go back to the
-            // disconnected state.
-            //
-            communicator.destroy().finally(() =>
-                {
-                    transition("#chat-form", "#signin-form").finally(() =>
-                        {
-                            $("#username").focus();
-                            state = State.Disconnected;
-                        });
-                });
-        }
-    ).catch(ex =>
-        {
-            //
-            // Handle any exceptions that occurred while running.
-            //
-            error(ex);
-            communicator.destroy();
-        });
-}
-
-//
-// Switch to Disconnected state and display the error
-// message.
-//
-function error(message)
-{
-    stopProgress(false);
-    hasError = true;
-    const current = state === State.Connecting ? "#loading" : "#chat-form";
-    $("#signin-alert span").text(message);
-
-    //
-    // Transition the screen
-    //
-    transition(current, "#signin-alert").then(() =>
-        {
-            $("#loading .meter").css("width", "0%");
-            $("#signin-form").css("display", "block").animo({ animation: "flipInX", keep: true });
-            state = State.Disconnected;
-        });
-}
-
-//
-// Do a transition from "from" screen to "to" screen, return
-// a promise that allows us to wait for the transition
-// to complete. If to screen is undefined just animate out the
-// from screen.
-//
-function transition(from, to)
-{
-    const p = new Ice.Promise();
-    $(from).animo({ animation: "flipOutX", keep: true }, () =>
-        {
-            $(from).css("display", "none");
-            if(to)
-            {
-                $(to).css("display", "block").animo({ animation: "flipInX", keep: true }, () => p.resolve());
-            }
-            else
-            {
-                p.resolve();
-            }
-        });
-    return p;
-}
-
-//
-// Event handler for Sign in button
-//
-$("#signin").click(() =>
-                   {
-                       signin();
-                       return false;
-                   });
-
-//
-// Dismiss error message.
-//
-function dismissError()
-{
-    transition("#signin-alert");
-    hasError = false;
-    return false;
-}
-
-//
-// Animate the loading progress bar.
-//
-var w = 0;
-var progress;
-
-function startProgress()
-{
-    if(!progress)
-    {
-        progress = setInterval(() =>
-            {
-                w = w === 100 ? 0 : w + 5;
-                $("#loading .meter").css("width", w.toString() + "%");
-            },
-            20);
-    }
-}
-
-function stopProgress(completed)
-{
-    if(progress)
-    {
-        clearInterval(progress);
-        progress = null;
-        if(completed)
-        {
-            $("#loading .meter").css("width", "100%");
         }
     }
-}
 
-$("#username").focus();
+    //
+    // Switch to Disconnected state and display the error
+    // message.
+    //
+    async function error(message)
+    {
+        stopProgress(false);
+        $("#loading .meter").css("width", "0%");
+        await transition(State.Connecting ? "#loading" : "#chat-form", "#signin-form");
+        $("#signin-alert span").text(message);
+        await transition(null, "#signin-alert");
+        state = State.Disconnected;
+    }
+
+    //
+    // Do a transition from "from" screen to "to" screen, return
+    // a promise that allows us to wait for the transition
+    // to complete. If to screen is undefined just animate out the
+    // from screen.
+    //
+    function transition(from, to)
+    {
+        return new Promise(
+            (resolve, reject) =>
+                {
+                    if(from)
+                    {
+                        $(from).fadeOut("slow",
+                                        () =>
+                                        {
+                                            $(from).css("display", "none");
+                                            if(to)
+                                            {
+                                                $(to).css("display", "block").fadeIn("slow", () => resolve());
+                                            }
+                                            else
+                                            {
+                                                resolve();
+                                            }
+                                        });
+                    }
+                    else
+                    {
+                        $(to).css("display", "block").fadeIn("slow", () => resolve())
+                    }
+                });
+    }
+
+    //
+    // Event handler for Sign in button
+    //
+    $("#signin").click(signin);
+
+    //
+    // Animate the loading progress bar.
+    //
+    var w = 0;
+    var progress;
+
+    function startProgress()
+    {
+        if(!progress)
+        {
+            progress = setInterval(() =>
+                                   {
+                                       w = w === 100 ? 0 : w + 5;
+                                       $("#loading .meter").css("width", w.toString() + "%");
+                                   },
+                                   100);
+        }
+    }
+
+    function stopProgress(completed)
+    {
+        if(progress)
+        {
+            clearInterval(progress);
+            progress = null;
+            if(completed)
+            {
+                $("#loading .meter").css("width", "100%");
+            }
+        }
+    }
+
+    $("#username").focus();
 
 }());
