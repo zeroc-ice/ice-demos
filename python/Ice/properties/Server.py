@@ -21,8 +21,7 @@ class PropsI(Demo.Props, Ice.PropertiesAdminUpdateCallback):
         self.m = threading.Condition()
 
     def getChanges(self, current = None):
-        self.m.acquire()
-        try:
+        with self.m:
             #
             # Make sure that we have received the property updates before we
             # return the results.
@@ -31,20 +30,15 @@ class PropsI(Demo.Props, Ice.PropertiesAdminUpdateCallback):
                 self.m.wait()
             self.called = False;
             return self.changes
-        finally:
-            self.m.release()
 
     def shutdown(self, current = None):
         current.adapter.getCommunicator().shutdown();
 
     def updated(self, changes):
-        self.m.acquire()
-        try:
+        with self.m:
             self.changes = changes;
             self.called = True
             self.m.notify()
-        finally:
-            self.m.release()
 
 class Server(Ice.Application):
     def run(self, args):
