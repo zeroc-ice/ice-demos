@@ -7,46 +7,6 @@
 const Ice = require("ice").Ice;
 const Demo = require("./generated/Throughput").Demo;
 
-function menu()
-{
-    process.stdout.write(
-`usage:
-
-toggle type of data to send:
-1: sequence of bytes (default)
-2: sequence of strings ("hello")
-3: sequence of structs with a string ("hello") and a double
-4: sequence of structs with two ints and a double
-
-select test to run:
-t: Send sequence as twoway
-o: Send sequence as oneway
-r: Receive sequence
-e: Echo (send and receive) sequence
-
-other commands:
-s: shutdown server
-x: exit
-?: help
-`);
-}
-
-//
-// Asynchonously process stdin lines using a promise
-//
-function getline()
-{
-    return new Promise((resolve, reject) =>
-                       {
-                           process.stdin.resume();
-                           process.stdin.once("data", buffer =>
-                                              {
-                                                  process.stdin.pause();
-                                                  resolve(buffer.toString("utf-8").trim());
-                                              });
-                       });
-}
-
 //
 // Initialize sequences.
 //
@@ -107,208 +67,207 @@ for(let i = 0; i < Demo.FixedSeqSize; ++i)
             try
             {
                 process.stdout.write("==> ");
-                key = await getline();
-
-                let proxy;
-                let operation;
-
-                if(key == "1" || key == "2" || key == "3" || key == "4")
+                for(key of await getline())
                 {
-                    currentType = key;
+                    let proxy;
+                    let operation;
 
-                    //
-                    // Select the sequence data type to use by this test.
-                    //
-                    switch(currentType)
+                    if(key == "1" || key == "2" || key == "3" || key == "4")
                     {
-                        case "1":
-                        {
-                            console.log("using byte sequences");
-                            seqSize = Demo.ByteSeqSize;
-                            seq = byteSeq;
-                            wireSize = 1;
-                            break;
-                        }
+                        currentType = key;
 
-                        case "2":
+                        //
+                        // Select the sequence data type to use by this test.
+                        //
+                        switch(currentType)
                         {
-                            console.log("using string sequences");
-                            seqSize = Demo.StringSeqSize;
-                            seq = stringSeq;
-                            wireSize = seq[0].length;
-                            break;
-                        }
+                            case "1":
+                            {
+                                console.log("using byte sequences");
+                                seqSize = Demo.ByteSeqSize;
+                                seq = byteSeq;
+                                wireSize = 1;
+                                break;
+                            }
 
-                        case "3":
-                        {
-                            console.log("using variable-length struct sequences");
-                            seqSize = Demo.StringDoubleSeqSize;
-                            seq = structSeq;
-                            wireSize = seq[0].s.length;
-                            wireSize += 8; // Size of double on the wire.
-                            break;
-                        }
+                            case "2":
+                            {
+                                console.log("using string sequences");
+                                seqSize = Demo.StringSeqSize;
+                                seq = stringSeq;
+                                wireSize = seq[0].length;
+                                break;
+                            }
 
-                        case "4":
-                        {
-                            console.log("using fixed-length struct sequences");
-                            seqSize = Demo.FixedSeqSize;
-                            seq = fixedSeq;
-                            wireSize = 16; // Size of two ints and a double on the wire.
-                            break;
+                            case "3":
+                            {
+                                console.log("using variable-length struct sequences");
+                                seqSize = Demo.StringDoubleSeqSize;
+                                seq = structSeq;
+                                wireSize = seq[0].s.length;
+                                wireSize += 8; // Size of double on the wire.
+                                break;
+                            }
+
+                            case "4":
+                            {
+                                console.log("using fixed-length struct sequences");
+                                seqSize = Demo.FixedSeqSize;
+                                seq = fixedSeq;
+                                wireSize = 16; // Size of two ints and a double on the wire.
+                                break;
+                            }
                         }
                     }
-                }
-                else if(key == "t" || key == "o" || key == "r" || key == "e")
-                {
-                    //
-                    // Select the proxy and operation to use by this test.
-                    //
-                    switch(key)
+                    else if(key == "t" || key == "o" || key == "r" || key == "e")
                     {
-                        case "t":
-                        case "o":
+                        //
+                        // Select the proxy and operation to use by this test.
+                        //
+                        switch(key)
                         {
-                            proxy = key == "o" ? oneway : twoway;
-                            if(currentType == 1)
+                            case "t":
+                            case "o":
                             {
-                                operation = proxy.sendByteSeq;
+                                proxy = key == "o" ? oneway : twoway;
+                                if(currentType == 1)
+                                {
+                                    operation = proxy.sendByteSeq;
+                                }
+                                else if(currentType == 2)
+                                {
+                                    operation = proxy.sendStringSeq;
+                                }
+                                else if(currentType == 3)
+                                {
+                                    operation = proxy.sendStructSeq;
+                                }
+                                else if(currentType == 4)
+                                {
+                                    operation = proxy.sendFixedSeq;
+                                }
+                                process.stdout.write("sending");
+                                break;
                             }
-                            else if(currentType == 2)
+
+                            case "r":
                             {
-                                operation = proxy.sendStringSeq;
+                                proxy = twoway;
+                                if(currentType == 1)
+                                {
+                                    operation = proxy.recvByteSeq;
+                                }
+                                else if(currentType == 2)
+                                {
+                                    operation = proxy.recvStringSeq;
+                                }
+                                else if(currentType == 3)
+                                {
+                                    operation = proxy.recvStructSeq;
+                                }
+                                else if(currentType == 4)
+                                {
+                                    operation = proxy.recvFixedSeq;
+                                }
+                                process.stdout.write("receiving");
+                                break;
                             }
-                            else if(currentType == 3)
+
+                            case "e":
                             {
-                                operation = proxy.sendStructSeq;
+                                proxy = twoway;
+                                if(currentType == 1)
+                                {
+                                    operation = proxy.echoByteSeq;
+                                }
+                                else if(currentType == 2)
+                                {
+                                    operation = proxy.echoStringSeq;
+                                }
+                                else if(currentType == 3)
+                                {
+                                    operation = proxy.echoStructSeq;
+                                }
+                                else if(currentType == 4)
+                                {
+                                    operation = proxy.echoFixedSeq;
+                                }
+                                process.stdout.write("sending and receiving");
+                                break;
                             }
-                            else if(currentType == 4)
-                            {
-                                operation = proxy.sendFixedSeq;
-                            }
-                            process.stdout.write("sending");
-                            break;
                         }
 
-                        case "r":
+                        process.stdout.write(" " + repetitions);
+                        switch(currentType)
                         {
-                            proxy = twoway;
-                            if(currentType == 1)
+                            case "1":
                             {
-                                operation = proxy.recvByteSeq;
+                                process.stdout.write(" byte");
+                                break;
                             }
-                            else if(currentType == 2)
+                            case "2":
                             {
-                                operation = proxy.recvStringSeq;
+                                process.stdout.write(" string");
+                                break;
                             }
-                            else if(currentType == 3)
+                            case "3":
                             {
-                                operation = proxy.recvStructSeq;
+                                process.stdout.write(" variable-length struct");
+                                break;
                             }
-                            else if(currentType == 4)
+
+                            case "4":
                             {
-                                operation = proxy.recvFixedSeq;
+                                process.stdout.write(" fixed-length struct");
+                                break;
                             }
-                            process.stdout.write("receiving");
-                            break;
                         }
 
-                        case "e":
+                        process.stdout.write(" sequences of size " + seqSize);
+
+                        if(key == "o")
                         {
-                            proxy = twoway;
-                            if(currentType == 1)
-                            {
-                                operation = proxy.echoByteSeq;
-                            }
-                            else if(currentType == 2)
-                            {
-                                operation = proxy.echoStringSeq;
-                            }
-                            else if(currentType == 3)
-                            {
-                                operation = proxy.echoStructSeq;
-                            }
-                            else if(currentType == 4)
-                            {
-                                operation = proxy.echoFixedSeq;
-                            }
-                            process.stdout.write("sending and receiving");
-                            break;
+                            process.stdout.write(" as oneway");
                         }
+                        console.log("...");
+
+                        let start = new Date().getTime();
+                        let args = key != "r" ? [seq] : [];
+
+                        for(let i = 0; i < repetitions; i++)
+                        {
+                            await operation.apply(proxy, args);
+                        }
+
+                        let total = new Date().getTime() - start;
+                        console.log(`time for ${repetitions} sequences: ${total} ms`);
+                        console.log(`time per sequence: ${total / repetitions} ms`);
+
+                        let mbit = repetitions * seqSize * wireSize * 8.0 / total / 1000.0;
+                        if(key == "e")
+                        {
+                            mbit *= 2;
+                        }
+                        mbit = Math.round(mbit * 100) / 100;
+                        console.log(`throughput: ${mbit} Mbps`);
                     }
-
-                    process.stdout.write(" " + repetitions);
-                    switch(currentType)
+                    else if(key == "s")
                     {
-                        case "1":
-                        {
-                            process.stdout.write(" byte");
-                            break;
-                        }
-                        case "2":
-                        {
-                            process.stdout.write(" string");
-                            break;
-                        }
-                        case "3":
-                        {
-                            process.stdout.write(" variable-length struct");
-                            break;
-                        }
-
-                        case "4":
-                        {
-                            process.stdout.write(" fixed-length struct");
-                            break;
-                        }
+                        await twoway.shutdown();
                     }
-
-                    process.stdout.write(" sequences of size " + seqSize);
-
-                    if(key == "o")
+                    else if(key == "x")
                     {
-                        process.stdout.write(" as oneway");
+                        break;
                     }
-                    console.log("...");
-
-                    let start = new Date().getTime();
-                    let args = key != "r" ? [seq] : [];
-
-                    for(let i = 0; i < repetitions; i++)
+                    else if(key == "?")
                     {
-                        await operation.apply(proxy, args);
+                        menu();
                     }
-
-                    let total = new Date().getTime() - start;
-                    console.log(`time for ${repetitions} sequences: ${total} ms`);
-                    console.log(`time per sequence: ${total / repetitions} ms`);
-
-                    let mbit = repetitions * seqSize * wireSize * 8.0 / total / 1000.0;
-                    if(key == "e")
+                    else
                     {
-                        mbit *= 2;
+                        console.log(`unknown command "${key}"`);
+                        menu();
                     }
-                    mbit = Math.round(mbit * 100) / 100;
-                    console.log(`throughput: ${mbit} Mbps`);
-                }
-                else if(key == "s")
-                {
-                    await twoway.shutdown();
-                }
-                else if(key == "x")
-                {
-                    // Nothing todo
-                }
-                else if(key == "?")
-                {
-                    process.stdout.write("\n");
-                    menu();
-                }
-                else
-                {
-                    console.log(`unknown command "${key}"`);
-                    process.stdout.write("\n");
-                    menu();
                 }
             }
             catch(ex)
@@ -331,3 +290,43 @@ for(let i = 0; i < Demo.FixedSeqSize; ++i)
         }
     }
 }());
+
+function menu()
+{
+    process.stdout.write(
+`usage:
+
+toggle type of data to send:
+1: sequence of bytes (default)
+2: sequence of strings ("hello")
+3: sequence of structs with a string ("hello") and a double
+4: sequence of structs with two ints and a double
+
+select test to run:
+t: Send sequence as twoway
+o: Send sequence as oneway
+r: Receive sequence
+e: Echo (send and receive) sequence
+
+other commands:
+s: shutdown server
+x: exit
+?: help
+`);
+}
+
+//
+// Asynchonously process stdin lines using a promise
+//
+function getline()
+{
+    return new Promise((resolve, reject) =>
+                       {
+                           process.stdin.resume();
+                           process.stdin.once("data", buffer =>
+                                              {
+                                                  process.stdin.pause();
+                                                  resolve(buffer.toString("utf-8").trim());
+                                              });
+                       });
+}

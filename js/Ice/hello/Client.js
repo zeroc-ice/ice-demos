@@ -3,7 +3,6 @@
 // Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
 //
 // **********************************************************************
-
 const Ice = require("ice").Ice;
 const Demo = require("./generated/Hello").Demo;
 
@@ -32,94 +31,94 @@ const Demo = require("./generated/Hello").Demo;
         do
         {
             process.stdout.write("==> ")
-            line = await getline();
-            try
+            for(line of await getline())
             {
-                if(line == "t")
+                try
                 {
-                    await twoway.sayHello(delay);
-                }
-                else if(line == "o")
-                {
-                    await oneway.sayHello(delay);
-                }
-                else if(line == "O")
-                {
-                    await batchOneway.sayHello(delay);
-                }
-                else if(line == "f")
-                {
-                    await batchOneway.ice_flushBatchRequests();
-                }
-                else if(line == "T")
-                {
-                    if(timeout == -1)
+                    if(line == "t")
                     {
-                        timeout = 2000;
+                        await twoway.sayHello(delay);
                     }
-                    else
+                    else if(line == "o")
                     {
-                        timeout = -1;
+                        await oneway.sayHello(delay);
                     }
-                    twoway = twoway.ice_invocationTimeout(timeout);
-                    oneway = oneway.ice_invocationTimeout(timeout);
-                    batchOneway = batchOneway.ice_invocationTimeout(timeout);
+                    else if(line == "O")
+                    {
+                        await batchOneway.sayHello(delay);
+                    }
+                    else if(line == "f")
+                    {
+                        await batchOneway.ice_flushBatchRequests();
+                    }
+                    else if(line == "T")
+                    {
+                        if(timeout == -1)
+                        {
+                            timeout = 2000;
+                        }
+                        else
+                        {
+                            timeout = -1;
+                        }
+                        twoway = twoway.ice_invocationTimeout(timeout);
+                        oneway = oneway.ice_invocationTimeout(timeout);
+                        batchOneway = batchOneway.ice_invocationTimeout(timeout);
 
-                    if(timeout == -1)
-                    {
-                        console.log("timeout is now switched off");
+                        if(timeout == -1)
+                        {
+                            console.log("timeout is now switched off");
+                        }
+                        else
+                        {
+                            console.log("timeout is now set to 2000ms");
+                        }
                     }
-                    else
+                    else if(line == "P")
                     {
-                        console.log("timeout is now set to 2000ms");
-                    }
-                }
-                else if(line == "P")
-                {
-                    if(delay === 0)
-                    {
-                        delay = 2500;
-                    }
-                    else
-                    {
-                        delay = 0;
-                    }
+                        if(delay === 0)
+                        {
+                            delay = 2500;
+                        }
+                        else
+                        {
+                            delay = 0;
+                        }
 
-                    if(delay === 0)
+                        if(delay === 0)
+                        {
+                            console.log("server delay is now deactivated");
+                        }
+                        else
+                        {
+                            console.log("server delay is now set to 2500ms");
+                        }
+                    }
+                    else if(line == "s")
                     {
-                        console.log("server delay is now deactivated");
+                        await twoway.shutdown();
+                    }
+                    else if(line == "x")
+                    {
+                        break;
+                    }
+                    else if(line == "?")
+                    {
+                        menu();
                     }
                     else
                     {
-                        console.log("server delay is now set to 2500ms");
+                        console.log("unknown command `" + line + "'");
+                        menu();
                     }
                 }
-                else if(line == "s")
+                catch(ex)
                 {
-                    await twoway.shutdown();
+                    console.log(ex.toString());
                 }
-                else if(line == "x")
-                {
-                    // Nothing to do
-                }
-                else if(line == "?")
-                {
-                    process.stdout.write("\n");
-                    menu();
-                }
-                else
-                {
-                    console.log("unknown command `" + line + "'");
-                    process.stdout.write("\n");
-                    menu();
-                }
-            }
-            catch(ex)
-            {
-                console.log(ex.toString());
             }
         }
-        while(line != "x")
+        while(line != "x");
     }
     catch(ex)
     {
