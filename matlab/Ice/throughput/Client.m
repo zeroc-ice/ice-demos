@@ -277,8 +277,8 @@ classdef Client
         end
         function main()
             addpath('generated');
-            if ~libisloaded('icematlab')
-                loadlibrary('icematlab')
+            if ~libisloaded('ice')
+                loadlibrary('ice', @iceproto)
             end
 
             % Initializes a communicator and then destroys it when cleanup is collected
