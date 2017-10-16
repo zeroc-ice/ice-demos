@@ -1,5 +1,8 @@
 function build()
-  demos = { {'Ice/latency' 'Ice/latency/Latency.ice'} {'Ice/throughput' 'Ice/latency/Latency.ice'}};
+  demos = { {'Ice/latency' 'Ice/latency/Latency.ice'}
+            {'Ice/throughput' 'Ice/latency/Latency.ice'}
+            {'Ice/gui' 'Ice/hello/Hello.ice'}
+          };
   for i = 1:length(demos)
     demo = demos{i};
     fprintf(1, 'Building %s...', demo{1});

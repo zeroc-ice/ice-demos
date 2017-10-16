@@ -11,3 +11,8 @@ Demos in this directory:
   various types between client and server and to measure the maximum
   bandwidth that can be achieved using serialized synchronous
   requests.
+
+- [gui](./gui)
+
+  A gui application that shows how to use Asynchronous Method Invocation (AMI)
+  in a graphical client.
