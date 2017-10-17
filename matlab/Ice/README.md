@@ -5,14 +5,14 @@ Demos in this directory:
   This demo illustrates the use of Asynchronous Method Invocation
   (AMI), with both futures and callbacks.
 
+- [context](./context)
+
+  This demo shows how to use Ice request contexts.
+
 - [gui](./gui)
 
   A GUI application that shows how to use Asynchronous Method Invocation (AMI)
   in a graphical client.
-
-- [context](./context)
-
-  This demo shows how to use Ice request contexts.
 
 - [hello](./hello)
 
@@ -28,6 +28,10 @@ Demos in this directory:
 - [minimal](./minimal)
 
   This demo illustrates a minimal Ice application.
+
+- [optional](./optional)
+
+  This demo shows the use of the optional keyword.
 
 - [throughput](./throughput)
 
