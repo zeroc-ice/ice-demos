@@ -18,11 +18,11 @@ function clean()
         demos = folders(components{i});
         for j = 1:length(demos)
             generatedDir = fullfile(components{i}, demos{j}, 'generated');
-            fprintf(1, 'Cleaning %s... ', generatedDir);
+            fprintf('Cleaning %s... ', generatedDir);
             if exist(generatedDir, 'dir') == 7
                 rmdir(generatedDir, 's');
             end
-            fprintf(1, 'ok\n');
+            fprintf('ok\n');
         end
     end
 end
