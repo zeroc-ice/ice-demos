@@ -19,7 +19,7 @@ using the MATLAB console:
 cd matlab
 ```
 
-To actually build the demos run the `build.m` script:
+To build the demos run the `build.m` script:
 
 ```
 build

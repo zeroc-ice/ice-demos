@@ -7,7 +7,7 @@ Demos in this directory:
 
 - [gui](./gui)
 
-  A gui application that shows how to use Asynchronous Method Invocation (AMI)
+  A GUI application that shows how to use Asynchronous Method Invocation (AMI)
   in a graphical client.
 
 - [hello](./hello)
