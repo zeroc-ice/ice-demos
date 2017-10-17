@@ -1,3 +1,7 @@
+% **********************************************************************
+% Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+% **********************************************************************
+
 function clean()
     function r = folders(root)
         function r = exclude(name)

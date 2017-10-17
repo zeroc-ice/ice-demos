@@ -1,3 +1,7 @@
+% **********************************************************************
+% Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+% **********************************************************************
+
 classdef Client < handle
     properties
         communicator
