@@ -91,7 +91,7 @@ classdef Client
                                 delay = 2500;
                                 fprintf('server delay is now set to 2500ms\n');
                             else
-                                delay = 0
+                                delay = 0;
                                 fprintf('server delay is now deactivated\n');
                             end
                         case 'S'

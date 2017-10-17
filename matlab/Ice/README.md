@@ -3,7 +3,7 @@ Demos in this directory:
 - [asyncInvocation](./asyncInvocation)
 
   This demo illustrates the use of Asynchronous Method Invocation
-  (AMI), with both futures and callbacks.
+  (AMI) with futures.
 
 - [context](./context)
 

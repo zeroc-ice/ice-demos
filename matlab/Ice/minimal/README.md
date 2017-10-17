@@ -7,7 +7,7 @@ therefore you must use a server from any other language mapping.
 After starting the server, run the MATLAB client:
 
 ```
->> Client.main()
+>> Client()
 ```
 
 Note that this demo uses port 10000. If port 10000 is not available on your

@@ -64,12 +64,10 @@ classdef Client
             % since we are not passing the NumberType parameter.
             %
             % The behavior of the server is to default construct the
-            % Contact, and then assign  all set parameters.  Since the
+            % Contact, and then assign all set parameters. Since the
             % default value of NumberType in the slice definition is
             % NumberType.HOME and in this case the NumberType is unset
             % it will take the default value.
-            %
-            % The java mapping permits null to be passed to unset optional values.
             %
             steveNumber = '234-567-8901';
             contactdb.addContact('steve', Ice.Unset, steveNumber, 1);
@@ -99,7 +97,7 @@ classdef Client
             fprintf('ok\n');
 
             %
-            % Add a contact from "frank". Here the dialGroup field isn't set.
+            % Add a contact for "frank". Here the dialGroup field isn't set.
             %
             frankNumber = '345-678-9012';
             contactdb.addContact('frank', NumberType.CELL, frankNumber, Ice.Unset);
@@ -129,7 +127,7 @@ classdef Client
             fprintf('ok\n');
 
             %
-            % Add a contact from "anne". The number field isn't set.
+            % Add a contact for "anne". The number field isn't set.
             %
             contactdb.addContact('anne', NumberType.OFFICE, Ice.Unset, 2);
 
@@ -158,7 +156,7 @@ classdef Client
 
             %
             % The optional fields can be used to determine what fields to
-            % update on the contact.  Here we update only the number for anne,
+            % update on the contact. Here we update only the number for anne,
             % the remainder of the fields are unchanged.
             %
             anneNumber = '456-789-0123';

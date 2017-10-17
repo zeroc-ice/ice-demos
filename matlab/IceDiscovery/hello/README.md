@@ -9,6 +9,5 @@ After starting the server, run the MATLAB client:
 Client.main()
 ```
 
-The client use IceDiscovery to enable the location of the
-Ice hello object. See the `config.client` file for
-details on the IceDiscovery configuration.
+The client uses IceDiscovery to locate the Ice hello object. See the
+`config.client` file for details on the IceDiscovery configuration.
