@@ -10,6 +10,8 @@ The following subdirectories contain sample programs:
 
 - [Ice](./Ice) has several examples that illustrate fundamental Ice concepts.
 
+- [IceDiscovery](./IceDiscovery) ilustrate how to use the IceDiscovery plug-in.
+
 ## Build Instructions
 
 Open MATLAB, and change to the [matlab](../matlab) demo directory
