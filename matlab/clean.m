@@ -1,11 +1,24 @@
 function clean()
-    demos = {'Ice/gui' 'Ice/latency' 'Ice/throughput'};
-    for i = 1:length(demos)
-        fprintf(1, 'Cleaning %s... ', demos{i});
-        generated = fullfile(demos{i}, 'generated');
-        if exist(generated, 'dir') == 7
-            rmdir(generated, 's');
+    function r = folders(root)
+        function r = exclude(name)
+            r = strcmp(name, '.') | strcmp(name, '..');
         end
-        fprintf(1, 'ok\n');
+        all = dir(root);
+        all = all([all.isdir]);
+        all = all(~cellfun(@exclude, {all.name}));
+        r = {all.name};
+    end
+
+    components = folders('.');
+    for i = 1:length(components)
+        demos = folders(components{i});
+        for j = 1:length(demos)
+            generatedDir = fullfile(components{i}, demos{j}, 'generated');
+            fprintf(1, 'Cleaning %s... ', generatedDir);
+            if exist(generatedDir, 'dir') == 7
+                rmdir(generatedDir, 's');
+            end
+            fprintf(1, 'ok\n');
+        end
     end
 end

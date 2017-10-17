@@ -1,17 +1,28 @@
 function build()
-  demos = { {'Ice/latency' 'Ice/latency/Latency.ice'}
-            {'Ice/throughput' 'Ice/latency/Latency.ice'}
-            {'Ice/gui' 'Ice/hello/Hello.ice'}
-          };
-  for i = 1:length(demos)
-    demo = demos{i};
-    fprintf(1, 'Building %s...', demo{1});
-    generated = fullfile(demo{1}, 'generated');
-    if exist(generated, 'file') == 0
-      mkdir(generated);
+    function r = folders(root)
+        function r = exclude(name)
+            r = strcmp(name, '.') | strcmp(name, '..');
+        end
+        all = dir(root);
+        all = all([all.isdir]);
+        all = all(~cellfun(@exclude, {all.name}));
+        r = {all.name};
     end
-    status = slice2matlab(sprintf('%s --output-dir %s', demo{2}, generated));
-    if status == 0
-      fprintf(1, 'ok\n');
+
+    components = folders('.');
+    for i = 1:length(components)
+        demos = folders(components{i});
+        for j = 1:length(demos)
+            demoDir = fullfile(components{i}, demos{j});
+            slices = dir(fullfile(demoDir, '*.ice'));
+            outputDir = fullfile(demoDir, 'generated');
+            fprintf(1, 'Building %s... ', demoDir);
+              if exist(outputDir, 'file') == 0
+                  mkdir(outputDir);
+              end
+            slice2matlab(sprintf('-I%s --output-dir %s %s\n', demoDir, outputDir,...
+                                 strjoin(strcat(strcat(['"' demoDir '\'], {slices.name}), '"'), ' ')));
+            fprintf(1, 'ok\n');
+        end
     end
 end
