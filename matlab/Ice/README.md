@@ -10,6 +10,10 @@ Demos in this directory:
   A GUI application that shows how to use Asynchronous Method Invocation (AMI)
   in a graphical client.
 
+- [context](./context)
+
+  This demo shows how to use Ice request contexts.
+
 - [hello](./hello)
 
   This demo illustrates how to invoke ordinary (twoway) operations, as
