@@ -39,6 +39,11 @@ Demos in this directory:
   retrieve and modify its configuration properties, and how the server
   can receive notifications whenever its properties are changed.
 
+- [session](./session)
+
+  This demo shows how to use sessions to clean up client-specific
+  resources in a server after the client shuts down or crashes.
+
 - [throughput](./throughput)
 
   A simple throughput demo that allows you to send sequences of
