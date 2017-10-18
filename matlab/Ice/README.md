@@ -33,6 +33,12 @@ Demos in this directory:
 
   This demo shows the use of the optional keyword.
 
+- [properties](./properties)
+
+  Shows how to access a server's PropertiesAdmin facet in order to
+  retrieve and modify its configuration properties, and how the server
+  can receive notifications whenever its properties are changed.
+
 - [throughput](./throughput)
 
   A simple throughput demo that allows you to send sequences of
