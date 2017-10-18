@@ -4,6 +4,7 @@
 
 classdef Client
     methods(Static)
+
         function run(communicator)
 
             import Demo.*;
@@ -178,7 +179,7 @@ classdef Client
         function main()
             addpath('generated');
             if ~libisloaded('ice')
-                loadlibrary('ice', @iceproto)
+                loadlibrary('ice', @iceproto);
             end
 
             % Initializes a communicator and then destroys it when cleanup is collected

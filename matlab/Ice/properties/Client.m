@@ -43,62 +43,52 @@ classdef Client
 
             while true
                 line = input('==> ', 's');
+                switch line
+                    case {'1', '2'}
+                        if strcmp(line, '1')
+                            dict = batch1;
+                        else
+                            dict = batch2;
+                        end
 
-                try
-                    switch line
-                        case {'1', '2'}
-                            if strcmp(line, '1')
-                                dict = batch1;
-                            else
-                                dict = batch2;
+                        fprintf('Sending:\n');
+                        for i = 1:length(propertyKeys)
+                            key = propertyKeys{i};
+                            value = dict(key);
+                            if ~isempty(value)
+                                fprintf('  %s=%s\n', key, value);
                             end
+                        end
+                        fprintf('\n');
 
-                            fprintf('Sending:\n');
+                        admin.setProperties(dict);
+
+                        fprintf('Changes:\n');
+                        changes = props.getChanges();
+                        if isempty(changes)
+                            fprintf('  None\n');
+                        else
                             for i = 1:length(propertyKeys)
                                 key = propertyKeys{i};
                                 value = dict(key);
-                                if ~isempty(value)
-                                    fprintf('  %s=%s\n', key, value);
+                                if isempty(value)
+                                    fprintf('  %s was removed\n', key);
+                                else
+                                    fprintf('  %s is now %s\n', key, value);
                                 end
                             end
-                            fprintf('\n');
-
-                            admin.setProperties(dict);
-
-                            fprintf('Changes:\n');
-                            changes = props.getChanges();
-                            if isempty(changes)
-                                fprintf('  None\n');
-                            else
-                                for i = 1:length(propertyKeys)
-                                    key = propertyKeys{i};
-                                    value = dict(key);
-                                    if isempty(value)
-                                        fprintf('  %s was removed\n', key);
-                                    else
-                                        fprintf('  %s is now %s\n', key, value);
-                                    end
-                                end
-                            end
-                        case 'c'
-                            Client.show(admin);
-                        case 's'
-                            props.shutdown();
-                        case 'x'
-                            break;
-                        case '?'
-                            Client.menu();
-                        otherwise
-                            fprintf('unknown command `%s''\n', line);
-                            Client.menu();
-                    end
-                catch ex
-                     if isa(ex, 'Ice.Exception')
-                         fprintf('%s\n', ex.ice_id());
-                     else
-                         fprintf('%s\n', class(ex));
-                         fprintf('%s\n', getReport(ex));
-                     end
+                        end
+                    case 'c'
+                        Client.show(admin);
+                    case 's'
+                        props.shutdown();
+                    case 'x'
+                        break;
+                    case '?'
+                        Client.menu();
+                    otherwise
+                        fprintf('unknown command `%s''\n', line);
+                        Client.menu();
                 end
             end
         end
@@ -112,7 +102,7 @@ classdef Client
         function main()
             addpath('generated');
             if ~libisloaded('ice')
-                loadlibrary('ice', @iceproto)
+                loadlibrary('ice', @iceproto);
             end
 
             % Initializes a communicator and then destroys it when cleanup is collected

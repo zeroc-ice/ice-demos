@@ -4,6 +4,7 @@
 
 classdef Client
     methods(Static)
+
         function r = run(communicator)
             import Demo.*;
 
@@ -27,10 +28,11 @@ classdef Client
             fprintf('time for %d pings: %f ms\n', repetitions, total);
             fprintf('time per ping: %f ms\n', total / repetitions);
         end
+
         function main()
             addpath('generated');
             if ~libisloaded('ice')
-                loadlibrary('ice', @iceproto)
+                loadlibrary('ice', @iceproto);
             end
 
             % Initializes a communicator and then destroys it when cleanup is collected

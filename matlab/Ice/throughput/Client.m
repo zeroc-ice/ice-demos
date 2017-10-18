@@ -4,6 +4,7 @@
 
 classdef Client
     methods(Static)
+
         function menu()
             fprintf([...
                 'usage:\n', ...
@@ -25,6 +26,7 @@ classdef Client
                 'x: exit\n', ...
                 '?: help\n']);
         end
+
         function run(communicator)
             import Demo.*;
 
@@ -95,9 +97,6 @@ classdef Client
 
             while true
                 line = input('==> ', 's');
-                if isempty(line)
-                    break;
-                end
 
                 %repetitions = 100;
                 repetitions = 10;
@@ -268,10 +267,11 @@ classdef Client
                 end
             end
         end
+
         function main()
             addpath('generated');
             if ~libisloaded('ice')
-                loadlibrary('ice', @iceproto)
+                loadlibrary('ice', @iceproto);
             end
 
             % Initializes a communicator and then destroys it when cleanup is collected

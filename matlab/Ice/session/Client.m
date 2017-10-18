@@ -44,43 +44,33 @@ classdef Client
                     break;
                 end
 
-                try
-                    switch line
-                        case {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'}
-                            index = str2num(line);
-                            if index < length(hellos)
-                                hello = hellos(index + 1);
-                                hello = hello{1};
-                                hello.sayHello();
-                            else
-                                fprintf('Index is too high. %i exist so far. Use "c" to create a new hello object.\n',...
-                                        index);
-                            end
-                        case 'c'
-                            hellos(length(hellos) + 1) = { session.createHello() };
-                            fprintf('created hello object %i\n', length(hellos) - 1);
-                        case 's'
-                            destroy = false;
-                            shutdown = true;
-                            break;
-                        case 'x'
-                            break;
-                        case 't'
-                            destroy = false;
-                            break;
-                        case '?'
-                            Client.menu();
-                        otherwise
-                            fprintf('unknown command `%s''\n', line);
-                            Client.menu();
-                    end
-                catch ex
-                    if isa(ex, 'Ice.Exception')
-                        fprintf('%s\n', ex.ice_id());
-                    else
-                        fprintf('%s\n', class(ex));
-                        fprintf('%s\n', getReport(ex));
-                    end
+                switch line
+                    case {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'}
+                        index = str2num(line);
+                        if index < length(hellos)
+                            hello = hellos{index + 1};
+                            hello.sayHello();
+                        else
+                            fprintf('Index is too high. %i exist so far. Use "c" to create a new hello object.\n',...
+                                    index);
+                        end
+                    case 'c'
+                        hellos{ length(hellos) + 1 } = session.createHello();
+                        fprintf('created hello object %i\n', length(hellos) - 1);
+                    case 's'
+                        destroy = false;
+                        shutdown = true;
+                        break;
+                    case 'x'
+                        break;
+                    case 't'
+                        destroy = false;
+                        break;
+                    case '?'
+                        Client.menu();
+                    otherwise
+                        fprintf('unknown command `%s''\n', line);
+                        Client.menu();
                 end
             end
 

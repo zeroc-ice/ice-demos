@@ -43,12 +43,8 @@ classdef Client < handle
         end
 
         function handleException(obj, ex)
-            if isa(ex, 'Ice.Exception')
-                obj.status.String = ex.ice_id();
-            else
-                obj.status.String = class(ex);
-                fprintf(1, getReport(ex));
-            end
+            obj.status.String = class(ex);
+            fprintf(getReport(ex));
         end
 
         function updateProxy(obj)
@@ -218,7 +214,7 @@ classdef Client < handle
         function main()
             addpath('generated');
             if ~libisloaded('ice')
-                loadlibrary('ice', @iceproto)
+                loadlibrary('ice', @iceproto);
             end
 
             import Demo.*;

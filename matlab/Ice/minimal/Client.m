@@ -5,7 +5,7 @@
 function Client(args)
     addpath('generated');
     if ~libisloaded('ice')
-        loadlibrary('ice', @iceproto)
+        loadlibrary('ice', @iceproto);
     end
     import Demo.*
 
