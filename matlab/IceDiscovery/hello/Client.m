@@ -4,6 +4,7 @@
 
 classdef Client
     methods(Static)
+
         function menu()
             fprintf(['usage:\n'...
                      't: send greeting as twoway\n'...
@@ -19,6 +20,7 @@ classdef Client
                      'x: exit\n'...
                      '?: help\n']);
         end
+
         function run(communicator)
             import Demo.*;
 
@@ -41,103 +43,97 @@ classdef Client
 
             while true
                 line = input('==> ', 's');
-                if isempty(line)
-                    break;
-                end
+                switch line
+                    case 't'
+                        twoway.sayHello(delay);
+                    case 'o'
+                        oneway.sayHello(delay);
+                    case 'O'
+                        batchOneway.sayHello(delay);
+                    case 'd'
+                        if secure
+                            frprintf('secure datagrams are not supported\n');
+                        else
+                            datagram.sayHello(delay);
+                        end
+                    case 'D'
+                        if secure
+                            frprintf('secure datagrams are not supported\n');
+                        else
+                            batchDatagram.sayHello(delay);
+                        end
+                    case 'f'
+                        batchOneway.ice_flushBatchRequests();
+                        if not(secure)
+                            batchDatagram.ice_flushBatchRequests();
+                        end
+                    case 'T'
+                        if timeout == -1
+                            timeout = 2000;
+                        else
+                            timeout = -1;
+                        end
 
-                try
-                    switch line
-                        case 't'
-                            twoway.sayHello(delay);
-                        case 'o'
-                            oneway.sayHello(delay);
-                        case 'O'
-                            batchOneway.sayHello(delay);
-                        case 'd'
-                            if secure
-                                frprintf('secure datagrams are not supported\n');
-                            else
-                                datagram.sayHello(delay);
-                            end
-                        case 'D'
-                            if secure
-                                frprintf('secure datagrams are not supported\n');
-                            else
-                                batchDatagram.sayHello(delay);
-                            end
-                        case 'f'
-                            batchOneway.ice_flushBatchRequests();
-                            if not(secure)
-                                batchDatagram.ice_flushBatchRequests();
-                            end
-                        case 'T'
-                            if timeout == -1
-                                timeout = 2000;
-                            else
-                                timeout = -1;
-                            end
+                        twoway = twoway.ice_invocationTimeout(timeout);
+                        oneway = oneway.ice_invocationTimeout(timeout);
+                        batchOneway = batchOneway.ice_invocationTimeout(timeout);
 
-                            twoway = twoway.ice_invocationTimeout(timeout);
-                            oneway = oneway.ice_invocationTimeout(timeout);
-                            batchOneway = batchOneway.ice_invocationTimeout(timeout);
+                        if timeout == -1
+                            fprintf('timeout is now switched off\n');
+                        else
+                            fprintf('timeout is now set to 2000ms\n');
+                        end
+                    case 'P'
+                        if delay == 0
+                            delay = 2500;
+                            fprintf('server delay is now set to 2500ms\n');
+                        else
+                            delay = 0
+                            fprintf('server delay is now deactivated\n');
+                        end
+                    case 'S'
+                        secure = not(secure);
 
-                            if timeout == -1
-                                fprintf('timeout is now switched off\n');
-                            else
-                                fprintf('timeout is now set to 2000ms\n');
-                            end
-                        case 'P'
-                            if delay == 0
-                                delay = 2500;
-                                fprintf('server delay is now set to 2500ms\n');
-                            else
-                                delay = 0
-                                fprintf('server delay is now deactivated\n');
-                            end
-                        case 'S'
-                            secure = not(secure);
+                        twoway = twoway.ice_secure(secure);
+                        oneway = oneway.ice_secure(secure);
+                        batchOneway = batchOneway.ice_secure(secure);
+                        datagram = datagram.ice_secure(secure);
+                        batchDatagram = batchDatagram.ice_secure(secure);
 
-                            twoway = twoway.ice_secure(secure);
-                            oneway = oneway.ice_secure(secure);
-                            batchOneway = batchOneway.ice_secure(secure);
-                            datagram = datagram.ice_secure(secure);
-                            batchDatagram = batchDatagram.ice_secure(secure);
-
-                            if secure
-                                fprintf('secure mode is now on\n');
-                            else
-                                fprintf('secure mode is now off\n');
-                            end
-                        case 's'
-                            twoway.shutdown();
-                        case 'x'
-                            break;
-                        case '?'
-                            Client.menu();
-                        otherwise
-                            fprintf('unknown command `%s''\n', line);
-                            Client.menu();
-                    end
-                catch ex
-                     if isa(ex, 'Ice.Exception')
-                         fprintf('%s\n', ex.ice_id());
-                     else
-                         fprintf('%s\n', class(ex));
-                         fprintf('%s\n', getReport(ex));
-                     end
+                        if secure
+                            fprintf('secure mode is now on\n');
+                        else
+                            fprintf('secure mode is now off\n');
+                        end
+                    case 's'
+                        twoway.shutdown();
+                    case 'x'
+                        break;
+                    case '?'
+                        Client.menu();
+                    otherwise
+                        fprintf('unknown command `%s''\n', line);
+                        Client.menu();
                 end
             end
         end
-        function main()
+
+        function status = main()
             addpath('generated');
             if ~libisloaded('ice')
                 loadlibrary('ice', @iceproto)
             end
 
-            % Initializes a communicator and then destroys it when cleanup is collected
-            communicator = Ice.initialize({'--Ice.Config=config.client'});
-            cleanup = onCleanup(@() communicator.destroy());
-            Client.run(communicator);
+            try
+                % Initializes a communicator and then destroys it when cleanup is collected
+                communicator = Ice.initialize({'--Ice.Config=config.client'});
+                cleanup = onCleanup(@() communicator.destroy());
+                Client.run(communicator);
+                status = 0;
+            catch ex
+                fprintf('%s\n', getReport(ex));
+                status = 1;
+            end
         end
     end
 end

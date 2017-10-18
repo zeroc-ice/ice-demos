@@ -176,16 +176,22 @@ classdef Client
             contactdb.shutdown();
         end
 
-        function main()
+        function status = main()
             addpath('generated');
             if ~libisloaded('ice')
                 loadlibrary('ice', @iceproto);
             end
 
+            try
             % Initializes a communicator and then destroys it when cleanup is collected
-            communicator = Ice.initialize({'--Ice.Config=config.client'});
-            cleanup = onCleanup(@() communicator.destroy());
-            Client.run(communicator);
+                communicator = Ice.initialize({'--Ice.Config=config.client'});
+                cleanup = onCleanup(@() communicator.destroy());
+                Client.run(communicator);
+                status = 0;
+            catch ex
+                fprintf('%s\n', getReport(ex));
+                status = 1
+            end
         end
     end
 end

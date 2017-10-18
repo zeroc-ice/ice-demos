@@ -4,6 +4,7 @@
 
 classdef Client
     methods(Static)
+
         function menu()
             fprintf(['usage:\n'...
                      't: send greeting as twoway\n'...
@@ -19,6 +20,7 @@ classdef Client
                      'x: exit\n'...
                      '?: help\n']);
         end
+
         function run(communicator)
             import Demo.*;
 
@@ -117,16 +119,22 @@ classdef Client
             end
         end
 
-        function main()
+        function status = main()
             addpath('generated');
             if ~libisloaded('ice')
                 loadlibrary('ice', @iceproto);
             end
 
-            % Initializes a communicator and then destroys it when cleanup is collected
-            communicator = Ice.initialize({'--Ice.Config=config.client'});
-            cleanup = onCleanup(@() communicator.destroy());
-            Client.run(communicator);
+            try
+                % Initializes a communicator and then destroys it when cleanup is collected
+                communicator = Ice.initialize({'--Ice.Config=config.client'});
+                cleanup = onCleanup(@() communicator.destroy());
+                Client.run(communicator);
+                status = 0;
+            catch ex
+                fprintf('%s\n', getReport(ex));
+                status = 1;
+            end
         end
     end
 end

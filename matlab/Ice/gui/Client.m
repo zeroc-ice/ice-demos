@@ -44,7 +44,7 @@ classdef Client < handle
 
         function handleException(obj, ex)
             obj.status.String = class(ex);
-            fprintf(getReport(ex));
+            fprintf('%s\n', getReport(ex));
         end
 
         function updateProxy(obj)

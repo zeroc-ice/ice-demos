@@ -99,16 +99,21 @@ classdef Client
             cellfun(@(key) fprintf('  %s=%s\n', key, props(key)), keys(props));
         end
 
-        function main()
+        function status = main()
             addpath('generated');
             if ~libisloaded('ice')
                 loadlibrary('ice', @iceproto);
             end
 
-            % Initializes a communicator and then destroys it when cleanup is collected
-            communicator = Ice.initialize({'--Ice.Config=config.client'});
-            cleanup = onCleanup(@() communicator.destroy());
-            Client.run(communicator);
+            try
+                % Initializes a communicator and then destroys it when cleanup is collected
+                communicator = Ice.initialize({'--Ice.Config=config.client'});
+                cleanup = onCleanup(@() communicator.destroy());
+                Client.run(communicator);
+            catch ex
+                fprintf('%s\n', ex);
+                status = 1;
+            end
         end
     end
 end
