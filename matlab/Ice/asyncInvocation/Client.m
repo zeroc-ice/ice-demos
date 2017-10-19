@@ -3,7 +3,9 @@
 % **********************************************************************
 
 classdef Client
+
     methods(Static)
+
         function run(communicator)
 
             import Demo.*;
@@ -21,17 +23,16 @@ classdef Client
 
             % Calculate 13 / 5 asynchronously
             future = calculator.divideAsync(13, 5);
+            [result, remainder] = future.fetchOutputs();
             try
-                [result, remainder] = future.fetchOutputs();
                 fprintf('13 / 5 is %i with a remainder of %i\n', result, remainder);
             catch ex
                 if isa(ex, 'Demo.DivideByZeroException')
                     fprintf('You cannot divide by 0\n')
                 else
-                    fprintf('%s\n', getReport(ex))
+                    rethrow(ex);
                 end
             end
-
             % Same with divide by 0:
             future = calculator.divideAsync(13, 0);
             try
@@ -41,7 +42,7 @@ classdef Client
                 if isa(ex, 'Demo.DivideByZeroException')
                     fprintf('You cannot divide by 0\n')
                 else
-                    fprintf('%s\n', getReport(ex))
+                    rethrow(ex);
                 end
             end
 
@@ -58,7 +59,7 @@ classdef Client
                 if isa(ex, 'Demo.NegativeRootException')
                     fprintf('You cannot take the square root of negative numbers\n');
                 else
-                    fprintf('%s\n', getReport(ex));
+                    rethrow(ex);
                 end
             end
             calculator.shutdown();
@@ -67,7 +68,7 @@ classdef Client
         function status = main()
             addpath('generated');
             if ~libisloaded('ice')
-                loadlibrary('ice', @iceproto)
+                loadlibrary('ice', @iceproto);
             end
 
             try

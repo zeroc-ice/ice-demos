@@ -3,17 +3,8 @@
 % **********************************************************************
 
 classdef Client
-    methods(Static)
 
-        function menu()
-            fprintf(['usage:\n'...
-                     '1: set properties (batch 1)\n'...
-                     '2: set properties (batch 2)\n'...
-                     'c: show current properties\n'...
-                     's: shutdown server\n'...
-                     'x: exit\n'...
-                     '?: help\n']);
-        end
+    methods(Static)
 
         function run(communicator)
             import Demo.*;
@@ -93,12 +84,6 @@ classdef Client
             end
         end
 
-        function show(admin)
-            props = admin.getPropertiesForPrefix('Demo');
-            fprintf('Server''s current settings:\n');
-            cellfun(@(key) fprintf('  %s=%s\n', key, props(key)), keys(props));
-        end
-
         function status = main()
             addpath('generated');
             if ~libisloaded('ice')
@@ -110,10 +95,27 @@ classdef Client
                 communicator = Ice.initialize({'--Ice.Config=config.client'});
                 cleanup = onCleanup(@() communicator.destroy());
                 Client.run(communicator);
+                status = 0;
             catch ex
-                fprintf('%s\n', ex);
+                fprintf('%s\n', getReport(ex));
                 status = 1;
             end
+        end
+
+        function show(admin)
+            props = admin.getPropertiesForPrefix('Demo');
+            fprintf('Server''s current settings:\n');
+            cellfun(@(key) fprintf('  %s=%s\n', key, props(key)), keys(props));
+        end
+
+        function menu()
+            fprintf(['usage:\n'...
+                     '1: set properties (batch 1)\n'...
+                     '2: set properties (batch 2)\n'...
+                     'c: show current properties\n'...
+                     's: shutdown server\n'...
+                     'x: exit\n'...
+                     '?: help\n']);
         end
     end
 end

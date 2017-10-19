@@ -3,6 +3,7 @@
 % **********************************************************************
 
 classdef Client
+
     methods(Static)
 
         function run(communicator)
@@ -61,14 +62,11 @@ classdef Client
             fprintf('ok\n');
 
             %
-            % Add a contact for "steve". Here we have to construct Optional parameters
-            % since we are not passing the NumberType parameter.
-            %
-            % The behavior of the server is to default construct the
-            % Contact, and then assign all set parameters. Since the
-            % default value of NumberType in the slice definition is
-            % NumberType.HOME and in this case the NumberType is unset
-            % it will take the default value.
+            % Add a contact for "steve". The behavior of the server is
+            % to default construct the Contact, and then assign all set
+            % parameters. Since the default value of NumberType in the
+            % slice definition is NumberType.HOME and in this case the
+            % NumberType is unset it will take the default value.
             %
             steveNumber = '234-567-8901';
             contactdb.addContact('steve', Ice.Unset, steveNumber, 1);
@@ -183,14 +181,14 @@ classdef Client
             end
 
             try
-            % Initializes a communicator and then destroys it when cleanup is collected
+                % Initializes a communicator and then destroys it when cleanup is collected
                 communicator = Ice.initialize({'--Ice.Config=config.client'});
                 cleanup = onCleanup(@() communicator.destroy());
                 Client.run(communicator);
                 status = 0;
             catch ex
                 fprintf('%s\n', getReport(ex));
-                status = 1
+                status = 1;
             end
         end
     end

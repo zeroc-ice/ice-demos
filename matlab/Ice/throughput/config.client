@@ -14,8 +14,7 @@ Throughput.Proxy=throughput:tcp -p 10000
 #
 # Only connect to the localhost interface by default.
 #
-#Ice.Default.Host=localhost
-Ice.Default.Host=192.168.9.129
+Ice.Default.Host=localhost
 
 #
 # Disable client-side ACM.

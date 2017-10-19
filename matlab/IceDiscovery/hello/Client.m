@@ -3,23 +3,8 @@
 % **********************************************************************
 
 classdef Client
-    methods(Static)
 
-        function menu()
-            fprintf(['usage:\n'...
-                     't: send greeting as twoway\n'...
-                     'o: send greeting as oneway\n'...
-                     'O: send greeting as batch oneway\n'...
-                     'd: send greeting as datagram\n'...
-                     'D: send greeting as batch datagram\n'...
-                     'f: flush all batch requests\n'...
-                     'T: set a timeout\n'...
-                     'P: set a server delay\n'...
-                     'S: switch secure mode on/off\n'...
-                     's: shutdown server\n'...
-                     'x: exit\n'...
-                     '?: help\n']);
-        end
+    methods(Static)
 
         function run(communicator)
             import Demo.*;
@@ -52,19 +37,19 @@ classdef Client
                         batchOneway.sayHello(delay);
                     case 'd'
                         if secure
-                            frprintf('secure datagrams are not supported\n');
+                            fprintf('secure datagrams are not supported\n');
                         else
                             datagram.sayHello(delay);
                         end
                     case 'D'
                         if secure
-                            frprintf('secure datagrams are not supported\n');
+                            fprintf('secure datagrams are not supported\n');
                         else
                             batchDatagram.sayHello(delay);
                         end
                     case 'f'
                         batchOneway.ice_flushBatchRequests();
-                        if not(secure)
+                        if ~secure
                             batchDatagram.ice_flushBatchRequests();
                         end
                     case 'T'
@@ -121,7 +106,7 @@ classdef Client
         function status = main()
             addpath('generated');
             if ~libisloaded('ice')
-                loadlibrary('ice', @iceproto)
+                loadlibrary('ice', @iceproto);
             end
 
             try
@@ -134,6 +119,22 @@ classdef Client
                 fprintf('%s\n', getReport(ex));
                 status = 1;
             end
+        end
+
+        function menu()
+            fprintf(['usage:\n'...
+                     't: send greeting as twoway\n'...
+                     'o: send greeting as oneway\n'...
+                     'O: send greeting as batch oneway\n'...
+                     'd: send greeting as datagram\n'...
+                     'D: send greeting as batch datagram\n'...
+                     'f: flush all batch requests\n'...
+                     'T: set a timeout\n'...
+                     'P: set a server delay\n'...
+                     'S: switch secure mode on/off\n'...
+                     's: shutdown server\n'...
+                     'x: exit\n'...
+                     '?: help\n']);
         end
     end
 end

@@ -3,6 +3,7 @@
 % **********************************************************************
 
 classdef Client
+
     methods(Static)
 
         function r = run(communicator)
@@ -42,8 +43,8 @@ classdef Client
                 Client.run(communicator);
                 status = 0;
             catch ex
-                fprintf('%s\', getReport(ex));
-                status = 1
+                fprintf('%s\n', getReport(ex));
+                status = 1;
             end
         end
     end

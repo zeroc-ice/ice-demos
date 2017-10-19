@@ -17,8 +17,9 @@ function clean()
     for i = 1:length(components)
         demos = folders(components{i});
         for j = 1:length(demos)
-            generatedDir = fullfile(components{i}, demos{j}, 'generated');
-            fprintf('Cleaning %s... ', generatedDir);
+            demoDir = fullfile(components{i}, demos{j});
+            generatedDir = fullfile(demoDir, 'generated');
+            fprintf('Cleaning %s... ', demoDir);
             if exist(generatedDir, 'dir') == 7
                 rmdir(generatedDir, 's');
             end

@@ -3,49 +3,8 @@
 % **********************************************************************
 
 classdef Client < handle
-    properties
-        communicator
-        helloPrx
-        host
-        mode
-        timeout
-        delay
-        status
-        flushBtn
-    end
 
     methods
-        function delete(obj)
-            try
-                obj.communicator.destroy();
-            catch
-            end
-        end
-
-        function waitForComplete(obj, f)
-            t = timer;
-            t.ExecutionMode = 'fixedRate';
-            t.Period = 0.1;
-            function completed(t, ~)
-                if strcmp(f.State, 'finished')
-                    stop(t);
-                    delete(t);
-                    try
-                        f.fetchOutputs();
-                        obj.status.String = 'Ready';
-                    catch ex
-                        obj.handleException(ex);
-                    end
-                end
-            end
-            t.TimerFcn = @completed;
-            start(t);
-        end
-
-        function handleException(obj, ex)
-            obj.status.String = class(ex);
-            fprintf('%s\n', getReport(ex));
-        end
 
         function updateProxy(obj)
             hostname = obj.host.String;
@@ -79,6 +38,10 @@ classdef Client < handle
                 proxy = proxy.ice_invocationTimeout(obj.timeout.Value);
             end
 
+            %
+            % The batch requests associated to the proxy are lost when we
+            % update the proxy.
+            %
             obj.flushBtn.Enable = 'off';
             obj.status.String = 'Ready';
 
@@ -93,7 +56,8 @@ classdef Client < handle
                     obj.helloPrx.shutdown();
                     obj.status.String = 'Queued shutdown request';
                 catch ex
-                    obj.handleException(ex);
+                    obj.status.String = class(ex);
+                    fprintf('%s\n', getReport(ex));
                 end
             else
                 obj.status.String = 'Sending request';
@@ -102,13 +66,9 @@ classdef Client < handle
         end
 
         function flush(obj)
-            try
-                obj.flushBtn.Enable = 'off';
-                obj.status.String = 'Flushed batch requests';
-                obj.waitForComplete(obj.helloPrx.ice_flushBatchRequestsAsync());
-            catch ex
-                obj.handleException(ex);
-            end
+            obj.flushBtn.Enable = 'off';
+            obj.status.String = 'Flushed batch requests';
+            obj.waitForComplete(obj.helloPrx.ice_flushBatchRequestsAsync());
         end
 
         function sayHello(obj)
@@ -119,7 +79,8 @@ classdef Client < handle
                     obj.helloPrx.sayHello(obj.delay.Value);
                     obj.status.String = 'Queued sayHello request';
                 catch ex
-                    obj.handleException(ex);
+                    obj.status.String = class(ex);
+                    fprintf('%s\n', getReport(ex));
                 end
             else
                 obj.status.String = 'Sending request';
@@ -205,8 +166,39 @@ classdef Client < handle
                 obj.communicator = Ice.initialize({'--Ice.Config=config.client'});
                 obj.updateProxy();
             catch ex
-                obj.handleException(ex);
+                obj.status.String = class(ex);
+                fprintf('%s\n', getReport(ex));
             end
+        end
+
+        function delete(obj)
+            try
+                obj.communicator.destroy();
+            catch
+            end
+        end
+
+        function waitForComplete(obj, f)
+            t = timer;
+            t.ExecutionMode = 'fixedRate';
+            t.Period = 0.1;
+            function completed(t, ~)
+                if strcmp(f.State, 'finished')
+                    stop(t);
+                    delete(t);
+                    try
+                        f.fetchOutputs();
+                        obj.status.String = 'Ready';
+                    catch ex
+                        obj.status.String = class(ex);
+                        if ~isa(ex, 'Ice.LocalException')
+                            fprintf('%s\n', getReport(ex));
+                        end
+                    end
+                end
+            end
+            t.TimerFcn = @completed;
+            start(t);
         end
     end
 
@@ -223,5 +215,16 @@ classdef Client < handle
             c = Client;
             c.run();
         end
+    end
+
+    properties
+        communicator
+        helloPrx
+        host
+        mode
+        timeout
+        delay
+        status
+        flushBtn
     end
 end

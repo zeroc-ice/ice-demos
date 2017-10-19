@@ -20,13 +20,13 @@ function build()
             demoDir = fullfile(components{i}, demos{j});
             slices = dir(fullfile(demoDir, '*.ice'));
             outputDir = fullfile(demoDir, 'generated');
-            fprintf(1, 'Building %s... ', demoDir);
-            if exist(outputDir, 'file') == 0
+            fprintf('Building %s... ', demoDir);
+            if ~exist(outputDir, 'file')
                 mkdir(outputDir);
             end
             slice2matlab(sprintf('-I%s --output-dir %s %s\n', demoDir, outputDir,...
                                  strjoin(strcat(strcat(['"' demoDir '\'], {slices.name}), '"'), ' ')));
-            fprintf(1, 'ok\n');
+            fprintf('ok\n');
         end
     end
 end
