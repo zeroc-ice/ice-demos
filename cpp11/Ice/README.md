@@ -84,6 +84,11 @@ Demos in this directory:
   retrieve and modify its configuration properties, and how the server
   can receive notifications whenever its properties are changed.
 
+- [qt](./qt)
+
+  A qt application that shows how to use Asynchronous Method Invocation
+  (AMI) in a graphical client.
+
 - [session](./session)
 
   This demo shows how to use sessions to clean up client-specific
