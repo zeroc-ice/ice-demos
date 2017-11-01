@@ -254,7 +254,7 @@ MainWindow::sayHello()
                     {
                         statusBar()->showMessage(errorToString(errptr));
                     },
-                    [this, mode](bool sent)
+                    [this, mode](bool)
                     {
                         if(mode == Oneway || mode == OnewaySecure || mode == Datagram)
                         {
@@ -279,7 +279,6 @@ MainWindow::shutdown()
 {
     if (_helloPrx)
     {
-        int delay = _delay->value();
         try
         {
             DeliveryMode mode = static_cast<DeliveryMode>(_mode->currentIndex());
@@ -301,7 +300,7 @@ MainWindow::shutdown()
                         {
                             statusBar()->showMessage(errorToString(errptr));
                         },
-                    [this, mode](bool sent)
+                    [this, mode](bool)
                         {
                             if (mode == Oneway || mode == OnewaySecure || mode == Datagram)
                             {
