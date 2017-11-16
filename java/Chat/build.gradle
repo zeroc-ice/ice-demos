@@ -1,11 +1,10 @@
 buildscript {
     repositories {
-        maven {
-            url "https://${iceMavenRepo}/nexus/content/repositories/thirdparty"
-        }
+        mavenCentral()
     }
+
     dependencies {
-        classpath group: 'net.sourceforge', name: 'proguard', version: '5.0'
+        classpath "net.sf.proguard:proguard-gradle:5.2.1"
     }
 }
 
