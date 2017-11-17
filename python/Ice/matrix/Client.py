@@ -39,9 +39,9 @@ class Client(Ice.Application):
         data = np.matrix(data)
 
         # Print the dimensions and elements of the matrix
-        print("Recieved " + str(data.shape[0]) + " by " + str(data.shape[1]) + " matrix:")
+        print("Received " + str(data.shape[0]) + " by " + str(data.shape[1]) + " matrix:")
         print(data)
-        
+
         # Compute some properties of the matrix
         sum = data.sum()
         print("sum: " + str(sum))

@@ -1,4 +1,4 @@
-This Demo illustrates how to create and use NumPy matrices with Ice.
+This demo illustrates how to create and use NumPy matrices with Ice.
 
 This demo requires NumPy to be run. To install NumPy with pip, use:
 

@@ -27,7 +27,7 @@ Demos in this directory:
 
 - [matrix](./matrix)
 
-  This Demo illustrates how to create and use MATLAB matrices with Ice.
+  This demo illustrates how to create and use MATLAB matrices with Ice.
 
 - [minimal](./minimal)
 

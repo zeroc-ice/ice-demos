@@ -41,7 +41,7 @@ Demos in this directory:
 
 - [matrix](./matrix)
 
-  This Demo illustrates how to create and use NumPy matrices with Ice.
+  This demo illustrates how to create and use NumPy matrices with Ice.
 
 - [metrics](./metrics)
 
