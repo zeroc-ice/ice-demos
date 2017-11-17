@@ -51,5 +51,5 @@ apply from: "$rootProject.projectDir/Manual/build.gradle"
 // Used to build the gradle wrapper to automatically download and install gradle.
 //
 task wrapper(type: Wrapper) {
-    gradleVersion = "4.1.0"
+    gradleVersion = "4.2.1"
 }

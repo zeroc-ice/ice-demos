@@ -8,6 +8,12 @@ buildscript {
     }
 }
 
+//
+// This is necessary when building with Java9, proguard doesn't support it yet.
+//
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
 slice {
     java {
         include = ["${projectDir}"]
