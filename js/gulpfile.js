@@ -20,7 +20,7 @@ var babel       = require("gulp-babel"),
     path        = require("path"),
     paths       = require("vinyl-paths"),
     pump        = require("pump"),
-    uglify      = require('gulp-uglify-es').default,
+    uglify      = require('gulp-uglifyes'),
     HttpServer  = require("./bin/HttpServer");
 
 //
