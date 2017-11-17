@@ -25,6 +25,10 @@ Demos in this directory:
   A simple latency test that measures the basic call dispatch delay of
   Ice.
 
+- [matrix](./matrix)
+
+  This Demo illustrates how to create and use MATLAB matrices with Ice.
+
 - [minimal](./minimal)
 
   This demo illustrates a minimal Ice application.

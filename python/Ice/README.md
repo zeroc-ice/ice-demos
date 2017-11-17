@@ -39,6 +39,10 @@ Demos in this directory:
   A simple latency test that measures the basic call dispatch delay of
   Ice.
 
+- [matrix](./matrix)
+
+  This Demo illustrates how to create and use NumPy matrices with Ice.
+
 - [metrics](./metrics)
 
   This demo illustrates how to retrieve metrics information from an
