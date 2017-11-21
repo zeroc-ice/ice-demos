@@ -51,7 +51,7 @@
 			android:layout_width="0dip"
 			android:layout_weight="80"
 			android:layout_height="wrap_content"
-                        android:checked="false"/>
+						android:checked="false"/>
 	</LinearLayout>
 
 	<LinearLayout
@@ -77,10 +77,10 @@
 	</LinearLayout>
 
 	<LinearLayout
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:orientation="horizontal"
-	        android:paddingBottom="10dip">
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:paddingBottom="10dip">
 
 		<TextView
 			android:layout_height="wrap_content"
@@ -166,15 +166,15 @@
 	</LinearLayout>
 
 	<LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_marginTop="20dip"
-                android:orientation="horizontal">
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent"
+				android:layout_marginTop="20dip"
+				android:orientation="horizontal">
 
 		<LinearLayout
-                        android:layout_width="0dip"
-                        android:layout_weight="25"
-                        android:layout_height="fill_parent">
+						android:layout_width="0dip"
+						android:layout_weight="25"
+						android:layout_height="fill_parent">
 
 			<ProgressBar
 				android:id="@+id/activity"
