@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <Import Project="../../../../../msbuild/ice.common.props" />
+    <PropertyGroup>
+        <AssemblyName>LoggerPlugin</AssemblyName>
+        <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+        <OutputPath>../../../</OutputPath>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    </PropertyGroup>
+    <ItemGroup>
+        <Compile Include="../../loggerplugin/Properties/AssemblyInfo.cs" />
+        <Compile Include="../../../LoggerI.cs" />
+        <Compile Include="../../../LoggerPluginFactoryI.cs" />
+    </ItemGroup>
+    <ItemGroup Condition="'$(ICE_HOME)' != ''">
+        <Reference Include="$(ICE_HOME)/csharp/lib/netstandard2.0/Ice.dll" />
+    </ItemGroup>
+    <ItemGroup Condition="'$(ICE_HOME)' == ''">
+      <PackageReference Include="zeroc.ice.net" Version="3.7.0" />
+    </ItemGroup>
+    <Import Project="$(ICE_HOME)/csharp/msbuild/zeroc.ice.net.targets" Condition="Exists('$(ICE_HOME)/csharp/msbuild/zeroc.ice.net.targets')"/>
+</Project>

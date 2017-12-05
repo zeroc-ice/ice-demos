@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <Import Project="../../../../../msbuild/ice.common.props" />
+    <PropertyGroup>
+        <AssemblyName>server</AssemblyName>
+        <OutputType>Exe</OutputType>
+        <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+        <OutputPath>../../../</OutputPath>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    </PropertyGroup>
+    <ItemGroup>
+        <Compile Include="../../server/Properties/AssemblyInfo.cs" />
+        <Compile Include="../../../Server.cs" />
+        <Compile Include="../../../CalculatorI.cs" />
+        <Slice Include="../../../Calculator.ice" />
+    </ItemGroup>
+    <ItemGroup Condition="'$(ICE_HOME)' != ''">
+        <Reference Include="$(ICE_HOME)/csharp/lib/netstandard2.0/Ice.dll" />
+    </ItemGroup>
+    <ItemGroup Condition="'$(ICE_HOME)' == ''">
+      <PackageReference Include="zeroc.ice.net" Version="3.7.0" />
+    </ItemGroup>
+    <Import Project="$(ICE_HOME)/csharp/msbuild/zeroc.ice.net.targets" Condition="Exists('$(ICE_HOME)/csharp/msbuild/zeroc.ice.net.targets')"/>
+</Project>

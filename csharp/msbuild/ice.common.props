@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!-- Required for the project configurations to show up in settings editor -->
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|Any CPU'">
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|Any CPU'">
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <Prefer32Bit>false</Prefer32Bit>
+    <FileAlignment>512</FileAlignment>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DefineConstants>TRACE</DefineConstants>
+    <SignAssembly>true</SignAssembly>
+    <IceHome Condition="'$(ICE_HOME)' != ''">$(ICE_HOME)</IceHome>
+    <SliceCompilerOutputDir>generated</SliceCompilerOutputDir>
+    <DefineConstants Condition="'$(TargetFrameworkVersion)' == 'v4.5.1'">NET45</DefineConstants>
+  </PropertyGroup>
+
+  <Choose>
+    <When Condition="Exists('$(IceHome)\cpp\bin\x64\$(Configuration)\slice2cs.exe')">
+      <PropertyGroup>
+        <SliceCompiler>$(IceHome)\cpp\bin\x64\$(Configuration)\slice2cs.exe</SliceCompiler>
+      </PropertyGroup>
+    </When>
+    <When Condition="Exists('$(IceHome)\cpp\bin\slice2cs')">
+      <PropertyGroup>
+        <SliceCompiler>$(IceHome)\cpp\bin\slice2cs</SliceCompiler>
+      </PropertyGroup>
+    </When>
+  </Choose>
+
+  <PropertyGroup Condition="$(Configuration.Contains('Debug'))">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG;$(DefineConstants)</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(Configuration.Contains('Release'))">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+
+</Project>
