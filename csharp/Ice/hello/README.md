@@ -1,35 +1,17 @@
 This demo illustrates how to invoke ordinary (twoway) operations, as
 well as how to make oneway, datagram, secure, and batched invocations.
 
-#### .Net 45
-
 To run the demo, first start the server:
 
-```
-server.exe
-```
+| .NET Framework 4.5 | .NET Core 2.0        |
+| ------------------ | -------------------- |
+| `server.exe`       | `dotnet server.dll`  |
 
 In a separate window, start the client:
 
-```
-client.exe
-```
----
-
-#### .Net Core
-
-To run the demo, first start the server:
-
-```
-dotnet server.dll
-```
-
-In a separate window, start the client:
-
-```
-dotnet client.dll
-```
----
+| .NET Framework 4.5 | .NET Core 2.0        |
+| ------------------ | -------------------- |
+| `client.exe`       | `dotnet client.dll`  |
 
 To test timeouts you can use 'T' to set an invocation timeout on the client
 proxy and 'P' to set a delayed response in the server to cause a timeout.
