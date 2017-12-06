@@ -14,7 +14,7 @@ In a separate window, start the client:
 ```
 client.exe
 ```
-___
+---
 
 #### .Net Core
 
@@ -29,7 +29,7 @@ In a separate window, start the client:
 ```
 dotnet client.dll
 ```
-___
+---
 
 To test timeouts you can use 'T' to set an invocation timeout on the client
 proxy and 'P' to set a delayed response in the server to cause a timeout.
