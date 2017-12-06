@@ -113,7 +113,7 @@ cd csharp
 To build the sample programs run:
 
 ```
-dotnet msbuild "NetCore Demos.sln" /t:"Restore;Build"
+dotnet msbuild /p:ICE_HOME=<Ice dist path> "NetCore Demos.sln" /t:"Restore;Build"
 ```
 
 ### Running the Demos
