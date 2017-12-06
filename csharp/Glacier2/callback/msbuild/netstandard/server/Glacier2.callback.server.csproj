@@ -17,6 +17,7 @@
     </ItemGroup>
     <ItemGroup Condition="'$(ICE_HOME)' != ''">
         <Reference Include="$(ICE_HOME)/csharp/lib/netstandard2.0/Ice.dll" />
+        <Reference Include="$(ICE_HOME)/csharp/lib/netstandard2.0/IceSSL.dll" />
         <Reference Include="$(ICE_HOME)/csharp/lib/netstandard2.0/Glacier2.dll" />
     </ItemGroup>
     <ItemGroup Condition="'$(ICE_HOME)' == ''">
