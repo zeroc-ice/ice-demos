@@ -16,6 +16,7 @@
     </ItemGroup>
     <ItemGroup Condition="'$(ICE_HOME)' != ''">
         <Reference Include="$(ICE_HOME)/csharp/lib/netstandard2.0/Ice.dll" />
+        <Reference Include="$(ICE_HOME)/csharp/lib/netstandard2.0/IceSSL.dll" />
     </ItemGroup>
     <ItemGroup Condition="'$(ICE_HOME)' == ''">
       <PackageReference Include="zeroc.ice.net" Version="3.7.0" />
