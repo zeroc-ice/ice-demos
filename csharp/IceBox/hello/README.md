@@ -1,27 +1,19 @@
 To run this demo, open two Command Prompt windows.
 
-In the first window, start the IceBox server for .NET.
+In the first window, start the IceBox server:
 
-### .NET Framework 4.5
+To run the demo, first start the IceBox server:
 
-The IceBox server for .NET Framework 4.5 (`iceboxnet.exe`) is in the `tools\net45` folder
-of `zeroc.ice.net` NuGet package. The file is copied to the demo directory during the build.
+| .NET Framework 4.5                     | .NET Core 2.0                                    |
+| -------------------------------------- | ------------------------------------------------ |
+| `iceboxnet --Ice.Config=config.icebox` | `dotnet iceboxnet.dll --Ice.Config=config.icebox`|
 
-Then start IceBox:
-```
-iceboxnet --Ice.Config=config.icebox
-```
+The demo build system copies the `iceboxnet` app to the demo's folder. With the `zeroc.ice.net`
+NuGet package, this app is installed in a subfolder of `tools`:
 
-### .NET Core 2.0
-
-The IceBox server for .NET Core 2.0 (`iceboxnet.dll`) is in the `tools\netcoreapp2.0` folder
-of `zeroc.ice.net` NuGet package. The file is copied to the demo directory during the build.
-
-Start IceBox:
-
-```
-dotnet iceboxnet.dll --Ice.Config=config.icebox
-```
+| .NET Framework 4.5          | .NET Core 2.0                      |
+| --------------------------- | ---------------------------------- |
+| `tools\net45\iceboxnet.exe` | `tools\netcoreapp2.0\iceboxnet.dll`|
 
 In the second window, start the client:
 
