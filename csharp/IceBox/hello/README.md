@@ -5,12 +5,7 @@ In the first window, start the IceBox server for .NET.
 ### .NET Framework 4.5
 
 The IceBox server for .NET Framework 4.5 (`iceboxnet.exe`) is in the `tools\net45` folder
-of `zeroc.ice.net` NuGet package. You should add this folder to your PATH with a command
-similar to:
-
-```
-set PATH=%USERPROFILE%\ice-demos\csharp\packages\zeroc.ice.net.3.7.0\tools\net45;%PATH%
-```
+of `zeroc.ice.net` NuGet package. The file is copied to the demo directory during the build.
 
 Then start IceBox:
 ```
