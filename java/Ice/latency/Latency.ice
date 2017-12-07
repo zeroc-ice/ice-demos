@@ -8,7 +8,7 @@
 
 module Demo
 {
-    class Ping
+    interface Ping
     {
     }
 }

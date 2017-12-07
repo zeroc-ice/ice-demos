@@ -11,7 +11,7 @@ Ice.loadSlice('Hello.ice')
 import Demo
 
 class HelloI(Demo.Hello):
-    def sayHello(self, current=None):
+    def sayHello(self, current):
         print("Hello World!")
 
 with Ice.initialize(sys.argv) as communicator:

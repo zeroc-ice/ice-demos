@@ -30,8 +30,7 @@ class SessionI(Demo.Session):
         print("The session " + self._name + " is now created.")
 
     def createHello(self, current):
-        self._lock.acquire()
-        try:
+        with self._lock:
             if self._destroy:
                 raise Ice.ObjectNotExistException()
 
@@ -39,21 +38,15 @@ class SessionI(Demo.Session):
             self._nextId = self._nextId + 1
             self._objs.append(hello)
             return hello
-        finally:
-            self._lock.release()
 
     def getName(self, current):
-        self._lock.acquire()
-        try:
+        with self._lock:
             if self._destroy:
                 raise Ice.ObjectNotExistException()
             return self._name
-        finally:
-            self._lock.release()
 
     def destroy(self, current):
-        self._lock.acquire()
-        try:
+        with self._lock:
             if self._destroy:
                 raise Ice.ObjectNotExistException()
             self._destroy = True
@@ -67,8 +60,6 @@ class SessionI(Demo.Session):
                 # which case this exception is expected.
                 pass
             self._objs = []
-        finally:
-            self._lock.release()
 
 class SessionFactoryI(Demo.SessionFactory):
     def create(self, name, current):

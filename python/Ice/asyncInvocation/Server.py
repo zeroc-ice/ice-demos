@@ -12,26 +12,26 @@ Ice.updateModules()
 import Demo
 
 class CalculatorI(Demo.Calculator):
-    async def add(self, x, y, current=None):
+    async def add(self, x, y, current):
         return x + y
 
-    async def subtract(self, x, subtrahend, current=None):
+    async def subtract(self, x, subtrahend, current):
         return x - subtrahend
 
-    async def divide(self, numerator, denominator, current=None):
+    async def divide(self, numerator, denominator, current):
         if(denominator == 0):
             raise Demo.DivideByZeroException()
         return (numerator // denominator, numerator % denominator)
 
-    async def square(self, x, current=None):
+    async def square(self, x, current):
         return x * x
 
-    async def squareRoot(self, x, current=None):
+    async def squareRoot(self, x, current):
         if(x < 0):
             raise Demo.NegativeRootException()
         return math.sqrt(x)
 
-    async def shutdown(self, current=None):
+    async def shutdown(self, current):
         current.adapter.getCommunicator().shutdown()
 
 class Server(Ice.Application):

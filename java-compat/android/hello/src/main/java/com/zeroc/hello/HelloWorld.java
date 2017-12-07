@@ -21,6 +21,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
@@ -54,7 +55,7 @@ public class HelloWorld extends Activity
                         {
                             if(getArguments().getBoolean("fatal"))
                             {
-                                ((HelloWorld) getActivity()).finish();
+                                ((HelloWorld)getActivity()).finish();
                             }
                         }
                     });
@@ -79,7 +80,8 @@ public class HelloWorld extends Activity
     }
 
     // These two arrays match.
-    private final static DeliveryMode DELIVERY_MODES[] = {
+    private final static DeliveryMode DELIVERY_MODES[] =
+    {
         DeliveryMode.TWOWAY,
         DeliveryMode.TWOWAY_SECURE,
         DeliveryMode.ONEWAY,
@@ -90,7 +92,8 @@ public class HelloWorld extends Activity
         DeliveryMode.DATAGRAM_BATCH,
     };
 
-    private final static String DELIVERY_MODE_DESC[] = new String[] {
+    private final static String DELIVERY_MODE_DESC[] = new String[]
+    {
             "Twoway",
             "Twoway Secure",
             "Oneway",
@@ -112,6 +115,7 @@ public class HelloWorld extends Activity
         final ProgressBar activityProgressBar = (ProgressBar)findViewById(R.id.activity);
         final Button shutdownButton = (Button)findViewById(R.id.shutdown);
         final EditText hostEditText = (EditText)findViewById(R.id.host);
+        final CheckBox useDiscoveryCheckBox = (CheckBox)findViewById(R.id.useDiscovery);
         final Button flushButton = (Button)findViewById(R.id.flush);
         final TextView statusTextView = (TextView)findViewById(R.id.status);
         final Spinner modeSpinner = (Spinner)findViewById(R.id.mode);
@@ -121,6 +125,29 @@ public class HelloWorld extends Activity
         final SharedPreferences prefs = getPreferences(MODE_PRIVATE);
 
         _app = (HelloApp)getApplication();
+
+        useDiscoveryCheckBox.setOnClickListener(new OnClickListener()
+        {
+            public void onClick(android.view.View v)
+            {
+                final boolean checked = ((CheckBox)v).isChecked();
+
+                _app.setUseDiscovery(checked);
+
+                if(checked)
+                {
+                    hostEditText.setEnabled(false);
+                    hostEditText.setText("");
+                    sayHelloButton.setEnabled(true);
+                    shutdownButton.setEnabled(true);
+                }
+                else
+                {
+                    hostEditText.setEnabled(true);
+                    hostEditText.setText(prefs.getString(HOSTNAME_KEY, DEFAULT_HOST));
+                }
+            }
+        });
 
         sayHelloButton.setOnClickListener(new OnClickListener()
         {
@@ -161,26 +188,29 @@ public class HelloWorld extends Activity
             @Override
             public void afterTextChanged(Editable s)
             {
-                String host = hostEditText.getText().toString().trim();
-                if(host.isEmpty())
+                if(!useDiscoveryCheckBox.isChecked())
                 {
-                    sayHelloButton.setEnabled(false);
-                    shutdownButton.setEnabled(false);
-                }
-                else
-                {
-                    sayHelloButton.setEnabled(true);
-                    shutdownButton.setEnabled(true);
-                }
+                    String host = hostEditText.getText().toString().trim();
+                    if(host.isEmpty())
+                    {
+                        sayHelloButton.setEnabled(false);
+                        shutdownButton.setEnabled(false);
+                    }
+                    else
+                    {
+                        sayHelloButton.setEnabled(true);
+                        shutdownButton.setEnabled(true);
+                    }
 
-                _app.setHost(host);
+                    _app.setHost(host);
 
-                // Change the preferences if necessary.
-                if(!prefs.getString(HOSTNAME_KEY, DEFAULT_HOST).equals(host))
-                {
-                    SharedPreferences.Editor edit = prefs.edit();
-                    edit.putString(HOSTNAME_KEY, host);
-                    edit.apply();
+                    // Change the preferences if necessary.
+                    if(!prefs.getString(HOSTNAME_KEY, DEFAULT_HOST).equals(host))
+                    {
+                        SharedPreferences.Editor edit = prefs.edit();
+                        edit.putString(HOSTNAME_KEY, host);
+                        edit.apply();
+                    }
                 }
             }
 
@@ -205,15 +235,15 @@ public class HelloWorld extends Activity
             }
         });
 
-        ArrayAdapter<String> modeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,
-                DELIVERY_MODE_DESC);
+        ArrayAdapter<String> modeAdapter =
+            new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, DELIVERY_MODE_DESC);
         modeSpinner.setAdapter(modeAdapter);
         modeSpinner.setOnItemSelectedListener(new android.widget.AdapterView.OnItemSelectedListener()
         {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
-                _app.setDeliveryMode(DELIVERY_MODES[(int) id]);
+                _app.setDeliveryMode(DELIVERY_MODES[(int)id]);
             }
 
             @Override
@@ -265,7 +295,8 @@ public class HelloWorld extends Activity
 
         statusTextView.setText("Ready");
 
-        _handler = new Handler(Looper.getMainLooper()) {
+        _handler = new Handler(Looper.getMainLooper())
+        {
             @Override
             public void handleMessage(Message m)
             {
@@ -285,16 +316,17 @@ public class HelloWorld extends Activity
                     case HelloApp.MSG_READY:
                     {
                         // Hide the initializing dialog if it is on the stack.
-                        DialogFragment initDialog = (DialogFragment) getFragmentManager().findFragmentByTag(INITIALIZE_TAG);
+                        DialogFragment initDialog =
+                            (DialogFragment)getFragmentManager().findFragmentByTag(INITIALIZE_TAG);
                         if(initDialog != null)
                         {
                             initDialog.dismiss();
                         }
 
-                        HelloApp.MessageReady ready = (HelloApp.MessageReady) m.obj;
+                        HelloApp.MessageReady ready = (HelloApp.MessageReady)m.obj;
                         if(ready.ex != null)
                         {
-                            LocalException ex = (LocalException) ready.ex;
+                            LocalException ex = (LocalException)ready.ex;
                             DialogFragment dialog = ErrorDialogFragment.newInstance(ex.toString(), true);
                             dialog.show(getFragmentManager(), ERROR_TAG);
                         }
@@ -307,7 +339,7 @@ public class HelloWorld extends Activity
                         statusTextView.setText("Ready");
                         activityProgressBar.setVisibility(View.GONE);
 
-                        LocalException ex = (LocalException) m.obj;
+                        LocalException ex = (LocalException)m.obj;
                         DialogFragment dialog = ErrorDialogFragment.newInstance(ex.toString(), false);
                         dialog.show(getFragmentManager(), ERROR_TAG);
                         break;
@@ -319,9 +351,10 @@ public class HelloWorld extends Activity
                         statusTextView.setText("Ready");
                         break;
                     }
+
                     case HelloApp.MSG_SENT:
                     {
-                        DeliveryMode mode = (DeliveryMode) m.obj;
+                        DeliveryMode mode = (DeliveryMode)m.obj;
                         activityProgressBar.setVisibility(View.VISIBLE);
                         statusTextView.setText("Waiting for response");
                         break;
@@ -350,7 +383,11 @@ public class HelloWorld extends Activity
     {
         super.onRestoreInstanceState(savedInstanceState);
 
+        final CheckBox useDiscoveryCheckBox = (CheckBox)findViewById(R.id.useDiscovery);
+        final EditText hostEditText = (EditText)findViewById(R.id.host);
         final SeekBar delaySeekBar = (SeekBar)findViewById(R.id.delay);
+        final Button sayHelloButton = (Button)findViewById(R.id.sayHello);
+        final Button shutdownButton = (Button)findViewById(R.id.shutdown);
         final Button flushButton = (Button)findViewById(R.id.flush);
         final Spinner modeSpinner = (Spinner)findViewById(R.id.mode);
         final SeekBar timeoutSeekBar = (SeekBar)findViewById(R.id.timeout);
@@ -363,7 +400,15 @@ public class HelloWorld extends Activity
         timeoutSeekBar.setProgress(savedInstanceState.getInt(BUNDLE_KEY_TIMEOUT));
         statusTextView.setText(savedInstanceState.getString(BUNDLE_KEY_STATUS));
         activityProgressBar.setVisibility(
-                savedInstanceState.getBoolean(BUNDLE_KEY_PROGRESS) ? View.VISIBLE : View.GONE);
+            savedInstanceState.getBoolean(BUNDLE_KEY_PROGRESS) ? View.VISIBLE : View.GONE);
+
+        if(useDiscoveryCheckBox.isChecked())
+        {
+            hostEditText.setEnabled(false);
+            hostEditText.setText("");
+            sayHelloButton.setEnabled(true);
+            shutdownButton.setEnabled(true);
+        }
     }
 
     @Override
@@ -371,6 +416,7 @@ public class HelloWorld extends Activity
     {
         super.onSaveInstanceState(outState);
 
+        final CheckBox useDiscoveryCheckBox = (CheckBox)findViewById(R.id.useDiscovery);
         final SeekBar delaySeekBar = (SeekBar)findViewById(R.id.delay);
         final Button flushButton = (Button)findViewById(R.id.flush);
         final Spinner modeSpinner = (Spinner)findViewById(R.id.mode);
@@ -385,8 +431,7 @@ public class HelloWorld extends Activity
         outState.putString(BUNDLE_KEY_STATUS, statusTextView.getText().toString());
         outState.putBoolean(BUNDLE_KEY_PROGRESS, activityProgressBar.getVisibility() == View.VISIBLE);
 
-        // Clear the application handler. We don't want any further messages while
-        // in the background.
+        // Clear the application handler. We don't want any further messages while in the background.
         _app.setHandler(null);
     }
 

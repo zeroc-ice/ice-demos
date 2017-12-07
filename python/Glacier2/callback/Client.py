@@ -25,7 +25,7 @@ x: exit
 """)
 
 class CallbackReceiverI(Demo.CallbackReceiver):
-    def callback(self, current=None):
+    def callback(self, current):
         print("received callback")
 
 class Client(Glacier2.Application):

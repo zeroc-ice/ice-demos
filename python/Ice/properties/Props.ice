@@ -14,5 +14,5 @@ module Demo
     {
         idempotent Ice::PropertyDict getChanges();
         void shutdown();
-    }s
+    }
 }

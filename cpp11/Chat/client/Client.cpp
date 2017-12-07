@@ -128,7 +128,8 @@ public:
     {
         if(argc > 1)
         {
-            throw string("usage: ") + appName();
+            const string message = "usage: ";
+            throw runtime_error(message + appName());
         }
 
         auto sessionPrx = Ice::uncheckedCast<Chat::ChatSessionPrx>(this->session());

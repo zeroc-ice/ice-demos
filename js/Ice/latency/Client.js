@@ -7,74 +7,44 @@
 const Ice = require("ice").Ice;
 const Demo = require("./generated/Latency").Demo;
 
-//
-// Asynchronous loop, each call to the given function returns a
-// promise that when fulfilled runs the next iteration.
-//
-function loop(fn, repetitions)
+(async function()
 {
-    let i = 0;
-    function next()
+    let communicator;
+    try
     {
-        if(i++ < repetitions)
-        {
-            return fn.call().then(next);
-        }
-    }
-    return next();
-}
-
-let communicator;
-Ice.Promise.try(
-    function()
-    {
-        //
-        // Initialize the communicator and create a proxy to the
-        // ping object.
-        //
         communicator = Ice.initialize(process.argv);
         if(process.argv.length > 2)
         {
-            throw("too many arguments");
+            throw new Error("too many arguments");
         }
         const repetitions = 1000;
-        const proxy = communicator.stringToProxy("ping:default -p 10000");
-
         //
-        // Down-cast the proxy to the Demo.Ping interface.
+        // Create a proxy to the ping object and down-cast the proxy to the
+        // Demo.Ping interface
         //
-        return Demo.PingPrx.checkedCast(proxy).then(
-            function(obj)
-            {
-                console.log("pinging server " + repetitions + " times (this may take a while)");
-                const start = new Date().getTime();
+        const proxy = await Demo.PingPrx.checkedCast(communicator.stringToProxy("ping:default -p 10000"));
 
-                return loop(() => obj.ice_ping(), repetitions).then(() =>
-                    {
-                        //
-                        // Write the results.
-                        //
-                        const total = new Date().getTime() - start;
-                        console.log("time for " + repetitions + " pings: " + total + "ms");
-                        console.log("time per ping: " + (total / repetitions) + "ms");
-                    });
-            });
+        console.log(`pinging server ${repetitions} times (this may take a while)`);
+        const start = new Date().getTime();
+
+        for(let i = 0; i < repetitions; ++i)
+        {
+            await proxy.ice_ping();
+        }
+        const total = new Date().getTime() - start;
+        console.log(`time for ${repetitions} pings: ${total}ms`);
+        console.log(`time per ping: ${total / repetitions}ms`);
     }
-).finally(() =>
+    catch(ex)
     {
-        //
-        // Destroy the communicator if required.
-        //
+        console.log(ex.toString());
+        process.exitCode = 1;
+    }
+    finally
+    {
         if(communicator)
         {
-            return communicator.destroy();
+            await communicator.destroy();
         }
     }
-).catch(ex =>
-    {
-        //
-        // Handle any exceptions above.
-        //
-        console.log(ex.toString());
-        process.exit(1);
-    });
+}());

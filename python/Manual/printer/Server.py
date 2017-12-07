@@ -11,7 +11,7 @@ Ice.loadSlice('Printer.ice')
 import Demo
 
 class PrinterI(Demo.Printer):
-    def printString(self, s, current=None):
+    def printString(self, s, current):
         print(s)
 
 with Ice.initialize(sys.argv) as ic:

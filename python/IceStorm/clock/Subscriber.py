@@ -11,7 +11,7 @@ Ice.loadSlice('Clock.ice')
 import Demo
 
 class ClockI(Demo.Clock):
-    def tick(self, date, current=None):
+    def tick(self, date, current):
         print(date)
 
 class Subscriber(Ice.Application):

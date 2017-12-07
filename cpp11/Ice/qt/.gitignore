@@ -1,0 +1,5 @@
+.qmake.stash
+Hello.cpp
+Hello.h
+Makefile
+moc_Client.cpp

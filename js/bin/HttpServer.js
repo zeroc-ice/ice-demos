@@ -48,20 +48,18 @@ function Init()
 
     var DemoData = {
         cssDeps: [
-            "https://cdnjs.cloudflare.com/ajax/libs/animo.js/1.0.3/animate-animo.min.css",
-            "https://cdnjs.cloudflare.com/ajax/libs/foundation/5.3.3/css/foundation.min.css",
+            "https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/css/foundation.min.css",
             "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/vs.min.css",
             "https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/7.0.10/jquery.nouislider.min.css"
         ],
         jsDeps: [
             "https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js",
-            "https://cdnjs.cloudflare.com/ajax/libs/animo.js/1.0.3/animo.min.js",
-            "https://cdnjs.cloudflare.com/ajax/libs/foundation/5.3.3/js/foundation.min.js",
+            "https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/js/foundation.min.js",
             "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js",
             "https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js",
             "https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/7.0.10/jquery.nouislider.all.min.js",
             "https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js",
-            "https://cdnjs.cloudflare.com/ajax/libs/URI.js/1.18.10/URI.min.js",
+            "https://cdnjs.cloudflare.com/ajax/libs/URI.js/1.18.12/URI.min.js",
             "/assets/jquery.spin.js"
         ]
     }

@@ -8,7 +8,7 @@ import Demo.*;
 
 public class Server extends com.zeroc.Ice.Application
 {
-    class PingI implements com.zeroc.Ice.Object
+    static class PingI implements Ping
     {
     }
 

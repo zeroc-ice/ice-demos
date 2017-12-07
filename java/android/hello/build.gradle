@@ -19,7 +19,7 @@ slice {
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "26.0.0"
+    buildToolsVersion "27.0.1"
 
     defaultConfig {
         applicationId "com.zeroc.hello"
@@ -37,14 +37,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
-    // It would be ideal if the slice plugin did this, but it doesn't work as expected.
-    sourceSets {
-        main {
-            java {
-                srcDirs = ['src/main/java', project.slice.output ]
-            }
-        }
-    }
 }
 
 task copyBksTask(type: Copy) {
@@ -60,4 +52,5 @@ clean {
 dependencies {
     implementation 'com.zeroc:ice:3.7.0'
     implementation 'com.zeroc:icessl:3.7.0'
+    implementation 'com.zeroc:icediscovery:3.7.0'
 }

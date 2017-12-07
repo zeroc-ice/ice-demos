@@ -11,7 +11,7 @@ Ice.loadSlice('Callback.ice')
 import Demo
 
 class CallbackReceiverI(Demo.CallbackReceiver):
-    def callback(self, current=None):
+    def callback(self, current):
         print("received callback")
 
 def run(communicator):
