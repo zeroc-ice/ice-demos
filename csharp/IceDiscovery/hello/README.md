@@ -3,11 +3,15 @@ well as how to make oneway, datagram, secure, and batched invocations.
 
 To run the demo, first start the server:
 
-      server.exe
+| .NET Framework 4.5 | .NET Core 2.0        |
+| ------------------ | -------------------- |
+| `server`           | `dotnet server.dll`  |
 
 In a separate window, start the client:
 
-      client.exe
+| .NET Framework 4.5 | .NET Core 2.0       |
+| ------------------ | ------------------- |
+| `client`           | `dotnet client.dll` |
 
 To test timeouts you can use 'T' to set an invocation timeout on the client
 proxy and 'P' to set a delayed response in the server to cause a timeout.

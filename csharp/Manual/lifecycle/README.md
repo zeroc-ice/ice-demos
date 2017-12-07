@@ -1,11 +1,15 @@
 This demo implements the file system with life cycle support.
 
-To run it, start the server in a window:
+To run the demo, first start the server:
 
-      server.exe
+| .NET Framework 4.5 | .NET Core 2.0        |
+| ------------------ | -------------------- |
+| `server.exe`       | `dotnet server.dll`  |
 
-Then run the client in a separate window:
+In a separate window, start the client:
 
-      client.exe
+| .NET Framework 4.5 | .NET Core 2.0        |
+| ------------------ | -------------------- |
+| `client.exe`       | `dotnet client.dll`  |
 
 Type "help" at the client prompt to see a list of commands.

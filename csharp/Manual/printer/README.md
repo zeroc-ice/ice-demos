@@ -1,12 +1,13 @@
 This demo implements the printer example in the Ice Manual.
-To run it, start the server in a window:
 
-```
-server.exe
-```
+To run the demo, first start the server:
 
-In a separate window, run the client:
+| .NET Framework 4.5 | .NET Core 2.0        |
+| ------------------ | -------------------- |
+| `server.exe`       | `dotnet server.dll`  |
 
-```
-client.exe
-```
+In a separate window, start the client:
+
+| .NET Framework 4.5 | .NET Core 2.0        |
+| ------------------ | -------------------- |
+| `client.exe`       | `dotnet client.dll`  |

@@ -9,8 +9,7 @@ named `LANG` with value `en`. The Hello object implementation `HelloI`
 reads the value of `LANG` and shows the message in the corresponding
 language; you can try changing the value to `fr`, `de`, `es` or `it`.
 
-Setup
------
+## .Net Framework 4.5 Setup
 
 Add `iceboxnet`'s folder to your PATH, with a command similar to:
 ```
@@ -18,15 +17,48 @@ set PATH=%USERPROFILE%\ice-demos\csharp\packages\zeroc.ice.net.3.7.0\tools;%PATH
 ```
 
 Start the IceGrid registry and node:
+
 ```
 icegridnode --Ice.Config=config.grid
 ```
 
 Deploy the `HelloSimpsons` application (in file `application.xml`) with
 the IceGridGUI. If you prefer to use the command-line utility, use:
+
 ```
 icegridadmin --Ice.Config=config.grid -e "application add application.xml"
 ```
+
+## .Net Core 2.0 Setup
+
+Start the IceGrid registry and node:
+
+```
+icegridnode --Ice.Config=config.grid
+```
+
+Deploy the `HelloSimpsons` application (in file `application-netcore.xml`) with
+the IceGridGUI. If you prefer to use the command-line utility, use:
+
+```
+icegridadmin --Ice.Config=config.grid -e "application add application-netcore.xml iceboxnet=<iceboxnet.dll>"
+```
+
+The `application-netcore.xml` application descriptor uses `iceboxnet` variable to
+refer to the path of `iceboxnet.dll` for .Net Core 2.0 framework, you need to correctly
+set this variable in order for `dotnet` host application to launch IceBox server.
+
+The `iceboxnet.dll` for .Net Core 2.0 is located in `tools\netcoreapp2.0` folder of the
+`zeroc.ice.net` NuGet package, the package is typically installed in the NuGet global
+packages folder.
+
+On Windows:
+
+`%USERPROFILE%\.nuget\packages\zeroc.ice.net\3.7.0\tools\netcoreapp2.0\iceboxnet.dll`
+
+On Linux:
+
+`$HOME/.nuget/packages/zeroc.ice.net/3.7.0/tools/netcoreapp2.0/iceboxnet.dll`
 
 Using IceGridGUI
 ----------------
