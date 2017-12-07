@@ -55,7 +55,7 @@
          </server-instance>
 
          <icebox id="IceBox" activation="on-demand" exe="dotnet">
-            <option>${iceboxnet}</option>
+            <option>iceboxnet.dll</option>
             <description>A sample IceBox server</description>
             <properties>
                <properties refid="mx"/>

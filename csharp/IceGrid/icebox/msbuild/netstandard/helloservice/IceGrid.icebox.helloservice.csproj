@@ -17,9 +17,17 @@
     <ItemGroup Condition="'$(ICE_HOME)' != ''">
         <Reference Include="$(ICE_HOME)/csharp/lib/netstandard2.0/Ice.dll" />
         <Reference Include="$(ICE_HOME)/csharp/lib/netstandard2.0/IceBox.dll" />
+        <IceBoxNet Include="$(ICE_HOME)/csharp/bin/netcoreapp2.0/*" />
     </ItemGroup>
     <ItemGroup Condition="'$(ICE_HOME)' == ''">
-      <PackageReference Include="zeroc.ice.net" Version="3.7.0" />
+        <PackageReference Include="zeroc.ice.net" Version="3.7.0" />
+        <IceBoxNet Include="$(IceHome)/tools/netcoreapp2.0/*"/>
     </ItemGroup>
+    <Target Name="iceboxnet" AfterTargets="Build">
+        <Copy SourceFiles="@(IceBoxNet)" DestinationFolder="$(OutputPath)" />
+    </Target>
+    <Target Name="CleanIceBoxNet" AfterTargets="Clean">
+        <Delete Files="@(IceBoxNet->$(OutputPath)%(Identity)" />
+    </Target>
     <Import Project="$(ICE_HOME)/csharp/msbuild/zeroc.ice.net.targets" Condition="Exists('$(ICE_HOME)/csharp/msbuild/zeroc.ice.net.targets')"/>
 </Project>

@@ -20,21 +20,15 @@ iceboxnet --Ice.Config=config.icebox
 ### .NET Core 2.0
 
 The IceBox server for .NET Core 2.0 (`iceboxnet.dll`) is in the `tools\netcoreapp2.0` folder
-of `zeroc.ice.net` NuGet package. With .NET Core the package is installed in the NuGet global-packages
-folder typically `%USERPROFILE%\.nuget\packages\` on Windows and `$HOME\.nuget\packages` on Linux.
+of `zeroc.ice.net` NuGet package. The file is copied to the demo directory during the build.
 
-On Windows:
-```
-dotnet %USERPROFILE%\.nuget\packages\zeroc.ice.net\3.7.0\tools\netcoreapp2.0\iceboxnet.dll --Ice.Config=config.icebox
-```
-
-On Linux:
+Start IceBox:
 
 ```
-dotnet $HOME\.nuget\packages\zeroc.ice.net\3.7.0\tools\netcoreapp2.0\iceboxnet.dll --Ice.Config=config.icebox
+dotnet iceboxnet.dll --Ice.Config=config.icebox
 ```
 
-In a separate window, start the client:
+In the second window, start the client:
 
 | .NET Framework 4.5 | .NET Core 2.0       |
 | ------------------ | ------------------- |

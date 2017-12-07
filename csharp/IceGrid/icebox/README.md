@@ -41,24 +41,8 @@ Deploy the `HelloSimpsons` application (in file `application-netcore.xml`) with
 the IceGridGUI. If you prefer to use the command-line utility, use:
 
 ```
-icegridadmin --Ice.Config=config.grid -e "application add application-netcore.xml iceboxnet=<iceboxnet.dll>"
+icegridadmin --Ice.Config=config.grid -e "application add application-netcore.xml"
 ```
-
-The `application-netcore.xml` application descriptor uses `iceboxnet` variable to
-refer to the path of `iceboxnet.dll` for .NET Core 2.0 framework, you need to correctly
-set this variable in order for `dotnet` host application to launch IceBox server.
-
-The `iceboxnet.dll` for .NET Core 2.0 is located in `tools\netcoreapp2.0` folder of the
-`zeroc.ice.net` NuGet package, the package is typically installed in the NuGet global
-packages folder.
-
-On Windows:
-
-`%USERPROFILE%\.nuget\packages\zeroc.ice.net\3.7.0\tools\netcoreapp2.0\iceboxnet.dll`
-
-On Linux:
-
-`$HOME/.nuget/packages/zeroc.ice.net/3.7.0/tools/netcoreapp2.0/iceboxnet.dll`
 
 Using IceGridGUI
 ----------------
