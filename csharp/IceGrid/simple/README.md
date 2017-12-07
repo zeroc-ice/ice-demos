@@ -39,17 +39,19 @@ application:
 If you have already deployed the application, you can update it to try
 a new set of descriptors, for example:
 
-* .Net Framework 4.5
+#### .Net Framework 4.5
 
 ```
 icegridadmin --Ice.Config=config.grid -e "application update application_with_template.xml"
 ```
+---
 
-* .Net Core 2.0
+#### .Net Core 2.0
 
 ```
 icegridadmin --Ice.Config=config.grid -e "application update application-netcore_with_template.xml"
 ```
+---
 
 When using the descriptors from `application_with_template.xml`, `application-netcore_with_template.xml`,
 `application_with_replication.xml` or `application-netcore_with_replication.xml`, you can easily deploy

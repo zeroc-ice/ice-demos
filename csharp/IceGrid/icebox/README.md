@@ -13,7 +13,7 @@ language; you can try changing the value to `fr`, `de`, `es` or `it`.
 
 Add `iceboxnet`'s folder to your PATH, with a command similar to:
 ```
-set PATH=%USERPROFILE%\ice-demos\csharp\packages\zeroc.ice.net.3.7.0\tools;%PATH%
+set PATH=%USERPROFILE%\ice-demos\csharp\packages\zeroc.ice.net.3.7.0\tools\net45;%PATH%
 ```
 
 Start the IceGrid registry and node:
