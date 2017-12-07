@@ -29,7 +29,7 @@ In order to build Ice for .NET sample programs, you need all of the following:
 
 ### Building the demos using NuGet packages:
 
-Open the solution file `CSharp demos.sln` to build the sample programs.
+Open the solution file `C# NET Framework demos.sln` to build the sample programs.
 
 The demos are configured to use the Ice distribution from NuGet packages. These
 packages are automatically downloaded during the build. If you have disabled the
@@ -48,7 +48,7 @@ Explorer window and select `Build`.
   * Open a Visual Studio command prompt
   ```
   cd ice-demos\csharp
-  MSBuild /p:ICE_HOME=<Ice dist path> /p:Platform="Any CPU" "CSharp demos.sln"
+  MSBuild /p:ICE_HOME=<Ice dist path> /p:Platform="Any CPU" "C# NET Framework demos.sln"
   ```
 
 - Build from Visual Studio:
@@ -96,7 +96,7 @@ cd csharp
 To build the sample programs run:
 
 ```
-dotnet msbuild "NetCore Demos.sln" /t:"Restore;Build"
+dotnet msbuild "C# NET Core demos.sln" /t:"Restore;Build"
 ```
 
 The demos are configured to use the Ice distribution from NuGet packages. These
@@ -113,7 +113,7 @@ cd csharp
 To build the sample programs run:
 
 ```
-dotnet msbuild /p:ICE_HOME=<Ice dist path> "NetCore Demos.sln" /t:"Restore;Build"
+dotnet msbuild /p:ICE_HOME=<Ice dist path> "C# NET Core demos.sln" /t:"Restore;Build"
 ```
 
 ### Running the Demos

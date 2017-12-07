@@ -6,7 +6,7 @@ icegridnode --Ice.Config=config.grid
 
 In a separate window:
 
-#### .Net Framework 4.5
+#### .NET Framework 4.5
 
 ```
 icegridadmin --Ice.Config=config.grid -e "application add application.xml"
@@ -14,7 +14,7 @@ client
 ```
 ---
 
-#### .Net Core 2.0
+#### .NET Core 2.0
 
 ```
 icegridadmin --Ice.Config=config.grid -e "application add application-netcore.xml"
@@ -39,14 +39,14 @@ application:
 If you have already deployed the application, you can update it to try
 a new set of descriptors, for example:
 
-#### .Net Framework 4.5
+#### .NET Framework 4.5
 
 ```
 icegridadmin --Ice.Config=config.grid -e "application update application_with_template.xml"
 ```
 ---
 
-#### .Net Core 2.0
+#### .NET Core 2.0
 
 ```
 icegridadmin --Ice.Config=config.grid -e "application update application-netcore_with_template.xml"

@@ -9,7 +9,7 @@ named `LANG` with value `en`. The Hello object implementation `HelloI`
 reads the value of `LANG` and shows the message in the corresponding
 language; you can try changing the value to `fr`, `de`, `es` or `it`.
 
-## .Net Framework 4.5 Setup
+## .NET Framework 4.5 Setup
 
 Add `iceboxnet`'s folder to your PATH, with a command similar to:
 ```
@@ -29,7 +29,7 @@ the IceGridGUI. If you prefer to use the command-line utility, use:
 icegridadmin --Ice.Config=config.grid -e "application add application.xml"
 ```
 
-## .Net Core 2.0 Setup
+## .NET Core 2.0 Setup
 
 Start the IceGrid registry and node:
 
@@ -45,10 +45,10 @@ icegridadmin --Ice.Config=config.grid -e "application add application-netcore.xm
 ```
 
 The `application-netcore.xml` application descriptor uses `iceboxnet` variable to
-refer to the path of `iceboxnet.dll` for .Net Core 2.0 framework, you need to correctly
+refer to the path of `iceboxnet.dll` for .NET Core 2.0 framework, you need to correctly
 set this variable in order for `dotnet` host application to launch IceBox server.
 
-The `iceboxnet.dll` for .Net Core 2.0 is located in `tools\netcoreapp2.0` folder of the
+The `iceboxnet.dll` for .NET Core 2.0 is located in `tools\netcoreapp2.0` folder of the
 `zeroc.ice.net` NuGet package, the package is typically installed in the NuGet global
 packages folder.
 
