@@ -1,7 +1,3 @@
-To run this demo, open two Command Prompt windows.
-
-In the first window, start the IceBox server:
-
 To run the demo, first start the IceBox server:
 
 | .NET Framework 4.5                     | .NET Core 2.0                                    |
