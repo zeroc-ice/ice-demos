@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+    <Import Project="../../../../../msbuild/ice.common.props"/>
+    <PropertyGroup>
+        <AssemblyName>helloservice</AssemblyName>
+        <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
+        <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+        <OutputPath>../../../</OutputPath>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <Company>ZeroC, Inc.</Company>
+        <AssemblyTitle>IceBox hello demo helloservice</AssemblyTitle>
+        <Description>IceBox hello demo helloservice</Description>
+        <Copyright>Copyright (c) 2003-2017 ZeroC, Inc.</Copyright>
+        <Product>Ice</Product>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <FileVersion>1.0.0.0</FileVersion>
+    </PropertyGroup>
+    <ItemGroup>
+        <Compile Include="../../../HelloI.cs"/>
+        <Compile Include="../../../HelloServiceI.cs"/>
+        <Slice Include="../../../Hello.ice"/>
+    </ItemGroup>
+    <Target AfterTargets="Build" Name="CopyIceBoxNet">
+        <Copy DestinationFolder="$(OutputPath)" SourceFiles="@(IceBoxNet)"/>
+    </Target>
+    <Target AfterTargets="Clean" Name="CleanIceBoxNet">
+        <Delete Files="@(IceBoxNet-&gt;$(OutputPath)%(Identity)"/>
+    </Target>
+    <Choose>
+        <!--Using Ice built from source-->
+        <When Condition="'$(ICE_HOME)' != ''">
+            <ItemGroup>
+                <Reference Include="$(ICE_HOME)/csharp/lib/netstandard2.0/Ice.dll"/>
+                <Reference Include="$(ICE_HOME)/csharp/lib/netstandard2.0/IceBox.dll"/>
+            </ItemGroup>
+        </When>
+        <!--Using Ice NuGet package-->
+        <Otherwise>
+            <ItemGroup>
+                <PackageReference Include="zeroc.ice.net" Version="3.7.0"/>
+            </ItemGroup>
+        </Otherwise>
+    </Choose>
+    <ImportGroup Condition="'$(ICE_HOME)' != ''">
+        <!--Using Ice built from source-->
+        <Import Project="$(ICE_HOME)/csharp/msbuild/zeroc.ice.net.targets"/>
+    </ImportGroup>
+</Project>
