@@ -11,11 +11,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "msbuild", "msbuild", "{D833
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "client", "client", "{7A1B7F90-CD7D-46FB-9522-99EDEFC7F6B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\callback\msbuild\client\netcoreapp2.0\client.csproj", "{63000AA5-CC4E-4F62-987C-D5857D5F7A8D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\callback\msbuild\client\netstandard2.0\client.csproj", "{63000AA5-CC4E-4F62-987C-D5857D5F7A8D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{64D0C89C-3C74-42A9-8052-19097ADDDE72}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\callback\msbuild\server\netcoreapp2.0\server.csproj", "{21CEF27C-41E1-4742-B7C7-3A6471DEF830}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\callback\msbuild\server\netstandard2.0\server.csproj", "{21CEF27C-41E1-4742-B7C7-3A6471DEF830}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "session", "session", "{DE04F58D-BB2D-4C9A-B26B-F94064064CD9}"
 EndProject
@@ -23,11 +23,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "msbuild", "msbuild", "{7C97
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "client", "client", "{AB1C7422-02BE-44D4-A7D9-CB7E652FA8FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\session\msbuild\client\netcoreapp2.0\client.csproj", "{2802FECA-4836-48D8-88A9-57CFAB9F10D4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\session\msbuild\client\netstandard2.0\client.csproj", "{2802FECA-4836-48D8-88A9-57CFAB9F10D4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{D6E71188-E2BC-4998-AE54-E3C0C4EB7C50}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\session\msbuild\server\netcoreapp2.0\server.csproj", "{3C770F5D-C9A4-4089-912A-7C9A2E02DDF7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\session\msbuild\server\netstandard2.0\server.csproj", "{3C770F5D-C9A4-4089-912A-7C9A2E02DDF7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bidir", "bidir", "{BD5DAD04-8C90-48CC-A0AA-BFA8F79D19F4}"
 EndProject
@@ -35,11 +35,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "msbuild", "msbuild", "{6004
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "client", "client", "{901C9316-8AD2-41E2-AD74-B39F0B94BD50}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\bidir\msbuild\client\netcoreapp2.0\client.csproj", "{B2C9E1EE-338C-4274-87A3-C9E8597CE96A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\bidir\msbuild\client\netstandard2.0\client.csproj", "{B2C9E1EE-338C-4274-87A3-C9E8597CE96A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{D020D4AA-4204-4BB8-ADC8-6F0665BBA814}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\bidir\msbuild\server\netcoreapp2.0\server.csproj", "{1BECBBAB-C315-4F17-BE16-FBB33FCDCF63}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\bidir\msbuild\server\netstandard2.0\server.csproj", "{1BECBBAB-C315-4F17-BE16-FBB33FCDCF63}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "invoke", "invoke", "{45BBEF14-3DE7-4D00-9FB3-659CD1F9B5C6}"
 EndProject
@@ -47,11 +47,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "msbuild", "msbuild", "{4CF0
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "client", "client", "{F43376EF-18D0-40CC-8E43-F1E74E1CD4A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\invoke\msbuild\client\netcoreapp2.0\client.csproj", "{C33A1A99-959D-45B0-995E-21AC2F576CEE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\invoke\msbuild\client\netstandard2.0\client.csproj", "{C33A1A99-959D-45B0-995E-21AC2F576CEE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{94812D6D-413F-4124-9125-57B30E3E1A91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\invoke\msbuild\server\netcoreapp2.0\server.csproj", "{7152DB4C-0F05-467B-82CD-0F2C7583916A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\invoke\msbuild\server\netstandard2.0\server.csproj", "{7152DB4C-0F05-467B-82CD-0F2C7583916A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "plugin", "plugin", "{63FED2F6-424C-476E-B12A-0F2999B6F043}"
 EndProject
@@ -59,19 +59,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "msbuild", "msbuild", "{F931
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "client", "client", "{3A6FB7BD-3125-4702-99BA-D9C561956A89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\plugin\msbuild\client\netcoreapp2.0\client.csproj", "{3091EE73-A802-47A3-AD87-9BCA86D60351}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\plugin\msbuild\client\netstandard2.0\client.csproj", "{3091EE73-A802-47A3-AD87-9BCA86D60351}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "loggerplugin", "loggerplugin", "{6904EA9D-11D0-4024-B470-30F299D3317F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "loggerplugin", "Ice\plugin\msbuild\loggerplugin\netcoreapp2.0\loggerplugin.csproj", "{3F1A0E5E-3684-4A67-9D49-5F376E0147DE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "loggerplugin", "Ice\plugin\msbuild\loggerplugin\netstandard2.0\loggerplugin.csproj", "{3F1A0E5E-3684-4A67-9D49-5F376E0147DE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "helloplugin", "helloplugin", "{0038FC98-3D27-465C-ABFC-4E52CC3FF1F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "helloplugin", "Ice\plugin\msbuild\helloplugin\netcoreapp2.0\helloplugin.csproj", "{FED94C66-D324-4A19-BB2B-CB143E729F37}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "helloplugin", "Ice\plugin\msbuild\helloplugin\netstandard2.0\helloplugin.csproj", "{FED94C66-D324-4A19-BB2B-CB143E729F37}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{590DFDCA-106B-4442-9D0A-0B8662CD4B69}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\plugin\msbuild\server\netcoreapp2.0\server.csproj", "{C97C4384-5179-47DB-88F0-B891443DB1D5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\plugin\msbuild\server\netstandard2.0\server.csproj", "{C97C4384-5179-47DB-88F0-B891443DB1D5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "async", "async", "{1771309F-146F-49AA-ACA5-63AFF79F2465}"
 EndProject
@@ -79,11 +79,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "msbuild", "msbuild", "{FE4B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "client", "client", "{FF66035E-8A98-466F-ACBF-6DBD23665834}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\async\msbuild\client\netcoreapp2.0\client.csproj", "{7818641A-C01F-4B67-A5BF-49481E13F4D9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\async\msbuild\client\netstandard2.0\client.csproj", "{7818641A-C01F-4B67-A5BF-49481E13F4D9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{FF76C4E7-1436-45CF-8C36-3B2F25DD5721}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\async\msbuild\server\netcoreapp2.0\server.csproj", "{59A6EE82-913A-415A-BA1F-C006852435F8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\async\msbuild\server\netstandard2.0\server.csproj", "{59A6EE82-913A-415A-BA1F-C006852435F8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "context", "context", "{5FD0E46E-0602-4D36-82BA-89F180686ADD}"
 EndProject
@@ -91,11 +91,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "msbuild", "msbuild", "{1F71
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "client", "client", "{104711E0-6B13-49D0-B960-1D569CB1719D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\context\msbuild\client\netcoreapp2.0\client.csproj", "{887877AE-1633-4B8A-A932-A5F05F184788}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\context\msbuild\client\netstandard2.0\client.csproj", "{887877AE-1633-4B8A-A932-A5F05F184788}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{04892483-3BB0-453D-A80A-CAF41B41900D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\context\msbuild\server\netcoreapp2.0\server.csproj", "{8F3377DF-CA64-4D09-99B6-B8749FF9A429}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\context\msbuild\server\netstandard2.0\server.csproj", "{8F3377DF-CA64-4D09-99B6-B8749FF9A429}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "optional", "optional", "{39F5B9F1-6BB5-497D-AF31-A5F52BE969B4}"
 EndProject
@@ -103,11 +103,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "msbuild", "msbuild", "{BC0D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "client", "client", "{32E19E91-19B5-412F-AA14-E6DC66EC1A95}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\optional\msbuild\client\netcoreapp2.0\client.csproj", "{CC5D2F49-0B77-42DB-8390-0D44DDD6BB0B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\optional\msbuild\client\netstandard2.0\client.csproj", "{CC5D2F49-0B77-42DB-8390-0D44DDD6BB0B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{FEE1A861-30AA-46B1-9474-277CACB05DCE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\optional\msbuild\server\netcoreapp2.0\server.csproj", "{F3D344D2-D07E-4090-8CAD-0B28DFD61C99}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\optional\msbuild\server\netstandard2.0\server.csproj", "{F3D344D2-D07E-4090-8CAD-0B28DFD61C99}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "latency", "latency", "{F570BD1C-714A-47F1-8BBD-A94BC8F36A2B}"
 EndProject
@@ -115,11 +115,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "msbuild", "msbuild", "{C5E3
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "client", "client", "{627F1281-0380-41F3-BA65-AC556F5AC8E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\latency\msbuild\client\netcoreapp2.0\client.csproj", "{C57AD6C5-9613-4B85-966B-E88C3C9DBA1F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\latency\msbuild\client\netstandard2.0\client.csproj", "{C57AD6C5-9613-4B85-966B-E88C3C9DBA1F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{535D3806-E473-4424-9BCA-D9BE36648D6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\latency\msbuild\server\netcoreapp2.0\server.csproj", "{5AC3AB5A-017F-4F9D-A57D-8CF8CDEDDC45}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\latency\msbuild\server\netstandard2.0\server.csproj", "{5AC3AB5A-017F-4F9D-A57D-8CF8CDEDDC45}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "throughput", "throughput", "{6903D708-7BCB-48B7-A9F8-FB2D666A8C36}"
 EndProject
@@ -127,11 +127,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "msbuild", "msbuild", "{1859
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "client", "client", "{86EFB29C-91AF-47D6-9C26-07B0EB8A38BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\throughput\msbuild\client\netcoreapp2.0\client.csproj", "{B3B7ADC3-E704-46F8-90FC-714D7C943DC6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\throughput\msbuild\client\netstandard2.0\client.csproj", "{B3B7ADC3-E704-46F8-90FC-714D7C943DC6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{14770D73-E664-4D99-A1E8-DF9827F8FEAB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\throughput\msbuild\server\netcoreapp2.0\server.csproj", "{4A9967F9-B29C-4D83-AC02-EF58E5CBD37D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\throughput\msbuild\server\netstandard2.0\server.csproj", "{4A9967F9-B29C-4D83-AC02-EF58E5CBD37D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "asyncInvocation", "asyncInvocation", "{A644BAB5-A1D6-4356-86F1-848A00D95326}"
 EndProject
@@ -139,11 +139,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "msbuild", "msbuild", "{6C5D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "client", "client", "{CBA20EE6-5E27-4C58-A2C6-8AE088953F8C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\asyncInvocation\msbuild\client\netcoreapp2.0\client.csproj", "{A5E46078-D018-4FE6-931C-12CC0AF3F10C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\asyncInvocation\msbuild\client\netstandard2.0\client.csproj", "{A5E46078-D018-4FE6-931C-12CC0AF3F10C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{E0812D00-2CFE-4ABA-8E00-1E71D115D508}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\asyncInvocation\msbuild\server\netcoreapp2.0\server.csproj", "{A2DC951D-6284-4816-95D8-2688242A1F26}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\asyncInvocation\msbuild\server\netstandard2.0\server.csproj", "{A2DC951D-6284-4816-95D8-2688242A1F26}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "multicast", "multicast", "{8E395C71-2941-4B4D-A1FC-8E4118678F9F}"
 EndProject
@@ -151,11 +151,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "msbuild", "msbuild", "{E5E2
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "client", "client", "{A30A5C98-E240-4316-AAD1-152FF3AD8B4B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\multicast\msbuild\client\netcoreapp2.0\client.csproj", "{FFE1A511-6F26-47A0-8A47-5F620516089D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\multicast\msbuild\client\netstandard2.0\client.csproj", "{FFE1A511-6F26-47A0-8A47-5F620516089D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{9D8CB438-FB52-458F-A124-294B834AA3A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\multicast\msbuild\server\netcoreapp2.0\server.csproj", "{110D96D3-98EC-4488-B95F-A58989813D93}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\multicast\msbuild\server\netstandard2.0\server.csproj", "{110D96D3-98EC-4488-B95F-A58989813D93}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "hello", "hello", "{206E13D9-34EE-48A1-80C7-825894065A78}"
 EndProject
@@ -163,11 +163,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "msbuild", "msbuild", "{2B9E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "client", "client", "{A8848F4A-C29A-49EB-AF4A-E6DEDC897E0F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\hello\msbuild\client\netcoreapp2.0\client.csproj", "{8D23919C-ECA8-498D-A53B-9AF5DC6DCD1C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\hello\msbuild\client\netstandard2.0\client.csproj", "{8D23919C-ECA8-498D-A53B-9AF5DC6DCD1C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{562F6544-1946-4AED-BA66-EE1D372532E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\hello\msbuild\server\netcoreapp2.0\server.csproj", "{FC895199-B7C3-4601-956B-B06536ED0007}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\hello\msbuild\server\netstandard2.0\server.csproj", "{FC895199-B7C3-4601-956B-B06536ED0007}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "properties", "properties", "{0628EB1E-3CE2-4F6B-B2BD-E0BEF89E3EB5}"
 EndProject
@@ -175,11 +175,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "msbuild", "msbuild", "{90CA
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "client", "client", "{D50D3390-B0A5-425B-9BE0-9A6F9B3797B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\properties\msbuild\client\netcoreapp2.0\client.csproj", "{157F2AA1-D767-42D7-97A1-91CE66686DDE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\properties\msbuild\client\netstandard2.0\client.csproj", "{157F2AA1-D767-42D7-97A1-91CE66686DDE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{F8D27A7F-F63B-4619-A16E-26D88A447236}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\properties\msbuild\server\netcoreapp2.0\server.csproj", "{16A5DD70-EA9A-4045-AE28-77B0758B724C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\properties\msbuild\server\netstandard2.0\server.csproj", "{16A5DD70-EA9A-4045-AE28-77B0758B724C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nested", "nested", "{AFAF9BC3-A6EA-4647-A15F-2188C98169ED}"
 EndProject
@@ -187,11 +187,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "msbuild", "msbuild", "{2927
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "client", "client", "{100233A2-A042-4A32-8E35-C5F918878E59}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\nested\msbuild\client\netcoreapp2.0\client.csproj", "{5EA99DDA-BF92-42F0-B4CE-C218D5CB91E4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\nested\msbuild\client\netstandard2.0\client.csproj", "{5EA99DDA-BF92-42F0-B4CE-C218D5CB91E4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{3D23684D-CCA6-4BB5-8DEB-56451B454496}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\nested\msbuild\server\netcoreapp2.0\server.csproj", "{5D7F78E8-DD66-4981-B0B2-8CFDEE405721}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\nested\msbuild\server\netstandard2.0\server.csproj", "{5D7F78E8-DD66-4981-B0B2-8CFDEE405721}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "serialize", "serialize", "{1B6D41F6-664F-4818-98B1-2BC4A5D96CBF}"
 EndProject
@@ -199,15 +199,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "msbuild", "msbuild", "{6EED
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "client", "client", "{9DD06052-FA8A-4A06-8365-8291251A3189}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\serialize\msbuild\client\netcoreapp2.0\client.csproj", "{5CEAE9AF-5FE2-4C6D-9BD9-983E8553101B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\serialize\msbuild\client\netstandard2.0\client.csproj", "{5CEAE9AF-5FE2-4C6D-9BD9-983E8553101B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "serializable", "serializable", "{44DD84D2-6493-462E-B51E-240248922C94}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "serializable", "Ice\serialize\msbuild\serializable\netcoreapp2.0\serializable.csproj", "{4CDEE97E-DD3E-46C0-AC48-563E46D35ECE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "serializable", "Ice\serialize\msbuild\serializable\netstandard2.0\serializable.csproj", "{4CDEE97E-DD3E-46C0-AC48-563E46D35ECE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{E9BD111D-9CF6-4B96-A98F-6588ADE59693}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\serialize\msbuild\server\netcoreapp2.0\server.csproj", "{3DE20F73-84F9-43A3-AF99-22AA52E3CE99}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\serialize\msbuild\server\netstandard2.0\server.csproj", "{3DE20F73-84F9-43A3-AF99-22AA52E3CE99}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "minimal", "minimal", "{F9D93EDF-7BCA-4EB3-A172-B6169B53BA2A}"
 EndProject
@@ -215,11 +215,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "msbuild", "msbuild", "{B134
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "client", "client", "{63D007DD-5F02-4CF8-86A3-5512D192F6B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\minimal\msbuild\client\netcoreapp2.0\client.csproj", "{4C16F406-29AD-473F-AF4E-444C1FB65681}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\minimal\msbuild\client\netstandard2.0\client.csproj", "{4C16F406-29AD-473F-AF4E-444C1FB65681}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{DC44B328-30C4-4205-96B8-43C56CC2CC3F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\minimal\msbuild\server\netcoreapp2.0\server.csproj", "{FACC78CF-0DA2-446A-AD9E-EF63EB782D12}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\minimal\msbuild\server\netstandard2.0\server.csproj", "{FACC78CF-0DA2-446A-AD9E-EF63EB782D12}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IceGrid", "IceGrid", "{A72DE903-B952-410A-8DB2-80B7FD1454A4}"
 EndProject
@@ -229,11 +229,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "msbuild", "msbuild", "{5F7D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "client", "client", "{C6568C1A-3F80-4EBA-8B98-885F33E940FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "IceGrid\icebox\msbuild\client\netcoreapp2.0\client.csproj", "{F09804BD-0941-45BE-A357-309E06031F54}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "IceGrid\icebox\msbuild\client\netstandard2.0\client.csproj", "{F09804BD-0941-45BE-A357-309E06031F54}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "helloservice", "helloservice", "{92DD01D4-9DA3-4ABF-9383-849B6D1354C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "helloservice", "IceGrid\icebox\msbuild\helloservice\netcoreapp2.0\helloservice.csproj", "{A4C6C14B-64DE-4C0C-A11C-7BBAD01D35BA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "helloservice", "IceGrid\icebox\msbuild\helloservice\netstandard2.0\helloservice.csproj", "{A4C6C14B-64DE-4C0C-A11C-7BBAD01D35BA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "simple", "simple", "{42A93FB9-586C-4F80-A007-65200F7EDAAD}"
 EndProject
@@ -241,11 +241,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "msbuild", "msbuild", "{F9FA
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "client", "client", "{0DC3A9D9-9FE6-4B50-AAEE-B882AF846EEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "IceGrid\simple\msbuild\client\netcoreapp2.0\client.csproj", "{A3EF7256-290E-4FBD-9E7E-B0CD530FAF23}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "IceGrid\simple\msbuild\client\netstandard2.0\client.csproj", "{A3EF7256-290E-4FBD-9E7E-B0CD530FAF23}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{113E3058-AC9F-400D-B106-C38136DB5DFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "IceGrid\simple\msbuild\server\netcoreapp2.0\server.csproj", "{B279E5CC-7995-464C-B7DB-C0D7623AF929}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "IceGrid\simple\msbuild\server\netstandard2.0\server.csproj", "{B279E5CC-7995-464C-B7DB-C0D7623AF929}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IceDiscovery", "IceDiscovery", "{7BC25A46-053C-4463-AC67-0DEDA2CB0E17}"
 EndProject
@@ -255,11 +255,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "msbuild", "msbuild", "{D5C5
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "client", "client", "{2DCD0258-B70A-4E33-97E8-FDD7EB7E0C41}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "IceDiscovery\replication\msbuild\client\netcoreapp2.0\client.csproj", "{388DF88F-D97C-4BE2-BC93-BAA8DACBB181}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "IceDiscovery\replication\msbuild\client\netstandard2.0\client.csproj", "{388DF88F-D97C-4BE2-BC93-BAA8DACBB181}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{27919B18-D687-4119-B7D0-72ACCEE4D914}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "IceDiscovery\replication\msbuild\server\netcoreapp2.0\server.csproj", "{C468CDAC-F7C7-4A1A-9001-EB5560718F7F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "IceDiscovery\replication\msbuild\server\netstandard2.0\server.csproj", "{C468CDAC-F7C7-4A1A-9001-EB5560718F7F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "hello", "hello", "{C1B714EA-18E9-4545-B4E1-005CD3F05D50}"
 EndProject
@@ -267,11 +267,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "msbuild", "msbuild", "{B18D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "client", "client", "{663A635E-EF29-4491-8783-E8325BD6B20A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "IceDiscovery\hello\msbuild\client\netcoreapp2.0\client.csproj", "{63E4427F-8199-49D2-AA70-2F44BD35D86D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "IceDiscovery\hello\msbuild\client\netstandard2.0\client.csproj", "{63E4427F-8199-49D2-AA70-2F44BD35D86D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{C530C47E-2484-49B4-87B5-A380048E1DAF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "IceDiscovery\hello\msbuild\server\netcoreapp2.0\server.csproj", "{1D038605-BBE1-4456-B733-51D97102F557}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "IceDiscovery\hello\msbuild\server\netstandard2.0\server.csproj", "{1D038605-BBE1-4456-B733-51D97102F557}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Glacier2", "Glacier2", "{B7302DAE-5964-4118-923C-5715F43EAB71}"
 EndProject
@@ -281,11 +281,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "msbuild", "msbuild", "{5E25
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "client", "client", "{332C98CA-3183-4866-82F0-06E047728B3B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Glacier2\callback\msbuild\client\netcoreapp2.0\client.csproj", "{18FD0EC4-67BA-4A6C-B051-9624C1538D2B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Glacier2\callback\msbuild\client\netstandard2.0\client.csproj", "{18FD0EC4-67BA-4A6C-B051-9624C1538D2B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{5E9E7776-CA55-4241-A601-679946563C75}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Glacier2\callback\msbuild\server\netcoreapp2.0\server.csproj", "{36CC3523-B625-4457-AAD4-012973D86801}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Glacier2\callback\msbuild\server\netstandard2.0\server.csproj", "{36CC3523-B625-4457-AAD4-012973D86801}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IceBox", "IceBox", "{567D1223-1C76-4BB5-B11F-A9C548BA30F6}"
 EndProject
@@ -295,11 +295,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "msbuild", "msbuild", "{A47F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "client", "client", "{B99184E5-A35D-40A4-8247-BC131CACAE56}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "IceBox\hello\msbuild\client\netcoreapp2.0\client.csproj", "{2D3C765D-73D7-4245-8E61-947EA6710709}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "IceBox\hello\msbuild\client\netstandard2.0\client.csproj", "{2D3C765D-73D7-4245-8E61-947EA6710709}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "helloservice", "helloservice", "{DF3850F6-16DA-47B1-8E8F-CF65EEFAB7C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "helloservice", "IceBox\hello\msbuild\helloservice\netcoreapp2.0\helloservice.csproj", "{381DFEBE-C518-4E90-A1EA-5724B8E0D434}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "helloservice", "IceBox\hello\msbuild\helloservice\netstandard2.0\helloservice.csproj", "{381DFEBE-C518-4E90-A1EA-5724B8E0D434}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IceStorm", "IceStorm", "{D6302ADA-ABAC-499C-BFC0-870D27E1F61E}"
 EndProject
@@ -309,11 +309,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "msbuild", "msbuild", "{2596
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "publisher", "publisher", "{00010BAA-3046-4E80-A4AA-EDE76D46B984}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "publisher", "IceStorm\clock\msbuild\publisher\netcoreapp2.0\publisher.csproj", "{756E97DF-6320-47C1-935A-6EA13135D9E9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "publisher", "IceStorm\clock\msbuild\publisher\netstandard2.0\publisher.csproj", "{756E97DF-6320-47C1-935A-6EA13135D9E9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "subscriber", "subscriber", "{F1035F89-FB43-4366-AE75-3D9B7F58BCF7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "subscriber", "IceStorm\clock\msbuild\subscriber\netcoreapp2.0\subscriber.csproj", "{8F7684CA-5504-48EE-AFF5-A551715FBE21}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "subscriber", "IceStorm\clock\msbuild\subscriber\netstandard2.0\subscriber.csproj", "{8F7684CA-5504-48EE-AFF5-A551715FBE21}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Manual", "Manual", "{D2B5C29A-45FD-4E3A-BF48-95906556396B}"
 EndProject
@@ -323,11 +323,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "msbuild", "msbuild", "{90B8
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "client", "client", "{AF7AF400-C4CD-4248-AE4F-5DD659E3C224}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Manual\simpleFilesystem\msbuild\client\netcoreapp2.0\client.csproj", "{975755F4-C572-4744-BE0B-A1D49868AEE7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Manual\simpleFilesystem\msbuild\client\netstandard2.0\client.csproj", "{975755F4-C572-4744-BE0B-A1D49868AEE7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{4238E042-51C3-4DBE-8AB2-0752A691F524}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Manual\simpleFilesystem\msbuild\server\netcoreapp2.0\server.csproj", "{B3278F2F-42BE-400D-9AC0-48DE05D43375}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Manual\simpleFilesystem\msbuild\server\netstandard2.0\server.csproj", "{B3278F2F-42BE-400D-9AC0-48DE05D43375}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lifecycle", "lifecycle", "{F5C12334-B8CE-4FC6-B13A-5BF7CD958D80}"
 EndProject
@@ -335,11 +335,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "msbuild", "msbuild", "{A100
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "client", "client", "{D32DD9FB-98E5-41A5-AC98-213B2308C0AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Manual\lifecycle\msbuild\client\netcoreapp2.0\client.csproj", "{036F873C-1F01-4D3B-99E2-E4C68B46A610}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Manual\lifecycle\msbuild\client\netstandard2.0\client.csproj", "{036F873C-1F01-4D3B-99E2-E4C68B46A610}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{B5E537E6-0578-4A1A-BCD4-C4EDA5D2C7E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Manual\lifecycle\msbuild\server\netcoreapp2.0\server.csproj", "{6E6F0AD3-B5A4-4847-B223-90B4F6BEEB4F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Manual\lifecycle\msbuild\server\netstandard2.0\server.csproj", "{6E6F0AD3-B5A4-4847-B223-90B4F6BEEB4F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "printer", "printer", "{8CBA26EF-8700-41C0-BAE8-6D918CAC284C}"
 EndProject
@@ -347,11 +347,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "msbuild", "msbuild", "{0716
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "client", "client", "{7C847E56-70A6-4F51-81F7-D51A855149E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Manual\printer\msbuild\client\netcoreapp2.0\client.csproj", "{3E32AAD8-8D84-473C-8491-50D7A5DC3EAD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Manual\printer\msbuild\client\netstandard2.0\client.csproj", "{3E32AAD8-8D84-473C-8491-50D7A5DC3EAD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{CB9256ED-AB9F-42BB-AECD-1F0A105B720F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Manual\printer\msbuild\server\netcoreapp2.0\server.csproj", "{CCDC11AD-914C-4FA8-8EC0-8822B1834F51}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Manual\printer\msbuild\server\netstandard2.0\server.csproj", "{CCDC11AD-914C-4FA8-8EC0-8822B1834F51}"
 EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
