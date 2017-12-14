@@ -21,7 +21,7 @@
     <SignAssembly>true</SignAssembly>
     <IceHome Condition="'$(ICE_HOME)' != ''">$(ICE_HOME)</IceHome>
     <SliceCompilerOutputDir>generated</SliceCompilerOutputDir>
-    <DefineConstants Condition="'$(TargetFrameworkVersion)' == 'v4.5.1'">NET45</DefineConstants>
+    <IceDemosTargetFramework Condition="'$(IceDemosTargetFramework)' == ''">netcoreapp2.0</IceDemosTargetFramework>
   </PropertyGroup>
 
   <Choose>
