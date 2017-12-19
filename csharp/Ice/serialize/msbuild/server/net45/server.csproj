@@ -110,7 +110,7 @@
         <AppDesigner Include="Properties\"/>
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\serializable\serializable.csproj">
+        <ProjectReference Include="..\..\serializable\net45\serializable.csproj">
             <Project>{8d371651-bfa4-43c9-b143-77fabcd2b310}</Project>
             <Name>serializable</Name>
         </ProjectReference>
