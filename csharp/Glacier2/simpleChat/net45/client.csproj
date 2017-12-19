@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <Import Condition="Exists('..\..\..\..\..\packages\zeroc.ice.net.3.7.0\build\zeroc.ice.net.props') and '$(ICE_HOME)' == ''" Project="..\..\..\..\..\packages\zeroc.ice.net.3.7.0\build\zeroc.ice.net.props"/>
+    <Import Condition="Exists('..\..\..\packages\zeroc.ice.net.3.7.0\build\zeroc.ice.net.props') and '$(ICE_HOME)' == ''" Project="..\..\..\packages\zeroc.ice.net.3.7.0\build\zeroc.ice.net.props"/>
     <PropertyGroup Label="Globals">
         <NuGetPackageImportStamp/>
         <IceBuilderInstallDir>$([MSBuild]::GetRegistryValue('HKEY_CURRENT_USER\SOFTWARE\ZeroC\IceBuilder', 'InstallDir.$(VisualStudioVersion)'))</IceBuilderInstallDir>
@@ -30,7 +30,7 @@
         <DebugSymbols>true</DebugSymbols>
         <DebugType>full</DebugType>
         <Optimize>false</Optimize>
-        <OutputPath>..\..</OutputPath>
+        <OutputPath>.</OutputPath>
         <DefineConstants>DEBUG;TRACE</DefineConstants>
         <ErrorReport>prompt</ErrorReport>
         <Prefer32Bit>false</Prefer32Bit>
@@ -39,7 +39,7 @@
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
         <DebugType>pdbonly</DebugType>
         <Optimize>true</Optimize>
-        <OutputPath>..\..</OutputPath>
+        <OutputPath>.</OutputPath>
         <DefineConstants>TRACE</DefineConstants>
         <ErrorReport>prompt</ErrorReport>
         <Prefer32Bit>false</Prefer32Bit>
@@ -88,50 +88,50 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
-        <ApplicationDefinition Include="..\..\App.xaml">
+        <ApplicationDefinition Include="App.xaml">
             <Link>App.xaml</Link>
             <Generator>MSBuild:Compile</Generator>
             <SubType>Designer</SubType>
             <Generator>MSBuild:Compile</Generator>
             <SubType>Designer</SubType>
         </ApplicationDefinition>
-        <Page Include="..\..\CancelDialog.xaml">
+        <Page Include="CancelDialog.xaml">
             <Link>CancelDialog.xaml</Link>
             <SubType>Designer</SubType>
             <Generator>MSBuild:Compile</Generator>
             <Generator>MSBuild:Compile</Generator>
             <SubType>Designer</SubType>
         </Page>
-        <Page Include="..\..\ChatWindow.xaml">
+        <Page Include="ChatWindow.xaml">
             <Link>ChatWindow.xaml</Link>
             <Generator>MSBuild:Compile</Generator>
             <SubType>Designer</SubType>
             <Generator>MSBuild:Compile</Generator>
             <SubType>Designer</SubType>
         </Page>
-        <Page Include="..\..\LoginDialog.xaml">
+        <Page Include="LoginDialog.xaml">
             <Link>LoginDialog.xaml</Link>
             <SubType>Designer</SubType>
             <Generator>MSBuild:Compile</Generator>
             <Generator>MSBuild:Compile</Generator>
             <SubType>Designer</SubType>
         </Page>
-        <Compile Include="..\..\..\App.xaml.cs">
+        <Compile Include="App.xaml.cs">
             <Link>App.xaml.cs</Link>
             <DependentUpon>App.xaml</DependentUpon>
             <SubType>Code</SubType>
         </Compile>
-        <Compile Include="..\..\..\ChatWindow.xaml.cs">
+        <Compile Include="ChatWindow.xaml.cs">
             <DependentUpon>ChatWindow.xaml</DependentUpon>
             <SubType>Code</SubType>
         </Compile>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="..\..\..\CancelDialog.xaml.cs">
+        <Compile Include="CancelDialog.xaml.cs">
             <DependentUpon>CancelDialog.xaml</DependentUpon>
         </Compile>
-        <Compile Include="..\..\..\ChatCommands.cs"/>
-        <Compile Include="..\..\..\LoginDialog.xaml.cs">
+        <Compile Include="ChatCommands.cs"/>
+        <Compile Include="LoginDialog.xaml.cs">
             <DependentUpon>LoginDialog.xaml</DependentUpon>
         </Compile>
         <Compile Include="generated\Chat.cs"/>
@@ -149,13 +149,13 @@
             <Generator>ResXFileCodeGenerator</Generator>
             <LastGenOutput>Resources.Designer.cs</LastGenOutput>
         </EmbeddedResource>
-        <None Include="..\..\..\Chat.ice">
+        <None Include="Chat.ice">
             <Link>Chat.ice</Link>
         </None>
-        <None Include="..\..\..\config.client">
+        <None Include="config.client">
             <Link>config.client</Link>
         </None>
-        <None Include="..\..\..\README.md">
+        <None Include="README.md">
             <Link>README.md</Link>
         </None>
         <None Include="Settings.settings">
@@ -184,6 +184,6 @@
         <PropertyGroup>
             <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
         </PropertyGroup>
-        <Error Condition="!Exists('..\..\..\..\..\packages\zeroc.ice.net.3.7.0\build\zeroc.ice.net.props') and '$(ICE_HOME)' == ''" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\packages\zeroc.ice.net.3.7.0\build\zeroc.ice.net.props'))"/>
+        <Error Condition="!Exists('..\..\..\packages\zeroc.ice.net.3.7.0\build\zeroc.ice.net.props') and '$(ICE_HOME)' == ''" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\zeroc.ice.net.3.7.0\build\zeroc.ice.net.props'))"/>
     </Target>
 </Project>
