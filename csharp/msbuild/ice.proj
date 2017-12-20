@@ -15,6 +15,7 @@
     </Target>
 
     <Target Name="NuGetRestore" DependsOnTargets="GetNuGet">
+        <Exec Command="$(NuGetExe) restore &quot;$(MSBuildThisFileDirectory)..\..\cpp98\C++98 demos.sln&quot;"/>
         <Exec Command="$(NuGetExe) restore &quot;$(MSBuildThisFileDirectory)..\C# NET Framework demos.sln&quot;"/>
         <MSbuild Projects="$(MSBuildThisFileDirectory)..\C# NET Core demos.sln"
                  Targets="Restore"
