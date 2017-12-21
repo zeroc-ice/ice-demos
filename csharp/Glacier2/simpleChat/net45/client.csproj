@@ -89,35 +89,30 @@
     </ItemGroup>
     <ItemGroup>
         <ApplicationDefinition Include="App.xaml">
-            <Link>App.xaml</Link>
             <Generator>MSBuild:Compile</Generator>
             <SubType>Designer</SubType>
             <Generator>MSBuild:Compile</Generator>
             <SubType>Designer</SubType>
         </ApplicationDefinition>
         <Page Include="CancelDialog.xaml">
-            <Link>CancelDialog.xaml</Link>
             <SubType>Designer</SubType>
             <Generator>MSBuild:Compile</Generator>
             <Generator>MSBuild:Compile</Generator>
             <SubType>Designer</SubType>
         </Page>
         <Page Include="ChatWindow.xaml">
-            <Link>ChatWindow.xaml</Link>
             <Generator>MSBuild:Compile</Generator>
             <SubType>Designer</SubType>
             <Generator>MSBuild:Compile</Generator>
             <SubType>Designer</SubType>
         </Page>
         <Page Include="LoginDialog.xaml">
-            <Link>LoginDialog.xaml</Link>
             <SubType>Designer</SubType>
             <Generator>MSBuild:Compile</Generator>
             <Generator>MSBuild:Compile</Generator>
             <SubType>Designer</SubType>
         </Page>
         <Compile Include="App.xaml.cs">
-            <Link>App.xaml.cs</Link>
             <DependentUpon>App.xaml</DependentUpon>
             <SubType>Code</SubType>
         </Compile>
@@ -149,15 +144,9 @@
             <Generator>ResXFileCodeGenerator</Generator>
             <LastGenOutput>Resources.Designer.cs</LastGenOutput>
         </EmbeddedResource>
-        <None Include="Chat.ice">
-            <Link>Chat.ice</Link>
-        </None>
-        <None Include="config.client">
-            <Link>config.client</Link>
-        </None>
-        <None Include="README.md">
-            <Link>README.md</Link>
-        </None>
+        <None Include="Chat.ice"/>
+        <None Include="config.client"/>
+        <None Include="README.md"/>
         <None Include="Settings.settings">
             <Generator>SettingsSingleFileGenerator</Generator>
             <LastGenOutput>Settings.Designer.cs</LastGenOutput>

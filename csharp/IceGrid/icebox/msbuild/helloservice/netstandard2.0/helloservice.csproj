@@ -24,7 +24,7 @@
         <Copy DestinationFolder="$(OutputPath)" SourceFiles="@(IceBoxNet)"/>
     </Target>
     <Target AfterTargets="Clean" Name="CleanIceBoxNet">
-        <Delete Files="@(IceBoxNet-&gt;$(OutputPath)%(Identity)"/>
+        <Delete Files="@(IceBoxNet->'$(OutputPath)%(Identity)')"/>
     </Target>
     <Choose>
         <!--Using Ice built from source-->
