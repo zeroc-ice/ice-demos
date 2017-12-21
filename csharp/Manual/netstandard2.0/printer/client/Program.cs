@@ -6,9 +6,8 @@
 
 using Demo;
 using System;
-using System.Reflection;
 
-public class Client
+public class Program
 {
     public static int Main(string[] args)
     {

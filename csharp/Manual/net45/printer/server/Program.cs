@@ -5,7 +5,6 @@
 // **********************************************************************
 
 using System;
-using System.Reflection;
 
 public class PrinterI : Demo.PrinterDisp_
 {
@@ -15,7 +14,7 @@ public class PrinterI : Demo.PrinterDisp_
     }
 }
 
-public class Server
+public class Program
 {
     public static int Main(string[] args)
     {

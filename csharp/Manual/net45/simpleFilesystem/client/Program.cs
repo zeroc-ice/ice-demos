@@ -6,9 +6,8 @@
 
 using Filesystem;
 using System;
-using System.Reflection;
 
-public class Client
+public class Program
 {
     // Recursively print the contents of directory "dir" in tree fashion.
     // For files, show the contents of each file. The "depth"

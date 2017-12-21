@@ -6,9 +6,8 @@
 
 using FilesystemI;
 using System;
-using System.Reflection;
 
-public class Server
+public class Program
 {
     class App : Ice.Application
     {
