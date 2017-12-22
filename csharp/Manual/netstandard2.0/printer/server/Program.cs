@@ -6,34 +6,37 @@
 
 using System;
 
-public class PrinterI : Demo.PrinterDisp_
+namespace Server
 {
-    public override void printString(string s, Ice.Current current)
+    public class PrinterI : Demo.PrinterDisp_
     {
-        Console.WriteLine(s);
+        public override void printString(string s, Ice.Current current)
+        {
+            Console.WriteLine(s);
+        }
     }
-}
 
-public class Program
-{
-    public static int Main(string[] args)
+    public class Program
     {
-        try
+        public static int Main(string[] args)
         {
-            using(Ice.Communicator ic = Ice.Util.initialize(ref args))
+            try
             {
-                var adapter =
-                    ic.createObjectAdapterWithEndpoints("SimplePrinterAdapter", "default -h localhost -p 10000");
-                adapter.add(new PrinterI(), Ice.Util.stringToIdentity("SimplePrinter"));
-                adapter.activate();
-                ic.waitForShutdown();
+                using(Ice.Communicator ic = Ice.Util.initialize(ref args))
+                {
+                    var adapter =
+                        ic.createObjectAdapterWithEndpoints("SimplePrinterAdapter", "default -h localhost -p 10000");
+                    adapter.add(new PrinterI(), Ice.Util.stringToIdentity("SimplePrinter"));
+                    adapter.activate();
+                    ic.waitForShutdown();
+                }
             }
+            catch(Exception e)
+            {
+                Console.Error.WriteLine(e);
+                return 1;
+            }
+            return 0;
         }
-        catch(Exception e)
-        {
-            Console.Error.WriteLine(e);
-            return 1;
-        }
-        return 0;
     }
 }
