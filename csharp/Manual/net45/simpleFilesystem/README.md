@@ -4,13 +4,13 @@ end of the client and server C# mapping chapters.
 To run the demo, first start the server:
 
 ```
-cd server
-server
+cd Server
+Server
 ```
 
 In a separate window, start the client:
 
 ```
-cd client
-client
+cd Client
+Client
 ```

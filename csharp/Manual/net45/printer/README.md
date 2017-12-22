@@ -3,13 +3,13 @@ This demo implements the printer example in the Ice Manual.
 To run the demo, first start the server:
 
 ```
-cd server
-server
+cd Server
+Server
 ```
 
 In a separate window, start the client:
 
 ```
-cd client
-client
+cd Client
+Client
 ```
