@@ -269,17 +269,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Chat", "Chat", "{BD048975-1
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatDemoGUI", "Chat\net45\ChatDemoGUI.csproj", "{F1A64A0A-7666-4E7E-82C5-DC34BA15D59A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Manual\net45\lifecycle\client\client.csproj", "{E6B38408-D998-40CE-A018-C53529B270D5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Manual\net45\lifecycle\Client\Client.csproj", "{E6B38408-D998-40CE-A018-C53529B270D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Manual\net45\lifecycle\server\server.csproj", "{710B7320-A714-4560-BCB0-A50FCA6ECAC5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Manual\net45\lifecycle\Server\Server.csproj", "{710B7320-A714-4560-BCB0-A50FCA6ECAC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Manual\net45\printer\client\client.csproj", "{07861488-87F0-4EA6-8774-08E39ABDD468}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Manual\net45\printer\Client\Client.csproj", "{07861488-87F0-4EA6-8774-08E39ABDD468}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Manual\net45\printer\server\server.csproj", "{2374126D-F982-4E2F-B9F3-278F8B38A310}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Manual\net45\printer\Server\Server.csproj", "{2374126D-F982-4E2F-B9F3-278F8B38A310}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Manual\net45\simpleFilesystem\client\client.csproj", "{2E01BB07-5E3A-4563-AE3B-C357672BEEF7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Manual\net45\simpleFilesystem\Client\Client.csproj", "{2E01BB07-5E3A-4563-AE3B-C357672BEEF7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Manual\net45\simpleFilesystem\server\server.csproj", "{ECF4A31E-8545-4A9D-ADC2-2020E53C9B46}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Manual\net45\simpleFilesystem\Server\Server.csproj", "{ECF4A31E-8545-4A9D-ADC2-2020E53C9B46}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

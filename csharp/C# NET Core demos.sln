@@ -321,15 +321,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "netstandard2.0", "netstanda
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "simpleFilesystem", "simpleFilesystem", "{BE7CBC96-E4D3-4ADD-B0DA-9A7275713622}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Manual\netstandard2.0\simpleFilesystem\client\client.csproj", "{3F12DD1A-B6B1-4F1B-983B-91D244987C3A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Manual\netstandard2.0\simpleFilesystem\Client\Client.csproj", "{3F12DD1A-B6B1-4F1B-983B-91D244987C3A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Manual\netstandard2.0\simpleFilesystem\server\server.csproj", "{5E4B8EC8-8845-4703-9FFC-B319360D2162}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Manual\netstandard2.0\simpleFilesystem\Server\Server.csproj", "{5E4B8EC8-8845-4703-9FFC-B319360D2162}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "printer", "printer", "{9C308ABD-BCBB-4593-B7FB-9CE0F66082E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Manual\netstandard2.0\printer\client\client.csproj", "{3E965DC0-9F03-471E-A7D6-2F7F025B2E40}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Manual\netstandard2.0\printer\Client\Client.csproj", "{3E965DC0-9F03-471E-A7D6-2F7F025B2E40}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Manual\netstandard2.0\printer\server\server.csproj", "{500D514E-14E8-4B29-909E-AD5F774DFC3B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Manual\netstandard2.0\printer\Server\Server.csproj", "{500D514E-14E8-4B29-909E-AD5F774DFC3B}"
 EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
