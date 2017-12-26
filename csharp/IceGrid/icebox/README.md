@@ -14,7 +14,7 @@ Setup
 
 Add `iceboxnet`'s folder to your PATH, with a command similar to:
 ```
-set PATH=%USERPROFILE%\ice-demos\csharp\packages\zeroc.ice.net.3.7.0\tools;%PATH%
+set PATH=%USERPROFILE%\ice-demos\csharp\packages\zeroc.ice.net.3.7.1\tools;%PATH%
 ```
 
 Start the IceGrid registry and node:

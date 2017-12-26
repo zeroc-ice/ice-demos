@@ -51,6 +51,6 @@ clean {
 }
 
 dependencies {
-    compile 'com.zeroc:ice-compat:3.7.0'
-    compile 'com.zeroc:glacier2-compat:3.7.0'
+    compile 'com.zeroc:ice-compat:3.7.1'
+    compile 'com.zeroc:glacier2-compat:3.7.1'
 }

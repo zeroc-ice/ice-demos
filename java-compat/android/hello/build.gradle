@@ -50,6 +50,6 @@ clean {
 }
 
 dependencies {
-    compile 'com.zeroc:ice-compat:3.7.0'
-    compile 'com.zeroc:icediscovery-compat:3.7.0'
+    compile 'com.zeroc:ice-compat:3.7.1'
+    compile 'com.zeroc:icediscovery-compat:3.7.1'
 }

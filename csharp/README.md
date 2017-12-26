@@ -77,4 +77,4 @@ refer to [Using the Windows Binary Distributions][4] for additional information.
 [1]: https://doc.zeroc.com/display/Ice37/Ice+Manual
 [2]: https://zeroc.com/chat/index.html
 [3]: https://github.com/zeroc-ice/ice-builder-visualstudio
-[4]: https://doc.zeroc.com/display/Rel/Using+the+Windows+Binary+Distributions+for+Ice+3.7.0
+[4]: https://doc.zeroc.com/display/Rel/Using+the+Windows+Binary+Distributions+for+Ice+3.7.1
