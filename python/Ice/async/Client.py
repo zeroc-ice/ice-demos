@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import sys, os, traceback, threading, Ice
+import sys, traceback, Ice
 
 Ice.loadSlice('Hello.ice')
 import Demo
@@ -23,7 +23,7 @@ class Callback:
 def run(communicator):
     hello = Demo.HelloPrx.checkedCast(communicator.propertyToProxy('Hello.Proxy'))
     if not hello:
-        print(args[0] + ": invalid proxy")
+        print(sys.argv[0] + ": invalid proxy")
         return 1
 
     menu()

@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import os, sys, Ice
+import sys, Ice
 
 slice_dir = Ice.getSliceDir()
 if not slice_dir:

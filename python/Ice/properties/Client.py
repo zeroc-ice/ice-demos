@@ -5,7 +5,8 @@
 #
 # **********************************************************************
 
-import sys, traceback, Ice
+from __future__ import print_function
+import sys, Ice
 
 slice_dir = Ice.getSliceDir()
 if not slice_dir:
@@ -96,9 +97,9 @@ x: exit
 
 def show(admin):
     props = admin.getPropertiesForPrefix("Demo")
-    print "Server's current settings:"
+    print("Server's current settings:")
     for k,v in props.items():
-        print "  " + k + "=" + v
+        print("  " + k + "=" + v)
 
 status = 0
 with Ice.initialize(sys.argv, "config.client") as communicator:

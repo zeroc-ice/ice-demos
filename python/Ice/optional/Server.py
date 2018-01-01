@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import sys, traceback, Ice, threading
+import sys, Ice
 
 Ice.loadSlice("Contact.ice")
 import Demo

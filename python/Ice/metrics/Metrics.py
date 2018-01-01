@@ -6,7 +6,7 @@
 #
 # **********************************************************************
 
-import sys, traceback, Ice, IceMX
+import sys, Ice, IceMX
 
 #
 # Formatting information for metrics maps. The tuple defines the

@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import sys, traceback, Ice, threading
+import sys, Ice, threading
 
 slice_dir = Ice.getSliceDir()
 if not slice_dir:
