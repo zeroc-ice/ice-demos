@@ -33,7 +33,7 @@ public:
         if(argc > 1)
         {
             cerr << appName() << ": too many arguments" << endl;
-            return EXIT_FAILURE;
+            return 1;
         }
 
         auto adapter = communicator()->createObjectAdapter("ChatServer");
@@ -46,7 +46,7 @@ public:
         communicator()->waitForShutdown();
         csm->destroy();
 
-        return EXIT_SUCCESS;
+        return 0;
     }
 };
 

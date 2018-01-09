@@ -65,10 +65,10 @@ ChatServer::start(int, char*[], int& status)
     }
     catch(const Ice::LocalException&)
     {
-        status = EXIT_FAILURE;
+        status = 1;
         throw;
     }
-    status = EXIT_SUCCESS;
+    status = 0;
     return true;
 }
 

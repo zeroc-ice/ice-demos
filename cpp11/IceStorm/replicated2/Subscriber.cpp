@@ -93,7 +93,7 @@ Subscriber::run(int argc, char* argv[])
             if(i >= argc)
             {
                 usage(argv[0]);
-                return EXIT_FAILURE;
+                return 1;
             }
             id = argv[i];
         }
@@ -103,14 +103,14 @@ Subscriber::run(int argc, char* argv[])
             if(i >= argc)
             {
                 usage(argv[0]);
-                return EXIT_FAILURE;
+                return 1;
             }
             retryCount = argv[i];
         }
         else if(optionString.substr(0, 2) == "--")
         {
             usage(argv[0]);
-            return EXIT_FAILURE;
+            return 1;
         }
         else
         {
@@ -121,14 +121,14 @@ Subscriber::run(int argc, char* argv[])
         if(oldoption != option && oldoption != Option::None)
         {
             usage(argv[0]);
-            return EXIT_FAILURE;
+            return 1;
         }
     }
 
     if(i != argc)
     {
         usage(argv[0]);
-        return EXIT_FAILURE;
+        return 1;
     }
 
     if(!retryCount.empty())
@@ -140,14 +140,14 @@ Subscriber::run(int argc, char* argv[])
         else if(option != Option::Twoway && option != Option::Ordered)
         {
             cerr << argv[0] << ": retryCount requires a twoway proxy" << endl;
-            return EXIT_FAILURE;
+            return 1;
         }
     }
 
     if(batch && (option == Option::Twoway || option == Option::Ordered))
     {
         cerr << argv[0] << ": batch can only be set with oneway or datagram" << endl;
-        return EXIT_FAILURE;
+        return 1;
     }
 
     auto manager = Ice::checkedCast<IceStorm::TopicManagerPrx>(
@@ -155,7 +155,7 @@ Subscriber::run(int argc, char* argv[])
     if(!manager)
     {
         cerr << appName() << ": invalid proxy" << endl;
-        return EXIT_FAILURE;
+        return 1;
     }
 
     shared_ptr<IceStorm::TopicPrx> topic;
@@ -172,7 +172,7 @@ Subscriber::run(int argc, char* argv[])
         catch(const IceStorm::TopicExists&)
         {
             cerr << appName() << ": temporary failure. try again." << endl;
-            return EXIT_FAILURE;
+            return 1;
         }
     }
 
@@ -259,5 +259,5 @@ Subscriber::run(int argc, char* argv[])
 
     topic->unsubscribe(subscriber);
 
-    return EXIT_SUCCESS;
+    return 0;
 }

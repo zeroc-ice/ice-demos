@@ -29,12 +29,12 @@ HelloServer::run(int argc, char*[])
     if(argc > 1)
     {
         cerr << appName() << ": too many arguments" << endl;
-        return EXIT_FAILURE;
+        return 1;
     }
 
     auto adapter = communicator()->createObjectAdapter("Hello");
     adapter->add(make_shared<HelloI>(), Ice::stringToIdentity("hello"));
     adapter->activate();
     communicator()->waitForShutdown();
-    return EXIT_SUCCESS;
+    return 0;
 }

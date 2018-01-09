@@ -34,14 +34,14 @@ LatencyClient::run(int argc, char* argv[])
     if(argc > 1)
     {
         cerr << appName() << ": too many arguments" << endl;
-        return EXIT_FAILURE;
+        return 1;
     }
 
     auto ping =  Ice::checkedCast<PingPrx>(communicator()->propertyToProxy("Ping.Proxy"));
     if(!ping)
     {
         cerr << argv[0] << ": invalid proxy" << endl;
-        return EXIT_FAILURE;
+        return 1;
     }
 
     // Initial ping to setup the connection.
@@ -60,5 +60,5 @@ LatencyClient::run(int argc, char* argv[])
     cout << "time for " << repetitions << " pings: " << duration.count() << "ms" << endl;
     cout << "time per ping: " << duration.count() / repetitions << "ms" << endl;
 
-    return EXIT_SUCCESS;
+    return 0;
 }

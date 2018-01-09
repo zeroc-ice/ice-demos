@@ -90,16 +90,16 @@ HelloClient::run(int, char* argv[])
     if(!base)
     {
         cerr << argv[0] << ": no replies" << endl;
-        return EXIT_FAILURE;
+        return 1;
     }
     HelloPrx hello = HelloPrx::checkedCast(base);
     if(!hello)
     {
         cerr << argv[0] << ": invalid reply" << endl;
-        return EXIT_FAILURE;
+        return 1;
     }
 
     hello->sayHello();
 
-    return EXIT_SUCCESS;
+    return 0;
 }

@@ -42,14 +42,14 @@ ContactClient::run(int argc, char* argv[])
     if(argc > 1)
     {
         cerr << appName() << ": too many arguments" << endl;
-        return EXIT_FAILURE;
+        return 1;
     }
 
     auto contactdb = Ice::checkedCast<ContactDBPrx>(communicator()->propertyToProxy("ContactDB.Proxy"));
     if(!contactdb)
     {
         cerr << argv[0] << ": invalid proxy" << endl;
-        return EXIT_FAILURE;
+        return 1;
     }
 
     //
@@ -247,5 +247,5 @@ ContactClient::run(int argc, char* argv[])
 
     contactdb->shutdown();
 
-    return EXIT_SUCCESS;
+    return 0;
 }

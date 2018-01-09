@@ -85,5 +85,5 @@ HelloServer::run(int, char*[])
     adapter->activate();
 
     communicator()->waitForShutdown();
-    return EXIT_SUCCESS;
+    return 0;
 }

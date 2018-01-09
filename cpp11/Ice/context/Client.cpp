@@ -19,7 +19,7 @@ main(int argc, char* argv[])
     Ice::registerIceSSL();
 #endif
 
-    int status = EXIT_SUCCESS;
+    int status = 0;
 
     try
     {
@@ -35,7 +35,7 @@ main(int argc, char* argv[])
         if(argc > 1)
         {
             cerr << argv[0] << ": too many arguments" << endl;
-            status = EXIT_FAILURE;
+            status = 1;
         }
         else
         {
@@ -45,7 +45,7 @@ main(int argc, char* argv[])
     catch(const std::exception& ex)
     {
         cerr << argv[0] << ": " << ex.what() << endl;
-        status = EXIT_FAILURE;
+        status = 1;
     }
 
     return status;
@@ -59,7 +59,7 @@ int run(const shared_ptr<Ice::Communicator>& communicator)
     if(!proxy)
     {
         cerr << "invalid proxy" << endl;
-        return EXIT_FAILURE;
+        return 1;
     }
 
     menu();
@@ -122,7 +122,7 @@ int run(const shared_ptr<Ice::Communicator>& communicator)
     }
     while(cin.good() && c != 'x');
 
-    return EXIT_SUCCESS;
+    return 0;
 }
 
 void

@@ -37,14 +37,14 @@ InterleavedClient::run(int argc, char* argv[])
     if(argc > 1)
     {
         cerr << appName() << ": too many arguments" << endl;
-        return EXIT_FAILURE;
+        return 1;
     }
 
     auto throughput = Ice::checkedCast<ThroughputPrx>(communicator()->propertyToProxy("Throughput.Proxy"));
     if(!throughput)
     {
         cerr << argv[0] << ": invalid proxy" << endl;
-        return EXIT_FAILURE;
+        return 1;
     }
 
     ByteSeq byteSeq(ByteSeqSize);
@@ -111,5 +111,5 @@ InterleavedClient::run(int argc, char* argv[])
 
     throughput->shutdown();
 
-    return EXIT_SUCCESS;
+    return 0;
 }

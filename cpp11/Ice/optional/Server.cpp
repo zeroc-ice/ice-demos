@@ -36,7 +36,7 @@ ContactServer::run(int argc, char*[])
     if(argc > 1)
     {
         cerr << appName() << ": too many arguments" << endl;
-        return EXIT_FAILURE;
+        return 1;
     }
 
     auto adapter = communicator()->createObjectAdapter("ContactDB");
@@ -44,5 +44,5 @@ ContactServer::run(int argc, char*[])
     adapter->add(contactdb, Ice::stringToIdentity("contactdb"));
     adapter->activate();
     communicator()->waitForShutdown();
-    return EXIT_SUCCESS;
+    return 0;
 }

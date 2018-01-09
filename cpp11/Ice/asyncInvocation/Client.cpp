@@ -32,14 +32,14 @@ Client::run(int argc, char* argv[])
     if(argc > 1)
     {
         cerr << appName() << ": too many arguments" << endl;
-        return EXIT_FAILURE;
+        return 1;
     }
 
     auto calculator = Ice::checkedCast<Demo::CalculatorPrx>(communicator()->propertyToProxy("Calculator.Proxy"));
     if(!calculator)
     {
         cerr << argv[0] << ": invalid proxy" << endl;
-        return EXIT_FAILURE;
+        return 1;
     }
 
     // Calculate 10 - 4 with future-based async operations which return a std::future
@@ -147,5 +147,5 @@ Client::run(int argc, char* argv[])
     cout << "The hypotenuse of a triangle with side lengths of 6 and 8 is " << hypotenuse.get_future().get() << endl;
 
     calculator->shutdown();
-    return EXIT_SUCCESS;
+    return 0;
 }

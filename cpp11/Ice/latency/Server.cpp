@@ -34,12 +34,12 @@ LatencyServer::run(int argc, char*[])
     if(argc > 1)
     {
         cerr << appName() << ": too many arguments" << endl;
-        return EXIT_FAILURE;
+        return 1;
     }
 
     auto adapter = communicator()->createObjectAdapter("Latency");
     adapter->add(make_shared<Ping>(), Ice::stringToIdentity("ping"));
     adapter->activate();
     communicator()->waitForShutdown();
-    return EXIT_SUCCESS;
+    return 0;
 }

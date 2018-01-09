@@ -32,7 +32,7 @@ InvokeServer::run(int argc, char*[])
     if(argc > 1)
     {
         cerr << appName() << ": too many arguments" << endl;
-        return EXIT_FAILURE;
+        return 1;
     }
 
     Ice::ObjectAdapterPtr adapter = communicator()->createObjectAdapter("Printer");
@@ -40,5 +40,5 @@ InvokeServer::run(int argc, char*[])
     adapter->add(printer, Ice::stringToIdentity("printer"));
     adapter->activate();
     communicator()->waitForShutdown();
-    return EXIT_SUCCESS;
+    return 0;
 }

@@ -96,7 +96,7 @@ CallbackClient::runWithSession(int argc, char*[])
     if(argc > 1)
     {
         cerr << appName() << ": too many arguments" << endl;
-        return EXIT_FAILURE;
+        return 1;
     }
 
     Ice::Identity callbackReceiverIdent = createCallbackIdentity("callbackReceiver");
@@ -219,5 +219,5 @@ CallbackClient::runWithSession(int argc, char*[])
     }
     while(cin.good() && c != 'x');
 
-    return EXIT_SUCCESS;
+    return 0;
 }

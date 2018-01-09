@@ -83,7 +83,7 @@ Server::run(int argc, char*[])
     if(argc > 1)
     {
         cerr << appName() << ": too many arguments" << endl;
-        return EXIT_FAILURE;
+        return 1;
     }
 
     auto props = make_shared<PropsI>();
@@ -98,5 +98,5 @@ Server::run(int argc, char*[])
     adapter->add(props, Ice::stringToIdentity("props"));
     adapter->activate();
     communicator()->waitForShutdown();
-    return EXIT_SUCCESS;
+    return 0;
 }

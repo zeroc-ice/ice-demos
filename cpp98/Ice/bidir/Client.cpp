@@ -45,14 +45,14 @@ CallbackClient::run(int argc, char*[])
     if(argc > 1)
     {
         cerr << appName() << ": too many arguments" << endl;
-        return EXIT_FAILURE;
+        return 1;
     }
 
     CallbackSenderPrx server = CallbackSenderPrx::checkedCast(communicator()->propertyToProxy("CallbackSender.Proxy"));
     if(!server)
     {
         cerr << appName() << ": invalid proxy" << endl;
-        return EXIT_FAILURE;
+        return 1;
     }
 
     Ice::ObjectAdapterPtr adapter = communicator()->createObjectAdapter("");
@@ -66,5 +66,5 @@ CallbackClient::run(int argc, char*[])
     server->addClient(ident);
     communicator()->waitForShutdown();
 
-    return EXIT_SUCCESS;
+    return 0;
 }

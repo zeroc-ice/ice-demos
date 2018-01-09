@@ -34,17 +34,17 @@ HelloClient::run(int argc, char* argv[])
     if(argc > 1)
     {
         cerr << appName() << ": too many arguments" << endl;
-        return EXIT_FAILURE;
+        return 1;
     }
 
     auto hello = Ice::uncheckedCast<HelloPrx>(communicator()->propertyToProxy("Hello.Proxy"));
     if(!hello)
     {
         cerr << argv[0] << ": invalid or missing Hello.Proxy property" << endl;
-        return EXIT_FAILURE;
+        return 1;
     }
 
     hello->sayHello();
 
-    return EXIT_SUCCESS;
+    return 0;
 }

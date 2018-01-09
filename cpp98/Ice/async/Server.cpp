@@ -35,7 +35,7 @@ AsyncServer::run(int argc, char*[])
     if(argc > 1)
     {
         cerr << appName() << ": too many arguments" << endl;
-        return EXIT_FAILURE;
+        return 1;
     }
 
     callbackOnInterrupt();
@@ -50,7 +50,7 @@ AsyncServer::run(int argc, char*[])
 
     communicator()->waitForShutdown();
     _workQueue->getThreadControl().join();
-    return EXIT_SUCCESS;
+    return 0;
 }
 
 void

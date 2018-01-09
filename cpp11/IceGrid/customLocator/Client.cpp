@@ -16,7 +16,7 @@ int run(const shared_ptr<Ice::Communicator>&, bool);
 int
 main(int argc, char* argv[])
 {
-    int status = EXIT_SUCCESS;
+    int status = 0;
 
     try
     {
@@ -32,7 +32,7 @@ main(int argc, char* argv[])
         if(argc > 2)
         {
             cerr << argv[0] << ": too many arguments" << endl;
-            status = EXIT_FAILURE;
+            status = 1;
         }
         else
         {
@@ -45,7 +45,7 @@ main(int argc, char* argv[])
                 else
                 {
                     cerr << "Usage: " << argv[0] << " [--context]" << endl;
-                    status = EXIT_FAILURE;
+                    status = 1;
                 }
             }
             else
@@ -57,7 +57,7 @@ main(int argc, char* argv[])
     catch(const std::exception& ex)
     {
         cerr << argv[0] << ": " << ex.what() << endl;
-        status = EXIT_FAILURE;
+        status = 1;
     }
 
     return status;
@@ -86,7 +86,7 @@ run(const shared_ptr<Ice::Communicator>& communicator, bool addContext)
     if(!hello)
     {
         cerr << "couldn't find a `hello' object." << endl;
-        return EXIT_FAILURE;
+        return 1;
     }
 
     menu();
@@ -131,7 +131,7 @@ run(const shared_ptr<Ice::Communicator>& communicator, bool addContext)
     }
     while(cin.good() && c != 'x');
 
-    return EXIT_SUCCESS;
+    return 0;
 }
 
 void

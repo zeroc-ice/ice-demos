@@ -21,7 +21,7 @@ main(int argc, char* argv[])
     Ice::registerIceLocatorDiscovery();
 #endif
 
-    int status = EXIT_SUCCESS;
+    int status = 0;
 
     try
     {
@@ -37,7 +37,7 @@ main(int argc, char* argv[])
         if(argc > 1)
         {
             cerr << argv[0] << ": too many arguments" << endl;
-            status = EXIT_FAILURE;
+            status = 1;
         }
         else
         {
@@ -47,7 +47,7 @@ main(int argc, char* argv[])
     catch(const std::exception& ex)
     {
         cerr << argv[0] << ": " << ex.what() << endl;
-        status = EXIT_FAILURE;
+        status = 1;
     }
 
     return status;
@@ -76,7 +76,7 @@ run(const Ice::CommunicatorPtr& communicator)
     if(!hello)
     {
         cerr << "couldn't find a `::Demo::Hello' object." << endl;
-        return EXIT_FAILURE;
+        return 1;
     }
 
     menu();
@@ -117,7 +117,7 @@ run(const Ice::CommunicatorPtr& communicator)
     }
     while(cin.good() && c != 'x');
 
-    return EXIT_SUCCESS;
+    return 0;
 }
 
 void

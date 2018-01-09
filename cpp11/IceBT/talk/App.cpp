@@ -131,7 +131,7 @@ TalkApp::run(int argc, char*[])
     if(argc > 1)
     {
         cerr << appName() << ": too many arguments" << endl;
-        return EXIT_FAILURE;
+        return 1;
     }
 
     //
@@ -196,7 +196,7 @@ TalkApp::run(int argc, char*[])
     //
     communicator()->destroy();
 
-    return EXIT_SUCCESS;
+    return 0;
 }
 
 void

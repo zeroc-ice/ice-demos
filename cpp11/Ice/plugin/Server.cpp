@@ -18,11 +18,11 @@ public:
         if(argc > 1)
         {
             cerr << appName() << ": too many arguments" << endl;
-            return EXIT_FAILURE;
+            return 1;
         }
 
         communicator()->waitForShutdown();
-        return EXIT_SUCCESS;
+        return 0;
     }
 };
 
