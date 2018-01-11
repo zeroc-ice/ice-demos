@@ -54,16 +54,7 @@ private:
     condition_variable _cond;
 };
 
-class HelloClient : public Ice::Application
-{
-public:
-
-    virtual int run(int, char*[]) override;
-
-private:
-
-    void menu();
-};
+int run(const shared_ptr<Ice::Communicator>&, const string&);
 
 int
 main(int argc, char* argv[])
@@ -72,30 +63,70 @@ main(int argc, char* argv[])
     Ice::registerIceUDP();
 #endif
 
-    HelloClient app;
-    return app.main(argc, argv, "config.client");
+    int status = 0;
+
+    try
+    {
+        //
+        // CtrlCHandler must be created before the communicator or any other threads are started
+        //
+        Ice::CtrlCHandler ctrlCHandler;
+
+        //
+        // CommunicatorHolder's ctor initializes an Ice communicator,
+        // and its dtor destroys this communicator.
+        //
+        Ice::CommunicatorHolder ich(argc, argv, "config.client");
+        auto communicator = ich.communicator();
+
+        ctrlCHandler.setCallback(
+            [communicator](int)
+            {
+                communicator->destroy();
+            });
+
+        //
+        // The communicator initialization removes all Ice-related arguments from argc/argv
+        //
+        if(argc > 1)
+        {
+            cerr << argv[0] << ": too many arguments" << endl;
+            status = 1;
+        }
+        else
+        {
+            status = run(communicator, argv[0]);
+        }
+    }
+    catch(std::exception& ex)
+    {
+        cerr << ex.what() << endl;
+        status = 1;
+    }
+
+    return status;
 }
 
 int
-HelloClient::run(int, char* argv[])
+run(const shared_ptr<Ice::Communicator>& communicator, const string& appName)
 {
-    auto adapter = communicator()->createObjectAdapter("DiscoverReply");
+    auto adapter = communicator->createObjectAdapter("DiscoverReply");
     auto replyI = make_shared<DiscoverReplyI>();
     auto reply = Ice::uncheckedCast<DiscoverReplyPrx>(adapter->addWithUUID(replyI));
     adapter->activate();
 
-    auto discover = Ice::uncheckedCast<DiscoverPrx>(communicator()->propertyToProxy("Discover.Proxy")->ice_datagram());
+    auto discover = Ice::uncheckedCast<DiscoverPrx>(communicator->propertyToProxy("Discover.Proxy")->ice_datagram());
     discover->lookup(reply);
     auto base = replyI->waitReply(2);
     if(!base)
     {
-        cerr << argv[0] << ": no replies" << endl;
+        cerr << appName << ": no replies" << endl;
         return 1;
     }
     auto hello = Ice::checkedCast<HelloPrx>(base);
     if(!hello)
     {
-        cerr << argv[0] << ": invalid reply" << endl;
+        cerr << appName << ": invalid reply" << endl;
         return 1;
     }
 

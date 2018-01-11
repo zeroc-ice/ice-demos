@@ -12,12 +12,10 @@
 
 using namespace std;
 
-class ChatApp : public Ice::Application
+class ChatApp
 {
 public:
-
-    ChatApp();
-    virtual int run(int, char*[]) override;
+    int run(const shared_ptr<Ice::Communicator>&);
 
     void discoveredPeer(const string&, const shared_ptr<MTalk::PeerPrx>&);
     void connect(const string&, const Ice::Identity&, const shared_ptr<Ice::Connection>&);
@@ -204,32 +202,48 @@ main(int argc, char* argv[])
     Ice::registerIceSSL();
 #endif
 
-    ChatApp app;
-    return app.main(argc, argv, "config");
-}
+    int status = 0;
 
-ChatApp::ChatApp() :
-    //
-    // Since this is an interactive demo we don't want any signal handling.
-    //
-    Ice::Application(Ice::SignalPolicy::NoSignalHandling)
-{
+    try
+    {
+        //
+        // CommunicatorHolder's ctor initializes an Ice communicator,
+        // and its dtor destroys this communicator.
+        //
+        Ice::CommunicatorHolder ich(argc, argv, "config");
+        auto communicator = ich.communicator();
+
+        //
+        // The communicator initialization removes all Ice-related arguments from argc/argv
+        //
+        if(argc > 1)
+        {
+            cerr << argv[0] << ": too many arguments" << endl;
+            status = 1;
+        }
+        else
+        {
+            ChatApp app;
+            status = app.run(communicator);
+        }
+    }
+    catch(std::exception& ex)
+    {
+        cerr << ex.what() << endl;
+        status = 1;
+    }
+
+    return status;
 }
 
 int
-ChatApp::run(int argc, char*[])
+ChatApp::run(const shared_ptr<Ice::Communicator>& communicator)
 {
-    if(argc > 1)
-    {
-        cerr << appName() << ": too many arguments" << endl;
-        return 1;
-    }
-
     //
     // Create two object adapters. Their endpoints are defined in the configuration file 'config'.
     //
-    _multicastAdapter = communicator()->createObjectAdapter("Multicast");
-    _peerAdapter = communicator()->createObjectAdapter("Peer");
+    _multicastAdapter = communicator->createObjectAdapter("Multicast");
+    _peerAdapter = communicator->createObjectAdapter("Peer");
 
     //
     // Install a servant with the well-known identity "discover". This servant receives multicast messages.
@@ -257,7 +271,7 @@ ChatApp::run(int argc, char*[])
     // the same endpoint and we always want our discovery announcements to be broadcast on the network.
     //
     auto discovery = Ice::uncheckedCast<MTalk::DiscoveryPrx>(
-        _communicator->propertyToProxy("Discovery.Proxy")->ice_datagram()->ice_collocationOptimized(false));
+        communicator->propertyToProxy("Discovery.Proxy")->ice_datagram()->ice_collocationOptimized(false));
 
     {
         DiscoverTask task(discovery, _name, _local);
@@ -311,7 +325,7 @@ ChatApp::run(int argc, char*[])
     // There may still be objects (connections and servants) that hold pointers to this object, so we destroy
     // the communicator here to make sure they get cleaned up first.
     //
-    communicator()->destroy();
+    communicator->destroy();
 
     return 0;
 }

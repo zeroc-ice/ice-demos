@@ -23,39 +23,60 @@ public:
     }
 };
 
-class ChatServer : public Ice::Application
-{
-public:
-
-    virtual int
-    run(int argc, char*[]) override
-    {
-        if(argc > 1)
-        {
-            cerr << appName() << ": too many arguments" << endl;
-            return 1;
-        }
-
-        auto adapter = communicator()->createObjectAdapter("ChatServer");
-
-        auto dpv = make_shared<DummyPermissionsVerifierI>();
-        adapter->add(dpv, Ice::stringToIdentity("ChatSessionVerifier"));
-        auto csm = make_shared<ChatSessionManagerI>();
-        adapter->add(csm, Ice::stringToIdentity("ChatSessionManager"));
-        adapter->activate();
-        communicator()->waitForShutdown();
-        csm->destroy();
-
-        return 0;
-    }
-};
-
-int
-main(int argc, char* argv[])
+int main(int argc, char* argv[])
 {
 #ifdef ICE_STATIC_LIBS
     Ice::registerIceSSL();
 #endif
-    ChatServer app;
-    return app.main(argc, argv, "config.server");
+
+    int status = 0;
+
+    try
+    {
+        //
+        // CtrlCHandler must be created before the communicator or any other threads are started
+        //
+        Ice::CtrlCHandler ctrlCHandler;
+
+        //
+        // CommunicatorHolder's ctor initializes an Ice communicator,
+        // and its dtor destroys this communicator.
+        //
+        Ice::CommunicatorHolder ich(argc, argv, "config.server");
+
+        ctrlCHandler.setCallback(
+            [communicator = ich.communicator()](int)
+            {
+                communicator->shutdown();
+            });
+
+        //
+        // The communicator initialization removes all Ice-related arguments from argc/argv
+        //
+        if(argc > 1)
+        {
+            cerr << argv[0] << ": too many arguments" << endl;
+            status = 1;
+        }
+        else
+        {
+            auto adapter = ich->createObjectAdapter("ChatServer");
+
+            auto dpv = make_shared<DummyPermissionsVerifierI>();
+            adapter->add(dpv, Ice::stringToIdentity("ChatSessionVerifier"));
+            auto csm = make_shared<ChatSessionManagerI>();
+            adapter->add(csm, Ice::stringToIdentity("ChatSessionManager"));
+            adapter->activate();
+
+            ich->waitForShutdown();
+            csm->destroy();
+        }
+    }
+    catch(std::exception& ex)
+    {
+        cerr << ex.what() << endl;
+        status = 1;
+    }
+
+    return status;
 }

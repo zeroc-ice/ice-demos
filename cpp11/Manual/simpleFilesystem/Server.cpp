@@ -10,79 +10,109 @@
 using namespace std;
 using namespace Filesystem;
 
-class FilesystemApp : public Ice::Application
-{
-public:
+int run(const shared_ptr<Ice::Communicator>& communicator);
 
-    virtual int run(int, char*[]) override
+int main(int argc, char* argv[])
+{
+    int status = 0;
+
+    try
     {
         //
-        // Terminate cleanly on receipt of a signal
+        // CtrlCHandler must be created before the communicator or any other threads are started
         //
-        shutdownOnInterrupt();
+        Ice::CtrlCHandler ctrlCHandler;
 
         //
-        // Create an object adapter.
+        // CommunicatorHolder's ctor initializes an Ice communicator,
+        // and its dtor destroys this communicator.
         //
-        auto adapter = communicator()->createObjectAdapterWithEndpoints(
-            "SimpleFilesystem", "default -h localhost -p 10000");
+        Ice::CommunicatorHolder ich(argc, argv, "config.server");
+        auto communicator = ich.communicator();
 
-        //
-        // Create the root directory (with name "/" and no parent)
-        //
-        auto root = make_shared<DirectoryI>("/", nullptr);
-        root->activate(adapter);
-
-        //
-        // Create a file called "README" in the root directory
-        //
-        auto file = make_shared<FileI>("README", root);
-        auto text = Lines({"This file system contains a collection of poetry."});
-        file->write(text, Ice::emptyCurrent);
-        file->activate(adapter);
-
-        //
-        // Create a directory called "Coleridge" in the root directory
-        //
-        auto coleridge = make_shared<DirectoryI>("Coleridge", root);
-        coleridge->activate(adapter);
-
-        //
-        // Create a file called "Kubla_Khan" in the Coleridge directory
-        //
-        file = make_shared<FileI>("Kubla_Khan", coleridge);
-        text =
+        auto appName = argv[0];
+        ctrlCHandler.setCallback(
+            [communicator, appName](int)
             {
-                "In Xanadu did Kubla Khan",
-                "A stately pleasure-dome decree:",
-                "Where Alph, the sacred river, ran",
-                "Through caverns measureless to man",
-                "Down to a sunless sea."
-            };
-        file->write(text, Ice::emptyCurrent);
-        file->activate(adapter);
+                communicator->shutdown();
+                cerr << appName << ": received signal, shutting down" << endl;
+            });
 
         //
-        // All objects are created, allow client requests now
+        // The communicator initialization removes all Ice-related arguments from argc/argv
         //
-        adapter->activate();
-
-        //
-        // Wait until we are done
-        //
-        communicator()->waitForShutdown();
-        if(interrupted())
+        if(argc > 1)
         {
-            cerr << appName() << ": received signal, shutting down" << endl;
+            cerr << argv[0] << ": too many arguments" << endl;
+            status = 1;
         }
-
-        return 0;
+        else
+        {
+            status = run(communicator);
+        }
     }
-};
+    catch(std::exception& ex)
+    {
+        cerr << ex.what() << endl;
+        status = 1;
+    }
+
+    return status;
+}
 
 int
-main(int argc, char* argv[])
+run(const shared_ptr<Ice::Communicator>& communicator)
 {
-    FilesystemApp app;
-    return app.main(argc, argv);
+    //
+    // Create an object adapter.
+    //
+    auto adapter = communicator->createObjectAdapterWithEndpoints(
+        "SimpleFilesystem", "default -h localhost -p 10000");
+
+    //
+    // Create the root directory (with name "/" and no parent)
+    //
+    auto root = make_shared<DirectoryI>("/", nullptr);
+    root->activate(adapter);
+
+    //
+    // Create a file called "README" in the root directory
+    //
+    auto file = make_shared<FileI>("README", root);
+    auto text = Lines({"This file system contains a collection of poetry."});
+    file->write(text, Ice::emptyCurrent);
+    file->activate(adapter);
+
+    //
+    // Create a directory called "Coleridge" in the root directory
+    //
+    auto coleridge = make_shared<DirectoryI>("Coleridge", root);
+    coleridge->activate(adapter);
+
+    //
+    // Create a file called "Kubla_Khan" in the Coleridge directory
+    //
+    file = make_shared<FileI>("Kubla_Khan", coleridge);
+    text =
+        {
+            "In Xanadu did Kubla Khan",
+            "A stately pleasure-dome decree:",
+            "Where Alph, the sacred river, ran",
+            "Through caverns measureless to man",
+            "Down to a sunless sea."
+        };
+    file->write(text, Ice::emptyCurrent);
+    file->activate(adapter);
+
+    //
+    // All objects are created, allow client requests now
+    //
+    adapter->activate();
+
+    //
+    // Wait until we are done
+    //
+    communicator->waitForShutdown();
+
+    return 0;
 }
