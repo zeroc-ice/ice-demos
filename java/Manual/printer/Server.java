@@ -10,6 +10,11 @@ public class Server
     {
         try(com.zeroc.Ice.Communicator ic = com.zeroc.Ice.Util.initialize(args))
         {
+            Runtime.getRuntime().addShutdownHook(new Thread(() ->
+            {
+                ic.shutdown();
+            }));
+
             com.zeroc.Ice.ObjectAdapter adapter =
                 ic.createObjectAdapterWithEndpoints("SimplePrinterAdapter", "default -h localhost -p 10000");
             com.zeroc.Ice.Object object = new PrinterI();
