@@ -1,6 +1,6 @@
 Demos in this directory:
 
-- [hello}(./hello)
+- [hello](./hello)
 
   This demo illustrates how to invoke ordinary (twoway) operations, as
   well as how to invoke oneway operations, use datagrams, secure
