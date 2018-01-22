@@ -11,7 +11,12 @@ require 'timeout'
 
 Ice::loadSlice('Session.ice')
 
-def run(communicator)
+def run(communicator, args)
+    if args.length > 0
+        puts $0 + ": too many arguments"
+        return 1
+    end
+
     while true
         print "Please enter your name ==> "
         STDOUT.flush
@@ -96,18 +101,5 @@ t:     exit without destroying the session
 MENU
 end
 
-status = 0
-begin
-    communicator = Ice::initialize(ARGV, "config.client")
-    if ARGV.length > 0
-        puts $0 + ": too many argumnents"
-        status = 1
-    else
-        status = run(communicator)
-    end
-ensure
-    if defined? communicator and communicator != nil
-        communicator.destroy()
-    end
-end
+status = Ice::initialize(ARGV, "config.client") { |communicator, args| run(communicator, args) }
 exit(status)

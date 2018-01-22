@@ -9,12 +9,7 @@ require 'Ice'
 
 Ice::loadSlice('Hello.ice')
 
-begin
-    communicator = Ice::initialize(ARGV)
+Ice::initialize(ARGV) do |communicator|
     hello = Demo::HelloPrx::checkedCast(communicator.stringToProxy("hello:default -h localhost -p 10000"))
     hello.sayHello()
-ensure
-    if defined? communicator and communicator != nil
-        communicator.destroy()
-    end
 end

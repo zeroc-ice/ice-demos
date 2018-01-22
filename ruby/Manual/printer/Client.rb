@@ -8,8 +8,7 @@
 require 'Ice'
 Ice::loadSlice('Printer.ice')
 
-begin
-    communicator = Ice::initialize(ARGV)
+Ice::initialize(ARGV) do |communicator|
     base = communicator.stringToProxy("SimplePrinter:default -h localhost -p 10000")
     printer = Demo::PrinterPrx::checkedCast(base)
     if not printer
@@ -17,8 +16,4 @@ begin
     end
 
     printer.printString("Hello World!")
-ensure
-    if defined? communicator and communicator != nil
-        communicator.destroy()
-    end
 end
