@@ -8,7 +8,6 @@
 import sys, traceback, time, Ice
 
 Ice.loadSlice('Hello.ice')
-Ice.updateModules()
 import Demo
 
 class HelloI(Demo.Hello):

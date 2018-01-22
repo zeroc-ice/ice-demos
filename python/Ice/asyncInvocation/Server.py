@@ -8,7 +8,6 @@
 import math, sys, Ice;
 
 Ice.loadSlice('Calculator.ice')
-Ice.updateModules()
 import Demo
 
 class CalculatorI(Demo.Calculator):

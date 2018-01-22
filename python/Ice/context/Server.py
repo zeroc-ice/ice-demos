@@ -8,7 +8,6 @@
 import sys, traceback, time, Ice
 
 Ice.loadSlice('Context.ice')
-Ice.updateModules()
 import Demo
 
 class ContextI(Demo.Context):
