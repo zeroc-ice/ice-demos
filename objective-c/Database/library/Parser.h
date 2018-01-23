@@ -15,7 +15,7 @@
 #define YYSTYPE ICE_STRONG_QUALIFIER NSMutableArray*
 #define YY_DECL int yylex(YYSTYPE* yylvalp)
 YY_DECL;
-int yyparse();
+int yyparse(void);
 
 //
 // I must set the initial stack depth to the maximum stack depth to

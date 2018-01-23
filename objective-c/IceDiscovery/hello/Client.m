@@ -46,7 +46,7 @@ main(int argc, char* argv[])
     return status;
 }
 
-void menu();
+void menu(void);
 
 int
 run(id<ICECommunicator> communicator)
