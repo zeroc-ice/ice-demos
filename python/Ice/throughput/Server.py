@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # **********************************************************************
 #
-# Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+# Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 #
 # **********************************************************************
 
@@ -41,65 +41,65 @@ class ThroughputI(Demo.Throughput):
             self.fixedSeq[i].j = 0
             self.fixedSeq[i].d = 0.0
 
-    def needsWarmup(self, current=None):
+    def needsWarmup(self, current):
         self.warmup = False
         return False
 
-    def startWarmup(self, current=None):
+    def startWarmup(self, current):
         self.warmup = True
 
-    def endWarmup(self, current=None):
+    def endWarmup(self, current):
         self.warmup = False
 
-    def sendByteSeq(self, seq, current=None):
+    def sendByteSeq(self, seq, current):
         pass
 
-    def recvByteSeq(self, current=None):
+    def recvByteSeq(self, current):
         if self.warmup:
             return []
         else:
             return self.byteSeq
 
-    def echoByteSeq(self, seq, current=None):
+    def echoByteSeq(self, seq, current):
         return seq
 
-    def sendStringSeq(self, seq, current=None):
+    def sendStringSeq(self, seq, current):
         pass
 
-    def recvStringSeq(self, current=None):
+    def recvStringSeq(self, current):
         if self.warmup:
             return []
         else:
             return self.stringSeq
 
-    def echoStringSeq(self, seq, current=None):
+    def echoStringSeq(self, seq, current):
         return seq
 
-    def sendStructSeq(self, seq, current=None):
+    def sendStructSeq(self, seq, current):
         pass
 
-    def recvStructSeq(self, current=None):
+    def recvStructSeq(self, current):
         if self.warmup:
             return []
         else:
             return self.structSeq
 
-    def echoStructSeq(self, seq, current=None):
+    def echoStructSeq(self, seq, current):
         return seq
 
-    def sendFixedSeq(self, seq, current=None):
+    def sendFixedSeq(self, seq, current):
         pass
 
-    def recvFixedSeq(self, current=None):
+    def recvFixedSeq(self, current):
         if self.warmup:
             return []
         else:
             return self.fixedSeq
 
-    def echoFixedSeq(self, seq, current=None):
+    def echoFixedSeq(self, seq, current):
         return seq
 
-    def shutdown(self, current=None):
+    def shutdown(self, current):
         current.adapter.getCommunicator().shutdown()
 
 class Server(Ice.Application):

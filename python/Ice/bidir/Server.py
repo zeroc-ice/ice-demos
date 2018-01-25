@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # **********************************************************************
 #
-# Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+# Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 #
 # **********************************************************************
 
@@ -30,7 +30,7 @@ class CallbackSenderI(Demo.CallbackSender, threading.Thread):
 
         self.join()
 
-    def addClient(self, ident, current=None):
+    def addClient(self, ident, current):
         with self._cond:
             print("adding client `" + Ice.identityToString(ident) + "'")
             client = Demo.CallbackReceiverPrx.uncheckedCast(current.con.createProxy(ident))

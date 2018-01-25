@@ -10,13 +10,13 @@
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:orientation="horizontal"
-		android:paddingBottom="5dip"
+		android:paddingBottom="10dip"
 		>
 
 		<TextView
 			android:layout_width="0dip"
 			android:layout_height="wrap_content"
-			android:layout_weight="30"
+			android:layout_weight="15"
 			android:text="Host"
 			android:id="@+id/hostLabel"/>
 
@@ -24,28 +24,94 @@
 			android:id ="@+id/host"
 			android:hint="IP or Hostname"
 			android:layout_width="0dip"
-			android:layout_weight="75"
+			android:layout_weight="85"
 			android:layout_height="wrap_content"
 			android:lines="1"
 			android:maxLines="1"
 			android:minLines="1"
 			android:inputType="text"/>
 
+	</LinearLayout>
+
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:paddingBottom="10dip"
+		>
+
 		<TextView
 			android:layout_width="0dip"
-			android:layout_weight="30"
+			android:layout_height="wrap_content"
+			android:layout_weight="15"
+			android:text=""
+			android:id="@+id/emptyLabel"/>
+		<CheckBox
+			android:id="@+id/useDiscovery"
+			android:text="Use IceDiscovery"
+			android:layout_width="0dip"
+			android:layout_weight="85"
+			android:layout_height="wrap_content"
+						android:checked="false"
+			/>
+	</LinearLayout>
+
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:paddingBottom="10dip"
+		>
+
+		<TextView
+			android:layout_width="0dip"
+			android:layout_weight="15"
 			android:layout_height="wrap_content"
 			android:text="Mode"
-			android:paddingLeft="5dip"
 			android:layout_gravity="center_vertical"
 			/>
 
 		<Spinner
 			android:id="@+id/mode"
 			android:layout_width="0dip"
-			android:layout_weight="75"
+			android:layout_weight="85"
 			android:layout_height="wrap_content"
 			android:drawSelectorOnTop="false"/>
+
+	</LinearLayout>
+
+	<LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:paddingBottom="10dip"
+			>
+
+		<TextView
+			android:layout_height="wrap_content"
+			android:layout_width="0dip"
+			android:layout_weight="15"
+			android:layout_gravity="center_vertical"
+			android:text="Timeout"
+			/>
+
+		<SeekBar
+			android:id="@+id/timeout"
+			android:layout_height="wrap_content"
+			android:layout_width="0dip"
+			android:layout_weight="75"
+			android:max="9900"
+			/>
+
+		 <TextView
+			android:id="@+id/timeoutView"
+			android:layout_height="wrap_content"
+			android:layout_width="0dip"
+			android:layout_weight="10"
+			android:layout_gravity="center_vertical"
+			android:paddingLeft="5dip"
+			android:text="0.0"
+			/>
 
 	</LinearLayout>
 
@@ -59,34 +125,8 @@
 		<TextView
 			android:layout_height="wrap_content"
 			android:layout_width="0dip"
-			android:layout_weight="30"
-			android:layout_gravity="center_vertical"
-			android:text="Timeout"
-			/>
-
-		<SeekBar
-			android:id="@+id/timeout"
-			android:layout_height="wrap_content"
-			android:layout_width="0dip"
-			android:layout_weight="60"
-			android:max="9900" />
-
-		 <TextView
-			android:id="@+id/timeoutView"
-			android:layout_height="wrap_content"
-			android:layout_width="0dip"
 			android:layout_weight="15"
 			android:layout_gravity="center_vertical"
-			android:paddingLeft="5dip"
-			android:text="0.0"
-			/>
-
-		<TextView
-			android:layout_height="wrap_content"
-			android:layout_width="0dip"
-			android:layout_weight="30"
-			android:layout_gravity="center_vertical"
-			android:paddingLeft="5dip"
 			android:text="Delay"
 			/>
 
@@ -94,14 +134,14 @@
 			android:id="@+id/delay"
 			android:layout_height="wrap_content"
 			android:layout_width="0dip"
-			android:layout_weight="60"
+			android:layout_weight="75"
 			android:max="9900"/>
 
 		 <TextView
 			android:id="@+id/delayView"
 			android:layout_height="wrap_content"
 			android:layout_width="0dip"
-			android:layout_weight="15"
+			android:layout_weight="10"
 			android:layout_gravity="center_vertical"
 			android:paddingLeft="5dip"
 			android:text="0.0"

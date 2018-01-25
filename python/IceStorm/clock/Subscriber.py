@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # **********************************************************************
 #
-# Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+# Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 #
 # **********************************************************************
 
@@ -11,7 +11,7 @@ Ice.loadSlice('Clock.ice')
 import Demo
 
 class ClockI(Demo.Clock):
-    def tick(self, date, current=None):
+    def tick(self, date, current):
         print(date)
 
 class Subscriber(Ice.Application):

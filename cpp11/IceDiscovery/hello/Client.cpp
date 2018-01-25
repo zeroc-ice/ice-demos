@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 //
 // **********************************************************************
 
@@ -123,7 +123,10 @@ run(const shared_ptr<Ice::Communicator>& communicator)
             else if(c == 'f')
             {
                 batchOneway->ice_flushBatchRequests();
-                batchDatagram->ice_flushBatchRequests();
+                if(!secure)
+                {
+                    batchDatagram->ice_flushBatchRequests();
+                }
             }
             else if(c == 'T')
             {

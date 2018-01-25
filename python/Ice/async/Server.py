@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # **********************************************************************
 #
-# Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+# Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 #
 # **********************************************************************
 
@@ -60,14 +60,14 @@ class HelloI(Demo.Hello):
     def __init__(self, workQueue):
         self._workQueue = workQueue
 
-    def sayHello(self, delay, current=None):
+    def sayHello(self, delay, current):
         if delay == 0:
             print("Hello World!")
             return None
         else:
             return self._workQueue.add(delay)
 
-    def shutdown(self, current=None):
+    def shutdown(self, current):
         self._workQueue.destroy()
         current.adapter.getCommunicator().shutdown();
 

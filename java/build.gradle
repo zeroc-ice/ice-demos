@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 //
 // **********************************************************************
 
@@ -51,5 +51,5 @@ apply from: "$rootProject.projectDir/Manual/build.gradle"
 // Used to build the gradle wrapper to automatically download and install gradle.
 //
 task wrapper(type: Wrapper) {
-    gradleVersion = "4.0.1"
+    gradleVersion = "4.2.1"
 }

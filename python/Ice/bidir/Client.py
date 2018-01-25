@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # **********************************************************************
 #
-# Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+# Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 #
 # **********************************************************************
 
@@ -16,7 +16,7 @@ Ice.loadSlice("'-I" + slice_dir + "' Callback.ice")
 import Demo
 
 class CallbackReceiverI(Demo.CallbackReceiver):
-    def callback(self, num, current=None):
+    def callback(self, num, current):
         print("received callback #" + str(num))
 
 class Client(Ice.Application):

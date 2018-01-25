@@ -1,23 +1,22 @@
 #!/usr/bin/env python
 # **********************************************************************
 #
-# Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+# Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 #
 # **********************************************************************
 
 import sys, traceback, time, Ice
 
 Ice.loadSlice('Hello.ice')
-Ice.updateModules()
 import Demo
 
 class HelloI(Demo.Hello):
-    def sayHello(self, delay, current=None):
+    def sayHello(self, delay, current):
         if delay != 0:
             time.sleep(delay / 1000.0)
         print("Hello World!")
 
-    def shutdown(self, current=None):
+    def shutdown(self, current):
         current.adapter.getCommunicator().shutdown()
 
 class Server(Ice.Application):

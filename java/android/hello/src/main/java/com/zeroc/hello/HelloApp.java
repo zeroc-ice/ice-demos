@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 //
 // **********************************************************************
 
@@ -15,6 +15,8 @@ import com.zeroc.Ice.ObjectPrx;
 import com.zeroc.Ice.Util;
 
 import android.app.Application;
+import android.content.Context;
+import android.net.wifi.WifiManager;
 import android.os.Build.VERSION;
 import android.os.Handler;
 import android.os.Looper;
@@ -73,6 +75,15 @@ public class HelloApp extends Application
             }
         };
 
+        _wifiManager = (WifiManager)getSystemService(Context.WIFI_SERVICE);
+
+        //
+        // On some devices, a multicast lock must be acquired otherwise multicast packets are discarded.
+        // The lock is initially unacquired.
+        //
+        _lock = _wifiManager.createMulticastLock("com.zeroc.hello");
+        _lock.acquire();
+
         // SSL initialization can take some time. To avoid blocking the
         // calling thread, we perform the initialization in a separate thread.
         new Thread(new Runnable()
@@ -97,6 +108,7 @@ public class HelloApp extends Application
                     initData.properties.setProperty("IceSSL.Password", "password");
                     initData.properties.setProperty("Ice.InitPlugins", "0");
                     initData.properties.setProperty("Ice.Plugin.IceSSL", "com.zeroc.IceSSL.PluginFactory");
+                    initData.properties.setProperty("Ice.Plugin.IceDiscovery", "com.zeroc.IceDiscovery.PluginFactory");
 
                     Communicator c = Util.initialize(initData);
                     com.zeroc.IceSSL.Plugin plugin = (com.zeroc.IceSSL.Plugin)c.getPluginManager().getPlugin("IceSSL");
@@ -160,6 +172,12 @@ public class HelloApp extends Application
     void setHost(String host)
     {
         _host = host;
+        _proxy = null;
+    }
+
+    void setUseDiscovery(boolean b)
+    {
+        _useDiscovery = b;
         _proxy = null;
     }
 
@@ -355,7 +373,15 @@ public class HelloApp extends Application
             return;
         }
 
-        String s = "hello:tcp -h " + _host + " -p 10000:ssl -h " + _host + " -p 10001:udp -h " + _host  + " -p 10000";
+        String s;
+        if(_useDiscovery)
+        {
+            s = "hello";
+        }
+        else
+        {
+            s = "hello:tcp -h " + _host + " -p 10000:ssl -h " + _host + " -p 10001:udp -h " + _host  + " -p 10000";
+        }
         ObjectPrx prx = _communicator.stringToProxy(s);
         prx = _mode.apply(prx);
         if(_timeout != 0)
@@ -378,6 +404,9 @@ public class HelloApp extends Application
     public static final int MSG_SENDING = 4;
     public static final int MSG_SENT = 5;
 
+    private WifiManager _wifiManager;
+    private WifiManager.MulticastLock _lock;
+
     private List<Message> _queue = new LinkedList<Message>();
     private Handler _uiHandler;
 
@@ -395,6 +424,7 @@ public class HelloApp extends Application
 
     // Proxy settings.
     private String _host;
+    private boolean _useDiscovery;
     private int _timeout;
     private DeliveryMode _mode;
 }

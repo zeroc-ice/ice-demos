@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 //
 // **********************************************************************
 
@@ -69,72 +69,75 @@ function updateProxy()
 //
 // Invoke sayHello.
 //
-function sayHello()
+async function sayHello()
 {
-    setState(State.SendRequest);
-
-    if(helloPrx.ice_isBatchOneway())
+    try
     {
-        batch++;
-    }
+        setState(State.SendRequest);
 
-    return helloPrx.sayHello($("#delay").val());
+        if(helloPrx.ice_isBatchOneway())
+        {
+            batch++;
+        }
+        await helloPrx.sayHello($("#delay").val());
+    }
+    catch(ex)
+    {
+        $("#output").val(ex.toString());
+    }
+    finally
+    {
+        setState(State.Idle);
+    }
 }
 
 //
 // Flush batch requests.
 //
-function flush()
+async function flush()
 {
-    batch = 0;
-    setState(State.FlushBatchRequests);
-    return helloPrx.ice_flushBatchRequests();
+    try
+    {
+        setState(State.SendRequest);
+
+        batch = 0;
+        setState(State.FlushBatchRequests);
+        await helloPrx.ice_flushBatchRequests();
+    }
+    catch(ex)
+    {
+        $("#output").val(ex.toString());
+    }
+    finally
+    {
+        setState(State.Idle);
+    }
 }
 
 //
 // Shutdown the server.
 //
-function shutdown()
+async function shutdown()
 {
-    setState(State.SendRequest);
-
-    if(helloPrx.ice_isBatchOneway())
+    try
     {
-        batch++;
+        setState(State.SendRequest);
+
+        if(helloPrx.ice_isBatchOneway())
+        {
+            batch++;
+        }
+        await helloPrx.shutdown();
     }
-
-    return helloPrx.shutdown();
-}
-
-//
-// Return an event handler suitable for "click" methods. The
-// event handler calls the given function, handles exceptions
-// and resets the state to Idle when the promise returned by
-// the function is fulfilled.
-//
-function performEventHandler(fn)
-{
-    return function()
+    catch(ex)
     {
-        Ice.Promise.try(() =>
-            {
-                return fn.call();
-            }
-        ).catch(ex =>
-            {
-                $("#output").val(ex.toString());
-            }
-        ).finally(() =>
-            {
-                setState(State.Idle);
-            });
-        return false;
-    };
+        $("#output").val(ex.toString());
+    }
+    finally
+    {
+        setState(State.Idle);
+    }
 }
-
-const sayHelloClickHandler = performEventHandler(sayHello);
-const shutdownClickHandler = performEventHandler(shutdown);
-const flushClickHandler = performEventHandler(flush);
 
 //
 // Handle the client state.
@@ -150,14 +153,6 @@ let state;
 
 function setState(newState, ex)
 {
-    function assert(v)
-    {
-        if(!v)
-        {
-            throw new Error("Assertion failed");
-        }
-    }
-
     if(state === newState)
     {
         //
@@ -171,8 +166,6 @@ function setState(newState, ex)
     {
         case State.Idle:
         {
-            assert(state === undefined || state === State.SendRequest || state === State.FlushBatchRequests);
-
             //
             // Hide the progress indicator.
             //
@@ -182,19 +175,17 @@ function setState(newState, ex)
             //
             // Enable buttons.
             //
-            $("#hello").removeClass("disabled").click(sayHelloClickHandler);
-            $("#shutdown").removeClass("disabled").click(shutdownClickHandler);
+            $("#hello").removeClass("disabled").click(sayHello);
+            $("#shutdown").removeClass("disabled").click(shutdown);
             if(batch > 0)
             {
-                $("#flush").removeClass("disabled").click(flushClickHandler);
+                $("#flush").removeClass("disabled").click(flush);
             }
             break;
         }
         case State.SendRequest:
         case State.FlushBatchRequests:
         {
-            assert(state === State.Idle);
-
             //
             // Reset the output.
             //
@@ -266,7 +257,7 @@ $("#mode").on("change", e =>
             document.location.assign(href);
         }
         else if (document.location.protocol === "https:" &&
-           (newMode === "twoway" || newMode === "oneway" || newMode === "oneway-batch"))
+                 (newMode === "twoway" || newMode === "oneway" || newMode === "oneway-batch"))
         {
             let href = document.location.protocol + "//" + document.location.host +
                        document.location.pathname + "?mode=" + newMode;
@@ -280,4 +271,5 @@ $("#mode").on("change", e =>
 $("#timeout").on("change", e => updateProxy());
 
 updateProxy();
+
 }());

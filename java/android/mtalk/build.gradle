@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 //
 // **********************************************************************
 
@@ -19,7 +19,7 @@ slice {
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "26.0.0"
+    buildToolsVersion "27.0.1"
 
     defaultConfig {
         applicationId "com.zeroc.mtalk"
@@ -39,14 +39,6 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
-        }
-    }
-    // It would be ideal if the slice plugin did this, but it doesn't work as expected.
-    sourceSets {
-        main {
-            java {
-                srcDirs = ['src/main/java', project.slice.output ]
-            }
         }
     }
 }

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # **********************************************************************
 #
-# Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+# Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 #
 # **********************************************************************
 
@@ -25,7 +25,7 @@ x: exit
 """)
 
 class CallbackReceiverI(Demo.CallbackReceiver):
-    def callback(self, current=None):
+    def callback(self, current):
         print("received callback")
 
 class Client(Glacier2.Application):

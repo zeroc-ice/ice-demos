@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 //
 // **********************************************************************
 
@@ -17,7 +17,7 @@ class Client extends com.zeroc.Ice.Application
             return 1;
         }
 
-        com.zeroc.Ice.ObjectPrx ping = communicator().propertyToProxy("Ping.Proxy");
+        PingPrx ping = PingPrx.checkedCast(communicator().propertyToProxy("Ping.Proxy"));
         if(ping == null)
         {
             System.err.println("invalid proxy");

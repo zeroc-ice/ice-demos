@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 //
 // **********************************************************************
 
@@ -199,6 +199,7 @@ CallbackClient::runWithSession(int argc, char*[])
         }
         else if(c == 'r')
         {
+            cin.ignore(); // Ignore the new line
             restart();
         }
         else if(c == 'x')

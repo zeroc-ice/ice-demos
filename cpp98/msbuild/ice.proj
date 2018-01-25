@@ -28,13 +28,12 @@
 
     <PropertyGroup>
       <SymbolServer Condition="'$(SymbolServer)' == ''">$(SYMBOL_SERVER)</SymbolServer>
-      <SymbolServer Condition="'$(SymbolServer)' == ''">http://symbols.zeroc.com</SymbolServer>
+      <SymbolServer Condition="'$(SymbolServer)' == ''">SRV*%TEMP%\SymbolCache*http://symbols.zeroc.com</SymbolServer>
     </PropertyGroup>
 
     <Target Name="DownloadSymbols" DependsOnTargets="NuGetRestore">
-        <MakeDir Directories="$(TEMP)\SymbolCache" />
         <Exec IgnoreExitCode="True"
-              Command="symchk /r $(MSBuildThisFileDirectory)..\packages\zeroc.ice.$(DefaultPlatformToolset).3.7.0\build\native\bin\$(Platform)\$(Configuration)\* /s SRV*$(TEMP)\SymbolCache*$(SymbolServer)">
+              Command="symchk /r $(MSBuildThisFileDirectory)..\packages\zeroc.ice.$(DefaultPlatformToolset).3.7.0\build\native\bin\$(Platform)\$(Configuration)\* /s $(SymbolServer)">
               <Output TaskParameter="ExitCode" PropertyName="ErrorCode"/>
         </Exec>
         <Warning  Text="PDBs download failed, stack traces might be missing or incomplete" Condition="'$(ErrorCode)' != '0'" />

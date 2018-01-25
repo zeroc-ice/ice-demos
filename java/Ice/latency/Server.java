@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 //
 // **********************************************************************
 
@@ -8,7 +8,7 @@ import Demo.*;
 
 public class Server extends com.zeroc.Ice.Application
 {
-    class PingI implements com.zeroc.Ice.Object
+    static class PingI implements Ping
     {
     }
 

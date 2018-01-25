@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 //
 // **********************************************************************
 
@@ -114,7 +114,10 @@ public class Client
                 else if(line.Equals("f"))
                 {
                     batchOneway.ice_flushBatchRequests();
-                    batchDatagram.ice_flushBatchRequests();
+                    if(!secure)
+                    {
+                        batchDatagram.ice_flushBatchRequests();
+                    }
                 }
                 else if(line.Equals("T"))
                 {

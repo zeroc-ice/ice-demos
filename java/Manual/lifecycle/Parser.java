@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 //
 // **********************************************************************
 
@@ -309,6 +309,8 @@ class Parser
     {
         _in = new java.io.BufferedReader(new java.io.InputStreamReader(System.in));
 
+        usage();
+
         Grammar g = new Grammar(this);
         g.parse();
 
@@ -318,6 +320,8 @@ class Parser
     int parse(java.io.BufferedReader in)
     {
         _in = in;
+
+        usage();
 
         Grammar g = new Grammar(this);
         g.parse();

@@ -1,13 +1,18 @@
 buildscript {
     repositories {
-        maven {
-            url "https://${iceMavenRepo}/nexus/content/repositories/thirdparty"
-        }
+        mavenCentral()
     }
+
     dependencies {
-        classpath group: 'net.sourceforge', name: 'proguard', version: '5.0'
+        classpath "net.sf.proguard:proguard-gradle:5.2.1"
     }
 }
+
+//
+// This is necessary when building with Java9, proguard doesn't support it yet.
+//
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 slice {
     java {

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # **********************************************************************
 #
-# Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+# Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 #
 # **********************************************************************
 
@@ -11,14 +11,14 @@ Ice.loadSlice('Callback.ice')
 import Demo
 
 class CallbackI(Demo.Callback):
-    def initiateCallback(self, proxy, current=None):
+    def initiateCallback(self, proxy, current):
         print("initiating callback to: " + current.adapter.getCommunicator().proxyToString(proxy))
         try:
             proxy.callback()
         except:
             traceback.print_exc()
 
-    def shutdown(self, current=None):
+    def shutdown(self, current):
         print("shutting down...")
         current.adapter.getCommunicator().shutdown()
 

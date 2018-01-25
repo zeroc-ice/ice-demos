@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # **********************************************************************
 #
-# Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+# Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 #
 # **********************************************************************
 
@@ -14,10 +14,10 @@ class HelloI(Demo.Hello):
     def __init__(self, name):
         self.name = name
 
-    def sayHello(self, current=None):
+    def sayHello(self, current):
         print(self.name + " says Hello World!")
 
-    def shutdown(self, current=None):
+    def shutdown(self, current):
         print(self.name + " shutting down...")
         current.adapter.getCommunicator().shutdown()
 

@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 //
 // **********************************************************************
 
@@ -128,7 +128,8 @@ public:
     {
         if(argc > 1)
         {
-            throw string("usage: ") + appName();
+            const string message = "usage: ";
+            throw runtime_error(message + appName());
         }
 
         auto sessionPrx = Ice::uncheckedCast<Chat::ChatSessionPrx>(this->session());

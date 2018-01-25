@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 //
 // **********************************************************************
 
@@ -437,6 +437,8 @@ Parser::parse(bool debug)
     assert(yyin);
 
     _continue = false;
+
+    usage();
 
     int status = yyparse();
     if(_errors)

@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 //
 // **********************************************************************
 
@@ -20,7 +20,7 @@ ChatRoom::reserve(const string& name)
     lock_guard<mutex> sync(_mutex);
     if(_reserved.find(name) != _reserved.end() || _members.find(name) != _members.end())
     {
-        throw string("The name " + name + " is already in use.");
+        throw runtime_error("The name " + name + " is already in use.");
     }
     _reserved.insert(name);
 }

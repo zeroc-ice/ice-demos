@@ -1,12 +1,15 @@
 # **********************************************************************
 #
-# Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+# Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 #
 # **********************************************************************
 
 # ----------------------------------------------------------------------
 # Don't change anything below this line!
 # ----------------------------------------------------------------------
+
+# Create component dependency variables
+$(eval $(call create-project-dependencies,ice,$(ICE_HOME),cpp))
 
 slice2php_targetext     = php
 slice2php_path          = $(ice_bindir)/slice2php

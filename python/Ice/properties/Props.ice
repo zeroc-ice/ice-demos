@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 //
 // **********************************************************************
 
@@ -14,5 +14,5 @@ module Demo
     {
         idempotent Ice::PropertyDict getChanges();
         void shutdown();
-    }s
+    }
 }

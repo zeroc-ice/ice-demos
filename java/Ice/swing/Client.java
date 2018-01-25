@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 //
 // **********************************************************************
 
@@ -607,7 +607,6 @@ public class Client extends JFrame
         {
             return;
         }
-        ex.printStackTrace();
         _status.setText(ex.getClass().getName());
     }
 

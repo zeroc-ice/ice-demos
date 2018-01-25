@@ -1,52 +1,11 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 //
 // **********************************************************************
 
 const Ice = require("ice").Ice;
 const Demo = require("./generated/Throughput").Demo;
-
-function menu()
-{
-    process.stdout.write(
-        "usage:\n" +
-        "\n" +
-        "toggle type of data to send:\n" +
-        "1: sequence of bytes (default)\n" +
-        "2: sequence of strings (\"hello\")\n" +
-        "3: sequence of structs with a string (\"hello\") and a double\n" +
-        "4: sequence of structs with two ints and a double\n" +
-        "\n" +
-        "select test to run:\n" +
-        "t: Send sequence as twoway\n" +
-        "o: Send sequence as oneway\n" +
-        "r: Receive sequence\n" +
-        "e: Echo (send and receive) sequence\n" +
-        "\n" +
-        "other commands:\n" +
-        "s: shutdown server\n" +
-        "x: exit\n" +
-        "?: help\n" +
-        "\n");
-}
-
-//
-// Asynchronous loop, each call to the given function returns a
-// promise that when fulfilled runs the next iteration.
-//
-function loop(fn, repetitions)
-{
-    var i = 0;
-    var next = function()
-    {
-        if(i++ < repetitions)
-        {
-            return fn.call().then(next);
-        }
-    };
-    return next();
-}
 
 //
 // Initialize sequences.
@@ -75,9 +34,10 @@ for(let i = 0; i < Demo.FixedSeqSize; ++i)
     fixedSeq[i] = new Demo.Fixed(0, 0, 0);
 }
 
-let communicator;
-let completed = false;
-Ice.Promise.try(() =>
+(async function()
+{
+    let communicator;
+    try
     {
         let currentType = "1";
         const repetitions = 100;
@@ -87,34 +47,28 @@ Ice.Promise.try(() =>
         let wireSize = 1;
 
         //
-        // Initialize the communicator.
+        // Initialize the communicator, Create a proxy to the throughput object
+        // and down-cast the proxy to the Demo.Throughput interface.
         //
         communicator = Ice.initialize(process.argv);
+
         if(process.argv.length > 2)
         {
-            throw("too many arguments");
+            throw new Error("too many arguments");
         }
 
-        //
-        // Create a proxy to the throughput object and down-cast the
-        // proxy to the Demo.Throughput interface.
-        //
-        return Demo.ThroughputPrx.checkedCast(communicator.stringToProxy("throughput:default -p 10000")).then(twoway =>
+        const twoway = await Demo.ThroughputPrx.checkedCast(communicator.stringToProxy("throughput:default -p 10000"));
+
+        const oneway = twoway.ice_oneway();
+        menu();
+        let key = null;
+        do
+        {
+            try
             {
-                const oneway = twoway.ice_oneway();
-                menu();
                 process.stdout.write("==> ");
-                const keyLoop = new Ice.Promise();
-
-                function processKey(key)
+                for(key of await getline())
                 {
-                    if(key == "x")
-                    {
-                        completed = true;
-                        keyLoop.resolve();
-                        return;
-                    }
-
                     let proxy;
                     let operation;
 
@@ -279,89 +233,100 @@ Ice.Promise.try(() =>
 
                         let start = new Date().getTime();
                         let args = key != "r" ? [seq] : [];
-                        return loop(() => operation.apply(proxy, args), repetitions).then(() =>
-                            {
-                                //
-                                // Write the results.
-                                //
-                                let total = new Date().getTime() - start;
-                                console.log("time for " + repetitions + " sequences: " + total  + " ms");
-                                console.log("time per sequence: " + total / repetitions + " ms");
 
-                                let mbit = repetitions * seqSize * wireSize * 8.0 / total / 1000.0;
-                                if(key == "e")
-                                {
-                                    mbit *= 2;
-                                }
-                                mbit = Math.round(mbit * 100) / 100;
-                                console.log("throughput: " + mbit + " Mbps");
-                            });
+                        for(let i = 0; i < repetitions; i++)
+                        {
+                            await operation.apply(proxy, args);
+                        }
+
+                        let total = new Date().getTime() - start;
+                        console.log(`time for ${repetitions} sequences: ${total} ms`);
+                        console.log(`time per sequence: ${total / repetitions} ms`);
+
+                        let mbit = repetitions * seqSize * wireSize * 8.0 / total / 1000.0;
+                        if(key == "e")
+                        {
+                            mbit *= 2;
+                        }
+                        mbit = Math.round(mbit * 100) / 100;
+                        console.log(`throughput: ${mbit} Mbps`);
                     }
                     else if(key == "s")
                     {
-                        return twoway.shutdown();
+                        await twoway.shutdown();
+                    }
+                    else if(key == "x")
+                    {
+                        break;
                     }
                     else if(key == "?")
                     {
-                        process.stdout.write("\n");
                         menu();
                     }
                     else
                     {
-                        console.log("unknown command `" + key + "'");
-                        process.stdout.write("\n");
+                        console.log(`unknown command "${key}"`);
                         menu();
                     }
                 }
-
-                //
-                // Process keys sequentially. We chain the promise objects
-                // returned by processKey(). Once we have process all the
-                // keys we print the prompt and resume the standard input.
-                //
-                process.stdin.resume();
-                let p = Ice.Promise.resolve();
-                process.stdin.on("data", buffer =>
-                    {
-                        process.stdin.pause();
-                        let data = buffer.toString("utf-8").trim().split("");
-                        // Process each key
-                        data.forEach(key =>
-                        {
-                            p = p.then(() => processKey(key)).catch(ex => console.log(ex));
-                        });
-                        // Once we're done, print the prompt
-                        p.then(() =>
-                        {
-                            if(!completed)
-                            {
-                                process.stdout.write("==> ");
-                                process.stdin.resume();
-                            }
-                        });
-                        data = [];
-                    });
-
-                return keyLoop;
-            });
+            }
+            catch(ex)
+            {
+                console.log(ex.toString());
+            }
+        }
+        while(key != "x")
     }
-).finally(() =>
+    catch(ex)
     {
-        //
-        // Destroy the communicator if required.
-        //
+        process.exitCode = 1;
+        console.log(ex.toString());
+    }
+    finally
+    {
         if(communicator)
         {
-            return communicator.destroy();
+            await communicator.destroy();
         }
     }
-).then(
-    () => process.exit(0),
-    ex =>
-    {
-        //
-        // Handle any exceptions above.
-        //
-        console.log(ex);
-        process.exit(1);
-    });
+}());
+
+function menu()
+{
+    process.stdout.write(
+`usage:
+
+toggle type of data to send:
+1: sequence of bytes (default)
+2: sequence of strings ("hello")
+3: sequence of structs with a string ("hello") and a double
+4: sequence of structs with two ints and a double
+
+select test to run:
+t: Send sequence as twoway
+o: Send sequence as oneway
+r: Receive sequence
+e: Echo (send and receive) sequence
+
+other commands:
+s: shutdown server
+x: exit
+?: help
+`);
+}
+
+//
+// Asynchonously process stdin lines using a promise
+//
+function getline()
+{
+    return new Promise((resolve, reject) =>
+                       {
+                           process.stdin.resume();
+                           process.stdin.once("data", buffer =>
+                                              {
+                                                  process.stdin.pause();
+                                                  resolve(buffer.toString("utf-8").trim());
+                                              });
+                       });
+}

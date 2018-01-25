@@ -97,20 +97,18 @@ select `Build`.
   * Open a Visual Studio command prompt
   ```
   cd ice-demos\cpp11
-  MSBuild /p:ICE_SRC_DIST=all /p:IceHome=<Ice dist path> /p:Configuration=<Release or Debug> "C++11 demos.sln"
+  MSBuild /p:ICE_HOME=<Ice dist path> /p:Configuration=<Release or Debug> "C++11 demos.sln"
   ```
 
 - Build from Visual Studio
   * Open a Visual Studio command prompt
   ```
-  set ICE_SRC_DIST=all
+  set ICE_HOME=<Ice dist path>
   devenv
   ```
 
-  * When Visual Studio starts set `Ice home directory` in
-    `Tools > Options > Projects and Solutions > Ice Builder`
-  * Disable automatic restoring of NuGet packages in Visual Studio
-    `Tools > Options > NuGet Package Manager`
+  * When Visual Studio starts disable automatic restoring of NuGet packages
+    in Visual Studio `Tools > Options > NuGet Package Manager`
   * Select your target configuration (Debug or Release) and platform (Win32 or
     x64). Right click on the desired demo in the Solution Explorer window and
     select `Build`.

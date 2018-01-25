@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 //
 // **********************************************************************
 
@@ -127,14 +127,14 @@ PollingChatSessionI::send(string message, const Ice::Current&)
     {
         msg = validateMessage(message);
     }
-    catch(const string& reason)
+    catch(const exception& ex)
     {
         if(_trace)
         {
             Ice::Trace out(_logger, "info");
-            out << "User '" << _name << "' sent an invalid message:\n" << reason;
+            out << "User '" << _name << "' sent an invalid message:\n" << ex;
         }
-        throw Chat::InvalidMessageException(reason);
+        throw Chat::InvalidMessageException(ex.what());
     }
     return _chatRoom->send(_name, move(msg));
 }
