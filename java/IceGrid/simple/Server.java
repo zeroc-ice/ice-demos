@@ -1,33 +1,46 @@
+import Ice.hello.HelloI;
+
 // **********************************************************************
 //
 // Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 //
 // **********************************************************************
 
-public class Server extends com.zeroc.Ice.Application
+public class Server
 {
-    @Override
-    public int run(String[] args)
+    public static void main(String[] args)
     {
-        if(args.length > 0)
+        int status = 0;
+        java.util.List<String> extraArgs = new java.util.ArrayList<>();
+
+        //
+        // try with resource block - communicator is automatically destroyed
+        // at the end of this try block
+        //
+        try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, extraArgs))
         {
-            System.err.println(appName() + ": too many arguments");
-            return 1;
+            Runtime.getRuntime().addShutdownHook(new Thread(() ->
+            {
+                communicator.shutdown();
+            }));
+
+            if(!extraArgs.isEmpty())
+            {
+                System.err.println("too many arguments");
+                status = 1;
+            }
+            else
+            {
+                com.zeroc.Ice.ObjectAdapter adapter = communicator.createObjectAdapter("Hello");
+                com.zeroc.Ice.Properties properties = communicator.getProperties();
+                com.zeroc.Ice.Identity id = com.zeroc.Ice.Util.stringToIdentity(properties.getProperty("Identity"));
+                adapter.add(new HelloI(properties.getProperty("Ice.ProgramName")), id);
+                adapter.activate();
+
+                communicator.waitForShutdown();
+            }
         }
 
-        com.zeroc.Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Hello");
-        com.zeroc.Ice.Properties properties = communicator().getProperties();
-        com.zeroc.Ice.Identity id = com.zeroc.Ice.Util.stringToIdentity(properties.getProperty("Identity"));
-        adapter.add(new HelloI(properties.getProperty("Ice.ProgramName")), id);
-        adapter.activate();
-        communicator().waitForShutdown();
-        return 0;
-    }
-
-    static public void main(String[] args)
-    {
-        Server app = new Server();
-        int status = app.main("Server", args);
         System.exit(status);
     }
 }

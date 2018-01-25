@@ -9,18 +9,41 @@ import java.util.concurrent.CompletionException;
 import java.util.concurrent.ExecutionException;
 import Demo.*;
 
-public class Client extends com.zeroc.Ice.Application
+public class Client
 {
-    @Override
-    public int run(String[] args)
+    public static void main(String[] args)
     {
-        if(args.length > 0)
+        int status = 0;
+        java.util.List<String> extraArgs = new java.util.ArrayList<>();
+
+        //
+        // try with resource block - communicator is automatically destroyed
+        // at the end of this try block
+        //
+        try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.client", extraArgs))
         {
-            System.err.println(appName() + ": too many arguments");
-            return 1;
+            Runtime.getRuntime().addShutdownHook(new Thread(() ->
+            {
+                communicator.destroy();
+            }));
+
+            if(!extraArgs.isEmpty())
+            {
+                System.err.println("too many arguments");
+                status = 1;
+            }
+            else
+            {
+                status = run(communicator);
+            }
         }
 
-        CalculatorPrx calculator = CalculatorPrx.checkedCast(communicator().propertyToProxy("Calculator.Proxy"));
+        System.exit(status);
+    }
+
+    private static int run(com.zeroc.Ice.Communicator communicator)
+    {
+        CalculatorPrx calculator = CalculatorPrx.checkedCast(communicator.propertyToProxy("Calculator.Proxy"));
         if(calculator == null)
         {
             System.err.println("invalid proxy");
@@ -142,12 +165,5 @@ public class Client extends com.zeroc.Ice.Application
 
         calculator.shutdown();
         return 0;
-    }
-
-    public static void main(String[] args)
-    {
-        Client app = new Client();
-        int status = app.main("Client", args, "config.client");
-        System.exit(status);
     }
 }

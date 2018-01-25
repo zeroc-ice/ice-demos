@@ -5,32 +5,58 @@
 // **********************************************************************
 
 import Filesystem.*;
+import Ice.hello.HelloI;
 
-public class Server extends com.zeroc.Ice.Application
+public class Server
 {
-    public int run(String[] args)
+    public static void main(String[] args)
     {
-        //
-        // Terminate cleanly on receipt of a signal
-        //
-        shutdownOnInterrupt();
+        int status = 0;
+        java.util.List<String> extraArgs = new java.util.ArrayList<>();
 
         //
+        // try with resource block - communicator is automatically destroyed
+        // at the end of this try block
+        //
+        try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, extraArgs))
+        {
+            Runtime.getRuntime().addShutdownHook(new Thread(() ->
+            {
+                communicator.shutdown();
+                System.err.println("terminating");
+            }));
+
+            if(!extraArgs.isEmpty())
+            {
+                System.err.println("too many arguments");
+                status = 1;
+            }
+            else
+            {
+                status = run(communicator);
+            }
+        }
+
+        System.exit(status);
+    }
+
+    private static int run(com.zeroc.Ice.Communicator communicator)
+    {
         // Create an object adapter.
         //
         com.zeroc.Ice.ObjectAdapter adapter =
-            communicator().createObjectAdapterWithEndpoints("SimpleFilesystem", "default -h localhost -p 10000");
+            communicator.createObjectAdapterWithEndpoints("SimpleFilesystem", "default -h localhost -p 10000");
 
         //
         // Create the root directory (with name "/" and no parent)
         //
-        DirectoryI root = new DirectoryI(communicator(), "/", null);
+        DirectoryI root = new DirectoryI(communicator, "/", null);
         root.activate(adapter);
 
         //
         // Create a file called "README" in the root directory
         //
-        FileI file = new FileI(communicator(), "README", root);
+        FileI file = new FileI(communicator, "README", root);
         String[] text;
         text = new String[]{ "This file system contains a collection of poetry." };
         try
@@ -46,13 +72,13 @@ public class Server extends com.zeroc.Ice.Application
         //
         // Create a directory called "Coleridge" in the root directory
         //
-        DirectoryI coleridge = new DirectoryI(communicator(), "Coleridge", root);
+        DirectoryI coleridge = new DirectoryI(communicator, "Coleridge", root);
         coleridge.activate(adapter);
 
         //
         // Create a file called "Kubla_Khan" in the Coleridge directory
         //
-        file = new FileI(communicator(), "Kubla_Khan", coleridge);
+        file = new FileI(communicator, "Kubla_Khan", coleridge);
         text = new String[]{ "In Xanadu did Kubla Khan",
                              "A stately pleasure-dome decree:",
                              "Where Alph, the sacred river, ran",
@@ -76,19 +102,8 @@ public class Server extends com.zeroc.Ice.Application
         //
         // Wait until we are done
         //
-        communicator().waitForShutdown();
-
-        if(interrupted())
-        {
-            System.err.println(appName() + ": terminating");
-        }
+        communicator.waitForShutdown();
 
         return 0;
-    }
-
-    public static void main(String[] args)
-    {
-        Server app = new Server();
-        System.exit(app.main("Server", args));
     }
 }
