@@ -23,10 +23,9 @@ class Client(Ice.Application):
             print("invalid proxy")
             return 1
 
-        content = fetcher.fetch('http://www.google.com')
-        print("Fetched " + str(len(content)) + " bytes from www.google.com")
-        content = fetcher.fetch('http://www.zeroc.com')
-        print("Fetched " + str(len(content)) + " bytes from www.zeroc.com")
+        content = fetcher.fetch('http://zeroc.com')
+        print("HTTP headers from zeroc.com:")
+        print(content)
 
         fetcher.shutdown()
         return 0
