@@ -7,7 +7,9 @@ of the same name. There are two ways you can use this app:
 server's host name or IP address in the app's "Host" field.
 
 2. Start an IceDiscovery/hello server from any language mapping and
-check the "Use IceDiscovery" box.
+check the "Use IceDiscovery" box. Note that multicast is not supported
+in the emulator so this app must be installed on a device in order to
+use IceDiscovery.
 
 Refer to the README file in the server's directory for more information
 on starting the server.
