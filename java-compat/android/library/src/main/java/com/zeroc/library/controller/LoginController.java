@@ -103,11 +103,15 @@ public class LoginController
 
                     if(initData.properties.getPropertyAsIntWithDefault("IceSSL.UsePlatformCAs", 0) == 0)
                     {
+                        //
+                        // We need to postpone plug-in initialization so that we can configure IceSSL
+                        // with a resource stream for the certificate information.
+                        //
                         initData.properties.setProperty("Ice.InitPlugins", "0");
-                        java.io.InputStream certStream = resources.openRawResource(R.raw.client);
                         _communicator = Ice.Util.initialize(initData);
 
                         IceSSL.Plugin plugin = (IceSSL.Plugin)_communicator.getPluginManager().getPlugin("IceSSL");
+                        java.io.InputStream certStream = resources.openRawResource(R.raw.client);
                         plugin.setTruststoreStream(certStream);
 
                         _communicator.getPluginManager().initializePlugins();

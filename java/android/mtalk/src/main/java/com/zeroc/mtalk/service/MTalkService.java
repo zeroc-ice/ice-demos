@@ -257,8 +257,13 @@ public class MTalkService extends Service implements com.zeroc.mtalk.service.Ser
             initData.properties.setProperty("IceSSL.KeystoreType", "BKS");
             initData.properties.setProperty("IceSSL.TruststoreType", "BKS");
             initData.properties.setProperty("IceSSL.Password", "password");
-            initData.properties.setProperty("Ice.InitPlugins", "0");
             initData.properties.setProperty("Ice.Plugin.IceSSL", "com.zeroc.IceSSL.PluginFactory");
+
+            //
+            // We need to postpone plug-in initialization so that we can configure IceSSL
+            // with a resource stream for the certificate information.
+            //
+            initData.properties.setProperty("Ice.InitPlugins", "0");
 
             //
             // Initialize the communicator.
