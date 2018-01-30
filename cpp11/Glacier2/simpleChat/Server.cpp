@@ -43,9 +43,10 @@ int main(int argc, char* argv[])
         // and its dtor destroys this communicator.
         //
         Ice::CommunicatorHolder ich(argc, argv, "config.server");
+        auto communicator = ich.communicator();
 
         ctrlCHandler.setCallback(
-            [communicator = ich.communicator()](int)
+            [communicator](int)
             {
                 communicator->shutdown();
             });
