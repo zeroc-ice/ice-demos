@@ -21,7 +21,7 @@ def run(communicator):
     base = communicator.propertyToProxy('SessionFactory.Proxy')
     factory = Demo.SessionFactoryPrx.checkedCast(base)
     if not factory:
-        print(args[0] + ": invalid proxy")
+        print(sys.argv[0] + ": invalid proxy")
         return 1
     session = factory.create(name)
 

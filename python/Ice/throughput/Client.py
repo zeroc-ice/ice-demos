@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import sys, time, traceback, Ice
+import sys, time, Ice
 
 Ice.loadSlice('Throughput.ice')
 import Demo
@@ -13,7 +13,7 @@ import Demo
 def run(communicator):
     throughput = Demo.ThroughputPrx.checkedCast(communicator.propertyToProxy('Throughput.Proxy'))
     if not throughput:
-        print(args[0] + ": invalid proxy")
+        print(sys.argv[0] + ": invalid proxy")
         return 1
     throughputOneway = Demo.ThroughputPrx.uncheckedCast(throughput.ice_oneway())
 

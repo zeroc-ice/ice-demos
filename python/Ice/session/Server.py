@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import sys, threading, traceback, Ice
+import sys, threading, Ice
 
 Ice.loadSlice('Session.ice')
 import Demo

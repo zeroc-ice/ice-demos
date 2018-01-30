@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import sys, traceback, Ice
+import sys, Ice
 
 Ice.loadSlice('Context.ice')
 import Demo
@@ -13,7 +13,7 @@ import Demo
 def run(communicator):
     proxy = Demo.ContextPrx.checkedCast(communicator.propertyToProxy('Context.Proxy'))
     if not proxy:
-        print(args[0] + ": invalid proxy")
+        print(sys.argv[0] + ": invalid proxy")
         return 1
 
     menu()

@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import sys, traceback, Ice
+import sys, Ice
 
 Ice.loadSlice('Throughput.ice')
 import Demo
