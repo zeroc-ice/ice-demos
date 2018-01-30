@@ -23,7 +23,6 @@ if(this.iceHome) {
 buildscript {
 
     ext.iceMavenRepo = System.env.ICE_MAVEN_REPOSITORY ? System.env.ICE_MAVEN_REPOSITORY : "repo.zeroc.com"
-    ext.useLocalOnly = gradle.startParameter.isOffline()
 
     //
     // If iceBuilderHome is set add its lib directory it to the local maven repositories
@@ -112,9 +111,7 @@ def demoIceBoxServer() {
         iceboxserver localDependency("ice")
         iceboxserver localDependency("icessl")
         iceboxserver localDependency("icebox")
-        if (!useLocalOnly) {
-            iceboxserver "org.apache.commons:commons-compress:1.14"
-        }
+        iceboxserver "org.apache.commons:commons-compress:1.14"
     }
 
     // Create a jar for the client & server which includes everything in the demo.

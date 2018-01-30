@@ -23,19 +23,16 @@ subprojects {
             }
         }
 
-        if (!useLocalOnly) {
-
-            if(this.devRepo) {
-                maven {
-                    url this.devRepo
-                }
-            }
-
-            mavenCentral()
-
+        if(this.devRepo) {
             maven {
-                url "https://${iceMavenRepo}/nexus/content/repositories/releases"
+                url this.devRepo
             }
+        }
+
+        mavenCentral()
+
+        maven {
+            url "https://${iceMavenRepo}/nexus/content/repositories/releases"
         }
     }
 }

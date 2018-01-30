@@ -27,9 +27,7 @@
 
         dependencies {
             compile localDependency("ice-compat")
-            if (!useLocalOnly) {
-                runtime "org.apache.commons:commons-compress:1.14"
-            }
+            runtime "org.apache.commons:commons-compress:1.14"
         }
 
         // Don't create the default jar.
