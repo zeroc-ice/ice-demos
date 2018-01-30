@@ -5,9 +5,8 @@
 // **********************************************************************
 
 import Demo.*;
-import Ice.hello.HelloI;
 
-public class Subscriber
+public class Subscriber extends com.zeroc.Ice.Application
 {
     public class ClockI implements Clock
     {
@@ -18,37 +17,16 @@ public class Subscriber
         }
     }
 
-    public static void main(String[] args)
+    public void usage()
     {
-        int status = 0;
-        java.util.List<String> extraArgs = new java.util.ArrayList<String>();
-
-        //
-        // try with resource block - communicator is automatically destroyed
-        // at the end of this try block
-        //
-        try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.sub", extraArgs))
-        {
-            Runtime.getRuntime().addShutdownHook(new Thread(() ->
-            {
-                communicator.shutdown();
-            }));
-
-            status = run(communicator, extraArgs.toArray(new String[extraArgs.size()]));
-        }
-
-        System.exit(status);
-    }
-
-    private static void usage()
-    {
-        System.out.println("Usage: [--batch] [--datagram|--twoway|--ordered|--oneway] " +
+        System.out.println("Usage: " + appName() + " [--batch] [--datagram|--twoway|--ordered|--oneway] " +
                            "[--retryCount count] [--id id] [topic]");
     }
 
-    private static int run(com.zeroc.Ice.Communicator communicator, String[] args)
+    @Override
+    public int run(String[] args)
     {
-        args = communicator.getProperties().parseCommandLineOptions("Clock", args);
+        args = communicator().getProperties().parseCommandLineOptions("Clock", args);
 
         String topicName = "time";
         String option = "None";
@@ -138,12 +116,12 @@ public class Subscriber
 
         if(batch && (option.equals("Twoway") || option.equals("Ordered")))
         {
-            System.err.println("batch can only be set with oneway or datagram");
+            System.err.println(appName() + ": batch can only be set with oneway or datagram");
             return 1;
         }
 
         com.zeroc.IceStorm.TopicManagerPrx manager = com.zeroc.IceStorm.TopicManagerPrx.checkedCast(
-            communicator.propertyToProxy("TopicManager.Proxy"));
+            communicator().propertyToProxy("TopicManager.Proxy"));
         if(manager == null)
         {
             System.err.println("invalid proxy");
@@ -166,12 +144,12 @@ public class Subscriber
             }
             catch(com.zeroc.IceStorm.TopicExists ex)
             {
-                System.err.println("temporary failure, try again.");
+                System.err.println(appName() + ": temporary failure, try again.");
                 return 1;
             }
         }
 
-        com.zeroc.Ice.ObjectAdapter adapter = communicator.createObjectAdapter("Clock.Subscriber");
+        com.zeroc.Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Clock.Subscriber");
 
         //
         // Add a servant for the Ice object. If --id is used the
@@ -262,10 +240,18 @@ public class Subscriber
             return 1;
         }
 
-        communicator.waitForShutdown();
+        shutdownOnInterrupt();
+        communicator().waitForShutdown();
 
         topic.unsubscribe(subscriber);
 
         return 0;
+    }
+
+    public static void main(String[] args)
+    {
+        Subscriber app = new Subscriber();
+        int status = app.main("Subscriber", args, "config.sub");
+        System.exit(status);
     }
 }

@@ -1,12 +1,10 @@
-import Ice.hello.HelloI;
-
 // **********************************************************************
 //
 // Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 //
 // **********************************************************************
 
-class Server
+class Server extends com.zeroc.Ice.Application
 {
     static class LocatorI implements com.zeroc.Ice.ServantLocator
     {
@@ -35,40 +33,18 @@ class Server
         private com.zeroc.Ice.Object _servant;
     }
 
-    public static void main(String[] args)
+    @Override
+    public int run(String[] args)
     {
-        int status = 0;
-        java.util.List<String> extraArgs = new java.util.ArrayList<String>();
+        args = communicator().getProperties().parseCommandLineOptions("JDBC", args);
 
-        //
-        // try with resource block - communicator is automatically destroyed
-        // at the end of this try block
-        //
-        try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.server", extraArgs))
+        if(args.length > 0)
         {
-            Runtime.getRuntime().addShutdownHook(new Thread(() ->
-            {
-                communicator.shutdown();
-            }));
-
-            if(!extraArgs.isEmpty())
-            {
-                System.err.println("too many arguments");
-                status = 1;
-            }
-            else
-            {
-                status = run(communicator, extraArgs.toArray(new String[extraArgs.size()]));
-            }
+            System.err.println(appName() + ": too many arguments");
+            return 1;
         }
 
-        System.exit(status);
-    }
-
-    private static int run(com.zeroc.Ice.Communicator communicator, String[] args)
-    {
-        args = communicator.getProperties().parseCommandLineOptions("JDBC", args);
-        com.zeroc.Ice.Properties properties = communicator.getProperties();
+        com.zeroc.Ice.Properties properties = communicator().getProperties();
 
         String username = properties.getProperty("JDBC.Username");
         String password = properties.getProperty("JDBC.Password");
@@ -79,7 +55,7 @@ class Server
             nConnections = 1;
         }
         ConnectionPool pool = null;
-        com.zeroc.Ice.Logger logger = communicator.getLogger();
+        com.zeroc.Ice.Logger logger = communicator().getLogger();
 
         try
         {
@@ -112,7 +88,7 @@ class Server
         //
         // Create an object adapter
         //
-        com.zeroc.Ice.ObjectAdapter adapter = communicator.createObjectAdapter("SessionFactory");
+        com.zeroc.Ice.ObjectAdapter adapter = communicator().createObjectAdapter("SessionFactory");
 
         SQLRequestContext.initialize(logger, pool);
         adapter.addServantLocator(new LocatorI(new BookI()), "book");
@@ -127,10 +103,19 @@ class Server
         //
         adapter.activate();
 
-        communicator.waitForShutdown();
+        shutdownOnInterrupt();
+        communicator().waitForShutdown();
+        defaultInterrupt();
 
         pool.destroy();
 
         return 0;
+    }
+
+    static public void main(String[] args)
+    {
+        Server app = new Server();
+        int status = app.main("demo.Database.library.Server", args, "config.server");
+        System.exit(status);
     }
 }

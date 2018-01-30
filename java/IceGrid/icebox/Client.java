@@ -6,45 +6,34 @@
 
 import Demo.*;
 
-public class Client
+public class Client extends com.zeroc.Ice.Application
 {
-    public static void main(String[] args)
+    @Override
+    public int run(String[] args)
     {
-        int status = 0;
-        java.util.List<String> extraArgs = new java.util.ArrayList<>();
-
-        //
-        // try with resource block - communicator is automatically destroyed
-        // at the end of this try block
-        //
-        try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.client", extraArgs))
+        if(args.length > 0)
         {
-            Runtime.getRuntime().addShutdownHook(new Thread(() ->
-            {
-                communicator.destroy();
-            }));
-
-            if(!extraArgs.isEmpty())
-            {
-                System.err.println("too many arguments");
-                status = 1;
-            }
-            else
-            {
-                HelloPrx hello = HelloPrx.uncheckedCast(communicator.propertyToProxy("Hello.Proxy"));
-
-                if(hello == null)
-                {
-                    System.err.println("Hello.Proxy not set");
-                    status = 1;
-                }
-                else
-                {
-                    hello.sayHello();
-                }
-            }
+            System.err.println(appName() + ": too many arguments");
+            return 1;
         }
 
+        HelloPrx hello = HelloPrx.uncheckedCast(communicator().propertyToProxy("Hello.Proxy"));
+
+        if(hello == null)
+        {
+            System.err.println(appName() + ": Hello.Proxy not set");
+            return 1;
+        }
+
+        hello.sayHello();
+
+        return 0;
+    }
+
+    public static void main(String[] args)
+    {
+        Client app = new Client();
+        int status = app.main("Client", args, "config.client");
         System.exit(status);
     }
 }

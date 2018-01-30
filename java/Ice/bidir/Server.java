@@ -4,42 +4,33 @@
 //
 // **********************************************************************
 
-public class Server
+public class Server extends com.zeroc.Ice.Application
 {
-    public static void main(String[] args)
+    @Override
+    public int run(String[] args)
     {
-        int status = 0;
-        java.util.List<String> extraArgs = new java.util.ArrayList<>();
-
-        //
-        // try with resource block - communicator is automatically destroyed
-        // at the end of this try block
-        //
-        try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.server", extraArgs))
+        if(args.length > 0)
         {
-            Runtime.getRuntime().addShutdownHook(new Thread(() ->
-            {
-                communicator.shutdown();
-            }));
-
-            if(!extraArgs.isEmpty())
-            {
-                System.err.println("too many arguments");
-                status = 1;
-            }
-            else
-            {
-                com.zeroc.Ice.ObjectAdapter adapter = communicator.createObjectAdapter("Callback.Server");
-                CallbackSenderI sender = new CallbackSenderI();
-                adapter.add(sender, com.zeroc.Ice.Util.stringToIdentity("sender"));
-                adapter.activate();
-                sender.start();
-
-                communicator.waitForShutdown();
-                sender.destroy();
-            }
+            System.err.println(appName() + ": too many arguments");
+            return 1;
         }
 
+        com.zeroc.Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Callback.Server");
+        CallbackSenderI sender = new CallbackSenderI();
+        adapter.add(sender, com.zeroc.Ice.Util.stringToIdentity("sender"));
+        adapter.activate();
+
+        sender.start();
+        communicator().waitForShutdown();
+        sender.destroy();
+
+        return 0;
+    }
+
+    public static void main(String[] args)
+    {
+        Server app = new Server();
+        int status = app.main("Server", args, "config.server");
         System.exit(status);
     }
 }

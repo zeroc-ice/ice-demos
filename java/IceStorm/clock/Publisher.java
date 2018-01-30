@@ -6,36 +6,15 @@
 
 import Demo.*;
 
-public class Publisher
+public class Publisher extends com.zeroc.Ice.Application
 {
-    public static void main(String[] args)
+    public void usage()
     {
-        int status = 0;
-        java.util.List<String> extraArgs = new java.util.ArrayList<String>();
-
-        //
-        // try with resource block - communicator is automatically destroyed
-        // at the end of this try block
-        //
-        try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.pun", extraArgs))
-        {
-            Runtime.getRuntime().addShutdownHook(new Thread(() ->
-            {
-                communicator.shutdown();
-            }));
-
-            status = run(communicator, extraArgs.toArray(new String[extraArgs.size()]));
-        }
-
-        System.exit(status);
+        System.out.println("Usage: " + appName() + " [--datagram|--twoway|--oneway] [topic]");
     }
 
-    private static void usage()
-    {
-        System.out.println("Usage: [--datagram|--twoway|--oneway] [topic]");
-    }
-
-    private static int run(com.zeroc.Ice.Communicator communicator, String[] args)
+    @Override
+    public int run(String[] args)
     {
         String option = "None";
         String topicName = "time";
@@ -81,7 +60,7 @@ public class Publisher
         }
 
         com.zeroc.IceStorm.TopicManagerPrx manager = com.zeroc.IceStorm.TopicManagerPrx.checkedCast(
-            communicator.propertyToProxy("TopicManager.Proxy"));
+            communicator().propertyToProxy("TopicManager.Proxy"));
         if(manager == null)
         {
             System.err.println("invalid proxy");
@@ -104,7 +83,7 @@ public class Publisher
             }
             catch(com.zeroc.IceStorm.TopicExists ex)
             {
-                System.err.println("temporary failure, try again.");
+                System.err.println(appName() + ": temporary failure, try again.");
                 return 1;
             }
         }
@@ -153,5 +132,12 @@ public class Publisher
         }
 
         return 0;
+    }
+
+    public static void main(String[] args)
+    {
+        Publisher app = new Publisher();
+        int status = app.main("Publisher", args, "config.pub");
+        System.exit(status);
     }
 }

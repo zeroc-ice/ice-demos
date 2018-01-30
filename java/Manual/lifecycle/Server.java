@@ -5,60 +5,51 @@
 // **********************************************************************
 
 import FilesystemI.*;
-import Ice.hello.HelloI;
 
-class Server
+class Server extends com.zeroc.Ice.Application
 {
-    public static void main(String[] args)
+    @Override
+    public int run(String[] args)
     {
-        int status = 0;
-        java.util.List<String> extraArgs = new java.util.ArrayList<>();
+        //
+        // Terminate cleanly on receipt of a signal.
+        //
+        shutdownOnInterrupt();
 
         //
-        // try with resource block - communicator is automatically destroyed
-        // at the end of this try block
+        // Create an object adapter
         //
-        try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, extraArgs))
+        com.zeroc.Ice.ObjectAdapter adapter = communicator().createObjectAdapterWithEndpoints(
+            "LifecycleFilesystem", "default -h localhost -p 10000");
+
+        //
+        // Create the root directory.
+        //
+        DirectoryI root = new DirectoryI();
+        com.zeroc.Ice.Identity id = new com.zeroc.Ice.Identity();
+        id.name = "RootDir";
+        adapter.add(root, id);
+
+        //
+        // All objects are created, allow client requests now.
+        //
+        adapter.activate();
+
+        //
+        // Wait until we are done.
+        //
+        communicator().waitForShutdown();
+        if(interrupted())
         {
-            Runtime.getRuntime().addShutdownHook(new Thread(() ->
-            {
-                communicator.shutdown();
-                System.err.println("received signal, shutting down");
-            }));
-
-            if(!extraArgs.isEmpty())
-            {
-                System.err.println("too many arguments");
-                status = 1;
-            }
-            else
-            {
-                //
-                // Create an object adapter
-                //
-                com.zeroc.Ice.ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints(
-                    "LifecycleFilesystem", "default -h localhost -p 10000");
-
-                //
-                // Create the root directory.
-                //
-                DirectoryI root = new DirectoryI();
-                com.zeroc.Ice.Identity id = new com.zeroc.Ice.Identity();
-                id.name = "RootDir";
-                adapter.add(root, id);
-
-                //
-                // All objects are created, allow client requests now.
-                //
-                adapter.activate();
-
-                //
-                // Wait until we are done.
-                //
-                communicator.waitForShutdown();
-            }
+            System.err.println(appName() + ": received signal, shutting down");
         }
 
-        System.exit(status);
+        return 0;
+    }
+
+    static public void main(String[] args)
+    {
+        Server app = new Server();
+        app.main("demo.book.lifecycle.Server", args);
     }
 }

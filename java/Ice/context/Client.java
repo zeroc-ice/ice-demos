@@ -19,11 +19,6 @@ public class Client
         //
         try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.client", extraArgs))
         {
-            Runtime.getRuntime().addShutdownHook(new Thread(() ->
-            {
-                communicator.destroy();
-            }));
-
             if(!extraArgs.isEmpty())
             {
                 System.err.println("too many arguments");
