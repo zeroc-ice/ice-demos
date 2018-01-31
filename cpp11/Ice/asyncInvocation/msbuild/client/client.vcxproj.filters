@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="..\..\Client.cpp" />
     <ClCompile Include="Win32\Debug\Calculator.cpp">
       <Filter>Source Files\Win32\Debug</Filter>
     </ClCompile>
@@ -13,6 +12,9 @@
     </ClCompile>
     <ClCompile Include="x64\Release\Calculator.cpp">
       <Filter>Source Files\x64\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Client.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

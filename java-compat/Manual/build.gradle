@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 //
 // **********************************************************************
 
@@ -25,9 +25,7 @@
 
         dependencies {
             compile localDependency("ice-compat")
-            if (!useLocalOnly) {
-                runtime "org.apache.commons:commons-compress:1.14"
-            }
+            runtime "org.apache.commons:commons-compress:1.14"
         }
 
         // Don't create the default jar.

@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 //
 // **********************************************************************
 
@@ -22,7 +22,7 @@ main(int argc, char* argv[])
     Ice::registerIceWS();
 #endif
 
-    int status = EXIT_SUCCESS;
+    int status = 0;
 
     try
     {
@@ -38,7 +38,7 @@ main(int argc, char* argv[])
         if(argc > 1)
         {
             cerr << argv[0] << ": too many arguments" << endl;
-            status = EXIT_FAILURE;
+            status = 1;
         }
         else
         {
@@ -48,7 +48,7 @@ main(int argc, char* argv[])
     catch(const std::exception& ex)
     {
         cerr << argv[0] << ": " << ex.what() << endl;
-        status = EXIT_FAILURE;
+        status = 1;
     }
 
     return status;
@@ -63,7 +63,7 @@ run(const Ice::CommunicatorPtr& communicator)
     if(!throughput)
     {
         cerr << "invalid proxy" << endl;
-        return EXIT_FAILURE;
+        return 1;
     }
 
     ThroughputPrx throughputOneway = throughput->ice_oneway();
@@ -437,7 +437,7 @@ run(const Ice::CommunicatorPtr& communicator)
     }
     while(cin.good() && c != 'x');
 
-    return EXIT_SUCCESS;
+    return 0;
 }
 
 void

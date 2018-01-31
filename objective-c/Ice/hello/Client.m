@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 //
 // **********************************************************************
 
@@ -19,7 +19,7 @@ main(int argc, char* argv[])
     ICEregisterIceWS(YES);
 #endif
 
-    int status = EXIT_SUCCESS;
+    int status = 0;
     @autoreleasepool
     {
         id<ICECommunicator> communicator = nil;
@@ -30,7 +30,7 @@ main(int argc, char* argv[])
             if(argc > 1)
             {
                 NSLog(@"%s: too many arguments", argv[0]);
-                status = EXIT_FAILURE;
+                status = 1;
             }
             else
             {
@@ -40,7 +40,7 @@ main(int argc, char* argv[])
         @catch(ICELocalException* ex)
         {
             NSLog(@"%@", ex);
-            status = EXIT_FAILURE;
+            status = 1;
         }
 
         [communicator destroy];
@@ -58,7 +58,7 @@ run(id<ICECommunicator> communicator)
     if(!twoway)
     {
         fprintf(stderr, "invalid proxy\n");
-        return EXIT_FAILURE;
+        return 1;
     }
     id<DemoHelloPrx> oneway = [twoway ice_oneway];
     id<DemoHelloPrx> batchOneway = [twoway ice_batchOneway];
@@ -219,7 +219,7 @@ run(id<ICECommunicator> communicator)
     }
     while(c != EOF && c != 'x');
 
-    return EXIT_SUCCESS;
+    return 0;
 }
 
 void

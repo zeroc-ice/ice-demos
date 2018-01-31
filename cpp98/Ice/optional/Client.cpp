@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 //
 // **********************************************************************
 
@@ -33,14 +33,14 @@ ContactClient::run(int argc, char* argv[])
     if(argc > 1)
     {
         cerr << appName() << ": too many arguments" << endl;
-        return EXIT_FAILURE;
+        return 1;
     }
 
     ContactDBPrx contactdb = ContactDBPrx::checkedCast(communicator()->propertyToProxy("ContactDB.Proxy"));
     if(!contactdb)
     {
         cerr << argv[0] << ": invalid proxy" << endl;
-        return EXIT_FAILURE;
+        return 1;
     }
 
     //
@@ -235,5 +235,5 @@ ContactClient::run(int argc, char* argv[])
 
     contactdb->shutdown();
 
-    return EXIT_SUCCESS;
+    return 0;
 }

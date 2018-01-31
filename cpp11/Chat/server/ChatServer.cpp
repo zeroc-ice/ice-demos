@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 //
 // **********************************************************************
 
@@ -65,10 +65,10 @@ ChatServer::start(int, char*[], int& status)
     }
     catch(const Ice::LocalException&)
     {
-        status = EXIT_FAILURE;
+        status = 1;
         throw;
     }
-    status = EXIT_SUCCESS;
+    status = 0;
     return true;
 }
 

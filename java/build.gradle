@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 //
 // **********************************************************************
 
@@ -20,18 +20,16 @@ subprojects {
             }
         }
 
-        if (!useLocalOnly) {
-            if(this.devRepo) {
-                maven {
-                    url this.devRepo
-                }
-            }
-
-            mavenCentral()
-
+        if(this.devRepo) {
             maven {
-                url "https://${iceMavenRepo}/nexus/content/repositories/releases"
+                url this.devRepo
             }
+        }
+
+        mavenCentral()
+
+        maven {
+            url "https://${iceMavenRepo}/nexus/content/repositories/releases"
         }
     }
 

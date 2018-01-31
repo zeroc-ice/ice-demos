@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 //
 // **********************************************************************
 
@@ -23,22 +23,45 @@ public:
     }
 };
 
-class Subscriber : public Ice::Application
-{
-public:
+int run(const shared_ptr<Ice::Communicator>& communicator, int argc, char* argv[]);
 
-    virtual int run(int, char*[]) override;
-};
-
-int
-main(int argc, char* argv[])
+int main(int argc, char* argv[])
 {
 #ifdef ICE_STATIC_LIBS
     Ice::registerIceUDP();
 #endif
 
-    Subscriber app;
-    return app.main(argc, argv, "config.sub");
+    int status = 0;
+
+    try
+    {
+        //
+        // CtrlCHandler must be created before the communicator or any other threads are started
+        //
+        Ice::CtrlCHandler ctrlCHandler;
+
+        //
+        // CommunicatorHolder's ctor initializes an Ice communicator,
+        // and its dtor destroys this communicator.
+        //
+        Ice::CommunicatorHolder ich(argc, argv, "config.sub");
+        auto communicator = ich.communicator();
+
+        ctrlCHandler.setCallback(
+            [communicator](int)
+            {
+                communicator->shutdown();
+            });
+
+        status = run(communicator, argc, argv);
+    }
+    catch(std::exception& ex)
+    {
+        cerr << ex.what() << endl;
+        status = 1;
+    }
+
+    return status;
 }
 
 void
@@ -49,10 +72,10 @@ usage(const string& n)
 }
 
 int
-Subscriber::run(int argc, char* argv[])
+run(const shared_ptr<Ice::Communicator>& communicator, int argc, char* argv[])
 {
     auto args = Ice::argsToStringSeq(argc, argv);
-    args = communicator()->getProperties()->parseCommandLineOptions("Clock", args);
+    args = communicator->getProperties()->parseCommandLineOptions("Clock", args);
     Ice::stringSeqToArgs(args, argc, argv);
 
     bool batch = false;
@@ -93,7 +116,7 @@ Subscriber::run(int argc, char* argv[])
             if(i >= argc)
             {
                 usage(argv[0]);
-                return EXIT_FAILURE;
+                return 1;
             }
             id = argv[i];
         }
@@ -103,14 +126,14 @@ Subscriber::run(int argc, char* argv[])
             if(i >= argc)
             {
                 usage(argv[0]);
-                return EXIT_FAILURE;
+                return 1;
             }
             retryCount = argv[i];
         }
         else if(optionString.substr(0, 2) == "--")
         {
             usage(argv[0]);
-            return EXIT_FAILURE;
+            return 1;
         }
         else
         {
@@ -121,14 +144,14 @@ Subscriber::run(int argc, char* argv[])
         if(oldoption != option && oldoption != Option::None)
         {
             usage(argv[0]);
-            return EXIT_FAILURE;
+            return 1;
         }
     }
 
     if(i != argc)
     {
         usage(argv[0]);
-        return EXIT_FAILURE;
+        return 1;
     }
 
     if(!retryCount.empty())
@@ -140,22 +163,22 @@ Subscriber::run(int argc, char* argv[])
         else if(option != Option::Twoway && option != Option::Ordered)
         {
             cerr << argv[0] << ": retryCount requires a twoway proxy" << endl;
-            return EXIT_FAILURE;
+            return 1;
         }
     }
 
     if(batch && (option == Option::Twoway || option == Option::Ordered))
     {
         cerr << argv[0] << ": batch can only be set with oneway or datagram" << endl;
-        return EXIT_FAILURE;
+        return 1;
     }
 
     auto manager = Ice::checkedCast<IceStorm::TopicManagerPrx>(
-        communicator()->propertyToProxy("TopicManager.Proxy"));
+        communicator->propertyToProxy("TopicManager.Proxy"));
     if(!manager)
     {
-        cerr << appName() << ": invalid proxy" << endl;
-        return EXIT_FAILURE;
+        cerr << argv[0] << ": invalid proxy" << endl;
+        return 1;
     }
 
     shared_ptr<IceStorm::TopicPrx> topic;
@@ -171,12 +194,12 @@ Subscriber::run(int argc, char* argv[])
         }
         catch(const IceStorm::TopicExists&)
         {
-            cerr << appName() << ": temporary failure. try again." << endl;
-            return EXIT_FAILURE;
+            cerr << argv[0] << ": temporary failure. try again." << endl;
+            return 1;
         }
     }
 
-    auto adapter = communicator()->createObjectAdapter("Clock.Subscriber");
+    auto adapter = communicator->createObjectAdapter("Clock.Subscriber");
 
     //
     // Add a servant for the Ice object. If --id is used the identity
@@ -254,10 +277,9 @@ Subscriber::run(int argc, char* argv[])
         cout << "reactivating persistent subscriber" << endl;
     }
 
-    shutdownOnInterrupt();
-    communicator()->waitForShutdown();
+    communicator->waitForShutdown();
 
     topic->unsubscribe(subscriber);
 
-    return EXIT_SUCCESS;
+    return 0;
 }

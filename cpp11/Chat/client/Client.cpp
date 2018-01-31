@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 //
 // **********************************************************************
 
@@ -169,7 +169,7 @@ public:
             }
         }
         while(cin.good());
-        return EXIT_SUCCESS;
+        return 0;
     }
 
 private:

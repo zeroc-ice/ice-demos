@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 //
 // **********************************************************************
 
@@ -22,9 +22,7 @@ sourceSets {
 dependencies {
     compile localDependency("ice-compat")
     compile localDependency("icestorm-compat")
-    if (!useLocalOnly) {
-        runtime "org.apache.commons:commons-compress:1.14"
-    }
+    runtime "org.apache.commons:commons-compress:1.14"
 }
 
 // Create a jar for the publisher & subscriber which includes everything in the demo.

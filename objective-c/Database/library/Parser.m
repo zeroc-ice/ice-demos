@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 //
 // **********************************************************************
 
@@ -474,7 +474,7 @@ Parser* parser;
     int status = yyparse();
     if(errors)
     {
-        status = EXIT_FAILURE;
+        status = 1;
     }
 
     parser = nil;

@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 //
 // **********************************************************************
 
@@ -34,17 +34,17 @@ HelloClient::run(int argc, char* argv[])
     if(argc > 1)
     {
         cerr << appName() << ": too many arguments" << endl;
-        return EXIT_FAILURE;
+        return 1;
     }
 
     HelloPrx hello = HelloPrx::uncheckedCast(communicator()->propertyToProxy("Hello.Proxy"));
     if(!hello)
     {
         cerr << argv[0] << ": invalid or missing Hello.Proxy property" << endl;
-        return EXIT_FAILURE;
+        return 1;
     }
 
     hello->sayHello();
 
-    return EXIT_SUCCESS;
+    return 0;
 }

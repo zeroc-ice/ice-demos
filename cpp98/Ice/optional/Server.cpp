@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 //
 // **********************************************************************
 
@@ -32,7 +32,7 @@ ContactServer::run(int argc, char*[])
     if(argc > 1)
     {
         cerr << appName() << ": too many arguments" << endl;
-        return EXIT_FAILURE;
+        return 1;
     }
 
     Ice::ObjectAdapterPtr adapter = communicator()->createObjectAdapter("ContactDB");
@@ -40,5 +40,5 @@ ContactServer::run(int argc, char*[])
     adapter->add(contactdb, Ice::stringToIdentity("contactdb"));
     adapter->activate();
     communicator()->waitForShutdown();
-    return EXIT_SUCCESS;
+    return 0;
 }

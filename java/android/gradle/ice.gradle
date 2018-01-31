@@ -9,17 +9,15 @@ repositories {
         }
     }
 
-    if (!useLocalOnly) {
-        if(this.devRepo) {
-            maven {
-                url this.devRepo
-            }
-        }
-
-        mavenCentral()
-
+    if(this.devRepo) {
         maven {
-            url "https://repo.zeroc.com/nexus/content/repositories/releases"
+            url this.devRepo
         }
+    }
+
+    mavenCentral()
+
+    maven {
+        url "https://repo.zeroc.com/nexus/content/repositories/releases"
     }
 }

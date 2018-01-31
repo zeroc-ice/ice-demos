@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 //
 // **********************************************************************
 
@@ -22,7 +22,7 @@
 int
 main(int argc, char* argv[])
 {
-    int status = EXIT_FAILURE;
+    int status = 1;
     @autoreleasepool
     {
         id<ICECommunicator> communicator = nil;
@@ -36,7 +36,7 @@ main(int argc, char* argv[])
 
             [communicator waitForShutdown];
 
-            status = EXIT_SUCCESS;
+            status = 0;
         }
         @catch (NSException* ex)
         {

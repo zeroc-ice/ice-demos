@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 //
 // **********************************************************************
 
@@ -12,34 +12,63 @@
 
 using namespace std;
 
-class Client : public Ice::Application
-{
-public:
-
-    virtual int run(int, char*[]) override;
-};
+int run(const shared_ptr<Ice::Communicator>&, const string&);
 
 int
 main(int argc, char* argv[])
 {
-    Client app;
-    return app.main(argc, argv, "config.client");
+    int status = 0;
+
+    try
+    {
+        //
+        // CtrlCHandler must be created before the communicator or any other threads are started
+        //
+        Ice::CtrlCHandler ctrlCHandler;
+
+        //
+        // CommunicatorHolder's ctor initializes an Ice communicator,
+        // and its dtor destroys this communicator.
+        //
+        Ice::CommunicatorHolder ich(argc, argv, "config.client");
+        auto communicator = ich.communicator();
+
+        ctrlCHandler.setCallback(
+            [communicator](int)
+            {
+                communicator->destroy();
+            });
+
+        //
+        // The communicator initialization removes all Ice-related arguments from argc/argv
+        //
+        if(argc > 1)
+        {
+            cerr << argv[0] << ": too many arguments" << endl;
+            status = 1;
+        }
+        else
+        {
+            status = run(communicator, argv[0]);
+        }
+    }
+    catch(std::exception& ex)
+    {
+        cerr << ex.what() << endl;
+        status = 1;
+    }
+
+    return status;
 }
 
 int
-Client::run(int argc, char* argv[])
+run(const shared_ptr<Ice::Communicator>& communicator, const string& appName)
 {
-    if(argc > 1)
-    {
-        cerr << appName() << ": too many arguments" << endl;
-        return EXIT_FAILURE;
-    }
-
-    auto calculator = Ice::checkedCast<Demo::CalculatorPrx>(communicator()->propertyToProxy("Calculator.Proxy"));
+    auto calculator = Ice::checkedCast<Demo::CalculatorPrx>(communicator->propertyToProxy("Calculator.Proxy"));
     if(!calculator)
     {
-        cerr << argv[0] << ": invalid proxy" << endl;
-        return EXIT_FAILURE;
+        cerr << appName << ": invalid proxy" << endl;
+        return 1;
     }
 
     // Calculate 10 - 4 with future-based async operations which return a std::future
@@ -147,5 +176,5 @@ Client::run(int argc, char* argv[])
     cout << "The hypotenuse of a triangle with side lengths of 6 and 8 is " << hypotenuse.get_future().get() << endl;
 
     calculator->shutdown();
-    return EXIT_SUCCESS;
+    return 0;
 }

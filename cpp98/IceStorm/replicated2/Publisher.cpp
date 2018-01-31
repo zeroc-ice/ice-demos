@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 //
 // **********************************************************************
 
@@ -63,7 +63,7 @@ Publisher::run(int argc, char* argv[])
         else if(optionString.substr(0, 2) == "--")
         {
             usage(argv[0]);
-            return EXIT_FAILURE;
+            return 1;
         }
         else
         {
@@ -74,14 +74,14 @@ Publisher::run(int argc, char* argv[])
         if(oldoption != option && oldoption != None)
         {
             usage(argv[0]);
-            return EXIT_FAILURE;
+            return 1;
         }
     }
 
     if(i != argc)
     {
         usage(argv[0]);
-        return EXIT_FAILURE;
+        return 1;
     }
 
     IceStorm::TopicManagerPrx manager = IceStorm::TopicManagerPrx::checkedCast(
@@ -89,7 +89,7 @@ Publisher::run(int argc, char* argv[])
     if(!manager)
     {
         cerr << appName() << ": invalid proxy" << endl;
-        return EXIT_FAILURE;
+        return 1;
     }
 
     //
@@ -109,7 +109,7 @@ Publisher::run(int argc, char* argv[])
         catch(const IceStorm::TopicExists&)
         {
             cerr << appName() << ": temporary failure. try again." << endl;
-            return EXIT_FAILURE;
+            return 1;
         }
     }
 
@@ -148,5 +148,5 @@ Publisher::run(int argc, char* argv[])
         // Ignore
     }
 
-    return EXIT_SUCCESS;
+    return 0;
 }

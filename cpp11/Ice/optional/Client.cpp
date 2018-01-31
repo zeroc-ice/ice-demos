@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 //
 // **********************************************************************
 
@@ -15,41 +15,67 @@
 using namespace std;
 using namespace Demo;
 
-class ContactClient : public Ice::Application
-{
-public:
-
-    virtual int run(int, char*[]) override;
-};
+int run(const shared_ptr<Ice::Communicator>&, const string&);
 
 int
-#ifdef _WIN32
-wmain(int argc, wchar_t* argv[])
-#else
 main(int argc, char* argv[])
-#endif
 {
 #ifdef ICE_STATIC_LIBS
     Ice::registerIceSSL();
 #endif
-    ContactClient app;
-    return app.main(argc, argv, "config.client");
+
+    int status = 0;
+
+    try
+    {
+        //
+        // CtrlCHandler must be created before the communicator or any other threads are started
+        //
+        Ice::CtrlCHandler ctrlCHandler;
+
+        //
+        // CommunicatorHolder's ctor initializes an Ice communicator,
+        // and its dtor destroys this communicator.
+        //
+        Ice::CommunicatorHolder ich(argc, argv, "config.client");
+        auto communicator = ich.communicator();
+
+        ctrlCHandler.setCallback(
+            [communicator](int)
+            {
+                communicator->destroy();
+            });
+
+        //
+        // The communicator initialization removes all Ice-related arguments from argc/argv
+        //
+        if(argc > 1)
+        {
+            cerr << argv[0] << ": too many arguments" << endl;
+            status = 1;
+        }
+        else
+        {
+            status = run(communicator, argv[0]);
+        }
+    }
+    catch(std::exception& ex)
+    {
+        cerr << ex.what() << endl;
+        status = 1;
+    }
+
+    return status;
 }
 
 int
-ContactClient::run(int argc, char* argv[])
+run(const shared_ptr<Ice::Communicator>& communicator, const string& appName)
 {
-    if(argc > 1)
-    {
-        cerr << appName() << ": too many arguments" << endl;
-        return EXIT_FAILURE;
-    }
-
-    auto contactdb = Ice::checkedCast<ContactDBPrx>(communicator()->propertyToProxy("ContactDB.Proxy"));
+    auto contactdb = Ice::checkedCast<ContactDBPrx>(communicator->propertyToProxy("ContactDB.Proxy"));
     if(!contactdb)
     {
-        cerr << argv[0] << ": invalid proxy" << endl;
-        return EXIT_FAILURE;
+        cerr << appName << ": invalid proxy" << endl;
+        return 1;
     }
 
     //
@@ -247,5 +273,5 @@ ContactClient::run(int argc, char* argv[])
 
     contactdb->shutdown();
 
-    return EXIT_SUCCESS;
+    return 0;
 }

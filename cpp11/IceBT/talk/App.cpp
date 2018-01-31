@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 //
 // **********************************************************************
 
@@ -11,12 +11,11 @@
 
 using namespace std;
 
-class TalkApp : public Ice::Application
+class TalkApp
 {
 public:
 
-    TalkApp();
-    virtual int run(int, char*[]) override;
+    int run(const shared_ptr<Ice::Communicator>& communicator);
 
     void connect(const Ice::Identity&, const shared_ptr<Ice::Connection>&);
     void message(const string&);
@@ -113,32 +112,48 @@ main(int argc, char* argv[])
     Ice::registerIceBT();
 #endif
 
-    TalkApp app;
-    return app.main(argc, argv, "config");
-}
+    int status = 0;
 
-TalkApp::TalkApp() :
-    //
-    // Since this is an interactive demo we don't want any signal handling.
-    //
-    Ice::Application(Ice::SignalPolicy::NoSignalHandling)
-{
+    try
+    {
+        //
+        // CommunicatorHolder's ctor initializes an Ice communicator,
+        // and its dtor destroys this communicator.
+        //
+        Ice::CommunicatorHolder ich(argc, argv, "config");
+        auto communicator = ich.communicator();
+
+        //
+        // The communicator initialization removes all Ice-related arguments from argc/argv
+        //
+        if(argc > 1)
+        {
+            cerr << argv[0] << ": too many arguments" << endl;
+            status = 1;
+        }
+        else
+        {
+            TalkApp app;
+            status = app.run(communicator, argv[0]);
+        }
+    }
+    catch(std::exception& ex)
+    {
+        cerr << ex.what() << endl;
+        status = 1;
+    }
+
+    return status;
 }
 
 int
-TalkApp::run(int argc, char*[])
+TalkApp::run(const shared_ptr<Ice::Communicator>& communicator)
 {
-    if(argc > 1)
-    {
-        cerr << appName() << ": too many arguments" << endl;
-        return EXIT_FAILURE;
-    }
-
     //
     // Create an object adapter with the name "Talk". Its endpoint is defined
     // in the configuration file 'config'.
     //
-    _adapter = communicator()->createObjectAdapter("Talk");
+    _adapter = communicator->createObjectAdapter("Talk");
 
     //
     // Install a servant with the well-known identity "peer".
@@ -194,9 +209,9 @@ TalkApp::run(int argc, char*[])
     // There may still be objects (connections and servants) that hold pointers to this object, so we destroy
     // the communicator here to make sure they get cleaned up first.
     //
-    communicator()->destroy();
+    communicator->destroy();
 
-    return EXIT_SUCCESS;
+    return 0;
 }
 
 void

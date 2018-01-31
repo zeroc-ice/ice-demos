@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 //
 // **********************************************************************
 
@@ -443,7 +443,7 @@ Parser::parse(bool debug)
     int status = yyparse();
     if(_errors)
     {
-        status = EXIT_FAILURE;
+        status = 1;
     }
 
     parser = 0;

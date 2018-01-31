@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 //
 // **********************************************************************
 
@@ -26,9 +26,7 @@ def demoIceGridProject(name) {
             compile localDependency("icessl")
             compile localDependency("icegrid")
             compile localDependency("icelocatordiscovery")
-            if (!useLocalOnly) {
-                runtime "org.apache.commons:commons-compress:1.14"
-            }
+            runtime "org.apache.commons:commons-compress:1.14"
         }
 
         task makeDbDirs {

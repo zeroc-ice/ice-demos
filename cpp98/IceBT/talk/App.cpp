@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 //
 // **********************************************************************
 
@@ -152,7 +152,7 @@ TalkApp::run(int argc, char*[])
     if(argc > 1)
     {
         cerr << appName() << ": too many arguments" << endl;
-        return EXIT_FAILURE;
+        return 1;
     }
 
     //
@@ -216,7 +216,7 @@ TalkApp::run(int argc, char*[])
     //
     communicator()->destroy();
 
-    return EXIT_SUCCESS;
+    return 0;
 }
 
 void
