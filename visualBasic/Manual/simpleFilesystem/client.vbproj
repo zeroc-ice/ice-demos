@@ -74,8 +74,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Ice, Version=3.6.4.0, Culture=neutral, processorArchitecture=MSIL">
-        <Private>True</Private>
-        <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="System">
       <Name>System</Name>
@@ -97,6 +97,9 @@
       <Project>{73CD4F2C-BF98-404C-B29E-BE0F53A2D19B}</Project>
       <Name>slice %28Book\simple_filesystem\slice%29</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="My Project\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
 </Project>

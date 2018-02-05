@@ -109,209 +109,209 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "replicated2", "replicated2"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workqueue", "workqueue", "{42998B0D-84E9-461D-96DA-597A853122A7}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Freeze\backup\Freeze.backup.client.vcxproj", "{3178F16D-EA3B-42F5-A334-CE753A0A8E33}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Freeze\backup\msbuild\client\client.vcxproj", "{3178F16D-EA3B-42F5-A334-CE753A0A8E33}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Freeze\bench\Freeze.bench.client.vcxproj", "{8148DA60-E8D7-4117-A60E-9AFA0C15143C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Freeze\bench\msbuild\client\client.vcxproj", "{8148DA60-E8D7-4117-A60E-9AFA0C15143C}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Freeze\casino\Freeze.casino.client.vcxproj", "{C015D52B-6548-4BEC-882C-3845945EDE13}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Freeze\casino\msbuild\client\client.vcxproj", "{C015D52B-6548-4BEC-882C-3845945EDE13}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Freeze\casino\Freeze.casino.server.vcxproj", "{87CECE87-62E9-4D10-B1A4-D36191ADFC8A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Freeze\casino\msbuild\server\server.vcxproj", "{87CECE87-62E9-4D10-B1A4-D36191ADFC8A}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Freeze\customEvictor\Freeze.customEvictor.client.vcxproj", "{AB4AAFB0-0F6F-4A46-A21F-96496A12A5F1}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Freeze\customEvictor\msbuild\client\client.vcxproj", "{AB4AAFB0-0F6F-4A46-A21F-96496A12A5F1}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Freeze\customEvictor\Freeze.customEvictor.server.vcxproj", "{342BFF78-C044-44EB-8DE9-464114C17233}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Freeze\customEvictor\msbuild\server\server.vcxproj", "{342BFF78-C044-44EB-8DE9-464114C17233}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Freeze\library\Freeze.library.client.vcxproj", "{CCF288AA-4C00-45BA-AD36-DA064A1AB8CF}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Freeze\library\msbuild\client\client.vcxproj", "{CCF288AA-4C00-45BA-AD36-DA064A1AB8CF}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "collocated", "Freeze\library\Freeze.library.collocated.vcxproj", "{80D04E2B-F180-4D44-AD65-9F04E875988C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "collocated", "Freeze\library\msbuild\collocated\collocated.vcxproj", "{80D04E2B-F180-4D44-AD65-9F04E875988C}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Freeze\library\Freeze.library.server.vcxproj", "{7CC6B463-7F14-4270-ABF5-5E5A7632EDBD}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Freeze\library\msbuild\server\server.vcxproj", "{7CC6B463-7F14-4270-ABF5-5E5A7632EDBD}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Freeze\phonebook\Freeze.phonebook.client.vcxproj", "{DC19C23E-B53C-4A11-9B62-677CDC87D08C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Freeze\phonebook\msbuild\client\client.vcxproj", "{DC19C23E-B53C-4A11-9B62-677CDC87D08C}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "collocated", "Freeze\phonebook\Freeze.phonebook.collocated.vcxproj", "{5EB31F0A-A3D4-4553-83AF-45E30549A7AD}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "collocated", "Freeze\phonebook\msbuild\collocated\collocated.vcxproj", "{5EB31F0A-A3D4-4553-83AF-45E30549A7AD}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Freeze\phonebook\Freeze.phonebook.server.vcxproj", "{8FACCA7B-B717-424A-8BAA-DF26D389E5C0}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Freeze\phonebook\msbuild\server\server.vcxproj", "{8FACCA7B-B717-424A-8BAA-DF26D389E5C0}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "create", "Freeze\transform\Freeze.transform.create.vcxproj", "{4ED994E8-3AF7-4ABC-B029-5EFDBCF41E76}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "create", "Freeze\transform\msbuild\create\create.vcxproj", "{4ED994E8-3AF7-4ABC-B029-5EFDBCF41E76}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "read", "Freeze\transform\Freeze.transform.read.vcxproj", "{2D02A8FB-6011-4E84-B2B7-2A26E310C536}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "read", "Freeze\transform\msbuild\read\read.vcxproj", "{2D02A8FB-6011-4E84-B2B7-2A26E310C536}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "readnew", "Freeze\transform\Freeze.transform.readnew.vcxproj", "{AD9A8840-D6B6-41F6-8AB5-6A18F6A5A50B}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "readnew", "Freeze\transform\msbuild\readnew\readnew.vcxproj", "{AD9A8840-D6B6-41F6-8AB5-6A18F6A5A50B}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "recreate", "Freeze\transform\Freeze.transform.recreate.vcxproj", "{7BD80BEC-C16B-412F-808B-FDD042D217DB}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "recreate", "Freeze\transform\msbuild\recreate\recreate.vcxproj", "{7BD80BEC-C16B-412F-808B-FDD042D217DB}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Glacier2\callback\Glacier2.callback.client.vcxproj", "{AF429C66-AF79-4CA1-83CE-EA345DFA4BBA}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Glacier2\callback\msbuild\client\client.vcxproj", "{AF429C66-AF79-4CA1-83CE-EA345DFA4BBA}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Glacier2\callback\Glacier2.callback.server.vcxproj", "{50C35E8E-3504-4DDF-8C5A-787525F16A91}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Glacier2\callback\msbuild\server\server.vcxproj", "{50C35E8E-3504-4DDF-8C5A-787525F16A91}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Glacier2\simpleChat\Glacier2.simpleChat.client.vcxproj", "{3202DB5F-A249-4250-AB9D-EAA35AE386F1}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Glacier2\simpleChat\msbuild\client\client.vcxproj", "{3202DB5F-A249-4250-AB9D-EAA35AE386F1}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Glacier2\simpleChat\Glacier2.simpleChat.server.vcxproj", "{A5A0DB86-3CB6-4B37-ADC7-5BC49C0E80A8}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Glacier2\simpleChat\msbuild\server\server.vcxproj", "{A5A0DB86-3CB6-4B37-ADC7-5BC49C0E80A8}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\MFC\client\Ice.MFC.client.vcxproj", "{44F51074-4C10-469B-9BB2-94803F0837BF}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\MFC\client\msbuild\client\client.vcxproj", "{44F51074-4C10-469B-9BB2-94803F0837BF}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\MFC\server\Ice.MFC.server.vcxproj", "{0AF3BFA1-2930-4E3C-9DB7-23735101CD76}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\MFC\server\msbuild\server\server.vcxproj", "{0AF3BFA1-2930-4E3C-9DB7-23735101CD76}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\async\Ice.async.client.vcxproj", "{85C473C2-E124-44AC-9BE0-8BFA6E5B0BA6}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\async\msbuild\client\client.vcxproj", "{85C473C2-E124-44AC-9BE0-8BFA6E5B0BA6}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\async\Ice.async.server.vcxproj", "{966B1F47-A385-4CC7-9E13-27B34808152C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\async\msbuild\server\server.vcxproj", "{966B1F47-A385-4CC7-9E13-27B34808152C}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\bidir\Ice.bidir.client.vcxproj", "{7074C2B1-CBA9-494C-BFE5-955721AE44B0}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\bidir\msbuild\client\client.vcxproj", "{7074C2B1-CBA9-494C-BFE5-955721AE44B0}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\bidir\Ice.bidir.server.vcxproj", "{FC895988-01DA-4B5C-8D38-C1CB68F93EF5}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\bidir\msbuild\server\server.vcxproj", "{FC895988-01DA-4B5C-8D38-C1CB68F93EF5}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\callback\Ice.callback.client.vcxproj", "{570A810E-6888-4D21-A6AD-976B0350F42E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\callback\msbuild\client\client.vcxproj", "{570A810E-6888-4D21-A6AD-976B0350F42E}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\callback\Ice.callback.server.vcxproj", "{5B71F2A4-0901-418C-8E11-986EE6362870}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\callback\msbuild\server\server.vcxproj", "{5B71F2A4-0901-418C-8E11-986EE6362870}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\converter\Ice.converter.server.vcxproj", "{64B05645-6A26-412D-B428-8369364DF61C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\converter\msbuild\server\server.vcxproj", "{64B05645-6A26-412D-B428-8369364DF61C}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\hello\Ice.hello.client.vcxproj", "{710A52F2-A014-4CB2-AF40-348D48DBCDDD}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\hello\msbuild\client\client.vcxproj", "{710A52F2-A014-4CB2-AF40-348D48DBCDDD}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\hello\Ice.hello.server.vcxproj", "{25843122-783A-45E0-8D42-612C72D3B183}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\hello\msbuild\server\server.vcxproj", "{25843122-783A-45E0-8D42-612C72D3B183}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\invoke\Ice.invoke.client.vcxproj", "{8ADDD766-8657-42B1-96A7-83AF4B70F2C3}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\invoke\msbuild\client\client.vcxproj", "{8ADDD766-8657-42B1-96A7-83AF4B70F2C3}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\invoke\Ice.invoke.server.vcxproj", "{9D2F23B1-0049-4E6C-86A7-557A5B1F8597}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\invoke\msbuild\server\server.vcxproj", "{9D2F23B1-0049-4E6C-86A7-557A5B1F8597}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\latency\Ice.latency.client.vcxproj", "{C9E196EB-AB36-48CE-93F4-2BA37BAA7E76}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\latency\msbuild\client\client.vcxproj", "{C9E196EB-AB36-48CE-93F4-2BA37BAA7E76}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\latency\Ice.latency.server.vcxproj", "{DF4C0DA9-DD64-44D1-B56E-FDC3C1CE4A44}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\latency\msbuild\server\server.vcxproj", "{DF4C0DA9-DD64-44D1-B56E-FDC3C1CE4A44}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\minimal\Ice.minimal.client.vcxproj", "{82D5187D-67E4-4C2D-B270-6ECC665D426E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\minimal\msbuild\client\client.vcxproj", "{82D5187D-67E4-4C2D-B270-6ECC665D426E}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\minimal\Ice.minimal.server.vcxproj", "{E768F2F0-04F1-4721-A624-1265AAC40211}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\minimal\msbuild\server\server.vcxproj", "{E768F2F0-04F1-4721-A624-1265AAC40211}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\multicast\Ice.multicast.client.vcxproj", "{2494165B-BD91-4805-B759-8F27983E9655}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\multicast\msbuild\client\client.vcxproj", "{2494165B-BD91-4805-B759-8F27983E9655}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\multicast\Ice.multicast.server.vcxproj", "{D7B009A5-9EAD-4D3B-AFFC-8E20E42F2A92}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\multicast\msbuild\server\server.vcxproj", "{D7B009A5-9EAD-4D3B-AFFC-8E20E42F2A92}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\nested\Ice.nested.client.vcxproj", "{C585D79C-46FD-411C-81E2-E000B0831EE0}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\nested\msbuild\client\client.vcxproj", "{C585D79C-46FD-411C-81E2-E000B0831EE0}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\nested\Ice.nested.server.vcxproj", "{743BB926-8649-447B-B8CF-7D3F41C0AD44}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\nested\msbuild\server\server.vcxproj", "{743BB926-8649-447B-B8CF-7D3F41C0AD44}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\nrvo\Ice.nrvo.client.vcxproj", "{DE27BEC2-4A03-4651-8C62-97EFE7E89AE7}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\nrvo\msbuild\client\client.vcxproj", "{DE27BEC2-4A03-4651-8C62-97EFE7E89AE7}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\nrvo\Ice.nrvo.server.vcxproj", "{0DFB0C6A-4513-4A05-8AE6-FD6EA6943E95}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\nrvo\msbuild\server\server.vcxproj", "{0DFB0C6A-4513-4A05-8AE6-FD6EA6943E95}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\plugin\Ice.plugin.client.vcxproj", "{53C81483-7079-4456-A5C9-59858369D516}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\plugin\msbuild\client\client.vcxproj", "{53C81483-7079-4456-A5C9-59858369D516}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "helloplugin", "Ice\plugin\Ice.plugin.hello.vcxproj", "{C9ABAC2B-9EFA-4841-AB7D-162DE65E8DA2}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "helloplugin", "Ice\plugin\msbuild\hello\hello.vcxproj", "{C9ABAC2B-9EFA-4841-AB7D-162DE65E8DA2}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "loggerplugin", "Ice\plugin\Ice.plugin.logger.vcxproj", "{7DD866C9-B1BC-42B8-973B-BAAD917B8468}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "loggerplugin", "Ice\plugin\msbuild\logger\logger.vcxproj", "{7DD866C9-B1BC-42B8-973B-BAAD917B8468}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\plugin\Ice.plugin.server.vcxproj", "{0DD23FDB-1BF9-4591-B096-43D925841E9E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\plugin\msbuild\server\server.vcxproj", "{0DD23FDB-1BF9-4591-B096-43D925841E9E}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\session\Ice.session.client.vcxproj", "{AE22F05C-FA79-41C2-AD9F-010E176765A3}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\session\msbuild\client\client.vcxproj", "{AE22F05C-FA79-41C2-AD9F-010E176765A3}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\session\Ice.session.server.vcxproj", "{DAA11E89-289F-4812-A662-84048AB7973A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\session\msbuild\server\server.vcxproj", "{DAA11E89-289F-4812-A662-84048AB7973A}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\throughput\Ice.throughput.client.vcxproj", "{734B7CEC-427F-49A6-9028-F2A420CCEA4B}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\throughput\msbuild\client\client.vcxproj", "{734B7CEC-427F-49A6-9028-F2A420CCEA4B}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\throughput\Ice.throughput.server.vcxproj", "{383AB467-E29D-4A9D-A5D4-699E7A754A88}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\throughput\msbuild\server\server.vcxproj", "{383AB467-E29D-4A9D-A5D4-699E7A754A88}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\value\Ice.value.client.vcxproj", "{68381F2F-D9AC-4CA2-9AEF-6293E14B4183}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\value\msbuild\client\client.vcxproj", "{68381F2F-D9AC-4CA2-9AEF-6293E14B4183}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\value\Ice.value.server.vcxproj", "{40A88A2C-8560-4B00-A94E-782C4BC3C588}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\value\msbuild\server\server.vcxproj", "{40A88A2C-8560-4B00-A94E-782C4BC3C588}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "IceBox\hello\IceBox.hello.client.vcxproj", "{C0A794BE-99CA-4AF8-B246-6A3510BEEF50}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "IceBox\hello\msbuild\client\client.vcxproj", "{C0A794BE-99CA-4AF8-B246-6A3510BEEF50}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "helloservice", "IceBox\hello\IceBox.hello.server.vcxproj", "{9DA82A4E-9CE3-4788-AA4E-715FE7F1A03E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "helloservice", "IceBox\hello\msbuild\server\server.vcxproj", "{9DA82A4E-9CE3-4788-AA4E-715FE7F1A03E}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "IceGrid\allocate\IceGrid.allocate.client.vcxproj", "{F926F833-BC03-4E8F-B0F2-E045DC139845}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "IceGrid\allocate\msbuild\client\client.vcxproj", "{F926F833-BC03-4E8F-B0F2-E045DC139845}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "IceGrid\allocate\IceGrid.allocate.server.vcxproj", "{A9DB3AF0-07A2-4B64-A8DE-5C18658BEA14}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "IceGrid\allocate\msbuild\server\server.vcxproj", "{A9DB3AF0-07A2-4B64-A8DE-5C18658BEA14}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "IceGrid\icebox\IceGrid.icebox.client.vcxproj", "{278DFA7E-A0A1-4D4C-ACD7-904D99CA8DA1}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "IceGrid\icebox\msbuild\client\client.vcxproj", "{278DFA7E-A0A1-4D4C-ACD7-904D99CA8DA1}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "helloservice", "IceGrid\icebox\IceGrid.icebox.server.vcxproj", "{6AD12991-A01E-4464-BC84-F5749F749157}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "helloservice", "IceGrid\icebox\msbuild\server\server.vcxproj", "{6AD12991-A01E-4464-BC84-F5749F749157}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "IceGrid\replication\IceGrid.replication.client.vcxproj", "{DBDF5E2D-6F91-406B-819F-661F76856A60}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "IceGrid\replication\msbuild\client\client.vcxproj", "{DBDF5E2D-6F91-406B-819F-661F76856A60}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "IceGrid\replication\IceGrid.replication.server.vcxproj", "{60BF2E43-C238-4E77-A80F-37AA9F450727}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "IceGrid\replication\msbuild\server\server.vcxproj", "{60BF2E43-C238-4E77-A80F-37AA9F450727}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "IceGrid\secure\IceGrid.secure.client.vcxproj", "{93D3D06E-656E-4EA2-BC49-DE90E9B3DBEC}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "IceGrid\secure\msbuild\client\client.vcxproj", "{93D3D06E-656E-4EA2-BC49-DE90E9B3DBEC}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "IceGrid\secure\IceGrid.secure.server.vcxproj", "{6E2F9FA0-E6A6-44DC-8747-3CC7595A6D4E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "IceGrid\secure\msbuild\server\server.vcxproj", "{6E2F9FA0-E6A6-44DC-8747-3CC7595A6D4E}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "IceGrid\sessionActivation\IceGrid.sessionActivation.client.vcxproj", "{0F6EA526-A020-4E60-82A2-5B934878D05E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "IceGrid\sessionActivation\msbuild\client\client.vcxproj", "{0F6EA526-A020-4E60-82A2-5B934878D05E}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "IceGrid\sessionActivation\IceGrid.sessionActivation.server.vcxproj", "{C4769D24-8A92-4E7F-92CC-96F07043D944}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "IceGrid\sessionActivation\msbuild\server\server.vcxproj", "{C4769D24-8A92-4E7F-92CC-96F07043D944}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "IceGrid\simple\IceGrid.simple.client.vcxproj", "{215AD5AB-C9A9-4109-8704-53E8F3289B5E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "IceGrid\simple\msbuild\client\client.vcxproj", "{215AD5AB-C9A9-4109-8704-53E8F3289B5E}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "IceGrid\simple\IceGrid.simple.server.vcxproj", "{D0040308-23C7-4BED-B2C7-09414A6FAD28}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "IceGrid\simple\msbuild\server\server.vcxproj", "{D0040308-23C7-4BED-B2C7-09414A6FAD28}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "IcePatch2\MFC\IcePatch2.MFC.client.vcxproj", "{A7A048D1-81F8-457E-941C-6D01AD7C4FB5}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "IcePatch2\MFC\msbuild\client\client.vcxproj", "{A7A048D1-81F8-457E-941C-6D01AD7C4FB5}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "publisher", "IceStorm\clock\IceStorm.clock.publisher.vcxproj", "{01BF79D2-B6A8-4E93-9BB9-8C2D1F1779F6}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "publisher", "IceStorm\clock\msbuild\publisher\publisher.vcxproj", "{01BF79D2-B6A8-4E93-9BB9-8C2D1F1779F6}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "subscriber", "IceStorm\clock\IceStorm.clock.subscriber.vcxproj", "{16C50485-2400-4C80-B564-ACEB6BFBD845}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "subscriber", "IceStorm\clock\msbuild\subscriber\subscriber.vcxproj", "{16C50485-2400-4C80-B564-ACEB6BFBD845}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "IceStorm\counter\IceStorm.counter.client.vcxproj", "{79AD1EE6-DFD3-41BB-8CDD-73675F86BC72}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "IceStorm\counter\msbuild\client\client.vcxproj", "{79AD1EE6-DFD3-41BB-8CDD-73675F86BC72}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "IceStorm\counter\IceStorm.counter.server.vcxproj", "{41635ABC-8CC9-431F-951A-9EA13288DB2D}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "IceStorm\counter\msbuild\server\server.vcxproj", "{41635ABC-8CC9-431F-951A-9EA13288DB2D}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "publisher", "IceStorm\replicated\IceStorm.replicated.publisher.vcxproj", "{1357A2FF-3D5E-41EF-8EE7-3E5CEA51464D}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "publisher", "IceStorm\replicated\msbuild\publisher\publisher.vcxproj", "{1357A2FF-3D5E-41EF-8EE7-3E5CEA51464D}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "subscriber", "IceStorm\replicated\IceStorm.replicated.subscriber.vcxproj", "{780D8169-71C8-48C3-8123-02A9DA1A94BC}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "subscriber", "IceStorm\replicated\msbuild\subscriber\subscriber.vcxproj", "{780D8169-71C8-48C3-8123-02A9DA1A94BC}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "publisher", "IceStorm\replicated2\IceStorm.replicated2.publisher.vcxproj", "{779FDD55-DA02-454C-A3EE-F222337CC27D}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "publisher", "IceStorm\replicated2\msbuild\publisher\publisher.vcxproj", "{779FDD55-DA02-454C-A3EE-F222337CC27D}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "subscriber", "IceStorm\replicated2\IceStorm.replicated2.subscriber.vcxproj", "{5C1184D4-7B2F-4366-82AA-11F7B4AD2FA7}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "subscriber", "IceStorm\replicated2\msbuild\subscriber\subscriber.vcxproj", "{5C1184D4-7B2F-4366-82AA-11F7B4AD2FA7}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "workqueue", "IceUtil\workqueue\IceUtil.workqueue.vcxproj", "{AE45156F-573C-4BDC-911D-EC7C28DB36D7}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "workqueue", "IceUtil\workqueue\msbuild\workqueue\workqueue.vcxproj", "{AE45156F-573C-4BDC-911D-EC7C28DB36D7}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Manual\lifecycle\manual.lifecycle.client.vcxproj", "{332A63F9-BBD9-4324-8C1E-26604C71D54F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Manual\lifecycle\msbuild\client\client.vcxproj", "{332A63F9-BBD9-4324-8C1E-26604C71D54F}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Manual\lifecycle\manual.lifecycle.server.vcxproj", "{95043699-A842-4E16-A95B-13E02709B210}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Manual\lifecycle\msbuild\server\server.vcxproj", "{95043699-A842-4E16-A95B-13E02709B210}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Manual\printer\manual.printer.client.vcxproj", "{4CCAF112-F152-422A-91BE-27C72F638092}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Manual\printer\msbuild\client\client.vcxproj", "{4CCAF112-F152-422A-91BE-27C72F638092}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Manual\printer\manual.printer.server.vcxproj", "{131C5C24-50C3-4AD6-A8D3-C57CEC50AFB9}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Manual\printer\msbuild\server\server.vcxproj", "{131C5C24-50C3-4AD6-A8D3-C57CEC50AFB9}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Manual\simpleFilesystem\manual.simpleFilesystem.client.vcxproj", "{4B2FC587-BB5D-4B19-85E0-56E7C7636294}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Manual\simpleFilesystem\msbuild\client\client.vcxproj", "{4B2FC587-BB5D-4B19-85E0-56E7C7636294}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Manual\simpleFilesystem\manual.simpleFilesystem.server.vcxproj", "{EFCFF55E-CCD2-451E-A0B5-604249ECE4D1}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Manual\simpleFilesystem\msbuild\server\server.vcxproj", "{EFCFF55E-CCD2-451E-A0B5-604249ECE4D1}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\interleaved\Ice.interleaved.client.vcxproj", "{798DC5EC-427F-49A6-9028-F2A420CCEA4B}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\interleaved\msbuild\client\client.vcxproj", "{798DC5EC-427F-49A6-9028-F2A420CCEA4B}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\interleaved\Ice.interleaved.server.vcxproj", "{383AB467-E29D-4A9D-A5D4-6BCA8E754A88}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\interleaved\msbuild\server\server.vcxproj", "{383AB467-E29D-4A9D-A5D4-6BCA8E754A88}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Manual\mapFilesystem\manual.mapFilesystem.client.vcxproj", "{0C6E1127-1105-49F0-99BB-CBDC1C2566F0}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Manual\mapFilesystem\msbuild\client\client.vcxproj", "{0C6E1127-1105-49F0-99BB-CBDC1C2566F0}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Manual\mapFilesystem\manual.mapFilesystem.server.vcxproj", "{37369B6D-DFB9-4413-A4F5-AE261FDA74A2}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Manual\mapFilesystem\msbuild\server\server.vcxproj", "{37369B6D-DFB9-4413-A4F5-AE261FDA74A2}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Manual\evictorFilesystem\manual.evictorFilesystem.client.vcxproj", "{66668B00-70BB-4CF0-8DB2-2717DC5F4DA3}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Manual\evictorFilesystem\msbuild\client\client.vcxproj", "{66668B00-70BB-4CF0-8DB2-2717DC5F4DA3}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Manual\evictorFilesystem\manual.evictorFilesystem.server.vcxproj", "{2E1BBDAB-F9C2-4C72-9587-29D7F428BC32}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Manual\evictorFilesystem\msbuild\server\server.vcxproj", "{2E1BBDAB-F9C2-4C72-9587-29D7F428BC32}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "optional", "optional", "{57D20A28-9954-4D22-ACE6-B367145DC11E}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\optional\Ice.optional.server.vcxproj", "{A40BCFC2-8141-4BF5-AAA5-08F6D13A3B08}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\optional\msbuild\server\server.vcxproj", "{A40BCFC2-8141-4BF5-AAA5-08F6D13A3B08}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\optional\Ice.optional.client.vcxproj", "{3EA94765-82A5-412A-8B4B-D88BC940B1F7}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\optional\msbuild\client\client.vcxproj", "{3EA94765-82A5-412A-8B4B-D88BC940B1F7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "properties", "properties", "{4529015A-40B6-41C5-A2D2-1873200DD673}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\properties\Ice.properties.client.vcxproj", "{51FCF834-E154-445B-9911-1E9F769EABEC}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\properties\msbuild\client\client.vcxproj", "{51FCF834-E154-445B-9911-1E9F769EABEC}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\properties\Ice.properties.server.vcxproj", "{C6F1C2A3-9817-4021-97D0-1D3FA9E95EA3}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\properties\msbuild\server\server.vcxproj", "{C6F1C2A3-9817-4021-97D0-1D3FA9E95EA3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "customLoadBalancing", "customLoadBalancing", "{AC8D2156-9EB4-4F2C-A317-ED37ED71DE92}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "IceGrid\customLoadBalancing\IceGrid.customLoadBalancing.client.vcxproj", "{D75BF0C7-D1AE-4E11-8E56-C176DD6B5EF9}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "IceGrid\customLoadBalancing\msbuild\client\client.vcxproj", "{D75BF0C7-D1AE-4E11-8E56-C176DD6B5EF9}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "IceGrid\customLoadBalancing\IceGrid.customLoadBalancing.server.vcxproj", "{5E88E194-E900-4C61-A1F4-27F158E6D43A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "IceGrid\customLoadBalancing\msbuild\server\server.vcxproj", "{5E88E194-E900-4C61-A1F4-27F158E6D43A}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "plugin", "IceGrid\customLoadBalancing\IceGrid.customLoadBalancing.plugin.vcxproj", "{57F470E1-3D19-4BAF-8E74-6AFE2AEF1328}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "plugin", "IceGrid\customLoadBalancing\msbuild\plugin\plugin.vcxproj", "{57F470E1-3D19-4BAF-8E74-6AFE2AEF1328}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\context\Ice.context.client.vcxproj", "{97DE0B9E-0DA8-4304-BAAC-CBC52339B14D}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\context\msbuild\client\client.vcxproj", "{97DE0B9E-0DA8-4304-BAAC-CBC52339B14D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "context", "context", "{ACDD5F75-3078-45FE-A240-541D248020C1}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\context\Ice.context.server.vcxproj", "{2E565430-0E78-44F1-97CD-6995EEED4FCC}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\context\msbuild\server\server.vcxproj", "{2E565430-0E78-44F1-97CD-6995EEED4FCC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IceDiscovery", "IceDiscovery", "{9C3ADCDB-81A1-4F28-A5C6-E65262BE99DD}"
 EndProject
@@ -319,47 +319,47 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "hello", "hello", "{371407F3
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "replication", "replication", "{51BE9F65-1AA5-43A1-8C04-E4EED15B642F}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "IceDiscovery\hello\IceDiscovery.hello.client.vcxproj", "{6BF6F512-253C-4D18-A45C-EC93D12CA263}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "IceDiscovery\hello\msbuild\client\client.vcxproj", "{6BF6F512-253C-4D18-A45C-EC93D12CA263}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "IceDiscovery\hello\IceDiscovery.hello.server.vcxproj", "{863D903A-41F8-4758-AC73-865334FF3C5F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "IceDiscovery\hello\msbuild\server\server.vcxproj", "{863D903A-41F8-4758-AC73-865334FF3C5F}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "IceDiscovery\replication\IceDiscovery.replication.client.vcxproj", "{6B90B8B3-2714-437F-BB4A-39D8B2206214}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "IceDiscovery\replication\msbuild\client\client.vcxproj", "{6B90B8B3-2714-437F-BB4A-39D8B2206214}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "IceDiscovery\replication\IceDiscovery.replication.server.vcxproj", "{48DC4EB0-02FE-41CC-BE3F-00911817E777}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "IceDiscovery\replication\msbuild\server\server.vcxproj", "{48DC4EB0-02FE-41CC-BE3F-00911817E777}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client1", "Ice\converter\Ice.converter.client1.vcxproj", "{533951F4-163A-4AD9-A275-ACB8F93D8D0F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client1", "Ice\converter\msbuild\client1\client1.vcxproj", "{533951F4-163A-4AD9-A275-ACB8F93D8D0F}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client2", "Ice\converter\Ice.converter.client2.vcxproj", "{2B67A072-FCDD-4D85-A604-48665353A7A4}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client2", "Ice\converter\msbuild\client2\client2.vcxproj", "{2B67A072-FCDD-4D85-A604-48665353A7A4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Chat", "Chat", "{87874ED6-C8AD-47DA-AC83-CE1C2F0BE4FE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cmdLineClient", "cmdLineClient", "{795EFC2D-BE81-42BD-8F4F-4F6E56BE3705}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "chatgl2client", "Chat\cmdLineClient\chatgl2client.vcxproj", "{3DFF080F-5D09-42FC-A151-6E130C11DD00}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "chatgl2client", "Chat\cmdLineClient\msbuild\chatgl2client\chatgl2client.vcxproj", "{3DFF080F-5D09-42FC-A151-6E130C11DD00}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "chatpollclient", "Chat\cmdLineClient\chatpollclient.vcxproj", "{F6C94046-F660-419C-AF01-DAD30A96C8DF}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "chatpollclient", "Chat\cmdLineClient\msbuild\chatpollclient\chatpollclient.vcxproj", "{F6C94046-F660-419C-AF01-DAD30A96C8DF}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Chat\server\server.vcxproj", "{5FD8BF89-9EC2-4F9A-B192-2752BF6FC160}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Chat\server\msbuild\server\server.vcxproj", "{5FD8BF89-9EC2-4F9A-B192-2752BF6FC160}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "simple", "simple", "{8031F801-5366-4BB7-9B76-CBC8B6C0984B}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "IcePatch2\simple\IcePatch2.simple.client.vcxproj", "{98EC2B9B-C541-496F-AA0B-264C6D4BEF6D}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "IcePatch2\simple\msbuild\client\client.vcxproj", "{98EC2B9B-C541-496F-AA0B-264C6D4BEF6D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "locator", "locator", "{BD5DE9F1-0008-44C6-A8F3-B7BA4FB69928}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\locator\Ice.locator.client.vcxproj", "{51D56919-05A7-4282-A736-CD25ABC2179A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\locator\msbuild\client\client.vcxproj", "{51D56919-05A7-4282-A736-CD25ABC2179A}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "locator", "Ice\locator\Ice.locator.locator.vcxproj", "{F6307AF8-3DD8-4C32-B2DC-0B0FBEF9E6A1}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "locator", "Ice\locator\msbuild\locator\locator.vcxproj", "{F6307AF8-3DD8-4C32-B2DC-0B0FBEF9E6A1}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\locator\Ice.locator.server.vcxproj", "{60208663-4C32-4B9F-A3CA-DA103A56257F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\locator\msbuild\server\server.vcxproj", "{60208663-4C32-4B9F-A3CA-DA103A56257F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "customLocator", "customLocator", "{ED4CCC8F-9244-447C-8464-3A47822D8ED6}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "IceGrid\customLocator\IceGrid.customLocator.client.vcxproj", "{1EC976DD-DCCA-4C18-8D97-88B3C583CF58}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "IceGrid\customLocator\msbuild\client\client.vcxproj", "{1EC976DD-DCCA-4C18-8D97-88B3C583CF58}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "locator", "IceGrid\customLocator\IceGrid.customLocator.locator.vcxproj", "{89C95737-BAB5-43AD-90B7-0E679ABD5609}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "locator", "IceGrid\customLocator\msbuild\locator\locator.vcxproj", "{89C95737-BAB5-43AD-90B7-0E679ABD5609}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "IceGrid\customLocator\IceGrid.customLocator.server.vcxproj", "{4FA4CD54-05F0-4279-BB1B-A75CEB1E0D1C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "IceGrid\customLocator\msbuild\server\server.vcxproj", "{4FA4CD54-05F0-4279-BB1B-A75CEB1E0D1C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

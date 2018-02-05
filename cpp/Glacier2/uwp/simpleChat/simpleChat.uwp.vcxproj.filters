@@ -73,6 +73,7 @@
     <None Include="simpleChat_TemporaryKey.pfx" />
     <None Include="..\..\..\..\certs\cacert.der" />
     <None Include="README.md" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainPage.xaml" />
@@ -86,8 +87,8 @@
     <AppxManifest Include="Package.uwp.appxmanifest" />
   </ItemGroup>
   <ItemGroup>
-    <IceBuilder Include="Chat.ice">
+    <SliceCompile Include="Chat.ice">
       <Filter>Slice Files</Filter>
-    </IceBuilder>
+    </SliceCompile>
   </ItemGroup>
 </Project>

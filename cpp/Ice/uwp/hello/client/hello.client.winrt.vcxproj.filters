@@ -52,6 +52,7 @@
     <None Include="..\..\..\..\..\certs\cacert.der" />
     <None Include="README.md" />
     <None Include="client_TemporaryKey.pfx" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainPage.xaml" />

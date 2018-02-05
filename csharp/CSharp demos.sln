@@ -60,175 +60,175 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "printer", "printer", "{BADD
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "simpleFilesystem", "simpleFilesystem", "{42B96E9A-A291-49A7-871D-AA14FFE1CF5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Manual\lifecycle\client.csproj", "{E6B38408-D998-40CE-A018-C53529B270D5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Manual\lifecycle\msbuild\client\client.csproj", "{E6B38408-D998-40CE-A018-C53529B270D5}"
 	ProjectSection(ProjectDependencies) = postProject
 		{710B7320-A714-4560-BCB0-A50FCA6ECAC5} = {710B7320-A714-4560-BCB0-A50FCA6ECAC5}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Manual\lifecycle\server.csproj", "{710B7320-A714-4560-BCB0-A50FCA6ECAC5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Manual\lifecycle\msbuild\server\server.csproj", "{710B7320-A714-4560-BCB0-A50FCA6ECAC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Manual\printer\client.csproj", "{07861488-87F0-4EA6-8774-08E39ABDD468}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Manual\printer\msbuild\client\client.csproj", "{07861488-87F0-4EA6-8774-08E39ABDD468}"
 	ProjectSection(ProjectDependencies) = postProject
 		{2374126D-F982-4E2F-B9F3-278F8B38A310} = {2374126D-F982-4E2F-B9F3-278F8B38A310}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Manual\printer\server.csproj", "{2374126D-F982-4E2F-B9F3-278F8B38A310}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Manual\printer\msbuild\server\server.csproj", "{2374126D-F982-4E2F-B9F3-278F8B38A310}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Manual\simpleFilesystem\client.csproj", "{2E01BB07-5E3A-4563-AE3B-C357672BEEF7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Manual\simpleFilesystem\msbuild\client\client.csproj", "{2E01BB07-5E3A-4563-AE3B-C357672BEEF7}"
 	ProjectSection(ProjectDependencies) = postProject
 		{ECF4A31E-8545-4A9D-ADC2-2020E53C9B46} = {ECF4A31E-8545-4A9D-ADC2-2020E53C9B46}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Manual\simpleFilesystem\server.csproj", "{ECF4A31E-8545-4A9D-ADC2-2020E53C9B46}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Manual\simpleFilesystem\msbuild\server\server.csproj", "{ECF4A31E-8545-4A9D-ADC2-2020E53C9B46}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Glacier2\callback\client.csproj", "{2AC78A13-497B-44B1-8BF0-156877B78293}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Glacier2\callback\msbuild\client\client.csproj", "{2AC78A13-497B-44B1-8BF0-156877B78293}"
 	ProjectSection(ProjectDependencies) = postProject
 		{E0C03A3C-1504-49B6-9C20-9B96DF17649E} = {E0C03A3C-1504-49B6-9C20-9B96DF17649E}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Glacier2\callback\server.csproj", "{E0C03A3C-1504-49B6-9C20-9B96DF17649E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Glacier2\callback\msbuild\server\server.csproj", "{E0C03A3C-1504-49B6-9C20-9B96DF17649E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\async\client.csproj", "{5678ADFF-7802-4A36-8374-C32DE33B0290}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\async\msbuild\client\client.csproj", "{5678ADFF-7802-4A36-8374-C32DE33B0290}"
 	ProjectSection(ProjectDependencies) = postProject
 		{1234ADFF-7802-4A36-8374-C32DE33B0290} = {1234ADFF-7802-4A36-8374-C32DE33B0290}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\async\server.csproj", "{1234ADFF-7802-4A36-8374-C32DE33B0290}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\async\msbuild\server\server.csproj", "{1234ADFF-7802-4A36-8374-C32DE33B0290}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\bidir\client.csproj", "{8707D8A6-5B7F-4DAB-9619-E18ABB2D9966}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\bidir\msbuild\client\client.csproj", "{8707D8A6-5B7F-4DAB-9619-E18ABB2D9966}"
 	ProjectSection(ProjectDependencies) = postProject
 		{F0D08374-2E49-4B47-BD72-0FA5E75804DD} = {F0D08374-2E49-4B47-BD72-0FA5E75804DD}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\bidir\server.csproj", "{F0D08374-2E49-4B47-BD72-0FA5E75804DD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\bidir\msbuild\server\server.csproj", "{F0D08374-2E49-4B47-BD72-0FA5E75804DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\callback\client.csproj", "{DD2D44C1-E67A-4142-8B52-4C15463BF13E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\callback\msbuild\client\client.csproj", "{DD2D44C1-E67A-4142-8B52-4C15463BF13E}"
 	ProjectSection(ProjectDependencies) = postProject
 		{61A697D5-36BB-4B00-88A7-E4A1C0034B66} = {61A697D5-36BB-4B00-88A7-E4A1C0034B66}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\callback\server.csproj", "{61A697D5-36BB-4B00-88A7-E4A1C0034B66}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\callback\msbuild\server\server.csproj", "{61A697D5-36BB-4B00-88A7-E4A1C0034B66}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\hello\client.csproj", "{228B2AFC-57DC-4E1F-8335-D0CD657A987B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\hello\msbuild\client\client.csproj", "{228B2AFC-57DC-4E1F-8335-D0CD657A987B}"
 	ProjectSection(ProjectDependencies) = postProject
 		{0B41ADFF-7802-4A36-8374-C32DE33B0290} = {0B41ADFF-7802-4A36-8374-C32DE33B0290}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\hello\server.csproj", "{0B41ADFF-7802-4A36-8374-C32DE33B0290}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\hello\msbuild\server\server.csproj", "{0B41ADFF-7802-4A36-8374-C32DE33B0290}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\invoke\client.csproj", "{64B7BE89-5E04-44B9-90F6-C040FB9111EA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\invoke\msbuild\client\client.csproj", "{64B7BE89-5E04-44B9-90F6-C040FB9111EA}"
 	ProjectSection(ProjectDependencies) = postProject
 		{CB1ADC6B-02F0-4470-A97B-A8F3AFF39581} = {CB1ADC6B-02F0-4470-A97B-A8F3AFF39581}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\invoke\server.csproj", "{CB1ADC6B-02F0-4470-A97B-A8F3AFF39581}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\invoke\msbuild\server\server.csproj", "{CB1ADC6B-02F0-4470-A97B-A8F3AFF39581}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\latency\client.csproj", "{7ED53E0A-4E93-42CA-AE8E-BB97AAFCF579}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\latency\msbuild\client\client.csproj", "{7ED53E0A-4E93-42CA-AE8E-BB97AAFCF579}"
 	ProjectSection(ProjectDependencies) = postProject
 		{BE103A1D-3AA6-40F6-BE0E-34AC909207EA} = {BE103A1D-3AA6-40F6-BE0E-34AC909207EA}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\latency\server.csproj", "{BE103A1D-3AA6-40F6-BE0E-34AC909207EA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\latency\msbuild\server\server.csproj", "{BE103A1D-3AA6-40F6-BE0E-34AC909207EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\minimal\client.csproj", "{42262F9A-0F9D-48BE-B6C7-E4D458B1A6B3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\minimal\msbuild\client\client.csproj", "{42262F9A-0F9D-48BE-B6C7-E4D458B1A6B3}"
 	ProjectSection(ProjectDependencies) = postProject
 		{8AD1BBF9-2E4E-4801-82C5-BD5AE86D9E2A} = {8AD1BBF9-2E4E-4801-82C5-BD5AE86D9E2A}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\minimal\server.csproj", "{8AD1BBF9-2E4E-4801-82C5-BD5AE86D9E2A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\minimal\msbuild\server\server.csproj", "{8AD1BBF9-2E4E-4801-82C5-BD5AE86D9E2A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\multicast\client.csproj", "{E8B0F14C-D67D-4A4D-B604-448D7EE048F8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\multicast\msbuild\client\client.csproj", "{E8B0F14C-D67D-4A4D-B604-448D7EE048F8}"
 	ProjectSection(ProjectDependencies) = postProject
 		{E6EF341D-3807-4A8B-ACEB-F1C9FB23ABB9} = {E6EF341D-3807-4A8B-ACEB-F1C9FB23ABB9}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\multicast\server.csproj", "{E6EF341D-3807-4A8B-ACEB-F1C9FB23ABB9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\multicast\msbuild\server\server.csproj", "{E6EF341D-3807-4A8B-ACEB-F1C9FB23ABB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\nested\client.csproj", "{2F6A2DC8-0F08-44A9-98E6-EB0C3525CA59}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\nested\msbuild\client\client.csproj", "{2F6A2DC8-0F08-44A9-98E6-EB0C3525CA59}"
 	ProjectSection(ProjectDependencies) = postProject
 		{871F0301-D864-420C-A859-5711F00078A9} = {871F0301-D864-420C-A859-5711F00078A9}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\nested\server.csproj", "{871F0301-D864-420C-A859-5711F00078A9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\nested\msbuild\server\server.csproj", "{871F0301-D864-420C-A859-5711F00078A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\session\client.csproj", "{C735D2B4-548E-4B46-BA4A-B081EFB728AA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\session\msbuild\client\client.csproj", "{C735D2B4-548E-4B46-BA4A-B081EFB728AA}"
 	ProjectSection(ProjectDependencies) = postProject
 		{2CF08DDA-0F0A-4B88-8ECF-E5CA54EAA765} = {2CF08DDA-0F0A-4B88-8ECF-E5CA54EAA765}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\session\server.csproj", "{2CF08DDA-0F0A-4B88-8ECF-E5CA54EAA765}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\session\msbuild\server\server.csproj", "{2CF08DDA-0F0A-4B88-8ECF-E5CA54EAA765}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\throughput\client.csproj", "{AEEFC3E3-7ADB-4764-8B26-E48E968C3252}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\throughput\msbuild\client\client.csproj", "{AEEFC3E3-7ADB-4764-8B26-E48E968C3252}"
 	ProjectSection(ProjectDependencies) = postProject
 		{092EBA96-7E30-49BE-96D3-B3F78F7E0CDE} = {092EBA96-7E30-49BE-96D3-B3F78F7E0CDE}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\throughput\server.csproj", "{092EBA96-7E30-49BE-96D3-B3F78F7E0CDE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\throughput\msbuild\server\server.csproj", "{092EBA96-7E30-49BE-96D3-B3F78F7E0CDE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\value\client.csproj", "{09767289-E658-49F2-ADD6-2EB467328E6F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\value\msbuild\client\client.csproj", "{09767289-E658-49F2-ADD6-2EB467328E6F}"
 	ProjectSection(ProjectDependencies) = postProject
 		{0E78B6EA-2CDF-401A-BC2D-364E44A46636} = {0E78B6EA-2CDF-401A-BC2D-364E44A46636}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\value\server.csproj", "{0E78B6EA-2CDF-401A-BC2D-364E44A46636}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\value\msbuild\server\server.csproj", "{0E78B6EA-2CDF-401A-BC2D-364E44A46636}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "IceBox\hello\client.csproj", "{6C390D21-6B1A-467A-A533-1A02DA104A64}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "IceBox\hello\msbuild\client\client.csproj", "{6C390D21-6B1A-467A-A533-1A02DA104A64}"
 	ProjectSection(ProjectDependencies) = postProject
 		{8D371651-BFA4-43C9-B143-77F06F02B310} = {8D371651-BFA4-43C9-B143-77F06F02B310}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "helloservice", "IceBox\hello\helloservice.csproj", "{8D371651-BFA4-43C9-B143-77F06F02B310}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "helloservice", "IceBox\hello\msbuild\helloservice\helloservice.csproj", "{8D371651-BFA4-43C9-B143-77F06F02B310}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "IceGrid\icebox\client.csproj", "{E50AABCD-D945-4ED0-9E1D-6053A86BA43E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "IceGrid\icebox\msbuild\client\client.csproj", "{E50AABCD-D945-4ED0-9E1D-6053A86BA43E}"
 	ProjectSection(ProjectDependencies) = postProject
 		{8D37ABCD-BFA4-43C9-B143-77F06F02B310} = {8D37ABCD-BFA4-43C9-B143-77F06F02B310}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "helloservice", "IceGrid\icebox\helloservice.csproj", "{8D37ABCD-BFA4-43C9-B143-77F06F02B310}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "helloservice", "IceGrid\icebox\msbuild\helloservice\helloservice.csproj", "{8D37ABCD-BFA4-43C9-B143-77F06F02B310}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "IceGrid\simple\client.csproj", "{E50ACFB0-D945-4ED0-9E1D-6053A86BA43E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "IceGrid\simple\msbuild\client\client.csproj", "{E50ACFB0-D945-4ED0-9E1D-6053A86BA43E}"
 	ProjectSection(ProjectDependencies) = postProject
 		{7F5F90B7-88D5-47EB-B8FD-2BEF5A08E0D9} = {7F5F90B7-88D5-47EB-B8FD-2BEF5A08E0D9}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "IceGrid\simple\server.csproj", "{7F5F90B7-88D5-47EB-B8FD-2BEF5A08E0D9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "IceGrid\simple\msbuild\server\server.csproj", "{7F5F90B7-88D5-47EB-B8FD-2BEF5A08E0D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "publisher", "IceStorm\clock\publisher.csproj", "{E76D1D8E-7154-461D-BAFA-A3BB2E5D6D7A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "publisher", "IceStorm\clock\msbuild\publisher\publisher.csproj", "{E76D1D8E-7154-461D-BAFA-A3BB2E5D6D7A}"
 	ProjectSection(ProjectDependencies) = postProject
 		{FC6800FD-F1B4-4ADC-850C-6D53FFC26D81} = {FC6800FD-F1B4-4ADC-850C-6D53FFC26D81}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "subscriber", "IceStorm\clock\subscriber.csproj", "{FC6800FD-F1B4-4ADC-850C-6D53FFC26D81}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "subscriber", "IceStorm\clock\msbuild\subscriber\subscriber.csproj", "{FC6800FD-F1B4-4ADC-850C-6D53FFC26D81}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "serializable", "Ice\serialize\serializable.csproj", "{8D371651-BFA4-43C9-B143-77FABCD2B310}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "serializable", "Ice\serialize\msbuild\serializable\serializable.csproj", "{8D371651-BFA4-43C9-B143-77FABCD2B310}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\serialize\server.csproj", "{0B41ADFF-7802-4A36-8374-C32DE33BABCD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\serialize\msbuild\server\server.csproj", "{0B41ADFF-7802-4A36-8374-C32DE33BABCD}"
 	ProjectSection(ProjectDependencies) = postProject
 		{8D371651-BFA4-43C9-B143-77FABCD2B310} = {8D371651-BFA4-43C9-B143-77FABCD2B310}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\serialize\client.csproj", "{228B2AFC-57DC-4E1F-8335-D0CABCDA987B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\serialize\msbuild\client\client.csproj", "{228B2AFC-57DC-4E1F-8335-D0CABCDA987B}"
 	ProjectSection(ProjectDependencies) = postProject
 		{8D371651-BFA4-43C9-B143-77FABCD2B310} = {8D371651-BFA4-43C9-B143-77FABCD2B310}
 		{0B41ADFF-7802-4A36-8374-C32DE33BABCD} = {0B41ADFF-7802-4A36-8374-C32DE33BABCD}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\plugin\client.csproj", "{228BEDFA-0000-0000-0000-000000000000}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\plugin\msbuild\client\client.csproj", "{228BEDFA-0000-0000-0000-000000000000}"
 	ProjectSection(ProjectDependencies) = postProject
 		{8D371651-BFA4-43C9-B143-77F0CCDEB310} = {8D371651-BFA4-43C9-B143-77F0CCDEB310}
 		{8D371651-BFA4-43C9-B143-77F0CCEEBB10} = {8D371651-BFA4-43C9-B143-77F0CCEEBB10}
 		{0B41ADFF-7802-4A36-DDFB-C32DE33B0290} = {0B41ADFF-7802-4A36-DDFB-C32DE33B0290}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "loggerplugin", "Ice\plugin\loggerplugin.csproj", "{8D371651-BFA4-43C9-B143-77F0CCDEB310}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "loggerplugin", "Ice\plugin\msbuild\loggerplugin\loggerplugin.csproj", "{8D371651-BFA4-43C9-B143-77F0CCDEB310}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\plugin\server.csproj", "{0B41ADFF-7802-4A36-DDFB-C32DE33B0290}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\plugin\msbuild\server\server.csproj", "{0B41ADFF-7802-4A36-DDFB-C32DE33B0290}"
 	ProjectSection(ProjectDependencies) = postProject
 		{8D371651-BFA4-43C9-B143-77F0CCDEB310} = {8D371651-BFA4-43C9-B143-77F0CCDEB310}
 		{8D371651-BFA4-43C9-B143-77F0CCEEBB10} = {8D371651-BFA4-43C9-B143-77F0CCEEBB10}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "helloplugin", "Ice\plugin\helloplugin.csproj", "{8D371651-BFA4-43C9-B143-77F0CCEEBB10}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "helloplugin", "Ice\plugin\msbuild\helloplugin\helloplugin.csproj", "{8D371651-BFA4-43C9-B143-77F0CCEEBB10}"
 	ProjectSection(ProjectDependencies) = postProject
 		{8D371651-BFA4-43C9-B143-77F0CCDEB310} = {8D371651-BFA4-43C9-B143-77F0CCDEB310}
 	EndProjectSection
@@ -239,30 +239,30 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Glacier2\simpleCh
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "optional", "optional", "{E84CAC08-D9FF-4A34-AA1D-625AD6038A5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\optional\client.csproj", "{5ABC94EA-A4AD-4B24-AFA2-23A5DA5DBC22}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\optional\msbuild\client\client.csproj", "{5ABC94EA-A4AD-4B24-AFA2-23A5DA5DBC22}"
 	ProjectSection(ProjectDependencies) = postProject
 		{EB5746F1-514B-49E5-863F-6B4A4A1ABC86} = {EB5746F1-514B-49E5-863F-6B4A4A1ABC86}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\optional\server.csproj", "{EB5746F1-514B-49E5-863F-6B4A4A1ABC86}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\optional\msbuild\server\server.csproj", "{EB5746F1-514B-49E5-863F-6B4A4A1ABC86}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "properties", "properties", "{BD5455AE-5C04-4582-AB21-293AE3298595}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\properties\client.csproj", "{27D3C724-B664-418B-8448-47B53EC8C49F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\properties\msbuild\client\client.csproj", "{27D3C724-B664-418B-8448-47B53EC8C49F}"
 	ProjectSection(ProjectDependencies) = postProject
 		{FDBF4741-8FC1-48A4-B978-3553A87178DF} = {FDBF4741-8FC1-48A4-B978-3553A87178DF}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\properties\server.csproj", "{FDBF4741-8FC1-48A4-B978-3553A87178DF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\properties\msbuild\server\server.csproj", "{FDBF4741-8FC1-48A4-B978-3553A87178DF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "context", "context", "{DFFC85E1-6802-4ABA-AB77-7B7999157500}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\context\client.csproj", "{9A841A53-9CE9-4E68-A62D-9E20BD8ECE8B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\context\msbuild\client\client.csproj", "{9A841A53-9CE9-4E68-A62D-9E20BD8ECE8B}"
 	ProjectSection(ProjectDependencies) = postProject
 		{47D0963E-697E-4470-8F3F-54F32F3CCF19} = {47D0963E-697E-4470-8F3F-54F32F3CCF19}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\context\server.csproj", "{47D0963E-697E-4470-8F3F-54F32F3CCF19}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\context\msbuild\server\server.csproj", "{47D0963E-697E-4470-8F3F-54F32F3CCF19}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IceDiscovery", "IceDiscovery", "{A90FFE38-5686-415B-966A-461AEB82309A}"
 EndProject
@@ -270,19 +270,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "hello", "hello", "{639EF141
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "replication", "replication", "{B750B6BC-81A7-46C8-A6AB-F0E74B9B8533}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "IceDiscovery\hello\client.csproj", "{0A4F0AAC-6F47-441C-BC42-5F1BC670B547}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "IceDiscovery\hello\msbuild\client\client.csproj", "{0A4F0AAC-6F47-441C-BC42-5F1BC670B547}"
 	ProjectSection(ProjectDependencies) = postProject
 		{558CBD3F-58CA-4858-85F8-EBB6261EA3F5} = {558CBD3F-58CA-4858-85F8-EBB6261EA3F5}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "IceDiscovery\hello\server.csproj", "{558CBD3F-58CA-4858-85F8-EBB6261EA3F5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "IceDiscovery\hello\msbuild\server\server.csproj", "{558CBD3F-58CA-4858-85F8-EBB6261EA3F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "IceDiscovery\replication\client.csproj", "{83A3CB76-564E-4180-8B6B-C7C1A6806D0D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "IceDiscovery\replication\msbuild\client\client.csproj", "{83A3CB76-564E-4180-8B6B-C7C1A6806D0D}"
 	ProjectSection(ProjectDependencies) = postProject
 		{0E26667C-F5DF-455F-A8FB-52E0B8305DF1} = {0E26667C-F5DF-455F-A8FB-52E0B8305DF1}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "IceDiscovery\replication\server.csproj", "{0E26667C-F5DF-455F-A8FB-52E0B8305DF1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "IceDiscovery\replication\msbuild\server\server.csproj", "{0E26667C-F5DF-455F-A8FB-52E0B8305DF1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Chat", "Chat", "{BD048975-1CF0-4122-B740-46F5C3302463}"
 EndProject

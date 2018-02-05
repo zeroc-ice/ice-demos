@@ -68,6 +68,7 @@
   <ItemGroup>
     <None Include="README.md" />
     <None Include="server_TemporaryKey.pfx" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainPage.xaml" />
@@ -79,8 +80,8 @@
     <AppxManifest Include="Package.uwp.appxmanifest" />
   </ItemGroup>
   <ItemGroup>
-    <IceBuilder Include="Hello.ice">
+    <SliceCompile Include="Hello.ice">
       <Filter>Slice Files</Filter>
-    </IceBuilder>
+    </SliceCompile>
   </ItemGroup>
 </Project>

@@ -75,12 +75,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Ice, Version=3.6.4.0, Culture=neutral, processorArchitecture=MSIL">
-        <Private>True</Private>
-        <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="IceGrid, Version=3.6.4.0, Culture=neutral, processorArchitecture=MSIL">
-        <Private>True</Private>
-        <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="System">
       <Name>System</Name>
@@ -102,6 +102,9 @@
       <Project>{DB73D8A1-E1DB-4E43-AB42-1AE93E04EEAC}</Project>
       <Name>slice %28IceGrid\simple\slice%29</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="My Project\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
 </Project>

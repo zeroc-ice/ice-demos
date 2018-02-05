@@ -74,12 +74,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Ice, Version=3.6.4.0, Culture=neutral, processorArchitecture=MSIL">
-        <Private>True</Private>
-        <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="IceStorm, Version=3.6.4.0, Culture=neutral, processorArchitecture=MSIL">
-        <Private>True</Private>
-        <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="System">
       <Name>System</Name>
@@ -101,6 +101,9 @@
       <Project>{E40D534D-3D87-4639-8518-F83D4C78B970}</Project>
       <Name>slice %28IceStorm\clock\slice%29</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="My Project\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
 </Project>
