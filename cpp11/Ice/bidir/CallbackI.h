@@ -14,7 +14,7 @@ class CallbackSenderI : public Demo::CallbackSender,
 {
 public:
 
-    virtual void addClient(Ice::Identity, const Ice::Current&) override;
+    virtual void addClient(std::shared_ptr<Demo::CallbackReceiverPrx>, const Ice::Current&) override;
 
     void destroy();
     void start();

@@ -84,12 +84,29 @@ run(const shared_ptr<Ice::Communicator>& communicator, const string& appName)
         return 1;
     }
 
+    //
+    // Create an object adapter with no name and no endpoints for receiving callbacks
+    // over bidirectional connections.
+    //
     auto adapter = communicator->createObjectAdapter("");
-    Ice::Identity ident{ Ice::generateUUID(), ""};
-    adapter->add(make_shared<CallbackReceiverI>(), ident);
+
+    //
+    // Register the callback receiver servant with the object adapter and activate
+    // the adapter.
+    //
+    auto proxy = Ice::uncheckedCast<CallbackReceiverPrx>(adapter->addWithUUID(make_shared<CallbackReceiverI>()));
     adapter->activate();
+
+    //
+    // Associate the object adapter with the bidirectional connection.
+    //
     server->ice_getConnection()->setAdapter(adapter);
-    server->addClient(ident);
+
+    //
+    // Provide the proxy of the callback receiver object to the server and wait for
+    // shutdown.
+    //
+    server->addClient(proxy);
     communicator->waitForShutdown();
 
     return 0;

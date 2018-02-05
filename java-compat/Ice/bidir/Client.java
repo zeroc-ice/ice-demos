@@ -26,16 +26,31 @@ public class Client extends Ice.Application
             return 1;
         }
 
+        //
+        // Create an object adapter with no name and no endpoints for receiving callbacks
+        // over bidirectional connections.
+        //
         Ice.ObjectAdapter adapter = communicator().createObjectAdapter("");
-        Ice.Identity ident = new Ice.Identity();
-        ident.name = java.util.UUID.randomUUID().toString();
-        ident.category = "";
-        adapter.add(new CallbackReceiverI(), ident);
-        adapter.activate();
-        server.ice_getConnection().setAdapter(adapter);
-        server.addClient(ident);
-        communicator().waitForShutdown();
 
+        //
+        // Register the callback receiver servant with the object adapter and activate
+        // the adapter.
+        //
+        CallbackReceiverPrx proxy =
+            CallbackReceiverPrxHelper.uncheckedCast(adapter.addWithUUID(new CallbackReceiverI()));
+        adapter.activate();
+
+        //
+        // Associate the object adapter with the bidirectional connection.
+        //
+        server.ice_getConnection().setAdapter(adapter);
+
+        //
+        // Provide the proxy of the callback receiver object to the server and wait for
+        // shutdown.
+        //
+        server.addClient(proxy);
+        communicator().waitForShutdown();
         return 0;
     }
 

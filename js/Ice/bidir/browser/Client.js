@@ -39,26 +39,27 @@ async function start()
         communicator.stringToProxy("sender:ws -p 10002 -h " + hostname));
 
     //
-    // Create the client object adapter.
+    // Create an object adapter with no name and no endpoints for receiving callbacks
+    // over bidirectional connections.
     //
     const adapter = await communicator.createObjectAdapter("");
 
     //
-    // Create a callback receiver servant and add it to
-    // the object adapter.
+    // Register the callback receiver servant with the object adapter and activate
+    // the adapter.
     //
-    const receiver = adapter.addWithUUID(new CallbackReceiverI());
+    const receiver = Demo.CallbackReceiverPrx.uncheckedCast(adapter.addWithUUID(new CallbackReceiverI()));
 
     //
-    // Set the connection adapter and remember the connection.
+    // Associate the object adapter with the bidirectional connection.
     //
-    connection = server.ice_getCachedConnection();
+    connection = server.ice_getCachedConnection()
     connection.setAdapter(adapter);
 
     //
     // Register the client with the bidir server.
     //
-    await server.addClient(receiver.ice_getIdentity());
+    await server.addClient(receiver);
 }
 
 function stop()

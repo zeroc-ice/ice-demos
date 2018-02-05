@@ -10,13 +10,10 @@ import java.util.concurrent.*;
 class CallbackSenderI implements CallbackSender
 {
     @Override
-    synchronized public void addClient(com.zeroc.Ice.Identity ident, com.zeroc.Ice.Current current)
+    synchronized public void addClient(CallbackReceiverPrx client, com.zeroc.Ice.Current current)
     {
-        System.out.println("adding client `" + com.zeroc.Ice.Util.identityToString(ident) + "'");
-
-        com.zeroc.Ice.ObjectPrx base = current.con.createProxy(ident);
-        CallbackReceiverPrx client = CallbackReceiverPrx.uncheckedCast(base);
-        _clients.add(client);
+        System.out.println("adding client `" + com.zeroc.Ice.Util.identityToString(client.ice_getIdentity()) + "'");
+        _clients.add(client.ice_fixed(current.con));
     }
 
     public void destroy()

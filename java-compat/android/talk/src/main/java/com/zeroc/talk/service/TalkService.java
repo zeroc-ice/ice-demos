@@ -46,8 +46,8 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
         {
             address = o.address;
             name = o.name;
-            peer = o.peer;
-            servantId = o.servantId;
+            remote = o.remote;
+            local = o.local;
             connection = o.connection;
         }
 
@@ -58,11 +58,11 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
 
         void removeServant(Ice.ObjectAdapter adapter)
         {
-            if(servantId != null)
+            if(local != null)
             {
                 try
                 {
-                    adapter.remove(servantId);
+                    adapter.remove(local.ice_getIdentity());
                 }
                 catch(Ice.NotRegisteredException ex)
                 {
@@ -73,8 +73,8 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
 
         String address;
         String name;
-        Talk.PeerPrx peer;
-        Ice.Identity servantId;
+        Talk.PeerPrx local;
+        Talk.PeerPrx remote;
         Ice.Connection connection;
     }
 
@@ -85,10 +85,10 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
     private class PeerImpl extends Talk._PeerDisp
     {
         @Override
-        public void connect(Ice.Identity id, Ice.Current current)
+        public void connect(Talk.PeerPrx peer, Ice.Current current)
             throws Talk.ConnectionException
         {
-            info = incoming(id, current.con);
+            info = incoming((Talk.PeerPrx)peer.ice_fixed(current.con));
         }
 
         @Override
@@ -298,18 +298,16 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
         // Create a proxy for the peer. The identity of the remote object is "peer". The UUID in the
         // proxy is the well-known Bluetooth service ID for the Talk service.
         //
-        info.peer = Talk.PeerPrxHelper.uncheckedCast(_communicator.stringToProxy(proxy));
+        info.remote = Talk.PeerPrxHelper.uncheckedCast(_communicator.stringToProxy(proxy));
 
         //
         // Register a unique servant with the OA for each outgoing connection. This servant receives
         // callbacks from the peer.
         //
-        info.servantId = Ice.Util.stringToIdentity(java.util.UUID.randomUUID().toString());
-
-        _adapter.add(
+        info.local = Talk.PeerPrxHelper.uncheckedCast(_adapter.addWithUUID(
             new Talk._PeerDisp()
             {
-                public void connect(Ice.Identity id, Ice.Current current)
+                public void connect(Talk.PeerPrx peer, Ice.Current current)
                     throws Talk.ConnectionException
                 {
                     throw new Talk.ConnectionException("already connected");
@@ -324,7 +322,7 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
                 {
                     disconnected(info);
                 }
-            }, info.servantId);
+            }));
 
         PeerInfo oldInfo = null;
 
@@ -382,14 +380,14 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
 
         final PeerInfo info = _peer;
 
-        info.peer.begin_send(message, new Ice.Callback()
+        info.remote.begin_send(message, new Ice.Callback()
             {
                 @Override
                 public void completed(Ice.AsyncResult r)
                 {
                     try
                     {
-                        info.peer.end_send(r);
+                        info.remote.end_send(r);
                         TalkService.this.sent(info, message);
                     }
                     catch(Ice.LocalException ex)
@@ -454,7 +452,7 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
         }
     }
 
-    synchronized private PeerInfo incoming(Ice.Identity id, Ice.Connection con)
+    synchronized private PeerInfo incoming(Talk.PeerPrx peer)
         throws Talk.ConnectionException
     {
         //
@@ -465,6 +463,7 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
             throw new Talk.ConnectionException("Peer is busy");
         }
 
+        Ice.Connection con = peer.ice_getConnection();
         Ice.ConnectionInfo ci = con.getInfo();
         if(ci.underlying != null)
         {
@@ -473,9 +472,9 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
         IceBT.ConnectionInfo btci = (IceBT.ConnectionInfo)ci;
 
         PeerInfo info = new PeerInfo();
-        info.peer = Talk.PeerPrxHelper.uncheckedCast(con.createProxy(id));
+        info.remote = peer;
         info.address = btci.remoteAddress;
-        info.servantId = null;
+        info.local = null;
         info.connection = con;
 
         setState(STATE_CONNECTED); // Also notifies the activity.
@@ -504,14 +503,14 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
         }
         setState(STATE_CONNECTING); // Also notifies the activity.
 
-        info.peer.begin_connect(info.servantId, new Ice.Callback()
+        info.remote.begin_connect(info.local, new Ice.Callback()
             {
                 @Override
                 public void completed(Ice.AsyncResult r)
                 {
                     try
                     {
-                        info.peer.end_connect(r);
+                        info.remote.end_connect(r);
                         connected(info);
                     }
                     catch(Talk.ConnectionException ex)
@@ -538,14 +537,14 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
         //
         // Try to gracefully disconnect from the old peer.
         //
-        oldInfo.peer.begin_disconnect(new Ice.Callback()
+        oldInfo.remote.begin_disconnect(new Ice.Callback()
             {
                 @Override
                 public void completed(Ice.AsyncResult r)
                 {
                     try
                     {
-                        oldInfo.peer.end_disconnect(r);
+                        oldInfo.remote.end_disconnect(r);
                     }
                     catch(Ice.LocalException ex)
                     {
@@ -569,7 +568,7 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
             //
             // Configure the connection for bidirectional connections.
             //
-            Ice.Connection con = info.peer.ice_getCachedConnection();
+            Ice.Connection con = info.remote.ice_getCachedConnection();
             con.setAdapter(_adapter);
             configureConnection(con, info);
             log("Connected to " + info.getName());

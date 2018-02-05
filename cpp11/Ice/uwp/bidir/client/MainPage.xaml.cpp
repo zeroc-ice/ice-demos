@@ -77,15 +77,30 @@ void bidir::MainPage::startClient_Click(Platform::Object^ sender, Windows::UI::X
                     return;
                 }
 
-                Ice::ObjectAdapterPtr adapter = _communicator->createObjectAdapter("");
-                Ice::Identity ident;
-                ident.name = Ice::generateUUID();
-                ident.category = "";
-                auto cr = make_shared<CallbackReceiverI>(this);
-                adapter->add(cr, ident);
+                //
+                // Create an object adapter with no name and no endpoints for receiving callbacks
+                // over bidirectional connections.
+                //
+                auto adapter = _communicator->createObjectAdapter("");
+
+                //
+                // Register the callback receiver servant with the object adapter and activate
+                // the adapter.
+                //
+                auto proxy = Ice:uncheckedCast<CallbackReceiverPrx>(
+                                        adapter->addWithUUID(make_shared<CallbackReceiverI>(this)));
                 adapter->activate();
+
+                //
+                // Associate the object adapter with the bidirectional connection.
+                //
                 server->ice_getConnection()->setAdapter(adapter);
-                server->addClientAsync(ident, nullptr,
+
+                //
+                // Provide the proxy of the callback receiver object to the server and wait for
+                // shutdown.
+                //
+                server->addClientAsync(proxy, nullptr,
                     [=](const exception_ptr ex)
                     {
                         try

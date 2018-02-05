@@ -17,6 +17,6 @@ module Demo
 
     interface CallbackSender
     {
-        void addClient(Ice::Identity ident);
+        void addClient(CallbackReceiver* receiver);
     }
 }

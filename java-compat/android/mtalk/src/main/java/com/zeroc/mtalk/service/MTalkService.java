@@ -28,6 +28,8 @@ import java.nio.ByteOrder;
 import com.zeroc.mtalk.Intents;
 import com.zeroc.mtalk.R;
 
+import MTalk.PeerPrx;
+
 public class MTalkService extends Service implements com.zeroc.mtalk.service.Service
 {
     private WifiManager _wifiManager;
@@ -57,8 +59,8 @@ public class MTalkService extends Service implements com.zeroc.mtalk.service.Ser
         PeerInfo(PeerInfo o)
         {
             name = o.name;
-            peer = o.peer;
-            servantId = o.servantId;
+            remote = o.remote;
+            local = o.local;
             connection = o.connection;
         }
 
@@ -69,11 +71,11 @@ public class MTalkService extends Service implements com.zeroc.mtalk.service.Ser
 
         void removeServant(Ice.ObjectAdapter adapter)
         {
-            if(servantId != null)
+            if(local != null)
             {
                 try
                 {
-                    adapter.remove(servantId);
+                    adapter.remove(local.ice_getIdentity());
                 }
                 catch(Ice.NotRegisteredException ex)
                 {
@@ -83,8 +85,8 @@ public class MTalkService extends Service implements com.zeroc.mtalk.service.Ser
         }
 
         String name;
-        MTalk.PeerPrx peer;
-        Ice.Identity servantId;
+        MTalk.PeerPrx remote;
+        MTalk.PeerPrx local;
         Ice.Connection connection;
     }
 
@@ -95,10 +97,10 @@ public class MTalkService extends Service implements com.zeroc.mtalk.service.Ser
     private class PeerImpl extends MTalk._PeerDisp
     {
         @Override
-        public void connect(String name, Ice.Identity id, Ice.Current current)
+        public void connect(String name, MTalk.PeerPrx peer, Ice.Current current)
             throws MTalk.ConnectionException
         {
-            info = incoming(name, id, current.con);
+            info = incoming(name, (PeerPrx)peer.ice_fixed(current.con));
         }
 
         @Override
@@ -308,19 +310,17 @@ public class MTalkService extends Service implements com.zeroc.mtalk.service.Ser
         final PeerInfo info = new PeerInfo();
 
         info.name = name;
-        info.peer = MTalk.PeerPrxHelper.uncheckedCast(
+        info.remote = MTalk.PeerPrxHelper.uncheckedCast(
             _communicator.stringToProxy(proxy).ice_invocationTimeout(5000));
 
         //
         // Register a unique servant with the OA for each outgoing connection. This servant receives
         // callbacks from the peer.
         //
-        info.servantId = Ice.Util.stringToIdentity(java.util.UUID.randomUUID().toString());
-
-        _adapter.add(
+        info.local = MTalk.PeerPrxHelper.uncheckedCast(_adapter.addWithUUID(
             new MTalk._PeerDisp()
             {
-                public void connect(String name, Ice.Identity id, Ice.Current current)
+                public void connect(String name, MTalk.PeerPrx peer, Ice.Current current)
                     throws MTalk.ConnectionException
                 {
                     throw new MTalk.ConnectionException("already connected");
@@ -335,7 +335,7 @@ public class MTalkService extends Service implements com.zeroc.mtalk.service.Ser
                 {
                     disconnected(info);
                 }
-            }, info.servantId);
+            }));
 
         PeerInfo oldInfo = null;
 
@@ -393,14 +393,14 @@ public class MTalkService extends Service implements com.zeroc.mtalk.service.Ser
 
         final PeerInfo info = _peer;
 
-        info.peer.begin_message(message, new Ice.Callback()
+        info.remote.begin_message(message, new Ice.Callback()
             {
                 @Override
                 public void completed(Ice.AsyncResult r)
                 {
                     try
                     {
-                        info.peer.end_message(r);
+                        info.remote.end_message(r);
                         MTalkService.this.sent(info, message);
                     }
                     catch(Ice.LocalException ex)
@@ -474,7 +474,7 @@ public class MTalkService extends Service implements com.zeroc.mtalk.service.Ser
         }
     }
 
-    synchronized private PeerInfo incoming(String name, Ice.Identity id, Ice.Connection con)
+    synchronized private PeerInfo incoming(String name, MTalk.PeerPrx peer)
         throws MTalk.ConnectionException
     {
         //
@@ -487,9 +487,9 @@ public class MTalkService extends Service implements com.zeroc.mtalk.service.Ser
 
         PeerInfo info = new PeerInfo();
         info.name = name;
-        info.peer = MTalk.PeerPrxHelper.uncheckedCast(con.createProxy(id).ice_invocationTimeout(5000));
-        info.servantId = null;
-        info.connection = con;
+        info.remote = (MTalk.PeerPrxHelper)peer.ice_invocationTimeout(5000);
+        info.local = null;
+        info.connection = peer.ice_getConnection();
 
         setState(Intents.PEER_CONNECTED); // Also notifies the activity.
         _peer = info;
@@ -517,14 +517,14 @@ public class MTalkService extends Service implements com.zeroc.mtalk.service.Ser
         }
         setState(Intents.PEER_CONNECTING); // Also notifies the activity.
 
-        info.peer.begin_connect(_name, info.servantId, new Ice.Callback()
+        info.remote.begin_connect(_name, info.local, new Ice.Callback()
             {
                 @Override
                 public void completed(Ice.AsyncResult r)
                 {
                     try
                     {
-                        info.peer.end_connect(r);
+                        info.remote.end_connect(r);
                         connected(info);
                     }
                     catch(MTalk.ConnectionException ex)
@@ -551,14 +551,14 @@ public class MTalkService extends Service implements com.zeroc.mtalk.service.Ser
         //
         // Try to gracefully disconnect from the old peer.
         //
-        oldInfo.peer.begin_disconnect(new Ice.Callback()
+        oldInfo.remote.begin_disconnect(new Ice.Callback()
             {
                 @Override
                 public void completed(Ice.AsyncResult r)
                 {
                     try
                     {
-                        oldInfo.peer.end_disconnect(r);
+                        oldInfo.remote.end_disconnect(r);
                     }
                     catch(Ice.LocalException ex)
                     {
@@ -582,7 +582,7 @@ public class MTalkService extends Service implements com.zeroc.mtalk.service.Ser
             //
             // Configure the connection for bidirectional connections.
             //
-            info.connection = info.peer.ice_getCachedConnection();
+            info.connection = info.remote.ice_getCachedConnection();
             info.connection.setAdapter(_adapter);
             configureConnection(info);
             log("Connected to " + info.getName());

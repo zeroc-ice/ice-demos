@@ -30,11 +30,10 @@ class CallbackSenderI(Demo.CallbackSender, threading.Thread):
 
         self.join()
 
-    def addClient(self, ident, current):
+    def addClient(self, client, current):
         with self._cond:
-            print("adding client `" + Ice.identityToString(ident) + "'")
-            client = Demo.CallbackReceiverPrx.uncheckedCast(current.con.createProxy(ident))
-            self._clients.append(client)
+            print("adding client `" + Ice.identityToString(client.ice_getIdentity()) + "'")
+            self._clients.append(client.ice_fixed(current.con))
 
     def run(self):
         num = 0

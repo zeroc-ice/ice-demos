@@ -31,16 +31,30 @@ class Client(Ice.Application):
             print(self.appName() + ": invalid proxy")
             return 1
 
+        #
+        # Create an object adapter with no name and no endpoints for receiving callbacks
+        # over bidirectional connections.
+        #
         adapter = self.communicator().createObjectAdapter("")
-        ident = Ice.Identity()
-        ident.name = Ice.generateUUID()
-        ident.category = ""
-        adapter.add(CallbackReceiverI(), ident)
-        adapter.activate()
-        server.ice_getConnection().setAdapter(adapter)
-        server.addClient(ident)
-        self.communicator().waitForShutdown()
 
+        #
+        # Register the callback receiver servant with the object adapter and activate
+        # the adapter.
+        #
+        proxy = Demo.CallbackReceiverPrx.uncheckedCast(adapter.addWithUUID(CallbackReceiverI()))
+        adapter.activate()
+
+        #
+        # Associate the object adapter with the bidirectional connection.
+        #
+        server.ice_getConnection().setAdapter(adapter)
+
+        #
+        # Provide the proxy of the callback receiver object to the server and wait for
+        # shutdown.
+        #
+        server.addClient(proxy)
+        self.communicator().waitForShutdown()
         return 0
 
 app = Client()

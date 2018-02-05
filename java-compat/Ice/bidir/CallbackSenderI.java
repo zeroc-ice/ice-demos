@@ -24,13 +24,10 @@ class CallbackSenderI extends _CallbackSenderDisp implements java.lang.Runnable
 
     @Override
     synchronized public void
-    addClient(Ice.Identity ident, Ice.Current current)
+    addClient(CallbackReceiverPrx client, Ice.Current current)
     {
-        System.out.println("adding client `" + Ice.Util.identityToString(ident) + "'");
-
-        Ice.ObjectPrx base = current.con.createProxy(ident);
-        CallbackReceiverPrx client = CallbackReceiverPrxHelper.uncheckedCast(base);
-        _clients.add(client);
+        System.out.println("adding client `" + Ice.Util.identityToString(client.ice_getIdentity()) + "'");
+        _clients.add((CallbackReceiverPrx)client.ice_fixed(current.con));
     }
 
     @Override

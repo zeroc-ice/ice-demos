@@ -55,16 +55,29 @@ CallbackClient::run(int argc, char*[])
         return 1;
     }
 
+    //
+    // Create an object adapter with no name and no endpoints for receiving callbacks
+    // over bidirectional connections.
+    //
     Ice::ObjectAdapterPtr adapter = communicator()->createObjectAdapter("");
-    Ice::Identity ident;
-    ident.name = Ice::generateUUID();
-    ident.category = "";
-    CallbackReceiverPtr cr = new CallbackReceiverI;
-    adapter->add(cr, ident);
-    adapter->activate();
-    server->ice_getConnection()->setAdapter(adapter);
-    server->addClient(ident);
-    communicator()->waitForShutdown();
 
+    //
+    // Register the callback receiver servant with the object adapter and activate
+    // the adapter.
+    //
+    CallbackReceiverPrx proxy = CallbackReceiverPrx::uncheckedCast(adapter->addWithUUID(new CallbackReceiverI));
+    adapter->activate();
+
+    //
+    // Associate the object adapter with the bidirectional connection.
+    //
+    server->ice_getConnection()->setAdapter(adapter);
+
+    //
+    // Provide the proxy of the callback receiver object to the server and wait for
+    // shutdown.
+    //
+    server->addClient(proxy);
+    communicator()->waitForShutdown();
     return 0;
 }
