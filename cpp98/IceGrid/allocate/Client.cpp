@@ -162,9 +162,9 @@ run(const Ice::CommunicatorPtr& communicator)
         cerr << "could not allocate object: " << ex.reason << endl;
         status = 1;
     }
-    catch(...)
+    catch(const std::exception& ex)
     {
-        cerr << "unexpected exception" << endl;
+        cerr << "unexpected exception: " << ex.what() << endl;
         status = 1;
     }
 

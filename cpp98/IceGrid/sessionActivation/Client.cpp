@@ -148,14 +148,9 @@ run(const Ice::CommunicatorPtr& communicator)
         cerr << "object not registered with registry" << endl;
         status = 1;
     }
-    catch(const Ice::Exception& ex)
+    catch(const std::exception& ex)
     {
-        cerr << ex << endl;
-        status = 1;
-    }
-    catch(...)
-    {
-        cerr << "unexpected exception" << endl;
+        cerr << "unexpected exception: " << ex.what() << endl;
         status = 1;
     }
 

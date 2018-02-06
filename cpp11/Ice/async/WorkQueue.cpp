@@ -76,15 +76,7 @@ WorkQueue::run()
     //
     for(auto& entry : _callbacks)
     {
-        try
-        {
-            throw Demo::RequestCanceledException();
-        }
-        catch(...)
-        {
-            auto& error = get<2>(entry);
-            error(current_exception());
-        }
+        get<2>(entry)(make_exception_ptr(Demo::RequestCanceledException()));
     }
 }
 
@@ -109,14 +101,7 @@ WorkQueue::add(int delay, function<void ()> response, function<void (exception_p
         //
         // Destroyed, throw exception.
         //
-        try
-        {
-            throw Demo::RequestCanceledException();
-        }
-        catch(...)
-        {
-            error(current_exception());
-        }
+        error(make_exception_ptr(Demo::RequestCanceledException()));
     }
 }
 
