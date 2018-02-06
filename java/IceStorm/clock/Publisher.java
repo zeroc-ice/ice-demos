@@ -14,15 +14,20 @@ public class Publisher
         java.util.List<String> extraArgs = new java.util.ArrayList<String>();
 
         //
-        // try with resources block - communicator is automatically destroyed
+        // Try with resources block - communicator is automatically destroyed
         // at the end of this try block
         //
-        System.out.println("hello");
         try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.pub", extraArgs))
         {
-            System.out.print("things");
+            //
+            // Install shutdown hook for user interrupt like Ctrl-C
+            //
             Runtime.getRuntime().addShutdownHook(new Thread(() ->
             {
+                //
+                // Initiate communicator shutdown, waitForShutdown returns when complete
+                // calling shutdown on a destroyed communicator is no-op
+                //
                 communicator.shutdown();
             }));
 

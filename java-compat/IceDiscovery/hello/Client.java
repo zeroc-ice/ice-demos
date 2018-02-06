@@ -14,7 +14,7 @@ public class Client
         Ice.StringSeqHolder argsHolder = new Ice.StringSeqHolder(args);
 
         //
-        // try with resource block - communicator is automatically destroyed
+        // Try with resources block - communicator is automatically destroyed
         // at the end of this try block
         //
         try(Ice.Communicator communicator = Ice.Util.initialize(argsHolder, "config.client"))

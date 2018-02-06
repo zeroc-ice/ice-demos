@@ -12,7 +12,7 @@ public class Client
     {
         int status = 0;
         //
-        // try with resource block - communicator is automatically destroyed
+        // Try with resources block - communicator is automatically destroyed
         // at the end of this try block
         //
         try(Ice.Communicator communicator = Ice.Util.initialize(args))

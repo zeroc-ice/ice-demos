@@ -14,18 +14,18 @@ public class Client
         java.util.List<String> extraArgs = new java.util.ArrayList<>();
 
         //
-        // try with resource block - communicator is automatically destroyed
+        // Try with resources block - communicator is automatically destroyed
         // at the end of this try block
         //
         try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.client", extraArgs))
         {
             //
-            // install shutdown hook for user interrupt like Ctrl-C
+            // Install shutdown hook for user interrupt like Ctrl-C
             //
             Runtime.getRuntime().addShutdownHook(new Thread(() ->
             {
                 //
-                // destroy communicator to cancel any long-running remote call
+                // Destroy communicator to abandon ongoing remote calls
                 // calling destroy multiple times is no-op
                 //
                 communicator.destroy();

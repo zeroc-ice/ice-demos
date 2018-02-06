@@ -10,8 +10,15 @@ public class Server
     {
         try(com.zeroc.Ice.Communicator ic = com.zeroc.Ice.Util.initialize(args))
         {
+            //
+            // Install shutdown hook for user interrupt like Ctrl-C
+            //
             Runtime.getRuntime().addShutdownHook(new Thread(() ->
             {
+                //
+                // Initiate communicator shutdown, waitForShutdown returns when complete
+                // calling shutdown on a destroyed communicator is no-op
+                //
                 ic.shutdown();
             }));
 
