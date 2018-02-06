@@ -82,7 +82,7 @@ CallbackClient::createSession()
         {
             cout << "permission denied:\n" << ex.reason << endl;
         }
-        catch(const Glacier2::CannotCreateSessionException ex)
+        catch(const Glacier2::CannotCreateSessionException& ex)
         {
             cout << "cannot create session:\n" << ex.reason << endl;
         }
