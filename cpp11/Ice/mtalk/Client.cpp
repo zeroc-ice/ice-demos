@@ -227,7 +227,7 @@ main(int argc, char* argv[])
             status = app.run(communicator);
         }
     }
-    catch(std::exception& ex)
+    catch(const std::exception& ex)
     {
         cerr << ex.what() << endl;
         status = 1;
