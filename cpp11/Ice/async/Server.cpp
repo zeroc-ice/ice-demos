@@ -58,7 +58,7 @@ int main(int argc, char* argv[])
             _workQueue->join();
         }
     }
-    catch(std::exception& ex)
+    catch(const std::exception& ex)
     {
         cerr << ex.what() << endl;
         status = 1;

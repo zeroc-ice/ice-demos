@@ -51,7 +51,7 @@ main(int argc, char* argv[])
 
         status = run(communicator, argc, argv);
     }
-    catch(std::exception& ex)
+    catch(const std::exception& ex)
     {
         cerr << ex.what() << endl;
         status = 1;
