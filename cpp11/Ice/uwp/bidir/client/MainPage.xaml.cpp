@@ -87,7 +87,7 @@ void bidir::MainPage::startClient_Click(Platform::Object^ sender, Windows::UI::X
                 // Register the callback receiver servant with the object adapter and activate
                 // the adapter.
                 //
-                auto proxy = Ice:uncheckedCast<CallbackReceiverPrx>(
+                auto proxy = Ice::uncheckedCast<CallbackReceiverPrx>(
                                         adapter->addWithUUID(make_shared<CallbackReceiverI>(this)));
                 adapter->activate();
 

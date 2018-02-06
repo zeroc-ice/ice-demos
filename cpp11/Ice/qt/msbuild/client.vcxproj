@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\..\packages\zeroc.icebuilder.msbuild.5.0.1\build\zeroc.icebuilder.msbuild.props" Condition="Exists('..\..\..\packages\zeroc.icebuilder.msbuild.5.0.1\build\zeroc.icebuilder.msbuild.props')" />
   <Import Project="..\..\..\packages\zeroc.ice.v141.3.7.1\build\native\zeroc.ice.v141.props" Condition="Exists('..\..\..\packages\zeroc.ice.v141.3.7.1\build\native\zeroc.ice.v141.props')  and '$(ICE_HOME)' == ''" />
   <Import Project="..\..\..\packages\zeroc.ice.v140.3.7.1\build\native\zeroc.ice.v140.props" Condition="Exists('..\..\..\packages\zeroc.ice.v140.3.7.1\build\native\zeroc.ice.v140.props')  and '$(ICE_HOME)' == ''" />
   <ItemGroup Label="ProjectConfigurations">
@@ -15,9 +16,6 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{B12702AD-ABFB-343A-A199-8E24837244A3}</ProjectGuid>
     <Keyword>Qt4VSv1.0</Keyword>
-    <IceBuilderInstallDir>$([MSBuild]::GetRegistryValue('HKEY_CURRENT_USER\SOFTWARE\ZeroC\IceBuilder', 'InstallDir.$(VisualStudioVersion)'))</IceBuilderInstallDir>
-    <IceBuilderCppProps>$(IceBuilderInstallDir)\Resources\IceBuilder.Cpp.props</IceBuilderCppProps>
-    <IceBuilderCppTargets>$(IceBuilderInstallDir)\Resources\IceBuilder.Cpp.targets</IceBuilderCppTargets>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -33,7 +31,6 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <Import Project="$(MSBuildThisFileDirectory)\..\..\..\msbuild\common.props" Condition="Exists('$(MSBuildThisFileDirectory)\..\..\..\msbuild\common.props')" />
-  <Import Project="$(IceBuilderCppProps)" Condition="Exists('$(IceBuilderCppProps)')" />
   <ImportGroup Label="ExtensionSettings" />
   <ImportGroup Label="Shared" />
   <ImportGroup Label="PropertySheets" />
@@ -45,12 +42,12 @@
     <OutDir>..\</OutDir>
   </PropertyGroup>
   <PropertyGroup Label="IceBuilder">
-    <IceBuilderOutputDir>$(Platform)\$(Configuration)</IceBuilderOutputDir>
+    <IceCppMapping>cpp98</IceCppMapping>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <PreprocessorDefinitions>ICE_CPP11_MAPPING;UNICODE;_UNICODE;WIN32;WIN64;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..;$(QTDIR)\include;..\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWidgets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(Platform)\$(Configuration);..;$(QTDIR)\include;..\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWidgets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -67,7 +64,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <PreprocessorDefinitions>ICE_CPP11_MAPPING;UNICODE;_UNICODE;WIN32;WIN64;QT_DLL;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..;$(QTDIR)\include;..\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWidgets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(Platform)\$(Configuration);..;$(QTDIR)\include;..\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtWidgets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat />
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
@@ -80,6 +77,11 @@
       <AdditionalDependencies>qtmain.lib;Qt5Core.lib;Qt5Gui.lib;Qt5Widgets.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Label="IceBuilder">
+    <SliceCompile>
+      <OutputDir>$(Platform)\$(Configuration)</OutputDir>
+    </SliceCompile>
+  </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\GeneratedFiles\Debug\moc_Client.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
@@ -90,9 +92,11 @@
     </ClCompile>
     <ClCompile Include="x64\Debug\Hello.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <SliceCompileSource>..\Hello.ice</SliceCompileSource>
     </ClCompile>
     <ClCompile Include="x64\Release\Hello.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <SliceCompileSource>..\Hello.ice</SliceCompileSource>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -108,26 +112,28 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <IceBuilder Include="..\Hello.ice">
+    <SliceCompile Include="..\Hello.ice">
       <SubType>Code</SubType>
-    </IceBuilder>
+    </SliceCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="x64\Debug\Hello.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <SliceCompileSource>..\Hello.ice</SliceCompileSource>
     </ClInclude>
     <ClInclude Include="x64\Release\Hello.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <SliceCompileSource>..\Hello.ice</SliceCompileSource>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <Import Project="$(IceBuilderCppTargets)" Condition="Exists('$(IceBuilderCppTargets)')" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\..\..\packages\zeroc.ice.v140.3.7.1\build\native\zeroc.ice.v140.targets" Condition="Exists('..\..\..\packages\zeroc.ice.v140.3.7.1\build\native\zeroc.ice.v140.targets')  and '$(ICE_HOME)' == ''" />
     <Import Project="..\..\..\packages\zeroc.ice.v141.3.7.1\build\native\zeroc.ice.v141.targets" Condition="Exists('..\..\..\packages\zeroc.ice.v141.3.7.1\build\native\zeroc.ice.v141.targets')  and '$(ICE_HOME)' == ''" />
+    <Import Project="..\..\..\packages\zeroc.icebuilder.msbuild.5.0.1\build\zeroc.icebuilder.msbuild.targets" Condition="Exists('..\..\..\packages\zeroc.icebuilder.msbuild.5.0.1\build\zeroc.icebuilder.msbuild.targets')" />
   </ImportGroup>
   <ProjectExtensions>
     <VisualStudio>
@@ -142,11 +148,7 @@
     <Error Condition="!Exists('..\..\..\packages\zeroc.ice.v140.3.7.1\build\native\zeroc.ice.v140.targets') and '$(ICE_HOME)' == ''" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\zeroc.ice.v140.3.7.1\build\native\zeroc.ice.v140.targets'))" />
     <Error Condition="!Exists('..\..\..\packages\zeroc.ice.v141.3.7.1\build\native\zeroc.ice.v141.props') and '$(ICE_HOME)' == ''" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\zeroc.ice.v141.3.7.1\build\native\zeroc.ice.v141.props'))" />
     <Error Condition="!Exists('..\..\..\packages\zeroc.ice.v141.3.7.1\build\native\zeroc.ice.v141.targets') and '$(ICE_HOME)' == ''" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\zeroc.ice.v141.3.7.1\build\native\zeroc.ice.v141.targets'))" />
-  </Target>
-  <Target Name="EnsureIceBuilderImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project requires the Ice Builder for Visual Studio extension. Use "Tools &amp;gt; Extensions and Updates" to install it. For more information, see https://visualstudiogallery.msdn.microsoft.com/1a64e701-63f2-4740-8004-290e6c682ce0.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('$(IceBuilderCppProps)')" Text="$(ErrorText)" />
+    <Error Condition="!Exists('..\..\..\packages\zeroc.icebuilder.msbuild.5.0.1\build\zeroc.icebuilder.msbuild.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\zeroc.icebuilder.msbuild.5.0.1\build\zeroc.icebuilder.msbuild.props'))" />
+    <Error Condition="!Exists('..\..\..\packages\zeroc.icebuilder.msbuild.5.0.1\build\zeroc.icebuilder.msbuild.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\zeroc.icebuilder.msbuild.5.0.1\build\zeroc.icebuilder.msbuild.targets'))" />
   </Target>
 </Project>

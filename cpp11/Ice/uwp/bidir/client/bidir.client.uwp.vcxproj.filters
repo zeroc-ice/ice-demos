@@ -127,11 +127,11 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <IceBuilder Include="Callback.ice">
-      <Filter>Slice Files</Filter>
-    </IceBuilder>
+    <AppxManifest Include="Package.uwp.appxmanifest" />
   </ItemGroup>
   <ItemGroup>
-    <AppxManifest Include="Package.uwp.appxmanifest" />
+    <SliceCompile Include="Callback.ice">
+      <Filter>Slice Files</Filter>
+    </SliceCompile>
   </ItemGroup>
 </Project>

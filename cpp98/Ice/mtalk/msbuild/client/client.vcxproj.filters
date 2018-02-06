@@ -76,18 +76,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Win32\Debug\Hello.h">
-      <Filter>Header Files\Win32\Debug</Filter>
-    </ClInclude>
-    <ClInclude Include="x64\Debug\Hello.h">
-      <Filter>Header Files\x64\Debug</Filter>
-    </ClInclude>
-    <ClInclude Include="Win32\Release\Hello.h">
-      <Filter>Header Files\Win32\Release</Filter>
-    </ClInclude>
-    <ClInclude Include="x64\Release\Hello.h">
-      <Filter>Header Files\x64\Release</Filter>
-    </ClInclude>
     <ClInclude Include="Win32\Debug\MTalk.h">
       <Filter>Header Files\Win32\Debug</Filter>
     </ClInclude>
