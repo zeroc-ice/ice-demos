@@ -4,7 +4,7 @@
 //
 // **********************************************************************
 
-public class Server extends com.zeroc.Ice.Application
+public class Server
 {
     //
     // The servant implements the Slice interface Demo::Props
@@ -55,35 +55,46 @@ public class Server extends com.zeroc.Ice.Application
         private boolean _called;
     }
 
-    @Override
-    public int run(String[] args)
-    {
-        if(args.length > 0)
-        {
-            System.err.println(appName() + ": too many arguments");
-            return 1;
-        }
-
-        PropsI props = new PropsI();
-
-        //
-        // Retrieve the PropertiesAdmin facet and register the servant as the update callback.
-        //
-        com.zeroc.Ice.Object obj = communicator().findAdminFacet("Properties");
-        com.zeroc.Ice.NativePropertiesAdmin admin = (com.zeroc.Ice.NativePropertiesAdmin)obj;
-        admin.addUpdateCallback(changes -> props.updated(changes));
-
-        com.zeroc.Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Props");
-        adapter.add(props, com.zeroc.Ice.Util.stringToIdentity("props"));
-        adapter.activate();
-        communicator().waitForShutdown();
-        return 0;
-    }
-
     public static void main(String[] args)
     {
-        Server app = new Server();
-        int status = app.main("Server", args, "config.server");
+        int status = 0;
+        java.util.List<String> extraArgs = new java.util.ArrayList<String>();
+
+        //
+        // try with resources block - communicator is automatically destroyed
+        // at the end of this try block
+        //
+        try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.server", extraArgs))
+        {
+            Runtime.getRuntime().addShutdownHook(new Thread(() ->
+            {
+                communicator.shutdown();
+            }));
+
+            if(!extraArgs.isEmpty())
+            {
+                System.err.println("too many arguments");
+                status = 1;
+            }
+            else
+            {
+                PropsI props = new PropsI();
+
+                //
+                // Retrieve the PropertiesAdmin facet and register the servant as the update callback.
+                //
+                com.zeroc.Ice.Object obj = communicator.findAdminFacet("Properties");
+                com.zeroc.Ice.NativePropertiesAdmin admin = (com.zeroc.Ice.NativePropertiesAdmin)obj;
+                admin.addUpdateCallback(changes -> props.updated(changes));
+
+                com.zeroc.Ice.ObjectAdapter adapter = communicator.createObjectAdapter("Props");
+                adapter.add(props, com.zeroc.Ice.Util.stringToIdentity("props"));
+                adapter.activate();
+
+                communicator.waitForShutdown();
+            }
+        }
+
         System.exit(status);
     }
 }

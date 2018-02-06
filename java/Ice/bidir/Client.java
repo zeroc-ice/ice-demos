@@ -6,26 +6,49 @@
 
 import Demo.*;
 
-public class Client extends com.zeroc.Ice.Application
+public class Client
 {
-    @Override
-    public int run(String[] args)
+    public static void main(String[] args)
     {
-        if(args.length > 0)
+        int status = 0;
+        java.util.List<String> extraArgs = new java.util.ArrayList<String>();
+
+        //
+        // try with resources block - communicator is automatically destroyed
+        // at the end of this try block
+        //
+        try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.client", extraArgs))
         {
-            System.err.println(appName() + ": too many arguments");
-            return 1;
+            Runtime.getRuntime().addShutdownHook(new Thread(() ->
+            {
+                communicator.destroy();
+            }));
+
+            if(!extraArgs.isEmpty())
+            {
+                System.err.println("too many arguments");
+                status = 1;
+            }
+            else
+            {
+                status = run(communicator);
+            }
         }
 
+        System.exit(status);
+    }
+
+    private static int run(com.zeroc.Ice.Communicator communicator)
+    {
         CallbackSenderPrx server = CallbackSenderPrx.checkedCast(
-            communicator().propertyToProxy("CallbackSender.Proxy"));
+            communicator.propertyToProxy("CallbackSender.Proxy"));
         if(server == null)
         {
             System.err.println("invalid proxy");
             return 1;
         }
 
-        com.zeroc.Ice.ObjectAdapter adapter = communicator().createObjectAdapter("");
+        com.zeroc.Ice.ObjectAdapter adapter = communicator.createObjectAdapter("");
         com.zeroc.Ice.Identity ident = new com.zeroc.Ice.Identity();
         ident.name = java.util.UUID.randomUUID().toString();
         ident.category = "";
@@ -33,15 +56,9 @@ public class Client extends com.zeroc.Ice.Application
         adapter.activate();
         server.ice_getConnection().setAdapter(adapter);
         server.addClient(ident);
-        communicator().waitForShutdown();
+
+        communicator.waitForShutdown();
 
         return 0;
-    }
-
-    public static void main(String[] args)
-    {
-        Client app = new Client();
-        int status = app.main("Client", args, "config.client");
-        System.exit(status);
     }
 }

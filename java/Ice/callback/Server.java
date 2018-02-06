@@ -4,28 +4,46 @@
 //
 // **********************************************************************
 
-public class Server extends com.zeroc.Ice.Application
+public class Server
 {
-    @Override
-    public int run(String[] args)
-    {
-        if(args.length > 0)
-        {
-            System.err.println(appName() + ": too many arguments");
-            return 1;
-        }
-
-        com.zeroc.Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Callback.Server");
-        adapter.add(new CallbackSenderI(), com.zeroc.Ice.Util.stringToIdentity("callbackSender"));
-        adapter.activate();
-        communicator().waitForShutdown();
-        return 0;
-    }
-
     public static void main(String[] args)
     {
-        Server app = new Server();
-        int status = app.main("Server", args, "config.server");
+        int status = 0;
+        java.util.List<String> extraArgs = new java.util.ArrayList<String>();
+
+        //
+        // try with resources block - communicator is automatically destroyed
+        // at the end of this try block
+        //
+        try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.server", extraArgs))
+        {
+            //
+            // install shutdown hook for user interrupt like Ctrl-C
+            //
+            Runtime.getRuntime().addShutdownHook(new Thread(() ->
+            {
+                //
+                // initiate communicator shutdown, waitForShutdown returns when complete
+                // calling shutdown on a destroyed communicator is no-op
+                //
+                communicator.shutdown();
+            }));
+
+            if(!extraArgs.isEmpty())
+            {
+                System.err.println("too many arguments");
+                status = 1;
+            }
+            else
+            {
+                com.zeroc.Ice.ObjectAdapter adapter = communicator.createObjectAdapter("Callback.Server");
+                adapter.add(new CallbackSenderI(), com.zeroc.Ice.Util.stringToIdentity("callbackSender"));
+                adapter.activate();
+
+                communicator.waitForShutdown();
+            }
+        }
+
         System.exit(status);
     }
 }

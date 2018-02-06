@@ -6,15 +6,38 @@
 
 import Demo.*;
 
-public class Publisher extends com.zeroc.Ice.Application
+public class Publisher
 {
-    public void usage()
+    public static void main(String[] args)
     {
-        System.out.println("Usage: " + appName() + " [--datagram|--twoway|--oneway] [topic]");
+        int status = 0;
+        java.util.List<String> extraArgs = new java.util.ArrayList<String>();
+
+        //
+        // try with resources block - communicator is automatically destroyed
+        // at the end of this try block
+        //
+        System.out.println("hello");
+        try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.pub", extraArgs))
+        {
+            System.out.print("things");
+            Runtime.getRuntime().addShutdownHook(new Thread(() ->
+            {
+                communicator.shutdown();
+            }));
+
+            status = run(communicator, extraArgs.toArray(new String[extraArgs.size()]));
+        }
+
+        System.exit(status);
     }
 
-    @Override
-    public int run(String[] args)
+    public static void usage()
+    {
+        System.out.println("Usage: [--datagram|--twoway|--oneway] [topic]");
+    }
+
+    private static int run(com.zeroc.Ice.Communicator communicator, String[] args)
     {
         String option = "None";
         String topicName = "time";
@@ -60,7 +83,7 @@ public class Publisher extends com.zeroc.Ice.Application
         }
 
         com.zeroc.IceStorm.TopicManagerPrx manager = com.zeroc.IceStorm.TopicManagerPrx.checkedCast(
-            communicator().propertyToProxy("TopicManager.Proxy"));
+            communicator.propertyToProxy("TopicManager.Proxy"));
         if(manager == null)
         {
             System.err.println("invalid proxy");
@@ -83,7 +106,7 @@ public class Publisher extends com.zeroc.Ice.Application
             }
             catch(com.zeroc.IceStorm.TopicExists ex)
             {
-                System.err.println(appName() + ": temporary failure, try again.");
+                System.err.println("temporary failure, try again.");
                 return 1;
             }
         }
@@ -132,12 +155,5 @@ public class Publisher extends com.zeroc.Ice.Application
         }
 
         return 0;
-    }
-
-    public static void main(String[] args)
-    {
-        Publisher app = new Publisher();
-        int status = app.main("Publisher", args, "config.pub");
-        System.exit(status);
     }
 }
