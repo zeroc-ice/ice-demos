@@ -39,10 +39,10 @@ building and running the sample programs.
   Primary development branch (unstable, frequently updated)
 
 - `3.7`
-  Demos for Ice 3.7 (unstable, frequently updated)
+  Demos for Ice 3.7 (stable, frequently updated)
 
 - `3.6`
-  Demos for Ice 3.6.x plus various patches (stable, frequently updated)
+  Demos for Ice 3.6.x plus various patches (stable)
 
 - `3.5`
   Demos for Ice 3.5.1 plus various patches (stable)
