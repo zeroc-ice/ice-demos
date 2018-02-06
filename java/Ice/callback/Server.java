@@ -12,18 +12,18 @@ public class Server
         java.util.List<String> extraArgs = new java.util.ArrayList<String>();
 
         //
-        // try with resources block - communicator is automatically destroyed
+        // Try with resources block - communicator is automatically destroyed
         // at the end of this try block
         //
         try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.server", extraArgs))
         {
             //
-            // install shutdown hook for user interrupt like Ctrl-C
+            // Install shutdown hook for user interrupt like Ctrl-C
             //
             Runtime.getRuntime().addShutdownHook(new Thread(() ->
             {
                 //
-                // initiate communicator shutdown, waitForShutdown returns when complete
+                // Initiate communicator shutdown, waitForShutdown returns when complete
                 // calling shutdown on a destroyed communicator is no-op
                 //
                 communicator.shutdown();
