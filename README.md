@@ -11,6 +11,7 @@ The sample programs are grouped by programming language:
 * [Java](./java)
 * [Java-Compat](./java-compat)
 * [JavaScript](./js)
+* [MATLAB](./matlab)
 * [Objective-C](./objective-c)
 * [PHP](./php)
 * [Python](./python)
