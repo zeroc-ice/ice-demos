@@ -1,32 +1,18 @@
 Demos in this directory:
 
-- [async](./async)
-
-  This demo illustrates the use of Asynchronous Method Invocation
-  (AMI) and Asynchronous Method Dispatch (AMD).
-
 - [asyncInvocation](./asyncInvocation)
 
   This demo illustrates the use of Asynchronous Method Invocation
-  (AMI).
-
-- [bidir](./bidir)
-
-  This demo shows how to use bidirectional connections for callbacks.
-  This is typically used if the server cannot open a connection to the
-  client to send callbacks, for example, because firewalls block
-  incoming connections to the client.
-
-- [callback](./callback)
-
-  A simple callback demo that illustrates how a client can pass a
-  proxy to a server, invoke an operation in the server, and the server
-  call back into an object provided by the client as part of that
-  invocation.
+  (AMI) with futures.
 
 - [context](./context)
 
   This demo shows how to use Ice request contexts.
+
+- [gui](./gui)
+
+  A GUI application that shows how to use Asynchronous Method Invocation (AMI)
+  in a graphical client.
 
 - [hello](./hello)
 
@@ -41,12 +27,7 @@ Demos in this directory:
 
 - [matrix](./matrix)
 
-  This demo illustrates how to create and use NumPy matrices with Ice.
-
-- [metrics](./metrics)
-
-  This demo illustrates how to retrieve metrics information from an
-  Ice application.
+  This demo illustrates how to create and use MATLAB matrices with Ice.
 
 - [minimal](./minimal)
 
