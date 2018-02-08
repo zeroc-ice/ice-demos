@@ -254,6 +254,8 @@
     <SliceCompile Include="..\..\Hello.ice" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\HelloI.h" />
+    <ClInclude Include="..\..\HelloServiceI.h" />
     <ClInclude Include="Win32\Debug\Hello.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
