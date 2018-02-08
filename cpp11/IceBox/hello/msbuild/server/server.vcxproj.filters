@@ -92,6 +92,12 @@
     <ClInclude Include="x64\Release\Hello.h">
       <Filter>Header Files\x64\Release</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\HelloServiceI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\HelloI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <SliceCompile Include="..\..\Hello.ice">
