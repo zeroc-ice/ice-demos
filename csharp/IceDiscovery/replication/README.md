@@ -1,12 +1,16 @@
 To run the demo, start the 3 servers:
 
-     server.exe --Ice.Config=config.server1
-     server.exe --Ice.Config=config.server2
-     server.exe --Ice.Config=config.server3
+| .NET Framework 4.5                    | .NET Core 2.0                                    |
+| --------------------------------------| ------------------------------------------------ |
+| `server  --Ice.Config=config.server1` | `dotnet server.dll  --Ice.Config=config.server1` |
+| `server  --Ice.Config=config.server2` | `dotnet server.dll  --Ice.Config=config.server2` |
+| `server  --Ice.Config=config.server3` | `dotnet server.dll  --Ice.Config=config.server3` |
 
-In a separate window:
+In a separate window, start the client:
 
-      client.exe
+| .NET Framework 4.5 | .NET Core 2.0       |
+| ------------------ | ------------------- |
+| `client`           | `dotnet client.dll` |
 
 The client invokes the number of specified iterations with a given
 delay on a well-known proxy configured to use per-request load

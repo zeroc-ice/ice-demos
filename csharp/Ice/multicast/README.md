@@ -3,11 +3,15 @@ discovery service.
 
 To run the demo, first start multiple instances of the server:
 
-      server.exe
+| .NET Framework 4.5 | .NET Core 2.0        |
+| ------------------ | -------------------- |
+| `server`           | `dotnet server.dll`  |
 
-In a separate window, start a client:
+In a separate window, start the client:
 
-      client.exe
+| .NET Framework 4.5 | .NET Core 2.0       |
+| ------------------ | ------------------- |
+| `client`           | `dotnet client.dll` |
 
 On startup the client will send out a broadcast message containing a
 callback proxy and waits for a response. Any servers that are up and

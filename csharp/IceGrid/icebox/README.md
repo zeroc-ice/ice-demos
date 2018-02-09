@@ -9,23 +9,34 @@ named `LANG` with value `en`. The Hello object implementation `HelloI`
 reads the value of `LANG` and shows the message in the corresponding
 language; you can try changing the value to `fr`, `de`, `es` or `it`.
 
-Setup
------
-
-Add `iceboxnet`'s folder to your PATH, with a command similar to:
-```
-set PATH=%USERPROFILE%\ice-demos\csharp\packages\zeroc.ice.net.3.7.1\tools;%PATH%
-```
+## .NET Framework 4.5 Setup
 
 Start the IceGrid registry and node:
+
 ```
 icegridnode --Ice.Config=config.grid
 ```
 
 Deploy the `HelloSimpsons` application (in file `application.xml`) with
 the IceGridGUI. If you prefer to use the command-line utility, use:
+
 ```
 icegridadmin --Ice.Config=config.grid -e "application add application.xml"
+```
+
+## .NET Core 2.0 Setup
+
+Start the IceGrid registry and node:
+
+```
+icegridnode --Ice.Config=config.grid
+```
+
+Deploy the `HelloSimpsons` application (in file `application-netcore.xml`) with
+the IceGridGUI. If you prefer to use the command-line utility, use:
+
+```
+icegridadmin --Ice.Config=config.grid -e "application add application-netcore.xml"
 ```
 
 Using IceGridGUI

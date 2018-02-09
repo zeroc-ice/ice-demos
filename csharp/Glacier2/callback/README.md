@@ -4,15 +4,21 @@ used.
 
 To run the demo, first start the server:
 
-      server.exe
+| .NET Framework 4.5 | .NET Core 2.0        |
+| ------------------ | -------------------- |
+| `server`           | `dotnet server.dll`  |
 
 In a separate window, start the Glacier2 router:
 
-      glacier2router --Ice.Config=config.glacier2
+```
+glacier2router --Ice.Config=config.glacier2
+```
 
 In a separate window, start the client:
 
-      client.exe
+| .NET Framework 4.5 | .NET Core 2.0       |
+| ------------------ | ------------------- |
+| `client`           | `dotnet client.dll` |
 
 If you plan to run this demo using clients on different hosts than
 the router, you must first modify the configuration. You need to

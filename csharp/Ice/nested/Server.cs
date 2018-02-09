@@ -20,6 +20,12 @@ public class Server
                 return 1;
             }
 
+            communicator().getLogger().error("starting server");
+
+            Console.Error.WriteLine(communicator().getLogger().GetType().Name);
+            var l = new Ice.ConsoleLoggerI("xxx");
+            l.warning("LoggerI");
+
             var adapter = communicator().createObjectAdapter("Nested.Server");
             var self =
                 NestedPrxHelper.uncheckedCast(adapter.createProxy(Ice.Util.stringToIdentity("nestedServer")));

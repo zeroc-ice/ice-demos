@@ -3,11 +3,15 @@ and Asynchronous Method Dispatch (AMD).
 
 To run the demo, first start the server:
 
-      server.exe
+| .NET Framework 4.5 | .NET Core 2.0        |
+| ------------------ | -------------------- |
+| `server`           | `dotnet server.dll`  |
 
-In a second window, start the client:
+In a separate window, start the client:
 
-      client.exe
+| .NET Framework 4.5 | .NET Core 2.0       |
+| ------------------ | ------------------- |
+| `client`           | `dotnet client.dll` |
 
 The demo invocation can either have a short response time or require a
 significant amount of time to complete. For the long running request
