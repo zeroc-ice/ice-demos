@@ -15,7 +15,7 @@ public class Server
         // Try with resources block - communicator is automatically destroyed
         // at the end of this try block
         //
-        try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, extraArgs))
+        try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.server", extraArgs))
         {
             //
             // Install shutdown hook for user interrupt like Ctrl-C
