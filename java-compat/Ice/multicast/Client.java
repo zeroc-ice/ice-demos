@@ -6,43 +6,87 @@
 
 import Demo.*;
 
-public class Client extends Ice.Application
+public class Client
 {
-    @Override
-    public int
-    run(String[] args)
+    static class ShutdownHook implements Runnable
     {
-        Ice.ObjectAdapter adapter = communicator().createObjectAdapter("DiscoverReply");
-        DiscoverReplyI replyI = new DiscoverReplyI();
-        DiscoverReplyPrx reply = DiscoverReplyPrxHelper.uncheckedCast(adapter.addWithUUID(replyI));
-        adapter.activate();
+        private Ice.Communicator communicator;
 
-        DiscoverPrx discover = DiscoverPrxHelper.uncheckedCast(
-            communicator().propertyToProxy("Discover.Proxy").ice_datagram());
-        discover.lookup(reply);
-        Ice.ObjectPrx base = replyI.waitReply(2000);
-
-        if(base == null)
+        ShutdownHook(Ice.Communicator communicator)
         {
-            System.err.println(appName() + ": no replies");
-            return 1;
-        }
-        HelloPrx hello = HelloPrxHelper.checkedCast(base);
-        if(hello == null)
-        {
-            System.err.println(appName() + ": invalid reply");
-            return 1;
+            this.communicator = communicator;
         }
 
-        hello.sayHello();
-        return 0;
+        @Override
+        public void
+        run()
+        {
+            //
+            // Destroy communicator to abandon ongoing remote calls
+            // calling destroy multiple times is no-op
+            //
+            communicator.destroy();
+        }
     }
 
     public static void
     main(String[] args)
     {
-        Client app = new Client();
-        int status = app.main("Client", args, "config.client");
+        int status = 0;
+        Ice.StringSeqHolder argsHolder = new Ice.StringSeqHolder(args);
+
+        //
+        // Try with resources block - communicator is automatically destroyed
+        // at the end of this try block
+        //
+        try(Ice.Communicator communicator = Ice.Util.initialize(argsHolder, "config.client"))
+        {
+            //
+            // Install shutdown hook for user interrupt like Ctrl-C
+            //
+            Runtime.getRuntime().addShutdownHook(new Thread(new ShutdownHook(communicator)));
+
+            if(argsHolder.value.length > 0)
+            {
+                System.err.println("too many arguments");
+                status = 1;
+            }
+            else
+            {
+                status = run(communicator);
+            }
+        }
+
         System.exit(status);
+    }
+
+    private static int
+    run(Ice.Communicator communicator)
+    {
+        Ice.ObjectAdapter adapter = communicator.createObjectAdapter("DiscoverReply");
+        DiscoverReplyI replyI = new DiscoverReplyI();
+        DiscoverReplyPrx reply = DiscoverReplyPrxHelper.uncheckedCast(adapter.addWithUUID(replyI));
+        adapter.activate();
+
+        DiscoverPrx discover = DiscoverPrxHelper.uncheckedCast(
+            communicator.propertyToProxy("Discover.Proxy").ice_datagram());
+        discover.lookup(reply);
+        Ice.ObjectPrx base = replyI.waitReply(2000);
+
+        if(base == null)
+        {
+            System.err.println("no replies");
+            return 1;
+        }
+
+        HelloPrx hello = HelloPrxHelper.checkedCast(base);
+        if(hello == null)
+        {
+            System.err.println("invalid reply");
+            return 1;
+        }
+
+        hello.sayHello();
+        return 0;
     }
 }

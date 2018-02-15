@@ -4,30 +4,66 @@
 //
 // **********************************************************************
 
-public class Server extends Ice.Application
+public class Server
 {
-    @Override
-    public int
-    run(String[] args)
+    static class ShutdownHook implements Runnable
     {
-        Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Hello");
-        Ice.ObjectAdapter discoverAdapter = communicator().createObjectAdapter("Discover");
+        private Ice.Communicator communicator;
 
-        Ice.ObjectPrx hello = adapter.addWithUUID(new HelloI());
-        discoverAdapter.add(new DiscoverI(hello), Ice.Util.stringToIdentity("discover"));
+        ShutdownHook(Ice.Communicator communicator)
+        {
+            this.communicator = communicator;
+        }
 
-        discoverAdapter.activate();
-        adapter.activate();
-
-        communicator().waitForShutdown();
-        return 0;
+        @Override
+        public void
+        run()
+        {
+            //
+            // Initiate communicator shutdown, waitForShutdown returns when complete
+            // calling shutdown on a destroyed communicator is no-op
+            //
+            communicator.shutdown();
+        }
     }
 
     public static void
     main(String[] args)
     {
-        Server app = new Server();
-        int status = app.main("Server", args, "config.server");
+        int status = 0;
+        Ice.StringSeqHolder argsHolder = new Ice.StringSeqHolder(args);
+
+        //
+        // Try with resources block - communicator is automatically destroyed
+        // at the end of this try block
+        //
+        try(Ice.Communicator communicator = Ice.Util.initialize(argsHolder, "config.server"))
+        {
+            //
+            // Install shutdown hook for user interrupt like Ctrl-C
+            //
+            Runtime.getRuntime().addShutdownHook(new Thread(new ShutdownHook(communicator)));
+
+            if(argsHolder.value.length > 0)
+            {
+                System.err.println("too many arguments");
+                status = 1;
+            }
+            else
+            {
+                Ice.ObjectAdapter adapter = communicator.createObjectAdapter("Hello");
+                Ice.ObjectAdapter discoverAdapter = communicator.createObjectAdapter("Discover");
+
+                Ice.ObjectPrx hello = adapter.addWithUUID(new HelloI());
+                discoverAdapter.add(new DiscoverI(hello), Ice.Util.stringToIdentity("discover"));
+
+                discoverAdapter.activate();
+                adapter.activate();
+
+                communicator.waitForShutdown();
+            }
+        }
+
         System.exit(status);
     }
 }
