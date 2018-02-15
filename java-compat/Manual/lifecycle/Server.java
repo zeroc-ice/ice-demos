@@ -6,52 +6,80 @@
 
 import FilesystemI.*;
 
-class Server extends Ice.Application
+class Server
 {
-    @Override
-    public int
-    run(String[] args)
+    static class ShutdownHook implements Runnable
     {
-        //
-        // Terminate cleanly on receipt of a signal.
-        //
-        shutdownOnInterrupt();
+        private Ice.Communicator communicator;
 
-        //
-        // Create an object adapter
-        //
-        Ice.ObjectAdapter adapter = communicator().createObjectAdapterWithEndpoints(
-            "LifecycleFilesystem", "default -h localhost -p 10000");
-
-        //
-        // Create the root directory.
-        //
-        DirectoryI root = new DirectoryI();
-        Ice.Identity id = new Ice.Identity();
-        id.name = "RootDir";
-        adapter.add(root, id);
-
-        //
-        // All objects are created, allow client requests now.
-        //
-        adapter.activate();
-
-        //
-        // Wait until we are done.
-        //
-        communicator().waitForShutdown();
-        if(interrupted())
+        ShutdownHook(Ice.Communicator communicator)
         {
-            System.err.println(appName() + ": received signal, shutting down");
+            this.communicator = communicator;
         }
 
-        return 0;
+        @Override
+        public void
+        run()
+        {
+            //
+            // Initiate communicator shutdown, waitForShutdown returns when complete
+            // calling shutdown on a destroyed communicator is no-op
+            //
+            communicator.shutdown();
+            System.err.println("received signal, shutting down");
+        }
     }
 
-    static public void
+    public static void
     main(String[] args)
     {
-        Server app = new Server();
-        app.main("demo.book.lifecycle.Server", args);
+        int status = 0;
+        Ice.StringSeqHolder argsHolder = new Ice.StringSeqHolder(args);
+
+        //
+        // Try with resources block - communicator is automatically destroyed
+        // at the end of this try block
+        //
+        try(Ice.Communicator communicator = Ice.Util.initialize(argsHolder))
+        {
+            //
+            // Install shutdown hook for user interrupt like Ctrl-C
+            //
+            Runtime.getRuntime().addShutdownHook(new Thread(new ShutdownHook(communicator)));
+
+            if(argsHolder.value.length > 0)
+            {
+                System.err.println("too many arguments");
+                status = 1;
+            }
+            else
+            {
+                //
+                // Create an object adapter
+                //
+                Ice.ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints(
+                    "LifecycleFilesystem", "default -h localhost -p 10000");
+
+                //
+                // Create the root directory.
+                //
+                DirectoryI root = new DirectoryI();
+                Ice.Identity id = new Ice.Identity();
+                id.name = "RootDir";
+                adapter.add(root, id);
+
+                //
+                // All objects are created, allow client requests now.
+                //
+                adapter.activate();
+
+                //
+                // Wait until we are done.
+                //
+                communicator.waitForShutdown();
+            }
+        }
+
+        System.exit(status);
     }
 }

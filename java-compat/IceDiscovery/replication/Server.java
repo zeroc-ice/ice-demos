@@ -4,31 +4,62 @@
 //
 // **********************************************************************
 
-public class Server extends Ice.Application
+public class Server
 {
-    @Override
-    public int
-    run(String[] args)
+    static class ShutdownHook implements Runnable
     {
-        if(args.length > 0)
+        private Ice.Communicator communicator;
+
+        ShutdownHook(Ice.Communicator communicator)
         {
-            System.err.println(appName() + ": too many arguments");
-            return 1;
+            this.communicator = communicator;
         }
 
-        Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Hello");
-        HelloI hello = new HelloI(communicator().getProperties().getProperty("Ice.ProgramName"));
-        adapter.add(hello, Ice.Util.stringToIdentity("hello"));
-        adapter.activate();
-        communicator().waitForShutdown();
-        return 0;
+        @Override
+        public void
+        run()
+        {
+            //
+            // Initiate communicator shutdown, waitForShutdown returns when complete
+            // calling shutdown on a destroyed communicator is no-op
+            //
+            communicator.shutdown();
+        }
     }
 
     public static void
     main(String[] args)
     {
-        Server app = new Server();
-        int status = app.main("Server", args);
+        int status = 0;
+        Ice.StringSeqHolder argsHolder = new Ice.StringSeqHolder(args);
+
+        //
+        // Try with resources block - communicator is automatically destroyed
+        // at the end of this try block
+        //
+        try(Ice.Communicator communicator = Ice.Util.initialize(argsHolder))
+        {
+            //
+            // Install shutdown hook for user interrupt like Ctrl-C
+            //
+            Runtime.getRuntime().addShutdownHook(new Thread(new ShutdownHook(communicator)));
+
+            if(argsHolder.value.length > 0)
+            {
+                System.err.println("too many arguments");
+                status = 1;
+            }
+            else
+            {
+                Ice.ObjectAdapter adapter = communicator.createObjectAdapter("Hello");
+                HelloI hello = new HelloI(communicator.getProperties().getProperty("Ice.ProgramName"));
+                adapter.add(hello, Ice.Util.stringToIdentity("hello"));
+                adapter.activate();
+
+                communicator.waitForShutdown();
+            }
+        }
+
         System.exit(status);
     }
 }
