@@ -28,13 +28,6 @@ public final class CallbackI extends _CallbackDisp
     shutdown(Ice.Current current)
     {
         System.out.println("shutting down...");
-        try
-        {
-            current.adapter.getCommunicator().shutdown();
-        }
-        catch(Ice.LocalException ex)
-        {
-            ex.printStackTrace();
-        }
+        current.adapter.getCommunicator().shutdown();
     }
 }
