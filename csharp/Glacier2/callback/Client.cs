@@ -214,6 +214,11 @@ public class Client
 
             return 0;
         }
+
+        public override void sessionDestroyed()
+        {
+            Console.WriteLine("The Glacier2 session has been destroyed.");
+        }
     }
 
     public static int Main(string[] args)

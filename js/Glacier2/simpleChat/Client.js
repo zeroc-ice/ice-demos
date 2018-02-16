@@ -25,11 +25,10 @@ const Demo = require("./generated/Chat").Demo;
 
     async function createSession(router)
     {
-
         try
         {
             //
-            // Get a proxy to the default rotuer and down-cast it to Glacier2.Router
+            // Get a proxy to the default router and down-cast it to Glacier2.Router
             // interface to ensure Glacier2 server is available.
             //
             console.log("This demo accepts any user-id / password combination.");
@@ -91,8 +90,8 @@ const Demo = require("./generated/Chat").Demo;
         await session.setCallback(callback);
 
         //
-        // The chat function sequantially reads stdin messages
-        // and send it to server using the session say method.
+        // The chat function sequentially reads stdin messages and
+        // sends them to the server using the session say method.
         //
         while(true)
         {

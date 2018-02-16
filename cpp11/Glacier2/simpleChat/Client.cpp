@@ -125,6 +125,12 @@ public:
         return 0;
     }
 
+    virtual void
+    sessionDestroyed() override
+    {
+        cout << "Connection lost." << endl;
+    }
+
 private:
 
     void

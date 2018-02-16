@@ -42,8 +42,7 @@
             // Get the session timeout and the router client category, and
             // create the client object adapter.
             //
-            // Use Promise.all to wait for the completion of all the
-            // calls.
+            // Use Promise.all to wait for the completion of all the calls.
             //
             let [timeout, category, adapter] = await Promise.all([router.getACMTimeout(),
                                                                   router.getCategoryForClient(),
@@ -60,8 +59,7 @@
             connection.setCloseCallback(() => error("Connection lost"));
 
             //
-            // Create the ChatCallback servant and add it to the
-            // ObjectAdapter.
+            // Create the ChatCallback servant and add it to the ObjectAdapter.
             //
             const callback = Demo.ChatCallbackPrx.uncheckedCast(
                 adapter.add(new ChatCallbackI(), new Ice.Identity("callback", category)));
@@ -72,8 +70,7 @@
             await session.setCallback(callback);
 
             //
-            // Stop animating the loading progress bar and
-            // transition to the chat screen.
+            // Stop animating the loading progress bar and transition to the chat screen.
             //
             stopProgress(true);
             await transition("#loading", "#chat-form");
@@ -83,7 +80,7 @@
             $("#input").focus();
 
             //
-            // Keep processing input events in the input textbox until signout is click
+            // Keep processing input events in the input textbox until signout is clicked
             // or there is an error sending a message.
             //
             await new Promise(
@@ -130,8 +127,7 @@
         finally
         {
             //
-            // Reset the input text box and chat output
-            // textarea.
+            // Reset the input text box and chat output textarea.
             //
             $("#input").val("");
             $("#input").off("keypress");
@@ -156,7 +152,7 @@
             await transition("#signin-alert");
 
             //
-            // Transition to loading screen
+            // Transition to loading screen.
             //
             await transition("#signin-form", "#loading");
 
@@ -228,8 +224,7 @@
     }
 
     //
-    // Switch to Disconnected state and display the error
-    // message.
+    // Switch to Disconnected state and display the error message.
     //
     async function error(message)
     {

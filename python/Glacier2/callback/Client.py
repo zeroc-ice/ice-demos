@@ -140,5 +140,8 @@ class Client(Glacier2.Application):
 
         return 0
 
+    def sessionDestroyed(self):
+        print("The Glacier2 session has been destroyed.")
+
 app = Client()
 sys.exit(app.main(sys.argv, "config.client"))
