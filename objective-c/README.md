@@ -32,11 +32,15 @@ To build the command-line examples, first review the settings found in
 in a non-standard location, you'll also need to set the `ICE_HOME` environment
 variable with the path name of the installation directory:
 
-    $ export ICE_HOME=~/testing/Ice
+```
+export ICE_HOME=~/testing/Ice
+```
 
 Run `make` to start the build:
 
-    $ make
+```
+make
+```
 
 To build the iOS or Cocoa examples, open `Objective-C demos.xcworkspace` in
 Xcode. You will need to select a development team in the Xcode project `General`

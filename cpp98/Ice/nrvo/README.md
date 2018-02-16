@@ -15,11 +15,15 @@ changes at:
 
 To run the demo, first start the server:
 
-      server
+```
+server
+```
 
 In a separate window, start the client:
 
-      client
+```
+client
+```
 
 The client presents a menu of options that you can invoke by pressing
 the corresponding key. All of these operations return a string

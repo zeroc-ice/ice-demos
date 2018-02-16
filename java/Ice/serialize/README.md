@@ -11,7 +11,9 @@ In your Slice definitions, you must declare a byte sequence using the
 `java:serializable` metadata and specify the Java class name, as shown
 below:
 
-    ["java:serializable:JavaClassName"] sequence<byte> SliceType;
+```
+["java:serializable:JavaClassName"] sequence<byte> SliceType;
+```
 
 Now, wherever you use the declared Slice type in your operations or
 data types, you can supply an instance of the designated Java class
@@ -27,11 +29,15 @@ class as an out-parameter, the out-parameter is passed as
 
 To run the demo, first start the server:
 
-      java -jar build/libs/server.jar
+```
+java -jar build/libs/server.jar
+```
 
 In a separate window, start the client:
 
-      java -jar build/libs/client.jar
+```
+java -jar build/libs/client.jar
+```
 
 The client allows you to toggle between sending a real class instance
 and sending a null value, to show that passing null is supported.

@@ -1,12 +1,16 @@
 To run the demo, start the 3 servers:
 
-    java -jar build/libs/server.jar --Ice.Config=config.server1
-    java -jar build/libs/server.jar --Ice.Config=config.server2
-    java -jar build/libs/server.jar --Ice.Config=config.server3
+```
+java -jar build/libs/server.jar --Ice.Config=config.server1
+java -jar build/libs/server.jar --Ice.Config=config.server2
+java -jar build/libs/server.jar --Ice.Config=config.server3
+```
 
 In a separate window:
 
-    java -jar build/libs/client.jar
+```
+java -jar build/libs/client.jar
+```
 
 The client invokes the number of specified iterations with a given
 delay on a well-known proxy configured to use per-request load

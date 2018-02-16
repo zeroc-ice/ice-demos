@@ -6,7 +6,9 @@ mapping.
 
 After starting the server, run the Ruby client:
 
-      ruby Client.rb
+```
+ruby Client.rb
+```
 
 The client uses IceDiscovery to enable the location of the Ice hello
 object. See the `config.client` file for details on the IceDiscovery

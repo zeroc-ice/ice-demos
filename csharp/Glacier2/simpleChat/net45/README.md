@@ -1,4 +1,4 @@
-This demo demonstrates the use of a Glacier2 session helpers and Windows
+This demo demonstrates the use of Glacier2 session helpers and Windows
 Presentation Framework (WPF) to create a graphical client for the simple
 chat server.
 

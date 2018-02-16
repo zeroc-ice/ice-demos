@@ -6,7 +6,7 @@ you must use a server from any other language mapping.
 After starting the server, run the MATLAB client:
 
 ```
-Client.main()
+>> Client.main()
 ```
 
 The client uses IceDiscovery to locate the Ice hello object. See the

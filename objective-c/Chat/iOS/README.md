@@ -3,7 +3,8 @@ This demo is an iPhone client for the
 connects to a single chat room, allowing you to chat with other chat
 room participants.
 
-By default, the demo connects to the chat server hosted on demo.zeroc.com through a WebSocket reverse proxy hosted on zeroc.com.
+By default, the demo connects to the chat server hosted on demo.zeroc.com
+through a WebSocket reverse proxy hosted on zeroc.com.
 
 You may use any user name and password when connecting.
 

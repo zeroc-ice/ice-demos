@@ -3,11 +3,15 @@ discovery service.
 
 To run the demo, first start multiple instances of the server:
 
-      server
+```
+server
+```
 
 In a separate window, start a client:
 
-      client
+```
+client
+```
 
 On startup the client will send out a broadcast message containing a
 callback proxy and waits for a response. Any servers that are up and

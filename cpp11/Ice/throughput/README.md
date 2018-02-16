@@ -4,11 +4,15 @@ that can be achieved using serialized synchronous requests.
 
 To run the demo, first start the server:
 
-      server
+```
+server
+```
 
 In a separate window, start the client:
 
-      client
+```
+client
+```
 
 We provide a number of optimizations through metadata in this demo.
 

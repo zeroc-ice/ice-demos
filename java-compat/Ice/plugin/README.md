@@ -3,11 +3,15 @@ as well as a Ice Logger plugin.
 
 To run the demo, first start the server:
 
-    $ java -jar build/libs/server.jar
+```
+java -jar build/libs/server.jar
+```
 
 In a separate window, start the client:
 
-    $ java -jar build/libs/client.jar
+```
+java -jar build/libs/client.jar
+```
 
 Both the client and server use a custom logger which is loaded as
 a logger plugin. The server also uses a plugin to implement the

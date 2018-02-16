@@ -11,11 +11,11 @@ session upon termination or through the server detecting the closure
 of the connection, all per-client objects are cleaned up by the
 session object.
 
-Ice for MATLAB currently supports only client-side functionality, therefore
-you must use a server from any other language mapping.
+Ice for MATLAB currently supports only client-side functionality,
+therefore you must use a server from any other language mapping.
 
 After starting the server, run the MATLAB client:
 
 ```
-Client.main()
+>> Client.main()
 ```

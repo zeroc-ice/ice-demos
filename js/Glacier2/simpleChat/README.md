@@ -6,4 +6,6 @@ simpleChat demo README to start the server.
 
 In a separate window, start the client:
 
-      node Client.js
+```
+node Client.js
+```

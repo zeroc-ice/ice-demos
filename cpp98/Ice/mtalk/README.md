@@ -3,6 +3,8 @@ devices using multicast and then hold a peer-to-peer talk session.
 
 To run the demo, just start the program:
 
-    $ ./client
+```
+client
+```
 
 On another device, start the command-line program or Android app.

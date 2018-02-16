@@ -11,7 +11,9 @@ In your Slice definitions, you must declare a byte sequence using the
 `clr:serializable` metadata and specify the .NET class name, as shown
 below:
 
-    ["clr:serializable:NETClassName"] sequence<byte> SliceType;
+```
+["clr:serializable:NETClassName"] sequence<byte> SliceType;
+```
 
 Now, wherever you use the declared Slice type in your operations or
 data types, you can supply an instance of the designated .NET class

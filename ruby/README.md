@@ -31,7 +31,9 @@ Refer to the README file in each demo directory for usage instructions.
 Note: When running a client with Ruby 1.8, you must start the interpreter with
 the `-rubygems` option as shown in the example below:
 
-    ruby -rubygems Client.rb
+```
+ruby -rubygems Client.rb
+```
 
 [1]: https://doc.zeroc.com/display/Ice37/Ice+Manual
 [2]: https://doc.zeroc.com/display/Rel/Using+the+Ruby+Distribution+for+Ice+3.7.1

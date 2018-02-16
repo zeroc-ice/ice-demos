@@ -7,7 +7,9 @@ you must use a server from any other language mapping.
 
 After starting the server, run the MATLAB client:
 
-      >> Client.main()
+```
+>> Client.main()
+```
 
 The performance for byte sequences is expected to be greater than
 for other types because the cost of marshaling and unmarshaling is

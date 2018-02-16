@@ -14,12 +14,16 @@ Setup
 
 Start the IceGrid registry and node:
 
-    icegridnode --Ice.Config=config.grid
+```
+icegridnode --Ice.Config=config.grid
+```
 
 Deploy the `HelloSimpsons` application (in file `application.xml`) with
 the IceGridGUI. If you prefer to use the command-line utility, use:
 
-    icegridadmin --Ice.Config=config.grid -e "application add application.xml"
+```
+icegridadmin --Ice.Config=config.grid -e "application add application.xml"
+```
 
 Using the IceGridGUI
 --------------------
@@ -32,9 +36,10 @@ log into the IceGrid registry and view the application you deployed above:
     icon from the Finder Applications folder, and users with a Linux
     installation can use the `icegridgui` script to start the
     program:
-```
+    ```
     icegridgui
-```
+    ```
+
   - Select `Login...` from the `File menu`.
 
   - In the `Saved Connections` dialog, click `New Connection` to open
@@ -60,7 +65,9 @@ log into the IceGrid registry and view the application you deployed above:
 Running the Client
 ------------------
 
-      java -jar build/libs/client.jar
+```
+java -jar build/libs/client.jar
+```
 
 The client simply calls 'sayHello' on the replicated 'hello' object.
 
@@ -71,9 +78,11 @@ You can use the IceGridGUI or the command-line utility to stop
 and restart IceBox services. The commands below show how to manipulate
 the 'Lisa' service:
 
-    icegridadmin --Ice.Config=config.grid
-    >>> service stop IceBox Lisa
-    >>> service start IceBox Lisa
+```
+icegridadmin --Ice.Config=config.grid
+>>> service stop IceBox Lisa
+>>> service start IceBox Lisa
+```
 
 Administration through Glacier2
 -------------------------------
@@ -92,9 +101,10 @@ Follow these steps:
  - Reconnect to the IceGrid registry, this time using a Glacier2
    session. For example, using the command-line utility you must
    supply a proxy for the router:
-```
+   ```
    $ icegridadmin --Ice.Default.Router="DemoGlacier2/router:tcp -h localhost -p 4063"
-```
+   ```
+
    In the IceGridGUI, use the Routed tab of the Login dialog.
    Change the Glacier2 instance name to "DemoGlacier2" and the endpoints
    to `tcp -h localhost -p 4063`.

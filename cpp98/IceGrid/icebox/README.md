@@ -40,6 +40,7 @@ log into the IceGrid registry and view the application you deployed above:
     ```
     icegridgui
     ```
+
   - Select `Login...` from the `File menu`.
 
   - In the `Saved Connections` dialog, click `New Connection` to open
@@ -105,6 +106,7 @@ Follow these steps:
    ```
    icegridadmin --Ice.Default.Router="DemoGlacier2/router:tcp -h localhost -p 4063"
    ```
+
    In the IceGrid GUI, use the `Routed` tab of the `Login` dialog.
    Change the Glacier2 instance name to `DemoGlacier2` and the endpoints
    to `tcp -h localhost -p 4063`.

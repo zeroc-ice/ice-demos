@@ -4,15 +4,21 @@ used.
 
 To run the demo, first start the server:
 
-      server
+```
+server
+```
 
 In a separate window, start the Glacier2 router:
 
-      glacier2router --Ice.Config=config.glacier2
+```
+glacier2router --Ice.Config=config.glacier2
+```
 
 In a separate window, start the client:
 
-      client
+```
+client
+```
 
 If you plan to run this demo using clients on different hosts than the
 router, you must first modify the configuration. You need to change

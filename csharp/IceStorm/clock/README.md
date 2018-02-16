@@ -120,6 +120,7 @@ Host <P>: publisher
 Host <S>: subscriber
 Host <I>: IceStorm
 ```
+
 Replace `<P>`, `<S>`, and `<I>` with the appropriate host names or IP addresses
 in the steps below:
 
@@ -128,11 +129,13 @@ in the steps below:
    ```
    TopicManager.Proxy=DemoIceStorm/TopicManager:default -h <I> -p 10000
    ```
+
 2. Edit the publisher's configuration file, `config.pub`, and change
    the `TopicManager.Proxy` property to
    ```
    TopicManager.Proxy=DemoIceStorm/TopicManager:default -h <I> -p 10000
    ```
+
 3. Since the default configurations for the subscriber and IceStorm
    endpoints listen only on localhost, you must also modify the Endpoints
    properties to explicitly include the host machine's name or IP
@@ -142,6 +145,7 @@ in the steps below:
    ```
    Clock.Subscriber.Endpoints=tcp -h <S>:udp -h <S>
    ```
+
    In `config.service`:
    ```
    IceStorm.TopicManager.Endpoints=default -h <I> -p 10000

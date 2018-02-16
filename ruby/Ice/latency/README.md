@@ -7,4 +7,6 @@ mapping.
 
 After starting the server, run the Ruby client:
 
-      ruby Client.rb
+```
+ruby Client.rb
+```

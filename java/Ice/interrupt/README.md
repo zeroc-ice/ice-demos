@@ -4,11 +4,15 @@ using `Thread.interrupt()`.
 
 To run the demo, first start the server:
 
-      java -jar build/libs/server.jar
+```
+java -jar build/libs/server.jar
+```
 
 In a separate window, start the client:
 
-      java -jar build/libs/client.jar
+```
+java -jar build/libs/client.jar
+```
 
 Calling `TaskManager.run` on the server simulates a long running task
 by sleeping 10 seconds. Ordinarily a server will not shutdown until

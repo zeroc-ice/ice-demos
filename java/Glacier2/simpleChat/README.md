@@ -6,4 +6,6 @@ README to start the server and the Glacier2 router.
 
 In a separate window, start the swing client:
 
-      java -jar build/libs/client.jar
+```
+java -jar build/libs/client.jar
+```
