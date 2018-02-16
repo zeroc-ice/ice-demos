@@ -48,20 +48,17 @@ Explorer window and select `Build`.
   * Open a Visual Studio command prompt
   ```
   cd ice-demos\csharp
-  MSBuild /p:ICE_HOME=<Ice dist path> /p:Platform="Any CPU" "C# NET Framework demos.sln"
+  MSBuild /p:IceHome=<Ice dist path> /t:Net45Build msbuild\ice.proj
   ```
 
 - Build from Visual Studio:
   * Open a Visual Studio command prompt
   ```
-  set ICE_HOME=<Ice dist path>
-  devenv
+  cd ice-demos\csharp
+  MSBuild /p:IceHome=<Ice dist path> /t:Net45InstallLocalPackages msbuild\ice.proj
   ```
 
-  * When Visual Studio starts disable automatic restoring of NuGet packages in
-    Visual Studio from `Tools > Options > NuGet Package Manager`
-  * Right click on the desired demo in the Solution Explorer window and select
-    `Build`.
+  * Open the solution file `C# NET Framework demos.sln` to build the sample programs.
 
 ### Running the Demos
 
@@ -107,13 +104,27 @@ packages are automatically downloaded during the build.
 Open a command prompt and change to the `csharp` subdirectory:
 
 ```
-cd csharp
+cd ice-demos\csharp
+```
+
+Install packages from the source build:
+
+On Windows
+
+```
+msbuild /p:IceHome=<Ice dist path> /t:NetStandardInstallLocalPackages msbuild\ice.proj
+```
+
+On Linux
+
+```
+dotnet msbuild /p:IceHome=<Ice dist path> /t:NetStandardInstallLocalPackages msbuild\ice.proj
 ```
 
 To build the sample programs run:
 
 ```
-dotnet msbuild /p:ICE_HOME=<Ice dist path> "C# NET Core demos.sln" /t:"Restore;Build"
+dotnet msbuild "C# NET Core demos.sln" /t:"Restore;Build"
 ```
 
 ### Running the Demos

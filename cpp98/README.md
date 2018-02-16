@@ -90,21 +90,19 @@ select `Build`.
   * Open a Visual Studio command prompt
   ```
   cd ice-demos\cpp98
-  MSBuild /p:ICE_HOME=<Ice dist path> /p:Configuration=<Release or Debug> "C++98 demos.sln"
+  MSBuild /p:IceHome=<Ice dist path> /p:Configuration=<Release or Debug> msbuild\ice.proj"
   ```
 
 - Build from Visual Studio
   * Open a Visual Studio command prompt
   ```
-  set ICE_HOME=<Ice dist path>
-  devenv
+  cd ice-demos\cpp98
+  MSBuild /p:IceHome=<Ice dist path> /p:Configuration=<Release or Debug> /t:InstallLocalPackages msbuild\ice.proj"
   ```
 
-  * When Visual Studio starts disable automatic restoring of NuGet packages
-    in Visual Studio `Tools > Options > NuGet Package Manager`
-  * Select your target configuration (Debug or Release) and platform (Win32 or
-    x64). Right click on the desired demo in the Solution Explorer window and
-    select `Build`.
+  * Start Visual Studio and open `C++98 demos.sln` solution file, select your target configuration
+    (Debug or Release) and platform (Win32 or x64). Right click on the desired demo in the Solution
+    Explorer window and select `Build`.
 
 ### Running the Demos
 

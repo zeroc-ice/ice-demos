@@ -1,10 +1,9 @@
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <PropertyGroup>
-        <VCTargetsPath Condition="'$(VCTargetsPath)' == ''">C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0</VCTargetsPath>
-        <DefaultPlatformToolset Condition="'$(VisualStudioVersion)' == '10.0' And  '$(DefaultPlatformToolset)' == ''">v100</DefaultPlatformToolset>
-    </PropertyGroup>
-
     <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+
+    <!-- Import Ice Version settings when building with Ice source distribution -->
+    <Import Project="$(IceHome)\config\icebuilder.props"
+            Condition="Exists('$(IceHome)\config\icebuilder.props')"/>
 
     <!-- Custom task to download files -->
     <!-- Nuget executable -->
@@ -36,6 +35,80 @@
               Command="symchk /r $(MSBuildThisFileDirectory)..\packages\zeroc.ice.$(DefaultPlatformToolset).3.7.1\build\native\bin\$(Platform)\$(Configuration)\* /s $(SymbolServer)">
               <Output TaskParameter="ExitCode" PropertyName="ErrorCode"/>
         </Exec>
-        <Warning  Text="PDBs download failed, stack traces might be missing or incomplete" Condition="'$(ErrorCode)' != '0'" />
+        <Warning Text="PDBs download failed, stack traces might be missing or incomplete" Condition="'$(ErrorCode)' != '0'" />
+    </Target>
+
+    <ItemGroup>
+        <CppPlatformToolset Include="v140"/>
+        <CppPlatformToolset Include="v141"/>
+    </ItemGroup>
+
+    <!--
+        When IceHome is set to a source distribution we install the NuGet packages
+        from IceHome build, for the platform we are building, we also need to copy
+        the props and targets files for the rest of platforms supported by the demos
+        to get away with NuGet install checks
+    -->
+    <Target Name="InstallLocalPackages"
+            DependsOnTargets="RemovePackages;GetNuGet"
+            Condition="Exists('$(IceHome)\cpp')">
+        <Copy SourceFiles="$(IceHome)\cpp\msbuild\zeroc.ice.%(CppPlatformToolset.Identity).props"
+              DestinationFolder="$(MSBuildThisFileDirectory)..\packages\zeroc.ice.%(CppPlatformToolset.Identity).$(IceVersion)\build\native\" />
+        <Copy SourceFiles="$(IceHome)\cpp\msbuild\zeroc.ice.%(CppPlatformToolset.Identity).targets"
+              DestinationFolder="$(MSBuildThisFileDirectory)..\packages\zeroc.ice.%(CppPlatformToolset.Identity).$(IceVersion)\build\native\" />
+        <Exec Command="rmdir /s /q $(MSBuildThisFileDirectory)..\packages\zeroc.ice.$(DefaultPlatformToolset).$(IceVersion)"
+              Condition="Exists('$(MSBuildThisFileDirectory)..\packages\zeroc.ice.$(DefaultPlatformToolset).$(IceVersion)')"/>
+
+        <!-- Run the distribution NuGetPack target to ensure packages are up to date -->
+        <MSBuild Projects="$(IceHome)\cpp\msbuild\ice.proj"
+                 Properties="Platform=$(Platform);Configuration=$(Configuration)"
+                 RemoveProperties="IceHome"
+                 Targets="NuGetPack"/>
+        <!-- Add the package to a local source and install it from it -->
+        <Exec Command="$(NuGetExe) init $(IceHome)\cpp\msbuild\zeroc.ice.$(DefaultPlatformToolset) local" />
+        <Exec Command="$(NuGetExe) install zeroc.ice.$(DefaultPlatformToolset) -Source $(MSBuildThisFileDirectory)local -NoCache -SolutionDirectory $(MSBuildThisFileDirectory).."/>
+        <!-- Remove the local source that is no longer needed -->
+        <Exec Command="rmdir /s /q local" />
+        <Exec Command="$(NuGetExe) install zeroc.icebuilder.msbuild -SolutionDirectory $(MSBuildThisFileDirectory).."/>
+    </Target>
+
+    <Target Name="Build"
+            DependsOnTargets="InstallLocalPackages">
+        <MSBuild Projects="$(MSBuildThisFileDirectory)..\C++11 demos.sln" RemoveProperties="IceHome"/>
+    </Target>
+
+    <!-- Same as above but for UWP builds -->
+    <Target Name="UWPInstallLocalPackages"
+            DependsOnTargets="RemovePackages;GetNuGet"
+            Condition="Exists('$(IceHome)\cpp')">
+        
+        <Copy SourceFiles="$(IceHome)\cpp\msbuild\zeroc.ice.uwp.%(CppPlatformToolset.Identity).props"
+              DestinationFolder="$(MSBuildThisFileDirectory)..\packages\zeroc.ice.uwp.%(CppPlatformToolset.Identity).$(IceVersion)\build\native\" />
+
+        <Copy SourceFiles="$(IceHome)\cpp\msbuild\zeroc.ice.uwp.%(CppPlatformToolset.Identity).targets"
+              DestinationFiles="$(MSBuildThisFileDirectory)..\packages\zeroc.ice.uwp.%(CppPlatformToolset.Identity).x86.$(IceVersion)\build\native\zeroc.ice.uwp.%(CppPlatformToolset.Identity).x86.targets" />
+        <Copy SourceFiles="$(IceHome)\cpp\msbuild\zeroc.ice.uwp.%(CppPlatformToolset.Identity).targets"
+              DestinationFiles="$(MSBuildThisFileDirectory)..\packages\zeroc.ice.uwp.%(CppPlatformToolset.Identity).x64.$(IceVersion)\build\native\zeroc.ice.uwp.%(CppPlatformToolset.Identity).x64.targets" />
+        <Exec Command="rmdir /s /q $(MSBuildThisFileDirectory)..\packages\zeroc.ice.$(DefaultPlatformToolset).$(IceVersion)"
+              Condition="Exists('$(MSBuildThisFileDirectory)..\packages\zeroc.ice.$(DefaultPlatformToolset).$(IceVersion)')"/>
+
+        <!-- Run the distribution NuGetPack target to ensure packages are up to date -->
+        <MSBuild Projects="$(IceHome)\cpp\msbuild\ice.proj"
+                 Properties="Platform=$(Platform);Configuration=$(Configuration)"
+                 RemoveProperties="IceHome"
+                 Targets="UWPNuGetPack"/>
+        <!-- Add the packages to a local source and install it from it -->
+        <Exec Command="$(NuGetExe) init $(IceHome)\cpp\msbuild\zeroc.ice.uwp.$(DefaultPlatformToolset) local" />
+        <Exec Command="$(NuGetExe) init $(IceHome)\cpp\msbuild\zeroc.ice.uwp.$(DefaultPlatformToolset).x86 local" />
+        <Exec Command="$(NuGetExe) init $(IceHome)\cpp\msbuild\zeroc.ice.uwp.$(DefaultPlatformToolset).x64 local" />
+        <Exec Command="$(NuGetExe) install zeroc.ice.uwp.$(DefaultPlatformToolset) -Source $(MSBuildThisFileDirectory)local -NoCache -SolutionDirectory $(MSBuildThisFileDirectory).."/>
+        <!-- Remove the local source that is no longer needed -->
+        <Exec Command="rmdir /s /q local" />
+        <Exec Command="$(NuGetExe) install zeroc.icebuilder.msbuild -SolutionDirectory $(MSBuildThisFileDirectory).."/>
+    </Target>
+
+    <Target Name="UWPBuild"
+            DependsOnTargets="UWPInstallLocalPackages">
+        <MSBuild Projects="$(MSBuildThisFileDirectory)..\C++11 demos (Universal Windows).sln" RemoveProperties="IceHome"/>
     </Target>
 </Project>

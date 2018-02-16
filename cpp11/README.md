@@ -91,33 +91,31 @@ Then select your target configuration (Debug or Release) and platform (Win32
 or x64). Right click on the desired demo in the Solution Explorer window and
 select `Build`.
 
-#### Building the demos without using NuGet packages:
+#### Building the demos with Ice source distribution:
 
 - Build from command line:
   * Open a Visual Studio command prompt
   ```
   cd ice-demos\cpp11
-  MSBuild /p:ICE_HOME=<Ice dist path> /p:Configuration=<Release or Debug> "C++11 demos.sln"
+  MSBuild /p:IceHome=<Ice dist path> /p:Configuration=<Release or Debug> msbuild\ice.proj"
   ```
 
 - Build from Visual Studio
   * Open a Visual Studio command prompt
   ```
-  set ICE_HOME=<Ice dist path>
-  devenv
+  cd ice-demos\cpp11
+  MSBuild /p:IceHome=<Ice dist path> /p:Configuration=<Release or Debug> /t:InstallLocalPackages msbuild\ice.proj"
   ```
 
-  * When Visual Studio starts disable automatic restoring of NuGet packages
-    in Visual Studio `Tools > Options > NuGet Package Manager`
-  * Select your target configuration (Debug or Release) and platform (Win32 or
-    x64). Right click on the desired demo in the Solution Explorer window and
-    select `Build`.
+  * Start Visual Studio and open `C++11 demos.sln` solution file, select your target 
+    configuration (Debug or Release) and platform (Win32 or x64). Right click on the
+    desired demo in the Solution Explorer window and select `Build`.
 
 ### Running the Demos
 
 You need to add the Ice `bin` directory to your PATH before running the demos.
 
-If are building Debug, add both the Debug and Release `bin` directories with a
+If you are building Debug, add both the Debug and Release `bin` directories with a
 command similar to:
 ```
 set PATH=%USERPROFILE%\ice-demos\cpp11\packages\zeroc.ice.v140.3.7.1\build\native\bin\x64\Debug;%USERPROFILE%\ice-demos\cpp11\packages\zeroc.ice.v140.3.7.1\build\native\bin\x64\Release;%PATH%

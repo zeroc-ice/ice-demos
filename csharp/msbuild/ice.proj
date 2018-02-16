@@ -3,6 +3,7 @@
     <PropertyGroup>
         <NugetExe>$(MSBuildThisFileDirectory)NuGet.exe</NugetExe>
         <NugetURL>https://dist.nuget.org/win-x86-commandline/v3.4.4/NuGet.exe</NugetURL>
+        <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
     </PropertyGroup>
 
     <!-- Download nuget.exe if not present -->
@@ -27,12 +28,58 @@
         <Exec Command="symchk /r $(MSBuildThisFileDirectory)..\packages\zeroc.ice.net.3.7.1\lib\* /s SRV*$(TEMP)\SymbolCache*https://dev.zeroc.com/share/ice/master/nuget/zeroc.ice.net.store/" />
     </Target>
 
-    <Target Name="Build" DependsOnTargets="NuGetRestore">
+    <Target Name="Net45InstallLocalPackages"
+            DependsOnTargets="RemovePackages;GetNuGet"
+            Condition="Exists('$(IceHome)\csharp')">
+        <!-- Run the distribution NuGetPack target to ensure packages are up to date -->
+        <MSBuild Projects="$(IceHome)\csharp\msbuild\ice.proj"
+                 Properties="Platform=$(Platform);Configuration=$(Configuration)"
+                 RemoveProperties="IceHome"
+                 Targets="NuGetPack"/>
+        <!-- Add the package to a local source and install it from it -->
+        <Exec Command="$(NuGetExe) init $(IceHome)\csharp\msbuild\zeroc.ice.net local" />
+        <Exec Command="$(NuGetExe) install zeroc.ice.net -Prerelease -Source $(MSBuildThisFileDirectory)local -NoCache -SolutionDirectory $(MSBuildThisFileDirectory).."/>
+        <!-- Remove the local source that is no longer needed -->
+        <Exec Command="rmdir /s /q local" />
+        <Exec Command="$(NuGetExe) install zeroc.icebuilder.msbuild -SolutionDirectory $(MSBuildThisFileDirectory).."/>
+    </Target>
+
+    <Target Name="Net45Build" DependsOnTargets="Net45InstallLocalPackages">
         <MSbuild Projects="$(MSBuildThisFileDirectory)..\C# NET Framework demos.sln"
-                 Targets="Build"/>
+                 Targets="Build"
+                 RemoveProperties="IceHome"
+                 Properties="Configuration=$(Configuration);Platform=Any CPU"/>
+    </Target>
+
+    <Target Name="NetStandardInstallLocalPackages"
+            Condition="Exists('$(IceHome)\csharp')">
+        <Exec Command="dotnet nuget locals --list global-packages" ConsoleToMSBuild="true" EchoOff="yes">
+            <Output TaskParameter="ConsoleOutput" PropertyName="NuGetGlobalPackages" />
+        </Exec>
+
+        <PropertyGroup>
+            <NuGetGlobalPackages>$(NuGetGlobalPackages.Replace('info : global-packages: ', ''))</NuGetGlobalPackages>
+        </PropertyGroup>
+        <!-- Run the distribution NuGetPack target to ensure packages are up to date -->
+        <MSBuild Projects="$(IceHome)\csharp\msbuild\ice.proj"
+                 Properties="Platform=$(Platform);Configuration=$(Configuration)"
+                 RemoveProperties="IceHome"
+                 Targets="NuGetPack"/>
+
+        <RemoveDir Directories="$(NuGetGlobalPackages)\zeroc.ice.net" Condition="Exists('$(NuGetGlobalPackages)\zeroc.ice.net')"/>
+        <Exec Command="dotnet nuget push $(IceHome)\csharp\msbuild\zeroc.ice.net\zeroc.ice.net.3.7.1-beta1.nupkg --source $(NuGetGlobalPackages)" />
+
+        <MSBuild Projects="$(MSBuildThisFileDirectory)..\C# NET Core demos.sln"
+                 Targets="Restore"
+                 RemoveProperties="IceHome"
+                 Properties="Configuration=$(Configuration);Platform=Any CPU"/>
+    </Target>
+
+    <Target Name="NetStandardBuild" DependsOnTargets="NetStandardInstallLocalPackages">
         <MSbuild Projects="$(MSBuildThisFileDirectory)..\C# NET Core demos.sln"
                  Targets="Build"
-                 Condition="$(VisualStudioVersion) == '15.0'" />
+                 RemoveProperties="IceHome"
+                 Properties="Configuration=$(Configuration);Platform=Any CPU"/>
     </Target>
 
 </Project>
