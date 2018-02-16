@@ -20,10 +20,7 @@ class CallbackSenderI(Demo.CallbackSender):
 
     def shutdown(self, current):
         print("Shutting down...")
-        try:
-            current.adapter.getCommunicator().shutdown()
-        except:
-            traceback.print_exc()
+        current.adapter.getCommunicator().shutdown()
 
 class Server(Ice.Application):
     def run(self, args):
