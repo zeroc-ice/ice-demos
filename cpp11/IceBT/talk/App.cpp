@@ -313,7 +313,6 @@ TalkApp::doConnect(const string& cmd)
     }
     string addr = cmd.substr(sp);
 
-
     shared_ptr<Talk::PeerPrx> remote;
     shared_ptr<Talk::PeerPrx> local;
     try

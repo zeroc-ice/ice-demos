@@ -81,7 +81,7 @@
     <Target Name="UWPInstallLocalPackages"
             DependsOnTargets="RemovePackages;GetNuGet"
             Condition="Exists('$(IceHome)\cpp')">
-        
+
         <Copy SourceFiles="$(IceHome)\cpp\msbuild\zeroc.ice.uwp.%(CppPlatformToolset.Identity).props"
               DestinationFolder="$(MSBuildThisFileDirectory)..\packages\zeroc.ice.uwp.%(CppPlatformToolset.Identity).$(IceVersion)\build\native\" />
 

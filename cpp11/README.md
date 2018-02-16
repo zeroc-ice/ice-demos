@@ -107,7 +107,7 @@ select `Build`.
   MSBuild /p:IceHome=<Ice dist path> /p:Configuration=<Release or Debug> /t:InstallLocalPackages msbuild\ice.proj"
   ```
 
-  * Start Visual Studio and open `C++11 demos.sln` solution file, select your target 
+  * Start Visual Studio and open `C++11 demos.sln` solution file, select your target
     configuration (Debug or Release) and platform (Win32 or x64). Right click on the
     desired demo in the Solution Explorer window and select `Build`.
 
