@@ -51,6 +51,21 @@
                  Properties="Configuration=$(Configuration);Platform=Any CPU"/>
     </Target>
 
+    <Choose>
+        <When Condition="'$(OS)' == 'Windows_NT'">
+            <PropertyGroup>
+                <PackagePath>$(IceHome)\csharp\msbuild\zeroc.ice.net\zeroc.ice.net.3.7.1-beta1.nupkg</PackagePath>
+                <BuildProperties>Configuration=$(Configuration);Platform=Any CPU</BuildProperties>
+            </PropertyGroup>
+        </When>
+        <Otherwise>
+            <PropertyGroup>
+                <PackagePath>$(IceHome)/csharp/msbuild/zeroc.ice.net/zeroc.ice.net.3.7.1-beta1.nupkg</PackagePath>
+                <BuildProperties>Configuration=$(Configuration);Platform=Any CPU;IceToolsPath=$(IceHome)/cpp/bin</BuildProperties>
+            </PropertyGroup>
+        </Otherwise>
+    </Choose>
+
     <Target Name="NetStandardInstallLocalPackages"
             Condition="Exists('$(IceHome)\csharp')">
         <Exec Command="dotnet nuget locals --list global-packages" ConsoleToMSBuild="true" EchoOff="yes">
@@ -67,7 +82,7 @@
                  Targets="NuGetPack"/>
 
         <RemoveDir Directories="$(NuGetGlobalPackages)\zeroc.ice.net" Condition="Exists('$(NuGetGlobalPackages)\zeroc.ice.net')"/>
-        <Exec Command="dotnet nuget push $(IceHome)\csharp\msbuild\zeroc.ice.net\zeroc.ice.net.3.7.1-beta1.nupkg --source $(NuGetGlobalPackages)" />
+        <Exec Command="dotnet nuget push $(PackagePath) --source $(NuGetGlobalPackages)" />
 
         <MSBuild Projects="$(MSBuildThisFileDirectory)..\C# NET Core demos.sln"
                  Targets="Restore"
@@ -79,7 +94,7 @@
         <MSbuild Projects="$(MSBuildThisFileDirectory)..\C# NET Core demos.sln"
                  Targets="Build"
                  RemoveProperties="IceHome"
-                 Properties="Configuration=$(Configuration);Platform=Any CPU"/>
+                 Properties="$(BuildProperties)"/>
     </Target>
 
 </Project>
