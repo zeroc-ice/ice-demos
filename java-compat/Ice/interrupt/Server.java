@@ -45,7 +45,7 @@ public class Server
         int status = 0;
         Ice.StringSeqHolder argsHolder = new Ice.StringSeqHolder(args);
 
-        ExecutorService executor = Executors.newFixedThreadPool(5);
+        final ExecutorService executor = Executors.newFixedThreadPool(5);
 
         Ice.InitializationData initData = new Ice.InitializationData();
         initData.properties = Ice.Util.createProperties();
