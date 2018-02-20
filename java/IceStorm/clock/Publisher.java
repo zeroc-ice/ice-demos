@@ -13,27 +13,17 @@ public class Publisher
         int status = 0;
         java.util.List<String> extraArgs = new java.util.ArrayList<String>();
 
+        com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.pub", extraArgs);
+
         //
-        // Try with resources block - communicator is automatically destroyed
-        // at the end of this try block
+        // Install shutdown hook to destroy communicator during JVM shutdown
         //
-        try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.pub", extraArgs))
+        Runtime.getRuntime().addShutdownHook(new Thread(() ->
         {
-            //
-            // Install shutdown hook for user interrupt like Ctrl-C
-            //
-            Runtime.getRuntime().addShutdownHook(new Thread(() ->
-            {
-                //
-                // Initiate communicator shutdown, waitForShutdown returns when complete
-                // calling shutdown on a destroyed communicator is no-op
-                //
-                communicator.shutdown();
-            }));
+            communicator.destroy();
+        }));
 
-            status = run(communicator, extraArgs.toArray(new String[extraArgs.size()]));
-        }
-
+        status = run(communicator, extraArgs.toArray(new String[extraArgs.size()]));
         System.exit(status);
     }
 
@@ -156,7 +146,7 @@ public class Publisher
         }
         catch(com.zeroc.Ice.CommunicatorDestroyedException ex)
         {
-            // Ignore
+            // Ctrl-C triggered shutdown hook, which destroyed communicator - we're terminating
         }
 
         return 0;
