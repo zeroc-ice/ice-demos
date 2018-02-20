@@ -22,28 +22,26 @@ public class Subscriber
         int status = 0;
         java.util.List<String> extraArgs = new java.util.ArrayList<String>();
 
+        com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.sub", extraArgs);
+
         //
-        // Try with resources block - communicator is automatically destroyed
-        // at the end of this try block
+        // Destroy communicator during JVM shutdown
         //
-        try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.sub", extraArgs))
+        Thread destroyHook = new Thread(() ->
         {
-            //
-            // Install shutdown hook for user interrupt like Ctrl-C
-            //
-            Runtime.getRuntime().addShutdownHook(new Thread(() ->
-            {
-                //
-                // Initiate communicator shutdown, waitForShutdown returns when complete
-                // calling shutdown on a destroyed communicator is no-op
-                //
-                communicator.shutdown();
-            }));
+            communicator.destroy();
+        });
+        Runtime.getRuntime().addShutdownHook(destroyHook);
 
-            status = run(communicator, extraArgs.toArray(new String[extraArgs.size()]));
+        status = run(communicator, destroyHook, extraArgs.toArray(new String[extraArgs.size()]));
+
+        if(status != 0)
+        {
+            System.exit(status);
         }
-
-        System.exit(status);
+        //
+        // Else the application waits for Ctrl-C to destroy the communicator
+        //
     }
 
     public static void usage()
@@ -52,7 +50,7 @@ public class Subscriber
                            "[--retryCount count] [--id id] [topic]");
     }
 
-    private static int run(com.zeroc.Ice.Communicator communicator, String[] args)
+    private static int run(com.zeroc.Ice.Communicator communicator, Thread destroyHook, String[] args)
     {
         args = communicator.getProperties().parseCommandLineOptions("Clock", args);
 
@@ -268,9 +266,31 @@ public class Subscriber
             return 1;
         }
 
-        communicator.waitForShutdown();
+        //
+        // Replace the shutdown hook to unsubscribe during JVM shutdown
+        //
+        final com.zeroc.IceStorm.TopicPrx topicF = topic;
+        final com.zeroc.Ice.ObjectPrx subscriberF = subscriber;
+        Runtime.getRuntime().addShutdownHook(new Thread(() ->
+        {
+            //
+            // Unregister subscriber
+            //
+            try
+            {
+                topicF.unsubscribe(subscriberF);
+            }
+            catch(com.zeroc.Ice.Exception e)
+            {
+                // Ignored
+            }
 
-        topic.unsubscribe(subscriber);
+            //
+            // Then destroy communicator
+            //
+            communicator.destroy();
+        }));
+        Runtime.getRuntime().removeShutdownHook(destroyHook); // remove old destroy-only shutdown hook
 
         return 0;
     }
