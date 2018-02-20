@@ -27,10 +27,10 @@ var babel       = require("gulp-babel"),
 // Check ICE_HOME environment variable. If this is set and points to a source
 // distribution then prefer it over default packages.
 //
-var ICE_HOME;
+var iceHome;
 if(process.env.ICE_HOME)
 {
-    ICE_HOME = fs.existsSync(path.join(process.env.ICE_HOME, "js", "package.json")) ? process.env.ICE_HOME : undefined;
+    iceHome = fs.existsSync(path.join(process.env.ICE_HOME, "js", "package.json")) ? process.env.ICE_HOME : undefined;
 }
 
 function parseArg(argv, key)
@@ -58,10 +58,11 @@ function slice2js(options)
     var opts = options || {};
 
     defaults.args = opts.args || [];
+    defaults.include = opts.include || []
     defaults.dest = opts.dest;
-    if(ICE_HOME)
+    if(iceHome)
     {
-        if(process.platform == "win32" && !opts.exe)
+        if(process.platform == "win32")
         {
             if(!platform || (platform != "Win32" && platform != "x64"))
             {
@@ -76,17 +77,16 @@ function slice2js(options)
                             "`Debug' or `Release', in order to locate slice2js.exe");
                 process.exit(1);
             }
+            defaults.iceToolsPath = path.join(iceHome, 'cpp', 'bin', platform, configuration);
         }
-        defaults.exe = path.join(ICE_HOME, 'cpp', 'bin', process.platform == "win32" ?
-            path.join(platform, configuration, "slice2js.exe") : "slice2js");
-        defaults.args = defaults.args.concat(["-I" + path.join(ICE_HOME, 'slice')]);
+        defaults.iceHome = iceHome;
     }
     return iceBuilder.compile(defaults);
 }
 
 function getIceLibs(es5)
 {
-    return  path.join(ICE_HOME ? path.join(ICE_HOME, 'js', 'lib') : path.join('node_modules', 'ice', 'lib'),
+    return  path.join(iceHome ? path.join(iceHome, 'js', 'lib') : path.join('node_modules', 'ice', 'lib'),
                       es5 ? 'es5/*' : '*');
 }
 
@@ -126,9 +126,9 @@ gulp.task("npm", [],
     function(cb)
     {
         npm.load({loglevel: 'silent', progress: false}, function(err, npm) {
-            if(ICE_HOME)
+            if(iceHome)
             {
-                npm.commands.install([path.join(ICE_HOME, 'js')], function(err, data)
+                npm.commands.install([path.join(iceHome, 'js')], function(err, data)
                 {
                     cb(err);
                 });
@@ -223,7 +223,7 @@ Object.keys(demos).forEach(
             function(cb){
                 pump([
                     gulp.src(path.join(name, "*.ice")),
-                    slice2js({args: ["-I" + name], dest: path.join(name, "generated")}),
+                    slice2js({include: [name], dest: path.join(name, "generated")}),
                     gulp.dest(path.join(name, "generated"))], cb);
             });
 
