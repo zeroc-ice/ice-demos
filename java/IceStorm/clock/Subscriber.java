@@ -273,22 +273,14 @@ public class Subscriber
         final com.zeroc.Ice.ObjectPrx subscriberF = subscriber;
         Runtime.getRuntime().addShutdownHook(new Thread(() ->
         {
-            //
-            // Unregister subscriber
-            //
             try
             {
                 topicF.unsubscribe(subscriberF);
             }
-            catch(com.zeroc.Ice.Exception e)
+            finally
             {
-                // Ignored
+                communicator.destroy();
             }
-
-            //
-            // Then destroy communicator
-            //
-            communicator.destroy();
         }));
         Runtime.getRuntime().removeShutdownHook(destroyHook); // remove old destroy-only shutdown hook
 
