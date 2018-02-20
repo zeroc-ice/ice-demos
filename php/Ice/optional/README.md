@@ -4,7 +4,8 @@ If you have not built the demos yet, please refer to the top level
 This is a PHP version of the Ice "optional" demo client.
 
 First, start the optional demo server, using any of the supported
-language mappings, on this host.
+language mappings, on this host. If you want to get started quickly,
+we recommend using the Python server.
 
 Then, if you are using an RPM installation of IcePHP, run the PHP
 client:

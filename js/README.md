@@ -81,8 +81,9 @@ npm run build
 
 Ice provides only client demos in JavaScript since Ice for JavaScript does not
 support full server-side activities. In order to run a sample client, you must
-first start its corresponding server from another Ice language mapping. For
-example, start the python "hello" server:
+first start its corresponding server from another Ice language mapping. If you
+want to get started quickly, we recommend using the Python server. For example,
+start the Python "hello" server:
 
 ```
 cd python/Ice/hello

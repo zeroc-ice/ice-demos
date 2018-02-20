@@ -53,8 +53,9 @@ Follow these steps to install the demo:
     % glacier2router --Ice.Config=config.glacier2
     ```
 
-6) In a separate command window on the same host, start a hello
-   server. You can use a server from any Ice language mapping.
+6) In a separate command window on the same host, start a hello server.
+   You can use a server from any Ice language mapping. If you want to get
+   started quickly, we recommend using the Python server.
 
 7) Start a Web browser and open the Login.php page to begin using the
    demo. Note that the Glacier2 configuration uses a session timeout

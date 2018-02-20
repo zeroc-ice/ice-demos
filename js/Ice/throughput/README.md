@@ -5,7 +5,8 @@ that can be achieved using serialized synchronous requests.
 To run the demo, first you need to start an Ice throughput server from
 another language mapping (Java, C++, C#, or Python). Please refer to
 the README in the server subdirectory for more information on starting
-the server.
+the server. If you want to get started quickly, we recommend using the
+Python server.
 
 After starting the server, open a separate window and start the
 client:

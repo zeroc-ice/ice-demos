@@ -2,7 +2,8 @@ This demo is the Ice hello world demo.
 
 The Ice extension for Ruby currently supports only client-side
 functionality, therefore you must use a server from any other language
-mapping.
+mapping. If you want to get started quickly, we recommend using the
+Python server.
 
 After starting the server, run the Ruby client:
 

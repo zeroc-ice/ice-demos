@@ -29,7 +29,8 @@ Follow these steps to install the demo:
     ```
 
 5) In a command window on the Web server host, start a hello server.
-   You can use a server from any Ice language mapping.
+   You can use a server from any Ice language mapping. If you want to
+   get started quickly, we recommend using the Python server.
 
 6) Start a Web browser and open the client page to begin using the
    demo. Note that support for secure invocations via SSL are disabled
