@@ -13,17 +13,23 @@ public class Publisher
         int status = 0;
         java.util.List<String> extraArgs = new java.util.ArrayList<String>();
 
-        com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.pub", extraArgs);
-
         //
-        // Install shutdown hook to destroy communicator during JVM shutdown
+        // Try with resources block - communicator is automatically destroyed
+        // at the end of this try block
         //
-        Runtime.getRuntime().addShutdownHook(new Thread(() ->
+        try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.pub", extraArgs))
         {
-            communicator.destroy();
-        }));
+            //
+            // Install shutdown hook to destroy communicator during JVM shutdown
+            // if not already destroyed (useful for Ctrl-C interrupts)
+            //
+            Runtime.getRuntime().addShutdownHook(new Thread(() ->
+            {
+                communicator.destroy();
+            }));
 
-        status = run(communicator, extraArgs.toArray(new String[extraArgs.size()]));
+            status = run(communicator, extraArgs.toArray(new String[extraArgs.size()]));
+        }
         System.exit(status);
     }
 

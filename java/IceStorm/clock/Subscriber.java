@@ -33,7 +33,15 @@ public class Subscriber
         });
         Runtime.getRuntime().addShutdownHook(destroyHook);
 
-        status = run(communicator, destroyHook, extraArgs.toArray(new String[extraArgs.size()]));
+        try
+        {
+            status = run(communicator, destroyHook, extraArgs.toArray(new String[extraArgs.size()]));
+        }
+        catch(Exception ex)
+        {
+            ex.printStackTrace();
+            status = 1;
+        }
 
         if(status != 0)
         {

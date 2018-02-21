@@ -8,25 +8,21 @@ import Demo.*;
 
 public class Publisher
 {
-    static class ShutdownHook implements Runnable
+    static class ShutdownHook extends Thread
     {
-        private Ice.Communicator communicator;
-
-        ShutdownHook(Ice.Communicator communicator)
-        {
-            this.communicator = communicator;
-        }
-
         @Override
         public void
         run()
         {
-            //
-            // Initiate communicator shutdown, waitForShutdown returns when complete
-            // calling shutdown on a destroyed communicator is no-op
-            //
-            communicator.shutdown();
+            _communicator.destroy();
         }
+
+        ShutdownHook(Ice.Communicator communicator)
+        {
+            _communicator = communicator;
+        }
+
+        private final Ice.Communicator _communicator;
     }
 
     public static void
@@ -42,13 +38,13 @@ public class Publisher
         try(Ice.Communicator communicator = Ice.Util.initialize(argsHolder, "config.pub"))
         {
             //
-            // Install shutdown hook for user interrupt like Ctrl-C
+            // Install shutdown hook to destroy communicator during JVM shutdown
+            // if not already destroyed (useful for Ctrl-C interrupts)
             //
-            Runtime.getRuntime().addShutdownHook(new Thread(new ShutdownHook(communicator)));
+            Runtime.getRuntime().addShutdownHook(new ShutdownHook(communicator));
 
             status = run(communicator, argsHolder.value);
         }
-
         System.exit(status);
     }
 
@@ -173,7 +169,7 @@ public class Publisher
         }
         catch(Ice.CommunicatorDestroyedException ex)
         {
-            // Ignore
+            // Ctrl-C triggered shutdown hook, which destroyed communicator - we're terminating
         }
 
         return 0;
