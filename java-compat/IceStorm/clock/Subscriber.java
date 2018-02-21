@@ -18,25 +18,40 @@ public class Subscriber
         }
     }
 
-    static class ShutdownHook implements Runnable
+    static class ShutdownHook extends Thread
     {
-        private Ice.Communicator communicator;
-
-        ShutdownHook(Ice.Communicator communicator)
-        {
-            this.communicator = communicator;
-        }
-
         @Override
         public void
         run()
         {
-            //
-            // Destroy communicator to abandon ongoing remote calls
-            // calling destroy multiple times is no-op
-            //
-            communicator.destroy();
+            try
+            {
+                if(_topic != null)
+                {
+                    _topic.unsubscribe(_subscriber);
+                }
+            }
+            finally
+            {
+                _communicator.destroy();
+            }
         }
+
+        ShutdownHook(Ice.Communicator communicator)
+        {
+            _communicator = communicator;
+        }
+
+        ShutdownHook(Ice.Communicator communicator, IceStorm.TopicPrx topic, Ice.ObjectPrx subscriber)
+        {
+            _communicator = communicator;
+            _topic = topic;
+            _subscriber = subscriber;
+        }
+
+        private final Ice.Communicator _communicator;
+        private IceStorm.TopicPrx _topic;
+        private Ice.ObjectPrx _subscriber;
     }
 
     public static void
@@ -45,21 +60,31 @@ public class Subscriber
         int status = 0;
         Ice.StringSeqHolder argsHolder = new Ice.StringSeqHolder(args);
 
-        //
-        // Try with resources block - communicator is automatically destroyed
-        // at the end of this try block
-        //
-        try(Ice.Communicator communicator = Ice.Util.initialize(argsHolder, "config.sub"))
-        {
-            //
-            // Install shutdown hook for user interrupt like Ctrl-C
-            //
-            Runtime.getRuntime().addShutdownHook(new Thread(new ShutdownHook(communicator)));
+        Ice.Communicator communicator = Ice.Util.initialize(argsHolder, "config.sub");
 
-            status = run(communicator, argsHolder.value);
+        //
+        // Destroy communicator during JVM shutdown
+        //
+        Thread destroyHook = new ShutdownHook(communicator);
+        Runtime.getRuntime().addShutdownHook(destroyHook);
+
+        try
+        {
+            status = run(communicator, destroyHook, argsHolder.value);
+        }
+        catch(Exception ex)
+        {
+            ex.printStackTrace();
+            status = 1;
         }
 
-        System.exit(status);
+        if(status != 0)
+        {
+            System.exit(status);
+        }
+        //
+        // Else the application waits for Ctrl-C to destroy the communicator
+        //
     }
 
     public static void
@@ -70,7 +95,7 @@ public class Subscriber
     }
 
     private static int
-    run(Ice.Communicator communicator, String[] args)
+    run(Ice.Communicator communicator, Thread destroyHook, String[] args)
     {
         args = communicator.getProperties().parseCommandLineOptions("Clock", args);
 
@@ -286,9 +311,11 @@ public class Subscriber
             return 1;
         }
 
-        communicator.waitForShutdown();
-
-        topic.unsubscribe(subscriber);
+        //
+        // Replace the shutdown hook to unsubscribe during JVM shutdown
+        //
+        Runtime.getRuntime().addShutdownHook(new ShutdownHook(communicator, topic, subscriber));
+        Runtime.getRuntime().removeShutdownHook(destroyHook);
 
         return 0;
     }
