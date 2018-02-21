@@ -5,33 +5,48 @@
 // **********************************************************************
 
 using System;
-using System.Reflection;
 
 public class Server
 {
-    public class App : Ice.Application
+    public static int Main(string[] args)
     {
-        public override int run(string[] args)
+        int status = 0;
+
+        try
         {
-            if(args.Length > 0)
+            //
+            // using statement - communicator is automatically destroyed
+            // at the end of this statement
+            //
+            using(var communicator = Ice.Util.initialize(ref args, "config.server"))
             {
-                System.Console.Error.WriteLine(appName() + ": too many arguments");
-                return 1;
+                //
+                // Destroy the communicator on Ctrl+C or Ctrl+Break
+                //
+                Console.CancelKeyPress += (sender, eventArgs) => communicator.destroy();
+
+                if(args.Length > 0)
+                {
+                    Console.Error.WriteLine("too many arguments");
+                    status = 1;
+                }
+                else
+                {
+                    var adapter = communicator.createObjectAdapter("Hello");
+                    var properties = communicator.getProperties();
+                    var id = Ice.Util.stringToIdentity(properties.getProperty("Identity"));
+                    adapter.add(new HelloI(properties.getProperty("Ice.ProgramName")), id);
+                    adapter.activate();
+                    communicator.waitForShutdown();
+                }
             }
-
-            var adapter = communicator().createObjectAdapter("Hello");
-            var properties = communicator().getProperties();
-            var id = Ice.Util.stringToIdentity(properties.getProperty("Identity"));
-            adapter.add(new HelloI(properties.getProperty("Ice.ProgramName")), id);
-            adapter.activate();
-            communicator().waitForShutdown();
-            return 0;
         }
-    }
+        catch(Exception ex)
+        {
+            Console.Error.WriteLine(ex);
+            status = 1;
+        }
 
-    static public int Main(string[] args)
-    {
-        var app = new App();
-        return app.main(args);
+        return status;
     }
 }

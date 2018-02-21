@@ -9,50 +9,54 @@ using System;
 
 public class Program
 {
-    class App : Ice.Application
+    public static int Main(string[] args)
     {
-        public override int run(string[] args)
+        int status = 0;
+
+        try
         {
             //
-            // Terminate cleanly on receipt of a signal.
+            // using statement - communicator is automatically destroyed
+            // at the end of this statement
             //
-            shutdownOnInterrupt();
-
-            //
-            // Create an object adapter
-            //
-            var adapter = communicator().createObjectAdapterWithEndpoints(
-                "LifecycleFilesystem", "default -h localhost -p 10000");
-
-            //
-            // Create the root directory.
-            //
-            var root = new DirectoryI();
-            var id = new Ice.Identity();
-            id.name = "RootDir";
-            adapter.add(root, id);
-
-            //
-            // All objects are created, allow client requests now.
-            //
-            adapter.activate();
-
-            //
-            // Wait until we are done.
-            //
-            communicator().waitForShutdown();
-            if(interrupted())
+            using(var communicator = Ice.Util.initialize(ref args))
             {
-                Console.Error.WriteLine(appName() + ": received signal, shutting down");
+                //
+                // Destroy the communicator on Ctrl+C or Ctrl+Break
+                //
+                Console.CancelKeyPress += (sender, eventArgs) => communicator.destroy();
+
+                //
+                // Create an object adapter
+                //
+                var adapter = communicator.createObjectAdapterWithEndpoints(
+                    "LifecycleFilesystem", "default -h localhost -p 10000");
+
+                //
+                // Create the root directory.
+                //
+                var root = new DirectoryI();
+                var id = new Ice.Identity();
+                id.name = "RootDir";
+                adapter.add(root, id);
+
+                //
+                // All objects are created, allow client requests now.
+                //
+                adapter.activate();
+
+                //
+                // Wait until we are done.
+                //
+                communicator.waitForShutdown();
             }
-
-            return 0;
         }
-    }
+        catch(Exception ex)
+        {
+            Console.Error.WriteLine(ex);
+            status = 1;
+        }
 
-    static public int Main(string[] args)
-    {
-        var app = new App();
-        return app.main(args);
+        return status;
     }
 }
