@@ -41,31 +41,31 @@ function client()
         % accurate throughput measurement.
         %
         if throughput.needsWarmup()
-            emptyBytes = zeros(1, 1, 'uint8');
-            emptyStrings = cell(1, 1);
-            emptyStructs = cell(1, 1);
-            emptyStructs{1} = StringDouble();
-            emptyFixed = cell(1, 1);
-            emptyFixed{1} = Fixed();
+            warmupBytes = zeros(1, 1, 'uint8');
+            warmupStrings = cell(1, 1);
+            warmupStructs = cell(1, 1);
+            warmupStructs{1} = StringDouble();
+            warmupFixed = cell(1, 1);
+            warmupFixed{1} = Fixed();
 
             throughput.startWarmup();
 
             fprintf('warming up the client/server...');
             for i = 1:10000
-                throughput.sendByteSeq(emptyBytes);
-                throughput.sendStringSeq(emptyStrings);
-                throughput.sendStructSeq(emptyStructs);
-                throughput.sendFixedSeq(emptyFixed);
+                throughput.sendByteSeq(warmupBytes);
+                throughput.sendStringSeq(warmupStrings);
+                throughput.sendStructSeq(warmupStructs);
+                throughput.sendFixedSeq(warmupFixed);
 
                 throughput.recvByteSeq();
                 throughput.recvStringSeq();
                 throughput.recvStructSeq();
                 throughput.recvFixedSeq();
 
-                throughput.echoByteSeq(emptyBytes);
-                throughput.echoStringSeq(emptyStrings);
-                throughput.echoStructSeq(emptyStructs);
-                throughput.echoFixedSeq(emptyFixed);
+                throughput.echoByteSeq(warmupBytes);
+                throughput.echoStringSeq(warmupStrings);
+                throughput.echoStructSeq(warmupStructs);
+                throughput.echoFixedSeq(warmupFixed);
             end
             throughput.endWarmup();
 

@@ -76,12 +76,10 @@ public class Client
         // JIT compiler.
         //
         {
-            byte[] emptyBytes= new byte[1];
-            String[] emptyStrings = new String[1];
-            StringDouble[] emptyStructs = new StringDouble[1];
-            emptyStructs[0] = new StringDouble();
-            Fixed[] emptyFixed = new Fixed[1];
-            emptyFixed[0] = new Fixed();
+            byte[] warmupBytes = new byte[1];
+            String[] warmupStrings = new String[1];
+            StringDouble[] warmupStructs = new StringDouble[] { new StringDouble() };
+            Fixed[] warmupFixed = new Fixed[] { new Fixed() };
 
             throughput.startWarmup();
 
@@ -89,20 +87,20 @@ public class Client
             System.out.flush();
             for(int i = 0; i < 10000; i++)
             {
-                throughput.sendByteSeq(emptyBytes);
-                throughput.sendStringSeq(emptyStrings);
-                throughput.sendStructSeq(emptyStructs);
-                throughput.sendFixedSeq(emptyFixed);
+                throughput.sendByteSeq(warmupBytes);
+                throughput.sendStringSeq(warmupStrings);
+                throughput.sendStructSeq(warmupStructs);
+                throughput.sendFixedSeq(warmupFixed);
 
                 throughput.recvByteSeq();
                 throughput.recvStringSeq();
                 throughput.recvStructSeq();
                 throughput.recvFixedSeq();
 
-                throughput.echoByteSeq(emptyBytes);
-                throughput.echoStringSeq(emptyStrings);
-                throughput.echoStructSeq(emptyStructs);
-                throughput.echoFixedSeq(emptyFixed);
+                throughput.echoByteSeq(warmupBytes);
+                throughput.echoStringSeq(warmupStrings);
+                throughput.echoStructSeq(warmupStructs);
+                throughput.echoFixedSeq(warmupFixed);
             }
             throughput.endWarmup();
 

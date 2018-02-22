@@ -92,32 +92,32 @@ run(const Ice::CommunicatorPtr& communicator)
     {
         throughput->startWarmup();
 
-        ByteSeq emptyBytesBuf(1);
-        pair<const Ice::Byte*, const Ice::Byte*> emptyBytes;
-        emptyBytes.first = &emptyBytesBuf[0];
-        emptyBytes.second = emptyBytes.first + emptyBytesBuf.size();
+        ByteSeq warmupBytesBuf(1);
+        pair<const Ice::Byte*, const Ice::Byte*> warmupBytes;
+        warmupBytes.first = &warmupBytesBuf[0];
+        warmupBytes.second = warmupBytes.first + warmupBytesBuf.size();
 
-        vector<Util::string_view> emptyStringViews(1);
-        StringDoubleSeq emptyStructs(1);
-        FixedSeq emptyFixed(1);
+        vector<Util::string_view> warmupStringViews(1);
+        StringDoubleSeq warmupStructs(1);
+        FixedSeq warmupFixed(1);
 
         cout << "warming up the server... " << flush;
         for(int i = 0; i < 10000; i++)
         {
-            throughput->sendByteSeq(emptyBytes);
-            throughput->sendStringSeq(emptyStringViews);
-            throughput->sendStructSeq(emptyStructs);
-            throughput->sendFixedSeq(emptyFixed);
+            throughput->sendByteSeq(warmupBytes);
+            throughput->sendStringSeq(warmupStringViews);
+            throughput->sendStructSeq(warmupStructs);
+            throughput->sendFixedSeq(warmupFixed);
 
             throughput->recvByteSeq();
             throughput->recvStringSeq();
             throughput->recvStructSeq();
             throughput->recvFixedSeq();
 
-            throughput->echoByteSeq(emptyBytes);
-            throughput->echoStringSeq(emptyStringViews);
-            throughput->echoStructSeq(emptyStructs);
-            throughput->echoFixedSeq(emptyFixed);
+            throughput->echoByteSeq(warmupBytes);
+            throughput->echoStringSeq(warmupStringViews);
+            throughput->echoStructSeq(warmupStructs);
+            throughput->echoFixedSeq(warmupFixed);
         }
 
         throughput->endWarmup();

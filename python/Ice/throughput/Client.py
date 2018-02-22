@@ -47,29 +47,29 @@ def run(communicator):
     if throughput.needsWarmup():
         throughput.startWarmup()
 
-        emptyBytes = [ '\x00' ]
-        emptyBytes = ''.join(emptyBytes)
-        emptyStrings = [ "" ]
-        emptyStructs = [ Demo.StringDouble() ]
-        emptyFixed = [ Demo.Fixed() ]
+        warmupBytes = [ '\x00' ]
+        warmupBytes = ''.join(warmupBytes)
+        warmupStrings = [ "" ]
+        warmupStructs = [ Demo.StringDouble() ]
+        warmupFixed = [ Demo.Fixed() ]
 
         print("warming up the server...",)
         sys.stdout.flush()
         for i in range(0, 10000):
-            throughput.sendByteSeq(emptyBytes)
-            throughput.sendStringSeq(emptyStrings)
-            throughput.sendStructSeq(emptyStructs)
-            throughput.sendFixedSeq(emptyFixed)
+            throughput.sendByteSeq(warmupBytes)
+            throughput.sendStringSeq(warmupStrings)
+            throughput.sendStructSeq(warmupStructs)
+            throughput.sendFixedSeq(warmupFixed)
 
             throughput.recvByteSeq()
             throughput.recvStringSeq()
             throughput.recvStructSeq()
             throughput.recvFixedSeq()
 
-            throughput.echoByteSeq(emptyBytes)
-            throughput.echoStringSeq(emptyStrings)
-            throughput.echoStructSeq(emptyStructs)
-            throughput.echoFixedSeq(emptyFixed)
+            throughput.echoByteSeq(warmupBytes)
+            throughput.echoStringSeq(warmupStrings)
+            throughput.echoStructSeq(warmupStructs)
+            throughput.echoFixedSeq(warmupFixed)
 
             throughput.endWarmup()
 
