@@ -97,7 +97,7 @@ def run(communicator):
             elif c == '?':
                 menu()
             else:
-                print("unknown command `" + c + "'")
+                print("unknown command `" + c + "\'")
                 menu()
         except KeyboardInterrupt:
             return 1
@@ -110,23 +110,32 @@ def run(communicator):
 
 def menu():
     print("""
-usage:
-t: send greeting as twoway
-o: send greeting as oneway
-O: send greeting as batch oneway
-d: send greeting as datagram
-D: send greeting as batch datagram
-f: flush all batch requests
-T: set a timeout
-P: set a server delay
-S: switch secure mode on/off
-s: shutdown server
-x: exit
-?: help
-""")
+    usage:
+    t: send greeting as twoway
+    o: send greeting as oneway
+    O: send greeting as batch oneway
+    d: send greeting as datagram
+    D: send greeting as batch datagram
+    f: flush all batch requests
+    T: set a timeout
+    P: set a server delay
+    S: switch secure mode on/off
+    s: shutdown server
+    x: exit
+    ?: help
+    """)
 
 status = 0
+
+#
+# Ice.initialize returns an initialized Ice communicator,
+# the communicator is destroyed once it goes out of scope.
+#
 with Ice.initialize(sys.argv, "config.client") as communicator:
+
+    #
+    # The communicator initialization removes all Ice-related arguments from argv
+    #
     if len(sys.argv) > 1:
         print(sys.argv[0] + ": too many arguments")
         status = 1

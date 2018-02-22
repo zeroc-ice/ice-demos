@@ -96,12 +96,21 @@ x: exit
 
 def show(admin):
     props = admin.getPropertiesForPrefix("Demo")
-    print "Server's current settings:"
+    print ("Server's current settings:")
     for k,v in props.items():
-        print "  " + k + "=" + v
+        print ("  " + k + "=" + v)
 
 status = 0
+
+#
+# Ice.initialize returns an initialized Ice communicator,
+# the communicator is destroyed once it goes out of scope.
+#
 with Ice.initialize(sys.argv, "config.client") as communicator:
+
+    #
+    # The communicator initialization removes all Ice-related arguments from argv
+    #
     if len(sys.argv) > 1:
         print(sys.argv[0] + ": too many arguments")
         status = 1

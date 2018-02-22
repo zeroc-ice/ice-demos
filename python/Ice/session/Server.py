@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import sys, threading, traceback, Ice
+import signal, sys, threading, traceback, Ice
 
 Ice.loadSlice('Session.ice')
 import Demo
@@ -94,17 +94,26 @@ class SessionFactoryI(Demo.SessionFactory):
         print("Shutting down...")
         current.adapter.getCommunicator().shutdown()
 
-class Server(Ice.Application):
-    def run(self, args):
-        if len(args) > 1:
-            print(self.appName() + ": too many arguments")
-            return 1
+#
+# Ice.initialize returns an initialized Ice communicator,
+# the communicator is destroyed once it goes out of scope.
+#
+with Ice.initialize(sys.argv, "config.server") as communicator:
 
-        adapter = self.communicator().createObjectAdapter("SessionFactory")
-        adapter.add(SessionFactoryI(), Ice.stringToIdentity("SessionFactory"))
-        adapter.activate()
-        self.communicator().waitForShutdown()
-        return 0
+    #
+    # signal.signal must be called within the same scope as the communicator to catch CtrlC
+    #
+    signal.signal(signal.SIGINT, lambda signum, handler: communicator.shutdown())
 
-app = Server()
-sys.exit(app.main(sys.argv, "config.server"))
+    #
+    # The communicator initialization removes all Ice-related arguments from argv
+    #
+    if len(sys.argv) > 1:
+        print(sys.argv[0] + ": too many arguments")
+        sys.exit(1)
+
+    adapter = communicator.createObjectAdapter("SessionFactory")
+    adapter.add(SessionFactoryI(), Ice.stringToIdentity("SessionFactory"))
+    adapter.activate()
+    communicator.waitForShutdown()
+sys.exit(0)

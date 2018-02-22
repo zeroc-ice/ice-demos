@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import sys, traceback, Ice, threading
+import signal, sys, traceback, Ice, threading
 
 slice_dir = Ice.getSliceDir()
 if not slice_dir:
@@ -15,6 +15,9 @@ if not slice_dir:
 Ice.loadSlice("'-I" + slice_dir + "' Props.ice")
 import Demo
 
+#
+#  The servant implements the Slice interface Demo.Props
+#
 class PropsI(Demo.Props, Ice.PropertiesAdminUpdateCallback):
     def __init__(self):
         self.called = False
@@ -40,26 +43,33 @@ class PropsI(Demo.Props, Ice.PropertiesAdminUpdateCallback):
             self.called = True
             self.m.notify()
 
-class Server(Ice.Application):
-    def run(self, args):
-        if len(args) > 1:
-            print(self.appName() + ": too many arguments")
-            return 1
+#
+# Ice.initialize returns an initialized Ice communicator,
+# the communicator is destroyed once it goes out of scope.
+#
+with Ice.initialize(sys.argv, "config.server") as communicator:
 
-        servant = PropsI()
+    #
+    # signal.signal must be called within the same scope as the communicator to catch CtrlC
+    #
+    signal.signal(signal.SIGINT, lambda signum, handler: communicator.shutdown())
 
-        #
-        # Retrieve the PropertiesAdmin facet and register the servant as the update callback.
-        #
-        admin = self.communicator().findAdminFacet("Properties");
-        admin.addUpdateCallback(servant);
+    #
+    # The communicator initialization removes all Ice-related arguments from argv
+    #
+    if len(sys.argv) > 1:
+        print(sys.argv[0] + ": too many arguments")
+        sys.exit(1)
+    servant = PropsI()
 
-        adapter = self.communicator().createObjectAdapter("Props")
-        adapter.add(servant, Ice.stringToIdentity("props"))
-        adapter.activate()
-        self.communicator().waitForShutdown()
-        return 0
+    #
+    # Retrieve the PropertiesAdmin facet and register the servant as the update callback.
+    #
+    admin = communicator.findAdminFacet("Properties");
+    admin.addUpdateCallback(servant);
 
-sys.stdout.flush()
-app = Server()
-sys.exit(app.main(sys.argv, "config.server"))
+    adapter = communicator.createObjectAdapter("Props")
+    adapter.add(servant, Ice.stringToIdentity("props"))
+    adapter.activate()
+    communicator.waitForShutdown()
+sys.exit(0)
