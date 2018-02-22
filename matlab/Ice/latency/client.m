@@ -2,7 +2,7 @@
 % Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
 % **********************************************************************
 
-function status = client()
+function client()
     addpath('generated');
     if ~libisloaded('ice')
         loadlibrary('ice', @iceproto);
@@ -34,10 +34,7 @@ function status = client()
 
         fprintf('time for %d pings: %f ms\n', repetitions, total);
         fprintf('time per ping: %f ms\n', total / repetitions);
-
-        status = 0;
     catch ex
         fprintf('%s\n', getReport(ex));
-        status = 1;
     end
 end

@@ -2,7 +2,7 @@
 % Copyright (c) 2003-2017 ZeroC, Inc. All rights reserved.
 % **********************************************************************
 
-function status = client()
+function client()
     addpath('generated');
     if ~libisloaded('ice')
         loadlibrary('ice', @iceproto);
@@ -55,10 +55,8 @@ function status = client()
                     menu();
             end
         end
-        status = 0;
     catch ex
         fprintf('%s\n', getReport(ex));
-        status = 1;
     end
 end
 
