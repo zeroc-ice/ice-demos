@@ -5,87 +5,94 @@
 #
 # **********************************************************************
 
-import sys, traceback, time, Ice, IceStorm, getopt
+import signal, sys, traceback, time, Ice, IceStorm, getopt
 
 Ice.loadSlice('Clock.ice')
 import Demo
 
-class Publisher(Ice.Application):
-    def usage(self):
-        print("Usage: " + self.appName() + " [--datagram|--twoway|--oneway] [topic]")
+def usage():
+    print("Usage: " + sys.argv[0] + " [--datagram|--twoway|--oneway] [topic]")
 
-    def run(self, args):
+def run(communicator, args):
+    try:
+        opts, args = getopt.getopt(args[1:], '', ['datagram', 'twoway', 'oneway'])
+    except getopt.GetoptError:
+        usage()
+        return 1
+
+    datagram = False
+    twoway = False
+    optsSet = 0
+    topicName = "time"
+    for o, a in opts:
+        if o == "--datagram":
+            datagram = True
+            optsSet = optsSet + 1
+        elif o == "--twoway":
+            twoway = True
+            optsSet = optsSet + 1
+        elif o == "--oneway":
+            optsSet = optsSet + 1
+
+    if optsSet > 1:
+        usage()
+        return 1
+
+    if len(args) > 0:
+        topicName = args[0]
+
+    manager = IceStorm.TopicManagerPrx.checkedCast(communicator.propertyToProxy('TopicManager.Proxy'))
+    if not manager:
+        print(args[0] + ": invalid proxy")
+        return 1
+
+    #
+    # Retrieve the topic.
+    #
+    try:
+        topic = manager.retrieve(topicName)
+    except IceStorm.NoSuchTopic:
         try:
-            opts, args = getopt.getopt(args[1:], '', ['datagram', 'twoway', 'oneway'])
-        except getopt.GetoptError:
-            self.usage()
+            topic = manager.create(topicName)
+        except IceStorm.TopicExists:
+            print(sys.argv[0] + ": temporary error. try again")
             return 1
 
-        datagram = False
-        twoway = False
-        optsSet = 0
-        topicName = "time"
-        for o, a in opts:
-            if o == "--datagram":
-                datagram = True
-                optsSet = optsSet + 1
-            elif o == "--twoway":
-                twoway = True
-                optsSet = optsSet + 1
-            elif o == "--oneway":
-                optsSet = optsSet + 1
+    #
+    # Get the topic's publisher object, and create a Clock proxy with
+    # the mode specified as an argument of this application.
+    #
+    publisher = topic.getPublisher();
+    if datagram:
+        publisher = publisher.ice_datagram();
+    elif twoway:
+        # Do nothing.
+        pass
+    else: # if(oneway)
+        publisher = publisher.ice_oneway();
+    clock = Demo.ClockPrx.uncheckedCast(publisher)
 
-        if optsSet > 1:
-            self.usage()
-            return 1
+    signal.signal(signal.SIGINT, lambda signum, frame: communicator.destroy())
+    print("publishing tick events. Press ^C to terminate the application.")
+    try:
+        while 1:
+            clock.tick(time.strftime("%m/%d/%Y %H:%M:%S"))
+            time.sleep(1)
+    except IOError:
+        # Ignore
+        pass
+    except Ice.CommunicatorDestroyedException:
+        # Ignore
+        pass
 
-        if len(args) > 0:
-            topicName = args[0]
+    return 0
 
-        manager = IceStorm.TopicManagerPrx.checkedCast(self.communicator().propertyToProxy('TopicManager.Proxy'))
-        if not manager:
-            print(args[0] + ": invalid proxy")
-            return 1
+status = 0
 
-        #
-        # Retrieve the topic.
-        #
-        try:
-            topic = manager.retrieve(topicName)
-        except IceStorm.NoSuchTopic:
-            try:
-                topic = manager.create(topicName)
-            except IceStorm.TopicExists:
-                print(self.appName() + ": temporary error. try again")
-                return 1
-
-        #
-        # Get the topic's publisher object, and create a Clock proxy with
-        # the mode specified as an argument of this application.
-        #
-        publisher = topic.getPublisher();
-        if datagram:
-            publisher = publisher.ice_datagram();
-        elif twoway:
-            # Do nothing.
-            pass
-        else: # if(oneway)
-            publisher = publisher.ice_oneway();
-        clock = Demo.ClockPrx.uncheckedCast(publisher)
-
-        print("publishing tick events. Press ^C to terminate the application.")
-        try:
-            while 1:
-                clock.tick(time.strftime("%m/%d/%Y %H:%M:%S"))
-                time.sleep(1)
-        except IOError:
-            # Ignore
-            pass
-        except Ice.CommunicatorDestroyedException:
-            # Ignore
-            pass
-
-        return 0
-
-app = Publisher()
-sys.exit(app.main(sys.argv, "config.pub"))
+#
+# Ice.initialize returns an initialized Ice communicator,
+# the communicator is destroyed once it goes out of scope.
+#
+with Ice.initialize(sys.argv, "config.pub") as communicator:
+    status = run(communicator, sys.argv)
+sys.exit(status)

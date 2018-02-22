@@ -89,13 +89,6 @@ def run(communicator):
     calculator.shutdown()
     return 0
 
-#
-# The definition of the handler must be declared before the function signal.signal is called
-#
-def interruptHandler(signum, handler, communicator):
-    communicator.destroy()
-    sys.exit(0)
-
 status = 0
 
 #
@@ -105,10 +98,10 @@ status = 0
 with Ice.initialize(sys.argv, "config.client") as communicator:
 
     #
-    # This function must be called after the communicator has been initialized and within the 
+    # This function must be called after the communicator has been initialized and within the
     # same scope as the communicator.
     #
-    signal.signal(signal.SIGINT, lambda signum, handler: interruptHandler(signum, handler, communicator))
+    signal.signal(signal.SIGINT, lambda signum, handler: communicator.destroy())
 
     #
     # The communicator initialization removes all Ice-related arguments from argv
@@ -117,5 +110,9 @@ with Ice.initialize(sys.argv, "config.client") as communicator:
         print(sys.argv[0] + ": too many arguments")
         status = 1
     else:
-        status = run(communicator)
+        try:
+            status = run(communicator)
+        except Ice.CommunicatorDestroyedException:
+            pass
+
 sys.exit(status)

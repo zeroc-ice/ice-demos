@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import math, signal, sys, Ice
+import math, signal, sys, time, Ice
 
 Ice.loadSlice('Calculator.ice')
 import Demo
@@ -50,7 +50,6 @@ with Ice.initialize(sys.argv, "config.server") as communicator:
     if len(sys.argv) > 1:
         print(sys.argv[0] + " : too many arguments")
         sys.exit(1)
-
     adapter = communicator.createObjectAdapter("Calculator")
     adapter.add(CalculatorI(), Ice.stringToIdentity("calculator"))
     adapter.activate()
