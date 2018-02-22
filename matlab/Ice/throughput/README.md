@@ -9,7 +9,7 @@ started quickly, we recommend using the Python server.
 After starting the server, run the MATLAB client:
 
 ```
->> client;
+>> client
 ```
 
 The performance for byte sequences is expected to be greater than
