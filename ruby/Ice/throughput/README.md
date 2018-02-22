@@ -10,7 +10,7 @@ Python server.
 After starting the server, run the Ruby client:
 
 ```
-ruby Client.rb
+ruby client.rb
 ```
 
 The performance for byte sequences is expected to be greater than

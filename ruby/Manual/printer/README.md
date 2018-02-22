@@ -7,5 +7,5 @@ Python server.
 In a separate window, run the client:
 
 ```
-ruby Client.rb
+ruby client.rb
 ```

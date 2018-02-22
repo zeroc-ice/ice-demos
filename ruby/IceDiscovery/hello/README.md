@@ -8,7 +8,7 @@ Python server.
 After starting the server, run the Ruby client:
 
 ```
-ruby Client.rb
+ruby client.rb
 ```
 
 The client uses IceDiscovery to enable the location of the Ice hello

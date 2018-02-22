@@ -9,7 +9,7 @@ Python server.
 After starting the server, run the Ruby client:
 
 ```
-ruby Client.rb
+ruby client.rb
 ```
 
 To test timeouts you can use 'T' to set an invocation timeout on the client

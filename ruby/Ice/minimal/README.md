@@ -8,7 +8,7 @@ Python server.
 
 After starting the server, run the Ruby client:
 ```
-ruby Client.rb
+ruby client.rb
 ```
 
 Note that this demo uses port 10000. If port 10000 is not available on your
