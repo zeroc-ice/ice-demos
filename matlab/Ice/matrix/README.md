@@ -6,5 +6,5 @@ you must use the server from the Python language mapping.
 After starting the server, run the MATLAB client:
 
 ```
->> Client.main()
+>> client;
 ```

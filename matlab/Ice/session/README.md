@@ -18,5 +18,5 @@ started quickly, we recommend using the Python server.
 After starting the server, run the MATLAB client:
 
 ```
->> Client.main()
+>> client;
 ```

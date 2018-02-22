@@ -8,7 +8,7 @@ started quickly, we recommend using the Python server.
 After starting the server, run the MATLAB client:
 
 ```
->> Client()
+>> client;
 ```
 
 Note that this demo uses port 10000. If port 10000 is not available on your
