@@ -119,49 +119,13 @@ public class Client extends JFrame
 
         _mode.setModel(new DefaultComboBoxModel<String>(DELIVERY_MODE_DESC));
 
-        _hello.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                sayHello();
-            }
-        });
-        _shutdown.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                shutdown();
-            }
-        });
-        _flush.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                flush();
-            }
-        });
-        _mode.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                changeDeliveryMode(_mode.getSelectedIndex());
-            }
-        });
+        _hello.addActionListener(e -> sayHello());
+        _shutdown.addActionListener(e -> shutdown());
+        _flush.addActionListener(e -> flush());
+        _mode.addActionListener(e -> changeDeliveryMode(_mode.getSelectedIndex()));
         changeDeliveryMode(_mode.getSelectedIndex());
-
         _timeoutSlider.addChangeListener(new SliderListener(_timeoutSlider, _timeoutLabel));
-        _timeoutSlider.addChangeListener(new ChangeListener()
-        {
-            @Override
-            public void stateChanged(ChangeEvent ce)
-            {
-                updateProxy();
-            }
-        });
+        _timeoutSlider.addChangeListener(e -> updateProxy());
         _timeoutSlider.setValue(0);
         _delaySlider.addChangeListener(new SliderListener(_delaySlider, _delayLabel));
         _delaySlider.setValue(0);
@@ -305,7 +269,8 @@ public class Client extends JFrame
     }
 
     // These two arrays match and match the order of the delivery mode enumeration.
-    private final static DeliveryMode DELIVERY_MODES[] = {
+    private final static DeliveryMode DELIVERY_MODES[] =
+    {
         DeliveryMode.TWOWAY,
         DeliveryMode.TWOWAY_SECURE,
         DeliveryMode.ONEWAY,
@@ -315,7 +280,9 @@ public class Client extends JFrame
         DeliveryMode.DATAGRAM,
         DeliveryMode.DATAGRAM_BATCH,
     };
-    private final static String DELIVERY_MODE_DESC[] = new String[] {
+
+    private final static String DELIVERY_MODE_DESC[] = new String[]
+    {
         "Twoway",
         "Twoway Secure",
         "Oneway",
@@ -325,6 +292,7 @@ public class Client extends JFrame
         "Datagram",
         "Datagram Batch"
     };
+
     private enum DeliveryMode
     {
         TWOWAY,
@@ -336,7 +304,7 @@ public class Client extends JFrame
         DATAGRAM,
         DATAGRAM_BATCH;
 
-        com.zeroc.Ice.ObjectPrx apply(com.zeroc.Ice.ObjectPrx prx)
+        Demo.HelloPrx apply(Demo.HelloPrx prx)
         {
             switch (this)
             {
@@ -405,14 +373,13 @@ public class Client extends JFrame
         }
 
         String s = "hello:tcp -h " + host + " -p 10000:ssl -h " + host + " -p 10001:udp -h " + host + " -p 10000";
-        com.zeroc.Ice.ObjectPrx prx = _communicator.stringToProxy(s);
-        prx = _deliveryMode.apply(prx);
+        _helloPrx = Demo.HelloPrx.uncheckedCast(_communicator.stringToProxy(s));
+        _helloPrx = _deliveryMode.apply(_helloPrx);
         int timeout = _timeoutSlider.getValue();
         if(timeout != 0)
         {
-            prx = prx.ice_invocationTimeout(timeout);
+            _helloPrx = _helloPrx.ice_invocationTimeout(timeout);
         }
-        _helloPrx = Demo.HelloPrx.uncheckedCast(prx);
 
         //
         // The batch requests associated to the proxy are lost when we
