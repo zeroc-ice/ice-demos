@@ -71,7 +71,7 @@ included in the `zeroc.ice.net` NuGet package. To run these demos, the simplest
 is to first install the Ice MSI and add its bin directory to your PATH. Please
 refer to [Using the Windows Binary Distributions][4] for additional information.
 
-## Building and running the Demos with .NET Core on Windows and Linux
+## Building and running the Demos with .NET Core on Windows, Linux, and macOS
 
 ### Build Requirements
 
@@ -104,7 +104,7 @@ packages are automatically downloaded during the build.
 Open a command prompt and change to the `csharp` subdirectory:
 
 ```
-cd ice-demos\csharp
+cd csharp
 ```
 
 Install packages from the source build:
@@ -115,10 +115,10 @@ On Windows
 msbuild /p:IceHome=<Ice dist path> /t:NetStandardInstallLocalPackages msbuild\ice.proj
 ```
 
-On Linux
+On Linux and macOS
 
 ```
-dotnet msbuild /p:IceHome=<Ice dist path> /t:NetStandardInstallLocalPackages msbuild\ice.proj
+dotnet msbuild /p:IceHome=<Ice dist path> /t:NetStandardInstallLocalPackages msbuild/ice.proj
 ```
 
 To build the sample programs run:
