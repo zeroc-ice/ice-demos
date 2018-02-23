@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import sys, Ice
+import signal, sys, Ice
 
 Ice.loadSlice('Hello.ice')
 import Demo
@@ -21,19 +21,28 @@ class HelloI(Demo.Hello):
         print(self.name + " shutting down...")
         current.adapter.getCommunicator().shutdown()
 
-class Server(Ice.Application):
-    def run(self, args):
-        if len(args) > 1:
-            print(self.appName() + ": too many arguments")
-            return 1
+#
+# Ice.initialize returns an initialized Ice communicator,
+# the communicator is destroyed once it goes out of scope.
+#
+with Ice.initialize(sys.argv) as communicator:
 
-        properties = self.communicator().getProperties()
-        adapter = self.communicator().createObjectAdapter("Hello")
-        id = Ice.stringToIdentity(properties.getProperty("Identity"))
-        adapter.add(HelloI(properties.getProperty("Ice.ProgramName")), id)
-        adapter.activate()
-        self.communicator().waitForShutdown()
-        return 0
+    #
+    # signal.signal must be called within the same scope as the communicator to catch CtrlC
+    #
+    signal.signal(signal.SIGINT, lambda signum, frame: communicator.shutdown())
 
-app = Server()
-sys.exit(app.main(sys.argv))
+    #
+    # The communicator initialization removes all Ice-related arguments from argv
+    #
+    if len(sys.argv) > 1:
+        print(sys.argv[0] + ": too many arguments")
+        sys.exit(1)
+
+    properties = communicator.getProperties()
+    adapter = communicator.createObjectAdapter("Hello")
+    id = Ice.stringToIdentity(properties.getProperty("Identity"))
+    adapter.add(HelloI(properties.getProperty("Ice.ProgramName")), id)
+    adapter.activate()
+    communicator.waitForShutdown()
+sys.exit(0)

@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import sys, threading, Ice
+import signal, sys, threading, Ice
 
 slice_dir = Ice.getSliceDir()
 if not slice_dir:
@@ -58,22 +58,30 @@ class CallbackSenderI(Demo.CallbackSender, threading.Thread):
             print("removing client `" + Ice.identityToString(client.ice_getIdentity()) + "':\n" + str(ex))
             self._clients.remove(client)
 
-class Server(Ice.Application):
-    def run(self, args):
-        if len(args) > 1:
-            print(self.appName() + ": too many arguments")
-            return 1
+#
+# Ice.initialize returns an initialized Ice communicator,
+# the communicator is destroyed once it goes out of scope.
+#
+with Ice.initialize(sys.argv, "config.server") as communicator:
 
-        adapter = self.communicator().createObjectAdapter("Callback.Server")
-        sender = CallbackSenderI()
-        adapter.add(sender, Ice.stringToIdentity("sender"))
-        adapter.activate()
+    #
+    # signal.signal must be called within the same scope as the communicator to catch CtrlC
+    #
+    signal.signal(signal.SIGINT, lambda signum, frame: communicator.shutdown())
 
-        sender.start()
-        self.communicator().waitForShutdown()
-        sender.destroy()
+    #
+    # The communicator initialization removes all Ice-related arguments from argv
+    #
+    if len(sys.argv) > 1:
+        print(sys.argv[0] + ": too many arguments")
+        sys.exit(1)
 
-        return 0
+    adapter = communicator.createObjectAdapter("Callback.Server")
+    sender = CallbackSenderI()
+    adapter.add(sender, Ice.stringToIdentity("sender"))
+    adapter.activate()
 
-app = Server()
-sys.exit(app.main(sys.argv, "config.server"))
+    sender.start()
+    communicator.waitForShutdown()
+    sender.destroy()
+sys.exit(0)

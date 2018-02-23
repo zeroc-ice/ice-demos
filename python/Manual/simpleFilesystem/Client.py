@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import sys, Ice
+import signal, sys, Ice
 
 Ice.loadSlice('Filesystem.ice')
 import Filesystem
@@ -37,18 +37,27 @@ def listRecursive(dir, depth):
                 print(indent + "\t" + line)
 
 with Ice.initialize(sys.argv) as communicator:
-    #
-    # Create a proxy to the root directory
-    #
-    obj = communicator.stringToProxy("RootDir:default -h localhost -p 10000")
 
     #
-    # Downcast the proxy to a Directory proxy
+    # This function must be called within the same scope as the communicator.
     #
-    rootDir = Filesystem.DirectoryPrx.checkedCast(obj)
+    signal.signal(signal.SIGINT, lambda signum, frame: communicator.destroy())
 
-    #
-    # Recursively list the contents of the root directory
-    #
-    print("Contents of root directory:")
-    listRecursive(rootDir, 0)
+    try:
+        #
+        # Create a proxy to the root directory
+        #
+        obj = communicator.stringToProxy("RootDir:default -h localhost -p 10000")
+
+        #
+        # Downcast the proxy to a Directory proxy
+        #
+        rootDir = Filesystem.DirectoryPrx.checkedCast(obj)
+
+        #
+        # Recursively list the contents of the root directory
+        #
+        print("Contents of root directory:")
+        listRecursive(rootDir, 0)
+    except Ice.CommunicatorDestroyedException:
+        pass

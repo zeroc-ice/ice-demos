@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import sys, Ice
+import signal, sys, Ice
 
 Ice.loadSlice('Throughput.ice')
 import Demo
@@ -102,17 +102,41 @@ class ThroughputI(Demo.Throughput):
     def shutdown(self, current):
         current.adapter.getCommunicator().shutdown()
 
-class Server(Ice.Application):
-    def run(self, args):
-        if len(args) > 1:
-            print(self.appName() + ": too many arguments")
-            return 1
+# class Server(Ice.Application):
+#     def run(self, args):
+#         if len(args) > 1:
+#             print(self.appName() + ": too many arguments")
+#             return 1
 
-        adapter = self.communicator().createObjectAdapter("Throughput")
-        adapter.add(ThroughputI(), Ice.stringToIdentity("throughput"))
-        adapter.activate()
-        self.communicator().waitForShutdown()
-        return 0
+#         adapter = self.communicator().createObjectAdapter("Throughput")
+#         adapter.add(ThroughputI(), Ice.stringToIdentity("throughput"))
+#         adapter.activate()
+#         self.communicator().waitForShutdown()
+#         return 0
 
-app = Server()
-sys.exit(app.main(sys.argv, "config.server"))
+# app = Server()
+# sys.exit(app.main(sys.argv, "config.server"))
+
+#
+# Ice.initialize returns an initialized Ice communicator,
+# the communicator is destroyed once it goes out of scope.
+#
+with Ice.initialize(sys.argv, "config.server") as communicator:
+
+    #
+    # signal.signal must be called within the same scope as the communicator to catch CtrlC
+    #
+    signal.signal(signal.SIGINT, lambda signum, handler: communicator.shutdown())
+
+    #
+    # The communicator initialization removes all Ice-related arguments from argv
+    #
+    if len(sys.argv) > 1:
+        print(sys.argv[0] + ": too many arguments")
+        sys.exit(1)
+
+    adapter = communicator.createObjectAdapter("Throughput")
+    adapter.add(ThroughputI(), Ice.stringToIdentity("throughput"))
+    adapter.activate()
+    communicator.waitForShutdown()
+sys.exit(0)

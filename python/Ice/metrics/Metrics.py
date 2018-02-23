@@ -223,104 +223,106 @@ def printMetricsView(admin, viewName, viewAndRefreshTime):
             printMetricsMap(admin, viewName, mapName, map)
     print("")
 
-class Client(Ice.Application):
-
-    def usage(self):
-        print("usage: " + sys.argv[0] + " dump | enable | disable [<view-name> [<map-name>]]" + """
+def usage():
+    print("usage: " + sys.argv[0] + " dump | enable | disable [<view-name> [<map-name>]]" + """
 To connect to the Ice administrative facility of an Ice process, you
 should specify its endpoint(s) and instance name with the
 `InstanceName' and `Endpoints' properties. For example:
 
- $ ./Metrics.py --Endpoints="tcp -p 12345 -h localhost" --InstanceName=Server dump
+$ ./Metrics.py --Endpoints="tcp -p 12345 -h localhost" --InstanceName=Server dump
 
 Commands:
 
-  dump    Dump all the IceMX metrics views configured for the
-          process or if a specific view or map is specified,
-          print only this view or map.
+dump    Dump all the IceMX metrics views configured for the
+        process or if a specific view or map is specified,
+        print only this view or map.
 
-  enable  Enable all the IceMX metrics views configured for
-          the process or the provided view or map if specified.
+enable  Enable all the IceMX metrics views configured for
+        the process or the provided view or map if specified.
 
-  disable Disable all the IceMX metrics views configured for
-          the process or the provided view or map if specified.
+disable Disable all the IceMX metrics views configured for
+        the process or the provided view or map if specified.
 """)
 
-    def run(self, args):
+def run(communicator, args):
 
-        props = self.communicator().getProperties()
-        args = props.parseCommandLineOptions("", args)
+    props = communicator.getProperties()
+    args = props.parseCommandLineOptions("", args);
 
-        if len(args) < 2 or len(args) > 6:
-            self.usage()
-            return 2
+    if len(args) < 2 or len(args) > 6:
+        usage()
+        return 2
 
-        command = args[1]
-        viewName = None
-        mapName = None
-        if len(args) > 2:
-            viewName = args[2]
-            if len(args) > 3:
-                mapName = args[3]
+    command = args[1]
+    viewName = None
+    mapName = None
+    if len(args) > 2:
+        viewName = args[2]
+        if len(args) > 3:
+            mapName = args[3]
 
-        try:
-            #
-            # Create the proxy for the Metrics admin facet.
-            #
-            proxyStr = "%s/admin -f Metrics:%s" % (props.getProperty("InstanceName"), props.getProperty("Endpoints"))
-            metrics = IceMX.MetricsAdminPrx.checkedCast(self.communicator().stringToProxy(proxyStr))
-            if not metrics:
-                print(sys.argv[0] + ": invalid proxy `" + proxyStr + "'")
-                return 1
+    try:
+        #
+        # Create the proxy for the Metrics admin facet.
+        #
+        proxyStr = "%s/admin -f Metrics:%s" % (props.getProperty("InstanceName"), props.getProperty("Endpoints"))
+        metrics = IceMX.MetricsAdminPrx.checkedCast(communicator.stringToProxy(proxyStr));
+        if not metrics:
+            print(sys.argv[0] + ": invalid proxy `" + proxyStr + "'")
+            return 1
 
-            if command == "dump":
-                (views, disabledViews) = metrics.getMetricsViewNames()
-                if not viewName:
-                    # Print all the enabled metrics views.
-                    for v in views:
-                        printMetricsView(metrics, v, metrics.getMetricsView(v))
-                else:
-                    # Ensure the view exists
-                    if viewName not in views and viewName not in disabledViews:
-                        print("unknown view `" + viewName + "', available views:")
-                        print("enabled = " + str(views) + ", disabled = " + str(disabledViews))
-                        return 0
-
-                    # Ensure the view is enabled
-                    if viewName in disabledViews:
-                        print("view `" + viewName + "' is disabled")
-                        return 0
-
-                    # Retrieve the metrics view and print it.
-                    (view, refresh) = metrics.getMetricsView(viewName)
-                    if mapName:
-                        if mapName not in view:
-                            print("no map `" + mapName + "' in `" + viewName + "' view, available maps:")
-                            print(str(view.keys()))
-                            return 0
-                        printMetricsMap(metrics, viewName, mapName, view[mapName])
-                    else:
-                        printMetricsView(metrics, viewName, (view, refresh))
-
-            elif command == "enable":
-                metrics.enableMetricsView(viewName)
-            elif command == "disable":
-                metrics.disableMetricsView(viewName)
+        if command == "dump":
+            (views, disabledViews) = metrics.getMetricsViewNames()
+            if not viewName:
+                # Print all the enabled metrics views.
+                for v in views:
+                    printMetricsView(metrics, v, metrics.getMetricsView(v))
             else:
-                print("unknown command `" + command + "'")
-                self.usage()
-                return 2
+                # Ensure the view exists
+                if not viewName in views and not viewName in disabledViews:
+                    print("unknown view `" + viewName + "', available views:")
+                    print("enabled = " + str(views) + ", disabled = " + str(disabledViews))
+                    return 0
 
-        except Ice.ObjectNotExistException as ex:
-            print("failed to get metrics from `%s':\n(the admin object doesn't exist, "
-                  "are you sure you used the correct instance name?)" % (proxyStr))
-            return 1
-        except Ice.Exception as ex:
-            print("failed to get metrics from `%s':\n%s" % (proxyStr, ex))
-            return 1
+                # Ensure the view is enabled
+                if viewName in disabledViews:
+                    print("view `" + viewName + "' is disabled")
+                    return 0
 
-        return 0
+                # Retrieve the metrics view and print it.
+                (view, refresh) = metrics.getMetricsView(viewName);
+                if mapName:
+                    if not mapName in view:
+                        print("no map `" + mapName + "' in `" + viewName + "' view, available maps:")
+                        print(str(view.keys()))
+                        return 0
+                    printMetricsMap(metrics, viewName, mapName, view[mapName])
+                else:
+                    printMetricsView(metrics, viewName, (view, refresh))
+        elif command == "enable":
+            metrics.enableMetricsView(viewName)
+        elif command == "disable":
+            metrics.disableMetricsView(viewName)
+        else:
+            print("unknown command `" + command + "'")
+            usage()
+            return 2
+    except Ice.ObjectNotExistException as ex:
+        print("failed to get metrics from `%s':\n(the admin object doesn't exist, "
+                "are you sure you used the correct instance name?)" % (proxyStr))
+        return 1
+    except Ice.Exception as ex:
+        print("failed to get metrics from `%s':\n%s" % (proxyStr, ex))
+        return 1
 
-app = Client()
+    return 0
 
-sys.exit(app.main(sys.argv))
+status = 0
+
+#
+# Ice.initialize returns an initialized Ice communicator,
+# the communicator is destroyed once it goes out of scope.
+#
+with Ice.initialize(sys.argv) as communicator:
+    status = run(communicator, sys.argv)
+sys.exit(status)

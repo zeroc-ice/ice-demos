@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import math, sys, Ice
+import math, signal, sys, Ice
 
 Ice.loadSlice('Calculator.ice')
 import Demo
@@ -33,21 +33,25 @@ class CalculatorI(Demo.Calculator):
     async def shutdown(self, current):
         current.adapter.getCommunicator().shutdown()
 
-class Server(Ice.Application):
-    def run(self, args):
+#
+# Ice.initialize returns an initialized Ice communicator,
+# the communicator is destroyed once it goes out of scope.
+#
+with Ice.initialize(sys.argv, "config.server") as communicator:
 
-        if len(args) > 1:
-            print(self.appName() + ": too many arguments")
-            return 1
+    #
+    # signal.signal must be called within the same scope as the communicator to catch CtrlC
+    #
+    signal.signal(signal.SIGINT, lambda signum, frame: communicator.shutdown())
 
-        adapter = self.communicator().createObjectAdapter("Calculator")
-        adapter.add(CalculatorI(), Ice.stringToIdentity("calculator"))
-
-        adapter.activate()
-
-        self.communicator().waitForShutdown()
-        return 0
-
-sys.stdout.flush()
-app = Server()
-sys.exit(app.main(sys.argv, "config.server"))
+    #
+    # The communicator initialization removes all Ice-related arguments from argv
+    #
+    if len(sys.argv) > 1:
+        print(sys.argv[0] + " : too many arguments")
+        sys.exit(1)
+    adapter = communicator.createObjectAdapter("Calculator")
+    adapter.add(CalculatorI(), Ice.stringToIdentity("calculator"))
+    adapter.activate()
+    communicator.waitForShutdown()
+sys.exit(0)

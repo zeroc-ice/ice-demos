@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import sys, threading, Ice
+import signal, sys, threading, Ice
 
 Ice.loadSlice('Hello.ice')
 import Demo
@@ -71,28 +71,35 @@ class HelloI(Demo.Hello):
         self._workQueue.destroy()
         current.adapter.getCommunicator().shutdown()
 
-class Server(Ice.Application):
-    def run(self, args):
-        if len(args) > 1:
-            print(self.appName() + ": too many arguments")
-            return 1
+def interruptHandler(signum, frame, communicator, workQueue):
+    workQueue.destroy()
+    communicator.shutdown()
 
-        self.callbackOnInterrupt()
+#
+# Ice.initialize returns an initialized Ice communicator,
+# the communicator is destroyed once it goes out of scope.
+#
+with Ice.initialize(sys.argv, "config.server") as communicator:
 
-        adapter = self.communicator().createObjectAdapter("Hello")
-        self._workQueue = WorkQueue()
-        adapter.add(HelloI(self._workQueue), Ice.stringToIdentity("hello"))
+    #
+    # signal.signal must be called within the same scope as the communicator to catch CtrlC
+    #
+    signal.signal(signal.SIGINT, lambda signum, frame: interruptHandler(signum, frame, communicator, workQueue))
 
-        self._workQueue.start()
-        adapter.activate()
+    #
+    # The communicator initialization removes all Ice-related arguments from argv
+    #
+    if len(sys.argv) > 1:
+        print(sys.argv[0] + ": too many arguments")
+        sys.exit(1)
 
-        self.communicator().waitForShutdown()
-        self._workQueue.join()
-        return 0
+    adapter = communicator.createObjectAdapter("Hello")
+    workQueue = WorkQueue()
+    adapter.add(HelloI(workQueue), Ice.stringToIdentity("hello"))
 
-    def interruptCallback(self, sig):
-        self._workQueue.destroy()
-        self._communicator.shutdown()
+    workQueue.start()
+    adapter.activate()
 
-app = Server()
-sys.exit(app.main(sys.argv, "config.server"))
+    communicator.waitForShutdown()
+    workQueue.join()
+sys.exit(0)

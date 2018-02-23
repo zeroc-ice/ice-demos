@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import sys, Ice
+import signal, sys, Ice
 
 Ice.loadSlice('Filesystem.ice')
 import Filesystem
@@ -81,63 +81,71 @@ class FileI(Filesystem.File):
         thisNode = Filesystem.FilePrx.uncheckedCast(a.add(self, self._id))
         self._parent.addChild(thisNode)
 
-class Server(Ice.Application):
-    def run(self, args):
-        # Terminate cleanly on receipt of a signal
-        #
-        self.shutdownOnInterrupt()
+def run(communicator):
+    # Terminate cleanly on receipt of a signal
+    #
+    signal.signal(signal.SIGINT, interruptHandler)
 
-        # Create an object adapter
-        #
-        adapter = self.communicator().createObjectAdapterWithEndpoints(
-            "SimpleFileSystem", "default -h localhost -p 10000")
+    # Create an object adapter
+    #
+    adapter = communicator.createObjectAdapterWithEndpoints(
+        "SimpleFileSystem", "default -h localhost -p 10000")
 
-        # Create the root directory (with name "/" and no parent)
-        #
-        root = DirectoryI(self.communicator(), "/", None)
-        root.activate(adapter)
+    # Create the root directory (with name "/" and no parent)
+    #
+    root = DirectoryI(communicator, "/", None)
+    root.activate(adapter)
 
-        # Create a file called "README" in the root directory
-        #
-        file = FileI(self.communicator(), "README", root)
-        text = ["This file system contains a collection of poetry."]
-        try:
-            file.write(text, None)
-        except Filesystem.GenericError as e:
-            print(e.reason)
-        file.activate(adapter)
+    # Create a file called "README" in the root directory
+    #
+    file = FileI(communicator, "README", root)
+    text = ["This file system contains a collection of poetry."]
+    try:
+        file.write(text, None)
+    except Filesystem.GenericError as e:
+        print(e.reason)
+    file.activate(adapter)
 
-        # Create a directory called "Coleridge" in the root directory
-        #
-        coleridge = DirectoryI(self.communicator(), "Coleridge", root)
-        coleridge.activate(adapter)
+    # Create a directory called "Coleridge" in the root directory
+    #
+    coleridge = DirectoryI(communicator, "Coleridge", root)
+    coleridge.activate(adapter)
 
-        # Create a file called "Kubla_Khan" in the Coleridge directory
-        #
-        file = FileI(self.communicator(), "Kubla_Khan", coleridge)
-        text = ["In Xanadu did Kubla Khan",
-                "A stately pleasure-dome decree:",
-                "Where Alph, the sacred river, ran",
-                "Through caverns measureless to man",
-                "Down to a sunless sea."]
-        try:
-            file.write(text, None)
-        except Filesystem.GenericError as e:
-            print(e.reason)
-        file.activate(adapter)
+    # Create a file called "Kubla_Khan" in the Coleridge directory
+    #
+    file = FileI(communicator, "Kubla_Khan", coleridge)
+    text = ["In Xanadu did Kubla Khan",
+            "A stately pleasure-dome decree:",
+            "Where Alph, the sacred river, ran",
+            "Through caverns measureless to man",
+            "Down to a sunless sea."]
+    try:
+        file.write(text, None)
+    except Filesystem.GenericError as e:
+        print(e.reason)
+    file.activate(adapter)
 
-        # All objects are created, allow client requests now
-        #
-        adapter.activate()
+    # All objects are created, allow client requests now
+    #
+    adapter.activate()
 
-        # Wait until we are done
-        #
-        self.communicator().waitForShutdown()
+    # Wait until we are done
+    #
+    communicator.waitForShutdown()
 
-        if self.interrupted():
-            print(self.appName() + ": terminating")
+    return 0
 
-        return 0
+#
+# The handler for catching Ctrl-C must be defined before signal.signal is called
+#
+def interruptHandler(signum, frame):
+    communicator.shutdown()
+    print(sys.argv[0] + ": terminating")
 
-app = Server()
-sys.exit(app.main(sys.argv))
+#
+# Ice.initialize returns an initialized Ice communicator,
+# the communicator is destroyed once it goes out of scope.
+#
+with Ice.initialize(sys.argv) as communicator:
+    run(communicator)
+sys.exit(0)
