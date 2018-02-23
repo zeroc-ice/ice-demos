@@ -21,7 +21,7 @@ def run(communicator):
     base = communicator.propertyToProxy('SessionFactory.Proxy')
     factory = Demo.SessionFactoryPrx.checkedCast(base)
     if not factory:
-        print(args[0] + ": invalid proxy")
+        print(sys.args[0] + ": invalid proxy")
         return 1
     session = factory.create(name)
 
@@ -43,11 +43,11 @@ def run(communicator):
                     hello = hellos[index]
                     hello.sayHello()
                 else:
-                    print("Index is too high. " + str(len(hellos)) + " hello objects exist so far.\n" +\
-                              "Use `c' to create a new hello object.")
+                    print("Index is too high. " + str(len(hellos)) + " hello objects exist so far.\n" +
+                          "Use `c' to create a new hello object.")
             elif c == 'c':
                 hellos.append(session.createHello())
-                print("Created hello object",len(hellos) - 1)
+                print("Created hello object", len(hellos) - 1)
             elif c == 's':
                 destroy = False
                 shutdown = True

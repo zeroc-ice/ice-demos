@@ -6,7 +6,7 @@
 #
 # **********************************************************************
 
-import sys, traceback, Ice, IceMX
+import sys, Ice, IceMX
 
 #
 # Formatting information for metrics maps. The tuple defines the
@@ -14,7 +14,7 @@ import sys, traceback, Ice, IceMX
 # right alignment) and width.
 #
 maps = {
-    "Connection" : [
+    "Connection": [
         ("id", "Connections", '<', 35),
         ("current", "#", '>', 3),
         ("total", "Total", '>', 5),
@@ -22,7 +22,7 @@ maps = {
         ("sentBytes", "TxBytes", '>', 10),
         ("averageLifetime", "Avg (s)", '>', 8)
     ],
-    "Invocation" : [
+    "Invocation": [
         ("id", "Invocations", '<', 39),
         ("current", "#", '>', 3),
         ("total", "Total", '>', 5),
@@ -31,7 +31,7 @@ maps = {
         ("", "RepSz", '>', 5),
         ("averageLifetime", "Avg (ms)", '>', 8)
     ],
-    "Dispatch" : [
+    "Dispatch": [
         ("id", "Dispatch", '<', 40),
         ("current", "#", '>', 3),
         ("total", "Total", '>', 5),
@@ -39,7 +39,7 @@ maps = {
         ("replySize", "RepSz", '>', 5),
         ("averageLifetime", "Avg (ms)", '>', 8)
     ],
-    "Thread" : [
+    "Thread": [
         ("id", "Threads", '<', 25),
         ("current", "#", '>', 3),
         ("total", "Total", '>', 5),
@@ -48,19 +48,19 @@ maps = {
         ("inUseForOther", "Other", '>', 6),
         ("averageLifetime", "Avg (s)", '>', 8)
     ],
-    "ConnectionEstablishment" : [
+    "ConnectionEstablishment": [
         ("id", "Connection Establishments", '<', 30),
         ("current", "#", '>', 3),
         ("total", "Total", '>', 5),
         ("averageLifetime", "Avg (ms)", '>', 8)
     ],
-    "EndpointLookup" : [
+    "EndpointLookup": [
         ("id", "Endpoint Lookups", '<', 30),
         ("current", "#", '>', 3),
         ("total", "Total", '>', 5),
-        ("averageLifetime", "Avg (ms)",'>', 8)
+        ("averageLifetime", "Avg (ms)", '>', 8)
     ],
-    "Remote" : [
+    "Remote": [
         ("id", "Invocations", '>', 39),
         ("current", "#", '>', 3),
         ("total", "Total", '>', 5),
@@ -69,7 +69,7 @@ maps = {
         ("replySize", "RepSz", '>', 5),
         ("averageLifetime", "Avg (ms)", '>', 8)
     ],
-    "Collocated" : [
+    "Collocated": [
         ("id", "Invocations", '>', 39),
         ("current", "#", '>', 3),
         ("total", "Total", '>', 5),
@@ -78,7 +78,7 @@ maps = {
         ("replySize", "RepSz", '>', 5),
         ("averageLifetime", "Avg (ms)", '>', 8)
     ],
-    "Session" : [
+    "Session": [
         ("id", "Sessions", '<', 15),
         ("current", "#", '>', 3),
         ("total", "Total", '>', 5),
@@ -91,7 +91,7 @@ maps = {
         ("routingTableSize", "RT Sz", '>', 5),
         ("averageLifetime", "Avg (s)", '>', 8)
     ],
-    "Topic" : [
+    "Topic": [
         ("id", "Topics", '<', 30),
         ("current", "#", '>', 3),
         ("total", "Total", '>', 5),
@@ -99,7 +99,7 @@ maps = {
         ("forwarded", "Forwarded", '>', 9),
         ("averageLifetime", "Avg (s)", '>', 7)
     ],
-    "Subscriber" : [
+    "Subscriber": [
         ("id", "Subscribers", '<', 32),
         ("current", "#", '>', 3),
         ("total", "Total", '>', 5),
@@ -131,14 +131,14 @@ def metricsField(metrics):
                 return "0.000"
 
             avg = metrics.totalLifetime / 1000.0 / (metrics.total - metrics.current)
-            if title.find("(s)") > 0: # Display in seconds
+            if title.find("(s)") > 0:  # Display in seconds
                 avg /= 1000.0
             return "%.3f" % avg
 
         else:
             v = str(metrics.__dict__[field])
             if len(v) > width:
-                v = v[0:width - 3] + '...' # Truncates the field if it's too large.
+                v = v[0:width - 3] + '...'  # Truncates the field if it's too large.
             return v
 
     # Return a lambda which returns the formated metric value for the
@@ -146,7 +146,7 @@ def metricsField(metrics):
     return lambda mapName, field, title, align, width: \
         ("{0:" + align + str(width) + "}").format(getField(mapName, field, title, width))
 
-def printMetrics(mapName, getValue, sep = '|', prefix = " "):
+def printMetrics(mapName, getValue, sep='|', prefix=" "):
     #
     # This method prints a metrics, a line in the table.
     #
@@ -154,7 +154,7 @@ def printMetrics(mapName, getValue, sep = '|', prefix = " "):
     # described in the `maps' table defined above. The value of each
     # column is obtained by calling the provided getValue function.
     #
-    fieldStr = [ prefix + sep ]
+    fieldStr = [prefix + sep]
     for (field, title, align, width) in maps[mapName]:
         fieldStr.append(getValue(mapName, field, title, align, width) + sep)
     print("".join(fieldStr))
@@ -249,7 +249,7 @@ Commands:
     def run(self, args):
 
         props = self.communicator().getProperties()
-        args = props.parseCommandLineOptions("", args);
+        args = props.parseCommandLineOptions("", args)
 
         if len(args) < 2 or len(args) > 6:
             self.usage()
@@ -268,7 +268,7 @@ Commands:
             # Create the proxy for the Metrics admin facet.
             #
             proxyStr = "%s/admin -f Metrics:%s" % (props.getProperty("InstanceName"), props.getProperty("Endpoints"))
-            metrics = IceMX.MetricsAdminPrx.checkedCast(self.communicator().stringToProxy(proxyStr));
+            metrics = IceMX.MetricsAdminPrx.checkedCast(self.communicator().stringToProxy(proxyStr))
             if not metrics:
                 print(sys.argv[0] + ": invalid proxy `" + proxyStr + "'")
                 return 1
@@ -281,7 +281,7 @@ Commands:
                         printMetricsView(metrics, v, metrics.getMetricsView(v))
                 else:
                     # Ensure the view exists
-                    if not viewName in views and not viewName in disabledViews:
+                    if viewName not in views and viewName not in disabledViews:
                         print("unknown view `" + viewName + "', available views:")
                         print("enabled = " + str(views) + ", disabled = " + str(disabledViews))
                         return 0
@@ -292,9 +292,9 @@ Commands:
                         return 0
 
                     # Retrieve the metrics view and print it.
-                    (view, refresh) = metrics.getMetricsView(viewName);
+                    (view, refresh) = metrics.getMetricsView(viewName)
                     if mapName:
-                        if not mapName in view:
+                        if mapName not in view:
                             print("no map `" + mapName + "' in `" + viewName + "' view, available maps:")
                             print(str(view.keys()))
                             return 0

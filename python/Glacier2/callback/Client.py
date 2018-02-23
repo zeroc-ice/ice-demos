@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import sys, threading, Ice, Glacier2
+import sys, Ice, Glacier2
 Ice.loadSlice('Callback.ice')
 import Demo
 
@@ -117,8 +117,10 @@ class Client(Glacier2.Application):
                     fake = not fake
 
                     if fake:
-                        twowayR = Demo.CallbackReceiverPrx.uncheckedCast(twowayR.ice_identity(callbackReceiverFakeIdent))
-                        onewayR = Demo.CallbackReceiverPrx.uncheckedCast(onewayR.ice_identity(callbackReceiverFakeIdent))
+                        twowayR = Demo.CallbackReceiverPrx.uncheckedCast(
+                            twowayR.ice_identity(callbackReceiverFakeIdent))
+                        onewayR = Demo.CallbackReceiverPrx.uncheckedCast(
+                            onewayR.ice_identity(callbackReceiverFakeIdent))
                     else:
                         twowayR = Demo.CallbackReceiverPrx.uncheckedCast(twowayR.ice_identity(callbackReceiverIdent))
                         onewayR = Demo.CallbackReceiverPrx.uncheckedCast(twowayR.ice_identity(callbackReceiverIdent))
@@ -127,7 +129,7 @@ class Client(Glacier2.Application):
                 elif c == 'r':
                     self.restart()
                 elif c == 'x':
-                    pass # Nothing to do
+                    pass  # Nothing to do
                 elif c == '?':
                     menu()
                 else:

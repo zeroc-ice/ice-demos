@@ -1,0 +1,8 @@
+[flake8]
+# E302 expected 2 blank lines, found 1
+# E305 expected 2 blank lines after class or function definition, found 1
+# E401 multiple imports on one line
+# E402 module level import not at top of file
+# E501 line too long
+ignore = E302, E305, E401, E402
+max-line-length = 120

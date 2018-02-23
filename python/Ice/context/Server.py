@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import sys, traceback, time, Ice
+import sys, Ice
 
 Ice.loadSlice('Context.ice')
 import Demo

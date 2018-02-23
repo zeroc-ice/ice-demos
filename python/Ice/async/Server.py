@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import sys, os, traceback, threading, Ice
+import sys, threading, Ice
 
 Ice.loadSlice('Hello.ice')
 import Demo
@@ -48,7 +48,7 @@ class WorkQueue(threading.Thread):
                     self._cond.notify()
                 self._callbacks.append(entry)
             else:
-               future.set_exception(Demo.RequestCanceledException())
+                future.set_exception(Demo.RequestCanceledException())
         return future
 
     def destroy(self):
@@ -69,7 +69,7 @@ class HelloI(Demo.Hello):
 
     def shutdown(self, current):
         self._workQueue.destroy()
-        current.adapter.getCommunicator().shutdown();
+        current.adapter.getCommunicator().shutdown()
 
 class Server(Ice.Application):
     def run(self, args):

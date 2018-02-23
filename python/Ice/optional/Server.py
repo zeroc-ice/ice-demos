@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import sys, traceback, Ice, threading
+import sys, Ice
 
 Ice.loadSlice("Contact.ice")
 import Demo
@@ -14,7 +14,7 @@ class ContactDBI(Demo.ContactDB):
     def __init__(self):
         self._contacts = {}
 
-    def addContact(self, name, type, number, dialGroup, current = None):
+    def addContact(self, name, type, number, dialGroup, current=None):
         contact = Demo.Contact()
         contact.name = name
         if type != Ice.Unset:
@@ -25,7 +25,7 @@ class ContactDBI(Demo.ContactDB):
             contact.dialGroup = dialGroup
         self._contacts[name] = contact
 
-    def updateContact(self, name, type, number, dialGroup, current = None):
+    def updateContact(self, name, type, number, dialGroup, current=None):
         if name in self._contacts:
             contact = self._contacts[name]
             if type != Ice.Unset:
@@ -35,24 +35,24 @@ class ContactDBI(Demo.ContactDB):
             if dialGroup != Ice.Unset:
                 contact.dialGroup = dialGroup
 
-    def query(self, name, current = None):
+    def query(self, name, current=None):
         if name in self._contacts:
             return self._contacts[name]
         return None
 
-    def queryNumber(self, name, current = None):
+    def queryNumber(self, name, current=None):
         if name in self._contacts:
             return self._contacts[name].number
         return Ice.Unset
 
-    def queryDialgroup(self, name, current = None):
+    def queryDialgroup(self, name, current=None):
         if name in self._contacts:
             return self._contacts[name].dialGroup
         return Ice.Unset
 
-    def shutdown(self, current = None):
+    def shutdown(self, current=None):
         print("Shutting down...")
-        current.adapter.getCommunicator().shutdown();
+        current.adapter.getCommunicator().shutdown()
 
 class ContactServer(Ice.Application):
     def run(self, args):

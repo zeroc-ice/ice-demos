@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import sys, traceback, Ice
+import sys, Ice
 
 Ice.loadSlice("Contact.ice")
 import Demo
@@ -17,7 +17,7 @@ class ContactClient(Ice.Application):
             return 1
 
         contactdb = Demo.ContactDBPrx.checkedCast(self.communicator().propertyToProxy("ContactDB.Proxy"))
-        if contactdb == None:
+        if contactdb is None:
             print("invalid proxy")
             return 1
 

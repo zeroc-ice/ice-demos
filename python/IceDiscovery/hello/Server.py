@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import sys, traceback, time, Ice
+import sys, time, Ice
 
 Ice.loadSlice('Hello.ice')
 import Demo

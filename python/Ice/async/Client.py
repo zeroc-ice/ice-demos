@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import sys, os, traceback, threading, Ice
+import sys, traceback, Ice
 
 Ice.loadSlice('Hello.ice')
 import Demo
@@ -16,14 +16,14 @@ class Callback:
             f.result()
         except Demo.RequestCanceledException:
             print("Demo.RequestCanceledException")
-        except:
+        except Exception:
             print("sayHello AMI call failed:")
             traceback.print_exc()
 
 def run(communicator):
     hello = Demo.HelloPrx.checkedCast(communicator.propertyToProxy('Hello.Proxy'))
     if not hello:
-        print(args[0] + ": invalid proxy")
+        print(sys.args[0] + ": invalid proxy")
         return 1
 
     menu()
@@ -42,7 +42,7 @@ def run(communicator):
             elif c == 's':
                 hello.shutdown()
             elif c == 'x':
-                pass # Nothing to do
+                pass  # Nothing to do
             elif c == '?':
                 menu()
             else:

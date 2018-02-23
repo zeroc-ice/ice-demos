@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import sys, time, traceback, Ice
+import sys, time, Ice
 
 Ice.loadSlice('Throughput.ice')
 import Demo
@@ -13,7 +13,7 @@ import Demo
 def run(communicator):
     throughput = Demo.ThroughputPrx.checkedCast(communicator.propertyToProxy('Throughput.Proxy'))
     if not throughput:
-        print(args[0] + ": invalid proxy")
+        print(sys.args[0] + ": invalid proxy")
         return 1
     throughputOneway = Demo.ThroughputPrx.uncheckedCast(throughput.ice_oneway())
 
@@ -47,11 +47,11 @@ def run(communicator):
     if throughput.needsWarmup():
         throughput.startWarmup()
 
-        warmupBytes = [ '\x00' ]
+        warmupBytes = ['\x00']
         warmupBytes = ''.join(warmupBytes)
-        warmupStrings = [ "" ]
-        warmupStructs = [ Demo.StringDouble() ]
-        warmupFixed = [ Demo.Fixed() ]
+        warmupStrings = [""]
+        warmupStructs = [Demo.StringDouble()]
+        warmupFixed = [Demo.Fixed()]
 
         print("warming up the server...",)
         sys.stdout.flush()
@@ -75,7 +75,7 @@ def run(communicator):
 
             print("ok")
     else:
-        throughput.ice_ping() # Initial ping to setup the connection.
+        throughput.ice_ping()  # Initial ping to setup the connection.
 
     menu()
 
@@ -108,7 +108,7 @@ def run(communicator):
             elif c == 't' or c == 'o' or c == 'r' or c == 'e':
 
                 if currentType == '1':
-                    repetitions = 1000 # Use more iterations for  byte sequences as it's a lot faster
+                    repetitions = 1000  # Use more iterations for  byte sequences as it's a lot faster
 
                 if c == 't' or c == 'o':
                     sys.stdout.write("sending ")
@@ -193,7 +193,7 @@ def run(communicator):
             elif c == 's':
                 throughput.shutdown()
             elif c == 'x':
-                pass # Nothing to do
+                pass  # Nothing to do
             elif c == '?':
                 menu()
             else:

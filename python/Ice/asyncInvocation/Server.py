@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import math, sys, Ice;
+import math, sys, Ice
 
 Ice.loadSlice('Calculator.ice')
 import Demo

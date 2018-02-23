@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import sys, time, traceback, Ice
+import sys, time, Ice
 
 Ice.loadSlice('Latency.ice')
 import Demo
@@ -22,7 +22,7 @@ class Client(Ice.Application):
             return 1
 
         # Initial ping to setup the connection.
-        ping.ice_ping();
+        ping.ice_ping()
 
         repetitions = 100000
         print("pinging server " + str(repetitions) + " times (this may take a while)")

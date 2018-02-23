@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import sys, traceback, Ice, threading
+import sys, Ice, threading
 
 slice_dir = Ice.getSliceDir()
 if not slice_dir:
@@ -20,7 +20,7 @@ class PropsI(Demo.Props, Ice.PropertiesAdminUpdateCallback):
         self.called = False
         self.m = threading.Condition()
 
-    def getChanges(self, current = None):
+    def getChanges(self, current=None):
         with self.m:
             #
             # Make sure that we have received the property updates before we
@@ -28,15 +28,15 @@ class PropsI(Demo.Props, Ice.PropertiesAdminUpdateCallback):
             #
             while not self.called:
                 self.m.wait()
-            self.called = False;
+            self.called = False
             return self.changes
 
-    def shutdown(self, current = None):
-        current.adapter.getCommunicator().shutdown();
+    def shutdown(self, current=None):
+        current.adapter.getCommunicator().shutdown()
 
     def updated(self, changes):
         with self.m:
-            self.changes = changes;
+            self.changes = changes
             self.called = True
             self.m.notify()
 
@@ -51,8 +51,8 @@ class Server(Ice.Application):
         #
         # Retrieve the PropertiesAdmin facet and register the servant as the update callback.
         #
-        admin = self.communicator().findAdminFacet("Properties");
-        admin.addUpdateCallback(servant);
+        admin = self.communicator().findAdminFacet("Properties")
+        admin.addUpdateCallback(servant)
 
         adapter = self.communicator().createObjectAdapter("Props")
         adapter.add(servant, Ice.stringToIdentity("props"))

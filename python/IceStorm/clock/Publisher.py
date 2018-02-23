@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import sys, traceback, time, Ice, IceStorm, getopt
+import sys, time, Ice, IceStorm, getopt
 
 Ice.loadSlice('Clock.ice')
 import Demo
@@ -63,14 +63,14 @@ class Publisher(Ice.Application):
         # Get the topic's publisher object, and create a Clock proxy with
         # the mode specified as an argument of this application.
         #
-        publisher = topic.getPublisher();
+        publisher = topic.getPublisher()
         if datagram:
-            publisher = publisher.ice_datagram();
+            publisher = publisher.ice_datagram()
         elif twoway:
             # Do nothing.
             pass
-        else: # if(oneway)
-            publisher = publisher.ice_oneway();
+        else:  # if(oneway)
+            publisher = publisher.ice_oneway()
         clock = Demo.ClockPrx.uncheckedCast(publisher)
 
         print("publishing tick events. Press ^C to terminate the application.")

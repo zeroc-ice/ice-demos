@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import sys, traceback, Ice, IceGrid
+import sys, Ice, IceGrid
 
 Ice.loadSlice('Hello.ice')
 import Demo
@@ -35,7 +35,7 @@ def run(communicator):
             elif c == 's':
                 hello.shutdown()
             elif c == 'x':
-                pass # Nothing to do
+                pass  # Nothing to do
             elif c == '?':
                 menu()
             else:
