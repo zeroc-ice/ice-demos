@@ -18,7 +18,7 @@ public class Server
             // using statement - communicator is automatically destroyed
             // at the end of this statement
             //
-            using(var communicator = Ice.Util.initialize(ref args, "config.server"))
+            using(var communicator = Ice.Util.initialize(ref args))
             {
                 //
                 // Destroy the communicator on Ctrl+C or Ctrl+Break
