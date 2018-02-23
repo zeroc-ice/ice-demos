@@ -18,64 +18,57 @@ public class WorkQueue extends Thread
     public synchronized void
     run()
     {
-        try
+        while(!_done)
         {
-            while(!_done)
+            if(_callbacks.size() == 0)
             {
-                if(_callbacks.size() == 0)
+                try
                 {
-                    try
-                    {
-                        wait();
-                    }
-                    catch(java.lang.InterruptedException ex)
-                    {
-                    }
+                    wait();
                 }
-
-                if(_callbacks.size() != 0)
+                catch(java.lang.InterruptedException ex)
                 {
-                    //
-                    // Get next work item.
-                    //
-                    CallbackEntry entry = _callbacks.getFirst();
-
-                    //
-                    // Wait for the amount of time indicated in delay to
-                    // emulate a process that takes a significant period of
-                    // time to complete.
-                    //
-                    try
-                    {
-                        wait(entry.delay);
-                    }
-                    catch(java.lang.InterruptedException ex)
-                    {
-                    }
-
-                    if(!_done)
-                    {
-                        //
-                        // Print greeting and send response.
-                        //
-                        _callbacks.removeFirst();
-                        System.err.println("Belated Hello World!");
-                        entry.cb.ice_response();
-                    }
                 }
             }
 
-            //
-            // Throw exception for any outstanding requests.
-            //
-            for(CallbackEntry p : _callbacks)
+            if(_callbacks.size() != 0)
             {
-                p.cb.ice_exception(new RequestCanceledException());
+                //
+                // Get next work item.
+                //
+                CallbackEntry entry = _callbacks.getFirst();
+
+                //
+                // Wait for the amount of time indicated in delay to
+                // emulate a process that takes a significant period of
+                // time to complete.
+                //
+                try
+                {
+                    wait(entry.delay);
+                }
+                catch(java.lang.InterruptedException ex)
+                {
+                }
+
+                if(!_done)
+                {
+                    //
+                    // Print greeting and send response.
+                    //
+                    _callbacks.removeFirst();
+                    System.err.println("Belated Hello World!");
+                    entry.cb.ice_response();
+                }
             }
         }
-        catch(Ice.CommunicatorDestroyedException e)
+
+        //
+        // Throw exception for any outstanding requests.
+        //
+        for(CallbackEntry p : _callbacks)
         {
-            // Ignored - expected during shutdown
+            p.cb.ice_exception(new RequestCanceledException());
         }
     }
 

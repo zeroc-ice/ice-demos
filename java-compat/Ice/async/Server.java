@@ -12,23 +12,6 @@ public class Server
         public void
         run()
         {
-            _communicator.destroy();
-        }
-
-        ShutdownHook(Ice.Communicator communicator)
-        {
-            _communicator = communicator;
-        }
-
-        private final Ice.Communicator _communicator;
-    }
-
-    static class WorkQueueShutdownHook extends Thread
-    {
-        @Override
-        public void
-        run()
-        {
             _workQueue._destroy();
             try
             {
@@ -37,15 +20,22 @@ public class Server
             catch(java.lang.InterruptedException ex)
             {
             }
+            finally
+            {
+                _communicator.destroy();
+            }
         }
 
-        WorkQueueShutdownHook(WorkQueue workQueue)
+        ShutdownHook(Ice.Communicator communicator, WorkQueue workQueue)
         {
+            _communicator = communicator;
             _workQueue = workQueue;
         }
 
+        private final Ice.Communicator _communicator;
         private final WorkQueue _workQueue;
     }
+
 
     public static void
     main(String[] args)
@@ -59,11 +49,12 @@ public class Server
         //
         try(Ice.Communicator communicator = Ice.Util.initialize(argsHolder, "config.server"))
         {
+            WorkQueue workQueue = new WorkQueue();
+
             //
-            // Install shutdown hook to (also) destroy communicator during JVM shutdown.
-            // This ensures the communicator gets destroyed when the user interrupts the application with Ctrl-C.
+            // Install shutdown hook to destroy workqueue and communicator during JVM shutdown.
             //
-            Runtime.getRuntime().addShutdownHook(new ShutdownHook(communicator));
+            Runtime.getRuntime().addShutdownHook(new ShutdownHook(communicator, workQueue));
 
             if(argsHolder.value.length > 0)
             {
@@ -73,17 +64,20 @@ public class Server
             else
             {
                 Ice.ObjectAdapter adapter = communicator.createObjectAdapter("Hello");
-                WorkQueue workQueue = new WorkQueue();
                 workQueue.start();
-
-                //
-                // Install second shutdown hook to destroy workqueue during JVM shutdown
-                //
-                Runtime.getRuntime().addShutdownHook(new WorkQueueShutdownHook(workQueue));
 
                 adapter.add(new HelloI(workQueue), Ice.Util.stringToIdentity("hello"));
                 adapter.activate();
                 communicator.waitForShutdown();
+
+                workQueue._destroy();
+                try
+                {
+                    workQueue.join();
+                }
+                catch(java.lang.InterruptedException ex)
+                {
+                }
             }
         }
 
