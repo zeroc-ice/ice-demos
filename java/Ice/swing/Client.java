@@ -40,20 +40,6 @@ public class Client extends JFrame
         });
     }
 
-    private void destroyCommunicator()
-    {
-        if(_communicator == null)
-        {
-            return;
-        }
-
-        //
-        // Destroy the Ice communicator.
-        //
-        _communicator.destroy();
-        _communicator = null;
-    }
-
     Client(String[] args)
     {
         //
@@ -64,11 +50,10 @@ public class Client extends JFrame
             com.zeroc.Ice.InitializationData initData = new com.zeroc.Ice.InitializationData();
             initData.properties = com.zeroc.Ice.Util.createProperties();
             initData.properties.load("config.client");
-            initData.dispatcher = (runnable, connection) ->
-            {
-                SwingUtilities.invokeLater(runnable);
-            };
+            initData.dispatcher = (runnable, connection) -> SwingUtilities.invokeLater(runnable);
+
             _communicator = com.zeroc.Ice.Util.initialize(args, initData);
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> _communicator.destroy()));
         }
         catch(Throwable ex)
         {
@@ -299,33 +284,15 @@ public class Client extends JFrame
 
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
-        _shutdownHook = new Thread("Shutdown hook")
-            {
-                @Override
-                public void run()
-                {
-                    destroyCommunicator();
-                }
-            };
-
-        try
-        {
-            Runtime.getRuntime().addShutdownHook(_shutdownHook);
-        }
-        catch(IllegalStateException e)
-        {
-            //
-            // Shutdown in progress, ignored
-            //
-        }
-
         addWindowListener(new WindowAdapter()
         {
             @Override
             public void windowClosing(WindowEvent e)
             {
-                destroyCommunicator();
-                Runtime.getRuntime().removeShutdownHook(_shutdownHook);
+                if(_communicator != null)
+                {
+                    _communicator.destroy();
+                }
                 dispose();
                 Runtime.getRuntime().exit(0);
             }
@@ -651,7 +618,6 @@ public class Client extends JFrame
 
     private com.zeroc.Ice.Communicator _communicator;
     private DeliveryMode _deliveryMode;
-    private Thread _shutdownHook;
 
     private Demo.HelloPrx _helloPrx = null;
 }

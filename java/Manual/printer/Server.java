@@ -8,18 +8,22 @@ public class Server
 {
     public static void main(String[] args) throws Exception
     {
+        //
+        // Try with resources block - communicator is automatically destroyed
+        // at the end of this try block
+        //
         try(com.zeroc.Ice.Communicator ic = com.zeroc.Ice.Util.initialize(args))
         {
             //
-            // Install shutdown hook for user interrupt like Ctrl-C
+            // Install shutdown hook to destroy communicator during JVM shutdown,
+            // including when the user interrupts the application with Ctrl-C
             //
             Runtime.getRuntime().addShutdownHook(new Thread(() ->
             {
                 //
-                // Initiate communicator shutdown, waitForShutdown returns when complete
-                // calling shutdown on a destroyed communicator is no-op
+                // Destroy returns only when the communicator is fully destroyed
                 //
-                ic.shutdown();
+                ic.destroy();
             }));
 
             com.zeroc.Ice.ObjectAdapter adapter =
@@ -27,6 +31,7 @@ public class Server
             com.zeroc.Ice.Object object = new PrinterI();
             adapter.add(object, com.zeroc.Ice.Util.stringToIdentity("SimplePrinter"));
             adapter.activate();
+
             ic.waitForShutdown();
         }
     }

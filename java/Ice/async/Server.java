@@ -17,20 +17,11 @@ public class Server
         //
         try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.server", extraArgs))
         {
-            WorkQueue workQueue = new WorkQueue();
-
             //
-            // Install shutdown hook for user interrupt like Ctrl-C
+            // Install shutdown hook to (also) destroy communicator during JVM shutdown.
+            // This ensures the communicator gets destroyed when the user interrupts the application with Ctrl-C.
             //
-            Runtime.getRuntime().addShutdownHook(new Thread(() ->
-            {
-                //
-                // Initiate communicator shutdown, waitForShutdown returns when complete
-                // calling shutdown on a destroyed communicator is no-op
-                //
-                workQueue._destroy();
-                communicator.shutdown();
-            }));
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> communicator.destroy()));
 
             if(!extraArgs.isEmpty())
             {
@@ -40,19 +31,28 @@ public class Server
             else
             {
                 com.zeroc.Ice.ObjectAdapter adapter = communicator.createObjectAdapter("Hello");
-                adapter.add(new HelloI(workQueue), com.zeroc.Ice.Util.stringToIdentity("hello"));
+
+                final WorkQueue workQueue = new WorkQueue();
                 workQueue.start();
+
+                //
+                // Install second shutdown hook to destroy workqueue during JVM shutdown
+                //
+                Runtime.getRuntime().addShutdownHook(new Thread(() ->
+                {
+                    workQueue._destroy();
+                    try
+                    {
+                        workQueue.join();
+                    }
+                    catch(InterruptedException e)
+                    {
+                    }
+                }));
+
+                adapter.add(new HelloI(workQueue), com.zeroc.Ice.Util.stringToIdentity("hello"));
                 adapter.activate();
-
                 communicator.waitForShutdown();
-
-                try
-                {
-                    workQueue.join();
-                }
-                catch(java.lang.InterruptedException ex)
-                {
-                }
             }
         }
 

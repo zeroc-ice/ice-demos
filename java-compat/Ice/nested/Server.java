@@ -8,25 +8,24 @@ import Demo.*;
 
 public class Server
 {
-    static class ShutdownHook implements Runnable
+    static class ShutdownHook extends Thread
     {
-        private Ice.Communicator communicator;
-
-        ShutdownHook(Ice.Communicator communicator)
-        {
-            this.communicator = communicator;
-        }
-
         @Override
         public void
         run()
         {
             //
-            // Initiate communicator shutdown, waitForShutdown returns when complete
-            // calling shutdown on a destroyed communicator is no-op
+            // Destroy returns only when the communicator is fully destroyed
             //
-            communicator.shutdown();
+            _communicator.destroy();
         }
+
+        ShutdownHook(Ice.Communicator communicator)
+        {
+            _communicator = communicator;
+        }
+
+        private final Ice.Communicator _communicator;
     }
 
     public static void
@@ -42,9 +41,10 @@ public class Server
         try(Ice.Communicator communicator = Ice.Util.initialize(argsHolder, "config.server"))
         {
             //
-            // Install shutdown hook for user interrupt like Ctrl-C
+            // Install shutdown hook to destroy communicator during JVM shutdown,
+            // including when the user interrupts the application with Ctrl-C
             //
-            Runtime.getRuntime().addShutdownHook(new Thread(new ShutdownHook(communicator)));
+            Runtime.getRuntime().addShutdownHook(new ShutdownHook(communicator));
 
             if(argsHolder.value.length > 0)
             {

@@ -9,34 +9,30 @@ import java.util.concurrent.Executors;
 
 public class Server
 {
-    static class ShutdownHook implements Runnable
+    static class ShutdownHook extends Thread
     {
-        private Ice.Communicator communicator;
-        private ExecutorService executor;
-
-        ShutdownHook(Ice.Communicator communicator, ExecutorService executor)
-        {
-            this.communicator = communicator;
-            this.executor = executor;
-        }
-
         @Override
         public void
         run()
         {
+            _communicator.destroy();
+
             //
             // Call shutdownNow on the executor. This interrupts all
             // executor threads causing any running servant dispatch threads
             // to terminate quickly.
             //
-            executor.shutdownNow();
-
-            //
-            // Initiate communicator shutdown, waitForShutdown returns when complete
-            // calling shutdown on a destroyed communicator is no-op
-            //
-            communicator.shutdown();
+            _executor.shutdownNow();
         }
+
+        ShutdownHook(Ice.Communicator communicator, ExecutorService executor)
+        {
+            _communicator = communicator;
+            _executor = executor;
+        }
+
+        private final Ice.Communicator _communicator;
+        private final ExecutorService _executor;
     }
 
     public static void
@@ -56,7 +52,8 @@ public class Server
         // By using an executor it is straightforward to interrupt any servant
         // dispatch threads by using ExecutorService.shutdownNow.
         //
-        initData.dispatcher = new Ice.Dispatcher() {
+        initData.dispatcher = new Ice.Dispatcher()
+        {
             @Override
             public void dispatch(Runnable runnable, Ice.Connection con)
             {
@@ -71,10 +68,10 @@ public class Server
         try(Ice.Communicator communicator = Ice.Util.initialize(argsHolder, initData))
         {
             //
-            // If ^C is pressed we want to interrupt all running upcalls from the
-            // dispatcher and destroy the communicator.
+            // Install shutdown hook to destroy communicator during JVM shutdown,
+            // including when the user interrupts the application with Ctrl-C
             //
-            Runtime.getRuntime().addShutdownHook(new Thread(new ShutdownHook(communicator, executor)));
+            Runtime.getRuntime().addShutdownHook(new ShutdownHook(communicator, executor));
 
             if(argsHolder.value.length > 0)
             {

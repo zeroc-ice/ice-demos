@@ -17,57 +17,64 @@ public class WorkQueue extends Thread
     @Override
     public synchronized void run()
     {
-        while(!_done)
+        try
         {
-            if(_futures.size() == 0)
+            while(!_done)
             {
-                try
+                if(_futures.size() == 0)
                 {
-                    wait();
+                    try
+                    {
+                        wait();
+                    }
+                    catch(java.lang.InterruptedException ex)
+                    {
+                    }
                 }
-                catch(java.lang.InterruptedException ex)
+
+                if(_futures.size() != 0)
                 {
+                    //
+                    // Get next work item.
+                    //
+                    FutureEntry entry = _futures.getFirst();
+
+                    //
+                    // Wait for the amount of time indicated in delay to
+                    // emulate a process that takes a significant period of
+                    // time to complete.
+                    //
+                    try
+                    {
+                        wait(entry.delay);
+                    }
+                    catch(java.lang.InterruptedException ex)
+                    {
+                    }
+
+                    if(!_done)
+                    {
+                        //
+                        // Print greeting and send response.
+                        //
+                        _futures.removeFirst();
+                        System.err.println("Belated Hello World!");
+                        entry.future.complete((Void)null);
+                    }
                 }
             }
 
-            if(_futures.size() != 0)
+            //
+            // Throw exception for any outstanding requests.
+            //
+            for(FutureEntry p : _futures)
             {
-                //
-                // Get next work item.
-                //
-                FutureEntry entry = _futures.getFirst();
-
-                //
-                // Wait for the amount of time indicated in delay to
-                // emulate a process that takes a significant period of
-                // time to complete.
-                //
-                try
-                {
-                    wait(entry.delay);
-                }
-                catch(java.lang.InterruptedException ex)
-                {
-                }
-
-                if(!_done)
-                {
-                    //
-                    // Print greeting and send response.
-                    //
-                    _futures.removeFirst();
-                    System.err.println("Belated Hello World!");
-                    entry.future.complete((Void)null);
-                }
+                p.future.completeExceptionally(new RequestCanceledException());
             }
         }
-
-        //
-        // Throw exception for any outstanding requests.
-        //
-        for(FutureEntry p : _futures)
+        catch(com.zeroc.Ice.CommunicatorDestroyedException e)
         {
-            p.future.completeExceptionally(new RequestCanceledException());
+            // Ignored - expected during shutdown
         }
     }
 

@@ -23,13 +23,13 @@ public class Client
         try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.client", extraArgs))
         {
             //
-            // Install shutdown hook for user interrupt like Ctrl-C
+            // Install shutdown hook to destroy communicator during JVM shutdown,
+            // including when the user interrupts the application with Ctrl-C
             //
             Runtime.getRuntime().addShutdownHook(new Thread(() ->
             {
                 //
-                // Destroy communicator to abandon ongoing remote calls
-                // calling destroy multiple times is no-op
+                // Destroy returns only when the communicator is fully destroyed
                 //
                 communicator.destroy();
             }));
