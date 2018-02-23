@@ -27,10 +27,7 @@ public class Subscriber
         //
         // Destroy communicator during JVM shutdown
         //
-        Thread destroyHook = new Thread(() ->
-        {
-            communicator.destroy();
-        });
+        Thread destroyHook = new Thread(() -> communicator.destroy());
         Runtime.getRuntime().addShutdownHook(destroyHook);
 
         try

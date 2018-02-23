@@ -63,8 +63,8 @@ public class Subscriber
         Ice.Communicator communicator = Ice.Util.initialize(argsHolder, "config.sub");
 
         //
-        // Install shutdown hook to destroy communicator during JVM shutdown,
-        // including when the user interrupts the application with Ctrl-C
+        // Install shutdown hook to (also) destroy communicator during JVM shutdown.
+        // This ensures the communicator gets destroyed when the user interrupts the application with Ctrl-C.
         //
         Thread destroyHook = new ShutdownHook(communicator);
         Runtime.getRuntime().addShutdownHook(destroyHook);

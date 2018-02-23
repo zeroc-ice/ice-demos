@@ -18,9 +18,6 @@ public class Server
         public void
         run()
         {
-            //
-            // Destroy returns only when the communicator is fully destroyed
-            //
             _communicator.destroy();
         }
 
@@ -45,8 +42,8 @@ public class Server
         try(Ice.Communicator communicator = Ice.Util.initialize(argsHolder, "config.server"))
         {
             //
-            // Install shutdown hook to destroy communicator during JVM shutdown,
-            // including when the user interrupts the application with Ctrl-C
+            // Install shutdown hook to (also) destroy communicator during JVM shutdown.
+            // This ensures the communicator gets destroyed when the user interrupts the application with Ctrl-C.
             //
             Runtime.getRuntime().addShutdownHook(new ShutdownHook(communicator));
 
