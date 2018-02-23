@@ -247,7 +247,7 @@ disable Disable all the IceMX metrics views configured for
 def run(communicator, args):
 
     props = communicator.getProperties()
-    args = props.parseCommandLineOptions("", args);
+    args = props.parseCommandLineOptions("", args)
 
     if len(args) < 2 or len(args) > 6:
         usage()
@@ -266,7 +266,7 @@ def run(communicator, args):
         # Create the proxy for the Metrics admin facet.
         #
         proxyStr = "%s/admin -f Metrics:%s" % (props.getProperty("InstanceName"), props.getProperty("Endpoints"))
-        metrics = IceMX.MetricsAdminPrx.checkedCast(communicator.stringToProxy(proxyStr));
+        metrics = IceMX.MetricsAdminPrx.checkedCast(communicator.stringToProxy(proxyStr))
         if not metrics:
             print(sys.argv[0] + ": invalid proxy `" + proxyStr + "'")
             return 1
@@ -279,7 +279,7 @@ def run(communicator, args):
                     printMetricsView(metrics, v, metrics.getMetricsView(v))
             else:
                 # Ensure the view exists
-                if not viewName in views and not viewName in disabledViews:
+                if viewName not in views and viewName not in disabledViews:
                     print("unknown view `" + viewName + "', available views:")
                     print("enabled = " + str(views) + ", disabled = " + str(disabledViews))
                     return 0
@@ -290,9 +290,9 @@ def run(communicator, args):
                     return 0
 
                 # Retrieve the metrics view and print it.
-                (view, refresh) = metrics.getMetricsView(viewName);
+                (view, refresh) = metrics.getMetricsView(viewName)
                 if mapName:
-                    if not mapName in view:
+                    if mapName not in view:
                         print("no map `" + mapName + "' in `" + viewName + "' view, available maps:")
                         print(str(view.keys()))
                         return 0
@@ -309,7 +309,7 @@ def run(communicator, args):
             return 2
     except Ice.ObjectNotExistException as ex:
         print("failed to get metrics from `%s':\n(the admin object doesn't exist, "
-                "are you sure you used the correct instance name?)" % (proxyStr))
+              "are you sure you used the correct instance name?)" % (proxyStr))
         return 1
     except Ice.Exception as ex:
         print("failed to get metrics from `%s':\n%s" % (proxyStr, ex))

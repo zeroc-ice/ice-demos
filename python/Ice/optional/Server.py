@@ -64,7 +64,7 @@ with Ice.initialize(sys.argv, "config.server") as communicator:
     # signal.signal must be called within the same scope as the communicator to catch CtrlC
     #
     signal.signal(signal.SIGINT, lambda signum, handler: communicator.shutdown())
-    
+
     #
     # The communicator initialization removes all Ice-related arguments from argv
     #

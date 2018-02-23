@@ -24,7 +24,7 @@ with Ice.initialize(sys.argv) as communicator:
     # signal.signal must be called within the same scope as the communicator to catch CtrlC
     #
     signal.signal(signal.SIGINT, lambda signum, frame: communicator.shutdown())
-    
+
     adapter = communicator.createObjectAdapterWithEndpoints("Hello", "default -h localhost -p 10000")
     adapter.add(HelloI(), Ice.stringToIdentity("hello"))
     adapter.activate()

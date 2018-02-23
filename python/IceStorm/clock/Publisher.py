@@ -62,13 +62,13 @@ def run(communicator, args):
     # Get the topic's publisher object, and create a Clock proxy with
     # the mode specified as an argument of this application.
     #
-    publisher = topic.getPublisher();
+    publisher = topic.getPublisher()
     if datagram:
         publisher = publisher.ice_datagram()
     elif twoway:
         # Do nothing.
         pass
-    else: # if(oneway)
+    else:  # if(oneway)
         publisher = publisher.ice_oneway()
     clock = Demo.ClockPrx.uncheckedCast(publisher)
 
