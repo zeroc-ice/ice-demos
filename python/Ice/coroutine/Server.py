@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import math, sys, asyncio, urllib.parse, concurrent.futures, os, Ice
+import sys, asyncio, urllib.parse, os, Ice
 
 Ice.loadSlice('Fetcher.ice')
 import Demo

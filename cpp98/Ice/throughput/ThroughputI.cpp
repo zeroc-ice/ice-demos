@@ -47,13 +47,21 @@ ThroughputI::sendByteSeq(const std::pair<const Ice::Byte*, const Ice::Byte*>&, c
 void
 ThroughputI::recvByteSeq_async(const Demo::AMD_Throughput_recvByteSeqPtr& cb, const Ice::Current&)
 {
-    std::pair<const Ice::Byte*, const Ice::Byte*> ret(static_cast<const Ice::Byte*>(0), static_cast<const Ice::Byte*>(0));
-    if(!_warmup)
+    if(_warmup)
     {
+        std::pair<const Ice::Byte*, const Ice::Byte*> ret;
+        Demo::ByteSeq warmupBytesBuf(1);
+        ret.first = &warmupBytesBuf[0];
+        ret.second = ret.first + warmupBytesBuf.size();
+        cb->ice_response(ret);
+    }
+    else
+    {
+        std::pair<const Ice::Byte*, const Ice::Byte*> ret;
         ret.first = &_byteSeq[0];
         ret.second = ret.first + _byteSeq.size();
+        cb->ice_response(ret);
     }
-    cb->ice_response(ret);
 }
 
 void
@@ -74,7 +82,7 @@ ThroughputI::recvStringSeq_async(const Demo::AMD_Throughput_recvStringSeqPtr& cb
 {
     if(_warmup)
     {
-        cb->ice_response(std::vector<Util::string_view>(0));
+        cb->ice_response(std::vector<Util::string_view>(1));
     }
     else
     {
@@ -99,7 +107,7 @@ ThroughputI::recvStructSeq(const Ice::Current&)
 {
     if(_warmup)
     {
-        return Demo::StringDoubleSeq();
+        return Demo::StringDoubleSeq(1);
     }
     else
     {
@@ -123,7 +131,7 @@ ThroughputI::recvFixedSeq(const Ice::Current&)
 {
     if(_warmup)
     {
-        return Demo::FixedSeq();
+        return Demo::FixedSeq(1);
     }
     else
     {

@@ -46,28 +46,28 @@ def run(communicator, args)
     if throughput.needsWarmup()
         throughput.startWarmup()
 
-        emptyBytes = "\x00"
-        emptyStrings = Array.new(1, "hello")
-        emptyStructs = Array.new(1, Demo::StringDouble.new)
-        emptyFixed = Array.new(1, Demo::Fixed.new)
+        warmupBytes = "\x00"
+        warmupStrings = Array.new(1, "hello")
+        warmupStructs = Array.new(1, Demo::StringDouble.new)
+        warmupFixed = Array.new(1, Demo::Fixed.new)
 
         print "warming up the server..."
         STDOUT.flush
         for i in (0..10000)
-            throughput.sendByteSeq(emptyBytes)
-            throughput.sendStringSeq(emptyStrings)
-            throughput.sendStructSeq(emptyStructs)
-            throughput.sendFixedSeq(emptyFixed)
+            throughput.sendByteSeq(warmupBytes)
+            throughput.sendStringSeq(warmupStrings)
+            throughput.sendStructSeq(warmupStructs)
+            throughput.sendFixedSeq(warmupFixed)
 
             throughput.recvByteSeq()
             throughput.recvStringSeq()
             throughput.recvStructSeq()
             throughput.recvFixedSeq()
 
-            throughput.echoByteSeq(emptyBytes)
-            throughput.echoStringSeq(emptyStrings)
-            throughput.echoStructSeq(emptyStructs)
-            throughput.echoFixedSeq(emptyFixed)
+            throughput.echoByteSeq(warmupBytes)
+            throughput.echoStringSeq(warmupStrings)
+            throughput.echoStructSeq(warmupStructs)
+            throughput.echoFixedSeq(warmupFixed)
         end
 
         throughput.endWarmup()

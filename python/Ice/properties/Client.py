@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import sys, traceback, Ice
+import sys, Ice
 
 slice_dir = Ice.getSliceDir()
 if not slice_dir:
@@ -17,7 +17,7 @@ import Demo
 
 def run(communicator):
     props = Demo.PropsPrx.checkedCast(communicator.propertyToProxy("Props.Proxy"))
-    if props == None:
+    if props is None:
         print("invalid proxy")
         return 1
 
@@ -30,7 +30,7 @@ def run(communicator):
 
     batch2 = {}
     batch2["Demo.Prop1"] = "10"
-    batch2["Demo.Prop2"] = "" # An empty value removes this property
+    batch2["Demo.Prop2"] = ""  # An empty value removes this property
     batch2["Demo.Prop3"] = "30"
 
     show(admin)
@@ -96,9 +96,9 @@ x: exit
 
 def show(admin):
     props = admin.getPropertiesForPrefix("Demo")
-    print ("Server's current settings:")
-    for k,v in props.items():
-        print ("  " + k + "=" + v)
+    print("Server's current settings:")
+    for k, v in props.items():
+        print("  " + k + "=" + v)
 
 status = 0
 

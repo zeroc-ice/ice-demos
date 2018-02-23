@@ -85,11 +85,11 @@ public class Client
         // JIT compiler.
         //
         {
-            var emptyBytes = new byte[1];
-            var emptyStrings = new string[1];
-            var emptyStructs = new StringDouble[1];
-            emptyStructs[0] = new StringDouble();
-            var emptyFixed = new Fixed[1];
+            var warmupBytes = new byte[1];
+            var warmupStrings = new string[1];
+            var warmupStructs = new StringDouble[1];
+            warmupStructs[0] = new StringDouble();
+            var warmupFixed = new Fixed[1];
 
             throughput.startWarmup();
 
@@ -97,20 +97,20 @@ public class Client
             Console.Error.Flush();
             for(int i = 0; i < 10000; i++)
             {
-                throughput.sendByteSeq(emptyBytes);
-                throughput.sendStringSeq(emptyStrings);
-                throughput.sendStructSeq(emptyStructs);
-                throughput.sendFixedSeq(emptyFixed);
+                throughput.sendByteSeq(warmupBytes);
+                throughput.sendStringSeq(warmupStrings);
+                throughput.sendStructSeq(warmupStructs);
+                throughput.sendFixedSeq(warmupFixed);
 
                 throughput.recvByteSeq();
                 throughput.recvStringSeq();
                 throughput.recvStructSeq();
                 throughput.recvFixedSeq();
 
-                throughput.echoByteSeq(emptyBytes);
-                throughput.echoStringSeq(emptyStrings);
-                throughput.echoStructSeq(emptyStructs);
-                throughput.echoFixedSeq(emptyFixed);
+                throughput.echoByteSeq(warmupBytes);
+                throughput.echoStringSeq(warmupStrings);
+                throughput.echoStructSeq(warmupStructs);
+                throughput.echoFixedSeq(warmupFixed);
             }
             throughput.endWarmup();
 

@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import signal, sys, threading, Ice
+import signal, sys, Ice
 
 Ice.loadSlice('Filesystem.ice')
 import Filesystem
@@ -53,7 +53,7 @@ class FileI(Filesystem.File):
         self._parent = parent
         self.lines = []
 
-        assert(self._parent != None)
+        assert(self._parent is not None)
 
         # Create an identity
         #
@@ -99,7 +99,7 @@ def run(communicator):
     # Create a file called "README" in the root directory
     #
     file = FileI(communicator, "README", root)
-    text = [ "This file system contains a collection of poetry." ]
+    text = ["This file system contains a collection of poetry."]
     try:
         file.write(text, None)
     except Filesystem.GenericError as e:
@@ -114,11 +114,11 @@ def run(communicator):
     # Create a file called "Kubla_Khan" in the Coleridge directory
     #
     file = FileI(communicator, "Kubla_Khan", coleridge)
-    text = [ "In Xanadu did Kubla Khan",
-                "A stately pleasure-dome decree:",
-                "Where Alph, the sacred river, ran",
-                "Through caverns measureless to man",
-                "Down to a sunless sea." ]
+    text = ["In Xanadu did Kubla Khan",
+            "A stately pleasure-dome decree:",
+            "Where Alph, the sacred river, ran",
+            "Through caverns measureless to man",
+            "Down to a sunless sea."]
     try:
         file.write(text, None)
     except Filesystem.GenericError as e:

@@ -38,7 +38,7 @@ def run(communicator):
     fut3.add_done_callback(handleDivideFuture)
     try:
         fut3.result()
-    except:
+    except Exception:
         # Ignored, already caught by 'handleDivideFuture'
         pass
 
@@ -59,13 +59,13 @@ def run(communicator):
         result = await Ice.wrap_future(calculator.subtractAsync(x, subtrahend))
         print(x, "minus", subtrahend, "is", result)
 
-    #Runs 'doSubtractAsync' until it's completed
+    # Runs 'doSubtractAsync' until it's completed
     loop.run_until_complete(doSubtractAsync(10, 4))
 
     async def doDivideAsync(numerator, denominator):
         try:
             result = await Ice.wrap_future(calculator.divideAsync(numerator, denominator))
-            print(numerator, "/",  denominator, "is", result[0], "with a remainder of", result[1])
+            print(numerator, "/", denominator, "is", result[0], "with a remainder of", result[1])
         except Demo.DivideByZeroException:
             print("You cannot divide by 0")
 
@@ -73,7 +73,8 @@ def run(communicator):
 
     async def doHypotenuseAsync(x, y):
         # Combines multiple futures into one, which executes the underlying futures concurrently when run
-        squareFuture = asyncio.gather(Ice.wrap_future(calculator.squareAsync(x)), Ice.wrap_future(calculator.squareAsync(y)))
+        squareFuture = asyncio.gather(Ice.wrap_future(calculator.squareAsync(x)),
+                                      Ice.wrap_future(calculator.squareAsync(y)))
         # gather returns all the future's results in a list
         sumFuture = Ice.wrap_future(calculator.addAsync(*(await squareFuture)))
         hypotenuseFuture = Ice.wrap_future(calculator.squareRootAsync(await sumFuture))
@@ -114,5 +115,4 @@ with Ice.initialize(sys.argv, "config.client") as communicator:
             status = run(communicator)
         except Ice.CommunicatorDestroyedException:
             pass
-
 sys.exit(status)

@@ -45,16 +45,10 @@ class Server
         try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.server", extraArgs))
         {
             //
-            // Install shutdown hook for user interrupt like Ctrl-C
+            // Install shutdown hook to (also) destroy communicator during JVM shutdown.
+            // This ensures the communicator gets destroyed when the user interrupts the application with Ctrl-C.
             //
-            Runtime.getRuntime().addShutdownHook(new Thread(() ->
-            {
-                //
-                // Initiate communicator shutdown, waitForShutdown returns when complete
-                // calling shutdown on a destroyed communicator is no-op
-                //
-                communicator.shutdown();
-            }));
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> communicator.destroy()));
 
             if(!extraArgs.isEmpty())
             {
@@ -83,7 +77,7 @@ class Server
         {
             nConnections = 1;
         }
-        ConnectionPool pool = null;
+
         com.zeroc.Ice.Logger logger = communicator.getLogger();
 
         try
@@ -102,7 +96,10 @@ class Server
 
         try
         {
-            pool = new ConnectionPool(logger, url, username, password, nConnections);
+            final ConnectionPool pool = new ConnectionPool(logger, url, username, password, nConnections);
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> pool.destroy()));
+
+            SQLRequestContext.initialize(logger, pool);
         }
         catch(java.sql.SQLException e)
         {
@@ -119,7 +116,6 @@ class Server
         //
         com.zeroc.Ice.ObjectAdapter adapter = communicator.createObjectAdapter("SessionFactory");
 
-        SQLRequestContext.initialize(logger, pool);
         adapter.addServantLocator(new LocatorI(new BookI()), "book");
 
         adapter.add(new SessionFactoryI(logger),
@@ -133,8 +129,6 @@ class Server
         adapter.activate();
 
         communicator.waitForShutdown();
-
-        pool.destroy();
 
         return 0;
     }

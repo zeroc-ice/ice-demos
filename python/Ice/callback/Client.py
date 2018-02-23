@@ -42,7 +42,7 @@ def run(communicator):
             elif c == 's':
                 sender.shutdown()
             elif c == 'x':
-                pass # Nothing to do
+                pass  # Nothing to do
             elif c == '?':
                 menu()
             else:

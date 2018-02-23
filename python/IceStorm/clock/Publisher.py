@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import signal, sys, traceback, time, Ice, IceStorm, getopt
+import signal, sys, time, Ice, IceStorm, getopt
 
 Ice.loadSlice('Clock.ice')
 import Demo
@@ -64,12 +64,12 @@ def run(communicator, args):
     #
     publisher = topic.getPublisher();
     if datagram:
-        publisher = publisher.ice_datagram();
+        publisher = publisher.ice_datagram()
     elif twoway:
         # Do nothing.
         pass
     else: # if(oneway)
-        publisher = publisher.ice_oneway();
+        publisher = publisher.ice_oneway()
     clock = Demo.ClockPrx.uncheckedCast(publisher)
 
     signal.signal(signal.SIGINT, lambda signum, frame: communicator.destroy())

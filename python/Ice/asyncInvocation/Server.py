@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import math, signal, sys, time, Ice
+import math, signal, sys, Ice
 
 Ice.loadSlice('Calculator.ice')
 import Demo

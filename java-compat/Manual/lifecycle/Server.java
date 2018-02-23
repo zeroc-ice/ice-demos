@@ -8,26 +8,22 @@ import FilesystemI.*;
 
 class Server
 {
-    static class ShutdownHook implements Runnable
+    static class ShutdownHook extends Thread
     {
-        private Ice.Communicator communicator;
-
-        ShutdownHook(Ice.Communicator communicator)
-        {
-            this.communicator = communicator;
-        }
-
         @Override
         public void
         run()
         {
-            //
-            // Initiate communicator shutdown, waitForShutdown returns when complete
-            // calling shutdown on a destroyed communicator is no-op
-            //
-            communicator.shutdown();
+            _communicator.destroy();
             System.err.println("received signal, shutting down");
         }
+
+        ShutdownHook(Ice.Communicator communicator)
+        {
+            _communicator = communicator;
+        }
+
+        private final Ice.Communicator _communicator;
     }
 
     public static void
@@ -43,9 +39,10 @@ class Server
         try(Ice.Communicator communicator = Ice.Util.initialize(argsHolder))
         {
             //
-            // Install shutdown hook for user interrupt like Ctrl-C
+            // Install shutdown hook to (also) destroy communicator during JVM shutdown.
+            // This ensures the communicator gets destroyed when the user interrupts the application with Ctrl-C.
             //
-            Runtime.getRuntime().addShutdownHook(new Thread(new ShutdownHook(communicator)));
+            Runtime.getRuntime().addShutdownHook(new ShutdownHook(communicator));
 
             if(argsHolder.value.length > 0)
             {

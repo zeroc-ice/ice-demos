@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import signal, sys, traceback, Ice, IceStorm, getopt
+import signal, sys, Ice, IceStorm, getopt
 
 Ice.loadSlice('Clock.ice')
 import Demo
@@ -15,13 +15,13 @@ class ClockI(Demo.Clock):
         print(date)
 
 def usage():
-    print("Usage: " + sys.argv[0] + \
-        " [--batch] [--datagram|--twoway|--ordered|--oneway] [--retryCount count] [--id id] [topic]")
+    print("Usage: " + sys.argv[0] +
+          " [--batch] [--datagram|--twoway|--ordered|--oneway] [--retryCount count] [--id id] [topic]")
 
 def run(communicator, args):
     try:
         opts, args = getopt.getopt(args[1:], '', ['datagram', 'twoway', 'oneway', 'ordered', 'batch',
-                'retryCount=', 'id='])
+                                                  'retryCount=', 'id='])
     except getopt.GetoptError:
         usage()
         return 1
@@ -36,13 +36,13 @@ def run(communicator, args):
         oldoption = option
         if o == "--datagram":
             option = "Datagram"
-        elif o =="--twoway":
+        elif o == "--twoway":
             option = "Twoway"
-        elif o =="--ordered":
+        elif o == "--ordered":
             option = "Ordered"
-        elif o =="--oneway":
+        elif o == "--oneway":
             option = "Oneway"
-        elif o =="--batch":
+        elif o == "--batch":
             batch = True
         elif o == "--id":
             id = a

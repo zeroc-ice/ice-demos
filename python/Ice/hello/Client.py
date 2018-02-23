@@ -5,13 +5,13 @@
 #
 # **********************************************************************
 
-import sys, traceback, Ice
+import sys, Ice
 
 Ice.loadSlice('Hello.ice')
 import Demo
 
 def run(communicator):
-    twoway = Demo.HelloPrx.checkedCast(\
+    twoway = Demo.HelloPrx.checkedCast(
         communicator.propertyToProxy('Hello.Proxy').ice_twoway().ice_secure(False))
     if not twoway:
         print("invalid proxy")
@@ -93,7 +93,7 @@ def run(communicator):
             elif c == 's':
                 twoway.shutdown()
             elif c == 'x':
-                pass # Nothing to do
+                pass  # Nothing to do
             elif c == '?':
                 menu()
             else:

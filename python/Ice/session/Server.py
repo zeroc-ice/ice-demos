@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import signal, sys, threading, traceback, Ice
+import signal, sys, threading, Ice
 
 Ice.loadSlice('Session.ice')
 import Demo
@@ -16,16 +16,16 @@ class HelloI(Demo.Hello):
         self._id = id
 
     def sayHello(self, c):
-        print("Hello object #" + str(self._id) + " for session `" + self._name + "' says:\n" + \
+        print("Hello object #" + str(self._id) + " for session `" + self._name + "' says:\n" +
               "Hello " + self._name + "!")
 
 class SessionI(Demo.Session):
     def __init__(self, name):
         self._name = name
         self._lock = threading.Lock()
-        self._destroy = False # true if destroy() was called, false otherwise.
-        self._nextId = 0 # The id of the next hello object. This is used for tracing purposes.
-        self._objs = [] # List of per-client allocated Hello objects.
+        self._destroy = False  # true if destroy() was called, false otherwise.
+        self._nextId = 0  # The id of the next hello object. This is used for tracing purposes.
+        self._objs = []  # List of per-client allocated Hello objects.
 
         print("The session " + self._name + " is now created.")
 

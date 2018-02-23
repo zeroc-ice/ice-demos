@@ -5,14 +5,14 @@
 #
 # **********************************************************************
 
-import sys, traceback, Ice
+import sys, Ice
 
 Ice.loadSlice("Contact.ice")
 import Demo
 
 def run(communicator):
     contactdb = Demo.ContactDBPrx.checkedCast(communicator.propertyToProxy("ContactDB.Proxy"))
-    if contactdb == None:
+    if contactdb is None:
         print("invalid proxy")
         return 1
 

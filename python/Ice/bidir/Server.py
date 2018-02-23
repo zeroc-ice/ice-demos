@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import os, signal, sys, threading, Ice
+import signal, sys, threading, Ice
 
 slice_dir = Ice.getSliceDir()
 if not slice_dir:
@@ -51,7 +51,7 @@ class CallbackSenderI(Demo.CallbackSender, threading.Thread):
                     #
                     for p in self._clients:
                         p.callbackAsync(num).add_done_callback_async(
-                            lambda f, client = p: self.removeClient(client, f.exception()) if f.exception() else None)
+                            lambda f, client=p: self.removeClient(client, f.exception()) if f.exception() else None)
 
     def removeClient(self, client, ex):
         with self._cond:

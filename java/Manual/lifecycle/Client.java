@@ -34,6 +34,7 @@ public class Client
             Parser p = new Parser(rootDir);
             status = p.parse();
         }
+
         System.exit(status);
     }
 

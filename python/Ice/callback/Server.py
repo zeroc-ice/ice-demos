@@ -15,7 +15,7 @@ class CallbackSenderI(Demo.CallbackSender):
         print("initiating callback")
         try:
             proxy.callback()
-        except:
+        except Exception:
             traceback.print_exc()
 
     def shutdown(self, current):

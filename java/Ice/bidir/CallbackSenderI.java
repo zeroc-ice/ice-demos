@@ -50,15 +50,25 @@ class CallbackSenderI implements CallbackSender
             //
             for(CallbackReceiverPrx p : _clients)
             {
-                p.callbackAsync(_num).whenCompleteAsync(
-                    (r, t) ->
-                    {
-                        if(t != null)
+                try
+                {
+                    p.callbackAsync(_num).whenCompleteAsync(
+                        (r, t) ->
                         {
-                            removeClient(p, t);
-                        }
-                    },
-                    _executorService);
+                            if(t != null)
+                            {
+                                removeClient(p, t);
+                            }
+                        },
+                        _executorService);
+                }
+                catch(com.zeroc.Ice.CommunicatorDestroyedException e)
+                {
+                    //
+                    // We're shutting down
+                    //
+                    break;
+                }
             }
         }
     }

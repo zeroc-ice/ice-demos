@@ -44,13 +44,19 @@ ThroughputI::sendByteSeq(std::pair<const Ice::Byte*, const Ice::Byte*>, const Ic
 Demo::Throughput::RecvByteSeqMarshaledResult
 ThroughputI::recvByteSeq(const Ice::Current& current)
 {
-    std::pair<const Ice::Byte*, const Ice::Byte*> ret = { nullptr, nullptr };
-
-    if(!_warmup)
+    if(_warmup)
     {
-        ret = std::make_pair(_byteSeq.data(), _byteSeq.data() + _byteSeq.size());
+        Demo::ByteSeq warmupBytesBuf(1);
+        std::pair<const Ice::Byte*, const Ice::Byte*> ret =
+            std::make_pair(warmupBytesBuf.data(), warmupBytesBuf.data() + warmupBytesBuf.size());
+        return RecvByteSeqMarshaledResult(ret, current);
     }
-    return RecvByteSeqMarshaledResult(ret, current);
+    else
+    {
+        std::pair<const Ice::Byte*, const Ice::Byte*> ret =
+            std::make_pair(_byteSeq.data(), _byteSeq.data() + _byteSeq.size());
+        return RecvByteSeqMarshaledResult(ret, current);
+    }
 }
 
 Demo::Throughput::EchoByteSeqMarshaledResult
@@ -69,7 +75,7 @@ ThroughputI::recvStringSeq(const Ice::Current& current)
 {
     if(_warmup)
     {
-        return RecvStringSeqMarshaledResult(std::vector<Util::string_view>(0), current);
+        return RecvStringSeqMarshaledResult(std::vector<Util::string_view>(1), current);
     }
     else
     {
@@ -93,7 +99,7 @@ ThroughputI::recvStructSeq(const Ice::Current&)
 {
     if(_warmup)
     {
-        return Demo::StringDoubleSeq();
+        return Demo::StringDoubleSeq(1);
     }
     else
     {
@@ -117,7 +123,7 @@ ThroughputI::recvFixedSeq(const Ice::Current&)
 {
     if(_warmup)
     {
-        return Demo::FixedSeq();
+        return Demo::FixedSeq(1);
     }
     else
     {

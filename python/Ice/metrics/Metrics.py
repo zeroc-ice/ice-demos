@@ -6,7 +6,7 @@
 #
 # **********************************************************************
 
-import sys, traceback, Ice, IceMX
+import sys, Ice, IceMX
 
 #
 # Formatting information for metrics maps. The tuple defines the
@@ -14,7 +14,7 @@ import sys, traceback, Ice, IceMX
 # right alignment) and width.
 #
 maps = {
-    "Connection" : [
+    "Connection": [
         ("id", "Connections", '<', 35),
         ("current", "#", '>', 3),
         ("total", "Total", '>', 5),
@@ -22,7 +22,7 @@ maps = {
         ("sentBytes", "TxBytes", '>', 10),
         ("averageLifetime", "Avg (s)", '>', 8)
     ],
-    "Invocation" : [
+    "Invocation": [
         ("id", "Invocations", '<', 39),
         ("current", "#", '>', 3),
         ("total", "Total", '>', 5),
@@ -31,7 +31,7 @@ maps = {
         ("", "RepSz", '>', 5),
         ("averageLifetime", "Avg (ms)", '>', 8)
     ],
-    "Dispatch" : [
+    "Dispatch": [
         ("id", "Dispatch", '<', 40),
         ("current", "#", '>', 3),
         ("total", "Total", '>', 5),
@@ -39,7 +39,7 @@ maps = {
         ("replySize", "RepSz", '>', 5),
         ("averageLifetime", "Avg (ms)", '>', 8)
     ],
-    "Thread" : [
+    "Thread": [
         ("id", "Threads", '<', 25),
         ("current", "#", '>', 3),
         ("total", "Total", '>', 5),
@@ -48,19 +48,19 @@ maps = {
         ("inUseForOther", "Other", '>', 6),
         ("averageLifetime", "Avg (s)", '>', 8)
     ],
-    "ConnectionEstablishment" : [
+    "ConnectionEstablishment": [
         ("id", "Connection Establishments", '<', 30),
         ("current", "#", '>', 3),
         ("total", "Total", '>', 5),
         ("averageLifetime", "Avg (ms)", '>', 8)
     ],
-    "EndpointLookup" : [
+    "EndpointLookup": [
         ("id", "Endpoint Lookups", '<', 30),
         ("current", "#", '>', 3),
         ("total", "Total", '>', 5),
-        ("averageLifetime", "Avg (ms)",'>', 8)
+        ("averageLifetime", "Avg (ms)", '>', 8)
     ],
-    "Remote" : [
+    "Remote": [
         ("id", "Invocations", '>', 39),
         ("current", "#", '>', 3),
         ("total", "Total", '>', 5),
@@ -69,7 +69,7 @@ maps = {
         ("replySize", "RepSz", '>', 5),
         ("averageLifetime", "Avg (ms)", '>', 8)
     ],
-    "Collocated" : [
+    "Collocated": [
         ("id", "Invocations", '>', 39),
         ("current", "#", '>', 3),
         ("total", "Total", '>', 5),
@@ -78,7 +78,7 @@ maps = {
         ("replySize", "RepSz", '>', 5),
         ("averageLifetime", "Avg (ms)", '>', 8)
     ],
-    "Session" : [
+    "Session": [
         ("id", "Sessions", '<', 15),
         ("current", "#", '>', 3),
         ("total", "Total", '>', 5),
@@ -91,7 +91,7 @@ maps = {
         ("routingTableSize", "RT Sz", '>', 5),
         ("averageLifetime", "Avg (s)", '>', 8)
     ],
-    "Topic" : [
+    "Topic": [
         ("id", "Topics", '<', 30),
         ("current", "#", '>', 3),
         ("total", "Total", '>', 5),
@@ -99,7 +99,7 @@ maps = {
         ("forwarded", "Forwarded", '>', 9),
         ("averageLifetime", "Avg (s)", '>', 7)
     ],
-    "Subscriber" : [
+    "Subscriber": [
         ("id", "Subscribers", '<', 32),
         ("current", "#", '>', 3),
         ("total", "Total", '>', 5),
@@ -131,14 +131,14 @@ def metricsField(metrics):
                 return "0.000"
 
             avg = metrics.totalLifetime / 1000.0 / (metrics.total - metrics.current)
-            if title.find("(s)") > 0: # Display in seconds
+            if title.find("(s)") > 0:  # Display in seconds
                 avg /= 1000.0
             return "%.3f" % avg
 
         else:
             v = str(metrics.__dict__[field])
             if len(v) > width:
-                v = v[0:width - 3] + '...' # Truncates the field if it's too large.
+                v = v[0:width - 3] + '...'  # Truncates the field if it's too large.
             return v
 
     # Return a lambda which returns the formated metric value for the
@@ -146,7 +146,7 @@ def metricsField(metrics):
     return lambda mapName, field, title, align, width: \
         ("{0:" + align + str(width) + "}").format(getField(mapName, field, title, width))
 
-def printMetrics(mapName, getValue, sep = '|', prefix = " "):
+def printMetrics(mapName, getValue, sep='|', prefix=" "):
     #
     # This method prints a metrics, a line in the table.
     #
@@ -154,7 +154,7 @@ def printMetrics(mapName, getValue, sep = '|', prefix = " "):
     # described in the `maps' table defined above. The value of each
     # column is obtained by calling the provided getValue function.
     #
-    fieldStr = [ prefix + sep ]
+    fieldStr = [prefix + sep]
     for (field, title, align, width) in maps[mapName]:
         fieldStr.append(getValue(mapName, field, title, align, width) + sep)
     print("".join(fieldStr))
@@ -299,7 +299,6 @@ def run(communicator, args):
                     printMetricsMap(metrics, viewName, mapName, view[mapName])
                 else:
                     printMetricsView(metrics, viewName, (view, refresh))
-
         elif command == "enable":
             metrics.enableMetricsView(viewName)
         elif command == "disable":
@@ -308,7 +307,6 @@ def run(communicator, args):
             print("unknown command `" + command + "'")
             usage()
             return 2
-
     except Ice.ObjectNotExistException as ex:
         print("failed to get metrics from `%s':\n(the admin object doesn't exist, "
                 "are you sure you used the correct instance name?)" % (proxyStr))

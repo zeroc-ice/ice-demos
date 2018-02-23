@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import signal, sys, traceback, Ice
+import signal, sys, Ice
 
 Ice.loadSlice('Printer.ice')
 import Demo

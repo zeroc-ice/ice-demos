@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import signal, sys, traceback, Ice
+import signal, sys, Ice
 
 Ice.loadSlice('Throughput.ice')
 import Demo
@@ -56,7 +56,7 @@ class ThroughputI(Demo.Throughput):
 
     def recvByteSeq(self, current):
         if self.warmup:
-            return []
+            return ''.join(['\x00'])
         else:
             return self.byteSeq
 
@@ -68,7 +68,7 @@ class ThroughputI(Demo.Throughput):
 
     def recvStringSeq(self, current):
         if self.warmup:
-            return []
+            return [""]
         else:
             return self.stringSeq
 
@@ -80,7 +80,7 @@ class ThroughputI(Demo.Throughput):
 
     def recvStructSeq(self, current):
         if self.warmup:
-            return []
+            return [Demo.StringDouble()]
         else:
             return self.structSeq
 
@@ -92,7 +92,7 @@ class ThroughputI(Demo.Throughput):
 
     def recvFixedSeq(self, current):
         if self.warmup:
-            return []
+            return [Demo.Fixed()]
         else:
             return self.fixedSeq
 

@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import signal, sys, time, traceback, Ice
+import signal, sys, time, Ice
 
 Ice.loadSlice('Latency.ice')
 import Demo

@@ -38,8 +38,8 @@ public class Publisher
         try(Ice.Communicator communicator = Ice.Util.initialize(argsHolder, "config.pub"))
         {
             //
-            // Install shutdown hook to destroy communicator during JVM shutdown
-            // if not already destroyed (useful for Ctrl-C interrupts)
+            // Install shutdown hook to (also) destroy communicator during JVM shutdown.
+            // This ensures the communicator gets destroyed when the user interrupts the application with Ctrl-C.
             //
             Runtime.getRuntime().addShutdownHook(new ShutdownHook(communicator));
 

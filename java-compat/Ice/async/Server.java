@@ -6,29 +6,36 @@
 
 public class Server
 {
-    static class ShutdownHook implements Runnable
+    static class ShutdownHook extends Thread
     {
-        private Ice.Communicator communicator;
-        private WorkQueue workQueue;
-
-        ShutdownHook(Ice.Communicator communicator, WorkQueue workQueue)
-        {
-            this.communicator = communicator;
-            this.workQueue = workQueue;
-        }
-
         @Override
         public void
         run()
         {
-            workQueue._destroy();
-            //
-            // Initiate communicator shutdown, waitForShutdown returns when complete
-            // calling shutdown on a destroyed communicator is no-op
-            //
-            communicator.shutdown();
+            _workQueue._destroy();
+            try
+            {
+                _workQueue.join();
+            }
+            catch(java.lang.InterruptedException ex)
+            {
+            }
+            finally
+            {
+                _communicator.destroy();
+            }
         }
+
+        ShutdownHook(Ice.Communicator communicator, WorkQueue workQueue)
+        {
+            _communicator = communicator;
+            _workQueue = workQueue;
+        }
+
+        private final Ice.Communicator _communicator;
+        private final WorkQueue _workQueue;
     }
+
 
     public static void
     main(String[] args)
@@ -45,9 +52,9 @@ public class Server
             WorkQueue workQueue = new WorkQueue();
 
             //
-            // Install shutdown hook for user interrupt like Ctrl-C
+            // Install shutdown hook to destroy workqueue and communicator during JVM shutdown.
             //
-            Runtime.getRuntime().addShutdownHook(new Thread(new ShutdownHook(communicator, workQueue)));
+            Runtime.getRuntime().addShutdownHook(new ShutdownHook(communicator, workQueue));
 
             if(argsHolder.value.length > 0)
             {
@@ -57,12 +64,13 @@ public class Server
             else
             {
                 Ice.ObjectAdapter adapter = communicator.createObjectAdapter("Hello");
-                adapter.add(new HelloI(workQueue), Ice.Util.stringToIdentity("hello"));
                 workQueue.start();
-                adapter.activate();
 
+                adapter.add(new HelloI(workQueue), Ice.Util.stringToIdentity("hello"));
+                adapter.activate();
                 communicator.waitForShutdown();
 
+                workQueue._destroy();
                 try
                 {
                     workQueue.join();

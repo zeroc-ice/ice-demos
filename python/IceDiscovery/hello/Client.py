@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import sys, traceback, Ice
+import sys, Ice
 
 Ice.loadSlice('Hello.ice')
 import Demo
@@ -15,10 +15,10 @@ def run(communicator):
     # only includes the Ice object identity. It's resolved using the Ice locator
     # implementation.
     #
-    twoway = Demo.HelloPrx.checkedCast(\
+    twoway = Demo.HelloPrx.checkedCast(
         communicator.stringToProxy('hello').ice_twoway().ice_secure(False))
     if not twoway:
-        print(args[0] + ": invalid proxy")
+        print(sys.args[0] + ": invalid proxy")
         return 1
 
     oneway = Demo.HelloPrx.uncheckedCast(twoway.ice_oneway())
@@ -97,7 +97,7 @@ def run(communicator):
             elif c == 's':
                 twoway.shutdown()
             elif c == 'x':
-                pass # Nothing to do
+                pass  # Nothing to do
             elif c == '?':
                 menu()
             else:
