@@ -42,8 +42,8 @@ public class Server
             //
             Runtime.getRuntime().addShutdownHook(new Thread(() ->
             {
-                communicator.destroy();
                 executor.shutdownNow();
+                communicator.destroy();
             }));
 
             if(!extraArgs.isEmpty())

@@ -15,14 +15,14 @@ public class Server
         public void
         run()
         {
-            _communicator.destroy();
-
             //
             // Call shutdownNow on the executor. This interrupts all
             // executor threads causing any running servant dispatch threads
             // to terminate quickly.
             //
             _executor.shutdownNow();
+
+            _communicator.destroy();
         }
 
         ShutdownHook(Ice.Communicator communicator, ExecutorService executor)
