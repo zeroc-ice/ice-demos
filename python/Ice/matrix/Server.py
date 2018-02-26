@@ -41,7 +41,7 @@ with Ice.initialize(sys.argv, "config.server") as communicator:
         print(sys.argv[0] + ": too many arguments")
         sys.exit(1)
 
-    adapter = communicator.rcreateObjectAdapter("Matrix")
+    adapter = communicator.createObjectAdapter("Matrix")
     adapter.add(MatrixI(), Ice.stringToIdentity("matrix"))
     adapter.activate()
     communicator.waitForShutdown()

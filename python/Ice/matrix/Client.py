@@ -11,7 +11,7 @@ import numpy as np
 Ice.loadSlice('Matrix.ice')
 import Demo
 
-def run(self, communicator):
+def run(communicator):
     matrix = Demo.MatrixPrx.checkedCast(communicator.propertyToProxy('Matrix.Proxy'))
     if not matrix:
         print("invalid proxy")
