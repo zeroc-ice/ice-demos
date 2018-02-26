@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import signal, sys, Ice
+import sys, Ice
 
 Ice.loadSlice('Filesystem.ice')
 import Filesystem
@@ -37,11 +37,6 @@ def listRecursive(dir, depth):
                 print(indent + "\t" + line)
 
 with Ice.initialize(sys.argv) as communicator:
-
-    #
-    # Install a signal handler to destroy the communicator on Ctrl-C
-    #
-    signal.signal(signal.SIGINT, lambda signum, frame: communicator.destroy())
 
     #
     # Create a proxy to the root directory

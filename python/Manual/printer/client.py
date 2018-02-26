@@ -14,8 +14,8 @@ import Demo
 # Ice.initialize returns an initialized Ice communicator,
 # the communicator is destroyed once it goes out of scope.
 #
-with Ice.initialize(sys.argv) as ic:
-    base = ic.stringToProxy("SimplePrinter:default -h localhost -p 10000")
+with Ice.initialize(sys.argv) as communicator:
+    base = communicator.stringToProxy("SimplePrinter:default -h localhost -p 10000")
     printer = Demo.PrinterPrx.checkedCast(base)
     if not printer:
         raise RuntimeError("Invalid proxy")
