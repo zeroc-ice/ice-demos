@@ -1,4 +1,4 @@
-This demo illustrates how to write a simple Locator.
+This demo illustrates how to write a simple [Locator][1].
 
 To run the demo, first start the locator server:
 
@@ -17,3 +17,5 @@ In a separate window, start the client:
 ```
 client
 ```
+
+[1]: https://doc.zeroc.com/display/Ice37/Locators

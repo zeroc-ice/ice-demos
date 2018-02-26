@@ -8,9 +8,9 @@ through a JDBC API and demonstrates the following techniques:
    conversion between Ice and JDBC types.
  - Using a JDBC connection pool to provide JDBC connections for Ice
    requests.
- - Using an Ice servant locator.
- - Using a dispatch interceptor.
- - Accessing a server with and without Glacier2
+ - Using an Ice [servant locator][1].
+ - Using a [dispatch interceptor][2].
+ - Accessing a server with and without [Glacier2][3].
 
 Setting up the demo
 -------------------
@@ -115,3 +115,7 @@ java -jar build/libs/client.jar books
 
 Omit the "books" argument if you have already populated the server's
 database.
+
+[1]: https://doc.zeroc.com/display/Ice37/Servant+Locators
+[2]: https://doc.zeroc.com/display/Ice37/Dispatch+Interceptors
+[3]: https://doc.zeroc.com/display/Ice37/Glacier2

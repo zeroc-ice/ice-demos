@@ -1,3 +1,6 @@
+This demo shows how to implement a [custom locator][1] that delegates
+to the [IceGrid][2] registry.
+
 To run the demo, first start the IceGrid service:
 
 ```
@@ -31,3 +34,6 @@ To run the client with the context set properly:
 ```
 client --context
 ```
+
+[1]: https://doc.zeroc.com/display/Ice37/Locators
+[2]: https://doc.zeroc.com/display/Ice37/IceGrid

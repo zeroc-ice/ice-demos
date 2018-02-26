@@ -1,3 +1,5 @@
+This demo shows how to use replication with [IceDiscovery][1].
+
 To run the demo, start the 3 servers:
 
 ```
@@ -20,3 +22,5 @@ implemented by the IceDiscovery plugin.
 While the client is running and invoking on the server, you can try to
 stop some of the servers. As long as one server is still running, the
 client will continue to work.
+
+[1]: https://doc.zeroc.com/display/Ice37/IceDiscovery

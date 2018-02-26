@@ -1,5 +1,5 @@
-This demo shows a very simple IceGrid deployment, with a single IceBox
-server hosting a number of IceBox services.
+This demo shows a very simple [IceGrid deployment][1], with a single
+[IceBox][2] server hosting a number of IceBox services.
 
 The demo also shows how to use an environment variable in a server
 descriptor.
@@ -18,7 +18,7 @@ icegridnode --Ice.Config=config.grid
 ```
 
 Deploy the `HelloSimpsons` application (in file `application.xml`) with
-the IceGridGUI. If you prefer to use the command-line utility, use:
+the IceGrid GUI. If you prefer to use the command-line utility, use:
 
 ```
 icegridadmin --Ice.Config=config.grid -e "application add application.xml"
@@ -33,19 +33,19 @@ icegridnode --Ice.Config=config.grid
 ```
 
 Deploy the `HelloSimpsons` application (in file `application-netcore.xml`) with
-the IceGridGUI. If you prefer to use the command-line utility, use:
+the IceGrid GUI. If you prefer to use the command-line utility, use:
 
 ```
 icegridadmin --Ice.Config=config.grid -e "application add application-netcore.xml"
 ```
 
-Using IceGridGUI
-----------------
+Using IceGrid GUI
+-----------------
 
-We suggest using the IceGridGUI tool with this demo. Follow these steps to
-log into the IceGrid registry and view the application you deployed above:
+We suggest using the [IceGrid GUI][3] tool with this demo. Follow these steps
+to log into the IceGrid registry and view the application you deployed above:
 
-  - Launch the IceGridGUI application using the IceGrid GUI icon from Start
+  - Launch the IceGrid GUI application using the IceGrid GUI icon from Start
     menu.
 
   - Select `Login...` from the `File menu`.
@@ -81,7 +81,7 @@ The client simply calls 'sayHello' on the replicated 'hello' object.
 Stopping and restarting IceBox services
 ---------------------------------------
 
-You can use the IceGridGUI or the command-line utility to stop
+You can use the IceGrid GUI or the command-line utility to stop
 and restart IceBox services. The commands below show how to manipulate
 the 'Lisa' service:
 ```
@@ -93,14 +93,13 @@ icegridadmin --Ice.Config=config.grid
 Administration through Glacier2
 -------------------------------
 
-This demo also includes the configuration for a Glacier2 router
-(DemoGlacier2) to show how you could administer IceGrid from
-"the other side" of a firewall. (In this demo, however, all the
-components run on the same system.)
+This demo also includes the configuration for a [Glacier2 router][4] to
+show how you could administer IceGrid from "the other side" of a firewall.
+(In this demo, however, all the components run on the same system.)
 
 Follow these steps:
 
- - Connect to the IceGrid registry with icegridadmin or the IceGridGUI
+ - Connect to the IceGrid registry with icegridadmin or the IceGrid GUI
 
  - Start the DemoGlacier2 server
 
@@ -110,10 +109,15 @@ Follow these steps:
    ```
    icegridadmin --Ice.Default.Router="DemoGlacier2/router:tcp -h localhost -p 4063"
    ```
-   In the IceGridGUI, use the Routed tab of the Login dialog.
+   In the IceGrid GUI, use the Routed tab of the Login dialog.
    Change the Glacier2 instance name to "DemoGlacier2" and the endpoints
    to `tcp -h localhost -p 4063`.
 
    DemoGlacier2 is configured to use a built-in permissions verifier
    that does not validate passwords, so you can log in using any
    username/password combination.
+
+[1]: https://doc.zeroc.com/display/Ice37/Using+IceGrid+Deployment
+[2]: https://doc.zeroc.com/display/Ice37/IceBox
+[3]: https://doc.zeroc.com/display/Ice37/IceGrid+GUI+Tool
+[4]: https://doc.zeroc.com/display/Ice37/Glacier2+Integration+with+IceGrid

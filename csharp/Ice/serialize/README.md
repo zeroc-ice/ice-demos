@@ -1,4 +1,4 @@
-This demo illustrates how to transfer serializable .NET classes
+This demo illustrates how to transfer [serializable .NET classes][1]
 with Ice.
 
 The .NET classes are transferred as byte sequences by Ice. It was
@@ -38,3 +38,5 @@ In a separate window, start the client:
 
 The client allows you to toggle between sending a real class instance
 and sending a null value, to show that passing null is supported.
+
+[1]: https://doc.zeroc.com/display/Ice37/Serializable+Objects+in+C-Sharp

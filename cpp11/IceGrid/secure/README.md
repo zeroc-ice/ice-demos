@@ -1,8 +1,8 @@
-This demo shows how to prevent unauthorized access to the IceGrid
-registry and node, to the Glacier2 administrative router and the
-Ice.Admin functionality of IceGrid-managed servers. These components
-use IceSSL secure connections to communicate and restrict access to
-their endpoints.
+This demo shows how to prevent unauthorized access to the [IceGrid registry
+and node][1], to the [Glacier2 administrative router][2], and to the
+[Ice.Admin][3] functionality of IceGrid-managed servers. These components
+use IceSSL secure connections to communicate and restrict access to their
+endpoints.
 
 The client and server use a regular TCP endpoint to communicate, but
 they could also use a secure endpoint if necessary.
@@ -104,3 +104,7 @@ The IceGrid registry and Glacier2 router are configured to use the
 login with the admin tools. In a real world deployment, you would
 instead typically use the file-based permissions verifier or a custom
 permissions verifier implementation.
+
+[1]: https://doc.zeroc.com/display/Ice37/Securing+IceGrid
+[2]: https://doc.zeroc.com/display/Ice37/Securing+a+Glacier2+Router
+[3]: https://doc.zeroc.com/display/Ice37/Security+Considerations+for+Administrative+Facets

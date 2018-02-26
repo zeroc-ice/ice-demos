@@ -1,3 +1,6 @@
+This demo shows how to implement IceGrid custom load balancing using
+[replica group filters][1].
+
 To run the demo, first start the IceGrid service:
 
 ```
@@ -25,3 +28,5 @@ that supports its preferred currency.
 
 You can edit `config.client` to change or comment out the client's
 preferred currency.
+
+[1]: https://doc.zeroc.com/display/Ice37/Load+Balancing

@@ -1,3 +1,5 @@
+This example demonstrates IceGrid's [registry replication][1] feature.
+
 To run the demo, start the IceGrid registries and nodes (you can start
 the registries and nodes in any order, you can also start one or two
 registries and start more later):
@@ -41,3 +43,5 @@ standard error and output to files in their data directories named
 icegridadmin `registry show` or `node show` commands or with the
 IceGridGUI. The standard error files contain the registry and
 node traces.
+
+[1]: https://doc.zeroc.com/display/Ice37/Registry+Replication

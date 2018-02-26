@@ -1,4 +1,4 @@
-This demo demonstrates the use of Glacier2 session helpers and Windows
+This demo demonstrates the use of [Glacier2 session helpers][1] and Windows
 Presentation Framework (WPF) to create a graphical client for the simple
 chat server.
 
@@ -10,3 +10,5 @@ In a separate window, start the WPF client:
 ```
 client
 ```
+
+[1]: https://doc.zeroc.com/display/Ice37/Glacier2+SessionHelper+Class

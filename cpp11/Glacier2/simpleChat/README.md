@@ -1,5 +1,5 @@
-This example demonstrates the use of a Glacier2 session to create a
-very simple chat server.
+This example presents a very simple chat server to demonstrate the use of a
+[Glacier2 session][1].
 
 To run the demo, first start the chat server:
 
@@ -38,3 +38,5 @@ as well: the ChatRoom in `ChatSessionI.cpp` keeps track of the
 sessions associated with each connection from a Glacier2 router,
 and destroys these sessions when the connection is closed. You can
 kill the Glacier2 router to see this cleanup occur.
+
+[1]: https://doc.zeroc.com/display/Ice37/Getting+Started+with+Glacier2

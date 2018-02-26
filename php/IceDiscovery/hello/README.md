@@ -1,10 +1,10 @@
 This directory contains a PHP/HTML implementation of the Ice hello
-client.
+client configured to use [IceDiscovery][1].
 
 Follow these steps to install the demo:
 
 1) Install the Ice extension and run-time files as described in the
-   [manual][1]. Restart the Web server if necessary.
+   [manual][2]. Restart the Web server if necessary.
 
 2) If you have not built the demos yet, please refer to the top level
    [php/README.md](../../README.md) file for build instructions.
@@ -37,4 +37,5 @@ Follow these steps to install the demo:
    by default. If you have configured SSL for the Ice extension, edit
    Client.php and set the have_ssl variable to true.
 
-[1]: https://doc.zeroc.com/display/Rel/Ice+3.7.1+Release+Notes
+[1]: https://doc.zeroc.com/display/Ice37/IceDiscovery
+[2]: https://doc.zeroc.com/display/Rel/Ice+3.7.1+Release+Notes

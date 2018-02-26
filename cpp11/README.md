@@ -72,7 +72,7 @@ Refer to the README.md file in each demo directory for usage instructions.
 ### Prerequisites
 
 The projects for the sample programs require the [Ice Builder for Visual
-Studio][5]. Add this extension to Visual Studio before opening the solution.
+Studio][4]. Add this extension to Visual Studio before opening the solution.
 
 ### Building the Demos
 

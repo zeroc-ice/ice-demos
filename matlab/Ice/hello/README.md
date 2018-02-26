@@ -1,5 +1,6 @@
 This demo illustrates how to invoke ordinary (twoway) operations, as
-well as how to make oneway, datagram, secure, and batched invocations.
+well as how to make [oneway][1], [datagram][2], [secure][3], and
+[batched][4] invocations.
 
 Ice for MATLAB currently supports only client-side functionality, therefore
 you must use a server from any other language mapping. If you want to get
@@ -10,3 +11,8 @@ After starting the server, run the MATLAB client:
 ```
 >> client
 ```
+
+[1]: https://doc.zeroc.com/display/Ice37/Oneway+Invocations
+[2]: https://doc.zeroc.com/display/Ice37/Datagram+Invocations
+[3]: https://doc.zeroc.com/display/Ice37/IceSSL
+[4]: https://doc.zeroc.com/display/Ice37/Batched+Invocations

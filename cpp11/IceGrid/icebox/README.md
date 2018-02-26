@@ -1,5 +1,5 @@
-This demo shows a very simple IceGrid deployment, with a single
-IceBox server hosting a number of IceBox services.
+This demo shows a very simple [IceGrid deployment][1], with a single
+[IceBox][2] server hosting a number of IceBox services.
 
 The demo also demonstrates how to use an environment variable in a
 server descriptor.
@@ -26,11 +26,11 @@ icegridadmin --Ice.Config=config.grid -e "application add application.xml"
 If you are using 32-bit binaries on a Linux 64-bit host, first edit
 `application.xml` and replace `exe="icebox++11"` by `exe="icebox32++11"`.
 
-Using the IceGridGUI
---------------------
+Using the IceGrid GUI
+---------------------
 
-We suggest using the IceGridGUI tool with this demo. Follow these steps to
-log into the IceGrid registry and view the application you deployed above:
+We suggest using the [IceGrid GUI][3] tool with this demo. Follow these steps
+to log into the IceGrid registry and view the application you deployed above:
 
   - Launch the application. Windows users can use the IceGrid GUI
     icon from the Start menu, macOS users can use the IceGrid GUI
@@ -76,7 +76,7 @@ The client simply calls `sayHello` on the replicated `hello` object.
 Stopping and restarting IceBox services
 ---------------------------------------
 
-You can use the IceGridGUI or the command-line utility to stop and
+You can use the IceGrid GUI or the command-line utility to stop and
 restart IceBox services. The commands below show how to manipulate
 the 'Lisa' service:
 ```
@@ -88,15 +88,13 @@ icegridadmin --Ice.Config=config.grid
 Administration through Glacier2
 -------------------------------
 
-This demo also includes the configuration for a Glacier2 router
-(DemoGlacier2), to show how you could administer IceGrid from
- "the other side" of a firewall. (In this demo, however, all the
-components run on the same system.)
+This demo also includes the configuration for a [Glacier2 router][4]
+to show how you could administer IceGrid from "the other side" of a firewall.
+(In this demo, however, all the components run on the same system.)
 
 Follow these steps:
 
- - Connect to the IceGrid registry with icegridadmin or the
-   IceGrid GUI
+ - Connect to the IceGrid registry with icegridadmin or the IceGrid GUI
 
  - Start the DemoGlacier2 server
 
@@ -115,3 +113,8 @@ Follow these steps:
    DemoGlacier2 is configured to use a built-in permissions verifier
    that does not validate passwords, so you can log in using any
    username/password combination.
+
+[1]: https://doc.zeroc.com/display/Ice37/Using+IceGrid+Deployment
+[2]: https://doc.zeroc.com/display/Ice37/IceBox
+[3]: https://doc.zeroc.com/display/Ice37/IceGrid+GUI+Tool
+[4]: https://doc.zeroc.com/display/Ice37/Glacier2+Integration+with+IceGrid

@@ -1,4 +1,4 @@
-This demo illustrates how to access a server's PropertiesAdmin facet
+This demo illustrates how to access a server's [Properties facet][1]
 in order to retrieve and modify its configuration properties. This
 demo also shows how the server can receive notifications whenever its
 properties are changed.
@@ -14,3 +14,5 @@ In a separate window, start the client:
 ```
 python client.py
 ```
+
+[1]: https://doc.zeroc.com/display/Ice37/The+Properties+Facet

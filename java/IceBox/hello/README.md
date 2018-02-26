@@ -1,3 +1,5 @@
+This demo shows how to create an [IceBox][1] service.
+
 To run this demo, open two terminal windows. In the first window,
 start the IceBox server:
 
@@ -16,3 +18,5 @@ To shut down IceBox, use IceBox.Admin:
 ```
 java IceBox.Admin --Ice.Config=config.admin shutdown
 ```
+
+[1]: https://doc.zeroc.com/display/Ice37/IceBox

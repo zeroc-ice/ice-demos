@@ -1,4 +1,4 @@
-This demo illustrates how to transfer serializable Java classes
+This demo illustrates how to transfer [serializable Java classes][1]
 with Ice.
 
 The Java classes are transferred as byte sequences by Ice. It was
@@ -41,3 +41,5 @@ java -jar build/libs/client.jar
 
 The client allows you to toggle between sending a real class instance
 and sending a null value, to show that passing null is supported.
+
+[1]: https://doc.zeroc.com/display/Ice37/Serializable+Objects+in+Java

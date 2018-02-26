@@ -1,5 +1,5 @@
-This demo is a C++ commandline client for the [ZeroC Chat Demo](https://doc.zeroc.com/display/Doc/Chat+Demo).
-This demo connects to a single chat room, allowing you to chat with other chat
+This demo is a C++ command-line client for the [ZeroC Chat Demo][1].
+It connects to a single chat room, allowing you to chat with other chat
 room participants.
 
 By default, the demo connects to the chat server hosted on demo.zeroc.com
@@ -15,3 +15,5 @@ the appropriate custom configuration file when launching the client:
 chatgl2client --Ice.Config=config.gl2client
 chatpollclient --Ice.Config=config.pollclient
 ```
+
+[1]: https://doc.zeroc.com/display/Doc/Chat+Demo

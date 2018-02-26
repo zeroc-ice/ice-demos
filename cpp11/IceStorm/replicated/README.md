@@ -1,5 +1,5 @@
-This demo demonstrates how to configure and deploy HA IceStorm using
-IceGrid.
+This demo demonstrates how to configure and deploy [Highly Available
+IceStorm][1] using IceGrid.
 
 To run the demo, start the IceGrid service:
 
@@ -29,10 +29,9 @@ become unavailable, and IceStorm will continue to function. However,
 should two replicas become unavailable, replication will halt until another
 instance comes back online.
 
-For more information on the configuration of HA IceStorm please see
-the Ice manual.
-
 Other than configuration, the subscribers and publishers do not have
 to do anything special to take advantage of the replication. The
 subscriber and publisher are identical to those contained in the clock
 demo. See ../clock/README for instructions on running them.
+
+[1]: https://doc.zeroc.com/display/Ice37/Highly+Available+IceStorm

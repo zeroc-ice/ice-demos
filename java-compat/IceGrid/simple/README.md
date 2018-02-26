@@ -1,3 +1,6 @@
+This demo illustrates the basics of using [IceGrid][1], including the use of
+[templates][2] and [object adapter replication][3].
+
 To run the demo, first start the IceGrid service:
 
 ```
@@ -45,3 +48,7 @@ following command to deploy a new server:
 ```
 icegridadmin --Ice.Config=config.grid -e "server template instantiate Simple node1 SimpleServer index=4"
 ```
+
+[1]: https://doc.zeroc.com/display/Ice37/IceGrid
+[2]: https://doc.zeroc.com/display/Ice37/IceGrid+Templates
+[3]: https://doc.zeroc.com/display/Ice37/Object+Adapter+Replication

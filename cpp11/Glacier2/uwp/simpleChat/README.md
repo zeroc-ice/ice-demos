@@ -2,7 +2,7 @@
 
 This demo is a graphical client app written in C++/CX. This client
 works with the Glacier2/simpleChat server provided in C++, and demonstrates
-the use of Glacier2 session helpers.
+the use of [Glacier2 session helpers][1].
 
 ## Running the demo
 
@@ -13,15 +13,15 @@ or right click on the project and select `Debug -> Start new instance`.
 
 ### SSL
 
-The Ice ssl transport for UWP currently does not support client-side
+The Ice SSL transport for UWP currently does not support client-side
 authentication. In order to successfully connect with SSL, you need to edit
 the Glacier2 router configuration file (`config.glacier2`) and uncomment the
 `IceSSL.VerifyPeer=0` property.
 
 If you run the chat client and Glacier2 router on different computers or
 devices, you also need to regenerate the server certificate to ensure the
-certificate common name is set to the address used by the client to connect to
-the Glacier2 router.
+certificate's common name is set to the address used by the client to connect
+to the Glacier2 router.
 
 To regenerate the certificate, you can run the `makedemocerts.py` Python script
 from the `certs` directory at the top of this distribution. For example:
@@ -41,3 +41,5 @@ sure to copy these certificates (the `certs` directory) to the other system.
  > Note: Rebuilding and redeploying the chat client app is not sufficient to
  > update its certificates. Make sure to manually un-install this app before
  > redeploying it.
+
+[1]: https://doc.zeroc.com/display/Ice37/Glacier2+SessionHelper+Class

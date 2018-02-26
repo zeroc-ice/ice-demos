@@ -1,5 +1,5 @@
-This demo demonstrates how to configure and deploy IceStorm in a
-replicated fashion without using IceGrid.
+This demo demonstrates how to configure and deploy [replicated IceStorm
+instances][1] without using IceGrid.
 
 To run the demo, start the three IceStorm replicas. In three separate
 windows:
@@ -30,10 +30,9 @@ IceStorm will continue to function. However, should two replicas
 become unavailable, replication will halt until another instance comes
 back online.
 
-For more information on the configuration of HA IceStorm please see
-the Ice manual.
-
 Other than configuration, the subscribers and publishers do not have
 to do anything special to take advantage of the replication. The
 subscriber and publisher are identical to those contained in the clock
 demo. See ../clock/README for instructions on running them.
+
+[1]: https://doc.zeroc.com/display/Ice37/Highly+Available+IceStorm

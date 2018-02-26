@@ -1,4 +1,4 @@
-This demo illustrates how to retrieve metrics information from Ice
+This demo illustrates how to retrieve [metrics information][1] from Ice
 applications.
 
 The Metrics.py script provided with this demo connects to an Ice
@@ -90,3 +90,5 @@ The Debug metrics view provides detailed metrics information while the
 ByParent metrics view groups metrics by parent (the parent is usually
 either the Ice communicator or object adapter depending on the object
 monitored).
+
+[1]: https://doc.zeroc.com/display/Ice37/Instrumentation+Facility

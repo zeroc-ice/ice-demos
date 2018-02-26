@@ -1,4 +1,4 @@
-This demo illustrates how to interrupt blocking servant dispatches on
+This demo illustrates how to [interrupt][1] blocking servant dispatches on
 the server and interrupt blocking proxy invocations on the client by
 using `Thread.interrupt()`.
 
@@ -38,3 +38,5 @@ Only a single blocking invocation can be active at once.
 
 Pressing 't' in the client runs the task on the server using a
 non-blocking AMI invocation.
+
+[1]: https://doc.zeroc.com/display/Ice37/Java+Interrupts

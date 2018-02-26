@@ -1,6 +1,6 @@
 This demo illustrates how to write a QT GUI application which invokes
-ordinary (twoway) operations, as well as how to make oneway, datagram,
-secure, and batched invocations.
+ordinary (twoway) operations, as well as how to make [oneway][1],
+[datagram][2], [secure][3], and [batched][4] invocations.
 
 ## Building the demo on Linux and macOS
 
@@ -19,8 +19,8 @@ Make
 
 ### Prerequisites
 
-The project requires the [Qt Visual Studio Tools][1] and [Ice Builder for Visual
-Studio][2] extensions.
+The project requires the [Qt Visual Studio Tools][5] and [Ice Builder for Visual
+Studio][6] extensions.
 
 ### Building the demo
 
@@ -41,5 +41,9 @@ In a separate window, start the qt client:
 client
 ```
 
-[1]: https://marketplace.visualstudio.com/items?itemName=TheQtCompany.QtVisualStudioTools2015
-[2]: https://github.com/zeroc-ice/ice-builder-visualstudio
+[1]: https://doc.zeroc.com/display/Ice37/Oneway+Invocations
+[2]: https://doc.zeroc.com/display/Ice37/Datagram+Invocations
+[3]: https://doc.zeroc.com/display/Ice37/Batched+Invocations
+[4]: https://doc.zeroc.com/display/Ice37/IceSSL
+[5]: https://marketplace.visualstudio.com/items?itemName=TheQtCompany.QtVisualStudioTools2015
+[6]: https://github.com/zeroc-ice/ice-builder-visualstudio

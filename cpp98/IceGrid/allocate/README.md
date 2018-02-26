@@ -1,3 +1,5 @@
+This demo shows how to [allocate objects][1] using the IceGrid registry.
+
 To run the demo, first start the IceGrid service:
 
 ```
@@ -40,3 +42,5 @@ icegridadmin --Ice.Config=config.grid -e \ "application update application-multi
 ```
 
 Messages will be displayed in the IceGrid service window.
+
+[1]: https://doc.zeroc.com/display/Ice37/Resource+Allocation+using+IceGrid+Sessions

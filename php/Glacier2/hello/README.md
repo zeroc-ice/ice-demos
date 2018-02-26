@@ -1,5 +1,5 @@
 This directory contains a PHP/HTML application that demonstrates how
-a PHP session can register an Ice communicator and use it in
+a PHP session can [register an Ice communicator][1] and use it in
 subsequent page requests.
 
 To use the application, a user must first log in by providing any
@@ -21,7 +21,7 @@ demo.
 Follow these steps to install the demo:
 
 1) Install the Ice extension and run-time files as described in the
-   [manual][1]. Restart the Web server if necessary.
+   [manual][2]. Restart the Web server if necessary.
 
 2) If you have not built the demos yet, please refer to the top level
    [php/README.md](../../README.md) file for build instructions.
@@ -66,4 +66,5 @@ Web server, you will need to modify the router's endpoint in
 `config.glacier2` and `Login.php`. To run the hello server on a different
 host, modify the endpoint in `Session.php`.
 
-[1]: https://doc.zeroc.com/display/Rel/Ice+3.7.1+Release+Notes
+[1]: https://doc.zeroc.com/display/Ice37/Application+Notes+for+PHP
+[2]: https://doc.zeroc.com/display/Rel/Ice+3.7.1+Release+Notes
