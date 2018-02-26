@@ -3,13 +3,13 @@ This demo is the Ice hello world demo.
 To run the demo, first start the server:
 
 ```
-python Server.py
+python server.py
 ```
 
 In a separate window, start the client:
 
 ```
-python Client.py
+python client.py
 ```
 
 The client and server use IceDiscovery to enable the location of the

@@ -4,13 +4,13 @@ and Asynchronous Method Dispatch (AMD).
 To run the demo, first start the server:
 
 ```
-python Server.py
+python server.py
 ```
 
 In a second window, start the client:
 
 ```
-python Client.py
+python client.py
 ```
 
 The demo invocation can either have a short response time or require a

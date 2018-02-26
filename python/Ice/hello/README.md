@@ -4,13 +4,13 @@ well as how to make oneway, datagram, secure, and batched invocations.
 To run the demo, first start the server:
 
 ```
-python Server.py
+python server.py
 ```
 
 In a separate window, start the client:
 
 ```
-python Client.py
+python client.py
 ```
 
 To test timeouts you can use 'T' to set an invocation timeout on the client
