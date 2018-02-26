@@ -8,24 +8,6 @@ import Filesystem.*;
 
 public class Server
 {
-    static class ShutdownHook extends Thread
-    {
-        @Override
-        public void
-        run()
-        {
-            _communicator.destroy();
-            System.err.println("terminating");
-        }
-
-        ShutdownHook(Ice.Communicator communicator)
-        {
-            _communicator = communicator;
-        }
-
-        private final Ice.Communicator _communicator;
-    }
-
     public static void
     main(String[] args)
     {
@@ -36,13 +18,21 @@ public class Server
         // Try with resources block - communicator is automatically destroyed
         // at the end of this try block
         //
-        try(Ice.Communicator communicator = Ice.Util.initialize(argsHolder))
+        try(final Ice.Communicator communicator = Ice.Util.initialize(argsHolder))
         {
             //
             // Install shutdown hook to (also) destroy communicator during JVM shutdown.
             // This ensures the communicator gets destroyed when the user interrupts the application with Ctrl-C.
             //
-            Runtime.getRuntime().addShutdownHook(new ShutdownHook(communicator));
+            Runtime.getRuntime().addShutdownHook(new Thread()
+                {
+                    @Override
+                    public void run()
+                    {
+                        communicator.destroy();
+                        System.err.println("terminating");
+                    }
+                });
 
             status = run(communicator, argsHolder.value);
         }
