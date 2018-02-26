@@ -17,7 +17,7 @@ import Demo
 with Ice.initialize(sys.argv, "config.server") as communicator:
 
     #
-    # signal.signal must be called within the same scope as the communicator to catch CtrlC
+    # Install a signal handler to shutdown the communicator on Ctrl-C
     #
     signal.signal(signal.SIGINT, lambda signum, handler: communicator.shutdown())
 
@@ -32,4 +32,3 @@ with Ice.initialize(sys.argv, "config.server") as communicator:
     adapter.add(Demo.Ping(), Ice.stringToIdentity("ping"))
     adapter.activate()
     communicator.waitForShutdown()
-sys.exit(0)

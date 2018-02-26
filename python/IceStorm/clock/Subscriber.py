@@ -18,13 +18,13 @@ def usage():
     print("Usage: " + sys.argv[0] +
           " [--batch] [--datagram|--twoway|--ordered|--oneway] [--retryCount count] [--id id] [topic]")
 
-def run(communicator, args):
+def run(communicator):
     try:
-        opts, args = getopt.getopt(args[1:], '', ['datagram', 'twoway', 'oneway', 'ordered', 'batch',
-                                                  'retryCount=', 'id='])
+        opts, args = getopt.getopt(sys.argv[1:], '', ['datagram', 'twoway', 'oneway', 'ordered', 'batch',
+                                                      'retryCount=', 'id='])
     except getopt.GetoptError:
         usage()
-        return 1
+        sys.exit(1)
 
     batch = False
     option = "None"
@@ -50,11 +50,11 @@ def run(communicator, args):
             retryCount = a
         if oldoption != option and oldoption != "None":
             usage()
-            return 1
+            sys.exit(1)
 
     if len(args) > 1:
         usage()
-        return 1
+        sys.exit(1)
 
     if len(args) > 0:
         topicName = args[0]
@@ -64,16 +64,16 @@ def run(communicator, args):
             option = "Twoway"
         elif option != "Twoway" and option != "Ordered":
             print(sys.argv[0] + ": retryCount requires a twoway proxy")
-            return 1
+            sys.exit(1)
 
     if batch and (option in ("Twoway", "Ordered")):
         print(sys.argv[0] + ": batch can only be set with oneway or datagram")
-        return 1
+        sys.exit(1)
 
     manager = IceStorm.TopicManagerPrx.checkedCast(communicator.propertyToProxy('TopicManager.Proxy'))
     if not manager:
         print(args[0] + ": invalid proxy")
-        return 1
+        sys.exit(1)
 
     #
     # Retrieve the topic.
@@ -85,7 +85,7 @@ def run(communicator, args):
             topic = manager.create(topicName)
         except IceStorm.TopicExists as ex:
             print(sys.argv[0] + ": temporary error. try again")
-            return 1
+            sys.exit(1)
 
     adapter = communicator.createObjectAdapter("Clock.Subscriber")
 
@@ -148,14 +148,14 @@ def run(communicator, args):
     #
     topic.unsubscribe(subscriber)
 
-    return 0
-
-status = 0
-
 #
 # Ice.initialize returns an initialized Ice communicator,
 # the communicator is destroyed once it goes out of scope.
 #
 with Ice.initialize(sys.argv, "config.sub") as communicator:
-    status = run(communicator, sys.argv)
-sys.exit(status)
+    #
+    # Install a signal handler to shutdown the communicator on Ctrl-C
+    #
+    signal.signal(signal.SIGINT, lambda signum, frame: communicator.shutdown())
+
+    status = run(communicator)

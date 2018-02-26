@@ -20,7 +20,7 @@ def run(communicator):
         ice_twoway().ice_timeout(-1).ice_secure(False))
     if not sender:
         print("invalid proxy")
-        return 1
+        sys.exit(1)
 
     adapter = communicator.createObjectAdapter("Callback.Client")
     adapter.add(CallbackReceiverI(), Ice.stringToIdentity("callbackReceiver"))
@@ -33,26 +33,20 @@ def run(communicator):
 
     c = None
     while c != 'x':
-        try:
-            sys.stdout.write("==> ")
-            sys.stdout.flush()
-            c = sys.stdin.readline().strip()
-            if c == 't':
-                sender.initiateCallback(receiver)
-            elif c == 's':
-                sender.shutdown()
-            elif c == 'x':
-                pass  # Nothing to do
-            elif c == '?':
-                menu()
-            else:
-                print("unknown command `" + c + "'")
-                menu()
-        except EOFError:
-            return 1
-        except KeyboardInterrupt:
-            return 1
-    return 0
+        sys.stdout.write("==> ")
+        sys.stdout.flush()
+        c = sys.stdin.readline().strip()
+        if c == 't':
+            sender.initiateCallback(receiver)
+        elif c == 's':
+            sender.shutdown()
+        elif c == 'x':
+            pass  # Nothing to do
+        elif c == '?':
+            menu()
+        else:
+            print("unknown command `" + c + "'")
+            menu()
 
 def menu():
     print("""
@@ -62,8 +56,6 @@ s: shutdown server
 x: exit
 ?: help
 """)
-
-status = 0
 
 #
 # The Ice communicator is initlialized with Ice.initialize
@@ -76,7 +68,5 @@ with Ice.initialize(sys.argv, "config.client") as communicator:
     #
     if len(sys.argv) > 1:
         print(sys.argv[0] + ": too many arguments")
-        status = 1
-    else:
-        status = run(communicator)
-sys.exit(status)
+        sys.exit(1)
+    run(communicator)

@@ -244,14 +244,14 @@ disable Disable all the IceMX metrics views configured for
         the process or the provided view or map if specified.
 """)
 
-def run(communicator, args):
+def run(communicator):
 
     props = communicator.getProperties()
-    args = props.parseCommandLineOptions("", args)
+    args = props.parseCommandLineOptions("", sys.argv)
 
     if len(args) < 2 or len(args) > 6:
         usage()
-        return 2
+        sys.exit(2)
 
     command = args[1]
     viewName = None
@@ -269,7 +269,7 @@ def run(communicator, args):
         metrics = IceMX.MetricsAdminPrx.checkedCast(communicator.stringToProxy(proxyStr))
         if not metrics:
             print(sys.argv[0] + ": invalid proxy `" + proxyStr + "'")
-            return 1
+            sys.exit(1)
 
         if command == "dump":
             (views, disabledViews) = metrics.getMetricsViewNames()
@@ -282,23 +282,20 @@ def run(communicator, args):
                 if viewName not in views and viewName not in disabledViews:
                     print("unknown view `" + viewName + "', available views:")
                     print("enabled = " + str(views) + ", disabled = " + str(disabledViews))
-                    return 0
-
                 # Ensure the view is enabled
-                if viewName in disabledViews:
+                elif viewName in disabledViews:
                     print("view `" + viewName + "' is disabled")
-                    return 0
-
-                # Retrieve the metrics view and print it.
-                (view, refresh) = metrics.getMetricsView(viewName)
-                if mapName:
-                    if mapName not in view:
-                        print("no map `" + mapName + "' in `" + viewName + "' view, available maps:")
-                        print(str(view.keys()))
-                        return 0
-                    printMetricsMap(metrics, viewName, mapName, view[mapName])
                 else:
-                    printMetricsView(metrics, viewName, (view, refresh))
+                    # Retrieve the metrics view and print it.
+                    (view, refresh) = metrics.getMetricsView(viewName)
+                    if mapName:
+                        if mapName not in view:
+                            print("no map `" + mapName + "' in `" + viewName + "' view, available maps:")
+                            print(str(view.keys()))
+                        else:
+                            printMetricsMap(metrics, viewName, mapName, view[mapName])
+                    else:
+                        printMetricsView(metrics, viewName, (view, refresh))
         elif command == "enable":
             metrics.enableMetricsView(viewName)
         elif command == "disable":
@@ -306,23 +303,18 @@ def run(communicator, args):
         else:
             print("unknown command `" + command + "'")
             usage()
-            return 2
+            sys.exit(2)
     except Ice.ObjectNotExistException as ex:
         print("failed to get metrics from `%s':\n(the admin object doesn't exist, "
               "are you sure you used the correct instance name?)" % (proxyStr))
-        return 1
+        sys.exit(1)
     except Ice.Exception as ex:
         print("failed to get metrics from `%s':\n%s" % (proxyStr, ex))
-        return 1
-
-    return 0
-
-status = 0
+        sys.exit(1)
 
 #
 # Ice.initialize returns an initialized Ice communicator,
 # the communicator is destroyed once it goes out of scope.
 #
 with Ice.initialize(sys.argv) as communicator:
-    status = run(communicator, sys.argv)
-sys.exit(status)
+    run(communicator)

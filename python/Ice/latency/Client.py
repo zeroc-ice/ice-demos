@@ -14,7 +14,7 @@ def run(communicator):
     ping = Demo.PingPrx.checkedCast(communicator.propertyToProxy('Ping.Proxy'))
     if not ping:
         print("invalid proxy")
-        return 1
+        sys.exit(1)
 
     # Initial ping to setup the connection.
     ping.ice_ping()
@@ -35,10 +35,6 @@ def run(communicator):
     print("time for %d pings: %.3fms" % (repetitions, tmsec))
     print("time per ping: %.3fms" % (tmsec / repetitions))
 
-    return 0
-
-status = 0
-
 #
 # Ice.initialize returns an initialized Ice communicator,
 # the communicator is destroyed once it goes out of scope.
@@ -46,16 +42,15 @@ status = 0
 with Ice.initialize(sys.argv, "config.client") as communicator:
 
     #
-    # signal.signal must be called within the same scope as the communicator to catch CtrlC
+    # Install a signal handler to destroy the communicator on Ctrl-C
     #
-    signal.signal(signal.SIGINT, lambda signum, handler: communicator.shutdown())
+    signal.signal(signal.SIGINT, lambda signum, handler: communicator.destroy())
 
     #
     # The communicator initialization removes all Ice-related arguments from argv
     #
     if len(sys.argv) > 1:
         print(sys.argv[0] + ": too many arguments")
-        status = 1
-    else:
-        status = run(communicator)
-sys.exit(status)
+        sys.exit(1)
+
+    run(communicator)

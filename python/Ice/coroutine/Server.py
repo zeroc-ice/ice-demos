@@ -5,7 +5,7 @@
 #
 # **********************************************************************
 
-import sys, asyncio, urllib.parse, os, Ice
+import signal, sys, asyncio, urllib.parse, os, Ice
 
 Ice.loadSlice('Fetcher.ice')
 import Demo
@@ -62,42 +62,42 @@ class FetcherI(Demo.Fetcher):
         current.adapter.getCommunicator().shutdown()
         self.loop.call_soon_threadsafe(self.loop.stop)
 
-class Server(Ice.Application):
-    def interruptCallback(self, sig):
-        #
-        # Schedule a call to stop the loop. This causes run_forever() to return.
-        #
-        self.loop.call_soon_threadsafe(self.loop.stop)
-        self.communicator().shutdown()
+def interruptHandler(loop, communicator):
+    #
+    # Schedule a call to stop the loop. This causes run_forever() to return.
+    #
+    loop.call_soon_threadsafe(loop.stop)
+    communicator.shutdown()
 
-    def run(self, args):
+#
+# Ice.initialize returns an initialized Ice communicator,
+# the communicator is destroyed once it goes out of scope.
+#
+with Ice.initialize(sys.argv, "config.server") as communicator:
 
-        if len(args) > 1:
-            print(self.appName() + ": too many arguments")
-            return 1
+    #
+    # The communicator initialization removes all Ice-related arguments from argv
+    #
+    if len(sys.argv) > 1:
+        print(sys.argv[0] + ": too many arguments")
+        sys.exit(1)
 
-        self.loop = asyncio.get_event_loop()
+    loop = asyncio.get_event_loop()
 
-        #
-        # This causes interruptCallback to be called on a signal.
-        #
-        self.callbackOnInterrupt()
+    #
+    # Install a signal handler to stop asyncio loop and shutdown the communicator on Ctrl-C
+    #
+    signal.signal(signal.SIGINT, lambda signum, frame: interruptHandler(loop, communicator))
 
-        adapter = self.communicator().createObjectAdapter("Fetcher")
-        adapter.add(FetcherI(self.loop), Ice.stringToIdentity("fetcher"))
-        adapter.activate()
+    adapter = communicator.createObjectAdapter("Fetcher")
+    adapter.add(FetcherI(loop), Ice.stringToIdentity("fetcher"))
+    adapter.activate()
 
-        #
-        # Run the asyncio event loop until stop() is called.
-        #
-        self.loop.run_forever()
+    #
+    # Run the asyncio event loop until stop() is called.
+    #
+    loop.run_forever()
 
-        self.communicator().waitForShutdown()
+    communicator.waitForShutdown()
 
-        self.loop.close()
-
-        return 0
-
-sys.stdout.flush()
-app = Server()
-sys.exit(app.main(sys.argv, "config.server"))
+    loop.close()

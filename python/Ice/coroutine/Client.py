@@ -5,30 +5,40 @@
 #
 # **********************************************************************
 
-import sys, Ice
+import signal, sys, Ice
 
 Ice.loadSlice('Fetcher.ice')
 import Demo
 
-class Client(Ice.Application):
+def run(communicator):
 
-    def run(self, args):
+    fetcher = Demo.FetcherPrx.checkedCast(communicator.propertyToProxy('Fetcher.Proxy'))
+    if not fetcher:
+        print("invalid proxy")
+        sys.exit(1)
 
-        if len(args) > 1:
-            print(self.appName() + ": too many arguments")
-            return 1
+    content = fetcher.fetch('http://zeroc.com')
+    print("HTTP headers from zeroc.com:")
+    print(content)
 
-        fetcher = Demo.FetcherPrx.checkedCast(self.communicator().propertyToProxy('Fetcher.Proxy'))
-        if not fetcher:
-            print("invalid proxy")
-            return 1
+    fetcher.shutdown()
 
-        content = fetcher.fetch('http://zeroc.com')
-        print("HTTP headers from zeroc.com:")
-        print(content)
+#
+# Ice.initialize returns an initialized Ice communicator,
+# the communicator is destroyed once it goes out of scope.
+#
+with Ice.initialize(sys.argv, "config.client") as communicator:
 
-        fetcher.shutdown()
-        return 0
+    #
+    # Install a signal handler to destroy the communicator on Ctrl-C
+    #
+    signal.signal(signal.SIGINT, lambda signum, handler: communicator.destroy())
 
-app = Client()
-sys.exit(app.main(sys.argv, "config.client"))
+    #
+    # The communicator initialization removes all Ice-related arguments from argv
+    #
+    if len(sys.argv) > 1:
+        print(sys.argv[0] + ": too many arguments")
+        sys.exit(1)
+
+    run(communicator)

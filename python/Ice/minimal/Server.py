@@ -21,7 +21,7 @@ class HelloI(Demo.Hello):
 with Ice.initialize(sys.argv) as communicator:
 
     #
-    # signal.signal must be called within the same scope as the communicator to catch CtrlC
+    # Install a signal handler to shutdown the communicator on Ctrl-C
     #
     signal.signal(signal.SIGINT, lambda signum, frame: communicator.shutdown())
 

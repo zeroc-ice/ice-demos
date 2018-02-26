@@ -19,7 +19,7 @@ def run(communicator):
         communicator.stringToProxy('hello').ice_twoway().ice_secure(False))
     if not twoway:
         print(sys.args[0] + ": invalid proxy")
-        return 1
+        sys.exit(1)
 
     oneway = Demo.HelloPrx.uncheckedCast(twoway.ice_oneway())
     batchOneway = Demo.HelloPrx.uncheckedCast(twoway.ice_batchOneway())
@@ -103,10 +103,6 @@ def run(communicator):
             else:
                 print("unknown command `" + c + "'")
                 menu()
-        except KeyboardInterrupt:
-            break
-        except EOFError:
-            break
         except Ice.Exception as ex:
             print(ex)
 
@@ -129,8 +125,6 @@ x: exit
 ?: help
 """)
 
-status = 0
-
 #
 # Ice.initialize returns an initialized Ice communicator,
 # the communicator is destroyed once it goes out of scope.
@@ -142,7 +136,6 @@ with Ice.initialize(sys.argv, "config.client") as communicator:
     #
     if len(sys.argv) > 1:
         print(sys.argv[0] + ": too many arguments")
-        status = 1
-    else:
-        status = run(communicator)
-sys.exit(status)
+        sys.exit(1)
+
+    run(communicator)

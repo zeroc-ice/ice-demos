@@ -17,13 +17,13 @@ import Demo
 
 class CallbackReceiverI(Demo.CallbackReceiver):
     def callback(self, num, current):
-        print("received callback #" + str(num))
+        print("received callback #{0}".format(num))
 
 def run(communicator):
     server = Demo.CallbackSenderPrx.checkedCast(communicator.propertyToProxy('CallbackSender.Proxy'))
     if not server:
         print("invalid proxy")
-        return 1
+        sys.exit(1)
 
     #
     # Create an object adapter with no name and no endpoints for receiving callbacks
@@ -50,9 +50,6 @@ def run(communicator):
     server.addClient(proxy)
     communicator.waitForShutdown()
 
-    return 0
-
-status = 0
 #
 # Ice.initialize returns an initialized Ice communicator,
 # the communicator is destroyed once it goes out of scope.
@@ -60,7 +57,7 @@ status = 0
 with Ice.initialize(sys.argv, "config.client") as communicator:
 
     #
-    # signal.signal must be called within the same scope as the communicator to catch CtrlC
+    # Install a signal handler to shutdown the communicator on Ctrl-C
     #
     signal.signal(signal.SIGINT, lambda signum, frame: communicator.shutdown())
 
@@ -69,8 +66,6 @@ with Ice.initialize(sys.argv, "config.client") as communicator:
     #
     if len(sys.argv) > 1:
         print(sys.argv[0] + ": too many arguments")
-        status = 1
-    else:
-        status = run(communicator)\
+        sys.exit(1)
 
-sys.exit(status)
+    run(communicator)

@@ -13,7 +13,7 @@ def run(communicator):
     calculator = Demo.CalculatorPrx.checkedCast(communicator.propertyToProxy('Calculator.Proxy'))
     if not calculator:
         print("invalid proxy")
-        return 1
+        sys.exit(1)
 
     # Calculate 10 - 4 with an asynchronous call that returns a future object
     print("10 minus 4 is ", calculator.subtractAsync(10, 4).result())
@@ -88,9 +88,6 @@ def run(communicator):
     loop.close()
 
     calculator.shutdown()
-    return 0
-
-status = 0
 
 #
 # Ice.initialize returns an initialized Ice communicator,
@@ -99,8 +96,7 @@ status = 0
 with Ice.initialize(sys.argv, "config.client") as communicator:
 
     #
-    # This function must be called after the communicator has been initialized and within the
-    # same scope as the communicator.
+    # Install a signal handler to destroy the communicator on Ctrl-C
     #
     signal.signal(signal.SIGINT, lambda signum, handler: communicator.destroy())
 
@@ -109,10 +105,6 @@ with Ice.initialize(sys.argv, "config.client") as communicator:
     #
     if len(sys.argv) > 1:
         print(sys.argv[0] + ": too many arguments")
-        status = 1
-    else:
-        try:
-            status = run(communicator)
-        except Ice.CommunicatorDestroyedException:
-            pass
-sys.exit(status)
+        sys.exit(1)
+
+    run(communicator)

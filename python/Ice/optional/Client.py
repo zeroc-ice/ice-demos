@@ -14,7 +14,7 @@ def run(communicator):
     contactdb = Demo.ContactDBPrx.checkedCast(communicator.propertyToProxy("ContactDB.Proxy"))
     if contactdb is None:
         print("invalid proxy")
-        return 1
+        sys.exit(1)
 
     #
     # Add a contact for "john". All parameters are provided.
@@ -161,10 +161,6 @@ def run(communicator):
 
     contactdb.shutdown()
 
-    return 0
-
-status = 0
-
 #
 # Ice.initialize returns an initialized Ice communicator,
 # the communicator is destroyed once it goes out of scope.
@@ -176,7 +172,6 @@ with Ice.initialize(sys.argv, "config.client") as communicator:
     #
     if len(sys.argv) > 1:
         print(sys.argv[0] + ": too many arguments")
-        status = 1
-    else:
-        status = run(communicator)
-sys.exit(status)
+        sys.exit(1)
+
+    run(communicator)

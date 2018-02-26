@@ -13,12 +13,12 @@ import Demo
 def usage():
     print("Usage: " + sys.argv[0] + " [--datagram|--twoway|--oneway] [topic]")
 
-def run(communicator, args):
+def run(communicator):
     try:
-        opts, args = getopt.getopt(args[1:], '', ['datagram', 'twoway', 'oneway'])
+        opts, args = getopt.getopt(sys.argv[1:], '', ['datagram', 'twoway', 'oneway'])
     except getopt.GetoptError:
         usage()
-        return 1
+        sys.exit(1)
 
     datagram = False
     twoway = False
@@ -36,7 +36,7 @@ def run(communicator, args):
 
     if optsSet > 1:
         usage()
-        return 1
+        sys.exit(1)
 
     if len(args) > 0:
         topicName = args[0]
@@ -44,7 +44,7 @@ def run(communicator, args):
     manager = IceStorm.TopicManagerPrx.checkedCast(communicator.propertyToProxy('TopicManager.Proxy'))
     if not manager:
         print(args[0] + ": invalid proxy")
-        return 1
+        sys.exit(1)
 
     #
     # Retrieve the topic.
@@ -56,7 +56,7 @@ def run(communicator, args):
             topic = manager.create(topicName)
         except IceStorm.TopicExists:
             print(sys.argv[0] + ": temporary error. try again")
-            return 1
+            sys.exit(1)
 
     #
     # Get the topic's publisher object, and create a Clock proxy with
@@ -85,14 +85,9 @@ def run(communicator, args):
         # Ignore
         pass
 
-    return 0
-
-status = 0
-
 #
 # Ice.initialize returns an initialized Ice communicator,
 # the communicator is destroyed once it goes out of scope.
 #
 with Ice.initialize(sys.argv, "config.pub") as communicator:
-    status = run(communicator, sys.argv)
-sys.exit(status)
+    status = run(communicator)

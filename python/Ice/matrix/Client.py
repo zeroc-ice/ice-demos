@@ -11,44 +11,49 @@ import numpy as np
 Ice.loadSlice('Matrix.ice')
 import Demo
 
-class Client(Ice.Application):
+def run(self, communicator):
+    matrix = Demo.MatrixPrx.checkedCast(communicator.propertyToProxy('Matrix.Proxy'))
+    if not matrix:
+        print("invalid proxy")
+        return 1
 
-    def run(self, args):
+    # Fetch a matrix from the server
+    matrixData = matrix.fetchData()
 
-        if len(args) > 1:
-            print(self.appName() + ": too many arguments")
-            return 1
+    # Numpy uses 'C' for row-major arrays, and 'F' for column-major
+    if matrixData.type == Demo.MatrixType.RowMajor:
+        major = 'C'
+    elif matrixData.type == Demo.MatrixType.ColumnMajor:
+        major = 'F'
 
-        matrix = Demo.MatrixPrx.checkedCast(self.communicator().propertyToProxy('Matrix.Proxy'))
-        if not matrix:
-            print("invalid proxy")
-            return 1
+    # Convert the data to a numpy-array
+    data = np.asarray(matrixData.elements, order=major).reshape((matrixData.axisLength, -1), order=major)
+    # Convert the numpy-array into a numpy-matrix
+    data = np.matrix(data)
 
-        # Fetch a matrix from the server
-        matrixData = matrix.fetchData()
+    # Print the dimensions and elements of the matrix
+    print("Received " + str(data.shape[0]) + " by " + str(data.shape[1]) + " matrix:")
+    print(data)
 
-        # Numpy uses 'C' for row-major arrays, and 'F' for column-major
-        if matrixData.type == Demo.MatrixType.RowMajor:
-            major = 'C'
-        elif matrixData.type == Demo.MatrixType.ColumnMajor:
-            major = 'F'
+    # Compute some properties of the matrix
+    sum = data.sum()
+    print("sum: " + str(sum))
+    mean = data.mean()
+    print("average: " + str(mean))
+    std = data.std()
+    print("standard deviation: " + str(std))
 
-        # Convert the data to a numpy-array
-        data = np.asarray(matrixData.elements, order=major).reshape((matrixData.axisLength, -1), order=major)
-        # Convert the numpy-array into a numpy-matrix
-        data = np.matrix(data)
+#
+# Ice.initialize returns an initialized Ice communicator,
+# the communicator is destroyed once it goes out of scope.
+#
+with Ice.initialize(sys.argv, "config.client") as communicator:
 
-        # Print the dimensions and elements of the matrix
-        print("Received " + str(data.shape[0]) + " by " + str(data.shape[1]) + " matrix:")
-        print(data)
+    #
+    # The communicator initialization removes all Ice-related arguments from argv
+    #
+    if len(sys.argv) > 1:
+        print(sys.argv[0] + ": too many arguments")
+        sys.exit(1)
 
-        # Compute some properties of the matrix
-        sum = data.sum()
-        print("sum: " + str(sum))
-        mean = data.mean()
-        print("average: " + str(mean))
-        std = data.std()
-        print("standard deviation: " + str(std))
-
-app = Client()
-sys.exit(app.main(sys.argv, "config.client"))
+    run(communicator)

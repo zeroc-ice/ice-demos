@@ -75,13 +75,8 @@ def run(communicator):
             else:
                 print("unknown command `" + c + "'")
                 menu()
-        except KeyboardInterrupt:
-            return 1
-        except EOFError:
-            return 1
         except Ice.Exception as ex:
             print(ex)
-    return 0
 
 def menu():
     print("""
@@ -113,7 +108,6 @@ with Ice.initialize(sys.argv, "config.client") as communicator:
     #
     if len(sys.argv) > 1:
         print(sys.argv[0] + ": too many arguments")
-        status = 1
-    else:
-        status = run(communicator)
-sys.exit(status)
+        sys.exit(1)
+
+    run(communicator)

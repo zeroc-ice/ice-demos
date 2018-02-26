@@ -14,7 +14,7 @@ def run(communicator):
     throughput = Demo.ThroughputPrx.checkedCast(communicator.propertyToProxy('Throughput.Proxy'))
     if not throughput:
         print(sys.args[0] + ": invalid proxy")
-        return 1
+        sys.exit(1)
     throughputOneway = Demo.ThroughputPrx.uncheckedCast(throughput.ice_oneway())
 
     byteSeq = bytearray(Demo.ByteSeqSize)
@@ -84,126 +84,120 @@ def run(communicator):
 
     c = None
     while c != 'x':
-        try:
-            sys.stdout.write("==> ")
-            sys.stdout.flush()
-            c = sys.stdin.readline().strip()
+        sys.stdout.write("==> ")
+        sys.stdout.flush()
+        c = sys.stdin.readline().strip()
 
-            repetitions = 100
+        repetitions = 100
 
-            if c == '1' or c == '2' or c == '3' or c == '4':
-                currentType = c
-                if c == '1':
-                    print("using byte sequences")
-                    seqSize = Demo.ByteSeqSize
-                elif c == '2':
-                    print("using string sequences")
-                    seqSize = Demo.StringSeqSize
-                elif c == '3':
-                    print("using variable-length struct sequences")
-                    seqSize = Demo.StringDoubleSeqSize
-                elif c == '4':
-                    print("using fixed-length struct sequences")
-                    seqSize = Demo.FixedSeqSize
-            elif c == 't' or c == 'o' or c == 'r' or c == 'e':
+        if c == '1' or c == '2' or c == '3' or c == '4':
+            currentType = c
+            if c == '1':
+                print("using byte sequences")
+                seqSize = Demo.ByteSeqSize
+            elif c == '2':
+                print("using string sequences")
+                seqSize = Demo.StringSeqSize
+            elif c == '3':
+                print("using variable-length struct sequences")
+                seqSize = Demo.StringDoubleSeqSize
+            elif c == '4':
+                print("using fixed-length struct sequences")
+                seqSize = Demo.FixedSeqSize
+        elif c == 't' or c == 'o' or c == 'r' or c == 'e':
 
-                if currentType == '1':
-                    repetitions = 1000  # Use more iterations for  byte sequences as it's a lot faster
+            if currentType == '1':
+                repetitions = 1000  # Use more iterations for  byte sequences as it's a lot faster
 
-                if c == 't' or c == 'o':
-                    sys.stdout.write("sending ")
-                elif c == 'r':
-                    sys.stdout.write("receiving ")
-                elif c == 'e':
-                    sys.stdout.write("sending and receiving ")
+            if c == 't' or c == 'o':
+                sys.stdout.write("sending ")
+            elif c == 'r':
+                sys.stdout.write("receiving ")
+            elif c == 'e':
+                sys.stdout.write("sending and receiving ")
 
-                sys.stdout.write(str(repetitions) + " ")
-                if currentType == '1':
-                    sys.stdout.write("byte ")
-                elif currentType == '2':
-                    sys.stdout.write("string ")
-                elif currentType == '3':
-                    sys.stdout.write("variable-length struct ")
-                elif currentType == '4':
-                    sys.stdout.write("fixed-length struct ")
+            sys.stdout.write(str(repetitions) + " ")
+            if currentType == '1':
+                sys.stdout.write("byte ")
+            elif currentType == '2':
+                sys.stdout.write("string ")
+            elif currentType == '3':
+                sys.stdout.write("variable-length struct ")
+            elif currentType == '4':
+                sys.stdout.write("fixed-length struct ")
 
-                if c == 'o':
-                    print("sequences of size %d as oneway..." % seqSize)
-                else:
-                    print("sequences of size %d..." % seqSize)
-
-                tsec = time.time()
-
-                for i in range(0, repetitions):
-                    if currentType == '1':
-                        if c == 't':
-                            throughput.sendByteSeq(byteSeq)
-                        elif c == 'o':
-                            throughputOneway.sendByteSeq(byteSeq)
-                        elif c == 'r':
-                            throughput.recvByteSeq()
-                        elif c == 'e':
-                            throughput.echoByteSeq(byteSeq)
-                    elif currentType == '2':
-                        if c == 't':
-                            throughput.sendStringSeq(stringSeq)
-                        elif c == 'o':
-                            throughputOneway.sendStringSeq(stringSeq)
-                        elif c == 'r':
-                            throughput.recvStringSeq()
-                        elif c == 'e':
-                            throughput.echoStringSeq(stringSeq)
-                    elif currentType == '3':
-                        if c == 't':
-                            throughput.sendStructSeq(structSeq)
-                        elif c == 'o':
-                            throughputOneway.sendStructSeq(structSeq)
-                        elif c == 'r':
-                            throughput.recvStructSeq()
-                        elif c == 'e':
-                            throughput.echoStructSeq(structSeq)
-                    elif currentType == '4':
-                        if c == 't':
-                            throughput.sendFixedSeq(fixedSeq)
-                        elif c == 'o':
-                            throughputOneway.sendFixedSeq(fixedSeq)
-                        elif c == 'r':
-                            throughput.recvFixedSeq()
-                        elif c == 'e':
-                            throughput.echoFixedSeq(fixedSeq)
-
-                tsec = time.time() - tsec
-                tmsec = tsec * 1000.0
-                print("time for %d sequences: %.3fms" % (repetitions, tmsec))
-                print("time per sequence: %.3fms" % (tmsec / repetitions))
-                wireSize = 0
-                if currentType == '1':
-                    wireSize = 1
-                elif currentType == '2':
-                    wireSize = len(stringSeq[0])
-                elif currentType == '3':
-                    wireSize = len(structSeq[0].s)
-                    wireSize += 8
-                elif currentType == '4':
-                    wireSize = 16
-                mbit = repetitions * seqSize * wireSize * 8.0 / tsec / 1000000.0
-                if c == 'e':
-                    mbit = mbit * 2
-                print("throughput: %.3fMbps" % mbit)
-            elif c == 's':
-                throughput.shutdown()
-            elif c == 'x':
-                pass  # Nothing to do
-            elif c == '?':
-                menu()
+            if c == 'o':
+                print("sequences of size %d as oneway..." % seqSize)
             else:
-                print("unknown command `" + c + "'")
-                menu()
-        except EOFError:
-            return 1
-        except KeyboardInterrupt:
-            return 1
-    return 0
+                print("sequences of size %d..." % seqSize)
+
+            tsec = time.time()
+
+            for i in range(0, repetitions):
+                if currentType == '1':
+                    if c == 't':
+                        throughput.sendByteSeq(byteSeq)
+                    elif c == 'o':
+                        throughputOneway.sendByteSeq(byteSeq)
+                    elif c == 'r':
+                        throughput.recvByteSeq()
+                    elif c == 'e':
+                        throughput.echoByteSeq(byteSeq)
+                elif currentType == '2':
+                    if c == 't':
+                        throughput.sendStringSeq(stringSeq)
+                    elif c == 'o':
+                        throughputOneway.sendStringSeq(stringSeq)
+                    elif c == 'r':
+                        throughput.recvStringSeq()
+                    elif c == 'e':
+                        throughput.echoStringSeq(stringSeq)
+                elif currentType == '3':
+                    if c == 't':
+                        throughput.sendStructSeq(structSeq)
+                    elif c == 'o':
+                        throughputOneway.sendStructSeq(structSeq)
+                    elif c == 'r':
+                        throughput.recvStructSeq()
+                    elif c == 'e':
+                        throughput.echoStructSeq(structSeq)
+                elif currentType == '4':
+                    if c == 't':
+                        throughput.sendFixedSeq(fixedSeq)
+                    elif c == 'o':
+                        throughputOneway.sendFixedSeq(fixedSeq)
+                    elif c == 'r':
+                        throughput.recvFixedSeq()
+                    elif c == 'e':
+                        throughput.echoFixedSeq(fixedSeq)
+
+            tsec = time.time() - tsec
+            tmsec = tsec * 1000.0
+            print("time for %d sequences: %.3fms" % (repetitions, tmsec))
+            print("time per sequence: %.3fms" % (tmsec / repetitions))
+            wireSize = 0
+            if currentType == '1':
+                wireSize = 1
+            elif currentType == '2':
+                wireSize = len(stringSeq[0])
+            elif currentType == '3':
+                wireSize = len(structSeq[0].s)
+                wireSize += 8
+            elif currentType == '4':
+                wireSize = 16
+            mbit = repetitions * seqSize * wireSize * 8.0 / tsec / 1000000.0
+            if c == 'e':
+                mbit = mbit * 2
+            print("throughput: %.3fMbps" % mbit)
+        elif c == 's':
+            throughput.shutdown()
+        elif c == 'x':
+            pass  # Nothing to do
+        elif c == '?':
+            menu()
+        else:
+            print("unknown command `" + c + "'")
+            menu()
 
 def menu():
     print("""
@@ -240,7 +234,6 @@ with Ice.initialize(sys.argv, "config.client") as communicator:
     #
     if len(sys.argv) > 1:
         print(sys.argv[0] + ": too many arguments")
-        status = 1
-    else:
-        status = run(communicator)
-sys.exit(status)
+        sys.exit(1)
+
+    run(communicator)

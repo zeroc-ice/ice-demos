@@ -82,7 +82,7 @@ def interruptHandler(signum, frame, communicator, workQueue):
 with Ice.initialize(sys.argv, "config.server") as communicator:
 
     #
-    # signal.signal must be called within the same scope as the communicator to catch CtrlC
+    # Install a signal handler to shutdown the communicator on Ctrl-C
     #
     signal.signal(signal.SIGINT, lambda signum, frame: interruptHandler(signum, frame, communicator, workQueue))
 
@@ -102,4 +102,3 @@ with Ice.initialize(sys.argv, "config.server") as communicator:
 
     communicator.waitForShutdown()
     workQueue.join()
-sys.exit(0)

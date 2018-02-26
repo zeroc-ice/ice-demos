@@ -22,7 +22,7 @@ def run(communicator):
     factory = Demo.SessionFactoryPrx.checkedCast(base)
     if not factory:
         print(sys.args[0] + ": invalid proxy")
-        return 1
+        sys.exit(1)
     session = factory.create(name)
 
     hellos = []
@@ -32,46 +32,40 @@ def run(communicator):
     destroy = True
     shutdown = False
     while True:
-        try:
-            sys.stdout.write("==> ")
-            sys.stdout.flush()
-            c = sys.stdin.readline().strip()
-            s = str(c)
-            if s.isdigit():
-                index = int(s)
-                if index < len(hellos):
-                    hello = hellos[index]
-                    hello.sayHello()
-                else:
-                    print("Index is too high. " + str(len(hellos)) + " hello objects exist so far.\n" +
-                          "Use `c' to create a new hello object.")
-            elif c == 'c':
-                hellos.append(session.createHello())
-                print("Created hello object", len(hellos) - 1)
-            elif c == 's':
-                destroy = False
-                shutdown = True
-                break
-            elif c == 'x':
-                break
-            elif c == 't':
-                destroy = False
-                break
-            elif c == '?':
-                menu()
+        sys.stdout.write("==> ")
+        sys.stdout.flush()
+        c = sys.stdin.readline().strip()
+        s = str(c)
+        if s.isdigit():
+            index = int(s)
+            if index < len(hellos):
+                hello = hellos[index]
+                hello.sayHello()
             else:
-                print("unknown command `" + c + "'")
-                menu()
-        except EOFError:
+                print("Index is too high. " + str(len(hellos)) + " hello objects exist so far.\n" +
+                      "Use `c' to create a new hello object.")
+        elif c == 'c':
+            hellos.append(session.createHello())
+            print("Created hello object", len(hellos) - 1)
+        elif c == 's':
+            destroy = False
+            shutdown = True
             break
-        except KeyboardInterrupt:
+        elif c == 'x':
             break
+        elif c == 't':
+            destroy = False
+            break
+        elif c == '?':
+            menu()
+        else:
+            print("unknown command `" + c + "'")
+            menu()
 
     if destroy:
         session.destroy()
     if shutdown:
         factory.shutdown()
-    return 0
 
 def menu():
     print("""
@@ -84,8 +78,6 @@ t:     exit without destroying the session
 ?:     help
 """)
 
-status = 0
-
 #
 # Ice.initialize returns an initialized Ice communicator,
 # the communicator is destroyed once it goes out of scope.
@@ -97,7 +89,6 @@ with Ice.initialize(sys.argv, "config.client") as communicator:
     #
     if len(sys.argv) > 1:
         print(sys.argv[0] + ": too many arguments")
-        status = 1
-    else:
-        status = run(communicator)
-sys.exit(status)
+        sys.exit(1)
+
+    run(communicator)

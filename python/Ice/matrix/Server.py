@@ -5,11 +5,9 @@
 #
 # **********************************************************************
 
-import Ice, sys
+import signal, sys, Ice
 from numpy import random
-
 Ice.loadSlice('Matrix.ice')
-Ice.updateModules()
 import Demo
 
 class MatrixI(Demo.Matrix):
@@ -25,18 +23,25 @@ class MatrixI(Demo.Matrix):
 
         return Demo.MatrixData(elements, type, axisLength)
 
-class Server(Ice.Application):
-    def run(self, args):
-        if len(args) > 1:
-            print(self.appName() + ": too many arguments")
-            return 1
+#
+# Ice.initialize returns an initialized Ice communicator,
+# the communicator is destroyed once it goes out of scope.
+#
+with Ice.initialize(sys.argv, "config.server") as communicator:
 
-        adapter = self.communicator().createObjectAdapter("Matrix")
-        adapter.add(MatrixI(), Ice.stringToIdentity("matrix"))
-        adapter.activate()
+    #
+    # Install a signal handler to shutdown the communicator on Ctrl-C
+    #
+    signal.signal(signal.SIGINT, lambda signum, frame: communicator.shutdown())
 
-        self.communicator().waitForShutdown()
-        return 0
+    #
+    # The communicator initialization removes all Ice-related arguments from argv
+    #
+    if len(sys.argv) > 1:
+        print(sys.argv[0] + ": too many arguments")
+        sys.exit(1)
 
-app = Server()
-sys.exit(app.main(sys.argv, "config.server"))
+    adapter = communicator.rcreateObjectAdapter("Matrix")
+    adapter.add(MatrixI(), Ice.stringToIdentity("matrix"))
+    adapter.activate()
+    communicator.waitForShutdown()

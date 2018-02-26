@@ -102,21 +102,6 @@ class ThroughputI(Demo.Throughput):
     def shutdown(self, current):
         current.adapter.getCommunicator().shutdown()
 
-# class Server(Ice.Application):
-#     def run(self, args):
-#         if len(args) > 1:
-#             print(self.appName() + ": too many arguments")
-#             return 1
-
-#         adapter = self.communicator().createObjectAdapter("Throughput")
-#         adapter.add(ThroughputI(), Ice.stringToIdentity("throughput"))
-#         adapter.activate()
-#         self.communicator().waitForShutdown()
-#         return 0
-
-# app = Server()
-# sys.exit(app.main(sys.argv, "config.server"))
-
 #
 # Ice.initialize returns an initialized Ice communicator,
 # the communicator is destroyed once it goes out of scope.
@@ -124,7 +109,7 @@ class ThroughputI(Demo.Throughput):
 with Ice.initialize(sys.argv, "config.server") as communicator:
 
     #
-    # signal.signal must be called within the same scope as the communicator to catch CtrlC
+    # Install a signal handler to shutdown the communicator on Ctrl-C
     #
     signal.signal(signal.SIGINT, lambda signum, handler: communicator.shutdown())
 
@@ -139,4 +124,3 @@ with Ice.initialize(sys.argv, "config.server") as communicator:
     adapter.add(ThroughputI(), Ice.stringToIdentity("throughput"))
     adapter.activate()
     communicator.waitForShutdown()
-sys.exit(0)

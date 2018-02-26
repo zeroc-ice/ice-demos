@@ -24,7 +24,7 @@ def run(communicator):
     hello = Demo.HelloPrx.checkedCast(communicator.propertyToProxy('Hello.Proxy'))
     if not hello:
         print(sys.args[0] + ": invalid proxy")
-        return 1
+        sys.exit(1)
 
     menu()
 
@@ -48,13 +48,8 @@ def run(communicator):
             else:
                 print("unknown command `" + c + "'")
                 menu()
-        except EOFError:
-            return 1
-        except KeyboardInterrupt:
-            return 1
         except Ice.Exception as ex:
             print(ex)
-    return 0
 
 def menu():
     print("""
@@ -65,8 +60,6 @@ s: shutdown server
 x: exit
 ?: help
 """)
-
-status = 0
 
 #
 # Ice.initialize returns an initialized Ice communicator,
@@ -79,7 +72,6 @@ with Ice.initialize(sys.argv, "config.client") as communicator:
     #
     if len(sys.argv) > 1:
         print(sys.argv[0] + ": too many arguments")
-        status = 1
-    else:
-        status = run(communicator)
-sys.exit(status)
+        sys.exit(1)
+
+    run(communicator)

@@ -36,7 +36,6 @@ public class Server
         private final WorkQueue _workQueue;
     }
 
-
     public static void
     main(String[] args)
     {
