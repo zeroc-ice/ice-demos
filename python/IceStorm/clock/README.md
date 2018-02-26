@@ -15,13 +15,13 @@ current working directory.
 In a separate window:
 
 ```
-python Subscriber.py
+python subscriber.py
 ```
 
 In another window:
 
 ```
-python Publisher.py
+python publisher.py
 ```
 
 While the publisher continues to run, "tick" messages should be
@@ -40,40 +40,40 @@ Subscriber Options
 ------------------
 
 ```
-python Subscriber.py --oneway
+python subscriber.py --oneway
 ```
 
 The subscriber receives events as oneway messages. This is the
 default.
 
 ```
-python Subscriber.py --datagram
+python subscriber.py --datagram
 ```
 
 The subscriber receives events as datagrams.
 
 ```
-python Subscriber.py --twoway
+python subscriber.py --twoway
 ```
 
 The subscriber receives events as twoway messages.
 
 ```
-python Subscriber.py --ordered
+python subscriber.py --ordered
 ```
 
 The subscriber receives events as twoway messages with guaranteed
 ordering.
 
 ```
-python Subscriber.py --batch
+python subscriber.py --batch
 ```
 
 This is an additional flag that forwards datagram and oneway events
 to the subscriber in batches.
 
 ```
-python Subscriber.py --id <id>
+python subscriber.py --id <id>
 ```
 
 This option specifies a unique identity for this subscriber. When
@@ -82,7 +82,7 @@ port by setting the `Clock.Subscriber.Endpoints` property. For
 example:
 
 ```
-python Subscriber.py --Clock.Subscriber.Endpoints="tcp -p <port> -h <host>"
+python subscriber.py --Clock.Subscriber.Endpoints="tcp -p <port> -h <host>"
 ```
 
 Replace "tcp" with "udp" when using the --datagram option.
@@ -99,7 +99,7 @@ Publisher Options
 -----------------
 
 ```
-python Publisher.py --oneway
+python publisher.py --oneway
 ```
 
 The publisher sends events as oneway messages. This is the default.
