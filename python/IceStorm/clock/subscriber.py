@@ -140,7 +140,6 @@ def run(communicator):
             raise
         print("reactivating persistent subscriber")
 
-    signal.signal(signal.SIGINT, lambda signum, frame: communicator.shutdown())
     communicator.waitForShutdown()
 
     #
@@ -157,5 +156,6 @@ with Ice.initialize(sys.argv, "config.sub") as communicator:
     # Install a signal handler to shutdown the communicator on Ctrl-C
     #
     signal.signal(signal.SIGINT, lambda signum, frame: communicator.shutdown())
-
+    if hasattr(signal, 'SIGBREAK'):
+        signal.signal(signal.SIGBREAK, lambda signum, frame: communicator.shutdown())
     status = run(communicator)

@@ -60,6 +60,8 @@ with Ice.initialize(sys.argv, "config.client") as communicator:
     # Install a signal handler to shutdown the communicator on Ctrl-C
     #
     signal.signal(signal.SIGINT, lambda signum, frame: communicator.shutdown())
+    if hasattr(signal, 'SIGBREAK'):
+        signal.signal(signal.SIGBREAK, lambda signum, frame: communicator.shutdown())
 
     #
     # The communicator initialization removes all Ice-related arguments from argv

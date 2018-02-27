@@ -72,7 +72,6 @@ def run(communicator):
         publisher = publisher.ice_oneway()
     clock = Demo.ClockPrx.uncheckedCast(publisher)
 
-    signal.signal(signal.SIGINT, lambda signum, frame: communicator.destroy())
     print("publishing tick events. Press ^C to terminate the application.")
     try:
         while 1:
@@ -90,4 +89,7 @@ def run(communicator):
 # the communicator is destroyed once it goes out of scope.
 #
 with Ice.initialize(sys.argv, "config.pub") as communicator:
+    signal.signal(signal.SIGINT, lambda signum, frame: communicator.destroy())
+    if hasattr(signal, 'SIGBREAK'):
+        signal.signal(signal.SIGBREAK, lambda signum, frame: communicator.destroy())
     status = run(communicator)
