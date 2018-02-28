@@ -22,13 +22,17 @@ namespace Server
         {
             try
             {
-                using(Ice.Communicator ic = Ice.Util.initialize(ref args))
+                using(Ice.Communicator communicator = Ice.Util.initialize(ref args))
                 {
+                    //
+                    // Destroy the communicator on Ctrl+C or Ctrl+Break
+                    //
+                    Console.CancelKeyPress += (sender, eventArgs) => communicator.destroy();
                     var adapter =
-                        ic.createObjectAdapterWithEndpoints("SimplePrinterAdapter", "default -h localhost -p 10000");
+                        communicator.createObjectAdapterWithEndpoints("SimplePrinterAdapter", "default -h localhost -p 10000");
                     adapter.add(new PrinterI(), Ice.Util.stringToIdentity("SimplePrinter"));
                     adapter.activate();
-                    ic.waitForShutdown();
+                    communicator.waitForShutdown();
                 }
             }
             catch(Exception e)

@@ -25,7 +25,19 @@ int
 main(int argc, char* argv[])
 {
     try {
+        //
+        // CtrlCHandler must be created before the communicator or any other threads are started
+        //
+        Ice::CtrlCHandler ctrlCHandler;
+
         Ice::CommunicatorHolder ich(argc, argv);
+        auto communicator = ich.communicator();
+
+        ctrlCHandler.setCallback(
+            [communicator](int)
+            {
+                communicator->shutdown();
+            });
         auto adapter = ich->createObjectAdapterWithEndpoints("SimplePrinterAdapter", "default -p 10000");
         auto servant = make_shared<PrinterI>();
         adapter->add(servant, Ice::stringToIdentity("SimplePrinter"));
