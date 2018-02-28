@@ -19,13 +19,6 @@ class PrinterI(Demo.Printer):
 # the communicator is destroyed once it goes out of scope.
 #
 with Ice.initialize(sys.argv) as communicator:
-
-    #
-    # Install a signal handler to shutdown the communicator on Ctrl-C
-    #
-    signal.signal(signal.SIGINT, lambda signum, frame: communicator.shutdown())
-    if hasattr(signal, 'SIGBREAK'):
-        signal.signal(signal.SIGBREAK, lambda signum, frame: communicator.shutdown())
     adapter = communicator.createObjectAdapterWithEndpoints("SimplePrinterAdapter", "default -h localhost -p 10000")
     adapter.add(PrinterI(), Ice.stringToIdentity("SimplePrinter"))
     adapter.activate()
