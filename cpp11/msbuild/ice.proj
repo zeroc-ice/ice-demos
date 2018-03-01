@@ -21,8 +21,12 @@
       <Exec Command="rmdir /s /q $(MSBuildThisFileDirectory)..\packages" Condition="Exists('$(MSBuildThisFileDirectory)..\packages')" />
     </Target>
 
-    <Target Name="NuGetRestore" DependsOnTargets="GetNuGet">
+    <Target Name="NuGetRestore" DependsOnTargets="GetNuGet" Condition="!Exists('$(IceHome)\cpp')">
       <Exec Command="$(NuGetExe) restore &quot;$(MSBuildThisFileDirectory)..\C++11 demos.sln&quot;"/>
+    </Target>
+
+    <Target Name="UWPNuGetRestore" DependsOnTargets="GetNuGet" Condition="!Exists('$(IceHome)\cpp')">
+      <Exec Command="$(NuGetExe) restore &quot;$(MSBuildThisFileDirectory)..\C++11 demos (Universal Windows).sln&quot;"/>
     </Target>
 
     <PropertyGroup>
@@ -73,7 +77,7 @@
     </Target>
 
     <Target Name="Build"
-            DependsOnTargets="InstallLocalPackages">
+            DependsOnTargets="InstallLocalPackages;NuGetRestore">
         <MSBuild Projects="$(MSBuildThisFileDirectory)..\C++11 demos.sln" RemoveProperties="IceHome"/>
     </Target>
 
@@ -108,7 +112,7 @@
     </Target>
 
     <Target Name="UWPBuild"
-            DependsOnTargets="UWPInstallLocalPackages">
+            DependsOnTargets="UWPInstallLocalPackages;UWPNugetRestore">
         <MSBuild Projects="$(MSBuildThisFileDirectory)..\C++11 demos (Universal Windows).sln" RemoveProperties="IceHome"/>
     </Target>
 </Project>

@@ -26,7 +26,7 @@
       <Exec Command="rmdir /s /q $(MSBuildThisFileDirectory)..\packages" Condition="Exists('$(MSBuildThisFileDirectory)..\packages')" />
     </Target>
 
-    <Target Name="NuGetRestore" DependsOnTargets="GetNuGet">
+    <Target Name="NuGetRestore" DependsOnTargets="GetNuGet" Condition="!Exists('$(IceHome)\cpp')">
       <Exec Command="$(NuGetExe) restore &quot;$(MSBuildThisFileDirectory)..\C++98 demos.sln&quot;"/>
     </Target>
 
@@ -81,7 +81,7 @@
     </Target>
 
     <Target Name="Build"
-            DependsOnTargets="InstallLocalPackages">
+            DependsOnTargets="InstallLocalPackages;NuGetRestore">
         <MSBuild Projects="$(MSBuildThisFileDirectory)..\C++98 demos.sln" RemoveProperties="IceHome"/>
     </Target>
 </Project>

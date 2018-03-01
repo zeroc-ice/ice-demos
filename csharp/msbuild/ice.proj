@@ -15,13 +15,7 @@
         <Exec Command="rmdir /s /q $(MSBuildThisFileDirectory)..\packages" Condition="Exists('$(MSBuildThisFileDirectory)..\packages')"/>
     </Target>
 
-    <Target Name="NuGetRestore" DependsOnTargets="GetNuGet">
-        <Exec Command="$(NuGetExe) install zeroc.ice.v141 -Version 3.7.1 -OutputDirectory &quot;$(MSBuildThisFileDirectory)..\..\cpp98\packages&quot;"/>
-        <Exec Command="$(NuGetExe) restore &quot;$(MSBuildThisFileDirectory)..\C# NET Framework demos.sln&quot;"/>
-        <MSbuild Projects="$(MSBuildThisFileDirectory)..\C# NET Core demos.sln"
-                 Targets="Restore"
-                 Condition="$(VisualStudioVersion) == '15.0'" />
-    </Target>
+    <Target Name="NuGetRestore" DependsOnTargets="Net45NuGetRestore;NetstandardNuGetRestore"/>
 
     <Target Name="DownloadSymbols" DependsOnTargets="NuGetRestore">
         <MakeDir Directories="$(TEMP)\SymbolCache" />
@@ -44,7 +38,12 @@
         <Exec Command="$(NuGetExe) install zeroc.icebuilder.msbuild -SolutionDirectory $(MSBuildThisFileDirectory).."/>
     </Target>
 
-    <Target Name="Net45Build" DependsOnTargets="Net45InstallLocalPackages">
+    <Target Name="Net45NuGetRestore" DependsOnTargets="GetNuGet" Condition="!Exists('$(IceHome)\csharp')">
+        <Exec Command="$(NuGetExe) restore &quot;$(MSBuildThisFileDirectory)..\C# NET Framework demos.sln&quot;"/>
+        <MSbuild Projects="$(MSBuildThisFileDirectory)..\C# NET Core demos.sln" Targets="Restore" Condition="$(VisualStudioVersion) == '15.0'" />
+    </Target>
+
+    <Target Name="Net45Build" DependsOnTargets="Net45InstallLocalPackages;Net45NuGetRestore">
         <MSbuild Projects="$(MSBuildThisFileDirectory)..\C# NET Framework demos.sln"
                  Targets="Build"
                  RemoveProperties="IceHome"
@@ -65,6 +64,10 @@
             </PropertyGroup>
         </Otherwise>
     </Choose>
+
+    <Target Name="NetStandardNuGetRestore" DependsOnTargets="GetNuGet" Condition="!Exists('$(IceHome)\csharp')">
+        <MSbuild Projects="$(MSBuildThisFileDirectory)..\C# NET Core demos.sln" Targets="Restore" Condition="$(VisualStudioVersion) == '15.0'" />
+    </Target>
 
     <Target Name="NetStandardInstallLocalPackages"
             Condition="Exists('$(IceHome)\csharp')">
@@ -90,7 +93,7 @@
                  Properties="Configuration=$(Configuration);Platform=Any CPU"/>
     </Target>
 
-    <Target Name="NetStandardBuild" DependsOnTargets="NetStandardInstallLocalPackages">
+    <Target Name="NetStandardBuild" DependsOnTargets="NetStandardInstallLocalPackages;NetStandardNuGetRestore">
         <MSbuild Projects="$(MSBuildThisFileDirectory)..\C# NET Core demos.sln"
                  Targets="Build"
                  RemoveProperties="IceHome"
