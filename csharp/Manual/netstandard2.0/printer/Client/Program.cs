@@ -15,9 +15,9 @@ namespace Client
         {
             try
             {
-                using(Ice.Communicator ic = Ice.Util.initialize(ref args))
+                using(Ice.Communicator communicator = Ice.Util.initialize(ref args))
                 {
-                    var obj = ic.stringToProxy("SimplePrinter:default -h localhost -p 10000");
+                    var obj = communicator.stringToProxy("SimplePrinter:default -h localhost -p 10000");
                     var printer = PrinterPrxHelper.checkedCast(obj);
                     if(printer == null)
                     {
