@@ -74,8 +74,8 @@ Refer to the README.md file in each demo directory for usage instructions.
 
 ### Prerequisites
 
-The projects for the sample programs require the [Ice Builder for Visual
-Studio][4]. Add this extension to Visual Studio before opening the solution.
+Visual Studio 2017 users need to install Windows 10 SDK (10.0.14393.0)
+component in Visual Studio 2017 installer.
 
 ### Building the Demos
 
@@ -137,11 +137,6 @@ Then refer to the README.md file in each demo directory for usage instructions.
 
 ## Building the Demo Apps for Universal Windows Platform (UWP)
 
-### Prerequisites
-
-The projects for the sample programs require the [Ice Builder for Visual Studio][4].
-Add this extension to Visual Studio before opening the solution.
-
 ### Building the Demos
 
 #### Building the demos using NuGet packages:
@@ -157,9 +152,8 @@ and are very large (about 300 MB compressed for each compiler). As a result, the
 first restore can take a long time; subsequent restores on the same computer are
 faster as they use the local NuGet cache.
 
-Then select your target configuration (Debug or Release), and platform
-(Win32, x64 or ARM). Right click on the desired demo in the Solution Explorer
-window and select `Build`.
+Then select your target configuration (Debug or Release), and platform (Win32 or x64).
+Right click on the desired demo in the Solution Explorer window and select `Build`.
 
 #### Building the demos using an Ice source build:
 
@@ -167,23 +161,19 @@ window and select `Build`.
   * Open a Visual Studio command prompt
   ```
   cd ice-demos\cpp11
-  MSBuild /p:ICE_SRC_DIST=all /p:IceHome:<Ice dist path> "C++11 demos (Universal Windows).sln"
+  MSBuild /p:IceHome=<Ice dist path> /p:Configuration=<Release or Debug> /t:UWPBuild msbuild\ice.proj"
   ```
 
 - Build from Visual Studio
   * Open a Visual Studio command prompt
   ```
-  set ICE_SRC_DIST=all
-  devenv
+  cd ice-demos\cpp11
+  MSBuild /p:IceHome=<Ice dist path> /p:Configuration=<Release or Debug> /t:UWPInstallLocalPackages msbuild\ice.proj"
   ```
 
-  * When Visual Studio starts set `Ice home directory` in
-    `Tools > Options > Projects and Solutions > Ice Builder`
-  * Disable automatic restoring of NuGet packages in Visual Studio
-    `Tools > Options > NuGet Package Manager`
-  * Select your target configuration (Debug or Release) and platform (Win32, x64
-    or ARM). Right click on the desired demo in the Solution Explorer window and
-    select `Build`.
+  * Start Visual Studio and open `C++11 demos (Universal Windows).sln` solution file,
+    select your target configuration (Debug or Release) and platform (Win32 or x64).
+    Right click on the desired demo in the Solution Explorer window and select `Build`.
 
 ### Running the Demos
 
@@ -192,4 +182,3 @@ Refer to the README.md file in each demo directory for usage instructions.
 [1]: https://doc.zeroc.com/display/Ice37/Ice+Manual
 [2]: https://doc.zeroc.com/display/Doc/Chat+Demo
 [3]: https://github.com/zeroc-ice/ice-builder-xcode
-[4]: https://github.com/zeroc-ice/ice-builder-visualstudio

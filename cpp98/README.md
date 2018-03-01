@@ -67,8 +67,8 @@ Refer to the README.md file in each demo directory for usage instructions.
 
 ### Prerequisites
 
-The projects for the sample programs require the [Ice Builder for Visual Studio][2].
-Add this extension to Visual Studio before opening the solution.
+Visual Studio 2017 users need to install Windows 10 SDK (10.0.14393.0)
+component in Visual Studio 2017 installer.
 
 ### Building the Demos
 
