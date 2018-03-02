@@ -40,7 +40,7 @@ public class Client
         }
     }
 
-    public static void main(String[] args) throws Exception
+    public static void main(String[] args)
     {
         //
         // Try with resources block - communicator is automatically destroyed

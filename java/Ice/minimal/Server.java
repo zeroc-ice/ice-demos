@@ -6,7 +6,7 @@
 
 public class Server
 {
-    public static void main(String[] args) throws Exception
+    public static void main(String[] args)
     {
         try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args))
         {

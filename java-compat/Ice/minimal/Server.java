@@ -24,7 +24,7 @@ public class Server
     }
 
     public static void
-    main(String[] args) throws Exception
+    main(String[] args)
     {
         try(Ice.Communicator communicator = Ice.Util.initialize(args))
         {

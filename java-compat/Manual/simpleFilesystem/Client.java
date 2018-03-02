@@ -42,7 +42,7 @@ public class Client
     }
 
     public static void
-    main(String[] args) throws Exception
+    main(String[] args)
     {
         try(Ice.Communicator ic = Ice.Util.initialize(args))
         {
