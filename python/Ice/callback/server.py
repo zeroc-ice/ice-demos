@@ -5,10 +5,14 @@
 #
 # **********************************************************************
 
-import signal, sys, traceback, Ice
+import signal
+import sys
+import traceback
+import Ice
 
 Ice.loadSlice('Callback.ice')
 import Demo
+
 
 class CallbackSenderI(Demo.CallbackSender):
     def initiateCallback(self, proxy, current):
@@ -21,6 +25,7 @@ class CallbackSenderI(Demo.CallbackSender):
     def shutdown(self, current):
         print("Shutting down...")
         current.adapter.getCommunicator().shutdown()
+
 
 #
 # The Ice communicator is initlialized with Ice.initialize

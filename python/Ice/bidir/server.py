@@ -5,7 +5,10 @@
 #
 # **********************************************************************
 
-import signal, sys, threading, Ice
+import signal
+import sys
+import threading
+import Ice
 
 slice_dir = Ice.getSliceDir()
 if not slice_dir:
@@ -14,6 +17,7 @@ if not slice_dir:
 
 Ice.loadSlice("'-I" + slice_dir + "' Callback.ice")
 import Demo
+
 
 class CallbackSenderI(Demo.CallbackSender, threading.Thread):
     def __init__(self):
@@ -57,6 +61,7 @@ class CallbackSenderI(Demo.CallbackSender, threading.Thread):
         with self._cond:
             print("removing client `" + Ice.identityToString(client.ice_getIdentity()) + "':\n" + str(ex))
             self._clients.remove(client)
+
 
 #
 # Ice.initialize returns an initialized Ice communicator,

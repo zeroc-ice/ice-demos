@@ -5,10 +5,13 @@
 #
 # **********************************************************************
 
-import signal, sys, Ice
+import signal
+import sys
+import Ice
 from numpy import random
 Ice.loadSlice('Matrix.ice')
 import Demo
+
 
 class MatrixI(Demo.Matrix):
     def fetchData(self, current=None):
@@ -22,6 +25,7 @@ class MatrixI(Demo.Matrix):
         elements = random.uniform(low=-5, high=5, size=(axisLength * random.randint(1, 5)))
 
         return Demo.MatrixData(elements, type, axisLength)
+
 
 #
 # Ice.initialize returns an initialized Ice communicator,

@@ -5,10 +5,13 @@
 #
 # **********************************************************************
 
-import sys, traceback, Ice
+import sys
+import traceback
+import Ice
 
 Ice.loadSlice('Callback.ice')
 import Demo
+
 
 class CallbackI(Demo.Callback):
     def initiateCallback(self, proxy, current):
@@ -22,6 +25,7 @@ class CallbackI(Demo.Callback):
         print("shutting down...")
         current.adapter.getCommunicator().shutdown()
 
+
 class Server(Ice.Application):
     def run(self, args):
         if len(args) > 1:
@@ -33,6 +37,7 @@ class Server(Ice.Application):
         adapter.activate()
         self.communicator().waitForShutdown()
         return 0
+
 
 app = Server()
 sys.exit(app.main(sys.argv, "config.server"))

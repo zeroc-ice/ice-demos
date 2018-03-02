@@ -5,14 +5,18 @@
 #
 # **********************************************************************
 
-import signal, sys, Ice
+import signal
+import sys
+import Ice
 
 Ice.loadSlice('Printer.ice')
 import Demo
 
+
 class PrinterI(Demo.Printer):
     def printString(self, s, current):
         print(s)
+
 
 #
 # Ice.initialize returns an initialized Ice communicator,

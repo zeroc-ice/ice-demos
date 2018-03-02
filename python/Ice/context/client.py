@@ -5,10 +5,12 @@
 #
 # **********************************************************************
 
-import sys, Ice
+import sys
+import Ice
 
 Ice.loadSlice('Context.ice')
 import Demo
+
 
 def run(communicator):
     proxy = Demo.ContextPrx.checkedCast(communicator.propertyToProxy('Context.Proxy'))
@@ -51,6 +53,7 @@ def run(communicator):
         except Ice.Exception as ex:
             print(ex)
 
+
 def menu():
     print("""
 usage:
@@ -62,6 +65,7 @@ s: shutdown server
 x: exit
 ?: help
 """)
+
 
 #
 # Ice.initialize returns an initialized Ice communicator,

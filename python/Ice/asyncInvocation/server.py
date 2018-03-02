@@ -5,10 +5,14 @@
 #
 # **********************************************************************
 
-import math, signal, sys, Ice
+import math
+import signal
+import sys
+import Ice
 
 Ice.loadSlice('Calculator.ice')
 import Demo
+
 
 class CalculatorI(Demo.Calculator):
     async def add(self, x, y, current):
@@ -32,6 +36,7 @@ class CalculatorI(Demo.Calculator):
 
     async def shutdown(self, current):
         current.adapter.getCommunicator().shutdown()
+
 
 #
 # Ice.initialize returns an initialized Ice communicator,

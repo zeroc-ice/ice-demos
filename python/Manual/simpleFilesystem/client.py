@@ -5,7 +5,8 @@
 #
 # **********************************************************************
 
-import sys, Ice
+import sys
+import Ice
 
 Ice.loadSlice('Filesystem.ice')
 import Filesystem
@@ -14,6 +15,7 @@ import Filesystem
 # in tree fashion. For files, show the contents of
 # each file. The "depth" parameter is the current
 # nesting level (for indentation).
+
 
 def listRecursive(dir, depth):
     indent = ''
@@ -35,6 +37,7 @@ def listRecursive(dir, depth):
             text = file.read()
             for line in text:
                 print(indent + "\t" + line)
+
 
 with Ice.initialize(sys.argv) as communicator:
 

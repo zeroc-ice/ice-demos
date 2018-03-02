@@ -5,10 +5,12 @@
 #
 # **********************************************************************
 
-import sys, Ice
+import sys
+import Ice
 
 Ice.loadSlice("Contact.ice")
 import Demo
+
 
 def run(communicator):
     contactdb = Demo.ContactDBPrx.checkedCast(communicator.propertyToProxy("ContactDB.Proxy"))
@@ -160,6 +162,7 @@ def run(communicator):
     print("ok")
 
     contactdb.shutdown()
+
 
 #
 # Ice.initialize returns an initialized Ice communicator,

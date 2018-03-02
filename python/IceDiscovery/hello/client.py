@@ -5,10 +5,12 @@
 #
 # **********************************************************************
 
-import sys, Ice
+import sys
+import Ice
 
 Ice.loadSlice('Hello.ice')
 import Demo
+
 
 def run(communicator):
     # Create a well-known proxy for the `hello' Ice object. A well-known proxy
@@ -108,6 +110,7 @@ def run(communicator):
 
     return 0
 
+
 def menu():
     print("""
 usage:
@@ -124,6 +127,7 @@ s: shutdown server
 x: exit
 ?: help
 """)
+
 
 #
 # Ice.initialize returns an initialized Ice communicator,

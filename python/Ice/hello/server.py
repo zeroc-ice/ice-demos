@@ -5,10 +5,14 @@
 #
 # **********************************************************************
 
-import signal, sys, time, Ice
+import signal
+import sys
+import time
+import Ice
 
 Ice.loadSlice('Hello.ice')
 import Demo
+
 
 class HelloI(Demo.Hello):
     def sayHello(self, delay, current):
@@ -18,6 +22,7 @@ class HelloI(Demo.Hello):
 
     def shutdown(self, current):
         current.adapter.getCommunicator().shutdown()
+
 
 #
 # Ice.initialize returns an initialized Ice communicator,

@@ -5,10 +5,13 @@
 #
 # **********************************************************************
 
-import sys, traceback, Ice
+import sys
+import traceback
+import Ice
 
 Ice.loadSlice('Hello.ice')
 import Demo
+
 
 class Callback:
     def response(self, f):
@@ -19,6 +22,7 @@ class Callback:
         except Exception:
             print("sayHello AMI call failed:")
             traceback.print_exc()
+
 
 def run(communicator):
     hello = Demo.HelloPrx.checkedCast(communicator.propertyToProxy('Hello.Proxy'))
@@ -51,6 +55,7 @@ def run(communicator):
         except Ice.Exception as ex:
             print(ex)
 
+
 def menu():
     print("""
 usage:
@@ -60,6 +65,7 @@ s: shutdown server
 x: exit
 ?: help
 """)
+
 
 #
 # Ice.initialize returns an initialized Ice communicator,

@@ -5,10 +5,13 @@
 #
 # **********************************************************************
 
-import sys, time, Ice
+import sys
+import time
+import Ice
 
 Ice.loadSlice('Throughput.ice')
 import Demo
+
 
 def run(communicator):
     throughput = Demo.ThroughputPrx.checkedCast(communicator.propertyToProxy('Throughput.Proxy'))
@@ -199,6 +202,7 @@ def run(communicator):
             print("unknown command `" + c + "'")
             menu()
 
+
 def menu():
     print("""
 usage:
@@ -220,6 +224,7 @@ s: shutdown server
 x: exit
 ?: help
 """)
+
 
 status = 0
 

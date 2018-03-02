@@ -5,11 +5,13 @@
 #
 # **********************************************************************
 
-import Ice, sys
+import Ice
+import sys
 import numpy as np
 
 Ice.loadSlice('Matrix.ice')
 import Demo
+
 
 def run(communicator):
     matrix = Demo.MatrixPrx.checkedCast(communicator.propertyToProxy('Matrix.Proxy'))
@@ -42,6 +44,7 @@ def run(communicator):
     print("average: " + str(mean))
     std = data.std()
     print("standard deviation: " + str(std))
+
 
 #
 # Ice.initialize returns an initialized Ice communicator,

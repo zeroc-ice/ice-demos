@@ -6,7 +6,9 @@
 #
 # **********************************************************************
 
-import sys, Ice, IceMX
+import sys
+import Ice
+import IceMX
 
 #
 # Formatting information for metrics maps. The tuple defines the
@@ -110,14 +112,17 @@ maps = {
     ],
 }
 
+
 def metricsTitle():
     # Returns a lambda which returns the title of the field.
     return lambda mapName, field, title, align, width: ("{0:" + align + str(width) + "}").format(title)
+
 
 def metricsSeparator(fill):
     # Returns a lambda which returns a separator of the size of the
     # field and using the specified fill character.
     return lambda mapName, field, title, align, width: ("{0:" + fill + align + str(width) + "}").format("")
+
 
 def metricsField(metrics):
     def getField(mapName, field, title, width):
@@ -146,6 +151,7 @@ def metricsField(metrics):
     return lambda mapName, field, title, align, width: \
         ("{0:" + align + str(width) + "}").format(getField(mapName, field, title, width))
 
+
 def printMetrics(mapName, getValue, sep='|', prefix=" "):
     #
     # This method prints a metrics, a line in the table.
@@ -158,6 +164,7 @@ def printMetrics(mapName, getValue, sep='|', prefix=" "):
     for (field, title, align, width) in maps[mapName]:
         fieldStr.append(getValue(mapName, field, title, align, width) + sep)
     print("".join(fieldStr))
+
 
 def printMetricsMap(admin, viewName, mapName, map):
 
@@ -209,6 +216,7 @@ def printMetricsMap(admin, viewName, mapName, map):
                     print("  - " + str(count) + ' ' + exception)
     print("")
 
+
 def printMetricsView(admin, viewName, viewAndRefreshTime):
 
     (view, refreshTime) = viewAndRefreshTime
@@ -222,6 +230,7 @@ def printMetricsView(admin, viewName, viewAndRefreshTime):
         if mapName in maps and len(map) > 0:
             printMetricsMap(admin, viewName, mapName, map)
     print("")
+
 
 def usage():
     print("usage: " + sys.argv[0] + " dump | enable | disable [<view-name> [<map-name>]]" + """
@@ -243,6 +252,7 @@ enable  Enable all the IceMX metrics views configured for
 disable Disable all the IceMX metrics views configured for
         the process or the provided view or map if specified.
 """)
+
 
 def run(communicator):
 
@@ -311,6 +321,7 @@ def run(communicator):
     except Ice.Exception as ex:
         print("failed to get metrics from `%s':\n%s" % (proxyStr, ex))
         sys.exit(1)
+
 
 #
 # Ice.initialize returns an initialized Ice communicator,

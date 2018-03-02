@@ -5,15 +5,20 @@
 #
 # **********************************************************************
 
-import signal, sys, threading, Ice
+import signal
+import sys
+import threading
+import Ice
 
 Ice.loadSlice('Hello.ice')
 import Demo
+
 
 class CallbackEntry(object):
     def __init__(self, f, delay):
         self.future = f
         self.delay = delay
+
 
 class WorkQueue(threading.Thread):
     def __init__(self):
@@ -56,6 +61,7 @@ class WorkQueue(threading.Thread):
             self._done = True
             self._cond.notify()
 
+
 class HelloI(Demo.Hello):
     def __init__(self, workQueue):
         self._workQueue = workQueue
@@ -71,9 +77,11 @@ class HelloI(Demo.Hello):
         self._workQueue.destroy()
         current.adapter.getCommunicator().shutdown()
 
+
 def interruptHandler(signum, frame, communicator, workQueue):
     workQueue.destroy()
     communicator.shutdown()
+
 
 #
 # Ice.initialize returns an initialized Ice communicator,

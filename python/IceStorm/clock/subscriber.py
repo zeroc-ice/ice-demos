@@ -5,18 +5,25 @@
 #
 # **********************************************************************
 
-import signal, sys, Ice, IceStorm, getopt
+import signal
+import sys
+import Ice
+import IceStorm
+import getopt
 
 Ice.loadSlice('Clock.ice')
 import Demo
+
 
 class ClockI(Demo.Clock):
     def tick(self, date, current):
         print(date)
 
+
 def usage():
     print("Usage: " + sys.argv[0] +
           " [--batch] [--datagram|--twoway|--ordered|--oneway] [--retryCount count] [--id id] [topic]")
+
 
 def run(communicator):
     try:
@@ -146,6 +153,7 @@ def run(communicator):
     # Unsubscribe all subscribed objects.
     #
     topic.unsubscribe(subscriber)
+
 
 #
 # Ice.initialize returns an initialized Ice communicator,

@@ -5,10 +5,13 @@
 #
 # **********************************************************************
 
-import sys, Ice, IceGrid
+import sys
+import Ice
+import IceGrid
 
 Ice.loadSlice('Hello.ice')
 import Demo
+
 
 def run(communicator):
     hello = None
@@ -41,6 +44,7 @@ def run(communicator):
             print("unknown command `" + c + "'")
             menu()
 
+
 def menu():
     print("""
 usage:
@@ -49,6 +53,7 @@ s: shutdown server
 x: exit
 ?: help
 """)
+
 
 #
 # Ice.initialize returns an initialized Ice communicator,

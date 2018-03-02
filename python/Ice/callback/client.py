@@ -5,14 +5,17 @@
 #
 # **********************************************************************
 
-import sys, Ice
+import sys
+import Ice
 
 Ice.loadSlice('Callback.ice')
 import Demo
 
+
 class CallbackReceiverI(Demo.CallbackReceiver):
     def callback(self, current):
         print("received callback")
+
 
 def run(communicator):
     sender = Demo.CallbackSenderPrx.checkedCast(
@@ -48,6 +51,7 @@ def run(communicator):
             print("unknown command `" + c + "'")
             menu()
 
+
 def menu():
     print("""
 usage:
@@ -56,6 +60,7 @@ s: shutdown server
 x: exit
 ?: help
 """)
+
 
 #
 # The Ice communicator is initlialized with Ice.initialize

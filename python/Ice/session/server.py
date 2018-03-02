@@ -5,10 +5,14 @@
 #
 # **********************************************************************
 
-import signal, sys, threading, Ice
+import signal
+import sys
+import threading
+import Ice
 
 Ice.loadSlice('Session.ice')
 import Demo
+
 
 class HelloI(Demo.Hello):
     def __init__(self, name, id):
@@ -18,6 +22,7 @@ class HelloI(Demo.Hello):
     def sayHello(self, c):
         print("Hello object #" + str(self._id) + " for session `" + self._name + "' says:\n" +
               "Hello " + self._name + "!")
+
 
 class SessionI(Demo.Session):
     def __init__(self, name):
@@ -61,6 +66,7 @@ class SessionI(Demo.Session):
                 pass
             self._objs = []
 
+
 class SessionFactoryI(Demo.SessionFactory):
     def create(self, name, current):
 
@@ -93,6 +99,7 @@ class SessionFactoryI(Demo.SessionFactory):
     def shutdown(self, current):
         print("Shutting down...")
         current.adapter.getCommunicator().shutdown()
+
 
 #
 # Ice.initialize returns an initialized Ice communicator,

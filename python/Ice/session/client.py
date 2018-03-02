@@ -5,10 +5,12 @@
 #
 # **********************************************************************
 
-import sys, Ice
+import sys
+import Ice
 
 Ice.loadSlice('Session.ice')
 import Demo
+
 
 def run(communicator):
     while True:
@@ -67,6 +69,7 @@ def run(communicator):
     if shutdown:
         factory.shutdown()
 
+
 def menu():
     print("""
 usage:
@@ -77,6 +80,7 @@ x:     exit
 t:     exit without destroying the session
 ?:     help
 """)
+
 
 #
 # Ice.initialize returns an initialized Ice communicator,

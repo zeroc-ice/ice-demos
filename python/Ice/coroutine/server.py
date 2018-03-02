@@ -5,10 +5,16 @@
 #
 # **********************************************************************
 
-import signal, sys, asyncio, urllib.parse, os, Ice
+import signal
+import sys
+import asyncio
+import urllib.parse
+import os
+import Ice
 
 Ice.loadSlice('Fetcher.ice')
 import Demo
+
 
 class FetcherI(Demo.Fetcher):
     def __init__(self, loop):
@@ -62,12 +68,14 @@ class FetcherI(Demo.Fetcher):
         current.adapter.getCommunicator().shutdown()
         self.loop.call_soon_threadsafe(self.loop.stop)
 
+
 def interruptHandler(loop, communicator):
     #
     # Schedule a call to stop the loop. This causes run_forever() to return.
     #
     loop.call_soon_threadsafe(loop.stop)
     communicator.shutdown()
+
 
 #
 # Ice.initialize returns an initialized Ice communicator,

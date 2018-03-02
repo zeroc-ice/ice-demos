@@ -5,7 +5,8 @@
 #
 # **********************************************************************
 
-import sys, Ice
+import sys
+import Ice
 
 slice_dir = Ice.getSliceDir()
 if not slice_dir:
@@ -14,6 +15,7 @@ if not slice_dir:
 
 Ice.loadSlice("'-I" + slice_dir + "' Props.ice")
 import Demo
+
 
 def run(communicator):
     props = Demo.PropsPrx.checkedCast(communicator.propertyToProxy("Props.Proxy"))
@@ -78,6 +80,7 @@ def run(communicator):
         except Ice.Exception as ex:
             print(ex)
 
+
 def menu():
     print("""
 usage:
@@ -89,11 +92,13 @@ x: exit
 ?: help
 """)
 
+
 def show(admin):
     props = admin.getPropertiesForPrefix("Demo")
     print("Server's current settings:")
     for k, v in props.items():
         print("  " + k + "=" + v)
+
 
 status = 0
 

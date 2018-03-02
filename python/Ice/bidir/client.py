@@ -5,7 +5,9 @@
 #
 # **********************************************************************
 
-import signal, sys, Ice
+import signal
+import sys
+import Ice
 
 slice_dir = Ice.getSliceDir()
 if not slice_dir:
@@ -15,9 +17,11 @@ if not slice_dir:
 Ice.loadSlice("'-I" + slice_dir + "' Callback.ice")
 import Demo
 
+
 class CallbackReceiverI(Demo.CallbackReceiver):
     def callback(self, num, current):
         print("received callback #{0}".format(num))
+
 
 def run(communicator):
     server = Demo.CallbackSenderPrx.checkedCast(communicator.propertyToProxy('CallbackSender.Proxy'))
@@ -49,6 +53,7 @@ def run(communicator):
     #
     server.addClient(proxy)
     communicator.waitForShutdown()
+
 
 #
 # Ice.initialize returns an initialized Ice communicator,

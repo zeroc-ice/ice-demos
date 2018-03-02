@@ -5,10 +5,13 @@
 #
 # **********************************************************************
 
-import signal, sys, Ice
+import signal
+import sys
+import Ice
 
 Ice.loadSlice('Context.ice')
 import Demo
+
 
 class ContextI(Demo.Context):
     def call(self, current):
@@ -21,6 +24,7 @@ class ContextI(Demo.Context):
 
     def shutdown(self, current):
         current.adapter.getCommunicator().shutdown()
+
 
 #
 # Ice.initialize returns an initialized Ice communicator,

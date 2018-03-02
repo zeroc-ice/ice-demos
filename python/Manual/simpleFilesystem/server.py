@@ -5,10 +5,13 @@
 #
 # **********************************************************************
 
-import signal, sys, Ice
+import signal
+import sys
+import Ice
 
 Ice.loadSlice('Filesystem.ice')
 import Filesystem
+
 
 class DirectoryI(Filesystem.Directory):
     def __init__(self, communicator, name, parent):
@@ -51,6 +54,7 @@ class DirectoryI(Filesystem.Directory):
         if self._parent:
             self._parent.addChild(thisNode)
 
+
 class FileI(Filesystem.File):
     def __init__(self, communicator, name, parent):
         self._name = name
@@ -88,6 +92,7 @@ class FileI(Filesystem.File):
     def activate(self, a):
         thisNode = Filesystem.FilePrx.uncheckedCast(a.add(self, self._id))
         self._parent.addChild(thisNode)
+
 
 def run(communicator):
     #
@@ -143,6 +148,7 @@ def run(communicator):
     # Wait until we are done
     #
     communicator.waitForShutdown()
+
 
 #
 # Ice.initialize returns an initialized Ice communicator,

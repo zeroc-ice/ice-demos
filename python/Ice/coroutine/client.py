@@ -5,10 +5,13 @@
 #
 # **********************************************************************
 
-import signal, sys, Ice
+import signal
+import sys
+import Ice
 
 Ice.loadSlice('Fetcher.ice')
 import Demo
+
 
 def run(communicator):
 
@@ -22,6 +25,7 @@ def run(communicator):
     print(content)
 
     fetcher.shutdown()
+
 
 #
 # Ice.initialize returns an initialized Ice communicator,

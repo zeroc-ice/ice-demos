@@ -5,10 +5,13 @@
 #
 # **********************************************************************
 
-import signal, sys, Ice
+import signal
+import sys
+import Ice
 
 Ice.loadSlice("Contact.ice")
 import Demo
+
 
 class ContactDBI(Demo.ContactDB):
     def __init__(self):
@@ -53,6 +56,7 @@ class ContactDBI(Demo.ContactDB):
     def shutdown(self, current=None):
         print("Shutting down...")
         current.adapter.getCommunicator().shutdown()
+
 
 #
 # Ice.initialize returns an initialized Ice communicator,

@@ -5,10 +5,12 @@
 #
 # **********************************************************************
 
-import sys, Ice
+import sys
+import Ice
 
 Ice.loadSlice('Hello.ice')
 import Demo
+
 
 def run(communicator):
     twoway = Demo.HelloPrx.checkedCast(
@@ -102,6 +104,7 @@ def run(communicator):
         except Ice.Exception as ex:
             print(ex)
 
+
 def menu():
     print("""
     usage:
@@ -118,6 +121,7 @@ def menu():
     x: exit
     ?: help
     """)
+
 
 #
 # Ice.initialize returns an initialized Ice communicator,

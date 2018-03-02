@@ -5,7 +5,10 @@
 #
 # **********************************************************************
 
-import signal, sys, Ice, threading
+import signal
+import sys
+import Ice
+import threading
 
 slice_dir = Ice.getSliceDir()
 if not slice_dir:
@@ -18,6 +21,8 @@ import Demo
 #
 #  The servant implements the Slice interface Demo.Props
 #
+
+
 class PropsI(Demo.Props, Ice.PropertiesAdminUpdateCallback):
     def __init__(self):
         self.called = False
@@ -42,6 +47,7 @@ class PropsI(Demo.Props, Ice.PropertiesAdminUpdateCallback):
             self.changes = changes
             self.called = True
             self.m.notify()
+
 
 #
 # Ice.initialize returns an initialized Ice communicator,

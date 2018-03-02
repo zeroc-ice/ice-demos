@@ -5,10 +5,13 @@
 #
 # **********************************************************************
 
-import signal, sys, Ice
+import signal
+import sys
+import Ice
 
 Ice.loadSlice('Throughput.ice')
 import Demo
+
 
 class ThroughputI(Demo.Throughput):
     def __init__(self):
@@ -101,6 +104,7 @@ class ThroughputI(Demo.Throughput):
 
     def shutdown(self, current):
         current.adapter.getCommunicator().shutdown()
+
 
 #
 # Ice.initialize returns an initialized Ice communicator,

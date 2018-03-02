@@ -5,13 +5,20 @@
 #
 # **********************************************************************
 
-import signal, sys, time, Ice, IceStorm, getopt
+import signal
+import sys
+import time
+import Ice
+import IceStorm
+import getopt
 
 Ice.loadSlice('Clock.ice')
 import Demo
 
+
 def usage():
     print("Usage: " + sys.argv[0] + " [--datagram|--twoway|--oneway] [topic]")
+
 
 def run(communicator):
     try:
@@ -83,6 +90,7 @@ def run(communicator):
     except Ice.CommunicatorDestroyedException:
         # Ignore
         pass
+
 
 #
 # Ice.initialize returns an initialized Ice communicator,

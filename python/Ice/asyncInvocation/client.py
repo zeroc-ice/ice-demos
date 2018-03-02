@@ -4,10 +4,14 @@
 # Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 #
 # **********************************************************************
-import signal, sys, Ice, asyncio
+import signal
+import sys
+import Ice
+import asyncio
 
 Ice.loadSlice('Calculator.ice')
 import Demo
+
 
 def run(communicator):
     calculator = Demo.CalculatorPrx.checkedCast(communicator.propertyToProxy('Calculator.Proxy'))
@@ -88,6 +92,7 @@ def run(communicator):
     loop.close()
 
     calculator.shutdown()
+
 
 #
 # Ice.initialize returns an initialized Ice communicator,

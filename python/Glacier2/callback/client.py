@@ -5,9 +5,12 @@
 #
 # **********************************************************************
 
-import sys, Ice, Glacier2
+import sys
+import Ice
+import Glacier2
 Ice.loadSlice('Callback.ice')
 import Demo
+
 
 def menu():
     print("""
@@ -24,9 +27,11 @@ x: exit
 ?: help
 """)
 
+
 class CallbackReceiverI(Demo.CallbackReceiver):
     def callback(self, current):
         print("received callback")
+
 
 class Client(Glacier2.Application):
     def __init__(self):
@@ -144,6 +149,7 @@ class Client(Glacier2.Application):
 
     def sessionDestroyed(self):
         print("The Glacier2 session has been destroyed.")
+
 
 app = Client()
 sys.exit(app.main(sys.argv, "config.client"))

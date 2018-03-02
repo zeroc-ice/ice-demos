@@ -5,10 +5,14 @@
 #
 # **********************************************************************
 
-import signal, sys, time, Ice
+import signal
+import sys
+import time
+import Ice
 
 Ice.loadSlice('Latency.ice')
 import Demo
+
 
 def run(communicator):
     ping = Demo.PingPrx.checkedCast(communicator.propertyToProxy('Ping.Proxy'))
@@ -34,6 +38,7 @@ def run(communicator):
 
     print("time for %d pings: %.3fms" % (repetitions, tmsec))
     print("time per ping: %.3fms" % (tmsec / repetitions))
+
 
 #
 # Ice.initialize returns an initialized Ice communicator,

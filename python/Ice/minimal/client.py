@@ -5,7 +5,8 @@
 #
 # **********************************************************************
 
-import sys, Ice
+import sys
+import Ice
 
 Ice.loadSlice('Hello.ice')
 import Demo
