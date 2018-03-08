@@ -15,6 +15,7 @@ using namespace std;
 class ChatApp
 {
 public:
+
     int run(const shared_ptr<Ice::Communicator>&);
 
     void discoveredPeer(const string&, const shared_ptr<MTalk::PeerPrx>&);
