@@ -60,8 +60,6 @@ public class LoginController
             {
                 try
                 {
-                    long refreshTimeout;
-
                     Ice.InitializationData initData = new Ice.InitializationData();
 
                     initData.dispatcher = new Ice.Dispatcher()
@@ -95,7 +93,6 @@ public class LoginController
                     //
                     // Check for Ice.Default.Router. If we find it use it, otherwise use a direct connection
                     //
-
                     if(!initData.properties.getProperty("Ice.Default.Router").isEmpty())
                     {
                         initData.properties.setProperty("Ice.RetryIntervals", "-1");
@@ -139,7 +136,19 @@ public class LoginController
                         final Demo.Glacier2SessionPrx sess =
                             Demo.Glacier2SessionPrxHelper.uncheckedCast(glacier2session);
                         final Demo.LibraryPrx library = sess.getLibrary();
-                        refreshTimeout = (router.getSessionTimeout() * 1000) / 2;
+
+                        final int acmTimeout = router.getACMTimeout();
+                        if(acmTimeout > 0)
+                        {
+                            //
+                            // Configure the connection to send heartbeats in order to keep our session alive.
+                            //
+                            Ice.Connection connection = router.ice_getCachedConnection();
+                            assert(connection != null);
+                            connection.setACM(
+                                new Ice.IntOptional(acmTimeout), null,
+                                new Ice.Optional<Ice.ACMHeartbeat>(Ice.ACMHeartbeat.HeartbeatAlways));
+                        }
 
                         session = new SessionAdapter()
                         {
@@ -152,11 +161,6 @@ public class LoginController
                                 catch(Glacier2.SessionNotExistException e)
                                 {
                                 }
-                            }
-
-                            public void refresh()
-                            {
-                                sess.refresh();
                             }
 
                             public Demo.LibraryPrx getLibrary()
@@ -178,18 +182,12 @@ public class LoginController
 
                         final Demo.SessionPrx sess = factory.create();
                         final Demo.LibraryPrx library = sess.getLibrary();
-                        refreshTimeout = (factory.getSessionTimeout() * 1000) / 2;
 
                         session = new SessionAdapter()
                         {
                             public void destroy()
                             {
                                 sess.destroy();
-                            }
-
-                            public void refresh()
-                            {
-                                sess.refresh();
                             }
 
                             public Demo.LibraryPrx getLibrary()
@@ -203,8 +201,7 @@ public class LoginController
                     {
                         if(_destroyed)
                         {
-                            // Here the app was terminated while session
-                            // establishment was in progress.
+                            // Here the app was terminated while session establishment was in progress.
                             try
                             {
                                 session.destroy();
@@ -217,7 +214,7 @@ public class LoginController
                             return;
                         }
 
-                        _sessionController = new SessionController(_handler, _communicator, session, username, refreshTimeout);
+                        _sessionController = new SessionController(_handler, _communicator, session, username);
                         if(_loginListener != null)
                         {
                             final Listener listener = _loginListener;
