@@ -34,6 +34,7 @@ main(int argc, char* argv[])
         Ice::ObjectPtr object = new PrinterI;
         adapter->add(object, Ice::stringToIdentity("SimplePrinter"));
         adapter->activate();
+
         ich->waitForShutdown();
     }
     catch(const std::exception& e)

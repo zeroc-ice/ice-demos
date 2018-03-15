@@ -12,12 +12,11 @@ using namespace std;
 class PeerI;
 typedef IceUtil::Handle<PeerI> PeerIPtr;
 
-class ChatApp : public Ice::Application
+class ChatApp
 {
 public:
 
-    ChatApp();
-    virtual int run(int, char*[]);
+    int run();
 
     void discoveredPeer(const string&, const MTalk::PeerPrx&);
     void connect(const string&, const MTalk::PeerPrx&);
@@ -202,39 +201,80 @@ private:
 };
 typedef IceUtil::Handle<DiscoverThread> DiscoverThreadPtr;
 
+//
+// Global variable for destroyCommunicator
+//
+Ice::CommunicatorPtr communicator;
+
+//
+// Callback for CtrlCHandler
+//
+void
+destroyCommunicator(int)
+{
+    communicator->destroy();
+}
+
+int run(const Ice::CommunicatorPtr&);
+
 int
 main(int argc, char* argv[])
 {
 #ifdef ICE_STATIC_LIBS
     Ice::registerIceSSL();
 #endif
+    int status = 0;
 
-    ChatApp app;
-    return app.main(argc, argv, "config");
-}
+    try
+    {
+        //
+        // CtrlCHandler must be created before the communicator or any other threads are started
+        //
+        Ice::CtrlCHandler ctrlCHandler;
 
-ChatApp::ChatApp() :
-    //
-    // Since this is an interactive demo we don't want any signal handling.
-    //
-    Ice::Application(Ice::NoSignalHandling)
-{
+        //
+        // CommunicatorHolder's ctor initializes an Ice communicator,
+        // and it's dtor destroys this communicator.
+        //
+        Ice::CommunicatorHolder ich(argc, argv, "config");
+        communicator = ich.communicator();
+
+        //
+        // Destroy communicator on Ctrl-C
+        //
+        ctrlCHandler.setCallback(&destroyCommunicator);
+
+        //
+        // The communicator initialization removes all Ice-related arguments from argc/argv
+        //
+        if(argc > 1)
+        {
+            cerr << argv[0] << ": too many arguments" << endl;
+            status = 1;
+        }
+        else
+        {
+            ChatApp app;
+            status = app.run();
+        }
+    }
+    catch(const std::exception& ex)
+    {
+        cerr << ex.what() << endl;
+        status = 1;
+    }
+
+    return status;
 }
 
 int
-ChatApp::run(int argc, char*[])
+ChatApp::run()
 {
-    if(argc > 1)
-    {
-        cerr << appName() << ": too many arguments" << endl;
-        return 1;
-    }
-
     //
     // Create two object adapters. Their endpoints are defined in the configuration file 'config'.
     //
-    _multicastAdapter = communicator()->createObjectAdapter("Multicast");
-    _peerAdapter = communicator()->createObjectAdapter("Peer");
+    _multicastAdapter = communicator->createObjectAdapter("Multicast");
+    _peerAdapter = communicator->createObjectAdapter("Peer");
 
     //
     // Install a servant with the well-known identity "discover". This servant receives multicast messages.
@@ -263,7 +303,7 @@ ChatApp::run(int argc, char*[])
     //
     MTalk::DiscoveryPrx discovery =
         MTalk::DiscoveryPrx::uncheckedCast(
-            _communicator->propertyToProxy("Discovery.Proxy")->ice_datagram()->ice_collocationOptimized(false));
+            communicator->propertyToProxy("Discovery.Proxy")->ice_datagram()->ice_collocationOptimized(false));
 
     DiscoverThreadPtr thread = new DiscoverThread(discovery, _name, _local);
     thread->start();
@@ -317,7 +357,7 @@ ChatApp::run(int argc, char*[])
     // There may still be objects (connections and servants) that hold pointers to this object, so we destroy
     // the communicator here to make sure they get cleaned up first.
     //
-    communicator()->destroy();
+    communicator->destroy();
 
     return 0;
 }
