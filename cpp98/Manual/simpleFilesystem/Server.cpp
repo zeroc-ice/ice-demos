@@ -10,6 +10,8 @@
 using namespace std;
 using namespace Filesystem;
 
+int run();
+
 //
 // Global variable for shutdownCommunicator
 //
@@ -24,9 +26,6 @@ shutdownCommunicator(int)
     communicator->shutdown();
     cerr << "received signal, shutting down" << endl;
 }
-
-int
-run();
 
 int
 main(int argc, char* argv[])

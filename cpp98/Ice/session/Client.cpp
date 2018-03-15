@@ -51,7 +51,18 @@ main(int argc, char* argv[])
     return status;
 }
 
-void menu();
+void
+menu()
+{
+    cout <<
+        "usage:\n"
+        "c:     create a new per-client hello object\n"
+        "0-9:   send a greeting to a hello object\n"
+        "s:     shutdown the server and exit\n"
+        "x:     exit\n"
+        "t:     exit without destroying the session\n"
+        "?:     help\n";
+}
 
 int
 run(const Ice::CommunicatorPtr& communicator)
@@ -145,17 +156,4 @@ run(const Ice::CommunicatorPtr& communicator)
     }
 
     return 0;
-}
-
-void
-menu()
-{
-    cout <<
-        "usage:\n"
-        "c:     create a new per-client hello object\n"
-        "0-9:   send a greeting to a hello object\n"
-        "s:     shutdown the server and exit\n"
-        "x:     exit\n"
-        "t:     exit without destroying the session\n"
-        "?:     help\n";
 }

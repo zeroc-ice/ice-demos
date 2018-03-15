@@ -51,7 +51,19 @@ main(int argc, char* argv[])
     return status;
 }
 
-void menu();
+void
+menu()
+{
+    cout <<
+        "usage:\n"
+        "1: use no request context\n"
+        "2: use explicit request context\n"
+        "3: use per-proxy request context\n"
+        "4: use implicit request context\n"
+        "s: shutdown server\n"
+        "x: exit\n"
+        "?: help\n";
+}
 
 int
 run(const Ice::CommunicatorPtr& communicator)
@@ -124,18 +136,4 @@ run(const Ice::CommunicatorPtr& communicator)
     while(cin.good() && c != 'x');
 
     return 0;
-}
-
-void
-menu()
-{
-    cout <<
-        "usage:\n"
-        "1: use no request context\n"
-        "2: use explicit request context\n"
-        "3: use per-proxy request context\n"
-        "4: use implicit request context\n"
-        "s: shutdown server\n"
-        "x: exit\n"
-        "?: help\n";
 }

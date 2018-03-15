@@ -53,8 +53,28 @@ main(int argc, char* argv[])
     return status;
 }
 
-void menu();
-string trim(const string&);
+void
+menu()
+{
+    cout <<
+        "usage:\n"
+        "t: send greeting\n"
+        "s: shutdown server\n"
+        "x: exit\n"
+        "?: help\n";
+}
+
+string
+trim(const string& s)
+{
+    static const string delims = "\t\r\n ";
+    string::size_type last = s.find_last_not_of(delims);
+    if(last != string::npos)
+    {
+        return s.substr(s.find_first_not_of(delims), last+1);
+    }
+    return s;
+}
 
 int
 run(const Ice::CommunicatorPtr& communicator)
@@ -171,27 +191,4 @@ run(const Ice::CommunicatorPtr& communicator)
     session->destroy();
 
     return status;
-}
-
-void
-menu()
-{
-    cout <<
-        "usage:\n"
-        "t: send greeting\n"
-        "s: shutdown server\n"
-        "x: exit\n"
-        "?: help\n";
-}
-
-string
-trim(const string& s)
-{
-    static const string delims = "\t\r\n ";
-    string::size_type last = s.find_last_not_of(delims);
-    if(last != string::npos)
-    {
-        return s.substr(s.find_first_not_of(delims), last+1);
-    }
-    return s;
 }

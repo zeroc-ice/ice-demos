@@ -12,6 +12,8 @@
 using namespace std;
 using namespace Demo;
 
+int run(int, char*[]);
+
 class ClockI : public Clock
 {
 public:
@@ -36,8 +38,6 @@ shutdownCommunicator(int)
 {
     communicator->shutdown();
 }
-
-int run(int, char*[]);
 
 int
 main(int argc, char* argv[])

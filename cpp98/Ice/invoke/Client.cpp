@@ -10,6 +10,8 @@
 using namespace std;
 using namespace Demo;
 
+int run(const Ice::CommunicatorPtr&);
+
 static ostream&
 operator<<(ostream& out, Demo::Color c)
 {
@@ -27,8 +29,6 @@ operator<<(ostream& out, Demo::Color c)
     }
     return out;
 }
-
-int run(const Ice::CommunicatorPtr&);
 
 int
 main(int argc, char* argv[])
@@ -69,7 +69,24 @@ main(int argc, char* argv[])
     return status;
 }
 
-void menu();
+void
+menu()
+{
+    cout <<
+        "usage:\n"
+        "1: print string\n"
+        "2: print string sequence\n"
+        "3: print dictionary\n"
+        "4: print enum\n"
+        "5: print struct\n"
+        "6: print struct sequence\n"
+        "7: print class\n"
+        "8: get values\n"
+        "9: throw exception\n"
+        "s: shutdown server\n"
+        "x: exit\n"
+        "?: help\n";
+}
 
 int
 run(const Ice::CommunicatorPtr& communicator)
@@ -331,23 +348,4 @@ run(const Ice::CommunicatorPtr& communicator)
     while(cin.good() && ch != 'x');
 
     return 0;
-}
-
-void
-menu()
-{
-    cout <<
-        "usage:\n"
-        "1: print string\n"
-        "2: print string sequence\n"
-        "3: print dictionary\n"
-        "4: print enum\n"
-        "5: print struct\n"
-        "6: print struct sequence\n"
-        "7: print class\n"
-        "8: get values\n"
-        "9: throw exception\n"
-        "s: shutdown server\n"
-        "x: exit\n"
-        "?: help\n";
 }

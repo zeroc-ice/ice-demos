@@ -9,6 +9,8 @@
 
 using namespace std;
 
+int run(const Ice::CommunicatorPtr&);
+
 class Callback : public IceUtil::Shared
 {
 public:
@@ -23,8 +25,6 @@ public:
     }
 };
 typedef IceUtil::Handle<Callback> CallbackPtr;
-
-int run(const Ice::CommunicatorPtr&);
 
 int
 main(int argc, char* argv[])
@@ -61,7 +61,17 @@ main(int argc, char* argv[])
     return status;
 }
 
-void menu();
+void
+menu()
+{
+    cout <<
+        "usage:\n"
+        "i: send immediate greeting\n"
+        "d: send delayed greeting\n"
+        "s: shutdown server\n"
+        "x: exit\n"
+        "?: help\n";
+}
 
 int
 run(const Ice::CommunicatorPtr& communicator)
@@ -118,16 +128,4 @@ run(const Ice::CommunicatorPtr& communicator)
     while(cin.good() && c != 'x');
 
     return 0;
-}
-
-void
-menu()
-{
-    cout <<
-        "usage:\n"
-        "i: send immediate greeting\n"
-        "d: send delayed greeting\n"
-        "s: shutdown server\n"
-        "x: exit\n"
-        "?: help\n";
 }

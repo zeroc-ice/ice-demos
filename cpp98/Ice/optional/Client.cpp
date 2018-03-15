@@ -10,6 +10,8 @@
 using namespace std;
 using namespace Demo;
 
+int run();
+
 //
 // Global variable for destroyCommunicator
 //
@@ -23,8 +25,6 @@ destroyCommunicator(int)
 {
     communicator->destroy();
 }
-
-int run();
 
 int
 main(int argc, char* argv[])

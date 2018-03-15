@@ -12,6 +12,8 @@
 using namespace std;
 using namespace Demo;
 
+int run(int, char*[]);
+
 //
 // Global variable for destroyCommunicator
 //
@@ -25,8 +27,6 @@ destroyCommunicator(int)
 {
     communicator->destroy();
 }
-
-int run(int, char*[]);
 
 int
 main(int argc, char* argv[])

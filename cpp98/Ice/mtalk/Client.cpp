@@ -215,8 +215,6 @@ destroyCommunicator(int)
     communicator->destroy();
 }
 
-int run(const Ice::CommunicatorPtr&);
-
 int
 main(int argc, char* argv[])
 {

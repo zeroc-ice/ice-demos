@@ -48,7 +48,16 @@ main(int argc, char* argv[])
     return status;
 }
 
-void menu(const MTPrinterPtr&);
+void
+menu(const MTPrinterPtr& printer)
+{
+    printer->print(
+        "usage:\n"
+        "i: increment the counter\n"
+        "d: decrement the counter\n"
+        "x: exit\n"
+        "?: help\n");
+}
 
 int
 run(const Ice::CommunicatorPtr& communicator)
@@ -120,15 +129,4 @@ run(const Ice::CommunicatorPtr& communicator)
     counter->unsubscribe(observer);
 
     return 0;
-}
-
-void
-menu(const MTPrinterPtr& printer)
-{
-    printer->print(
-        "usage:\n"
-        "i: increment the counter\n"
-        "d: decrement the counter\n"
-        "x: exit\n"
-        "?: help\n");
 }
