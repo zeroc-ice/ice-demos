@@ -143,8 +143,7 @@ public class LoginController
                             //
                             // Configure the connection to send heartbeats in order to keep our session alive.
                             //
-                            Ice.Connection connection = router.ice_getCachedConnection();
-                            assert(connection != null);
+                            final Ice.Connection connection = router.ice_getCachedConnection();
                             connection.setACM(
                                 new Ice.IntOptional(acmTimeout), null,
                                 new Ice.Optional<Ice.ACMHeartbeat>(Ice.ACMHeartbeat.HeartbeatAlways));
@@ -171,7 +170,7 @@ public class LoginController
                     }
                     else
                     {
-                        Ice.ObjectPrx proxy = _communicator.stringToProxy("LibraryDemo.Proxy");
+                        Ice.ObjectPrx proxy = _communicator.propertyToProxy("LibraryDemo.Proxy");
 
                         Demo.SessionFactoryPrx factory = Demo.SessionFactoryPrxHelper.checkedCast(proxy);
                         if(factory == null)

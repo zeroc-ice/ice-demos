@@ -149,8 +149,7 @@ public class LoginController
                             //
                             // Configure the connection to send heartbeats in order to keep our session alive.
                             //
-                            com.zeroc.Ice.Connection connection = router.ice_getCachedConnection();
-                            assert(connection != null);
+                            final com.zeroc.Ice.Connection connection = router.ice_getCachedConnection();
                             connection.setACM(
                                 java.util.OptionalInt.of(acmTimeout), null,
                                 java.util.Optional.of(ACMHeartbeat.HeartbeatAlways));
@@ -177,7 +176,7 @@ public class LoginController
                     }
                     else
                     {
-                        ObjectPrx proxy = _communicator.stringToProxy("LibraryDemo.Proxy");
+                        ObjectPrx proxy = _communicator.propertyToProxy("LibraryDemo.Proxy");
 
                         Demo.SessionFactoryPrx factory = Demo.SessionFactoryPrx.checkedCast(proxy);
                         if(factory == null)
