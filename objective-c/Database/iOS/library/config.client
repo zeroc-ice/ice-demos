@@ -8,9 +8,9 @@ IceSSL.CheckCertName=1
 #
 # Alternately, connect directly to library server
 #
-# Comment out Ice.Default.Rotuer above
+# Comment out Ice.Default.Router above
 #
-# SessionFactory.Proxy=SessionFactory:tcp -h demo2.zeroc.com -p 10000 -t 10000
+#SessionFactory.Proxy=SessionFactory:tcp -h demo2.zeroc.com -p 10000
 
 #
 # Use Locally Hosted Server with SSL

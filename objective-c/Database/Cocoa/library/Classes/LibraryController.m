@@ -19,8 +19,7 @@
 
 -(id)initWithCommunicator:(id<ICECommunicator>)c
                   session:(id)s
-                   router:(id<GLACIER2RouterPrx>)r
-           sessionTimeout:(ICELong)t
+                  router:(id<GLACIER2RouterPrx>)r
                   library:(id<DemoLibraryPrx>)l
 {
     if(self = [super initWithWindowNibName:@"LibraryView"])
@@ -33,7 +32,6 @@
         books = [NSMutableArray array];
         rowsQueried = 0;
         nrows = 0;
-        sessionTimeout = t;
         searchType = 0;
     }
     return self;
@@ -45,13 +43,6 @@
     AppDelegate* delegate = (AppDelegate*)[app delegate];
     [delegate setLibraryActive:YES];
 
-    // Setup the session refresh timer.
-    refreshTimer = [NSTimer timerWithTimeInterval:sessionTimeout/2
-                                           target:self
-                                         selector:@selector(refreshSession:)
-                                         userInfo:nil
-                                          repeats:YES];
-    [[NSRunLoop currentRunLoop] addTimer:refreshTimer forMode:NSDefaultRunLoopMode];
     [[titleField textStorage] setAttributedString:[[NSAttributedString alloc] initWithString:@""]];
 }
 
@@ -90,12 +81,6 @@
 
 -(void)destroySession
 {
-    if(refreshTimer)
-    {
-        [refreshTimer invalidate];
-        refreshTimer = nil;
-    }
-
     // Destroy the session.
     if(router)
     {
@@ -202,25 +187,6 @@
             modalDelegate:self
            didEndSelector:@selector(editFinished:returnCode:contextInfo:)
               contextInfo:NULL];
-    }
-}
-
--(void)refreshSession:(NSTimer*)timer
-{
-    if(session != nil)
-    {
-        [session begin_refresh:nil exception:^(ICEException *ex)
-            {
-                [self destroySession];
-                if(savingController)
-                {
-                    // Hide the saving sheet.
-                    [NSApp endSheet:savingController.window];
-                    [savingController.window orderOut:self];
-                    savingController = nil;
-                }
-                NSRunAlertPanel(@"Error", @"%@", @"OK", nil, nil, [ex description]);
-            }];
     }
 }
 

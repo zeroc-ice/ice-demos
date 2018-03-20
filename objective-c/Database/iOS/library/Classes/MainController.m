@@ -19,10 +19,9 @@
 @property (nonatomic) NSIndexPath* currentIndexPath;
 @property (nonatomic) id<DemoBookQueryResultPrx> query;
 
-@property (nonatomic) NSTimer* refreshTimer;
 @property (nonatomic) id<ICECommunicator> communicator;
 @property (nonatomic) id session;
-@property (nonatomic)  id<GLACIER2RouterPrx> router;
+@property (nonatomic) id<GLACIER2RouterPrx> router;
 @property (nonatomic) id<DemoLibraryPrx> library;
 
 -(void)exception:(ICEException*)ex;
@@ -35,7 +34,6 @@
 @synthesize query;
 @synthesize currentIndexPath;
 @synthesize communicator;
-@synthesize refreshTimer;
 @synthesize session;
 @synthesize router;
 
@@ -103,7 +101,6 @@
 -(void)activate:(id<ICECommunicator>)c
         session:(id)s
          router:(id<GLACIER2RouterPrx>)r
- sessionTimeout:(ICELong)sessionTimeout
         library:(id<DemoLibraryPrx>)l
 {
     self.communicator = c;
@@ -114,23 +111,10 @@
     nrows = 0;
     rowsQueried = 10;
     [books removeAllObjects];
-
-    // Save the new session, and create the refresh timer.
-    self.refreshTimer = [NSTimer
-                         timerWithTimeInterval:sessionTimeout/2
-                         target:self
-                         selector:@selector(refreshSession:)
-                         userInfo:nil
-                         repeats:YES];
-    [[NSRunLoop currentRunLoop] addTimer:refreshTimer forMode:NSDefaultRunLoopMode];
 }
 
 -(void)destroySession
 {
-    // Destroy the old session, and invalidate the refresh timer.
-    [refreshTimer invalidate];
-    self.refreshTimer = nil;
-
     if(router)
     {
         [router begin_destroySession];
@@ -143,7 +127,7 @@
     session = nil;
 
     // Destroy the communicator from another thread since this call blocks.
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^ {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [communicator destroy];
         communicator = nil;
     });
@@ -153,32 +137,6 @@
 {
     [self destroySession];
     [self.navigationController popViewControllerAnimated:YES];
-}
-
--(void)refreshSession:(NSTimer*)timer
-{
-    if(self.communicator != nil)
-    {
-        [session begin_refresh:nil exception:^(ICEException* ex)
-            {
-                [self.navigationController popToRootViewControllerAnimated:YES];
-
-                // The session is invalid, clear.
-                self.session = nil;
-
-                // Clean up the remainder.
-                [self destroySession];
-
-                NSString* s = [NSString stringWithFormat:@"Lost connection with session!\n%@", ex];
-
-                // open an alert with just an OK button
-                UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Error"
-                                                                               message:s
-                                                                        preferredStyle:UIAlertControllerStyleAlert];
-                [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
-                [self presentViewController:alert animated:YES completion:nil];
-            }];
-    }
 }
 
 -(void)removeCurrentBook

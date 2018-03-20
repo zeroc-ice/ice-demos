@@ -1,4 +1,4 @@
-This demo is an Ice Touch client for the [Java library demo][1]. It provides
+This demo is an Ice client for the [Java library demo][1]. It provides
 a command-line interface to the library server and permits you to:
 
   - Create and delete books

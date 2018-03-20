@@ -10,9 +10,9 @@
 #import <Library.h>
 #import <Glacier2Session.h>
 #import <Session.h>
-#import <Router.h>
 
 #import <objc/Ice.h>
+#import <objc/Glacier2.h>
 
 NSString* const usernameKey = @"usernameKey";
 NSString* const passwordKey = @"passwordKey";
@@ -62,13 +62,11 @@ NSString* const passwordKey = @"passwordKey";
     }
 
     id<DemoSessionPrx> session = [factory create];
-    ICELong sessionTimeout = [factory getSessionTimeout];
     id<DemoLibraryPrx> library = [session getLibrary];
     return [[LibraryController alloc]
             initWithCommunicator:[proxy ice_getCommunicator]
             session:session
             router:nil
-            sessionTimeout:sessionTimeout
             library:library];
 }
 
@@ -80,64 +78,25 @@ NSString* const passwordKey = @"passwordKey";
                                                           password:passwordField.stringValue];
     id<DemoGlacier2SessionPrx> session = [DemoGlacier2SessionPrx uncheckedCast:glacier2session];
 
-    ICELong sessionTimeout = [router getSessionTimeout];
-
     id<DemoLibraryPrx> library = [session getLibrary];
+
+    ICELong acmTimeout = [router getACMTimeout];
+    if(acmTimeout > 0)
+    {
+        //
+        // Configure the connection to send heartbeats in order to keep our session alive
+        //
+        id<ICEConnection> connection = [router ice_getCachedConnection];
+        id heartbeat = @(ICEHeartbeatAlways);
+        id timeout = [NSNumber numberWithInteger:acmTimeout];
+        [connection setACM:timeout close:ICENone heartbeat:heartbeat];
+    }
 
     return [[LibraryController alloc]
             initWithCommunicator:[proxy ice_getCommunicator]
             session:session
             router:router
-            sessionTimeout:sessionTimeout
             library:library];
-}
-
-// Login through the iPhone router.
--(LibraryController*)doPhoneRouterLogin:(id)proxy NS_RETURNS_RETAINED
-{
-    id<DemoRouterPrx> router = [DemoRouterPrx uncheckedCast:[communicator getDefaultRouter]];
-    [router createSession];
-
-    id<DemoSessionFactoryPrx> factory = [DemoSessionFactoryPrx checkedCast:proxy];
-    if(factory == nil)
-    {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Invalid proxy" userInfo:nil];
-    }
-
-    id<DemoSessionPrx> session = [factory create];
-    ICELong sessionTimeout = [factory getSessionTimeout];
-    id<DemoLibraryPrx> library = [session getLibrary];
-    return [[LibraryController alloc]
-            initWithCommunicator:[proxy ice_getCommunicator]
-            session:session
-            router:nil
-            sessionTimeout:sessionTimeout
-            library:library];
-}
-
-// Login through the iPhone router, using Glacier2.
--(LibraryController*)doPhoneRouterGlacier2Login:(id)proxy NS_RETURNS_RETAINED
-{
-    id<DemoRouterPrx> router = [DemoRouterPrx uncheckedCast:[communicator getDefaultRouter]];
-    id<ICERouterPrx> glacier2router = [ICERouterPrx uncheckedCast:proxy];
-    id<GLACIER2SessionPrx> glacier2session;
-    NSMutableString* category;
-    ICELong sessionTimeout;
-
-    [router createGlacier2Session:glacier2router
-                           userId:usernameField.stringValue
-                         password:passwordField.stringValue
-                         category:&category
-                   sessionTimeout:&sessionTimeout
-                             sess:&glacier2session];
-    id<DemoGlacier2SessionPrx> session = [DemoGlacier2SessionPrx uncheckedCast:glacier2session];
-    id<DemoLibraryPrx> library = [session getLibrary];
-
-    return [[LibraryController alloc] initWithCommunicator:[proxy ice_getCommunicator]
-                                                   session:[DemoGlacier2SessionPrx uncheckedCast:glacier2session]
-                                                    router:nil
-                                            sessionTimeout:sessionTimeout
-                                                   library:library];
 }
 
 #pragma mark Login
@@ -151,13 +110,7 @@ NSString* const passwordKey = @"passwordKey";
     ICEInitializationData* initData = [ICEInitializationData initializationData];
     initData.properties = [ICEUtil createProperties];
     [initData.properties load:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"config.client"]];
-    [initData.properties setProperty:@"Ice.ACM.Client.Timeout" value:@"0"];
     [initData.properties setProperty:@"Ice.RetryIntervals" value:@"-1"];
-
-    // Tracing properties.
-    //[initData.properties setProperty:@"Ice.Trace.Network" value:@"1"];
-    //[initData.properties setProperty:@"Ice.Trace.Protocol" value:@"1"];
-    //[initData.properties setProperty:@"IceSSL.Trace.Security" value:@"1"];
 
     initData.dispatcher = ^(id<ICEDispatcherCall> call, id<ICEConnection> con)
     {
@@ -174,11 +127,11 @@ NSString* const passwordKey = @"passwordKey";
         communicator = [ICEUtil createCommunicator:initData];
 
         NSString* router = [[communicator getProperties] getProperty:@"Ice.Default.Router"];
-        NSString* glacier2Proxy = [[communicator getProperties] getProperty:@"SessionFactory.Glacier2Proxy"];
         NSString* sessionFactoryProxy = [[communicator getProperties] getProperty:@"SessionFactory.Proxy"];
 
         int connectionType = [[communicator getProperties] getPropertyAsIntWithDefault:@"LibraryDemo.ConnectionType" value:-1];
-        switch (connectionType) {
+        switch(connectionType)
+        {
             case 1: // Login though Glacier2
                 proxy = [communicator stringToProxy:router];
                 loginSelector = @selector(doGlacier2Login:);
@@ -186,14 +139,6 @@ NSString* const passwordKey = @"passwordKey";
             case 2: // Login directly to Library server
                 proxy = [communicator stringToProxy:sessionFactoryProxy];
                 loginSelector = @selector(doLogin:);
-                break;
-            case 3: // Login though iPhone router, using Glacier2
-                proxy = [communicator stringToProxy:glacier2Proxy];
-                loginSelector = @selector(doPhoneRouterGlacier2Login:);
-                break;
-            case 4: // Login though iPhone router, directly to Library server
-                proxy = [communicator stringToProxy:sessionFactoryProxy];
-                loginSelector = @selector(doPhoneRouterLogin:);
                 break;
             default:
                 NSRunAlertPanel(@"Error", @"%@", @"OK", nil, nil, @"Please set configuration type in 'config.client' file.");

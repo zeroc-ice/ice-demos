@@ -33,7 +33,6 @@
     int nrows;
 
     // Session state.
-    NSTimer* refreshTimer;
     id<ICECommunicator> communicator;
     id session;
     id<GLACIER2RouterPrx> router;
@@ -44,7 +43,6 @@
 -(void)activate:(id<ICECommunicator>)communicator
         session:(id)session
          router:(id<GLACIER2RouterPrx>)router
- sessionTimeout:(ICELong)timeout
         library:(id<DemoLibraryPrx>)library;
 
 @end

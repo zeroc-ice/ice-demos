@@ -185,7 +185,6 @@ static NSString* passwordKey = @"passwordKey";
     id<DemoSessionPrx> sess = [factory create];
 
     self.session = sess;
-    sessionTimeout = [factory getSessionTimeout];
     self.library = [sess getLibrary];
 }
 
@@ -199,8 +198,19 @@ static NSString* passwordKey = @"passwordKey";
 
     self.session = sess;
     self.router = glacier2router;
-    sessionTimeout = [glacier2router getSessionTimeout];
     self.library = [sess getLibrary];
+
+    ICELong acmTimeout = [glacier2router getACMTimeout];
+    if(acmTimeout > 0)
+    {
+        //
+        // Configure the connection to send heartbeats in order to keep our session alive
+        //
+        id<ICEConnection> connection = [glacier2router ice_getCachedConnection];
+        id heartbeat = @(ICEHeartbeatAlways);
+        id timeout = [NSNumber numberWithInteger:acmTimeout];
+        [connection setACM:timeout close:ICENone heartbeat:heartbeat];
+    }
 }
 
 -(IBAction)login:(id)sender
@@ -208,14 +218,10 @@ static NSString* passwordKey = @"passwordKey";
     ICEInitializationData* initData = [ICEInitializationData initializationData];
     initData.properties = [ICEUtil createProperties];
     [initData.properties load:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"config.client"]];
-    [initData.properties setProperty:@"Ice.ACM.Client.Timeout" value:@"0"];
     [initData.properties setProperty:@"Ice.RetryIntervals" value:@"-1"];
 
-    // Tracing properties.
-    //[initData.properties setProperty:@"Ice.Trace.Network" value:@"1"];
-    //[initData.properties setProperty:@"Ice.Trace.Protocol" value:@"1"];
-
-    initData.dispatcher = ^(id<ICEDispatcherCall> call, id<ICEConnection> con) {
+    initData.dispatcher = ^(id<ICEDispatcherCall> call, id<ICEConnection> con)
+    {
         dispatch_sync(dispatch_get_main_queue(), ^ { [call run]; });
     };
 
@@ -276,7 +282,6 @@ static NSString* passwordKey = @"passwordKey";
                 [mainController activate:communicator
                                  session:session
                                   router:router
-                          sessionTimeout:sessionTimeout
                                  library:library];
 
                 // Clear internal state.
