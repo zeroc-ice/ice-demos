@@ -68,10 +68,7 @@ runParser(int argc, char* argv[], id<ICECommunicator> communicator)
             //
             // Configure the connection to send heartbeats in order to keep our session alive
             //
-            id<ICEConnection> connection = [router ice_getCachedConnection];
-            id heartbeat = @(ICEHeartbeatAlways);
-            id timeout = [NSNumber numberWithInteger:acmTimeout];
-            [connection setACM:timeout close:ICENone heartbeat:heartbeat];
+            [[router ice_getCachedConnection] setACM:@(acmTimeout) close:ICENone heartbeat:@(ICEHeartbeatAlways)];
         }
     }
     else

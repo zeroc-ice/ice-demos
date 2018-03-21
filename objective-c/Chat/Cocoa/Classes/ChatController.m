@@ -23,14 +23,10 @@
     }
 }
 
--(void)heartbeat:(id<ICEConnection>)connection
-{
-}
-
 // This is called outside of the main thread.
 -(id)initWithCommunicator:(id<ICECommunicator>)c
                   session:(id<ChatChatSessionPrx>)s
-               acmTiemout:(int)t
+               acmTimeout:(int)t
                    router:(id<GLACIER2RouterPrx>)r
                  category:(NSString*)category
 {
@@ -152,7 +148,7 @@
 
                     NSApplication* app = [NSApplication sharedApplication];
                     AppDelegate* delegate = (AppDelegate*)[app delegate];
-                    [delegate setChatActive:NO];
+                    [delegate setChatController:nil];
             });
     });
 }
@@ -168,12 +164,10 @@
 {
     NSApplication* app = [NSApplication sharedApplication];
     AppDelegate* delegate = (AppDelegate*)[app delegate];
-    [delegate setChatActive:YES];
+    [delegate setChatController:self];
 
     id<ICEConnection> conn = [router ice_getCachedConnection];
-    id heartbeat = @(ICEHeartbeatAlways);
-    id timeout = [NSNumber numberWithInteger:acmTimeout];
-    [conn setACM:timeout close:ICENone heartbeat:heartbeat];
+    [conn setACM:@(acmTimeout) close:ICENone heartbeat:@(ICEHeartbeatAlways)];
     [conn setCloseCallback:^(id<ICEConnection> connection) {
         [self closed:connection];
     }];

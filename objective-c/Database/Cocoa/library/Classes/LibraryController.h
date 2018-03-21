@@ -56,6 +56,8 @@
                    router:(id<GLACIER2RouterPrx>)router
                   library:(id<DemoLibraryPrx>)library;
 
+-(void)destroySession;
+
 -(void)add:(id)sender;
 -(void)remove:(id)sender;
 

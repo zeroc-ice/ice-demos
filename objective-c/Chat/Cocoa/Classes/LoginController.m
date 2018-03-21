@@ -43,32 +43,8 @@ NSString* const passwordKey = @"passwordKey";
 
     // Restore the field values from the app defaults.
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-
     usernameField.stringValue = [defaults stringForKey:usernameKey];
     passwordField.stringValue = [defaults stringForKey:passwordKey];
-}
-
-#pragma mark Login callbacks
-
--(ChatController*)doGlacier2Login:(id)communictor
-{
-    id<GLACIER2RouterPrx> router = [GLACIER2RouterPrx checkedCast:[communicator getDefaultRouter]];;
-    id<GLACIER2SessionPrx> glacier2session = [router createSession:usernameField.stringValue
-                                                          password:passwordField.stringValue];
-    id<ChatChatSessionPrx> session = [ChatChatSessionPrx uncheckedCast:glacier2session];
-
-    ICEInt acmTiemout = [router getACMTimeout];
-    if(acmTiemout <= 0)
-    {
-        acmTiemout = (ICEInt)[router getSessionTimeout];
-    }
-    NSString* category = [router getCategoryForClient];
-
-    return [[ChatController alloc] initWithCommunicator:communicator
-                                                session:session
-                                             acmTiemout:acmTiemout
-                                                 router:router
-                                               category:category];
 }
 
 #pragma mark Login
@@ -95,8 +71,6 @@ NSString* const passwordKey = @"passwordKey";
     NSAssert(communicator == nil, @"communicator == nil");
     communicator = [ICEUtil createCommunicator:initData];
 
-    SEL loginSelector = @selector(doGlacier2Login:);
-
     [NSApp beginSheet:connectingSheet
        modalForWindow:self.window
         modalDelegate:nil
@@ -104,14 +78,30 @@ NSString* const passwordKey = @"passwordKey";
           contextInfo:NULL];
     [progress startAnimation:self];
 
+    NSString* username = usernameField.stringValue;
+    NSString* password = passwordField.stringValue;
+
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^ {
         NSString* msg;
         @try
         {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-            ChatController* chatController = [self performSelector:loginSelector withObject:communicator];
-#pragma clang diagnostic pop
+            id<GLACIER2RouterPrx> router = [GLACIER2RouterPrx checkedCast:[communicator getDefaultRouter]];;
+            id<GLACIER2SessionPrx> glacier2session = [router createSession:username password:password];
+            id<ChatChatSessionPrx> session = [ChatChatSessionPrx uncheckedCast:glacier2session];
+
+            ICEInt acmTimeout = [router getACMTimeout];
+            if(acmTimeout <= 0)
+            {
+                acmTimeout = (ICEInt)[router getSessionTimeout];
+            }
+            NSString* category = [router getCategoryForClient];
+
+            ChatController* chatController = [[ChatController alloc] initWithCommunicator:communicator
+                                                                                  session:session
+                                                                               acmTimeout:acmTimeout
+                                                                                   router:router
+                                                                                 category:category];
+
             dispatch_async(dispatch_get_main_queue(), ^ {
                 // Hide the connecting sheet.
                 [NSApp endSheet:connectingSheet];

@@ -41,7 +41,7 @@
 {
     NSApplication* app = [NSApplication sharedApplication];
     AppDelegate* delegate = (AppDelegate*)[app delegate];
-    [delegate setLibraryActive:YES];
+    [delegate setLibraryController:self];
 
     [[titleField textStorage] setAttributedString:[[NSAttributedString alloc] initWithString:@""]];
 }
@@ -102,11 +102,10 @@
         dispatch_async(dispatch_get_main_queue(), ^ {
             NSApplication* app = [NSApplication sharedApplication];
             AppDelegate* delegate = (AppDelegate*)[app delegate];
-            [delegate setLibraryActive:NO];
+            [delegate setLibraryController:nil];
         });
     });
 }
-
 -(void)windowWillClose:(NSNotification *)notification
 {
     [self destroySession];

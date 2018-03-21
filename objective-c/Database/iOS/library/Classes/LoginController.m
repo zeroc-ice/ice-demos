@@ -189,11 +189,11 @@ static NSString* passwordKey = @"passwordKey";
 }
 
 // Runs in a separate thread, called only by NSInvocationOperation.
--(void)doGlacier2Login:(id)proxy
+-(void)doGlacier2Login:(id)proxy username:(NSString*)username password:(NSString*)password
 {
     id<GLACIER2RouterPrx> glacier2router = [GLACIER2RouterPrx uncheckedCast:proxy];
 
-    id<GLACIER2SessionPrx> glacier2session = [glacier2router createSession:usernameField.text password:passwordField.text];
+    id<GLACIER2SessionPrx> glacier2session = [glacier2router createSession:username password:password];
     id<DemoGlacier2SessionPrx> sess = [DemoGlacier2SessionPrx uncheckedCast:glacier2session];
 
     self.session = sess;
@@ -206,10 +206,7 @@ static NSString* passwordKey = @"passwordKey";
         //
         // Configure the connection to send heartbeats in order to keep our session alive
         //
-        id<ICEConnection> connection = [glacier2router ice_getCachedConnection];
-        id heartbeat = @(ICEHeartbeatAlways);
-        id timeout = [NSNumber numberWithInteger:acmTimeout];
-        [connection setACM:timeout close:ICENone heartbeat:heartbeat];
+        [[glacier2router ice_getCachedConnection] setACM:@(acmTimeout) close:ICENone heartbeat:@(ICEHeartbeatAlways)];
     }
 }
 
@@ -225,8 +222,7 @@ static NSString* passwordKey = @"passwordKey";
         dispatch_sync(dispatch_get_main_queue(), ^ { [call run]; });
     };
 
-    id<ICEObjectPrx> proxy;
-    SEL loginSelector;
+    id proxy;
     @try
     {
         NSAssert(communicator == nil, @"communicator == nil");
@@ -235,12 +231,10 @@ static NSString* passwordKey = @"passwordKey";
         if([[[communicator getProperties] getProperty:@"Ice.Default.Router"] length] > 0)
         {
             proxy = [communicator getDefaultRouter];
-            loginSelector = @selector(doGlacier2Login:);
         }
         else
         {
             proxy = [communicator stringToProxy:[[communicator getProperties] getProperty:@"SessionFactory.Proxy"]];
-            loginSelector = @selector(doLogin:);
         }
     }
     @catch(ICEEndpointParseException* ex)
@@ -270,13 +264,21 @@ static NSString* passwordKey = @"passwordKey";
 
     [self connecting:YES];
 
+    NSString* username = usernameField.text;
+    NSString* password = passwordField.text;
+
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^ {
         @try
         {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-            [self performSelector:loginSelector withObject:proxy];
-#pragma clang diagnostic pop
+            if([[[communicator getProperties] getProperty:@"Ice.Default.Router"] length] > 0)
+            {
+                [self doGlacier2Login:proxy username:username password:password];
+            }
+            else
+            {
+                [self doLogin:proxy];
+            }
+
             dispatch_async(dispatch_get_main_queue(), ^ {
                 [self connecting:NO];
                 [mainController activate:communicator

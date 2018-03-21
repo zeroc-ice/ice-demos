@@ -36,10 +36,10 @@
 
 -(id)initWithCommunicator:(id<ICECommunicator>)communicator
                   session:(id<ChatChatSessionPrx>)session
-               acmTiemout:(int)acmTiemout
+               acmTimeout:(int)acmTiemout
                    router:(id<ICERouterPrx>)router
                  category:(NSString*)category;
-
+-(void)destroySession;
 -(IBAction)sendChat:(id)sender;
 -(void)logout:(id)sender;
 

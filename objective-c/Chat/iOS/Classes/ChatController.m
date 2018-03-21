@@ -307,9 +307,7 @@
     [chatView reloadData];
 
     id<ICEConnection> conn = [router ice_getCachedConnection];
-    id heartbeat = @(ICEHeartbeatAlways);
-    id timeout = [NSNumber numberWithInteger:acmTimeout];
-    [conn setACM:timeout close:ICENone heartbeat:heartbeat];
+    [conn setACM:@(acmTimeout) close:ICENone heartbeat:@(ICEHeartbeatAlways)];
     [conn setCloseCallback:^(id<ICEConnection> connection) {
         [self closed:connection];
     }];
