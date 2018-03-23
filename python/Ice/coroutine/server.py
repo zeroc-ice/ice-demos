@@ -15,7 +15,6 @@ import Ice
 Ice.loadSlice('Fetcher.ice')
 import Demo
 
-
 class FetcherI(Demo.Fetcher):
     def __init__(self, loop):
         self.loop = loop
@@ -65,17 +64,7 @@ class FetcherI(Demo.Fetcher):
         return headers
 
     async def shutdown(self, current):
-        current.adapter.getCommunicator().shutdown()
         self.loop.call_soon_threadsafe(self.loop.stop)
-
-
-def interruptHandler(loop, communicator):
-    #
-    # Schedule a call to stop the loop. This causes run_forever() to return.
-    #
-    loop.call_soon_threadsafe(loop.stop)
-    communicator.shutdown()
-
 
 #
 # Ice.initialize returns an initialized Ice communicator,
@@ -95,7 +84,7 @@ with Ice.initialize(sys.argv, "config.server") as communicator:
     #
     # Install a signal handler to stop asyncio loop and shutdown the communicator on Ctrl-C
     #
-    signal.signal(signal.SIGINT, lambda signum, frame: interruptHandler(loop, communicator))
+    signal.signal(signal.SIGINT, lambda signum, frame: loop.call_soon_threadsafe(loop.stop))
 
     adapter = communicator.createObjectAdapter("Fetcher")
     adapter.add(FetcherI(loop), Ice.stringToIdentity("fetcher"))
@@ -105,7 +94,4 @@ with Ice.initialize(sys.argv, "config.server") as communicator:
     # Run the asyncio event loop until stop() is called.
     #
     loop.run_forever()
-
-    communicator.waitForShutdown()
-
     loop.close()
