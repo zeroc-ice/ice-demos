@@ -48,7 +48,7 @@ $(eval $(call create-project-dependencies,ice,$(ICE_HOME),cpp,cpp,$(cpp-dependen
 $(foreach v,$(supported-platforms) platform config,$(eval $v_targetdir := ) $(eval $v_targetname := ))
 
 slice2cpp_targetext             = cpp
-slice2cpp_path                  = $(or $(ice_bindir)[$(build-platform)],$(ice_bindir))/slice2cpp
+slice2cpp_path                  = $(or $(ice_bindir[$(build-platform)]),$(ice_bindir))/slice2cpp
 
 ifeq ($(wildcard $(slice2cpp_path)),)
 $(error Can't find Ice distribution, please set ICE_HOME to the Ice installation directory)
