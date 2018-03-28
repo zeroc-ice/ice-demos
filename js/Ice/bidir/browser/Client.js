@@ -12,7 +12,7 @@
 //
 class CallbackReceiverI extends Demo.CallbackReceiver
 {
-    callback(num, current)
+    callback(num /* , current */)
     {
         writeLine("received callback #" + num);
     }
@@ -53,7 +53,7 @@ async function start()
     //
     // Associate the object adapter with the bidirectional connection.
     //
-    connection = server.ice_getCachedConnection()
+    connection = server.ice_getCachedConnection();
     connection.setAdapter(adapter);
 
     //
@@ -70,6 +70,17 @@ function stop()
     //
     return connection.close(Ice.ConnectionClose.GracefullyWithWait);
 }
+
+//
+// Handle client state
+//
+const State =
+{
+    Disconnected: 0,
+    Connecting: 1,
+    Connected: 2,
+    Disconnecting: 3
+};
 
 //
 // Setup button click handlers
@@ -120,16 +131,7 @@ $("#stop").click(() =>
         return false;
     });
 
-//
-// Handle client state
-//
-const State =
-{
-    Disconnected: 0,
-    Connecting: 1,
-    Connected: 2,
-    Disconnecting: 3
-};
+let state;
 
 function isConnected()
 {
@@ -146,8 +148,6 @@ function writeLine(msg)
     $("#output").val($("#output").val() + msg + "\n");
     $("#output").scrollTop($("#output").get(0).scrollHeight);
 }
-
-let state;
 
 function setState(s)
 {

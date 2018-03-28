@@ -117,6 +117,11 @@ for(let i = 0; i < Demo.FixedSeqSize; ++i)
                                 wireSize = 16; // Size of two ints and a double on the wire.
                                 break;
                             }
+
+                            default:
+                            {
+                                break;
+                            }
                         }
                     }
                     else if(key == "t" || key == "o" || key == "r" || key == "e")
@@ -195,6 +200,11 @@ for(let i = 0; i < Demo.FixedSeqSize; ++i)
                                 process.stdout.write("sending and receiving");
                                 break;
                             }
+
+                            default:
+                            {
+                                break;
+                            }
                         }
 
                         process.stdout.write(" " + repetitions);
@@ -221,6 +231,11 @@ for(let i = 0; i < Demo.FixedSeqSize; ++i)
                                 process.stdout.write(" fixed-length struct");
                                 break;
                             }
+
+                            default:
+                            {
+                                break;
+                            }
                         }
 
                         process.stdout.write(" sequences of size " + seqSize);
@@ -231,15 +246,15 @@ for(let i = 0; i < Demo.FixedSeqSize; ++i)
                         }
                         console.log("...");
 
-                        let start = new Date().getTime();
-                        let args = key != "r" ? [seq] : [];
+                        const start = new Date().getTime();
+                        const args = key != "r" ? [seq] : [];
 
                         for(let i = 0; i < repetitions; i++)
                         {
                             await operation.apply(proxy, args);
                         }
 
-                        let total = new Date().getTime() - start;
+                        const total = new Date().getTime() - start;
                         console.log(`time for ${repetitions} sequences: ${total} ms`);
                         console.log(`time per sequence: ${total / repetitions} ms`);
 
@@ -275,7 +290,7 @@ for(let i = 0; i < Demo.FixedSeqSize; ++i)
                 console.log(ex.toString());
             }
         }
-        while(key != "x")
+        while(key != "x");
     }
     catch(ex)
     {
@@ -320,7 +335,7 @@ x: exit
 //
 function getline()
 {
-    return new Promise((resolve, reject) =>
+    return new Promise(resolve =>
                        {
                            process.stdin.resume();
                            process.stdin.once("data", buffer =>

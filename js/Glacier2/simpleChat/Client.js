@@ -63,9 +63,12 @@ const Demo = require("./generated/Chat").Demo;
         // create the client object adapter. Using Promise.all we
         // can wait for the completion of all the calls at once.
         //
-        let [timeout, category, adapter] = await Promise.all([router.getACMTimeout(),
-                                                              router.getCategoryForClient(),
-                                                              router.ice_getCommunicator().createObjectAdapterWithRouter("", router)]);
+        const [timeout, category, adapter] = await Promise.all(
+            [
+                router.getACMTimeout(),
+                router.getCategoryForClient(),
+                router.ice_getCommunicator().createObjectAdapterWithRouter("", router)
+            ]);
 
         //
         // Use ACM heartbeat to keep session alive.
@@ -115,7 +118,6 @@ const Demo = require("./generated/Chat").Demo;
     }
 
     let communicator;
-    let completed = false;
     try
     {
         //
@@ -149,7 +151,7 @@ const Demo = require("./generated/Chat").Demo;
     //
     function getline()
     {
-        return new Promise((resolve, reject) =>
+        return new Promise(resolve =>
                            {
                                process.stdin.resume();
                                process.stdin.once("data", buffer =>

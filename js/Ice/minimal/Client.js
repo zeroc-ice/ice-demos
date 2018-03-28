@@ -23,7 +23,7 @@ const Demo = require("./generated/Hello").Demo;
     catch(ex)
     {
         console.log(ex.toString());
-        process.exitCode  = 1;
+        process.exitCode = 1;
     }
     finally
     {

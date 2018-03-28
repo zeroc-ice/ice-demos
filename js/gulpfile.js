@@ -7,13 +7,10 @@
 var babel       = require("gulp-babel"),
     concat      = require("gulp-concat"),
     del         = require("del"),
-    extreplace  = require("gulp-ext-replace"),
     fs          = require("fs"),
     gulp        = require("gulp"),
     gzip        = require("gulp-gzip"),
     iceBuilder  = require("gulp-ice-builder"),
-    jshint      = require("gulp-jshint"),
-    minifycss   = require("gulp-minify-css"),
     newer       = require("gulp-newer"),
     npm         = require("npm"),
     open        = require("gulp-open"),
@@ -117,6 +114,21 @@ gulp.task("dist:clean", [],
     {
         del(["lib/*", "lib/es5/*"]);
     });
+
+gulp.task("common-es5", [],
+          function(cb)
+          {
+              pump([
+                  gulp.src([path.join( "assets", "common.js")]),
+                  babel({compact:false}),
+                  gulp.dest(path.join("assets", "es5"))], cb);
+          });
+
+gulp.task("common-es5:clean", [],
+          function()
+          {
+              del(["assets/es5/*"]);
+          });
 
 //
 // If ICE_HOME is set we install Ice for JavaScript module from ICE_HOME
@@ -295,29 +307,15 @@ Object.keys(demos).forEach(
             });
     });
 
-gulp.task("lint:js", ["build"],
-    function(cb){
-        pump([
-            gulp.src(["gulpfile.js",
-                      "**/*.js",
-                      "!**/es5/*.js",
-                      "!config/*.js",
-                      "!lib/*.js",
-                      "!**/*.min.js",
-                      "!node_modules/**/*.js"]),
-            jshint(),
-            jshint.reporter("default")], cb);
-    });
-
 gulp.task("demo:build", Object.keys(demos).map(demoBuildTask));
 gulp.task("demo:clean", Object.keys(demos).map(demoCleanTask));
 
-gulp.task("build", ["demo:build"]);
+gulp.task("build", ["demo:build", "common-es5"]);
 
 gulp.task("run", ["demo:build", "dist:libs"],
     function(){
         HttpServer();
         return gulp.src("").pipe(open({uri: "http://127.0.0.1:8080/index.html"}));
     });
-gulp.task("clean", ["demo:clean", "dist:clean"]);
+gulp.task("clean", ["demo:clean", "dist:clean", "common-es5:clean"]);
 gulp.task("default", ["build"]);

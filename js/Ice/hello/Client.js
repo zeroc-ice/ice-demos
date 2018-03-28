@@ -18,7 +18,7 @@ const Demo = require("./generated/Hello").Demo;
             throw new Error("too many arguments");
         }
 
-        let proxy = communicator.stringToProxy("hello:default -p 10000").ice_twoway().ice_secure(false);
+        const proxy = communicator.stringToProxy("hello:default -p 10000").ice_twoway().ice_secure(false);
         let timeout = -1;
         let delay = 0;
 
@@ -30,7 +30,7 @@ const Demo = require("./generated/Hello").Demo;
         let line = null;
         do
         {
-            process.stdout.write("==> ")
+            process.stdout.write("==> ");
             for(line of await getline())
             {
                 try
@@ -156,7 +156,7 @@ function menu()
 //
 function getline()
 {
-    return new Promise((resolve, reject) =>
+    return new Promise(resolve =>
                        {
                            process.stdin.resume();
                            process.stdin.once("data", buffer =>

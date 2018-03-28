@@ -13,7 +13,7 @@ const Demo = require("./generated/Callback").Demo;
 //
 class CallbackReceiverI extends Demo.CallbackReceiver
 {
-    callback(num, current)
+    callback(num/* , current*/)
     {
         console.log("received callback #" + num);
     }

@@ -8,7 +8,6 @@
 
 const communicator = Ice.initialize();
 
-let flushEnabled = false;
 let batch = 0;
 let helloPrx = null;
 
@@ -65,6 +64,13 @@ function updateProxy()
     batch = 0;
     $("#flush").addClass("disabled").off("click");
 }
+
+const State =
+{
+    Idle: 0,
+    SendRequest: 1,
+    FlushBatchRequests: 2
+};
 
 //
 // Invoke sayHello.
@@ -142,16 +148,10 @@ async function shutdown()
 //
 // Handle the client state.
 //
-const State =
-{
-    Idle:0,
-    SendRequest:1,
-    FlushBatchRequests:2
-};
 
 let state;
 
-function setState(newState, ex)
+function setState(newState)
 {
     if(state === newState)
     {
@@ -207,6 +207,10 @@ function setState(newState, ex)
             $("body").addClass("waiting");
             break;
         }
+        default:
+        {
+            break;
+        }
     }
     state = newState;
 }
@@ -224,10 +228,10 @@ if(window.location.search.length > 1)
 {
     window.location.search.substr(1).split("&").forEach(pair =>
         {
-            pair = pair.split("=");
+            const tokens = pair.split("=");
             if(pair.length > 0)
             {
-                _GET[decodeURIComponent(pair[0])] = pair.length > 1 ? decodeURIComponent(pair[1]) : "";
+                _GET[decodeURIComponent(tokens[0])] = pair.length > 1 ? decodeURIComponent(tokens[1]) : "";
             }
         });
 }
@@ -268,7 +272,7 @@ $("#mode").on("change", e =>
         updateProxy();
     });
 
-$("#timeout").on("change", e => updateProxy());
+    $("#timeout").on("change", () => updateProxy());
 
 updateProxy();
 
