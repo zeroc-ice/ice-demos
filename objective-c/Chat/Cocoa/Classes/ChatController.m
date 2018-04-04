@@ -10,7 +10,15 @@
 #import <objc/Ice.h>
 #import <objc/Glacier2.h>
 
+@interface ChatController()
+@property (nonatomic) NSTextField* inputField;
+@property (nonatomic) id<ICECommunicator> communicator;
+@end
+
 @implementation ChatController
+
+@synthesize inputField;
+@synthesize communicator;
 
 -(void)closed:(id<ICEConnection>)connection
 {
@@ -139,12 +147,12 @@
     // Clean up the communicator.
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^ {
             // Destroy might block so we call it from a separate thread.
-            [communicator destroy];
-            communicator = nil;
+            [self.communicator destroy];
+            self.communicator = nil;
 
             dispatch_async(dispatch_get_main_queue(), ^ {
                     [self append:@"<disconnected>" who:@"system message" timestamp:[NSDate date]];
-                    [inputField setEnabled:NO];
+                    [self.inputField setEnabled:NO];
 
                     NSApplication* app = [NSApplication sharedApplication];
                     AppDelegate* delegate = (AppDelegate*)[app delegate];

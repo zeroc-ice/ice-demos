@@ -15,7 +15,27 @@
 #import <objc/Glacier2.h>
 #import <objc/Ice.h>
 
+@interface LibraryController()
+@property (nonatomic) NSTableView* queryTable;
+@property (nonatomic) NSProgressIndicator* searchIndicator;
+@property (nonatomic) id<ICECommunicator> communicator;
+@property (nonatomic) id<DemoBookQueryResultPrx> query;
+@property (nonatomic) NSMutableArray* books;
+@property (nonatomic) int nrows;
+@property (nonatomic) DemoBookDescription* selection;
+@property (nonatomic) DemoBookDescription* updated;
+@end
+
 @implementation LibraryController
+
+@synthesize queryTable;
+@synthesize searchIndicator;
+@synthesize communicator;
+@synthesize query;
+@synthesize books;
+@synthesize nrows;
+@synthesize selection;
+@synthesize updated;
 
 -(id)initWithCommunicator:(id<ICECommunicator>)c
                   session:(id)s
@@ -96,8 +116,8 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^ {
 
         // Destroy might block so we call it from a separate thread.
-        [communicator destroy];
-        communicator = nil;
+        [self.communicator destroy];
+        self.communicator = nil;
 
         dispatch_async(dispatch_get_main_queue(), ^ {
             NSApplication* app = [NSApplication sharedApplication];
@@ -262,7 +282,7 @@
         [selection.proxy begin_destroy:nil exception:^(ICEException* ex) {
             if([ex isKindOfClass:[ICEObjectNotExistException class]]) // Ignore ICEObjectNotExistException
             {
-                [searchIndicator stopAnimation:self];
+                [self.searchIndicator stopAnimation:self];
                 return;
             }
             [self exception:ex];
@@ -318,16 +338,16 @@
     void(^queryResponse)(NSMutableArray*, int, id<DemoBookQueryResultPrx>) =
     ^(NSMutableArray* seq, int n, id<DemoBookQueryResultPrx> q)
     {
-        [searchIndicator stopAnimation:self];
-        nrows = n;
-        if(nrows == 0)
+        [self.searchIndicator stopAnimation:self];
+        self.nrows = n;
+        if(self.nrows == 0)
         {
             return;
         }
 
-        [books addObjectsFromArray:seq];
-        query = q;
-        [queryTable reloadData];
+        [self.books addObjectsFromArray:seq];
+        self.query = q;
+        [self.queryTable reloadData];
     };
 
     switch(searchType)
@@ -383,16 +403,16 @@
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             @try
             {
-                if(![updated.title isEqualToString:selection.title])
+                if(![self.updated.title isEqualToString:self.selection.title])
                 {
-                    [updated.proxy setTitle:updated.title];
+                    [self.updated.proxy setTitle:self.updated.title];
                 }
                 BOOL diff = NO;
-                if(updated.authors.count == selection.authors.count)
+                if(self.updated.authors.count == self.selection.authors.count)
                 {
-                    for(int i = 0; i < updated.authors.count; ++i)
+                    for(int i = 0; i < self.updated.authors.count; ++i)
                     {
-                        if(![[updated.authors objectAtIndex:i] isEqualToString:[selection.authors objectAtIndex:i]])
+                        if(![[self.updated.authors objectAtIndex:i] isEqualToString:[self.selection.authors objectAtIndex:i]])
                         {
                             diff = YES;
                             break;
@@ -405,7 +425,7 @@
                 }
                 if(diff)
                 {
-                    [updated.proxy setAuthors:updated.authors];
+                    [self.updated.proxy setAuthors:self.updated.authors];
                 }
                 dispatch_async(dispatch_get_main_queue(), ^{ [self asyncRequestReply]; });
             }
@@ -533,14 +553,14 @@
                 NSAssert(query != nil, @"query != nil");
                 [query begin_next:10
                          response:^(NSMutableArray* seq, BOOL destroyed) {
-                             [searchIndicator stopAnimation:self];
-                             [books addObjectsFromArray:seq];
+                             [self.searchIndicator stopAnimation:self];
+                             [self.books addObjectsFromArray:seq];
                              // The query has returned all available results.
                              if(destroyed)
                              {
-                                 query = nil;
+                                 self.query = nil;
                              }
-                             [queryTable reloadData];
+                             [self.queryTable reloadData];
                          }
                         exception:^(ICEException* ex) { [self exception:ex]; } ];
                 rowsQueried += 10;

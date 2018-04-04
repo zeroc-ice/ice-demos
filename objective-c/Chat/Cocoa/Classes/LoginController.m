@@ -16,7 +16,17 @@
 NSString* const usernameKey = @"usernameKey";
 NSString* const passwordKey = @"passwordKey";
 
+@interface LoginController()
+@property (nonatomic) NSWindow* connectingSheet;
+@property (nonatomic)  NSProgressIndicator* progress;
+@property (nonatomic) id<ICECommunicator> communicator;
+@end
+
 @implementation LoginController
+
+@synthesize connectingSheet;
+@synthesize progress;
+@synthesize communicator;
 
 // Initialize the app defaults.
 +(void)initialize
@@ -85,7 +95,7 @@ NSString* const passwordKey = @"passwordKey";
         NSString* msg;
         @try
         {
-            id<GLACIER2RouterPrx> router = [GLACIER2RouterPrx checkedCast:[communicator getDefaultRouter]];;
+            id<GLACIER2RouterPrx> router = [GLACIER2RouterPrx checkedCast:[self.communicator getDefaultRouter]];;
             id<GLACIER2SessionPrx> glacier2session = [router createSession:username password:password];
             id<ChatChatSessionPrx> session = [ChatChatSessionPrx uncheckedCast:glacier2session];
 
@@ -96,7 +106,7 @@ NSString* const passwordKey = @"passwordKey";
             }
             NSString* category = [router getCategoryForClient];
 
-            ChatController* chatController = [[ChatController alloc] initWithCommunicator:communicator
+            ChatController* chatController = [[ChatController alloc] initWithCommunicator:self.communicator
                                                                                   session:session
                                                                                acmTimeout:acmTimeout
                                                                                    router:router
@@ -104,12 +114,12 @@ NSString* const passwordKey = @"passwordKey";
 
             dispatch_async(dispatch_get_main_queue(), ^ {
                 // Hide the connecting sheet.
-                [NSApp endSheet:connectingSheet];
-                [connectingSheet orderOut:self.window];
-                [progress stopAnimation:self];
+                [NSApp endSheet:self.connectingSheet];
+                [self.connectingSheet orderOut:self.window];
+                [self.progress stopAnimation:self];
 
                 // The communicator is now owned by the ChatController.
-                communicator = nil;
+                self.communicator = nil;
 
                 // Close the connecting window, show the main window.
                 [self.window close];
@@ -140,12 +150,12 @@ NSString* const passwordKey = @"passwordKey";
 
         dispatch_async(dispatch_get_main_queue(), ^ {
             // Hide the connecting sheet.
-            [NSApp endSheet:connectingSheet];
-            [connectingSheet orderOut:self.window];
-            [progress stopAnimation:self];
+            [NSApp endSheet:self.connectingSheet];
+            [self.connectingSheet orderOut:self.window];
+            [self.progress stopAnimation:self];
 
-            [communicator destroy];
-            communicator = nil;
+            [self.communicator destroy];
+            self.communicator = nil;
 
             NSRunAlertPanel(@"Error", @"%@", @"OK", nil, nil, msg);
         });

@@ -23,6 +23,9 @@
 @property (nonatomic) id session;
 @property (nonatomic) id<GLACIER2RouterPrx> router;
 @property (nonatomic) id<DemoLibraryPrx> library;
+@property (nonatomic) int nrows;
+@property (nonatomic) NSMutableArray* books;
+@property (nonatomic) UITableView* searchTableView;
 
 -(void)exception:(ICEException*)ex;
 
@@ -36,6 +39,9 @@
 @synthesize communicator;
 @synthesize session;
 @synthesize router;
+@synthesize nrows;
+@synthesize books;
+@synthesize searchTableView;
 
 -(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -84,12 +90,6 @@
     [searchTableView reloadData];
 }
 
--(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
 -(void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning]; // Releases the view if it doesn't have a superview
@@ -128,8 +128,8 @@
 
     // Destroy the communicator from another thread since this call blocks.
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [communicator destroy];
-        communicator = nil;
+        [self.communicator destroy];
+        self.communicator = nil;
     });
 }
 
@@ -204,7 +204,7 @@
                                                             preferredStyle:UIAlertControllerStyleAlert];
     [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
                       handler:^(UIAlertAction * action) {
-                        if(session == nil)
+                        if(self.session == nil)
                         {
                             [self.navigationController popToRootViewControllerAnimated:YES];
                         }
@@ -244,8 +244,8 @@
     ^(NSMutableArray* seq, int n, id<DemoBookQueryResultPrx> q)
     {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-        nrows = n;
-        if(nrows == 0)
+        self.nrows = n;
+        if(self.nrows == 0)
         {
             // open an alert with just an OK button
             UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"No results"
@@ -256,10 +256,10 @@
             return;
         }
 
-        [books addObjectsFromArray:seq];
+        [self.books addObjectsFromArray:seq];
         self.query = q;
 
-        [searchTableView reloadData];
+        [self.searchTableView reloadData];
     };
 
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
@@ -347,7 +347,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
             NSAssert(query != nil, @"query != nil");
             [query begin_next:10
                      response:^(NSMutableArray* seq, BOOL destroyed) {
-                         [books addObjectsFromArray:seq];
+                         [self.books addObjectsFromArray:seq];
                          // The query has returned all available results.
                          if(destroyed)
                          {
@@ -355,7 +355,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
                          }
 
                          [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-                         [searchTableView reloadData];
+                         [self.searchTableView reloadData];
                      }
                     exception:^(ICEException* ex) { [self exception:ex]; }];
             rowsQueried += 10;
