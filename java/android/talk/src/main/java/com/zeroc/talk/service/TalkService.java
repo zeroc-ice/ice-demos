@@ -104,7 +104,7 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
         public void connect(Talk.PeerPrx peer, Current current)
             throws Talk.ConnectionException
         {
-            info = incoming(peer.ice_fixed(current.con));
+            info = incoming(peer.ice_fixed(current.con), current.con);
         }
 
         @Override
@@ -453,7 +453,7 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
         }
     }
 
-    synchronized private PeerInfo incoming(Talk.PeerPrx peer)
+    synchronized private PeerInfo incoming(Talk.PeerPrx peer, com.zeroc.Ice.Connection con)
         throws Talk.ConnectionException
     {
         //
@@ -464,7 +464,6 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
             throw new Talk.ConnectionException("Peer is busy");
         }
 
-        com.zeroc.Ice.Connection con = peer.ice_getConnection();
         com.zeroc.Ice.ConnectionInfo ci = con.getInfo();
         if(ci.underlying != null)
         {

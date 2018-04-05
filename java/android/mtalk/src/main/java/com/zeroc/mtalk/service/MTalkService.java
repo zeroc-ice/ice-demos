@@ -110,7 +110,7 @@ public class MTalkService extends Service implements com.zeroc.mtalk.service.Ser
         public void connect(String name, MTalk.PeerPrx peer, Current current)
             throws MTalk.ConnectionException
         {
-            info = incoming(name, peer.ice_fixed(current.con));
+            info = incoming(name, peer.ice_fixed(current.con), current.con);
         }
 
         @Override
@@ -476,7 +476,7 @@ public class MTalkService extends Service implements com.zeroc.mtalk.service.Ser
         }
     }
 
-    synchronized private PeerInfo incoming(String name, MTalk.PeerPrx peer)
+    synchronized private PeerInfo incoming(String name, MTalk.PeerPrx peer, com.zeroc.Ice.Connection con)
         throws MTalk.ConnectionException
     {
         //
@@ -491,7 +491,7 @@ public class MTalkService extends Service implements com.zeroc.mtalk.service.Ser
         info.name = name;
         info.remote = peer.ice_invocationTimeout(5000);
         info.local = null;
-        info.connection = peer.ice_getConnection();
+        info.connection = con;
 
         setState(Intents.PEER_CONNECTED); // Also notifies the activity.
         _peer = info;
