@@ -88,14 +88,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <IceBuilder Include="..\..\Discovery.ice">
-      <Filter>Slice Files</Filter>
-    </IceBuilder>
-    <IceBuilder Include="..\..\Hello.ice">
-      <Filter>Slice Files</Filter>
-    </IceBuilder>
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="Win32\Debug\Discovery.h">
       <Filter>Header Files\Win32\Debug</Filter>
     </ClInclude>
@@ -120,5 +112,13 @@
     <ClInclude Include="x64\Release\Hello.h">
       <Filter>Header Files\x64\Release</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <SliceCompile Include="..\..\Discovery.ice">
+      <Filter>Slice Files</Filter>
+    </SliceCompile>
+    <SliceCompile Include="..\..\Hello.ice">
+      <Filter>Slice Files</Filter>
+    </SliceCompile>
   </ItemGroup>
 </Project>

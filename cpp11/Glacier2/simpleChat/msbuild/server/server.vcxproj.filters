@@ -98,8 +98,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <IceBuilder Include="..\..\Chat.ice">
+    <SliceCompile Include="..\..\Chat.ice">
       <Filter>Slice Files</Filter>
-    </IceBuilder>
+    </SliceCompile>
   </ItemGroup>
 </Project>

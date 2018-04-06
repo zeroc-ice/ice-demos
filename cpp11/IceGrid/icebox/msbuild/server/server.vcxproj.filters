@@ -79,11 +79,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <IceBuilder Include="..\..\Hello.ice">
-      <Filter>Slice Files</Filter>
-    </IceBuilder>
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="Win32\Debug\Hello.h">
       <Filter>Header Files\Win32\Debug</Filter>
     </ClInclude>
@@ -99,5 +94,10 @@
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\..\application.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <SliceCompile Include="..\..\Hello.ice">
+      <Filter>Slice Files</Filter>
+    </SliceCompile>
   </ItemGroup>
 </Project>

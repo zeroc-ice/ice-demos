@@ -1,4 +1,4 @@
-This demo shows how to create an [IceBox][1] service.
+  This demo shows how to create an [IceBox][1] service.
 
 To run this demo, open two terminal windows. In the first window,
 start the IceBox server:
