@@ -77,7 +77,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <PackageCertificateKeyFile>simpleChat_TemporaryKey.pfx</PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>7FF6CF78B92393F31C1473675EBC0064D471C6F8</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>16283E43409FDDD7521D05F3367D40ED50802C26</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>uwp\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>

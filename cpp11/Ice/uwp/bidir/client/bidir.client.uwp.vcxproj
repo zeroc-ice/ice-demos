@@ -77,7 +77,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <PackageCertificateKeyFile>client_TemporaryKey.pfx</PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>22ED751544CB172844C906C22A91338D0A7BFD41</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>A8ABDBB711C0F060FD901252FEC47D735A331F23</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>uwp\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
