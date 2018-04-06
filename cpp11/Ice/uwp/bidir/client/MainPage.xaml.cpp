@@ -127,7 +127,7 @@ void bidir::MainPage::startClient_Click(Platform::Object^ sender, Windows::UI::X
             catch(const Ice::Exception& ex)
             {
                 string msg(ex.what()); // Copy the message, dispatch is asynchronous
-                dispatch([this, &ex]()
+                dispatch([this, msg]()
                     {
                         print(msg);
                         startClient->IsEnabled = true;
