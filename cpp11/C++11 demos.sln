@@ -274,7 +274,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "replication", "replication"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "secure", "secure", "{25EDC795-3D76-4134-8E25-3EA25E37C8A6}"
 	ProjectSection(SolutionItems) = preProject
-		README.md = README.md
+		IceGrid\secure\README.md = IceGrid\secure\README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sessionActivation", "sessionActivation", "{E9666704-1A6F-47FA-9C30-0CF82F792BFA}"
@@ -299,7 +299,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "counter", "counter", "{60C0
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "replicated", "replicated", "{6F396003-A0A1-47EE-BC9B-0A176B028973}"
 	ProjectSection(SolutionItems) = preProject
-		README.md = README.md
+		IceStorm\replicated\README.md = IceStorm\replicated\README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "replicated2", "replicated2", "{C2F650DA-2BA4-4D8E-8C00-F309EDB2C989}"
