@@ -10,29 +10,29 @@ function client()
 
     import Demo.*;
 
-    try
-        % Initializes a communicator and then destroys it when cleanup is collected
-        communicator = Ice.initialize({'--Ice.Config=config.client'});
-        cleanup = onCleanup(@() communicator.destroy());
+    % Initializes a communicator and then destroys it when cleanup is collected
+    communicator = Ice.initialize({'--Ice.Config=config.client'});
+    cleanup = onCleanup(@() communicator.destroy());
 
-        twoway = HelloPrx.checkedCast(communicator.stringToProxy('hello'));
-        if isempty(twoway)
-            fprintf('invalid proxy\n');
-            return;
-        end
+    twoway = HelloPrx.checkedCast(communicator.stringToProxy('hello'));
+    if isempty(twoway)
+        fprintf('invalid proxy\n');
+        return;
+    end
 
-        oneway = twoway.ice_oneway();
-        batchOneway = twoway.ice_batchOneway();
-        datagram = twoway.ice_datagram();
-        batchDatagram = twoway.ice_batchDatagram();
+    oneway = twoway.ice_oneway();
+    batchOneway = twoway.ice_batchOneway();
+    datagram = twoway.ice_datagram();
+    batchDatagram = twoway.ice_batchDatagram();
 
-        secure = 0;
-        timeout = -1;
-        delay = 0;
+    secure = 0;
+    timeout = -1;
+    delay = 0;
 
-        menu();
+    menu();
 
-        while true
+    while true
+        try
             line = input('==> ', 's');
             switch line
                 case 't'
@@ -79,7 +79,7 @@ function client()
                         delay = 2500;
                         fprintf('server delay is now set to 2500ms\n');
                     else
-                        delay = 0
+                        delay = 0;
                         fprintf('server delay is now deactivated\n');
                     end
                 case 'S'
@@ -106,9 +106,9 @@ function client()
                     fprintf('unknown command `%s''\n', line);
                     menu();
             end
+        catch ex
+            fprintf('%s\n', getReport(ex));
         end
-    catch ex
-        fprintf('%s\n', getReport(ex));
     end
 end
 
