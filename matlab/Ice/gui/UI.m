@@ -173,6 +173,7 @@ classdef UI < handle
 
         function delete(obj)
             obj.communicator.destroy();
+            rmpath('generated');
         end
 
         function waitForComplete(obj, f)

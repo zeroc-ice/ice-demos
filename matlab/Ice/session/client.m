@@ -82,6 +82,7 @@ function client()
     catch ex
         fprintf('%s\n', getReport(ex));
     end
+    rmpath('generated');
 end
 
 function menu()

@@ -111,6 +111,7 @@ function client()
             fprintf('%s\n', getReport(ex));
         end
     end
+    rmpath('generated');
 end
 
 function menu()
