@@ -7,7 +7,7 @@ started quickly, we recommend using the Python server.
 After starting the server, run the MATLAB client:
 
 ```
->> client
+client
 ```
 
 The client uses IceDiscovery to locate the Ice hello object. See the
