@@ -17,6 +17,7 @@
 
 @property (nonatomic) UITextField* currentField;
 @property (nonatomic) NSString* oldFieldValue;
+@property (nonatomic) MainController *mainController;
 
 @property (nonatomic) id<ICECommunicator> communicator;
 @property (nonatomic) id session;
@@ -29,6 +30,7 @@
 
 @synthesize currentField;
 @synthesize oldFieldValue;
+@synthesize mainController;
 @synthesize session;
 @synthesize library;
 @synthesize router;
@@ -78,12 +80,6 @@ static NSString* passwordKey = @"passwordKey";
     loginButton.enabled = usernameField.text.length > 0;
     [loginButton setAlpha:loginButton.enabled ? 1.0 : 0.5];
     [super viewWillAppear:animated];
-}
-
--(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 -(void)didReceiveMemoryWarning
@@ -270,7 +266,7 @@ static NSString* passwordKey = @"passwordKey";
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^ {
         @try
         {
-            if([[[communicator getProperties] getProperty:@"Ice.Default.Router"] length] > 0)
+            if([[[self.communicator getProperties] getProperty:@"Ice.Default.Router"] length] > 0)
             {
                 [self doGlacier2Login:proxy username:username password:password];
             }
@@ -281,10 +277,10 @@ static NSString* passwordKey = @"passwordKey";
 
             dispatch_async(dispatch_get_main_queue(), ^ {
                 [self connecting:NO];
-                [mainController activate:communicator
-                                 session:session
-                                  router:router
-                                 library:library];
+                [self.mainController activate:self.communicator
+                                      session:self.session
+                                       router:self.router
+                                      library:self.library];
 
                 // Clear internal state.
                 self.communicator = nil;
@@ -292,7 +288,7 @@ static NSString* passwordKey = @"passwordKey";
                 self.library = nil;
                 self.router = nil;
 
-                [self.navigationController pushViewController:mainController animated:YES];
+                [self.navigationController pushViewController:self.mainController animated:YES];
             });
         }
         @catch(GLACIER2CannotCreateSessionException* ex)
