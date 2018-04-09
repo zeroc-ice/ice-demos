@@ -312,7 +312,7 @@ gulp.task("demo:clean", Object.keys(demos).map(demoCleanTask));
 
 gulp.task("build", ["demo:build", "common-es5"]);
 
-gulp.task("run", ["demo:build", "dist:libs"],
+gulp.task("run", ["build", "dist:libs"],
     function(){
         HttpServer();
         return gulp.src("").pipe(open({uri: "http://127.0.0.1:8080/index.html"}));
