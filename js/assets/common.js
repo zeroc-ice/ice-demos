@@ -43,16 +43,16 @@ $(".source").each((i, e) =>
 
 $("#protocol").val(document.location.protocol == "http:" ? "ws" : "wss");
 
-$("#protocol").on("change", () =>
+$("#protocol").on("change", e =>
                   {
-                      if((document.location.protocol == "http:" && $(this).val() == "wss") ||
-                         (document.location.protocol == "https:" && $(this).val() == "ws"))
+                      if((document.location.protocol == "http:" && $(e.currentTarget).val() == "wss") ||
+                         (document.location.protocol == "https:" && $(e.currentTarget).val() == "ws"))
                       {
                           document.location.assign(
                               new URI().
-                                  protocol($(this).val() == "ws" ? "http" : "https").
+                                  protocol($(e.currentTarget).val() == "ws" ? "http" : "https").
                                   hostname(document.location.hostname).
-                                  port($(this).val() == "ws" ? 8080 : 9090));
+                                  port($(e.currentTarget).val() == "ws" ? 8080 : 9090));
                           return false;
                       }
                   });
