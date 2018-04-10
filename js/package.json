@@ -28,7 +28,6 @@
     "gulp-ext-replace": "^0.3.0",
     "gulp-gzip": "1.4.0",
     "gulp-ice-builder": "^2.0.0",
-    "gulp-jshint": "^2.1.0",
     "gulp-minify-css": "^1.1.6",
     "gulp-newer": "^1.4.0",
     "gulp-open": "^2.1.0",
