@@ -11,5 +11,5 @@ function client()
     import Demo.*;
     import Ice.*;
 
-    c = UI();
+    UI();
 end

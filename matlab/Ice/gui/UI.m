@@ -133,7 +133,7 @@ classdef UI < handle
 
         function shutdown(obj)
             m = obj.mode.String{obj.mode.Value};
-            if strfind(m, 'Batch')
+            if contains(m, 'Batch')
                 try
                     obj.flushBtn.Enable = 'on';
                     obj.helloPrx.shutdown();
@@ -156,7 +156,7 @@ classdef UI < handle
 
         function sayHello(obj)
             m = obj.mode.String{obj.mode.Value};
-            if strfind(m, 'Batch')
+            if contains(m, 'Batch')
                 try
                     obj.flushBtn.Enable = 'on';
                     obj.helloPrx.sayHello(obj.delay.Value);
