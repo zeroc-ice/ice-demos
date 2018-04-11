@@ -72,9 +72,10 @@ to log into the IceGrid registry and view the application you deployed above:
 
 Running the Client
 ------------------
-```
-client
-```
+
+| .NET Framework 4.5 | .NET Core 2.0       |
+| ------------------ | ------------------- |
+| `client`           | `dotnet client.dll` |
 
 The client simply calls 'sayHello' on the replicated 'hello' object.
 
