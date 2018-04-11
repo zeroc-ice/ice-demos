@@ -86,7 +86,10 @@ public class Client
                 else if(line.equals("f"))
                 {
                     batchOneway.ice_flushBatchRequests();
-                    batchDatagram.ice_flushBatchRequests();
+                    if(!secure)
+                    {
+                        batchDatagram.ice_flushBatchRequests();
+                    }
                 }
                 else if(line.equals("x"))
                 {
