@@ -53,13 +53,13 @@
     <Choose>
         <When Condition="'$(OS)' == 'Windows_NT'">
             <PropertyGroup>
-                <PackagePath>$(IceHome)\csharp\msbuild\zeroc.ice.net\zeroc.ice.net.3.7.1-beta1.nupkg</PackagePath>
+                <PackagePath>$(IceHome)\csharp\msbuild\zeroc.ice.net\zeroc.ice.net.3.7.1.nupkg</PackagePath>
                 <BuildProperties>Configuration=$(Configuration);Platform=Any CPU</BuildProperties>
             </PropertyGroup>
         </When>
         <Otherwise>
             <PropertyGroup>
-                <PackagePath>$(IceHome)/csharp/msbuild/zeroc.ice.net/zeroc.ice.net.3.7.1-beta1.nupkg</PackagePath>
+                <PackagePath>$(IceHome)/csharp/msbuild/zeroc.ice.net/zeroc.ice.net.3.7.1.nupkg</PackagePath>
                 <BuildProperties>Configuration=$(Configuration);Platform=Any CPU;IceToolsPath=$(IceHome)/cpp/bin</BuildProperties>
             </PropertyGroup>
         </Otherwise>
