@@ -27,10 +27,6 @@ subprojects {
         }
 
         mavenCentral()
-
-        maven {
-            url "https://${iceMavenRepo}/nexus/content/repositories/releases"
-        }
     }
 
     tasks.withType(JavaCompile) {
