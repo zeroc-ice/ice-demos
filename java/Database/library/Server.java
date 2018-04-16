@@ -82,7 +82,7 @@ class Server
 
         try
         {
-            Class.forName(properties.getProperty("JDBC.DriverClassName")).newInstance();
+            Class.forName(properties.getProperty("JDBC.DriverClassName")).getConstructor().newInstance();
         }
         catch(Exception e)
         {
