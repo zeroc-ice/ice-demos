@@ -4,14 +4,14 @@ To run the demo, first start the server:
 
 ```
 cd Server
-dotnet Server.dll
+dotnet server.dll
 ```
 
 In a separate window, start the client:
 
 ```
 cd Client
-dotnet Client.dll
+dotnet client.dll
 ```
 
 [1]: https://doc.zeroc.com/display/Ice37/Writing+an+Ice+Application+with+C-Sharp
