@@ -11,8 +11,8 @@ The demo requires QT 5 package from https://www.qt.io/
 ### Building the demo
 
 ```
-qmake -o qt.pro
-Make
+qmake
+make
 ```
 
 ## Building the demo on Windows

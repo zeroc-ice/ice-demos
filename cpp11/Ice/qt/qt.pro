@@ -9,7 +9,8 @@ TEMPLATE = app
 TARGET = client
 DESTDIR = .
 
-CONFIG += qt warn_on
+CONFIG += qt warn_on debug
+CONFIG -= app_bundle
 
 QT = core gui widgets
 
@@ -22,6 +23,14 @@ SOURCES = Client.cpp
 DEFINES += ICE_CPP11_MAPPING
 
 INCLUDEPATH += .
+
+macx {
+  ICE_HOME =? /usr/local
+}
+unix:!macx {
+  ICE_HOME =? /usr
+}
+
 
 equals (ICE_HOME, "/usr") {
 } else:equals(ICE_HOME, "/usr/local") {
