@@ -47,8 +47,29 @@ main(int argc, char* argv[])
     return status;
 }
 
-void menu();
-void show(const Ice::PropertiesAdminPrx&);
+void
+menu()
+{
+    cout << endl <<
+        "usage:\n"
+        "1: set properties (batch 1)\n"
+        "2: set properties (batch 2)\n"
+        "c: show current properties\n"
+        "s: shutdown server\n"
+        "x: exit\n"
+        "?: help\n";
+}
+
+void
+show(const Ice::PropertiesAdminPrx& admin)
+{
+    Ice::PropertyDict props = admin->getPropertiesForPrefix("Demo");
+    cout << "Server's current settings:" << endl;
+    for(Ice::PropertyDict::iterator p = props.begin(); p != props.end(); ++p)
+    {
+        cout << "  " << p->first << "=" << p->second << endl;
+    }
+}
 
 int
 run(const Ice::CommunicatorPtr& communicator)
@@ -150,28 +171,4 @@ run(const Ice::CommunicatorPtr& communicator)
     while(cin.good() && c != 'x');
 
     return 0;
-}
-
-void
-menu()
-{
-    cout << endl <<
-        "usage:\n"
-        "1: set properties (batch 1)\n"
-        "2: set properties (batch 2)\n"
-        "c: show current properties\n"
-        "s: shutdown server\n"
-        "x: exit\n"
-        "?: help\n";
-}
-
-void
-show(const Ice::PropertiesAdminPrx& admin)
-{
-    Ice::PropertyDict props = admin->getPropertiesForPrefix("Demo");
-    cout << "Server's current settings:" << endl;
-    for(Ice::PropertyDict::iterator p = props.begin(); p != props.end(); ++p)
-    {
-        cout << "  " << p->first << "=" << p->second << endl;
-    }
 }

@@ -24,10 +24,10 @@ Ice.Trace.Network=1
 #
 # Logger Plugin Configuration
 #
-Ice.Plugin.Logger=LoggerPlugin:LoggerPluginFactoryI
+Ice.Plugin.Logger=LoggerPlugin.dll:LoggerPluginFactoryI
 
 #
 # Hello Plugin Configuration
 #
-Ice.Plugin.Hello=HelloPlugin:HelloPluginFactoryI
+Ice.Plugin.Hello=HelloPlugin.dll:HelloPluginFactoryI
 Hello.Endpoints=tcp -h localhost -p 10000

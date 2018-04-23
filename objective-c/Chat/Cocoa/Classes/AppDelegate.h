@@ -6,13 +6,16 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class ChatController;
+
 @interface AppDelegate : NSObject
 {
     NSWindowController* loginController;
-    BOOL chatActive;
+    ChatController* chatController;
+    BOOL terminate;
 }
 
 -(void)login:(id)sender;
--(void)setChatActive:(BOOL)active;
+-(void)setChatController:(ChatController*)controller;
 
 @end

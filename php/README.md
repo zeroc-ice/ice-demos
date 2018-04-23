@@ -34,14 +34,18 @@ If you've installed Ice in a non-standard location, you'll need to set the
 `ICE_HOME` environment variable with the path name of the
 installation directory:
 
-    $ export ICE_HOME=~/testing/Ice
+```
+export ICE_HOME=~/testing/Ice
+```
 
 ### Building the Demos
 
 Review the settings in `../make/Make.rules`. When you're ready to start the
 build, run `make`:
 
-    $ make
+```
+make
+```
 
 ## Build Instructions for Windows
 
@@ -54,7 +58,9 @@ Studio][2]. Add this extension to Visual Studio before building the demos.
 
 When you're ready to start the build, run `MSBuild`:
 
-    > MSBuild msbuild\ice.proj /p:IceHome=C:\Ice-3.7.0
+```
+MSBuild msbuild\ice.proj /p:IceHome=C:\Ice-3.7.1
+```
 
 ## Running the Demos
 

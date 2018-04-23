@@ -1,10 +1,15 @@
-This demo illustrates the use of optional class members and parameters.
+This demo illustrates the use of [optional class members][1] and
+[parameters][2].
 
 Ice for MATLAB currently supports only client-side functionality, therefore
-you must use a server from any other language mapping.
+you must use a server from any other language mapping. If you want to get
+started quickly, we recommend using the Python server.
 
 After starting the server, run the MATLAB client:
 
 ```
-Client.main()
+client
 ```
+
+[1]: https://doc.zeroc.com/display/Ice37/Optional+Data+Members
+[2]: https://doc.zeroc.com/display/Ice37/MATLAB+Mapping+for+Operations

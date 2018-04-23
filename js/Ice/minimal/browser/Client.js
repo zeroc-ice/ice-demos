@@ -7,6 +7,15 @@
 (function(){
 
 //
+// Handle the client state
+//
+const State =
+{
+    Idle: 0,
+    Busy: 1
+};
+
+//
 // Initialize the communicator.
 //
 const communicator = Ice.initialize();
@@ -43,17 +52,6 @@ async function sayHello()
         setState(State.Idle);
     }
 }
-
-//
-// Handle the client state
-//
-const State =
-{
-    Idle: 0,
-    Busy: 1
-};
-
-let state;
 
 function setState(newState)
 {
@@ -92,8 +90,11 @@ function setState(newState)
             $("body").addClass("waiting");
             break;
         }
+        default:
+        {
+            break;
+        }
     }
-    state = newState;
 }
 
 //

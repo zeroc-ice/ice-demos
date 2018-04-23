@@ -89,9 +89,4 @@
       <Filter>Header Files\x64\Release</Filter>
     </ClInclude>
   </ItemGroup>
-  <ItemGroup>
-    <IceBuilder Include="..\..\MTalk.ice">
-      <Filter>Slice Files</Filter>
-    </IceBuilder>
-  </ItemGroup>
 </Project>

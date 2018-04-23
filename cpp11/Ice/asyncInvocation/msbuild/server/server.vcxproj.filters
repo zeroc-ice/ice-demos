@@ -89,9 +89,4 @@
       <UniqueIdentifier>{56c6fe11-c05a-4b93-b579-550d4f11c504}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
-  <ItemGroup>
-    <SliceCompile Include="..\..\Calculator.ice">
-      <Filter>Slice Files</Filter>
-    </SliceCompile>
-  </ItemGroup>
 </Project>

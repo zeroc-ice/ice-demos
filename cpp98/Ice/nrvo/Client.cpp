@@ -53,7 +53,21 @@ main(int argc, char* argv[])
     return status;
 }
 
-void menu();
+void
+menu()
+{
+    cout <<
+        "usage:\n"
+        "\n"
+        "Operation to call:\n"
+        "1: return a string sequence\n"
+        "2: return a string sequence that is a data member of the servant\n"
+        "3: return a string sequence from an operation with multiple return paths\n"
+        "4: return a string sequence from an operation with multiple return paths, using RVO\n"
+        "s: shutdown server\n"
+        "x: exit\n"
+        "?: show this menu\n";
+}
 
 int
 run(const Ice::CommunicatorPtr& communicator)
@@ -137,20 +151,4 @@ run(const Ice::CommunicatorPtr& communicator)
     while(cin.good() && c != 'x');
 
     return 0;
-}
-
-void
-menu()
-{
-    cout <<
-        "usage:\n"
-        "\n"
-        "Operation to call:\n"
-        "1: return a string sequence\n"
-        "2: return a string sequence that is a data member of the servant\n"
-        "3: return a string sequence from an operation with multiple return paths\n"
-        "4: return a string sequence from an operation with multiple return paths, using RVO\n"
-        "s: shutdown server\n"
-        "x: exit\n"
-        "?: show this menu\n";
 }

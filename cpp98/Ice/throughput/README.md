@@ -4,11 +4,15 @@ that can be achieved using serialized synchronous requests.
 
 To run the demo, first start the server:
 
-      server
+```
+server
+```
 
 In a separate window, start the client:
 
-      client
+```
+client
+```
 
 We provide a number of optimizations through metadata in this demo.
 
@@ -49,6 +53,7 @@ parameters and out parameters, such as:
 //
 stringVect = prx->recvStringSeq();
 ```
+
 If you use `cpp:type` above instead of `cpp:view-type`, you would get a
 `std::vector`<`Util::string_view`>, with the `string_view` objects pointing to
 deallocated memory:

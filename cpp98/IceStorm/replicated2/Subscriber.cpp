@@ -12,6 +12,8 @@
 using namespace std;
 using namespace Demo;
 
+int run(int argc, char* argv[]);
+
 class ClockI : public Clock
 {
 public:
@@ -23,12 +25,19 @@ public:
     }
 };
 
-class Subscriber : public Ice::Application
-{
-public:
+//
+// Global variable for shutdownCommunicator
+//
+Ice::CommunicatorPtr communicator;
 
-    virtual int run(int, char*[]);
-};
+//
+// Callback for CtrlCHandler
+//
+void
+shutdownCommunicator(int)
+{
+    communicator->shutdown();
+}
 
 int
 main(int argc, char* argv[])
@@ -36,9 +45,36 @@ main(int argc, char* argv[])
 #ifdef ICE_STATIC_LIBS
     Ice::registerIceUDP();
 #endif
+    int status = 0;
 
-    Subscriber app;
-    return app.main(argc, argv, "config.sub");
+    try
+    {
+        //
+        // CtrlCHandler must be created before the communicator or any other threads are started
+        //
+        Ice::CtrlCHandler ctrlCHandler;
+
+        //
+        // CommunicatorHolder's ctor initializes an Ice communicator,
+        // and it's dtor destroys this communicator.
+        //
+        Ice::CommunicatorHolder ich(argc, argv, "config.sub");
+        communicator = ich.communicator();
+
+        //
+        // Shutdown communicator on Ctrl-C
+        //
+        ctrlCHandler.setCallback(&shutdownCommunicator);
+
+        status = run(argc, argv);
+    }
+    catch(const std::exception& ex)
+    {
+        cerr << ex.what() << endl;
+        status = 1;
+    }
+
+    return status;
 }
 
 void
@@ -49,10 +85,10 @@ usage(const string& n)
 }
 
 int
-Subscriber::run(int argc, char* argv[])
+run(int argc, char* argv[])
 {
     Ice::StringSeq args = Ice::argsToStringSeq(argc, argv);
-    args = communicator()->getProperties()->parseCommandLineOptions("Clock", args);
+    args = communicator->getProperties()->parseCommandLineOptions("Clock", args);
     Ice::stringSeqToArgs(args, argc, argv);
 
     bool batch = false;
@@ -151,10 +187,10 @@ Subscriber::run(int argc, char* argv[])
     }
 
     IceStorm::TopicManagerPrx manager = IceStorm::TopicManagerPrx::checkedCast(
-        communicator()->propertyToProxy("TopicManager.Proxy"));
+        communicator->propertyToProxy("TopicManager.Proxy"));
     if(!manager)
     {
-        cerr << appName() << ": invalid proxy" << endl;
+        cerr << argv[0] << ": invalid proxy" << endl;
         return 1;
     }
 
@@ -171,12 +207,12 @@ Subscriber::run(int argc, char* argv[])
         }
         catch(const IceStorm::TopicExists&)
         {
-            cerr << appName() << ": temporary failure. try again." << endl;
+            cerr << argv[0] << ": temporary failure. try again." << endl;
             return 1;
         }
     }
 
-    Ice::ObjectAdapterPtr adapter = communicator()->createObjectAdapter("Clock.Subscriber");
+    Ice::ObjectAdapterPtr adapter = communicator->createObjectAdapter("Clock.Subscriber");
 
     //
     // Add a servant for the Ice object. If --id is used the identity
@@ -254,10 +290,7 @@ Subscriber::run(int argc, char* argv[])
         cout << "reactivating persistent subscriber" << endl;
     }
 
-    shutdownOnInterrupt();
-    communicator()->waitForShutdown();
-
+    communicator->waitForShutdown();
     topic->unsubscribe(subscriber);
-
     return 0;
 }

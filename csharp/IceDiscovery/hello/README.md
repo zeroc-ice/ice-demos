@@ -1,13 +1,20 @@
-This demo illustrates how to invoke ordinary (twoway) operations, as
-well as how to make oneway, datagram, secure, and batched invocations.
+This demo is the Ice hello world demo configured to use [IceDiscovery][1].
 
 To run the demo, first start the server:
 
-      server.exe
+| .NET Framework 4.5 | .NET Core 2.0        |
+| ------------------ | -------------------- |
+| `server`           | `dotnet server.dll`  |
 
 In a separate window, start the client:
 
-      client.exe
+| .NET Framework 4.5 | .NET Core 2.0       |
+| ------------------ | ------------------- |
+| `client`           | `dotnet client.dll` |
 
-To test timeouts you can use 'T' to set an invocation timeout on the client
-proxy and 'P' to set a delayed response in the server to cause a timeout.
+To test [timeouts][2] you can use 'T' to set an invocation timeout on the
+client proxy and 'P' to set a delayed response in the server to cause a
+timeout.
+
+[1]: https://doc.zeroc.com/display/Ice37/IceDiscovery
+[2]: https://doc.zeroc.com/display/Ice37/Invocation+Timeouts

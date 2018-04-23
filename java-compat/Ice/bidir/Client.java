@@ -8,25 +8,21 @@ import Demo.*;
 
 public class Client
 {
-    static class ShutdownHook implements Runnable
+    static class ShutdownHook extends Thread
     {
-        private Ice.Communicator communicator;
-
-        ShutdownHook(Ice.Communicator communicator)
-        {
-            this.communicator = communicator;
-        }
-
         @Override
         public void
         run()
         {
-            //
-            // Destroy communicator to abandon ongoing remote calls
-            // calling destroy multiple times is no-op
-            //
-            communicator.destroy();
+            _communicator.destroy();
         }
+
+        ShutdownHook(Ice.Communicator communicator)
+        {
+            _communicator = communicator;
+        }
+
+        private final Ice.Communicator _communicator;
     }
 
     public static void
@@ -42,9 +38,10 @@ public class Client
         try(Ice.Communicator communicator = Ice.Util.initialize(argsHolder, "config.client"))
         {
             //
-            // Install shutdown hook for user interrupt like Ctrl-C
+            // Install shutdown hook to (also) destroy communicator during JVM shutdown.
+            // This ensures the communicator gets destroyed when the user interrupts the application with Ctrl-C.
             //
-            Runtime.getRuntime().addShutdownHook(new Thread(new ShutdownHook(communicator)));
+            Runtime.getRuntime().addShutdownHook(new ShutdownHook(communicator));
 
             if(argsHolder.value.length > 0)
             {
@@ -62,14 +59,30 @@ public class Client
                 }
                 else
                 {
+                     //
+                    // Create an object adapter with no name and no endpoints for receiving callbacks
+                    // over bidirectional connections.
+                    //
                     Ice.ObjectAdapter adapter = communicator.createObjectAdapter("");
-                    Ice.Identity ident = new Ice.Identity();
-                    ident.name = java.util.UUID.randomUUID().toString();
-                    ident.category = "";
-                    adapter.add(new CallbackReceiverI(), ident);
+
+                    //
+                    // Register the callback receiver servant with the object adapter and activate
+                    // the adapter.
+                    //
+                    CallbackReceiverPrx proxy =
+                        CallbackReceiverPrxHelper.uncheckedCast(adapter.addWithUUID(new CallbackReceiverI()));
                     adapter.activate();
+
+                    //
+                    // Associate the object adapter with the bidirectional connection.
+                    //
                     server.ice_getConnection().setAdapter(adapter);
-                    server.addClient(ident);
+
+                    //
+                    // Provide the proxy of the callback receiver object to the server and wait for
+                    // shutdown.
+                    //
+                    server.addClient(proxy);
 
                     communicator.waitForShutdown();
                 }

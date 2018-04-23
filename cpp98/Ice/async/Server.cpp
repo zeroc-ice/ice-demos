@@ -10,52 +10,73 @@
 
 using namespace std;
 
-class AsyncServer : public Ice::Application
+//
+// Global variables for shutdownCommunicator
+//
+Ice::CommunicatorPtr communicator;
+WorkQueuePtr _workQueue;
+
+//
+// Callback for CtrlCHandler
+//
+void
+shutdownCommunicator(int)
 {
-public:
-
-    virtual int run(int, char*[]);
-    virtual void interruptCallback(int);
-
-private:
-
-    WorkQueuePtr _workQueue;
-};
+    _workQueue->destroy();
+    communicator->shutdown();
+}
 
 int
 main(int argc, char* argv[])
 {
-    AsyncServer app;
-    return app.main(argc, argv, "config.server");
-}
+    int status = 0;
 
-int
-AsyncServer::run(int argc, char*[])
-{
-    if(argc > 1)
+    try
     {
-        cerr << appName() << ": too many arguments" << endl;
-        return 1;
+        //
+        // CtrlCHandler must be created before the communicator or any other threads are started
+        //
+        Ice::CtrlCHandler ctrlCHandler;
+
+        //
+        // CommunicatorHolder's ctor initializes an Ice communicator,
+        // and it's dtor destroys this communicator.
+        //
+        Ice::CommunicatorHolder ich(argc, argv, "config.server");
+        communicator = ich.communicator();
+
+        //
+        // Shutdown communicator on Ctrl-C
+        //
+        ctrlCHandler.setCallback(&shutdownCommunicator);
+
+        //
+        // The communicator initialization removes all Ice-related arguments from argc/argv
+        //
+        if(argc > 1)
+        {
+            cerr << argv[0] << ": too many arguments" << endl;
+            status = 1;
+        }
+        else
+        {
+            Ice::ObjectAdapterPtr adapter = communicator->createObjectAdapter("Hello");
+            _workQueue = new WorkQueue();
+            Demo::HelloPtr hello = new HelloI(_workQueue);
+            adapter->add(hello, Ice::stringToIdentity("hello"));
+
+            _workQueue->start();
+            adapter->activate();
+
+            communicator->waitForShutdown();
+            _workQueue->getThreadControl().join();
+        }
+    }
+    catch(const std::exception& ex)
+    {
+        cerr << ex.what() << endl;
+        status = 1;
     }
 
-    callbackOnInterrupt();
-
-    Ice::ObjectAdapterPtr adapter = communicator()->createObjectAdapter("Hello");
-    _workQueue = new WorkQueue();
-    Demo::HelloPtr hello = new HelloI(_workQueue);
-    adapter->add(hello, Ice::stringToIdentity("hello"));
-
-    _workQueue->start();
-    adapter->activate();
-
-    communicator()->waitForShutdown();
-    _workQueue->getThreadControl().join();
-    return 0;
-}
-
-void
-AsyncServer::interruptCallback(int)
-{
-    _workQueue->destroy();
-    communicator()->shutdown();
+    return status;
 }

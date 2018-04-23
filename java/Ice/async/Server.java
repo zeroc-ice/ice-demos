@@ -17,19 +17,25 @@ public class Server
         //
         try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.server", extraArgs))
         {
-            WorkQueue workQueue = new WorkQueue();
+            final WorkQueue workQueue = new WorkQueue();
 
             //
-            // Install shutdown hook for user interrupt like Ctrl-C
+            // Install shutdown hook to destroy workqueue and communicator during JVM shutdown
             //
             Runtime.getRuntime().addShutdownHook(new Thread(() ->
             {
-                //
-                // Initiate communicator shutdown, waitForShutdown returns when complete
-                // calling shutdown on a destroyed communicator is no-op
-                //
                 workQueue._destroy();
-                communicator.shutdown();
+                try
+                {
+                    workQueue.join();
+                }
+                catch(InterruptedException e)
+                {
+                }
+                finally
+                {
+                    communicator.destroy();
+                }
             }));
 
             if(!extraArgs.isEmpty())
@@ -40,17 +46,17 @@ public class Server
             else
             {
                 com.zeroc.Ice.ObjectAdapter adapter = communicator.createObjectAdapter("Hello");
-                adapter.add(new HelloI(workQueue), com.zeroc.Ice.Util.stringToIdentity("hello"));
                 workQueue.start();
+                adapter.add(new HelloI(workQueue), com.zeroc.Ice.Util.stringToIdentity("hello"));
                 adapter.activate();
-
                 communicator.waitForShutdown();
 
+                workQueue._destroy();
                 try
                 {
                     workQueue.join();
                 }
-                catch(java.lang.InterruptedException ex)
+                catch(InterruptedException e)
                 {
                 }
             }

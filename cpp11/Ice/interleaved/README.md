@@ -4,11 +4,15 @@ multiple concurrent requests and we maximize the bandwidth usage.
 
 To run the demo, first start the server:
 
-      server
+```
+server
+```
 
 In a separate window, start the client:
 
-      client
+```
+client
+```
 
 See the throughput demo for a description of the metadata used in
 Throughput.ice.

@@ -9,10 +9,6 @@
       <UniqueIdentifier>{721e94cf-bee6-475b-8187-ce6927b3556c}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl</Extensions>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{8ea124c2-bc3b-44e5-aaa3-52e3be058d3b}</UniqueIdentifier>
-      <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
-    </Filter>
     <Filter Include="Slice Files">
       <UniqueIdentifier>{dfeb6ff4-3a20-4b31-8659-d3dc90b3df2c}</UniqueIdentifier>
       <Extensions>ice</Extensions>
@@ -53,6 +49,10 @@
     <Filter Include="Header Files\x64\Release">
       <UniqueIdentifier>{6bda0bcf-0760-4b6e-9919-aa6980e0ea23}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{8ea124c2-bc3b-44e5-aaa3-52e3be058d3b}</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Client.cpp">
@@ -74,11 +74,6 @@
   <ItemGroup>
     <None Include="..\..\config.client" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <IceBuilder Include="..\..\Contact.ice">
-      <Filter>Slice Files</Filter>
-    </IceBuilder>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Win32\Debug\Contact.h">

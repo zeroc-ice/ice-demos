@@ -12,10 +12,11 @@ of the connection, all per-client objects are cleaned up by the
 session object.
 
 Ice for MATLAB currently supports only client-side functionality, therefore
-you must use a server from any other language mapping.
+you must use a server from any other language mapping. If you want to get
+started quickly, we recommend using the Python server.
 
 After starting the server, run the MATLAB client:
 
 ```
-Client.main()
+client
 ```

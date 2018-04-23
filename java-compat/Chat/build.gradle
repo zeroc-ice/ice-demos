@@ -4,15 +4,9 @@ buildscript {
     }
 
     dependencies {
-        classpath "net.sf.proguard:proguard-gradle:5.2.1"
+        classpath "net.sf.proguard:proguard-gradle:6.0.2"
     }
 }
-
-//
-// This is necessary when building with Java9, proguard doesn't support it yet.
-//
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
 
 slice {
     java {
@@ -42,8 +36,15 @@ def javaHome = System.properties['java.home']
 task proguard(type: proguard.gradle.ProGuardTask, dependsOn: jar) {
     injars configurations.compile.resolve(), filter: '!META-INF/**'
     injars "${buildDir}/libs/ChatGUITEMP.jar"
-    libraryjars "${javaHome}/lib/rt.jar"
-    libraryjars "${javaHome}/lib/jsse.jar"
+    if(JavaVersion.current() <= JavaVersion.VERSION_1_8) {
+        libraryjars "${javaHome}/lib/rt.jar"
+        libraryjars "${javaHome}/lib/jsse.jar"
+    } else {
+        libraryjars "${javaHome}/jmods/java.base.jmod"
+        libraryjars "${javaHome}/jmods/java.logging.jmod"
+        libraryjars "${javaHome}/jmods/java.desktop.jmod"
+        libraryjars "${javaHome}/jmods/java.prefs.jmod"
+    }
     outjars "ChatGUI.jar"
     configuration "chatdemogui.pro"
 }

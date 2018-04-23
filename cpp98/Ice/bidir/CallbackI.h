@@ -22,7 +22,7 @@ public:
 
     void destroy();
 
-    virtual void addClient(const Ice::Identity&, const Ice::Current&);
+    virtual void addClient(const Demo::CallbackReceiverPrx&, const Ice::Current&);
 
     virtual void run();
 

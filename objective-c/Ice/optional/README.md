@@ -1,10 +1,17 @@
-This demo illustrates the use of optional class members and
-parameters.
+This demo illustrates the use of [optional class members][1] and
+[parameters][2].
 
 To run the demo, first start the server:
 
-      server
+```
+server
+```
 
 In a separate window, start the client:
 
-      client
+```
+client
+```
+
+[1]: https://doc.zeroc.com/display/Ice37/Objective-C+Mapping+for+Optional+Data+Members
+[2]: https://doc.zeroc.com/display/Ice37/Objective-C+Mapping+for+Operations

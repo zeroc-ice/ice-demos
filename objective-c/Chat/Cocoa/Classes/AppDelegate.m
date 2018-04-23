@@ -6,6 +6,7 @@
 
 #import <AppDelegate.h>
 #import <LoginController.h>
+#import <ChatController.h>
 
 @implementation AppDelegate
 
@@ -14,13 +15,28 @@
     if(self = [super init])
     {
         loginController = [[LoginController alloc] init];
+        terminate = NO;
     }
     return self;
 }
 
--(void)applicationDidFinishLaunching:(NSNotification *)aNotification
+-(void)applicationDidFinishLaunching:(NSNotification*)aNotification
 {
     [loginController showWindow:self];
+}
+
+-(NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication*)sender
+{
+    if(chatController)
+    {
+        [chatController destroySession];
+        terminate = YES;
+        return NSTerminateLater; // Wait for the session to be destroyed to terminate.
+    }
+    else
+    {
+        return NSTerminateNow;
+    }
 }
 
 -(void)login:(id)sender
@@ -28,16 +44,20 @@
     [loginController showWindow:self];
 }
 
--(void)setChatActive:(BOOL)active
+-(void)setChatController:(ChatController*)controller
 {
-    chatActive = active;
+    if(!controller && terminate)
+    {
+        [[NSApplication sharedApplication] replyToApplicationShouldTerminate:YES];
+    }
+    chatController = controller;
 }
 
-- (BOOL)validateMenuItem:(NSMenuItem *)item
+-(BOOL)validateMenuItem:(NSMenuItem *)item
 {
-    if ([item action] == @selector(login:))
+    if([item action] == @selector(login:))
     {
-        return !chatActive && !loginController.window.isVisible;
+        return !chatController && !loginController.window.isVisible;
     }
     return YES;
 }

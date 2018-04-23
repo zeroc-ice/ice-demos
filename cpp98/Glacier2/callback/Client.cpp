@@ -19,6 +19,7 @@ public:
 
     virtual int runWithSession(int, char*[]);
     virtual Glacier2::SessionPrx createSession();
+    virtual void sessionDestroyed();
 };
 
 int
@@ -220,4 +221,10 @@ CallbackClient::runWithSession(int argc, char*[])
     while(cin.good() && c != 'x');
 
     return 0;
+}
+
+void
+CallbackClient::sessionDestroyed()
+{
+    cout << "The Glacier2 session has been destroyed." << endl;
 }

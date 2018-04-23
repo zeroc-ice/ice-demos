@@ -1,18 +1,22 @@
-To run this demo, open two Command Prompt windows.
+This demo shows how to create an [IceBox][1] service.
 
-In the first window, start the IceBox server for .NET. The IceBox server for .NET
-(`iceboxnet.exe`) is in the `tools` folder of your  `zeroc.ice.net` NuGet. You should
-add this folder to your PATH with a command similar to:
-```
-set PATH=%USERPROFILE%\ice-demos\csharp\packages\zeroc.ice.net.3.7.0\tools;%PATH%
-```
+To run the demo, first start the IceBox server:
 
-Then start IceBox:
-```
-iceboxnet --Ice.Config=config.icebox
-```
+| .NET Framework 4.5                     | .NET Core 2.0                                    |
+| -------------------------------------- | ------------------------------------------------ |
+| `iceboxnet --Ice.Config=config.icebox` | `dotnet iceboxnet.dll --Ice.Config=config.icebox`|
 
-In the second window, run the client:
-```
-client
-```
+The demo build system copies the `iceboxnet` app to the demo's folder. With the `zeroc.ice.net`
+NuGet package, this app is installed in a subfolder of `tools`:
+
+| .NET Framework 4.5          | .NET Core 2.0                      |
+| --------------------------- | ---------------------------------- |
+| `tools\net45\iceboxnet.exe` | `tools\netcoreapp2.0\iceboxnet.dll`|
+
+In the second window, start the client:
+
+| .NET Framework 4.5 | .NET Core 2.0       |
+| ------------------ | ------------------- |
+| `client`           | `dotnet client.dll` |
+
+[1]: https://doc.zeroc.com/display/Ice37/IceBox

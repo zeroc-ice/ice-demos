@@ -8,42 +8,60 @@ using System;
 
 public class Server
 {
-    public class App : Ice.Application
-    {
-        public override int run(string[] args)
-        {
-            if(args.Length > 0)
-            {
-                Console.Error.WriteLine(appName() + ": too many arguments");
-                return 1;
-            }
-
-            callbackOnInterrupt();
-
-            var adapter = communicator().createObjectAdapter("Hello");
-            _workQueue = new WorkQueue();
-            adapter.add(new HelloI(_workQueue), Ice.Util.stringToIdentity("hello"));
-
-            _workQueue.Start();
-            adapter.activate();
-
-            communicator().waitForShutdown();
-            _workQueue.Join();
-            return 0;
-        }
-
-        public override void interruptCallback(int sig)
-        {
-            _workQueue.destroy();
-            communicator().shutdown();
-        }
-
-        private WorkQueue _workQueue;
-    }
-
     public static int Main(string[] args)
     {
-        var app = new App();
-        return app.main(args, "config.server");
+        int status = 0;
+
+        try
+        {
+            //
+            // using statement - communicator is automatically destroyed
+            // at the end of this statement
+            //
+            using(var communicator = Ice.Util.initialize(ref args, "config.server"))
+            {
+                if(args.Length > 0)
+                {
+                    Console.Error.WriteLine("too many arguments");
+                    status = 1;
+                }
+                else
+                {
+                    var workQueue = new WorkQueue();
+
+                    //
+                    // Shutdown the communicator and destroy the workqueue on Ctrl+C or Ctrl+Break
+                    // (shutdown always with Cancel = true)
+                    //
+                    Console.CancelKeyPress += (sender, eventArgs) =>
+                    {
+                        eventArgs.Cancel = true;
+                        workQueue.destroy();
+                        communicator.shutdown();
+                    };
+
+                    var adapter = communicator.createObjectAdapter("Hello");
+                    adapter.add(new HelloI(workQueue), Ice.Util.stringToIdentity("hello"));
+
+                    workQueue.Start();
+                    try
+                    {
+                        adapter.activate();
+                        communicator.waitForShutdown();
+                    }
+                    finally
+                    {
+                        workQueue.Join();
+                    }
+                }
+            }
+        }
+        catch(Exception ex)
+        {
+            Console.Error.WriteLine(ex);
+            status = 1;
+        }
+
+        return status;
     }
 }

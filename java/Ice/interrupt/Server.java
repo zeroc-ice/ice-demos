@@ -23,7 +23,7 @@ public class Server
         // By using an executor it is straightforward to interrupt any servant
         // dispatch threads by using ExecutorService.shutdownNow.
         //
-        ExecutorService executor = Executors.newFixedThreadPool(5);
+        final ExecutorService executor = Executors.newFixedThreadPool(5);
         initData.dispatcher = (runnable, con) ->
         {
             executor.submit(runnable);
@@ -42,12 +42,8 @@ public class Server
             //
             Runtime.getRuntime().addShutdownHook(new Thread(() ->
             {
-                //
-                // Initiate communicator shutdown, waitForShutdown returns when complete
-                // calling shutdown on a destroyed communicator is no-op
-                //
-                communicator.shutdown();
                 executor.shutdownNow();
+                communicator.destroy();
             }));
 
             if(!extraArgs.isEmpty())

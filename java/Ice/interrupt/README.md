@@ -1,14 +1,18 @@
-This demo illustrates how to interrupt blocking servant dispatches on
+This demo illustrates how to [interrupt][1] blocking servant dispatches on
 the server and interrupt blocking proxy invocations on the client by
 using `Thread.interrupt()`.
 
 To run the demo, first start the server:
 
-      java -jar build/libs/server.jar
+```
+java -jar build/libs/server.jar
+```
 
 In a separate window, start the client:
 
-      java -jar build/libs/client.jar
+```
+java -jar build/libs/client.jar
+```
 
 Calling `TaskManager.run` on the server simulates a long running task
 by sleeping 10 seconds. Ordinarily a server will not shutdown until
@@ -34,3 +38,5 @@ Only a single blocking invocation can be active at once.
 
 Pressing 't' in the client runs the task on the server using a
 non-blocking AMI invocation.
+
+[1]: https://doc.zeroc.com/display/Ice37/Java+Interrupts

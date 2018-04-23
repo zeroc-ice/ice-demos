@@ -18,7 +18,9 @@ You'll need Python to run the script. The script also depends on a utility
 package from a separate [ZeroC repository][1]. You can install this package as
 follows:
 
-    pip install zeroc-icecertutils
+```
+pip install zeroc-icecertutils
+```
 
 ## Usage
 

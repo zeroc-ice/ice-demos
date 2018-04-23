@@ -6,36 +6,55 @@
 
 using Demo;
 using System;
-using System.Reflection;
 
 public class Client
 {
-    public class App : Ice.Application
-    {
-        public override int run(string[] args)
-        {
-            if(args.Length > 0)
-            {
-                Console.Error.WriteLine(appName() + ": too many arguments");
-                return 1;
-            }
-
-            var hello = HelloPrxHelper.uncheckedCast(communicator().propertyToProxy("Hello.Proxy"));
-            if(hello == null)
-            {
-                Console.Error.WriteLine("Hello.Proxy not found");
-                return 1;
-            }
-
-            hello.sayHello();
-
-            return 0;
-        }
-    }
-
     public static int Main(string[] args)
     {
-        var app = new App();
-        return app.main(args, "config.client");
+        int status = 0;
+
+        try
+        {
+            //
+            // The new communicator is automatically destroyed (disposed) at the end of the
+            // using statement
+            //
+            using(var communicator = Ice.Util.initialize(ref args, "config.client"))
+            {
+                //
+                // Destroy the communicator on Ctrl+C or Ctrl+Break
+                //
+                Console.CancelKeyPress += (sender, eventArgs) => communicator.destroy();
+
+                //
+                // The communicator initialization removes all Ice-related arguments from args
+                //
+                if(args.Length > 0)
+                {
+                    Console.Error.WriteLine("too many arguments");
+                    status = 1;
+                }
+                else
+                {
+                    var hello = HelloPrxHelper.uncheckedCast(communicator.propertyToProxy("Hello.Proxy"));
+                    if(hello == null)
+                    {
+                        Console.Error.WriteLine("Hello.Proxy not found");
+                        status = 1;
+                    }
+                    else
+                    {
+                        hello.sayHello();
+                    }
+                }
+            }
+        }
+        catch(Exception ex)
+        {
+            Console.Error.WriteLine(ex);
+            status = 1;
+        }
+
+        return status;
     }
 }

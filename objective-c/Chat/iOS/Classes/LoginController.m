@@ -15,6 +15,7 @@
 @property (nonatomic) UITextField* currentField;
 @property (nonatomic) NSString* oldFieldValue;
 @property (nonatomic) WaitAlert* waitAlert;
+@property (nonatomic) ChatController* chatController;
 @property (nonatomic) id<ICECommunicator> communicator;
 
 @end
@@ -24,6 +25,7 @@
 @synthesize currentField;
 @synthesize oldFieldValue;
 @synthesize waitAlert;
+@synthesize chatController;
 @synthesize communicator;
 
 static NSString* usernameKey = @"usernameKey";
@@ -85,7 +87,7 @@ static NSString* sslKey = @"sslKey";
 {
     // Start the long-running task and return immediately.
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [communicator destroy];
+        [self.communicator destroy];
     });
 }
 
@@ -94,12 +96,6 @@ static NSString* sslKey = @"sslKey";
     loginButton.enabled = usernameField.text.length > 0;
     [loginButton setAlpha:loginButton.enabled ? 1.0 : 0.5];
     [super viewWillAppear:animated];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 - (void)didReceiveMemoryWarning
@@ -208,29 +204,29 @@ static NSString* sslKey = @"sslKey";
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^ {
         @try
         {
-            id<GLACIER2RouterPrx> router = [GLACIER2RouterPrx checkedCast:[communicator getDefaultRouter]];
+            id<GLACIER2RouterPrx> router = [GLACIER2RouterPrx checkedCast:[self.communicator getDefaultRouter]];
             id<GLACIER2SessionPrx> glacier2session = [router createSession:username password:password];
             id<ChatChatSessionPrx> sess = [ChatChatSessionPrx uncheckedCast:glacier2session];
 
-            ICEInt acmTiemout = [router getACMTimeout];
-            if(acmTiemout <= 0)
+            ICEInt acmTimeout = [router getACMTimeout];
+            if(acmTimeout <= 0)
             {
-                acmTiemout = (ICEInt)[router getSessionTimeout];
+                acmTimeout = (ICEInt)[router getSessionTimeout];
             }
 
-            [chatController setup:communicator
-                          session:sess
-                       acmTimeout:acmTiemout
-                           router:router
-                         category:[router getCategoryForClient]];
+            [self.chatController setup:self.communicator
+                                session:sess
+                             acmTimeout:acmTimeout
+                                 router:router
+                               category:[router getCategoryForClient]];
             dispatch_async(dispatch_get_main_queue(), ^ {
                 [self connecting:FALSE];
 
                 // The communicator is now owned by the ChatController.
                 self.communicator = nil;
 
-                [chatController activate:@"Chat"];
-                [self.navigationController pushViewController:chatController animated:YES];
+                [self.chatController activate:@"Chat"];
+                [self.navigationController pushViewController:self.chatController animated:YES];
             });
         }
         @catch(GLACIER2CannotCreateSessionException* ex)

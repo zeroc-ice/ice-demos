@@ -11,11 +11,11 @@ using namespace std;
 using namespace Demo;
 
 void
-CallbackSenderI::addClient(Ice::Identity ident, const Ice::Current& current)
+CallbackSenderI::addClient(std::shared_ptr<CallbackReceiverPrx> client, const Ice::Current& current)
 {
     lock_guard<mutex> lock(_mutex);
-    cout << "adding client `" << Ice::identityToString(ident) << "'"<< endl;
-    _clients.push_back(Ice::uncheckedCast<CallbackReceiverPrx>(current.con->createProxy(ident)));
+    cout << "adding client `" << Ice::identityToString(client->ice_getIdentity()) << "'"<< endl;
+    _clients.push_back(client->ice_fixed(current.con));
 }
 
 void

@@ -89,9 +89,4 @@
       <UniqueIdentifier>{8621caef-5d3e-4546-ad64-29f6664b3b8d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
-  <ItemGroup>
-    <SliceCompile Include="..\..\Callback.ice">
-      <Filter>Slice Files</Filter>
-    </SliceCompile>
-  </ItemGroup>
 </Project>

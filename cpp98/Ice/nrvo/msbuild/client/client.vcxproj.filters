@@ -95,9 +95,4 @@
     <None Include="..\..\config.client" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <IceBuilder Include="..\..\Nrvo.ice">
-      <Filter>Slice Files</Filter>
-    </IceBuilder>
-  </ItemGroup>
 </Project>

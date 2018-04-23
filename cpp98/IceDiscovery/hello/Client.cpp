@@ -52,7 +52,24 @@ main(int argc, char* argv[])
     return status;
 }
 
-void menu();
+void
+menu()
+{
+    cout <<
+        "usage:\n"
+        "t: send greeting as twoway\n"
+        "o: send greeting as oneway\n"
+        "O: send greeting as batch oneway\n"
+        "d: send greeting as datagram\n"
+        "D: send greeting as batch datagram\n"
+        "f: flush all batch requests\n"
+        "T: set a timeout\n"
+        "P: set server delay\n"
+        "S: switch secure mode on/off\n"
+        "s: shutdown server\n"
+        "x: exit\n"
+        "?: help\n";
+}
 
 int
 run(const Ice::CommunicatorPtr& communicator)
@@ -217,23 +234,4 @@ run(const Ice::CommunicatorPtr& communicator)
     while(cin.good() && c != 'x');
 
     return 0;
-}
-
-void
-menu()
-{
-    cout <<
-        "usage:\n"
-        "t: send greeting as twoway\n"
-        "o: send greeting as oneway\n"
-        "O: send greeting as batch oneway\n"
-        "d: send greeting as datagram\n"
-        "D: send greeting as batch datagram\n"
-        "f: flush all batch requests\n"
-        "T: set a timeout\n"
-        "P: set server delay\n"
-        "S: switch secure mode on/off\n"
-        "s: shutdown server\n"
-        "x: exit\n"
-        "?: help\n";
 }

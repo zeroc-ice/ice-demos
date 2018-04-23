@@ -3,11 +3,12 @@ client is run a "sayHello" invocation is sent to the server.
 
 The Ice extension for Ruby currently supports only client-side
 functionality, therefore you must use a server from any other language
-mapping.
+mapping. If you want to get started quickly, we recommend using the
+Python server.
 
 After starting the server, run the Ruby client:
 ```
-ruby Client.rb
+ruby client.rb
 ```
 
 Note that this demo uses port 10000. If port 10000 is not available on your

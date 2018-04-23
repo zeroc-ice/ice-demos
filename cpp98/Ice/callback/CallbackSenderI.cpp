@@ -29,12 +29,5 @@ void
 CallbackSenderI::shutdown(const Current& c)
 {
     cout << "shutting down..." << endl;
-    try
-    {
-        c.adapter->getCommunicator()->shutdown();
-    }
-    catch(const Exception& ex)
-    {
-        cout << ex << endl;
-    }
+    c.adapter->getCommunicator()->shutdown();
 }

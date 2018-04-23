@@ -12,15 +12,14 @@ using namespace std;
 class PeerI;
 typedef IceUtil::Handle<PeerI> PeerIPtr;
 
-class ChatApp : public Ice::Application
+class ChatApp
 {
 public:
 
-    ChatApp();
-    virtual int run(int, char*[]);
+    int run();
 
     void discoveredPeer(const string&, const MTalk::PeerPrx&);
-    void connect(const string&, const Ice::Identity&, const Ice::ConnectionPtr&);
+    void connect(const string&, const MTalk::PeerPrx&);
     void message(const string&);
     void disconnect(const Ice::Identity&, const Ice::ConnectionPtr&, bool);
     void closed();
@@ -77,9 +76,9 @@ public:
     {
     }
 
-    virtual void connect(const string& name, const Ice::Identity& id, const Ice::Current& current)
+    virtual void connect(const string& name, const MTalk::PeerPrx& peer, const Ice::Current& current)
     {
-        _app->connect(name, id, current.con);
+        _app->connect(name, peer->ice_fixed(current.con));
     }
 
     virtual void message(const string& text, const Ice::Current&)
@@ -109,7 +108,7 @@ public:
     {
     }
 
-    virtual void connect(const string&, const Ice::Identity&, const Ice::Current&)
+    virtual void connect(const string&, const MTalk::PeerPrx&, const Ice::Current&)
     {
         throw MTalk::ConnectionException("already connected");
     }
@@ -202,39 +201,78 @@ private:
 };
 typedef IceUtil::Handle<DiscoverThread> DiscoverThreadPtr;
 
+//
+// Global variable for destroyCommunicator
+//
+Ice::CommunicatorPtr communicator;
+
+//
+// Callback for CtrlCHandler
+//
+void
+destroyCommunicator(int)
+{
+    communicator->destroy();
+}
+
 int
 main(int argc, char* argv[])
 {
 #ifdef ICE_STATIC_LIBS
     Ice::registerIceSSL();
 #endif
+    int status = 0;
 
-    ChatApp app;
-    return app.main(argc, argv, "config");
-}
+    try
+    {
+        //
+        // CtrlCHandler must be created before the communicator or any other threads are started
+        //
+        Ice::CtrlCHandler ctrlCHandler;
 
-ChatApp::ChatApp() :
-    //
-    // Since this is an interactive demo we don't want any signal handling.
-    //
-    Ice::Application(Ice::NoSignalHandling)
-{
+        //
+        // CommunicatorHolder's ctor initializes an Ice communicator,
+        // and it's dtor destroys this communicator.
+        //
+        Ice::CommunicatorHolder ich(argc, argv, "config");
+        communicator = ich.communicator();
+
+        //
+        // Destroy communicator on Ctrl-C
+        //
+        ctrlCHandler.setCallback(&destroyCommunicator);
+
+        //
+        // The communicator initialization removes all Ice-related arguments from argc/argv
+        //
+        if(argc > 1)
+        {
+            cerr << argv[0] << ": too many arguments" << endl;
+            status = 1;
+        }
+        else
+        {
+            ChatApp app;
+            status = app.run();
+        }
+    }
+    catch(const std::exception& ex)
+    {
+        cerr << ex.what() << endl;
+        status = 1;
+    }
+
+    return status;
 }
 
 int
-ChatApp::run(int argc, char*[])
+ChatApp::run()
 {
-    if(argc > 1)
-    {
-        cerr << appName() << ": too many arguments" << endl;
-        return 1;
-    }
-
     //
     // Create two object adapters. Their endpoints are defined in the configuration file 'config'.
     //
-    _multicastAdapter = communicator()->createObjectAdapter("Multicast");
-    _peerAdapter = communicator()->createObjectAdapter("Peer");
+    _multicastAdapter = communicator->createObjectAdapter("Multicast");
+    _peerAdapter = communicator->createObjectAdapter("Peer");
 
     //
     // Install a servant with the well-known identity "discover". This servant receives multicast messages.
@@ -263,7 +301,7 @@ ChatApp::run(int argc, char*[])
     //
     MTalk::DiscoveryPrx discovery =
         MTalk::DiscoveryPrx::uncheckedCast(
-            _communicator->propertyToProxy("Discovery.Proxy")->ice_datagram()->ice_collocationOptimized(false));
+            communicator->propertyToProxy("Discovery.Proxy")->ice_datagram()->ice_collocationOptimized(false));
 
     DiscoverThreadPtr thread = new DiscoverThread(discovery, _name, _local);
     thread->start();
@@ -317,7 +355,7 @@ ChatApp::run(int argc, char*[])
     // There may still be objects (connections and servants) that hold pointers to this object, so we destroy
     // the communicator here to make sure they get cleaned up first.
     //
-    communicator()->destroy();
+    communicator->destroy();
 
     return 0;
 }
@@ -348,7 +386,7 @@ ChatApp::discoveredPeer(const string& name, const MTalk::PeerPrx& peer)
 }
 
 void
-ChatApp::connect(const string& name, const Ice::Identity& id, const Ice::ConnectionPtr& con)
+ChatApp::connect(const string& name, const MTalk::PeerPrx& peer)
 {
     //
     // Called for a new incoming connection request.
@@ -364,10 +402,11 @@ ChatApp::connect(const string& name, const Ice::Identity& id, const Ice::Connect
     //
     // Install a connection callback and enable ACM heartbeats.
     //
+    Ice::ConnectionPtr con = peer->ice_getConnection();
     con->setCloseCallback(new CloseCallbackI(this));
     con->setACM(30, Ice::CloseOff, Ice::HeartbeatAlways);
 
-    _remote = MTalk::PeerPrx::uncheckedCast(con->createProxy(id))->ice_invocationTimeout(5000);
+    _remote = peer->ice_invocationTimeout(5000);
 
     Ice::ConnectionInfoPtr info = con->getInfo();
     if(info->underlying)
@@ -456,13 +495,7 @@ ChatApp::doConnect(const string& cmd)
         remote = _remote;
     }
 
-    //
-    // Generate a UUID for our callback servant. We have to pass this identity to
-    // the remote peer so that it can invoke callbacks on the servant over a
-    // bidirectional connection.
-    //
-    Ice::Identity id = Ice::stringToIdentity(Ice::generateUUID());
-
+    MTalk::PeerPrx localPeer;
     try
     {
         cout << ">>>> Connecting to " << name << endl;
@@ -474,7 +507,13 @@ ChatApp::doConnect(const string& cmd)
         //
         Ice::ConnectionPtr con = remote->ice_getConnection();
         con->setAdapter(_peerAdapter);
-        _peerAdapter->add(new OutgoingPeerI(this), id);
+
+        //
+        // Register our callback servant with a UUID identity. We pass the returned proxy
+        // to the remote peer so that it can invoke callbacks on the servant over a
+        // bidirectional connection.
+        //
+        localPeer = MTalk::PeerPrx::uncheckedCast(_peerAdapter->addWithUUID(new OutgoingPeerI(this)));
 
         //
         // Install a connection callback and enable ACM heartbeats.
@@ -485,7 +524,7 @@ ChatApp::doConnect(const string& cmd)
         //
         // Now we're ready to notify the peer that we'd like to connect.
         //
-        remote->connect(_name, id);
+        remote->connect(_name, localPeer);
         cout << ">>>> Connected to " << name << endl;
     }
     catch(const MTalk::ConnectionException& ex)
@@ -493,12 +532,9 @@ ChatApp::doConnect(const string& cmd)
         IceUtil::Monitor<IceUtil::Mutex>::Lock lock(_lock);
 
         cout << ">>>> Connection failed: " << ex.reason << endl;
-        try
+        if(localPeer)
         {
-            _peerAdapter->remove(id);
-        }
-        catch(const Ice::NotRegisteredException&)
-        {
+            _peerAdapter->remove(localPeer->ice_getIdentity());
         }
 
         if(_remote == remote)
@@ -511,12 +547,9 @@ ChatApp::doConnect(const string& cmd)
         IceUtil::Monitor<IceUtil::Mutex>::Lock lock(_lock);
 
         cout << ">>>> " << ex << endl;
-        try
+        if(localPeer)
         {
-            _peerAdapter->remove(id);
-        }
-        catch(const Ice::NotRegisteredException&)
-        {
+            _peerAdapter->remove(localPeer->ice_getIdentity());
         }
 
         if(_remote == remote)

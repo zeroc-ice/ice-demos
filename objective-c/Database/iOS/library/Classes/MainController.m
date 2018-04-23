@@ -19,11 +19,13 @@
 @property (nonatomic) NSIndexPath* currentIndexPath;
 @property (nonatomic) id<DemoBookQueryResultPrx> query;
 
-@property (nonatomic) NSTimer* refreshTimer;
 @property (nonatomic) id<ICECommunicator> communicator;
 @property (nonatomic) id session;
-@property (nonatomic)  id<GLACIER2RouterPrx> router;
+@property (nonatomic) id<GLACIER2RouterPrx> router;
 @property (nonatomic) id<DemoLibraryPrx> library;
+@property (nonatomic) int nrows;
+@property (nonatomic) NSMutableArray* books;
+@property (nonatomic) UITableView* searchTableView;
 
 -(void)exception:(ICEException*)ex;
 
@@ -35,9 +37,11 @@
 @synthesize query;
 @synthesize currentIndexPath;
 @synthesize communicator;
-@synthesize refreshTimer;
 @synthesize session;
 @synthesize router;
+@synthesize nrows;
+@synthesize books;
+@synthesize searchTableView;
 
 -(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -86,12 +90,6 @@
     [searchTableView reloadData];
 }
 
--(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
 -(void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning]; // Releases the view if it doesn't have a superview
@@ -103,7 +101,6 @@
 -(void)activate:(id<ICECommunicator>)c
         session:(id)s
          router:(id<GLACIER2RouterPrx>)r
- sessionTimeout:(ICELong)sessionTimeout
         library:(id<DemoLibraryPrx>)l
 {
     self.communicator = c;
@@ -114,23 +111,10 @@
     nrows = 0;
     rowsQueried = 10;
     [books removeAllObjects];
-
-    // Save the new session, and create the refresh timer.
-    self.refreshTimer = [NSTimer
-                         timerWithTimeInterval:sessionTimeout/2
-                         target:self
-                         selector:@selector(refreshSession:)
-                         userInfo:nil
-                         repeats:YES];
-    [[NSRunLoop currentRunLoop] addTimer:refreshTimer forMode:NSDefaultRunLoopMode];
 }
 
 -(void)destroySession
 {
-    // Destroy the old session, and invalidate the refresh timer.
-    [refreshTimer invalidate];
-    self.refreshTimer = nil;
-
     if(router)
     {
         [router begin_destroySession];
@@ -143,9 +127,9 @@
     session = nil;
 
     // Destroy the communicator from another thread since this call blocks.
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^ {
-        [communicator destroy];
-        communicator = nil;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self.communicator destroy];
+        self.communicator = nil;
     });
 }
 
@@ -153,32 +137,6 @@
 {
     [self destroySession];
     [self.navigationController popViewControllerAnimated:YES];
-}
-
--(void)refreshSession:(NSTimer*)timer
-{
-    if(self.communicator != nil)
-    {
-        [session begin_refresh:nil exception:^(ICEException* ex)
-            {
-                [self.navigationController popToRootViewControllerAnimated:YES];
-
-                // The session is invalid, clear.
-                self.session = nil;
-
-                // Clean up the remainder.
-                [self destroySession];
-
-                NSString* s = [NSString stringWithFormat:@"Lost connection with session!\n%@", ex];
-
-                // open an alert with just an OK button
-                UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Error"
-                                                                               message:s
-                                                                        preferredStyle:UIAlertControllerStyleAlert];
-                [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
-                [self presentViewController:alert animated:YES completion:nil];
-            }];
-    }
 }
 
 -(void)removeCurrentBook
@@ -246,7 +204,7 @@
                                                             preferredStyle:UIAlertControllerStyleAlert];
     [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
                       handler:^(UIAlertAction * action) {
-                        if(session == nil)
+                        if(self.session == nil)
                         {
                             [self.navigationController popToRootViewControllerAnimated:YES];
                         }
@@ -286,8 +244,8 @@
     ^(NSMutableArray* seq, int n, id<DemoBookQueryResultPrx> q)
     {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-        nrows = n;
-        if(nrows == 0)
+        self.nrows = n;
+        if(self.nrows == 0)
         {
             // open an alert with just an OK button
             UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"No results"
@@ -298,10 +256,10 @@
             return;
         }
 
-        [books addObjectsFromArray:seq];
+        [self.books addObjectsFromArray:seq];
         self.query = q;
 
-        [searchTableView reloadData];
+        [self.searchTableView reloadData];
     };
 
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
@@ -389,7 +347,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
             NSAssert(query != nil, @"query != nil");
             [query begin_next:10
                      response:^(NSMutableArray* seq, BOOL destroyed) {
-                         [books addObjectsFromArray:seq];
+                         [self.books addObjectsFromArray:seq];
                          // The query has returned all available results.
                          if(destroyed)
                          {
@@ -397,7 +355,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
                          }
 
                          [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-                         [searchTableView reloadData];
+                         [self.searchTableView reloadData];
                      }
                     exception:^(ICEException* ex) { [self exception:ex]; }];
             rowsQueried += 10;

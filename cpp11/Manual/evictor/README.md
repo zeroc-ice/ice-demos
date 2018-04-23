@@ -7,5 +7,6 @@ pure virtual functions `add` and `evict`.
 Note that you can pass information from `add` to the corresponding
 call to `evict` via the cookie argument.
 
-For more details on this evictor, see
-[Servant Evictors](https://doc.zeroc.com/display/Ice37/Servant+Evictors).
+For more details on this evictor, see [Servant Evictors][1].
+
+[1]: https://doc.zeroc.com/display/Ice37/Servant+Evictors

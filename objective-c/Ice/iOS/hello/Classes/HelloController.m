@@ -25,7 +25,13 @@
 -(void)setShowValue:(BOOL)val;
 @end
 
+@interface HelloController()
+@property (nonatomic) UILabel* statusLabel;
+@end
+
 @implementation HelloController
+
+@synthesize statusLabel;
 
 static NSString* hostnameKey = @"hostnameKey";
 
@@ -79,12 +85,6 @@ static NSString* hostnameKey = @"hostnameKey";
     [timeoutSlider setShowValue:YES];
 
     statusLabel.text = @"Ready";
-}
-
--(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 -(void)didReceiveMemoryWarning
@@ -386,7 +386,7 @@ static NSString* hostnameKey = @"hostnameKey";
                                                   [self exception:ex];
                                                }
                                                sent:^(BOOL sentSynchronously) {
-                                                  statusLabel.text = @"Flushed batch requests";
+                                                  self.statusLabel.text = @"Flushed batch requests";
                                                }];
     }
     @catch(ICELocalException* ex)

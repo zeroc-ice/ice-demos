@@ -1,37 +1,18 @@
 #
-# Choose the type (1, 2, 3, or 4)
-#
-LibraryDemo.ConnectionType=1
-
-#
-# Connection Type 1: Login using Glacier2
+# By default connect to WebSocket proxy on zeroc.com
 #
 Ice.Default.Router=DemoGlacier2/router:wss -p 443 -h zeroc.com -r /demo-proxy/library/glacier2 -t 10000
 
 #
-# Connection Type 2: Login though Library server
+# Alternately, connect directly to library server
 #
-# SessionFactory.Proxy=SessionFactory:tcp -h demo2.zeroc.com -p 10000 -t 10000
+# Comment out Ice.Default.Router above
+#
+#SessionFactory.Proxy=SessionFactory:tcp -h demo2.zeroc.com -p 10000
+#SessionFactory.Proxy=SessionFactory:wss -h zeroc.com -p 443 -r /demo-proxy/library/direct
 
 #
-# Connection Type 3: Login though iPhone router, using Glacier2
-#                    Replace <host> with the ip address of your iPhone router.
-#
-# Ice.Default.Router=iPhoneRouter/Router:tcp -p 12000 -h <host> -t 10000
-# SessionFactory.Glacier2Proxy=DemoGlacier2/router:wss -p 443 -h zeroc.com -r /demo-proxy/library/glacier2 -t 10000
-
-#
-# Connection Type 4: Login through iPhone router, using Library server
-#                    Replace <host> with the ip address of your iPhone router.
-#
-# Ice.Default.Router=iPhoneRouter/Router:tcp -p 12000 -h <host> -t 10000
-# SessionFactory.Proxy=SessionFactory:tcp -h demo2.zeroc.com -p 10000 -t 10000
-
-#
-# Ice.SSL Configuration
+# IceSSL Configuration
 #
 IceSSL.UsePlatformCAs=1
 IceSSL.CheckCertName=1
-
-#IceSSL.TrustOnly.Client=CN="127.0.0.1"
-#IceSSL.CAs=cacert.pem

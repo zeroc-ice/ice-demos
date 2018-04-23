@@ -60,36 +60,52 @@ public class Server
         private bool _called;
     }
 
-    public class App : Ice.Application
-    {
-        override public int run(string[] args)
-        {
-            if(args.Length > 0)
-            {
-                Console.Error.WriteLine(appName() + ": too many arguments");
-                return 1;
-            }
-
-            var props = new PropsI();
-
-            //
-            // Retrieve the PropertiesAdmin facet and use props.updated as the update callback.
-            //
-            var obj = communicator().findAdminFacet("Properties");
-            var admin = (Ice.NativePropertiesAdmin)obj;
-            admin.addUpdateCallback(props.updated);
-
-            var adapter = communicator().createObjectAdapter("Props");
-            adapter.add(props, Ice.Util.stringToIdentity("props"));
-            adapter.activate();
-            communicator().waitForShutdown();
-            return 0;
-        }
-    }
-
     public static int Main(string[] args)
     {
-        var app = new App();
-        return app.main(args, "config.server");
+        int status = 0;
+
+        try
+        {
+            //
+            // using statement - communicator is automatically destroyed
+            // at the end of this statement
+            //
+            using(var communicator = Ice.Util.initialize(ref args, "config.server"))
+            {
+                //
+                // Destroy the communicator on Ctrl+C or Ctrl+Break
+                //
+                Console.CancelKeyPress += (sender, eventArgs) => communicator.destroy();
+
+                if(args.Length > 0)
+                {
+                    Console.Error.WriteLine("too many arguments");
+                    status = 1;
+                }
+                else
+                {
+                    var props = new PropsI();
+
+                    //
+                    // Retrieve the PropertiesAdmin facet and use props.updated as the update callback.
+                    //
+                    var obj = communicator.findAdminFacet("Properties");
+                    var admin = (Ice.NativePropertiesAdmin)obj;
+                    admin.addUpdateCallback(props.updated);
+
+                    var adapter = communicator.createObjectAdapter("Props");
+                    adapter.add(props, Ice.Util.stringToIdentity("props"));
+                    adapter.activate();
+                    communicator.waitForShutdown();
+                }
+            }
+        }
+        catch(Exception ex)
+        {
+            Console.Error.WriteLine(ex);
+            status = 1;
+        }
+
+        return status;
     }
 }

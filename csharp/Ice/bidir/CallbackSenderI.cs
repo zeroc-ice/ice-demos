@@ -27,12 +27,12 @@ class CallbackSenderI : CallbackSenderDisp_
         }
     }
 
-    public override void addClient(Ice.Identity ident, Ice.Current current)
+    public override void addClient(CallbackReceiverPrx client, Ice.Current current)
     {
         lock(this)
         {
-            Console.Out.WriteLine("adding client `" + Ice.Util.identityToString(ident) + "'");
-            _clients.Add(CallbackReceiverPrxHelper.uncheckedCast(current.con.createProxy(ident)));
+            Console.Out.WriteLine("adding client `" + Ice.Util.identityToString(client.ice_getIdentity()) + "'");
+            _clients.Add((CallbackReceiverPrx)client.ice_fixed(current.con));
         }
     }
 

@@ -3,11 +3,14 @@ types between client and server and to measure the maximum bandwidth
 that can be achieved using serialized synchronous requests.
 
 Ice for MATLAB currently supports only client-side functionality, therefore
-you must use a server from any other language mapping.
+you must use a server from any other language mapping. If you want to get
+started quickly, we recommend using the Python server.
 
 After starting the server, run the MATLAB client:
 
-      >> Client.main()
+```
+client
+```
 
 The performance for byte sequences is expected to be greater than
 for other types because the cost of marshaling and unmarshaling is

@@ -1,4 +1,4 @@
-This demo illustrates how to retrieve metrics information from Ice
+This demo illustrates how to retrieve [metrics information][1] from Ice
 applications.
 
 The Metrics.py script provided with this demo connects to an Ice
@@ -16,18 +16,20 @@ your application.
 Once you have configured IceMX with a demo or your application, you
 can run Metrics.py to dump the metrics views:
 ```
- $ ./Metrics.py --Endpoints="tcp -p 10004 -h localhost" \
-       --InstanceName="server" dump
+python Metrics.py --Endpoints="tcp -p 10004 -h localhost" \
+    --InstanceName="server" dump
 ```
+
 You can also disable or enable views with the "enable" or "disable"
 commands:
 ```
- $ ./Metrics.py --Endpoints="tcp -p 10004 -h localhost" \
-       --InstanceName="server" disable Debug
+python Metrics.py --Endpoints="tcp -p 10004 -h localhost" \
+    --InstanceName="server" disable Debug
 
- $ ./Metrics.py --Endpoints="tcp -p 10004 -h localhost" \
-       --InstanceName="server" enable ByParent
+python Metrics.py --Endpoints="tcp -p 10004 -h localhost" \
+    --InstanceName="server" enable ByParent
 ```
+
 The Endpoints and InstanceName properties passed to the Metrics.py
 script must match the value of the `Ice.Admin.Endpoints` and
 `Ice.Admin.InstanceName` properties configured for the application to
@@ -48,7 +50,9 @@ files that is disabled by default:
 To enable IceMX, you need to un-comment the following property in the
 configuration file of the demo application you wish to monitor:
 
-    Ice.Admin.Endpoints
+```
+Ice.Admin.Endpoints
+```
 
 Once this property is enabled, restart the client or server.
 
@@ -58,13 +62,17 @@ Enable IceMX with your application
 First you need to enable the Ice administrative facility by setting the
 following properties:
 
-    Ice.Admin.Endpoints
-    Ice.Admin.InstanceName
+```
+Ice.Admin.Endpoints
+Ice.Admin.InstanceName
+```
 
 For example:
 
-    Ice.Admin.Endpoints=tcp -p 10002 -h localhost
-    Ice.Admin.InstanceName=server
+```
+Ice.Admin.Endpoints=tcp -p 10002 -h localhost
+Ice.Admin.InstanceName=server
+```
 
 Note that enabling the Ice administrative facility can have security
 implications if your network is not secured. See the Ice manual for
@@ -73,10 +81,14 @@ more information on this.
 Next, you need to configure metrics views. You can for example use the
 following properties to enable two metrics views:
 
-    IceMX.Metrics.Debug.GroupBy=id
-    IceMX.Metrics.ByParent.GroupBy=parent
+```
+IceMX.Metrics.Debug.GroupBy=id
+IceMX.Metrics.ByParent.GroupBy=parent
+```
 
 The Debug metrics view provides detailed metrics information while the
 ByParent metrics view groups metrics by parent (the parent is usually
 either the Ice communicator or object adapter depending on the object
 monitored).
+
+[1]: https://doc.zeroc.com/display/Ice37/Instrumentation+Facility

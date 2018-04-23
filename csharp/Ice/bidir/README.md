@@ -1,12 +1,18 @@
-This demo shows how to use bidirectional connections for callbacks.
+This demo shows how to use [bidirectional connections][1] for callbacks.
 This is typically used if the server cannot open a connection to the
 client to send callbacks, for example, because firewalls block
 incoming connections to the client.
 
 To run the demo, first start the server:
 
-      server.exe
+| .NET Framework 4.5 | .NET Core 2.0        |
+| ------------------ | -------------------- |
+| `server`           | `dotnet server.dll`  |
 
 In a separate window, start the client:
 
-      client.exe
+| .NET Framework 4.5 | .NET Core 2.0       |
+| ------------------ | ------------------- |
+| `client`           | `dotnet client.dll` |
+
+[1]: https://doc.zeroc.com/display/Ice37/Bidirectional+Connections

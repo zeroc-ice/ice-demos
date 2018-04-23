@@ -4,11 +4,14 @@ that can be achieved using serialized synchronous requests.
 
 The Ice extension for Ruby currently supports only client-side
 functionality, therefore you must use a server from any other language
-mapping.
+mapping. If you want to get started quickly, we recommend using the
+Python server.
 
 After starting the server, run the Ruby client:
 
-      ruby Client.rb
+```
+ruby client.rb
+```
 
 The performance for byte sequences is expected to be greater than
 for other types because the cost of marshaling and unmarshaling is

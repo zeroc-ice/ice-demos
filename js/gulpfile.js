@@ -7,13 +7,10 @@
 var babel       = require("gulp-babel"),
     concat      = require("gulp-concat"),
     del         = require("del"),
-    extreplace  = require("gulp-ext-replace"),
     fs          = require("fs"),
     gulp        = require("gulp"),
     gzip        = require("gulp-gzip"),
     iceBuilder  = require("gulp-ice-builder"),
-    jshint      = require("gulp-jshint"),
-    minifycss   = require("gulp-minify-css"),
     newer       = require("gulp-newer"),
     npm         = require("npm"),
     open        = require("gulp-open"),
@@ -27,10 +24,10 @@ var babel       = require("gulp-babel"),
 // Check ICE_HOME environment variable. If this is set and points to a source
 // distribution then prefer it over default packages.
 //
-var ICE_HOME;
+var iceHome;
 if(process.env.ICE_HOME)
 {
-    ICE_HOME = fs.existsSync(path.join(process.env.ICE_HOME, "js", "package.json")) ? process.env.ICE_HOME : undefined;
+    iceHome = fs.existsSync(path.join(process.env.ICE_HOME, "js", "package.json")) ? process.env.ICE_HOME : undefined;
 }
 
 function parseArg(argv, key)
@@ -58,10 +55,11 @@ function slice2js(options)
     var opts = options || {};
 
     defaults.args = opts.args || [];
+    defaults.include = opts.include || []
     defaults.dest = opts.dest;
-    if(ICE_HOME)
+    if(iceHome)
     {
-        if(process.platform == "win32" && !opts.exe)
+        if(process.platform == "win32")
         {
             if(!platform || (platform != "Win32" && platform != "x64"))
             {
@@ -76,17 +74,16 @@ function slice2js(options)
                             "`Debug' or `Release', in order to locate slice2js.exe");
                 process.exit(1);
             }
+            defaults.iceToolsPath = path.join(iceHome, 'cpp', 'bin', platform, configuration);
         }
-        defaults.exe = path.join(ICE_HOME, 'cpp', 'bin', process.platform == "win32" ?
-            path.join(platform, configuration, "slice2js.exe") : "slice2js");
-        defaults.args = defaults.args.concat(["-I" + path.join(ICE_HOME, 'slice')]);
+        defaults.iceHome = iceHome;
     }
     return iceBuilder.compile(defaults);
 }
 
 function getIceLibs(es5)
 {
-    return  path.join(ICE_HOME ? path.join(ICE_HOME, 'js', 'lib') : path.join('node_modules', 'ice', 'lib'),
+    return  path.join(iceHome ? path.join(iceHome, 'js', 'lib') : path.join('node_modules', 'ice', 'lib'),
                       es5 ? 'es5/*' : '*');
 }
 
@@ -118,6 +115,21 @@ gulp.task("dist:clean", [],
         del(["lib/*", "lib/es5/*"]);
     });
 
+gulp.task("common-es5", [],
+          function(cb)
+          {
+              pump([
+                  gulp.src([path.join( "assets", "common.js")]),
+                  babel({compact:false}),
+                  gulp.dest(path.join("assets", "es5"))], cb);
+          });
+
+gulp.task("common-es5:clean", [],
+          function()
+          {
+              del(["assets/es5/*"]);
+          });
+
 //
 // If ICE_HOME is set we install Ice for JavaScript module from ICE_HOME
 // that is required for running JavaScript NodeJS demos.
@@ -126,9 +138,9 @@ gulp.task("npm", [],
     function(cb)
     {
         npm.load({loglevel: 'silent', progress: false}, function(err, npm) {
-            if(ICE_HOME)
+            if(iceHome)
             {
-                npm.commands.install([path.join(ICE_HOME, 'js')], function(err, data)
+                npm.commands.install([path.join(iceHome, 'js')], function(err, data)
                 {
                     cb(err);
                 });
@@ -223,7 +235,7 @@ Object.keys(demos).forEach(
             function(cb){
                 pump([
                     gulp.src(path.join(name, "*.ice")),
-                    slice2js({args: ["-I" + name], dest: path.join(name, "generated")}),
+                    slice2js({include: [name], dest: path.join(name, "generated")}),
                     gulp.dest(path.join(name, "generated"))], cb);
             });
 
@@ -295,29 +307,15 @@ Object.keys(demos).forEach(
             });
     });
 
-gulp.task("lint:js", ["build"],
-    function(cb){
-        pump([
-            gulp.src(["gulpfile.js",
-                      "**/*.js",
-                      "!**/es5/*.js",
-                      "!config/*.js",
-                      "!lib/*.js",
-                      "!**/*.min.js",
-                      "!node_modules/**/*.js"]),
-            jshint(),
-            jshint.reporter("default")], cb);
-    });
-
 gulp.task("demo:build", Object.keys(demos).map(demoBuildTask));
 gulp.task("demo:clean", Object.keys(demos).map(demoCleanTask));
 
-gulp.task("build", ["demo:build"]);
+gulp.task("build", ["demo:build", "common-es5"]);
 
-gulp.task("run", ["demo:build", "dist:libs"],
+gulp.task("run", ["build", "dist:libs"],
     function(){
         HttpServer();
         return gulp.src("").pipe(open({uri: "http://127.0.0.1:8080/index.html"}));
     });
-gulp.task("clean", ["demo:clean", "dist:clean"]);
+gulp.task("clean", ["demo:clean", "dist:clean", "common-es5:clean"]);
 gulp.task("default", ["build"]);

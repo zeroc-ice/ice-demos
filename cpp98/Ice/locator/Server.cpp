@@ -9,33 +9,67 @@
 
 using namespace std;
 
-class HelloServer : public Ice::Application
-{
-public:
+//
+// Global variable for shutdownCommunicator
+//
+Ice::CommunicatorPtr communicator;
 
-    virtual int run(int, char*[]);
-};
+//
+// Callback for CtrlCHandler
+//
+void
+shutdownCommunicator(int)
+{
+    communicator->shutdown();
+}
 
 int
 main(int argc, char* argv[])
 {
-    HelloServer app;
-    return app.main(argc, argv, "config.server");
-}
+    int status = 0;
 
-int
-HelloServer::run(int argc, char*[])
-{
-    if(argc > 1)
+    try
     {
-        cerr << appName() << ": too many arguments" << endl;
-        return 1;
+        //
+        // CtrlCHandler must be created before the communicator or any other threads are started
+        //
+        Ice::CtrlCHandler ctrlCHandler;
+
+        //
+        // CommunicatorHolder's ctor initializes an Ice communicator,
+        // and it's dtor destroys this communicator.
+        //
+        Ice::CommunicatorHolder ich(argc, argv, "config.server");
+        communicator = ich.communicator();
+
+        //
+        // Shutdown communicator on Ctrl-C
+        //
+        ctrlCHandler.setCallback(&shutdownCommunicator);
+
+        //
+        // The communicator initialization removes all Ice-related arguments from argc/argv
+        //
+        if(argc > 1)
+        {
+            cerr << argv[0] << ": too many arguments" << endl;
+            status = 1;
+        }
+        else
+        {
+            Ice::ObjectAdapterPtr adapter = communicator->createObjectAdapter("Hello");
+            Demo::HelloPtr hello = new HelloI;
+            adapter->add(hello, Ice::stringToIdentity("hello"));
+            adapter->activate();
+
+            communicator->waitForShutdown();
+        }
+    }
+    catch(const std::exception& ex)
+    {
+        cerr << ex.what() << endl;
+        status = 1;
     }
 
-    Ice::ObjectAdapterPtr adapter = communicator()->createObjectAdapter("Hello");
-    Demo::HelloPtr hello = new HelloI;
-    adapter->add(hello, Ice::stringToIdentity("hello"));
-    adapter->activate();
-    communicator()->waitForShutdown();
-    return 0;
+    return status;
 }

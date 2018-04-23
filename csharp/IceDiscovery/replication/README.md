@@ -1,18 +1,26 @@
+This demo shows how to use replication with [IceDiscovery][1].
+
 To run the demo, start the 3 servers:
 
-     server.exe --Ice.Config=config.server1
-     server.exe --Ice.Config=config.server2
-     server.exe --Ice.Config=config.server3
+| .NET Framework 4.5                    | .NET Core 2.0                                    |
+| --------------------------------------| ------------------------------------------------ |
+| `server  --Ice.Config=config.server1` | `dotnet server.dll  --Ice.Config=config.server1` |
+| `server  --Ice.Config=config.server2` | `dotnet server.dll  --Ice.Config=config.server2` |
+| `server  --Ice.Config=config.server3` | `dotnet server.dll  --Ice.Config=config.server3` |
 
-In a separate window:
+In a separate window, start the client:
 
-      client.exe
+| .NET Framework 4.5 | .NET Core 2.0       |
+| ------------------ | ------------------- |
+| `client`           | `dotnet client.dll` |
 
 The client invokes the number of specified iterations with a given
 delay on a well-known proxy configured to use per-request load
 balancing. Each invocation on the proxy queries the Ice locator
-implemented by the IceDiscovery plugin.
+implemented by the IceDiscovery plug-in.
 
 While the client is running and invoking on the server, you can try to
 stop some of the servers. As long as one server is still running, the
 client will continue to work.
+
+[1]: https://doc.zeroc.com/display/Ice37/IceDiscovery

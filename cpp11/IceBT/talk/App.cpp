@@ -17,7 +17,7 @@ public:
 
     int run(const shared_ptr<Ice::Communicator>& communicator);
 
-    void connect(const Ice::Identity&, const shared_ptr<Ice::Connection>&);
+    void connect(const shared_ptr<Talk::PeerPrx>&);
     void message(const string&);
     void disconnect(const Ice::Identity&, const shared_ptr<Ice::Connection>&, bool);
     void closed();
@@ -31,6 +31,7 @@ private:
     void failed(const Ice::LocalException&);
     void usage();
 
+    shared_ptr<Ice::Communicator> _communicator;
     shared_ptr<Ice::ObjectAdapter> _adapter;
     shared_ptr<Talk::PeerPrx> _local;
     shared_ptr<Talk::PeerPrx> _remote;
@@ -49,9 +50,9 @@ public:
     {
     }
 
-    virtual void connect(Ice::Identity id, const Ice::Current& current) override
+    virtual void connect(shared_ptr<Talk::PeerPrx> peer, const Ice::Current& current) override
     {
-        _app->connect(id, current.con);
+        _app->connect(peer->ice_fixed(current.con));
     }
 
     virtual void send(string text, const Ice::Current&) override
@@ -81,7 +82,7 @@ public:
     {
     }
 
-    virtual void connect(Ice::Identity, const Ice::Current&) override
+    virtual void connect(shared_ptr<Talk::PeerPrx>, const Ice::Current&) override
     {
         throw Talk::ConnectionException("already connected");
     }
@@ -134,7 +135,7 @@ main(int argc, char* argv[])
         else
         {
             TalkApp app;
-            status = app.run(communicator, argv[0]);
+            status = app.run(communicator);
         }
     }
     catch(const std::exception& ex)
@@ -149,11 +150,13 @@ main(int argc, char* argv[])
 int
 TalkApp::run(const shared_ptr<Ice::Communicator>& communicator)
 {
+    _communicator = communicator;
+
     //
     // Create an object adapter with the name "Talk". Its endpoint is defined
     // in the configuration file 'config'.
     //
-    _adapter = communicator->createObjectAdapter("Talk");
+    _adapter = _communicator->createObjectAdapter("Talk");
 
     //
     // Install a servant with the well-known identity "peer".
@@ -209,13 +212,13 @@ TalkApp::run(const shared_ptr<Ice::Communicator>& communicator)
     // There may still be objects (connections and servants) that hold pointers to this object, so we destroy
     // the communicator here to make sure they get cleaned up first.
     //
-    communicator->destroy();
+    _communicator->destroy();
 
     return 0;
 }
 
 void
-TalkApp::connect(const Ice::Identity& id, const shared_ptr<Ice::Connection>& con)
+TalkApp::connect(const shared_ptr<Talk::PeerPrx>& peer)
 {
     //
     // Called for a new incoming connection request.
@@ -231,6 +234,7 @@ TalkApp::connect(const Ice::Identity& id, const shared_ptr<Ice::Connection>& con
     //
     // Install a connection callback and enable ACM heartbeats.
     //
+    auto con = peer->ice_getConnection();
     con->setCloseCallback(
         [this](const shared_ptr<Ice::Connection>&)
         {
@@ -238,7 +242,7 @@ TalkApp::connect(const Ice::Identity& id, const shared_ptr<Ice::Connection>& con
         });
     con->setACM(30, Ice::ACMClose::CloseOff, Ice::ACMHeartbeat::HeartbeatAlways);
 
-    _remote = Ice::uncheckedCast<Talk::PeerPrx>(con->createProxy(id))->ice_invocationTimeout(10000);
+    _remote = peer->ice_invocationTimeout(10000);
 
     auto info = con->getInfo();
     if(info->underlying)
@@ -309,14 +313,8 @@ TalkApp::doConnect(const string& cmd)
     }
     string addr = cmd.substr(sp);
 
-    //
-    // Generate a UUID for our callback servant. We have to pass this identity to
-    // the remote peer so that it can invoke callbacks on the servant over a
-    // bidirectional connection.
-    //
-    Ice::Identity id = Ice::stringToIdentity(Ice::generateUUID());
     shared_ptr<Talk::PeerPrx> remote;
-
+    shared_ptr<Talk::PeerPrx> local;
     try
     {
         {
@@ -341,7 +339,7 @@ TalkApp::doConnect(const string& cmd)
             {
                 proxy += "bt -a \"" + addr + "\" -u " + btUUID;
             }
-            remote = Ice::uncheckedCast<Talk::PeerPrx>(communicator()->stringToProxy(proxy));
+            remote = Ice::uncheckedCast<Talk::PeerPrx>(_communicator->stringToProxy(proxy));
             _remote = remote;
         }
 
@@ -354,7 +352,7 @@ TalkApp::doConnect(const string& cmd)
         //
         auto con = remote->ice_getConnection();
         con->setAdapter(_adapter);
-        _adapter->add(make_shared<OutgoingPeerI>(this), id);
+        local = Ice::uncheckedCast<Talk::PeerPrx>(_adapter->addWithUUID(make_shared<OutgoingPeerI>(this)));
 
         //
         // Install a connection callback and enable ACM heartbeats.
@@ -369,7 +367,7 @@ TalkApp::doConnect(const string& cmd)
         //
         // Now we're ready to notify the peer that we'd like to connect.
         //
-        remote->connect(id);
+        remote->connect(local);
         cout << ">>>> Connected to " << addr << endl;
     }
     catch(const Talk::ConnectionException& ex)
@@ -377,12 +375,9 @@ TalkApp::doConnect(const string& cmd)
         lock_guard<mutex> lock(_mutex);
 
         cout << ">>>> Connection failed: " << ex.reason << endl;
-        try
+        if(local)
         {
-            _adapter->remove(id);
-        }
-        catch(const Ice::NotRegisteredException&)
-        {
+            _adapter->remove(local->ice_getIdentity());
         }
 
         if(_remote == remote)
@@ -395,12 +390,9 @@ TalkApp::doConnect(const string& cmd)
         lock_guard<mutex> lock(_mutex);
 
         cout << ">>>> " << ex << endl;
-        try
+        if(local)
         {
-            _adapter->remove(id);
-        }
-        catch(const Ice::NotRegisteredException&)
-        {
+            _adapter->remove(local->ice_getIdentity());
         }
 
         if(_remote == remote)
@@ -416,7 +408,7 @@ TalkApp::doList()
     //
     // Obtain a reference to the IceBT plug-in.
     //
-    auto plugin = dynamic_pointer_cast<IceBT::Plugin>(communicator()->getPluginManager()->getPlugin("IceBT"));
+    auto plugin = dynamic_pointer_cast<IceBT::Plugin>(_communicator->getPluginManager()->getPlugin("IceBT"));
     assert(plugin);
 
     auto devices = plugin->getDevices();

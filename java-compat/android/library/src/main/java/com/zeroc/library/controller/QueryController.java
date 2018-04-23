@@ -110,7 +110,8 @@ public class QueryController
         _library = library;
     }
 
-    QueryController(Handler handler, Demo.LibraryPrx library, final Listener listener, final QueryType _type, final String _queryString)
+    QueryController(Handler handler, Demo.LibraryPrx library, final Listener listener, final QueryType _type,
+                    final String _queryString)
     {
         _handler = handler;
         _listener = listener;

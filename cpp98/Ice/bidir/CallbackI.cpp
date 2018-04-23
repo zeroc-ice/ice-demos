@@ -32,14 +32,11 @@ CallbackSenderI::destroy()
 }
 
 void
-CallbackSenderI::addClient(const Identity& ident, const Current& current)
+CallbackSenderI::addClient(const CallbackReceiverPrx& client, const Current& current)
 {
     IceUtil::Monitor<IceUtil::Mutex>::Lock lck(*this);
-
-    cout << "adding client `" << Ice::identityToString(ident) << "'"<< endl;
-
-    CallbackReceiverPrx client = CallbackReceiverPrx::uncheckedCast(current.con->createProxy(ident));
-    _clients.insert(client);
+    cout << "adding client `" << Ice::identityToString(client->ice_getIdentity()) << "'"<< endl;
+    _clients.insert(client->ice_fixed(current.con));
 }
 
 void

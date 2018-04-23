@@ -30,18 +30,15 @@ CallbackSenderI::CallbackSenderI(MainPage^ page) :
 }
 
 void
-CallbackSenderI::addClient(Ice::Identity ident, const Ice::Current& current)
+CallbackSenderI::addClient(std::shared_ptr<CallbackReceiverPrx> client, const Ice::Current& current)
 {
     lock_guard<mutex> lock(_mutex);
 
     ostringstream os;
-    os << "adding client `";
-    os << Ice::identityToString(ident);
-    os << "'\n";
+    os << "adding client `" << Ice::identityToString(client->ice_getIdentity()) << "'\n";
     _page->print(os.str());
 
-    auto client = Ice::uncheckedCast<CallbackReceiverPrx>(current.con->createProxy(ident));
-    _clients.push_back(client);
+    _clients.push_back(client->ice_fixed(current.con));
 }
 
 void

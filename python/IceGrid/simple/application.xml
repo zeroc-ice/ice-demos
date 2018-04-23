@@ -12,7 +12,7 @@
 
     <node name="node1">
       <server id="SimpleServer" exe="python" activation="on-demand">
-        <option>Server.py</option>
+        <option>server.py</option>
         <adapter name="Hello" endpoints="tcp -h localhost">
           <object identity="hello" type="::Demo::Hello" property="Identity"/>
         </adapter>

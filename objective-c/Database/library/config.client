@@ -3,6 +3,7 @@
 # "SessionFactory" object in the server.
 #
 #SessionFactory.Proxy=SessionFactory:default -p 10000
+#SessionFactory.Proxy=SessionFactory:tcp -h demo2.zeroc.com -p 10000
 
 #
 # The proxy to the Glacier2 router for all outgoing connections. This
@@ -15,12 +16,6 @@ Ice.Default.Router=DemoGlacier2/router:wss -p 443 -h zeroc.com -r /demo-proxy/li
 # the SSL setup below.
 #
 #Ice.Default.Router=DemoGlacier2/router:ssl -p 4064 -h 127.0.0.1 -t 10000
-
-#
-# No active connection management is permitted because of the session
-# interfaces. Connections must remain established.
-#
-Ice.ACM.Client.Timeout=0
 
 #
 # Connection retry is not possible because of the session

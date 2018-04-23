@@ -9,17 +9,8 @@ import java.util.concurrent.Executors;
 
 public class Server
 {
-    static class ShutdownHook implements Runnable
+    static class ShutdownHook extends Thread
     {
-        private Ice.Communicator communicator;
-        private ExecutorService executor;
-
-        ShutdownHook(Ice.Communicator communicator, ExecutorService executor)
-        {
-            this.communicator = communicator;
-            this.executor = executor;
-        }
-
         @Override
         public void
         run()
@@ -29,14 +20,19 @@ public class Server
             // executor threads causing any running servant dispatch threads
             // to terminate quickly.
             //
-            executor.shutdownNow();
+            _executor.shutdownNow();
 
-            //
-            // Initiate communicator shutdown, waitForShutdown returns when complete
-            // calling shutdown on a destroyed communicator is no-op
-            //
-            communicator.shutdown();
+            _communicator.destroy();
         }
+
+        ShutdownHook(Ice.Communicator communicator, ExecutorService executor)
+        {
+            _communicator = communicator;
+            _executor = executor;
+        }
+
+        private final Ice.Communicator _communicator;
+        private final ExecutorService _executor;
     }
 
     public static void
@@ -45,7 +41,7 @@ public class Server
         int status = 0;
         Ice.StringSeqHolder argsHolder = new Ice.StringSeqHolder(args);
 
-        ExecutorService executor = Executors.newFixedThreadPool(5);
+        final ExecutorService executor = Executors.newFixedThreadPool(5);
 
         Ice.InitializationData initData = new Ice.InitializationData();
         initData.properties = Ice.Util.createProperties();
@@ -56,7 +52,8 @@ public class Server
         // By using an executor it is straightforward to interrupt any servant
         // dispatch threads by using ExecutorService.shutdownNow.
         //
-        initData.dispatcher = new Ice.Dispatcher() {
+        initData.dispatcher = new Ice.Dispatcher()
+        {
             @Override
             public void dispatch(Runnable runnable, Ice.Connection con)
             {
@@ -71,10 +68,10 @@ public class Server
         try(Ice.Communicator communicator = Ice.Util.initialize(argsHolder, initData))
         {
             //
-            // If ^C is pressed we want to interrupt all running upcalls from the
-            // dispatcher and destroy the communicator.
+            // Install shutdown hook to (also) destroy communicator during JVM shutdown.
+            // This ensures the communicator gets destroyed when the user interrupts the application with Ctrl-C.
             //
-            Runtime.getRuntime().addShutdownHook(new Thread(new ShutdownHook(communicator, executor)));
+            Runtime.getRuntime().addShutdownHook(new ShutdownHook(communicator, executor));
 
             if(argsHolder.value.length > 0)
             {

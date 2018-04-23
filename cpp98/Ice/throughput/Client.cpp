@@ -54,7 +54,29 @@ main(int argc, char* argv[])
     return status;
 }
 
-void menu();
+void
+menu()
+{
+    cout <<
+        "usage:\n"
+        "\n"
+        "toggle type of data to send:\n"
+        "1: sequence of bytes (default)\n"
+        "2: sequence of strings (\"hello\")\n"
+        "3: sequence of structs with a string (\"hello\") and a double\n"
+        "4: sequence of structs with two ints and a double\n"
+        "\n"
+        "select test to run:\n"
+        "t: Send sequence as twoway\n"
+        "o: Send sequence as oneway\n"
+        "r: Receive sequence\n"
+        "e: Echo (send and receive) sequence\n"
+        "\n"
+        "other commands:\n"
+        "s: shutdown server\n"
+        "x: exit\n"
+        "?: help\n";
+}
 
 int
 run(const Ice::CommunicatorPtr& communicator)
@@ -92,32 +114,32 @@ run(const Ice::CommunicatorPtr& communicator)
     {
         throughput->startWarmup();
 
-        ByteSeq emptyBytesBuf(1);
-        pair<const Ice::Byte*, const Ice::Byte*> emptyBytes;
-        emptyBytes.first = &emptyBytesBuf[0];
-        emptyBytes.second = emptyBytes.first + emptyBytesBuf.size();
+        ByteSeq warmupBytesBuf(1);
+        pair<const Ice::Byte*, const Ice::Byte*> warmupBytes;
+        warmupBytes.first = &warmupBytesBuf[0];
+        warmupBytes.second = warmupBytes.first + warmupBytesBuf.size();
 
-        vector<Util::string_view> emptyStringViews(1);
-        StringDoubleSeq emptyStructs(1);
-        FixedSeq emptyFixed(1);
+        vector<Util::string_view> warmupStringViews(1);
+        StringDoubleSeq warmupStructs(1);
+        FixedSeq warmupFixed(1);
 
         cout << "warming up the server... " << flush;
         for(int i = 0; i < 10000; i++)
         {
-            throughput->sendByteSeq(emptyBytes);
-            throughput->sendStringSeq(emptyStringViews);
-            throughput->sendStructSeq(emptyStructs);
-            throughput->sendFixedSeq(emptyFixed);
+            throughput->sendByteSeq(warmupBytes);
+            throughput->sendStringSeq(warmupStringViews);
+            throughput->sendStructSeq(warmupStructs);
+            throughput->sendFixedSeq(warmupFixed);
 
             throughput->recvByteSeq();
             throughput->recvStringSeq();
             throughput->recvStructSeq();
             throughput->recvFixedSeq();
 
-            throughput->echoByteSeq(emptyBytes);
-            throughput->echoStringSeq(emptyStringViews);
-            throughput->echoStructSeq(emptyStructs);
-            throughput->echoFixedSeq(emptyFixed);
+            throughput->echoByteSeq(warmupBytes);
+            throughput->echoStringSeq(warmupStringViews);
+            throughput->echoStructSeq(warmupStructs);
+            throughput->echoFixedSeq(warmupFixed);
         }
 
         throughput->endWarmup();
@@ -438,28 +460,4 @@ run(const Ice::CommunicatorPtr& communicator)
     while(cin.good() && c != 'x');
 
     return 0;
-}
-
-void
-menu()
-{
-    cout <<
-        "usage:\n"
-        "\n"
-        "toggle type of data to send:\n"
-        "1: sequence of bytes (default)\n"
-        "2: sequence of strings (\"hello\")\n"
-        "3: sequence of structs with a string (\"hello\") and a double\n"
-        "4: sequence of structs with two ints and a double\n"
-        "\n"
-        "select test to run:\n"
-        "t: Send sequence as twoway\n"
-        "o: Send sequence as oneway\n"
-        "r: Receive sequence\n"
-        "e: Echo (send and receive) sequence\n"
-        "\n"
-        "other commands:\n"
-        "s: shutdown server\n"
-        "x: exit\n"
-        "?: help\n";
 }

@@ -35,11 +35,8 @@
     EditController* editController;
     SavingController* savingController;
 
-    NSTimer* refreshTimer;
-
     id<ICECommunicator> communicator;
     id session;
-    ICELong sessionTimeout;
     id<DemoLibraryPrx> library;
     id<GLACIER2RouterPrx> router;
 
@@ -57,8 +54,9 @@
 -(id)initWithCommunicator:(id<ICECommunicator>)communicator
                   session:(id)session
                    router:(id<GLACIER2RouterPrx>)router
-           sessionTimeout:(ICELong)sessionTimeout
                   library:(id<DemoLibraryPrx>)library;
+
+-(void)destroySession;
 
 -(void)add:(id)sender;
 -(void)remove:(id)sender;

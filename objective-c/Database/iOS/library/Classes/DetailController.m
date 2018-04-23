@@ -19,6 +19,7 @@ static EditController* editViewController_ = nil;
 @property (nonatomic) UITableView *tableView;
 @property (nonatomic) NSIndexPath *selectedIndexPath;
 @property (nonatomic, copy) DemoBookDescription* updated;
+@property (nonatomic) bool fatal;
 
 @end
 
@@ -30,6 +31,7 @@ static EditController* editViewController_ = nil;
 @synthesize updated;
 @synthesize waitAlert;
 @synthesize delegate;
+@synthesize fatal;
 
 -(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -76,12 +78,6 @@ static EditController* editViewController_ = nil;
     [tableView setEditing:editing animated:animated];
     [self.navigationItem setHidesBackButton:editing animated:animated];
     [tableView reloadData];
-}
-
--(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 -(void)didReceiveMemoryWarning
@@ -165,9 +161,9 @@ static EditController* editViewController_ = nil;
                                                             preferredStyle:UIAlertControllerStyleAlert];
     [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
                       handler:^(UIAlertAction * action) {
-                        if(fatal)
+                        if(self.fatal)
                         {
-                            [delegate destroySession];
+                            [self.delegate destroySession];
                             [self.navigationController popToRootViewControllerAnimated:YES];
                         }
                       }]];
@@ -569,18 +565,18 @@ static EditController* editViewController_ = nil;
 
                 [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault
                       handler:^(UIAlertAction * action) {
-                        [self.tableView deselectRowAtIndexPath:selectedIndexPath animated:NO];
+                        [self.tableView deselectRowAtIndexPath:self.selectedIndexPath animated:NO];
                       }]];
                 [alert addAction:[UIAlertAction actionWithTitle:@"Return" style:UIAlertActionStyleDefault
                       handler:^(UIAlertAction * action) {
-                        [self.tableView deselectRowAtIndexPath:selectedIndexPath animated:NO];
+                        [self.tableView deselectRowAtIndexPath:self.selectedIndexPath animated:NO];
                         [self saving:YES];
-                        [[book proxy] begin_returnBook:^ {
+                        [[self.book proxy] begin_returnBook:^ {
 
                             [self saving:NO];
-                            [self.tableView deselectRowAtIndexPath:selectedIndexPath animated:NO];
+                            [self.tableView deselectRowAtIndexPath:self.selectedIndexPath animated:NO];
 
-                            book.rentedBy = @"";
+                            self.book.rentedBy = @"";
                             [self.tableView reloadData];
                         }
                         exception:^(ICEException* ex) { [self exception:ex]; }];

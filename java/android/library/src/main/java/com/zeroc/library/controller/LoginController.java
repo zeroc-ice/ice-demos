@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import com.zeroc.Ice.ACMHeartbeat;
 import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.Connection;
 import com.zeroc.Ice.InitializationData;
@@ -70,8 +71,6 @@ public class LoginController
             {
                 try
                 {
-                    long refreshTimeout;
-
                     InitializationData initData = new InitializationData();
 
                     initData.dispatcher = (Runnable runnable, Connection connection) ->
@@ -107,12 +106,16 @@ public class LoginController
 
                     if(initData.properties.getPropertyAsIntWithDefault("IceSSL.UsePlatformCAs", 0) == 0)
                     {
+                        //
+                        // We need to postpone plug-in initialization so that we can configure IceSSL
+                        // with a resource stream for the certificate information.
+                        //
                         initData.properties.setProperty("Ice.InitPlugins", "0");
-                        java.io.InputStream certStream = resources.openRawResource(R.raw.client);
                         _communicator = Util.initialize(initData);
 
                         com.zeroc.IceSSL.Plugin plugin =
                             (com.zeroc.IceSSL.Plugin)_communicator.getPluginManager().getPlugin("IceSSL");
+                        java.io.InputStream certStream = resources.openRawResource(R.raw.client);
                         plugin.setTruststoreStream(certStream);
 
                         _communicator.getPluginManager().initializePlugins();
@@ -124,7 +127,6 @@ public class LoginController
 
                     SessionAdapter session = null;
 
-                    com.zeroc.Ice.Connection con = null;
                     if(_communicator.getDefaultRouter() != null)
                     {
                         final com.zeroc.Ice.RouterPrx r = _communicator.getDefaultRouter();
@@ -140,8 +142,18 @@ public class LoginController
 
                         final Demo.Glacier2SessionPrx sess = Demo.Glacier2SessionPrx.uncheckedCast(glacier2session);
                         final Demo.LibraryPrx library = sess.getLibrary();
-                        refreshTimeout = router.getSessionTimeout();
-                        con = sess.ice_getConnection();
+
+                        final int acmTimeout = router.getACMTimeout();
+                        if(acmTimeout > 0)
+                        {
+                            //
+                            // Configure the connection to send heartbeats in order to keep our session alive.
+                            //
+                            final com.zeroc.Ice.Connection connection = router.ice_getCachedConnection();
+                            connection.setACM(
+                                java.util.OptionalInt.of(acmTimeout), null,
+                                java.util.Optional.of(ACMHeartbeat.HeartbeatAlways));
+                        }
 
                         session = new SessionAdapter()
                         {
@@ -164,7 +176,7 @@ public class LoginController
                     }
                     else
                     {
-                        ObjectPrx proxy = _communicator.stringToProxy("LibraryDemo.Proxy");
+                        ObjectPrx proxy = _communicator.propertyToProxy("LibraryDemo.Proxy");
 
                         Demo.SessionFactoryPrx factory = Demo.SessionFactoryPrx.checkedCast(proxy);
                         if(factory == null)
@@ -175,8 +187,6 @@ public class LoginController
 
                         final Demo.SessionPrx sess = factory.create();
                         final Demo.LibraryPrx library = sess.getLibrary();
-                        refreshTimeout = factory.getSessionTimeout();
-                        con = sess.ice_getConnection();
 
                         session = new SessionAdapter()
                         {
@@ -191,13 +201,6 @@ public class LoginController
                             }
                         };
                     }
-
-                    //
-                    // Configure the connection to send heartbeats in order to keep our session alive.
-                    //
-                    con.setACM(java.util.OptionalInt.of((int)refreshTimeout),
-                               java.util.Optional.of(com.zeroc.Ice.ACMClose.CloseOff),
-                               java.util.Optional.of(com.zeroc.Ice.ACMHeartbeat.HeartbeatAlways));
 
                     synchronized(LoginController.this)
                     {

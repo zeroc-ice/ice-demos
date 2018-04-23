@@ -7,5 +7,5 @@ Demos in this directory:
 
 - [simpleChat](./simpleChat)
 
-   A swing application that shows how to use write a graphical Glacier2
-   simple chat client.
+  A swing application that shows how to use write a graphical Glacier2
+  simple chat client.

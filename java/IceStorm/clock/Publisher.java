@@ -20,13 +20,10 @@ public class Publisher
         try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.pub", extraArgs))
         {
             //
-            // Install shutdown hook to destroy communicator during JVM shutdown
-            // if not already destroyed (useful for Ctrl-C interrupts)
+            // Install shutdown hook to (also) destroy communicator during JVM shutdown.
+            // This ensures the communicator gets destroyed when the user interrupts the application with Ctrl-C.
             //
-            Runtime.getRuntime().addShutdownHook(new Thread(() ->
-            {
-                communicator.destroy();
-            }));
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> communicator.destroy()));
 
             status = run(communicator, extraArgs.toArray(new String[extraArgs.size()]));
         }

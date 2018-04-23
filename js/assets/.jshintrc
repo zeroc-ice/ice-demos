@@ -1,9 +1,0 @@
-{
-  "extends" : "../.jshintrc_browser",
-  "browser" : true,
-  "jquery" : true,
-  "globals" :
-  {
-    "hljs" : false
-  }
-}

@@ -6,7 +6,6 @@
 
 using Demo;
 using System;
-using System.Reflection;
 
 public class Client
 {
@@ -112,7 +111,10 @@ public class Client
                 else if(line.Equals("f"))
                 {
                     batchOneway.ice_flushBatchRequests();
-                    batchDatagram.ice_flushBatchRequests();
+                    if(!secure)
+                    {
+                        batchDatagram.ice_flushBatchRequests();
+                    }
                 }
                 else if(line.Equals("S"))
                 {

@@ -19,7 +19,7 @@ slice {
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "27.0.1"
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         applicationId "com.zeroc.hello"
@@ -50,7 +50,7 @@ clean {
 }
 
 dependencies {
-    implementation 'com.zeroc:ice:3.7.0'
-    implementation 'com.zeroc:icessl:3.7.0'
-    implementation 'com.zeroc:icediscovery:3.7.0'
+    implementation 'com.zeroc:ice:3.7.1'
+    implementation 'com.zeroc:icessl:3.7.1'
+    implementation 'com.zeroc:icediscovery:3.7.1'
 }

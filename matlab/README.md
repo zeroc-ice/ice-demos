@@ -3,14 +3,14 @@
 ## Overview
 
 This directory contains MATLAB sample programs for various Ice components.
-These examples are provided to get you started on using a particular Ice feature
-or coding technique.
+These examples are provided to get you started on using a particular Ice
+feature or coding technique.
 
 The following subdirectories contain sample programs:
 
 - [Ice](./Ice) has several examples that illustrate fundamental Ice concepts.
 
-- [IceDiscovery](./IceDiscovery) ilustrate how to use the IceDiscovery plug-in.
+- [IceDiscovery](./IceDiscovery) illustrate how to use the IceDiscovery plug-in.
 
 ## Build Instructions
 

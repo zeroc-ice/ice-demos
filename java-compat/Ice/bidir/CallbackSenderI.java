@@ -24,13 +24,10 @@ class CallbackSenderI extends _CallbackSenderDisp implements java.lang.Runnable
 
     @Override
     synchronized public void
-    addClient(Ice.Identity ident, Ice.Current current)
+    addClient(CallbackReceiverPrx client, Ice.Current current)
     {
-        System.out.println("adding client `" + Ice.Util.identityToString(ident) + "'");
-
-        Ice.ObjectPrx base = current.con.createProxy(ident);
-        CallbackReceiverPrx client = CallbackReceiverPrxHelper.uncheckedCast(base);
-        _clients.add(client);
+        System.out.println("adding client `" + Ice.Util.identityToString(client.ice_getIdentity()) + "'");
+        _clients.add((CallbackReceiverPrx)client.ice_fixed(current.con));
     }
 
     @Override
@@ -55,20 +52,27 @@ class CallbackSenderI extends _CallbackSenderDisp implements java.lang.Runnable
                 for(CallbackReceiverPrx p : _clients)
                 {
                     final CallbackReceiverPrx prx = p;
-                    p.begin_callback(num, new Callback_CallbackReceiver_callback() {
-                        @Override
-                        public void
-                        response()
-                        {
-                        }
+                    try
+                    {
+                        p.begin_callback(num, new Callback_CallbackReceiver_callback() {
+                                @Override
+                                public void
+                                response()
+                                {
+                                }
 
-                        @Override
-                        public void
-                        exception(Ice.LocalException ex)
-                        {
-                            removeClient(prx, ex);
-                        }
-                    });
+                                @Override
+                                public void
+                                exception(Ice.LocalException ex)
+                                {
+                                    removeClient(prx, ex);
+                                }
+                            });
+                    }
+                    catch(Ice.CommunicatorDestroyedException e)
+                    {
+                        return; // expected during shutdown
+                    }
                 }
             }
         }

@@ -72,7 +72,7 @@ public final class ThroughputI extends _ThroughputDisp
     {
         if(_warmup)
         {
-            return _emptyByteSeq;
+            return _warmupByteSeq;
         }
         else
         {
@@ -99,7 +99,7 @@ public final class ThroughputI extends _ThroughputDisp
     {
         if(_warmup)
         {
-            return _emptyStringSeq;
+            return _warmupStringSeq;
         }
         else
         {
@@ -126,7 +126,7 @@ public final class ThroughputI extends _ThroughputDisp
     {
         if(_warmup)
         {
-            return _emptyStructSeq;
+            return _warmupStructSeq;
         }
         else
         {
@@ -153,7 +153,7 @@ public final class ThroughputI extends _ThroughputDisp
     {
         if(_warmup)
         {
-            return _emptyFixedSeq;
+            return _warmupFixedSeq;
         }
         else
         {
@@ -180,10 +180,10 @@ public final class ThroughputI extends _ThroughputDisp
     private StringDouble[] _structSeq;
     private Fixed[] _fixedSeq;
 
-    private byte[] _emptyByteSeq = new byte[0];
-    private String[] _emptyStringSeq = new String[0];
-    private StringDouble[] _emptyStructSeq = new StringDouble[0];
-    private Fixed[] _emptyFixedSeq = new Fixed[0];
+    private byte[] _warmupByteSeq = new byte[1];
+    private String[] _warmupStringSeq = new String[1];
+    private StringDouble[] _warmupStructSeq = new StringDouble[] { new StringDouble() };
+    private Fixed[] _warmupFixedSeq = new Fixed[] { new Fixed() };
 
     private boolean _needsWarmup = true;
     private boolean _warmup = false;

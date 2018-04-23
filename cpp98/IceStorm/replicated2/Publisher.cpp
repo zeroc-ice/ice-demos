@@ -12,12 +12,21 @@
 using namespace std;
 using namespace Demo;
 
-class Publisher : public Ice::Application
-{
-public:
+int run(int argc, char* argv[]);
 
-    virtual int run(int, char*[]);
-};
+//
+// Global variable for destroyCommunicator
+//
+Ice::CommunicatorPtr communicator;
+
+//
+// Callback for CtrlCHandler
+//
+void
+destroyCommunicator(int)
+{
+    communicator->destroy();
+}
 
 int
 main(int argc, char* argv[])
@@ -25,9 +34,36 @@ main(int argc, char* argv[])
 #ifdef ICE_STATIC_LIBS
     Ice::registerIceUDP();
 #endif
+    int status = 0;
 
-    Publisher app;
-    return app.main(argc, argv, "config.pub");
+    try
+    {
+        //
+        // CtrlCHandler must be created before the communicator or any other threads are started
+        //
+        Ice::CtrlCHandler ctrlCHandler;
+
+        //
+        // CommunicatorHolder's ctor initializes an Ice communicator,
+        // and it's dtor destroys this communicator.
+        //
+        Ice::CommunicatorHolder ich(argc, argv, "config.pub");
+        communicator = ich.communicator();
+
+        //
+        // Destroy communicator on Ctrl-C
+        //
+        ctrlCHandler.setCallback(&destroyCommunicator);
+
+        status = run(argc, argv);
+    }
+    catch(const std::exception& ex)
+    {
+        cerr << ex.what() << endl;
+        status = 1;
+    }
+
+    return status;
 }
 
 void
@@ -37,7 +73,7 @@ usage(const string& n)
 }
 
 int
-Publisher::run(int argc, char* argv[])
+run(int argc, char* argv[])
 {
     enum Option { None, Datagram, Twoway, Oneway };
     Option option = None;
@@ -85,10 +121,10 @@ Publisher::run(int argc, char* argv[])
     }
 
     IceStorm::TopicManagerPrx manager = IceStorm::TopicManagerPrx::checkedCast(
-        communicator()->propertyToProxy("TopicManager.Proxy"));
+        communicator->propertyToProxy("TopicManager.Proxy"));
     if(!manager)
     {
-        cerr << appName() << ": invalid proxy" << endl;
+        cerr << argv[0] << ": invalid proxy" << endl;
         return 1;
     }
 
@@ -108,7 +144,7 @@ Publisher::run(int argc, char* argv[])
         }
         catch(const IceStorm::TopicExists&)
         {
-            cerr << appName() << ": temporary failure. try again." << endl;
+            cerr << argv[0] << ": temporary failure. try again." << endl;
             return 1;
         }
     }

@@ -17,6 +17,7 @@
 
 @property (nonatomic) UITextField* currentField;
 @property (nonatomic) NSString* oldFieldValue;
+@property (nonatomic) MainController *mainController;
 
 @property (nonatomic) id<ICECommunicator> communicator;
 @property (nonatomic) id session;
@@ -29,6 +30,7 @@
 
 @synthesize currentField;
 @synthesize oldFieldValue;
+@synthesize mainController;
 @synthesize session;
 @synthesize library;
 @synthesize router;
@@ -78,12 +80,6 @@ static NSString* passwordKey = @"passwordKey";
     loginButton.enabled = usernameField.text.length > 0;
     [loginButton setAlpha:loginButton.enabled ? 1.0 : 0.5];
     [super viewWillAppear:animated];
-}
-
--(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 -(void)didReceiveMemoryWarning
@@ -185,22 +181,29 @@ static NSString* passwordKey = @"passwordKey";
     id<DemoSessionPrx> sess = [factory create];
 
     self.session = sess;
-    sessionTimeout = [factory getSessionTimeout];
     self.library = [sess getLibrary];
 }
 
 // Runs in a separate thread, called only by NSInvocationOperation.
--(void)doGlacier2Login:(id)proxy
+-(void)doGlacier2Login:(id)proxy username:(NSString*)username password:(NSString*)password
 {
     id<GLACIER2RouterPrx> glacier2router = [GLACIER2RouterPrx uncheckedCast:proxy];
 
-    id<GLACIER2SessionPrx> glacier2session = [glacier2router createSession:usernameField.text password:passwordField.text];
+    id<GLACIER2SessionPrx> glacier2session = [glacier2router createSession:username password:password];
     id<DemoGlacier2SessionPrx> sess = [DemoGlacier2SessionPrx uncheckedCast:glacier2session];
 
     self.session = sess;
     self.router = glacier2router;
-    sessionTimeout = [glacier2router getSessionTimeout];
     self.library = [sess getLibrary];
+
+    ICELong acmTimeout = [glacier2router getACMTimeout];
+    if(acmTimeout > 0)
+    {
+        //
+        // Configure the connection to send heartbeats in order to keep our session alive
+        //
+        [[glacier2router ice_getCachedConnection] setACM:@(acmTimeout) close:ICENone heartbeat:@(ICEHeartbeatAlways)];
+    }
 }
 
 -(IBAction)login:(id)sender
@@ -208,19 +211,14 @@ static NSString* passwordKey = @"passwordKey";
     ICEInitializationData* initData = [ICEInitializationData initializationData];
     initData.properties = [ICEUtil createProperties];
     [initData.properties load:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"config.client"]];
-    [initData.properties setProperty:@"Ice.ACM.Client.Timeout" value:@"0"];
     [initData.properties setProperty:@"Ice.RetryIntervals" value:@"-1"];
 
-    // Tracing properties.
-    //[initData.properties setProperty:@"Ice.Trace.Network" value:@"1"];
-    //[initData.properties setProperty:@"Ice.Trace.Protocol" value:@"1"];
-
-    initData.dispatcher = ^(id<ICEDispatcherCall> call, id<ICEConnection> con) {
+    initData.dispatcher = ^(id<ICEDispatcherCall> call, id<ICEConnection> con)
+    {
         dispatch_sync(dispatch_get_main_queue(), ^ { [call run]; });
     };
 
-    id<ICEObjectPrx> proxy;
-    SEL loginSelector;
+    id proxy;
     @try
     {
         NSAssert(communicator == nil, @"communicator == nil");
@@ -229,12 +227,10 @@ static NSString* passwordKey = @"passwordKey";
         if([[[communicator getProperties] getProperty:@"Ice.Default.Router"] length] > 0)
         {
             proxy = [communicator getDefaultRouter];
-            loginSelector = @selector(doGlacier2Login:);
         }
         else
         {
             proxy = [communicator stringToProxy:[[communicator getProperties] getProperty:@"SessionFactory.Proxy"]];
-            loginSelector = @selector(doLogin:);
         }
     }
     @catch(ICEEndpointParseException* ex)
@@ -264,20 +260,27 @@ static NSString* passwordKey = @"passwordKey";
 
     [self connecting:YES];
 
+    NSString* username = usernameField.text;
+    NSString* password = passwordField.text;
+
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^ {
         @try
         {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-            [self performSelector:loginSelector withObject:proxy];
-#pragma clang diagnostic pop
+            if([[[self.communicator getProperties] getProperty:@"Ice.Default.Router"] length] > 0)
+            {
+                [self doGlacier2Login:proxy username:username password:password];
+            }
+            else
+            {
+                [self doLogin:proxy];
+            }
+
             dispatch_async(dispatch_get_main_queue(), ^ {
                 [self connecting:NO];
-                [mainController activate:communicator
-                                 session:session
-                                  router:router
-                          sessionTimeout:sessionTimeout
-                                 library:library];
+                [self.mainController activate:self.communicator
+                                      session:self.session
+                                       router:self.router
+                                      library:self.library];
 
                 // Clear internal state.
                 self.communicator = nil;
@@ -285,7 +288,7 @@ static NSString* passwordKey = @"passwordKey";
                 self.library = nil;
                 self.router = nil;
 
-                [self.navigationController pushViewController:mainController animated:YES];
+                [self.navigationController pushViewController:self.mainController animated:YES];
             });
         }
         @catch(GLACIER2CannotCreateSessionException* ex)

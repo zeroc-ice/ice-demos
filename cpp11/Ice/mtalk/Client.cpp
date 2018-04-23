@@ -15,10 +15,11 @@ using namespace std;
 class ChatApp
 {
 public:
+
     int run(const shared_ptr<Ice::Communicator>&);
 
     void discoveredPeer(const string&, const shared_ptr<MTalk::PeerPrx>&);
-    void connect(const string&, const Ice::Identity&, const shared_ptr<Ice::Connection>&);
+    void connect(const string&, const shared_ptr<MTalk::PeerPrx>&);
     void message(const string&);
     void disconnect(const Ice::Identity&, const shared_ptr<Ice::Connection>&, bool);
     void closed();
@@ -76,9 +77,9 @@ public:
     {
     }
 
-    virtual void connect(string name, Ice::Identity id, const Ice::Current& current) override
+    virtual void connect(string name, shared_ptr<MTalk::PeerPrx> peer, const Ice::Current& current) override
     {
-        _app->connect(name, id, current.con);
+        _app->connect(name, peer->ice_fixed(current.con));
     }
 
     virtual void message(string text, const Ice::Current&) override
@@ -108,7 +109,7 @@ public:
     {
     }
 
-    virtual void connect(string, Ice::Identity, const Ice::Current&) override
+    virtual void connect(string, shared_ptr<MTalk::PeerPrx>, const Ice::Current&) override
     {
         throw MTalk::ConnectionException("already connected");
     }
@@ -356,7 +357,7 @@ ChatApp::discoveredPeer(const string& name, const shared_ptr<MTalk::PeerPrx>& pe
 }
 
 void
-ChatApp::connect(const string& name, const Ice::Identity& id, const shared_ptr<Ice::Connection>& con)
+ChatApp::connect(const string& name, const shared_ptr<MTalk::PeerPrx>& peer)
 {
     //
     // Called for a new incoming connection request.
@@ -372,6 +373,7 @@ ChatApp::connect(const string& name, const Ice::Identity& id, const shared_ptr<I
     //
     // Install a connection callback and enable ACM heartbeats.
     //
+    auto con = peer->ice_getConnection();
     con->setCloseCallback(
         [this](const shared_ptr<Ice::Connection>&)
         {
@@ -379,7 +381,7 @@ ChatApp::connect(const string& name, const Ice::Identity& id, const shared_ptr<I
         });
     con->setACM(30, Ice::ACMClose::CloseOff, Ice::ACMHeartbeat::HeartbeatAlways);
 
-    _remote = Ice::uncheckedCast<MTalk::PeerPrx>(con->createProxy(id))->ice_invocationTimeout(5000);
+    _remote = peer->ice_invocationTimeout(5000);
 
     auto info = con->getInfo();
     if(info->underlying)
@@ -468,13 +470,7 @@ ChatApp::doConnect(const string& cmd)
         remote = _remote;
     }
 
-    //
-    // Generate a UUID for our callback servant. We have to pass this identity to
-    // the remote peer so that it can invoke callbacks on the servant over a
-    // bidirectional connection.
-    //
-    auto id = Ice::stringToIdentity(Ice::generateUUID());
-
+    shared_ptr<MTalk::PeerPrx> localPeer;
     try
     {
         cout << ">>>> Connecting to " << name << endl;
@@ -486,7 +482,13 @@ ChatApp::doConnect(const string& cmd)
         //
         auto con = remote->ice_getConnection();
         con->setAdapter(_peerAdapter);
-        _peerAdapter->add(make_shared<OutgoingPeerI>(this), id);
+
+        //
+        // Register our callback servant with a UUID identity. We pass the returned proxy
+        // to the remote peer so that it can invoke callbacks on the servant over a
+        // bidirectional connection.
+        //
+        localPeer = Ice::uncheckedCast<MTalk::PeerPrx>(_peerAdapter->addWithUUID(make_shared<OutgoingPeerI>(this)));
 
         //
         // Install a connection callback and enable ACM heartbeats.
@@ -501,18 +503,15 @@ ChatApp::doConnect(const string& cmd)
         //
         // Now we're ready to notify the peer that we'd like to connect.
         //
-        remote->connect(_name, id);
+        remote->connect(_name, localPeer);
         cout << ">>>> Connected to " << name << endl;
     }
     catch(const MTalk::ConnectionException& ex)
     {
         cout << ">>>> Connection failed: " << ex.reason << endl;
-        try
+        if(localPeer)
         {
-            _peerAdapter->remove(id);
-        }
-        catch(const Ice::NotRegisteredException&)
-        {
+            _peerAdapter->remove(localPeer->ice_getIdentity());
         }
         _remote = nullptr;
         return;
@@ -520,12 +519,9 @@ ChatApp::doConnect(const string& cmd)
     catch(const Ice::Exception& ex)
     {
         cout << ">>>> " << ex << endl;
-        try
+        if(localPeer)
         {
-            _peerAdapter->remove(id);
-        }
-        catch(const Ice::NotRegisteredException&)
-        {
+            _peerAdapter->remove(localPeer->ice_getIdentity());
         }
         _remote = nullptr;
         return;

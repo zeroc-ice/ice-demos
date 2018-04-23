@@ -43,26 +43,6 @@ private:
     std::function<void()> _call;
 };
 
-QString
-errorToString(const std::exception& err)
-{
-    return QString(typeid(err).name()).replace("class", "Error");
-}
-
-QString
-errorToString(std::exception_ptr errptr)
-{
-    try
-    {
-        std::rethrow_exception(errptr);
-    }
-    catch (const std::exception& err)
-    {
-        return errorToString(err);
-    }
-    return "";
-}
-
 }
 
 MainWindow::MainWindow() :
@@ -115,26 +95,19 @@ MainWindow::MainWindow() :
     connect(_timeout, &QSlider::valueChanged, this, &MainWindow::updateProxy);
     connect(_mode, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &MainWindow::updateProxy);
 
-    try
-    {
-        Ice::InitializationData initData;
-        initData.properties = Ice::createProperties();
-        initData.properties->load("config.client");
-        initData.dispatcher = [this](std::function<void()> dispatchCall, const std::shared_ptr<Ice::Connection>&)
-                                {
-                                    QApplication::postEvent(this, new DispatchEvent(dispatchCall));
-                                };
-        _communicator = Ice::initialize(initData);
-        updateProxy();
-    }
-    catch(const std::exception& ex)
-    {
-        statusBar()->showMessage(errorToString(ex));
-    }
-
     auto centralWidget = new QWidget(this);
     centralWidget->setLayout(layout);
     setCentralWidget(centralWidget);
+
+    Ice::InitializationData initData;
+    initData.properties = Ice::createProperties();
+    initData.properties->load("config.client");
+    initData.dispatcher = [this](std::function<void()> dispatchCall, const std::shared_ptr<Ice::Connection>&)
+        {
+            QApplication::postEvent(this, new DispatchEvent(dispatchCall));
+        };
+    _communicator = Ice::initialize(initData);
+    updateProxy();
 }
 
 bool
@@ -147,9 +120,15 @@ MainWindow::event(QEvent* event)
         {
             dispatchEvent->dispatch();
         }
+        catch(const Ice::Exception& ex)
+        {
+            statusBar()->showMessage(ex.ice_id().c_str());
+        }
         catch(const std::exception& ex)
         {
-            statusBar()->showMessage(errorToString(ex));
+            QMessageBox error(QMessageBox::Critical, "Error", ex.what());
+            error.exec();
+            QApplication::exit(EXIT_FAILURE);
         }
         return true;
     }
@@ -252,7 +231,20 @@ MainWindow::sayHello()
                     },
                     [this](std::exception_ptr errptr)
                     {
-                        statusBar()->showMessage(errorToString(errptr));
+                        try
+                        {
+                            std::rethrow_exception(errptr);
+                        }
+                        catch(const Ice::Exception& ex)
+                        {
+                            statusBar()->showMessage(ex.ice_id().c_str());
+                        }
+                        catch(const std::exception& ex)
+                        {
+                            QMessageBox error(QMessageBox::Critical, "Error", ex.what());
+                            error.exec();
+                            QApplication::exit(EXIT_FAILURE);
+                        }
                     },
                     [this, mode](bool)
                     {
@@ -267,9 +259,15 @@ MainWindow::sayHello()
                     });
             }
         }
+        catch(const Ice::Exception& ex)
+        {
+            statusBar()->showMessage(ex.ice_id().c_str());
+        }
         catch(const std::exception& ex)
         {
-            statusBar()->showMessage(errorToString(ex));
+            QMessageBox error(QMessageBox::Critical, "Error", ex.what());
+            error.exec();
+            QApplication::exit(EXIT_FAILURE);
         }
     }
 }
@@ -277,7 +275,7 @@ MainWindow::sayHello()
 void
 MainWindow::shutdown()
 {
-    if (_helloPrx)
+    if(_helloPrx)
     {
         try
         {
@@ -298,7 +296,20 @@ MainWindow::shutdown()
                         },
                     [this](std::exception_ptr errptr)
                         {
-                            statusBar()->showMessage(errorToString(errptr));
+                            try
+                            {
+                                std::rethrow_exception(errptr);
+                            }
+                            catch(const Ice::Exception& ex)
+                            {
+                                statusBar()->showMessage(ex.ice_id().c_str());
+                            }
+                            catch(const std::exception& ex)
+                            {
+                                QMessageBox error(QMessageBox::Critical, "Error", ex.what());
+                                error.exec();
+                                QApplication::exit(EXIT_FAILURE);
+                            }
                         },
                     [this, mode](bool)
                         {
@@ -313,9 +324,15 @@ MainWindow::shutdown()
                         });
             }
         }
+        catch(const Ice::Exception& ex)
+        {
+            statusBar()->showMessage(ex.ice_id().c_str());
+        }
         catch(const std::exception& ex)
         {
-            statusBar()->showMessage(errorToString(ex));
+            QMessageBox error(QMessageBox::Critical, "Error", ex.what());
+            error.exec();
+            QApplication::exit(EXIT_FAILURE);
         }
     }
 }
@@ -327,7 +344,20 @@ MainWindow::flush()
     {
         _helloPrx->ice_flushBatchRequestsAsync([this](std::exception_ptr errptr)
                                                     {
-                                                        statusBar()->showMessage(errorToString(errptr));
+                                                        try
+                                                        {
+                                                            std::rethrow_exception(errptr);
+                                                        }
+                                                        catch(const Ice::Exception& ex)
+                                                        {
+                                                            statusBar()->showMessage(ex.ice_id().c_str());
+                                                        }
+                                                        catch(const std::exception& ex)
+                                                        {
+                                                            QMessageBox error(QMessageBox::Critical, "Error", ex.what());
+                                                            error.exec();
+                                                            QApplication::exit(EXIT_FAILURE);
+                                                        }
                                                     });
         _flush->setEnabled(false);
         statusBar()->showMessage("Flushed batch requests");
@@ -338,7 +368,16 @@ int
 main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
-    return a.exec();
+    try
+    {
+        MainWindow w;
+        w.show();
+        return a.exec();
+    }
+    catch(const std::exception& ex)
+    {
+        QMessageBox error(QMessageBox::Critical, "Initialization exception", ex.what());
+        error.exec();
+        return EXIT_FAILURE;
+    }
 }

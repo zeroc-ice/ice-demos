@@ -72,11 +72,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <IceBuilder Include="..\..\Filesystem.ice">
-      <Filter>Slice Files</Filter>
-    </IceBuilder>
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="Win32\Debug\Filesystem.h">
       <Filter>Header Files\Win32\Debug</Filter>
     </ClInclude>

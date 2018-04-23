@@ -28,6 +28,11 @@ Demos in this directory:
 
   This demo shows how to use Ice request contexts.
 
+- [coroutine](./coroutine)
+
+  This demo shows how to implement a servant using coroutines and the
+  await keyword.
+
 - [hello](./hello)
 
   This demo illustrates how to invoke ordinary (twoway) operations, as

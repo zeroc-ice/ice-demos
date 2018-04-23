@@ -20,16 +20,10 @@ public class Client
         try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.client", extraArgs))
         {
             //
-            // Install shutdown hook for user interrupt like Ctrl-C
+            // Install shutdown hook to (also) destroy communicator during JVM shutdown.
+            // This ensures the communicator gets destroyed when the user interrupts the application with Ctrl-C.
             //
-            Runtime.getRuntime().addShutdownHook(new Thread(() ->
-            {
-                //
-                // Destroy communicator to abandon ongoing remote calls
-                // calling destroy multiple times is no-op
-                //
-                communicator.destroy();
-            }));
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> communicator.destroy()));
 
             if(!extraArgs.isEmpty())
             {
@@ -55,17 +49,30 @@ public class Client
             return 1;
         }
 
+        //
+        // Create an object adapter with no name and no endpoints for receiving callbacks
+        // over bidirectional connections.
+        //
         com.zeroc.Ice.ObjectAdapter adapter = communicator.createObjectAdapter("");
-        com.zeroc.Ice.Identity ident = new com.zeroc.Ice.Identity();
-        ident.name = java.util.UUID.randomUUID().toString();
-        ident.category = "";
-        adapter.add(new CallbackReceiverI(), ident);
+
+        //
+        // Register the callback receiver servant with the object adapter and activate
+        // the adapter.
+        //
+        CallbackReceiverPrx proxy = CallbackReceiverPrx.uncheckedCast(adapter.addWithUUID(new CallbackReceiverI()));
         adapter.activate();
+
+        //
+        // Associate the object adapter with the bidirectional connection.
+        //
         server.ice_getConnection().setAdapter(adapter);
-        server.addClient(ident);
 
+        //
+        // Provide the proxy of the callback receiver object to the server and wait for
+        // shutdown.
+        //
+        server.addClient(proxy);
         communicator.waitForShutdown();
-
         return 0;
     }
 }

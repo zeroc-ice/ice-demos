@@ -6,13 +6,16 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class LibraryController;
+
 @interface AppDelegate : NSObject
 {
     NSWindowController* connectController;
-    BOOL chatActive;
+    LibraryController* libraryController;
+    BOOL terminate;
 }
 
 -(void)login:(id)sender;
--(void)setLibraryActive:(BOOL)active;
+-(void)setLibraryController:(LibraryController*)controller;
 
 @end
