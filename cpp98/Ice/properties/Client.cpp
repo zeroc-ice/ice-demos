@@ -15,7 +15,7 @@ int run(const Ice::CommunicatorPtr&);
 int
 main(int argc, char* argv[])
 {
-    int status = EXIT_SUCCESS;
+    int status = 0;
 
     try
     {
@@ -31,7 +31,7 @@ main(int argc, char* argv[])
         if(argc > 1)
         {
             cerr << argv[0] << ": too many arguments" << endl;
-            status = EXIT_FAILURE;
+            status = 1;
         }
         else
         {
@@ -41,14 +41,35 @@ main(int argc, char* argv[])
     catch(const std::exception& ex)
     {
         cerr << argv[0] << ": " << ex.what() << endl;
-        status = EXIT_FAILURE;
+        status = 1;
     }
 
     return status;
 }
 
-void menu();
-void show(const Ice::PropertiesAdminPrx&);
+void
+menu()
+{
+    cout << endl <<
+        "usage:\n"
+        "1: set properties (batch 1)\n"
+        "2: set properties (batch 2)\n"
+        "c: show current properties\n"
+        "s: shutdown server\n"
+        "x: exit\n"
+        "?: help\n";
+}
+
+void
+show(const Ice::PropertiesAdminPrx& admin)
+{
+    Ice::PropertyDict props = admin->getPropertiesForPrefix("Demo");
+    cout << "Server's current settings:" << endl;
+    for(Ice::PropertyDict::iterator p = props.begin(); p != props.end(); ++p)
+    {
+        cout << "  " << p->first << "=" << p->second << endl;
+    }
+}
 
 int
 run(const Ice::CommunicatorPtr& communicator)
@@ -57,7 +78,7 @@ run(const Ice::CommunicatorPtr& communicator)
     if(!props)
     {
         cerr << "invalid proxy" << endl;
-        return EXIT_FAILURE;
+        return 1;
     }
 
     Ice::PropertiesAdminPrx admin =
@@ -149,29 +170,5 @@ run(const Ice::CommunicatorPtr& communicator)
     }
     while(cin.good() && c != 'x');
 
-    return EXIT_SUCCESS;
-}
-
-void
-menu()
-{
-    cout << endl <<
-        "usage:\n"
-        "1: set properties (batch 1)\n"
-        "2: set properties (batch 2)\n"
-        "c: show current properties\n"
-        "s: shutdown server\n"
-        "x: exit\n"
-        "?: help\n";
-}
-
-void
-show(const Ice::PropertiesAdminPrx& admin)
-{
-    Ice::PropertyDict props = admin->getPropertiesForPrefix("Demo");
-    cout << "Server's current settings:" << endl;
-    for(Ice::PropertyDict::iterator p = props.begin(); p != props.end(); ++p)
-    {
-        cout << "  " << p->first << "=" << p->second << endl;
-    }
+    return 0;
 }

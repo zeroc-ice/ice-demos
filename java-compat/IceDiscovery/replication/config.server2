@@ -26,14 +26,6 @@ Ice.ProgramName=Server2
 Ice.Plugin.IceDiscovery=IceDiscovery:IceDiscovery.PluginFactory
 
 #
-# Use the loopback interface by default for discovery.
-#
-# Change this property to the IP address of a network interface if
-# you want the client to discover servers on your local network.
-#
-IceDiscovery.Interface=127.0.0.1
-
-#
 # Ensure connection establishment doesn't take too long.
 #
 Ice.Override.ConnectTimeout=1000

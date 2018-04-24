@@ -95,9 +95,4 @@
       <UniqueIdentifier>{6a8cf76a-93f6-4937-887f-724eac122737}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
-  <ItemGroup>
-    <IceBuilder Include="..\..\Hello.ice">
-      <Filter>Slice Files</Filter>
-    </IceBuilder>
-  </ItemGroup>
 </Project>

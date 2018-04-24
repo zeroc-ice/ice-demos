@@ -58,7 +58,7 @@ Q                       := $(if $(V),,@)
 E                       := $(if $(V),@:,@echo)
 
 # $(call install-data,$1=filename,$2=srcdir,$3=destdist)
-install-data            = $(INSTALL) $2/$1 $(DESTDIR)$3/$1; $(CHMOD) a+r $(DESTDIR)$(3)/$(1)
+install-data            = $(INSTALL) -m 644 $2/$1 $(DESTDIR)$3/$1
 
 #
 # $(call install-data-files,$1=files,$2=$srcdir,$3=$destdir,$4=target,$5=text-output)
@@ -397,10 +397,15 @@ $2_configs      := $$(filter $(configs) $$($2_always_enable_configs),$$(call uni
 # Install files necessary for development.
 $2_devinstall   := $$(call var-with-default,$2_devinstall,yes)
 
+# Set default target directory if we're not building the component, this is used
+# when building against the component binary distribution.
+ifneq ($4,)
+$2_targetdir    := $$(call var-with-default,$2_targetdir,$$(if $$(filter program,$$($2_target)),$$($1_bindir),$$($1_libdir)))
+endif
+
 #
 # The installation directory (install_bindir if program, install_libdir otherwise)
 #
-$2_targetdir    := $$(call var-with-default,$2_targetdir,$$(if $$(filter program,$$($2_target)),$$($1_bindir),$$($1_libdir)))
 $2_installdir   := $$(call var-with-default,$2_installdir,$$(if $$(filter program,$$($2_target)),$$($1_install_bindir),$$($1_install_libdir)))
 
 $$(foreach p,$$($2_platforms),\
@@ -864,7 +869,12 @@ $1_install_platforms    := $(call component-platforms,$1,$(notdir $1))
 # on the translator for slice files.
 #
 $(notdir $1)_targetext  := $$(or $$($(notdir $1)_targetext),$(patsubst slice2%,%,$(or $2,$(notdir $1))))
+
+ifeq ($(ice_bindir[$(build-platform)]),)
 $(notdir $1)_path       = $$($(notdir $1)[$(build-platform)-static]_targetdir)/$(notdir $1)
+else
+$(notdir $1)_path       = $(ice_bindir[$(build-platform)])/$(notdir $1)
+endif
 
 projects        += $(project)
 endef

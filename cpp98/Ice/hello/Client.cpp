@@ -21,7 +21,7 @@ main(int argc, char* argv[])
     Ice::registerIceWS();
 #endif
 
-    int status = EXIT_SUCCESS;
+    int status = 0;
 
     try
     {
@@ -37,7 +37,7 @@ main(int argc, char* argv[])
         if(argc > 1)
         {
             cerr << argv[0] << ": too many arguments" << endl;
-            status = EXIT_FAILURE;
+            status = 1;
         }
         else
         {
@@ -47,13 +47,30 @@ main(int argc, char* argv[])
     catch(const std::exception& ex)
     {
         cerr << argv[0] << ": " << ex.what() << endl;
-        status = EXIT_FAILURE;
+        status = 1;
     }
 
     return status;
 }
 
-void menu();
+void
+menu()
+{
+    cout <<
+        "usage:\n"
+        "t: send greeting as twoway\n"
+        "o: send greeting as oneway\n"
+        "O: send greeting as batch oneway\n"
+        "d: send greeting as datagram\n"
+        "D: send greeting as batch datagram\n"
+        "f: flush all batch requests\n"
+        "T: set a timeout\n"
+        "P: set server delay\n"
+        "S: switch secure mode on/off\n"
+        "s: shutdown server\n"
+        "x: exit\n"
+        "?: help\n";
+}
 
 int
 run(const Ice::CommunicatorPtr& communicator)
@@ -63,7 +80,7 @@ run(const Ice::CommunicatorPtr& communicator)
     if(!twoway)
     {
         cerr << "invalid proxy" << endl;
-        return EXIT_FAILURE;
+        return 1;
     }
     HelloPrx oneway = twoway->ice_oneway();
     HelloPrx batchOneway = twoway->ice_batchOneway();
@@ -213,24 +230,5 @@ run(const Ice::CommunicatorPtr& communicator)
     }
     while(cin.good() && c != 'x');
 
-    return EXIT_SUCCESS;
-}
-
-void
-menu()
-{
-    cout <<
-        "usage:\n"
-        "t: send greeting as twoway\n"
-        "o: send greeting as oneway\n"
-        "O: send greeting as batch oneway\n"
-        "d: send greeting as datagram\n"
-        "D: send greeting as batch datagram\n"
-        "f: flush all batch requests\n"
-        "T: set a timeout\n"
-        "P: set server delay\n"
-        "S: switch secure mode on/off\n"
-        "s: shutdown server\n"
-        "x: exit\n"
-        "?: help\n";
+    return 0;
 }

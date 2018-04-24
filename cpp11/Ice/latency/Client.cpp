@@ -10,12 +10,7 @@
 using namespace std;
 using namespace Demo;
 
-class LatencyClient : public Ice::Application
-{
-public:
-
-    virtual int run(int, char*[]) override;
-};
+int run(const shared_ptr<Ice::Communicator>&, const string&);
 
 int
 main(int argc, char* argv[])
@@ -24,24 +19,59 @@ main(int argc, char* argv[])
     Ice::registerIceSSL();
     Ice::registerIceWS();
 #endif
-    LatencyClient app;
-    return app.main(argc, argv, "config.client");
+
+    int status = 0;
+
+    try
+    {
+        //
+        // CtrlCHandler must be created before the communicator or any other threads are started
+        //
+        Ice::CtrlCHandler ctrlCHandler;
+
+        //
+        // CommunicatorHolder's ctor initializes an Ice communicator,
+        // and its dtor destroys this communicator.
+        //
+        Ice::CommunicatorHolder ich(argc, argv, "config.client");
+        auto communicator = ich.communicator();
+
+        ctrlCHandler.setCallback(
+            [communicator](int)
+            {
+                communicator->destroy();
+            });
+
+        //
+        // The communicator initialization removes all Ice-related arguments from argc/argv
+        //
+        if(argc > 1)
+        {
+            cerr << argv[0] << ": too many arguments" << endl;
+            status = 1;
+        }
+        else
+        {
+            status = run(communicator, argv[0]);
+        }
+    }
+    catch(const std::exception& ex)
+    {
+        cerr << ex.what() << endl;
+        status = 1;
+    }
+
+    return status;
 }
 
 int
-LatencyClient::run(int argc, char* argv[])
+run(const shared_ptr<Ice::Communicator>& communicator, const string& appName)
 {
-    if(argc > 1)
-    {
-        cerr << appName() << ": too many arguments" << endl;
-        return EXIT_FAILURE;
-    }
-
-    auto ping =  Ice::checkedCast<PingPrx>(communicator()->propertyToProxy("Ping.Proxy"));
+    auto ping =  Ice::checkedCast<PingPrx>(communicator->propertyToProxy("Ping.Proxy"));
     if(!ping)
     {
-        cerr << argv[0] << ": invalid proxy" << endl;
-        return EXIT_FAILURE;
+        cerr << appName << ": invalid proxy" << endl;
+        return 1;
     }
 
     // Initial ping to setup the connection.
@@ -60,5 +90,5 @@ LatencyClient::run(int argc, char* argv[])
     cout << "time for " << repetitions << " pings: " << duration.count() << "ms" << endl;
     cout << "time per ping: " << duration.count() / repetitions << "ms" << endl;
 
-    return EXIT_SUCCESS;
+    return 0;
 }

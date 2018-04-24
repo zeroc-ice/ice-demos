@@ -14,66 +14,98 @@
 using namespace std;
 using namespace Demo;
 
-class Server : public Ice::Application
-{
-public:
+//
+// Global variable for shutdownCommunicator
+//
+Ice::CommunicatorPtr communicator;
 
-    virtual int run(int, char*[]);
-};
+//
+// Callback for CtrlCHandler
+//
+void
+shutdownCommunicator(int)
+{
+    communicator->shutdown();
+}
 
 int
 main(int argc, char* argv[])
 {
-    Server app;
-    return app.main(argc, argv, "config.server");
-}
+    int status = 0;
 
-int
-Server::run(int argc, char*[])
-{
-    if(argc > 1)
-    {
-        cerr << appName() << ": too many arguments" << endl;
-        return EXIT_FAILURE;
-    }
-
-    Ice::PropertiesPtr properties = communicator()->getProperties();
-
-    IceStorm::TopicManagerPrx manager = IceStorm::TopicManagerPrx::checkedCast(
-        communicator()->propertyToProxy("TopicManager.Proxy"));
-    if(!manager)
-    {
-        cerr << appName() << ": invalid proxy" << endl;
-        return EXIT_FAILURE;
-    }
-
-    IceStorm::TopicPrx topic;
     try
     {
-        topic = manager->retrieve("counter");
+        //
+        // CtrlCHandler must be created before the communicator or any other threads are started
+        //
+        Ice::CtrlCHandler ctrlCHandler;
+
+        //
+        // CommunicatorHolder's ctor initializes an Ice communicator,
+        // and it's dtor destroys this communicator.
+        //
+        Ice::CommunicatorHolder ich(argc, argv, "config.server");
+        communicator = ich.communicator();
+
+        //
+        // Shutdown communicator on Ctrl-C
+        //
+        ctrlCHandler.setCallback(&shutdownCommunicator);
+
+        //
+        // The communicator initialization removes all Ice-related arguments from argc/argv
+        //
+        if(argc > 1)
+        {
+            cerr << argv[0] << ": too many arguments" << endl;
+            status = 1;
+        }
+        else
+        {
+            Ice::PropertiesPtr properties = communicator->getProperties();
+
+            IceStorm::TopicManagerPrx manager = IceStorm::TopicManagerPrx::checkedCast(
+                communicator->propertyToProxy("TopicManager.Proxy"));
+            if(!manager)
+            {
+                cerr << argv[0] << ": invalid proxy" << endl;
+                return 1;
+            }
+
+            IceStorm::TopicPrx topic;
+            try
+            {
+                topic = manager->retrieve("counter");
+            }
+            catch(const IceStorm::NoSuchTopic&)
+            {
+                try
+                {
+                    topic = manager->create("counter");
+                }
+                catch(const IceStorm::TopicExists&)
+                {
+                    cerr << argv[0] << ": topic exists, please try again." << endl;
+                    return 1;
+                }
+            }
+
+            //
+            // Create the servant to receive the events.
+            //
+            Ice::ObjectAdapterPtr adapter = communicator->createObjectAdapter("Counter");
+            Demo::CounterPtr counter = new CounterI(topic);
+            adapter->add(counter, Ice::stringToIdentity("counter"));
+            adapter->activate();
+
+            communicator->waitForShutdown();
+        }
     }
-    catch(const IceStorm::NoSuchTopic&)
+    catch(const std::exception& ex)
     {
-        try
-        {
-            topic = manager->create("counter");
-        }
-        catch(const IceStorm::TopicExists&)
-        {
-            cerr << appName() << ": topic exists, please try again." << endl;
-            return EXIT_FAILURE;
-        }
+        cerr << ex.what() << endl;
+        status = 1;
     }
 
-    //
-    // Create the servant to receive the events.
-    //
-    Ice::ObjectAdapterPtr adapter = communicator()->createObjectAdapter("Counter");
-    Demo::CounterPtr counter = new CounterI(topic);
-    adapter->add(counter, Ice::stringToIdentity("counter"));
-    adapter->activate();
-
-    communicator()->waitForShutdown();
-
-    return EXIT_SUCCESS;
+    return status;
 }

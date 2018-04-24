@@ -21,7 +21,7 @@ main(int argc, char* argv[])
     Ice::registerIceWS();
 #endif
 
-    int status = EXIT_SUCCESS;
+    int status = 0;
 
     try
     {
@@ -37,7 +37,7 @@ main(int argc, char* argv[])
         if(argc > 1)
         {
             cerr << argv[0] << ": too many arguments" << endl;
-            status = EXIT_FAILURE;
+            status = 1;
         }
         else
         {
@@ -47,7 +47,7 @@ main(int argc, char* argv[])
     catch(const std::exception& ex)
     {
         cerr << argv[0] << ": " << ex.what() << endl;
-        status = EXIT_FAILURE;
+        status = 1;
     }
 
     return status;
@@ -62,7 +62,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
     if(!throughput)
     {
         cerr << "invalid proxy" << endl;
-        return EXIT_FAILURE;
+        return 1;
     }
 
     auto throughputOneway = throughput->ice_oneway();
@@ -86,30 +86,30 @@ run(const shared_ptr<Ice::Communicator>& communicator)
     {
         throughput->startWarmup();
 
-        ByteSeq emptyBytesBuf(1);
-        auto emptyBytes = make_pair(emptyBytesBuf.data(), emptyBytesBuf.data() + emptyBytesBuf.size());
+        ByteSeq warmupBytesBuf(1);
+        auto warmupBytes = make_pair(warmupBytesBuf.data(), warmupBytesBuf.data() + warmupBytesBuf.size());
 
-        vector<Util::string_view> emptyStringViews(1);
-        StringDoubleSeq emptyStructs(1);
-        FixedSeq emptyFixed(1);
+        vector<Util::string_view> warmupStringViews(1);
+        StringDoubleSeq warmupStructs(1);
+        FixedSeq warmupFixed(1);
 
         cout << "warming up the server... " << flush;
         for(int i = 0; i < 10000; i++)
         {
-            throughput->sendByteSeq(emptyBytes);
-            throughput->sendStringSeq(emptyStringViews);
-            throughput->sendStructSeq(emptyStructs);
-            throughput->sendFixedSeq(emptyFixed);
+            throughput->sendByteSeq(warmupBytes);
+            throughput->sendStringSeq(warmupStringViews);
+            throughput->sendStructSeq(warmupStructs);
+            throughput->sendFixedSeq(warmupFixed);
 
             throughput->recvByteSeq();
             throughput->recvStringSeq();
             throughput->recvStructSeq();
             throughput->recvFixedSeq();
 
-            throughput->echoByteSeq(emptyBytes);
-            throughput->echoStringSeq(emptyStringViews);
-            throughput->echoStructSeq(emptyStructs);
-            throughput->echoFixedSeq(emptyFixed);
+            throughput->echoByteSeq(warmupBytes);
+            throughput->echoStringSeq(warmupStringViews);
+            throughput->echoStructSeq(warmupStructs);
+            throughput->echoFixedSeq(warmupFixed);
         }
 
         throughput->endWarmup();
@@ -429,7 +429,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
     }
     while(cin.good() && c != 'x');
 
-    return EXIT_SUCCESS;
+    return 0;
 }
 
 void

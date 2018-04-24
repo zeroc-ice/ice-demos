@@ -1,11 +1,18 @@
+This demo shows how to implement IceGrid custom load balancing using
+[replica group filters][1].
+
 To run the demo, first start the IceGrid service:
 
-      icegridnode --Ice.Config=config.grid
+```
+icegridnode --Ice.Config=config.grid
+```
 
 In a separate window:
 
-     icegridadmin --Ice.Config=config.admin -e "application add application.xml"
-     client
+```
+icegridadmin --Ice.Config=config.admin -e "application add application.xml"
+client
+```
 
 This will deploy the application described in the file
 `application.xml` and start the client.
@@ -21,3 +28,5 @@ that supports its preferred currency.
 
 You can edit `config.client` to change or comment out the client's
 preferred currency.
+
+[1]: https://doc.zeroc.com/display/Ice37/Load+Balancing

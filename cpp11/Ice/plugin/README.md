@@ -1,5 +1,5 @@
-This demo illustrates how to write and configure a simple Ice plug-in
-as well as an Ice Logger plug-in.
+This demo illustrates how to write and configure a simple Ice [plug-in][1]
+as well as an Ice [Logger plug-in][2].
 
 To run the demo, first start the server:
 ```
@@ -15,5 +15,8 @@ Both the client and server use a custom logger that is loaded as
 a logger plug-in. The server also uses a plug-in to implement the
 servant for this demo.
 
-Please review the client and sever configuration files to see the
+Please review the client and server configuration files to see the
 plug-in configuration.
+
+[1]: https://doc.zeroc.com/display/Ice37/Plug-in+Facility
+[2]: https://doc.zeroc.com/display/Ice37/Logger+Plug-ins

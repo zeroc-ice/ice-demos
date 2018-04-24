@@ -96,12 +96,12 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <IceBuilder Include="..\..\Hello.ice">
-      <Filter>Slice Files</Filter>
-    </IceBuilder>
-  </ItemGroup>
-  <ItemGroup>
     <Xml Include="..\..\application-single.xml" />
     <Xml Include="..\..\application-multiple.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <SliceCompile Include="..\..\Hello.ice">
+      <Filter>Slice Files</Filter>
+    </SliceCompile>
   </ItemGroup>
 </Project>

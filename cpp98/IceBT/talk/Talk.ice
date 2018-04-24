@@ -6,8 +6,6 @@
 
 #pragma once
 
-#include <Ice/Identity.ice>
-
 /**
  *
  * The Talk module defines the types that two devices use to communicate with one another.
@@ -43,12 +41,12 @@ interface Peer
      * Initiate a talk session with a remote peer. The remote peer should set up a
      * bidirectional connection and send its messages on that connection.
      *
-     * @param id The object identity of the initiator's local Peer object.
+     * @param peer The proxy of the initiator's Peer object.
      * @throws ConnectionException If the remote peer rejects the request. For example,
      * the remote peer may already be in a talk session.
      *
      **/
-    void connect(Ice::Identity id)
+    void connect(Peer* peer)
         throws ConnectionException;
 
     /**

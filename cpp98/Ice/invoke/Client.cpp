@@ -10,6 +10,8 @@
 using namespace std;
 using namespace Demo;
 
+int run(const Ice::CommunicatorPtr&);
+
 static ostream&
 operator<<(ostream& out, Demo::Color c)
 {
@@ -28,8 +30,6 @@ operator<<(ostream& out, Demo::Color c)
     return out;
 }
 
-int run(const Ice::CommunicatorPtr&);
-
 int
 main(int argc, char* argv[])
 {
@@ -37,7 +37,7 @@ main(int argc, char* argv[])
     Ice::registerIceSSL();
 #endif
 
-    int status = EXIT_SUCCESS;
+    int status = 0;
 
     try
     {
@@ -53,7 +53,7 @@ main(int argc, char* argv[])
         if(argc > 1)
         {
             cerr << argv[0] << ": too many arguments" << endl;
-            status = EXIT_FAILURE;
+            status = 1;
         }
         else
         {
@@ -63,13 +63,30 @@ main(int argc, char* argv[])
     catch(const std::exception& ex)
     {
         cerr << argv[0] << ": " << ex.what() << endl;
-        status = EXIT_FAILURE;
+        status = 1;
     }
 
     return status;
 }
 
-void menu();
+void
+menu()
+{
+    cout <<
+        "usage:\n"
+        "1: print string\n"
+        "2: print string sequence\n"
+        "3: print dictionary\n"
+        "4: print enum\n"
+        "5: print struct\n"
+        "6: print struct sequence\n"
+        "7: print class\n"
+        "8: get values\n"
+        "9: throw exception\n"
+        "s: shutdown server\n"
+        "x: exit\n"
+        "?: help\n";
+}
 
 int
 run(const Ice::CommunicatorPtr& communicator)
@@ -330,24 +347,5 @@ run(const Ice::CommunicatorPtr& communicator)
     }
     while(cin.good() && ch != 'x');
 
-    return EXIT_SUCCESS;
-}
-
-void
-menu()
-{
-    cout <<
-        "usage:\n"
-        "1: print string\n"
-        "2: print string sequence\n"
-        "3: print dictionary\n"
-        "4: print enum\n"
-        "5: print struct\n"
-        "6: print struct sequence\n"
-        "7: print class\n"
-        "8: get values\n"
-        "9: throw exception\n"
-        "s: shutdown server\n"
-        "x: exit\n"
-        "?: help\n";
+    return 0;
 }

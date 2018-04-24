@@ -10,12 +10,20 @@
 using namespace std;
 using namespace Demo;
 
-class CallbackServer : public Ice::Application
-{
-public:
 
-    virtual int run(int, char*[]);
-};
+//
+// Global variable for shutdownCommunicator
+//
+Ice::CommunicatorPtr communicator;
+
+//
+// Callback for CtrlCHandler
+//
+void
+shutdownCommunicator(int)
+{
+    communicator->shutdown();
+}
 
 int
 main(int argc, char* argv[])
@@ -23,23 +31,50 @@ main(int argc, char* argv[])
 #ifdef ICE_STATIC_LIBS
     Ice::registerIceSSL();
 #endif
-    CallbackServer app;
-    return app.main(argc, argv, "config.server");
-}
+    int status = 0;
 
-int
-CallbackServer::run(int argc, char*[])
-{
-    if(argc > 1)
+    try
     {
-        cerr << appName() << ": too many arguments" << endl;
-        return EXIT_FAILURE;
+        //
+        // CtrlCHandler must be created before the communicator or any other threads are started
+        //
+        Ice::CtrlCHandler ctrlCHandler;
+
+        //
+        // CommunicatorHolder's ctor initializes an Ice communicator,
+        // and it's dtor destroys this communicator.
+        //
+        Ice::CommunicatorHolder ich(argc, argv, "config.server");
+        communicator = ich.communicator();
+
+        //
+        // Shutdown communicator on Ctrl-C
+        //
+        ctrlCHandler.setCallback(&shutdownCommunicator);
+
+        //
+        // The communicator initialization removes all Ice-related arguments from argc/argv
+        //
+        if(argc > 1)
+        {
+            cerr << argv[0] << ": too many arguments" << endl;
+            status = 1;
+        }
+        else
+        {
+            Ice::ObjectAdapterPtr adapter = communicator->createObjectAdapter("Callback.Server");
+            CallbackPtr cb = new CallbackI;
+            adapter->add(cb, Ice::stringToIdentity("callback"));
+            adapter->activate();
+
+            communicator->waitForShutdown();
+        }
+    }
+    catch(const std::exception& ex)
+    {
+        cerr << ex.what() << endl;
+        status = 1;
     }
 
-    Ice::ObjectAdapterPtr adapter = communicator()->createObjectAdapter("Callback.Server");
-    CallbackPtr cb = new CallbackI;
-    adapter->add(cb, Ice::stringToIdentity("callback"));
-    adapter->activate();
-    communicator()->waitForShutdown();
-    return EXIT_SUCCESS;
+    return status;
 }

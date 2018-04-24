@@ -6,8 +6,6 @@
 
 #pragma once
 
-#include <Ice/Identity.ice>
-
 /**
  *
  * The MTalk module defines the types that devices use to discover and communicate with one another.
@@ -44,12 +42,12 @@ interface Peer
      * bidirectional connection and send its messages on that connection.
      *
      * @param name The peer's descriptive name.
-     * @param id The object identity of the initiator's local Peer object.
+     * @param peer The proxy of the initiator's Peer object.
      * @throws ConnectionException If the remote peer rejects the request. For example,
      * the remote peer may already be in a conversation.
      *
      **/
-    void connect(string name, Ice::Identity id)
+    void connect(string name, Peer* peer)
         throws ConnectionException;
 
     /**

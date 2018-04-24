@@ -124,45 +124,65 @@ private:
 
 }
 
-class LocatorServer : public Ice::Application
+int main(int argc, char* argv[])
 {
-public:
+    int status = 0;
 
-    virtual int run(int, char*[]) override;
-};
-
-int
-main(int argc, char* argv[])
-{
-    LocatorServer app;
-    return app.main(argc, argv, "config.locator");
-}
-
-int
-LocatorServer::run(int argc, char*[])
-{
-    if(argc > 1)
+    try
     {
-        cerr << appName() << ": too many arguments" << endl;
-        return EXIT_FAILURE;
+        //
+        // CtrlCHandler must be created before the communicator or any other threads are started
+        //
+        Ice::CtrlCHandler ctrlCHandler;
+
+        //
+        // CommunicatorHolder's ctor initializes an Ice communicator,
+        // and its dtor destroys this communicator.
+        //
+        Ice::CommunicatorHolder ich(argc, argv, "config.locator");
+        auto communicator = ich.communicator();
+
+        ctrlCHandler.setCallback(
+            [communicator](int)
+            {
+                communicator->shutdown();
+            });
+
+        //
+        // The communicator initialization removes all Ice-related arguments from argc/argv
+        //
+        if(argc > 1)
+        {
+            cerr << argv[0] << ": too many arguments" << endl;
+            status = 1;
+        }
+        else
+        {
+            //
+            // Get the IceGrid Locator and LocatorRegistry
+            //
+            auto defaultLocator = communicator->getDefaultLocator();
+            auto defaultRegistry = defaultLocator->getRegistry();
+
+            //
+            // Create the custom Locator and LocatorRegistry
+            //
+            auto adapter = communicator->createObjectAdapter("Locator");
+            auto registry = make_shared<LocatorRegistryI>(defaultRegistry);
+            auto registryPrx =
+                Ice::uncheckedCast<Ice::LocatorRegistryPrx>(adapter->add(registry, Ice::stringToIdentity("registry")));
+            auto locator = make_shared<LocatorI>(defaultLocator, registryPrx);
+            adapter->add(locator, Ice::stringToIdentity("locator"));
+            adapter->activate();
+
+            communicator->waitForShutdown();
+        }
+    }
+    catch(const std::exception& ex)
+    {
+        cerr << ex.what() << endl;
+        status = 1;
     }
 
-    //
-    // Get the IceGrid Locator and LocatorRegistry
-    //
-    auto defaultLocator = communicator()->getDefaultLocator();
-    auto defaultRegistry = defaultLocator->getRegistry();
-
-    //
-    // Create the custom Locator and LocatorRegistry
-    //
-    auto adapter = communicator()->createObjectAdapter("Locator");
-    auto registry = make_shared<LocatorRegistryI>(defaultRegistry);
-    auto registryPrx =
-        Ice::uncheckedCast<Ice::LocatorRegistryPrx>(adapter->add(registry, Ice::stringToIdentity("registry")));
-    auto locator = make_shared<LocatorI>(defaultLocator, registryPrx);
-    adapter->add(locator, Ice::stringToIdentity("locator"));
-    adapter->activate();
-    communicator()->waitForShutdown();
-    return EXIT_SUCCESS;
+    return status;
 }

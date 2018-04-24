@@ -21,7 +21,7 @@ main(int argc, char* argv[])
     Ice::registerIceLocatorDiscovery();
 #endif
 
-    int status = EXIT_SUCCESS;
+    int status = 0;
 
     try
     {
@@ -37,7 +37,7 @@ main(int argc, char* argv[])
         if(argc > 1)
         {
             cerr << argv[0] << ": too many arguments" << endl;
-            status = EXIT_FAILURE;
+            status = 1;
         }
         else
         {
@@ -47,26 +47,46 @@ main(int argc, char* argv[])
     catch(const std::exception& ex)
     {
         cerr << argv[0] << ": " << ex.what() << endl;
-        status = EXIT_FAILURE;
+        status = 1;
     }
 
     return status;
 }
 
-void menu();
-string trim(const string&);
+void
+menu()
+{
+    cout <<
+        "usage:\n"
+        "t: send greeting\n"
+        "s: shutdown server\n"
+        "x: exit\n"
+        "?: help\n";
+}
+
+string
+trim(const string& s)
+{
+    static const string delims = "\t\r\n ";
+    string::size_type last = s.find_last_not_of(delims);
+    if(last != string::npos)
+    {
+        return s.substr(s.find_first_not_of(delims), last+1);
+    }
+    return s;
+}
 
 int
 run(const Ice::CommunicatorPtr& communicator)
 {
-    int status = EXIT_SUCCESS;
+    int status = 0;
 
     IceGrid::RegistryPrx registry = IceGrid::RegistryPrx::checkedCast(
         communicator->stringToProxy("DemoIceGrid/Registry"));
     if(!registry)
     {
         cerr << "could not contact registry" << endl;
-        return EXIT_FAILURE;
+        return 1;
     }
 
     IceGrid::SessionPrx session;
@@ -160,38 +180,15 @@ run(const Ice::CommunicatorPtr& communicator)
     catch(const IceGrid::AllocationException& ex)
     {
         cerr << "could not allocate object: " << ex.reason << endl;
-        status = EXIT_FAILURE;
+        status = 1;
     }
-    catch(...)
+    catch(const std::exception& ex)
     {
-        cerr << "unexpected exception" << endl;
-        status = EXIT_FAILURE;
+        cerr << "unexpected exception: " << ex.what() << endl;
+        status = 1;
     }
 
     session->destroy();
 
     return status;
-}
-
-void
-menu()
-{
-    cout <<
-        "usage:\n"
-        "t: send greeting\n"
-        "s: shutdown server\n"
-        "x: exit\n"
-        "?: help\n";
-}
-
-string
-trim(const string& s)
-{
-    static const string delims = "\t\r\n ";
-    string::size_type last = s.find_last_not_of(delims);
-    if(last != string::npos)
-    {
-        return s.substr(s.find_first_not_of(delims), last+1);
-    }
-    return s;
 }

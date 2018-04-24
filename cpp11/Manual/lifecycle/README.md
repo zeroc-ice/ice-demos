@@ -1,11 +1,18 @@
-This demo implements the file system with life cycle support.
+This demo implements [the file system with life cycle support][1]
+example in the Ice Manual.
 
 To run it, start the server in a window:
 
-      server
+```
+server
+```
 
 Then run the client in a separate window:
 
-      client
+```
+client
+```
 
 Type "help" at the client prompt to see a list of commands.
+
+[1]: https://doc.zeroc.com/display/Ice37/Object+Life+Cycle+for+the+File+System+Application

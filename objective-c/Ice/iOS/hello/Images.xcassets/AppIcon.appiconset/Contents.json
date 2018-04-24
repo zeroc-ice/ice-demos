@@ -139,6 +139,12 @@
       "idiom" : "ipad",
       "filename" : "hello_world-83@2x-1.png",
       "scale" : "2x"
+    },
+    {
+      "size" : "1024x1024",
+      "idiom" : "ios-marketing",
+      "filename" : "hello.png",
+      "scale" : "1x"
     }
   ],
   "info" : {

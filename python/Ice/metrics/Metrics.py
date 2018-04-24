@@ -6,7 +6,9 @@
 #
 # **********************************************************************
 
-import sys, traceback, Ice, IceMX
+import sys
+import Ice
+import IceMX
 
 #
 # Formatting information for metrics maps. The tuple defines the
@@ -14,7 +16,7 @@ import sys, traceback, Ice, IceMX
 # right alignment) and width.
 #
 maps = {
-    "Connection" : [
+    "Connection": [
         ("id", "Connections", '<', 35),
         ("current", "#", '>', 3),
         ("total", "Total", '>', 5),
@@ -22,7 +24,7 @@ maps = {
         ("sentBytes", "TxBytes", '>', 10),
         ("averageLifetime", "Avg (s)", '>', 8)
     ],
-    "Invocation" : [
+    "Invocation": [
         ("id", "Invocations", '<', 39),
         ("current", "#", '>', 3),
         ("total", "Total", '>', 5),
@@ -31,7 +33,7 @@ maps = {
         ("", "RepSz", '>', 5),
         ("averageLifetime", "Avg (ms)", '>', 8)
     ],
-    "Dispatch" : [
+    "Dispatch": [
         ("id", "Dispatch", '<', 40),
         ("current", "#", '>', 3),
         ("total", "Total", '>', 5),
@@ -39,7 +41,7 @@ maps = {
         ("replySize", "RepSz", '>', 5),
         ("averageLifetime", "Avg (ms)", '>', 8)
     ],
-    "Thread" : [
+    "Thread": [
         ("id", "Threads", '<', 25),
         ("current", "#", '>', 3),
         ("total", "Total", '>', 5),
@@ -48,19 +50,19 @@ maps = {
         ("inUseForOther", "Other", '>', 6),
         ("averageLifetime", "Avg (s)", '>', 8)
     ],
-    "ConnectionEstablishment" : [
+    "ConnectionEstablishment": [
         ("id", "Connection Establishments", '<', 30),
         ("current", "#", '>', 3),
         ("total", "Total", '>', 5),
         ("averageLifetime", "Avg (ms)", '>', 8)
     ],
-    "EndpointLookup" : [
+    "EndpointLookup": [
         ("id", "Endpoint Lookups", '<', 30),
         ("current", "#", '>', 3),
         ("total", "Total", '>', 5),
-        ("averageLifetime", "Avg (ms)",'>', 8)
+        ("averageLifetime", "Avg (ms)", '>', 8)
     ],
-    "Remote" : [
+    "Remote": [
         ("id", "Invocations", '>', 39),
         ("current", "#", '>', 3),
         ("total", "Total", '>', 5),
@@ -69,7 +71,7 @@ maps = {
         ("replySize", "RepSz", '>', 5),
         ("averageLifetime", "Avg (ms)", '>', 8)
     ],
-    "Collocated" : [
+    "Collocated": [
         ("id", "Invocations", '>', 39),
         ("current", "#", '>', 3),
         ("total", "Total", '>', 5),
@@ -78,7 +80,7 @@ maps = {
         ("replySize", "RepSz", '>', 5),
         ("averageLifetime", "Avg (ms)", '>', 8)
     ],
-    "Session" : [
+    "Session": [
         ("id", "Sessions", '<', 15),
         ("current", "#", '>', 3),
         ("total", "Total", '>', 5),
@@ -91,7 +93,7 @@ maps = {
         ("routingTableSize", "RT Sz", '>', 5),
         ("averageLifetime", "Avg (s)", '>', 8)
     ],
-    "Topic" : [
+    "Topic": [
         ("id", "Topics", '<', 30),
         ("current", "#", '>', 3),
         ("total", "Total", '>', 5),
@@ -99,7 +101,7 @@ maps = {
         ("forwarded", "Forwarded", '>', 9),
         ("averageLifetime", "Avg (s)", '>', 7)
     ],
-    "Subscriber" : [
+    "Subscriber": [
         ("id", "Subscribers", '<', 32),
         ("current", "#", '>', 3),
         ("total", "Total", '>', 5),
@@ -110,14 +112,17 @@ maps = {
     ],
 }
 
+
 def metricsTitle():
     # Returns a lambda which returns the title of the field.
     return lambda mapName, field, title, align, width: ("{0:" + align + str(width) + "}").format(title)
+
 
 def metricsSeparator(fill):
     # Returns a lambda which returns a separator of the size of the
     # field and using the specified fill character.
     return lambda mapName, field, title, align, width: ("{0:" + fill + align + str(width) + "}").format("")
+
 
 def metricsField(metrics):
     def getField(mapName, field, title, width):
@@ -131,14 +136,14 @@ def metricsField(metrics):
                 return "0.000"
 
             avg = metrics.totalLifetime / 1000.0 / (metrics.total - metrics.current)
-            if title.find("(s)") > 0: # Display in seconds
+            if title.find("(s)") > 0:  # Display in seconds
                 avg /= 1000.0
             return "%.3f" % avg
 
         else:
             v = str(metrics.__dict__[field])
             if len(v) > width:
-                v = v[0:width - 3] + '...' # Truncates the field if it's too large.
+                v = v[0:width - 3] + '...'  # Truncates the field if it's too large.
             return v
 
     # Return a lambda which returns the formated metric value for the
@@ -146,7 +151,8 @@ def metricsField(metrics):
     return lambda mapName, field, title, align, width: \
         ("{0:" + align + str(width) + "}").format(getField(mapName, field, title, width))
 
-def printMetrics(mapName, getValue, sep = '|', prefix = " "):
+
+def printMetrics(mapName, getValue, sep='|', prefix=" "):
     #
     # This method prints a metrics, a line in the table.
     #
@@ -154,10 +160,11 @@ def printMetrics(mapName, getValue, sep = '|', prefix = " "):
     # described in the `maps' table defined above. The value of each
     # column is obtained by calling the provided getValue function.
     #
-    fieldStr = [ prefix + sep ]
+    fieldStr = [prefix + sep]
     for (field, title, align, width) in maps[mapName]:
         fieldStr.append(getValue(mapName, field, title, align, width) + sep)
     print("".join(fieldStr))
+
 
 def printMetricsMap(admin, viewName, mapName, map):
 
@@ -209,6 +216,7 @@ def printMetricsMap(admin, viewName, mapName, map):
                     print("  - " + str(count) + ' ' + exception)
     print("")
 
+
 def printMetricsView(admin, viewName, viewAndRefreshTime):
 
     (view, refreshTime) = viewAndRefreshTime
@@ -223,104 +231,101 @@ def printMetricsView(admin, viewName, viewAndRefreshTime):
             printMetricsMap(admin, viewName, mapName, map)
     print("")
 
-class Client(Ice.Application):
 
-    def usage(self):
-        print("usage: " + sys.argv[0] + " dump | enable | disable [<view-name> [<map-name>]]" + """
+def usage():
+    print("usage: " + sys.argv[0] + " dump | enable | disable [<view-name> [<map-name>]]" + """
 To connect to the Ice administrative facility of an Ice process, you
 should specify its endpoint(s) and instance name with the
 `InstanceName' and `Endpoints' properties. For example:
 
- $ ./Metrics.py --Endpoints="tcp -p 12345 -h localhost" --InstanceName=Server dump
+$ ./Metrics.py --Endpoints="tcp -p 12345 -h localhost" --InstanceName=Server dump
 
 Commands:
 
-  dump    Dump all the IceMX metrics views configured for the
-          process or if a specific view or map is specified,
-          print only this view or map.
+dump    Dump all the IceMX metrics views configured for the
+        process or if a specific view or map is specified,
+        print only this view or map.
 
-  enable  Enable all the IceMX metrics views configured for
-          the process or the provided view or map if specified.
+enable  Enable all the IceMX metrics views configured for
+        the process or the provided view or map if specified.
 
-  disable Disable all the IceMX metrics views configured for
-          the process or the provided view or map if specified.
+disable Disable all the IceMX metrics views configured for
+        the process or the provided view or map if specified.
 """)
 
-    def run(self, args):
 
-        props = self.communicator().getProperties()
-        args = props.parseCommandLineOptions("", args);
+def run(communicator):
 
-        if len(args) < 2 or len(args) > 6:
-            self.usage()
-            return 2
+    props = communicator.getProperties()
+    args = props.parseCommandLineOptions("", sys.argv)
 
-        command = args[1]
-        viewName = None
-        mapName = None
-        if len(args) > 2:
-            viewName = args[2]
-            if len(args) > 3:
-                mapName = args[3]
+    if len(args) < 2 or len(args) > 6:
+        usage()
+        sys.exit(2)
 
-        try:
-            #
-            # Create the proxy for the Metrics admin facet.
-            #
-            proxyStr = "%s/admin -f Metrics:%s" % (props.getProperty("InstanceName"), props.getProperty("Endpoints"))
-            metrics = IceMX.MetricsAdminPrx.checkedCast(self.communicator().stringToProxy(proxyStr));
-            if not metrics:
-                print(sys.argv[0] + ": invalid proxy `" + proxyStr + "'")
-                return 1
+    command = args[1]
+    viewName = None
+    mapName = None
+    if len(args) > 2:
+        viewName = args[2]
+        if len(args) > 3:
+            mapName = args[3]
 
-            if command == "dump":
-                (views, disabledViews) = metrics.getMetricsViewNames()
-                if not viewName:
-                    # Print all the enabled metrics views.
-                    for v in views:
-                        printMetricsView(metrics, v, metrics.getMetricsView(v))
+    try:
+        #
+        # Create the proxy for the Metrics admin facet.
+        #
+        proxyStr = "%s/admin -f Metrics:%s" % (props.getProperty("InstanceName"), props.getProperty("Endpoints"))
+        metrics = IceMX.MetricsAdminPrx.checkedCast(communicator.stringToProxy(proxyStr))
+        if not metrics:
+            print(sys.argv[0] + ": invalid proxy `" + proxyStr + "'")
+            sys.exit(1)
+
+        if command == "dump":
+            (views, disabledViews) = metrics.getMetricsViewNames()
+            if not viewName:
+                # Print all the enabled metrics views.
+                for v in views:
+                    printMetricsView(metrics, v, metrics.getMetricsView(v))
+            else:
+                # Ensure the view exists
+                if viewName not in views and viewName not in disabledViews:
+                    print("unknown view `" + viewName + "', available views:")
+                    print("enabled = " + str(views) + ", disabled = " + str(disabledViews))
+                # Ensure the view is enabled
+                elif viewName in disabledViews:
+                    print("view `" + viewName + "' is disabled")
                 else:
-                    # Ensure the view exists
-                    if not viewName in views and not viewName in disabledViews:
-                        print("unknown view `" + viewName + "', available views:")
-                        print("enabled = " + str(views) + ", disabled = " + str(disabledViews))
-                        return 0
-
-                    # Ensure the view is enabled
-                    if viewName in disabledViews:
-                        print("view `" + viewName + "' is disabled")
-                        return 0
-
                     # Retrieve the metrics view and print it.
-                    (view, refresh) = metrics.getMetricsView(viewName);
+                    (view, refresh) = metrics.getMetricsView(viewName)
                     if mapName:
-                        if not mapName in view:
+                        if mapName not in view:
                             print("no map `" + mapName + "' in `" + viewName + "' view, available maps:")
                             print(str(view.keys()))
-                            return 0
-                        printMetricsMap(metrics, viewName, mapName, view[mapName])
+                        else:
+                            printMetricsMap(metrics, viewName, mapName, view[mapName])
                     else:
                         printMetricsView(metrics, viewName, (view, refresh))
+        elif command == "enable":
+            metrics.enableMetricsView(viewName)
+        elif command == "disable":
+            metrics.disableMetricsView(viewName)
+        else:
+            print("unknown command `" + command + "'")
+            usage()
+            sys.exit(2)
+    except Ice.ObjectNotExistException as ex:
+        print("failed to get metrics from `%s':\n(the admin object doesn't exist, "
+              "are you sure you used the correct instance name?)" % (proxyStr))
+        sys.exit(1)
+    except Ice.Exception as ex:
+        print("failed to get metrics from `%s':\n%s" % (proxyStr, ex))
+        sys.exit(1)
 
-            elif command == "enable":
-                metrics.enableMetricsView(viewName)
-            elif command == "disable":
-                metrics.disableMetricsView(viewName)
-            else:
-                print("unknown command `" + command + "'")
-                self.usage()
-                return 2
 
-        except Ice.ObjectNotExistException as ex:
-            print("failed to get metrics from `%s':\n(the admin object doesn't exist, "
-                  "are you sure you used the correct instance name?)" % (proxyStr))
-            return 1
-        except Ice.Exception as ex:
-            print("failed to get metrics from `%s':\n%s" % (proxyStr, ex))
-            return 1
-
-        return 0
-
-app = Client()
-
-sys.exit(app.main(sys.argv))
+#
+# Ice.initialize returns an initialized Ice communicator,
+# the communicator is destroyed once it goes out of scope.
+#
+with Ice.initialize(sys.argv) as communicator:
+    run(communicator)

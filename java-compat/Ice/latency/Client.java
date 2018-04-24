@@ -6,19 +6,61 @@
 
 import Demo.*;
 
-class Client extends Ice.Application
+class Client
 {
-    @Override
-    public int
-    run(String[] args)
+    static class ShutdownHook extends Thread
     {
-        if(args.length > 0)
+        @Override
+        public void
+        run()
         {
-            System.err.println(appName() + ": too many arguments");
-            return 1;
+            _communicator.destroy();
         }
 
-        PingPrx ping = PingPrxHelper.checkedCast(communicator().propertyToProxy("Ping.Proxy"));
+        ShutdownHook(Ice.Communicator communicator)
+        {
+            _communicator = communicator;
+        }
+
+        private final Ice.Communicator _communicator;
+    }
+
+    public static void
+    main(String[] args)
+    {
+        int status = 0;
+        Ice.StringSeqHolder argsHolder = new Ice.StringSeqHolder(args);
+
+        //
+        // Try with resources block - communicator is automatically destroyed
+        // at the end of this try block
+        //
+        try(Ice.Communicator communicator = Ice.Util.initialize(argsHolder, "config.client"))
+        {
+            //
+            // Install shutdown hook to (also) destroy communicator during JVM shutdown.
+            // This ensures the communicator gets destroyed when the user interrupts the application with Ctrl-C.
+            //
+            Runtime.getRuntime().addShutdownHook(new ShutdownHook(communicator));
+
+            if(argsHolder.value.length > 0)
+            {
+                System.err.println("too many arguments");
+                status = 1;
+            }
+            else
+            {
+                status = run(communicator);
+            }
+        }
+
+        System.exit(status);
+    }
+
+    private static int
+    run(Ice.Communicator communicator)
+    {
+        PingPrx ping = PingPrxHelper.checkedCast(communicator.propertyToProxy("Ping.Proxy"));
         if(ping == null)
         {
             System.err.println("invalid proxy");
@@ -57,13 +99,5 @@ class Client extends Ice.Application
         System.out.println("time per ping: " + perPing + "ms");
 
         return 0;
-    }
-
-    public static void
-    main(String[] args)
-    {
-        Client app = new Client();
-        int status = app.main("Client", args, "config.client");
-        System.exit(status);
     }
 }

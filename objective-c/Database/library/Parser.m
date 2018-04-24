@@ -474,7 +474,7 @@ Parser* parser;
     int status = yyparse();
     if(errors)
     {
-        status = EXIT_FAILURE;
+        status = 1;
     }
 
     parser = nil;

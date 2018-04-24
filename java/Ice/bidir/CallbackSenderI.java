@@ -10,13 +10,10 @@ import java.util.concurrent.*;
 class CallbackSenderI implements CallbackSender
 {
     @Override
-    synchronized public void addClient(com.zeroc.Ice.Identity ident, com.zeroc.Ice.Current current)
+    synchronized public void addClient(CallbackReceiverPrx client, com.zeroc.Ice.Current current)
     {
-        System.out.println("adding client `" + com.zeroc.Ice.Util.identityToString(ident) + "'");
-
-        com.zeroc.Ice.ObjectPrx base = current.con.createProxy(ident);
-        CallbackReceiverPrx client = CallbackReceiverPrx.uncheckedCast(base);
-        _clients.add(client);
+        System.out.println("adding client `" + com.zeroc.Ice.Util.identityToString(client.ice_getIdentity()) + "'");
+        _clients.add(client.ice_fixed(current.con));
     }
 
     public void destroy()
@@ -53,15 +50,25 @@ class CallbackSenderI implements CallbackSender
             //
             for(CallbackReceiverPrx p : _clients)
             {
-                p.callbackAsync(_num).whenCompleteAsync(
-                    (r, t) ->
-                    {
-                        if(t != null)
+                try
+                {
+                    p.callbackAsync(_num).whenCompleteAsync(
+                        (r, t) ->
                         {
-                            removeClient(p, t);
-                        }
-                    },
-                    _executorService);
+                            if(t != null)
+                            {
+                                removeClient(p, t);
+                            }
+                        },
+                        _executorService);
+                }
+                catch(com.zeroc.Ice.CommunicatorDestroyedException e)
+                {
+                    //
+                    // We're shutting down
+                    //
+                    break;
+                }
             }
         }
     }

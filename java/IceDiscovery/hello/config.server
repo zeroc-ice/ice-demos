@@ -12,16 +12,6 @@ Hello.AdapterId=HelloAdapter
 Ice.Plugin.IceDiscovery=IceDiscovery:com.zeroc.IceDiscovery.PluginFactory
 
 #
-# Only listen on the loopback interface by default.
-#
-# Change these properties to the IP address of a network interface if
-# you want the server to be discoverable and accessible on your
-# local network.
-#
-Ice.Default.Host=127.0.0.1
-IceDiscovery.Interface=127.0.0.1
-
-#
 # Warn about connection exceptions
 #
 Ice.Warn.Connections=1

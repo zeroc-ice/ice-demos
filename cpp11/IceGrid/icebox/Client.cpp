@@ -10,12 +10,7 @@
 using namespace std;
 using namespace Demo;
 
-class HelloClient : public Ice::Application
-{
-public:
-
-    virtual int run(int, char*[]) override;
-};
+int run(const shared_ptr<Ice::Communicator>&, const string&);
 
 int
 main(int argc, char* argv[])
@@ -24,27 +19,61 @@ main(int argc, char* argv[])
     Ice::registerIceLocatorDiscovery();
 #endif
 
-    HelloClient app;
-    return app.main(argc, argv, "config.client");
+    int status = 0;
+
+    try
+    {
+        //
+        // CtrlCHandler must be created before the communicator or any other threads are started
+        //
+        Ice::CtrlCHandler ctrlCHandler;
+
+        //
+        // CommunicatorHolder's ctor initializes an Ice communicator,
+        // and its dtor destroys this communicator.
+        //
+        Ice::CommunicatorHolder ich(argc, argv, "config.client");
+        auto communicator = ich.communicator();
+
+        ctrlCHandler.setCallback(
+            [communicator](int)
+            {
+                communicator->destroy();
+            });
+
+        //
+        // The communicator initialization removes all Ice-related arguments from argc/argv
+        //
+        if(argc > 1)
+        {
+            cerr << argv[0] << ": too many arguments" << endl;
+            status = 1;
+        }
+        else
+        {
+            status = run(communicator, argv[0]);
+        }
+    }
+    catch(const std::exception& ex)
+    {
+        cerr << ex.what() << endl;
+        status = 1;
+    }
+
+    return status;
 }
 
 int
-HelloClient::run(int argc, char* argv[])
+run(const shared_ptr<Ice::Communicator>& communicator, const string& appName)
 {
-    if(argc > 1)
-    {
-        cerr << appName() << ": too many arguments" << endl;
-        return EXIT_FAILURE;
-    }
-
-    auto hello = Ice::uncheckedCast<HelloPrx>(communicator()->propertyToProxy("Hello.Proxy"));
+    auto hello = Ice::uncheckedCast<HelloPrx>(communicator->propertyToProxy("Hello.Proxy"));
     if(!hello)
     {
-        cerr << argv[0] << ": invalid or missing Hello.Proxy property" << endl;
-        return EXIT_FAILURE;
+        cerr << appName << ": invalid or missing Hello.Proxy property" << endl;
+        return 1;
     }
 
     hello->sayHello();
 
-    return EXIT_SUCCESS;
+    return 0;
 }

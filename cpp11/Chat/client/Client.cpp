@@ -169,7 +169,7 @@ public:
             }
         }
         while(cin.good());
-        return EXIT_SUCCESS;
+        return 0;
     }
 
 private:

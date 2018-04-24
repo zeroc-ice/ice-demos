@@ -32,9 +32,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <IceBuilder Include="..\..\Counter.ice" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="..\..\config.client" />
     <None Include="packages.config" />
   </ItemGroup>

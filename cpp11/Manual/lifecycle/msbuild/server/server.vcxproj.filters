@@ -92,11 +92,11 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <IceBuilder Include="..\..\Filesystem.ice">
-      <Filter>Slice Files</Filter>
-    </IceBuilder>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <SliceCompile Include="..\..\Filesystem.ice">
+      <Filter>Slice Files</Filter>
+    </SliceCompile>
   </ItemGroup>
 </Project>

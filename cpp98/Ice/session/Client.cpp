@@ -19,7 +19,7 @@ main(int argc, char* argv[])
     Ice::registerIceSSL();
 #endif
 
-    int status = EXIT_SUCCESS;
+    int status = 0;
 
     try
     {
@@ -35,7 +35,7 @@ main(int argc, char* argv[])
         if(argc > 1)
         {
             cerr << argv[0] << ": too many arguments" << endl;
-            status = EXIT_FAILURE;
+            status = 1;
         }
         else
         {
@@ -45,13 +45,24 @@ main(int argc, char* argv[])
     catch(const std::exception& ex)
     {
         cerr << argv[0] << ": " << ex.what() << endl;
-        status = EXIT_FAILURE;
+        status = 1;
     }
 
     return status;
 }
 
-void menu();
+void
+menu()
+{
+    cout <<
+        "usage:\n"
+        "c:     create a new per-client hello object\n"
+        "0-9:   send a greeting to a hello object\n"
+        "s:     shutdown the server and exit\n"
+        "x:     exit\n"
+        "t:     exit without destroying the session\n"
+        "?:     help\n";
+}
 
 int
 run(const Ice::CommunicatorPtr& communicator)
@@ -61,7 +72,7 @@ run(const Ice::CommunicatorPtr& communicator)
     cin >> name;
     if(!cin.good())
     {
-        return EXIT_FAILURE;
+        return 1;
     }
 
     Ice::ObjectPrx base = communicator->propertyToProxy("SessionFactory.Proxy");
@@ -69,7 +80,7 @@ run(const Ice::CommunicatorPtr& communicator)
     if(!factory)
     {
         cerr << "invalid proxy" << endl;
-        return EXIT_FAILURE;
+        return 1;
     }
 
     SessionPrx session = factory->create(name);
@@ -144,18 +155,5 @@ run(const Ice::CommunicatorPtr& communicator)
         factory->shutdown();
     }
 
-    return EXIT_SUCCESS;
-}
-
-void
-menu()
-{
-    cout <<
-        "usage:\n"
-        "c:     create a new per-client hello object\n"
-        "0-9:   send a greeting to a hello object\n"
-        "s:     shutdown the server and exit\n"
-        "x:     exit\n"
-        "t:     exit without destroying the session\n"
-        "?:     help\n";
+    return 0;
 }

@@ -9,21 +9,45 @@ import Demo.*;
 import java.util.Optional;
 import java.util.OptionalInt;
 
-public class Client extends com.zeroc.Ice.Application
+public class Client
 {
-    @Override
-    public int run(String[] args)
+    public static void main(String[] args)
     {
-        if(args.length > 0)
+        int status = 0;
+        java.util.List<String> extraArgs = new java.util.ArrayList<>();
+
+        //
+        // Try with resources block - communicator is automatically destroyed
+        // at the end of this try block
+        //
+        try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.client", extraArgs))
         {
-            System.err.println(appName() + ": too many arguments");
-            return 1;
+            //
+            // Install shutdown hook to (also) destroy communicator during JVM shutdown.
+            // This ensures the communicator gets destroyed when the user interrupts the application with Ctrl-C.
+            //
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> communicator.destroy()));
+
+            if(!extraArgs.isEmpty())
+            {
+                System.err.println("too many arguments");
+                status = 1;
+            }
+            else
+            {
+                status = run(communicator);
+            }
         }
 
-        ContactDBPrx contactdb = ContactDBPrx.checkedCast(communicator().propertyToProxy("ContactDB.Proxy"));
+        System.exit(status);
+    }
+
+    private static int run(com.zeroc.Ice.Communicator communicator)
+    {
+        ContactDBPrx contactdb = ContactDBPrx.checkedCast(communicator.propertyToProxy("ContactDB.Proxy"));
         if(contactdb == null)
         {
-            System.err.println(appName() + ": invalid proxy");
+            System.err.println("invalid proxy");
             return 1;
         }
 
@@ -214,13 +238,5 @@ public class Client extends com.zeroc.Ice.Application
         contactdb.shutdown();
 
         return 0;
-    }
-
-    public static void
-    main(String[] args)
-    {
-        Client app = new Client();
-        int status = app.main("Client", args, "config.client");
-        System.exit(status);
     }
 }

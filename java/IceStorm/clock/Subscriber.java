@@ -6,9 +6,9 @@
 
 import Demo.*;
 
-public class Subscriber extends com.zeroc.Ice.Application
+public class Subscriber
 {
-    public class ClockI implements Clock
+    public static class ClockI implements Clock
     {
         @Override
         public void tick(String date, com.zeroc.Ice.Current current)
@@ -17,16 +17,47 @@ public class Subscriber extends com.zeroc.Ice.Application
         }
     }
 
-    public void usage()
+    public static void main(String[] args)
     {
-        System.out.println("Usage: " + appName() + " [--batch] [--datagram|--twoway|--ordered|--oneway] " +
+        int status = 0;
+        java.util.List<String> extraArgs = new java.util.ArrayList<String>();
+
+        com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.sub", extraArgs);
+
+        //
+        // Destroy communicator during JVM shutdown
+        //
+        Thread destroyHook = new Thread(() -> communicator.destroy());
+        Runtime.getRuntime().addShutdownHook(destroyHook);
+
+        try
+        {
+            status = run(communicator, destroyHook, extraArgs.toArray(new String[extraArgs.size()]));
+        }
+        catch(Exception ex)
+        {
+            ex.printStackTrace();
+            status = 1;
+        }
+
+        if(status != 0)
+        {
+            System.exit(status);
+        }
+        //
+        // Else the application waits for Ctrl-C to destroy the communicator
+        //
+    }
+
+    public static void usage()
+    {
+        System.out.println("Usage: [--batch] [--datagram|--twoway|--ordered|--oneway] " +
                            "[--retryCount count] [--id id] [topic]");
     }
 
-    @Override
-    public int run(String[] args)
+    private static int run(com.zeroc.Ice.Communicator communicator, Thread destroyHook, String[] args)
     {
-        args = communicator().getProperties().parseCommandLineOptions("Clock", args);
+        args = communicator.getProperties().parseCommandLineOptions("Clock", args);
 
         String topicName = "time";
         String option = "None";
@@ -116,12 +147,12 @@ public class Subscriber extends com.zeroc.Ice.Application
 
         if(batch && (option.equals("Twoway") || option.equals("Ordered")))
         {
-            System.err.println(appName() + ": batch can only be set with oneway or datagram");
+            System.err.println("batch can only be set with oneway or datagram");
             return 1;
         }
 
         com.zeroc.IceStorm.TopicManagerPrx manager = com.zeroc.IceStorm.TopicManagerPrx.checkedCast(
-            communicator().propertyToProxy("TopicManager.Proxy"));
+            communicator.propertyToProxy("TopicManager.Proxy"));
         if(manager == null)
         {
             System.err.println("invalid proxy");
@@ -144,12 +175,12 @@ public class Subscriber extends com.zeroc.Ice.Application
             }
             catch(com.zeroc.IceStorm.TopicExists ex)
             {
-                System.err.println(appName() + ": temporary failure, try again.");
+                System.err.println("temporary failure, try again.");
                 return 1;
             }
         }
 
-        com.zeroc.Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Clock.Subscriber");
+        com.zeroc.Ice.ObjectAdapter adapter = communicator.createObjectAdapter("Clock.Subscriber");
 
         //
         // Add a servant for the Ice object. If --id is used the
@@ -240,18 +271,24 @@ public class Subscriber extends com.zeroc.Ice.Application
             return 1;
         }
 
-        shutdownOnInterrupt();
-        communicator().waitForShutdown();
-
-        topic.unsubscribe(subscriber);
+        //
+        // Replace the shutdown hook to unsubscribe during JVM shutdown
+        //
+        final com.zeroc.IceStorm.TopicPrx topicF = topic;
+        final com.zeroc.Ice.ObjectPrx subscriberF = subscriber;
+        Runtime.getRuntime().addShutdownHook(new Thread(() ->
+        {
+            try
+            {
+                topicF.unsubscribe(subscriberF);
+            }
+            finally
+            {
+                communicator.destroy();
+            }
+        }));
+        Runtime.getRuntime().removeShutdownHook(destroyHook); // remove old destroy-only shutdown hook
 
         return 0;
-    }
-
-    public static void main(String[] args)
-    {
-        Subscriber app = new Subscriber();
-        int status = app.main("Subscriber", args, "config.sub");
-        System.exit(status);
     }
 }

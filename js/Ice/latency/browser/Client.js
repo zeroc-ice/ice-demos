@@ -7,6 +7,15 @@
 (function(){
 
 //
+// Handle the client state.
+//
+const State =
+{
+    Idle: 0,
+    Running: 1
+};
+
+//
 // Initialize the communicator
 //
 const communicator = Ice.initialize();
@@ -28,7 +37,7 @@ async function run()
     // Create a proxy to the ping object and down-cast the proxy
     // to the Demo.Ping interface.
     //
-    let ping = await Demo.PingPrx.checkedCast(communicator.stringToProxy(ref));
+    const ping = await Demo.PingPrx.checkedCast(communicator.stringToProxy(ref));
 
     writeLine(`pinging server ${repetitions} times (this may take a while)`);
     const start = new Date().getTime();
@@ -42,6 +51,8 @@ async function run()
     writeLine(`time per ping: ${total / repetitions}ms`);
     setState(State.Idle);
 }
+
+let state;
 
 //
 // Run button event handler.
@@ -82,18 +93,7 @@ function writeLine(msg)
     $("#output").scrollTop($("#output").get(0).scrollHeight);
 }
 
-//
-// Handle the client state.
-//
-const State =
-{
-    Idle:0,
-    Running: 1
-};
-
-let state;
-
-function setState(s, ex)
+function setState(s)
 {
     if(s != state)
     {
@@ -112,6 +112,10 @@ function setState(s, ex)
                 $("#run").removeClass("disabled");
                 $("#progress").hide();
                 $("body").removeClass("waiting");
+                break;
+            }
+            default:
+            {
                 break;
             }
         }

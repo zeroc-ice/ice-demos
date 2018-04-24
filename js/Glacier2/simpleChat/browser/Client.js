@@ -28,11 +28,10 @@
           {
               Disconnected: 0,
               Connecting: 1,
-              Connected:2
+              Connected: 2
           };
 
     let state = State.Disconnected;
-    let hasError = false;
 
     async function runWithSession(router, session)
     {
@@ -42,12 +41,14 @@
             // Get the session timeout and the router client category, and
             // create the client object adapter.
             //
-            // Use Promise.all to wait for the completion of all the
-            // calls.
+            // Use Promise.all to wait for the completion of all the calls.
             //
-            let [timeout, category, adapter] = await Promise.all([router.getACMTimeout(),
-                                                                  router.getCategoryForClient(),
-                                                                  router.ice_getCommunicator().createObjectAdapterWithRouter("", router)]);
+            const [timeout, category, adapter] = await Promise.all(
+                [
+                    router.getACMTimeout(),
+                    router.getCategoryForClient(),
+                    router.ice_getCommunicator().createObjectAdapterWithRouter("", router)
+                ]);
             //
             // Use ACM heartbeat to keep session alive.
             //
@@ -60,8 +61,7 @@
             connection.setCloseCallback(() => error("Connection lost"));
 
             //
-            // Create the ChatCallback servant and add it to the
-            // ObjectAdapter.
+            // Create the ChatCallback servant and add it to the ObjectAdapter.
             //
             const callback = Demo.ChatCallbackPrx.uncheckedCast(
                 adapter.add(new ChatCallbackI(), new Ice.Identity("callback", category)));
@@ -72,8 +72,7 @@
             await session.setCallback(callback);
 
             //
-            // Stop animating the loading progress bar and
-            // transition to the chat screen.
+            // Stop animating the loading progress bar and transition to the chat screen.
             //
             stopProgress(true);
             await transition("#loading", "#chat-form");
@@ -83,14 +82,14 @@
             $("#input").focus();
 
             //
-            // Keep processing input events in the input textbox until signout is click
+            // Keep processing input events in the input textbox until signout is clicked
             // or there is an error sending a message.
             //
             await new Promise(
                 (resolve, reject) =>
                     {
                         $("#input").keypress(
-                            (e) =>
+                            e =>
                                 {
                                     //
                                     // When the enter key is pressed, we send a new
@@ -130,8 +129,7 @@
         finally
         {
             //
-            // Reset the input text box and chat output
-            // textarea.
+            // Reset the input text box and chat output textarea.
             //
             $("#input").val("");
             $("#input").off("keypress");
@@ -156,7 +154,7 @@
             await transition("#signin-alert");
 
             //
-            // Transition to loading screen
+            // Transition to loading screen.
             //
             await transition("#signin-form", "#loading");
 
@@ -228,14 +226,26 @@
     }
 
     //
-    // Switch to Disconnected state and display the error
-    // message.
+    // Switch to Disconnected state and display the error message.
     //
     async function error(message)
     {
-        stopProgress(false);
-        $("#loading .meter").css("width", "0%");
-        await transition(State.Connecting ? "#loading" : "#chat-form", "#signin-form");
+        if(state == State.Connected)
+        {
+            $("#input").val("");
+            $("#input").off("keypress");
+            $("#signout").off("click");
+            $("#output").val("");
+
+            await transition("#chat-form", "#signin-form");
+            $("#username").focus();
+        }
+        else if(state == State.Connecting)
+        {
+            stopProgress(false);
+            $("#loading .meter").css("width", "0%");
+            await transition("#loading", "#signin-form");
+        }
         $("#signin-alert span").text(message);
         await transition(null, "#signin-alert");
         state = State.Disconnected;
@@ -250,7 +260,7 @@
     function transition(from, to)
     {
         return new Promise(
-            (resolve, reject) =>
+            resolve =>
                 {
                     if(from)
                     {
@@ -270,7 +280,7 @@
                     }
                     else
                     {
-                        $(to).css("display", "block").fadeIn("slow", () => resolve())
+                        $(to).css("display", "block").fadeIn("slow", () => resolve());
                     }
                 });
     }
@@ -283,8 +293,8 @@
     //
     // Animate the loading progress bar.
     //
-    var w = 0;
-    var progress;
+    let w = 0;
+    let progress;
 
     function startProgress()
     {

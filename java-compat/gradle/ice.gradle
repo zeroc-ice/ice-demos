@@ -23,7 +23,6 @@ if(this.iceHome) {
 buildscript {
 
     ext.iceMavenRepo = System.env.ICE_MAVEN_REPOSITORY ? System.env.ICE_MAVEN_REPOSITORY : "repo.zeroc.com"
-    ext.useLocalOnly = gradle.startParameter.isOffline()
 
     //
     // If iceBuilderHome is set add its lib directory it to the local maven repositories
@@ -59,7 +58,6 @@ buildscript {
 }
 
 ext.generatedDir = "$project.buildDir/generated"
-ext.useLocalOnly = gradle.startParameter.isOffline()
 
 // Android does not have a compileJava task
 if(!(project.hasProperty('android') && project.android.sourceSets)) {
@@ -112,9 +110,7 @@ def demoIceBoxServer() {
     dependencies {
         iceboxserver localDependency("ice-compat")
         iceboxserver localDependency("icebox-compat")
-        if (!useLocalOnly) {
-            iceboxserver "org.apache.commons:commons-compress:1.14"
-        }
+        iceboxserver "org.apache.commons:commons-compress:1.14"
     }
 
     // Create a jar for the client & server which includes everything in the demo.

@@ -31,14 +31,6 @@ interface Session
 
     /**
      *
-     * Refresh a session. If a session is not refreshed on a regular
-     * basis by the client, it will be automatically destroyed.
-     *
-     **/
-    idempotent void refresh();
-
-    /**
-     *
      * Destroy the session.
      *
      **/
@@ -60,16 +52,6 @@ interface SessionFactory
      *
      **/
     Session* create();
-
-    /**
-     *
-     * Get the value of the session timeout. Sessions are destroyed
-     * if they see no activity for this period of time.
-     *
-     * @return The timeout (in seconds).
-     *
-     **/
-    ["nonmutating", "cpp:const"] idempotent long getSessionTimeout();
 }
 
 }

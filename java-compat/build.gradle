@@ -23,20 +23,13 @@ subprojects {
             }
         }
 
-        if (!useLocalOnly) {
-
-            if(this.devRepo) {
-                maven {
-                    url this.devRepo
-                }
-            }
-
-            mavenCentral()
-
+        if(this.devRepo) {
             maven {
-                url "https://${iceMavenRepo}/nexus/content/repositories/releases"
+                url this.devRepo
             }
         }
+
+        mavenCentral()
     }
 }
 
@@ -50,5 +43,5 @@ apply from: "$rootProject.projectDir/Manual/build.gradle"
 // Used to build the gradle wrapper to automatically download and install gradle.
 //
 task wrapper(type: Wrapper) {
-    gradleVersion = "4.2.1"
+    gradleVersion = "4.7"
 }

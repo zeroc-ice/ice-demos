@@ -53,12 +53,19 @@ private:
     const Ice::ObjectPrx _obj;
 };
 
-class HelloServer : public Ice::Application
-{
-public:
+//
+// Global variable for shutdownCommunicator
+//
+Ice::CommunicatorPtr communicator;
 
-    virtual int run(int, char*[]);
-};
+//
+// Callback for CtrlCHandler
+//
+void
+shutdownCommunicator(int)
+{
+    communicator->shutdown();
+}
 
 int
 main(int argc, char* argv[])
@@ -66,24 +73,55 @@ main(int argc, char* argv[])
 #ifdef ICE_STATIC_LIBS
     Ice::registerIceUDP();
 #endif
+    int status = 0;
 
-    HelloServer app;
-    return app.main(argc, argv, "config.server");
-}
+    try
+    {
+        //
+        // CtrlCHandler must be created before the communicator or any other threads are started
+        //
+        Ice::CtrlCHandler ctrlCHandler;
 
-int
-HelloServer::run(int, char*[])
-{
-    Ice::ObjectAdapterPtr adapter = communicator()->createObjectAdapter("Hello");
-    Ice::ObjectAdapterPtr discoverAdapter = communicator()->createObjectAdapter("Discover");
+        //
+        // CommunicatorHolder's ctor initializes an Ice communicator,
+        // and it's dtor destroys this communicator.
+        //
+        Ice::CommunicatorHolder ich(argc, argv, "config.server");
+        communicator = ich.communicator();
 
-    Ice::ObjectPrx hello = adapter->addWithUUID(new HelloI);
-    DiscoverPtr d = new DiscoverI(hello);
-    discoverAdapter->add(d, Ice::stringToIdentity("discover"));
+        //
+        // Shutdown communicator on Ctrl-C
+        //
+        ctrlCHandler.setCallback(&shutdownCommunicator);
 
-    discoverAdapter->activate();
-    adapter->activate();
+        //
+        // The communicator initialization removes all Ice-related arguments from argc/argv
+        //
+        if(argc > 1)
+        {
+            cerr << argv[0] << ": too many arguments" << endl;
+            status = 1;
+        }
+        else
+        {
+            Ice::ObjectAdapterPtr adapter = communicator->createObjectAdapter("Hello");
+            Ice::ObjectAdapterPtr discoverAdapter = communicator->createObjectAdapter("Discover");
 
-    communicator()->waitForShutdown();
-    return EXIT_SUCCESS;
+            Ice::ObjectPrx hello = adapter->addWithUUID(new HelloI);
+            DiscoverPtr d = new DiscoverI(hello);
+            discoverAdapter->add(d, Ice::stringToIdentity("discover"));
+
+            discoverAdapter->activate();
+            adapter->activate();
+
+            communicator->waitForShutdown();
+        }
+    }
+    catch(const std::exception& ex)
+    {
+        cerr << ex.what() << endl;
+        status = 1;
+    }
+
+    return status;
 }

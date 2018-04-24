@@ -13,102 +13,10 @@
 #import <stdio.h>
 #import <string.h>
 
-#import <Foundation/NSThread.h>
-#import <Foundation/NSLock.h>
-
-@interface SessionRefreshThread : NSThread
-{
-@private
-    id<ICELogger> logger;
-    id session;
-    NSCondition* cond;
-
-    long timeout;
-}
-
--(id)initWithLogger:(id<ICELogger>) logger timeout:(long)timeout session:(id)session;
-+(id)sessionRefreshThreadWithLogger:(id<ICELogger>)logger timeout:(long)timeout session:(id)session;
-@end
-
-@interface SessionRefreshThread()
-@property (nonatomic, strong) id<ICELogger> logger;
-@property (nonatomic, strong) id session;
-@property (nonatomic, strong) NSCondition* cond;
-@end
-
-@implementation SessionRefreshThread
-
-@synthesize logger;
-@synthesize session;
-@synthesize cond;
-
--(id)initWithLogger:(id<ICELogger>)l timeout:(long)t session:(id)s
-{
-    if((self = [super init]))
-    {
-        self.logger = l;
-        self.session = s;
-        self.cond = [[NSCondition alloc] init];
-        timeout = t;
-    }
-    return self;
-}
-
-+(id)sessionRefreshThreadWithLogger:(id<ICELogger>)logger timeout:(long)timeout session:(id)session
-{
-    return [[SessionRefreshThread alloc] initWithLogger:logger timeout:timeout session:session];
-}
-
--(void)main
-{
-    [cond lock];
-    @try
-    {
-        while(!self.isCancelled)
-        {
-            [cond waitUntilDate:[NSDate dateWithTimeIntervalSinceNow:timeout]];
-            if(!self.isCancelled)
-            {
-                @try
-                {
-                    [session refresh];
-                }
-                @catch(ICELocalException* ex)
-                {
-                    NSString* warning = [NSString stringWithFormat:@"SessionRefreshThread: %@", [ex description]];
-                    [logger warning:warning];
-                    [super cancel];
-                }
-            }
-        }
-    }
-    @finally
-    {
-        [cond unlock];
-    }
-}
-
--(void)cancel
-{
-    [super cancel];
-    [cond lock];
-    @try
-    {
-        [cond signal];
-    }
-    @finally
-    {
-        [cond unlock];
-    }
-}
-
-@end
-
 int
 runParser(int argc, char* argv[], id<ICECommunicator> communicator)
 {
     id<GLACIER2RouterPrx> router = [GLACIER2RouterPrx uncheckedCast:[communicator getDefaultRouter]];
-    ICELong timeout;
     id<DemoLibraryPrx> library;
     id session;
     if(router != nil)
@@ -152,8 +60,16 @@ runParser(int argc, char* argv[], id<ICECommunicator> communicator)
                 printf("cannot create session:\n%s\n", [ex.reason UTF8String]);
             }
         }
-        timeout = [router getSessionTimeout]/2;
         library = [session getLibrary];
+
+        ICELong acmTimeout = [router getACMTimeout];
+        if(acmTimeout > 0)
+        {
+            //
+            // Configure the connection to send heartbeats in order to keep our session alive
+            //
+            [[router ice_getCachedConnection] setACM:@(acmTimeout) close:ICENone heartbeat:@(ICEHeartbeatAlways)];
+        }
     }
     else
     {
@@ -166,23 +82,10 @@ runParser(int argc, char* argv[], id<ICECommunicator> communicator)
         }
 
         session = [factory create];
-        timeout = [factory getSessionTimeout]/2;
         library = [session getLibrary];
     }
 
-    SessionRefreshThread* refresh = [SessionRefreshThread sessionRefreshThreadWithLogger:[communicator getLogger]
-                                                          timeout:timeout/2 session:session];
-    [refresh start];
-
     int rc = [[Parser parserWithLibrary:library] parse];
-
-    [refresh cancel];
-
-    // No join.
-    while(!refresh.isFinished)
-    {
-        [NSThread sleepForTimeInterval:0.1];
-    }
 
     if(router)
     {

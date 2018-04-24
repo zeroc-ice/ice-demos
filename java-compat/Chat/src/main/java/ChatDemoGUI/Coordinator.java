@@ -191,8 +191,7 @@ class Coordinator
                     }
                     catch(Ice.Exception ex)
                     {
-                        setError("Login failed (" + ex.ice_name() + ").\n" +
-                                 "Please check your configuration.");
+                        setError("Login failed (" + ex.ice_id() + ").\n" + "Please check your configuration.");
                     }
                     catch(final Throwable ex)
                     {

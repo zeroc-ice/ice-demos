@@ -8,7 +8,6 @@ using Demo;
 using System;
 using System.Threading;
 using System.Collections.Generic;
-using System.Reflection;
 
 public class Client
 {
@@ -213,6 +212,11 @@ public class Client
             while(!line.Equals("x"));
 
             return 0;
+        }
+
+        public override void sessionDestroyed()
+        {
+            Console.WriteLine("The Glacier2 session has been destroyed.");
         }
     }
 

@@ -18,12 +18,7 @@
 using namespace std;
 using namespace Demo;
 
-class Publisher : public Ice::Application
-{
-public:
-
-    virtual int run(int, char*[]) override;
-};
+int run(const shared_ptr<Ice::Communicator>& communicator, int argc, char* argv[]);
 
 int
 main(int argc, char* argv[])
@@ -32,8 +27,37 @@ main(int argc, char* argv[])
     Ice::registerIceUDP();
 #endif
 
-    Publisher app;
-    return app.main(argc, argv, "config.pub");
+    int status = 0;
+
+    try
+    {
+        //
+        // CtrlCHandler must be created before the communicator or any other threads are started
+        //
+        Ice::CtrlCHandler ctrlCHandler;
+
+        //
+        // CommunicatorHolder's ctor initializes an Ice communicator,
+        // and its dtor destroys this communicator.
+        //
+        Ice::CommunicatorHolder ich(argc, argv, "config.pub");
+        auto communicator = ich.communicator();
+
+        ctrlCHandler.setCallback(
+            [communicator](int)
+            {
+                communicator->destroy();
+            });
+
+        status = run(communicator, argc, argv);
+    }
+    catch(const std::exception& ex)
+    {
+        cerr << ex.what() << endl;
+        status = 1;
+    }
+
+    return status;
 }
 
 void
@@ -43,7 +67,7 @@ usage(const string& n)
 }
 
 int
-Publisher::run(int argc, char* argv[])
+run(const shared_ptr<Ice::Communicator>& communicator, int argc, char* argv[])
 {
     enum class Option { None, Datagram, Twoway, Oneway };
     Option option = Option::None;
@@ -69,7 +93,7 @@ Publisher::run(int argc, char* argv[])
         else if(optionString.substr(0, 2) == "--")
         {
             usage(argv[0]);
-            return EXIT_FAILURE;
+            return 1;
         }
         else
         {
@@ -80,22 +104,22 @@ Publisher::run(int argc, char* argv[])
         if(oldoption != option && oldoption != Option::None)
         {
             usage(argv[0]);
-            return EXIT_FAILURE;
+            return 1;
         }
     }
 
     if(i != argc)
     {
         usage(argv[0]);
-        return EXIT_FAILURE;
+        return 1;
     }
 
     auto manager = Ice::checkedCast<IceStorm::TopicManagerPrx>(
-        communicator()->propertyToProxy("TopicManager.Proxy"));
+        communicator->propertyToProxy("TopicManager.Proxy"));
     if(!manager)
     {
-        cerr << appName() << ": invalid proxy" << endl;
-        return EXIT_FAILURE;
+        cerr << argv[0] << ": invalid proxy" << endl;
+        return 1;
     }
 
     //
@@ -114,8 +138,8 @@ Publisher::run(int argc, char* argv[])
         }
         catch(const IceStorm::TopicExists&)
         {
-            cerr << appName() << ": temporary failure. try again." << endl;
-            return EXIT_FAILURE;
+            cerr << argv[0] << ": temporary failure. try again." << endl;
+            return 1;
         }
     }
 
@@ -160,5 +184,5 @@ Publisher::run(int argc, char* argv[])
         // Ignore
     }
 
-    return EXIT_SUCCESS;
+    return 0;
 }

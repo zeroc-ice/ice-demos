@@ -14,14 +14,13 @@ namespace bidir
 {
 ref class MainPage;
 
-class CallbackSenderI : public Demo::CallbackSender,
-                        public std::enable_shared_from_this<CallbackSenderI>
+class CallbackSenderI : public Demo::CallbackSender, public std::enable_shared_from_this<CallbackSenderI>
 {
 public:
 
     CallbackSenderI(MainPage^ page);
 
-    virtual void addClient(Ice::Identity, const Ice::Current&) override;
+    virtual void addClient(std::shared_ptr<Demo::CallbackReceiverPrx>, const Ice::Current&) override;
     void start();
     void stop();
 

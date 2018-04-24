@@ -6,8 +6,6 @@
 
 #pragma once
 
-#include <Ice/Identity.ice>
-
 module Demo
 {
     interface CallbackReceiver
@@ -17,6 +15,6 @@ module Demo
 
     interface CallbackSender
     {
-        void addClient(Ice::Identity ident);
+        void addClient(CallbackReceiver* receiver);
     }
 }

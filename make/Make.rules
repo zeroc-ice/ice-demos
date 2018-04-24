@@ -8,7 +8,7 @@
 # Define ICE_HOME if Ice is not installed in /usr (Linux) or
 # /usr/local (macOS)
 #
-#ICE_HOME               ?= /opt/Ice-3.7.0
+#ICE_HOME               ?= /opt/Ice-3.7.1
 
 #
 # Define OPTIMIZE as yes if you want to build with optimization.
@@ -51,7 +51,7 @@ include $(top_srcdir)/make/Make.demos.rules
 #
 # The version/soversion variables are used for versionning plugins built with the demos.
 #
-version                 = 3.7.0
+version                 = 3.7.1
 soversion               = 37
 compatversion           = $(version)
 

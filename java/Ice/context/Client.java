@@ -14,11 +14,17 @@ public class Client
         java.util.List<String> extraArgs = new java.util.ArrayList<>();
 
         //
-        // try with resource block - communicator is automatically destroyed
+        // Try with resources block - communicator is automatically destroyed
         // at the end of this try block
         //
         try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.client", extraArgs))
         {
+            //
+            // Install shutdown hook to (also) destroy communicator during JVM shutdown.
+            // This ensures the communicator gets destroyed when the user interrupts the application with Ctrl-C.
+            //
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> communicator.destroy()));
+
             if(!extraArgs.isEmpty())
             {
                 System.err.println("too many arguments");

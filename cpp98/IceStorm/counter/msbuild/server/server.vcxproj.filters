@@ -97,9 +97,4 @@
     <None Include="..\..\config.service" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <IceBuilder Include="..\..\Counter.ice">
-      <Filter>Slice Files</Filter>
-    </IceBuilder>
-  </ItemGroup>
 </Project>

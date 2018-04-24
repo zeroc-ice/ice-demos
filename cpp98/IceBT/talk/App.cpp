@@ -17,7 +17,7 @@ public:
     TalkApp();
     virtual int run(int, char*[]);
 
-    void connect(const Ice::Identity&, const Ice::ConnectionPtr&);
+    void connect(const Talk::PeerPrx&);
     void message(const string&);
     void disconnect(const Ice::Identity&, const Ice::ConnectionPtr&, bool);
     void closed();
@@ -49,9 +49,9 @@ public:
     {
     }
 
-    virtual void connect(const Ice::Identity& id, const Ice::Current& current)
+    virtual void connect(const Talk::PeerPrx& peer, const Ice::Current& current)
     {
-        _app->connect(id, current.con);
+        _app->connect(peer->ice_fixed(current.con));
     }
 
     virtual void send(const string& text, const Ice::Current&)
@@ -81,7 +81,7 @@ public:
     {
     }
 
-    virtual void connect(const Ice::Identity&, const Ice::Current&)
+    virtual void connect(const Talk::PeerPrx&, const Ice::Current&)
     {
         throw Talk::ConnectionException("already connected");
     }
@@ -152,7 +152,7 @@ TalkApp::run(int argc, char*[])
     if(argc > 1)
     {
         cerr << appName() << ": too many arguments" << endl;
-        return EXIT_FAILURE;
+        return 1;
     }
 
     //
@@ -216,11 +216,11 @@ TalkApp::run(int argc, char*[])
     //
     communicator()->destroy();
 
-    return EXIT_SUCCESS;
+    return 0;
 }
 
 void
-TalkApp::connect(const Ice::Identity& id, const Ice::ConnectionPtr& con)
+TalkApp::connect(const Talk::PeerPrx& peer)
 {
     //
     // Called for a new incoming connection request.
@@ -236,10 +236,11 @@ TalkApp::connect(const Ice::Identity& id, const Ice::ConnectionPtr& con)
     //
     // Install a connection callback and enable ACM heartbeats.
     //
+    Ice::ConnectionPtr con = peer->ice_getConnection();
     con->setCloseCallback(new CloseCallbackI(this));
     con->setACM(30, Ice::CloseOff, Ice::HeartbeatAlways);
 
-    _remote = Talk::PeerPrx::uncheckedCast(con->createProxy(id))->ice_invocationTimeout(10000);
+    _remote = peer->ice_invocationTimeout(10000);
 
     Ice::ConnectionInfoPtr info = con->getInfo();
     if(info->underlying)
@@ -310,14 +311,8 @@ TalkApp::doConnect(const string& cmd)
     }
     string addr = cmd.substr(sp);
 
-    //
-    // Generate a UUID for our callback servant. We have to pass this identity to
-    // the remote peer so that it can invoke callbacks on the servant over a
-    // bidirectional connection.
-    //
-    Ice::Identity id = Ice::stringToIdentity(Ice::generateUUID());
     Talk::PeerPrx remote;
-
+    Talk::PeerPrx local;
     try
     {
         {
@@ -355,7 +350,7 @@ TalkApp::doConnect(const string& cmd)
         //
         Ice::ConnectionPtr con = remote->ice_getConnection();
         con->setAdapter(_adapter);
-        _adapter->add(new OutgoingPeerI(this), id);
+        local = Talk::PeerPrx::uncheckedCast(_adapter->addWithUUID(new OutgoingPeerI(this)));
 
         //
         // Install a connection callback and enable ACM heartbeats.
@@ -366,7 +361,7 @@ TalkApp::doConnect(const string& cmd)
         //
         // Now we're ready to notify the peer that we'd like to connect.
         //
-        remote->connect(id);
+        remote->connect(local);
         cout << ">>>> Connected to " << addr << endl;
     }
     catch(const Talk::ConnectionException& ex)
@@ -374,12 +369,9 @@ TalkApp::doConnect(const string& cmd)
         IceUtil::Monitor<IceUtil::Mutex>::Lock lock(_lock);
 
         cout << ">>>> Connection failed: " << ex.reason << endl;
-        try
+        if(local)
         {
-            _adapter->remove(id);
-        }
-        catch(const Ice::NotRegisteredException&)
-        {
+            _adapter->remove(local->ice_getIdentity());
         }
 
         if(_remote == remote)
@@ -392,12 +384,9 @@ TalkApp::doConnect(const string& cmd)
         IceUtil::Monitor<IceUtil::Mutex>::Lock lock(_lock);
 
         cout << ">>>> " << ex << endl;
-        try
+        if(local)
         {
-            _adapter->remove(id);
-        }
-        catch(const Ice::NotRegisteredException&)
-        {
+            _adapter->remove(local->ice_getIdentity());
         }
 
         if(_remote == remote)

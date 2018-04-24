@@ -1,5 +1,5 @@
 This directory contains a PHP/HTML application that demonstrates how
-a PHP session can register an Ice communicator and use it in
+a PHP session can [register an Ice communicator][1] and use it in
 subsequent page requests.
 
 To use the application, a user must first log in by providing any
@@ -21,9 +21,9 @@ demo.
 Follow these steps to install the demo:
 
 1) Install the Ice extension and run-time files as described in the
-   [manual][1]. Restart the Web server if necessary.
+   [manual][2]. Restart the Web server if necessary.
 
-2) If you have not build the demos yet, please refer to the top level
+2) If you have not built the demos yet, please refer to the top level
    [php/README.md](../../README.md) file for build instructions.
 
 3) Install the following files in your Web server's document
@@ -40,19 +40,22 @@ Follow these steps to install the demo:
    are able to include the Ice run time files. For example, if you
    installed Ice in C:\Ice, add a call to set_include_path as shown
    below:
-```
-   <?php
-   set_include_path(get_include_path() . PATH_SEPARATOR . 'C:/Ice/php');
-   require 'Ice.php';
-   ...
-```
+    ```
+    <?php
+    set_include_path(get_include_path() . PATH_SEPARATOR . 'C:/Ice/php');
+    require 'Ice.php';
+    ...
+    ```
+
 5) In a command window on the Web server host, start a Glacier2 router
    using the configuration file provided in this directory:
-```
-   % glacier2router --Ice.Config=config.glacier2
-```
-6) In a separate command window on the same host, start a hello
-   server. You can use a server from any Ice language mapping.
+    ```
+    % glacier2router --Ice.Config=config.glacier2
+    ```
+
+6) In a separate command window on the same host, start a hello server.
+   You can use a server from any Ice language mapping. If you want to get
+   started quickly, we recommend using the Python server.
 
 7) Start a Web browser and open the Login.php page to begin using the
    demo. Note that the Glacier2 configuration uses a session timeout
@@ -63,4 +66,5 @@ Web server, you will need to modify the router's endpoint in
 `config.glacier2` and `Login.php`. To run the hello server on a different
 host, modify the endpoint in `Session.php`.
 
-[1]: https://doc.zeroc.com/display/Rel/Ice+3.7.0+Release+Notes
+[1]: https://doc.zeroc.com/display/Ice37/Application+Notes+for+PHP
+[2]: https://doc.zeroc.com/display/Rel/Ice+3.7.1+Release+Notes

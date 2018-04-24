@@ -29,14 +29,6 @@ interface Glacier2Session extends Glacier2::Session
      *
      **/
     Library* getLibrary();
-
-    /**
-     *
-     * Refresh a session. If a session is not refreshed on a regular
-     * basis by the client, it will be automatically destroyed.
-     *
-     **/
-    idempotent void refresh();
 }
 
 }

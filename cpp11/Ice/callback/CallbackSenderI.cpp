@@ -28,12 +28,5 @@ void
 CallbackSenderI::shutdown(const Ice::Current& c)
 {
     cout << "shutting down..." << endl;
-    try
-    {
-        c.adapter->getCommunicator()->shutdown();
-    }
-    catch(const Ice::Exception& ex)
-    {
-        cout << ex << endl;
-    }
+    c.adapter->getCommunicator()->shutdown();
 }

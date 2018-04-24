@@ -1,12 +1,14 @@
--target 1.8
 -dontshrink
 -dontoptimize
 -dontobfuscate
 -dontusemixedcaseclassnames
 -dontpreverify
 
+-dontnote jdk.internal.jimage.**
+-dontnote jdk.internal.jrtfs.**
+-dontnote module-info
+
 -dontnote com.jgoodies.**
--dontnote com.javafx.**
 
 # Keep - Applications. Keep all application classes, along with their 'main'
 # methods.

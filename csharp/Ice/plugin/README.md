@@ -1,17 +1,24 @@
-This demo illustrates how to write and configure a simple Ice plugin
-as well as a Ice Logger plugin.
+This demo illustrates how to write and configure a simple Ice [plug-in][1]
+as well as an Ice [Logger plug-in][2].
 
 To run the demo, first start the server:
 
-      server.exe
+| .NET Framework 4.5 | .NET Core 2.0        |
+| ------------------ | -------------------- |
+| `server`           | `dotnet server.dll`  |
 
 In a separate window, start the client:
 
-      client.exe
+| .NET Framework 4.5 | .NET Core 2.0       |
+| ------------------ | ------------------- |
+| `client`           | `dotnet client.dll` |
 
-Both the client and server use a custom logger which is loaded as
-a logger plugin. The server also uses a plugin to implement the
+Both the client and server use a custom logger that is loaded as
+a logger plug-in. The server also uses a plug-in to implement the
 servant for this demo.
 
-Please Look in the client and sever configuration files to see the
-plugin configuration.
+Please review the client and server configuration files to see the
+plug-in configuration.
+
+[1]: https://doc.zeroc.com/display/Ice37/Plug-in+Facility
+[2]: https://doc.zeroc.com/display/Ice37/Logger+Plug-ins

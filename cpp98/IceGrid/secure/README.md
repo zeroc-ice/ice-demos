@@ -1,8 +1,8 @@
-This demo shows how to prevent unauthorized access to the IceGrid
-registry and node, to the Glacier2 administrative router and the
-Ice.Admin functionality of IceGrid-managed servers. These components
-use IceSSL secure connections to communicate and restrict access to
-their endpoints.
+This demo shows how to prevent unauthorized access to the [IceGrid registry
+and node][1], to the [Glacier2 administrative router][2], and to the
+[Ice.Admin][3] functionality of IceGrid-managed servers. These components
+use IceSSL secure connections to communicate and restrict access to their
+endpoints.
 
 The client and server use a regular TCP endpoint to communicate, but
 they could also use a secure endpoint if necessary.
@@ -12,14 +12,18 @@ IceGrid registry and node, the Glacier2 administrative router, and the
 server. Run the `makedemocerts.py` python script in this directory to
 create these certificates:
 
-      makedemocerts.py
+```
+makedemocerts.py
+```
 
 Follow the instructions provided by the script. Note that to run the
 script you must install the zeroc-icecertutils package from the
 [Python package repository](https://pypi.python.org/pypi). To install
 this package with [pip](https://pip.pypa.io):
 
-      pip install zeroc-icecertutils
+```
+pip install zeroc-icecertutils
+```
 
 The keytool utility from the Java Development Kit is also required to
 generate Java KeyStore files so you need to add the the JDK bin
@@ -43,15 +47,19 @@ the filesystem permissions to restrict access to the certificate.
 Once the certificates are generated, you can start the IceGrid
 registries, node, and Glacier2 router:
 
-     $ icegridregistry --Ice.Config=config.master
-     $ icegridregistry --Ice.Config=config.slave
-     $ icegridnode --Ice.Config=config.node
-     $ glacier2router --Ice.Config=config.glacier2
+```
+icegridregistry --Ice.Config=config.master
+icegridregistry --Ice.Config=config.slave
+icegridnode --Ice.Config=config.node
+glacier2router --Ice.Config=config.glacier2
+```
 
 In a separate window:
 
-     $ icegridadmin --Ice.Config=config.admin -e "application add application.xml"
-     $ client
+```
+icegridadmin --Ice.Config=config.admin -e "application add application.xml"
+client
+```
 
 This will deploy the application described in the file
 `application.xml` and start the client.
@@ -59,7 +67,9 @@ This will deploy the application described in the file
 To use icegridadmin through the Glacier2 router, you can use the
 following command:
 
-    $ icegridadmin --Ice.Config=config.admin --Ice.Default.Router="DemoGlacier2/router:ssl -p 4064"
+```
+icegridadmin --Ice.Config=config.admin --Ice.Default.Router="DemoGlacier2/router:ssl -p 4064"
+```
 
 Alternatively, you can edit the `config.admin` file and uncomment the
 `Ice.Default.Router` property definition.
@@ -69,7 +79,9 @@ You can also manage this IceGrid deployment with the IceGridGUI.
 The IceSSL configuration in `config.master`, `config.slave` and
 `config.glacier2` is:
 
-    IceSSL.VerifyPeer=1
+```
+IceSSL.VerifyPeer=1
+```
 
 which means that a client, such as IceGridGUI, does not need to
 provide an X.509 certificate. As a result, connecting with IceGrid
@@ -92,3 +104,7 @@ The IceGrid registry and Glacier2 router are configured to use the
 login with the admin tools. In a real world deployment, you would
 instead typically use the file-based permissions verifier or a custom
 permissions verifier implementation.
+
+[1]: https://doc.zeroc.com/display/Ice37/Securing+IceGrid
+[2]: https://doc.zeroc.com/display/Ice37/Securing+a+Glacier2+Router
+[3]: https://doc.zeroc.com/display/Ice37/Security+Considerations+for+Administrative+Facets

@@ -6,9 +6,9 @@
 
 import Demo.*;
 
-public class Subscriber extends Ice.Application
+public class Subscriber
 {
-    public class ClockI extends _ClockDisp
+    public static class ClockI extends _ClockDisp
     {
         @Override
         public void
@@ -18,18 +18,87 @@ public class Subscriber extends Ice.Application
         }
     }
 
-    public void
+    static class ShutdownHook extends Thread
+    {
+        @Override
+        public void
+        run()
+        {
+            try
+            {
+                if(_topic != null)
+                {
+                    _topic.unsubscribe(_subscriber);
+                }
+            }
+            finally
+            {
+                _communicator.destroy();
+            }
+        }
+
+        ShutdownHook(Ice.Communicator communicator)
+        {
+            _communicator = communicator;
+        }
+
+        ShutdownHook(Ice.Communicator communicator, IceStorm.TopicPrx topic, Ice.ObjectPrx subscriber)
+        {
+            _communicator = communicator;
+            _topic = topic;
+            _subscriber = subscriber;
+        }
+
+        private final Ice.Communicator _communicator;
+        private IceStorm.TopicPrx _topic;
+        private Ice.ObjectPrx _subscriber;
+    }
+
+    public static void
+    main(String[] args)
+    {
+        int status = 0;
+        Ice.StringSeqHolder argsHolder = new Ice.StringSeqHolder(args);
+
+        Ice.Communicator communicator = Ice.Util.initialize(argsHolder, "config.sub");
+
+        //
+        // Install shutdown hook to (also) destroy communicator during JVM shutdown.
+        // This ensures the communicator gets destroyed when the user interrupts the application with Ctrl-C.
+        //
+        Thread destroyHook = new ShutdownHook(communicator);
+        Runtime.getRuntime().addShutdownHook(destroyHook);
+
+        try
+        {
+            status = run(communicator, destroyHook, argsHolder.value);
+        }
+        catch(Exception ex)
+        {
+            ex.printStackTrace();
+            status = 1;
+        }
+
+        if(status != 0)
+        {
+            System.exit(status);
+        }
+        //
+        // Else the application waits for Ctrl-C to destroy the communicator
+        //
+    }
+
+    public static void
     usage()
     {
-        System.out.println("Usage: " + appName() + " [--batch] [--datagram|--twoway|--ordered|--oneway] " +
+        System.out.println("Usage: [--batch] [--datagram|--twoway|--ordered|--oneway] " +
                            "[--retryCount count] [--id id] [topic]");
     }
 
-    @Override
-    public int
-    run(String[] args)
+    private static int
+    run(Ice.Communicator communicator, Thread destroyHook, String[] args)
     {
-        args = communicator().getProperties().parseCommandLineOptions("Clock", args);
+        args = communicator.getProperties().parseCommandLineOptions("Clock", args);
 
         String topicName = "time";
         String option = "None";
@@ -119,12 +188,12 @@ public class Subscriber extends Ice.Application
 
         if(batch && (option.equals("Twoway") || option.equals("Ordered")))
         {
-            System.err.println(appName() + ": batch can only be set with oneway or datagram");
+            System.err.println("batch can only be set with oneway or datagram");
             return 1;
         }
 
         IceStorm.TopicManagerPrx manager = IceStorm.TopicManagerPrxHelper.checkedCast(
-            communicator().propertyToProxy("TopicManager.Proxy"));
+            communicator.propertyToProxy("TopicManager.Proxy"));
         if(manager == null)
         {
             System.err.println("invalid proxy");
@@ -147,12 +216,12 @@ public class Subscriber extends Ice.Application
             }
             catch(IceStorm.TopicExists ex)
             {
-                System.err.println(appName() + ": temporary failure, try again.");
+                System.err.println("temporary failure, try again.");
                 return 1;
             }
         }
 
-        Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Clock.Subscriber");
+        Ice.ObjectAdapter adapter = communicator.createObjectAdapter("Clock.Subscriber");
 
         //
         // Add a servant for the Ice object. If --id is used the
@@ -243,19 +312,12 @@ public class Subscriber extends Ice.Application
             return 1;
         }
 
-        shutdownOnInterrupt();
-        communicator().waitForShutdown();
-
-        topic.unsubscribe(subscriber);
+        //
+        // Replace the shutdown hook to unsubscribe during JVM shutdown
+        //
+        Runtime.getRuntime().addShutdownHook(new ShutdownHook(communicator, topic, subscriber));
+        Runtime.getRuntime().removeShutdownHook(destroyHook);
 
         return 0;
-    }
-
-    public static void
-    main(String[] args)
-    {
-        Subscriber app = new Subscriber();
-        int status = app.main("Subscriber", args, "config.sub");
-        System.exit(status);
     }
 }

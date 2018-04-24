@@ -52,7 +52,7 @@ listRecursive(id<FSDirectoryPrx> directory, int depth)
 int
 main(int argc, char* argv[])
 {
-    int status = EXIT_FAILURE;
+    int status = 1;
     @autoreleasepool
     {
         id<ICECommunicator> communicator = nil;
@@ -75,7 +75,7 @@ main(int argc, char* argv[])
             printf("Contents of root directory:\n");
             listRecursive(rootDir, 0);
 
-            status = EXIT_SUCCESS;
+            status = 0;
         }
         @catch (NSException *ex)
         {

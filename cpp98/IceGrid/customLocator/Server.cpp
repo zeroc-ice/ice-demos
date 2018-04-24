@@ -9,44 +9,76 @@
 
 using namespace std;
 
-class Server : public Ice::Application
+//
+// Global variable for shutdownCommunicator
+//
+Ice::CommunicatorPtr communicator;
+
+//
+// Callback for CtrlCHandler
+//
+void
+shutdownCommunicator(int)
 {
-public:
-
-    virtual int run(int argc, char* argv[]);
-
-};
+    communicator->shutdown();
+}
 
 int
 main(int argc, char* argv[])
 {
-    //
-    // Set the 'BuildId' property displayed in the IceGridAdmin GUI
-    //
-    Ice::InitializationData initData;
-    initData.properties = Ice::createProperties();
-    initData.properties->setProperty("BuildId", string("Ice ") + ICE_STRING_VERSION);
+    int status = 0;
 
-    Server app;
-    int status = app.main(argc, argv, initData);
-    return status;
-}
-
-int
-Server::run(int argc, char*[])
-{
-    if(argc > 1)
+    try
     {
-        cerr << appName() << ": too many arguments" << endl;
-        return EXIT_FAILURE;
+        //
+        // CtrlCHandler must be created before the communicator or any other threads are started
+        //
+        Ice::CtrlCHandler ctrlCHandler;
+
+        //
+        // Set the 'BuildId' property displayed in the IceGridAdmin GUI
+        //
+        Ice::InitializationData initData;
+        initData.properties = Ice::createProperties();
+        initData.properties->setProperty("BuildId", string("Ice ") + ICE_STRING_VERSION);
+
+        //
+        // CommunicatorHolder's ctor initializes an Ice communicator,
+        // and it's dtor destroys this communicator.
+        //
+        Ice::CommunicatorHolder ich(argc, argv, initData);
+        communicator = ich.communicator();
+
+        //
+        // Shutdown communicator on Ctrl-C
+        //
+        ctrlCHandler.setCallback(&shutdownCommunicator);
+
+        //
+        // The communicator initialization removes all Ice-related arguments from argc/argv
+        //
+        if(argc > 1)
+        {
+            cerr << argv[0] << ": too many arguments" << endl;
+            status = 1;
+        }
+        else
+        {
+            Ice::PropertiesPtr properties = communicator->getProperties();
+            Ice::ObjectAdapterPtr adapter = communicator->createObjectAdapter("Hello");
+            Ice::Identity id = Ice::stringToIdentity(properties->getProperty("Identity"));
+            Demo::HelloPtr hello = new HelloI(properties->getProperty("Ice.ProgramName"));
+            adapter->add(hello, id);
+            adapter->activate();
+
+            communicator->waitForShutdown();
+        }
+    }
+    catch(const std::exception& ex)
+    {
+        cerr << ex.what() << endl;
+        status = 1;
     }
 
-    Ice::PropertiesPtr properties = communicator()->getProperties();
-    Ice::ObjectAdapterPtr adapter = communicator()->createObjectAdapter("Hello");
-    Ice::Identity id = Ice::stringToIdentity(properties->getProperty("Identity"));
-    Demo::HelloPtr hello = new HelloI(properties->getProperty("Ice.ProgramName"));
-    adapter->add(hello, id);
-    adapter->activate();
-    communicator()->waitForShutdown();
-    return EXIT_SUCCESS;
+    return status;
 }

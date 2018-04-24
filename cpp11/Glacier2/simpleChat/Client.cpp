@@ -71,7 +71,7 @@ public:
             {
                 cout << "permission denied:\n" << ex.reason << endl;
             }
-            catch(const Glacier2::CannotCreateSessionException ex)
+            catch(const Glacier2::CannotCreateSessionException& ex)
             {
                 cout << "cannot create session:\n" << ex.reason << endl;
             }
@@ -85,7 +85,7 @@ public:
         if(argc > 1)
         {
             cerr << appName() << ": too many arguments" << endl;
-            return EXIT_FAILURE;
+            return 1;
         }
 
         auto callbackReceiverIdent = createCallbackIdentity("callbackReceiver");
@@ -122,7 +122,13 @@ public:
             }
         }
         while(cin.good());
-        return EXIT_SUCCESS;
+        return 0;
+    }
+
+    virtual void
+    sessionDestroyed() override
+    {
+        cout << "Connection lost." << endl;
     }
 
 private:

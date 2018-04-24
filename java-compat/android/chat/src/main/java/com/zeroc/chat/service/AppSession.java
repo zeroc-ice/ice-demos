@@ -79,6 +79,10 @@ public class AppSession
 
         if(initData.properties.getPropertyAsIntWithDefault("IceSSL.UsePlatformCAs", 0) == 0)
         {
+            //
+            // We need to postpone plug-in initialization so that we can configure IceSSL
+            // with a resource stream for the certificate information.
+            //
             initData.properties.setProperty("Ice.InitPlugins", "0");
             initData.properties.setProperty("IceSSL.TruststoreType", "BKS");
             initData.properties.setProperty("IceSSL.Password", "password");
@@ -159,6 +163,9 @@ public class AppSession
                     Ice.Communicator communicator = session.communicator();
                     if(communicator.getProperties().getPropertyAsIntWithDefault("IceSSL.UsePlatformCAs", 0) == 0)
                     {
+                        //
+                        // Configure the IceSSL plug-in to use a resource stream for the truststore.
+                        //
                         java.io.InputStream certStream = resources.openRawResource(R.raw.client);
                         IceSSL.Plugin plugin = (IceSSL.Plugin)communicator.getPluginManager().getPlugin("IceSSL");
                         plugin.setTruststoreStream(certStream);

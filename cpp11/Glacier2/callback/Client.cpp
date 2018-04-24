@@ -19,6 +19,7 @@ public:
 
     virtual int runWithSession(int, char*[]) override;
     virtual shared_ptr<Glacier2::SessionPrx> createSession() override;
+    virtual void sessionDestroyed() override;
 };
 
 int
@@ -82,7 +83,7 @@ CallbackClient::createSession()
         {
             cout << "permission denied:\n" << ex.reason << endl;
         }
-        catch(const Glacier2::CannotCreateSessionException ex)
+        catch(const Glacier2::CannotCreateSessionException& ex)
         {
             cout << "cannot create session:\n" << ex.reason << endl;
         }
@@ -96,7 +97,7 @@ CallbackClient::runWithSession(int argc, char*[])
     if(argc > 1)
     {
         cerr << appName() << ": too many arguments" << endl;
-        return EXIT_FAILURE;
+        return 1;
     }
 
     auto callbackReceiverIdent = createCallbackIdentity("callbackReceiver");
@@ -218,5 +219,11 @@ CallbackClient::runWithSession(int argc, char*[])
     }
     while(cin.good() && c != 'x');
 
-    return EXIT_SUCCESS;
+    return 0;
+}
+
+void
+CallbackClient::sessionDestroyed()
+{
+    cout << "The Glacier2 session has been destroyed." << endl;
 }

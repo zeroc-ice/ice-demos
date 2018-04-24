@@ -8,7 +8,6 @@
 
 #include "MainPage.g.h"
 #include <Ice/Ice.h>
-#include <Hello.h>
 
 namespace hello
 {

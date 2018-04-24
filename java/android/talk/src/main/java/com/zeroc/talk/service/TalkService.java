@@ -62,8 +62,8 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
         {
             address = o.address;
             name = o.name;
-            peer = o.peer;
-            servantId = o.servantId;
+            remote = o.remote;
+            local = o.local;
             connection = o.connection;
         }
 
@@ -74,11 +74,11 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
 
         void removeServant(ObjectAdapter adapter)
         {
-            if(servantId != null)
+            if(local != null)
             {
                 try
                 {
-                    adapter.remove(servantId);
+                    adapter.remove(local.ice_getIdentity());
                 }
                 catch(NotRegisteredException ex)
                 {
@@ -89,8 +89,8 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
 
         String address;
         String name;
-        Talk.PeerPrx peer;
-        Identity servantId;
+        Talk.PeerPrx remote;
+        Talk.PeerPrx local;
         Connection connection;
     }
 
@@ -101,10 +101,10 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
     private class PeerImpl implements Talk.Peer
     {
         @Override
-        public void connect(Identity id, Current current)
+        public void connect(Talk.PeerPrx peer, Current current)
             throws Talk.ConnectionException
         {
-            info = incoming(id, current.con);
+            info = incoming(peer.ice_fixed(current.con), current.con);
         }
 
         @Override
@@ -214,8 +214,13 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
             initData.properties.setProperty("IceSSL.KeystoreType", "BKS");
             initData.properties.setProperty("IceSSL.TruststoreType", "BKS");
             initData.properties.setProperty("IceSSL.Password", "password");
-            initData.properties.setProperty("Ice.InitPlugins", "0");
             initData.properties.setProperty("Ice.Plugin.IceSSL", "com.zeroc.IceSSL.PluginFactory");
+
+            //
+            // We need to postpone plug-in initialization so that we can configure IceSSL
+            // with a resource stream for the certificate information.
+            //
+            initData.properties.setProperty("Ice.InitPlugins", "0");
 
             //
             // Install the IceBT transport.
@@ -298,18 +303,16 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
         // Create a proxy for the peer. The identity of the remote object is "peer". The UUID in the
         // proxy is the well-known Bluetooth service ID for the Talk service.
         //
-        info.peer = Talk.PeerPrx.uncheckedCast(_communicator.stringToProxy(proxy));
+        info.remote = Talk.PeerPrx.uncheckedCast(_communicator.stringToProxy(proxy));
 
         //
         // Register a unique servant with the OA for each outgoing connection. This servant receives
         // callbacks from the peer.
         //
-        info.servantId = Util.stringToIdentity(java.util.UUID.randomUUID().toString());
-
-        _adapter.add(
+        Talk.PeerPrx local = Talk.PeerPrx.uncheckedCast(_adapter.addWithUUID(
             new Talk.Peer()
             {
-                public void connect(Identity id, Current current)
+                public void connect(Talk.PeerPrx peer, Current current)
                     throws Talk.ConnectionException
                 {
                     throw new Talk.ConnectionException("already connected");
@@ -324,7 +327,8 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
                 {
                     disconnected(info);
                 }
-            }, info.servantId);
+            }));
+        info.local = local;
 
         PeerInfo oldInfo = null;
 
@@ -382,7 +386,7 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
 
         final PeerInfo info = _peer;
 
-        info.peer.sendAsync(message).whenComplete((result, ex) ->
+        info.remote.sendAsync(message).whenComplete((result, ex) ->
             {
                 if(ex != null)
                 {
@@ -449,7 +453,7 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
         }
     }
 
-    synchronized private PeerInfo incoming(Identity id, Connection con)
+    synchronized private PeerInfo incoming(Talk.PeerPrx peer, com.zeroc.Ice.Connection con)
         throws Talk.ConnectionException
     {
         //
@@ -468,9 +472,9 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
         com.zeroc.IceBT.ConnectionInfo btci = (com.zeroc.IceBT.ConnectionInfo)ci;
 
         PeerInfo info = new PeerInfo();
-        info.peer = Talk.PeerPrx.uncheckedCast(con.createProxy(id));
+        info.remote = peer;
         info.address = btci.remoteAddress;
-        info.servantId = null;
+        info.local = null;
         info.connection = con;
 
         setState(STATE_CONNECTED); // Also notifies the activity.
@@ -499,7 +503,7 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
         }
         setState(STATE_CONNECTING); // Also notifies the activity.
 
-        info.peer.connectAsync(info.servantId).whenComplete((result, ex) ->
+        info.remote.connectAsync(info.local).whenComplete((result, ex) ->
             {
                 if(ex != null)
                 {
@@ -532,7 +536,7 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
         //
         // Try to gracefully disconnect from the old peer.
         //
-        oldInfo.peer.disconnectAsync().whenComplete((result, ex) ->
+        oldInfo.remote.disconnectAsync().whenComplete((result, ex) ->
             {
                 if(oldInfo.connection != null)
                 {
@@ -550,7 +554,7 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
             //
             // Configure the connection for bidirectional connections.
             //
-            Connection con = info.peer.ice_getCachedConnection();
+            Connection con = info.remote.ice_getCachedConnection();
             con.setAdapter(_adapter);
             configureConnection(con, info);
             log("Connected to " + info.getName());

@@ -3,12 +3,12 @@ client is run a "sayHello" invocation is sent to the server.
 
 To run the demo, first start the server:
 ```
-python Server.py
+python server.py
 ```
 
 In a separate window, start the client:
 ```
-python Client.py
+python client.py
 ```
 
 Note that this demo uses port 10000. If port 10000 is not available on your
@@ -21,10 +21,10 @@ with the host name or IP address of the server.
 
 To run the server with web socket support:
 ```
-python Server.py --Ice.Default.Protocol=ws
+python server.py --Ice.Default.Protocol=ws
 ```
 
 To run the client with web socket support:
 ```
-python Client.py --Ice.Default.Protocol=ws
+python client.py --Ice.Default.Protocol=ws
 ```

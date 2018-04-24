@@ -6,7 +6,7 @@
 
 #include "pch.h"
 #include "MainPage.xaml.h"
-#include "Hello.h"
+#include <Hello.h>
 
 using namespace std;
 using namespace hello;
@@ -49,10 +49,14 @@ public:
             }, CallbackContext::Any));
     }
 
-    virtual void
-    shutdown(const Ice::Current&)
+    void shutdown(const ::Ice::Current& current)
     {
-        Application::Current->Exit();
+        _page->Dispatcher->RunAsync(CoreDispatcherPriority::Normal,
+                                    ref new DispatchedHandler([=]()
+                                                              {
+                                                                  current.adapter->getCommunicator()->destroy();
+                                                                  App::Current->Exit();
+                                                              }, CallbackContext::Any));
     }
 
 private:

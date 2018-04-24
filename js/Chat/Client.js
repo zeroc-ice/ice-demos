@@ -83,7 +83,6 @@
 
     async function signin()
     {
-
         try
         {
             await setState(State.Connecting);
@@ -166,9 +165,12 @@
             // Use Promise.all to wait for the completion of all the
             // calls.
             //
-            const [timeout, category, adapter] = await Promise.all([router.getACMTimeout(),
-                                                                    router.getCategoryForClient(),
-                                                                    communicator.createObjectAdapterWithRouter("", router)]);
+            const [timeout, category, adapter] = await Promise.all(
+                [
+                    router.getACMTimeout(),
+                    router.getCategoryForClient(),
+                    communicator.createObjectAdapterWithRouter("", router)
+                ]);
 
             //
             // Use ACM heartbeat to keep session alive.
@@ -191,7 +193,7 @@
             //
             await session.setCallback(callback);
 
-            await setState(State.Connected)
+            await setState(State.Connected);
 
             //
             // Process input events in the input textbox until completed.
@@ -200,7 +202,7 @@
                 (resolve, reject) =>
                     {
                         $("#input").keypress(
-                            (e) =>
+                            e =>
                                 {
                                     //
                                     // When enter key is pressed, we send a new message
@@ -287,7 +289,7 @@
     function transition(from, to)
     {
         return new Promise(
-            (resolve, reject) =>
+            resolve =>
                 {
                     if(from)
                     {
@@ -307,7 +309,7 @@
                     }
                     else
                     {
-                        $(to).css("display", "block").fadeIn("slow", () => resolve())
+                        $(to).css("display", "block").fadeIn("slow", () => resolve());
                     }
                 });
     }
@@ -436,10 +438,7 @@
                 // away from the page while the user is connected to the chat server.
                 //
                 $(window).on("beforeunload",
-                             () =>
-                             {
-                                 return "If you navigate away from this page, the current chat session will be lost.";
-                             });
+                             () => "If you navigate away from this page, the current chat session will be lost.");
 
                 //
                 // Transition to loading screen
@@ -460,6 +459,10 @@
                 $("#loading .meter").css("width", "0%");
                 $("#input").focus();
                 state = State.Connected;
+                break;
+            }
+            default:
+            {
                 break;
             }
         }
@@ -489,12 +492,13 @@
         $("#output").scrollTop($("#output").get(0).scrollHeight);
     }
 
-    var entities = [
+    const entities = [
         {escape: /&quot;/g, value: "\""},
         {escape: /&#39;/g, value: "'"},
         {escape: /&lt;/g, value: "<"},
         {escape: /&gt;/g, value: ">"},
-        {escape: /&amp;/g, value: "&"}];
+        {escape: /&amp;/g, value: "&"}
+    ];
 
     function unescapeHtml(message)
     {

@@ -95,9 +95,4 @@
     <None Include="..\..\config.server" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <IceBuilder Include="..\..\Hello.ice">
-      <Filter>Slice Files</Filter>
-    </IceBuilder>
-  </ItemGroup>
 </Project>

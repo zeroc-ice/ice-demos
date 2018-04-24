@@ -4,50 +4,93 @@
 //
 // **********************************************************************
 
-public class Server extends Ice.Application
+public class Server
 {
-    @Override
-    public int
-    run(String[] args)
+    static class ShutdownHook extends Thread
     {
-        if(args.length > 0)
+        @Override
+        public void
+        run()
         {
-            System.err.println(appName() + ": too many arguments");
-            return 1;
+            _communicator.destroy();
         }
 
-        Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Callback.Server");
-        CallbackSenderI sender = new CallbackSenderI(communicator());
-        adapter.add(sender, Ice.Util.stringToIdentity("sender"));
-        adapter.activate();
-
-        Thread t = new Thread(sender);
-        t.start();
-
-        try
+        ShutdownHook(Ice.Communicator communicator)
         {
-            communicator().waitForShutdown();
+            _communicator = communicator;
         }
-        finally
+
+        private final Ice.Communicator _communicator;
+    }
+
+    static class SenderShutdownHook extends Thread
+    {
+        @Override
+        public void
+        run()
         {
-            sender.destroy();
+            _sender.destroy();
             try
             {
-                t.join();
+                _senderThread.join();
             }
-            catch(java.lang.InterruptedException ex)
+            catch(InterruptedException e)
             {
             }
         }
 
-        return 0;
+        SenderShutdownHook(CallbackSenderI sender, Thread senderThread)
+        {
+            _sender = sender;
+            _senderThread = senderThread;
+        }
+
+        private final CallbackSenderI _sender;
+        private final Thread _senderThread;
     }
 
     public static void
     main(String[] args)
     {
-        Server app = new Server();
-        int status = app.main("Server", args, "config.server");
+        int status = 0;
+        Ice.StringSeqHolder argsHolder = new Ice.StringSeqHolder(args);
+
+        //
+        // Try with resources block - communicator is automatically destroyed
+        // at the end of this try block
+        //
+        try(Ice.Communicator communicator = Ice.Util.initialize(argsHolder, "config.server"))
+        {
+            //
+            // Install shutdown hook to (also) destroy communicator during JVM shutdown.
+            // This ensures the communicator gets destroyed when the user interrupts the application with Ctrl-C.
+            //
+            Runtime.getRuntime().addShutdownHook(new ShutdownHook(communicator));
+
+            if(argsHolder.value.length > 0)
+            {
+                System.err.println("too many arguments");
+                status = 1;
+            }
+            else
+            {
+                Ice.ObjectAdapter adapter = communicator.createObjectAdapter("Callback.Server");
+                CallbackSenderI sender = new CallbackSenderI(communicator);
+                adapter.add(sender, Ice.Util.stringToIdentity("sender"));
+                adapter.activate();
+
+                Thread t = new Thread(sender);
+                t.start();
+
+                //
+                // Add second shutdown hook to destroy sender
+                //
+                Runtime.getRuntime().addShutdownHook(new SenderShutdownHook(sender, t));
+
+                communicator.waitForShutdown();
+            }
+        }
+
         System.exit(status);
     }
 }

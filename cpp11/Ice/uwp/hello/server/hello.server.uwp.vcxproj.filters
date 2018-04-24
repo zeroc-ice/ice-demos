@@ -135,8 +135,8 @@
     <AppxManifest Include="Package.uwp.appxmanifest" />
   </ItemGroup>
   <ItemGroup>
-    <IceBuilder Include="Hello.ice">
+    <SliceCompile Include="Hello.ice">
       <Filter>Slice Files</Filter>
-    </IceBuilder>
+    </SliceCompile>
   </ItemGroup>
 </Project>

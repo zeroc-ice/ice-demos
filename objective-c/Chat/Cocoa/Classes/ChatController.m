@@ -10,7 +10,15 @@
 #import <objc/Ice.h>
 #import <objc/Glacier2.h>
 
+@interface ChatController()
+@property (nonatomic) NSTextField* inputField;
+@property (nonatomic) id<ICECommunicator> communicator;
+@end
+
 @implementation ChatController
+
+@synthesize inputField;
+@synthesize communicator;
 
 -(void)closed:(id<ICEConnection>)connection
 {
@@ -23,14 +31,10 @@
     }
 }
 
--(void)heartbeat:(id<ICEConnection>)connection
-{
-}
-
 // This is called outside of the main thread.
 -(id)initWithCommunicator:(id<ICECommunicator>)c
                   session:(id<ChatChatSessionPrx>)s
-               acmTiemout:(int)t
+               acmTimeout:(int)t
                    router:(id<GLACIER2RouterPrx>)r
                  category:(NSString*)category
 {
@@ -143,16 +147,16 @@
     // Clean up the communicator.
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^ {
             // Destroy might block so we call it from a separate thread.
-            [communicator destroy];
-            communicator = nil;
+            [self.communicator destroy];
+            self.communicator = nil;
 
             dispatch_async(dispatch_get_main_queue(), ^ {
                     [self append:@"<disconnected>" who:@"system message" timestamp:[NSDate date]];
-                    [inputField setEnabled:NO];
+                    [self.inputField setEnabled:NO];
 
                     NSApplication* app = [NSApplication sharedApplication];
                     AppDelegate* delegate = (AppDelegate*)[app delegate];
-                    [delegate setChatActive:NO];
+                    [delegate setChatController:nil];
             });
     });
 }
@@ -168,12 +172,10 @@
 {
     NSApplication* app = [NSApplication sharedApplication];
     AppDelegate* delegate = (AppDelegate*)[app delegate];
-    [delegate setChatActive:YES];
+    [delegate setChatController:self];
 
     id<ICEConnection> conn = [router ice_getCachedConnection];
-    id heartbeat = @(ICEHeartbeatAlways);
-    id timeout = [NSNumber numberWithInteger:acmTimeout];
-    [conn setACM:timeout close:ICENone heartbeat:heartbeat];
+    [conn setACM:@(acmTimeout) close:ICENone heartbeat:@(ICEHeartbeatAlways)];
     [conn setCloseCallback:^(id<ICEConnection> connection) {
         [self closed:connection];
     }];

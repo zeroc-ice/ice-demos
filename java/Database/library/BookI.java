@@ -17,7 +17,7 @@ class BookI implements Book
     {
         SQLRequestContext context = SQLRequestContext.getCurrentContext();
         assert context != null;
-        Integer id = new Integer(current.id.name);
+        Integer id = Integer.valueOf(current.id.name);
 
         try
         {
@@ -42,7 +42,7 @@ class BookI implements Book
     {
         SQLRequestContext context = SQLRequestContext.getCurrentContext();
         assert context != null;
-        Integer id = new Integer(current.id.name);
+        Integer id = Integer.valueOf(current.id.name);
 
         try
         {
@@ -68,7 +68,7 @@ class BookI implements Book
     {
         SQLRequestContext context = SQLRequestContext.getCurrentContext();
         assert context != null;
-        Integer id = new Integer(current.id.name);
+        Integer id = Integer.valueOf(current.id.name);
 
         try
         {
@@ -94,7 +94,7 @@ class BookI implements Book
     {
         SQLRequestContext context = SQLRequestContext.getCurrentContext();
         assert context != null;
-        Integer id = new Integer(current.id.name);
+        Integer id = Integer.valueOf(current.id.name);
 
         try
         {
@@ -170,7 +170,7 @@ class BookI implements Book
     {
         SQLRequestContext context = SQLRequestContext.getCurrentContext();
         assert context != null;
-        Integer id = new Integer(current.id.name);
+        Integer id = Integer.valueOf(current.id.name);
 
         try
         {
@@ -196,7 +196,7 @@ class BookI implements Book
     {
         SQLRequestContext context = SQLRequestContext.getCurrentContext();
         assert context != null;
-        Integer id = new Integer(current.id.name);
+        Integer id = Integer.valueOf(current.id.name);
 
         try
         {
@@ -240,7 +240,7 @@ class BookI implements Book
     {
         SQLRequestContext context = SQLRequestContext.getCurrentContext();
         assert context != null;
-        Integer id = new Integer(current.id.name);
+        Integer id = Integer.valueOf(current.id.name);
         name = name.trim();
         if(name.length() == 0)
         {
@@ -310,7 +310,7 @@ class BookI implements Book
     {
         SQLRequestContext context = SQLRequestContext.getCurrentContext();
         assert context != null;
-        Integer id = new Integer(current.id.name);
+        Integer id = Integer.valueOf(current.id.name);
         try
         {
             java.sql.PreparedStatement stmt = context.prepareStatement("SELECT * FROM books WHERE id = ?");

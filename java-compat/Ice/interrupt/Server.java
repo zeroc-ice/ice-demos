@@ -7,57 +7,41 @@
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class Server extends Ice.Application
+public class Server
 {
-    @Override
-    public int
-    run(String[] args)
+    static class ShutdownHook extends Thread
     {
-        if(args.length > 0)
+        @Override
+        public void
+        run()
         {
-            System.err.println(appName() + ": too many arguments");
-            return 1;
+            //
+            // Call shutdownNow on the executor. This interrupts all
+            // executor threads causing any running servant dispatch threads
+            // to terminate quickly.
+            //
+            _executor.shutdownNow();
+
+            _communicator.destroy();
         }
 
-        //
-        // If ^C is pressed we want to interrupt all running upcalls from the
-        // dispatcher and destroy the communicator.
-        //
-        setInterruptHook(new Runnable()
-            {
-                @Override
-                public void
-                run()
-                {
-                    //
-                    // Call shutdownNow on the executor. This interrupts all
-                    // executor threads causing any running servant dispatch threads
-                    // to terminate quickly.
-                    //
-                    _executor.shutdownNow();
-                    try
-                    {
-                        communicator().shutdown();
-                    }
-                    catch(Ice.LocalException ex)
-                    {
-                        ex.printStackTrace();
-                    }
-                }
-            });
+        ShutdownHook(Ice.Communicator communicator, ExecutorService executor)
+        {
+            _communicator = communicator;
+            _executor = executor;
+        }
 
-        Ice.ObjectAdapter adapter = communicator().createObjectAdapter("TaskManager");
-        adapter.add(new TaskManagerI(_executor), Ice.Util.stringToIdentity("manager"));
-        adapter.activate();
-        communicator().waitForShutdown();
-
-        return 0;
+        private final Ice.Communicator _communicator;
+        private final ExecutorService _executor;
     }
 
     public static void
     main(String[] args)
     {
-        final Server app = new Server();
+        int status = 0;
+        Ice.StringSeqHolder argsHolder = new Ice.StringSeqHolder(args);
+
+        final ExecutorService executor = Executors.newFixedThreadPool(5);
 
         Ice.InitializationData initData = new Ice.InitializationData();
         initData.properties = Ice.Util.createProperties();
@@ -68,22 +52,42 @@ public class Server extends Ice.Application
         // By using an executor it is straightforward to interrupt any servant
         // dispatch threads by using ExecutorService.shutdownNow.
         //
-        initData.dispatcher = new Ice.Dispatcher() {
+        initData.dispatcher = new Ice.Dispatcher()
+        {
             @Override
             public void dispatch(Runnable runnable, Ice.Connection con)
             {
-                app.getExecutor().submit(runnable);
+                executor.submit(runnable);
             }
         };
 
-        int status = app.main("Server", args, initData);
+        //
+        // Try with resources block - communicator is automatically destroyed
+        // at the end of this try block
+        //
+        try(Ice.Communicator communicator = Ice.Util.initialize(argsHolder, initData))
+        {
+            //
+            // Install shutdown hook to (also) destroy communicator during JVM shutdown.
+            // This ensures the communicator gets destroyed when the user interrupts the application with Ctrl-C.
+            //
+            Runtime.getRuntime().addShutdownHook(new ShutdownHook(communicator, executor));
+
+            if(argsHolder.value.length > 0)
+            {
+                System.err.println("too many arguments");
+                status = 1;
+            }
+            else
+            {
+                Ice.ObjectAdapter adapter = communicator.createObjectAdapter("TaskManager");
+                adapter.add(new TaskManagerI(executor), Ice.Util.stringToIdentity("manager"));
+                adapter.activate();
+
+                communicator.waitForShutdown();
+            }
+        }
+
         System.exit(status);
     }
-
-    ExecutorService getExecutor()
-    {
-        return _executor;
-    }
-
-    private ExecutorService _executor = Executors.newFixedThreadPool(5);
 }

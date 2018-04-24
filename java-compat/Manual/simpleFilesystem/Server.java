@@ -6,32 +6,59 @@
 
 import Filesystem.*;
 
-public class Server extends Ice.Application
+public class Server
 {
-    public int
-    run(String[] args)
+    public static void
+    main(String[] args)
     {
-        //
-        // Terminate cleanly on receipt of a signal
-        //
-        shutdownOnInterrupt();
+        int status = 0;
+        Ice.StringSeqHolder argsHolder = new Ice.StringSeqHolder(args);
 
+        //
+        // Try with resources block - communicator is automatically destroyed
+        // at the end of this try block
+        //
+        try(final Ice.Communicator communicator = Ice.Util.initialize(argsHolder))
+        {
+            //
+            // Install shutdown hook to (also) destroy communicator during JVM shutdown.
+            // This ensures the communicator gets destroyed when the user interrupts the application with Ctrl-C.
+            //
+            Runtime.getRuntime().addShutdownHook(new Thread()
+                {
+                    @Override
+                    public void run()
+                    {
+                        communicator.destroy();
+                        System.err.println("terminating");
+                    }
+                });
+
+            status = run(communicator, argsHolder.value);
+        }
+
+        System.exit(status);
+    }
+
+    private static int
+    run(Ice.Communicator communicator, String[] args)
+    {
         //
         // Create an object adapter.
         //
         Ice.ObjectAdapter adapter =
-            communicator().createObjectAdapterWithEndpoints("SimpleFilesystem", "default -h localhost -p 10000");
+            communicator.createObjectAdapterWithEndpoints("SimpleFilesystem", "default -h localhost -p 10000");
 
         //
         // Create the root directory (with name "/" and no parent)
         //
-        DirectoryI root = new DirectoryI(communicator(), "/", null);
+        DirectoryI root = new DirectoryI(communicator, "/", null);
         root.activate(adapter);
 
         //
         // Create a file called "README" in the root directory
         //
-        FileI file = new FileI(communicator(), "README", root);
+        FileI file = new FileI(communicator, "README", root);
         String[] text;
         text = new String[]{ "This file system contains a collection of poetry." };
         try
@@ -47,13 +74,13 @@ public class Server extends Ice.Application
         //
         // Create a directory called "Coleridge" in the root directory
         //
-        DirectoryI coleridge = new DirectoryI(communicator(), "Coleridge", root);
+        DirectoryI coleridge = new DirectoryI(communicator, "Coleridge", root);
         coleridge.activate(adapter);
 
         //
         // Create a file called "Kubla_Khan" in the Coleridge directory
         //
-        file = new FileI(communicator(), "Kubla_Khan", coleridge);
+        file = new FileI(communicator, "Kubla_Khan", coleridge);
         text = new String[]{ "In Xanadu did Kubla Khan",
                              "A stately pleasure-dome decree:",
                              "Where Alph, the sacred river, ran",
@@ -77,20 +104,8 @@ public class Server extends Ice.Application
         //
         // Wait until we are done
         //
-        communicator().waitForShutdown();
-
-        if(interrupted())
-        {
-            System.err.println(appName() + ": terminating");
-        }
+        communicator.waitForShutdown();
 
         return 0;
-    }
-
-    public static void
-    main(String[] args)
-    {
-        Server app = new Server();
-        System.exit(app.main("Server", args));
     }
 }

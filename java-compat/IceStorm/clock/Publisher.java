@@ -6,17 +6,56 @@
 
 import Demo.*;
 
-public class Publisher extends Ice.Application
+public class Publisher
 {
-    public void
-    usage()
+    static class ShutdownHook extends Thread
     {
-        System.out.println("Usage: " + appName() + " [--datagram|--twoway|--oneway] [topic]");
+        @Override
+        public void
+        run()
+        {
+            _communicator.destroy();
+        }
+
+        ShutdownHook(Ice.Communicator communicator)
+        {
+            _communicator = communicator;
+        }
+
+        private final Ice.Communicator _communicator;
     }
 
-    @Override
-    public int
-    run(String[] args)
+    public static void
+    main(String[] args)
+    {
+        int status = 0;
+        Ice.StringSeqHolder argsHolder = new Ice.StringSeqHolder(args);
+
+        //
+        // Try with resources block - communicator is automatically destroyed
+        // at the end of this try block
+        //
+        try(Ice.Communicator communicator = Ice.Util.initialize(argsHolder, "config.pub"))
+        {
+            //
+            // Install shutdown hook to (also) destroy communicator during JVM shutdown.
+            // This ensures the communicator gets destroyed when the user interrupts the application with Ctrl-C.
+            //
+            Runtime.getRuntime().addShutdownHook(new ShutdownHook(communicator));
+
+            status = run(communicator, argsHolder.value);
+        }
+        System.exit(status);
+    }
+
+    public static void
+    usage()
+    {
+        System.out.println("Usage: [--datagram|--twoway|--oneway] [topic]");
+    }
+
+    private static int
+    run(Ice.Communicator communicator, String[] args)
     {
         String option = "None";
         String topicName = "time";
@@ -62,7 +101,7 @@ public class Publisher extends Ice.Application
         }
 
         IceStorm.TopicManagerPrx manager = IceStorm.TopicManagerPrxHelper.checkedCast(
-            communicator().propertyToProxy("TopicManager.Proxy"));
+            communicator.propertyToProxy("TopicManager.Proxy"));
         if(manager == null)
         {
             System.err.println("invalid proxy");
@@ -85,7 +124,7 @@ public class Publisher extends Ice.Application
             }
             catch(IceStorm.TopicExists ex)
             {
-                System.err.println(appName() + ": temporary failure, try again.");
+                System.err.println("temporary failure, try again.");
                 return 1;
             }
         }
@@ -130,17 +169,9 @@ public class Publisher extends Ice.Application
         }
         catch(Ice.CommunicatorDestroyedException ex)
         {
-            // Ignore
+            // Ctrl-C triggered shutdown hook, which destroyed communicator - we're terminating
         }
 
         return 0;
-    }
-
-    public static void
-    main(String[] args)
-    {
-        Publisher app = new Publisher();
-        int status = app.main("Publisher", args, "config.pub");
-        System.exit(status);
     }
 }

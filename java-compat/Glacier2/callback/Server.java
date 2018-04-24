@@ -4,30 +4,58 @@
 //
 // **********************************************************************
 
-public class Server extends Ice.Application
+public class Server
 {
-    @Override
-    public int
-    run(String[] args)
+    static class ShutdownHook extends Thread
     {
-        if(args.length > 0)
+        @Override
+        public void
+        run()
         {
-            System.err.println(appName() + ": too many arguments");
-            return 1;
+            _communicator.destroy();
         }
 
-        Ice.ObjectAdapter adapter = communicator().createObjectAdapter("Callback.Server");
-        adapter.add(new CallbackI(), Ice.Util.stringToIdentity("callback"));
-        adapter.activate();
-        communicator().waitForShutdown();
-        return 0;
+        ShutdownHook(Ice.Communicator communicator)
+        {
+            _communicator = communicator;
+        }
+
+        private final Ice.Communicator _communicator;
     }
 
     public static void
     main(String[] args)
     {
-        Server app = new Server();
-        int status = app.main("Server", args, "config.server");
+        int status = 0;
+        Ice.StringSeqHolder argsHolder = new Ice.StringSeqHolder(args);
+
+        //
+        // Try with resources block - communicator is automatically destroyed
+        // at the end of this try block
+        //
+        try(Ice.Communicator communicator = Ice.Util.initialize(argsHolder, "config.server"))
+        {
+            //
+            // Install shutdown hook to (also) destroy communicator during JVM shutdown.
+            // This ensures the communicator gets destroyed when the user interrupts the application with Ctrl-C.
+            //
+            Runtime.getRuntime().addShutdownHook(new ShutdownHook(communicator));
+
+            if(argsHolder.value.length > 0)
+            {
+                System.err.println("too many arguments");
+                status = 1;
+            }
+            else
+            {
+                Ice.ObjectAdapter adapter = communicator.createObjectAdapter("Callback.Server");
+                adapter.add(new CallbackI(), Ice.Util.stringToIdentity("callback"));
+                adapter.activate();
+
+                communicator.waitForShutdown();
+            }
+        }
+
         System.exit(status);
     }
 }

@@ -23,7 +23,6 @@
 		34C5F21B0FC514C900B226F7 /* Library.ice in Sources */ = {isa = PBXBuildFile; fileRef = 34C5F20E0FC514C900B226F7 /* Library.ice */; };
 		34C5F21C0FC514C900B226F7 /* LibraryController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C5F2100FC514C900B226F7 /* LibraryController.m */; };
 		34C5F21D0FC514C900B226F7 /* RentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C5F2120FC514C900B226F7 /* RentController.m */; };
-		34C5F21E0FC514C900B226F7 /* Router.ice in Sources */ = {isa = PBXBuildFile; fileRef = 34C5F2130FC514C900B226F7 /* Router.ice */; };
 		34C5F21F0FC514C900B226F7 /* SavingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C5F2150FC514C900B226F7 /* SavingController.m */; };
 		34C5F2200FC514C900B226F7 /* Session.ice in Sources */ = {isa = PBXBuildFile; fileRef = 34C5F2160FC514C900B226F7 /* Session.ice */; };
 		82AC63CD1738185D0040F03D /* cacert.pem in Resources */ = {isa = PBXBuildFile; fileRef = 82AC63CC1738185D0040F03D /* cacert.pem */; };
@@ -72,7 +71,6 @@
 		34C5F2100FC514C900B226F7 /* LibraryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LibraryController.m; path = Classes/LibraryController.m; sourceTree = "<group>"; };
 		34C5F2110FC514C900B226F7 /* RentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RentController.h; path = Classes/RentController.h; sourceTree = "<group>"; };
 		34C5F2120FC514C900B226F7 /* RentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RentController.m; path = Classes/RentController.m; sourceTree = "<group>"; };
-		34C5F2130FC514C900B226F7 /* Router.ice */ = {isa = PBXFileReference; explicitFileType = sourcecode.slice; fileEncoding = 4; lastKnownFileType = text; name = Router.ice; path = Classes/Router.ice; sourceTree = "<group>"; };
 		34C5F2140FC514C900B226F7 /* SavingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SavingController.h; path = Classes/SavingController.h; sourceTree = "<group>"; };
 		34C5F2150FC514C900B226F7 /* SavingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SavingController.m; path = Classes/SavingController.m; sourceTree = "<group>"; };
 		34C5F2160FC514C900B226F7 /* Session.ice */ = {isa = PBXFileReference; explicitFileType = sourcecode.slice; fileEncoding = 4; lastKnownFileType = text; name = Session.ice; path = Classes/Session.ice; sourceTree = "<group>"; };
@@ -101,7 +99,6 @@
 			children = (
 				34C5F20D0FC514C900B226F7 /* Glacier2Session.ice */,
 				34C5F20E0FC514C900B226F7 /* Library.ice */,
-				34C5F2130FC514C900B226F7 /* Router.ice */,
 				34C5F2160FC514C900B226F7 /* Session.ice */,
 				34C5F2070FC514C900B226F7 /* AppDelegate.h */,
 				34C5F2080FC514C900B226F7 /* AppDelegate.m */,
@@ -203,7 +200,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0930;
 				TargetAttributes = {
 					8D1107260486CEB800E47090 = {
 						ProvisioningStyle = Automatic;
@@ -260,7 +257,6 @@
 				34C5F21B0FC514C900B226F7 /* Library.ice in Sources */,
 				34C5F21C0FC514C900B226F7 /* LibraryController.m in Sources */,
 				34C5F21D0FC514C900B226F7 /* RentController.m in Sources */,
-				34C5F21E0FC514C900B226F7 /* Router.ice in Sources */,
 				34C5F21F0FC514C900B226F7 /* SavingController.m in Sources */,
 				34C5F2200FC514C900B226F7 /* Session.ice in Sources */,
 			);
@@ -374,12 +370,20 @@
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -401,12 +405,20 @@
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;

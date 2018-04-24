@@ -4,7 +4,7 @@
 //
 // **********************************************************************
 
-['lifecycle', 'printer', 'simple_filesystem'].each {
+['lifecycle', 'simple_filesystem'].each {
     // abc_def -> AbcDef
     def name = it.split('_').collect { it.capitalize() }.join()
     project(":demoManual${name}") {
@@ -26,9 +26,7 @@
         dependencies {
             compile localDependency("ice")
             compile localDependency("icessl")
-            if (!useLocalOnly) {
-                runtime "org.apache.commons:commons-compress:1.14"
-            }
+            runtime "org.apache.commons:commons-compress:1.14"
         }
 
         // Don't create the default jar.

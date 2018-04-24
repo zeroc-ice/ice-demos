@@ -6,7 +6,6 @@
 
 using Demo;
 using System;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -19,14 +18,16 @@ public class Client
         try
         {
             //
-            // The new communicator is automatically destroyed (disposed) at the end of the
-            // using statement
+            // using statement - communicator is automatically destroyed
+            // at the end of this statement
             //
             using(var communicator = Ice.Util.initialize(ref args, "config.client"))
             {
                 //
-                // The communicator initialization removes all Ice-related arguments from args
+                // Destroy the communicator on Ctrl+C or Ctrl+Break
                 //
+                Console.CancelKeyPress += (sender, eventArgs) => communicator.destroy();
+
                 if(args.Length > 0)
                 {
                     Console.Error.WriteLine("too many arguments");

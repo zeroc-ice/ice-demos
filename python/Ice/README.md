@@ -28,6 +28,11 @@ Demos in this directory:
 
   This demo shows how to use Ice request contexts.
 
+- [coroutine](./coroutine)
+
+  This demo shows how to implement a servant using coroutines and the
+  await keyword.
+
 - [hello](./hello)
 
   This demo illustrates how to invoke ordinary (twoway) operations, as
@@ -38,6 +43,10 @@ Demos in this directory:
 
   A simple latency test that measures the basic call dispatch delay of
   Ice.
+
+- [matrix](./matrix)
+
+  This demo illustrates how to create and use NumPy matrices with Ice.
 
 - [metrics](./metrics)
 

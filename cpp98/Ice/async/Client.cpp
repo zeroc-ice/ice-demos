@@ -9,6 +9,8 @@
 
 using namespace std;
 
+int run(const Ice::CommunicatorPtr&);
+
 class Callback : public IceUtil::Shared
 {
 public:
@@ -24,12 +26,10 @@ public:
 };
 typedef IceUtil::Handle<Callback> CallbackPtr;
 
-int run(const Ice::CommunicatorPtr&);
-
 int
 main(int argc, char* argv[])
 {
-    int status = EXIT_SUCCESS;
+    int status = 0;
 
     try
     {
@@ -45,7 +45,7 @@ main(int argc, char* argv[])
         if(argc > 1)
         {
             cerr << argv[0] << ": too many arguments" << endl;
-            status = EXIT_FAILURE;
+            status = 1;
         }
         else
         {
@@ -55,13 +55,23 @@ main(int argc, char* argv[])
     catch(const std::exception& ex)
     {
         cerr << argv[0] << ": " << ex.what() << endl;
-        status = EXIT_FAILURE;
+        status = 1;
     }
 
     return status;
 }
 
-void menu();
+void
+menu()
+{
+    cout <<
+        "usage:\n"
+        "i: send immediate greeting\n"
+        "d: send delayed greeting\n"
+        "s: shutdown server\n"
+        "x: exit\n"
+        "?: help\n";
+}
 
 int
 run(const Ice::CommunicatorPtr& communicator)
@@ -70,7 +80,7 @@ run(const Ice::CommunicatorPtr& communicator)
     if(!hello)
     {
         cerr << "invalid proxy" << endl;
-        return EXIT_FAILURE;
+        return 1;
     }
 
     menu();
@@ -117,17 +127,5 @@ run(const Ice::CommunicatorPtr& communicator)
     }
     while(cin.good() && c != 'x');
 
-    return EXIT_SUCCESS;
-}
-
-void
-menu()
-{
-    cout <<
-        "usage:\n"
-        "i: send immediate greeting\n"
-        "d: send delayed greeting\n"
-        "s: shutdown server\n"
-        "x: exit\n"
-        "?: help\n";
+    return 0;
 }

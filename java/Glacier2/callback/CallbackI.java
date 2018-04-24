@@ -26,13 +26,6 @@ public final class CallbackI implements Callback
     public void shutdown(com.zeroc.Ice.Current current)
     {
         System.out.println("shutting down...");
-        try
-        {
-            current.adapter.getCommunicator().shutdown();
-        }
-        catch(com.zeroc.Ice.LocalException ex)
-        {
-            ex.printStackTrace();
-        }
+        current.adapter.getCommunicator().shutdown();
     }
 }
