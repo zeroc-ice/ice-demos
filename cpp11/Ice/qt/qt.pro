@@ -31,7 +31,6 @@ unix:!macx {
   ICE_HOME =? /usr
 }
 
-
 equals (ICE_HOME, "/usr") {
 } else:equals(ICE_HOME, "/usr/local") {
 } else:exists($(ICE_HOME)/include ) {

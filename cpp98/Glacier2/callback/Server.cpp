@@ -10,7 +10,6 @@
 using namespace std;
 using namespace Demo;
 
-
 //
 // Global variable for shutdownCommunicator
 //
