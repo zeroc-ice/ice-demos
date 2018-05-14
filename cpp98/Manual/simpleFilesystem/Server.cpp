@@ -73,7 +73,7 @@ main(int argc, char* argv[])
     return status;
 }
 
-int 
+int
 run()
 {
     //
