@@ -98,6 +98,16 @@ cd js/Ice/hello
 node Client
 ```
 
+The JavaScript demos use `async`, `await` and other features introduced
+in ES2017. For compatibility with JavaScript interpreters that only include
+support for ES5, the build creates `es5` versions of the demos using the Babel
+JavaScript compiler. The es5 versions can be run:
+
+```
+cd js/Ice/hello/es5
+node Client
+```
+
 ## Running the Browser JavaScript Demos
 
 Ice provides only client demos in JavaScript since Ice for JavaScript does not
