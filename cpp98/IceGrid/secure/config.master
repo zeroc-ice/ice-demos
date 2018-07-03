@@ -60,7 +60,7 @@ IceSSL.KeychainPassword=password
 #
 IceSSL.VerifyPeer=1
 
-IceSSL.TrustOnly.Client=CN="Master";CN="Slave";CN="Node";CN="Glacier2"
+IceSSL.TrustOnly.Client=CN="Slave";CN="Node";CN="Glacier2"
 IceSSL.TrustOnly.Server.IceGrid.Registry.Server=CN="Server"
-IceSSL.TrustOnly.Server.IceGrid.Registry.Internal=CN="Node";CN="Master";CN="Slave"
+IceSSL.TrustOnly.Server.IceGrid.Registry.Internal=CN="Node";CN="Slave"
 IceSSL.TrustOnly.Server.IceGrid.Registry.AdminSessionManager=CN="Glacier2"
