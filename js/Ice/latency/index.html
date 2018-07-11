@@ -89,6 +89,30 @@
             <p>The client is configured to use WSS secure endpoints when the page
                is loaded over HTTPS and WS unsecure endpoints when loaded over HTTP.</p>
         </div>
+        <p>To use the minified version you should edit the <code>js/Ice/latency/index.html</code>
+        file and comment out the non-optimized scripts:</p>
+        <pre>
+    &lt;!--
+      Scripts used during development, for optimized builds comment
+      the following scripts and uncomment es5/browser/Client.min.js
+      below
+    --&gt;
+    &lt;!-- Ice.js (Ice run-time library) --&gt;
+    &lt;script type="text/javascript" src="../../../lib/es5/Ice.js"&gt;&lt;/script&gt;
+    &lt;!-- Hello.js (Demo generated code) --&gt;
+    &lt;script type="text/javascript" src="es5/generated/Latency.js"&gt;&lt;/script&gt;
+    &lt;!-- Client.js (Latency Demo Application) --&gt;
+    &lt;script type="text/javascript" src="es5/browser/Client.js"&gt;&lt;/script&gt;
+        </pre>
+        <p>Then uncomment the script tag for the minified version</p>
+        <pre>
+    &lt;!--
+      Uncomment the following script to use a minified version of the
+      scripts that includes: the Ice run-time library, the generated
+      code and the demo application.
+    --&gt;
+    &lt;!--&lt;script src="es5/browser/Client.min.js"&gt;&lt;/script&gt;--&gt;
+        </pre>
         <a class="close-reveal-modal">&#215;</a>
     </div>
     <!-- Modal dialog to show the client source code -->
@@ -131,12 +155,23 @@
     <script type="text/javascript" src="../../../assets/es5/common.js"></script>
     <!-- Babel dependencies -->
     <script type="text/javascript" src="../../../node_modules/babel-polyfill/dist/polyfill.js"></script>
-     <!-- Ice.js (Ice run-time library) -->
+    <!--
+      Scripts used during development, for optimized builds comment
+      the following scripts and uncomment es5/browser/Client.min.js
+      below
+    -->
+    <!-- Ice.js (Ice run-time library) -->
     <script type="text/javascript" src="../../../lib/es5/Ice.js"></script>
     <!-- Latency.js (Demo generated code) -->
     <script type="text/javascript" src="es5/generated/Latency.js"></script>
-    <!-- browser/Client.js (Latency Demo Application) -->
+    <!-- Client.js (Latency Demo Application) -->
     <script type="text/javascript" src="es5/browser/Client.js"></script>
+   <!--
+      Uncomment the following script to use a minified version of the
+      scripts that includes: the Ice run-time library, the generated
+      code and the demo application.
+    -->
+    <!--<script type="text/javascript" src="es5/browser/Client.min.js"></script>-->
     <script type="text/javascript">
         /* jshint browser:true, jquery:true */
         /* global checkGenerated: false */
