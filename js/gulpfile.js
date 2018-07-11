@@ -275,7 +275,7 @@ Object.keys(demos).forEach(
         const depends = [demoBabelTask(name)];
 
         if(fs.existsSync(path.join(name, "browser"))){
-            gulp.task(demoBrowserBabelTask(name), [demoTaskName(name)],
+            gulp.task(demoBrowserBabelTask(name), [minDemoTaskName(name)],
                 function(cb){
                     pump([
                         gulp.src(path.join(name, "browser", "*.js")),
