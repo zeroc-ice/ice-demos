@@ -21,9 +21,6 @@ if(this.iceHome) {
 }
 
 buildscript {
-
-    ext.iceMavenRepo = System.env.ICE_MAVEN_REPOSITORY ? System.env.ICE_MAVEN_REPOSITORY : "repo.zeroc.com"
-
     //
     // If iceBuilderHome is set add its lib directory it to the local maven repositories
     // so we can build using a local plugin version
