@@ -15,6 +15,8 @@ class ChatRoomCallbackAdapter
 {
 public:
 
+    virtual ~ChatRoomCallbackAdapter() = default;
+
     virtual void init(Ice::StringSeq) = 0;
     virtual void join(const std::shared_ptr<PollingChat::UserJoinedEvent>&) = 0;
     virtual void leave(const std::shared_ptr<PollingChat::UserLeftEvent>&) = 0;
