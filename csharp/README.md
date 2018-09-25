@@ -22,8 +22,15 @@ Refer to the [C++11 demos](../cpp11) for more examples that use the Ice services
 
 ### Build Requirements
 
-In order to build Ice for .NET sample programs, you need a supported version
-of Visual Studio.
+In order to build the Ice for .NET sample programs, you need:
+ * a supported version of Visual Studio
+ * the [Ice Builder][3] extension
+ 
+If you forget to install Ice Builder, the C# sample projects will fail to load and
+Visual Studio may give an error message that suggests a version migration problem:
+> Unsupported
+> This version of Visual Studio is unable to open the following projects. The project types may not be installed or this version of Visual Studio may not support them.
+> For more information on enabling these project types or otherwise migrating your assets, please see the details in the "Migration Report" displayed after clicking OK.
 
 ### Building the demos using NuGet packages:
 
@@ -138,6 +145,7 @@ directory to your PATH. Please refer to the [Release Notes][6] for additional in
 
 [1]: https://doc.zeroc.com/display/Ice37/Ice+Manual
 [2]: https://zeroc.com/chat/index.html
+[3]: https://marketplace.visualstudio.com/items?itemName=ZeroCInc.IceBuilder
 [4]: https://doc.zeroc.com/display/Rel/Using+the+Windows+Binary+Distributions+for+Ice+3.7.1
 [5]: https://www.microsoft.com/net/download/windows
 [6]: https://doc.zeroc.com/display/Ice37/Ice+Release+Notes
