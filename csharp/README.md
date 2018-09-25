@@ -29,6 +29,7 @@ In order to build the Ice for .NET sample programs, you need:
 If you forget to install Ice Builder, the C# sample projects will fail to load and
 Visual Studio may give an error message that suggests a version migration problem:
 > Unsupported
+>
 > This version of Visual Studio is unable to open the following projects. The project types may not be installed or this version of Visual Studio may not support them.
 > For more information on enabling these project types or otherwise migrating your assets, please see the details in the "Migration Report" displayed after clicking OK.
 
