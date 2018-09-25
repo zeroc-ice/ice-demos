@@ -3,7 +3,7 @@
 # "Hello". The following sets the endpoints and the adapter ID for
 # this adapter.
 #
-Hello.Endpoints=tcp:udp:ssl
+Hello.Endpoints=tcp -p 10000:udp -p 10000:ssl -p 10001
 Hello.AdapterId=HelloAdapter
 
 #
@@ -53,13 +53,13 @@ Ice.Trace.Locator=0
 Ice.Plugin.IceSSL=IceSSL:IceSSL.PluginFactory
 IceSSL.DefaultDir=../../../certs
 IceSSL.CAs=cacert.pem
-IceSSL.CertFile=client.p12
+IceSSL.CertFile=server.p12
 IceSSL.Password=password
 
 #
 # IceMX configuration.
 #
 #Ice.Admin.Endpoints=tcp -h localhost -p 10003
-Ice.Admin.InstanceName=client
+Ice.Admin.InstanceName=server
 IceMX.Metrics.Debug.GroupBy=id
 IceMX.Metrics.ByParent.GroupBy=parent
