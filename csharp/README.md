@@ -25,7 +25,7 @@ Refer to the [C++11 demos](../cpp11) for more examples that use the Ice services
 In order to build the Ice for .NET sample programs, you need:
  * a supported version of Visual Studio
  * the [Ice Builder][3] extension
- 
+
 If you forget to install Ice Builder, the C# sample projects will fail to load and
 Visual Studio may give an error message that suggests a version migration problem:
 > Unsupported
