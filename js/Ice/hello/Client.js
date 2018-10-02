@@ -3,6 +3,7 @@
 // Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
 //
 // **********************************************************************
+
 const Ice = require("ice").Ice;
 const Demo = require("./generated/Hello").Demo;
 
