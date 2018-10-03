@@ -14,6 +14,10 @@ The following subdirectories contain sample programs:
 
 - [Ice](./Ice) has several examples that illustrate fundamental Ice concepts.
 
+- [Manual](./Manual) contains complete examples for some of the code snippets
+in the [Ice manual][2].
+
+
 Refer to the [C++11 demos](../cpp11) for more examples that use Ice services
 such as IceGrid and IceStorm.
 
@@ -21,7 +25,7 @@ such as IceGrid and IceStorm.
 
 ### Prerequisites
 
-The JavaScript sample programs require an installation of [Node.js][2].
+The JavaScript sample programs require an installation of [Node.js][3].
 
 ### Building the Demos
 
@@ -203,4 +207,5 @@ Next go to _Settings -> Security -> Install from storage_, and choose
 `cacert.pem`. Enter a name and press OK.
 
 [1]: https://zeroc.com/chat/index.html
-[2]: http://nodejs.org
+[2]: https://doc.zeroc.com/display/Ice37/Ice+Manual
+[3]: http://nodejs.org

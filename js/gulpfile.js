@@ -213,6 +213,22 @@ var demos =
             "Ice/throughput/browser/Client.js"],
         dest: "Ice/throughput/browser/"
     },
+    "Manual/printer":
+    {
+        srcs: [
+            "lib/Ice.min.js",
+            "Manual/printer/generated/Printer.js",
+            "Manual/simpleFileSystem/browser/Client.js"],
+        dest: "Manual/printer/browser"
+    },
+    "Manual/simpleFileSystem":
+    {
+        srcs: [
+            "lib/Ice.min.js",
+            "Manual/simpleFileSystem/generated/Filesystem.js",
+            "Manual/printer/browser/Client.js"],
+        dest: "Manual/simpleFileSystem/browser"
+    },
 };
 function demoTaskName(name) { return "demo_" + name.replace("/", "_"); }
 function demoES5IceTask(name) { return demoTaskName(name) + ":ice-es5"; }
