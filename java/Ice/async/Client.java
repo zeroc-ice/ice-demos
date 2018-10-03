@@ -4,7 +4,7 @@
 //
 // **********************************************************************
 
-import Demo.*;
+import com.zeroc.demos.Ice.async.Demo.*;
 
 public class Client
 {
@@ -19,6 +19,8 @@ public class Client
         //
         try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.client", extraArgs))
         {
+            communicator.getProperties().setProperty("Ice.Default.Package", "com.zeroc.demos.Ice.async");
+
             if(!extraArgs.isEmpty())
             {
                 System.err.println("too many arguments");
@@ -68,7 +70,7 @@ public class Client
                         {
                             if(ex != null)
                             {
-                                if(ex instanceof Demo.RequestCanceledException)
+                                if(ex instanceof RequestCanceledException)
                                 {
                                     System.out.println("Demo.RequestCanceledException");
                                 }

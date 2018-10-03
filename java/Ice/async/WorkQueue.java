@@ -4,7 +4,7 @@
 //
 // **********************************************************************
 
-import Demo.*;
+import com.zeroc.demos.Ice.async.Demo.*;
 
 public class WorkQueue extends Thread
 {

@@ -4,12 +4,14 @@
 //
 // **********************************************************************
 
+import com.zeroc.demos.Ice.properties.Demo.*;
+
 public class Server
 {
     //
     // The servant implements the Slice interface Demo::Props
     //
-    static class PropsI implements Demo.Props
+    static class PropsI implements Props
     {
         PropsI()
         {
@@ -66,6 +68,7 @@ public class Server
         //
         try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.server", extraArgs))
         {
+            communicator.getProperties().setProperty("Ice.Default.Package", "com.zeroc.demos.Ice.properties");
             //
             // Install shutdown hook to (also) destroy communicator during JVM shutdown.
             // This ensures the communicator gets destroyed when the user interrupts the application with Ctrl-C.

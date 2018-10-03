@@ -17,6 +17,7 @@ public class Server
         //
         try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.server", extraArgs))
         {
+            communicator.getProperties().setProperty("Ice.Default.Package", "com.zeroc.demos.Ice.async");
             final WorkQueue workQueue = new WorkQueue();
 
             //

@@ -4,7 +4,7 @@
 //
 // **********************************************************************
 
-import Demo.*;
+import com.zeroc.demos.Ice.session.Demo.*;
 
 class SessionI implements Session
 {

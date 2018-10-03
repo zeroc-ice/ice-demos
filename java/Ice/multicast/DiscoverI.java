@@ -4,7 +4,7 @@
 //
 // **********************************************************************
 
-import Demo.*;
+import com.zeroc.demos.Ice.multicast.Demo.*;
 
 public class DiscoverI implements Discover
 {

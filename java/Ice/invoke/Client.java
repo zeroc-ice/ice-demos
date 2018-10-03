@@ -4,6 +4,8 @@
 //
 // **********************************************************************
 
+import com.zeroc.demos.Ice.invoke.Demo.*;
+
 public class Client
 {
     public static void main(String[] args)
@@ -17,6 +19,8 @@ public class Client
         //
         try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.client", extraArgs))
         {
+            communicator.getProperties().setProperty("Ice.Default.Package", "com.zeroc.demos.Ice.invoke");
+
             if(!extraArgs.isEmpty())
             {
                 System.err.println("too many arguments");
@@ -102,7 +106,7 @@ public class Client
                     java.util.Map<String, String> dict = new java.util.HashMap<>();
                     dict.put("The", "streaming");
                     dict.put("API", "works!");
-                    Demo.StringDictHelper.write(out, dict);
+                    StringDictHelper.write(out, dict);
                     out.endEncapsulation();
 
                     //
@@ -122,7 +126,7 @@ public class Client
                     //
                     com.zeroc.Ice.OutputStream out = new com.zeroc.Ice.OutputStream(communicator);
                     out.startEncapsulation();
-                    Demo.Color.ice_write(out, Demo.Color.green);
+                    Color.ice_write(out, Color.green);
                     out.endEncapsulation();
 
                     //
@@ -142,10 +146,10 @@ public class Client
                     //
                     com.zeroc.Ice.OutputStream out = new com.zeroc.Ice.OutputStream(communicator);
                     out.startEncapsulation();
-                    Demo.Structure s = new Demo.Structure();
+                    Structure s = new Structure();
                     s.name = "red";
-                    s.value = Demo.Color.red;
-                    Demo.Structure.ice_write(out, s);
+                    s.value = Color.red;
+                    Structure.ice_write(out, s);
                     out.endEncapsulation();
 
                     //
@@ -165,17 +169,17 @@ public class Client
                     //
                     com.zeroc.Ice.OutputStream out = new com.zeroc.Ice.OutputStream(communicator);
                     out.startEncapsulation();
-                    Demo.Structure[] arr = new Demo.Structure[3];
-                    arr[0] = new Demo.Structure();
+                    Structure[] arr = new Structure[3];
+                    arr[0] = new Structure();
                     arr[0].name = "red";
-                    arr[0].value = Demo.Color.red;
-                    arr[1] = new Demo.Structure();
+                    arr[0].value = Color.red;
+                    arr[1] = new Structure();
                     arr[1].name = "green";
-                    arr[1].value = Demo.Color.green;
-                    arr[2] = new Demo.Structure();
+                    arr[1].value = Color.green;
+                    arr[2] = new Structure();
                     arr[2].name = "blue";
-                    arr[2].value = Demo.Color.blue;
-                    Demo.StructureSeqHelper.write(out, arr);
+                    arr[2].value = Color.blue;
+                    StructureSeqHelper.write(out, arr);
                     out.endEncapsulation();
 
                     //
@@ -195,10 +199,10 @@ public class Client
                     //
                     com.zeroc.Ice.OutputStream out = new com.zeroc.Ice.OutputStream(communicator);
                     out.startEncapsulation();
-                    Demo.C c = new Demo.C();
-                    c.s = new Demo.Structure();
+                    C c = new C();
+                    c.s = new Structure();
                     c.s.name = "blue";
-                    c.s.value = Demo.Color.blue;
+                    c.s.value = Color.blue;
                     out.writeValue(c);
                     out.writePendingValues();
                     out.endEncapsulation();
@@ -233,10 +237,10 @@ public class Client
                     in.startEncapsulation();
                     class Holder
                     {
-                        Demo.C obj;
+                        C obj;
                     }
                     final Holder h = new Holder();
-                    in.readValue(v -> h.obj = (Demo.C)v);
+                    in.readValue(v -> h.obj = (C)v);
                     String str = in.readString();
                     in.readPendingValues();
                     in.endEncapsulation();
@@ -262,7 +266,7 @@ public class Client
                     {
                         in.throwException();
                     }
-                    catch(Demo.PrintFailure ex)
+                    catch(PrintFailure ex)
                     {
                         // Expected.
                     }

@@ -7,7 +7,7 @@
 package FilesystemI;
 
 import com.zeroc.Ice.*;
-import Filesystem.*;
+import com.zeroc.demos.Manual.lifecycle.Filesystem.*;
 
 public class DirectoryI implements Directory, NodeI
 {

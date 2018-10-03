@@ -8,6 +8,7 @@
 
 #include <Glacier2/Session.ice>
 
+["java:package:com.zeroc.demos.Glacier2.simpleChat"]
 module Demo
 {
     interface ChatCallback

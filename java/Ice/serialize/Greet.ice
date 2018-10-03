@@ -6,9 +6,10 @@
 
 #pragma once
 
+["java:package:com.zeroc.demos.Ice.serialize"]
 module Demo
 {
-    ["java:serializable:Demo.MyGreeting"] sequence<byte> Greeting;
+    ["java:serializable:MyGreeting"] sequence<byte> Greeting;
 
     interface Greet
     {

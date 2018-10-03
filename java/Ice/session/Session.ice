@@ -6,6 +6,7 @@
 
 #pragma once
 
+["java:package:com.zeroc.demos.Ice.session"]
 module Demo
 {
     interface Hello

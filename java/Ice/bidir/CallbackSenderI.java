@@ -4,7 +4,7 @@
 //
 // **********************************************************************
 
-import Demo.*;
+import com.zeroc.demos.Ice.bidir.Demo.*;
 import java.util.concurrent.*;
 
 class CallbackSenderI implements CallbackSender

@@ -4,7 +4,7 @@
 //
 // **********************************************************************
 
-import Demo.*;
+import com.zeroc.demos.Ice.callback.Demo.*;
 
 public final class CallbackSenderI implements CallbackSender
 {

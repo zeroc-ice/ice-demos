@@ -6,6 +6,7 @@
 
 #pragma once
 
+["java:package:com.zeroc.demos.Glacier2.callback"]
 module Demo
 {
     interface CallbackReceiver

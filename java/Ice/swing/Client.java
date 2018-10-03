@@ -4,6 +4,8 @@
 //
 // **********************************************************************
 
+import com.zeroc.demos.Ice.swing.Demo.*;
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -50,6 +52,7 @@ public class Client extends JFrame
             com.zeroc.Ice.InitializationData initData = new com.zeroc.Ice.InitializationData();
             initData.properties = com.zeroc.Ice.Util.createProperties();
             initData.properties.load("config.client");
+            initData.properties.setProperty("Ice.Default.Package", "com.zeroc.demos.Ice.swing");
             initData.dispatcher = (runnable, connection) -> SwingUtilities.invokeLater(runnable);
 
             _communicator = com.zeroc.Ice.Util.initialize(args, initData);
@@ -304,7 +307,7 @@ public class Client extends JFrame
         DATAGRAM,
         DATAGRAM_BATCH;
 
-        Demo.HelloPrx apply(Demo.HelloPrx prx)
+        HelloPrx apply(HelloPrx prx)
         {
             switch (this)
             {
@@ -373,7 +376,7 @@ public class Client extends JFrame
         }
 
         String s = "hello:tcp -h " + host + " -p 10000:ssl -h " + host + " -p 10001:udp -h " + host + " -p 10000";
-        _helloPrx = Demo.HelloPrx.uncheckedCast(_communicator.stringToProxy(s));
+        _helloPrx = HelloPrx.uncheckedCast(_communicator.stringToProxy(s));
         _helloPrx = _deliveryMode.apply(_helloPrx);
         int timeout = _timeoutSlider.getValue();
         if(timeout != 0)
@@ -586,5 +589,5 @@ public class Client extends JFrame
     private com.zeroc.Ice.Communicator _communicator;
     private DeliveryMode _deliveryMode;
 
-    private Demo.HelloPrx _helloPrx = null;
+    private HelloPrx _helloPrx = null;
 }

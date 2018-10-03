@@ -4,7 +4,7 @@
 //
 // **********************************************************************
 
-import Filesystem.*;
+import com.zeroc.demos.Manual.simpleFilesystem.Filesystem.*;
 
 public class Client
 {
@@ -48,6 +48,7 @@ public class Client
         //
         try(com.zeroc.Ice.Communicator ic = com.zeroc.Ice.Util.initialize(args))
         {
+            ic.getProperties().setProperty("Ice.Default.Package", "com.zeroc.demos.Manual.simpleFilesystem");
             //
             // Create a proxy for the root directory
             //

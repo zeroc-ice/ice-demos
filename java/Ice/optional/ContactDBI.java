@@ -4,7 +4,7 @@
 //
 // **********************************************************************
 
-import Demo.*;
+import com.zeroc.demos.Ice.optional.Demo.*;
 
 public class ContactDBI implements ContactDB
 {

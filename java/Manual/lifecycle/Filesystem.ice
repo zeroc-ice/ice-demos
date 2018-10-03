@@ -6,6 +6,7 @@
 
 #pragma once
 
+["java:package:com.zeroc.demos.Manual.lifecycle"]
 module Filesystem
 {
     exception GenericError

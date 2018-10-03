@@ -4,7 +4,9 @@
 //
 // **********************************************************************
 
-package Filesystem;
+package com.zeroc.demos.Manual.simpleFilesystem.Filesystem;
+
+import com.zeroc.demos.Manual.simpleFilesystem.*;
 
 public final class DirectoryI implements Directory
 {

@@ -35,6 +35,7 @@ public class Server
         //
         try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, initData, extraArgs))
         {
+            communicator.getProperties().setProperty("Ice.Default.Package", "com.zeroc.demos.Ice.interrupt");
             //
             // Call shutdownNow on the executor. This interrupts all
             // executor threads causing any running servant dispatch threads

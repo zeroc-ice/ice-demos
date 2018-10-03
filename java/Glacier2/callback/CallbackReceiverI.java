@@ -4,7 +4,7 @@
 //
 // **********************************************************************
 
-import Demo.*;
+import com.zeroc.demos.Glacier2.callback.Demo.*;
 
 public final class CallbackReceiverI implements CallbackReceiver
 {

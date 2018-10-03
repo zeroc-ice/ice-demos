@@ -6,6 +6,7 @@
 
 #pragma once
 
+["java:package:com.zeroc.demos.IceGrid.simple"]
 module Demo
 {
     interface Hello
