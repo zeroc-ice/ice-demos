@@ -5,11 +5,6 @@
 Hello.Proxy=hello:tcp -h localhost -p 10000:udp -h localhost -p 10000
 
 #
-# Required for unmarshalling Java user exceptions and classes
-#
-Ice.Default.Package=com.zeroc.demos.IceBox.hello
-
-#
 # Warn about connection exceptions
 #
 Ice.Warn.Connections=1
