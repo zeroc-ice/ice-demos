@@ -80,7 +80,7 @@ Visual Studio 2017 users need to either:
  - retarget the solution to a version of the Windows 10 SDK already installed
    (using `Project > Retarget solution`)
    
-Failure would perform this step results in error MSB8036 when building any project:
+Failure to perform this step results in error MSB8036 when building any project:
 ```
 The Windows SDK version 8.1 was not found. Install the required version of Windows SDK
 or change the SDK version in the project property pages or by right-clicking the solution and selecting "Retarget solution".
