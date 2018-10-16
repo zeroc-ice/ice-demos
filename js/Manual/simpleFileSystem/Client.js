@@ -16,14 +16,12 @@ const Filesystem = require("./generated/Filesystem").Filesystem;
     //
     async function listRecursive(dir, depth)
     {
-        let indent = "\t".repeat(++depth);
+        const indent = "\t".repeat(++depth);
+        const contents = await dir.list();
 
-        let contents = await dir.list();
-
-        for(index in contents)
+        for(let node of contents)
         {
-            node = contents[index];
-            let subdir = await Filesystem.DirectoryPrx.checkedCast(node);
+            const subdir = await Filesystem.DirectoryPrx.checkedCast(node);
             console.log(indent + (await node.name()) + (subdir? " (directory):" : " (file):"));
             if(subdir)
             {
@@ -31,11 +29,11 @@ const Filesystem = require("./generated/Filesystem").Filesystem;
             }
             else
             {
-                let file = Filesystem.FilePrx.uncheckedCast(node);
-                text = await file.read();
-                for(line in text)
+                const file = Filesystem.FilePrx.uncheckedCast(node);
+                const text = await file.read();
+                for(let line of text)
                 {
-                    console.log(indent + "\t" + text[line]);
+                    console.log(`${indent}\t${line}`);
                 }
             }
         }
@@ -53,7 +51,7 @@ const Filesystem = require("./generated/Filesystem").Filesystem;
         //
         // Create a proxy for the root directory
         //
-        const base = await communicator.stringToProxy("RootDir:default -h localhost -p 10000");
+        const base = communicator.stringToProxy("RootDir:default -h localhost -p 10000");
 
         //
         // Down-cast the proxy to a directory proxy

@@ -27,13 +27,11 @@ const communicator = Ice.initialize();
 //
 async function listRecursive(dir, depth)
 {
-    let indent = "\t".repeat(++depth);
+    const indent = "\t".repeat(++depth);
+    const contents = await dir.list();
 
-    let contents = await dir.list();
-
-    for(index in contents)
+    for(let node of contents)
     {
-        node = contents[index];
         let subdir = await Filesystem.DirectoryPrx.checkedCast(node);
         $("#output").val($("#output").val() + indent + (await node.name()) + (subdir? " (directory):" : " (file):") + "\n");
         if(subdir)
@@ -42,11 +40,11 @@ async function listRecursive(dir, depth)
         }
         else
         {
-            let file = Filesystem.FilePrx.uncheckedCast(node);
-            text = await file.read();
-            for(line in text)
+            const  file = Filesystem.FilePrx.uncheckedCast(node);
+            const text = await file.read();
+            for(let line of text)
             {
-                $("#output").val($("#output").val() + indent + "\t" + text[line] + "\n");
+                $("#output").val($("#output").val() + indent + "\t" + line + "\n");
             }
         }
     }
