@@ -10,7 +10,7 @@ subprojects {
 	apply plugin: 'java'
 	apply from: "$rootProject.projectDir/gradle/ice.gradle"
 
-	project.version = slice.iceVersion
+	project.version = "3.6.4"
 
 	repositories {
 		if (slice.jarDir) {
@@ -18,16 +18,17 @@ subprojects {
 		        name "local"
 		        dirs slice.jarDir
 		    }
-	    }
+		}
 
-	    if (!useLocalOnly) {
-		    maven {
-		        url "https://${iceMavenRepo}/nexus/content/repositories/thirdparty"
-		    }
-		    maven {
-		        url "https://${iceMavenRepo}/nexus/content/repositories/releases"
-		    }
-	    }
+		if (!useLocalOnly) {
+			if(this.devRepo) {
+				maven {
+					url this.devRepo
+				}
+			}
+
+			mavenCentral()
+		}
     }
 }
 
