@@ -88,6 +88,37 @@ ext {
     demoJar = this.&demoJar
 }
 
+def demoIceBoxServer() {
+    configurations {
+        iceboxserver
+    }
+
+    dependencies {
+        iceboxserver localDependency("ice")
+        iceboxserver localDependency("icebox")
+        iceboxserver "org.apache.commons:commons-compress:1.14"
+    }
+
+    // Create a jar for the client & server which includes everything in the demo.
+    def jarTask = tasks.create(name: "IceBoxServerJar", type: Jar) {
+        version = ""
+        baseName = "iceboxserver"
+    }
+
+    jarTask.manifest {
+        attributes("Main-Class": "IceBox.Server")
+        attributes("Class-Path": configurations.iceboxserver.resolve().collect { it.toURI() }.join(' '))
+    }
+
+    artifacts {
+        archives jarTask
+    }
+}
+ext {
+    demoIceBoxServer = this.&demoIceBoxServer
+}
+
+
 def localDependency(artifactId) {
     return "com.zeroc:${artifactId}:${slice.iceArtifactVersion}"
 }

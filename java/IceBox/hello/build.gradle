@@ -31,6 +31,7 @@ dependencies {
 jar.enabled = false
 
 demoJar("client")
+demoIceBoxServer()
 
 task serverJar(type: Jar) {
     version = ""
