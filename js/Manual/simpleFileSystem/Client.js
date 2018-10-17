@@ -16,13 +16,13 @@ const Filesystem = require("./generated/Filesystem").Filesystem;
     //
     async function listRecursive(dir, depth)
     {
-        const indent = "\t".repeat(++depth);
+        const indent = "\t".repeat(depth + 1);
         const contents = await dir.list();
 
-        for(let node of contents)
+        for(const node of contents)
         {
             const subdir = await Filesystem.DirectoryPrx.checkedCast(node);
-            console.log(indent + (await node.name()) + (subdir? " (directory):" : " (file):"));
+            console.log(indent + (await node.name()) + (subdir ? " (directory):" : " (file):"));
             if(subdir)
             {
                 await listRecursive(subdir, depth);
@@ -31,7 +31,7 @@ const Filesystem = require("./generated/Filesystem").Filesystem;
             {
                 const file = Filesystem.FilePrx.uncheckedCast(node);
                 const text = await file.read();
-                for(let line of text)
+                for(const line of text)
                 {
                     console.log(`${indent}\t${line}`);
                 }

@@ -4,7 +4,17 @@
 //
 // **********************************************************************
 
-(function(){
+(() =>
+{
+
+//
+// Handle the client state
+//
+const State =
+{
+    Idle: 0,
+    Busy: 1
+};
 
 //
 // Initialize the communicator.
@@ -46,15 +56,6 @@ async function printString()
     }
 }
 
-//
-// Handle the client state
-//
-const State =
-{
-    Idle: 0,
-    Busy: 1
-};
-
 function setState(newState)
 {
     switch(newState)
@@ -92,6 +93,10 @@ function setState(newState)
             $("body").addClass("waiting");
             break;
         }
+        default:
+        {
+            throw new RangeError(`Unexpected state ${newState}`);
+        }
     }
 }
 
@@ -99,4 +104,5 @@ function setState(newState)
 // Start in the idle state
 //
 setState(State.Idle);
-}());
+
+})();

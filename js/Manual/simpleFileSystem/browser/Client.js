@@ -4,7 +4,8 @@
 //
 // **********************************************************************
 
-(function(){
+(() =>
+{
 
 //
 // Handle the client state
@@ -27,22 +28,22 @@ const communicator = Ice.initialize();
 //
 async function listRecursive(dir, depth)
 {
-    const indent = "\t".repeat(++depth);
+    const indent = "\t".repeat(depth + 1);
     const contents = await dir.list();
 
-    for(let node of contents)
+    for(const node of contents)
     {
-        let subdir = await Filesystem.DirectoryPrx.checkedCast(node);
-        $("#output").val($("#output").val() + indent + (await node.name()) + (subdir? " (directory):" : " (file):") + "\n");
+        const subdir = await Filesystem.DirectoryPrx.checkedCast(node);
+        $("#output").val($("#output").val() + indent + (await node.name()) + (subdir ? " (directory):" : " (file):") + "\n");
         if(subdir)
         {
             await listRecursive(subdir, depth);
         }
         else
         {
-            const  file = Filesystem.FilePrx.uncheckedCast(node);
+            const file = Filesystem.FilePrx.uncheckedCast(node);
             const text = await file.read();
-            for(let line of text)
+            for(const line of text)
             {
                 $("#output").val($("#output").val() + indent + "\t" + line + "\n");
             }
@@ -127,4 +128,4 @@ function setState(newState)
 //
 setState(State.Idle);
 
-}());
+})();
