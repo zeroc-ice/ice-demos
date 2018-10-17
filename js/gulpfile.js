@@ -17,7 +17,7 @@ var babel       = require("gulp-babel"),
     path        = require("path"),
     paths       = require("vinyl-paths"),
     pump        = require("pump"),
-    uglify      = require('gulp-uglifyes'),
+    terser      = require("gulp-terser"),
     HttpServer  = require("./bin/HttpServer");
 
 //
@@ -260,7 +260,7 @@ Object.keys(demos).forEach(
                 pump([gulp.src(demo.srcs),
                     newer(path.join(demo.dest, "Client.min.js")),
                     concat("Client.min.js"),
-                    uglify({compress:false}),
+                    terser(),
                     gulp.dest(demo.dest),
                     gzip(),
                     gulp.dest(demo.dest)], cb);
