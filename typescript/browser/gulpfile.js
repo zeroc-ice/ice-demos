@@ -213,7 +213,7 @@ for(let demo of browserDemos)
               });
 }
 
-gulp.task("demo:build", browserDemos.map(demoBuildTask));
+gulp.task("demo:build", browserDemos.map(demoBundleTask));
 gulp.task("demo:clean", browserDemos.map(demoCleanTask));
 
 gulp.task("build", ["demo:build"]);
