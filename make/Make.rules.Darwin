@@ -33,7 +33,10 @@ iphonesimulator_targetdir       = $(if $(filter %/build,$5),/iphonesimulator)
 # If building objects for a shared library, enable fPIC
 shared_cppflags = $(if $(filter-out program,$($1_target)),-fPIC) -fvisibility=hidden
 
-cppflags        = -Wall -Wextra -Wshadow -Wshadow-field -Wshadow-uncaptured-local -Wredundant-decls \
+# Check for Xcode 9 to disable unsupported -Wshadow-field flag.
+xcode9 = $(filter 9,$(shell clang -v 2>&1 | sed -ne 's/.*version \([0-9]*\).*/\1/p'))
+
+cppflags        = -Wall -Wextra -Wshadow $(if $(xcode9),,-Wshadow-field) -Wshadow-uncaptured-local -Wredundant-decls \
                   -Wdeprecated -Wstrict-prototypes -Werror -pthread \
                   $(if $(filter yes,$(OPTIMIZE)),-O2 -DNDEBUG,-g)
 
