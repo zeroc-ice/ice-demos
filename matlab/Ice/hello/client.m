@@ -103,6 +103,7 @@ function client()
                     break;
                 case '?'
                     menu();
+                case ''
                 otherwise
                     fprintf('unknown command `%s''\n', line);
                     menu();
