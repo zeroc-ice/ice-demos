@@ -13,7 +13,7 @@
     "run": "gulp run"
   },
   "dependencies": {
-    "ice": "file:../../ice/js",
+    "ice": "^3.7.1",
     "slice2js": "^3.7.1"
   },
   "devDependencies": {
@@ -25,7 +25,7 @@
     "babel-plugin-transform-builtin-extend": "^1.1.2",
     "babel-preset-es2015-script": "^1.1.0",
     "del": "^3.0.0",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.0",
     "gulp-babel": "^8.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-ext-replace": "^0.3.0",

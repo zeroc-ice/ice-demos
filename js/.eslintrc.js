@@ -10,7 +10,7 @@ module.exports = {
     },
     "rules": {
         "accessor-pairs": "error",
-        "array-bracket-newline": "error",
+        "array-bracket-newline": "off",
         "array-bracket-spacing": [
             "error",
             "never"
@@ -243,10 +243,7 @@ module.exports = {
         "prefer-rest-params": "error",
         "prefer-spread": "error",
         "prefer-template": "off",
-        "quote-props": [
-            "error",
-            "as-needed"
-        ],
+        "quote-props": "off",
         "quotes": [
             "off",
             "double"

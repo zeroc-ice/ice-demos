@@ -4,27 +4,32 @@
 //
 // **********************************************************************
 
-var babel       = require("gulp-babel"),
-    concat      = require("gulp-concat"),
-    del         = require("del"),
-    fs          = require("fs"),
-    gulp        = require("gulp"),
-    gzip        = require("gulp-gzip"),
-    iceBuilder  = require("gulp-ice-builder"),
-    newer       = require("gulp-newer"),
-    npm         = require("npm"),
-    open        = require("gulp-open"),
-    path        = require("path"),
-    paths       = require("vinyl-paths"),
-    pump        = require("pump"),
-    terser      = require("gulp-terser"),
-    HttpServer  = require("./bin/HttpServer");
+/* eslint no-sync: "off" */
+/* eslint no-process-env: "off" */
+/* eslint no-process-exit: "off" */
 
+const babel = require("gulp-babel");
+const concat = require("gulp-concat");
+const del = require("del");
+const fs = require("fs");
+const gulp = require("gulp");
+const gzip = require("gulp-gzip");
+const iceBuilder = require("gulp-ice-builder");
+const newer = require("gulp-newer");
+const npm = require("npm");
+const open = require("gulp-open");
+const path = require("path");
+const paths = require("vinyl-paths");
+const pump = require("pump");
+const terser = require("gulp-terser");
+const httpServer = require("./bin/HttpServer");
+
+const root = path.resolve(path.join('__dirname', '..'));
 //
 // Check ICE_HOME environment variable. If this is set and points to a source
 // distribution then prefer it over default packages.
 //
-var iceHome;
+let iceHome;
 if(process.env.ICE_HOME)
 {
     iceHome = fs.existsSync(path.join(process.env.ICE_HOME, "js", "package.json")) ? process.env.ICE_HOME : undefined;
@@ -32,9 +37,9 @@ if(process.env.ICE_HOME)
 
 function parseArg(argv, key)
 {
-    for(var i = 0; i < argv.length; ++i)
+    for(let i = 0; i < argv.length; ++i)
     {
-        var e = argv[i];
+        const e = argv[i];
         if(e == key)
         {
             return argv[i + 1];
@@ -46,16 +51,16 @@ function parseArg(argv, key)
     }
 }
 
-var platform = parseArg(process.argv, "--cppPlatform") || process.env.CPP_PLATFORM;
-var configuration = parseArg(process.argv, "--cppConfiguration") || process.env.CPP_CONFIGURATION;
+const platform = parseArg(process.argv, "--cppPlatform") || process.env.CPP_PLATFORM;
+const configuration = parseArg(process.argv, "--cppConfiguration") || process.env.CPP_CONFIGURATION;
 
 function slice2js(options)
 {
-    var defaults = {};
-    var opts = options || {};
+    const defaults = {};
+    const opts = options || {};
 
     defaults.args = opts.args || [];
-    defaults.include = opts.include || []
+    defaults.include = opts.include || [];
     defaults.dest = opts.dest;
     if(iceHome)
     {
@@ -83,84 +88,93 @@ function slice2js(options)
 
 function getIceLibs(es5)
 {
-    return  path.join(iceHome ? path.join(iceHome, 'js', 'lib') : path.join('node_modules', 'ice', 'lib'),
-                      es5 ? 'es5/*' : '*');
+    return path.join(iceHome ? path.join(iceHome, 'js', 'lib') : path.join('node_modules', 'ice', 'lib'),
+                     es5 ? 'es5/*' : '*');
+}
+
+//
+// If ICE_HOME is set we install Ice for JavaScript module from ICE_HOME
+// that is required for running JavaScript NodeJS demos.
+//
+if(iceHome)
+{
+    gulp.task("npm",
+              cb =>
+              {
+                  npm.load({loglevel: 'silent', progress: false},
+                           err =>
+                           {
+                               if(err)
+                               {
+                                   cb(err);
+                               }
+                               else
+                               {
+                                   npm.commands.install([path.join(iceHome, 'js')], cb);
+                               }
+                           });
+              });
+}
+else
+{
+    gulp.task("npm",
+              cb =>
+              {
+                  cb();
+              });
 }
 
 //
 // Deploy Ice for JavaScript browser libraries from ice or from ICE_HOME depending
 // on whenever or not ICE_HOME is set.
 //
-gulp.task("dist:libs", ["npm"],
-    function(cb)
-    {
-        pump([
-            gulp.src([getIceLibs(false)]),
-            newer("lib"),
-            gulp.dest("lib")], cb);
-    });
-
-gulp.task("dist:libs-es5", ["npm"],
-    function(cb)
-    {
-        pump([
-            gulp.src([getIceLibs(true)]),
-            newer("lib/es5"),
-            gulp.dest("lib/es5")], cb);
-    });
-
-gulp.task("dist:clean", [],
-    function()
-    {
-        del(["lib/*", "lib/es5/*"]);
-    });
-
-gulp.task("common-es5", [],
-          function(cb)
+gulp.task("dist",
+          cb =>
           {
-              pump([
-                  gulp.src([path.join( "assets", "common.js")]),
-                  babel({compact:false}),
-                  gulp.dest(path.join("assets", "es5"))], cb);
+              pump([gulp.src([getIceLibs(false)]),
+                    newer("lib"),
+                    gulp.dest("lib")], cb);
           });
 
-gulp.task("common-es5:clean", [],
-          function()
+gulp.task("dist:es5",
+          cb =>
           {
-              del(["assets/es5/*"]);
+              pump([gulp.src([getIceLibs(true)]),
+                    newer("lib/es5"),
+                    gulp.dest("lib/es5")], cb);
           });
 
-//
-// If ICE_HOME is set we install Ice for JavaScript module from ICE_HOME
-// that is required for running JavaScript NodeJS demos.
-//
-gulp.task("npm", [],
-    function(cb)
-    {
-        npm.load({loglevel: 'silent', progress: false}, function(err, npm) {
-            if(iceHome)
-            {
-                npm.commands.install([path.join(iceHome, 'js')], function(err, data)
-                {
-                    cb(err);
-                });
-            }
-            else
-            {
-                cb();
-            }
-        });
-    });
+gulp.task("dist:clean",
+          cb =>
+          {
+              del(["lib/*", "lib/es5/*", "lib"]);
+              cb();
+          });
 
-var demos =
+gulp.task("common:es5",
+          cb =>
+          {
+              pump([gulp.src([path.join("assets", "common.js")]),
+                    babel({compact: false}),
+                    gulp.dest(path.join("assets", "es5"))], cb);
+          });
+
+gulp.task("common:es5:clean",
+          cb =>
+          {
+              del(["assets/es5/*", "assets/es5"]);
+              cb();
+          });
+
+const demos =
 {
     "Chat":
     {
         srcs: [
             "lib/Ice.min.js",
             "lib/Glacier2.min.js",
-            "Chat/Chat.js",
-            "Chat/ChatSession.js",
+            "Chat/generated/Chat.js",
+            "Chat/generated/ChatSession.js",
             "Chat/Client.js"],
         dest: "Chat"
     },
@@ -175,10 +189,9 @@ var demos =
     },
     "Ice/bidir":
     {
-        srcs: [
-            "lib/Ice.min.js",
-            "Ice/bidir/generated/Callback.js",
-            "Ice/bidir/browser/Client.js"],
+        srcs: ["lib/Ice.min.js",
+               "Ice/bidir/generated/Callback.js",
+               "Ice/bidir/browser/Client.js"],
         dest: "Ice/bidir/browser"
     },
     "Ice/hello":
@@ -228,110 +241,116 @@ var demos =
             "Manual/simpleFileSystem/generated/Filesystem.js",
             "Manual/printer/browser/Client.js"],
         dest: "Manual/simpleFileSystem/browser"
-    },
+    }
 };
-function demoTaskName(name) { return "demo_" + name.replace("/", "_"); }
-function demoES5IceTask(name) { return demoTaskName(name) + ":ice-es5"; }
-function demoBabelTask(name) { return demoTaskName(name) + ":babel"; }
-function demoGeneratedBabelTask(name) { return demoTaskName(name) + "-generated:babel"; }
-function demoBrowserBabelTask(name) { return demoTaskName(name) + "-browser:babel"; }
-function demoBuildTask(name) { return demoTaskName(name) + ":build"; }
-function demoDependCleanTask(name) { return demoTaskName(name) + "-depend:clean"; }
-function demoCleanTask(name) { return demoTaskName(name) + ":clean"; }
-function demoBabelCleanTask(name) { return demoTaskName(name) + ":babel-clean"; }
-function demoGeneratedFile(file){ return path.join(path.basename(file, ".ice") + ".js"); }
-function minDemoTaskName(name) { return demoTaskName(name) + ":min"; }
-function minDemoCleanTaskName(name) { return minDemoTaskName(name) + ":clean"; }
 
-Object.keys(demos).forEach(
-    function(name){
-        var demo = demos[name];
+const demoTaskName = name => "demo_" + name.replace("/", "_");
+const demoSlice2JsTask = name => demoTaskName(name) + ":slice2js";
+const demoMinTask = name => demoTaskName(name) + ":minimize";
 
-        gulp.task(demoTaskName(name), ['dist:libs', 'dist:libs-es5'],
-            function(cb){
-                pump([
-                    gulp.src(path.join(name, "*.ice")),
-                    slice2js({include: [name], dest: path.join(name, "generated")}),
-                    gulp.dest(path.join(name, "generated"))], cb);
-            });
+const demoBabelTask = name => demoTaskName(name) + ":babel";
+const demoGeneratedBabelTask = name => demoTaskName(name) + "-generated:babel";
+const demoBrowserBabelTask = name => demoTaskName(name) + "-browser:babel";
+const demoBuildTask = name => demoTaskName(name) + ":build";
+const demoCleanTask = name => demoTaskName(name) + ":clean";
 
-        gulp.task(minDemoTaskName(name), [demoTaskName(name), "dist:libs"],
-            function(cb){
-                pump([gulp.src(demo.srcs),
-                    newer(path.join(demo.dest, "Client.min.js")),
-                    concat("Client.min.js"),
-                    terser(),
-                    gulp.dest(demo.dest),
-                    gzip(),
-                    gulp.dest(demo.dest)], cb);
-            });
+for(const name of Object.keys(demos))
+{
+    const demo = demos[name];
+    gulp.task(demoSlice2JsTask(name),
+              cb =>
+              {
+                  const outdir = path.join(root, name, "generated");
+                  pump([
+                      gulp.src(path.join(root, name, "*.ice")),
+                      slice2js({include: [path.join(root, name)], dest: outdir}),
+                      gulp.dest(outdir)], cb);
+              });
 
-        gulp.task(minDemoCleanTaskName(name), [],
-            function(){
-                del([path.join(demo.dest, "Client.min.js"),
-                     path.join(demo.dest, "Client.min.js.gz")]);
-            });
+    gulp.task(demoMinTask(name),
+              cb =>
+              {
+                  const outdir = path.join(root, demo.dest);
+                  pump([gulp.src(demo.srcs),
+                        newer(path.join(outdir, "Client.min.js")),
+                        concat("Client.min.js"),
+                        terser(),
+                        gulp.dest(outdir),
+                        gzip(),
+                        gulp.dest(outdir)], cb);
+              });
 
-        gulp.task(demoGeneratedBabelTask(name), [minDemoTaskName(name)],
-            function(cb){
-                pump([
-                    gulp.src([path.join(name, "generated", "*.js")]),
-                    babel({compact:false}),
-                    gulp.dest(path.join(name, "es5", "generated"))], cb);
-            });
+    gulp.task(demoGeneratedBabelTask(name),
+              cb =>
+              {
+                  pump([
+                      gulp.src([path.join(root, name, "generated", "*.js")]),
+                      babel({compact: false}),
+                      gulp.dest(path.join(root, name, "es5", "generated"))], cb);
+              });
 
-        gulp.task(demoBabelTask(name), [demoGeneratedBabelTask(name)],
-            function(cb){
-                pump([
-                    gulp.src([path.join(name, "*.js")]),
-                    babel({compact:false}),
-                    gulp.dest(path.join(name, "es5"))], cb);
-            });
+    gulp.task(demoBabelTask(name),
+              cb =>
+              {
+                  pump([
+                      gulp.src([path.join(root, name, "*.js")]),
+                      babel({compact: false}),
+                      gulp.dest(path.join(root, name, "es5"))], cb);
+              });
 
-        const depends = [demoBabelTask(name)];
+    if(fs.existsSync(path.join(name, "browser")))
+    {
+        gulp.task(demoBrowserBabelTask(name),
+                  cb =>
+                  {
+                      pump([
+                          gulp.src(path.join(root, name, "browser", "*.js")),
+                          babel({compact: false}),
+                          gulp.dest(path.join(root, name, "es5", "browser"))], cb);
+                  });
+    }
+    else
+    {
+        gulp.task(demoBrowserBabelTask(name),
+                  cb =>
+                  {
+                      cb();
+                  });
+    }
 
-        if(fs.existsSync(path.join(name, "browser"))){
-            gulp.task(demoBrowserBabelTask(name), [minDemoTaskName(name)],
-                function(cb){
-                    pump([
-                        gulp.src(path.join(name, "browser", "*.js")),
-                        babel({compact:false}),
-                        gulp.dest(path.join(name, "es5", "browser"))], cb);
-                });
-            depends.push(demoBrowserBabelTask(name));
-        }
+    gulp.task(demoCleanTask(name),
+              cb =>
+              {
+                  pump([gulp.src([path.join(root, name, ".depend"),
+                                  path.join(root, name, "es5"),
+                                  path.join(root, name, "browser", "es5"),
+                                  path.join(root, name, "generated")], {allowEmpty: true}),
+                        gulp.src([path.join(root, demo.dest, "Client.min.js"),
+                                  path.join(root, demo.dest, "Client.min.js.gz")], {allowEmpty: true}),
+                        paths(del)], cb);
+              });
 
-        gulp.task(demoES5IceTask(name), [demoBabelTask(name)],
-            function(cb){
-                pump([
-                    gulp.src(['node_modules/ice/src/es5/**/*']),
-                    gulp.dest(path.join(name, "es5", "node_modules", "ice"))], cb);
-            });
-        depends.push(demoES5IceTask(name));
+    gulp.task(demoBuildTask(name),
+              gulp.series(demoSlice2JsTask(name),
+                          demoMinTask(name),
+                          demoGeneratedBabelTask(name),
+                          demoBabelTask(name),
+                          demoBrowserBabelTask(name)));
+}
 
-        gulp.task(demoBuildTask(name), depends, function(){});
+gulp.task("build", gulp.series(
+    "npm", "dist", "dist:es5", "common:es5",
+    gulp.parallel(Object.keys(demos).map(demoBuildTask))));
 
-        gulp.task(demoCleanTask(name), [],
-            function(){
-                gulp.src([
-                    path.join(name, ".depend"),
-                    path.join(name, "es5"),
-                    path.join(name, "es5"),
-                    path.join(name, "browser", "es5"),
-                    path.join(name, "generated")])
-                    .pipe(paths(del));
-            });
-    });
+gulp.task("clean", gulp.parallel(
+    "dist:clean", "common:es5:clean",
+    Object.keys(demos).map(demoCleanTask)));
 
-gulp.task("demo:build", Object.keys(demos).map(demoBuildTask));
-gulp.task("demo:clean", Object.keys(demos).map(demoCleanTask));
+gulp.task("run", gulp.series("build",
+                             () =>
+                             {
+                                 httpServer();
+                                 return gulp.src(__filename).pipe(open({uri: "http://127.0.0.1:8080/index.html"}));
+                             }));
 
-gulp.task("build", ["demo:build", "common-es5"]);
-
-gulp.task("run", ["build", "dist:libs"],
-    function(){
-        HttpServer();
-        return gulp.src("").pipe(open({uri: "http://127.0.0.1:8080/index.html"}));
-    });
-gulp.task("clean", ["demo:clean", "dist:clean", "common-es5:clean"]);
-gulp.task("default", ["build"]);
+gulp.task("default", gulp.series("build"));
