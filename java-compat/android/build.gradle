@@ -24,8 +24,8 @@ subprojects {
 // Used to build the gradle wrapper to automatically download and install
 // the version of gradle needed to build Ice.
 //
-task wrapper(type: Wrapper) {
-    gradleVersion = "4.7"
+wrapper {
+    gradleVersion = "4.10.2"
     distributionType = Wrapper.DistributionType.ALL
 }
 
