@@ -4,22 +4,26 @@
 //
 // **********************************************************************
 
-const del         = require("del"),
-      fs          = require("fs"),
-      gulp        = require("gulp"),
-      iceBuilder  = require("gulp-ice-builder"),
-      newer       = require("gulp-newer"),
-      npm         = require("npm"),
-      open        = require("gulp-open"),
-      path        = require("path"),
-      paths       = require("vinyl-paths"),
-      pump        = require("pump"),
-      resolve     = require("rollup-plugin-node-resolve"),
-      rollup      = require("rollup"),
-      tsc         = require("gulp-typescript"),
-      extreplace  = require("gulp-ext-replace"),
-      HttpServer  = require("./bin/HttpServer");
+/* eslint no-sync: "off" */
+/* eslint no-process-env: "off" */
+/* eslint no-process-exit: "off" */
 
+const del = require("del");
+const fs = require("fs");
+const gulp= require("gulp");
+const iceBuilder = require("gulp-ice-builder");
+const newer = require("gulp-newer");
+const open = require("gulp-open");
+const path = require("path");
+const paths = require("vinyl-paths");
+const pump = require("pump");
+const resolve = require("rollup-plugin-node-resolve");
+const rollup = require("rollup");
+const tsc = require("gulp-typescript");
+const extreplace = require("gulp-ext-replace");
+const httpServer = require("./bin/HttpServer");
+
+const root = path.resolve('.');
 //
 // Check ICE_HOME environment variable. If this is set and points to a source
 // distribution then prefer it over default packages.
@@ -32,9 +36,9 @@ if(process.env.ICE_HOME)
 
 function parseArg(argv, key)
 {
-    for(var i = 0; i < argv.length; ++i)
+    for(let i = 0; i < argv.length; ++i)
     {
-        var e = argv[i];
+        const e = argv[i];
         if(e == key)
         {
             return argv[i + 1];
@@ -46,16 +50,16 @@ function parseArg(argv, key)
     }
 }
 
-var platform = parseArg(process.argv, "--cppPlatform") || process.env.CPP_PLATFORM;
-var configuration = parseArg(process.argv, "--cppConfiguration") || process.env.CPP_CONFIGURATION;
+const platform = parseArg(process.argv, "--cppPlatform") || process.env.CPP_PLATFORM;
+const configuration = parseArg(process.argv, "--cppConfiguration") || process.env.CPP_CONFIGURATION;
 
 function slice2js(options)
 {
-    var defaults = {};
-    var opts = options || {};
+    const defaults = {};
+    const opts = options || {};
 
     defaults.args = opts.args || [];
-    defaults.include = opts.include || []
+    defaults.include = opts.include || [];
     defaults.dest = opts.dest;
     if(iceHome)
     {
@@ -85,28 +89,64 @@ function slice2js(options)
 // If ICE_HOME is set we install Ice for JavaScript module from ICE_HOME
 // that is required for running JavaScript NodeJS demos.
 //
-gulp.task("npm", [],
-          cb =>
-          {
-              npm.load({loglevel: 'silent', progress: false},
-                       (err, npm) =>
-                       {
-                           if(iceHome)
-                           {
-                               npm.commands.install([path.join(iceHome, 'js')],
-                                                    (err, data) =>
-                                                    {
-                                                        cb(err);
-                                                    });
-                           }
-                           else
-                           {
-                               cb();
-                           }
-                       });
-          });
+if(iceHome)
+{
+    //
+    // BUGFIX: do not use npm.commands.install to install local packages
+    // https://npm.community/t/npm-install-for-package-with-local-dependency-fails/754
+    //
+    gulp.task("npm",
+              cb =>
+              {
+                  const moduleDir = path.join(root, "node_modules", "ice");
 
-const browserDemos = [
+                  function install(err)
+                  {
+                      if(err)
+                      {
+                          cb(err);
+                      }
+                      else
+                      {
+                          fs.symlink(path.join(iceHome, 'js'), path.join(root, "node_modules", "ice"), "dir",
+                                     err =>
+                                     {
+                                         cb(err);
+                                     });
+                      }
+                  }
+
+                  fs.stat(moduleDir,
+                          (err, stats) =>
+                          {
+                              if(err)
+                              {
+                                  if(err.code == "ENOENT")
+                                  {
+                                      install();
+                                  }
+                                  else
+                                  {
+                                      cb(err);
+                                  }
+                              }
+                              else
+                              {
+                                  del(moduleDir).then(() => install());
+                              }
+                          });
+              });
+}
+else
+{
+    gulp.task("npm",
+              cb =>
+              {
+                  cb();
+              });
+}
+
+const demos = [
     "Chat",
     "Glacier2/simpleChat",
     "Ice/bidir",
@@ -115,49 +155,59 @@ const browserDemos = [
     "Ice/minimal",
     "Ice/throughput",
     "Manual/printer",
-    "Manual/simpleFileSystem"];
+    "Manual/simpleFilesystem"];
 
 const demoTaskName = name => "demo_" + name.replace(/\//g, "_");
 
-const demoSliceJsTask = name => demoTaskName(name) + ":slice-compile-js";
-const demoSliceJsCleanTask = name => demoTaskName(name) + ":slice-compile-js:clean";
-const demoSliceTsTask = name => demoTaskName(name) + ":slice-compile-ts";
-const demoSliceTsCleanTask = name => demoTaskName(name) + ":slice-compile-ts:clean";
+const demoSliceJsTask = name => demoTaskName(name) + ":slice2js";
+const demoSliceTsTask = name => demoTaskName(name) + ":slice2ts";
+const demoTsCompileTask = name => demoTaskName(name) + ":tscompile";
 
-const demoBuildTask = name => demoTaskName(name) + ":build";
 const demoBundleTask = name => demoTaskName(name) + ":bundle";
+const demoBuildTask = name => demoTaskName(name) + ":build";
 const demoCleanTask = name => demoTaskName(name) + ":clean";
 
-for(let demo of browserDemos)
+const demoModuleName = demo => {
+    let name = path.basename(demo);
+    name = name.charAt(0).toLowerCase() + name.substr(1);
+    return name.replace(/([A-Z])/g, "-$1").toLowerCase();
+}
+
+for(let demo of demos)
 {
-    gulp.task(demoSliceJsTask(demo), [],
+    const moduleName = demoModuleName(demo);
+    gulp.task(demoSliceJsTask(demo),
               cb =>
               {
+                  const outdir = path.join(root, demo, "node_modules", moduleName);
                   pump([
-                      gulp.src(path.join(demo, "*.ice")),
-                      slice2js({include:[demo], dest:path.join(demo, "node_modules", "demo")}),
-                      gulp.dest(path.join(demo, "node_modules", "demo"))
+                      gulp.src(path.join(root, demo, "*.ice")),
+                      slice2js({include: [demo], dest: outdir}),
+                      gulp.dest(outdir)
                   ], cb);
               });
 
-    gulp.task(demoSliceTsTask(demo), [],
+    gulp.task(demoSliceTsTask(demo),
               cb =>
               {
+                  const outdir = path.join(root, demo, "node_modules", moduleName);
                   pump([
-                      gulp.src(path.join(demo, "*.ice")),
-                      slice2js({
-                        include:[demo],
-                        dest:path.join(demo, "node_modules", "demo"),
-                        args:["--typescript"]}),
-                      gulp.dest(path.join(demo, "node_modules", "demo"))
+                      gulp.src(path.join(root, demo, "*.ice")),
+                      slice2js(
+                          {
+                              include: [demo],
+                              dest: outdir,
+                              args: ["--typescript"]
+                          }),
+                      gulp.dest(outdir)
                   ], cb);
               });
 
-    gulp.task(demoBuildTask(demo), ["npm", demoSliceJsTask(demo), demoSliceTsTask(demo)],
+    gulp.task(demoTsCompileTask(demo),
               cb =>
               {
                   pump([
-                      gulp.src(path.join(demo, "*.ts")),
+                      gulp.src(path.join(root, demo, "*.ts")),
                       tsc(
                           {
                               lib: ["dom", "es2017"],
@@ -167,11 +217,11 @@ for(let demo of browserDemos)
                               noUnusedLocals:true,
                               types: ["@types/jquery"]
                           }),
-                      gulp.dest(demo)
+                      gulp.dest(path.join(root, demo))
                   ], cb);
               });
 
-    gulp.task(demoBundleTask(demo), [demoBuildTask(demo)],
+    gulp.task(demoBundleTask(demo),
               cb => {
                   return rollup.rollup({
                       input: path.join(demo, "Client.js"),
@@ -194,35 +244,29 @@ for(let demo of browserDemos)
                   });
               });
 
-    gulp.task(demoSliceTsCleanTask(demo), [],
-              cb =>
-              {
-                  pump([gulp.src(path.join(demo, "*.ice")), extreplace(".d.ts"), paths(del)], cb);
-              });
+    gulp.task(demoBuildTask(demo),
+              gulp.series(gulp.parallel(demoSliceJsTask(demo), demoSliceTsTask(demo)),
+                          demoTsCompileTask(demo), demoBundleTask(demo)));
 
-    gulp.task(demoSliceJsCleanTask(demo), [],
+    gulp.task(demoCleanTask(demo),
               cb =>
               {
-                  pump([gulp.src(path.join(demo, "*.ice")), extreplace(".js"), paths(del)], cb);
-              });
-
-    gulp.task(demoCleanTask(demo), [demoSliceJsCleanTask(demo), demoSliceTsCleanTask(demo)],
-              cb =>
-              {
-                  pump([gulp.src(path.join(demo, "**/*.js")), paths(del)], cb);
+                  pump([gulp.src([path.join(demo, "**/*.js"),
+                                  path.join(demo, "**/*.d.ts"),
+                                  path.join(demo, "**/.depend"),
+                                  "!**/index.js",
+                                  "!**/index.d.ts"]), paths(del)], cb);
               });
 }
 
-gulp.task("demo:build", browserDemos.map(demoBuildTask));
-gulp.task("demo:clean", browserDemos.map(demoCleanTask));
+gulp.task("build", gulp.series("npm", demos.map(demoBuildTask)));
+gulp.task("clean", gulp.series(demos.map(demoCleanTask)));
 
-gulp.task("build", ["demo:build"]);
+gulp.task("default", gulp.series("build"));
 
-gulp.task("clean", ["demo:clean", "dist:clean"]);
-gulp.task("default", ["build"]);
-
-gulp.task("run", ["build"],
-    function(){
-        HttpServer();
-        return gulp.src("").pipe(open({uri: "http://127.0.0.1:8080/index.html"}));
-    });
+gulp.task("run",
+          () =>
+          {
+              httpServer();
+              return gulp.src(__filename).pipe(open({uri: "http://127.0.0.1:8080/index.html"}));
+          });

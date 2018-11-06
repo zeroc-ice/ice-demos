@@ -5,7 +5,7 @@
 // **********************************************************************
 
 import {Ice, Glacier2} from "ice";
-import {Demo} from "demo";
+import {Demo} from "simple-chat";
 
 (async () =>
 {

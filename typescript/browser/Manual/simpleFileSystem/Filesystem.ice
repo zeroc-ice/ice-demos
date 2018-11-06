@@ -11,7 +11,7 @@
 //
 [["js:es6-module"]]
 
-["js:module:demo"]
+["js:module:simple-filesystem"]
 module Filesystem
 {
     exception GenericError

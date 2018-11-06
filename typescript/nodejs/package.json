@@ -12,21 +12,20 @@
     "clean": "gulp clean"
   },
   "dependencies": {
-    "ice": "file:../../../ice/js",
+    "ice": "file:^3.7.1",
     "slice2js": "^3.7.1"
   },
   "devDependencies": {
-    "@types/node": "^10.12.0",
+    "@types/node": "^10.12.2",
     "del": "^3.0.0",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.0",
     "gulp-ext-replace": "^0.3.0",
-    "gulp-ice-builder": "^2.0.2",
+    "gulp-ice-builder": "^2.0.3",
     "gulp-newer": "^1.4.0",
     "gulp-terser": "^1.1.5",
     "gulp-typescript": "^5.0.0-alpha.3",
-    "npm": "^6.4.1",
     "pump": "^3.0.0",
-    "typescript": "^3.1.3",
+    "typescript": "^3.1.6",
     "vinyl-paths": "^2.1.0"
   }
 }

@@ -5,10 +5,10 @@
 // **********************************************************************
 
 /// <reference path="../../node_modules/ice/src/index.d.ts" />
-/// <reference path="node_modules/demo/index.d.ts" />
+/// <reference path="node_modules/simple-chat/index.d.ts" />
 
 import {Ice, Glacier2} from "ice";
-import {Demo} from "demo";
+import {Demo} from "simple-chat";
 
 (function(){
 

@@ -6,7 +6,7 @@
 
 #pragma once
 
-["js:module:demo"]
+["js:module:bidir"]
 module Demo
 {
     interface CallbackReceiver

@@ -5,7 +5,7 @@
 // **********************************************************************
 
 import {Ice} from "ice";
-import {Demo} from "demo";
+import {Demo} from "hello";
 
 (async function()
 {

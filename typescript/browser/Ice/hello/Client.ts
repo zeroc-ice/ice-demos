@@ -5,10 +5,10 @@
 // **********************************************************************
 
 /// <reference path="../../node_modules/ice/src/index.d.ts" />
-/// <reference path="node_modules/demo/index.d.ts" />
+/// <reference path="node_modules/hello/index.d.ts" />
 
 import {Ice} from "ice";
-import {Demo} from "demo";
+import {Demo} from "hello";
 
 (function(){
 

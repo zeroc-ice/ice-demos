@@ -8,7 +8,7 @@
 
 #include <Glacier2/Session.ice>
 
-["js:module:demo"]
+["js:module:simple-chat"]
 module Demo
 {
     interface ChatCallback

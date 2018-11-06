@@ -30,7 +30,7 @@ The TypeScript sample programs require an installation of [Node.js][3].
 
 #### Building the demos with the NPM packages
 
-With Node.js in your PATH, go to the [typescript/browser directory](../typescript/browser)
+With Node.js in your PATH, go to the typescript/browser directory
 and run the following command to install several dependencies:
 
 ```

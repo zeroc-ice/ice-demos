@@ -5,7 +5,7 @@
 // **********************************************************************
 
 import {Ice} from "ice";
-import {Demo} from "demo";
+import {Demo} from "bidir";
 
 //
 // Define a servant class that implements Demo.CallbackReceiver

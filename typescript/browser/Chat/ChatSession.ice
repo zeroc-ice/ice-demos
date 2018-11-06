@@ -15,7 +15,7 @@
 //
 [["js:es6-module"]]
 
-["js:module:demo"]
+["js:module:chat"]
 module Chat
 {
 

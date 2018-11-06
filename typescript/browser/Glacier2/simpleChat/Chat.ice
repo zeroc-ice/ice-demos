@@ -13,7 +13,7 @@
 //
 [["js:es6-module"]]
 
-["js:module:demo"]
+["js:module:simple-chat"]
 module Demo
 {
     interface ChatCallback
