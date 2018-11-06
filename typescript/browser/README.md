@@ -17,7 +17,7 @@ The following subdirectories contain sample programs:
 - [Manual](./Manual) contains complete examples for some of the code snippets
 in the [Ice manual][2].
 
-Refer to the [C++11 demos](../cpp11) for more examples that use Ice services
+Refer to the [C++11 demos](../../cpp11) for more examples that use Ice services
 such as IceGrid and IceStorm.
 
 ## Build Instructions

@@ -15,7 +15,7 @@ The following subdirectories contain sample programs:
 - [Manual](./Manual) contains complete examples for some of the code snippets
 in the [Ice manual][1].
 
-Refer to the [C++11 demos](../cpp11) for more examples that use Ice services
+Refer to the [C++11 demos](../../cpp11) for more examples that use Ice services
 such as IceGrid and IceStorm.
 
 ## Build Instructions
@@ -28,7 +28,7 @@ The JavaScript sample programs require an installation of [Node.js][3].
 
 #### Building the demos with the NPM packages
 
-With Node.js in your PATH, go to the [typescript/nodejs directory](../typescript/nodejs)
+With Node.js in your PATH, go to the typescript/nodejs directory
 and run the following command to install several dependencies:
 
 ```
