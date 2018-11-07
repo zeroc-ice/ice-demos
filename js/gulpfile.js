@@ -16,7 +16,6 @@ const gulp = require("gulp");
 const gzip = require("gulp-gzip");
 const iceBuilder = require("gulp-ice-builder");
 const newer = require("gulp-newer");
-const npm = require("npm");
 const open = require("gulp-open");
 const path = require("path");
 const paths = require("vinyl-paths");

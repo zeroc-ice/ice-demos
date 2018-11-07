@@ -37,7 +37,6 @@
     "gulp-uglifyes": "^0.2.1",
     "hogan.js": "^3.0.2",
     "http-proxy": "^1.17.0",
-    "npm": "^6.4.1",
     "pump": "^3.0.0",
     "vinyl-paths": "^2.1.0"
   }
