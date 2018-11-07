@@ -1,0 +1,3 @@
+{
+  "Ice.Default.Router": "Glacier2/router:wss -p 443 -h zeroc.com -r /demo-proxy/chat/glacier2"
+}
