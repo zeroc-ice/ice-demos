@@ -98,21 +98,50 @@ function getIceLibs(es5)
 //
 if(iceHome)
 {
+    //
+    // BUGFIX: do not use npm.commands.install to install local packages
+    // https://npm.community/t/npm-install-for-package-with-local-dependency-fails/754
+    //
     gulp.task("npm",
               cb =>
               {
-                  npm.load({loglevel: 'silent', progress: false},
-                           err =>
-                           {
-                               if(err)
-                               {
-                                   cb(err);
-                               }
-                               else
-                               {
-                                   npm.commands.install([path.join(iceHome, 'js')], cb);
-                               }
-                           });
+                  const moduleDir = path.join(root, "node_modules", "ice");
+
+                  function install(err)
+                  {
+                      if(err)
+                      {
+                          cb(err);
+                      }
+                      else
+                      {
+                          fs.symlink(path.join(iceHome, 'js'), path.join(root, "node_modules", "ice"), "dir",
+                                     err =>
+                                     {
+                                         cb(err);
+                                     });
+                      }
+                  }
+
+                  fs.stat(moduleDir,
+                          (err, stats) =>
+                          {
+                              if(err)
+                              {
+                                  if(err.code == "ENOENT")
+                                  {
+                                      install();
+                                  }
+                                  else
+                                  {
+                                      cb(err);
+                                  }
+                              }
+                              else
+                              {
+                                  del(moduleDir).then(() => install());
+                              }
+                          });
               });
 }
 else
