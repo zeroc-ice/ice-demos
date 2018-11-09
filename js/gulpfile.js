@@ -87,8 +87,7 @@ function slice2js(options)
 
 function getIceLibs(es5)
 {
-    return path.join(iceHome ? path.join(iceHome, 'js', 'lib') : path.join('node_modules', 'ice', 'lib'),
-                     es5 ? 'es5/*' : '*');
+    return path.join(path.join(root, 'node_modules', 'ice', 'lib'), es5 ? 'es5/*' : '*');
 }
 
 //
@@ -152,46 +151,19 @@ else
               });
 }
 
-//
-// Deploy Ice for JavaScript browser libraries from ice or from ICE_HOME depending
-// on whenever or not ICE_HOME is set.
-//
-gulp.task("dist",
-          cb =>
-          {
-              pump([gulp.src([getIceLibs(false)]),
-                    newer("lib"),
-                    gulp.dest("lib")], cb);
-          });
-
-gulp.task("dist:es5",
-          cb =>
-          {
-              pump([gulp.src([getIceLibs(true)]),
-                    newer("lib/es5"),
-                    gulp.dest("lib/es5")], cb);
-          });
-
-gulp.task("dist:clean",
-          cb =>
-          {
-              del(["lib/*", "lib/es5/*", "lib"]);
-              cb();
-          });
-
 gulp.task("common:es5",
           cb =>
           {
-              pump([gulp.src([path.join("assets", "common.js")]),
+              pump([gulp.src([path.join(root, "assets", "common.js")]),
                     babel({compact: false}),
-                    gulp.dest(path.join("assets", "es5"))], cb);
+                    gulp.dest(path.join(root, "assets", "es5"))], cb);
           });
 
 gulp.task("common:es5:clean",
           cb =>
           {
-              del(["assets/es5/*", "assets/es5"]);
-              cb();
+              pump([gulp.src([path.join(root, "assets", "es5")], {allowEmpty: true}),
+                    paths(del)], cb);
           });
 
 const demos =
@@ -199,8 +171,8 @@ const demos =
     "Chat":
     {
         srcs: [
-            "lib/Ice.min.js",
-            "lib/Glacier2.min.js",
+            "node_modules/ice/lib/Ice.min.js",
+            "node_modules/ice/lib/Glacier2.min.js",
             "Chat/generated/Chat.js",
             "Chat/generated/ChatSession.js",
             "Chat/Client.js"],
@@ -209,15 +181,15 @@ const demos =
     "Glacier2/simpleChat":
     {
         srcs: [
-            "lib/Ice.min.js",
-            "lib/Glacier2.min.js",
+            "node_modules/ice/lib/Ice.min.js",
+            "node_modules/ice/lib/Glacier2.min.js",
             "Glacier2/simpleChat/generated/Chat.js",
             "Glacier2/simpleChat/browser/Client.js"],
         dest: "Glacier2/simpleChat/browser/"
     },
     "Ice/bidir":
     {
-        srcs: ["lib/Ice.min.js",
+        srcs: ["node_modules/ice/lib/Ice.min.js",
                "Ice/bidir/generated/Callback.js",
                "Ice/bidir/browser/Client.js"],
         dest: "Ice/bidir/browser"
@@ -225,7 +197,7 @@ const demos =
     "Ice/hello":
     {
         srcs: [
-            "lib/Ice.min.js",
+            "node_modules/ice/lib/Ice.min.js",
             "Ice/hello/generated/Hello.js",
             "Ice/hello/browser/Client.js"],
         dest: "Ice/hello/browser"
@@ -233,7 +205,7 @@ const demos =
     "Ice/latency":
     {
         srcs: [
-            "lib/Ice.min.js",
+            "node_modules/ice/lib/Ice.min.js",
             "Ice/latency/generated/Latency.js",
             "Ice/latency/browser/Client.js"],
         dest: "Ice/latency/browser"
@@ -241,7 +213,7 @@ const demos =
     "Ice/minimal":
     {
         srcs: [
-            "lib/Ice.min.js",
+            "node_modules/ice/lib/Ice.min.js",
             "Ice/minimal/generated/Hello.js",
             "Ice/minimal/browser/Client.js"],
         dest: "Ice/minimal/browser/"
@@ -249,7 +221,7 @@ const demos =
     "Ice/throughput":
     {
         srcs: [
-            "lib/Ice.min.js",
+            "node_modules/ice/lib/Ice.min.js",
             "Ice/throughput/generated/Throughput.js",
             "Ice/throughput/browser/Client.js"],
         dest: "Ice/throughput/browser/"
@@ -257,7 +229,7 @@ const demos =
     "Manual/printer":
     {
         srcs: [
-            "lib/Ice.min.js",
+            "node_modules/ice/lib/Ice.min.js",
             "Manual/printer/generated/Printer.js",
             "Manual/simpleFileSystem/browser/Client.js"],
         dest: "Manual/printer/browser"
@@ -265,7 +237,7 @@ const demos =
     "Manual/simpleFileSystem":
     {
         srcs: [
-            "lib/Ice.min.js",
+            "node_modules/ice/lib/Ice.min.js",
             "Manual/simpleFileSystem/generated/Filesystem.js",
             "Manual/printer/browser/Client.js"],
         dest: "Manual/simpleFileSystem/browser"
@@ -366,13 +338,9 @@ for(const name of Object.keys(demos))
                           demoBrowserBabelTask(name)));
 }
 
-gulp.task("build", gulp.series(
-    "npm", "dist", "dist:es5", "common:es5",
-    gulp.parallel(Object.keys(demos).map(demoBuildTask))));
+gulp.task("build", gulp.series("npm", "common:es5", gulp.parallel(Object.keys(demos).map(demoBuildTask))));
 
-gulp.task("clean", gulp.parallel(
-    "dist:clean", "common:es5:clean",
-    Object.keys(demos).map(demoCleanTask)));
+gulp.task("clean", gulp.parallel("common:es5:clean", Object.keys(demos).map(demoCleanTask)));
 
 gulp.task("run", gulp.series("build",
                              () =>

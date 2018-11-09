@@ -84,9 +84,9 @@
             script <code>Client.min.js</code> that includes:
             </p>
             <ul>
-                <li><code>es5/Ice.js</code> (The Ice run-time library)</li>
-                <li><code>es5/generated/Printer.js</code> (The generated code for this demo)</li>
-                <li><code>es5/browser/Client.js</code> (The demo source)</li>
+                <li><code>node_modules/ice/lib/es5/Ice.js</code> (The Ice run-time library)</li>
+                <li><code>node_modules/ice/lib/es5/generated/Printer.js</code> (The generated code for this demo)</li>
+                <li><code>node_modules/ice/lib/es5/browser/Client.js</code> (The demo source)</li>
             </ul>
             <p>To use the minified version you should edit the <code>js/Manual/printer/index.html</code>
                 file and comment out the non-optimized scripts:</p>
@@ -97,7 +97,7 @@
                 below
                 --&gt;
                 &lt;!-- Ice.js (Ice run-time library) --&gt;
-                &lt;script type="text/javascript" src="../../../lib/es5/Ice.js"&gt;&lt;/script&gt;
+                &lt;script type="text/javascript" src="../../../node_modules/ice/lib/es5/Ice.js"&gt;&lt;/script&gt;
                 &lt;!-- Printer.js (Demo generated code) --&gt;
                 &lt;script type="text/javascript" src="es5/generated/Printer.js"&gt;&lt;/script&gt;
                 &lt;!-- Client.js (Printer Demo Application) --&gt;
@@ -161,7 +161,7 @@
       below
     -->
     <!-- Ice.js (Ice run-time library) -->
-    <script type="text/javascript" src="../../../lib/es5/Ice.js"></script>
+    <script type="text/javascript" src="../../../node_modules/ice/lib/es5/Ice.js"></script>
     <!-- Printer.js (Demo generated code) -->
     <script type="text/javascript" src="es5/generated/Printer.js"></script>
     <!-- Client.js (Printer Demo Application) -->
