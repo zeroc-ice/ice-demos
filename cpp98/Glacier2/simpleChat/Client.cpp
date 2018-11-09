@@ -11,13 +11,8 @@
 using namespace std;
 using namespace Demo;
 
-namespace
-{
-
 // mutex to prevent intertwined cout output
 IceUtil::Mutex coutMutex;
-
-}
 
 class ChatCallbackI : public ChatCallback
 {
@@ -31,128 +26,19 @@ public:
     }
 };
 
-class ChatClient : public Glacier2::Application
+class CloseCallbackI : public Ice::CloseCallback
 {
 public:
 
-    ChatClient() :
-        //
-        // Since this is an interactive demo we don't want any signal
-        // handling.
-        //
-        Glacier2::Application(Ice::NoSignalHandling)
-    {
-    }
-
-    virtual Glacier2::SessionPrx
-    createSession()
-    {
-        ChatSessionPrx sess;
-        while(!sess)
-        {
-            cout << "This demo accepts any user-id / password combination.\n";
-
-            string id;
-            cout << "user id: " << flush;
-            getline(cin, id);
-            id = trim(id);
-
-            string pw;
-            cout << "password: " << flush;
-            getline(cin, pw);
-            pw = trim(pw);
-
-            try
-            {
-                sess = ChatSessionPrx::uncheckedCast(router()->createSession(id, pw));
-                break;
-            }
-            catch(const Glacier2::PermissionDeniedException& ex)
-            {
-                cout << "permission denied:\n" << ex.reason << endl;
-            }
-            catch(const Glacier2::CannotCreateSessionException& ex)
-            {
-                cout << "cannot create session:\n" << ex.reason << endl;
-            }
-        }
-        return sess;
-    }
-
-    virtual int
-    runWithSession(int argc, char*[])
-    {
-        if(argc > 1)
-        {
-            cerr << appName() << ": too many arguments" << endl;
-            return 1;
-        }
-
-        Ice::Identity callbackReceiverIdent = createCallbackIdentity("callbackReceiver");
-
-        ChatCallbackPtr cb = new ChatCallbackI;
-        ChatCallbackPrx callback = ChatCallbackPrx::uncheckedCast(objectAdapter()->add(cb, callbackReceiverIdent));
-
-        ChatSessionPrx sessionPrx = ChatSessionPrx::uncheckedCast(session());
-        sessionPrx->setCallback(callback);
-        menu();
-
-        do
-        {
-            string s;
-            {
-                IceUtil::Mutex::Lock lock(coutMutex);
-                cout << "==> ";
-            }
-            getline(cin, s);
-            s = trim(s);
-            if(!s.empty())
-            {
-                if(s[0] == '/')
-                {
-                    if(s == "/quit")
-                    {
-                        break;
-                    }
-                    menu();
-                }
-                else
-                {
-                    sessionPrx->say(s);
-                }
-            }
-        }
-        while(cin.good());
-        return 0;
-    }
-
     virtual void
-    sessionDestroyed()
-    {
-        cout << "Connection lost." << endl;
-    }
-
-private:
-
-    void
-    menu()
+    closed(const Ice::ConnectionPtr&)
     {
         IceUtil::Mutex::Lock lock(coutMutex);
-        cout << "enter /quit to exit." << endl;
-    }
-
-    string
-    trim(const string& s)
-    {
-        static const string delims = "\t\r\n ";
-        string::size_type last = s.find_last_not_of(delims);
-        if(last != string::npos)
-        {
-            return s.substr(s.find_first_not_of(delims), last+1);
-        }
-        return s;
+        cout << "The Glacier2 session has been destroyed." << endl;
     }
 };
+
+void run(const Ice::CommunicatorPtr&);
 
 int
 main(int argc, char* argv[])
@@ -160,6 +46,133 @@ main(int argc, char* argv[])
 #ifdef ICE_STATIC_LIBS
     Ice::registerIceSSL();
 #endif
-    ChatClient app;
-    return app.main(argc, argv, "config.client");
+
+    int status = 0;
+    try
+    {
+        //
+        // CommunicatorHolder's ctor initializes an Ice communicator,
+        // and its dtor destroys this communicator.
+        //
+        Ice::CommunicatorHolder ich(argc, argv, "config.client");
+
+        //
+        // The communicator initialization removes all Ice-related arguments from argc/argv
+        //
+        if(argc > 1)
+        {
+            cerr << argv[0] << ": too many arguments" << endl;
+            status = 1;
+        }
+        else
+        {
+            run(ich.communicator());
+        }
+    }
+    catch(const std::exception& ex)
+    {
+        cerr << argv[0] << ": " << ex.what() << endl;
+        status = 1;
+    }
+
+    return status;
+}
+
+void menu();
+string trim(const string&);
+
+void
+run(const Ice::CommunicatorPtr& communicator)
+{
+    Glacier2::RouterPrx router = Glacier2::RouterPrx::checkedCast(communicator->getDefaultRouter());
+    ChatSessionPrx session;
+    while(!session)
+    {
+        cout << "This demo accepts any user-id / password combination.\n";
+
+        string id;
+        cout << "user id: " << flush;
+        getline(cin, id);
+
+        string pw;
+        cout << "password: " << flush;
+        getline(cin, pw);
+
+        try
+        {
+            session = ChatSessionPrx::uncheckedCast(router->createSession(id, pw));
+            break;
+        }
+        catch(const Glacier2::PermissionDeniedException& ex)
+        {
+            cout << "permission denied:\n" << ex.reason << endl;
+        }
+        catch(const Glacier2::CannotCreateSessionException& ex)
+        {
+            cout << "cannot create session:\n" << ex.reason << endl;
+        }
+    }
+
+    Ice::Int acmTimeout = router->getACMTimeout();
+    Ice::ConnectionPtr connection = router->ice_getCachedConnection();
+    assert(connection);
+    connection->setACM(acmTimeout, IceUtil::None, Ice::HeartbeatAlways);
+    connection->setCloseCallback(new CloseCallbackI());
+
+    Ice::Identity callbackReceiverIdent;
+    callbackReceiverIdent.name = "callbackReceiver";
+    callbackReceiverIdent.category = router->getCategoryForClient();
+
+    auto adapter = communicator->createObjectAdapterWithRouter("", router);
+    adapter->activate();
+    ChatCallbackPrx callback = ChatCallbackPrx::uncheckedCast(adapter->add(new ChatCallbackI(), callbackReceiverIdent));
+
+    session->setCallback(callback);
+    menu();
+
+    do
+    {
+        string s;
+        {
+            IceUtil::Mutex::Lock lock(coutMutex);
+            cout << "==> ";
+        }
+        getline(cin, s);
+        s = trim(s);
+        if(!s.empty())
+        {
+            if(s[0] == '/')
+            {
+                if(s == "/quit")
+                {
+                    break;
+                }
+                menu();
+            }
+            else
+            {
+                session->say(s);
+            }
+        }
+    }
+    while(cin.good());
+}
+
+void
+menu()
+{
+    IceUtil::Mutex::Lock lock(coutMutex);
+    cout << "enter /quit to exit." << endl;
+}
+
+string
+trim(const string& s)
+{
+    static const string delims = "\t\r\n ";
+    string::size_type last = s.find_last_not_of(delims);
+    if(last != string::npos)
+    {
+        return s.substr(s.find_first_not_of(delims), last+1);
+    }
+    return s;
 }
