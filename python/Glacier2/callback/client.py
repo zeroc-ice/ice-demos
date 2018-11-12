@@ -55,7 +55,8 @@ def run(communicator):
     connection = router.ice_getCachedConnection()
     assert(connection)
     connection.setACM(acmTimeout, Ice.Unset, Ice.ACMHeartbeat.HeartbeatAlways)
-    connection.setCloseCallback(lambda conn: print("The Glacier2 session has been destroyed."))
+    # Note: we use sys.stdout.write instead of print because print can't be used in a lambda with Python 2.x
+    connection.setCloseCallback(lambda conn: sys.stdout.write("The Glacier2 session has been destroyed.\n"))
 
     callbackReceiverIdent = Ice.Identity()
     callbackReceiverIdent.name = "callbackReceiver"
