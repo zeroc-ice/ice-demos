@@ -123,7 +123,7 @@ run(const Ice::CommunicatorPtr& communicator)
     callbackReceiverIdent.name = "callbackReceiver";
     callbackReceiverIdent.category = router->getCategoryForClient();
 
-    auto adapter = communicator->createObjectAdapterWithRouter("", router);
+    Ice::ObjectAdapterPtr adapter = communicator->createObjectAdapterWithRouter("", router);
     adapter->activate();
     ChatCallbackPrx callback = ChatCallbackPrx::uncheckedCast(adapter->add(new ChatCallbackI(), callbackReceiverIdent));
 

@@ -115,7 +115,7 @@ run(const Ice::CommunicatorPtr& communicator)
     CallbackPrx oneway = twoway->ice_oneway();
     CallbackPrx batchOneway = twoway->ice_batchOneway();
 
-    auto adapter = communicator->createObjectAdapterWithRouter("", router);
+    Ice::ObjectAdapterPtr adapter = communicator->createObjectAdapterWithRouter("", router);
     adapter->activate();
     adapter->add(new CallbackReceiverI, callbackReceiverIdent);
 
