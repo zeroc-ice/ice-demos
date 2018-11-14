@@ -54,7 +54,7 @@ clean {
 }
 
 dependencies {
-    implementation 'com.zeroc:ice:3.7.1'
-    implementation 'com.zeroc:icessl:3.7.1'
-    implementation 'com.zeroc:icebt:3.7.1'
+    implementation 'com.zeroc:ice:3.7.1-1'
+    implementation 'com.zeroc:icessl:3.7.1-1'
+    implementation 'com.zeroc:icebt:3.7.1-1'
 }

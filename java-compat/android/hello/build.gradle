@@ -50,6 +50,6 @@ clean {
 }
 
 dependencies {
-    implementation 'com.zeroc:ice-compat:3.7.1'
-    implementation 'com.zeroc:icediscovery-compat:3.7.1'
+    implementation 'com.zeroc:ice-compat:3.7.1-1'
+    implementation 'com.zeroc:icediscovery-compat:3.7.1-1'
 }
