@@ -67,4 +67,4 @@ Web server, you will need to modify the router's endpoint in
 host, modify the endpoint in `Session.php`.
 
 [1]: https://doc.zeroc.com/display/Ice37/Application+Notes+for+PHP
-[2]: https://doc.zeroc.com/display/Rel/Ice+3.7.1+Release+Notes
+[2]: https://doc.zeroc.com/display/Rel/Ice+3.7.2+Release+Notes

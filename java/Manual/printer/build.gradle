@@ -42,7 +42,7 @@ subprojects {
     // Both Client and Server depend only on Ice JAR
     //
     dependencies {
-        compile 'com.zeroc:ice:3.7.1'
+        compile 'com.zeroc:ice:3.7.2'
     }
 
     //

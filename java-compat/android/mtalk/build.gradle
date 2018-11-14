@@ -54,5 +54,5 @@ clean {
 }
 
 dependencies {
-    implementation 'com.zeroc:ice-compat:3.7.1'
+    implementation 'com.zeroc:ice-compat:3.7.2'
 }

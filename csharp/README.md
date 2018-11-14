@@ -147,6 +147,6 @@ directory to your PATH. Please refer to the [Release Notes][6] for additional in
 [1]: https://doc.zeroc.com/display/Ice37/Ice+Manual
 [2]: https://zeroc.com/chat/index.html
 [3]: https://marketplace.visualstudio.com/items?itemName=ZeroCInc.IceBuilder
-[4]: https://doc.zeroc.com/display/Rel/Using+the+Windows+Binary+Distributions+for+Ice+3.7.1
+[4]: https://doc.zeroc.com/display/Rel/Using+the+Windows+Binary+Distributions+for+Ice+3.7.2
 [5]: https://www.microsoft.com/net/download/windows
 [6]: https://doc.zeroc.com/display/Ice37/Ice+Release+Notes
