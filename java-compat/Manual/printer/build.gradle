@@ -29,21 +29,17 @@ subprojects {
     }
 
     //
-    // Use Ice JAR files from maven central repository, fallback to ZeroC testing
-    // repository (Useful for release testing)
+    // Use Ice JAR files from maven central repository
     //
     repositories {
         mavenCentral()
-        maven {
-            url "https://builds.testing.zeroc.com/nexus/repository/maven.ice-3.7"
-        }
     }
 
     //
     // Both Client and Server depend only on Ice JAR
     //
     dependencies {
-        compile 'com.zeroc:ice-compat:3.7.2'
+        implementation 'com.zeroc:ice-compat:3.7.2'
     }
 
     //
@@ -53,7 +49,7 @@ subprojects {
         manifest {
             attributes(
                 "Main-Class" : project.name.capitalize(),
-                "Class-Path": configurations.runtime.resolve().collect { it.toURI() }.join(' ')
+                "Class-Path": configurations.runtimeClasspath.resolve().collect { it.toURI() }.join(' ')
             )
         }
     }

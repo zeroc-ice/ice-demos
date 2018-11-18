@@ -20,9 +20,9 @@ sourceSets {
 }
 
 dependencies {
-    compile localDependency("ice-compat")
-    compile localDependency("icestorm-compat")
-    runtime "org.apache.commons:commons-compress:1.14"
+    implementation "com.zeroc:ice-compat:${project.iceArtifactVersion}"
+    implementation "com.zeroc:icestorm-compat:${project.iceArtifactVersion}"
+    runtimeOnly "org.apache.commons:commons-compress:1.14"
 }
 
 // Create a jar for the publisher & subscriber which includes everything in the demo.
@@ -45,14 +45,14 @@ task subscriberJar(type: Jar) {
 publisherJar {
     manifest {
         attributes("Main-Class": "Publisher")
-        attributes("Class-Path": configurations.compile.resolve().collect { it.toURI() }.join(' '))
+        attributes("Class-Path": configurations.runtimeClasspath.resolve().collect { it.toURI() }.join(' '))
     }
 }
 
 subscriberJar {
     manifest {
         attributes("Main-Class": "Subscriber")
-        attributes("Class-Path": configurations.compile.resolve().collect { it.toURI() }.join(' '))
+        attributes("Class-Path": configurations.runtimeClasspath.resolve().collect { it.toURI() }.join(' '))
     }
 }
 

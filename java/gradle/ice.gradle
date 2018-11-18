@@ -4,20 +4,32 @@
 //
 // **********************************************************************
 
-if (!project.plugins.findPlugin(com.zeroc.gradle.icebuilder.slice.SlicePlugin)) {
-    project.apply(plugin: com.zeroc.gradle.icebuilder.slice.SlicePlugin)
-}
+project.apply(plugin: com.zeroc.gradle.icebuilder.slice.SlicePlugin)
 
-if(this.cppPlatform) {
-    slice.cppPlatform = this.cppPlatform
-}
+//
+// slice.iceVersion returns the version of slice2java used by Ice Builder.
+// This is usually (but not always) the version of the Ice Jar files we want to use.
+//
+project.ext.iceArtifactVersion = slice.iceVersion
 
-if(this.cppConfiguration) {
-    slice.cppConfiguration = this.cppConfiguration
-}
+project.version = project.iceArtifactVersion
 
-if(this.iceHome) {
-    slice.iceHome = this.iceHome
+slice {
+    if(project.cppPlatform) {
+        cppPlatform = project.cppPlatform
+    }
+
+    if(project.cppConfiguration) {
+        cppConfiguration = project.cppConfiguration
+    }
+
+    if(project.iceHome) {
+        iceHome = project.iceHome
+    }
+
+    if(project.hasProperty('android')) {
+        output = project.file("${project.buildDir}/generated/source/ice")
+    }
 }
 
 buildscript {
@@ -25,7 +37,7 @@ buildscript {
     // If iceBuilderHome is set add its lib directory it to the local maven repositories
     // so we can build using a local plugin version
     //
-    if (iceBuilderHome) {
+    if(iceBuilderHome) {
         def builder  = new File([iceBuilderHome, "build", "libs"].join(File.separator))
 
         if(builder.exists()) {
@@ -54,22 +66,28 @@ buildscript {
     }
 }
 
-ext.generatedDir = "$project.buildDir/generated"
+repositories {
+    if(slice.jarDir != null) {
+        flatDir {
+            name "local"
+            dirs slice.jarDir
+        }
+    }
+
+    if(project.devRepo) {
+        maven {
+            url project.devRepo
+        }
+    }
+
+    mavenCentral()
+}
 
 // Android does not have a compileJava task
 if(!(project.hasProperty('android') && project.android.sourceSets)) {
     compileJava {
         options.debug = debug
     }
-}
-
-def env = System.getenv()
-
-// Check if we need to append version suffix to jar files
-ext.versionSuffix = ""
-def iceJar = new File("${slice.jarDir}/ice-${slice.iceVersion}.jar")
-if(iceJar.exists()) {
-    ext.versionSuffix = "-${slice.iceVersion}"
 }
 
 def demoJar(name, mainClass = name.capitalize()) {
@@ -87,7 +105,7 @@ def demoJar(name, mainClass = name.capitalize()) {
         if(mainClass) {
             attributes("Main-Class": mainClass)
         }
-        attributes("Class-Path": configurations.runtime.resolve().collect { it.toURI() }.join(' '))
+        attributes("Class-Path": configurations.runtimeClasspath.resolve().collect { it.toURI() }.join(' '))
     }
 
     artifacts {
@@ -105,9 +123,9 @@ def demoIceBoxServer() {
     }
 
     dependencies {
-        iceboxserver localDependency("ice")
-        iceboxserver localDependency("icessl")
-        iceboxserver localDependency("icebox")
+        iceboxserver "com.zeroc:ice:${project.iceArtifactVersion}"
+        iceboxserver "com.zeroc:icessl:${project.iceArtifactVersion}"
+        iceboxserver "com.zeroc:icebox:${project.iceArtifactVersion}"
         iceboxserver "org.apache.commons:commons-compress:1.14"
     }
 
@@ -129,12 +147,4 @@ def demoIceBoxServer() {
 
 ext {
     demoIceBoxServer = this.&demoIceBoxServer
-}
-
-def localDependency(artifactId) {
-    return "com.zeroc:${artifactId}:${slice.iceVersion}"
-}
-
-ext {
-    localDependency = this.&localDependency
 }

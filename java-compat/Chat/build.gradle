@@ -17,11 +17,11 @@ slice {
 }
 
 dependencies {
-    compile 'com.jgoodies:jgoodies-common:1.8.0'
-    compile 'com.jgoodies:jgoodies-looks:2.6.0'
-    compile 'com.jgoodies:jgoodies-forms:1.8.0'
-    compile localDependency("ice-compat")
-    compile localDependency("glacier2-compat")
+    implementation 'com.jgoodies:jgoodies-common:1.8.0'
+    implementation 'com.jgoodies:jgoodies-looks:2.6.0'
+    implementation 'com.jgoodies:jgoodies-forms:1.8.0'
+    implementation "com.zeroc:ice-compat:${project.iceArtifactVersion}"
+    implementation "com.zeroc:glacier2-compat:${project.iceArtifactVersion}"
 }
 
 if(JavaVersion.current() == JavaVersion.VERSION_11) {
@@ -30,7 +30,7 @@ if(JavaVersion.current() == JavaVersion.VERSION_11) {
         destinationDir = new File("${projectDir}")
         manifest {
             attributes 'Main-Class': "ChatDemoGUI.MainView"
-            attributes("Class-Path": configurations.runtime.resolve().collect{ it.toURI() }.join(' '))
+            attributes("Class-Path": configurations.runtimeClasspath.resolve().collect{ it.toURI() }.join(' '))
         }
     }
 }
@@ -45,7 +45,7 @@ else {
     def javaHome = System.properties['java.home']
 
     task proguard(type: proguard.gradle.ProGuardTask, dependsOn: jar) {
-        injars configurations.compile.resolve(), filter: '!META-INF/**'
+        injars configurations.runtimeCLasspath.resolve(), filter: '!META-INF/**'
         injars "${buildDir}/libs/ChatGUITEMP.jar"
         if(JavaVersion.current() <= JavaVersion.VERSION_1_8) {
             libraryjars "${javaHome}/lib/rt.jar"

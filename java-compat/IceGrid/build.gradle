@@ -22,10 +22,10 @@ def demoIceGridProject(name) {
         }
 
         dependencies {
-            compile localDependency("ice-compat")
-            compile localDependency("icegrid-compat")
-            compile localDependency("icelocatordiscovery-compat")
-            runtime "org.apache.commons:commons-compress:1.14"
+            implementation "com.zeroc:ice-compat:${project.iceArtifactVersion}"
+            implementation "com.zeroc:icegrid-compat:${project.iceArtifactVersion}"
+            implementation "com.zeroc:icelocatordiscovery-compat:${project.iceArtifactVersion}"
+            runtimeOnly "org.apache.commons:commons-compress:1.14"
         }
 
         task makeDbDirs {
@@ -55,7 +55,7 @@ project(":demoIceGridSimple") {
 
 project(":demoIceGridIcebox") {
     dependencies {
-        compile localDependency("icebox-compat")
+        implementation "com.zeroc:icebox-compat:${project.iceArtifactVersion}"
     }
     demoJar("client")
     demoJar("service")

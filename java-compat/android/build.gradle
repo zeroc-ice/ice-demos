@@ -6,17 +6,16 @@
 
 buildscript {
     repositories {
-        jcenter()
         google()
+        jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.1'
+        classpath 'com.android.tools.build:gradle:3.2.1'
     }
 }
 
 subprojects {
     project.group = "com.zeroc"
-
     apply plugin: 'idea'
 }
 
@@ -29,6 +28,15 @@ wrapper {
     distributionType = Wrapper.DistributionType.ALL
 }
 
-repositories {
-    google()
+allprojects {
+    repositories {
+        google()
+    }
 }
+
+ext {
+    compileSdkVersion = 21
+    minSdkVersion = 21
+    targetSdkVersion = 21
+}
+

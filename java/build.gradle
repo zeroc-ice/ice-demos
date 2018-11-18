@@ -8,26 +8,7 @@ subprojects {
 
     project.group = "com.zeroc"
     apply plugin: 'java'
-
     apply from: "$rootProject.projectDir/gradle/ice.gradle"
-    project.version = slice.iceVersion
-
-    repositories {
-        if (slice.jarDir != null) {
-            flatDir {
-                name "local"
-                dirs slice.jarDir
-            }
-        }
-
-        if(this.devRepo) {
-            maven {
-                url this.devRepo
-            }
-        }
-
-        mavenCentral()
-    }
 
     tasks.withType(JavaCompile) {
         options.compilerArgs << "-Xlint:unchecked" << "-Xlint:-options"

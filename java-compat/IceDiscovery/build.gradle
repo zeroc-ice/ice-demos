@@ -23,9 +23,9 @@
         }
 
         dependencies {
-            compile localDependency("ice-compat")
-            compile localDependency("icediscovery-compat")
-            runtime "org.apache.commons:commons-compress:1.14"
+            implementation "com.zeroc:ice-compat:${project.iceArtifactVersion}"
+            runtimeOnly "com.zeroc:icediscovery-compat:${project.iceArtifactVersion}"
+            runtimeOnly "org.apache.commons:commons-compress:1.14"
         }
 
         // Don't create the default jar.

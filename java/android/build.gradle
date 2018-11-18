@@ -6,17 +6,16 @@
 
 buildscript {
     repositories {
-        jcenter()
         google()
+        jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.1'
+        classpath 'com.android.tools.build:gradle:3.2.1'
     }
 }
 
 subprojects {
     project.group = "com.zeroc"
-
     apply plugin: 'idea'
 }
 
@@ -30,6 +29,11 @@ wrapper {
 }
 
 allprojects {
+
+    repositories {
+        google()
+    }
+
     gradle.projectsEvaluated {
         tasks.withType(JavaCompile) {
             options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
@@ -37,6 +41,8 @@ allprojects {
     }
 }
 
-repositories {
-    google()
+ext {
+    compileSdkVersion = 24
+    minSdkVersion = 24
+    targetSdkVersion = 24
 }
