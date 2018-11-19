@@ -28,14 +28,10 @@ subprojects {
     }
 
     //
-    // Use Ice JAR files from maven central repository, fallback to ZeroC testing
-    // repository (Useful for release testing)
+    // Use Ice JAR files from maven central repository
     //
     repositories {
         mavenCentral()
-        maven {
-            url "https://builds.testing.zeroc.com/nexus/repository/maven.ice-3.7"
-        }
     }
 
     //
