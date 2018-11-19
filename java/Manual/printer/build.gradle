@@ -5,7 +5,8 @@
 // **********************************************************************
 
 //
-// Install gradle Ice builder plug-in from the plug-in portal
+// Install gradle Ice builder plug-in from the plug-in portal. `apply false`
+// applies the plug-in only to subprojects.
 //
 plugins {
     id 'com.zeroc.gradle.ice-builder.slice' version '1.4.5' apply false
@@ -35,7 +36,7 @@ subprojects {
     }
 
     //
-    // Both Client and Server depend only on Ice JAR
+    // Both Client and Server depend only on the Ice JAR file
     //
     dependencies {
         implementation "com.zeroc:ice:${slice.iceVersion}"
