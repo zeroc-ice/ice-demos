@@ -45,7 +45,7 @@ else {
     def javaHome = System.properties['java.home']
 
     task proguard(type: proguard.gradle.ProGuardTask, dependsOn: jar) {
-        injars configurations.runtimeCLasspath.resolve(), filter: '!META-INF/**'
+        injars configurations.runtimeClasspath.resolve(), filter: '!META-INF/**'
         injars "${buildDir}/libs/ChatGUITEMP.jar"
         if(JavaVersion.current() <= JavaVersion.VERSION_1_8) {
             libraryjars "${javaHome}/lib/rt.jar"
