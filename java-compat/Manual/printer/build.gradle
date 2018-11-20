@@ -40,7 +40,7 @@ subprojects {
     // Both Client and Server depend only on the Ice JAR file
     //
     dependencies {
-        implementation 'com.zeroc:ice-compat:${slice.iceVersion}'
+        implementation "com.zeroc:ice-compat:${slice.iceVersion}"
     }
 
     //
