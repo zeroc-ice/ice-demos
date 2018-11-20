@@ -32,6 +32,7 @@ allprojects {
 
     repositories {
         google()
+        jcenter()
     }
 
     gradle.projectsEvaluated {
@@ -42,7 +43,7 @@ allprojects {
 }
 
 ext {
-    compileSdkVersion = 24
+    compileSdkVersion = 26
     minSdkVersion = 24
-    targetSdkVersion = 24
+    targetSdkVersion = 26
 }

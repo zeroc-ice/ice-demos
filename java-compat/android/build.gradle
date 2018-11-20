@@ -31,12 +31,13 @@ wrapper {
 allprojects {
     repositories {
         google()
+        jcenter()
     }
 }
 
 ext {
-    compileSdkVersion = 21
+    compileSdkVersion = 26
     minSdkVersion = 21
-    targetSdkVersion = 21
+    targetSdkVersion = 26
 }
 

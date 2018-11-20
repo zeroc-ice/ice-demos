@@ -18,13 +18,10 @@ public class LibraryApp extends Application
     private SessionController _sessionController;
 
     @Override
-    public void onCreate()
-    {
-    }
-
-    @Override
     public void onTerminate()
     {
+        super.onTerminate();
+
         if(_loginController != null)
         {
             _loginController.destroy();

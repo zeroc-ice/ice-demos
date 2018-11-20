@@ -75,7 +75,7 @@ public class HelloApp extends Application
             }
         };
 
-        _wifiManager = (WifiManager)getSystemService(Context.WIFI_SERVICE);
+        _wifiManager = (WifiManager)getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 
         //
         // On some devices, a multicast lock must be acquired otherwise multicast packets are discarded.
