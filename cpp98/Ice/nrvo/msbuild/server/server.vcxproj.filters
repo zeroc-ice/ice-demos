@@ -93,9 +93,17 @@
     <ClInclude Include="x64\Release\Nrvo.h">
       <Filter>Header Files\x64\Release</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\MyStringSeq.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\config.server" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <SliceCompile Include="..\..\Nrvo.ice">
+      <Filter>Slice Files</Filter>
+    </SliceCompile>
   </ItemGroup>
 </Project>

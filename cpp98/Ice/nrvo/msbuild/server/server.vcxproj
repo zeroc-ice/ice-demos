@@ -223,6 +223,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\MyStringSeq.h" />
     <ClInclude Include="..\..\NrvoI.h" />
     <ClInclude Include="Win32\Debug\Nrvo.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
