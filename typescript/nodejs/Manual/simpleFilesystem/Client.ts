@@ -5,9 +5,9 @@
 // **********************************************************************
 
 import {Ice} from "ice";
-import {Filesystem} from "simple-filesystem";
+import {Filesystem} from "./generated";
 
-(async function()
+(async () =>
 {
     //
     // Recursively print the contents of directory "dir" in tree fashion.
@@ -80,4 +80,4 @@ import {Filesystem} from "simple-filesystem";
             await communicator.destroy();
         }
     }
-}());
+})();

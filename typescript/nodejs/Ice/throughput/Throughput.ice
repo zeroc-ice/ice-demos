@@ -6,7 +6,8 @@
 
 #pragma once
 
-["js:module:throughput"]
+[["js:es6-module"]]
+
 module Demo
 {
     sequence<byte> ByteSeq;

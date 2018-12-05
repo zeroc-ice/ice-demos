@@ -4,13 +4,11 @@
 //
 // **********************************************************************
 
-/// <reference path="../../node_modules/ice/src/index.d.ts" />
-/// <reference path="node_modules/bidir/index.d.ts" />
-
 import {Ice} from "ice";
-import {Demo} from "bidir";
+import {Demo} from "./generated";
 
-(function(){
+(() =>
+{
 
 //
 // Define a servant class that implements the Demo.CallbackReceiver
@@ -207,4 +205,4 @@ function setState(s:State)
 
 setState(State.Disconnected);
 
-}());
+})();

@@ -7,7 +7,7 @@
 const Ice = require("ice").Ice;
 const Demo = require("./generated/Hello").Demo;
 
-(async function()
+(async () =>
 {
     let communicator;
     try
@@ -133,7 +133,7 @@ const Demo = require("./generated/Hello").Demo;
             await communicator.destroy();
         }
     }
-}());
+})();
 
 function menu()
 {

@@ -6,7 +6,8 @@
 
 #pragma once
 
-["js:module:latency"]
+[["js:es6-module"]]
+
 module Demo
 {
     interface Ping

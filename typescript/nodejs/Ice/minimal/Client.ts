@@ -5,7 +5,7 @@
 // **********************************************************************
 
 import {Ice} from "ice";
-import {Demo} from "minimal";
+import {Demo} from "./generated";
 
 (async () =>
 {

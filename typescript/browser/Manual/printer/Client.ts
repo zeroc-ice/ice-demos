@@ -4,11 +4,8 @@
 //
 // **********************************************************************
 
-/// <reference path="../../node_modules/ice/src/index.d.ts" />
-/// <reference path="node_modules/printer/index.d.ts" />
-
 import {Ice} from "ice";
-import {Demo} from "printer";
+import {Demo} from "./generated";
 
 (() =>
 {

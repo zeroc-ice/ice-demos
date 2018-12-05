@@ -11,8 +11,6 @@
 //
 [["js:es6-module"]]
 
-["js:module:throughput"]
-
 module Demo
 {
     sequence<byte> ByteSeq;

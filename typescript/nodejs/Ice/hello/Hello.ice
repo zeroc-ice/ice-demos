@@ -6,7 +6,8 @@
 
 #pragma once
 
-["js:module:hello"]
+[["js:es6-module"]]
+
 module Demo
 {
     interface Hello

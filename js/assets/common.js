@@ -4,7 +4,8 @@
 //
 // **********************************************************************
 
-(function(){
+(() =>
+{
 
 $(document).foundation();
 
@@ -88,7 +89,7 @@ if(document.location.protocol === "file:")
     $("#setup-modal").foundation("reveal", "open");
 }
 
-}());
+})();
 
 //
 // Check if the corresponding generated files can be access, if they

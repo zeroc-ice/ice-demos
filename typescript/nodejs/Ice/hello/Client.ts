@@ -5,9 +5,9 @@
 // **********************************************************************
 
 import {Ice} from "ice";
-import {Demo} from "hello";
+import {Demo} from "./generated";
 
-(async function()
+(async () =>
 {
     let communicator:Ice.Communicator;
     try
@@ -133,7 +133,7 @@ import {Demo} from "hello";
             await communicator.destroy();
         }
     }
-}());
+})();
 
 function menu():void
 {

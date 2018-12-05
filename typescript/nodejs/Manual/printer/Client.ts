@@ -5,9 +5,9 @@
 // **********************************************************************
 
 import {Ice} from "ice";
-import {Demo} from "printer";
+import {Demo} from "./generated";
 
-(async function()
+(async () =>
 {
     let communicator;
     try
@@ -36,4 +36,4 @@ import {Demo} from "printer";
             await communicator.destroy();
         }
     }
-}());
+})();

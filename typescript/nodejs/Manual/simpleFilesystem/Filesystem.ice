@@ -6,7 +6,8 @@
 
 #pragma once
 
-["js:module:simple-filesystem"]
+[["js:es6-module"]]
+
 module Filesystem
 {
     exception GenericError

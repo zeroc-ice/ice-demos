@@ -4,13 +4,11 @@
 //
 // **********************************************************************
 
-/// <reference path="../../node_modules/ice/src/index.d.ts" />
-/// <reference path="node_modules/simple-chat/index.d.ts" />
-
 import {Ice, Glacier2} from "ice";
-import {Demo} from "simple-chat";
+import {Demo} from "./generated";
 
-(function(){
+(() =>
+{
 
 //
 // Servant that implements the ChatCallback interface.
@@ -331,4 +329,4 @@ function stopProgress(completed:boolean)
 
 $("#username").focus();
 
-}());
+})();

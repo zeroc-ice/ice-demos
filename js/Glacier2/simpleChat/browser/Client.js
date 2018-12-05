@@ -4,7 +4,8 @@
 //
 // **********************************************************************
 
-(function(){
+(() =>
+{
 
 //
 // Servant that implements the ChatCallback interface.
@@ -323,4 +324,4 @@ function stopProgress(completed)
 
 $("#username").focus();
 
-}());
+})();

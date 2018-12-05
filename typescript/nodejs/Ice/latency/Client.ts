@@ -5,7 +5,7 @@
 // **********************************************************************
 
 import {Ice} from "ice";
-import {Demo} from "latency";
+import {Demo} from "./generated";
 
 (async () =>
 {

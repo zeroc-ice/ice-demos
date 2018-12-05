@@ -17,7 +17,6 @@
  * ChatSession.ice and PollingChat.ice.
  *
  **/
-["js:module:chat"]
 module Chat
 {
 

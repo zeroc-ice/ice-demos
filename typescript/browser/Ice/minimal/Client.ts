@@ -4,13 +4,11 @@
 //
 // **********************************************************************
 
-/// <reference path="../../node_modules/ice/src/index.d.ts" />
-/// <reference path="node_modules/minimal/index.d.ts" />
-
 import {Ice} from "ice";
-import {Demo} from "minimal";
+import {Demo} from "./generated";
 
-(function(){
+(() =>
+{
 
 //
 // Handle the client state
@@ -108,4 +106,4 @@ function setState(newState:State)
 //
 setState(State.Idle);
 
-}());
+})();

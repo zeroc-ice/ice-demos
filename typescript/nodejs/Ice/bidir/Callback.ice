@@ -6,7 +6,8 @@
 
 #pragma once
 
-["js:module:bidir"]
+[["js:es6-module"]]
+
 module Demo
 {
     interface CallbackReceiver

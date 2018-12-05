@@ -40,4 +40,3 @@ ext {
     minSdkVersion = 21
     targetSdkVersion = 26
 }
-

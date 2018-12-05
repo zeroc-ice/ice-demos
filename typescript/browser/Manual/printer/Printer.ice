@@ -11,7 +11,6 @@
 //
 [["js:es6-module"]]
 
-["js:module:printer"]
 module Demo
 {
     interface Printer

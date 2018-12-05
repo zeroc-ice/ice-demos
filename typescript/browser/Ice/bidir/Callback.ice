@@ -11,7 +11,6 @@
 //
 [["js:es6-module"]]
 
-["js:module:bidir"]
 module Demo
 {
     interface CallbackReceiver

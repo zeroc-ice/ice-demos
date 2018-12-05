@@ -4,7 +4,8 @@
 //
 // **********************************************************************
 
-(function(){
+(() =>
+{
 
 //
 // Define a servant class that implements the Demo.CallbackReceiver
@@ -201,4 +202,4 @@ function setState(s)
 
 setState(State.Disconnected);
 
-}());
+})();

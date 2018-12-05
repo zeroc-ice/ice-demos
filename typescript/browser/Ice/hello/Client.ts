@@ -4,13 +4,11 @@
 //
 // **********************************************************************
 
-/// <reference path="../../node_modules/ice/src/index.d.ts" />
-/// <reference path="node_modules/hello/index.d.ts" />
-
 import {Ice} from "ice";
-import {Demo} from "hello";
+import {Demo} from "./generated";
 
-(function(){
+(() =>
+{
 
 const communicator = Ice.initialize();
 
@@ -272,4 +270,4 @@ $("#mode").on("change", e =>
 
 updateProxy();
 
-}());
+})();

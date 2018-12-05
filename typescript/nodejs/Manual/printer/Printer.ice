@@ -6,7 +6,8 @@
 
 #pragma once
 
-["js:module:printer"]
+[["js:es6-module"]]
+
 module Demo
 {
     interface Printer

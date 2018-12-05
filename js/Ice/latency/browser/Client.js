@@ -4,7 +4,8 @@
 //
 // **********************************************************************
 
-(function(){
+(() =>
+{
 
 //
 // Handle the client state.
@@ -125,4 +126,4 @@ function setState(s)
 
 setState(State.Idle);
 
-}());
+})();

@@ -7,7 +7,7 @@
 const Ice = require("ice").Ice;
 const Demo = require("./generated/Latency").Demo;
 
-(async function()
+(async () =>
 {
     let communicator;
     try
@@ -47,4 +47,4 @@ const Demo = require("./generated/Latency").Demo;
             await communicator.destroy();
         }
     }
-}());
+})();

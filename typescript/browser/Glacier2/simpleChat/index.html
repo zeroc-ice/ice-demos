@@ -155,7 +155,7 @@
         <dl class="tabs" data-tab>
             <dt></dt>
             <dd class="active"><a href="#panel2-1">Slice</a></dd>
-            <dd><a href="#panel2-2">JavaScript</a></dd>
+            <dd><a href="#panel2-2">TypeScript</a></dd>
             <dd><a href="#panel2-3">HTML</a></dd>
         </dl>
         <div class="tabs-content">
@@ -194,11 +194,9 @@
     <!-- main.js (Chat Demo Application Bundle) -->
     <script type="text/javascript" src="main.js"></script>
     <script type="text/javascript">
-        /* jshint browser:true, jquery:true */
-        /* global checkGenerated: false */
         if(["http:", "https:"].indexOf(document.location.protocol) !== -1)
         {
-            checkGenerated(["node_modules/simple-chat/Chat.js"]);
+            checkGenerated(["main.js"]);
         }
     </script>
   </body>
