@@ -1,55 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:padding="5dip"
-	>
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:padding="5dip">
 
-	<EditText
-		android:id ="@+id/text"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:inputType="text"
-		android:lines="1"
-		android:maxLines="1"
-		android:imeOptions="actionSearch"
-	/>
+    <EditText
+        android:id="@+id/text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints=""
+        android:hint="@string/search"
+        android:imeOptions="actionSearch"
+        android:inputType="text"
+        android:lines="1"
+        android:maxLines="1" />
 
-	<LinearLayout
-		android:orientation="horizontal"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-		<Spinner android:id ="@+id/searchType"
-			android:layout_width="0dip"
-			android:layout_weight="60"
-			android:layout_height="wrap_content"
-		/>
+        <Spinner
+            android:id="@+id/searchType"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="60" />
 
-		<Button android:id ="@+id/search"
-			android:text="Search"
-			android:layout_width="0dip"
-			android:layout_weight="40"
-			android:layout_height="wrap_content"
-		/>
-	</LinearLayout>
-	  <TextView
-			android:id="@+id/no_match"
-			android:paddingTop="10dip"
-			android:paddingBottom="0dip"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:gravity="center"
-			android:textSize="20sp"
-			android:text="No matches found"
-			android:visibility="gone"
-		/>
+        <Button
+            android:id="@+id/search"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="40"
+            android:text="@string/search" />
+    </LinearLayout>
 
-		<ListView android:id="@+id/list"
-			android:layout_width="fill_parent"
-			android:layout_height="0dip"
-			android:layout_weight="1"
-		/>
+    <TextView
+        android:id="@+id/no_match"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingTop="10dip"
+        android:paddingBottom="0dip"
+        android:text="@string/no_matches_found"
+        android:textSize="20sp"
+        android:visibility="gone" />
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1" />
 </LinearLayout>

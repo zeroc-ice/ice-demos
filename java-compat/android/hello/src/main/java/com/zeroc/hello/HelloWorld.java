@@ -7,7 +7,12 @@
 package com.zeroc.hello;
 
 import Ice.LocalException;
-import android.app.*;
+import androidx.fragment.app.DialogFragment;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.AlertDialog;
+import android.app.Dialog;
+
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -29,7 +34,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
-public class HelloWorld extends Activity
+import android.view.WindowManager;
+
+public class HelloWorld extends AppCompatActivity
 {
     public static class ErrorDialogFragment extends DialogFragment
     {
@@ -60,22 +67,6 @@ public class HelloWorld extends Activity
                         }
                     });
             return builder.create();
-        }
-    }
-
-    public static class InitializeDialogFragment extends DialogFragment
-    {
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState)
-        {
-            ProgressDialog dialog = new ProgressDialog(getActivity());
-            dialog.setTitle("Initializing");
-            dialog.setMessage("Please wait while loading...");
-            dialog.setIndeterminate(true);
-            dialog.setCanceledOnTouchOutside(false);
-
-            setCancelable(false);
-            return dialog;
         }
     }
 
@@ -157,7 +148,7 @@ public class HelloWorld extends Activity
                 {
                     flushButton.setEnabled(true);
                     _app.sayHello(delaySeekBar.getProgress());
-                    statusTextView.setText("Queued hello request");
+                    statusTextView.setText(R.string.queue_request);
                 }
                 else
                 {
@@ -174,7 +165,7 @@ public class HelloWorld extends Activity
                 {
                     flushButton.setEnabled(true);
                     _app.shutdown();
-                    statusTextView.setText("Queued shutdown request");
+                    statusTextView.setText(R.string.shutdown_request);
                 }
                 else
                 {
@@ -231,7 +222,7 @@ public class HelloWorld extends Activity
             {
                 _app.flush();
                 flushButton.setEnabled(false);
-                statusTextView.setText("Flushed batch requests");
+                statusTextView.setText(R.string.flushed_batch_requests);
             }
         });
 
@@ -258,7 +249,7 @@ public class HelloWorld extends Activity
         {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromThumb)
             {
-                delayTextView.setText(String.format("%.1f", progress / 1000.0));
+                delayTextView.setText(String.format(java.util.Locale.getDefault(), "%.1f", progress / 1000.0));
             }
 
             public void onStartTrackingTouch(SeekBar seekBar)
@@ -274,7 +265,7 @@ public class HelloWorld extends Activity
         {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromThumb)
             {
-                timeoutTextView.setText(String.format("%.1f", progress / 1000.0));
+                timeoutTextView.setText(String.format(java.util.Locale.getDefault(), "%.1f", progress / 1000.0));
                 _app.setTimeout(progress);
             }
 
@@ -293,7 +284,7 @@ public class HelloWorld extends Activity
         hostEditText.setText(prefs.getString(HOSTNAME_KEY, DEFAULT_HOST));
         flushButton.setEnabled(false);
 
-        statusTextView.setText("Ready");
+        statusTextView.setText(R.string.ready);
 
         _handler = new Handler(Looper.getMainLooper())
         {
@@ -304,51 +295,42 @@ public class HelloWorld extends Activity
                 {
                     case HelloApp.MSG_WAIT:
                     {
-                        // Show the initializing dialog if it isn't already on the stack.
-                        if(getFragmentManager().findFragmentByTag(INITIALIZE_TAG) == null)
-                        {
-                            DialogFragment dialog = new InitializeDialogFragment();
-                            dialog.show(getFragmentManager(), INITIALIZE_TAG);
-                        }
+                        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                        ((ProgressBar)findViewById(R.id.progressbar)).setVisibility(View.VISIBLE);
                         break;
                     }
 
                     case HelloApp.MSG_READY:
                     {
-                        // Hide the initializing dialog if it is on the stack.
-                        DialogFragment initDialog =
-                            (DialogFragment)getFragmentManager().findFragmentByTag(INITIALIZE_TAG);
-                        if(initDialog != null)
-                        {
-                            initDialog.dismiss();
-                        }
-
+                        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                        ((ProgressBar)findViewById(R.id.progressbar)).setVisibility(View.INVISIBLE);
                         HelloApp.MessageReady ready = (HelloApp.MessageReady)m.obj;
                         if(ready.ex != null)
                         {
                             LocalException ex = (LocalException)ready.ex;
                             DialogFragment dialog = ErrorDialogFragment.newInstance(ex.toString(), true);
-                            dialog.show(getFragmentManager(), ERROR_TAG);
+                            dialog.show(getSupportFragmentManager(), ERROR_TAG);
                         }
-                        statusTextView.setText("Ready");
+                        statusTextView.setText(R.string.ready);
                         break;
                     }
 
                     case HelloApp.MSG_EXCEPTION:
                     {
-                        statusTextView.setText("Ready");
+                        statusTextView.setText(R.string.ready);
                         activityProgressBar.setVisibility(View.GONE);
 
                         LocalException ex = (LocalException)m.obj;
                         DialogFragment dialog = ErrorDialogFragment.newInstance(ex.toString(), false);
-                        dialog.show(getFragmentManager(), ERROR_TAG);
+                        dialog.show(getSupportFragmentManager(), ERROR_TAG);
                         break;
                     }
 
                     case HelloApp.MSG_RESPONSE:
                     {
                         activityProgressBar.setVisibility(View.GONE);
-                        statusTextView.setText("Ready");
+                        statusTextView.setText(R.string.ready);
                         break;
                     }
 
@@ -356,14 +338,14 @@ public class HelloWorld extends Activity
                     {
                         DeliveryMode mode = (DeliveryMode)m.obj;
                         activityProgressBar.setVisibility(View.VISIBLE);
-                        statusTextView.setText("Waiting for response");
+                        statusTextView.setText(R.string.wait_for_response);
                         break;
                     }
 
                     case HelloApp.MSG_SENDING:
                     {
                         activityProgressBar.setVisibility(View.VISIBLE);
-                        statusTextView.setText("Sending request");
+                        statusTextView.setText(R.string.sending_request);
                         break;
                     }
                 }

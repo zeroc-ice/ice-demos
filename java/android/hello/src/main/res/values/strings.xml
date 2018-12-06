@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, HelloWorld</string>
     <string name="app_name">Hello World</string>
+    <string name="host">Host</string>
+    <string name="flush">Flush</string>
+    <string name="ip_or_hostname">IP or Hostname</string>
+    <string name="use_icediscovery">Use IceDiscovery</string>
+    <string name="mode">Mode</string>
+    <string name="timeout">Timeout</string>
+    <string name="_0_0">0.0</string>
+    <string name="delay">Delay</string>
+    <string name="shutdown">Shutdown</string>
+    <string name="queued_hello_request">Queued hello request</string>
+    <string name="queued_shutdown_request">Queued shutdown request</string>
+    <string name="flushed_batch_requests">Flushed batch requests</string>
+    <string name="ready">Ready</string>
+    <string name="sending_request">Sending request</string>
+    <string name="waiting_response">Waiting for response</string>
 </resources>

@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, Chat</string>
     <string name="app_name">Chat</string>
+    <string name="app_description">ZeroC Chat Demo application</string>
     <string name="users_name">Users</string>
     <string name="menu_users">Show Users</string>
     <string name="menu_logout">Logout</string>
+    <string name="username">Username</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="message">Message</string>
 </resources>

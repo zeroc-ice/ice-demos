@@ -32,6 +32,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
+
+    lintOptions {
+        disable 'UnusedAttribute',  // autofillHints is only used with API level 26 and older
+                'UselessParent'
+    }
 }
 
 task copyBksTask(type: Copy) {
@@ -47,4 +52,6 @@ clean {
 dependencies {
     implementation "com.zeroc:ice-compat:${project.iceArtifactVersion}"
     implementation "com.zeroc:glacier2-compat:${project.iceArtifactVersion}"
+    implementation "androidx.fragment:fragment:1.0.0"
+    implementation "androidx.appcompat:appcompat:1.0.2"
 }

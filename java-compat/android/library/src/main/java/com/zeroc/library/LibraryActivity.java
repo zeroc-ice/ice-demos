@@ -85,7 +85,7 @@ public class LibraryActivity extends SessionActivity
             if(position > _querydata.books.size() - 1)
             {
                 _queryController.getMore(position);
-                text.setText("<loading>");
+                text.setText(R.string.loading);
             }
             else
             {

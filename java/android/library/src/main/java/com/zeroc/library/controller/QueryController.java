@@ -197,7 +197,10 @@ public class QueryController
 
     synchronized public void getMore(int position)
     {
-        assert position < _nrows;
+        if(com.zeroc.library.BuildConfig.DEBUG && position >= _nrows)
+        {
+            throw  new AssertionError();
+        }
         if(position < _rowsQueried)
         {
             return;
@@ -233,7 +236,10 @@ public class QueryController
 
     synchronized public void returnBook()
     {
-        assert _currentBook != NO_BOOK;
+        if(com.zeroc.library.BuildConfig.DEBUG && _currentBook == NO_BOOK)
+        {
+            throw  new AssertionError();
+        }
         final Demo.BookDescription desc = _books.get(_currentBook);
         desc.proxy.returnBookAsync().whenComplete((result, ex) ->
             {
@@ -266,7 +272,10 @@ public class QueryController
 
     synchronized public void rentBook(final String r)
     {
-        assert _currentBook != NO_BOOK;
+        if(com.zeroc.library.BuildConfig.DEBUG && _currentBook == NO_BOOK)
+        {
+            throw  new AssertionError();
+        }
         final Demo.BookDescription desc = _books.get(_currentBook);
         desc.proxy.rentBookAsync(r).whenComplete((result, ex) ->
             {
@@ -304,7 +313,10 @@ public class QueryController
 
     synchronized public void deleteBook()
     {
-        assert _currentBook != NO_BOOK;
+        if(com.zeroc.library.BuildConfig.DEBUG && _currentBook == NO_BOOK)
+        {
+            throw  new AssertionError();
+        }
         final Demo.BookDescription desc = _books.get(_currentBook);
         desc.proxy.destroyAsync().whenComplete((result, ex) ->
             {
@@ -327,7 +339,10 @@ public class QueryController
 
     synchronized public boolean saveBook(final Demo.BookDescription newDesc)
     {
-        assert _currentBook != NO_BOOK;
+        if(com.zeroc.library.BuildConfig.DEBUG && _currentBook == NO_BOOK)
+        {
+            throw  new AssertionError();
+        }
         if(_currentBook == NEW_BOOK)
         {
             _library.createBookAsync(newDesc.isbn, newDesc.title, newDesc.authors).whenComplete((result, ex) ->

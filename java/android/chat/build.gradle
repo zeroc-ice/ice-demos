@@ -24,6 +24,11 @@ android {
             targetCompatibility JavaVersion.VERSION_1_8
         }
         applicationId "com.zeroc.chat"
+        vectorDrawables.useSupportLibrary = false
+    }
+
+    lintOptions {
+        disable 'UnusedAttribute' // autofillHints is only used with API level 26 and older
     }
 
     buildTypes {
@@ -48,4 +53,6 @@ dependencies {
     implementation "com.zeroc:ice:${project.iceArtifactVersion}"
     implementation "com.zeroc:icessl:${project.iceArtifactVersion}"
     implementation "com.zeroc:glacier2:${project.iceArtifactVersion}"
+    implementation "androidx.fragment:fragment:1.0.0"
+    implementation "androidx.appcompat:appcompat:1.0.2"
 }

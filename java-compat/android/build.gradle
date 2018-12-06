@@ -33,10 +33,16 @@ allprojects {
         google()
         jcenter()
     }
+
+    gradle.projectsEvaluated {
+        tasks.withType(JavaCompile) {
+            options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+        }
+    }
 }
 
 ext {
-    compileSdkVersion = 26
+    compileSdkVersion = 28
     minSdkVersion = 21
-    targetSdkVersion = 26
+    targetSdkVersion = 28
 }

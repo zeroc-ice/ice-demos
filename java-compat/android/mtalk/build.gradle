@@ -21,7 +21,7 @@ android {
     }
 
     lintOptions {
-        disable 'IconMissingDensityFolder', 'Assert', 'LabelFor'
+        disable 'UnusedAttribute' // autofillHints is only used with API level 26 and older
     }
 
     buildTypes {

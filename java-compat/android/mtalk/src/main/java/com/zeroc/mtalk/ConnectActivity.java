@@ -98,6 +98,7 @@ public class ConnectActivity extends Activity
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);

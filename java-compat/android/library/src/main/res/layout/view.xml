@@ -1,202 +1,193 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:orientation="vertical"
-	android:scrollbarStyle="insideInset"
-	android:fillViewport="true">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true"
+    android:orientation="vertical"
+    android:scrollbarStyle="insideInset">
 
-	<LinearLayout
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent"
-		android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-		<LinearLayout
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-			<TextView
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:gravity="center_vertical"
-				android:textColor="?android:attr/textColorSecondary"
-				android:textStyle="bold"
-				android:textSize="14sp"
-				android:paddingLeft="8dip"
-				android:text="ISBN"
-				/>
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingStart="8dip"
+                android:paddingEnd="8dip"
+                android:text="@string/isbn"
+                android:textColor="?android:attr/textColorSecondary"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
-			<View
-				android:layout_width="fill_parent"
-				android:layout_height="1dip"
-				android:background="?android:attr/listDivider"
-				/>
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:background="?android:attr/listDivider" />
 
-		</LinearLayout>
+        </LinearLayout>
 
-		<LinearLayout
-			android:layout_width="fill_parent"
-			android:layout_height="?android:attr/listPreferredItemHeight"
-			android:orientation="horizontal"
-			android:padding="0dip"
-			android:gravity="center_vertical"
-			android:baselineAligned="false"
-			>
-			<TextView
-				android:id="@+id/isbn"
-				android:paddingLeft="8dip"
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginRight="4dip"
-				android:gravity="center_vertical"
-				android:singleLine="true"
-				android:capitalize="words"
-				android:text="isbn"
-			/>
-		</LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="?android:attr/listPreferredItemHeight"
+            android:baselineAligned="false"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="0dip">
 
-		<LinearLayout
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:orientation="vertical">
+            <TextView
+                android:id="@+id/isbn"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dip"
+                android:gravity="center_vertical"
+                android:paddingStart="8dip"
+                android:paddingEnd="8dip"
+                android:singleLine="true"
+                android:text="@string/isbn" />
+        </LinearLayout>
 
-			<View
-				android:layout_width="fill_parent"
-				android:layout_height="1dip"
-				android:background="?android:attr/listDivider"
-				/>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-			<TextView
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:gravity="center_vertical"
-				android:textColor="?android:attr/textColorSecondary"
-				android:textStyle="bold"
-				android:textSize="14sp"
-				android:paddingLeft="8dip"
-				android:text="Title"
-				/>
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:background="?android:attr/listDivider" />
 
-			<View
-				android:layout_width="fill_parent"
-				android:layout_height="1dip"
-				android:background="?android:attr/listDivider"
-				/>
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingStart="8dip"
+                android:paddingEnd="8dip"
+                android:text="@string/title"
+                android:textColor="?android:attr/textColorSecondary"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
-		</LinearLayout>
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:background="?android:attr/listDivider" />
 
-		<LinearLayout
-		   android:layout_width="fill_parent"
-		   android:layout_height="?android:attr/listPreferredItemHeight"
-		   android:orientation="horizontal"
-		   android:padding="0dip"
-		   android:gravity="center_vertical"
-		   android:baselineAligned="false"
-		   >
-			<TextView
-				android:id="@+id/title"
-				android:paddingLeft="8dip"
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginRight="4dip"
-				android:gravity="center_vertical"
-				android:singleLine="true"
-				android:capitalize="words"
-				android:text="title"
-			/>
-		</LinearLayout>
+        </LinearLayout>
 
-		<LinearLayout
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="?android:attr/listPreferredItemHeight"
+            android:baselineAligned="false"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="0dip">
 
-			<View
-				android:layout_width="fill_parent"
-				android:layout_height="1dip"
-				android:background="?android:attr/listDivider"
-				/>
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dip"
+                android:layout_marginEnd="4dip"
+                android:gravity="center_vertical"
+                android:paddingStart="8dip"
+                android:paddingEnd="8dip"
+                android:singleLine="true"
+                android:text="@string/title" />
+        </LinearLayout>
 
-			<TextView
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:gravity="center_vertical"
-				android:textColor="?android:attr/textColorSecondary"
-				android:textStyle="bold"
-				android:textSize="14sp"
-				android:paddingLeft="8dip"
-				android:text="Authors"
-				/>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-			<View
-				android:layout_width="fill_parent"
-				android:layout_height="1dip"
-				android:background="?android:attr/listDivider"
-				/>
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:background="?android:attr/listDivider" />
 
-		</LinearLayout>
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingStart="8dip"
+                android:paddingEnd="8dip"
+                android:text="@string/authors"
+                android:textColor="?android:attr/textColorSecondary"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
-		<!-- The edit items -->
-		<LinearLayout android:id="@+id/authorsList"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:orientation="vertical"
-		>
-			<View
-				android:layout_width="fill_parent"
-				android:layout_height="26dip"
-				/>
-		</LinearLayout>
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:background="?android:attr/listDivider" />
 
-		<LinearLayout
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:orientation="vertical">
+        </LinearLayout>
 
-			<View
-				android:layout_width="fill_parent"
-				android:layout_height="1dip"
-				android:background="?android:attr/listDivider"
-			/>
+        <!-- The edit items -->
+        <LinearLayout
+            android:id="@+id/authorsList"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-			<TextView
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:gravity="center_vertical"
-				android:textColor="?android:attr/textColorSecondary"
-				android:textStyle="bold"
-				android:textSize="14sp"
-				android:paddingLeft="8dip"
-				android:text="Rented By"
-				/>
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="26dip" />
+        </LinearLayout>
 
-			<View
-				android:layout_width="fill_parent"
-				android:layout_height="1dip"
-				android:background="?android:attr/listDivider"
-				/>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-		</LinearLayout>
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:background="?android:attr/listDivider" />
 
-		<TextView
-			android:id="@+id/rentedBy"
-			android:paddingLeft="8dip"
-			android:layout_width="fill_parent"
-			android:layout_height="?android:attr/listPreferredItemHeight"
-			android:layout_marginRight="4dip"
-			android:gravity="center_vertical"
-			android:singleLine="true"
-			android:capitalize="words"
-			android:text="rented by"
-		/>
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingStart="8dip"
+                android:paddingEnd="8dip"
+                android:text="@string/rented_by"
+                android:textColor="?android:attr/textColorSecondary"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
-		<Button
-			android:id="@+id/rent"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:text="Rent book"
-			/>
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:background="?android:attr/listDivider" />
 
-	</LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/rentedBy"
+            android:layout_width="fill_parent"
+            android:layout_height="?android:attr/listPreferredItemHeight"
+            android:layout_marginStart="4dip"
+            android:layout_marginEnd="4dip"
+            android:gravity="center_vertical"
+            android:paddingStart="8dip"
+            android:paddingEnd="8dip"
+            android:singleLine="true"
+            android:text="@string/rented_by" />
+
+        <Button
+            android:id="@+id/rent"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/rent_book" />
+
+    </LinearLayout>
 
 </ScrollView>

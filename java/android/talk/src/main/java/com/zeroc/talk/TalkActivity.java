@@ -8,15 +8,10 @@ package com.zeroc.talk;
 
 import java.lang.ref.WeakReference;
 import java.util.LinkedList;
-import java.util.List;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
@@ -26,10 +21,8 @@ import android.os.IBinder;
 import android.os.Message;
 import android.view.KeyEvent;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -356,17 +349,23 @@ public class TalkActivity extends Activity
 
     private void connect(Intent data, boolean ssl)
     {
-        //
-        // Extract the address and name of the peer from the result intent returned by DeviceActivity.
-        //
-        String address = data.getExtras().getString(DeviceActivity.EXTRA_DEVICE_ADDRESS);
-        String name = data.getExtras().getString(DeviceActivity.EXTRA_DEVICE_NAME);
-        _service.connect(address, name, ssl);
+        if(_service.getState() == Service.STATE_NOT_CONNECTED)
+        {
+            //
+            // Extract the address and name of the peer from the result intent returned by DeviceActivity.
+            //
+            String address = data.getExtras().getString(DeviceActivity.EXTRA_DEVICE_ADDRESS);
+            String name = data.getExtras().getString(DeviceActivity.EXTRA_DEVICE_NAME);
+            _service.connect(address, name, ssl);
+        }
     }
 
     private void disconnect()
     {
-        _service.disconnect();
+        if(_service.getState() == Service.STATE_CONNECTED)
+        {
+            _service.disconnect();
+        }
     }
 
     synchronized private void serviceConnected(Service service)

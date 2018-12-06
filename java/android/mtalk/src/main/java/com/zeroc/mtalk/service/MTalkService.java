@@ -31,12 +31,12 @@ import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.Connection;
 import com.zeroc.Ice.ConnectionClose;
 import com.zeroc.Ice.Current;
-import com.zeroc.Ice.Identity;
 import com.zeroc.Ice.InitializationData;
 import com.zeroc.Ice.LocalException;
 import com.zeroc.Ice.NotRegisteredException;
 import com.zeroc.Ice.ObjectAdapter;
 import com.zeroc.Ice.Util;
+import com.zeroc.mtalk.BuildConfig;
 import com.zeroc.mtalk.Intents;
 import com.zeroc.mtalk.R;
 
@@ -163,7 +163,8 @@ public class MTalkService extends Service implements com.zeroc.mtalk.service.Ser
         _state = Intents.PEER_NOT_CONNECTED;
         _name = Build.MODEL;
 
-        _wifiManager = (WifiManager)getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        Context context = getApplicationContext();
+        _wifiManager = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
 
         //
         // On some devices, a multicast lock must be acquired otherwise multicast packets are discarded.
@@ -177,11 +178,32 @@ public class MTalkService extends Service implements com.zeroc.mtalk.service.Ser
         IntentFilter filter = new IntentFilter();
         filter.addAction(Intents.ACTION_START_MULTICAST);
         filter.addAction(Intents.ACTION_STOP_MULTICAST);
+        this.registerReceiver(_receiver, filter);
+
         //
         // Listen for changes to network status.
         //
-        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-        this.registerReceiver(_receiver, filter);
+        ConnectivityManager connectivityManager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        connectivityManager.registerDefaultNetworkCallback(new ConnectivityManager.NetworkCallback()
+            {
+                @Override
+                public void onAvailable(android.net.Network network)
+                {
+                    checkNetwork();
+                }
+
+                @Override
+                public void onLost(android.net.Network network)
+                {
+                    checkNetwork();
+                }
+
+                @Override
+                public void onUnavailable()
+                {
+                    checkNetwork();
+                }
+            });
     }
 
     @Override
@@ -665,7 +687,10 @@ public class MTalkService extends Service implements com.zeroc.mtalk.service.Ser
     {
         if(_networkEnabled)
         {
-            assert(!_lock.isHeld());
+            if(BuildConfig.DEBUG && _lock.isHeld())
+            {
+                throw new AssertionError();
+            }
             _lock.acquire();
 
             _handler.postDelayed(new Runnable()
@@ -828,10 +853,6 @@ public class MTalkService extends Service implements com.zeroc.mtalk.service.Ser
             else if(Intents.ACTION_STOP_MULTICAST.equals(action))
             {
                 stopMulticast();
-            }
-            else if(ConnectivityManager.CONNECTIVITY_ACTION.equals(action))
-            {
-                checkNetwork();
             }
         }
     };

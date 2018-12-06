@@ -29,7 +29,7 @@ public class ChatUtils
 
     public static String formatTimestamp(long timestamp)
     {
-        DateFormat dtf = new SimpleDateFormat("HH:mm:ss");
+        DateFormat dtf = new SimpleDateFormat("HH:mm:ss", java.util.Locale.US);
         dtf.setTimeZone(TimeZone.getDefault());
         return dtf.format(new Date(timestamp));
     }

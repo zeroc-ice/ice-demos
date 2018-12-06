@@ -9,9 +9,10 @@ package com.zeroc.chat;
 import java.util.LinkedList;
 import java.util.List;
 
-import android.app.AlertDialog;
+import androidx.fragment.app.DialogFragment;
+import androidx.appcompat.app.AlertDialog;
+
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -195,7 +196,7 @@ public class ChatActivity extends SessionActivity
         if(t.length() > MAX_MESSAGE_SIZE)
         {
             DialogFragment dialog = new MessageTooLongDialogFragment();
-            dialog.show(getFragmentManager(), MESSAGE_TOO_LONG_TAG);
+            dialog.show(getSupportFragmentManager(), MESSAGE_TOO_LONG_TAG);
             return;
         }
         _text.setText("");

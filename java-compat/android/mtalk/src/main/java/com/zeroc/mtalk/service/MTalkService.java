@@ -146,6 +146,7 @@ public class MTalkService extends Service implements com.zeroc.mtalk.service.Ser
         return new LocalBinder();
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void onCreate()
     {
@@ -208,7 +209,7 @@ public class MTalkService extends Service implements com.zeroc.mtalk.service.Ser
     // Called only from the UI thread.
     public void initialize()
     {
-        if(_handler == null)
+        if(com.zeroc.mtalk.BuildConfig.DEBUG && _handler == null)
         {
             throw new AssertionError();
         }
@@ -511,7 +512,7 @@ public class MTalkService extends Service implements com.zeroc.mtalk.service.Ser
             return;
         }
 
-        if(!_state.equals(Intents.PEER_NOT_CONNECTED))
+        if(com.zeroc.mtalk.BuildConfig.DEBUG && !_state.equals(Intents.PEER_NOT_CONNECTED))
         {
             throw new AssertionError();
         }
@@ -681,7 +682,11 @@ public class MTalkService extends Service implements com.zeroc.mtalk.service.Ser
     {
         if(_networkEnabled)
         {
-            assert(!_lock.isHeld());
+            if(com.zeroc.mtalk.BuildConfig.DEBUG && _lock.isHeld())
+            {
+                throw new AssertionError();
+            }
+
             _lock.acquire();
 
             _handler.postDelayed(new Runnable()
@@ -830,6 +835,7 @@ public class MTalkService extends Service implements com.zeroc.mtalk.service.Ser
         return str;
     }
 
+    @SuppressWarnings("deprecation")
     private final BroadcastReceiver _receiver = new BroadcastReceiver()
     {
         @Override

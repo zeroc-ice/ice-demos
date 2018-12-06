@@ -22,5 +22,6 @@
     <string name="name_title">User Name</string>
     <string name="enter_name">Enter your name</string>
     <string name="name_ok">OK</string>
+    <string name="message">message</string>
 
 </resources>
