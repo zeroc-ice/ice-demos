@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import com.zeroc.demos.android.library.Demo.*;
 import com.zeroc.Ice.ACMHeartbeat;
 import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.Connection;
@@ -95,6 +96,7 @@ public class LoginController
                     initData.properties.setProperty("Ice.Trace.Network", "0");
                     initData.properties.setProperty("IceSSL.Trace.Security", "0");
                     initData.properties.setProperty("Ice.Plugin.IceSSL", "com.zeroc.IceSSL.PluginFactory");
+                    initData.properties.setProperty("Ice.Default.Package", "com.zeroc.demos.android.library");
 
                     //
                     // Check for Ice.Default.Router. If we find it use it, otherwise use a direct connection
@@ -141,7 +143,7 @@ public class LoginController
                         SessionPrx glacier2session = router.createSession(username, password);
 
                         final Demo.Glacier2SessionPrx sess = Demo.Glacier2SessionPrx.uncheckedCast(glacier2session);
-                        final Demo.LibraryPrx library = sess.getLibrary();
+                        final LibraryPrx library = sess.getLibrary();
 
                         final int acmTimeout = router.getACMTimeout();
                         if(acmTimeout > 0)
@@ -168,7 +170,7 @@ public class LoginController
                                 }
                             }
 
-                            public Demo.LibraryPrx getLibrary()
+                            public LibraryPrx getLibrary()
                             {
                                 return library;
                             }
@@ -186,7 +188,7 @@ public class LoginController
                         }
 
                         final Demo.SessionPrx sess = factory.create();
-                        final Demo.LibraryPrx library = sess.getLibrary();
+                        final LibraryPrx library = sess.getLibrary();
 
                         session = new SessionAdapter()
                         {
@@ -195,7 +197,7 @@ public class LoginController
                                 sess.destroy();
                             }
 
-                            public Demo.LibraryPrx getLibrary()
+                            public LibraryPrx getLibrary()
                             {
                                 return library;
                             }

@@ -4,7 +4,7 @@
 //
 // **********************************************************************
 
-import Demo.*;
+import com.zeroc.demos.Database.library.Demo.*;
 
 //
 // This is a per-session library object.

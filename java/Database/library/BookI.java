@@ -4,7 +4,7 @@
 //
 // **********************************************************************
 
-import Demo.*;
+import com.zeroc.demos.Database.library.Demo.*;
 
 //
 // This servant is a default servant. The book identity is retrieved

@@ -5,7 +5,7 @@
 // **********************************************************************
 
 #pragma once
-
+["java:package:com.zeroc.demos.android.hello"]
 module Demo
 {
 

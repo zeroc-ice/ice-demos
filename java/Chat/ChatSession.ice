@@ -10,6 +10,7 @@
 #include <Glacier2/Session.ice>
 #include <Chat.ice>
 
+["java:package:com.zeroc.demos.Chat"]
 module Chat
 {
 

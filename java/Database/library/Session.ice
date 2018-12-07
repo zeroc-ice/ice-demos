@@ -8,6 +8,7 @@
 
 #include <Library.ice>
 
+["java:package:com.zeroc.demos.Database.library"]
 module Demo
 {
 

@@ -15,6 +15,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 
+import com.zeroc.demos.android.talk.Talk.*;
 import com.zeroc.Ice.ACMClose;
 import com.zeroc.Ice.ACMHeartbeat;
 import com.zeroc.Ice.Communicator;
@@ -89,8 +90,8 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
 
         String address;
         String name;
-        Talk.PeerPrx remote;
-        Talk.PeerPrx local;
+        PeerPrx remote;
+        PeerPrx local;
         Connection connection;
     }
 
@@ -98,11 +99,11 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
     // We use this servant to handle new incoming connections. We use a different servant implementation
     // for outgoing connections.
     //
-    private class PeerImpl implements Talk.Peer
+    private class PeerImpl implements Peer
     {
         @Override
-        public void connect(Talk.PeerPrx peer, Current current)
-            throws Talk.ConnectionException
+        public void connect(PeerPrx peer, Current current)
+            throws ConnectionException
         {
             info = incoming(peer.ice_fixed(current.con), current.con);
         }
@@ -215,6 +216,7 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
             initData.properties.setProperty("IceSSL.TruststoreType", "BKS");
             initData.properties.setProperty("IceSSL.Password", "password");
             initData.properties.setProperty("Ice.Plugin.IceSSL", "com.zeroc.IceSSL.PluginFactory");
+            initData.properties.setProperty("Ice.Default.Package", "com.zeroc.demos.android.talk");
 
             //
             // We need to postpone plug-in initialization so that we can configure IceSSL
@@ -303,19 +305,19 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
         // Create a proxy for the peer. The identity of the remote object is "peer". The UUID in the
         // proxy is the well-known Bluetooth service ID for the Talk service.
         //
-        info.remote = Talk.PeerPrx.uncheckedCast(_communicator.stringToProxy(proxy));
+        info.remote = PeerPrx.uncheckedCast(_communicator.stringToProxy(proxy));
 
         //
         // Register a unique servant with the OA for each outgoing connection. This servant receives
         // callbacks from the peer.
         //
-        Talk.PeerPrx local = Talk.PeerPrx.uncheckedCast(_adapter.addWithUUID(
-            new Talk.Peer()
+        PeerPrx local = PeerPrx.uncheckedCast(_adapter.addWithUUID(
+            new Peer()
             {
-                public void connect(Talk.PeerPrx peer, Current current)
-                    throws Talk.ConnectionException
+                public void connect(PeerPrx peer, Current current)
+                    throws ConnectionException
                 {
-                    throw new Talk.ConnectionException("already connected");
+                    throw new ConnectionException("already connected");
                 }
 
                 public void send(String message, Current current)
@@ -453,15 +455,15 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
         }
     }
 
-    synchronized private PeerInfo incoming(Talk.PeerPrx peer, com.zeroc.Ice.Connection con)
-        throws Talk.ConnectionException
+    synchronized private PeerInfo incoming(PeerPrx peer, com.zeroc.Ice.Connection con)
+        throws ConnectionException
     {
         //
         // Only accept a new incoming connection if we're idle.
         //
         if(_state != STATE_NOT_CONNECTED)
         {
-            throw new Talk.ConnectionException("Peer is busy");
+            throw new ConnectionException("Peer is busy");
         }
 
         com.zeroc.Ice.ConnectionInfo ci = con.getInfo();
@@ -507,10 +509,10 @@ public class TalkService extends Service implements com.zeroc.talk.service.Servi
             {
                 if(ex != null)
                 {
-                    if(ex instanceof Talk.ConnectionException)
+                    if(ex instanceof ConnectionException)
                     {
                         connectFailed(info, "Connection to " + info.getName() + " failed: " +
-                                      ((Talk.ConnectionException)ex).reason);
+                                      ((ConnectionException)ex).reason);
                     }
                     else
                     {

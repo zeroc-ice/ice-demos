@@ -34,10 +34,12 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.factories.Borders;
 
+import com.zeroc.demos.Chat.*;
 import com.zeroc.Glacier2.SessionFactoryHelper;
 import com.zeroc.Glacier2.SessionHelper;
 import com.zeroc.Glacier2.SessionCallback;
 import com.zeroc.Glacier2.SessionNotExistException;
+import com.zeroc.Ice.Util;
 
 class Coordinator
 {
@@ -59,6 +61,10 @@ class Coordinator
         _args = rArgs.toArray(new String[rArgs.size()]);
 
         initData.properties.setProperty("Ice.Plugin.IceSSL", "com.zeroc.IceSSL.PluginFactory");
+
+        // Load the configuration file.
+        initData.properties.setProperty("Ice.Default.Package", "com.zeroc.demos.Chat");
+        initData.properties = Util.createProperties(args, initData.properties);
 
         //
         // Set Ice.Default.Router if not set.

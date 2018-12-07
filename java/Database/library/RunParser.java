@@ -4,7 +4,7 @@
 //
 // **********************************************************************
 
-import Demo.*;
+import com.zeroc.demos.Database.library.Demo.*;
 
 import com.zeroc.Ice.ACMClose;
 import com.zeroc.Ice.ACMHeartbeat;

@@ -6,6 +6,7 @@
 
 #pragma once
 
+["java:package:com.zeroc.demos.android.mtalk"]
 /**
  *
  * The MTalk module defines the types that devices use to discover and communicate with one another.

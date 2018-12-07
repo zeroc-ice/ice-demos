@@ -6,6 +6,7 @@
 
 package com.zeroc.chat.service;
 
+import com.zeroc.demos.android.chat.Chat.*;
 import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.CommunicatorDestroyedException;
 import com.zeroc.Ice.Connection;
@@ -38,7 +39,7 @@ import com.zeroc.chat.R;
 public class AppSession
 {
     private ChatService _service;
-    private Chat.ChatSessionPrx _chat;
+    private ChatSessionPrx _chat;
     private List<ChatRoomListener> _listeners = new LinkedList<ChatRoomListener>();
     private LinkedList<ChatEventReplay> _replay = new LinkedList<ChatEventReplay>();
     private List<String> _users = new LinkedList<String>();
@@ -99,93 +100,93 @@ public class AppSession
         }
 
         SessionFactoryHelper factory = new SessionFactoryHelper(initData, new SessionCallback()
-            {
-                public void connected(final SessionHelper session)
+        {
+            public void connected(final SessionHelper session)
                     throws SessionNotExistException
+            {
+                //
+                // If the session has been reassigned avoid the spurious callback.
+                //
+                if(session != _session)
                 {
-                    //
-                    // If the session has been reassigned avoid the spurious callback.
-                    //
-                    if(session != _session)
-                    {
-                        return;
-                    }
-
-                    Chat.ChatRoomCallbackPrx callback =
-                        Chat.ChatRoomCallbackPrx.uncheckedCast(_session.addWithUUID(new ChatCallbackI()));
-
-                    _chat = Chat.ChatSessionPrx.uncheckedCast(_session.session());
-                    try
-                    {
-                        _chat.setCallbackAsync(callback).whenComplete((result, ex) ->
-                            {
-                                if(ex == null)
-                                {
-                                    _service.loginComplete();
-                                }
-                                else
-                                {
-                                    AppSession.this.destroy();
-                                }
-                            });
-                    }
-                    catch(CommunicatorDestroyedException ex)
-                    {
-                        // Ignore client session was destroyed.
-                    }
+                    return;
                 }
 
-                public void disconnected(SessionHelper session)
+                ChatRoomCallbackPrx callback =
+                        ChatRoomCallbackPrx.uncheckedCast(_session.addWithUUID(new ChatCallbackI()));
+
+                _chat = ChatSessionPrx.uncheckedCast(_session.session());
+                try
                 {
-                    if(!_destroyed) // Connection closed by user logout/exit
+                    _chat.setCallbackAsync(callback).whenComplete((result, ex) ->
                     {
-                        destroyWithError(
+                        if(ex == null)
+                        {
+                            _service.loginComplete();
+                        }
+                        else
+                        {
+                            AppSession.this.destroy();
+                        }
+                    });
+                }
+                catch(CommunicatorDestroyedException ex)
+                {
+                    // Ignore client session was destroyed.
+                }
+            }
+
+            public void disconnected(SessionHelper session)
+            {
+                if(!_destroyed) // Connection closed by user logout/exit
+                {
+                    destroyWithError(
                             "<system-message> - The connection with the server was unexpectedly lost.\nTry again.");
-                    }
                 }
+            }
 
-                public void connectFailed(SessionHelper session, Throwable exception)
+            public void connectFailed(SessionHelper session, Throwable exception)
+            {
+                try
                 {
-                    try
-                    {
-                        throw exception;
-                    }
-                    catch(CannotCreateSessionException ex)
-                    {
-                        setError("Login failed (Glacier2.CannotCreateSessionException):\n" + ex.reason);
-                    }
-                    catch(PermissionDeniedException ex)
-                    {
-                        setError("Login failed (Glacier2.PermissionDeniedException):\n" + ex.reason);
-                    }
-                    catch(com.zeroc.Ice.Exception ex)
-                    {
-                        setError("Login failed (" + ex.ice_id() + ").\n" +
-                                 "Please check your configuration.");
-                    }
-                    catch(Throwable ex)
-                    {
-                        setError("Login failed:\n" + stack2string(ex));
-                    }
-                    _service.loginFailed();
+                    throw exception;
                 }
-
-                public void createdCommunicator(SessionHelper session)
+                catch(CannotCreateSessionException ex)
                 {
-                    Communicator communicator = session.communicator();
-                    if(communicator.getProperties().getPropertyAsIntWithDefault("IceSSL.UsePlatformCAs", 0) == 0)
-                    {
-                        //
-                        // Configure the IceSSL plug-in to use a resource stream for the truststore.
-                        //
-                        java.io.InputStream certStream = resources.openRawResource(R.raw.client);
-                        com.zeroc.IceSSL.Plugin plugin =
+                    setError("Login failed (Glacier2.CannotCreateSessionException):\n" + ex.reason);
+                }
+                catch(PermissionDeniedException ex)
+                {
+                    setError("Login failed (Glacier2.PermissionDeniedException):\n" + ex.reason);
+                }
+                catch(com.zeroc.Ice.Exception ex)
+                {
+                    setError("Login failed (" + ex.ice_id() + ").\n" +
+                            "Please check your configuration.");
+                }
+                catch(Throwable ex)
+                {
+                    setError("Login failed:\n" + stack2string(ex));
+                }
+                _service.loginFailed();
+            }
+
+            public void createdCommunicator(SessionHelper session)
+            {
+                Communicator communicator = session.communicator();
+                if(communicator.getProperties().getPropertyAsIntWithDefault("IceSSL.UsePlatformCAs", 0) == 0)
+                {
+                    //
+                    // Configure the IceSSL plug-in to use a resource stream for the truststore.
+                    //
+                    java.io.InputStream certStream = resources.openRawResource(R.raw.client);
+                    com.zeroc.IceSSL.Plugin plugin =
                             (com.zeroc.IceSSL.Plugin)communicator.getPluginManager().getPlugin("IceSSL");
-                        plugin.setTruststoreStream(certStream);
-                        communicator.getPluginManager().initializePlugins();
-                    }
+                    plugin.setTruststoreStream(certStream);
+                    communicator.getPluginManager().initializePlugins();
                 }
-            });
+            }
+        });
         _session = factory.connect(username, password);
     }
 
@@ -220,12 +221,12 @@ public class AppSession
         }
 
         _chat.sendAsync(t).whenComplete((result, ex) ->
+        {
+            if(ex != null)
             {
-                if(ex != null)
-                {
-                    destroyWithError(ex.toString());
-                }
-            });
+                destroyWithError(ex.toString());
+            }
+        });
     }
 
     // This method is only called by the UI thread.
@@ -262,7 +263,7 @@ public class AppSession
         public void replay(ChatRoomListener cb);
     }
 
-    private class ChatCallbackI implements Chat.ChatRoomCallback
+    private class ChatCallbackI implements ChatRoomCallback
     {
         public void init(String[] users, Current current)
         {

@@ -8,6 +8,7 @@
 
 #include <Ice/BuiltinSequences.ice>
 
+["java:package:com.zeroc.demos.android.library"]
 module Demo
 {
 

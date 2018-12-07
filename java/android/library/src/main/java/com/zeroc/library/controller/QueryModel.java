@@ -8,9 +8,11 @@ package com.zeroc.library.controller;
 
 import java.util.List;
 
+import com.zeroc.demos.android.library.Demo.*;
+
 public class QueryModel
 {
-    public List<Demo.BookDescription> books;
+    public List<BookDescription> books;
     public int nrows;
-    public Demo.BookDescription currentBook;
+    public BookDescription currentBook;
 }
