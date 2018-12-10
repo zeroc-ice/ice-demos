@@ -20,7 +20,7 @@
     "del": "^3.0.0",
     "gulp": "^4.0.0",
     "gulp-ext-replace": "^0.3.0",
-    "gulp-ice-builder": "^3.0.0",
+    "gulp-ice-builder": "^3.0.1",
     "gulp-newer": "^1.4.0",
     "gulp-terser": "^1.1.5",
     "gulp-typescript": "^5.0.0-alpha.3",

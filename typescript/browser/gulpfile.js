@@ -21,7 +21,7 @@ const rollup = require("rollup");
 const tsc = require("gulp-typescript");
 const httpServer = require("./bin/HttpServer");
 
-const root = path.resolve('.');
+const root = path.resolve(".");
 //
 // Check ICE_HOME environment variable. If this is set and points to a source
 // distribution then prefer it over default packages.
