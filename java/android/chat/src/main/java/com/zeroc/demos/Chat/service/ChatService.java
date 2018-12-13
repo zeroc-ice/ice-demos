@@ -4,7 +4,7 @@
 //
 // **********************************************************************
 
-package com.zeroc.chat.service;
+package com.zeroc.demos.Chat.service;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -16,12 +16,12 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Build;
 
-import com.zeroc.chat.ChatActivity;
-import com.zeroc.chat.R;
+import com.zeroc.demos.Chat.ChatActivity;
+import com.zeroc.demos.Chat.R;
 
 import java.io.IOException;
 
-public class ChatService extends Service implements com.zeroc.chat.service.Service
+public class ChatService extends Service implements com.zeroc.demos.Chat.service.Service
 {
     private static final int CHATACTIVE_NOTIFICATION = 0;
     private AppSession _session = null;
@@ -33,7 +33,7 @@ public class ChatService extends Service implements com.zeroc.chat.service.Servi
 
     public class LocalBinder extends Binder
     {
-        public com.zeroc.chat.service.Service getService()
+        public com.zeroc.demos.Chat.service.Service getService()
         {
             return ChatService.this;
         }
@@ -120,7 +120,7 @@ public class ChatService extends Service implements com.zeroc.chat.service.Servi
 
     synchronized public void login(final String username, final String password)
     {
-        if(com.zeroc.chat.BuildConfig.DEBUG)
+        if(com.zeroc.demos.Chat.BuildConfig.DEBUG)
         {
             if(_session != null)
             {

@@ -10,9 +10,7 @@ buildscript {
 
 slice {
     java {
-        include = ["${projectDir}"]
-        srcDir = '.'
-        include = ["${projectDir}"]
+        include = ["${projectDir}/src/main/slice"]
     }
 }
 

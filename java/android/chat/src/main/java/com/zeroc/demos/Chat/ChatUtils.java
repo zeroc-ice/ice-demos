@@ -4,7 +4,7 @@
 //
 // **********************************************************************
 
-package com.zeroc.chat;
+package com.zeroc.demos.Chat;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

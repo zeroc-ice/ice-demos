@@ -4,7 +4,7 @@
 //
 // **********************************************************************
 
-package com.zeroc.chat;
+package com.zeroc.demos.Chat;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -26,7 +26,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.zeroc.chat.service.ChatRoomListener;
+import com.zeroc.demos.Chat.service.ChatRoomListener;
 
 public class ChatActivity extends SessionActivity
 {

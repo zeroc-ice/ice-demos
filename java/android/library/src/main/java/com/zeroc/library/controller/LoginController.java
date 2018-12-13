@@ -24,7 +24,6 @@ import com.zeroc.Ice.ObjectPrx;
 import com.zeroc.Ice.Util;
 import com.zeroc.Glacier2.CannotCreateSessionException;
 import com.zeroc.Glacier2.PermissionDeniedException;
-import com.zeroc.Glacier2.SessionPrx;
 import com.zeroc.Glacier2.SessionNotExistException;
 import com.zeroc.library.R;
 
@@ -140,9 +139,9 @@ public class LoginController
                             return;
                         }
 
-                        SessionPrx glacier2session = router.createSession(username, password);
+                        com.zeroc.Glacier2.SessionPrx glacier2session = router.createSession(username, password);
 
-                        final Demo.Glacier2SessionPrx sess = Demo.Glacier2SessionPrx.uncheckedCast(glacier2session);
+                        final Glacier2SessionPrx sess = Glacier2SessionPrx.uncheckedCast(glacier2session);
                         final LibraryPrx library = sess.getLibrary();
 
                         final int acmTimeout = router.getACMTimeout();
@@ -180,14 +179,14 @@ public class LoginController
                     {
                         ObjectPrx proxy = _communicator.propertyToProxy("LibraryDemo.Proxy");
 
-                        Demo.SessionFactoryPrx factory = Demo.SessionFactoryPrx.checkedCast(proxy);
+                        SessionFactoryPrx factory = SessionFactoryPrx.checkedCast(proxy);
                         if(factory == null)
                         {
                             postLoginFailure("SessionFactory proxy is invalid.");
                             return;
                         }
 
-                        final Demo.SessionPrx sess = factory.create();
+                        final SessionPrx sess = factory.create();
                         final LibraryPrx library = sess.getLibrary();
 
                         session = new SessionAdapter()

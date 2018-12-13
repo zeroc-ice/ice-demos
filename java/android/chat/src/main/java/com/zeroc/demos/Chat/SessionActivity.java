@@ -4,17 +4,17 @@
 //
 // **********************************************************************
 
-package com.zeroc.chat;
+package com.zeroc.demos.Chat;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import com.zeroc.chat.service.ChatRoomListener;
-import com.zeroc.chat.service.ChatService;
-import com.zeroc.chat.service.NoSessionException;
-import com.zeroc.chat.service.Service;
+import com.zeroc.demos.Chat.service.ChatRoomListener;
+import com.zeroc.demos.Chat.service.ChatService;
+import com.zeroc.demos.Chat.service.NoSessionException;
+import com.zeroc.demos.Chat.service.Service;
 
 import android.app.Dialog;
 import android.content.ComponentName;
@@ -70,7 +70,7 @@ public abstract class SessionActivity extends AppCompatActivity
             // interact with the service. Because we have bound to a explicit
             // service that we know is running in our own process, we can
             // cast its IBinder to a concrete class and directly access it.
-            _service = ((com.zeroc.chat.service.ChatService.LocalBinder)service).getService();
+            _service = ((com.zeroc.demos.Chat.service.ChatService.LocalBinder)service).getService();
             try
             {
                 String hostname = _service.addChatRoomListener(getChatRoomListener(), replayEvents());

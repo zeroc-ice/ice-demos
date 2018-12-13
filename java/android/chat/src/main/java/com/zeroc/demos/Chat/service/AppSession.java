@@ -4,9 +4,9 @@
 //
 // **********************************************************************
 
-package com.zeroc.chat.service;
+package com.zeroc.demos.Chat.service;
 
-import com.zeroc.demos.android.chat.Chat.*;
+import com.zeroc.demos.Chat.*;
 import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.CommunicatorDestroyedException;
 import com.zeroc.Ice.Connection;
@@ -34,7 +34,7 @@ import android.os.Build;
 import android.content.res.Resources;
 import android.os.Handler;
 
-import com.zeroc.chat.R;
+import com.zeroc.demos.Chat.R;
 
 public class AppSession
 {

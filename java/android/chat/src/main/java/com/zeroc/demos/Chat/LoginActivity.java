@@ -4,7 +4,7 @@
 //
 // **********************************************************************
 
-package com.zeroc.chat;
+package com.zeroc.demos.Chat;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.appcompat.app.AlertDialog;
@@ -24,9 +24,9 @@ import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.zeroc.chat.service.ChatService;
-import com.zeroc.chat.service.Service;
-import com.zeroc.chat.service.SessionListener;
+import com.zeroc.demos.Chat.service.ChatService;
+import com.zeroc.demos.Chat.service.Service;
+import com.zeroc.demos.Chat.service.SessionListener;
 
 public class LoginActivity extends AppCompatActivity
 {
@@ -107,7 +107,7 @@ public class LoginActivity extends AppCompatActivity
             // cast its IBinder to a concrete class and directly access it.
             setLoginState();
 
-            _service = ((com.zeroc.chat.service.ChatService.LocalBinder)service).getService();
+            _service = ((com.zeroc.demos.Chat.service.ChatService.LocalBinder)service).getService();
             _service.setSessionListener(_listener);
         }
 

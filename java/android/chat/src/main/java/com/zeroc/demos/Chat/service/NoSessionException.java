@@ -4,7 +4,7 @@
 //
 // **********************************************************************
 
-package com.zeroc.chat.service;
+package com.zeroc.demos.Chat.service;
 
 public class NoSessionException extends Exception
 {
