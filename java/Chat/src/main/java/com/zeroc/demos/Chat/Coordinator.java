@@ -4,7 +4,7 @@
 //
 // **********************************************************************
 
-package ChatDemoGUI;
+package com.zeroc.demos.Chat;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -63,7 +63,7 @@ class Coordinator
         initData.properties.setProperty("Ice.Plugin.IceSSL", "com.zeroc.IceSSL.PluginFactory");
 
         // Load the configuration file.
-        initData.properties.setProperty("Ice.Default.Package", "com.zeroc.demos.Chat");
+        initData.properties.setProperty("Ice.Default.Package", "com.zeroc.demos");
         initData.properties = Util.createProperties(args, initData.properties);
 
         //
@@ -112,10 +112,10 @@ class Coordinator
                         return;
                     }
 
-                    Chat.ChatRoomCallbackPrx callback = Chat.ChatRoomCallbackPrx.uncheckedCast(
+                    ChatRoomCallbackPrx callback = ChatRoomCallbackPrx.uncheckedCast(
                         _session.addWithUUID(new ChatRoomCallbackI(coordinator)));
 
-                    _chat = Chat.ChatSessionPrx.uncheckedCast(_session.session());
+                    _chat = ChatSessionPrx.uncheckedCast(_session.session());
                     try
                     {
                         _chat.setCallbackAsync(callback).whenCompleteAsync((result, ex) ->
@@ -292,9 +292,9 @@ class Coordinator
                             {
                                 userSayEvent(timestamp, _username, message);
                             }
-                            else if(ex instanceof Chat.InvalidMessageException)
+                            else if(ex instanceof InvalidMessageException)
                             {
-                                Chat.InvalidMessageException e = (Chat.InvalidMessageException)ex;
+                                InvalidMessageException e = (InvalidMessageException)ex;
                                 _chatView.appendMessage("<system-message> - " + e.reason);
                             }
                             else
@@ -471,7 +471,7 @@ class Coordinator
     private LoginInfo _info = new LoginInfo();
     private SessionHelper _session = null;
     private Object _sessionMonitor = new java.lang.Object();
-    private Chat.ChatSessionPrx _chat = null;
+    private ChatSessionPrx _chat = null;
     private String _username = "";
     private static final int _maxMessageSize = 1024;
     private boolean _exit = false;

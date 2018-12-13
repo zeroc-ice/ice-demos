@@ -4,7 +4,7 @@
 //
 // **********************************************************************
 
-package ChatDemoGUI;
+package com.zeroc.demos.Chat;
 
 import java.util.Date;
 import java.util.TimeZone;

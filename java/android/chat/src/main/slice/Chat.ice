@@ -12,6 +12,8 @@
  * ChatSession.ice and PollingChat.ice.
  *
  **/
+
+["java:package:com.zeroc.demos"]
 module Chat
 {
 

@@ -4,8 +4,6 @@
 //
 // **********************************************************************
 
-package FilesystemI;
-
 public interface NodeI
 {
     com.zeroc.Ice.Identity id();

@@ -4,9 +4,7 @@
 //
 // **********************************************************************
 
-package com.zeroc.demos.Manual.simpleFilesystem.Filesystem;
-
-import com.zeroc.demos.Manual.simpleFilesystem.*;
+import com.zeroc.demos.Manual.simpleFilesystem.Filesystem.*;
 
 public class FileI implements File
 {

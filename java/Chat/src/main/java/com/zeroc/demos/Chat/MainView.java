@@ -4,7 +4,7 @@
 //
 // **********************************************************************
 
-package ChatDemoGUI;
+package com.zeroc.demos.Chat;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;

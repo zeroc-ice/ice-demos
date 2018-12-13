@@ -4,12 +4,12 @@
 //
 // **********************************************************************
 
-package ChatDemoGUI;
+package com.zeroc.demos.Chat;
 
 //
 // This class implements the ChatRoomCallback interface.
 //
-class ChatRoomCallbackI implements Chat.ChatRoomCallback
+class ChatRoomCallbackI implements ChatRoomCallback
 {
     public ChatRoomCallbackI(Coordinator coordinator)
     {

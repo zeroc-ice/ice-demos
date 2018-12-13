@@ -4,7 +4,7 @@
 //
 // **********************************************************************
 
-package ChatDemoGUI;
+package com.zeroc.demos.Chat;
 
 import java.util.prefs.Preferences;
 import java.util.prefs.BackingStoreException;

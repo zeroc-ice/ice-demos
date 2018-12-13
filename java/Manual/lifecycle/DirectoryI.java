@@ -4,8 +4,6 @@
 //
 // **********************************************************************
 
-package FilesystemI;
-
 import com.zeroc.Ice.*;
 import com.zeroc.demos.Manual.lifecycle.Filesystem.*;
 
