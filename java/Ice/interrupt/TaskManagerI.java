@@ -6,7 +6,7 @@
 
 import java.util.concurrent.ExecutorService;
 
-import Demo.*;
+import com.zeroc.demos.Ice.interrupt.Demo.*;
 
 public class TaskManagerI implements TaskManager
 {

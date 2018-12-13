@@ -10,9 +10,7 @@ buildscript {
 
 slice {
     java {
-        include = ["${projectDir}"]
-        srcDir = '.'
-        include = ["${projectDir}"]
+        include = ["${projectDir}/src/main/slice"]
     }
 }
 
@@ -27,19 +25,19 @@ dependencies {
 
 if(JavaVersion.current() == JavaVersion.VERSION_11) {
     jar {
-        archiveName = "ChatGUI.jar"
+        archiveName = "Chat.jar"
         destinationDir = new File("${projectDir}")
         manifest {
-            attributes 'Main-Class': "ChatDemoGUI.MainView"
+            attributes 'Main-Class': "com.zeroc.demos.Chat.MainView"
             attributes("Class-Path": configurations.runtimeClasspath.resolve().collect{ it.toURI() }.join(' '))
         }
     }
 }
 else {
     jar {
-        archiveName = "ChatGUITEMP.jar"
+        archiveName = "ChatTEMP.jar"
         manifest {
-            attributes 'Main-Class': "ChatDemoGUI.MainView"
+            attributes 'Main-Class': "com.zeroc.demos.Chat.MainView"
         }
     }
 
@@ -47,7 +45,7 @@ else {
 
     task proguard(type: proguard.gradle.ProGuardTask, dependsOn: jar) {
         injars configurations.runtimeClasspath.resolve(), filter: '!META-INF/**'
-        injars "${buildDir}/libs/ChatGUITEMP.jar"
+        injars "${buildDir}/libs/ChatTEMP.jar"
         if(JavaVersion.current() <= JavaVersion.VERSION_1_8) {
             libraryjars "${javaHome}/lib/rt.jar"
             libraryjars "${javaHome}/lib/jsse.jar"
@@ -57,12 +55,12 @@ else {
             libraryjars "${javaHome}/jmods/java.desktop.jmod"
             libraryjars "${javaHome}/jmods/java.prefs.jmod"
         }
-        outjars "ChatGUI.jar"
-        configuration "chatdemogui.pro"
+        outjars "Chat.jar"
+        configuration "chatdemo.pro"
     }
     assemble.dependsOn(proguard)
 }
 
 clean {
-    delete("ChatGUI.jar")
+    delete("Chat.jar")
 }

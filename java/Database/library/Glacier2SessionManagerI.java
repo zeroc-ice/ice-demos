@@ -4,7 +4,7 @@
 //
 // **********************************************************************
 
-import Demo.*;
+import com.zeroc.demos.Database.library.Demo.*;
 
 import com.zeroc.Glacier2.SessionPrx;
 import com.zeroc.Glacier2.SessionControlPrx;

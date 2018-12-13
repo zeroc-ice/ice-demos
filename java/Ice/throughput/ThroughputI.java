@@ -4,7 +4,7 @@
 //
 // **********************************************************************
 
-import Demo.*;
+import com.zeroc.demos.Ice.throughput.Demo.*;
 
 public final class ThroughputI implements Throughput
 {

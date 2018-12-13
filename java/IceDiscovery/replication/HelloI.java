@@ -4,7 +4,7 @@
 //
 // **********************************************************************
 
-import Demo.*;
+import com.zeroc.demos.IceDiscovery.replication.Demo.*;
 
 public class HelloI implements Hello
 {

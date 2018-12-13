@@ -4,7 +4,7 @@
 //
 // **********************************************************************
 
-import Demo.*;
+import com.zeroc.demos.IceBox.hello.Demo.*;
 
 public class HelloI implements Hello
 {

@@ -6,6 +6,7 @@
 
 #pragma once
 
+["java:package:com.zeroc.demos.android.talk"]
 /**
  *
  * The Talk module defines the types that two devices use to communicate with one another.

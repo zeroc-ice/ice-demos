@@ -4,7 +4,7 @@
 //
 // **********************************************************************
 
-import Demo.*;
+import com.zeroc.demos.Ice.serialize.Demo.*;
 
 public class GreetI implements Greet
 {

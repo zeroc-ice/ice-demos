@@ -4,7 +4,7 @@
 //
 // **********************************************************************
 
-import Demo.*;
+import com.zeroc.demos.Ice.nested.Demo.*;
 
 class NestedI implements Nested
 {

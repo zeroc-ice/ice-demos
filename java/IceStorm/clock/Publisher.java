@@ -4,7 +4,7 @@
 //
 // **********************************************************************
 
-import Demo.*;
+import com.zeroc.demos.IceStorm.clock.Demo.*;
 
 public class Publisher
 {
@@ -19,6 +19,7 @@ public class Publisher
         //
         try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.pub", extraArgs))
         {
+            communicator.getProperties().setProperty("Ice.Default.Package", "com.zeroc.demos.IceStorm.clock");
             //
             // Install shutdown hook to (also) destroy communicator during JVM shutdown.
             // This ensures the communicator gets destroyed when the user interrupts the application with Ctrl-C.

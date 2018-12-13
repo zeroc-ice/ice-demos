@@ -6,6 +6,7 @@
 
 #pragma once
 
+["java:package:com.zeroc.demos.IceDiscovery.hello"]
 module Demo
 {
     interface Hello

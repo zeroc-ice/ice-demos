@@ -4,7 +4,8 @@
 //
 // **********************************************************************
 
-import Filesystem.*;
+import com.zeroc.Ice.*;
+import com.zeroc.demos.Manual.lifecycle.Filesystem.*;
 
 public class Client
 {
@@ -17,6 +18,7 @@ public class Client
         //
         try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args))
         {
+            communicator.getProperties().setProperty("Ice.Default.Package", "com.zeroc.demos.Manual.lifecycle");
             //
             // Create a proxy for the root directory
             //

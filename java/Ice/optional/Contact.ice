@@ -6,6 +6,7 @@
 
 #pragma once
 
+["java:package:com.zeroc.demos.Ice.optional"]
 module Demo
 {
     enum NumberType

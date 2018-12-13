@@ -45,6 +45,7 @@ import javax.swing.text.DefaultEditorKit;
 import javax.swing.text.Document;
 import javax.swing.text.Element;
 
+import com.zeroc.demos.Glacier2.simpleChat.Demo.*;
 import com.zeroc.Glacier2.SessionFactoryHelper;
 import com.zeroc.Glacier2.SessionHelper;
 import com.zeroc.Glacier2.SessionCallback;
@@ -293,6 +294,7 @@ public class Client extends JFrame
         // Load the configuration file.
         initData.properties = com.zeroc.Ice.Util.createProperties();
         initData.properties.load("config.client");
+        initData.properties.setProperty("Ice.Default.Package", "com.zeroc.demos.Glacier2.simpleChat");
         initData.properties = Util.createProperties(args, initData.properties);
 
         // Setup a dispatcher to dispath Ice and Glacier2 helper callbacks to the GUI thread.
@@ -316,7 +318,7 @@ public class Client extends JFrame
                 // The chat callback servant. We use an anonymous
                 // inner class since the implementation is very
                 // simple.
-                Demo.ChatCallback servant = new Demo.ChatCallback()
+                ChatCallback servant = new ChatCallback()
                 {
                     @Override
                     public void message(final String data, Current current)
@@ -325,9 +327,9 @@ public class Client extends JFrame
                     }
                 };
 
-                Demo.ChatCallbackPrx callback = Demo.ChatCallbackPrx.uncheckedCast(_session.addWithUUID(servant));
+                ChatCallbackPrx callback = ChatCallbackPrx.uncheckedCast(_session.addWithUUID(servant));
 
-                _chat = Demo.ChatSessionPrx.uncheckedCast(_session.session());
+                _chat = ChatSessionPrx.uncheckedCast(_session.session());
                 _chat.setCallbackAsync(callback).whenCompleteAsync((result, ex) ->
                 {
                     if(ex == null)
@@ -488,5 +490,5 @@ public class Client extends JFrame
     // The session factory and current session.
     private SessionFactoryHelper _factory;
     private SessionHelper _session;
-    private Demo.ChatSessionPrx _chat;
+    private ChatSessionPrx _chat;
 }

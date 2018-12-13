@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.zeroc.demos.android.library.Demo.*;
 import com.zeroc.library.controller.QueryController;
 import com.zeroc.library.controller.QueryModel;
 
@@ -32,7 +33,7 @@ public class ViewActivity extends SessionActivity
     public static final String RENT_TAG = "rent";
     public static final String DELETE_TAG = "delete";
 
-    private Demo.BookDescription _desc;
+    private BookDescription _desc;
     private TextView _isbn;
     private TextView _title;
     private LinearLayout _authorsLayout;

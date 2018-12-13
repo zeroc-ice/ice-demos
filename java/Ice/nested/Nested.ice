@@ -6,6 +6,7 @@
 
 #pragma once
 
+["java:package:com.zeroc.demos.Ice.nested"]
 module Demo
 {
     interface Nested

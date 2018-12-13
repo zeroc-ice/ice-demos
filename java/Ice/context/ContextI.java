@@ -4,7 +4,7 @@
 //
 // **********************************************************************
 
-import Demo.*;
+import com.zeroc.demos.Ice.context.Demo.*;
 
 public class ContextI implements Context
 {

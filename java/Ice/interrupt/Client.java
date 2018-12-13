@@ -11,7 +11,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import Demo.*;
+import com.zeroc.demos.Ice.interrupt.Demo.*;
 import com.zeroc.Ice.LocalException;
 
 public class Client
@@ -27,6 +27,8 @@ public class Client
         //
         try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.client", extraArgs))
         {
+            communicator.getProperties().setProperty("Ice.Default.Package", "com.zeroc.demos.Ice.interrupt");
+
             if(!extraArgs.isEmpty())
             {
                 System.err.println("too many arguments");

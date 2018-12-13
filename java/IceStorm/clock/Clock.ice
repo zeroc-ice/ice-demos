@@ -6,6 +6,7 @@
 
 #pragma once
 
+["java:package:com.zeroc.demos.IceStorm.clock"]
 module Demo
 {
     interface Clock

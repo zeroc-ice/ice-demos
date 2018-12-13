@@ -6,7 +6,7 @@
 
 import com.zeroc.Ice.Current;
 
-import Demo.*;
+import com.zeroc.demos.Ice.asyncInvocation.Demo.*;
 
 public class CalculatorI implements Calculator
 {

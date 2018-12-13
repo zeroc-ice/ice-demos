@@ -4,7 +4,7 @@
 //
 // **********************************************************************
 
-import Demo.*;
+import com.zeroc.demos.IceDiscovery.replication.Demo.*;
 
 public class Client
 {
@@ -19,6 +19,8 @@ public class Client
         //
         try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.client", extraArgs))
         {
+            communicator.getProperties().setProperty("Ice.Default.Package", "com.zeroc.demos.IceDiscover.replication");
+
             if(!extraArgs.isEmpty())
             {
                 System.err.println("too many arguments");

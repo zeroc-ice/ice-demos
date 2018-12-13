@@ -27,6 +27,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.zeroc.demos.android.library.Demo.*;
 import com.zeroc.library.controller.QueryController;
 import com.zeroc.library.controller.QueryModel;
 
@@ -36,7 +37,7 @@ public class EditActivity extends SessionActivity
     private static final int DISCARD_ID = Menu.FIRST + 1;
     public static final String DISCARD_TAG = "discard";
 
-    private Demo.BookDescription _desc;
+    private BookDescription _desc;
 
     private List<View> _authorEntries = new ArrayList<View>();
     private EditText _isbn;

@@ -9,6 +9,7 @@
 #include <Glacier2/Session.ice>
 #include <Library.ice>
 
+["java:package:com.zeroc.demos.Database.library"]
 module Demo
 {
 

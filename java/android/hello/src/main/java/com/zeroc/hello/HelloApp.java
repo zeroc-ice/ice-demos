@@ -6,6 +6,7 @@
 
 package com.zeroc.hello;
 
+import com.zeroc.demos.android.hello.Demo.*;
 import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.Connection;
 import com.zeroc.Ice.InitializationData;
@@ -81,7 +82,7 @@ public class HelloApp extends Application
         // On some devices, a multicast lock must be acquired otherwise multicast packets are discarded.
         // The lock is initially unacquired.
         //
-        _lock = _wifiManager.createMulticastLock("com.zeroc.hello");
+        _lock = _wifiManager.createMulticastLock("com.zeroc.demos.android.hello");
         _lock.acquire();
 
         // SSL initialization can take some time. To avoid blocking the
@@ -108,6 +109,7 @@ public class HelloApp extends Application
                     initData.properties.setProperty("IceSSL.Password", "password");
                     initData.properties.setProperty("Ice.Plugin.IceSSL", "com.zeroc.IceSSL.PluginFactory");
                     initData.properties.setProperty("Ice.Plugin.IceDiscovery", "com.zeroc.IceDiscovery.PluginFactory");
+                    initData.properties.setProperty("Ice.Default.Package", "com.zeroc.demos.android.hello");
 
                     //
                     // We need to postpone plug-in initialization so that we can configure IceSSL
@@ -398,7 +400,7 @@ public class HelloApp extends Application
             prx = prx.ice_invocationTimeout(_timeout);
         }
 
-        _proxy = Demo.HelloPrx.uncheckedCast(prx);
+        _proxy = HelloPrx.uncheckedCast(prx);
     }
 
     DeliveryMode getDeliveryMode()
@@ -421,7 +423,7 @@ public class HelloApp extends Application
 
     private boolean _initialized;
     private Communicator _communicator;
-    private Demo.HelloPrx _proxy = null;
+    private HelloPrx _proxy = null;
 
     // The current request if any.
     private InvocationFuture<?> _result;

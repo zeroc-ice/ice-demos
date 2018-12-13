@@ -4,7 +4,7 @@
 //
 // **********************************************************************
 
-package Demo;
+package com.zeroc.demos.Ice.serialize.Demo;
 
 public class MyGreeting implements java.io.Serializable
 {

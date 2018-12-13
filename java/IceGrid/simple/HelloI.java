@@ -4,7 +4,7 @@
 //
 // **********************************************************************
 
-import Demo.*;
+import com.zeroc.demos.IceGrid.simple.Demo.*;
 
 public class HelloI implements Hello
 {
