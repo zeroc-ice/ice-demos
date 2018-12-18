@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Manual printer demo client")]
 [assembly: AssemblyDescription("Manual printer demo client")]
 [assembly: AssemblyCompany("ZeroC, Inc.")]
-[assembly: AssemblyCopyright("Copyright (c) 2003-2018 ZeroC, Inc.")]
+[assembly: AssemblyCopyright("Copyright (c) 2003-present ZeroC, Inc.")]
 [assembly: ComVisible(false)]
 [assembly: CLSCompliant(true)]
 [assembly: AssemblyProductAttribute("Ice")]

@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Ice plugin demo loggerplugin")]
 [assembly: AssemblyDescription("Ice plugin demo loggerplugin")]
 [assembly: AssemblyCompany("ZeroC, Inc.")]
-[assembly: AssemblyCopyright("Copyright (c) 2003-2018 ZeroC, Inc.")]
+[assembly: AssemblyCopyright("Copyright (c) 2003-present ZeroC, Inc.")]
 [assembly: ComVisible(false)]
 [assembly: CLSCompliant(true)]
 [assembly: AssemblyProductAttribute("Ice")]

@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Ice callback demo client")]
 [assembly: AssemblyDescription("Ice callback demo client")]
 [assembly: AssemblyCompany("ZeroC, Inc.")]
-[assembly: AssemblyCopyright("Copyright (c) 2003-2018 ZeroC, Inc.")]
+[assembly: AssemblyCopyright("Copyright (c) 2003-present ZeroC, Inc.")]
 [assembly: ComVisible(false)]
 [assembly: CLSCompliant(true)]
 [assembly: AssemblyProductAttribute("Ice")]

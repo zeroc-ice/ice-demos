@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("IceDiscovery hello demo server")]
 [assembly: AssemblyDescription("IceDiscovery hello demo server")]
 [assembly: AssemblyCompany("ZeroC, Inc.")]
-[assembly: AssemblyCopyright("Copyright (c) 2003-2018 ZeroC, Inc.")]
+[assembly: AssemblyCopyright("Copyright (c) 2003-present ZeroC, Inc.")]
 [assembly: ComVisible(false)]
 [assembly: CLSCompliant(true)]
 [assembly: AssemblyProductAttribute("Ice")]

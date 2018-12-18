@@ -1,6 +1,6 @@
 // **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) 2003-present ZeroC, Inc. All rights reserved.
 //
 // **********************************************************************
 
@@ -212,7 +212,7 @@ public class MainView extends JFrame
 
     private void about()
     {
-        String text = "Chat Demo.\nCopyright \u00A9 2005-2018 ZeroC, Inc. All rights reserved.\n";
+        String text = "Chat Demo.\nCopyright \u00A9 2005-present ZeroC, Inc. All rights reserved.\n";
         JOptionPane.showMessageDialog(this, text, "About", JOptionPane.INFORMATION_MESSAGE);
     }
 

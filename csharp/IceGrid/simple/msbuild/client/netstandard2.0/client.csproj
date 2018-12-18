@@ -9,7 +9,7 @@
         <Company>ZeroC, Inc.</Company>
         <AssemblyTitle>IceGrid simple demo client</AssemblyTitle>
         <Description>IceGrid simple demo client</Description>
-        <Copyright>Copyright (c) 2003-2018 ZeroC, Inc.</Copyright>
+        <Copyright>Copyright (c) 2003-present ZeroC, Inc.</Copyright>
         <Product>Ice</Product>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
         <FileVersion>1.0.0.0</FileVersion>
