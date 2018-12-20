@@ -1,8 +1,8 @@
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <!-- Nuget executable -->
     <PropertyGroup>
-        <NugetExe>$(MSBuildThisFileDirectory)NuGet.exe</NugetExe>
-        <NugetURL>https://dist.nuget.org/win-x86-commandline/v3.4.4/NuGet.exe</NugetURL>
+        <NugetExe>$(MSBuildThisFileDirectory)NuGet-4.9.2.exe</NugetExe>
+        <NugetURL>https://dist.nuget.org/win-x86-commandline/v4.9.2/nuget.exe</NugetURL>
         <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
     </PropertyGroup>
 
