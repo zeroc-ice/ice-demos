@@ -9,7 +9,7 @@
 // applies the plug-in only to subprojects.
 //
 plugins {
-    id 'com.zeroc.gradle.ice-builder.slice' version '1.4.5' apply false
+    id 'com.zeroc.gradle.ice-builder.slice' version '1.4.6' apply false
 }
 
 subprojects {
