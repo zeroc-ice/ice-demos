@@ -17,11 +17,11 @@
         <Compile Include="../../../HelloI.cs" />
         <Compile Include="../../../HelloServiceI.cs" />
         <SliceCompile Include="../../../Hello.ice" />
-        <PackageReference Include="zeroc.ice.net" Version="3.7.1" />
+        <PackageReference Include="zeroc.ice.net" Version="3.7.2" />
         <PackageReference Include="zeroc.icebuilder.msbuild" Version="5.0.4" />
         <IceBoxNet Include="$(IceHome)/tools/netcoreapp2.0/*" />
         <Compile Update="generated\Hello.cs">
-          <SliceCompileSource>../../../Hello.ice</SliceCompileSource>
+          <SliceCompileSource>..\..\..\Hello.ice</SliceCompileSource>
         </Compile>
     </ItemGroup>
     <Target AfterTargets="Build" Name="CopyIceBoxNet">

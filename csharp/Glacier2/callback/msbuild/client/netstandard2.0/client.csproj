@@ -19,10 +19,10 @@
         <Compile Include="../../../CallbackI.cs" />
         <Compile Include="../../../CallbackReceiverI.cs" />
         <SliceCompile Include="../../../Callback.ice" />
-        <PackageReference Include="zeroc.ice.net" Version="3.7.1" />
+        <PackageReference Include="zeroc.ice.net" Version="3.7.2" />
         <PackageReference Include="zeroc.icebuilder.msbuild" Version="5.0.4" />
         <Compile Update="generated\Callback.cs">
-          <SliceCompileSource>../../../Callback.ice</SliceCompileSource>
+          <SliceCompileSource>..\..\..\Callback.ice</SliceCompileSource>
         </Compile>
     </ItemGroup>
 </Project>

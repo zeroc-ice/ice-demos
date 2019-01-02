@@ -19,7 +19,7 @@
         <Compile Include="../../../DiscoverReplyI.cs" />
         <SliceCompile Include="../../../Discovery.ice" />
         <SliceCompile Include="../../../Hello.ice" />
-        <PackageReference Include="zeroc.ice.net" Version="3.7.1" />
+        <PackageReference Include="zeroc.ice.net" Version="3.7.2" />
         <PackageReference Include="zeroc.icebuilder.msbuild" Version="5.0.4" />
         <Compile Update="generated\Discovery.cs">
           <SliceCompileSource>../../../Discovery.ice</SliceCompileSource>

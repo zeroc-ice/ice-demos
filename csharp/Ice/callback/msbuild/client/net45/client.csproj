@@ -90,7 +90,7 @@
     <Reference Include="IceGrid, Version=3.7.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\..\packages\zeroc.ice.net.3.7.2\lib\net45\IceGrid.dll</HintPath>
     </Reference>
-    <Reference Include="IceLocatorDiscovery, Version=3.7.1.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="IceLocatorDiscovery, Version=3.7.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\..\packages\zeroc.ice.net.3.7.2\lib\net45\IceLocatorDiscovery.dll</HintPath>
     </Reference>
     <Reference Include="IcePatch2, Version=3.7.2.0, Culture=neutral, processorArchitecture=MSIL">
