@@ -23,7 +23,8 @@
     "ice": "3.6.*",
     "npm": "^2.11.1",
     "slice2js": "3.6.*",
-    "vinyl-paths": "^1.0.0"
+    "vinyl-paths": "^1.0.0",
+    "natives": "^1.1.6"
   },
   "scripts": {
     "gulp:build": "gulp",
