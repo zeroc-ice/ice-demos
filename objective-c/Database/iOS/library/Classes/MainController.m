@@ -43,36 +43,20 @@
 @synthesize books;
 @synthesize searchTableView;
 
--(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+-(id)initWithCoder:(NSCoder *)aDecoder
 {
-    if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])
+    if (self = [super initWithCoder:aDecoder])
     {
-        self.title = @"Search"; // Hostname?
-
         // Initialization code
         books = [NSMutableArray array];
         nrows = 0;
         rowsQueried = 0;
-
-        detailController = [[DetailController alloc] initWithNibName:@"DetailView" bundle:nil];
-        detailController.delegate = self;
-
-        addController = [[AddController alloc] initWithNibName:@"DetailView" bundle:nil];
     }
     return self;
 }
 
 -(void)viewDidLoad
 {
-    self.navigationItem.rightBarButtonItem =
-    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
-                                                   target:self
-                                                   action:@selector(addBook:)];
-    self.navigationItem.leftBarButtonItem =
-    [[UIBarButtonItem alloc] initWithTitle:@"Logout"
-                                     style:UIBarButtonItemStylePlain
-                                     target:self action:@selector(logout:)];
-
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(destroySession)
                                                  name:UIApplicationWillTerminateNotification
@@ -88,6 +72,26 @@
     }
     // Redisplay the data.
     [searchTableView reloadData];
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"ShowDetail"])
+    {
+        DetailController* dc = [segue destinationViewController];
+        dc.delegate = self;
+        [dc startEdit:[books objectAtIndex:currentIndexPath.row]];
+    }
+    else if ([[segue identifier] isEqualToString:@"NewBook"])
+    {
+        DemoBookDescription* book = [DemoBookDescription bookDescription];
+        book.title = @"";
+        book.authors = [NSMutableArray array];
+
+        AddController* ac = [segue destinationViewController];
+        ac.delegate = self;
+        [ac startEdit:book library:library];
+    }
 }
 
 -(void)didReceiveMemoryWarning
@@ -133,7 +137,7 @@
     });
 }
 
--(void)logout:(id)sender
+-(IBAction)logout:(id)sender
 {
     [self destroySession];
     [self.navigationController popViewControllerAnimated:YES];
@@ -162,22 +166,14 @@
                            withRowAnimation:UITableViewRowAnimationFade];
 }
 
--(void)addBook:(id)sender
-{
-    DemoBookDescription* book = [DemoBookDescription bookDescription];
-    book.title = @"";
-    book.authors = [NSMutableArray array];
-
-    [addController startEdit:book library:library];
-
-    [self.navigationController pushViewController:addController animated:YES];
-}
-
 #pragma mark DetailControllerDelegate
 
 -(void)bookUpdated:(DemoBookDescription*)book
 {
-    [books replaceObjectAtIndex:currentIndexPath.row withObject:book];
+    if(currentIndexPath.row)
+    {
+        [books replaceObjectAtIndex:currentIndexPath.row withObject:book];
+    }
     [searchTableView reloadData];
 }
 
@@ -206,7 +202,7 @@
                       handler:^(UIAlertAction * action) {
                         if(self.session == nil)
                         {
-                            [self.navigationController popToRootViewControllerAnimated:YES];
+                            [self.navigationController popViewControllerAnimated:YES];
                         }
                       }]];
     [self presentViewController:alert animated:YES completion:nil];
@@ -217,20 +213,20 @@
 -(void)searchBarCancelButtonClicked:(UISearchBar*)sender
 {
     [sender resignFirstResponder];
-    searchSegmentedControl.hidden = YES;
-    sender.showsCancelButton = NO;
+    [sender setShowsScopeBar:NO];
+    [sender setShowsCancelButton:NO];
 }
 
 -(void)searchBarSearchButtonClicked:(UISearchBar*)sender
 {
     [sender resignFirstResponder];
-    searchSegmentedControl.hidden = YES;
-    sender.showsCancelButton = NO;
+    [sender setShowsScopeBar:NO];
+    [sender setShowsCancelButton:NO];
 
     // Initiate a search.
     NSString* search = sender.text;
 
-    NSUInteger searchMode = searchSegmentedControl.selectedSegmentIndex;
+    NSUInteger searchMode = [sender selectedScopeButtonIndex];
 
     // Kill the previous query results.
     self.query = nil;
@@ -289,8 +285,8 @@
 
 -(BOOL)searchBarShouldBeginEditing:(UISearchBar *)sender
 {
-    searchSegmentedControl.hidden = NO;
-    sender.showsCancelButton = YES;
+    [sender setShowsScopeBar:YES];
+    [sender setShowsCancelButton:YES];
 
     return YES;
 }
@@ -381,10 +377,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 
     self.currentIndexPath = indexPath;
 
-    [detailController startEdit:[books objectAtIndex:indexPath.row]];
-
-    // Push the detail view on to the navigation controller's stack.
-    [self.navigationController pushViewController:detailController animated:YES];
+    [self performSegueWithIdentifier:@"ShowDetail" sender:self];
     return nil;
 }
 

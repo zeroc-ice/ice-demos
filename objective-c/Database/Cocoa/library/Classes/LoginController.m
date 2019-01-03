@@ -21,6 +21,7 @@ NSString* const passwordKey = @"passwordKey";
 @property (nonatomic) NSWindow* connectingSheet;
 @property (nonatomic)  NSProgressIndicator* progress;
 @property (nonatomic) id<ICECommunicator> communicator;
+@property (nonatomic) ICEInitializationData* initializationData;
 @end
 
 @implementation LoginController
@@ -28,6 +29,7 @@ NSString* const passwordKey = @"passwordKey";
 @synthesize connectingSheet;
 @synthesize progress;
 @synthesize communicator;
+@synthesize initializationData;
 
 +(void)initialize
 {
@@ -52,11 +54,31 @@ NSString* const passwordKey = @"passwordKey";
     ICEregisterIceSSL(YES);
     ICEregisterIceWS(YES);
 
-    // Initialize the fields from the application defaults.
-    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    initializationData = [ICEInitializationData initializationData];
+    initializationData.properties = [ICEUtil createProperties];
+    [initializationData.properties load:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"config.client"]];
+    [initializationData.properties setProperty:@"Ice.RetryIntervals" value:@"-1"];
 
-    usernameField.stringValue = [defaults stringForKey:usernameKey];
-    passwordField.stringValue = [defaults stringForKey:passwordKey];
+    initializationData.dispatcher = ^(id<ICEDispatcherCall> call, id<ICEConnection> con)
+    {
+        dispatch_sync(dispatch_get_main_queue(), ^ { [call run]; });
+    };
+
+    [initializationData.properties setProperty:@"IceSSL.DefaultDir" value:[[NSBundle mainBundle] resourcePath]];
+
+    if([[[initializationData properties] getProperty:@"Ice.Default.Router"] length] == 0)
+    {
+        [usernameField setHidden:YES];
+        [passwordField setHidden:YES];
+    }
+    else
+    {
+        // Initialize the fields from the application defaults.
+        NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+
+        usernameField.stringValue = [defaults stringForKey:usernameKey];
+        passwordField.stringValue = [defaults stringForKey:passwordKey];
+    }
 
 }
 
@@ -109,27 +131,11 @@ NSString* const passwordKey = @"passwordKey";
 
 -(void)login:(id)sender
 {
-    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:usernameField.stringValue forKey:usernameKey];
-    [defaults setObject:passwordField.stringValue forKey:passwordKey];
-
-    ICEInitializationData* initData = [ICEInitializationData initializationData];
-    initData.properties = [ICEUtil createProperties];
-    [initData.properties load:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"config.client"]];
-    [initData.properties setProperty:@"Ice.RetryIntervals" value:@"-1"];
-
-    initData.dispatcher = ^(id<ICEDispatcherCall> call, id<ICEConnection> con)
-    {
-        dispatch_sync(dispatch_get_main_queue(), ^ { [call run]; });
-    };
-
-    [initData.properties setProperty:@"IceSSL.DefaultDir" value:[[NSBundle mainBundle] resourcePath]];
-
     id proxy;
     @try
     {
         NSAssert(communicator == nil, @"communicator == nil");
-        communicator = [ICEUtil createCommunicator:initData];
+        communicator = [ICEUtil createCommunicator:initializationData];
         if([[[communicator getProperties] getProperty:@"Ice.Default.Router"] length] > 0)
         {
             proxy = [communicator getDefaultRouter];

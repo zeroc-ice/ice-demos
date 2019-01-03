@@ -6,12 +6,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AppDelegate : NSObject <UIApplicationDelegate>
-{
-@private
+@interface AppDelegate : UIResponder <UIApplicationDelegate>
 
-    IBOutlet UIWindow *window;
-    IBOutlet UINavigationController *navigationController;
-}
+@property (strong, nonatomic) UIWindow *window;
 
 @end

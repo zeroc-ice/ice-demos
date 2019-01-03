@@ -146,18 +146,18 @@
 
     // Clean up the communicator.
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^ {
-            // Destroy might block so we call it from a separate thread.
-            [self.communicator destroy];
-            self.communicator = nil;
+        // Destroy might block so we call it from a separate thread.
+        [self.communicator destroy];
+        self.communicator = nil;
 
-            dispatch_async(dispatch_get_main_queue(), ^ {
-                    [self append:@"<disconnected>" who:@"system message" timestamp:[NSDate date]];
-                    [self.inputField setEnabled:NO];
+        dispatch_async(dispatch_get_main_queue(), ^ {
+            [self append:@"<disconnected>" who:@"system message" timestamp:[NSDate date]];
+            [self.inputField setEnabled:NO];
 
-                    NSApplication* app = [NSApplication sharedApplication];
-                    AppDelegate* delegate = (AppDelegate*)[app delegate];
-                    [delegate setChatController:nil];
-            });
+            NSApplication* app = [NSApplication sharedApplication];
+            AppDelegate* delegate = (AppDelegate*)[app delegate];
+            [delegate setChatController:nil];
+        });
     });
 }
 

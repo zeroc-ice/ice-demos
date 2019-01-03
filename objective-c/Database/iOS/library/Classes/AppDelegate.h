@@ -6,17 +6,8 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol ICECommunicator;
-@class ICEException;
-@class ICEInitializationData;
+@interface AppDelegate : UIResponder <UIApplicationDelegate>
 
-@interface AppDelegate : NSObject <UIApplicationDelegate>
-{
-@private
-
-    IBOutlet UIWindow *window;
-    IBOutlet UINavigationController *navigationController;
-
-}
+@property (strong, nonatomic) UIWindow *window;
 
 @end

@@ -7,20 +7,10 @@
 #import <UIKit/UIKit.h>
 
 @interface EditController : UIViewController
-{
-@private
 
-    IBOutlet UITextField* __unsafe_unretained textField;
+@property (nonatomic) IBOutlet UITextField* textField;
+@property (nonatomic) NSString* initialValue;
 
-    id obj;
-    SEL selector;
-    NSString* value;
-}
-
-@property (unsafe_unretained, nonatomic, readonly) UITextField *textField;
-
--(IBAction)cancel:(id)sender;
--(IBAction)save:(id)sender;
--(void)startEdit:(id)obj selector:(SEL)selector name:(NSString*)name value:(NSString*)value;
+-(void)startEdit:(NSString*)name value:(NSString*)value;
 
 @end

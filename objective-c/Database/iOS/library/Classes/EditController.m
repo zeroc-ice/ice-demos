@@ -9,25 +9,12 @@
 @implementation EditController
 
 @synthesize textField;
+@synthesize initialValue;
 
 -(void)viewDidLoad
 {
-    // Adjust the text field size and font.
-    CGRect frame = textField.frame;
-    frame.size.height += 10;
-    textField.frame = frame;
-    textField.font = [UIFont boldSystemFontOfSize:16];
-    // Set the view background to match the grouped tables in the other views.
-    self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
-}
-
--(void)viewWillAppear:(BOOL)animated
-{
     textField.placeholder = self.title;
-    textField.enabled = YES;
-    textField.text = value;
-
-    [textField becomeFirstResponder];
+    textField.text = initialValue;
 }
 
 -(void)didReceiveMemoryWarning
@@ -36,27 +23,10 @@
     // Release anything that's not essential, such as cached data
 }
 
--(IBAction)cancel:(id)sender
+-(void)startEdit:(NSString*)name value:(NSString*)v
 {
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
--(void)startEdit:(id)o selector:(SEL)sel name:(NSString*)name value:(NSString*)v
-{
-    obj = o;
-    selector = sel;
-
     self.title = name;
-    value = v;
-}
-
--(IBAction)save:(id)sender
-{
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-    [obj performSelector:selector withObject:textField.text];
-#pragma clang diagnostic pop
-    [self.navigationController popViewControllerAnimated:YES];
+    self.initialValue = v;
 }
 
 @end

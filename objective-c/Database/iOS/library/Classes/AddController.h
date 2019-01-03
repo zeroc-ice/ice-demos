@@ -18,7 +18,6 @@
     id<DemoLibraryPrx> library;
 }
 
--(IBAction)cancel:(id)sender;
 -(IBAction)save:(id)sender;
 
 -(void)startEdit:(DemoBookDescription*)book library:(id<DemoLibraryPrx>)library;

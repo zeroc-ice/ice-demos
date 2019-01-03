@@ -17,7 +17,7 @@
 @private
     IBOutlet UITableView* chatView;
     IBOutlet UITextField* inputField;
-    UserController* userController;
+    NSMutableArray* users;
     NSMutableArray* messages;
     NSTimer* refreshTimer;
 
@@ -35,7 +35,7 @@
         router:(id<GLACIER2RouterPrx>)router
       category:(NSString*)category;
 // Called just prior to being shown.
--(void)activate:(NSString*)title;
+-(void)activate;
 
 // ChatChatRoomCallback methods.
 -(void)init:(NSMutableArray *)users current:(ICECurrent*)current;
@@ -44,4 +44,5 @@
 -(void)join:(ICELong)timestamp name:(NSMutableString *)name current:(ICECurrent*)current;
 -(void)leave:(ICELong)timestamp name:(NSMutableString *)name current:(ICECurrent*)current;
 
+-(IBAction)logout:(id)sender;
 @end

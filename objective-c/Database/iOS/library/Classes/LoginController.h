@@ -32,6 +32,8 @@
     id<GLACIER2RouterPrx> router;
     ICELong sessionTimeout;
     id<DemoLibraryPrx> library;
+
+    ICEInitializationData* initializationData;
 }
 
 -(IBAction)login:(id)sender;

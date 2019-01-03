@@ -13,20 +13,15 @@
 @protocol DemoBookQueryResultPrx;
 @protocol GLACIER2RouterPrx;
 
-@class AddController;
-
 @interface MainController :
     UIViewController<UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate,UIAlertViewDelegate,
                      DetailControllerDelegate>
 {
 @private
-    IBOutlet UISegmentedControl* searchSegmentedControl;
     IBOutlet UITableView* searchTableView;
 
     NSIndexPath* currentIndexPath;
 
-    DetailController* detailController;
-    AddController* addController;
     id<DemoBookQueryResultPrx> query;
     NSMutableArray* books;
     int rowsQueried;
