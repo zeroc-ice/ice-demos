@@ -3,7 +3,7 @@
     <PropertyGroup>
         <AssemblyName>server</AssemblyName>
         <OutputType>Exe</OutputType>
-        <TargetFramework>netcoreapp2.1</TargetFramework>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
         <OutputPath>.</OutputPath>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <Company>ZeroC, Inc.</Company>
