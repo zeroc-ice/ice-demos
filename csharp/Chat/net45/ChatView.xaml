@@ -1,10 +1,4 @@
-<!--
- **********************************************************************
-
- Copyright (c) 2003-present ZeroC, Inc. All rights reserved.
-
- **********************************************************************
--->
+<!--  Copyright (c) ZeroC, Inc. All rights reserved. -->
 
 <!-- This file defines a WPF Page that represent the view to display the
     chat when the user is connected. -->

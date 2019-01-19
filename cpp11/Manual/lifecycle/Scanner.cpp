@@ -490,11 +490,9 @@ char *yytext;
 #line 1 "Manual/lifecycle/Scanner.l"
 #line 2 "Manual/lifecycle/Scanner.l"
 
-// **********************************************************************
 //
-// Copyright (c) 2003-present ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 #include <IceUtil/PushDisableWarnings.h>
 #include <Parser.h>
