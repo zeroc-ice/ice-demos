@@ -57,7 +57,7 @@ namespace ChatDemoGUI
         private void about(object sender,ExecutedRoutedEventArgs args)
         {
             String aboutMessage = "Chat Demo \n"
-                                 + "Copyright \u00A9 2005-present ZeroC, Inc. All rights reserved.\n";
+                                 + "Copyright \u00A9 ZeroC, Inc. All rights reserved.\n";
             string caption = "Chat Demo - About";
             MessageBoxImage icon = MessageBoxImage.Information;
             MessageBoxButton button = MessageBoxButton.OK;
