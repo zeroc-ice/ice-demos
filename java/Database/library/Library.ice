@@ -6,7 +6,6 @@
 
 #include <Ice/BuiltinSequences.ice>
 
-
 ["java:package:com.zeroc.demos.Database.library"]
 module Demo
 {
