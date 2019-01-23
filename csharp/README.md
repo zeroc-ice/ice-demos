@@ -83,7 +83,7 @@ refer to [Using the Windows Binary Distributions][4] for additional information.
 
 In order to build Ice for .NET sample programs, you need all of the following:
 
- - the [.NET Core 2.0 SDK][5]
+ - the [.NET Core 2.2 SDK][5]
  - Slice to C# compiler, for Windows platform the Slice to C# compiler is included
    with the `zeroc.ice.net` NuGet package installed during build, for other platforms
    refer to the [Release Notes][6].
