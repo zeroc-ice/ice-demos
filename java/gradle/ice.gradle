@@ -4,14 +4,6 @@
 
 project.apply(plugin: com.zeroc.gradle.icebuilder.slice.SlicePlugin)
 
-//
-// slice.iceVersion returns the version of slice2java used by Ice Builder.
-// This is usually (but not always) the version of the Ice Jar files we want to use.
-//
-project.ext.iceArtifactVersion = slice.iceVersion
-
-project.version = project.iceArtifactVersion
-
 slice {
     if(project.cppPlatform) {
         cppPlatform = project.cppPlatform
@@ -29,6 +21,14 @@ slice {
         output = project.file("${project.buildDir}/generated/source/ice")
     }
 }
+
+//
+// slice.iceVersion returns the version of slice2java used by Ice Builder.
+// This is usually (but not always) the version of the Ice Jar files we want to use.
+//
+project.ext.iceArtifactVersion = slice.iceVersion
+
+project.version = project.iceArtifactVersion
 
 buildscript {
     //
