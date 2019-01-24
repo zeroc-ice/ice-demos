@@ -3,9 +3,9 @@
 //
 
 //
-// Install gradle Ice builder plug-in from the plug-in portal. `apply false`
-// To avoid adding the plug-in to the root project, we want to apply the plug-in
-// only to the subprojects.
+// Install gradle Ice builder plug-in from the plug-in portal. We use `apply false`
+// to tell Gradle not to apply the plugin to the current project. The subprojects
+// use `apply plugin` to apply the plugin.
 //
 plugins {
     id 'com.zeroc.gradle.ice-builder.slice' version '1.4.7' apply false
