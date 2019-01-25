@@ -500,7 +500,10 @@
 
     function unescapeHtml(message)
     {
-        entities.forEach(entity => message.replace(entity.escape, entity.value));
+        for(const entity of entities)
+        {
+            message = message.replace(entity.escape, entity.value);
+        }
         return message;
     }
 }());
