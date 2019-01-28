@@ -19,5 +19,13 @@ incoming connections to the client.
 * Build and deploy the demo using `Deploy client` from the `Build` menu.
 * Start the "Ice Bidir Demo Client" application from the Windows Start screen
 or right click on the project and select `Debug -> Start new instance`.
+* If you are connecting to a bidir server running on the same machine
+you must add the application to the loopback exempted list, using the
+following command:
+```
+CheckNetIsolation LoopbackExempt -a -n=ice-bidir-client_3qjctahehqazm
+```
+This is automatically done when you start the client application from
+Visual Studio `Debug -> Start new instance`.
 
 [1]: https://doc.zeroc.com/display/Ice37/Bidirectional+Connections

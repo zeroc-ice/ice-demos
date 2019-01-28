@@ -14,6 +14,14 @@ use any other hello server (C++, C# etc.).
 * Build and deploy the demo using `Deploy hello` from the `Build` menu.
 * Start the "Ice Hello Demo Client" application from the Windows Start screen
 or right click on the project and select `Debug -> Start new instance`.
+* If you are connecting to a hello server running on the same machine
+you must add the application to the loopback exempted list, using the
+following command:
+```
+CheckNetIsolation LoopbackExempt -a -n=ice-hello-client_3qjctahehqazm
+```
+This is automatically done when you start the client application from
+Visual Studio `Debug -> Start new instance`.
 
 ### SSL
 
