@@ -45,6 +45,7 @@ private:
     void dispatch(std::function<void()>);
     Ice::CommunicatorHolder _communicator;
     std::future<void> _start;
+    std::future<void> _stop;
 };
 
 }
