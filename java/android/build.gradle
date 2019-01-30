@@ -17,20 +17,12 @@ subprojects {
     apply plugin: 'idea'
 }
 
-//
-// Used to build the gradle wrapper to automatically download and install
-// the version of gradle needed to build Ice.
-//
-wrapper {
-    gradleVersion = "4.10.2"
-    distributionType = Wrapper.DistributionType.ALL
-}
-
 allprojects {
 
     repositories {
         google()
         jcenter()
+        maven { url 'https://builds.testing.zeroc.com/nexus/repository/maven.ice-v3.7.2-rc0' }
     }
 
     gradle.projectsEvaluated {
