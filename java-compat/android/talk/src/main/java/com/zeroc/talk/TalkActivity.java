@@ -142,7 +142,13 @@ public class TalkActivity extends Activity
         //
         // Enable Bluetooth if necessary.
         //
-        if(!BluetoothAdapter.getDefaultAdapter().isEnabled())
+        BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+        if(adapter == null)
+        {
+            Toast.makeText(this, R.string.no_bluetooth, Toast.LENGTH_SHORT).show();
+            finish();
+        }
+        else if(!BluetoothAdapter.getDefaultAdapter().isEnabled())
         {
             Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
@@ -167,7 +173,10 @@ public class TalkActivity extends Activity
     public void onStop()
     {
         super.onStop();
-        unbindService(_connection);
+        if(_service != null)
+        {
+            unbindService(_connection);
+        }
     }
 
     @Override
