@@ -22,7 +22,6 @@ allprojects {
     repositories {
         google()
         jcenter()
-        maven { url 'https://builds.testing.zeroc.com/nexus/repository/maven.ice-v3.7.2-rc0' }
     }
 
     gradle.projectsEvaluated {
