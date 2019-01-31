@@ -99,7 +99,8 @@ cd csharp
 To build the sample programs run:
 
 ```
-dotnet msbuild "C# NET Core demos.sln" /t:"Restore;Build"
+dotnet restore "C# NET Core demos.sln"
+dotnet msbuild "C# NET Core demos.sln"
 ```
 
 The demos are configured to use the Ice distribution from NuGet packages. These
@@ -130,7 +131,7 @@ dotnet msbuild /p:IceHome=<Ice dist path> /t:NetStandardInstallLocalPackages msb
 To build the sample programs run:
 
 ```
-dotnet msbuild "C# NET Core demos.sln" /t:"Restore;Build"
+dotnet msbuild "C# NET Core demos.sln"
 ```
 
 ### Running the Demos
