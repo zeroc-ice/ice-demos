@@ -5,7 +5,7 @@
 This directory contains a Xamarin client application for the Ice hello
 demo.
 
-### Building on Windows
+### Windows
 
 #### Windows Build Requirements
 
@@ -21,16 +21,13 @@ build the desired project `hello.Android`, `hello.iOS` or `hello.UWP`.
 
 #### Running
 
-To run the demo, first you need to start an Ice hello server from another
-language mapping (Java, C++, C#, or Python). Please refer to the README
-in the server subdirectory for more information on starting the server.
-If you want to get started quickly, we recommend using the Python server.
+You can deploy the Hello client application on a device or emulator, or run
+it from Visual Studio with the debugger.
 
-The Xamarin Hello client application can be deploy to Android, iOS or UWP
-using the `hello.Android`, `hello.iOS` and `hello.UWP` project `Deploy`
-option respectivelly.
+You also need to run a `hello` demo server provided by another language
+mapping, such as C++ (cpp11, cpp98), C# (csharp) or Python (python).
 
-### Building on macOS
+### macOS
 
 #### macOS Build Requirements
 
@@ -43,13 +40,9 @@ and build the desired project `hello.Android` or `hello.iOS`.
 
 #### Running
 
-To run the demo, first you need to start an Ice hello server from another
-language mapping (Java, C++, C#, or Python). Please refer to the README
-in the server subdirectory for more information on starting the server.
-If you want to get started quickly, we recommend using the Python server.
+Press the Run button or select the `Run item` menu to run the Hello client on
+the selected device or emulator.
 
-After starting the server open the solution file `Xamarin demos.sln` using
-Visual Studio 2017 for Mac.
-
-The Xamarin Hello client application can be deploy to Android or iOS
-using the `hello.Android` and `hello.iOS` `Run Item` option respectivelly.
+You also need to run a `hello` demo server provided by another language
+mapping, such as C++ (cpp11, cpp98), C# (csharp) or Python (python). Python is
+the simplest as it does not require building anything.
