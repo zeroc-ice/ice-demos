@@ -426,7 +426,7 @@ public class HelloWorld extends AppCompatActivity
     public static final String INITIALIZE_TAG = "initialize";
     public static final String ERROR_TAG = "error";
 
-    private static final String DEFAULT_HOST = "";
+    private static final String DEFAULT_HOST = "10.0.2.2";
     private static final String HOSTNAME_KEY = "host";
 
     private static final String BUNDLE_KEY_PROGRESS = "zeroc:progress";
