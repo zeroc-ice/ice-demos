@@ -2,10 +2,8 @@ This demo is a minimal Ice "hello world" application. Each time the
 client is run a "sayHello" invocation is sent to the server.
 
 To run the demo, first you need to start an Ice minimal server from
-another language mapping (Java, C++, C#, or Python). Please refer to
-the README in the server subdirectory for more information on starting
-the server. If you want to get started quickly, we recommend using the
-Python server.
+another language mapping (Java, C++, C#, or Python). If you want to
+get started quickly, we recommend using the Python server.
 
 Note that this demo uses port 10000. If port 10000 is not available on your
 machine, you need to edit both client and server to use a free port.
