@@ -11,11 +11,11 @@ namespace hello
 {
     public partial class App : Application
     {
-        public App ()
+        public App (string defaultHost = "127.0.0.1")
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new MainPage(defaultHost);
         }
 
         protected override void OnStart ()

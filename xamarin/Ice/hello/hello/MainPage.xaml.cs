@@ -21,10 +21,9 @@ namespace hello
         const string DATAGRAM = "Datagram";
         const string DATAGRAM_BATCH = "Datagram Batch";
 
-        public MainPage()
+        public MainPage(string defaultHost)
         {
             InitializeComponent();
-
             Mode.Items.Add(TWOWAY);
             Mode.Items.Add(TWOWAY_SECURE);
             Mode.Items.Add(ONEWAY);
@@ -34,7 +33,7 @@ namespace hello
             Mode.Items.Add(DATAGRAM);
             Mode.Items.Add(DATAGRAM_BATCH);
             Mode.SelectedIndex = 0;
-
+            Hostname.Text = defaultHost;
             Hostname.TextChanged += Hostname_TextChanged;
             Mode.SelectedIndexChanged += Mode_SelectedIndexChanged;
 
