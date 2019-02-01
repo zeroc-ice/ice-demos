@@ -83,7 +83,7 @@ refer to [Using the Windows Binary Distributions][4] for additional information.
 
 In order to build Ice for .NET sample programs, you need all of the following:
 
- - the [.NET Core 2.2 SDK][5]
+ - the [.NET Core 2.1 SDK][5]
  - Slice to C# compiler, for Windows platform the Slice to C# compiler is included
    with the `zeroc.ice.net` NuGet package installed during build, for other platforms
    refer to the [Release Notes][6].
@@ -131,6 +131,7 @@ dotnet msbuild /p:IceHome=<Ice dist path> /t:NetStandardInstallLocalPackages msb
 To build the sample programs run:
 
 ```
+dotnet restore "C# NET Core demos.sln"
 dotnet msbuild "C# NET Core demos.sln"
 ```
 
@@ -149,5 +150,5 @@ directory to your PATH. Please refer to the [Release Notes][6] for additional in
 [2]: https://zeroc.com/chat/index.html
 [3]: https://marketplace.visualstudio.com/items?itemName=ZeroCInc.IceBuilder
 [4]: https://doc.zeroc.com/display/Rel/Using+the+Windows+Binary+Distributions+for+Ice+3.7.2
-[5]: https://www.microsoft.com/net/download/windows
+[5]: https://dotnet.microsoft.com/download/dotnet-core/2.1
 [6]: https://doc.zeroc.com/display/Ice37/Ice+Release+Notes

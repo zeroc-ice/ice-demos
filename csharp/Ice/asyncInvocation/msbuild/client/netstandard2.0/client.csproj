@@ -3,7 +3,7 @@
     <PropertyGroup>
         <AssemblyName>client</AssemblyName>
         <OutputType>Exe</OutputType>
-        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <TargetFramework>$(AppTargetFramework)</TargetFramework>
         <OutputPath>../../../</OutputPath>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <Company>ZeroC, Inc.</Company>
