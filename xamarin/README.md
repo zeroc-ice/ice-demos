@@ -52,4 +52,4 @@ After starting the server open the solution file `Xamarin demos.sln` using
 Visual Studio 2017 for Mac.
 
 The Xamarin Hello client application can be deploy to Android or iOS
-using the `hello.Android` and `hello.iOS` `Deploy` option respectivelly.
+using the `hello.Android` and `hello.iOS` `Run Item` option respectivelly.
