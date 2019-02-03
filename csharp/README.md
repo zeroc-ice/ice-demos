@@ -23,8 +23,8 @@ Refer to the [C++11 demos](../cpp11) for more examples that use the Ice services
 ### Build Requirements
 
 In order to build the Ice for .NET sample programs, you need:
- * a supported version of Visual Studio
- * the [Ice Builder][3] extension
+ * Visual Studio
+ * the [Ice Builder][3] Visual Studio extension
 
 If you forget to install Ice Builder, the C# sample projects will fail to load and
 Visual Studio may give an error message that suggests a version migration problem:
@@ -88,6 +88,10 @@ In order to build Ice for .NET sample programs, you need all of the following:
    with the `zeroc.ice.net` NuGet package installed during build, for other platforms
    refer to the [Release Notes][6].
 
+You can build from the command-line or with Visual Studio 2017 (for Windows or Mac).
+If you use Visual Studio 2017, the [Ice Builder][3] extension is optional on Windows,
+and not available on macOS.
+
 ### Building the demos using NuGet packages:
 
 Open a command prompt and change to the `csharp` subdirectory:
@@ -103,8 +107,8 @@ dotnet restore "C# NET Core demos.sln"
 dotnet msbuild "C# NET Core demos.sln"
 ```
 
-The demos are configured to use the Ice distribution from NuGet packages. These
-packages are automatically downloaded during the build.
+The demos are configured to use the Ice NuGet packages. These packages are automatically
+downloaded from nuget.org during the build.
 
 ### Building the demos using a source build:
 
