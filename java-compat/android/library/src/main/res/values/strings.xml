@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, LoginActivity</string>
     <string name="app_name">Library</string>
     <string name="menu_save">Save</string>
     <string name="menu_discard">Discard changes</string>
@@ -8,4 +7,22 @@
     <string name="menu_delete">Delete book</string>
     <string name="menu_add">Add</string>
     <string name="menu_logout">Logout</string>
+    <string name="isbn">ISBN</string>
+    <string name="title">Title</string>
+    <string name="authors">Authors</string>
+    <string name="add_author">Add Author</string>
+    <string name="save">Save</string>
+    <string name="discard">Discard</string>
+    <string name="rented_by">Rented By</string>
+    <string name="rent_book">Rent book</string>
+    <string name="X">X</string>
+    <string name="author_name">Author name</string>
+    <string name="search">Search</string>
+    <string name="no_matches_found">No matches found</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="loading"><![CDATA[<loading>]]></string>
+    <string name="return_book">Return Book</string>
+    <string name="search_text">Search text</string>
 </resources>

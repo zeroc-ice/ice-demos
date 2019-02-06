@@ -1,10 +1,8 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
-import Demo.*;
+import com.zeroc.demos.IceStorm.clock.Demo.*;
 
 public class Subscriber
 {
@@ -23,7 +21,7 @@ public class Subscriber
         java.util.List<String> extraArgs = new java.util.ArrayList<String>();
 
         com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.sub", extraArgs);
-
+        communicator.getProperties().setProperty("Ice.Default.Package", "com.zeroc.demos.IceStorm.clock");
         //
         // Destroy communicator during JVM shutdown
         //

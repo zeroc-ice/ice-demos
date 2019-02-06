@@ -1,16 +1,12 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
-
-/// <reference path="../../node_modules/ice/src/index.d.ts" />
-/// <reference path="node_modules/throughput/index.d.ts" />
 
 import {Ice} from "ice";
-import {Demo} from "throughput";
+import {Demo} from "./generated";
 
-(function(){
+(() =>
+{
 
 //
 // Initialize sequences.
@@ -313,4 +309,4 @@ function setState(s:State)
 
 setState(State.Idle);
 
-}());
+})();

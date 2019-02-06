@@ -1,8 +1,6 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 #import <UIKit/UIKit.h>
 #import <objc/Ice.h>
@@ -13,20 +11,15 @@
 @protocol DemoBookQueryResultPrx;
 @protocol GLACIER2RouterPrx;
 
-@class AddController;
-
 @interface MainController :
     UIViewController<UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate,UIAlertViewDelegate,
                      DetailControllerDelegate>
 {
 @private
-    IBOutlet UISegmentedControl* searchSegmentedControl;
     IBOutlet UITableView* searchTableView;
 
     NSIndexPath* currentIndexPath;
 
-    DetailController* detailController;
-    AddController* addController;
     id<DemoBookQueryResultPrx> query;
     NSMutableArray* books;
     int rowsQueried;

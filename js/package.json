@@ -1,6 +1,6 @@
 {
   "name": "ice-demos",
-  "version": "3.7.1",
+  "version": "3.7.2",
   "description": "Sample programs for Ice (Internet Communications Engine)",
   "author": "ZeroC, Inc.",
   "homepage": "https://zeroc.com",
@@ -13,15 +13,15 @@
     "run": "gulp run"
   },
   "dependencies": {
-    "ice": "^3.7.1",
-    "slice2js": "^3.7.1"
+    "ice": "^3.7.2",
+    "slice2js": "^3.7.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.1.2",
-    "@babel/core": "^7.1.2",
-    "@babel/plugin-transform-async-to-generator": "^7.1.0",
-    "@babel/polyfill": "^7.0.0",
-    "@babel/preset-env": "^7.1.0",
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/plugin-transform-async-to-generator": "^7.2.0",
+    "@babel/polyfill": "^7.2.5",
+    "@babel/preset-env": "^7.2.3",
     "babel-plugin-transform-builtin-extend": "^1.1.2",
     "babel-preset-es2015-script": "^1.1.0",
     "del": "^3.0.0",
@@ -30,10 +30,10 @@
     "gulp-concat": "^2.6.1",
     "gulp-ext-replace": "^0.3.0",
     "gulp-gzip": "1.4.2",
-    "gulp-ice-builder": "^2.0.3",
+    "gulp-ice-builder": "^3.0.2",
     "gulp-newer": "^1.4.0",
     "gulp-open": "^3.0.1",
-    "gulp-terser": "^1.1.5",
+    "gulp-terser": "^1.1.6",
     "gulp-uglifyes": "^0.2.1",
     "hogan.js": "^3.0.2",
     "http-proxy": "^1.17.0",

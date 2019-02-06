@@ -1,11 +1,9 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 import {Ice, Glacier2} from "ice";
-import {Demo} from "simple-chat";
+import {Demo} from "./generated";
 
 (async () =>
 {

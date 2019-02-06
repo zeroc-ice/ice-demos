@@ -1,8 +1,6 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 package com.zeroc.library;
 
@@ -18,13 +16,10 @@ public class LibraryApp extends Application
     private SessionController _sessionController;
 
     @Override
-    public void onCreate()
-    {
-    }
-
-    @Override
     public void onTerminate()
     {
+        super.onTerminate();
+
         if(_loginController != null)
         {
             _loginController.destroy();

@@ -1,8 +1,6 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 #pragma once
 
@@ -10,8 +8,6 @@
 // Map Slice modules to JavaScript ES6 modules
 //
 [["js:es6-module"]]
-
-["js:module:throughput"]
 
 module Demo
 {

@@ -1,8 +1,6 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 #import <UserController.h>
 
@@ -10,16 +8,6 @@
 
 @synthesize usersTableView;
 @synthesize users;
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    if((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]))
-    {
-        self.title = @"Users";
-        self.users = [NSMutableArray array];
-    }
-    return self;
-}
 
 - (void)didReceiveMemoryWarning
 {

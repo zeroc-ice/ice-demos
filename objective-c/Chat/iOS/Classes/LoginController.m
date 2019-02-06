@@ -1,8 +1,6 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 #import <LoginController.h>
 #import <ChatController.h>
@@ -44,6 +42,8 @@ static NSString* sslKey = @"sslKey";
 
 - (void)viewDidLoad
 {
+    [super viewDidLoad];
+
     // Register IceSSL/IceWS plugins and load them on communicator initialization.
     ICEregisterIceSSL(YES);
     ICEregisterIceWS(YES);
@@ -56,7 +56,9 @@ static NSString* sslKey = @"sslKey";
     passwordField.text = [defaults stringForKey:passwordKey];
     passwordField.clearButtonMode = UITextFieldViewModeWhileEditing;
 
-    chatController = [[ChatController alloc] initWithNibName:@"ChatView" bundle:nil];
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main"
+                                                             bundle: nil];
+    chatController = (ChatController *)[mainStoryboard instantiateViewControllerWithIdentifier:@"ChatController"];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(applicationDidEnterBackground)
@@ -225,8 +227,9 @@ static NSString* sslKey = @"sslKey";
                 // The communicator is now owned by the ChatController.
                 self.communicator = nil;
 
-                [self.chatController activate:@"Chat"];
+                [self.chatController activate];
                 [self.navigationController pushViewController:self.chatController animated:YES];
+
             });
         }
         @catch(GLACIER2CannotCreateSessionException* ex)

@@ -1,8 +1,6 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 package com.zeroc.library;
 
@@ -85,7 +83,7 @@ public class LibraryActivity extends SessionActivity
             if(position > _querydata.books.size() - 1)
             {
                 _queryController.getMore(position);
-                text.setText("<loading>");
+                text.setText(R.string.loading);
             }
             else
             {

@@ -13,8 +13,8 @@
     <!-- Custom task to download files -->
     <!-- Nuget executable -->
     <PropertyGroup>
-      <NugetExe>$(MSBuildThisFileDirectory)NuGet.exe</NugetExe>
-      <NugetURL>https://dist.nuget.org/win-x86-commandline/v3.4.4/NuGet.exe</NugetURL>
+      <NugetExe>$(MSBuildThisFileDirectory)NuGet-4.9.2.exe</NugetExe>
+      <NugetURL>https://dist.nuget.org/win-x86-commandline/v4.9.2/nuget.exe</NugetURL>
     </PropertyGroup>
 
     <!-- Download nuget.exe if not present -->
@@ -37,7 +37,7 @@
 
     <Target Name="DownloadSymbols" DependsOnTargets="NuGetRestore">
         <Exec IgnoreExitCode="True"
-              Command="symchk /r $(MSBuildThisFileDirectory)..\packages\zeroc.ice.$(DefaultPlatformToolset).3.7.1\build\native\bin\$(Platform)\$(Configuration)\* /s $(SymbolServer)">
+              Command="symchk /r $(MSBuildThisFileDirectory)..\packages\zeroc.ice.$(DefaultPlatformToolset).3.7.2\build\native\bin\$(Platform)\$(Configuration)\* /s $(SymbolServer)">
               <Output TaskParameter="ExitCode" PropertyName="ErrorCode"/>
         </Exec>
         <Warning  Text="PDBs download failed, stack traces might be missing or incomplete" Condition="'$(ErrorCode)' != '0'" />

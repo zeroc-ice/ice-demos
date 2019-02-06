@@ -1,8 +1,6 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 package com.zeroc.chat.service;
 
@@ -13,9 +11,6 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
-import java.util.UUID;
-
-import android.os.Build;
 
 import android.content.res.Resources;
 import android.os.Handler;
@@ -148,7 +143,7 @@ public class AppSession
                     }
                     catch(Ice.Exception ex)
                     {
-                        setError("Login failed (" + ex.ice_name() + ").\n" +
+                        setError("Login failed (" + ex.ice_id() + ").\n" +
                                  "Please check your configuration.");
                     }
                     catch(final Throwable ex) {

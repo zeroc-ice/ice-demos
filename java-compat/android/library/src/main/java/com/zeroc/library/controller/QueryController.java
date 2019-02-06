@@ -1,8 +1,6 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 package com.zeroc.library.controller;
 
@@ -221,7 +219,11 @@ public class QueryController
 
     synchronized public void getMore(int position)
     {
-        assert position < _nrows;
+        if(com.zeroc.library.BuildConfig.DEBUG && position >= _nrows)
+        {
+            throw new AssertionError();
+        }
+
         if(position < _rowsQueried)
         {
             return;
@@ -261,7 +263,11 @@ public class QueryController
 
     synchronized public void returnBook()
     {
-        assert _currentBook != NO_BOOK;
+        if(com.zeroc.library.BuildConfig.DEBUG && _currentBook == NO_BOOK)
+        {
+            throw new AssertionError();
+        }
+
         final Demo.BookDescription desc = _books.get(_currentBook);
         Demo.Callback_Book_returnBook returnBookCB = new Demo.Callback_Book_returnBook()
         {
@@ -304,7 +310,11 @@ public class QueryController
 
     synchronized public void rentBook(final String r)
     {
-        assert _currentBook != NO_BOOK;
+        if(com.zeroc.library.BuildConfig.DEBUG && _currentBook == NO_BOOK)
+        {
+            throw new AssertionError();
+        }
+
         final Demo.BookDescription desc = _books.get(_currentBook);
         Demo.Callback_Book_rentBook rentBookCB = new Demo.Callback_Book_rentBook()
         {
@@ -352,7 +362,10 @@ public class QueryController
 
     synchronized public void deleteBook()
     {
-        assert _currentBook != NO_BOOK;
+        if(com.zeroc.library.BuildConfig.DEBUG && _currentBook == NO_BOOK)
+        {
+            throw new AssertionError();
+        }
         final Demo.BookDescription desc = _books.get(_currentBook);
         desc.proxy.begin_destroy(new Demo.Callback_Book_destroy()
         {
@@ -378,7 +391,11 @@ public class QueryController
 
     synchronized public boolean saveBook(final Demo.BookDescription newDesc)
     {
-        assert _currentBook != NO_BOOK;
+        if(com.zeroc.library.BuildConfig.DEBUG && _currentBook == NO_BOOK)
+        {
+            throw new AssertionError();
+        }
+
         if(_currentBook == NEW_BOOK)
         {
             _library.begin_createBook(newDesc.isbn, newDesc.title, newDesc.authors,

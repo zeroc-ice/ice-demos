@@ -1,13 +1,13 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 package com.zeroc.library.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.zeroc.demos.android.library.Demo.*;
 
 import android.os.Handler;
 
@@ -27,13 +27,13 @@ public class QueryController
         ISBN, TITLE, AUTHOR
     }
 
-    private ArrayList<Demo.BookDescription> _books = new ArrayList<Demo.BookDescription>();
+    private ArrayList<BookDescription> _books = new ArrayList<BookDescription>();
     private int _nrows = 0;
     private int _rowsQueried = 0;
-    private Demo.BookQueryResultPrx _query = null;
+    private BookQueryResultPrx _query = null;
     private Listener _listener;
     private Handler _handler;
-    private Demo.LibraryPrx _library;
+    private LibraryPrx _library;
     private int _currentBook = NO_BOOK;
     private String _lastError;
 
@@ -66,7 +66,7 @@ public class QueryController
         }
     }
 
-    synchronized private void queryResponse(List<Demo.BookDescription> first, int nrows, Demo.BookQueryResultPrx result)
+    synchronized private void queryResponse(List<BookDescription> first, int nrows, BookQueryResultPrx result)
     {
         _books.clear();
         _nrows = nrows;
@@ -81,15 +81,15 @@ public class QueryController
     synchronized private QueryModel getQueryModel()
     {
         QueryModel data = new QueryModel();
-        data.books = new ArrayList<Demo.BookDescription>();
-        for(Demo.BookDescription book : _books)
+        data.books = new ArrayList<BookDescription>();
+        for(BookDescription book : _books)
         {
-            data.books.add((Demo.BookDescription)book.clone());
+            data.books.add((BookDescription)book.clone());
         }
         data.nrows = _nrows;
         if(_currentBook == NEW_BOOK)
         {
-            data.currentBook = new Demo.BookDescription();
+            data.currentBook = new BookDescription();
             data.currentBook.proxy = null;
             data.currentBook.isbn = "";
             data.currentBook.title = "";
@@ -98,19 +98,19 @@ public class QueryController
         }
         else if(_currentBook != NO_BOOK)
         {
-            data.currentBook = (Demo.BookDescription)_books.get(_currentBook).clone();
+            data.currentBook = (BookDescription)_books.get(_currentBook).clone();
         }
         return data;
     }
 
     // An empty query
-    QueryController(Handler handler, Demo.LibraryPrx library)
+    QueryController(Handler handler, LibraryPrx library)
     {
         _handler = handler;
         _library = library;
     }
 
-    QueryController(Handler handler, Demo.LibraryPrx library, final Listener listener, final QueryType _type,
+    QueryController(Handler handler, LibraryPrx library, final Listener listener, final QueryType _type,
                     final String _queryString)
     {
         _handler = handler;
@@ -197,7 +197,10 @@ public class QueryController
 
     synchronized public void getMore(int position)
     {
-        assert position < _nrows;
+        if(com.zeroc.library.BuildConfig.DEBUG && position >= _nrows)
+        {
+            throw  new AssertionError();
+        }
         if(position < _rowsQueried)
         {
             return;
@@ -233,14 +236,17 @@ public class QueryController
 
     synchronized public void returnBook()
     {
-        assert _currentBook != NO_BOOK;
-        final Demo.BookDescription desc = _books.get(_currentBook);
+        if(com.zeroc.library.BuildConfig.DEBUG && _currentBook == NO_BOOK)
+        {
+            throw  new AssertionError();
+        }
+        final BookDescription desc = _books.get(_currentBook);
         desc.proxy.returnBookAsync().whenComplete((result, ex) ->
             {
                 if(ex != null)
                 {
                     final String error;
-                    if(ex instanceof Demo.BookNotRentedException)
+                    if(ex instanceof BookNotRentedException)
                     {
                         error = "The book is no longer rented.";
 
@@ -266,22 +272,25 @@ public class QueryController
 
     synchronized public void rentBook(final String r)
     {
-        assert _currentBook != NO_BOOK;
-        final Demo.BookDescription desc = _books.get(_currentBook);
+        if(com.zeroc.library.BuildConfig.DEBUG && _currentBook == NO_BOOK)
+        {
+            throw  new AssertionError();
+        }
+        final BookDescription desc = _books.get(_currentBook);
         desc.proxy.rentBookAsync(r).whenComplete((result, ex) ->
             {
                 if(ex != null)
                 {
                     final String error;
-                    if(ex instanceof Demo.InvalidCustomerException)
+                    if(ex instanceof InvalidCustomerException)
                     {
                         error = "The customer name is invalid.";
                     }
-                    else if(ex instanceof Demo.BookRentedException)
+                    else if(ex instanceof BookRentedException)
                     {
                         error = "That book is already rented.";
 
-                        Demo.BookRentedException bre = (Demo.BookRentedException)ex;
+                        BookRentedException bre = (BookRentedException)ex;
                         desc.rentedBy = bre.renter;
                         postDataChanged(false);
                     }
@@ -304,8 +313,11 @@ public class QueryController
 
     synchronized public void deleteBook()
     {
-        assert _currentBook != NO_BOOK;
-        final Demo.BookDescription desc = _books.get(_currentBook);
+        if(com.zeroc.library.BuildConfig.DEBUG && _currentBook == NO_BOOK)
+        {
+            throw  new AssertionError();
+        }
+        final BookDescription desc = _books.get(_currentBook);
         desc.proxy.destroyAsync().whenComplete((result, ex) ->
             {
                 if(ex != null)
@@ -325,16 +337,19 @@ public class QueryController
             });
     }
 
-    synchronized public boolean saveBook(final Demo.BookDescription newDesc)
+    synchronized public boolean saveBook(final BookDescription newDesc)
     {
-        assert _currentBook != NO_BOOK;
+        if(com.zeroc.library.BuildConfig.DEBUG && _currentBook == NO_BOOK)
+        {
+            throw  new AssertionError();
+        }
         if(_currentBook == NEW_BOOK)
         {
             _library.createBookAsync(newDesc.isbn, newDesc.title, newDesc.authors).whenComplete((result, ex) ->
                 {
                     if(ex != null)
                     {
-                        if(ex instanceof Demo.BookExistsException)
+                        if(ex instanceof BookExistsException)
                         {
                             postError("That ISBN is already in the library.");
                         }
@@ -356,7 +371,7 @@ public class QueryController
             return true;
         }
 
-        final Demo.BookDescription desc = _books.get(_currentBook);
+        final BookDescription desc = _books.get(_currentBook);
 
         final boolean saveTitle = !newDesc.title.equals(desc.title);
         final boolean saveAuthors = !newDesc.authors.equals(desc.authors);

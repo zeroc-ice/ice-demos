@@ -59,7 +59,7 @@ Studio][2]. Add this extension to Visual Studio before building the demos.
 When you're ready to start the build, run `MSBuild`:
 
 ```
-MSBuild msbuild\ice.proj /p:IceHome=C:\Ice-3.7.1
+MSBuild msbuild\ice.proj /p:IceHome=C:\Ice-3.7.2
 ```
 
 ## Running the Demos

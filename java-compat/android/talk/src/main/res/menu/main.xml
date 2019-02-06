@@ -4,22 +4,22 @@
     <item
         android:id="@+id/connect"
         android:showAsAction="ifRoom"
-        android:title="@string/connect"/>
+        android:title="@string/connect" />
     <item
         android:id="@+id/connectSSL"
         android:showAsAction="never"
-        android:title="@string/connectSSL"/>
+        android:title="@string/connectSSL" />
     <item
         android:id="@+id/disconnect"
         android:showAsAction="never"
-        android:title="@string/disconnect"/>
+        android:title="@string/disconnect" />
     <item
         android:id="@+id/discoverable"
         android:showAsAction="never"
-        android:title="@string/discoverable"/>
+        android:title="@string/discoverable" />
     <item
         android:id="@+id/clear"
         android:showAsAction="never"
-        android:title="@string/clear"/>
+        android:title="@string/clear" />
 
 </menu>

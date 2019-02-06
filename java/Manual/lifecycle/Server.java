@@ -1,10 +1,6 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
-
-import FilesystemI.*;
 
 class Server
 {
@@ -19,6 +15,7 @@ class Server
         //
         try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, extraArgs))
         {
+            communicator.getProperties().setProperty("Ice.Default.Package", "com.zeroc.demos.Manual.lifecycle");
             //
             // Install shutdown hook to (also) destroy communicator during JVM shutdown.
             // This ensures the communicator gets destroyed when the user interrupts the application with Ctrl-C.

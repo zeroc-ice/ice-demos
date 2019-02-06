@@ -1,8 +1,6 @@
-# **********************************************************************
 #
-# Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+# Copyright (c) ZeroC, Inc. All rights reserved.
 #
-# **********************************************************************
 
 top_srcdir      := ..
 lang_srcdir     := $(top_srcdir)/cpp11

@@ -1,16 +1,12 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
-
-/// <reference path="../../node_modules/ice/src/index.d.ts" />
-/// <reference path="node_modules/latency/index.d.ts" />
 
 import {Ice} from "ice";
-import {Demo} from "latency";
+import {Demo} from "./generated";
 
-(function(){
+(() =>
+{
 
 //
 // Handle the client state.
@@ -131,4 +127,4 @@ function setState(s:State)
 
 setState(State.Idle);
 
-}());
+})();

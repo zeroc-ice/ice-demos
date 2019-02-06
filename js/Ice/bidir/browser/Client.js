@@ -1,10 +1,9 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
-(function(){
+(() =>
+{
 
 //
 // Define a servant class that implements the Demo.CallbackReceiver
@@ -201,4 +200,4 @@ function setState(s)
 
 setState(State.Disconnected);
 
-}());
+})();

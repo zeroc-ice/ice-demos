@@ -3,10 +3,8 @@ well as how to make [oneway][1], [datagram][2], [secure][3], and
 [batched][4] invocations.
 
 To run the demo, first you need to start an Ice hello server from
-another language mapping (Java, C++, C#, or Python). Please refer to
-the README in the server subdirectory for more information on starting
-the server. If you want to get started quickly, we recommend using the
-Python server.
+another language mapping (Java, C++, C#, or Python). If you want
+to get started quickly, we recommend using the Python server.
 
 [1]: https://doc.zeroc.com/display/Ice37/Oneway+Invocations
 [2]: https://doc.zeroc.com/display/Ice37/Datagram+Invocations

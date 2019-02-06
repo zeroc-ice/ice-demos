@@ -1,16 +1,11 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
-
-/// <reference path="../node_modules/ice/src/index.d.ts" />
-/// <reference path="node_modules/chat/index.d.ts" />
 
 import {Ice, Glacier2} from "ice";
-import {Chat} from "chat";
+import {Chat} from "./generated";
 
-(function()
+(() =>
 {
 
     const RouterPrx = Glacier2.RouterPrx;
@@ -508,7 +503,10 @@ import {Chat} from "chat";
 
     function unescapeHtml(message:string)
     {
-        entities.forEach(entity => message.replace(entity.escape, entity.value));
+        for(const entity of entities)
+        {
+            message = message.replace(entity.escape, entity.value);
+        }
         return message;
     }
-}());
+})();

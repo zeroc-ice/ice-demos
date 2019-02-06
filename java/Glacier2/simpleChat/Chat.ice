@@ -1,13 +1,12 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 #pragma once
 
 #include <Glacier2/Session.ice>
 
+["java:package:com.zeroc.demos.Glacier2.simpleChat"]
 module Demo
 {
     interface ChatCallback

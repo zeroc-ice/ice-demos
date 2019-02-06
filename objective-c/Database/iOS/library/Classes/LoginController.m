@@ -1,8 +1,6 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 #import <LoginController.h>
 #import <MainController.h>
@@ -23,6 +21,7 @@
 @property (nonatomic) id session;
 @property (nonatomic) id<DemoLibraryPrx> library;
 @property (nonatomic) id<GLACIER2RouterPrx> router;
+@property (nonatomic) ICEInitializationData* initializationData;
 
 @end
 
@@ -35,6 +34,7 @@
 @synthesize library;
 @synthesize router;
 @synthesize communicator;
+@synthesize initializationData;
 
 static NSString* usernameKey = @"usernameKey";
 static NSString* passwordKey = @"passwordKey";
@@ -54,15 +54,36 @@ static NSString* passwordKey = @"passwordKey";
     ICEregisterIceSSL(YES);
     ICEregisterIceWS(YES);
 
-    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    //Load initialization data here so that we check if the username/passwords fields should be hidden.
+    initializationData = [ICEInitializationData initializationData];
+    initializationData.properties = [ICEUtil createProperties];
+    [initializationData.properties load:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"config.client"]];
+    [initializationData.properties setProperty:@"Ice.RetryIntervals" value:@"-1"];
 
-    // Set the default values, and show the clear button in the text field.
-    usernameField.clearButtonMode = UITextFieldViewModeWhileEditing;
-    usernameField.text = [defaults stringForKey:usernameKey];
-    passwordField.clearButtonMode = UITextFieldViewModeWhileEditing;
-    passwordField.text = [defaults stringForKey:passwordKey];
+    initializationData.dispatcher = ^(id<ICEDispatcherCall> call, id<ICEConnection> con)
+    {
+        dispatch_sync(dispatch_get_main_queue(), ^ { [call run]; });
+    };
 
-    mainController = [[MainController alloc] initWithNibName:@"MainView" bundle:nil];
+    // If Ice.Default.Router is not set then we hide the login and password prompts.
+    if([[[initializationData properties] getProperty:@"Ice.Default.Router"] length] == 0)
+    {
+        [[usernameField superview] setHidden:YES];
+        [[passwordField superview] setHidden:YES];
+        [loginButton setEnabled:YES];
+    }
+    else
+    {
+        NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+
+        // Set the default values
+        usernameField.text = [defaults stringForKey:usernameKey];
+        passwordField.text = [defaults stringForKey:passwordKey];
+    }
+
+    UIStoryboard*  mainStoryboard = [UIStoryboard storyboardWithName:@"Main"
+                                                             bundle: nil];
+    mainController = (MainController*)[mainStoryboard instantiateViewControllerWithIdentifier:@"MainController"];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(applicationWillTerminate)
@@ -77,7 +98,7 @@ static NSString* passwordKey = @"passwordKey";
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    loginButton.enabled = usernameField.text.length > 0;
+    loginButton.enabled = (usernameField.text.length > 0) || ([[usernameField superview] isHidden] == YES);
     [loginButton setAlpha:loginButton.enabled ? 1.0 : 0.5];
     [super viewWillAppear:animated];
 }
@@ -90,14 +111,13 @@ static NSString* passwordKey = @"passwordKey";
 
 #pragma mark UITextFieldDelegate
 
--(BOOL)textFieldShouldBeginEditing:(UITextField*)field
+- (void)textFieldDidBeginEditing:(UITextField *)field;
 {
     self.currentField = field;
     self.oldFieldValue = field.text;
-    return YES;
 }
 
--(BOOL)textFieldShouldReturn:(UITextField*)theTextField
+- (void)textFieldDidEndEditing:(UITextField *)theTextField;
 {
     NSAssert(theTextField == currentField, @"theTextField == currentTextField");
 
@@ -118,8 +138,6 @@ static NSString* passwordKey = @"passwordKey";
 
     [theTextField resignFirstResponder];
     self.currentField = nil;
-
-    return YES;
 }
 
 #pragma mark -
@@ -208,21 +226,11 @@ static NSString* passwordKey = @"passwordKey";
 
 -(IBAction)login:(id)sender
 {
-    ICEInitializationData* initData = [ICEInitializationData initializationData];
-    initData.properties = [ICEUtil createProperties];
-    [initData.properties load:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"config.client"]];
-    [initData.properties setProperty:@"Ice.RetryIntervals" value:@"-1"];
-
-    initData.dispatcher = ^(id<ICEDispatcherCall> call, id<ICEConnection> con)
-    {
-        dispatch_sync(dispatch_get_main_queue(), ^ { [call run]; });
-    };
-
     id proxy;
     @try
     {
         NSAssert(communicator == nil, @"communicator == nil");
-        self.communicator = [ICEUtil createCommunicator:initData];
+        self.communicator = [ICEUtil createCommunicator:initializationData];
 
         if([[[communicator getProperties] getProperty:@"Ice.Default.Router"] length] > 0)
         {

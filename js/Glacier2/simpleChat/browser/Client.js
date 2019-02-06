@@ -1,10 +1,9 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
-(function(){
+(() =>
+{
 
 //
 // Servant that implements the ChatCallback interface.
@@ -323,4 +322,4 @@ function stopProgress(completed)
 
 $("#username").focus();
 
-}());
+})();

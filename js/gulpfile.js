@@ -1,12 +1,11 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 /* eslint no-sync: "off" */
 /* eslint no-process-env: "off" */
 /* eslint no-process-exit: "off" */
+/* eslint no-shadow: "off" */
 
 const babel = require("gulp-babel");
 const concat = require("gulp-concat");
@@ -82,12 +81,7 @@ function slice2js(options)
         }
         defaults.iceHome = iceHome;
     }
-    return iceBuilder.compile(defaults);
-}
-
-function getIceLibs(es5)
-{
-    return path.join(path.join(root, 'node_modules', 'ice', 'lib'), es5 ? 'es5/*' : '*');
+    return iceBuilder(defaults);
 }
 
 //
@@ -122,7 +116,7 @@ if(iceHome)
                   }
 
                   fs.stat(moduleDir,
-                          (err, stats) =>
+                          err =>
                           {
                               if(err)
                               {

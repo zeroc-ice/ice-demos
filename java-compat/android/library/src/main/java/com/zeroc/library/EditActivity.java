@@ -1,17 +1,16 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 package com.zeroc.library;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.DialogFragment;
+
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
@@ -162,7 +161,7 @@ public class EditActivity extends SessionActivity
             public void onClick(View v)
             {
                 DialogFragment dialog = new DiscardDialogFragment();
-                dialog.show(getFragmentManager(), DISCARD_TAG);
+                dialog.show(getSupportFragmentManager(), DISCARD_TAG);
             }
         });
     }
@@ -234,7 +233,7 @@ public class EditActivity extends SessionActivity
 
         case DISCARD_ID:
             DialogFragment dialog = new DiscardDialogFragment();
-            dialog.show(getFragmentManager(), DISCARD_TAG);
+            dialog.show(getSupportFragmentManager(), DISCARD_TAG);
             return true;
         }
 

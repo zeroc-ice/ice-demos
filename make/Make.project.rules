@@ -1,11 +1,6 @@
-# **********************************************************************
 #
-# Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+# Copyright (c) ZeroC, Inc. All rights reserved.
 #
-# This copy of Ice is licensed to you under the terms described in the
-# ICE_LICENSE file included in this distribution.
-#
-# **********************************************************************
 
 #
 # $(call project,[$1])
@@ -869,10 +864,10 @@ $1_install_platforms    := $(call component-platforms,$1,$(notdir $1))
 #
 $(notdir $1)_targetext  := $$(or $$($(notdir $1)_targetext),$(patsubst slice2%,%,$(or $2,$(notdir $1))))
 
-ifeq ($(ice_bindir[$(build-platform)]),)
+ifeq ($$(ice_bindir[$(build-platform)]),)
 $(notdir $1)_path       = $$($(notdir $1)[$(build-platform)-static]_targetdir)/$(notdir $1)
 else
-$(notdir $1)_path       = $(ice_bindir[$(build-platform)])/$(notdir $1)
+$(notdir $1)_path       = $$(ice_bindir[$(build-platform)])/$(notdir $1)
 endif
 
 projects        += $(project)
@@ -1116,6 +1111,8 @@ config_dependency       = $6
 static_targetrule       = $(if $(filter-out program,$($1_target)),static)
 static_cppflags         += $(strip $(call make-lib-cppflags,$4)) -DICE_STATIC_LIBS
 static_ldflags          += $$(call make-ldflags,$$(call get-all-deps,$4),make-static-dep-ldflags,$4,runique)\
+                           $$(call make-ldflags,$4,make-lib-ldflags,$4,unique)\
+                           $$(call make-ldflags,$4,make-system-lib-ldflags,$4,unique)\
                            $$(call make-ldflags,$$(call get-all-deps,$4),make-lib-ldflags,$4,unique)\
                            $$(call make-ldflags,$$(call get-all-deps,$4),make-system-lib-ldflags,$4,unique)
 

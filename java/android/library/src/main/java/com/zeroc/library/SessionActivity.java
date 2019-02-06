@@ -1,23 +1,22 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 package com.zeroc.library;
 
-import android.app.DialogFragment;
 import android.os.Bundle;
 import com.zeroc.library.controller.QueryController;
 import com.zeroc.library.controller.SessionController;
 
-import android.app.Activity;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 
 // The base class of any activity created after a session has been established.
-public class SessionActivity extends Activity
+public class SessionActivity extends AppCompatActivity
 {
     public static final String ERROR_TAG = "error";
     public static final String FATAL_TAG = "fatal";
@@ -87,7 +86,7 @@ public class SessionActivity extends Activity
     void showDialogError()
     {
         DialogFragment dialog = ErrorDialogFragment.newInstance(_queryController.getLastError());
-        dialog.show(getFragmentManager(), SessionActivity.ERROR_TAG);
+        dialog.show(getSupportFragmentManager(), SessionActivity.ERROR_TAG);
     }
 
     @Override
@@ -108,7 +107,7 @@ public class SessionActivity extends Activity
             public void onDestroy()
             {
                 DialogFragment dialog = new FatalDialogFragment();
-                dialog.show(getFragmentManager(), FATAL_TAG);
+                dialog.show(getSupportFragmentManager(), FATAL_TAG);
             }
         });
 

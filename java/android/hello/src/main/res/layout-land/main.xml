@@ -1,214 +1,212 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:orientation="vertical"
-	android:padding="5dip"
-	xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:padding="5dip">
 
-	<LinearLayout
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:orientation="horizontal"
-		android:paddingBottom="10dip"
-		>
+    <ProgressBar
+        android:id="@+id/progressbar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-7dp"
+        android:indeterminate="true"
+        android:indeterminateTint="#1a09d6"
+        android:max="100" />
 
-		<TextView
-			android:layout_width="0dip"
-			android:layout_height="wrap_content"
-			android:layout_weight="15"
-			android:text="Host"
-			android:id="@+id/hostLabel"/>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="10dip">
 
-		<EditText
-			android:id ="@+id/host"
-			android:hint="IP or Hostname"
-			android:layout_width="0dip"
-			android:layout_weight="85"
-			android:layout_height="wrap_content"
-			android:lines="1"
-			android:maxLines="1"
-			android:minLines="1"
-			android:inputType="text"/>
+        <TextView
+            android:id="@+id/hostLabel"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="15"
+            android:text="@string/host" />
 
-	</LinearLayout>
+        <EditText
+            android:id="@+id/host"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="85"
+            android:autofillHints=""
+            android:hint="@string/ip_or_hostname"
+            android:inputType="text"
+            android:lines="1"
+            android:maxLines="1"
+            android:minLines="1" />
 
-	<LinearLayout
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:orientation="horizontal"
-		android:paddingBottom="10dip"
-		>
+    </LinearLayout>
 
-		<TextView
-			android:layout_width="0dip"
-			android:layout_height="wrap_content"
-			android:layout_weight="15"
-			android:text=""
-			android:id="@+id/emptyLabel"/>
-		<CheckBox
-			android:id="@+id/useDiscovery"
-			android:text="Use IceDiscovery"
-			android:layout_width="0dip"
-			android:layout_weight="85"
-			android:layout_height="wrap_content"
-						android:checked="false"
-			/>
-	</LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="10dip">
 
-	<LinearLayout
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:orientation="horizontal"
-		android:paddingBottom="10dip"
-		>
+        <TextView
+            android:id="@+id/emptyLabel"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="15"
+            android:text="" />
 
-		<TextView
-			android:layout_width="0dip"
-			android:layout_weight="15"
-			android:layout_height="wrap_content"
-			android:text="Mode"
-			android:layout_gravity="center_vertical"
-			/>
+        <CheckBox
+            android:id="@+id/useDiscovery"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="85"
+            android:checked="false"
+            android:text="@string/use_icediscovery" />
+    </LinearLayout>
 
-		<Spinner
-			android:id="@+id/mode"
-			android:layout_width="0dip"
-			android:layout_weight="85"
-			android:layout_height="wrap_content"
-			android:drawSelectorOnTop="false"/>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="10dip">
 
-	</LinearLayout>
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="15"
+            android:text="@string/mode" />
 
-	<LinearLayout
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:orientation="horizontal"
-			android:paddingBottom="10dip"
-			>
+        <Spinner
+            android:id="@+id/mode"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="85"
+            android:drawSelectorOnTop="false" />
 
-		<TextView
-			android:layout_height="wrap_content"
-			android:layout_width="0dip"
-			android:layout_weight="15"
-			android:layout_gravity="center_vertical"
-			android:text="Timeout"
-			/>
+    </LinearLayout>
 
-		<SeekBar
-			android:id="@+id/timeout"
-			android:layout_height="wrap_content"
-			android:layout_width="0dip"
-			android:layout_weight="75"
-			android:max="9900"
-			/>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="10dip">
 
-		 <TextView
-			android:id="@+id/timeoutView"
-			android:layout_height="wrap_content"
-			android:layout_width="0dip"
-			android:layout_weight="10"
-			android:layout_gravity="center_vertical"
-			android:paddingLeft="5dip"
-			android:text="0.0"
-			/>
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="15"
+            android:text="@string/timeout" />
 
-	</LinearLayout>
+        <SeekBar
+            android:id="@+id/timeout"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="75"
+            android:max="9900" />
 
-	<LinearLayout
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:orientation="horizontal"
-		android:paddingBottom="5dip"
-		>
+        <TextView
+            android:id="@+id/timeoutView"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="10"
+            android:paddingStart="5dip"
+            android:paddingEnd="5dip"
+            android:text="@string/_0_0" />
 
-		<TextView
-			android:layout_height="wrap_content"
-			android:layout_width="0dip"
-			android:layout_weight="15"
-			android:layout_gravity="center_vertical"
-			android:text="Delay"
-			/>
+    </LinearLayout>
 
-		<SeekBar
-			android:id="@+id/delay"
-			android:layout_height="wrap_content"
-			android:layout_width="0dip"
-			android:layout_weight="75"
-			android:max="9900"/>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="5dip">
 
-		 <TextView
-			android:id="@+id/delayView"
-			android:layout_height="wrap_content"
-			android:layout_width="0dip"
-			android:layout_weight="10"
-			android:layout_gravity="center_vertical"
-			android:paddingLeft="5dip"
-			android:text="0.0"
-			/>
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="15"
+            android:text="@string/delay" />
 
-	</LinearLayout>
+        <SeekBar
+            android:id="@+id/delay"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="75"
+            android:max="9900" />
 
-	<LinearLayout
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:orientation="horizontal"
-		android:layout_marginTop="20dip"
-		android:gravity="center">
+        <TextView
+            android:id="@+id/delayView"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="10"
+            android:paddingStart="5dip"
+            android:paddingEnd="5dip"
+            android:text="@string/_0_0" />
 
-		<Button
-			android:id="@+id/sayHello"
-			android:text="Hello World!"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			/>
+    </LinearLayout>
 
-		<Button
-			android:id="@+id/shutdown"
-			android:text="Shutdown"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			/>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dip"
+        android:gravity="center"
+        android:orientation="horizontal">
 
-		<Button
-			android:layout_height="wrap_content"
-			android:layout_width="wrap_content"
-			android:id="@+id/flush"
-			android:text="Flush"
-			/>
+        <Button
+            android:id="@+id/sayHello"
+            style="@android:style/Widget.DeviceDefault.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hello World!" />
 
-	</LinearLayout>
+        <Button
+            android:id="@+id/shutdown"
+            style="@android:style/Widget.DeviceDefault.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/shutdown" />
 
-	<LinearLayout
-			android:layout_width="fill_parent"
-			android:layout_height="fill_parent"
-			android:layout_marginTop="20dip"
-			android:orientation="horizontal">
+        <Button
+            android:id="@+id/flush"
+            style="@android:style/Widget.DeviceDefault.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/flush" />
 
-		<LinearLayout
-				android:layout_width="0dip"
-				android:layout_weight="25"
-				android:layout_height="fill_parent"
-				>
+    </LinearLayout>
 
-			<ProgressBar
-				android:id="@+id/activity"
-				android:layout_height="wrap_content"
-				android:layout_width="wrap_content"
-				android:layout_gravity="center"
-				android:layout_marginLeft="15dip"
-				/>
-		</LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="20dip"
+        android:orientation="horizontal">
 
-		<TextView
-			android:id="@+id/status"
-			android:layout_gravity="center_vertical"
-			android:layout_width="0dip"
-			android:layout_weight="75"
-			android:layout_height="wrap_content"
-			android:text=""
-			/>
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="25">
 
-	</LinearLayout>
+            <ProgressBar
+                android:id="@+id/activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="15dip" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="75"
+            android:text="" />
+
+    </LinearLayout>
 
 </LinearLayout>

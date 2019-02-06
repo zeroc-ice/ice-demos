@@ -101,11 +101,10 @@
 
             <p>
                To run the demo, first you need to start an Ice hello server from
-               another language mapping (Java, C++, C#, or Python). Please refer to
-               the README in the server subdirectory for more information on starting
-               the server. You will also need to edit the hello server configuration
-               file config.server to uncomment the IceSSL.VerifyPeer=0 property if
-               you want to establish a secure connection with the WSS protocol.
+               another language mapping (Java, C++, C#, or Python). You will also
+               need to edit the hello server configuration file config.server to
+               uncomment the IceSSL.VerifyPeer=0 property if you want to establish
+               a secure connection with the WSS protocol.
             </p>
 
             <p>You can change the invocation mode using the <strong>"Mode"</strong>
@@ -152,7 +151,7 @@
             <h4><strong>ZeroC</strong></h4>
         </div>
         <div class="copyright">
-            <h6>Copyright &copy; 2003-2018 ZeroC, Inc. All rights reserved.</h6>
+            <h6>Copyright &copy; ZeroC, Inc. All rights reserved.</h6>
         </div>
     </section>
     <!-- Common dependencies -->
@@ -170,11 +169,9 @@
     <!-- main.js (Hello Demo Application Bundle) -->
     <script type="text/javascript" src="main.js"></script>
     <script type="text/javascript">
-        /* jshint browser:true, jquery:true */
-        /* global checkGenerated: false */
         if(["http:", "https:"].indexOf(document.location.protocol) !== -1)
         {
-            checkGenerated(["node_modules/hello/Hello.js"]);
+            checkGenerated(["main.js"]);
         }
     </script>
   </body>

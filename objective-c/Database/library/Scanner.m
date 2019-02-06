@@ -495,11 +495,9 @@ int yy_flex_debug = 0;
 char *yytext;
 #line 1 "Database/library/Scanner.l"
 #line 2 "Database/library/Scanner.l"
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 #include <Parser.h>
 #include <Grammar.h>

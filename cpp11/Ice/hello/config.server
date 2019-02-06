@@ -14,7 +14,7 @@ Hello.Endpoints=tcp -p 10000:udp -p 10000:ssl -p 10001:ws -p 10002:wss -p 10003
 # Only listen on the localhost interface by default. You can comment
 # out this property to allow listening on all available interfaces.
 #
-Ice.Default.Host=localhost
+#Ice.Default.Host=localhost
 
 #
 # For JavaScript browser clients using a secure WebSocket (WSS),

@@ -1,12 +1,10 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 import com.zeroc.Ice.Current;
 
-import Demo.*;
+import com.zeroc.demos.Ice.asyncInvocation.Demo.*;
 
 public class CalculatorI implements Calculator
 {

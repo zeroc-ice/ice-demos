@@ -1,14 +1,9 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
-
-/// <reference path="../../node_modules/ice/src/index.d.ts" />
-/// <reference path="node_modules/simple-filesystem/index.d.ts" />
 
 import {Ice} from "ice";
-import {Filesystem} from "simple-filesystem";
+import {Filesystem} from "./generated";
 
 (() =>
 {

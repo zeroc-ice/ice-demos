@@ -1,11 +1,6 @@
-# **********************************************************************
 #
-# Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+# Copyright (c) ZeroC, Inc. All rights reserved.
 #
-# This copy of Ice is licensed to you under the terms described in the
-# ICE_LICENSE file included in this distribution.
-#
-# **********************************************************************
 
 supported-platforms             = macosx iphoneos iphonesimulator
 
@@ -33,14 +28,21 @@ iphonesimulator_targetdir       = $(if $(filter %/build,$5),/iphonesimulator)
 # If building objects for a shared library, enable fPIC
 shared_cppflags = $(if $(filter-out program,$($1_target)),-fPIC) -fvisibility=hidden
 
-# Check for Xcode 9 to disable unsupported -Wshadow-field flag.
-xcode9 = $(filter 9,$(shell clang -v 2>&1 | sed -ne 's/.*version \([0-9]*\).*/\1/p'))
-
-cppflags        = -Wall -Wextra -Wshadow $(if $(xcode9),,-Wshadow-field) -Wshadow-uncaptured-local -Wredundant-decls \
+cppflags        = -Wall -Wextra -Wshadow -Wshadow-all -Wredundant-decls \
                   -Wdeprecated -Wstrict-prototypes -Werror -pthread \
                   $(if $(filter yes,$(OPTIMIZE)),-O2 -DNDEBUG,-g)
 
+ifeq ($(MAXWARN),yes)
+    cppflags	+=  -Wweak-vtables
+endif
+
+# -Wshadow issues false warnings with clang 3.x (Apple LLVM 9.0)
+ifeq ($(shell clang -v 2>&1 | sed -ne 's/.*version \([0-9]*\)\.\([0-9]*\).*/\1\2/p'),90)
+    cppflags    := $(filter-out -Wshadow -Wshadow-all,$(cppflags))
+endif
+
 nodeprecatedwarnings-cppflags := -Wno-deprecated-declarations
+nounusedparameter-cppflags    := -Wno-unused-parameter
 
 loader_path     = @loader_path
 

@@ -1,15 +1,14 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 package com.zeroc.library;
 
-import android.app.Activity;
-import android.app.AlertDialog;
+import androidx.fragment.app.DialogFragment;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,13 +16,12 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.zeroc.library.controller.LoginController;
 import com.zeroc.library.controller.SessionController;
 
-public class LoginActivity extends Activity
+public class LoginActivity extends AppCompatActivity
 {
 
     private static final String USERNAME_KEY = "username";
@@ -63,7 +61,7 @@ public class LoginActivity extends Activity
             setLoginState();
 
             DialogFragment dialog = ErrorDialogFragment.newInstance(_loginController.getLoginError());
-            dialog.show(getFragmentManager(), ERROR_TAG);
+            dialog.show(getSupportFragmentManager(), ERROR_TAG);
         }
     };
 

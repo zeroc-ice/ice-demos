@@ -196,3 +196,5 @@ csharp/packages
 local.properties
 *.idea
 **/res/raw/*.bks
+
+Resource.designer.cs

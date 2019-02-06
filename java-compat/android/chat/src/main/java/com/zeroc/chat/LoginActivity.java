@@ -1,15 +1,14 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 package com.zeroc.chat;
 
-import android.app.Activity;
-import android.app.AlertDialog;
+import androidx.fragment.app.DialogFragment;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -26,7 +25,7 @@ import com.zeroc.chat.service.ChatService;
 import com.zeroc.chat.service.Service;
 import com.zeroc.chat.service.SessionListener;
 
-public class LoginActivity extends Activity
+public class LoginActivity extends AppCompatActivity
 {
     private static final String USERNAME_KEY = "username";
     private static final String PASSWORD_KEY = "password";
@@ -90,7 +89,7 @@ public class LoginActivity extends Activity
             setLoginState();
             DialogFragment dialog = LoginErrorDialogFragment.newInstance(
                 (_service != null) ? _service.getLoginError() : "");
-            dialog.show(getFragmentManager(), LOGIN_ERROR_TAG);
+            dialog.show(getSupportFragmentManager(), LOGIN_ERROR_TAG);
         }
     };
 

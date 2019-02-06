@@ -1,0 +1,8 @@
+﻿<!-- Copyright (c) ZeroC, Inc. All rights reserved. -->
+<Application
+    x:Class="hello.UWP.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:hello.UWP"
+    RequestedTheme="Light">
+</Application>

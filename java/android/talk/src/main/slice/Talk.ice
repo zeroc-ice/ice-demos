@@ -1,11 +1,10 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 #pragma once
 
+["java:package:com.zeroc.demos.android.talk"]
 /**
  *
  * The Talk module defines the types that two devices use to communicate with one another.

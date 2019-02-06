@@ -1,13 +1,11 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 import {Ice} from "ice";
-import {Demo} from "printer";
+import {Demo} from "./generated";
 
-(async function()
+(async () =>
 {
     let communicator;
     try
@@ -36,4 +34,4 @@ import {Demo} from "printer";
             await communicator.destroy();
         }
     }
-}());
+})();

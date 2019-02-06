@@ -1,10 +1,9 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
-(function(){
+(() =>
+{
 
 //
 // Initialize sequences.
@@ -219,7 +218,7 @@ async function run()
 
     for(let i = 0; i < repetitions; i++)
     {
-        await operation.apply(proxy, args);
+        await Reflect.apply(operation, proxy, args);
     }
 
     //
@@ -307,4 +306,4 @@ function setState(s)
 
 setState(State.Idle);
 
-}());
+})();

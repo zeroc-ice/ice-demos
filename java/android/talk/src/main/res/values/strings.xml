@@ -22,5 +22,6 @@
     <string name="none_paired">No devices have been paired</string>
     <string name="none_found">No devices found</string>
     <string name="scan">Scan for devices</string>
+    <string name="message">message</string>
 
 </resources>

@@ -1,8 +1,6 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 #pragma once
 
@@ -15,7 +13,6 @@
 //
 [["js:es6-module"]]
 
-["js:module:chat"]
 module Chat
 {
 

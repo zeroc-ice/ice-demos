@@ -1,13 +1,11 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 import {Ice} from "ice";
-import {Filesystem} from "simple-filesystem";
+import {Filesystem} from "./generated";
 
-(async function()
+(async () =>
 {
     //
     // Recursively print the contents of directory "dir" in tree fashion.
@@ -80,4 +78,4 @@ import {Filesystem} from "simple-filesystem";
             await communicator.destroy();
         }
     }
-}());
+})();

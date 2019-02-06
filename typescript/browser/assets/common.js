@@ -1,10 +1,9 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
-(function(){
+(() =>
+{
 
 $(document).foundation();
 
@@ -74,7 +73,7 @@ if(document.location.protocol === "file:")
 {
     const setupDialog = "<div id=\"setup-modal\" class=\"reveal-modal\" data-reveal>" +
           "<p>The Ice for JavaScript demos require a web server. Please refer to the Sample Programs page from the " +
-          "Ice for JavaScript <a href=\"http://doc.zeroc.com/display/Rel/Ice+3.7.1+Release+Notes\">" +
+          "Ice for JavaScript <a href=\"http://doc.zeroc.com/display/Rel/Ice+3.7.2+Release+Notes\">" +
           " release notes</a> for instructions on how to run the web server included with your distribution.</p></div>";
 
     $("body").append(setupDialog);
@@ -88,7 +87,7 @@ if(document.location.protocol === "file:")
     $("#setup-modal").foundation("reveal", "open");
 }
 
-}());
+})();
 
 //
 // Check if the corresponding generated files can be access, if they
@@ -103,7 +102,7 @@ function checkGenerated(files)
     const dialog = "<div id=\"build-required-modal\" class=\"reveal-modal\" data-reveal>" +
           "<p>Couldn't find generated file `%FILENAME%'. This is expected if you didn't build the JavaScript demos. " +
           "Please refer to the Sample Programs page from the Ice for JavaScript " +
-          "<a href=\"http://doc.zeroc.com/display/Rel/Ice+3.7.1+Release+Notes\">release notes</a> " +
+          "<a href=\"http://doc.zeroc.com/display/Rel/Ice+3.7.2+Release+Notes\">release notes</a> " +
           "for instructions on how to build the demos.</p>" +
           "</div>";
 

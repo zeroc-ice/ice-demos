@@ -1,11 +1,9 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 import {Ice} from "ice";
-import {Demo} from "throughput";
+import {Demo} from "./generated";
 
 //
 // Initialize sequences.

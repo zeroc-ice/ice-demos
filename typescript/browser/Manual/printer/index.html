@@ -68,12 +68,11 @@
             <p>This demo implements the printer example in the Ice Manual.</p>
             <p>
                 To run the demo, first you need to start a Manual printer server from
-                another language mapping (Java, C++, C#, or Python). Please refer to
-                the README in the server subdirectory for more information on starting
-                the server. If you want to get started quickly, we recommend using the
-                Python server. For the server to communicate with the browser you need
-                to start it with WS as it's default protocol. This is done by setting the
-                Ice.Default.Protocol option. For the python server this would look like
+                another language mapping (Java, C++, C#, or Python). If you want to get
+                started quickly, we recommend using the Python server. For the server to
+                communicate with the browser you need to start it with WS as it's default
+                protocol. This is done by setting the Ice.Default.Protocol option. For the
+                python server this would look like
                 <pre>
                     python server.py --Ice.Default.Protocol=ws
                 </pre>
@@ -112,7 +111,7 @@
             <h4><strong>ZeroC</strong></h4>
         </div>
         <div class="copyright">
-            <h6>Copyright &copy; 2003-2018 ZeroC, Inc. All rights reserved.</h6>
+            <h6>Copyright &copy; ZeroC, Inc. All rights reserved.</h6>
         </div>
     </section>
     <!-- Common dependencies -->
@@ -125,11 +124,9 @@
     <!-- main.js (Bundled Printer Demo Application) -->
     <script type="text/javascript" src="main.js"></script>
     <script type="text/javascript">
-        /* jshint browser:true, jquery:true */
-        /* global checkGenerated: false */
         if(["http:", "https:"].indexOf(document.location.protocol) !== -1)
         {
-            checkGenerated(["node_modules/printer/Printer.js"]);
+            checkGenerated(["main.js"]);
         }
     </script>
   </body>

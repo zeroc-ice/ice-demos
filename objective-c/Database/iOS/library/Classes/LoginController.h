@@ -1,8 +1,6 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 #import <UIKit/UIKit.h>
 #import <objc/Ice.h>
@@ -32,6 +30,8 @@
     id<GLACIER2RouterPrx> router;
     ICELong sessionTimeout;
     id<DemoLibraryPrx> library;
+
+    ICEInitializationData* initializationData;
 }
 
 -(IBAction)login:(id)sender;

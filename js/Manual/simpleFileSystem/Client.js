@@ -1,13 +1,11 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 const Ice = require("ice").Ice;
 const Filesystem = require("./generated/Filesystem").Filesystem;
 
-(async function()
+(async () =>
 {
     //
     // Recursively print the contents of directory "dir" in tree fashion.
@@ -80,4 +78,4 @@ const Filesystem = require("./generated/Filesystem").Filesystem;
             await communicator.destroy();
         }
     }
-}());
+})();
