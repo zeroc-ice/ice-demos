@@ -10,47 +10,57 @@ buildscript {
 
 slice {
     java {
-        include = ["${projectDir}"]
-        srcDir = '.'
-        include = ["${projectDir}"]
+        include = ["${projectDir}/src/main/slice"]
     }
 }
 
 dependencies {
-    compile 'com.jgoodies:jgoodies-common:1.8.0'
-    compile 'com.jgoodies:jgoodies-looks:2.6.0'
-    compile 'com.jgoodies:jgoodies-forms:1.8.0'
-    compile localDependency("ice")
-    compile localDependency("icessl")
-    compile localDependency("glacier2")
+    implementation 'com.jgoodies:jgoodies-common:1.8.0'
+    implementation 'com.jgoodies:jgoodies-looks:2.6.0'
+    implementation 'com.jgoodies:jgoodies-forms:1.8.0'
+    implementation "com.zeroc:ice:${project.iceArtifactVersion}"
+    runtimeOnly "com.zeroc:icessl:${project.iceArtifactVersion}"
+    implementation "com.zeroc:glacier2:${project.iceArtifactVersion}"
 }
 
-jar {
-    archiveName = "ChatGUITEMP.jar"
-    manifest {
-        attributes 'Main-Class': "ChatDemoGUI.MainView"
+if(JavaVersion.current() == JavaVersion.VERSION_11) {
+    jar {
+        archiveName = "Chat.jar"
+        destinationDir = new File("${projectDir}")
+        manifest {
+            attributes 'Main-Class': "com.zeroc.demos.Chat.MainView"
+            attributes("Class-Path": configurations.runtimeClasspath.resolve().collect{ it.toURI() }.join(' '))
+        }
     }
 }
-
-def javaHome = System.properties['java.home']
-
-task proguard(type: proguard.gradle.ProGuardTask, dependsOn: jar) {
-    injars configurations.compile.resolve(), filter: '!META-INF/**'
-    injars "${buildDir}/libs/ChatGUITEMP.jar"
-    if(JavaVersion.current() == JavaVersion.VERSION_1_8) {
-        libraryjars "${javaHome}/lib/rt.jar"
-        libraryjars "${javaHome}/lib/jsse.jar"
-    } else {
-        libraryjars "${javaHome}/jmods/java.base.jmod"
-        libraryjars "${javaHome}/jmods/java.logging.jmod"
-        libraryjars "${javaHome}/jmods/java.desktop.jmod"
-        libraryjars "${javaHome}/jmods/java.prefs.jmod"
+else {
+    jar {
+        archiveName = "ChatTEMP.jar"
+        manifest {
+            attributes 'Main-Class': "com.zeroc.demos.Chat.MainView"
+        }
     }
-    outjars "ChatGUI.jar"
-    configuration "chatdemogui.pro"
+
+    def javaHome = System.properties['java.home']
+
+    task proguard(type: proguard.gradle.ProGuardTask, dependsOn: jar) {
+        injars configurations.runtimeClasspath.resolve(), filter: '!META-INF/**'
+        injars "${buildDir}/libs/ChatTEMP.jar"
+        if(JavaVersion.current() <= JavaVersion.VERSION_1_8) {
+            libraryjars "${javaHome}/lib/rt.jar"
+            libraryjars "${javaHome}/lib/jsse.jar"
+        } else {
+            libraryjars "${javaHome}/jmods/java.base.jmod"
+            libraryjars "${javaHome}/jmods/java.logging.jmod"
+            libraryjars "${javaHome}/jmods/java.desktop.jmod"
+            libraryjars "${javaHome}/jmods/java.prefs.jmod"
+        }
+        outjars "Chat.jar"
+        configuration "chatdemo.pro"
+    }
+    assemble.dependsOn(proguard)
 }
-assemble.dependsOn(proguard)
 
 clean {
-    delete("ChatGUI.jar")
+    delete("Chat.jar")
 }

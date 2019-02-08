@@ -1,8 +1,6 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 package com.zeroc.chat.service;
 
 import android.app.Notification;
@@ -13,6 +11,7 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Build;
 
 import com.zeroc.chat.ChatActivity;
 import com.zeroc.chat.R;
@@ -48,6 +47,18 @@ public class ChatService extends Service implements com.zeroc.chat.service.Servi
     {
         super.onCreate();
         _handler = new Handler();
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+        {
+            android.app.NotificationChannel channel =
+                    new android.app.NotificationChannel(getString(R.string.app_name),
+                            getString(R.string.app_name),
+                            NotificationManager.IMPORTANCE_DEFAULT);
+            channel.setDescription(getString(R.string.app_description));
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 
     @Override
@@ -104,10 +115,20 @@ public class ChatService extends Service implements com.zeroc.chat.service.Servi
         }
     }
 
-    synchronized public void login(final String username, final String password) {
-        assert _session == null;
-        assert !_loginInProgress;
+    synchronized public void login(final String username, final String password)
+    {
+        if(com.zeroc.chat.BuildConfig.DEBUG)
+        {
+            if(_session != null)
+            {
+                throw new AssertionError();
+            }
 
+            if(_loginInProgress)
+            {
+                throw new AssertionError();
+            }
+        }
         _loginError = null;
         _loginInProgress = true;
 
@@ -174,19 +195,33 @@ public class ChatService extends Service implements com.zeroc.chat.service.Servi
         }
     }
 
+    @SuppressWarnings("deprecation")
     synchronized public void loginComplete()
     {
         _loginInProgress = false;
 
-        // Display a notification that the user is logged in.
-        Notification notification = new Notification.Builder(this)
-                .setSmallIcon(R.drawable.stat_notify)
-                .setContentText("Logged In")
-                .setWhen(System.currentTimeMillis())
-                .setContentTitle("You are logged into server")
-                .setContentIntent(PendingIntent.getActivity(this, 0, new Intent(this, ChatActivity.class), 0))
-                .build();
         NotificationManager n = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+        // Display a notification that the user is logged in.
+        Notification.Builder builder;
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+        {
+            builder = new Notification.Builder(this, getString(R.string.app_name));
+        }
+        else
+        {
+            //
+            // The Suppress deprecation warnings annotation avoids a warnings
+            // when using the now deprecated Notification.Builder constructor
+            //
+            builder = new Notification.Builder(this);
+        }
+
+        Notification notification = builder.setSmallIcon(R.drawable.stat_notify)
+            .setContentText("Logged In")
+            .setWhen(System.currentTimeMillis())
+            .setContentTitle("You are logged into the server")
+            .setContentIntent(PendingIntent.getActivity(this, 0, new Intent(this, ChatActivity.class), 0))
+            .build();
         n.notify(CHATACTIVE_NOTIFICATION, notification);
 
         if(_listener != null)

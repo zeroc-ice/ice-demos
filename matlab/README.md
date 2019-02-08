@@ -10,7 +10,9 @@ The following subdirectories contain sample programs:
 
 - [Ice](./Ice) has several examples that illustrate fundamental Ice concepts.
 
-- [IceDiscovery](./IceDiscovery) illustrate how to use the IceDiscovery plug-in.
+- [IceDiscovery](./IceDiscovery) illustrates how to use the IceDiscovery plug-in.
+
+- [Manual](./Manual) contains complete examples for some of the code snippets in the [Ice Manual][1].
 
 ## Build Instructions
 
@@ -40,3 +42,5 @@ Add the following directories to your MATLAB search path:
  - `<IceHome>\matlab\lib`
  - `<IceHome>\matlab\lib\generated`
  - `<IceHome>\matlab\lib\x64\Release`
+
+[1]: https://doc.zeroc.com/display/Ice37/Ice+Manual

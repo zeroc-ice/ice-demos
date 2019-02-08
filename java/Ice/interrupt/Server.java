@@ -1,8 +1,6 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -35,6 +33,7 @@ public class Server
         //
         try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, initData, extraArgs))
         {
+            communicator.getProperties().setProperty("Ice.Default.Package", "com.zeroc.demos.Ice.interrupt");
             //
             // Call shutdownNow on the executor. This interrupts all
             // executor threads causing any running servant dispatch threads

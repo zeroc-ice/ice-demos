@@ -128,6 +128,3 @@ IceSSL.CertFile=server.p12
 IceSSL.Password=password
 IceSSL.Keychain=../../../certs/glacier2.keychain
 IceSSL.KeychainPassword=password
-
-# Required for a Java 1.8 client to talk to a C++ server on OSX
-IceSSL.ProtocolVersionMax=tls1_1

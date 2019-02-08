@@ -1,8 +1,6 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 #include <Ice/Ice.h>
 #include <MTalk.h>
@@ -158,7 +156,7 @@ class DiscoverThread : public IceUtil::Thread, public IceUtil::Monitor<IceUtil::
 public:
 
     DiscoverThread(const MTalk::DiscoveryPrx& d, const string& n, const MTalk::PeerPrx& p) :
-        _discovery(d), _name(n), _proxy(p), _destroy(false)
+        IceUtil::Thread(n), _discovery(d), _proxy(p), _destroy(false)
     {
     }
 
@@ -195,7 +193,6 @@ public:
 private:
 
     MTalk::DiscoveryPrx _discovery;
-    string _name;
     MTalk::PeerPrx _proxy;
     bool _destroy;
 };

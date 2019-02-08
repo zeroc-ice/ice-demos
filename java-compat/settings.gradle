@@ -1,8 +1,6 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 // Map of dir->subdir for each of the demos.
 def demos = [
@@ -15,7 +13,7 @@ def demos = [
     'Glacier2' : ['callback', 'simpleChat'],
     'IceStorm' : ['clock'],
     'IceGrid' : ['icebox', 'simple'],
-    'Manual' : ['evictorFilesystem', 'lifecycle', 'mapFilesystem', 'simpleFilesystem']
+    'Manual' : ['lifecycle', 'simpleFilesystem']
 ]
 
 demos.each {

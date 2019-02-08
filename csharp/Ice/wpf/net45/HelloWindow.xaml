@@ -1,9 +1,7 @@
 <!--
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 -->
 <Window x:Class="Ice.wpf.client.HelloWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"

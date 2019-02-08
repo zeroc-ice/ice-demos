@@ -1,8 +1,6 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 public class Server
 {
@@ -14,6 +12,7 @@ public class Server
         //
         try(com.zeroc.Ice.Communicator ic = com.zeroc.Ice.Util.initialize(args))
         {
+            ic.getProperties().setProperty("Ice.Default.Package", "com.zeroc.demos.Manual.printer");
             com.zeroc.Ice.ObjectAdapter adapter =
                 ic.createObjectAdapterWithEndpoints("SimplePrinterAdapter", "default -h localhost -p 10000");
             com.zeroc.Ice.Object object = new PrinterI();

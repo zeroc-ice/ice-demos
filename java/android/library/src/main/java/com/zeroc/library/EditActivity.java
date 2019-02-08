@@ -1,17 +1,16 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 package com.zeroc.library;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.fragment.app.DialogFragment;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
@@ -26,6 +25,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.zeroc.demos.android.library.Demo.*;
 import com.zeroc.library.controller.QueryController;
 import com.zeroc.library.controller.QueryModel;
 
@@ -35,7 +35,7 @@ public class EditActivity extends SessionActivity
     private static final int DISCARD_ID = Menu.FIRST + 1;
     public static final String DISCARD_TAG = "discard";
 
-    private Demo.BookDescription _desc;
+    private BookDescription _desc;
 
     private List<View> _authorEntries = new ArrayList<View>();
     private EditText _isbn;
@@ -161,7 +161,7 @@ public class EditActivity extends SessionActivity
             public void onClick(View v)
             {
                 DialogFragment dialog = new DiscardDialogFragment();
-                dialog.show(getFragmentManager(), DISCARD_TAG);
+                dialog.show(getSupportFragmentManager(), DISCARD_TAG);
             }
         });
     }
@@ -233,7 +233,7 @@ public class EditActivity extends SessionActivity
 
         case DISCARD_ID:
             DialogFragment dialog = new DiscardDialogFragment();
-            dialog.show(getFragmentManager(), DISCARD_TAG);
+            dialog.show(getSupportFragmentManager(), DISCARD_TAG);
             return true;
         }
 

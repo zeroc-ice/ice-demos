@@ -107,11 +107,10 @@
 
         <p>
            To run the demo, first you need to start an Ice throughput server from
-           another language mapping (Java, C++, C#, or Python). Please refer to
-           the README in the server subdirectory for more information on starting
-           the server. You will also need to edit the hello server configuration
-           file config.server to uncomment the IceSSL.VerifyPeer=0 property if
-           you want to establish a secure connection with the WSS protocol.
+           another language mapping (Java, C++, C#, or Python). You will also need
+           to edit the throughput server configuration file config.server to uncomment
+           the IceSSL.VerifyPeer=0 property if you want to establish a secure connection
+           with the WSS protocol.
         </p>
 
         <p>You can change the data type using the <strong>"Data"</strong> select
@@ -130,6 +129,30 @@
             <p>The client is configured to use WSS secure endpoints when the page
                is loaded over HTTPS and WS unsecure endpoints when loaded over HTTP.</p>
         </div>
+        <p>To use the minified version you should edit the <code>js/Ice/throughput/index.html</code>
+        file and comment out the non-optimized scripts:</p>
+        <pre>
+    &lt;!--
+      Scripts used during development, for optimized builds comment
+      the following scripts and uncomment es5/browser/Client.min.js
+      below
+    --&gt;
+    &lt;!-- Ice.js (Ice run-time library) --&gt;
+    &lt;script type="text/javascript" src="../../../node_modules/ice/lib/es5/Ice.js"&gt;&lt;/script&gt;
+    &lt;!-- Hello.js (Demo generated code) --&gt;
+    &lt;script type="text/javascript" src="es5/generated/Throughput.js"&gt;&lt;/script&gt;
+    &lt;!-- Client.js (Throughput Demo Application) --&gt;
+    &lt;script type="text/javascript" src="es5/browser/Client.js"&gt;&lt;/script&gt;
+        </pre>
+        <p>Then uncomment the script tag for the minified version</p>
+        <pre>
+    &lt;!--
+      Uncomment the following script to use a minified version of the
+      scripts that includes: the Ice run-time library, the generated
+      code and the demo application.
+    --&gt;
+    &lt;!--&lt;script src="es5/browser/Client.min.js"&gt;&lt;/script&gt;--&gt;
+        </pre>
         <a class="close-reveal-modal">&#215;</a>
     </div>
     <!-- Modal dialog to show the client source code -->
@@ -162,7 +185,7 @@
             <h4><strong>ZeroC</strong></h4>
         </div>
         <div class="copyright">
-            <h6>Copyright &copy; 2003-2018 ZeroC, Inc. All rights reserved.</h6>
+            <h6>Copyright &copy; ZeroC, Inc. All rights reserved.</h6>
         </div>
     </section>
     <!-- Common dependencies -->
@@ -171,14 +194,24 @@
     {{/jsDeps}}
     <script type="text/javascript" src="../../../assets/es5/common.js"></script>
     <!-- Babel dependencies -->
-    <script type="text/javascript" src="../../../node_modules/babel-polyfill/dist/polyfill.js"></script>
+    <script type="text/javascript" src="../../../node_modules/@babel/polyfill/dist/polyfill.js"></script>
+    <!--
+      Scripts used during development, for optimized builds comment
+      the following scripts and uncomment es5/browser/Client.min.js
+      below
+    -->
     <!-- Ice.js (Ice run-time library) -->
-    <script type="text/javascript" src="../../../lib/es5/Ice.js"></script>
+    <script type="text/javascript" src="../../../node_modules/ice/lib/es5/Ice.js"></script>
     <!-- Throughput.js (Demo generated code) -->
     <script type="text/javascript" src="es5/generated/Throughput.js"></script>
-    <!-- browser/Client.js (Throughput Demo Application) -->
+    <!-- Client.js (Throughput Demo Application) -->
     <script type="text/javascript" src="es5/browser/Client.js"></script>
-
+    <!--
+      Uncomment the following script to use a minified version of the
+      scripts that includes: the Ice run-time library, the generated
+      code and the demo application.
+    -->
+    <!--<script type="text/javascript" src="es5/browser/Client.min.js"></script>-->
     <script type="text/javascript">
         /* jshint browser:true, jquery:true */
         /* global checkGenerated: false */

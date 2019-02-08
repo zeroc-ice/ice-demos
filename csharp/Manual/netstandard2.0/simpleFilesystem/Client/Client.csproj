@@ -3,20 +3,20 @@
     <PropertyGroup>
         <AssemblyName>client</AssemblyName>
         <OutputType>Exe</OutputType>
-        <TargetFramework>netcoreapp2.0</TargetFramework>
+        <TargetFramework>$(AppTargetFramework)</TargetFramework>
         <OutputPath>.</OutputPath>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <Company>ZeroC, Inc.</Company>
         <AssemblyTitle>Manual simpleFilesystem demo client</AssemblyTitle>
         <Description>Manual simpleFilesystem demo client</Description>
-        <Copyright>Copyright (c) 2003-2018 ZeroC, Inc.</Copyright>
+        <Copyright>Copyright (c) ZeroC, Inc.</Copyright>
         <Product>Ice</Product>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
         <FileVersion>1.0.0.0</FileVersion>
     </PropertyGroup>
     <ItemGroup>
         <SliceCompile Include="../Filesystem.ice" />
-        <PackageReference Include="zeroc.ice.net" Version="3.7.1" />
+        <PackageReference Include="zeroc.ice.net" Version="3.7.2" />
         <PackageReference Include="zeroc.icebuilder.msbuild" Version="5.0.4" />
         <Compile Update="generated\Filesystem.cs">
           <SliceCompileSource>../Filesystem.ice</SliceCompileSource>

@@ -1,22 +1,19 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 buildscript {
     repositories {
-        jcenter()
         google()
+        jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.1'
+        classpath 'com.android.tools.build:gradle:3.3.0'
     }
 }
 
 subprojects {
     project.group = "com.zeroc"
-
     apply plugin: 'idea'
 }
 
@@ -24,11 +21,26 @@ subprojects {
 // Used to build the gradle wrapper to automatically download and install
 // the version of gradle needed to build Ice.
 //
-task wrapper(type: Wrapper) {
-    gradleVersion = "4.7"
+wrapper {
+    gradleVersion = "4.10.2"
     distributionType = Wrapper.DistributionType.ALL
 }
 
-repositories {
-    google()
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+
+    gradle.projectsEvaluated {
+        tasks.withType(JavaCompile) {
+            options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+        }
+    }
+}
+
+ext {
+    compileSdkVersion = 28
+    minSdkVersion = 21
+    targetSdkVersion = 28
 }

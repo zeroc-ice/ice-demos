@@ -1,8 +1,6 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 (function()
 {
@@ -502,7 +500,10 @@
 
     function unescapeHtml(message)
     {
-        entities.forEach(entity => message.replace(entity.escape, entity.value));
+        for(const entity of entities)
+        {
+            message = message.replace(entity.escape, entity.value);
+        }
         return message;
     }
 }());

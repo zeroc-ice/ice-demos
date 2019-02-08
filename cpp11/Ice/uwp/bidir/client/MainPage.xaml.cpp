@@ -1,8 +1,6 @@
-﻿// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 #include "pch.h"
 #include "MainPage.xaml.h"
@@ -60,10 +58,7 @@ void bidir::MainPage::startClient_Click(Platform::Object^ sender, Windows::UI::X
         };
 
     startClient->IsEnabled = false;
-    stopClient->IsEnabled = true;
-
     string endpoint = "sender:tcp -h " + Ice::wstringToString(hostname->Text->Data()) + " -p 10000";
-
     _start = async(launch::async, [this, initData, endpoint]
         {
             try
@@ -114,6 +109,10 @@ void bidir::MainPage::startClient_Click(Platform::Object^ sender, Windows::UI::X
                             stopClient->IsEnabled = false;
                         }
                     });
+                dispatch([this]()
+                         {
+                             stopClient->IsEnabled = true;
+                         });
             }
             catch(Platform::Exception^ ex)
             {
@@ -139,21 +138,30 @@ void bidir::MainPage::startClient_Click(Platform::Object^ sender, Windows::UI::X
 
 void bidir::MainPage::stopClient_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e)
 {
-    try
-    {
-        _start.get();
-        if(_communicator)
-        {
-            _communicator->destroy();
-            _communicator = nullptr;
-        }
-    }
-    catch(const Ice::Exception& ex)
-    {
-        print(ex.what());
-    }
-    startClient->IsEnabled = true;
     stopClient->IsEnabled = false;
+    _stop = async(launch::async, [this]()
+                                 {
+                                     try
+                                     {
+                                         if(_communicator)
+                                         {
+                                             _communicator->destroy();
+                                             _communicator = nullptr;
+                                         }
+                                     }
+                                     catch (const Ice::Exception& ex)
+                                     {
+                                         string msg(ex.what()); // Copy the message, dispatch is asynchronous
+                                         dispatch([this, msg]()
+                                                  {
+                                                      print(msg);
+                                                  });
+                                     }
+                                     dispatch([this]()
+                                              {
+                                                  startClient->IsEnabled = true;
+                                              });
+                                 });
 }
 
 void

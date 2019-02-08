@@ -1,14 +1,14 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 //
-// Instal gradle Ice builder plug-in from the plug-in portal
+// Install gradle Ice builder plug-in from the plug-in portal. We use `apply false`
+// to tell Gradle not to apply the plugin to the current project. The subprojects
+// use `apply plugin` to apply the plugin.
 //
 plugins {
-    id 'com.zeroc.gradle.ice-builder.slice' version '1.4.5' apply false
+    id 'com.zeroc.gradle.ice-builder.slice' version '1.4.7' apply false
 }
 
 subprojects {
@@ -29,21 +29,17 @@ subprojects {
     }
 
     //
-    // Use Ice JAR files from maven central repository, fallback to ZeroC testing
-    // repository (Useful for release testing)
+    // Use Ice JAR files from maven central repository
     //
     repositories {
         mavenCentral()
-        maven {
-            url "https://builds.testing.zeroc.com/nexus/repository/maven.ice-3.7"
-        }
     }
 
     //
-    // Both Client and Server depend only on Ice JAR
+    // Both Client and Server depend only on the Ice JAR file
     //
     dependencies {
-        compile 'com.zeroc:ice-compat:3.7.1'
+        implementation "com.zeroc:ice-compat:${slice.iceVersion}"
     }
 
     //
@@ -53,12 +49,12 @@ subprojects {
         manifest {
             attributes(
                 "Main-Class" : project.name.capitalize(),
-                "Class-Path": configurations.runtime.resolve().collect { it.toURI() }.join(' ')
+                "Class-Path": configurations.runtimeClasspath.resolve().collect { it.toURI() }.join(' ')
             )
         }
     }
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = "4.7"
+wrapper {
+    gradleVersion = "4.10.2"
 }

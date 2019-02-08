@@ -1,8 +1,6 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 package com.zeroc.mtalk.service;
 
@@ -25,18 +23,19 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.nio.ByteOrder;
 
+import com.zeroc.demos.android.mtalk.MTalk.*;
 import com.zeroc.Ice.ACMClose;
 import com.zeroc.Ice.ACMHeartbeat;
 import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.Connection;
 import com.zeroc.Ice.ConnectionClose;
 import com.zeroc.Ice.Current;
-import com.zeroc.Ice.Identity;
 import com.zeroc.Ice.InitializationData;
 import com.zeroc.Ice.LocalException;
 import com.zeroc.Ice.NotRegisteredException;
 import com.zeroc.Ice.ObjectAdapter;
 import com.zeroc.Ice.Util;
+import com.zeroc.mtalk.BuildConfig;
 import com.zeroc.mtalk.Intents;
 import com.zeroc.mtalk.R;
 
@@ -50,8 +49,8 @@ public class MTalkService extends Service implements com.zeroc.mtalk.service.Ser
     private boolean _networkEnabled;
     private ObjectAdapter _adapter;
     private ObjectAdapter _multicastAdapter;
-    private MTalk.PeerPrx _local;
-    private MTalk.DiscoveryPrx _discovery;
+    private PeerPrx _local;
+    private DiscoveryPrx _discovery;
     private String _name;
 
     private final static String MULTICAST_ENDPOINT = "udp -h 239.255.1.1 -p 10000";
@@ -95,8 +94,8 @@ public class MTalkService extends Service implements com.zeroc.mtalk.service.Ser
         }
 
         String name;
-        MTalk.PeerPrx remote;
-        MTalk.PeerPrx local;
+        PeerPrx remote;
+        PeerPrx local;
         Connection connection;
     }
 
@@ -104,11 +103,11 @@ public class MTalkService extends Service implements com.zeroc.mtalk.service.Ser
     // We use this servant to handle new incoming connections. We use a different servant implementation
     // for outgoing connections.
     //
-    private class PeerImpl implements MTalk.Peer
+    private class PeerImpl implements Peer
     {
         @Override
-        public void connect(String name, MTalk.PeerPrx peer, Current current)
-            throws MTalk.ConnectionException
+        public void connect(String name, PeerPrx peer, Current current)
+            throws ConnectionException
         {
             info = incoming(name, peer.ice_fixed(current.con), current.con);
         }
@@ -131,10 +130,10 @@ public class MTalkService extends Service implements com.zeroc.mtalk.service.Ser
     //
     // This servant receives multicast messages.
     //
-    private class DiscoveryImpl implements MTalk.Discovery
+    private class DiscoveryImpl implements Discovery
     {
         @Override
-        public void announce(String name, MTalk.PeerPrx proxy, Current current)
+        public void announce(String name, PeerPrx proxy, Current current)
         {
             discoveredPeer(name, proxy);
         }
@@ -163,7 +162,8 @@ public class MTalkService extends Service implements com.zeroc.mtalk.service.Ser
         _state = Intents.PEER_NOT_CONNECTED;
         _name = Build.MODEL;
 
-        _wifiManager = (WifiManager)getSystemService(Context.WIFI_SERVICE);
+        Context context = getApplicationContext();
+        _wifiManager = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
 
         //
         // On some devices, a multicast lock must be acquired otherwise multicast packets are discarded.
@@ -177,11 +177,32 @@ public class MTalkService extends Service implements com.zeroc.mtalk.service.Ser
         IntentFilter filter = new IntentFilter();
         filter.addAction(Intents.ACTION_START_MULTICAST);
         filter.addAction(Intents.ACTION_STOP_MULTICAST);
+        this.registerReceiver(_receiver, filter);
+
         //
         // Listen for changes to network status.
         //
-        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-        this.registerReceiver(_receiver, filter);
+        ConnectivityManager connectivityManager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        connectivityManager.registerDefaultNetworkCallback(new ConnectivityManager.NetworkCallback()
+            {
+                @Override
+                public void onAvailable(android.net.Network network)
+                {
+                    checkNetwork();
+                }
+
+                @Override
+                public void onLost(android.net.Network network)
+                {
+                    checkNetwork();
+                }
+
+                @Override
+                public void onUnavailable()
+                {
+                    checkNetwork();
+                }
+            });
     }
 
     @Override
@@ -258,6 +279,7 @@ public class MTalkService extends Service implements com.zeroc.mtalk.service.Ser
             initData.properties.setProperty("IceSSL.TruststoreType", "BKS");
             initData.properties.setProperty("IceSSL.Password", "password");
             initData.properties.setProperty("Ice.Plugin.IceSSL", "com.zeroc.IceSSL.PluginFactory");
+            initData.properties.setProperty("Ice.Default.Package", "com.zeroc.demos.android.mtalk");
 
             //
             // We need to postpone plug-in initialization so that we can configure IceSSL
@@ -289,7 +311,7 @@ public class MTalkService extends Service implements com.zeroc.mtalk.service.Ser
             // Note that we need to disable collocation optimization because we also create an object adapter with
             // the same endpoint and we always want our discovery announcements to be broadcast on the network.
             //
-            _discovery = MTalk.DiscoveryPrx.uncheckedCast(
+            _discovery = DiscoveryPrx.uncheckedCast(
                 _communicator.stringToProxy("discover:" + MULTICAST_ENDPOINT)
                     .ice_datagram().ice_collocationOptimized(false));
 
@@ -317,20 +339,20 @@ public class MTalkService extends Service implements com.zeroc.mtalk.service.Ser
         final PeerInfo info = new PeerInfo();
 
         info.name = name;
-        info.remote = MTalk.PeerPrx.uncheckedCast(
+        info.remote = PeerPrx.uncheckedCast(
             _communicator.stringToProxy(proxy).ice_invocationTimeout(5000));
 
         //
         // Register a unique servant with the OA for each outgoing connection. This servant receives
         // callbacks from the peer.
         //
-        info.local = MTalk.PeerPrx.uncheckedCast(_adapter.addWithUUID(
-            new MTalk.Peer()
+        info.local = PeerPrx.uncheckedCast(_adapter.addWithUUID(
+            new Peer()
             {
-                public void connect(String name, MTalk.PeerPrx peer, Current current)
-                    throws MTalk.ConnectionException
+                public void connect(String name, PeerPrx peer, Current current)
+                    throws ConnectionException
                 {
-                    throw new MTalk.ConnectionException("already connected");
+                    throw new ConnectionException("already connected");
                 }
 
                 public void message(String message, Current current)
@@ -476,15 +498,15 @@ public class MTalkService extends Service implements com.zeroc.mtalk.service.Ser
         }
     }
 
-    synchronized private PeerInfo incoming(String name, MTalk.PeerPrx peer, com.zeroc.Ice.Connection con)
-        throws MTalk.ConnectionException
+    synchronized private PeerInfo incoming(String name, PeerPrx peer, com.zeroc.Ice.Connection con)
+        throws ConnectionException
     {
         //
         // Only accept a new incoming connection if we're idle.
         //
         if(!_state.equals(Intents.PEER_NOT_CONNECTED))
         {
-            throw new MTalk.ConnectionException("Peer is busy");
+            throw new ConnectionException("Peer is busy");
         }
 
         PeerInfo info = new PeerInfo();
@@ -523,10 +545,10 @@ public class MTalkService extends Service implements com.zeroc.mtalk.service.Ser
             {
                 if(ex != null)
                 {
-                    if(ex instanceof MTalk.ConnectionException)
+                    if(ex instanceof ConnectionException)
                     {
                         connectFailed(info, "Connection to " + info.getName() + " failed: " +
-                                      ((MTalk.ConnectionException)ex).reason);
+                                      ((ConnectionException)ex).reason);
                     }
                     else
                     {
@@ -650,7 +672,7 @@ public class MTalkService extends Service implements com.zeroc.mtalk.service.Ser
         info.removeServant(_adapter);
     }
 
-    private synchronized void discoveredPeer(String name, MTalk.PeerPrx proxy)
+    private synchronized void discoveredPeer(String name, PeerPrx proxy)
     {
         if(!_name.equals(name)) // Ignore our own broadcasts.
         {
@@ -665,7 +687,10 @@ public class MTalkService extends Service implements com.zeroc.mtalk.service.Ser
     {
         if(_networkEnabled)
         {
-            assert(!_lock.isHeld());
+            if(BuildConfig.DEBUG && _lock.isHeld())
+            {
+                throw new AssertionError();
+            }
             _lock.acquire();
 
             _handler.postDelayed(new Runnable()
@@ -755,7 +780,7 @@ public class MTalkService extends Service implements com.zeroc.mtalk.service.Ser
                         else
                         {
                             _adapter = _communicator.createObjectAdapterWithEndpoints("", "ssl -h \"" + ip + "\"");
-                            _local = MTalk.PeerPrx.uncheckedCast(
+                            _local = PeerPrx.uncheckedCast(
                                 _adapter.add(new PeerImpl(), Util.stringToIdentity("peer")));
                             _adapter.activate();
 
@@ -828,10 +853,6 @@ public class MTalkService extends Service implements com.zeroc.mtalk.service.Ser
             else if(Intents.ACTION_STOP_MULTICAST.equals(action))
             {
                 stopMulticast();
-            }
-            else if(ConnectivityManager.CONNECTIVITY_ACTION.equals(action))
-            {
-                checkNetwork();
             }
         }
     };

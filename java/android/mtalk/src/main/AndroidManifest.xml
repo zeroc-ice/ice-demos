@@ -1,40 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="com.zeroc.mtalk"
-      android:versionCode="1"
-      android:versionName="1.0.0">
+    package="com.zeroc.mtalk"
+    android:versionCode="1"
+    android:versionName="1.0.0">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
 
     <application
-        android:icon="@drawable/icon"
-        android:label="@string/app_name"
-        android:allowBackup="false">
+        android:allowBackup="false"
+        android:icon="@raw/icon"
+        android:label="@string/app_name">
 
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:windowSoftInputMode="stateHidden"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"></action>
                 <category android:name="android.intent.category.LAUNCHER"></category>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="demo.zeroc.com"
+                    android:scheme="http" />
             </intent-filter>
         </activity>
 
         <activity
             android:name=".ConnectActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:label="@string/choose_peer"/>
+            android:label="@string/choose_peer" />
 
         <service
             android:name=".service.MTalkService"
             android:enabled="true"
-            android:exported="false"/>
+            android:exported="false" />
 
     </application>
 </manifest>

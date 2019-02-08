@@ -1,10 +1,8 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
-import Demo.*;
+import com.zeroc.demos.Database.library.Demo.*;
 
 class SessionI implements Glacier2Session
 {

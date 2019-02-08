@@ -1,6 +1,6 @@
-% **********************************************************************
-% Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
-% **********************************************************************
+%
+% Copyright (c) ZeroC, Inc. All rights reserved.
+%
 
 function client()
     addpath('generated');
@@ -86,169 +86,146 @@ function client()
             %repetitions = 100;
             repetitions = 10;
 
-            if line(1) == '1' || line(1) == '2' || line(1) == '3' || line(1) == '4'
-                currentType = line(1);
-
-                switch currentType
-                    case '1'
-                        fprintf('using byte sequences\n');
-                        seqSize = ByteSeqSize.value;
-
-                    case '2'
-                        fprintf('using string sequences\n');
-                        seqSize = StringSeqSize.value;
-
-                    case '3'
-                        fprintf('using variable-length struct sequences\n');
-                        seqSize = StringDoubleSeqSize.value;
-
-                    case '4'
-                        fprintf('using fixed-length struct sequences\n');
-                        seqSize = FixedSeqSize.value;
-                end
-            elseif line(1) == 't' || line(1) == 'o' || line(1) == 'r' || line(1) == 'e'
-                if currentType == '1'
-                    %repetitions = 1000; % Use more iterations for byte sequences as it's a lot faster
-                    repetitions = 100;
-                end
-
-                c = line(1);
-
-                switch(c)
-                    case 't'
-                        fprintf('sending');
-
-                    case 'o'
-                        fprintf('sending');
-
-                    case 'r'
-                        fprintf('receiving');
-
-                    case 'e'
-                        fprintf('sending and receiving');
-                end
-
-                fprintf(' %d', repetitions);
-                switch currentType
-                    case '1'
-                        fprintf(' byte');
-
-                    case '2'
-                        fprintf(' string');
-
-                    case '3'
-                        fprintf(' variable-length struct');
-
-                    case '4'
-                        fprintf(' fixed-length struct');
-                end
-
-                fprintf(' sequences of size %d', seqSize);
-
-                if c == 'o'
-                    fprintf(' as oneway');
-                end
-
-                fprintf('...\n');
-
-                tic();
-
-                for i = 1:repetitions
+            switch(line)
+                case {'1', '2', '3', '4'}
+                    currentType = line(1);
                     switch currentType
                         case '1'
-                            switch c
-                                case 't'
-                                    throughput.sendByteSeq(byteSeq);
-
-                                case 'o'
-                                    throughputOneway.sendByteSeq(byteSeq);
-
-                                case 'r'
-                                    throughput.recvByteSeq();
-
-                                case 'e'
-                                    throughput.echoByteSeq(byteSeq);
-                            end
-
+                            fprintf('using byte sequences\n');
+                            seqSize = ByteSeqSize.value;
                         case '2'
-                            switch c
-                                case 't'
-                                    throughput.sendStringSeq(stringSeq);
-
-                                case 'o'
-                                    throughputOneway.sendStringSeq(stringSeq);
-
-                                case 'r'
-                                    throughput.recvStringSeq();
-
-                                case 'e'
-                                    throughput.echoStringSeq(stringSeq);
-                            end
-
+                            fprintf('using string sequences\n');
+                            seqSize = StringSeqSize.value;
                         case '3'
-                            switch c
-                                case 't'
-                                    throughput.sendStructSeq(structSeq);
-
-                                case 'o'
-                                    throughputOneway.sendStructSeq(structSeq);
-
-                                case 'r'
-                                    throughput.recvStructSeq();
-
-                                case 'e'
-                                    throughput.echoStructSeq(structSeq);
-                            end
-
+                            fprintf('using variable-length struct sequences\n');
+                            seqSize = StringDoubleSeqSize.value;
                         case '4'
-                            switch c
-                                case 't'
-                                    throughput.sendFixedSeq(fixedSeq);
-
-                                case 'o'
-                                    throughputOneway.sendFixedSeq(fixedSeq);
-
-                                case 'r'
-                                    throughput.recvFixedSeq();
-
-                                case 'e'
-                                    throughput.echoFixedSeq(fixedSeq);
-                            end
+                            fprintf('using fixed-length struct sequences\n');
+                            seqSize = FixedSeqSize.value;
                     end
-                end
 
-                elaps = toc() * 1000.0;
-                fprintf('time for %d sequences: %0.3f ms\n', repetitions, elaps);
-                fprintf('time per sequence: %0.3f ms\n', elaps / repetitions);
-                wireSize = 0;
-                switch currentType
-                    case '1'
-                        wireSize = 1;
+                case {'t', 'o', 'r', 'e'}
+                    if currentType == '1'
+                        %repetitions = 1000; % Use more iterations for byte sequences as it's a lot faster
+                        repetitions = 100;
+                    end
 
-                    case '2'
-                        wireSize = length(stringSeq{1});
+                    c = line(1);
+                    switch(c)
+                        case 't'
+                            fprintf('sending');
+                        case 'o'
+                            fprintf('sending');
+                        case 'r'
+                            fprintf('receiving');
+                        case 'e'
+                            fprintf('sending and receiving');
+                    end
 
-                    case '3'
-                        wireSize = length(structSeq(1).s);
-                        wireSize = wireSize + 8; % Size of double on the wire.
+                    fprintf(' %d', repetitions);
+                    switch currentType
+                        case '1'
+                            fprintf(' byte');
+                        case '2'
+                            fprintf(' string');
+                        case '3'
+                            fprintf(' variable-length struct');
+                        case '4'
+                            fprintf(' fixed-length struct');
+                    end
 
-                    case '4'
-                        wireSize = 16; % Size of two ints and a double on the wire.
-                end
-                mbit = repetitions * seqSize * wireSize * 8.0 / elaps / 1000.0;
-                if c == 'e'
-                    mbit = mbit * 2;
-                end
-                fprintf('throughput: %0.3f Mbps\n', mbit);
-            elseif line(1) == 's'
-                throughput.shutdown();
-            elseif line(1) == 'x'
-                break;
-            elseif line(1) == '?'
-                menu();
-            else
-                fprintf('unknown command `%s''\n', line);
-                menu();
+                    fprintf(' sequences of size %d', seqSize);
+
+                    if c == 'o'
+                        fprintf(' as oneway');
+                    end
+
+                    fprintf('...\n');
+
+                    tic();
+
+                    for i = 1:repetitions
+                        switch currentType
+                            case '1'
+                                switch c
+                                    case 't'
+                                        throughput.sendByteSeq(byteSeq);
+                                    case 'o'
+                                        throughputOneway.sendByteSeq(byteSeq);
+                                    case 'r'
+                                        throughput.recvByteSeq();
+                                    case 'e'
+                                        throughput.echoByteSeq(byteSeq);
+                                end
+
+                            case '2'
+                                switch c
+                                    case 't'
+                                        throughput.sendStringSeq(stringSeq);
+                                    case 'o'
+                                        throughputOneway.sendStringSeq(stringSeq);
+                                    case 'r'
+                                        throughput.recvStringSeq();
+                                    case 'e'
+                                        throughput.echoStringSeq(stringSeq);
+                                end
+
+                            case '3'
+                                switch c
+                                    case 't'
+                                        throughput.sendStructSeq(structSeq);
+                                    case 'o'
+                                        throughputOneway.sendStructSeq(structSeq);
+                                    case 'r'
+                                        throughput.recvStructSeq();
+                                    case 'e'
+                                        throughput.echoStructSeq(structSeq);
+                                end
+
+                            case '4'
+                                switch c
+                                    case 't'
+                                        throughput.sendFixedSeq(fixedSeq);
+                                    case 'o'
+                                        throughputOneway.sendFixedSeq(fixedSeq);
+                                    case 'r'
+                                        throughput.recvFixedSeq();
+                                    case 'e'
+                                        throughput.echoFixedSeq(fixedSeq);
+                                end
+                        end
+                    end
+
+                    elaps = toc() * 1000.0;
+                    fprintf('time for %d sequences: %0.3f ms\n', repetitions, elaps);
+                    fprintf('time per sequence: %0.3f ms\n', elaps / repetitions);
+                    wireSize = 0;
+                    switch currentType
+                        case '1'
+                            wireSize = 1;
+                        case '2'
+                            wireSize = length(stringSeq{1});
+                        case '3'
+                            wireSize = length(structSeq(1).s);
+                            wireSize = wireSize + 8; % Size of double on the wire.
+                        case '4'
+                            wireSize = 16; % Size of two ints and a double on the wire.
+                    end
+                    mbit = repetitions * seqSize * wireSize * 8.0 / elaps / 1000.0;
+                    if c == 'e'
+                        mbit = mbit * 2;
+                    end
+                    fprintf('throughput: %0.3f Mbps\n', mbit);
+                case 's'
+                    throughput.shutdown();
+                case 'x'
+                    break;
+                case '?'
+                    menu();
+                case ''
+                otherwise
+                    fprintf('unknown command `%s''\n', line);
+                    menu();
             end
         end
     catch ex

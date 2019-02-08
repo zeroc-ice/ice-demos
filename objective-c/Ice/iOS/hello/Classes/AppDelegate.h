@@ -1,17 +1,11 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 #import <UIKit/UIKit.h>
 
-@class HelloController;
+@interface AppDelegate : UIResponder <UIApplicationDelegate>
 
-@interface AppDelegate : NSObject <UIApplicationDelegate>
-{
-    IBOutlet UIWindow *window;
-    IBOutlet HelloController *viewController;
-}
+@property (strong, nonatomic) UIWindow *window;
 
 @end

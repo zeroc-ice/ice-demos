@@ -10,7 +10,7 @@ module.exports = {
     },
     "rules": {
         "accessor-pairs": "error",
-        "array-bracket-newline": "error",
+        "array-bracket-newline": "off",
         "array-bracket-spacing": [
             "error",
             "never"
@@ -87,10 +87,7 @@ module.exports = {
         "jsx-quotes": "error",
         "key-spacing": "error",
         "line-comment-position": "off",
-        "linebreak-style": [
-            "error",
-            "unix"
-        ],
+        "linebreak-style": "off",
         "lines-around-comment": "error",
         "lines-around-directive": "error",
         "lines-between-class-members": [
@@ -243,10 +240,7 @@ module.exports = {
         "prefer-rest-params": "error",
         "prefer-spread": "error",
         "prefer-template": "off",
-        "quote-props": [
-            "error",
-            "as-needed"
-        ],
+        "quote-props": "off",
         "quotes": [
             "off",
             "double"

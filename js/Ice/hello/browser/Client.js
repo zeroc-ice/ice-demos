@@ -1,10 +1,9 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
-(function(){
+(() =>
+{
 
 const communicator = Ice.initialize();
 
@@ -276,4 +275,4 @@ $("#mode").on("change", e =>
 
 updateProxy();
 
-}());
+})();

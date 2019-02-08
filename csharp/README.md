@@ -22,8 +22,16 @@ Refer to the [C++11 demos](../cpp11) for more examples that use the Ice services
 
 ### Build Requirements
 
-In order to build Ice for .NET sample programs, you need a supported version
-of Visual Studio.
+In order to build the Ice for .NET sample programs, you need:
+ * Visual Studio
+ * the [Ice Builder][3] Visual Studio extension
+
+If you forget to install Ice Builder, the C# sample projects will fail to load and
+Visual Studio may give an error message that suggests a version migration problem:
+> Unsupported
+>
+> This version of Visual Studio is unable to open the following projects. The project types may not be installed or this version of Visual Studio may not support them.
+> For more information on enabling these project types or otherwise migrating your assets, please see the details in the "Migration Report" displayed after clicking OK.
 
 ### Building the demos using NuGet packages:
 
@@ -75,10 +83,14 @@ refer to [Using the Windows Binary Distributions][4] for additional information.
 
 In order to build Ice for .NET sample programs, you need all of the following:
 
- - the [.NET Core 2.0 SDK][5]
+ - the [.NET Core 2.1 SDK][5]
  - Slice to C# compiler, for Windows platform the Slice to C# compiler is included
    with the `zeroc.ice.net` NuGet package installed during build, for other platforms
    refer to the [Release Notes][6].
+
+You can build from the command-line or with Visual Studio 2017 (for Windows or Mac).
+If you use Visual Studio 2017, the [Ice Builder][3] extension is optional on Windows,
+and not available on macOS.
 
 ### Building the demos using NuGet packages:
 
@@ -91,11 +103,12 @@ cd csharp
 To build the sample programs run:
 
 ```
-dotnet msbuild "C# NET Core demos.sln" /t:"Restore;Build"
+dotnet restore "C# NET Core demos.sln"
+dotnet msbuild "C# NET Core demos.sln"
 ```
 
-The demos are configured to use the Ice distribution from NuGet packages. These
-packages are automatically downloaded during the build.
+The demos are configured to use the Ice NuGet packages. These packages are automatically
+downloaded from nuget.org during the build.
 
 ### Building the demos using a source build:
 
@@ -122,7 +135,8 @@ dotnet msbuild /p:IceHome=<Ice dist path> /t:NetStandardInstallLocalPackages msb
 To build the sample programs run:
 
 ```
-dotnet msbuild "C# NET Core demos.sln" /t:"Restore;Build"
+dotnet restore "C# NET Core demos.sln"
+dotnet msbuild "C# NET Core demos.sln"
 ```
 
 ### Running the Demos
@@ -138,6 +152,7 @@ directory to your PATH. Please refer to the [Release Notes][6] for additional in
 
 [1]: https://doc.zeroc.com/display/Ice37/Ice+Manual
 [2]: https://zeroc.com/chat/index.html
-[4]: https://doc.zeroc.com/display/Rel/Using+the+Windows+Binary+Distributions+for+Ice+3.7.1
-[5]: https://www.microsoft.com/net/download/windows
+[3]: https://marketplace.visualstudio.com/items?itemName=ZeroCInc.IceBuilder
+[4]: https://doc.zeroc.com/display/Rel/Using+the+Windows+Binary+Distributions+for+Ice+3.7.2
+[5]: https://dotnet.microsoft.com/download/dotnet-core/2.1
 [6]: https://doc.zeroc.com/display/Ice37/Ice+Release+Notes

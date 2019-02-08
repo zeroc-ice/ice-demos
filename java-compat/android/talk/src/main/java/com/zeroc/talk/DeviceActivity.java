@@ -1,8 +1,6 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 package com.zeroc.talk;
 
@@ -106,6 +104,7 @@ public class DeviceActivity extends Activity
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
@@ -179,7 +178,6 @@ public class DeviceActivity extends Activity
 
     private void runDiscovery()
     {
-        setProgressBarIndeterminateVisibility(true);
         setTitle(R.string.scanning);
 
         if(_adapter.isDiscovering())
@@ -269,7 +267,6 @@ public class DeviceActivity extends Activity
                 }
                 else if(BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action))
                 {
-                    setProgressBarIndeterminateVisibility(false);
                     setTitle(R.string.choose_peer);
 
                     if(_devices.getCount() == 1)

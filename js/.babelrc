@@ -1,16 +1,19 @@
 {
-
-    "presets": ["babel-preset-es2015-script"],
-    "plugins":
-    [
+    "presets": [
+        "@babel/preset-env",
+    ],
+    "plugins": [
         [
             "babel-plugin-transform-builtin-extend",
             {
-                globals: ["Error", "Promise"]
+                "globals": [
+                    "Error",
+                    "Promise"
+                ]
             }
         ],
         [
-            "transform-async-to-generator"
+            "@babel/plugin-transform-async-to-generator"
         ]
     ]
 }

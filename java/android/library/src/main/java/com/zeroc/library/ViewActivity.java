@@ -1,14 +1,13 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 package com.zeroc.library;
 
+import androidx.fragment.app.DialogFragment;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,10 +17,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.zeroc.demos.android.library.Demo.*;
 import com.zeroc.library.controller.QueryController;
 import com.zeroc.library.controller.QueryModel;
 
@@ -32,7 +31,7 @@ public class ViewActivity extends SessionActivity
     public static final String RENT_TAG = "rent";
     public static final String DELETE_TAG = "delete";
 
-    private Demo.BookDescription _desc;
+    private BookDescription _desc;
     private TextView _isbn;
     private TextView _title;
     private LinearLayout _authorsLayout;
@@ -46,7 +45,7 @@ public class ViewActivity extends SessionActivity
         public Dialog onCreateDialog(Bundle savedInstanceState)
         {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder .setTitle("Delete")
+            builder .setTitle(R.string.delete)
                     .setMessage("This book will be deleted.")
                     .setPositiveButton("OK", new DialogInterface.OnClickListener()
                     {
@@ -84,13 +83,13 @@ public class ViewActivity extends SessionActivity
         if(_desc.rentedBy.length() == 0)
         {
             _rentedBy.setVisibility(View.GONE);
-            _rent.setText("Rent Book");
+            _rent.setText(R.string.rent_book);
         }
         else
         {
             _rentedBy.setVisibility(View.VISIBLE);
             _rentedBy.setText(_desc.rentedBy);
-            _rent.setText("Return Book");
+            _rent.setText(R.string.return_book);
         }
     }
 
@@ -191,7 +190,7 @@ public class ViewActivity extends SessionActivity
             case DELETE_ID:
             {
                 DialogFragment dialog = new DeleteBookDialogFragment();
-                dialog.show(getFragmentManager(), DELETE_TAG);
+                dialog.show(getSupportFragmentManager(), DELETE_TAG);
                 return true;
             }
         }

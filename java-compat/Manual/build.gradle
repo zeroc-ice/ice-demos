@@ -1,8 +1,6 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 ['lifecycle', 'simple_filesystem'].each {
     // abc_def -> AbcDef
@@ -24,8 +22,8 @@
         }
 
         dependencies {
-            compile localDependency("ice-compat")
-            runtime "org.apache.commons:commons-compress:1.14"
+            implementation "com.zeroc:ice-compat:${project.iceArtifactVersion}"
+            runtimeOnly "org.apache.commons:commons-compress:1.14"
         }
 
         // Don't create the default jar.

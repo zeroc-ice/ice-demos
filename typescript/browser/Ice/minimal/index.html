@@ -1,0 +1,162 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Minimal Demo | Ice for JavaScript</title>
+    <link rel="icon" type="image/x-icon" href="../../../assets/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="../../../assets/common.css" />
+    {{#cssDeps}}
+    <link rel="stylesheet" type="text/css" href="{{.}}"/>
+    {{/cssDeps}}
+  </head>
+  <body>
+    <!-- Header section that contains title and navigation bar -->
+    <section id="header">
+        <nav class="top-bar" data-topbar>
+            <ul class="title-area">
+                <li class="name">
+                    <h1><a href="../../../index.html">Ice for JavaScript</a></h1>
+                </li>
+                <li class="toggle-topbar menu-icon"><a href="#">Menu</a></li>
+            </ul>
+            <section class="top-bar-section">
+                <!-- Right Nav Section -->
+                <ul class="right">
+                    <li class="divider"></li>
+                    <li><a href="#" id="viewReadme">Readme</a></li>
+                    <li><a href="#" id="viewSource">Source</a></li>
+                </ul>
+            </section>
+        </nav>
+        <ul class="breadcrumbs">
+            <li><a href="../../../index.html">Ice</a></li>
+            <li><a href="../../index.html">Demos</a></li>
+            <li class="current"><a href="#">Minimal</a></li>
+        </ul>
+    </section>
+    <!-- Main section that contains the user interface -->
+    <section role="main" id="body">
+        <div class="row">
+            <div class="large-12 medium-12 columns">
+                <form>
+                    <div class="row">
+                        <div class="small-12 columns">
+                            <a href="#" class="button small" id="hello">Hello World!</a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="small-12 columns">
+                            <textarea id="output" readonly></textarea>
+                        </div>
+                    </div>
+                    <div id="progress" class="row hide">
+                        <div class="small-12 columns left">
+                            <div class="inline left icon"></div>
+                            <div class="text">Sending Request...</div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <!-- Modal dialog to show the client README -->
+    <div id="readme-modal" class="reveal-modal" data-reveal>
+        <h4>Minimal Demo Readme</h4>
+        <hr/>
+        <p>This demo is a minimal Ice "hello world" application. Each time the
+        client is run a "sayHello" invocation is sent to the server.</p>
+
+        <p>
+           To run the demo, first you need to start an Ice minimal server from
+           another language mapping (Java, C++, C#, or Python) with
+           web socket support. For example with Python, run:
+           <pre>
+    python Server.py --Ice.Default.Protocol=ws
+           </pre>
+        </p>
+
+        <p>After starting the server, run the client by clicking the <strong>"Hello World!"</strong> button.</p>
+        <div class="panel callout radius">
+            <p>Note that this demo hardwires port 10,000. If port 10,000 is not
+            available on your machine, you need to edit both client and server
+            to use a free port.</p>
+        </div>
+        <a class="close-reveal-modal">&#215;</a>
+    </div>
+    <!-- Modal dialog to show the client source code -->
+    <div id="source-modal" class="reveal-modal" data-reveal>
+        <a class="close-reveal-modal">&#215;</a>
+        <dl class="tabs" data-tab>
+            <dt></dt>
+            <dd class="active"><a href="#panel2-1">Slice</a></dd>
+            <dd><a href="#panel2-2">TypeScript</a></dd>
+            <dd><a href="#panel2-3">HTML</a></dd>
+        </dl>
+        <div class="tabs-content">
+            <div class="content active" id="panel2-1">
+                <h6>File: browser/Ice/minimal/Hello.ice</h6>
+                <pre class="source language-c" data-code="Hello.ice"></pre>
+            </div>
+            <div class="content" id="panel2-2">
+                <h6>File: browser/Ice/minimal/Client.ts</h6>
+                <pre class="source" data-code="Client.ts"></pre>
+            </div>
+            <div class="content" id="panel2-3">
+                <h6>File: browser/Ice/minimal/index.html</h6>
+                <pre class="source" data-code="index.html"></pre>
+            </div>
+        </div>
+    </div>
+    <div id="no-https-modal" class="reveal-modal" data-reveal>
+        <p>This client uses a non-secure WebSocket connection, but your browser does not allow
+            the client to make a non-secure connection from a page loaded via HTTPS. You can run the
+            demo from an HTTP page by navigating to <a href=""></a>.
+        </p>
+    </div>
+    <!-- Footer section -->
+    <section id="footer" class="show-for-medium-up">
+        <div class="logo">
+            <h4><strong>ZeroC</strong></h4>
+        </div>
+        <div class="copyright">
+            <h6>Copyright &copy; ZeroC, Inc. All rights reserved.</h6>
+        </div>
+    </section>
+    <!-- Common dependencies -->
+    {{#jsDeps}}
+    <script src="{{.}}"></script>
+    {{/jsDeps}}
+    <script type="text/javascript" src="../../../assets/common.js"></script>
+    <!-- Ice.js (Ice run-time library) -->
+    <script type="text/javascript" src="../../../node_modules/ice/lib/Ice.js"></script>
+    <!-- main.js (Minimal Demo Application Bundle) -->
+    <script type="text/javascript" src="main.js"></script>
+    <script type="text/javascript">
+        /* jshint browser:true, jquery:true */
+        /* global checkGenerated: false */
+        //
+        // Web browsers does not allow WS connections from
+        // HTTPS pages.
+        //
+        if(document.location.protocol === "https:")
+        {
+            var href = "http://" + document.location.hostname + ":8080" + document.location.pathname;
+            $("#no-https-modal a").attr("href", href);
+            $("#no-https-modal a").text(href);
+            $("#no-https-modal").foundation({
+                reveal:
+                {
+                    close_on_background_click: false,
+                    close_on_esc: false
+                }
+            });
+            $("#no-https-modal").foundation("reveal", "open");
+        }
+        else if(document.location.protocol == "http:")
+        {
+            checkGenerated(["main.js"]);
+        }
+    </script>
+  </body>
+</html>

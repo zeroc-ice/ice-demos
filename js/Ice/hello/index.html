@@ -35,7 +35,6 @@
             <li class="current"><a href="#">Hello</a></li>
         </ul>
     </section>
-
     <!-- Main section that contains the user interface -->
     <section role="main" id="body">
         <div class="row">
@@ -102,11 +101,10 @@
 
             <p>
                To run the demo, first you need to start an Ice hello server from
-               another language mapping (Java, C++, C#, or Python). Please refer to
-               the README in the server subdirectory for more information on starting
-               the server. You will also need to edit the hello server configuration
-               file config.server to uncomment the IceSSL.VerifyPeer=0 property if
-               you want to establish a secure connection with the WSS protocol.
+               another language mapping (Java, C++, C#, or Python). You will also
+               need to edit the hello server configuration file config.server to
+               uncomment the IceSSL.VerifyPeer=0 property if you want to establish
+               a secure connection with the WSS protocol.
             </p>
 
             <p>You can change the invocation mode using the <strong>"Mode"</strong>
@@ -121,6 +119,30 @@
             on the client proxy and the delay slider to set a delayed response in
             the server to cause a timeout.</p>
         </div>
+        <p>To use the minified version you should edit the <code>js/Ice/hello/index.html</code>
+        file and comment out the non-optimized scripts:</p>
+        <pre>
+    &lt;!--
+      Scripts used during development, for optimized builds comment
+      the following scripts and uncomment es5/browser/Client.min.js
+      below
+    --&gt;
+    &lt;!-- Ice.js (Ice run-time library) --&gt;
+    &lt;script type="text/javascript" src="../../../node_modules/ice/lib/es5/Ice.js"&gt;&lt;/script&gt;
+    &lt;!-- Hello.js (Demo generated code) --&gt;
+    &lt;script type="text/javascript" src="es5/generated/Hello.js"&gt;&lt;/script&gt;
+    &lt;!-- Client.js (Hello Demo Application) --&gt;
+    &lt;script type="text/javascript" src="es5/browser/Client.js"&gt;&lt;/script&gt;
+        </pre>
+        <p>Then uncomment the script tag for the minified version</p>
+        <pre>
+    &lt;!--
+      Uncomment the following script to use a minified version of the
+      scripts that includes: the Ice run-time library, the generated
+      code and the demo application.
+    --&gt;
+    &lt;!--&lt;script src="es5/browser/Client.min.js"&gt;&lt;/script&gt;--&gt;
+        </pre>
         <a class="close-reveal-modal">&#215;</a>
     </div>
     <!-- Modal dialog to show the client source code -->
@@ -153,7 +175,7 @@
             <h4><strong>ZeroC</strong></h4>
         </div>
         <div class="copyright">
-            <h6>Copyright &copy; 2003-2018 ZeroC, Inc. All rights reserved.</h6>
+            <h6>Copyright &copy; ZeroC, Inc. All rights reserved.</h6>
         </div>
     </section>
     <!-- Common dependencies -->
@@ -161,17 +183,25 @@
     <script src="{{.}}"></script>
     {{/jsDeps}}
     <script type="text/javascript" src="../../../assets/es5/common.js"></script>
-
     <!-- Babel dependencies -->
-    <script type="text/javascript" src="../../../node_modules/babel-polyfill/dist/polyfill.js"></script>
-
+    <script type="text/javascript" src="../../../node_modules/@babel/polyfill/dist/polyfill.js"></script>
+    <!--
+      Scripts used during development, for optimized builds comment
+      the following scripts and uncomment es5/browser/Client.min.js
+      below
+    -->
     <!-- Ice.js (Ice run-time library) -->
-    <script type="text/javascript" src="../../../lib/es5/Ice.js"></script>
+    <script type="text/javascript" src="../../../node_modules/ice/lib/es5/Ice.js"></script>
     <!-- Hello.js (Demo generated code) -->
     <script type="text/javascript" src="es5/generated/Hello.js"></script>
-    <!-- browser/Client.js (Hello Demo Application) -->
+    <!-- Client.js (Hello Demo Application) -->
     <script type="text/javascript" src="es5/browser/Client.js"></script>
-
+    <!--
+      Uncomment the following script to use a minified version of the
+      scripts that includes: the Ice run-time library, the generated
+      code and the demo application.
+    -->
+    <!--<script type="text/javascript" src="es5/browser/Client.min.js"></script>-->
     <script type="text/javascript">
         /* jshint browser:true, jquery:true */
         /* global checkGenerated: false */

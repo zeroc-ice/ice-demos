@@ -38,4 +38,4 @@ Follow these steps to install the demo:
    Client.php and set the have_ssl variable to true.
 
 [1]: https://doc.zeroc.com/display/Ice37/IceDiscovery
-[2]: https://doc.zeroc.com/display/Rel/Ice+3.7.1+Release+Notes
+[2]: https://doc.zeroc.com/display/Rel/Ice+3.7.2+Release+Notes

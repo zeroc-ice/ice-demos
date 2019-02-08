@@ -1,12 +1,11 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 #import <Cocoa/Cocoa.h>
 
 @protocol ICECommunicator;
+@class ICEInitializationData;
 
 @interface LoginController : NSWindowController
 {
@@ -17,6 +16,7 @@
     IBOutlet NSWindow* connectingSheet;
     IBOutlet NSProgressIndicator* progress;
     id<ICECommunicator> communicator;
+    ICEInitializationData* initializationData;
 }
 
 -(void)login:(id)sender;

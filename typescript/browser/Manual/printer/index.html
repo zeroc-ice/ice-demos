@@ -1,0 +1,133 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Printer Demo | Ice for JavaScript</title>
+    <link rel="icon" type="image/x-icon" href="../../../assets/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="../../../assets/common.css" />
+    {{#cssDeps}}
+    <link rel="stylesheet" type="text/css" href="{{.}}"/>
+    {{/cssDeps}}
+  </head>
+  <body>
+    <!-- Header section that contains title and navigation bar -->
+    <section id="header">
+        <nav class="top-bar" data-topbar>
+            <ul class="title-area">
+                <li class="name">
+                    <h1><a href="../../../index.html">Ice for JavaScript</a></h1>
+                </li>
+                <li class="toggle-topbar menu-icon"><a href="#">Menu</a></li>
+            </ul>
+            <section class="top-bar-section">
+                <!-- Right Nav Section -->
+                <ul class="right">
+                    <li class="divider"></li>
+                    <li><a href="#" id="viewReadme">Readme</a></li>
+                    <li><a href="#" id="viewSource">Source</a></li>
+                </ul>
+            </section>
+        </nav>
+        <ul class="breadcrumbs">
+            <li><a href="../../../index.html">Ice</a></li>
+            <li><a href="../../index.html">Demos</a></li>
+            <li class="current"><a href="#">Printer</a></li>
+        </ul>
+    </section>
+    <!-- Main section that contains the user interface -->
+    <section role="main" id="body">
+        <div class="row">
+            <div class="large-12 medium-12 columns">
+                <form>
+                    <div class="row">
+                        <div class="small-12 columns">
+                            <a href="#" class="button small" id="print">Print String</a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="small-12 columns">
+                            <textarea id="output" readonly></textarea>
+                        </div>
+                    </div>
+                    <div id="progress" class="row hide">
+                        <div class="small-12 columns left">
+                            <div class="inline left icon"></div>
+                            <div class="text">Sending Request...</div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <!-- Modal dialog to show the client README -->
+    <div id="readme-modal" class="reveal-modal medium" data-reveal>
+        <div class="contents">
+            <h4>Printer Demo Readme</h4>
+            <hr/>
+            <p>This demo implements the printer example in the Ice Manual.</p>
+            <p>
+                To run the demo, first you need to start a Manual printer server from
+                another language mapping (Java, C++, C#, or Python). If you want to get
+                started quickly, we recommend using the Python server. For the server to
+                communicate with the browser you need to start it with WS as it's default
+                protocol. This is done by setting the Ice.Default.Protocol option. For the
+                python server this would look like
+                <pre>
+                    python server.py --Ice.Default.Protocol=ws
+                </pre>
+            </p>
+            <p>Then you can use the <strong>"Print String"</strong> button to run this client.</p>
+        </div>
+        <a class="close-reveal-modal">&#215;</a>
+    </div>
+    <!-- Modal dialog to show the client source code -->
+    <div id="source-modal" class="reveal-modal" data-reveal>
+        <a class="close-reveal-modal">&#215;</a>
+        <dl class="tabs" data-tab>
+            <dt></dt>
+            <dd class="active"><a href="#panel2-1">Slice</a></dd>
+            <dd><a href="#panel2-2">TypeScript</a></dd>
+            <dd><a href="#panel2-3">HTML</a></dd>
+        </dl>
+        <div class="tabs-content">
+            <div class="content active" id="panel2-1">
+                <h6>File: Manual/printer/Printer.ice</h6>
+                <pre class="source language-c" data-code="Printer.ice"></pre>
+            </div>
+            <div class="content" id="panel2-2">
+                <h6>File: Manual/printer/Client.ts</h6>
+                <pre class="source" data-code="Client.ts"></pre>
+            </div>
+            <div class="content" id="panel2-3">
+                <h6>File: Ice/printer/index.html</h6>
+                <pre class="source" data-code="index.html"></pre>
+            </div>
+        </div>
+    </div>
+    <!-- Footer section -->
+    <section id="footer" class="show-for-medium-up">
+        <div class="logo">
+            <h4><strong>ZeroC</strong></h4>
+        </div>
+        <div class="copyright">
+            <h6>Copyright &copy; ZeroC, Inc. All rights reserved.</h6>
+        </div>
+    </section>
+    <!-- Common dependencies -->
+    {{#jsDeps}}
+    <script src="{{.}}"></script>
+    {{/jsDeps}}
+    <script type="text/javascript" src="../../../assets/common.js"></script>
+    <!-- Ice.js (Ice run-time library) -->
+    <script type="text/javascript" src="../../../node_modules/ice/lib/Ice.js"></script>
+    <!-- main.js (Bundled Printer Demo Application) -->
+    <script type="text/javascript" src="main.js"></script>
+    <script type="text/javascript">
+        if(["http:", "https:"].indexOf(document.location.protocol) !== -1)
+        {
+            checkGenerated(["main.js"]);
+        }
+    </script>
+  </body>
+</html>

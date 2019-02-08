@@ -1,8 +1,6 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 var crypto    = require("crypto");
 var fs        = require("fs");
@@ -35,10 +33,10 @@ function Init()
         js: "text/javascript",
     };
 
-    var libraries = ["/lib/Ice.js", "/lib/Ice.min.js",
-                    "/lib/Glacier2.js", "/lib/Glacier2.min.js",
-                    "/lib/IceStorm.js", "/lib/IceStorm.min.js",
-                    "/lib/IceGrid.js", "/lib/IceGrid.min.js",];
+    var libraries = ["/lib/Ice.js",
+                     "/lib/Glacier2.js",
+                     "/lib/IceStorm.js",
+                     "/lib/IceGrid.js"];
 
     var libraryMaps = libraries.map(
         function(f)
@@ -109,22 +107,6 @@ function Init()
                         }
                     });
             return
-        }
-
-        //
-        // If OPTIMIZE is set resolve Ice libraries to the corresponding minified
-        // versions.
-        //
-        if(process.env.OPTIMIZE == "yes")
-        {
-            if(iceLib && filePath.substr(-7) !== ".min.js")
-            {
-                filePath = filePath.replace(".js", ".min.js");
-            }
-            else if(iceLibMap && filePath.substr(-11) !== ".min.js.map")
-            {
-                filePath = filePath.replace(".js.map", ".min.js.map");
-            }
         }
 
         var ext = path.extname(filePath).slice(1);

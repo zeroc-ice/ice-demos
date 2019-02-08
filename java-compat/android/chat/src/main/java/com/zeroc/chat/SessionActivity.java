@@ -1,20 +1,19 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 package com.zeroc.chat;
 
-import android.app.DialogFragment;
+import androidx.fragment.app.DialogFragment;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import com.zeroc.chat.service.ChatRoomListener;
 import com.zeroc.chat.service.ChatService;
 import com.zeroc.chat.service.NoSessionException;
 import com.zeroc.chat.service.Service;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.DialogInterface;
@@ -23,7 +22,7 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 
 // Base of any activities that use the chat session.
-public abstract class SessionActivity extends Activity
+public abstract class SessionActivity extends AppCompatActivity
 {
     private static final String FATAL_TAG = "fatal";
     protected Service _service;
@@ -109,7 +108,7 @@ public abstract class SessionActivity extends Activity
     {
         DialogFragment dialog = FatalDialogFragment.newInstance(
                 (_service != null) ? _service.getSessionError() : "");
-        dialog.show(getFragmentManager(), FATAL_TAG);
+        dialog.show(getSupportFragmentManager(), FATAL_TAG);
     }
 
     private void fatalOk()

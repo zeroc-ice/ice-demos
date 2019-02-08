@@ -1,8 +1,6 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 #import <DetailController.h>
 #import <EditController.h>
@@ -11,8 +9,6 @@
 #import <Library.h>
 
 #import <objc/Ice.h>
-
-static EditController* editViewController_ = nil;
 
 @interface DetailController ()
 
@@ -33,43 +29,29 @@ static EditController* editViewController_ = nil;
 @synthesize delegate;
 @synthesize fatal;
 
--(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])
-    {
-        self.title = @"Info";
-    }
-    return self;
-}
-
--(void)popBack
-{
-    if(changed)
-    {
-        [delegate bookUpdated:book];
-    }
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
 -(void)viewDidLoad
 {
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    tableView.allowsSelectionDuringEditing = YES;
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Search"
-                                                                             style:UIBarButtonItemStylePlain
-                                                                            target:self
-                                                                            action:@selector(popBack)];
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    self.navigationItem.leftBarButtonItem.action = @selector(popBack);
-    self.navigationItem.leftBarButtonItem.target = self;
-
     // Remove any existing selection.
     [tableView deselectRowAtIndexPath:selectedIndexPath animated:NO];
     // Redisplay the data.
     [tableView reloadData];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    // Only call bookUpdate if we are moving back to parent
+    if ([self isMovingFromParentViewController])
+    {
+        if(changed)
+        {
+            [delegate bookUpdated:book];
+        }
+    }
 }
 
 -(void)setEditing:(BOOL)editing animated:(BOOL)animated
@@ -84,16 +66,6 @@ static EditController* editViewController_ = nil;
 {
     [super didReceiveMemoryWarning]; // Releases the view if it doesn't have a superview
     // Release anything that's not essential, such as cached data
-}
-
-+ (EditController *)editViewController
-{
-    // Instantiate the edit view controller if necessary.
-    if(editViewController_ == nil)
-    {
-        editViewController_ = [[EditController alloc] initWithNibName:@"EditView" bundle:nil];
-    }
-    return editViewController_;
 }
 
 -(IBAction)removeBook:(id)sender
@@ -341,12 +313,8 @@ static EditController* editViewController_ = nil;
     }
     else if(editingStyle == UITableViewCellEditingStyleInsert)
     {
-        EditController *controller = [DetailController editViewController];
         self.selectedIndexPath = indexPath;
-        NSString* auth = (indexPath.row >= book.authors.count) ? @"" : [book.authors objectAtIndex:indexPath.row];
-        [controller startEdit:self selector:@selector(saveAuthors:) name:@"Author" value:auth];
-
-        [self.navigationController pushViewController:controller animated:YES];
+        [self performSegueWithIdentifier:@"ShowEdit" sender:self];
     }
 }
 
@@ -422,17 +390,13 @@ static EditController* editViewController_ = nil;
                     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                                    reuseIdentifier:@"RemoveBook"];
                     // Add a label to the frame,
-
-                    UIImage *buttonBackground = [UIImage imageNamed:@"redButton.png"];
-                    UIImage *newImage = [buttonBackground stretchableImageWithLeftCapWidth:12.0 topCapHeight:0.0];
-
-                    UIButton* button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+                    UIButton* button = [UIButton buttonWithType:UIButtonTypeSystem];
                     button.tag = 100;
-                    button.frame = CGRectMake(-30.f, 0.f, 300.f, 44.f);
+                    button.frame = cell.frame;
 
                     [button setTitle:@"Remove Book" forState:UIControlStateNormal];
                     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-                    [button setBackgroundImage:newImage forState:UIControlStateNormal];
+                    [button setBackgroundColor:[UIColor redColor]];
 
                     [button addTarget:self action:@selector(removeBook:) forControlEvents:UIControlEventTouchUpInside];
 
@@ -475,7 +439,14 @@ static EditController* editViewController_ = nil;
             }
             else if(indexPath.section == 3)
             {
-                [cell.textLabel setText:book.rentedBy];
+                if([book.rentedBy length] == 0)
+                {
+                    [cell.textLabel setText:@"Not rented. Click to rent."];
+                }
+                else
+                {
+                    [cell.textLabel setText:book.rentedBy];
+                }
             }
         }
     }
@@ -515,7 +486,6 @@ static EditController* editViewController_ = nil;
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    EditController *controller = [DetailController editViewController];
     //
     // Do not accept edit commands while saving is in progress.
     //
@@ -532,22 +502,16 @@ static EditController* editViewController_ = nil;
             {
                 return;
             }
-
-            [controller startEdit:self selector:@selector(saveIsbn:) name:@"ISBN" value:book.isbn];
             break;
         }
 
         case 1:
         {
-            [controller startEdit:self selector:@selector(saveTitle:)name:@"Title" value:book.title];
             break;
         }
 
         case 2:
         {
-            self.selectedIndexPath = indexPath;
-            NSString* auth = (indexPath.row >= book.authors.count) ? @"" : [book.authors objectAtIndex:indexPath.row];
-            [controller startEdit:self selector:@selector(saveAuthors:) name:@"Author" value:auth];
             break;
         }
 
@@ -585,15 +549,99 @@ static EditController* editViewController_ = nil;
                 self.selectedIndexPath = indexPath;
                 return;
             }
-
-            [controller startEdit:self selector:@selector(rentBook:) name:@"" value:@""];
             break;
         }
     }
 
     self.selectedIndexPath = indexPath;
+    [self performSegueWithIdentifier:@"ShowEdit" sender:self];
 
-    [self.navigationController pushViewController:controller animated:YES];
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"ShowEdit"])
+    {
+        EditController* ec = [segue destinationViewController];
+        NSString* name;
+        NSString* value;
+
+        switch(selectedIndexPath.section)
+        {
+            case 0:
+            {
+                name = @"ISBN";
+                value = book.isbn;
+                break;
+            }
+
+            case 1:
+            {
+                name = @"Title";
+                value = book.title;
+                break;
+            }
+
+            case 2:
+            {
+                NSString* auth = (selectedIndexPath.row >= book.authors.count) ? @"" : [book.authors objectAtIndex:selectedIndexPath.row];
+                name = @"Author";
+                value = auth;
+                break;
+            }
+
+            case 3:
+            {
+                name = @"Enter Book Renter Name";
+                value = @"";
+                break;
+            }
+
+        }
+
+        [ec startEdit:name value:value];
+    }
+}
+
+// NTRMainViewConroller.m
+- (IBAction)unwindFromEdit:(UIStoryboardSegue *)segue
+{
+
+    UIViewController* sourceViewController = segue.sourceViewController;
+
+    if ([sourceViewController isKindOfClass:[EditController class]])
+    {
+        EditController* ec = [segue sourceViewController];
+        NSString* value = ec.textField.text;
+
+        switch(selectedIndexPath.section)
+        {
+            case 0:
+            {
+
+                [self saveIsbn:value];
+                break;
+            }
+
+            case 1:
+            {
+                [self saveTitle:value];
+                break;
+            }
+
+            case 2:
+            {
+                [self saveAuthors:value];
+                break;
+            }
+
+            case 3:
+            {
+                [self rentBook:value];
+                break;
+            }
+        }
+    }
 }
 
 @end

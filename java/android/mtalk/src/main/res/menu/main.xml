@@ -4,14 +4,14 @@
     <item
         android:id="@+id/connect"
         android:showAsAction="ifRoom"
-        android:title="@string/connect"/>
+        android:title="@string/connect" />
     <item
         android:id="@+id/disconnect"
         android:showAsAction="never"
-        android:title="@string/disconnect"/>
+        android:title="@string/disconnect" />
     <item
         android:id="@+id/clear"
         android:showAsAction="never"
-        android:title="@string/clear"/>
+        android:title="@string/clear" />
 
 </menu>

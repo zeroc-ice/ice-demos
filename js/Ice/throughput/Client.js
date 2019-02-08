@@ -1,8 +1,6 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 const Ice = require("ice").Ice;
 const Demo = require("./generated/Throughput").Demo;
@@ -10,7 +8,7 @@ const Demo = require("./generated/Throughput").Demo;
 //
 // Initialize sequences.
 //
-const byteSeq = new Buffer(Demo.ByteSeqSize);
+const byteSeq = new Uint8Array(Demo.ByteSeqSize);
 for(let i = 0; i < Demo.ByteSeqSize; ++i)
 {
     byteSeq[i] = 0;
@@ -34,7 +32,7 @@ for(let i = 0; i < Demo.FixedSeqSize; ++i)
     fixedSeq[i] = new Demo.Fixed(0, 0, 0);
 }
 
-(async function()
+(async () =>
 {
     let communicator;
     try
@@ -251,7 +249,7 @@ for(let i = 0; i < Demo.FixedSeqSize; ++i)
 
                         for(let i = 0; i < repetitions; i++)
                         {
-                            await operation.apply(proxy, args);
+                            await Reflect.apply(operation, proxy, args);
                         }
 
                         const total = new Date().getTime() - start;
@@ -304,7 +302,7 @@ for(let i = 0; i < Demo.FixedSeqSize; ++i)
             await communicator.destroy();
         }
     }
-}());
+})();
 
 function menu()
 {

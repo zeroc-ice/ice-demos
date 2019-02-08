@@ -1,38 +1,25 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 apply plugin: 'com.android.application'
-apply from: "$rootProject.projectDir/gradle/ice.gradle"
-
-project.slice.output = project.file("${project.buildDir}/generated/source/ice")
-
-slice {
-    java {
-        set1 {
-            srcDir = 'src/main'
-        }
-    }
-}
+apply from: "$rootProject.projectDir/../gradle/ice.gradle"
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion '27.0.3'
+    compileSdkVersion rootProject.compileSdkVersion
 
     defaultConfig {
-        applicationId "com.zeroc.talk"
-        minSdkVersion 24
-        targetSdkVersion 24
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_8
             targetCompatibility JavaVersion.VERSION_1_8
         }
+        applicationId "com.zeroc.talk"
     }
 
     lintOptions {
-        disable 'IconMissingDensityFolder', 'Assert', 'LabelFor'
+        disable 'UnusedAttribute' // autofillHints is only used with API level 26 and older
     }
 
     buildTypes {
@@ -54,7 +41,7 @@ clean {
 }
 
 dependencies {
-    implementation 'com.zeroc:ice:3.7.1'
-    implementation 'com.zeroc:icessl:3.7.1'
-    implementation 'com.zeroc:icebt:3.7.1'
+    implementation "com.zeroc:ice:${project.iceArtifactVersion}"
+    implementation "com.zeroc:icessl:${project.iceArtifactVersion}"
+    implementation "com.zeroc:icebt:${project.iceArtifactVersion}"
 }

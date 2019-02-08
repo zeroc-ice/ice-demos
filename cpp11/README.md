@@ -74,8 +74,17 @@ Refer to the README.md file in each demo directory for usage instructions.
 
 ### Prerequisites
 
-Visual Studio 2017 users need to install Windows 10 SDK (10.0.14393.0)
-component in Visual Studio 2017 installer.
+Visual Studio 2017 users need to either:
+ - install the Windows 10 SDK (10.0.14393.0) component using the Visual Studio 2017
+   installer, or
+ - retarget the solution to a version of the Windows 10 SDK already installed
+   (using `Project > Retarget solution`)
+
+Failure to perform this step results in error MSB8036 when building any project:
+```
+The Windows SDK version 8.1 was not found. Install the required version of Windows SDK
+or change the SDK version in the project property pages or by right-clicking the solution and selecting "Retarget solution".
+```
 
 ### Building the Demos
 
@@ -121,7 +130,7 @@ You need to add the Ice `bin` directory to your PATH before running the demos.
 If you are building Debug, add both the Debug and Release `bin` directories with a
 command similar to:
 ```
-set PATH=%USERPROFILE%\ice-demos\cpp11\packages\zeroc.ice.v140.3.7.1\build\native\bin\x64\Debug;%USERPROFILE%\ice-demos\cpp11\packages\zeroc.ice.v140.3.7.1\build\native\bin\x64\Release;%PATH%
+set PATH=%USERPROFILE%\ice-demos\cpp11\packages\zeroc.ice.v140.3.7.2\build\native\bin\x64\Debug;%USERPROFILE%\ice-demos\cpp11\packages\zeroc.ice.v140.3.7.2\build\native\bin\x64\Release;%PATH%
 ```
 
 This is required because the Debug `bin` directories provide only a subset of all
@@ -130,7 +139,7 @@ Ice services and tools. For example, they don't provide `glacier2router`.
 If you are building Release, you should add only the Release `bin` directory to
 your PATH with a command similar to:
 ```
-set PATH=%USERPROFILE%\ice-demos\cpp11\packages\zeroc.ice.v140.3.7.1\build\native\bin\x64\Release;%PATH%
+set PATH=%USERPROFILE%\ice-demos\cpp11\packages\zeroc.ice.v140.3.7.2\build\native\bin\x64\Release;%PATH%
 ```
 
 Then refer to the README.md file in each demo directory for usage instructions.

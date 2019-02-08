@@ -16,6 +16,7 @@ The sample programs are grouped by programming language:
 * [PHP](./php)
 * [Python](./python)
 * [Ruby](./ruby)
+* [TypeScript](./typescript)
 
 For example, the [cpp11](./cpp11) folder contains all the sample programs written
 in C++ that demonstrate the Ice C++11 mapping.

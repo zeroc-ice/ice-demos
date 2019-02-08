@@ -1,12 +1,10 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 import java.util.concurrent.ExecutorService;
 
-import Demo.*;
+import com.zeroc.demos.Ice.interrupt.Demo.*;
 
 public class TaskManagerI implements TaskManager
 {

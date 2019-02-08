@@ -16,8 +16,4 @@ repositories {
     }
 
     mavenCentral()
-
-    maven {
-        url "https://repo.zeroc.com/nexus/content/repositories/releases"
-    }
 }

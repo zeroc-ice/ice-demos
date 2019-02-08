@@ -1,10 +1,8 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
-import Filesystem.*;
+import com.zeroc.demos.Manual.lifecycle.Filesystem.*;
 
 class Parser
 {
@@ -42,7 +40,7 @@ class Parser
         }
     }
 
-    void list(Filesystem.DirectoryPrx dir, boolean recursive, int depth)
+    void list(DirectoryPrx dir, boolean recursive, int depth)
     {
         StringBuilder b = new StringBuilder();
         for(int i = 0; i < depth; ++i)

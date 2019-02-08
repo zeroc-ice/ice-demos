@@ -1,6 +1,6 @@
-% **********************************************************************
-% Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
-% **********************************************************************
+%
+% Copyright (c) ZeroC, Inc. All rights reserved.
+%
 
 function client()
     addpath('generated');
@@ -83,6 +83,7 @@ function client()
                     break;
                 case '?'
                     menu();
+                case ''
                 otherwise
                     fprintf('unknown command `%s''\n', line);
                     menu();

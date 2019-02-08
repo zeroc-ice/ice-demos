@@ -1,8 +1,6 @@
-# **********************************************************************
 #
-# Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+# Copyright (c) ZeroC, Inc. All rights reserved.
 #
-# **********************************************************************
 
 $(demo)_programs        = chatserver
 $(demo)_dependencies    = Ice Glacier2

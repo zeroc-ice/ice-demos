@@ -1,8 +1,6 @@
-﻿// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 #pragma once
 
@@ -47,6 +45,7 @@ private:
     void dispatch(std::function<void()>);
     Ice::CommunicatorHolder _communicator;
     std::future<void> _start;
+    std::future<void> _stop;
 };
 
 }

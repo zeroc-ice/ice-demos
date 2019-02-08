@@ -1,36 +1,12 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 subprojects {
 
     project.group = "com.zeroc"
     apply plugin: 'java'
-
     apply from: "$rootProject.projectDir/gradle/ice.gradle"
-    project.version = slice.iceVersion
-
-    // We set this early so that slice.jarDir is correct
-    slice.compat = true
-
-    repositories {
-        if (slice.jarDir != null) {
-            flatDir {
-                name "local"
-                dirs slice.jarDir
-            }
-        }
-
-        if(this.devRepo) {
-            maven {
-                url this.devRepo
-            }
-        }
-
-        mavenCentral()
-    }
 }
 
 apply from: "$rootProject.projectDir/Ice/build.gradle"
@@ -42,6 +18,6 @@ apply from: "$rootProject.projectDir/Manual/build.gradle"
 //
 // Used to build the gradle wrapper to automatically download and install gradle.
 //
-task wrapper(type: Wrapper) {
-    gradleVersion = "4.7"
+wrapper {
+    gradleVersion = "4.10.2"
 }

@@ -1,13 +1,12 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 #pragma once
 
 #include <Ice/BuiltinSequences.ice>
 
+["java:package:com.zeroc.demos.Database.library"]
 module Demo
 {
 

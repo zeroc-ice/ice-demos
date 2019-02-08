@@ -1,8 +1,6 @@
-// **********************************************************************
 //
-// Copyright (c) 2003-2018 ZeroC, Inc. All rights reserved.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
-// **********************************************************************
 
 public class Client
 {
@@ -19,6 +17,7 @@ public class Client
         //
         try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.client", extraArgs))
         {
+            communicator.getProperties().setProperty("Ice.Default.Package", "com.zeroc.demos.Database.library");
             if(extraArgs.size() > 1)
             {
                 System.err.println("Usage: " + appName + " [file]");
