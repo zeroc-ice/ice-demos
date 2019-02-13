@@ -82,7 +82,7 @@ or change the SDK version in the project property pages or by right-clicking the
 
 #### Building the demos using NuGet packages:
 
-Open the solution file `C++11 demos.sln` to build the sample programs.
+Open the solution file `C++98 demos.sln` to build the sample programs.
 
 The demos are configured to use Ice C++ binary distribution, packaged with
 NuGet. The build downloads automatically the Ice NuGet package.
