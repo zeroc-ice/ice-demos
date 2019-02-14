@@ -21,12 +21,12 @@
     </ItemGroup>
 
     <Target Name="Build">
-        <MakeDir Directories="@(SliceCompile->'%(OutputDir)')"/>
-        <Exec Command="&quot;$(IceToolsPath)\slice2php.exe&quot; -I. -I&quot;$(IceHome)\slice&quot;  @(SliceCompile->'%(FullPath)', ' ')"
+        <MakeDir Directories="@(SliceCompile->'%(RootDir)%(Directory)generated')"/>
+        <Exec Command="&quot;$(IceToolsPath)\slice2php.exe&quot; --output-dir generated -I. -I&quot;$(IceHome)\slice&quot; @(SliceCompile->'%(FullPath)', ' ')"
               WorkingDirectory="$(MSBuildThisFileDirectory)..\%(SliceCompile.RecursiveDir)"/>
     </Target>
 
     <Target Name="Clean">
-        <Delete Files="@(SliceCompile->'%(RootDir)%(Directory)%(Filename).php')" />
+        <Delete Files="@(SliceCompile->'%(RootDir)%(Directory)generated\%(Filename).php')" />
     </Target>
 </Project>
