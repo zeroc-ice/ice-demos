@@ -40,8 +40,14 @@ else
     $iceBinDir = "$iceHome/bin";
 }
 
-$slice2php = realpath(PHP_OS == "WINNT" ? "$iceBinDir/slice2php.exe" : "$iceBinDir/slice2php");
-$sliceDir = realpath(file_exists("$iceHome/share/ice/slice") ? "$iceHome/share/ice/slice" : "$iceHome/slice");
+$slice2php = PHP_OS == "WINNT" ? "$iceBinDir/slice2php.exe" : "$iceBinDir/slice2php";
+$sliceDir = file_exists("$iceHome/share/ice/slice") ? "$iceHome/share/ice/slice" : "$iceHome/slice";
+
+if(!file_exists($slice2php) || !is_dir($sliceDir))
+{
+    echo("Ice Installation invalid or not detected\n");
+    exit(1);
+}
 
 $demos = array(
     "Chat",
@@ -64,7 +70,7 @@ foreach($demos as $demo)
     if($retval != 0)
     {
         echo "failed!\n";
-	echo "$command\n";
+        echo "$command\n";
         exit($retval);
     }
     echo "ok\n";
