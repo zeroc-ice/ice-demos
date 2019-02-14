@@ -1,4 +1,4 @@
-This demo illustrates the use of [optional class members][1] and
+[This demo illustrates the use of [optional class members][1] and
 [parameters][2].
 
 If you have not built the demos yet, please refer to the top level
@@ -8,8 +8,8 @@ First, start the optional demo server, using any of the supported
 language mappings, on this host. If you want to get started quickly,
 we recommend using the Python server.
 
-Then, if you are using an RPM installation of IcePHP, run the PHP
-client:
+Then, if you are using one of the Ice for PHP binary distributions,
+run the PHP client:
 
 ```
 php -f Client.php
