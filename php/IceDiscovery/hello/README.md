@@ -9,7 +9,7 @@ Follow these steps to install the demo:
 2) Compile all the demo Slice files (see [php/README.md](../../README.md)),
    or compile just this demo's Slice file with `slice2php`:
    ```
-   slice2php --output-dir generated *.ice
+   slice2php *.ice
    ```
 
 3) Configure your PHP-enabled web server to serve the directoy where this

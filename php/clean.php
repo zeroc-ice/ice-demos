@@ -14,11 +14,15 @@ $demos = array(
 foreach($demos as $demo)
 {
     echo "Clean $demo... ";
-    $outputDir = "$demo/generated";
-    array_map('unlink', glob("$outputDir/*.php"));
-    if(is_dir($outputDir))
+    $files = glob("$demo/*.ice");
+    foreach($files as $file)
     {
-        rmdir($outputDir);
+        $info = pathinfo($file);
+        $generated = $info['dirname'] . "/" . $info['filename'] . ".php";
+        if(file_exists($generated))
+        {
+            unlink($generated);
+        }
     }
     echo "ok\n";
 }

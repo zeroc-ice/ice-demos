@@ -4,7 +4,7 @@ This demo illustrates the use of [optional class members][1] and
 First, compile all the demo Slice files (see [php/README.md](../../README.md)),
 or compile just this demo's Slice file with `slice2php`:
 ```
-slice2php --output-dir generated *.ice
+slice2php *.ice
 ```
 
 Then, start the optional demo server, using any of the supported

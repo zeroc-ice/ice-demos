@@ -59,13 +59,9 @@ $demos = array(
 foreach($demos as $demo)
 {
     echo "Building $demo... ";
-    $outputDir = "$demo/generated";
     $inputFiles = "$demo/*.ice";
-    $command = "\"$slice2php\" -I\"$sliceDir\" -I$demo --output-dir $outputDir $inputFiles";
-    if(!is_dir($outputDir))
-    {
-        mkdir($outputDir);
-    }
+    $command = "\"$slice2php\" -I\"$sliceDir\" -I$demo --output-dir $demo $inputFiles";
+
     system($command, $retval);
     if($retval != 0)
     {
