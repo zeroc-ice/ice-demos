@@ -4,8 +4,6 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-require_once 'Ice.php';
-
 $iceHome = getenv("ICE_HOME");
 if($iceHome == NULL)
 {
@@ -24,9 +22,7 @@ if($iceHome == NULL)
     }
 }
 
-$srcDist = file_exists("$iceHome/cpp");
-
-if($srcDist)
+if(file_exists("$iceHome/cpp"))
 {
     if(PHP_OS == "WINNT")
     {
@@ -44,8 +40,8 @@ else
     $iceBinDir = "$iceHome/bin";
 }
 
-$slice2php = PHP_OS == "WINNT" ? realpath("$iceBinDir/slice2php.exe") : realpath("$iceBinDir/slice2php");
-$sliceDir = file_exists("$iceHome/share/ice/slice") ? "$iceHome/share/ice/slice" : "$iceHome/slice";
+$slice2php = realpath(PHP_OS == "WINNT" ? "$iceBinDir/slice2php.exe" : "$iceBinDir/slice2php");
+$sliceDir = realpath(file_exists("$iceHome/share/ice/slice") ? "$iceHome/share/ice/slice" : "$iceHome/slice");
 
 $demos = array(
     "Chat",
@@ -57,13 +53,18 @@ $demos = array(
 foreach($demos as $demo)
 {
     echo "Building $demo... ";
-    $outputDir = realpath("$demo/generated");
+    $outputDir = "$demo/generated";
     $inputFiles = "$demo/*.ice";
     $command = "\"$slice2php\" -I\"$sliceDir\" -I$demo --output-dir $outputDir $inputFiles";
+    if(!is_dir($outputDir))
+    {
+        mkdir($outputDir);
+    }
     system($command, $retval);
     if($retval != 0)
     {
         echo "failed!\n";
+	echo "$command\n";
         exit($retval);
     }
     echo "ok\n";

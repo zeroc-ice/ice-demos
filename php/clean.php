@@ -14,6 +14,11 @@ $demos = array(
 foreach($demos as $demo)
 {
     echo "Clean $demo... ";
-    array_map('unlink', glob("$demo/generated/*.php"));
+    $outputDir = "$demo/generated";
+    array_map('unlink', glob("$outputDir/*.php"));
+    if(is_dir($outputDir))
+    {
+        rmdir($outputDir);
+    }
     echo "ok\n";
 }
