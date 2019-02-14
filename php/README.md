@@ -51,12 +51,19 @@ make
 
 ### Prerequisites
 
-The projects for the sample programs require the [Ice Builder for Visual
-Studio][2]. Add this extension to Visual Studio before building the demos.
+The projects for the sample programs require MSBuild 14.0 or later,
+MSBuild 14.0 is included with Visual Studio 2015.
 
 ### Building the Demos
 
 When you're ready to start the build, run `MSBuild`:
+
+```
+MSBuild msbuild\ice.proj
+```
+
+If you've installed Ice in a non-standard location, you'll need to set the
+`IceHome` MSBuild property with the path name of the installation directory:
 
 ```
 MSBuild msbuild\ice.proj /p:IceHome=C:\Ice-3.7.2
@@ -67,4 +74,3 @@ MSBuild msbuild\ice.proj /p:IceHome=C:\Ice-3.7.2
 Refer to the README file in each demo directory for usage instructions.
 
 [1]: https://zeroc.com/chat/index.html
-[2]: https://github.com/zeroc-ice/ice-builder-visualstudio

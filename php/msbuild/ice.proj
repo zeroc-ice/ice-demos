@@ -1,18 +1,32 @@
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-  <ItemGroup>
-    <DemoProjects Include="..\**\msbuild\demo.proj" />
-  </ItemGroup>
+    <PropertyGroup Condition="'$(IceHome)' == ''">
+        <IceHome>C:\Program Files\ZeroC\Ice-3.7.2</IceHome>
+    </PropertyGroup>
 
-  <Target Name="Build">
-    <MSBuild Projects="@(DemoProjects)"
-             BuildInParallel="true"/>
-  </Target>
+    <PropertyGroup Condition="'$(IceToolsPath)' == ''">
+        <IceToolsPath Condition="Exists('$(IceHome)\tools')">$(IceHome)\tools</IceToolsPath>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(IceToolsPath)' == ''">
+        <IceToolsPath Condition="Exists('$(IceHome)\cpp\bin')">$(IceHome)\cpp\bin</IceToolsPath>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(IceToolsPath)' == ''">
+        <IceToolsPath Condition="Exists('$(IceHome)\bin')">$(IceHome)\bin</IceToolsPath>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <SliceCompile Include="..\**\*.ice" />
+    </ItemGroup>
+
+    <Target Name="Build">
+        <MakeDir Directories="@(SliceCompile->'%(OutputDir)')"/>
+        <Exec Command="&quot;$(IceToolsPath)\slice2php.exe&quot; -I. -I&quot;$(IceHome)\slice&quot;  @(SliceCompile->'%(FullPath)', ' ')"
+              WorkingDirectory="$(MSBuildThisFileDirectory)..\%(SliceCompile.RecursiveDir)"/>
+    </Target>
 
     <Target Name="Clean">
-    <MSBuild Projects="@(DemoProjects)"
-             BuildInParallel="true"
-             Targets="Clean"/>
-  </Target>
-
+        <Delete Files="@(SliceCompile->'%(RootDir)%(Directory)%(Filename).php')" />
+    </Target>
 </Project>
