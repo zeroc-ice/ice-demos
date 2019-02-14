@@ -6,8 +6,11 @@ Follow these steps to install the demo:
 1) Install the Ice extension and run-time files as described in the
    [manual][2]. Restart the Web server if necessary.
 
-2) If you have not built the demos yet, please refer to the top level
-   [php/README.md](../../README.md) file for build instructions.
+2) Compile all the demo Slice files (see [php/README.md](../../README.md)),
+   or compile just this demo's Slice file with `slice2php`:
+   ```
+   slice2php --output-dir generated *.ice
+   ```
 
 3) Configure your PHP-enabled web server to serve the directoy where this
    file exists.
@@ -21,5 +24,5 @@ Follow these steps to install the demo:
    by default. If you have configured SSL for the Ice extension, edit
    `Client.php` and set the `have_ssl` variable to `true`.
 
-[1]: https://doc.zeroc.com/display/Ice37/IceDiscovery
+[1]: https://doc.zeroc.com/ice/latest/ice-plugins/icediscovery
 [2]: https://doc.zeroc.com/display/Rel/Ice+3.7.2+Release+Notes

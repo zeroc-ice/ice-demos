@@ -6,8 +6,11 @@ Follow these steps to install the demo:
 1) Install the Ice extension and run-time files as described in the
    [manual][1]. Restart the Web server if necessary.
 
-2) If you have not built the demos yet, please refer to the top level
-   [php/README.md](../../README.md) file for build instructions.
+2) Compile all the demo Slice files (see [php/README.md](../../README.md)),
+   or compile just this demo's Slice file with `slice2php`:
+   ```
+   slice2php --output-dir generated *.ice
+   ```
 
 3) Configure your PHP-enabled web server to serve the directoy where this
    file exists.
