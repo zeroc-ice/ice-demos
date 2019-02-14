@@ -17,56 +17,26 @@ The following subdirectories contain sample programs:
 - [IceDiscovery](./IceDiscovery) demonstrates the use of our multicast service
 discovery plug-in.
 
-Refer to the [C++11 demos](../cpp11) for more examples that use Ice services
-such as IceGrid and IceStorm.
-
-## Build Instructions for Linux and macOS
-
-### Prerequisites
-
-The makefiles require GNU make 3.80 or later. If your system does not come
-with GNU make, you can find information on how to acquire it at the
-following link:
-
-http://www.gnu.org/software/make/
-
-If you've installed Ice in a non-standard location, you'll need to set the
-`ICE_HOME` environment variable with the path name of the
-installation directory:
-
-```
-export ICE_HOME=~/testing/Ice
-```
-
 ### Building the Demos
 
-Review the settings in `../make/Make.rules`. When you're ready to start the
-build, run `make`:
-
 ```
-make
+php build.php
 ```
 
-## Build Instructions for Windows
+If you have installed Ice in a non-standard location, you'll need to set
+the `ICE_HOME` environment variable with the path name of the installation
+directory:
 
-### Prerequisites
-
-The projects for the sample programs require MSBuild 14.0 or later,
-MSBuild 14.0 is included with Visual Studio 2015.
-
-### Building the Demos
-
-When you're ready to start the build, run `MSBuild`:
+#### Linux and macOS
 
 ```
-MSBuild msbuild\ice.proj
+export ICE_HOME=/opt/Ice-3.7
 ```
 
-If you've installed Ice in a non-standard location, you'll need to set the
-`IceHome` MSBuild property with the path name of the installation directory:
+#### Windows
 
 ```
-MSBuild msbuild\ice.proj /p:IceHome=C:\Ice-3.7.2
+set ICE_HOME=C:\Ice-3.7.2
 ```
 
 ## Running the Demos
