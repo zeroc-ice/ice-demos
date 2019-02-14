@@ -15,7 +15,7 @@ Follow these steps to install the demo:
    slice2php -I. -I<slice dir of Ice installation> *.ice
    ```
 
-3) Configure your PHP-enabled web server to serve the directoy where this
+3) Configure your PHP-enabled web server to serve the directory where this
    file exists.
 
 4) Start a Web browser and open the index.html page to begin using the demo.

@@ -12,7 +12,7 @@ Follow these steps to install the demo:
    slice2php *.ice
    ```
 
-3) Configure your PHP-enabled web server to serve the directoy where this
+3) Configure your PHP-enabled web server to serve the directory where this
    file exists.
 
 4) In a command window on the Web server host, start IceDiscovery hello
