@@ -1,4 +1,4 @@
-[This demo illustrates the use of [optional class members][1] and
+This demo illustrates the use of [optional class members][1] and
 [parameters][2].
 
 First, compile all the demo Slice files (see [php/README.md](../../README.md)),
