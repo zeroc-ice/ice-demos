@@ -1,8 +1,8 @@
 <?php
 
-#
-# Copyright (c) ZeroC, Inc. All rights reserved.
-#
+//
+// Copyright (c) ZeroC, Inc. All rights reserved.
+//
 
 //
 // Enable error reporting
