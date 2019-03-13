@@ -17,6 +17,5 @@ Finally, run the PHP client:
 php Client.php
 ```
 
-
 [1]: https://doc.zeroc.com/ice/latest/the-slice-language/optional-data-members
 [2]: https://doc.zeroc.com/ice/latest/language-mappings/php-mapping/client-side-slice-to-php-mapping/php-mapping-for-operations
