@@ -1,0 +1,471 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		076B15E1A6C982D2668E45B9 /* Latency.ice in Sources */ = {isa = PBXBuildFile; fileRef = 9F37B11BD8716837C310833B /* Latency.ice */; };
+		347D458E0EB77FD1FECCF66A /* Ice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B1451DD474120F55F1B8FD8 /* Ice.framework */; };
+		6356BBFEE5805669AC81A304 /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95F6A2AB9AA34E54BCCB4405 /* PromiseKit.framework */; };
+		6A231EF9FD9714F242C06007 /* Ice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B1451DD474120F55F1B8FD8 /* Ice.framework */; };
+		6E55715CA2E02E412D5A866F /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044C47A8C0C75239D96AFB28 /* main.swift */; };
+		90662AD57545FD82D91A80BE /* Latency.ice in Sources */ = {isa = PBXBuildFile; fileRef = 9F37B11BD8716837C310833B /* Latency.ice */; };
+		9BA40F5D44B1A12E77D212F0 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483D51B3F0C97CD0FBCF1935 /* main.swift */; };
+		DA258614DA77698061E38EC2 /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95F6A2AB9AA34E54BCCB4405 /* PromiseKit.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXBuildRule section */
+		0A4042C5264AE9B3B21A1171 /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			filePatterns = "*.ice";
+			fileType = pattern.proxy;
+			isEditable = 1;
+			name = "Slice Compiler";
+			outputFiles = (
+				"$(DERIVED_FILE_DIR)/$(INPUT_FILE_BASE).swift",
+			);
+			script = "/Users/jose/Documents/ZeroC/3.7/ice-demos/swift/config/xcode-slice2swift.sh";
+		};
+		414BC343E122D7DE9E523261 /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			filePatterns = "*.ice";
+			fileType = pattern.proxy;
+			isEditable = 1;
+			name = "Slice Compiler";
+			outputFiles = (
+				"$(DERIVED_FILE_DIR)/$(INPUT_FILE_BASE).swift",
+			);
+			script = "/Users/jose/Documents/ZeroC/3.7/ice-demos/swift/config/xcode-slice2swift.sh";
+		};
+/* End PBXBuildRule section */
+
+/* Begin PBXFileReference section */
+		044C47A8C0C75239D96AFB28 /* main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = main.swift; path = Client/main.swift; sourceTree = "<group>"; };
+		0A7BF48196BDD14EB298CDAF /* Client. */ = {isa = PBXFileReference; includeInIndex = 0; path = Client.; sourceTree = BUILT_PRODUCTS_DIR; };
+		190D70D412EEFB8581F17E9B /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
+		483D51B3F0C97CD0FBCF1935 /* main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = main.swift; path = Server/main.swift; sourceTree = "<group>"; };
+		597A7FD44D9E3B1865780EA8 /* Server. */ = {isa = PBXFileReference; includeInIndex = 0; path = Server.; sourceTree = BUILT_PRODUCTS_DIR; };
+		7B1451DD474120F55F1B8FD8 /* Ice.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ice.framework; path = ../../Carthage/Build/Mac/Ice.framework; sourceTree = "<group>"; };
+		95F6A2AB9AA34E54BCCB4405 /* PromiseKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PromiseKit.framework; path = ../../Carthage/Build/Mac/PromiseKit.framework; sourceTree = "<group>"; };
+		9F37B11BD8716837C310833B /* Latency.ice */ = {isa = PBXFileReference; includeInIndex = 1; path = Latency.ice; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B8B6EF68687F4D5A3A93FEB1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				347D458E0EB77FD1FECCF66A /* Ice.framework in Frameworks */,
+				DA258614DA77698061E38EC2 /* PromiseKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DDDA6B32786FEC85F16968E2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6A231EF9FD9714F242C06007 /* Ice.framework in Frameworks */,
+				6356BBFEE5805669AC81A304 /* PromiseKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		44927EF2E10E6AAA7D2A642D /* Client */ = {
+			isa = PBXGroup;
+			children = (
+				044C47A8C0C75239D96AFB28 /* main.swift */,
+			);
+			name = Client;
+			sourceTree = "<group>";
+		};
+		495F3197932989B6B0F2A066 = {
+			isa = PBXGroup;
+			children = (
+				C314735185A2D327895F6A27 /* Frameworks */,
+				AEB872A5E82CE870F514A9E2 /* Ice */,
+				B7FF8B2C273D6263572CEB9D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		683178E9B6D09EB8333B9D0D /* latency */ = {
+			isa = PBXGroup;
+			children = (
+				44927EF2E10E6AAA7D2A642D /* Client */,
+				7396DE80CAEE303A49C6587A /* Server */,
+				9F37B11BD8716837C310833B /* Latency.ice */,
+			);
+			name = latency;
+			sourceTree = "<group>";
+		};
+		7396DE80CAEE303A49C6587A /* Server */ = {
+			isa = PBXGroup;
+			children = (
+				483D51B3F0C97CD0FBCF1935 /* main.swift */,
+			);
+			name = Server;
+			sourceTree = "<group>";
+		};
+		AEB872A5E82CE870F514A9E2 /* Ice */ = {
+			isa = PBXGroup;
+			children = (
+				683178E9B6D09EB8333B9D0D /* latency */,
+			);
+			name = Ice;
+			sourceTree = "<group>";
+		};
+		B19AC617F5CF189A6C797833 /* OS X */ = {
+			isa = PBXGroup;
+			children = (
+				190D70D412EEFB8581F17E9B /* Cocoa.framework */,
+				7B1451DD474120F55F1B8FD8 /* Ice.framework */,
+				95F6A2AB9AA34E54BCCB4405 /* PromiseKit.framework */,
+			);
+			name = "OS X";
+			sourceTree = "<group>";
+		};
+		B7FF8B2C273D6263572CEB9D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0A7BF48196BDD14EB298CDAF /* Client. */,
+				597A7FD44D9E3B1865780EA8 /* Server. */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C314735185A2D327895F6A27 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B19AC617F5CF189A6C797833 /* OS X */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3274D5E8E6E04CCC50E19B23 /* Server macOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 32A9F26CD114C50E77F19578 /* Build configuration list for PBXNativeTarget "Server macOS" */;
+			buildPhases = (
+				DBEE1F901D01CD59ECB8F9B6 /* Sources */,
+				DDDA6B32786FEC85F16968E2 /* Frameworks */,
+			);
+			buildRules = (
+				414BC343E122D7DE9E523261 /* PBXBuildRule */,
+			);
+			dependencies = (
+			);
+			name = "Server macOS";
+			productName = Server;
+			productReference = 597A7FD44D9E3B1865780EA8 /* Server. */;
+			productType = "com.apple.product-type.tool";
+		};
+		44427950EB338D7D87B9D6DD /* Client macOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 60219FA6F3A31B5DE46245C5 /* Build configuration list for PBXNativeTarget "Client macOS" */;
+			buildPhases = (
+				453A97A727CECBB88DA24157 /* Sources */,
+				B8B6EF68687F4D5A3A93FEB1 /* Frameworks */,
+			);
+			buildRules = (
+				0A4042C5264AE9B3B21A1171 /* PBXBuildRule */,
+			);
+			dependencies = (
+			);
+			name = "Client macOS";
+			productName = Client;
+			productReference = 0A7BF48196BDD14EB298CDAF /* Client. */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5F0FC10D46105F26C13D56E8 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0930;
+				LastUpgradeCheck = 0930;
+				TargetAttributes = {
+					3274D5E8E6E04CCC50E19B23 = {
+						ProvisioningStyle = Automatic;
+					};
+					44427950EB338D7D87B9D6DD = {
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 6CA9B3062AD44CE3B43146FB /* Build configuration list for PBXProject "latency" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 495F3197932989B6B0F2A066;
+			productRefGroup = B7FF8B2C273D6263572CEB9D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				44427950EB338D7D87B9D6DD /* Client macOS */,
+				3274D5E8E6E04CCC50E19B23 /* Server macOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		453A97A727CECBB88DA24157 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				076B15E1A6C982D2668E45B9 /* Latency.ice in Sources */,
+				6E55715CA2E02E412D5A866F /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DBEE1F901D01CD59ECB8F9B6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				90662AD57545FD82D91A80BE /* Latency.ice in Sources */,
+				9BA40F5D44B1A12E77D212F0 /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		2E5CA55E5F8A1B1CDD3B11D0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
+			};
+			name = Debug;
+		};
+		333559659370F875309C8E0E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/Server";
+				CURRENT_PROJECT_VERSION = 3.7.2;
+				DYLIB_COMPATIBILITY_VERSION = 3.7.2;
+				DYLIB_CURRENT_VERSION = 3.7.2;
+				ENABLE_TESTABILITY = NO;
+				FRAMEWORK_SEARCH_PATHS = "/Users/jose/Documents/ZeroC/3.7/ice-demos/swift/Carthage/Build/Mac";
+				INFOPLIST_FILE = Ice/latency/Server/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "/Users/jose/Documents/ZeroC/3.7/ice-demos/swift/Carthage/Build/Mac";
+				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.Server;
+				PRODUCT_NAME = Server;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		565D5076B779686B8DD66AD4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/Client";
+				CURRENT_PROJECT_VERSION = 3.7.2;
+				DYLIB_COMPATIBILITY_VERSION = 3.7.2;
+				DYLIB_CURRENT_VERSION = 3.7.2;
+				ENABLE_TESTABILITY = NO;
+				FRAMEWORK_SEARCH_PATHS = "/Users/jose/Documents/ZeroC/3.7/ice-demos/swift/Carthage/Build/Mac";
+				INFOPLIST_FILE = Ice/latency/Client/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "/Users/jose/Documents/ZeroC/3.7/ice-demos/swift/Carthage/Build/Mac";
+				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.Client;
+				PRODUCT_NAME = Client;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		93C8F5593E5C295E92BA4D30 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/Server";
+				CURRENT_PROJECT_VERSION = 3.7.2;
+				DYLIB_COMPATIBILITY_VERSION = 3.7.2;
+				DYLIB_CURRENT_VERSION = 3.7.2;
+				ENABLE_TESTABILITY = NO;
+				FRAMEWORK_SEARCH_PATHS = "/Users/jose/Documents/ZeroC/3.7/ice-demos/swift/Carthage/Build/Mac";
+				INFOPLIST_FILE = Ice/latency/Server/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "/Users/jose/Documents/ZeroC/3.7/ice-demos/swift/Carthage/Build/Mac";
+				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.Server;
+				PRODUCT_NAME = Server;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		94C853E4B053F4D93478141E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 4.2;
+			};
+			name = Release;
+		};
+		A9527DC91164EB700FCEC017 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/Client";
+				CURRENT_PROJECT_VERSION = 3.7.2;
+				DYLIB_COMPATIBILITY_VERSION = 3.7.2;
+				DYLIB_CURRENT_VERSION = 3.7.2;
+				ENABLE_TESTABILITY = NO;
+				FRAMEWORK_SEARCH_PATHS = "/Users/jose/Documents/ZeroC/3.7/ice-demos/swift/Carthage/Build/Mac";
+				INFOPLIST_FILE = Ice/latency/Client/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "/Users/jose/Documents/ZeroC/3.7/ice-demos/swift/Carthage/Build/Mac";
+				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.Client;
+				PRODUCT_NAME = Client;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		32A9F26CD114C50E77F19578 /* Build configuration list for PBXNativeTarget "Server macOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				93C8F5593E5C295E92BA4D30 /* Debug */,
+				333559659370F875309C8E0E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		60219FA6F3A31B5DE46245C5 /* Build configuration list for PBXNativeTarget "Client macOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A9527DC91164EB700FCEC017 /* Debug */,
+				565D5076B779686B8DD66AD4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6CA9B3062AD44CE3B43146FB /* Build configuration list for PBXProject "latency" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2E5CA55E5F8A1B1CDD3B11D0 /* Debug */,
+				94C853E4B053F4D93478141E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5F0FC10D46105F26C13D56E8 /* Project object */;
+}

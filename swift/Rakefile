@@ -1,0 +1,218 @@
+#!/usr/bin/env ruby
+
+require 'xcodeproj'
+
+$top_level = File.expand_path(File.dirname(__FILE__))
+
+$demos = [
+    "Ice/latency",
+    "Ice/throughput"
+]
+
+$demo_variants = ["Client", "Server"]
+
+#
+# Default sources for each variant
+#
+$demo_default_sources = {}
+
+$demo_variant_sources = {
+    "Client" => ["Client/main.swift"],
+    "Server" => ["Server/main.swift"]
+}
+
+#
+# Extra demo sources if any
+#
+$demo_extra_sources = {
+    "Ice/latency" => ["Latency.ice"],
+    "Ice/throughput" => ["Throughput.ice"]
+}
+
+desc "Generate Xcode projects required to build Ice for Swift Demo Applications"
+task :iceproj do
+    group = Xcodeproj::Workspace::GroupReference.new("macOS").to_node
+    workspace = Xcodeproj::Workspace.new(nil)
+    $demos.each do |demo|
+        project = Xcodeproj::Project.new(project_path(demo))
+        group.add_element(Xcodeproj::Workspace::FileReference.new("#{project.path}").to_node)
+        create_platform_targets(project, demo, :osx)
+
+        attributes = project.root_object.attributes
+        attributes["TargetAttributes"] ||= {}
+        project.targets.each do |target|
+            attributes["TargetAttributes"][target.uuid] ||= {}
+            attributes["TargetAttributes"][target.uuid]["ProvisioningStyle"] = "Automatic"
+        end
+        project.root_object.development_region = "en"
+        project.root_object.known_regions = ["Base", "en"]
+
+        #
+        # Sort the project and save it
+        #
+        project.sort({:groups_position => :above})
+        project.save()
+    end
+    workspace.document.root.add_element(group)
+    workspace.save_as("ice.xcworkspace")
+end
+
+task :default => [:iceproj]
+
+def create_platform_targets(project, demo, platform)
+    platform_name = platform == :osx ? "macOS" : "iOS"
+
+    $demo_variants.each do |variant|
+        target = project.new_target(:command_line_tool, variant, platform)
+        target.name = "#{target.name} #{platform_name}"
+        target_set_common_build_settings(target, variant, "#{demo}/#{variant}/Info.plist",
+                                         "$(SRCROOT)/#{variant}")
+
+        target.frameworks_build_phases.clear()
+        group = project_group(project, demo)
+        target_add_files(target, group, "#{project.project_dir}", demo_default_sources(demo, variant))
+
+        group = project_group(project, "#{demo}/#{variant}")
+        target_add_files(target, group, "#{project.project_dir}", demo_variant_sources(demo, variant))
+
+        target_add_carthage_framework(target, platform, "Ice.framework")
+        target_add_carthage_framework(target, platform, "PromiseKit.framework")
+
+        target_set_framework_build_settings(target)
+        target_add_slice2swift_build_rule(project, target)
+    end
+end
+
+def project_group(project, name)
+    group = project.main_group
+    name.split("/").each { |item|
+        new_group = group[item]
+        unless new_group
+            new_group = group.new_group(item)
+        end
+        group = new_group
+    }
+    group
+end
+
+def target_name(basename, suffix = nil)
+    name = basename.split("/").map{ |item| item[0].upcase + item[1..-1]}.join()
+    suffix ? "#{name} #{suffix}" : name
+end
+
+def project_name(basename)
+    basename[basename.index('/') + 1..-1].downcase
+end
+
+def project_path(basename)
+    "#{basename}/#{project_name(basename)}.xcodeproj"
+end
+
+def target_add_slice2swift_build_rule(project, target, prefix = nil)
+    #
+    # Add Slice Compiler build rule to the target
+    #
+    rule = project.new(Xcodeproj::Project::PBXBuildRule)
+    rule.compiler_spec = "com.apple.compilers.proxy.script"
+    rule.file_type = "pattern.proxy"
+    if prefix then
+        rule.name = "Slice Compiler for #{prefix}/*.ice"
+        rule.file_patterns = "*/#{prefix}/*.ice"
+        rule.script = "#{$top_level}/config/xcode-slice2swift.sh #{prefix}"
+        rule.output_files = ["$(DERIVED_FILE_DIR)/#{prefix}_$(INPUT_FILE_BASE).swift"]
+    else
+        rule.name = "Slice Compiler"
+        rule.file_patterns = "*.ice"
+        rule.script = "#{$top_level}/config/xcode-slice2swift.sh"
+        rule.output_files = ["$(DERIVED_FILE_DIR)/$(INPUT_FILE_BASE).swift"]
+    end
+    target.build_rules << rule
+end
+
+def target_add_swiftlint_build_phase(target, basedir)
+    phase = target.new_shell_script_build_phase("Swiftformat & Swiftlint")
+    phase.shell_script = "$SRCROOT/config/xcode-swiftlint.sh $SRCROOT/#{basedir} $SRCROOT/.swiftlint.yml"
+end
+
+def group_add_files(group, basedir, patterns, exclude = [])
+    files = []
+    Dir.chdir(basedir) do
+        patterns.each do |p|
+            Dir.glob(p) do |file|
+                files << file
+            end
+        end
+    end
+    files = files.reject { |item| exclude.any? { |pattern| item.match(pattern) } }
+    files = files.uniq
+    files.map { |file|  group.find_subpath(File.basename(file)) ||  group.new_file("#{basedir}/#{file}") }
+end
+
+def target_add_files(target, group, basedir, patterns, excludes = [])
+    target.add_file_references(group_add_files(group, basedir, patterns, excludes))
+end
+
+def target_add_headers(target, group, basedir, patterns, excludes: [], attributes: ["Public"])
+    files = group_add_files(group, basedir, patterns, excludes)
+    if attributes.include? "Public" then
+        files.each do |file|
+            header = target.headers_build_phase.add_file_reference(file)
+            header.settings = { "ATTRIBUTES" => attributes }
+        end
+    end
+end
+
+def target_set_common_build_settings(target, product, plist, build_dir)
+    target.build_configurations.each { |config|
+        config.build_settings["ENABLE_TESTABILITY"] = "NO"
+        config.build_settings["CODE_SIGN_STYLE"] = "Automatic"
+        config.build_settings["CURRENT_PROJECT_VERSION"] = "3.7.2"
+        config.build_settings["DYLIB_CURRENT_VERSION"] = "3.7.2"
+        config.build_settings["DYLIB_COMPATIBILITY_VERSION"] = "3.7.2"
+        config.build_settings["SWIFT_VERSION"] = "5.0"
+        config.build_settings["INFOPLIST_FILE"] = plist
+        config.build_settings["PRODUCT_NAME"] = product
+        config.build_settings["CONFIGURATION_BUILD_DIR"] = build_dir
+        config.build_settings["PRODUCT_BUNDLE_IDENTIFIER"] = "com.zeroc.demo.#{product}"
+    }
+end
+
+def target_set_framework_build_settings(target)
+    carthage_prefix = (target.name.include? "macOS") ? "Mac" : "iOS"
+    target.build_configurations.each { |config|
+        config.build_settings["FRAMEWORK_SEARCH_PATHS"] = "#{$top_level}/Carthage/Build/#{carthage_prefix}"
+        config.build_settings["LD_RUNPATH_SEARCH_PATHS"] = "#{$top_level}/Carthage/Build/#{carthage_prefix}"
+    }
+end
+
+def target_add_carthage_framework(target, platform, framework, copy=false)
+    group = target.project.frameworks_group[(platform == :osx ? "OS X" : "iOS")]
+    carthage_prefix = (platform == :osx) ? "Mac" : "iOS"
+    puts("Add framework from: #{$top_level}/Carthage/Build/#{carthage_prefix}")
+    group_add_files(group, "#{$top_level}/Carthage/Build/#{carthage_prefix}", [framework]).each do |ref|
+        target.frameworks_build_phases.add_file_reference(ref, true)
+        if copy then
+            file = target.copy_files_build_phases[0].add_file_reference(ref)
+            file.settings = { 'ATTRIBUTES' => ['CodeSignOnCopy'] }
+        end
+    end
+end
+
+#
+# Check if the test include the given variant
+#
+def demo_has_variant(demo, variant)
+    return File.file?("#{demo}/#{variant}.swift")
+end
+
+def demo_variant_sources(demo, variant)
+    sources = $demo_variant_sources[variant] || []
+    sources += $demo_extra_sources["#{demo}/#{variant}"] || []
+    return sources
+end
+
+def demo_default_sources(demo, variant)
+    sources = $demo_default_sources[variant] || []
+    sources += $demo_extra_sources[demo] || []
+    return sources
+end
