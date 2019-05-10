@@ -77,7 +77,8 @@ func run() -> Int32 {
             var repetitions = 100
             let start = DispatchTime.now()
             
-            if line == "1" || line == "2" || line == "3" || line == "4" {
+            switch line {
+            case "1", "2", "3", "4":
                 currentType = line
                 switch currentType {
                 case "1":
@@ -99,8 +100,7 @@ func run() -> Int32 {
                 default:
                     precondition(false)
                 }
-            }
-            else if line == "t" || line == "o" || line == "r" || line == "e" {
+            case "t", "o", "r", "e":
                 switch line {
                 case "t":
                     print("sending", terminator: "")
@@ -227,13 +227,13 @@ func run() -> Int32 {
                 }
                 formated = String(format: "%.2f", mbit)
                 print("throughput: \(formated) Mbps")
-            } else if line == "s" {
+            case "s":
                 try throughput.shutdown()
-            } else if line == "x" {
-                // Nothing to do
-            } else if line == "?" {
+            case "x":
+                break
+            case "?":
                 menu()
-            } else {
+            default:
                 print("unknown command `\(line)'")
                 menu()
             }

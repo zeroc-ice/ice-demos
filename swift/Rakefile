@@ -5,7 +5,9 @@ require 'xcodeproj'
 $top_level = File.expand_path(File.dirname(__FILE__))
 
 $demos = [
+    "Ice/hello",
     "Ice/latency",
+    "Ice/minimal",
     "Ice/throughput"
 ]
 
@@ -25,7 +27,9 @@ $demo_variant_sources = {
 # Extra demo sources if any
 #
 $demo_extra_sources = {
+    "Ice/hello" => ["Hello.ice"],
     "Ice/latency" => ["Latency.ice"],
+    "Ice/minimal" => ["Hello.ice"],
     "Ice/throughput" => ["Throughput.ice"]
 }
 
