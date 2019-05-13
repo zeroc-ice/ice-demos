@@ -4,12 +4,10 @@ require 'xcodeproj'
 
 $top_level = File.expand_path(File.dirname(__FILE__))
 
-$demos = [
-    "Ice/hello",
-    "Ice/latency",
-    "Ice/minimal",
-    "Ice/throughput"
-]
+$demos = {
+    :osx => ["Ice/bidir", "Ice/hello", "Ice/latency", "Ice/minimal", "Ice/throughput"],
+    :ios => ["iOS/Ice/hello"]
+}
 
 $demo_variants = ["Client", "Server"]
 
@@ -19,72 +17,117 @@ $demo_variants = ["Client", "Server"]
 $demo_default_sources = {}
 
 $demo_variant_sources = {
-    "Client" => ["Client/main.swift"],
-    "Server" => ["Server/main.swift"]
+    "Client" => ["Client/*.swift"],
+    "Server" => ["Server/*.swift"]
 }
 
 #
 # Extra demo sources if any
 #
 $demo_extra_sources = {
+    "Ice/bidir" => ["Callback.ice"],
     "Ice/hello" => ["Hello.ice"],
     "Ice/latency" => ["Latency.ice"],
     "Ice/minimal" => ["Hello.ice"],
-    "Ice/throughput" => ["Throughput.ice"]
+    "Ice/throughput" => ["Throughput.ice"],
+    "iOS/Ice/hello" => ["Hello.ice"]
 }
 
 desc "Generate Xcode projects required to build Ice for Swift Demo Applications"
 task :iceproj do
-    group = Xcodeproj::Workspace::GroupReference.new("macOS").to_node
     workspace = Xcodeproj::Workspace.new(nil)
-    $demos.each do |demo|
-        project = Xcodeproj::Project.new(project_path(demo))
-        group.add_element(Xcodeproj::Workspace::FileReference.new("#{project.path}").to_node)
-        create_platform_targets(project, demo, :osx)
+    $demos.each do |platform, demos|
+        platform_name = platform == :osx ? "macOS" : "iOS"
+        group = Xcodeproj::Workspace::GroupReference.new(platform_name).to_node
 
-        attributes = project.root_object.attributes
-        attributes["TargetAttributes"] ||= {}
-        project.targets.each do |target|
-            attributes["TargetAttributes"][target.uuid] ||= {}
-            attributes["TargetAttributes"][target.uuid]["ProvisioningStyle"] = "Automatic"
+        demos.each do |demo|
+            project = Xcodeproj::Project.new(project_path(demo))
+
+            group.add_element(Xcodeproj::Workspace::FileReference.new("#{project.path}").to_node)
+            if demo.start_with? "iOS/" then
+                create_uikit_targets(project, demo)
+            else
+                create_commandline_targets(project, demo)
+            end
+
+            attributes = project.root_object.attributes
+            attributes["TargetAttributes"] ||= {}
+            project.targets.each do |target|
+                attributes["TargetAttributes"][target.uuid] ||= {}
+                attributes["TargetAttributes"][target.uuid]["ProvisioningStyle"] = "Automatic"
+            end
+            project.root_object.development_region = "en"
+            project.root_object.known_regions = ["Base", "en"]
+
+            #
+            # Sort the project and save it
+            #
+            project.sort({:groups_position => :above})
+            project.save()
         end
-        project.root_object.development_region = "en"
-        project.root_object.known_regions = ["Base", "en"]
-
-        #
-        # Sort the project and save it
-        #
-        project.sort({:groups_position => :above})
-        project.save()
+        workspace.document.root.add_element(group)
     end
-    workspace.document.root.add_element(group)
     workspace.save_as("ice.xcworkspace")
 end
 
 task :default => [:iceproj]
 
-def create_platform_targets(project, demo, platform)
-    platform_name = platform == :osx ? "macOS" : "iOS"
-
+def create_commandline_targets(project, demo)
     $demo_variants.each do |variant|
-        target = project.new_target(:command_line_tool, variant, platform)
-        target.name = "#{target.name} #{platform_name}"
-        target_set_common_build_settings(target,
-                                         variant.downcase,
-                                         "#{demo}/#{variant}/Info.plist",
-                                         "$(SRCROOT)/#{variant}")
+        if demo_has_variant(demo, variant)
+            target = project.new_target(:command_line_tool, variant, :osx)
+            target.name = "#{target.name} macOS"
+            target_set_common_build_settings(target,
+                                             variant.downcase,
+                                             "#{variant}/Info.plist",
+                                             "$(SRCROOT)/#{variant}")
 
-        target.frameworks_build_phases.clear()
-        target_add_files(target, project.main_group, "#{project.project_dir}", demo_default_sources(demo, variant))
+            target.frameworks_build_phases.clear()
+            target_add_files(target, project.main_group, "#{project.project_dir}", demo_default_sources(demo, variant))
 
-        group = project_group(project, variant)
-        target_add_files(target, group, "#{project.project_dir}", demo_variant_sources(demo, variant))
+            group = project_group(project, variant)
+            target_add_files(target, group, "#{project.project_dir}", demo_variant_sources(demo, variant))
 
-        target_add_carthage_framework(target, platform, "Ice.framework")
-        target_add_carthage_framework(target, platform, "PromiseKit.framework")
+            target_add_carthage_framework(target, :osx, "Ice.framework")
+            target_add_carthage_framework(target, :osx, "PromiseKit.framework")
 
-        target_set_framework_build_settings(target)
-        target_add_slice2swift_build_rule(project, target)
+            target_set_framework_build_settings(target)
+            target_add_slice2swift_build_rule(project, target)
+        end
+    end
+end
+
+def create_uikit_targets(project, demo)
+    $demo_variants.each do |variant|
+        if demo_has_variant(demo, variant)
+            target = project.new_target(:application, variant, :ios)
+            target.name = "#{target.name} iOS"
+            target_set_common_build_settings(target,
+                                             variant.downcase,
+                                             "#{variant}/Info.plist",
+                                             "$(SRCROOT)/#{variant}")
+
+            target.frameworks_build_phases.clear()
+            target_add_files(target, project.main_group, "#{project.project_dir}", demo_default_sources(demo, variant))
+
+            group = project_group(project, variant)
+            target_add_files(target, group, "#{project.project_dir}", demo_variant_sources(demo, variant))
+
+            target_add_files(target, group, "#{project.project_dir}/#{variant}", ["*.xcassets"])
+            target_add_files(target, group, "#{project.project_dir}/#{variant}/Base.lproj", ["*.storyboard"])
+            target.add_resources(group_add_files(group, "#{project.project_dir}/../../../..", ["certs"]))
+
+            target_add_carthage_framework(target, :ios, "Ice.framework")
+            target_add_carthage_framework(target, :ios, "PromiseKit.framework")
+
+            target_set_framework_build_settings(target)
+            target_add_slice2swift_build_rule(project, target)
+
+            target.build_configurations.each { |config|
+                config.build_settings["CODE_SIGN_IDENTITY"] = "iPhone Developer"
+                config.build_settings["DEVELOPMENT_TEAM"] = "U4TBVKNQ7F"
+            }
+        end
     end
 end
 
@@ -106,7 +149,7 @@ def target_name(basename, suffix = nil)
 end
 
 def project_name(basename)
-    basename[basename.index('/') + 1..-1].downcase
+    basename.split("/")[-1].downcase
 end
 
 def project_path(basename)
@@ -206,7 +249,8 @@ end
 # Check if the test include the given variant
 #
 def demo_has_variant(demo, variant)
-    return File.file?("#{demo}/#{variant}.swift")
+    return File.file?("#{demo}/#{variant}/main.swift") ||
+           File.file?("#{demo}/#{variant}/AppDelegate.swift")
 end
 
 def demo_variant_sources(demo, variant)

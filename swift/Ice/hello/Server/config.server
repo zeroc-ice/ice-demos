@@ -57,7 +57,7 @@ Ice.Trace.Network=3
 #
 # SSL Configuration
 #
-Ice.Plugin.IceSSL=IceSSL:createIceSSL
+Ice.Plugin.IceSSL=1
 IceSSL.DefaultDir=../../../../certs
 IceSSL.CAs=cacert.pem
 IceSSL.CertFile=server.p12
