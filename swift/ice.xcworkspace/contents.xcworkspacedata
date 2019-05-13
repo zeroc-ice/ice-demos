@@ -19,6 +19,9 @@
       <FileRef
          location = "group:/Users/jose/Documents/ZeroC/3.7/ice-demos/swift/Ice/throughput/throughput.xcodeproj">
       </FileRef>
+      <FileRef
+         location = "group:/Users/jose/Documents/ZeroC/3.7/ice-demos/swift/Manual/printer/printer.xcodeproj">
+      </FileRef>
    </Group>
    <Group
       location = "container:"

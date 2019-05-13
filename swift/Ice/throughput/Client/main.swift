@@ -32,10 +32,6 @@ func menu() {
 
 func run() -> Int32 {
     do {
-        //
-        // The new communicator is automatically destroyed (disposed) at the end of the
-        // using statement
-        //
         var args = CommandLine.arguments
         let communicator = try Ice.initialize(args: &args, configFile: "config.client")
         defer {
@@ -244,4 +240,5 @@ func run() -> Int32 {
     }
     return 0
 }
+
 exit(run())
