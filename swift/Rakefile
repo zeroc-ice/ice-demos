@@ -5,7 +5,8 @@ require 'xcodeproj'
 $top_level = File.expand_path(File.dirname(__FILE__))
 
 $demos = {
-    :osx => ["Ice/bidir", "Ice/hello", "Ice/latency", "Ice/minimal", "Ice/throughput"],
+    :osx => ["Ice/bidir", "Ice/hello", "Ice/latency", "Ice/minimal", "Ice/throughput",
+             "Manual/printer"],
     :ios => ["iOS/Ice/hello"]
 }
 
@@ -30,6 +31,7 @@ $demo_extra_sources = {
     "Ice/latency" => ["Latency.ice"],
     "Ice/minimal" => ["Hello.ice"],
     "Ice/throughput" => ["Throughput.ice"],
+    "Manual/printer" => ["Printer.ice"],
     "iOS/Ice/hello" => ["Hello.ice"]
 }
 
