@@ -20,7 +20,7 @@ func run() -> Int32 {
             print("Invalid proxy")
             return 1
         }
-        
+
         try printer.printString("Hello World!")
         return 0
     } catch {
