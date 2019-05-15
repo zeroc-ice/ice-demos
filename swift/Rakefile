@@ -5,10 +5,12 @@ require 'xcodeproj'
 $top_level = File.expand_path(File.dirname(__FILE__))
 
 $demos = {
-    :osx => ["Ice/hello",
+    :osx => ["Ice/bidir",
+             "Ice/hello",
              "Ice/latency",
              "Ice/minimal",
              "Ice/throughput",
+
              "Manual/printer",
              "Manual/simpleFilesystem"],
 
@@ -50,6 +52,7 @@ task :iceproj do
     workspace = Xcodeproj::Workspace.new(nil)
     $demos.each do |platform, demos|
         platform_name = platform == :osx ? "macOS" : "iOS"
+
         group = Xcodeproj::Workspace::GroupReference.new(platform_name).to_node
 
         demos.each do |demo|
@@ -131,7 +134,6 @@ def create_uikit_targets(project, demo)
 
     extra_frameworks = $demo_extra_frameworks[demo] || []
     extra_frameworks.each do |f|
-        puts("Demo: #{demo} adding extra framework #{f}")
         target_add_carthage_framework(target, :ios, f)
     end
 

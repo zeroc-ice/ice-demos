@@ -5,6 +5,9 @@
       location = "container:"
       name = "macOS">
       <FileRef
+         location = "group:/Users/jose/Documents/ZeroC/3.7/ice-demos/swift/Ice/bidir/bidir.xcodeproj">
+      </FileRef>
+      <FileRef
          location = "group:/Users/jose/Documents/ZeroC/3.7/ice-demos/swift/Ice/hello/hello.xcodeproj">
       </FileRef>
       <FileRef
