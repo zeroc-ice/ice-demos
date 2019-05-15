@@ -200,3 +200,5 @@ local.properties
 Resource.designer.cs
 
 swift/Carthage
+*.swiftmodule
+*.app

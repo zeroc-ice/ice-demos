@@ -12,7 +12,8 @@ $demos = {
              "Manual/printer",
              "Manual/simpleFilesystem"],
 
-    :ios => ["iOS/Ice/hello"]
+    :ios => ["iOS/Ice/hello",
+             "iOS/Chat"]
 }
 
 $demo_variants = ["Client", "Server"]
@@ -38,7 +39,10 @@ $demo_extra_sources = {
     "Ice/throughput" => ["Throughput.ice"],
     "Manual/printer" => ["Printer.ice"],
     "Manual/simpleFilesystem" => ["Filesystem.ice"],
-    "iOS/Ice/hello" => ["Hello.ice"]
+}
+
+$demo_extra_frameworks = {
+    "iOS/Chat" => ["Glacier2.framework"]
 }
 
 desc "Generate Xcode projects required to build Ice for Swift Demo Applications"
@@ -99,6 +103,11 @@ def create_commandline_targets(project, demo)
             target_add_carthage_framework(target, :osx, "Ice.framework")
             target_add_carthage_framework(target, :osx, "PromiseKit.framework")
 
+            extra_frameworks = $demo_extra_frameworks[demo] || []
+            extra_frameworks.each do |f|
+                target_add_carthage_framework(target, :osx, f)
+            end
+
             target_set_framework_build_settings(target)
             target_add_slice2swift_build_rule(project, target)
         end
@@ -106,37 +115,33 @@ def create_commandline_targets(project, demo)
 end
 
 def create_uikit_targets(project, demo)
-    $demo_variants.each do |variant|
-        if demo_has_variant(demo, variant)
-            target = project.new_target(:application, variant, :ios)
-            target.name = "#{target.name} iOS"
-            target_set_common_build_settings(target,
-                                             variant.downcase,
-                                             "#{variant}/Info.plist",
-                                             "$(SRCROOT)/#{variant}")
+    target = project.new_target(:application, target_name(demo), :ios)
+    target.name = "#{target.name} iOS"
+    target_set_common_build_settings(target, target_name(demo), "Info.plist", "$(SRCROOT)")
 
-            target.frameworks_build_phases.clear()
-            target_add_files(target, project.main_group, "#{project.project_dir}", demo_default_sources(demo, variant))
+    target.frameworks_build_phases.clear()
+    group = project.main_group
+    target_add_files(target, group, "#{project.project_dir}", ["*.swift", "*.ice"])
+    target_add_files(target, group, "#{project.project_dir}", ["*.xcassets"])
+    target_add_files(target, group, "#{project.project_dir}/Base.lproj", ["*.storyboard"])
+    target.add_resources(group_add_files(group, "#{project.project_dir}/../../..", ["certs"]))
 
-            group = project_group(project, variant)
-            target_add_files(target, group, "#{project.project_dir}", demo_variant_sources(demo, variant))
+    target_add_carthage_framework(target, :ios, "Ice.framework")
+    target_add_carthage_framework(target, :ios, "PromiseKit.framework")
 
-            target_add_files(target, group, "#{project.project_dir}/#{variant}", ["*.xcassets"])
-            target_add_files(target, group, "#{project.project_dir}/#{variant}/Base.lproj", ["*.storyboard"])
-            target.add_resources(group_add_files(group, "#{project.project_dir}/../../../..", ["certs"]))
-
-            target_add_carthage_framework(target, :ios, "Ice.framework")
-            target_add_carthage_framework(target, :ios, "PromiseKit.framework")
-
-            target_set_framework_build_settings(target)
-            target_add_slice2swift_build_rule(project, target)
-
-            target.build_configurations.each { |config|
-                config.build_settings["CODE_SIGN_IDENTITY"] = "iPhone Developer"
-                config.build_settings["DEVELOPMENT_TEAM"] = "U4TBVKNQ7F"
-            }
-        end
+    extra_frameworks = $demo_extra_frameworks[demo] || []
+    extra_frameworks.each do |f|
+        puts("Demo: #{demo} adding extra framework #{f}")
+        target_add_carthage_framework(target, :ios, f)
     end
+
+    target_set_framework_build_settings(target)
+    target_add_slice2swift_build_rule(project, target)
+
+    target.build_configurations.each { |config|
+        config.build_settings["CODE_SIGN_IDENTITY"] = "iPhone Developer"
+        config.build_settings["DEVELOPMENT_TEAM"] = "U4TBVKNQ7F"
+    }
 end
 
 def project_group(project, name)
@@ -151,9 +156,8 @@ def project_group(project, name)
     group
 end
 
-def target_name(basename, suffix = nil)
-    name = basename.split("/").map{ |item| item[0].upcase + item[1..-1]}.join()
-    suffix ? "#{name} #{suffix}" : name
+def target_name(basename)
+    basename.split("/")[-1].capitalize
 end
 
 def project_name(basename)
