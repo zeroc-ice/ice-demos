@@ -35,5 +35,8 @@
       <FileRef
          location = "group:/Users/jose/Documents/ZeroC/3.7/ice-demos/swift/iOS/Chat/chat.xcodeproj">
       </FileRef>
+      <FileRef
+         location = "group:/Users/jose/Documents/ZeroC/3.7/ice-demos/swift/iOS/Database/library/library.xcodeproj">
+      </FileRef>
    </Group>
 </Workspace>

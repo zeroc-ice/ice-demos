@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BD9-J4-Ku9">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Akr-4J-pTg">
     <device id="retina6_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -11,10 +11,26 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="2Zf-yF-Nnh">
+            <objects>
+                <navigationController id="Akr-4J-pTg" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="KIb-YN-qh4">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="M5v-xP-5iF" kind="relationship" relationship="rootViewController" id="2Mt-Dx-EXM"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kCP-F9-Dzi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="510" y="115"/>
+        </scene>
         <!--LoginController-->
         <scene sceneID="SZw-IO-UVD">
             <objects>
-                <viewController useStoryboardIdentifierAsRestorationIdentifier="YES" id="M5v-xP-5iF" userLabel="LoginController" customClass="LoginController" sceneMemberID="viewController">
+                <viewController useStoryboardIdentifierAsRestorationIdentifier="YES" id="M5v-xP-5iF" userLabel="LoginController" customClass="LoginController" customModule="Library" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="a9P-Rt-wYr"/>
                         <viewControllerLayoutGuide type="bottom" id="3j6-Sr-lsT"/>
@@ -45,9 +61,6 @@
                                                 <rect key="frame" x="86.666666666666671" y="-2.3333333333333144" width="192.66666666666663" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <textInputTraits key="textInputTraits"/>
-                                                <connections>
-                                                    <outlet property="delegate" destination="M5v-xP-5iF" id="Gio-dY-wB4"/>
-                                                </connections>
                                             </textField>
                                         </subviews>
                                     </stackView>
@@ -64,9 +77,6 @@
                                                 <rect key="frame" x="86.666666666666671" y="-2.3333333333333144" width="192.66666666666663" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" secureTextEntry="YES"/>
-                                                <connections>
-                                                    <outlet property="delegate" destination="M5v-xP-5iF" id="t2K-uI-oQx"/>
-                                                </connections>
                                             </textField>
                                         </subviews>
                                     </stackView>
@@ -91,7 +101,7 @@
                                         <inset key="contentEdgeInsets" minX="12" minY="8" maxX="12" maxY="8"/>
                                         <state key="normal" title="Login"/>
                                         <connections>
-                                            <action selector="login:" destination="M5v-xP-5iF" eventType="touchUpInside" id="wMA-Ki-pih"/>
+                                            <action selector="loginWithSender:" destination="M5v-xP-5iF" eventType="touchUpInside" id="fcS-rV-5sz"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -117,22 +127,38 @@
                         <barButtonItem key="backBarButtonItem" title="Logout" id="ihw-Cf-87c"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="loginButton" destination="uWE-2h-ZhS" id="mzA-Bj-FDw"/>
-                        <outlet property="passwordField" destination="Bcn-Jv-shJ" id="RQz-zP-R1K"/>
-                        <outlet property="statusActivity" destination="Jvh-Iw-QHt" id="Hd9-JL-2IG"/>
-                        <outlet property="statusLabel" destination="wDZ-s6-Xz1" id="eWD-O4-bh4"/>
-                        <outlet property="usernameField" destination="0np-tZ-ij7" id="ohA-aZ-eH3"/>
-                        <segue destination="RLB-OB-vEB" kind="presentation" identifier="showMainController" id="Oy6-ky-Ew8"/>
+                        <outlet property="loginButton" destination="uWE-2h-ZhS" id="Zid-0u-Nse"/>
+                        <outlet property="passwordField" destination="Bcn-Jv-shJ" id="jZ9-zR-NM0"/>
+                        <outlet property="statusActivity" destination="Jvh-Iw-QHt" id="yLb-GB-wYM"/>
+                        <outlet property="statusLabel" destination="wDZ-s6-Xz1" id="YfP-FM-nXw"/>
+                        <outlet property="usernameField" destination="0np-tZ-ij7" id="QNW-pK-goT"/>
+                        <segue destination="aBa-hc-o1o" kind="presentation" id="VEO-3L-Nmm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vUA-lp-VIb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="973.91304347826099" y="115.17857142857142"/>
+            <point key="canvasLocation" x="1274" y="115"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="KUP-cs-Box">
+            <objects>
+                <navigationController id="aBa-hc-o1o" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="uMZ-rK-SbN">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="11R-W4-ymf" kind="relationship" relationship="rootViewController" id="PFI-zH-IBE"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Mcv-aa-27u" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2025" y="115"/>
         </scene>
         <!--Search-->
         <scene sceneID="mq1-oY-hVv">
             <objects>
-                <viewController storyboardIdentifier="MainController" id="11R-W4-ymf" customClass="MainController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MainController" id="11R-W4-ymf" customClass="MainController" customModule="Library" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="tsS-hq-b9C">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -155,8 +181,8 @@
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <inset key="insetFor6xAndEarlier" minX="0.0" minY="20" maxX="0.0" maxY="-20"/>
                                 <connections>
-                                    <outlet property="dataSource" destination="11R-W4-ymf" id="vxY-DR-X5p"/>
-                                    <outlet property="delegate" destination="11R-W4-ymf" id="HOD-Qo-TVw"/>
+                                    <outlet property="dataSource" destination="11R-W4-ymf" id="iMj-RN-bCV"/>
+                                    <outlet property="delegate" destination="11R-W4-ymf" id="ob6-W5-q5f"/>
                                 </connections>
                             </tableView>
                         </subviews>
@@ -176,7 +202,7 @@
                         <barButtonItem key="backBarButtonItem" title="Search" id="rKG-Zf-Ag0"/>
                         <barButtonItem key="leftBarButtonItem" title="Logout" id="Gaa-0T-8Gl">
                             <connections>
-                                <action selector="logout:" destination="11R-W4-ymf" id="Wd0-L8-PlA"/>
+                                <action selector="logoutWithSender:" destination="11R-W4-ymf" id="Ale-dD-pX4"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="hdq-rx-jXl">
@@ -187,7 +213,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="searchTableView" destination="9H5-o1-OnE" id="wwk-9w-xxL"/>
+                        <outlet property="searchTableView" destination="9H5-o1-OnE" id="gJV-Gk-H3y"/>
                         <segue destination="HcO-Yv-N0O" kind="show" identifier="ShowDetail" id="Gn9-8g-SNq"/>
                     </connections>
                 </viewController>
@@ -198,7 +224,7 @@
         <!--Book Info-->
         <scene sceneID="XdO-k9-SGb">
             <objects>
-                <viewController id="HcO-Yv-N0O" customClass="DetailController" sceneMemberID="viewController">
+                <viewController id="HcO-Yv-N0O" customClass="DetailController" customModule="Library" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Th0-JP-1w5">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -207,8 +233,8 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <connections>
-                                    <outlet property="dataSource" destination="HcO-Yv-N0O" id="cl8-n4-kcj"/>
-                                    <outlet property="delegate" destination="HcO-Yv-N0O" id="GPj-su-hEQ"/>
+                                    <outlet property="dataSource" destination="HcO-Yv-N0O" id="Y1q-mI-BCA"/>
+                                    <outlet property="delegate" destination="HcO-Yv-N0O" id="zZv-2u-CD3"/>
                                 </connections>
                             </tableView>
                             <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DFm-5Y-7ar">
@@ -229,7 +255,7 @@
                         <barButtonItem key="backBarButtonItem" title="Back" id="UmG-RK-Sn2"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="tableView" destination="x1n-zI-PAZ" id="cQb-mZ-YIo"/>
+                        <outlet property="tableView" destination="x1n-zI-PAZ" id="e45-I2-RTZ"/>
                         <segue destination="FJf-Ny-2t6" kind="show" identifier="ShowEdit" id="usr-K4-9fI"/>
                     </connections>
                 </viewController>
@@ -240,7 +266,7 @@
         <!--Edit-->
         <scene sceneID="VVt-Tj-ccw">
             <objects>
-                <viewController id="FJf-Ny-2t6" customClass="EditController" sceneMemberID="viewController">
+                <viewController id="FJf-Ny-2t6" customClass="EditController" customModule="Library" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ejv-Bn-jQJ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -264,8 +290,7 @@
                     <navigationItem key="navigationItem" title="Edit" id="8fG-DK-MYd">
                         <barButtonItem key="rightBarButtonItem" title="Save" id="LHy-rT-kH4">
                             <connections>
-                                <action selector="save:" destination="FJf-Ny-2t6" id="3Vn-ug-Wvr"/>
-                                <segue destination="feS-cS-KZW" kind="unwind" unwindAction="unwindFromEdit:" id="U3b-Sk-Cdb"/>
+                                <segue destination="xzW-df-m8l" kind="unwind" unwindAction="unwindFromEditWithSegue:" id="g8X-RI-uwN"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -274,50 +299,14 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zVD-Kw-XXL" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="feS-cS-KZW" userLabel="Exit" sceneMemberID="exit"/>
+                <exit id="xzW-df-m8l" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="4652" y="135"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="kiq-5O-EZk">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="RLB-OB-vEB" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="fO8-Zd-l07">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="11R-W4-ymf" kind="relationship" relationship="rootViewController" id="gha-po-gon"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="1iw-J0-6UY" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1839.1304347826087" y="114.50892857142857"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="7jY-XW-kpC">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="BD9-J4-Ku9" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="4W7-1S-49A">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="M5v-xP-5iF" kind="relationship" relationship="rootViewController" id="BM2-mP-f2R"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="fpi-mB-pmA" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="63.768115942028992" y="115.17857142857142"/>
         </scene>
         <!--New Book-->
         <scene sceneID="DGg-kN-F50">
             <objects>
-                <viewController id="Ls1-MX-iHD" customClass="AddController" sceneMemberID="viewController">
+                <viewController id="Ls1-MX-iHD" customClass="AddController" customModule="Library" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="NsM-AE-Izx">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -326,8 +315,8 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <connections>
-                                    <outlet property="dataSource" destination="Ls1-MX-iHD" id="axk-th-Yj7"/>
-                                    <outlet property="delegate" destination="Ls1-MX-iHD" id="vSV-6d-fua"/>
+                                    <outlet property="dataSource" destination="Ls1-MX-iHD" id="7yg-Hq-L8B"/>
+                                    <outlet property="delegate" destination="Ls1-MX-iHD" id="Gv1-pz-3YS"/>
                                 </connections>
                             </tableView>
                             <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6cz-pt-UxS">
@@ -348,12 +337,12 @@
                         <barButtonItem key="backBarButtonItem" title="Back" id="vEc-zV-hkj"/>
                         <barButtonItem key="rightBarButtonItem" title="Save" id="gl0-ik-gP8">
                             <connections>
-                                <action selector="save:" destination="Ls1-MX-iHD" id="24g-df-x1x"/>
+                                <action selector="saveWithSender:" destination="Ls1-MX-iHD" id="dgN-Sc-k7p"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="tableView" destination="mmj-cD-wAx" id="KcE-S8-crK"/>
+                        <outlet property="tableView" destination="mmj-cD-wAx" id="l37-aU-EXu"/>
                         <segue destination="FJf-Ny-2t6" kind="show" identifier="ShowEdit" id="tN4-zD-FsE"/>
                     </connections>
                 </viewController>

@@ -110,8 +110,10 @@ class LoginController: UIViewController, UITextFieldDelegate, UIAlertViewDelegat
         return true
     }
     
+    //
     // A touch outside the keyboard dismisses the keyboard, and
     // sets back the old field value.
+    //
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let field = currentField {
             field.resignFirstResponder()
@@ -131,7 +133,9 @@ class LoginController: UIViewController, UITextFieldDelegate, UIAlertViewDelegat
             loginButton.alpha = 1.0
         }
         
+        //
         // open an alert with just an OK button
+        //
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         present(alert, animated: true, completion: nil)

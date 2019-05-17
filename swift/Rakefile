@@ -15,7 +15,8 @@ $demos = {
              "Manual/simpleFilesystem"],
 
     :ios => ["iOS/Ice/hello",
-             "iOS/Chat"]
+             "iOS/Chat",
+             "iOS/Database/library"]
 }
 
 $demo_variants = ["Client", "Server"]
@@ -44,7 +45,8 @@ $demo_extra_sources = {
 }
 
 $demo_extra_frameworks = {
-    "iOS/Chat" => ["Glacier2.framework"]
+    "iOS/Chat" => ["Glacier2.framework"],
+    "iOS/Database/library" => ["Glacier2.framework"]
 }
 
 desc "Generate Xcode projects required to build Ice for Swift Demo Applications"
@@ -58,7 +60,8 @@ task :iceproj do
         demos.each do |demo|
             project = Xcodeproj::Project.new(project_path(demo))
 
-            group.add_element(Xcodeproj::Workspace::FileReference.new("#{project.path}").to_node)
+            reference = Xcodeproj::Workspace::FileReference.new("#{project.path}")
+            group.add_element(reference.to_node)
             if demo.start_with? "iOS/" then
                 create_uikit_targets(project, demo)
             else
@@ -127,14 +130,14 @@ def create_uikit_targets(project, demo)
     target_add_files(target, group, "#{project.project_dir}", ["*.swift", "*.ice"])
     target_add_files(target, group, "#{project.project_dir}", ["*.xcassets"])
     target_add_files(target, group, "#{project.project_dir}/Base.lproj", ["*.storyboard"])
-    target.add_resources(group_add_files(group, "#{project.project_dir}/../../..", ["certs"]))
+    target.add_resources(group_add_files(group, "#{project.project_dir}", ["config.client"]))
 
-    target_add_carthage_framework(target, :ios, "Ice.framework")
-    target_add_carthage_framework(target, :ios, "PromiseKit.framework")
+    target_add_carthage_framework(target, :ios, "Ice.framework", true)
+    target_add_carthage_framework(target, :ios, "PromiseKit.framework", true)
 
     extra_frameworks = $demo_extra_frameworks[demo] || []
     extra_frameworks.each do |f|
-        target_add_carthage_framework(target, :ios, f)
+        target_add_carthage_framework(target, :ios, f, true)
     end
 
     target_set_framework_build_settings(target)
@@ -243,7 +246,9 @@ def target_set_framework_build_settings(target)
     carthage_prefix = (target.name.include? "macOS") ? "Mac" : "iOS"
     target.build_configurations.each { |config|
         config.build_settings["FRAMEWORK_SEARCH_PATHS"] = "#{$top_level}/Carthage/Build/#{carthage_prefix}"
-        config.build_settings["LD_RUNPATH_SEARCH_PATHS"] = "#{$top_level}/Carthage/Build/#{carthage_prefix}"
+        if carthage_prefix == "Mac" then
+            config.build_settings["LD_RUNPATH_SEARCH_PATHS"] = "#{$top_level}/Carthage/Build/#{carthage_prefix}"
+        end
     }
 end
 
@@ -253,7 +258,9 @@ def target_add_carthage_framework(target, platform, framework, copy=false)
     group_add_files(group, "#{$top_level}/Carthage/Build/#{carthage_prefix}", [framework]).each do |ref|
         target.frameworks_build_phases.add_file_reference(ref, true)
         if copy then
-            file = target.copy_files_build_phases[0].add_file_reference(ref)
+            copy_phase = target.copy_files_build_phases[0] || target.new_copy_files_build_phase("Copy Frameworks")
+            copy_phase.dst_subfolder_spec = Xcodeproj::Constants::COPY_FILES_BUILD_PHASE_DESTINATIONS[:frameworks]
+            file = copy_phase.add_file_reference(ref)
             file.settings = { 'ATTRIBUTES' => ['CodeSignOnCopy'] }
         end
     end
