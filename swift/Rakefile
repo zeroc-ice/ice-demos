@@ -5,19 +5,20 @@ require 'xcodeproj'
 $top_level = File.expand_path(File.dirname(__FILE__))
 
 $demos = {
-    :osx => ["Ice/bidir",
+    :osx => ["Ice/asyncInvocation",
+             "Ice/bidir",
              "Ice/hello",
              "Ice/latency",
              "Ice/minimal",
-             "Ice/throughput",
              "Ice/optional",
+             "Ice/throughput",
 
              "Manual/printer",
              "Manual/simpleFilesystem"],
 
-    :ios => ["iOS/Ice/hello",
-             "iOS/Chat",
-             "iOS/Database/library"]
+    :ios => ["iOS/Chat",
+             "iOS/Database/library",
+             "iOS/Ice/hello"]
 }
 
 $demo_variants = ["Client", "Server"]
@@ -36,6 +37,7 @@ $demo_variant_sources = {
 # Extra demo sources if any
 #
 $demo_extra_sources = {
+    "Ice/asyncInvocation" => ["Calculator.ice"],
     "Ice/bidir" => ["Callback.ice"],
     "Ice/hello" => ["Hello.ice"],
     "Ice/latency" => ["Latency.ice"],

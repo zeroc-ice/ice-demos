@@ -7,29 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		01250A1A49588A921EB38F42 /* Ice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D1498EAD59F33BBCEEDFCF1 /* Ice.framework */; };
-		0575D25D16976ED88F536231 /* Glacier2Session.ice in Sources */ = {isa = PBXBuildFile; fileRef = 30D300C98E04E159A32211F2 /* Glacier2Session.ice */; };
-		0C109BBA0883B9F7AAE7BBA1 /* Images.xcassets in Sources */ = {isa = PBXBuildFile; fileRef = 65BB4F3AD5C06F7D18728009 /* Images.xcassets */; };
-		2418BD7A0D6B884F456EBF5E /* EditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43E5559E5DB51FC0A506FBD /* EditController.swift */; };
-		29591594182FEE4D843EE495 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1624F222546401CBBF77B66C /* LoginController.swift */; };
-		2B09C3F4BD60ADE20151B6FB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5FB92B06DC297D3422AF81 /* AppDelegate.swift */; };
-		303F885E058AD0EACAE682F7 /* DetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5087697E0A7A844FD2123C75 /* DetailController.swift */; };
-		30FA1672B968833E686F3C57 /* Session.ice in Sources */ = {isa = PBXBuildFile; fileRef = 3840344D036E74E12555BE8C /* Session.ice */; };
-		361B4D269F064BD2900FA799 /* AddController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73609E8E5BDB2E1B0985B33B /* AddController.swift */; };
-		3DAD2075152B7E4000F3C8AE /* Library.ice in Sources */ = {isa = PBXBuildFile; fileRef = 0570291F7D9B097147038F1F /* Library.ice */; };
-		7AD4A0F2660888CDFA6EEAAC /* Main.storyboard in Sources */ = {isa = PBXBuildFile; fileRef = CACA4520DA9B5E09867D26A4 /* Main.storyboard */; };
-		80D0591045D4E6B05DCBC711 /* Ice.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 6D1498EAD59F33BBCEEDFCF1 /* Ice.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		8C810B73B19112FE35F41EEB /* LaunchScreen.storyboard in Sources */ = {isa = PBXBuildFile; fileRef = 34B6333103A6FE6A1FA620E7 /* LaunchScreen.storyboard */; };
-		9293B1DB336F8B998B919C76 /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D135AB7C0A7C855216BDE11 /* MainController.swift */; };
-		9A4C6A6E4B1A94BEA39C55B5 /* Glacier2.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = F39152ABB6D85D8792BFCEFC /* Glacier2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		9DF1967C00BA109B4227A896 /* config.client in Resources */ = {isa = PBXBuildFile; fileRef = 4535D320F7C1962014A6C15F /* config.client */; };
-		C3ABEF161B59BFF93582DC0B /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51C4FC47663F1F689F3428A5 /* PromiseKit.framework */; };
-		DE79D1768E4F49BFB73A1004 /* PromiseKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 51C4FC47663F1F689F3428A5 /* PromiseKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		FCE1CAF132F6570B0775248A /* Glacier2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F39152ABB6D85D8792BFCEFC /* Glacier2.framework */; };
+		11202F5EF95BCB86A2FB2A6C /* Glacier2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A45A5CEF9F249B4C2368DF82 /* Glacier2.framework */; };
+		1625B41D4B492B67F97CC9D0 /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD1EF57FA5019F0BA4824D6 /* MainController.swift */; };
+		18EC1E4FB1F2944C6BEE7600 /* Library.ice in Sources */ = {isa = PBXBuildFile; fileRef = DD305D14D0799F54A3C17FA3 /* Library.ice */; };
+		1A7BB178F9D6B879BD9F10AA /* Images.xcassets in Sources */ = {isa = PBXBuildFile; fileRef = 6C2FC40006C2ADD8CBA8214E /* Images.xcassets */; };
+		25919868EB8DAC4AC8D4CD04 /* EditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 901F671C291A63F57E821D46 /* EditController.swift */; };
+		3EB6F2FFB7A7BEA83FBC0224 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78EA978CEE86550EFD972D1 /* AppDelegate.swift */; };
+		56FF6CE00E502240672C12F2 /* Session.ice in Sources */ = {isa = PBXBuildFile; fileRef = ED60027E5F458DB982DE434C /* Session.ice */; };
+		58B02B451E34E13E94DB0720 /* Glacier2Session.ice in Sources */ = {isa = PBXBuildFile; fileRef = 2CF4691615ED5E4ADD7210D9 /* Glacier2Session.ice */; };
+		5934BFE3A776336611F5346A /* AddController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824D02FB6791425E0B5F84A4 /* AddController.swift */; };
+		69FACBFE728C12EBE818DC45 /* DetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F9953E272806E8F0D37C93 /* DetailController.swift */; };
+		76C218FAC0CC2DD98396EFB8 /* config.client in Resources */ = {isa = PBXBuildFile; fileRef = 29200B7D2BB8AC4CF55882BB /* config.client */; };
+		779C3674DD7B5BF8A7A96E1F /* Ice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 164469EC45F7C08C0E12C0A9 /* Ice.framework */; };
+		826ABEDABE2D0ABF73374FAC /* PromiseKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 6AB9A1AE4C750A17A2094418 /* PromiseKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		84262412DD7DD9A80053EED0 /* Ice.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 164469EC45F7C08C0E12C0A9 /* Ice.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		8730B4F5FD1ADDF54F94E3A0 /* Glacier2.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = A45A5CEF9F249B4C2368DF82 /* Glacier2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		9DFD636F56BA01825BABADC0 /* PromiseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AB9A1AE4C750A17A2094418 /* PromiseKit.framework */; };
+		BB35C4401FA52D94611B0AA2 /* Main.storyboard in Sources */ = {isa = PBXBuildFile; fileRef = 083F1AD86BB83B912FE58924 /* Main.storyboard */; };
+		C60E4C51B8AE446E66111304 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B29468A9803484DEA0B1320 /* LoginController.swift */; };
+		CBDE2021CAF94FADC9A65EB3 /* LaunchScreen.storyboard in Sources */ = {isa = PBXBuildFile; fileRef = B95AB5460766DC15DAF0D900 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
-		9AC7DA92AC19D884B4E05E28 /* PBXBuildRule */ = {
+		5C01D2596209DFB7669A25B1 /* PBXBuildRule */ = {
 			isa = PBXBuildRule;
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.ice";
@@ -44,15 +44,15 @@
 /* End PBXBuildRule section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		27CC9C442A5832C4E53FD2FB /* Copy Frameworks */ = {
+		DA5E608E5FF13AD1026E30D8 /* Copy Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				9A4C6A6E4B1A94BEA39C55B5 /* Glacier2.framework in Copy Frameworks */,
-				80D0591045D4E6B05DCBC711 /* Ice.framework in Copy Frameworks */,
-				DE79D1768E4F49BFB73A1004 /* PromiseKit.framework in Copy Frameworks */,
+				8730B4F5FD1ADDF54F94E3A0 /* Glacier2.framework in Copy Frameworks */,
+				84262412DD7DD9A80053EED0 /* Ice.framework in Copy Frameworks */,
+				826ABEDABE2D0ABF73374FAC /* PromiseKit.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -60,84 +60,84 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0570291F7D9B097147038F1F /* Library.ice */ = {isa = PBXFileReference; includeInIndex = 1; path = Library.ice; sourceTree = "<group>"; };
-		0F5FB92B06DC297D3422AF81 /* AppDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		1624F222546401CBBF77B66C /* LoginController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
-		30D300C98E04E159A32211F2 /* Glacier2Session.ice */ = {isa = PBXFileReference; includeInIndex = 1; path = Glacier2Session.ice; sourceTree = "<group>"; };
-		34B6333103A6FE6A1FA620E7 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		3840344D036E74E12555BE8C /* Session.ice */ = {isa = PBXFileReference; includeInIndex = 1; path = Session.ice; sourceTree = "<group>"; };
-		4535D320F7C1962014A6C15F /* config.client */ = {isa = PBXFileReference; includeInIndex = 1; path = config.client; sourceTree = "<group>"; };
-		5087697E0A7A844FD2123C75 /* DetailController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DetailController.swift; sourceTree = "<group>"; };
-		51C4FC47663F1F689F3428A5 /* PromiseKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PromiseKit.framework; path = ../../../Carthage/Build/iOS/PromiseKit.framework; sourceTree = "<group>"; };
-		65BB4F3AD5C06F7D18728009 /* Images.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		6D1498EAD59F33BBCEEDFCF1 /* Ice.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ice.framework; path = ../../../Carthage/Build/iOS/Ice.framework; sourceTree = "<group>"; };
-		73609E8E5BDB2E1B0985B33B /* AddController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddController.swift; sourceTree = "<group>"; };
-		8779BEA8F261C57F38BDCD5E /* Library.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Library.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		8D135AB7C0A7C855216BDE11 /* MainController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
-		CA05A27B3C00E4AE6CC166D2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		CACA4520DA9B5E09867D26A4 /* Main.storyboard */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		F39152ABB6D85D8792BFCEFC /* Glacier2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Glacier2.framework; path = ../../../Carthage/Build/iOS/Glacier2.framework; sourceTree = "<group>"; };
-		F43E5559E5DB51FC0A506FBD /* EditController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EditController.swift; sourceTree = "<group>"; };
+		083F1AD86BB83B912FE58924 /* Main.storyboard */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		164469EC45F7C08C0E12C0A9 /* Ice.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ice.framework; path = ../../../Carthage/Build/iOS/Ice.framework; sourceTree = "<group>"; };
+		1CD1EF57FA5019F0BA4824D6 /* MainController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
+		29200B7D2BB8AC4CF55882BB /* config.client */ = {isa = PBXFileReference; includeInIndex = 1; path = config.client; sourceTree = "<group>"; };
+		2CF4691615ED5E4ADD7210D9 /* Glacier2Session.ice */ = {isa = PBXFileReference; includeInIndex = 1; path = Glacier2Session.ice; sourceTree = "<group>"; };
+		480A9F71233C673A7DA8872B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		6AB9A1AE4C750A17A2094418 /* PromiseKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PromiseKit.framework; path = ../../../Carthage/Build/iOS/PromiseKit.framework; sourceTree = "<group>"; };
+		6C2FC40006C2ADD8CBA8214E /* Images.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		824D02FB6791425E0B5F84A4 /* AddController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddController.swift; sourceTree = "<group>"; };
+		8B29468A9803484DEA0B1320 /* LoginController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
+		901F671C291A63F57E821D46 /* EditController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EditController.swift; sourceTree = "<group>"; };
+		98F9953E272806E8F0D37C93 /* DetailController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DetailController.swift; sourceTree = "<group>"; };
+		A08563963726FEDA1D1F8DCA /* Library.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Library.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A45A5CEF9F249B4C2368DF82 /* Glacier2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Glacier2.framework; path = ../../../Carthage/Build/iOS/Glacier2.framework; sourceTree = "<group>"; };
+		A78EA978CEE86550EFD972D1 /* AppDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		B95AB5460766DC15DAF0D900 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		DD305D14D0799F54A3C17FA3 /* Library.ice */ = {isa = PBXFileReference; includeInIndex = 1; path = Library.ice; sourceTree = "<group>"; };
+		ED60027E5F458DB982DE434C /* Session.ice */ = {isa = PBXFileReference; includeInIndex = 1; path = Session.ice; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		4B4D17B0C02A0966A4A4ABA0 /* Frameworks */ = {
+		A6EB4694BA38E44A58DFCB9F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FCE1CAF132F6570B0775248A /* Glacier2.framework in Frameworks */,
-				01250A1A49588A921EB38F42 /* Ice.framework in Frameworks */,
-				C3ABEF161B59BFF93582DC0B /* PromiseKit.framework in Frameworks */,
+				11202F5EF95BCB86A2FB2A6C /* Glacier2.framework in Frameworks */,
+				779C3674DD7B5BF8A7A96E1F /* Ice.framework in Frameworks */,
+				9DFD636F56BA01825BABADC0 /* PromiseKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2CFD122CBC133ED6C7D52549 /* Frameworks */ = {
+		05BED24835EDBCA311FA671D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CFA01133F02949568CD34AD9 /* iOS */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		68213C1E2BA75FA85928C12C = {
-			isa = PBXGroup;
-			children = (
-				2CFD122CBC133ED6C7D52549 /* Frameworks */,
-				A47FA52A23FAF3B6AAE186CF /* Products */,
-				73609E8E5BDB2E1B0985B33B /* AddController.swift */,
-				0F5FB92B06DC297D3422AF81 /* AppDelegate.swift */,
-				4535D320F7C1962014A6C15F /* config.client */,
-				5087697E0A7A844FD2123C75 /* DetailController.swift */,
-				F43E5559E5DB51FC0A506FBD /* EditController.swift */,
-				30D300C98E04E159A32211F2 /* Glacier2Session.ice */,
-				65BB4F3AD5C06F7D18728009 /* Images.xcassets */,
-				34B6333103A6FE6A1FA620E7 /* LaunchScreen.storyboard */,
-				0570291F7D9B097147038F1F /* Library.ice */,
-				1624F222546401CBBF77B66C /* LoginController.swift */,
-				CACA4520DA9B5E09867D26A4 /* Main.storyboard */,
-				8D135AB7C0A7C855216BDE11 /* MainController.swift */,
-				3840344D036E74E12555BE8C /* Session.ice */,
-			);
-			sourceTree = "<group>";
-		};
-		A47FA52A23FAF3B6AAE186CF /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				8779BEA8F261C57F38BDCD5E /* Library.app */,
+				A08563963726FEDA1D1F8DCA /* Library.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		CFA01133F02949568CD34AD9 /* iOS */ = {
+		11B761D07B561B6CE68B0876 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				CA05A27B3C00E4AE6CC166D2 /* Foundation.framework */,
-				F39152ABB6D85D8792BFCEFC /* Glacier2.framework */,
-				6D1498EAD59F33BBCEEDFCF1 /* Ice.framework */,
-				51C4FC47663F1F689F3428A5 /* PromiseKit.framework */,
+				3B7249FD949BBB29E0B1E223 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3AA45BAA5F1371B5EFA96967 = {
+			isa = PBXGroup;
+			children = (
+				11B761D07B561B6CE68B0876 /* Frameworks */,
+				05BED24835EDBCA311FA671D /* Products */,
+				824D02FB6791425E0B5F84A4 /* AddController.swift */,
+				A78EA978CEE86550EFD972D1 /* AppDelegate.swift */,
+				29200B7D2BB8AC4CF55882BB /* config.client */,
+				98F9953E272806E8F0D37C93 /* DetailController.swift */,
+				901F671C291A63F57E821D46 /* EditController.swift */,
+				2CF4691615ED5E4ADD7210D9 /* Glacier2Session.ice */,
+				6C2FC40006C2ADD8CBA8214E /* Images.xcassets */,
+				B95AB5460766DC15DAF0D900 /* LaunchScreen.storyboard */,
+				DD305D14D0799F54A3C17FA3 /* Library.ice */,
+				8B29468A9803484DEA0B1320 /* LoginController.swift */,
+				083F1AD86BB83B912FE58924 /* Main.storyboard */,
+				1CD1EF57FA5019F0BA4824D6 /* MainController.swift */,
+				ED60027E5F458DB982DE434C /* Session.ice */,
+			);
+			sourceTree = "<group>";
+		};
+		3B7249FD949BBB29E0B1E223 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				480A9F71233C673A7DA8872B /* Foundation.framework */,
+				A45A5CEF9F249B4C2368DF82 /* Glacier2.framework */,
+				164469EC45F7C08C0E12C0A9 /* Ice.framework */,
+				6AB9A1AE4C750A17A2094418 /* PromiseKit.framework */,
 			);
 			name = iOS;
 			sourceTree = "<group>";
@@ -145,40 +145,40 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		59BD2376ABD449C026644EB1 /* Library iOS */ = {
+		1A2614B581A85418958CF5D1 /* Library iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 384CE3C20E579E8EC361F434 /* Build configuration list for PBXNativeTarget "Library iOS" */;
+			buildConfigurationList = 956018F2EDEB5D271F6E2948 /* Build configuration list for PBXNativeTarget "Library iOS" */;
 			buildPhases = (
-				428E59EBE3E477AB9C8A1268 /* Sources */,
-				4B4D17B0C02A0966A4A4ABA0 /* Frameworks */,
-				32EB36FD44B7D4DC97598BEB /* Resources */,
-				27CC9C442A5832C4E53FD2FB /* Copy Frameworks */,
+				2EE1E9B219A2E776EFDE8552 /* Sources */,
+				A6EB4694BA38E44A58DFCB9F /* Frameworks */,
+				C8D1FA6C3044BDCD09075C4B /* Resources */,
+				DA5E608E5FF13AD1026E30D8 /* Copy Frameworks */,
 			);
 			buildRules = (
-				9AC7DA92AC19D884B4E05E28 /* PBXBuildRule */,
+				5C01D2596209DFB7669A25B1 /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
 			name = "Library iOS";
 			productName = Library;
-			productReference = 8779BEA8F261C57F38BDCD5E /* Library.app */;
+			productReference = A08563963726FEDA1D1F8DCA /* Library.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		8C3D5E5756FA4B61F440A806 /* Project object */ = {
+		BCE36A139EF4FE2299F7F4CA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0930;
 				LastUpgradeCheck = 0930;
 				TargetAttributes = {
-					59BD2376ABD449C026644EB1 = {
+					1A2614B581A85418958CF5D1 = {
 						ProvisioningStyle = Automatic;
 					};
 				};
 			};
-			buildConfigurationList = 083A11A075A739600B7A7822 /* Build configuration list for PBXProject "library" */;
+			buildConfigurationList = B82EE32AB16F0FDD7EFD4291 /* Build configuration list for PBXProject "library" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -186,98 +186,51 @@
 				Base,
 				en,
 			);
-			mainGroup = 68213C1E2BA75FA85928C12C;
-			productRefGroup = A47FA52A23FAF3B6AAE186CF /* Products */;
+			mainGroup = 3AA45BAA5F1371B5EFA96967;
+			productRefGroup = 05BED24835EDBCA311FA671D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				59BD2376ABD449C026644EB1 /* Library iOS */,
+				1A2614B581A85418958CF5D1 /* Library iOS */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		32EB36FD44B7D4DC97598BEB /* Resources */ = {
+		C8D1FA6C3044BDCD09075C4B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9DF1967C00BA109B4227A896 /* config.client in Resources */,
+				76C218FAC0CC2DD98396EFB8 /* config.client in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		428E59EBE3E477AB9C8A1268 /* Sources */ = {
+		2EE1E9B219A2E776EFDE8552 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				361B4D269F064BD2900FA799 /* AddController.swift in Sources */,
-				2B09C3F4BD60ADE20151B6FB /* AppDelegate.swift in Sources */,
-				303F885E058AD0EACAE682F7 /* DetailController.swift in Sources */,
-				2418BD7A0D6B884F456EBF5E /* EditController.swift in Sources */,
-				0575D25D16976ED88F536231 /* Glacier2Session.ice in Sources */,
-				0C109BBA0883B9F7AAE7BBA1 /* Images.xcassets in Sources */,
-				8C810B73B19112FE35F41EEB /* LaunchScreen.storyboard in Sources */,
-				3DAD2075152B7E4000F3C8AE /* Library.ice in Sources */,
-				29591594182FEE4D843EE495 /* LoginController.swift in Sources */,
-				7AD4A0F2660888CDFA6EEAAC /* Main.storyboard in Sources */,
-				9293B1DB336F8B998B919C76 /* MainController.swift in Sources */,
-				30FA1672B968833E686F3C57 /* Session.ice in Sources */,
+				5934BFE3A776336611F5346A /* AddController.swift in Sources */,
+				3EB6F2FFB7A7BEA83FBC0224 /* AppDelegate.swift in Sources */,
+				69FACBFE728C12EBE818DC45 /* DetailController.swift in Sources */,
+				25919868EB8DAC4AC8D4CD04 /* EditController.swift in Sources */,
+				58B02B451E34E13E94DB0720 /* Glacier2Session.ice in Sources */,
+				1A7BB178F9D6B879BD9F10AA /* Images.xcassets in Sources */,
+				CBDE2021CAF94FADC9A65EB3 /* LaunchScreen.storyboard in Sources */,
+				18EC1E4FB1F2944C6BEE7600 /* Library.ice in Sources */,
+				C60E4C51B8AE446E66111304 /* LoginController.swift in Sources */,
+				BB35C4401FA52D94611B0AA2 /* Main.storyboard in Sources */,
+				1625B41D4B492B67F97CC9D0 /* MainController.swift in Sources */,
+				56FF6CE00E502240672C12F2 /* Session.ice in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		06F351525D31BF15E6C2ED93 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$(SRCROOT)";
-				CURRENT_PROJECT_VERSION = 3.7.2;
-				DEVELOPMENT_TEAM = U4TBVKNQ7F;
-				DYLIB_COMPATIBILITY_VERSION = 3.7.2;
-				DYLIB_CURRENT_VERSION = 3.7.2;
-				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "/Users/jose/Documents/ZeroC/3.7/ice-demos/swift/Carthage/Build/iOS";
-				INFOPLIST_FILE = Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.Library;
-				PRODUCT_NAME = Library;
-				SDKROOT = iphoneos;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		C16F4D7EC12C54E022E67A40 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$(SRCROOT)";
-				CURRENT_PROJECT_VERSION = 3.7.2;
-				DEVELOPMENT_TEAM = U4TBVKNQ7F;
-				DYLIB_COMPATIBILITY_VERSION = 3.7.2;
-				DYLIB_CURRENT_VERSION = 3.7.2;
-				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "/Users/jose/Documents/ZeroC/3.7/ice-demos/swift/Carthage/Build/iOS";
-				INFOPLIST_FILE = Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.Library;
-				PRODUCT_NAME = Library;
-				SDKROOT = iphoneos;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		C8175EE5541E544C40B324A9 /* Debug */ = {
+		09E9E5F880D715A2221FC59C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -337,7 +290,54 @@
 			};
 			name = Debug;
 		};
-		E7FCACD5A069C90AAAF6F74D /* Release */ = {
+		29D0C7BC77ABAEEA89A7F2C0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CONFIGURATION_BUILD_DIR = "$(SRCROOT)";
+				CURRENT_PROJECT_VERSION = 3.7.2;
+				DEVELOPMENT_TEAM = U4TBVKNQ7F;
+				DYLIB_COMPATIBILITY_VERSION = 3.7.2;
+				DYLIB_CURRENT_VERSION = 3.7.2;
+				ENABLE_TESTABILITY = NO;
+				FRAMEWORK_SEARCH_PATHS = "/Users/jose/Documents/ZeroC/3.7/ice-demos/swift/Carthage/Build/iOS";
+				INFOPLIST_FILE = Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.Library;
+				PRODUCT_NAME = Library;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		4BAC4FD2AC7A61527937F791 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CONFIGURATION_BUILD_DIR = "$(SRCROOT)";
+				CURRENT_PROJECT_VERSION = 3.7.2;
+				DEVELOPMENT_TEAM = U4TBVKNQ7F;
+				DYLIB_COMPATIBILITY_VERSION = 3.7.2;
+				DYLIB_CURRENT_VERSION = 3.7.2;
+				ENABLE_TESTABILITY = NO;
+				FRAMEWORK_SEARCH_PATHS = "/Users/jose/Documents/ZeroC/3.7/ice-demos/swift/Carthage/Build/iOS";
+				INFOPLIST_FILE = Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.Library;
+				PRODUCT_NAME = Library;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		9F445EDD9685B1561DED8175 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -393,25 +393,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		083A11A075A739600B7A7822 /* Build configuration list for PBXProject "library" */ = {
+		956018F2EDEB5D271F6E2948 /* Build configuration list for PBXNativeTarget "Library iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C8175EE5541E544C40B324A9 /* Debug */,
-				E7FCACD5A069C90AAAF6F74D /* Release */,
+				4BAC4FD2AC7A61527937F791 /* Debug */,
+				29D0C7BC77ABAEEA89A7F2C0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		384CE3C20E579E8EC361F434 /* Build configuration list for PBXNativeTarget "Library iOS" */ = {
+		B82EE32AB16F0FDD7EFD4291 /* Build configuration list for PBXProject "library" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				06F351525D31BF15E6C2ED93 /* Debug */,
-				C16F4D7EC12C54E022E67A40 /* Release */,
+				09E9E5F880D715A2221FC59C /* Debug */,
+				9F445EDD9685B1561DED8175 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 8C3D5E5756FA4B61F440A806 /* Project object */;
+	rootObject = BCE36A139EF4FE2299F7F4CA /* Project object */;
 }

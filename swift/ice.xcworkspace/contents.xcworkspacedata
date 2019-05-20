@@ -5,6 +5,9 @@
       location = "container:"
       name = "macOS">
       <FileRef
+         location = "group:/Users/jose/Documents/ZeroC/3.7/ice-demos/swift/Ice/asyncInvocation/asyncinvocation.xcodeproj">
+      </FileRef>
+      <FileRef
          location = "group:/Users/jose/Documents/ZeroC/3.7/ice-demos/swift/Ice/bidir/bidir.xcodeproj">
       </FileRef>
       <FileRef
@@ -17,10 +20,10 @@
          location = "group:/Users/jose/Documents/ZeroC/3.7/ice-demos/swift/Ice/minimal/minimal.xcodeproj">
       </FileRef>
       <FileRef
-         location = "group:/Users/jose/Documents/ZeroC/3.7/ice-demos/swift/Ice/throughput/throughput.xcodeproj">
+         location = "group:/Users/jose/Documents/ZeroC/3.7/ice-demos/swift/Ice/optional/optional.xcodeproj">
       </FileRef>
       <FileRef
-         location = "group:/Users/jose/Documents/ZeroC/3.7/ice-demos/swift/Ice/optional/optional.xcodeproj">
+         location = "group:/Users/jose/Documents/ZeroC/3.7/ice-demos/swift/Ice/throughput/throughput.xcodeproj">
       </FileRef>
       <FileRef
          location = "group:/Users/jose/Documents/ZeroC/3.7/ice-demos/swift/Manual/printer/printer.xcodeproj">
@@ -33,13 +36,13 @@
       location = "container:"
       name = "iOS">
       <FileRef
-         location = "group:/Users/jose/Documents/ZeroC/3.7/ice-demos/swift/iOS/Ice/hello/hello.xcodeproj">
-      </FileRef>
-      <FileRef
          location = "group:/Users/jose/Documents/ZeroC/3.7/ice-demos/swift/iOS/Chat/chat.xcodeproj">
       </FileRef>
       <FileRef
          location = "group:/Users/jose/Documents/ZeroC/3.7/ice-demos/swift/iOS/Database/library/library.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:/Users/jose/Documents/ZeroC/3.7/ice-demos/swift/iOS/Ice/hello/hello.xcodeproj">
       </FileRef>
    </Group>
 </Workspace>
