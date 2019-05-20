@@ -42,12 +42,6 @@ func run() -> Int32 {
             // Since the divide operation has output parameters, the promise result is a tuple
             // with the return value and the output parameters
             print("13 / 5 is \(r.returnValue) with a remainder of \(r.remainder)")
-        }.recover { error -> Promise<(returnValue: Int32, remainder: Int32)> in
-            guard error is DivideByZeroException else {
-                throw error
-            }
-            print("You cannot divide by zero")
-            return .value((returnValue: 0, remainder: 0))
         }.then { _ in
             //
             // Same with 13 / 0
