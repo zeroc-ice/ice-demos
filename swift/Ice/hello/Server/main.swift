@@ -23,10 +23,6 @@ class HelloI: Hello {
 
 func run() -> Int32 {
     do {
-        //
-        // using statement - communicator is automatically destroyed
-        // at the end of this statement
-        //
         var args = CommandLine.arguments
         let communicator = try Ice.initialize(args: &args, configFile: "config.server")
         defer {

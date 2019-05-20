@@ -12,27 +12,27 @@ func run() -> Int32 {
         defer {
             communicator.destroy()
         }
-        
+
         guard args.count == 1 else {
             print("too many arguments")
             return 1
         }
-        
+
         guard let base = try communicator.propertyToProxy("ContactDB.Proxy"),
               let contactdb = try checkedCast(prx: base, type: ContactDBPrx.self) else {
             print("invalid proxy")
             return 1
         }
-        
+
         //
         // Add a contact for "john". All parameters are provided.
         //
         do {
             let johnNumber = "123-456-7890";
             try contactdb.addContact(name: "john", type: .HOME, number: johnNumber, dialGroup: 0)
-            
+
             print("Checking john... ", terminator: "")
-            
+
             //
             // Find the phone number for "john".
             //
@@ -40,7 +40,7 @@ func run() -> Int32 {
                 print("number is incorrect")
                 return 1
             }
-            
+
             //
             // Optional can also be used in an out parameter.
             //
@@ -71,13 +71,13 @@ func run() -> Int32 {
             //
             let steveNumber = "234-567-8901";
             try contactdb.addContact(name: "steve", type: nil, number: steveNumber, dialGroup: 1)
-            
+
             print("Checking steve... ", terminator: "")
             guard try contactdb.queryNumber("steve") == steveNumber else {
                 print("number is incorrect ")
                 return 1
             }
-            
+
             guard let info = try contactdb.query("steve"),
                       info.type == .HOME,
                       info.number == steveNumber,
@@ -85,28 +85,28 @@ func run() -> Int32 {
                 print("info is incorrect")
                 return 1
             }
-            
+
             guard try contactdb.queryDialgroup("steve") == 1 else {
                 print("dialgroup is incorrect")
                 return 1
             }
         }
         print("ok")
-        
+
         print("Checking frank... ", terminator: "")
-        
+
         do {
             //
             // Add a contact from "frank". Here the dialGroup field isn't set.
             //
             let frankNumber = "345-678-9012";
             try contactdb.addContact(name: "frank", type: .CELL, number: frankNumber, dialGroup: nil)
-        
+
             guard try contactdb.queryNumber("frank") == frankNumber else {
                 print("number is incorrect ")
                 return 1
             }
-            
+
             //
             // The dial group field should be unset.
             //
@@ -117,28 +117,28 @@ func run() -> Int32 {
                 print("info is incorrect")
                 return 1
             }
-            
+
             guard try contactdb.queryDialgroup("frank") == nil else {
                 print("dialgroup is incorrect")
                 return 1
             }
         }
         print("ok")
-        
-        
+
+
         print("Checking anne... ", terminator: "")
-        
+
         do {
             //
             // Add a contact from "anne". The number field isn't set.
             //
             try contactdb.addContact(name: "anne", type: .OFFICE, number: nil, dialGroup: 2)
-           
+
             guard try contactdb.queryNumber("anne") == nil else {
                 print("number is incorrect ")
                 return 1
             }
-            
+
             //
             // The number field should be unset.
             //
@@ -149,13 +149,13 @@ func run() -> Int32 {
                 print("info is incorrect ")
                 return 1
             }
-            
+
             guard try contactdb.queryDialgroup("anne") == 2 else {
                 print("dialgroup is incorrect ")
                 return 1
             }
         }
-        
+
         do {
             //
             // The optional fields can be used to determine what fields to
@@ -177,7 +177,7 @@ func run() -> Int32 {
             }
         }
         print("ok")
-        
+
         try contactdb.shutdown()
 
         return 0
@@ -188,4 +188,3 @@ func run() -> Int32 {
 }
 
 exit(run())
-

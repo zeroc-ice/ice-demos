@@ -10,6 +10,7 @@ $demos = {
              "Ice/latency",
              "Ice/minimal",
              "Ice/throughput",
+             "Ice/optional",
 
              "Manual/printer",
              "Manual/simpleFilesystem"],
@@ -39,6 +40,7 @@ $demo_extra_sources = {
     "Ice/hello" => ["Hello.ice"],
     "Ice/latency" => ["Latency.ice"],
     "Ice/minimal" => ["Hello.ice"],
+    "Ice/optional" => ["Contact.ice"],
     "Ice/throughput" => ["Throughput.ice"],
     "Manual/printer" => ["Printer.ice"],
     "Manual/simpleFilesystem" => ["Filesystem.ice"],
