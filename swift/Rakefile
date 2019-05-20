@@ -5,7 +5,8 @@ require 'xcodeproj'
 $top_level = File.expand_path(File.dirname(__FILE__))
 
 $demos = {
-    :osx => ["Ice/asyncInvocation",
+    :osx => ["Ice/async",
+             "Ice/asyncInvocation",
              "Ice/bidir",
              "Ice/hello",
              "Ice/latency",
