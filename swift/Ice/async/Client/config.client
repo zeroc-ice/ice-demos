@@ -2,17 +2,7 @@
 # The client reads this property to create the reference to the
 # "hello" object in the server.
 #
-Hello.Proxy=hello:tcp -p 10000:udp -p 10000:ssl -p 10001
-
-#
-# Uncomment to use the WebSocket transports instead.
-#
-#Hello.Proxy=hello:ws -p 10002:udp -p 10000:wss -p 10003
-
-#
-# Only connect to the localhost interface by default.
-#
-Ice.Default.Host=localhost
+Hello.Proxy=hello:tcp -h localhost -p 10000
 
 #
 # Warn about connection exceptions
@@ -36,30 +26,3 @@ Ice.Warn.Connections=1
 # 1 = trace protocol messages
 #
 #Ice.Trace.Protocol=1
-
-#
-# Security Tracing
-#
-# 0 = no security tracing
-# 1 = trace messages
-#
-#IceSSL.Trace.Security=1
-
-#
-# SSL Configuration
-#
-Ice.Plugin.IceSSL=IceSSL:createIceSSL
-IceSSL.DefaultDir=../../../../certs
-IceSSL.CAs=cacert.pem
-IceSSL.CertFile=client.p12
-IceSSL.Password=password
-IceSSL.Keychain=../../../../certs/client.keychain
-IceSSL.KeychainPassword=password
-
-#
-# IceMX configuration.
-#
-#Ice.Admin.Endpoints=tcp -p 10004
-Ice.Admin.InstanceName=client
-IceMX.Metrics.Debug.GroupBy=id
-IceMX.Metrics.ByParent.GroupBy=parent
