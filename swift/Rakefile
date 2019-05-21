@@ -13,6 +13,8 @@ $demos = {
              "Ice/optional",
              "Ice/throughput",
 
+             "IceStorm/clock",
+
              "Manual/printer",
              "Manual/simpleFilesystem"],
 
@@ -21,34 +23,21 @@ $demos = {
              "iOS/Ice/hello"]
 }
 
-$demo_variants = ["Client", "Server"]
+$demo_variants = ["Client", "Server", "Publisher", "Subscriber"]
 
 #
 # Default sources for each variant
 #
-$demo_default_sources = {}
-
 $demo_variant_sources = {
     "Client" => ["Client/*.swift"],
-    "Server" => ["Server/*.swift"]
-}
-
-#
-# Extra demo sources if any
-#
-$demo_extra_sources = {
-    "Ice/asyncInvocation" => ["Calculator.ice"],
-    "Ice/bidir" => ["Callback.ice"],
-    "Ice/hello" => ["Hello.ice"],
-    "Ice/latency" => ["Latency.ice"],
-    "Ice/minimal" => ["Hello.ice"],
-    "Ice/optional" => ["Contact.ice"],
-    "Ice/throughput" => ["Throughput.ice"],
-    "Manual/printer" => ["Printer.ice"],
-    "Manual/simpleFilesystem" => ["Filesystem.ice"],
+    "Server" => ["Server/*.swift"],
+    "Publisher" => ["Publisher/*.swift"],
+    "Subscriber" => ["Subscriber/*.swift"]
 }
 
 $demo_extra_frameworks = {
+    "IceStorm/clock" => ["IceStorm.framework"],
+
     "iOS/Chat" => ["Glacier2.framework"],
     "iOS/Database/library" => ["Glacier2.framework"]
 }
@@ -99,13 +88,10 @@ def create_commandline_targets(project, demo)
         if demo_has_variant(demo, variant)
             target = project.new_target(:command_line_tool, variant, :osx)
             target.name = "#{target.name} macOS"
-            target_set_common_build_settings(target,
-                                             variant.downcase,
-                                             "#{variant}/Info.plist",
-                                             "$(SRCROOT)/#{variant}")
+            target_set_common_build_settings(target, variant.downcase, "#{variant}/Info.plist", "$(SRCROOT)/#{variant}")
 
             target.frameworks_build_phases.clear()
-            target_add_files(target, project.main_group, "#{project.project_dir}", demo_default_sources(demo, variant))
+            target_add_files(target, project.main_group, "#{project.project_dir}", ["*.ice"])
 
             group = project_group(project, variant)
             target_add_files(target, group, "#{project.project_dir}", demo_variant_sources(demo, variant))
@@ -178,6 +164,7 @@ def project_path(basename)
 end
 
 def target_add_slice2swift_build_rule(project, target, prefix = nil)
+    relative_path = Pathname.new($top_level).relative_path_from(Pathname.new(project.project_dir)).to_s
     #
     # Add Slice Compiler build rule to the target
     #
@@ -187,20 +174,15 @@ def target_add_slice2swift_build_rule(project, target, prefix = nil)
     if prefix then
         rule.name = "Slice Compiler for #{prefix}/*.ice"
         rule.file_patterns = "*/#{prefix}/*.ice"
-        rule.script = "#{$top_level}/config/xcode-slice2swift.sh #{prefix}"
+        rule.script = "$SRCROOT/#{relative_path}/config/xcode-slice2swift.sh #{prefix}"
         rule.output_files = ["$(DERIVED_FILE_DIR)/#{prefix}_$(INPUT_FILE_BASE).swift"]
     else
         rule.name = "Slice Compiler"
         rule.file_patterns = "*.ice"
-        rule.script = "#{$top_level}/config/xcode-slice2swift.sh"
+        rule.script = "$SRCROOT/#{relative_path}/config/xcode-slice2swift.sh"
         rule.output_files = ["$(DERIVED_FILE_DIR)/$(INPUT_FILE_BASE).swift"]
     end
     target.build_rules << rule
-end
-
-def target_add_swiftlint_build_phase(target, basedir)
-    phase = target.new_shell_script_build_phase("Swiftformat & Swiftlint")
-    phase.shell_script = "$SRCROOT/config/xcode-swiftlint.sh $SRCROOT/#{basedir} $SRCROOT/.swiftlint.yml"
 end
 
 def group_add_files(group, basedir, patterns, exclude = [])
@@ -247,11 +229,14 @@ def target_set_common_build_settings(target, product, plist, build_dir)
 end
 
 def target_set_framework_build_settings(target)
+    relative_path = Pathname.new($top_level).relative_path_from(Pathname.new(target.project.project_dir)).to_s
     carthage_prefix = (target.name.include? "macOS") ? "Mac" : "iOS"
     target.build_configurations.each { |config|
-        config.build_settings["FRAMEWORK_SEARCH_PATHS"] = "#{$top_level}/Carthage/Build/#{carthage_prefix}"
+        config.build_settings["FRAMEWORK_SEARCH_PATHS"] =
+            "$SRCROOT/#{relative_path}/Carthage/Build/#{carthage_prefix}"
         if carthage_prefix == "Mac" then
-            config.build_settings["LD_RUNPATH_SEARCH_PATHS"] = "#{$top_level}/Carthage/Build/#{carthage_prefix}"
+            config.build_settings["LD_RUNPATH_SEARCH_PATHS"] =
+                "$SRCROOT/#{relative_path}/Carthage/Build/#{carthage_prefix}"
         end
     }
 end
@@ -279,13 +264,5 @@ def demo_has_variant(demo, variant)
 end
 
 def demo_variant_sources(demo, variant)
-    sources = $demo_variant_sources[variant] || []
-    sources += $demo_extra_sources["#{demo}/#{variant}"] || []
-    return sources
-end
-
-def demo_default_sources(demo, variant)
-    sources = $demo_default_sources[variant] || []
-    sources += $demo_extra_sources[demo] || []
-    return sources
+    $demo_variant_sources[variant] || []
 end
