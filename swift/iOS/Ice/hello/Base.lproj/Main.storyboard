@@ -13,7 +13,7 @@
         <!--View Controller-->
         <scene sceneID="eQE-te-PoZ">
             <objects>
-                <viewController id="4dU-vC-6ir" customClass="ViewController" customModule="client" sceneMemberID="viewController">
+                <viewController id="4dU-vC-6ir" customClass="ViewController" customModule="hello" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" id="HBb-0W-zeW">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -89,7 +89,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <slider opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="UUC-Bl-xsX">
-                                                <rect key="frame" x="73.666666666666629" y="0.0" width="302.33333333333337" height="31"/>
+                                                <rect key="frame" x="73.666666666666657" y="0.0" width="302.33333333333337" height="31"/>
                                                 <inset key="insetFor6xAndEarlier" minX="0.0" minY="20" maxX="0.0" maxY="-20"/>
                                             </slider>
                                         </subviews>
@@ -105,7 +105,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <slider opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="PDC-Gu-DRy">
-                                                <rect key="frame" x="73.666666666666629" y="0.0" width="302.33333333333337" height="31"/>
+                                                <rect key="frame" x="73.666666666666657" y="0.0" width="302.33333333333337" height="31"/>
                                                 <inset key="insetFor6xAndEarlier" minX="0.0" minY="20" maxX="0.0" maxY="-20"/>
                                             </slider>
                                         </subviews>

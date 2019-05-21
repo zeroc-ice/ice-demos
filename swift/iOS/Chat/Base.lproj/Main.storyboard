@@ -12,7 +12,7 @@
         <!--LoginController-->
         <scene sceneID="I31-6a-v1c">
             <objects>
-                <viewController useStoryboardIdentifierAsRestorationIdentifier="YES" id="vha-ZL-jpa" userLabel="LoginController" customClass="LoginController" customModule="Chat" sceneMemberID="viewController">
+                <viewController useStoryboardIdentifierAsRestorationIdentifier="YES" id="vha-ZL-jpa" userLabel="LoginController" customClass="LoginController" customModule="chat" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="iTx-kw-jEP"/>
                         <viewControllerLayoutGuide type="bottom" id="374-ah-K6y"/>
@@ -124,7 +124,7 @@
         <!--UserController-->
         <scene sceneID="yAq-n2-Mkb">
             <objects>
-                <viewController storyboardIdentifier="UserController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYr-oK-g6W" userLabel="UserController" customClass="UserController" customModule="Chat" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UserController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYr-oK-g6W" userLabel="UserController" customClass="UserController" customModule="chat" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="UKz-YU-1Rr">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -164,7 +164,7 @@
         <!--Chat-->
         <scene sceneID="ozo-Oa-DVw">
             <objects>
-                <viewController storyboardIdentifier="ChatController" id="MVQ-EK-wrE" customClass="ChatController" customModule="Chat" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ChatController" id="MVQ-EK-wrE" customClass="ChatController" customModule="chat" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="CiG-kL-1z1"/>
                         <viewControllerLayoutGuide type="bottom" id="tAQ-ro-Vmf"/>
@@ -177,7 +177,7 @@
                                 <rect key="frame" x="20" y="96" width="374" height="720"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MessageCell" id="zxV-YJ-Xsc" customClass="MessageCell" customModule="Chat">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MessageCell" id="zxV-YJ-Xsc" customClass="MessageCell" customModule="chat">
                                         <rect key="frame" x="0.0" y="28" width="374" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="zxV-YJ-Xsc" id="TA8-bA-3xE">

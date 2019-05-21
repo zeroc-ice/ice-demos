@@ -30,7 +30,7 @@
         <!--LoginController-->
         <scene sceneID="SZw-IO-UVD">
             <objects>
-                <viewController useStoryboardIdentifierAsRestorationIdentifier="YES" id="M5v-xP-5iF" userLabel="LoginController" customClass="LoginController" customModule="Library" sceneMemberID="viewController">
+                <viewController useStoryboardIdentifierAsRestorationIdentifier="YES" id="M5v-xP-5iF" userLabel="LoginController" customClass="LoginController" customModule="library" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="a9P-Rt-wYr"/>
                         <viewControllerLayoutGuide type="bottom" id="3j6-Sr-lsT"/>
@@ -158,7 +158,7 @@
         <!--Search-->
         <scene sceneID="mq1-oY-hVv">
             <objects>
-                <viewController storyboardIdentifier="MainController" id="11R-W4-ymf" customClass="MainController" customModule="Library" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MainController" id="11R-W4-ymf" customClass="MainController" customModule="library" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="tsS-hq-b9C">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -224,7 +224,7 @@
         <!--Book Info-->
         <scene sceneID="XdO-k9-SGb">
             <objects>
-                <viewController id="HcO-Yv-N0O" customClass="DetailController" customModule="Library" sceneMemberID="viewController">
+                <viewController id="HcO-Yv-N0O" customClass="DetailController" customModule="library" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Th0-JP-1w5">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -266,7 +266,7 @@
         <!--Edit-->
         <scene sceneID="VVt-Tj-ccw">
             <objects>
-                <viewController id="FJf-Ny-2t6" customClass="EditController" customModule="Library" sceneMemberID="viewController">
+                <viewController id="FJf-Ny-2t6" customClass="EditController" customModule="library" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ejv-Bn-jQJ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -306,7 +306,7 @@
         <!--New Book-->
         <scene sceneID="DGg-kN-F50">
             <objects>
-                <viewController id="Ls1-MX-iHD" customClass="AddController" customModule="Library" sceneMemberID="viewController">
+                <viewController id="Ls1-MX-iHD" customClass="AddController" customModule="library" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="NsM-AE-Izx">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -352,6 +352,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="tN4-zD-FsE"/>
+        <segue reference="usr-K4-9fI"/>
     </inferredMetricsTieBreakers>
 </document>
