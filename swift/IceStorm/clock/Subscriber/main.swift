@@ -16,6 +16,14 @@ class ClockI: Clock {
     }
 }
 
+enum Option: String {
+    case none = ""
+    case datagram = "--datagram"
+    case twoway = "--twoway"
+    case ordered = "--ordered"
+    case oneway = "--oneway"
+}
+
 func run() -> Int32 {
     do {
         var args = [String](CommandLine.arguments.dropFirst())
@@ -26,21 +34,15 @@ func run() -> Int32 {
         args = try communicator.getProperties().parseCommandLineOptions(prefix: "Clock", options: args)
 
         var topicName = "time"
-        var option = "None"
+        var option: Option = .none
         var batch = false
         var id: String?
         var retryCount: String?
 
         for var i in 0..<args.count {
             let oldoption = option
-            if args[i] == "--datagram" {
-                option = "Datagram"
-            } else if args[i] == "--twoway" {
-                option = "Twoway"
-            } else if args[i] == "--ordered" {
-                option = "Ordered"
-            } else if args[i] == "--oneway" {
-                option = "Oneway"
+            if let o = Option(rawValue: args[i]) {
+                option = o
             } else if args[i] == "--batch" {
                 batch = true
             } else if args[i] == "--id" {
@@ -66,16 +68,16 @@ func run() -> Int32 {
                 break
             }
 
-            if oldoption != option && oldoption != "None" {
+            if oldoption != option && oldoption != .none {
                 usage()
                 return 1
             }
         }
 
         if retryCount != nil {
-            if option == "None" {
-                option = "Twoway"
-            } else if option != "Twoway" && option != "Ordered" {
+            if option == .none {
+                option = .twoway
+            } else if option != .twoway && option != .ordered {
                 usage()
                 return 1
             }
@@ -130,15 +132,18 @@ func run() -> Int32 {
         //
         // Set up the proxy.
         //
-        if option == "Datagram" {
+        switch option {
+        case .datagram:
             subscriber = batch ? subscriber.ice_batchDatagram() : subscriber.ice_datagram()
-        } else if option == "Twoway" {
-            // Do nothing to the subscriber proxy. Its already twoway.
-        } else if option == "Ordered" {
+        case .ordered:
             // Do nothing to the subscriber proxy. Its already twoway.
             qos["reliability"] = "ordered"
-        } else if option == "Oneway" || option == "None" {
+        case .oneway,
+             .none:
             subscriber = batch ? subscriber.ice_batchOneway() : subscriber.ice_oneway()
+        case .twoway:
+            // Do nothing to the subscriber proxy. Its already twoway.
+            break
         }
 
         do {

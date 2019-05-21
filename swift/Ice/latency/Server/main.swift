@@ -26,7 +26,7 @@ func run() -> Int32 {
         communicator.waitForShutdown()
         return 0
     } catch {
-        print("Error: \(error)")
+        print("Error: \(error)\n")
         return 1
     }
 }

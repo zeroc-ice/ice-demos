@@ -20,8 +20,23 @@ func menu() {
             S: switch secure mode on/off
             s: shutdown server
             x: exit
-        ?: help
+            ?: help
         """)
+}
+
+enum Option: String {
+    case twoway = "t"
+    case oneway = "o"
+    case batchOneway = "O"
+    case datagram = "d"
+    case batchDatagram = "D"
+    case flushBatchRequests = "f"
+    case timeout = "T"
+    case delay = "P"
+    case switchSecure = "S"
+    case shutdown = "s"
+    case exit = "x"
+    case help = "?"
 }
 
 func run() -> Int32 {
@@ -53,84 +68,83 @@ func run() -> Int32 {
         var secure = false
         var timeout = Int32(-1)
         var delay = Int32(0)
-        var line = ""
-        repeat {
+        do {
 
             print("==> ", terminator: "")
-            guard let l = readLine(strippingNewline: true) else {
+            guard let line = readLine(strippingNewline: true) else {
                 return 0
             }
-            line = l
+            if let option = Option(rawValue: line) {
+                switch option {
+                case .twoway:
+                    try twoway.sayHello(delay)
+                case .oneway:
+                    try oneway.sayHello(delay)
+                case .batchOneway:
+                    try batchOneway.sayHello(delay)
+                case .datagram:
+                    if secure {
+                        print("secure datagrams are not supported")
+                    } else {
+                        try datagram.sayHello(delay)
+                    }
+                case .batchDatagram:
+                    if secure {
+                        print("secure datagrams are not supported")
+                    } else {
+                        try batchDatagram.sayHello(delay)
+                    }
+                case .flush:
+                    try batchOneway.ice_flushBatchRequests()
+                    if !secure {
+                        try batchDatagram.ice_flushBatchRequests()
+                    }
+                case .timeout:
+                    timeout = timeout == -1 ? 2000 : -1
 
-            switch line {
-            case "t":
-                try twoway.sayHello(delay)
-            case "o":
-                try oneway.sayHello(delay)
-            case "O":
-                try batchOneway.sayHello(delay)
-            case "d":
-                if secure {
-                    print("secure datagrams are not supported")
-                } else {
-                    try datagram.sayHello(delay)
-                }
-            case "D":
-                if secure {
-                    print("secure datagrams are not supported")
-                } else {
-                    try batchDatagram.sayHello(delay)
-                }
-            case "f":
-                try batchOneway.ice_flushBatchRequests()
-                if !secure {
-                    try batchDatagram.ice_flushBatchRequests()
-                }
-            case "T":
-                timeout = timeout == -1 ? 2000 : -1
+                    twoway = twoway.ice_invocationTimeout(timeout)
+                    oneway = oneway.ice_invocationTimeout(timeout)
+                    batchOneway = batchOneway.ice_invocationTimeout(timeout)
 
-                twoway = twoway.ice_invocationTimeout(timeout)
-                oneway = oneway.ice_invocationTimeout(timeout)
-                batchOneway = batchOneway.ice_invocationTimeout(timeout)
+                    if timeout == -1 {
+                        print("timeout is now switched off")
+                    } else {
+                        print("timeout is now set to 2000ms")
+                    }
+                case .delay:
+                    delay = delay == 0 ? 2500 : 0
 
-                if timeout == -1 {
-                    print("timeout is now switched off")
-                } else {
-                    print("timeout is now set to 2000ms")
+                    if delay == 0 {
+                        print("server delay is now deactivated")
+                    } else {
+                        print("server delay is now set to 2500ms")
+                    }
+                case .secure:
+                    secure = !secure
+
+                    twoway = twoway.ice_secure(secure)
+                    oneway = oneway.ice_secure(secure)
+                    batchOneway = batchOneway.ice_secure(secure)
+                    datagram = datagram.ice_secure(secure)
+                    batchDatagram = batchDatagram.ice_secure(secure)
+
+                    if secure {
+                        print("secure mode is now on")
+                    } else {
+                        print("secure mode is now off")
+                    }
+                case .shutdown:
+                    try twoway.shutdown()
+                case .exit:
+                    break
+                case .help
+                    menu()
                 }
-            case "P":
-                delay = delay == 0 ? 2500 : 0
-
-                if delay == 0 {
-                    print("server delay is now deactivated")
-                } else {
-                    print("server delay is now set to 2500ms")
-                }
-            case "S":
-                secure = !secure
-
-                twoway = twoway.ice_secure(secure)
-                oneway = oneway.ice_secure(secure)
-                batchOneway = batchOneway.ice_secure(secure)
-                datagram = datagram.ice_secure(secure)
-                batchDatagram = batchDatagram.ice_secure(secure)
-
-                if secure {
-                    print("secure mode is now on")
-                } else {
-                    print("secure mode is now off")
-                }
-            case "s":
-                try twoway.shutdown()
-            case "x":
-                break
-            case "?":
-                menu()
-            default:
+            } else {
                 print("unknown command `\(line)'")
                 menu()
             }
-        } while line != "x"
+        } while true
     } catch {
         print("Error: \(error)")
         return 1

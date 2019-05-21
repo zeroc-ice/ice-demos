@@ -181,7 +181,7 @@ func run() -> Int32 {
 
         return 0
     } catch {
-        print("Error: \(error)")
+        print("Error: \(error)\n")
         return 1
     }
 }

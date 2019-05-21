@@ -10,6 +10,7 @@ class ContactDBI: ContactDB {
     func addContact(name: String, type: NumberType?, number: String?, dialGroup: Int32?, current: Ice.Current) {
         let contact = Contact()
         contact.name = name
+
         if let type = type {
             contact.type = type
         }

@@ -10,6 +10,13 @@ func usage() {
     print("Usage: [--datagram|--twoway|--oneway] [topic]")
 }
 
+enum Option: String {
+    case none = ""
+    case datagram = "--datagram"
+    case twoway = "-twoway"
+    case oneway = "-oneway"
+}
+
 func run() -> Int32 {
     do {
         var args = [String](CommandLine.arguments.dropFirst())
@@ -18,28 +25,25 @@ func run() -> Int32 {
             communicator.destroy()
         }
 
-        var option = "None"
+        var option: Option = .none
         var topicName = "time"
 
         for var i in 0..<args.count {
             let oldoption = option
 
-            if args[i] == "--datagram" {
-                option = "Datagram"
-            } else if args[i] == "--twoway" {
-                option = "Twoway"
-            } else if args[i] == "--oneway" {
-                option = "Oneway"
-            } else if args[i].starts(with: "--") {
-                usage()
-                return 1
+            if args[i].starts(with: "--") {
+                guard let o = Option(rawValue: args[i]) else {
+                    usage()
+                    return 1
+                }
+                option = o
             } else {
                 topicName = args[i]
                 i += 1
                 break
             }
 
-            if oldoption != option && oldoption != "None" {
+            if oldoption != option && oldoption != .none {
                 usage()
                 return 1
             }
@@ -74,11 +78,13 @@ func run() -> Int32 {
             print("Error getting publisher proxy")
             return 1
         }
-        if option == "Datagram" {
+        switch option {
+        case .datagram:
             publisher = publisher.ice_datagram()
-        } else if option == "Twoway" {
-            // Do nothing.
-        } else { // if(oneway)
+        case .twoway:
+            // Do Nothing
+            break
+        default:
             publisher = publisher.ice_oneway()
         }
 
