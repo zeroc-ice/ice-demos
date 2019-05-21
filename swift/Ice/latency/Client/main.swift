@@ -13,7 +13,7 @@ func run() -> Int32 {
         defer {
             communicator.destroy()
         }
-        
+
         guard args.count == 1 else {
             print("too many arguments")
             return 1
@@ -23,17 +23,17 @@ func run() -> Int32 {
             print("invalid proxy")
             return 1
         }
-        
+
         let start = DispatchTime.now()
         let repetitions = 100000
         print("pinging server \(repetitions) times (this may take a while)")
         for _ in 0..<repetitions {
             try ping.ice_ping()
         }
-        
+
         let total = Double(DispatchTime.now().uptimeNanoseconds - start.uptimeNanoseconds) / 1_000_000
         let perPing = total / Double(repetitions)
-        
+
         print("time for \(repetitions) pings: \(total)ms")
         print("time per ping: \(perPing)ms")
         return 0

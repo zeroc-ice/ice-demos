@@ -20,7 +20,7 @@ protocol SessionAdapter {
 class Glacier2SessionAdapter: SessionAdapter {
 
     let router: Glacier2.RouterPrx
-    
+
     init(_ router: Glacier2.RouterPrx) {
         self.router = router
     }
@@ -32,11 +32,11 @@ class Glacier2SessionAdapter: SessionAdapter {
 
 class DemoSessionAdapter: SessionAdapter {
     let session: SessionPrx
-    
+
     init(_ session: SessionPrx) {
         self.session = session
     }
-    
+
     @discardableResult func destroy() -> Promise<Void> {
         return session.destroyAsync()
     }
@@ -50,16 +50,16 @@ class LoginController: UIViewController,
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var statusActivity: UIActivityIndicatorView!
-    
+
     var currentField: UITextField!
     var oldFieldValue: String?
-    
+
     var mainController: MainController!
-    
+
     var communicator: Ice.Communicator!
     var library: LibraryPrx?
     var initializationData: Ice.InitializationData!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         do {
@@ -72,7 +72,7 @@ class LoginController: UIViewController,
 
             initializationData = Ice.InitializationData()
             initializationData.properties = properties
-            
+
             //
             // If Ice.Default.Router is not set then we hide the login and password prompts.
             //
@@ -87,10 +87,11 @@ class LoginController: UIViewController,
                 usernameField.text = UserDefaults.standard.string(forKey: usernameKey)
                 passwordField.text = UserDefaults.standard.string(forKey: passwordKey)
             }
-            
+
             let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            mainController = mainStoryboard.instantiateViewController(withIdentifier: "MainController") as? MainController
-            
+            mainController =
+                mainStoryboard.instantiateViewController(withIdentifier: "MainController") as? MainController
+
             NotificationCenter.default.addObserver(self,
                                                    selector: #selector(applicationWillTerminate),
                                                    name: UIApplication.willTerminateNotification,
@@ -99,13 +100,13 @@ class LoginController: UIViewController,
             fatalError()
         }
     }
-    
+
     @objc func applicationWillTerminate() {
         if let communicator = self.communicator {
             communicator.destroy()
         }
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         if usernameField.superview!.isHidden || !usernameField.text!.isEmpty {
             loginButton.isEnabled = true
@@ -121,7 +122,7 @@ class LoginController: UIViewController,
         currentField = field
         oldFieldValue = field.text
     }
-    
+
     func textFieldDidEndEditing(_ field: UITextField) {
         precondition(field == currentField)
         //
@@ -129,7 +130,7 @@ class LoginController: UIViewController,
         // field so that the keyboard is dismissed.
         //
         UserDefaults.standard.set(field.text, forKey: field == usernameField ? usernameKey : passwordKey)
-    
+
         if usernameField.text!.isEmpty {
             loginButton.isEnabled = false
             loginButton.alpha = 0.5
@@ -139,9 +140,9 @@ class LoginController: UIViewController,
         }
 
         field.resignFirstResponder()
-        currentField = nil;
+        currentField = nil
     }
-    
+
     //
     // A touch outside the keyboard dismisses the keyboard, and
     // sets back the old field value.
@@ -157,14 +158,14 @@ class LoginController: UIViewController,
 
     func exception(_ message: String) {
         connecting(false)
-    
+
         // We always create a new communicator each time
         // we try to login.
         if let communicator = self.communicator {
             communicator.destroy()
         }
-        self.communicator = nil;
-    
+        self.communicator = nil
+
         //
         // open an alert with just an OK button
         //
@@ -172,9 +173,9 @@ class LoginController: UIViewController,
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
     }
-    
+
     func connecting(_ connecting: Bool) {
-        statusLabel.isHidden = !connecting;
+        statusLabel.isHidden = !connecting
         if connecting {
             statusActivity.startAnimating()
         } else {
@@ -189,10 +190,10 @@ class LoginController: UIViewController,
         do {
             precondition(self.communicator == nil)
             self.communicator = try Ice.initialize(initializationData)
-            
+
             if let router = communicator.getDefaultRouter() {
                 connecting(true)
-                
+
                 let glacier2router = uncheckedCast(prx: router, type: Glacier2.RouterPrx.self)
                 let username = usernameField.text!
                 let password = passwordField.text!
@@ -207,13 +208,15 @@ class LoginController: UIViewController,
                         //
                         // Configure the connection to send heartbeats in order to keep our session alive
                         //
-                        glacier2router.ice_getCachedConnection()!.setACM(timeout: acmTimeout, close: nil, heartbeat: .HeartbeatAlways)
+                        glacier2router.ice_getCachedConnection()!.setACM(timeout: acmTimeout,
+                                                                         close: nil,
+                                                                         heartbeat: .HeartbeatAlways)
                     }
                     self.connecting(false)
                     self.mainController.activate(communicator: self.communicator,
                                                  session: Glacier2SessionAdapter(glacier2router),
                                                  library: self.library)
-                    
+
                     self.library = nil
                     self.communicator = nil
                     self.navigationController!.pushViewController(self.mainController, animated: true)
@@ -221,8 +224,10 @@ class LoginController: UIViewController,
                     self.exception("Error: \(error)")
                 }
             } else {
-                guard let proxy = try communicator.stringToProxy(communicator.getProperties().getProperty("SessionFactory.Proxy")) else {
-                    exception("Error neither Ice.Default.Router nor SessionFactory.Proxy are defined in the application config file")
+                let properties = communicator.getProperties()
+                guard let proxy = try communicator.stringToProxy(properties.getProperty("SessionFactory.Proxy")) else {
+                    exception("Error neither Ice.Default.Router nor SessionFactory.Proxy" +
+                              "are defined in the application config file")
                     return
                 }
                 connecting(true)
@@ -233,8 +238,10 @@ class LoginController: UIViewController,
                     return session.getLibraryAsync()
                 }.done { library in
                     self.connecting(false)
-                    self.mainController.activate(communicator: self.communicator, session: DemoSessionAdapter(session), library: library)
-                    
+                    self.mainController.activate(communicator: self.communicator,
+                                                 session: DemoSessionAdapter(session),
+                                                 library: library)
+
                     self.library = nil
                     self.communicator = nil
                     self.navigationController!.pushViewController(self.mainController!, animated: true)

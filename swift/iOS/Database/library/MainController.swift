@@ -18,14 +18,14 @@ class MainController: UIViewController,
     var nrows: Int
     var rowsQueried: Int
     var currentIndexPath: IndexPath!
-    
+
     required init?(coder: NSCoder) {
         books = []
         nrows = 0
         rowsQueried = 0
         super.init(coder: coder)
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self,
@@ -33,7 +33,7 @@ class MainController: UIViewController,
                                                name: UIApplication.willTerminateNotification,
                                                object: nil)
     }
-    
+
     func activate(communicator: Ice.Communicator,
                   session: SessionAdapter,
                   library: LibraryPrx?) {
@@ -45,9 +45,9 @@ class MainController: UIViewController,
         rowsQueried = 10
         books.removeAll()
     }
-    
+
     @objc func destroySession() {
-        
+
         precondition(session != nil)
         session.destroy()
         session = nil
@@ -60,15 +60,15 @@ class MainController: UIViewController,
             self.communicator = nil
         }
     }
-    
+
     @IBAction func logout(sender: AnyObject) {
         destroySession()
         navigationController?.popViewController(animated: true)
     }
-    
+
     func removeCurrentBook() {
         let book = books[currentIndexPath.row]
-    
+
         if let proxy = book.proxy {
             proxy.destroyAsync().done {
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
@@ -84,18 +84,18 @@ class MainController: UIViewController,
         nrows -= 1
         searchTableView.deleteRows(at: [currentIndexPath], with: .fade)
     }
-    
+
     func bookUpdated(_ book: BookDescription) {
         if let currentIndexPath = self.currentIndexPath {
             books[currentIndexPath.row] = book
         }
         searchTableView.reloadData()
     }
-    
+
     func bookDeleted() {
         removeCurrentBook()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         //
         // There was a fatal error and the session was destroyed.
@@ -108,7 +108,7 @@ class MainController: UIViewController,
         //
         searchTableView.reloadData()
     }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowDetail", let dc = segue.destination as? DetailController {
             dc.delegate = self
@@ -118,7 +118,7 @@ class MainController: UIViewController,
             ac.startEdit(book: BookDescription(), library: library)
         }
     }
-    
+
     func exception(_ error: Error) {
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         //
@@ -128,7 +128,7 @@ class MainController: UIViewController,
         // in the alert view didDismissWithButtonIndex callback.
         //
         destroySession()
-    
+
         //
         // open an alert with just an OK button
         //
@@ -148,24 +148,24 @@ extension MainController: UISearchBarDelegate {
         searchBar.showsScopeBar = false
         searchBar.showsCancelButton = false
     }
-    
+
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         searchBar.showsScopeBar = false
         searchBar.showsCancelButton = false
-        
+
         let search = searchBar.text!
         let searchMode = searchBar.selectedScopeButtonIndex
-        
+
         // Kill the previous query results.
         query = nil
         nrows = 0
         rowsQueried = 10
         books.removeAll()
         searchTableView.reloadData()
-        
+
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        
+
         var result: Promise<(first: BookDescriptionSeq, nrows: Swift.Int32, result: BookQueryResultPrx?)>!
         switch searchMode {
         case 0:
@@ -199,7 +199,7 @@ extension MainController: UISearchBarDelegate {
             self.exception(error)
         }
     }
-    
+
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
         searchBar.showsScopeBar = true
         searchBar.showsCancelButton = true
@@ -211,18 +211,18 @@ extension MainController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSectionsInTableView() -> Int {
         return 1
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return nrows
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = searchTableView.dequeueReusableCell(withIdentifier: "MyIdentifier") ??
             UITableViewCell(style: .default, reuseIdentifier: "MyIdentifier")
         cell.accessoryType = UITableViewCell.AccessoryType.detailDisclosureButton
-        
+
         if indexPath.row > books.count - 1 {
-            
+
             //
             // Here we are past the available cached set of data. rowsQueried records
             // how many rows of data we've actually asked for.
@@ -230,7 +230,7 @@ extension MainController: UITableViewDelegate, UITableViewDataSource {
             if indexPath.row > rowsQueried - 1 {
                 UIApplication.shared.isNetworkActivityIndicatorVisible = true
                 precondition(query != nil)
-                
+
                 query!.nextAsync(Int32(10)).done { result in
                     self.books.append(contentsOf: result.returnValue)
                     if result.destroyed {
@@ -249,13 +249,13 @@ extension MainController: UITableViewDelegate, UITableViewDataSource {
         }
         return cell
     }
-    
+
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         // Selecting a <loading> book does nothing.
         if indexPath.row > books.count - 1 {
             return nil
         }
-        
+
         self.currentIndexPath = indexPath
         performSegue(withIdentifier: "ShowDetail", sender: self)
         return nil

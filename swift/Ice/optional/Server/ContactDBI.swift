@@ -5,12 +5,11 @@ import Ice
 
 class ContactDBI: ContactDB {
 
-
     var contacts = [String: Contact]()
 
     func addContact(name: String, type: NumberType?, number: String?, dialGroup: Int32?, current: Ice.Current) {
         let contact = Contact()
-        contact.name = name;
+        contact.name = name
         if let type = type {
             contact.type = type
         }
@@ -54,7 +53,7 @@ class ContactDBI: ContactDB {
     }
 
     func shutdown(current: Ice.Current) {
-        print("Shutting down...");
+        print("Shutting down...")
         current.adapter!.getCommunicator().shutdown()
     }
 }

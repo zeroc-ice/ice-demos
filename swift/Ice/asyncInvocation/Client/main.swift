@@ -13,18 +13,18 @@ func run() -> Int32 {
         defer {
             communicator.destroy()
         }
-        
+
         guard args.count == 1 else {
             print("too many arguments")
             return 1
         }
-        
+
         guard let base = try communicator.propertyToProxy("Calculator.Proxy"),
               let calculator = try checkedCast(prx: base, type: CalculatorPrx.self) else {
                 print("invalid proxy")
                 return 1
         }
-        
+
         var status: Int32 = 0
         firstly {
             //
@@ -91,4 +91,3 @@ func run() -> Int32 {
 }
 
 exit(run())
-

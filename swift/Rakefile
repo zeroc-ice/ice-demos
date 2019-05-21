@@ -103,6 +103,7 @@ def create_commandline_targets(project, demo)
 
             target_set_framework_build_settings(target, :osx)
             target_add_slice2swift_build_rule(project, target)
+            target_add_swiftlint_build_phase(target, "#{demo}/#{variant}")
         end
     end
 end
@@ -135,6 +136,7 @@ def create_uikit_targets(project, demo)
 
     target_set_framework_build_settings(target, :ios)
     target_add_slice2swift_build_rule(project, target)
+    target_add_swiftlint_build_phase(target, demo)
 
     target.build_configurations.each { |config|
         config.build_settings["CODE_SIGN_IDENTITY"] = "iPhone Developer"
@@ -152,6 +154,11 @@ def project_group(project, name)
         group = new_group
     }
     group
+end
+
+def target_add_swiftlint_build_phase(target, basedir)
+    phase = target.new_shell_script_build_phase("Swiftformat & Swiftlint")
+    phase.shell_script = "$SRCROOT/config/xcode-swiftlint.sh $SRCROOT/#{basedir} $SRCROOT/.swiftlint.yml"
 end
 
 def target_name(basename, suffix)

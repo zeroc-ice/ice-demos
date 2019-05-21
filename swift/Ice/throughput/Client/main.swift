@@ -41,7 +41,7 @@ func run() -> Int32 {
         // The communicator initialization removes all Ice-related arguments from args
         //
         guard args.count == 1 else {
-            print("too many arguments\n");
+            print("too many arguments\n")
             return 1
         }
 
@@ -51,28 +51,28 @@ func run() -> Int32 {
             return 1
         }
         let throughputOneway = throughput.ice_oneway()
-        
+
         let byteSeq = ByteSeq(repeating: 0, count: Int(ByteSeqSize))
         var stringSeq = StringSeq(repeating: "hello", count: Int(StringSeqSize))
         var structSeq = StringDoubleSeq(repeating: StringDouble(s: "hello", d: 3.14), count: Int(StringDoubleSeqSize))
         let fixedSeq = FixedSeq(repeating: Fixed(i: 0, j: 0, d: 0), count: Int(FixedSeqSize))
-        
+
         menu()
-        
+
         var line = ""
         var currentType = "1"
         repeat {
-            
+
             print("==> ", terminator: "")
             guard let l = readLine(strippingNewline: true) else {
                 return 0
             }
             line = l
-            
+
             var seqSize = ByteSeqSize
             var repetitions = 100
             let start = DispatchTime.now()
-            
+
             switch line {
             case "1", "2", "3", "4":
                 currentType = line
@@ -109,9 +109,9 @@ func run() -> Int32 {
                 default:
                     precondition(false)
                 }
-                
+
                 print(" \(repetitions) ", terminator: "")
-                
+
                 print("currentType: \(currentType)")
                 switch currentType {
                 case "1":
@@ -126,12 +126,12 @@ func run() -> Int32 {
                     precondition(false)
                 }
                 print(" sequences of size \(seqSize)", terminator: "")
-                
+
                 if line == "o" {
                     print(" as oneway", terminator: "")
                 }
                 print("...")
-                
+
                 for _ in 0..<repetitions {
                     switch currentType {
                     case "1":
@@ -147,7 +147,7 @@ func run() -> Int32 {
                         default:
                             precondition(false)
                         }
-                    
+
                     case "2":
                         switch line {
                         case "t":
@@ -161,7 +161,7 @@ func run() -> Int32 {
                         default:
                             precondition(false)
                         }
-                    
+
                     case "3":
                         switch line {
                         case "t":
@@ -175,7 +175,7 @@ func run() -> Int32 {
                         default:
                             precondition(false)
                         }
-                        
+
                     case "4":
                         switch line {
                         case "t":
@@ -194,14 +194,14 @@ func run() -> Int32 {
                         precondition(false)
                     }
                 }
-                
+
                 let total = Double(DispatchTime.now().uptimeNanoseconds - start.uptimeNanoseconds) / 1_000_000
-                
+
                 var formated = String(format: "%.2f", total)
                 print("time for \(repetitions) sequences: \(formated) ms")
                 formated = String(format: "%.2f", total / Double(repetitions))
                 print("time per sequence: \(formated) ms")
-                
+
                 var wireSize = 0
                 switch currentType {
                 case "1":
@@ -216,10 +216,10 @@ func run() -> Int32 {
                 default:
                     precondition(false)
                 }
-                
+
                 var mbit = Double(Int32(repetitions) * Int32(seqSize) * Int32(wireSize)) * 8.0 / total / 1000.0
                 if line == "e" {
-                    mbit *= 2;
+                    mbit *= 2
                 }
                 formated = String(format: "%.2f", mbit)
                 print("throughput: \(formated) Mbps")

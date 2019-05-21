@@ -61,7 +61,7 @@ func run() -> Int32 {
             do {
                 topic = try manager.create(topicName)
             } catch is IceStorm.TopicExists {
-                print("temporary error. try again.");
+                print("temporary error. try again.")
                 return 1
             }
         }

@@ -14,7 +14,7 @@ func run() -> Int32 {
         }
 
         guard args.count == 1 else {
-            print("too many arguments\n");
+            print("too many arguments\n")
             return 1
         }
 

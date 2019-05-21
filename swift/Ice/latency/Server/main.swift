@@ -14,7 +14,7 @@ func run() -> Int32 {
         defer {
             communicator.destroy()
         }
-        
+
         guard args.count == 1 else {
             print("too many arguments")
             return 1

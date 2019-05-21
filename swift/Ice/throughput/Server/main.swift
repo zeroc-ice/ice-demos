@@ -10,7 +10,7 @@ class ThroughputI: Throughput {
     var stringSeq: StringSeq
     var structSeq: StringDoubleSeq
     var fixedSeq: FixedSeq
-    
+
     init() {
         byteSeq = ByteSeq(repeating: 0, count: Int(ByteSeqSize))
         stringSeq = StringSeq(repeating: "hello", count: Int(StringSeqSize))
@@ -18,55 +18,55 @@ class ThroughputI: Throughput {
                                     count: Int(StringDoubleSeqSize))
         fixedSeq = FixedSeq(repeating: Fixed(i: 0, j: 0, d: 0), count: Int(FixedSeqSize))
     }
-    
+
     func needsWarmup(current: Current) throws -> Bool {
         return false
     }
-    
+
     func startWarmup(current: Current) throws {}
-    
+
     func endWarmup(current: Current) throws {}
-    
+
     func sendByteSeq(seq: ByteSeq, current: Current) throws {}
-    
+
     func recvByteSeq(current: Current) throws -> ByteSeq {
         return byteSeq
     }
-    
+
     func echoByteSeq(seq: ByteSeq, current: Current) throws -> ByteSeq {
         return seq
     }
-    
+
     func sendStringSeq(seq: StringSeq, current: Current) throws {}
-    
+
     func recvStringSeq(current: Current) throws -> StringSeq {
         return stringSeq
     }
-    
+
     func echoStringSeq(seq: StringSeq, current: Current) throws -> StringSeq {
         return seq
     }
-    
+
     func sendStructSeq(seq: StringDoubleSeq, current: Current) throws {}
-    
+
     func recvStructSeq(current: Current) throws -> StringDoubleSeq {
         return structSeq
     }
-    
+
     func echoStructSeq(seq: StringDoubleSeq, current: Current) throws -> StringDoubleSeq {
         return seq
     }
-    
+
     func sendFixedSeq(seq: FixedSeq, current: Current) throws {}
-    
+
     func recvFixedSeq(current: Current) throws -> FixedSeq {
         return fixedSeq
     }
-    
+
     func echoFixedSeq(seq: FixedSeq, current: Current) throws -> FixedSeq {
         return seq
     }
-    
+
     func shutdown(current: Current) throws {
         if let adapter = current.adapter {
             adapter.getCommunicator().shutdown()
@@ -83,7 +83,7 @@ func run() -> Int32 {
         }
 
         guard args.count == 1 else {
-            print("too many arguments\n");
+            print("too many arguments\n")
             return 1
         }
 

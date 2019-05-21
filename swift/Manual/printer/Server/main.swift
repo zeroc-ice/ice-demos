@@ -18,7 +18,8 @@ func run() -> Int32 {
             communicator.destroy()
         }
 
-        let adapter = try communicator.createObjectAdapterWithEndpoints(name: "SimplePrinterAdapter", endpoints: "default -h localhost -p 10000")
+        let adapter = try communicator.createObjectAdapterWithEndpoints(name: "SimplePrinterAdapter",
+                                                                        endpoints: "default -h localhost -p 10000")
         try adapter.add(servant: PrinterI(), id: Ice.stringToIdentity("SimplePrinter"))
         try adapter.activate()
 

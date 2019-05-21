@@ -24,23 +24,23 @@ func run() -> Int32 {
             print("invalid proxy")
             return 1
         }
-        
+
         //
         // Create an object adapter with no name and no endpoints for receiving callbacks
         // over bidirectional connections.
         //
         let adapter = try communicator.createObjectAdapter("")
-        
+
         //
         // Register the callback receiver servant with the object adapter
         //
         let proxy = try uncheckedCast(prx: adapter.addWithUUID(CallbackReceiverI()), type: CallbackReceiverPrx.self)
-        
+
         //
         // Associate the object adapter with the bidirectional connection.
         //
         try server.ice_getConnection()!.setAdapter(adapter)
-        
+
         //
         // Provide the proxy of the callback receiver object to the server and wait for
         // shutdown.

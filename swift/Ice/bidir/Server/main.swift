@@ -10,7 +10,7 @@ class CallbackSenderI: CallbackSender {
 
     var _clients: [CallbackReceiverPrx] = []
     var _num: Int32 = 0
-    
+
     func addClient(receiver: CallbackReceiverPrx?, current: Ice.Current) throws {
         if let client = receiver {
             DispatchQueue.global(qos: .background).async(flags: .barrier) {
@@ -19,7 +19,7 @@ class CallbackSenderI: CallbackSender {
             }
         }
     }
-    
+
     func dispatch() {
         if _clients.count > 0 {
             _num += 1
@@ -47,23 +47,23 @@ func run() -> Int32 {
         defer {
             communicator.destroy()
         }
-        
+
         guard args.count == 1 else {
-            print("too many arguments\n");
+            print("too many arguments\n")
             return 1
         }
-        
+
         let adapter = try communicator.createObjectAdapter("Callback.Server")
         let sender = CallbackSenderI()
         try adapter.add(servant: sender, id: Ice.stringToIdentity("sender"))
         try adapter.activate()
-        
-        Timer.scheduledTimer(withTimeInterval: TimeInterval(2.0), repeats: true) { timer in
+
+        Timer.scheduledTimer(withTimeInterval: TimeInterval(2.0), repeats: true) { _ in
             DispatchQueue.global(qos: .background).async(flags: .barrier) {
                 sender.dispatch()
             }
         }
-        
+
         RunLoop.main.run()
     } catch {
         print("Error: \(error)\n")

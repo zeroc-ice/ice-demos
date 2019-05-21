@@ -28,8 +28,8 @@ func run() -> Int32 {
         var topicName = "time"
         var option = "None"
         var batch = false
-        var id: String? = nil
-        var retryCount: String? = nil
+        var id: String?
+        var retryCount: String?
 
         for var i in 0..<args.count {
             let oldoption = option
@@ -74,7 +74,7 @@ func run() -> Int32 {
 
         if retryCount != nil {
             if option == "None" {
-                option = "Twoway";
+                option = "Twoway"
             } else if option != "Twoway" && option != "Ordered" {
                 usage()
                 return 1

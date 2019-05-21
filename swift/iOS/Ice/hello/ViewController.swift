@@ -25,7 +25,6 @@ class ViewController: UIViewController,
                       UIPickerViewDelegate,
                       UITextFieldDelegate,
                       UIAlertViewDelegate {
-    
 
     @IBOutlet weak var sayHelloButton: UIButton!
     @IBOutlet weak var shutdownButton: UIButton!
@@ -37,17 +36,17 @@ class ViewController: UIViewController,
     @IBOutlet weak var timeoutSlider: UISlider!
     @IBOutlet weak var delaySlider: UISlider!
     @IBOutlet weak var activity: UIActivityIndicatorView!
-    
+
     var communicator: Ice.Communicator!
     var helloPrx: HelloPrx!
     var deliveryMode: DeliveryMode!
     var hostname: String!
     var timeout: Int32!
     var discovery: Bool!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         do {
             var initData = Ice.InitializationData()
             let properties = Ice.createProperties()
@@ -59,14 +58,13 @@ class ViewController: UIViewController,
             properties.setProperty(key: "IceSSL.CertFile", value: "client.p12")
             properties.setProperty(key: "IceSSL.Password", value: "password")
             initData.properties = properties
-            
-            
+
             communicator = try Ice.initialize(initData)
         } catch {
             fatalError()
         }
     }
-    
+
     @IBAction func sayHello() {
         do {
             try updateProxy()
@@ -134,7 +132,7 @@ class ViewController: UIViewController,
             if helloPrx == nil {
                 return
             }
-            
+
             if deliveryMode != .OnewayBatch &&
                deliveryMode != .OnewaySecureBatch &&
                deliveryMode != .DatagramBatch {
@@ -142,17 +140,17 @@ class ViewController: UIViewController,
                 sendingRequest()
                 var response = false
                 firstly {
-                    helloPrx.shutdownAsync() { _ in
+                    helloPrx.shutdownAsync { _ in
                             if !response {
                                 self.requestSent()
                             }
                         }
-                    }.done {
-                        response = true
-                        self.ready()
-                    }.catch { error in
-                        response = true
-                        self.exception(error)
+                }.done {
+                    response = true
+                    self.ready()
+                }.catch { error in
+                    response = true
+                    self.exception(error)
                 }
             } else {
                 try helloPrx.shutdown()
@@ -166,16 +164,16 @@ class ViewController: UIViewController,
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
-    
+
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return 8
     }
-    
+
     func pickerView(_ view: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         guard let mode = DeliveryMode(rawValue: row) else {
             return nil
         }
-        
+
         switch mode {
         case .Twoway:
             return "Twoway"
@@ -202,11 +200,11 @@ class ViewController: UIViewController,
             fatalError()
         }
 
-        if(helloPrx != nil &&
+        if helloPrx != nil &&
            hostnameTextField.text == hostname &&
            timeout == t &&
            deliveryMode == mode &&
-           discovery == useDiscovery.isOn) {
+           discovery == useDiscovery.isOn {
             return
         }
 
@@ -214,7 +212,7 @@ class ViewController: UIViewController,
         timeout = t
         hostname = hostnameTextField.text
         discovery = useDiscovery.isOn
-        
+
         if discovery == false && hostname == "" {
             helloPrx = nil
             return
@@ -224,12 +222,14 @@ class ViewController: UIViewController,
         if discovery {
             s = "hello"
         } else {
-            s = "hello:tcp -h \"\(hostname!)\" -p 10000:ssl -h \"\(hostname!)\" -p 10001:udp -h \"\(hostname!)\" -p 10000"
+            s = "hello:tcp -h \"\(hostname!)\" -p 10000:" +
+                "ssl -h \"\(hostname!)\" -p 10001:" +
+                "udp -h \"\(hostname!)\" -p 10000"
         }
 
         UserDefaults.standard.set(hostname, forKey: hostnameKey)
         helloPrx = uncheckedCast(prx: try communicator.stringToProxy(s)!, type: HelloPrx.self)
-        
+
         switch mode {
         case .Twoway:
             helloPrx = helloPrx.ice_twoway()
@@ -253,14 +253,14 @@ class ViewController: UIViewController,
             helloPrx = helloPrx.ice_invocationTimeout(timeout)
         }
     }
-    
+
     func sendingRequest() {
         sayHelloButton.isEnabled = false
         shutdownButton.isEnabled = false
         statusLabel.text = "Sending request"
         activity.startAnimating()
     }
-    
+
     func requestSent() {
         if useDiscovery.isOn {
             if let connection = helloPrx.ice_getCachedConnection() {
@@ -269,7 +269,7 @@ class ViewController: UIViewController,
                     for info in sequence(first: try connection.getInfo(), next: { $0.underlying }) {
                         if let ipinfo = info as? IPConnectionInfo {
                             hostnameTextField.text = ipinfo.remoteAddress
-                            UserDefaults.standard.set(hostnameTextField.text, forKey:hostnameKey)
+                            UserDefaults.standard.set(hostnameTextField.text, forKey: hostnameKey)
                             break
                         }
                     }
@@ -285,14 +285,14 @@ class ViewController: UIViewController,
             ready()
         }
     }
-    
+
     func ready() {
         sayHelloButton.isEnabled = true
         shutdownButton.isEnabled = true
         statusLabel.text = "Ready"
         activity.stopAnimating()
     }
-    
+
     func queuedRequest(_ name: String) {
         flushButton.isEnabled = true
         flushButton.alpha = 1.0

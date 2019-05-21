@@ -28,7 +28,7 @@ func run() -> Int32 {
         // Add a contact for "john". All parameters are provided.
         //
         do {
-            let johnNumber = "123-456-7890";
+            let johnNumber = "123-456-7890"
             try contactdb.addContact(name: "john", type: .HOME, number: johnNumber, dialGroup: 0)
 
             print("Checking john... ", terminator: "")
@@ -69,7 +69,7 @@ func run() -> Int32 {
             //
             // The Swift mapping permits nil to be passed to unset optional values.
             //
-            let steveNumber = "234-567-8901";
+            let steveNumber = "234-567-8901"
             try contactdb.addContact(name: "steve", type: nil, number: steveNumber, dialGroup: 1)
 
             print("Checking steve... ", terminator: "")
@@ -99,7 +99,7 @@ func run() -> Int32 {
             //
             // Add a contact from "frank". Here the dialGroup field isn't set.
             //
-            let frankNumber = "345-678-9012";
+            let frankNumber = "345-678-9012"
             try contactdb.addContact(name: "frank", type: .CELL, number: frankNumber, dialGroup: nil)
 
             guard try contactdb.queryNumber("frank") == frankNumber else {
@@ -124,7 +124,6 @@ func run() -> Int32 {
             }
         }
         print("ok")
-
 
         print("Checking anne... ", terminator: "")
 
@@ -162,7 +161,7 @@ func run() -> Int32 {
             // update on the contact.  Here we update only the number for anne,
             // the remainder of the fields are unchanged.
             //
-            let anneNumber = "456-789-0123";
+            let anneNumber = "456-789-0123"
             try contactdb.updateContact(name: "anne", type: nil, number: anneNumber, dialGroup: nil)
             guard try contactdb.queryNumber("anne") == anneNumber else {
                 print("number is incorrect ")

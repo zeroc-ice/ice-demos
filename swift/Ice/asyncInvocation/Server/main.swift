@@ -12,16 +12,16 @@ func run() -> Int32 {
         defer {
             communicator.destroy()
         }
-        
+
         guard args.count == 1 else {
-            print("too many arguments\n");
+            print("too many arguments\n")
             return 1
         }
-        
+
         let adapter = try communicator.createObjectAdapter("Calculator")
         try adapter.add(servant: CalculatorI(), id: Ice.stringToIdentity("calculator"))
         try adapter.activate()
-        
+
         communicator.waitForShutdown()
     } catch {
         print("Error: \(error)\n")
@@ -31,4 +31,3 @@ func run() -> Int32 {
 }
 
 exit(run())
-

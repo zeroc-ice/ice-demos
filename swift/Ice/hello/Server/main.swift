@@ -12,7 +12,7 @@ class HelloI: Hello {
         }
         print("Hello World!")
     }
-    
+
     func shutdown(current: Ice.Current) throws {
         print("Shutting down...")
         if let adapter = current.adapter {
@@ -28,16 +28,16 @@ func run() -> Int32 {
         defer {
             communicator.destroy()
         }
-        
+
         guard args.count == 1 else {
-            print("too many arguments\n");
+            print("too many arguments\n")
             return 1
         }
-        
+
         let adapter = try communicator.createObjectAdapter("Hello")
         try adapter.add(servant: HelloI(), id: Ice.stringToIdentity("hello"))
         try adapter.activate()
-        
+
         communicator.waitForShutdown()
     } catch {
         print("Error: \(error)\n")
