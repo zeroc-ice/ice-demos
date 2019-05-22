@@ -67,10 +67,11 @@ func run() -> Int32 {
             // is NumberType.HOME and in this case the NumberType is unset it will take
             // the default value.
             //
-            // The Swift mapping permits nil to be passed to unset optional values.
+            // The Swift mapping permits to omit unset optional values, nil is also acepted
+            // for unset optional values
             //
             let steveNumber = "234-567-8901"
-            try contactdb.addContact(name: "steve", type: nil, number: steveNumber, dialGroup: 1)
+            try contactdb.addContact(name: "steve", number: steveNumber, dialGroup: 1)
 
             print("Checking steve... ", terminator: "")
             guard try contactdb.queryNumber("steve") == steveNumber else {
@@ -100,7 +101,7 @@ func run() -> Int32 {
             // Add a contact from "frank". Here the dialGroup field isn't set.
             //
             let frankNumber = "345-678-9012"
-            try contactdb.addContact(name: "frank", type: .CELL, number: frankNumber, dialGroup: nil)
+            try contactdb.addContact(name: "frank", type: .CELL, number: frankNumber)
 
             guard try contactdb.queryNumber("frank") == frankNumber else {
                 print("number is incorrect ")
@@ -131,7 +132,7 @@ func run() -> Int32 {
             //
             // Add a contact from "anne". The number field isn't set.
             //
-            try contactdb.addContact(name: "anne", type: .OFFICE, number: nil, dialGroup: 2)
+            try contactdb.addContact(name: "anne", type: .OFFICE, dialGroup: 2)
 
             guard try contactdb.queryNumber("anne") == nil else {
                 print("number is incorrect ")
@@ -162,7 +163,7 @@ func run() -> Int32 {
             // the remainder of the fields are unchanged.
             //
             let anneNumber = "456-789-0123"
-            try contactdb.updateContact(name: "anne", type: nil, number: anneNumber, dialGroup: nil)
+            try contactdb.updateContact(name: "anne", number: anneNumber)
             guard try contactdb.queryNumber("anne") == anneNumber else {
                 print("number is incorrect ")
                 return 1
