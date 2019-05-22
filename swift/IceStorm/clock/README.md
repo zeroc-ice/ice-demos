@@ -15,14 +15,12 @@ current working directory.
 In a separate window:
 
 ```
-cd Subscriber
 subscriber
 ```
 
 In another window:
 
 ```
-cd Publisher
 publisher
 ```
 

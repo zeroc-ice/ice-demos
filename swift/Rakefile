@@ -13,6 +13,9 @@ $demos = {
              "Ice/optional",
              "Ice/throughput",
 
+             "IceDiscovery/hello",
+             "IceDiscovery/replication",
+
              "IceStorm/clock",
 
              "Manual/printer",
@@ -49,6 +52,7 @@ $demo_resources = {
 desc "Generate Xcode projects required to build Ice for Swift Demo Applications"
 task :iceproj do
     project = Xcodeproj::Project.new("demos.xcodeproj")
+    group_add_files(project.main_group, "#{project.project_dir}", ["README.md"])
     $demos.each do |platform, demos|
         demos.each do |demo|
 
@@ -82,15 +86,15 @@ def create_commandline_targets(project, demo)
     $demo_variants.each do |variant|
         if demo_has_variant(demo, variant)
             target = project.new_target(:command_line_tool, target_name(demo, variant), :osx)
-            target_set_common_build_settings(target, variant.downcase,
-                                             "$SRCROOT/#{demo}/#{variant}/Info.plist",
-                                             "$SRCROOT/#{demo}/#{variant}")
+            target_set_common_build_settings(target, variant.downcase, "$SRCROOT/#{demo}")
 
             target.frameworks_build_phases.clear()
-            target_add_files(target, project_group(project, demo), "#{project.project_dir}/#{demo}", ["*.ice"])
+            group = project_group(project, demo)
+            group_add_files(group, "#{project.project_dir}/#{demo}", ["README.md", "config.*"])
+            target_add_files(target, group, "#{project.project_dir}/#{demo}/src", ["*.ice"])
 
             group = project_group(project, "#{demo}/#{variant}")
-            target_add_files(target, group, "#{project.project_dir}/#{demo}",
+            target_add_files(target, group, "#{project.project_dir}/#{demo}/src",
                              demo_variant_sources(demo, variant))
 
             target_add_carthage_framework(target, :osx, "Ice.framework")
@@ -103,20 +107,18 @@ def create_commandline_targets(project, demo)
 
             target_set_framework_build_settings(target, :osx)
             target_add_slice2swift_build_rule(project, target)
-            target_add_swiftlint_build_phase(target, "#{demo}/#{variant}")
+            target_add_swiftlint_build_phase(target, "#{demo}/src/#{variant}")
         end
     end
 end
 
 def create_uikit_targets(project, demo)
     target = project.new_target(:application, target_name(demo, ""), :ios)
-    target_set_common_build_settings(target,
-                                     product_name(demo),
-                                     "$SRCROOT/#{demo}/Info.plist",
-                                     "$SRCROOT/#{demo}")
+    target_set_common_build_settings(target, product_name(demo), "$SRCROOT/#{demo}", "$SRCROOT/#{demo}/Info.plist")
 
     target.frameworks_build_phases.clear()
     group = project_group(project, demo)
+    group_add_files(group, "#{project.project_dir}/#{demo}", ["README.md"])
     target_add_files(target, group, "#{project.project_dir}/#{demo}", ["*.swift", "*.ice"])
     target_add_files(target, group, "#{project.project_dir}/#{demo}", ["*.xcassets"])
     target_add_files(target, group, "#{project.project_dir}/#{demo}/Base.lproj", ["*.storyboard"])
@@ -218,7 +220,7 @@ def target_add_headers(target, group, basedir, patterns, excludes: [], attribute
     end
 end
 
-def target_set_common_build_settings(target, product, plist, build_dir)
+def target_set_common_build_settings(target, product, build_dir, plist = nil)
     target.build_configurations.each { |config|
         config.build_settings["ENABLE_TESTABILITY"] = "NO"
         config.build_settings["CODE_SIGN_STYLE"] = "Automatic"
@@ -226,7 +228,9 @@ def target_set_common_build_settings(target, product, plist, build_dir)
         config.build_settings["DYLIB_CURRENT_VERSION"] = "3.7.2"
         config.build_settings["DYLIB_COMPATIBILITY_VERSION"] = "3.7.2"
         config.build_settings["SWIFT_VERSION"] = "5.0"
-        config.build_settings["INFOPLIST_FILE"] = plist
+        if plist != nil then
+            config.build_settings["INFOPLIST_FILE"] = plist
+        end
         config.build_settings["PRODUCT_NAME"] = product
         config.build_settings["CONFIGURATION_BUILD_DIR"] = build_dir
         config.build_settings["PRODUCT_BUNDLE_IDENTIFIER"] = "com.zeroc.demo.#{product}"
@@ -261,7 +265,7 @@ end
 # Check if the test include the given variant
 #
 def demo_has_variant(demo, variant)
-    return File.file?("#{demo}/#{variant}/main.swift") ||
+    return File.file?("#{demo}/src/#{variant}/main.swift") ||
            File.file?("#{demo}/#{variant}/AppDelegate.swift")
 end
 
