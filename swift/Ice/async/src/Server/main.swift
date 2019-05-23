@@ -12,14 +12,12 @@ class HelloI: Hello {
     var doneSemaphore = DispatchSemaphore(value: 1)
 
     var workQueue: OperationQueue
-    var concurrentQueue: DispatchQueue // DispatchQueue used in workQueue
+    var serialQueue: DispatchQueue // DispatchQueue used in workQueue
 
     init(_ queue: OperationQueue) {
         workQueue = queue
-        concurrentQueue = DispatchQueue(label: "com.zeroc.demo.ice.async.server.workqueue",
-                                        qos: .default,
-                                        attributes: .concurrent)
-        workQueue.underlyingQueue = concurrentQueue
+        serialQueue = DispatchQueue(label: "com.zeroc.demo.ice.async.server.workqueue")
+        workQueue.underlyingQueue = serialQueue
     }
 
     private func lock(cb: () -> Void) {
