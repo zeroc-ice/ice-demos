@@ -27,11 +27,11 @@ class HelloI: Hello {
                 seal.fulfill(())
             } else {
                 serialQueue.sync {
-                    guard self.workQueue.isSuspended == false else {
-                        seal.reject(RequestCanceledException())
-                        return
-                    }
                     self.workQueue.addOperation {
+                        guard self.workQueue.isSuspended == false else {
+                            seal.reject(RequestCanceledException())
+                            return
+                        }
                         Thread.sleep(forTimeInterval: TimeInterval(delay) / 1000)
                         print("Belated Hello World!")
                         seal.fulfill(())
@@ -57,7 +57,6 @@ class HelloI: Hello {
 func run() -> Int32 {
     do {
         var args = CommandLine.arguments
-        let workQueue = OperationQueue()
         let communicator = try Ice.initialize(args: &args, configFile: "config.server")
 
         defer {
@@ -68,6 +67,7 @@ func run() -> Int32 {
             return 1
         }
 
+        let workQueue = OperationQueue()
         let adapter = try communicator.createObjectAdapter("Hello")
         try adapter.add(servant: HelloI(workQueue), id: Ice.stringToIdentity("hello"))
         try adapter.activate()

@@ -22,7 +22,7 @@ func menu() {
             d: send delayed greeting
             s: shutdown server
             x: exit
-        ?: help
+            ?: help
         """)
 }
 
@@ -40,7 +40,7 @@ func run() -> Int32 {
         }
 
         guard let base = try communicator.propertyToProxy("Hello.Proxy"),
-            let twoway = try checkedCast(prx: base.ice_twoway().ice_secure(false), type: HelloPrx.self)
+            let hello = try checkedCast(prx: base, type: HelloPrx.self)
         else {
             print("invalid proxy")
             return 1
@@ -58,19 +58,18 @@ func run() -> Int32 {
             guard let choice = selection(rawValue: line) else {
                 print("unknown command `\(line)'")
                 menu()
-                return 0
             }
             switch choice {
             case .immediate:
-                try twoway.sayHello(0)
+                try hello.sayHello(0)
             case .delayed:
                 firstly {
-                    twoway.sayHelloAsync(5000)
+                    hello.sayHelloAsync(5000)
                 }.catch { error in
                     print("sayHello AMI call failed:\n \(error)")
                 }
             case .shutdown:
-                try twoway.shutdown()
+                try hello.shutdown()
             case .exit:
                 break
             case .help:
