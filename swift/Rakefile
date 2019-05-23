@@ -5,7 +5,9 @@ require 'xcodeproj'
 $top_level = File.expand_path(File.dirname(__FILE__))
 
 $demos = {
-    :osx => ["Ice/async",
+    :osx => ["Glacier2/callback",
+
+             "Ice/async",
              "Ice/asyncInvocation",
              "Ice/bidir",
              "Ice/hello",
@@ -40,6 +42,8 @@ $demo_variant_sources = {
 }
 
 $demo_extra_frameworks = {
+    "Glacier2/callback" => ["Glacier2.framework"],
+
     "IceStorm/clock" => ["IceStorm.framework"],
 
     "iOS/Chat" => ["Glacier2.framework"],
