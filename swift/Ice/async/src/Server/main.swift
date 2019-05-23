@@ -30,7 +30,7 @@ class HelloI: Hello {
 
     private func addToQueue(delay: Int32, seal: Resolver<Void>) {
         lock {
-            guard self.workQueue.isSuspended == false else {
+            guard done == false else {
                 seal.reject(RequestCanceledException())
                 return
             }
@@ -60,15 +60,9 @@ class HelloI: Hello {
     }
 
     func shutdown(current: Current) throws {
-        lock {
-            print("Shutting down...")
-            // Setting this property to true prevents the queue from starting any queued operations,
-            // but already executing operations continue to execute.
-            done = true
-            if let adapter = current.adapter {
-                adapter.getCommunicator().shutdown()
-            }
-        }
+        print("Shutting down...")
+        lock { done = true }
+        current.adapter?.getCommunicator().shutdown()
     }
 }
 
