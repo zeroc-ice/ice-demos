@@ -6,6 +6,9 @@ import Foundation
 import Ice
 import PromiseKit
 
+// Use global queue to avoid blocking REPL which runs on main thread
+PromiseKit.conf.Q.return = .global()
+
 enum selection: String {
     case immediate = "i"
     case delayed = "d"
@@ -58,6 +61,7 @@ func run() -> Int32 {
             guard let choice = selection(rawValue: line) else {
                 print("unknown command `\(line)'")
                 menu()
+                continue
             }
             switch choice {
             case .immediate:

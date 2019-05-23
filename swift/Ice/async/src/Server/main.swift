@@ -7,17 +7,45 @@ import Ice
 import PromiseKit
 
 class HelloI: Hello {
+
+    var done: Bool = false
+    var doneSemaphore = DispatchSemaphore(value: 1)
+
     var workQueue: OperationQueue
-    var serialQueue: DispatchQueue // Used for blocking the change of workQueue.isSuspended
     var concurrentQueue: DispatchQueue // DispatchQueue used in workQueue
 
     init(_ queue: OperationQueue) {
         workQueue = queue
-        serialQueue = DispatchQueue(label: "com.zeroc.demo.ice.async.server.serialqueue")
         concurrentQueue = DispatchQueue(label: "com.zeroc.demo.ice.async.server.workqueue",
                                         qos: .default,
                                         attributes: .concurrent)
         workQueue.underlyingQueue = concurrentQueue
+    }
+
+    private func lock(cb: () -> Void) {
+        doneSemaphore.wait()
+        cb()
+        doneSemaphore.signal()
+    }
+
+    private func addToQueue(delay: Int32, seal: Resolver<Void>) {
+        lock {
+            guard self.workQueue.isSuspended == false else {
+                seal.reject(RequestCanceledException())
+                return
+            }
+            self.workQueue.addOperation {
+                Thread.sleep(forTimeInterval: TimeInterval(delay) / 1000)
+                self.lock {
+                    guard self.done == false else {
+                        seal.reject(RequestCanceledException())
+                        return
+                    }
+                    print("Belated Hello World!")
+                    seal.fulfill(())
+                }
+            }
+        }
     }
 
     func sayHelloAsync(delay: Int32, current _: Current) -> Promise<Void> {
@@ -26,30 +54,20 @@ class HelloI: Hello {
                 print("Hello World!")
                 seal.fulfill(())
             } else {
-                serialQueue.sync {
-                    self.workQueue.addOperation {
-                        guard self.workQueue.isSuspended == false else {
-                            seal.reject(RequestCanceledException())
-                            return
-                        }
-                        Thread.sleep(forTimeInterval: TimeInterval(delay) / 1000)
-                        print("Belated Hello World!")
-                        seal.fulfill(())
-                    }
-                }
+                addToQueue(delay: delay, seal: seal)
             }
         }
     }
 
     func shutdown(current: Current) throws {
-        print("Shutting down...")
-        // Setting this property to true prevents the queue from starting any queued operations,
-        // but already executing operations continue to execute.
-        serialQueue.sync {
-            workQueue.isSuspended = true
-        }
-        if let adapter = current.adapter {
-            adapter.getCommunicator().shutdown()
+        lock {
+            print("Shutting down...")
+            // Setting this property to true prevents the queue from starting any queued operations,
+            // but already executing operations continue to execute.
+            done = true
+            if let adapter = current.adapter {
+                adapter.getCommunicator().shutdown()
+            }
         }
     }
 }
