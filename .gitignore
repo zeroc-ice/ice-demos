@@ -11,7 +11,12 @@ talk
 !**/msbuild/locator
 !**/msbuild/publisher
 !**/msbuild/subscriber
-!**/msbuild/locator
+
+!**/src/client
+!**/src/server
+!**/src/locator
+!**/src/publisher
+!**/src/subscriber
 
 .gradle
 *.jar
