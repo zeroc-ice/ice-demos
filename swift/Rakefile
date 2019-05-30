@@ -23,9 +23,9 @@ $demos = {
              "Manual/printer",
              "Manual/simpleFilesystem"],
 
-    :ios => ["iOS/Chat",
-             "iOS/Database/library",
-             "iOS/Ice/hello"]
+    :ios => ["iOS/chat",
+             "iOS/library",
+             "iOS/hello"]
 }
 
 $demo_variants = ["Client", "Server", "Publisher", "Subscriber"]
