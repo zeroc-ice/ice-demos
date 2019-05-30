@@ -8,43 +8,8 @@ import PromiseKit
 
 class HelloI: Hello {
 
-    var done: Bool = false
-    var doneSemaphore = DispatchSemaphore(value: 1)
-
-    var workQueue: OperationQueue
-    var serialQueue: DispatchQueue // DispatchQueue used in workQueue
-
-    init(_ queue: OperationQueue) {
-        workQueue = queue
-        serialQueue = DispatchQueue(label: "com.zeroc.demo.ice.async.server.workqueue")
-        workQueue.underlyingQueue = serialQueue
-    }
-
-    private func lock(cb: () -> Void) {
-        doneSemaphore.wait()
-        cb()
-        doneSemaphore.signal()
-    }
-
-    private func addToQueue(delay: Int32, seal: Resolver<Void>) {
-        lock {
-            guard done == false else {
-                seal.reject(RequestCanceledException())
-                return
-            }
-            self.workQueue.addOperation {
-                Thread.sleep(forTimeInterval: TimeInterval(delay) / 1000)
-                self.lock {
-                    guard self.done == false else {
-                        seal.reject(RequestCanceledException())
-                        return
-                    }
-                    print("Belated Hello World!")
-                    seal.fulfill(())
-                }
-            }
-        }
-    }
+    var done = false
+    var serialQueue = DispatchQueue(label: "com.zeroc.demo.ice.async.server")
 
     func sayHelloAsync(delay: Int32, current _: Current) -> Promise<Void> {
         return Promise { seal in
@@ -52,15 +17,30 @@ class HelloI: Hello {
                 print("Hello World!")
                 seal.fulfill(())
             } else {
-                addToQueue(delay: delay, seal: seal)
+                serialQueue.async {
+                    guard self.done == false else {
+                        seal.reject(RequestCanceledException())
+                        return
+                    }
+                    self.serialQueue.asyncAfter(deadline: .now() + .milliseconds(Int(delay)), execute: {
+                        guard self.done == false else {
+                            seal.reject(RequestCanceledException())
+                            return
+                        }
+                        print("Belated Hello World!")
+                        seal.fulfill(())
+                    })
+                }
             }
         }
     }
 
     func shutdown(current: Current) throws {
-        print("Shutting down...")
-        lock { done = true }
-        current.adapter?.getCommunicator().shutdown()
+        serialQueue.async {
+            print("Shutting down...")
+            self.done = true
+            current.adapter?.getCommunicator().shutdown()
+        }
     }
 }
 
@@ -76,14 +56,12 @@ func run() -> Int32 {
             print("too many arguments\n")
             return 1
         }
-
-        let workQueue = OperationQueue()
         let adapter = try communicator.createObjectAdapter("Hello")
-        try adapter.add(servant: HelloI(workQueue), id: Ice.stringToIdentity("hello"))
+        try adapter.add(servant: HelloI(), id: Ice.stringToIdentity("hello"))
         try adapter.activate()
 
         communicator.waitForShutdown()
-        workQueue.waitUntilAllOperationsAreFinished()
+
     } catch {
         print("Error: \(error)\n")
         return 1
