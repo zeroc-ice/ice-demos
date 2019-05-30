@@ -9,6 +9,7 @@ $demos = {
              "Ice/asyncInvocation",
              "Ice/bidir",
              "Ice/hello",
+             "Ice/invoke",
              "Ice/latency",
              "Ice/minimal",
              "Ice/optional",
