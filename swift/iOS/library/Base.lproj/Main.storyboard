@@ -132,7 +132,7 @@
                         <outlet property="statusActivity" destination="Jvh-Iw-QHt" id="yLb-GB-wYM"/>
                         <outlet property="statusLabel" destination="wDZ-s6-Xz1" id="YfP-FM-nXw"/>
                         <outlet property="usernameField" destination="0np-tZ-ij7" id="QNW-pK-goT"/>
-                        <segue destination="aBa-hc-o1o" kind="presentation" id="VEO-3L-Nmm"/>
+                        <segue destination="aBa-hc-o1o" kind="presentation" identifier="showMainController" id="VEO-3L-Nmm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vUA-lp-VIb" userLabel="First Responder" sceneMemberID="firstResponder"/>

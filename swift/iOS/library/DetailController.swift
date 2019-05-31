@@ -6,7 +6,7 @@ import UIKit
 import PromiseKit
 import Ice
 
-protocol  DetailControllerDelegate {
+protocol  DetailControllerDelegate: AnyObject {
     func bookUpdated(_ book: BookDescription)
     func bookDeleted()
     func destroySession()
@@ -20,7 +20,7 @@ class DetailController: UIViewController {
 
     var selectedIndexPath: IndexPath!
 
-    var delegate: DetailControllerDelegate!
+    weak var delegate: DetailControllerDelegate!
     var saving: Bool = false
     var changed: Bool = false
 
