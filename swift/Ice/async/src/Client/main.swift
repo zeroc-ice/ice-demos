@@ -51,13 +51,12 @@ func run() -> Int32 {
 
         menu()
 
-        var line = ""
+        var exit = false
         repeat {
             print("==> ", terminator: "")
-            guard let l = readLine(strippingNewline: true) else {
+            guard let line = readLine(strippingNewline: true) else {
                 return 0
             }
-            line = l
             guard let choice = selection(rawValue: line) else {
                 print("unknown command `\(line)'")
                 menu()
@@ -75,11 +74,11 @@ func run() -> Int32 {
             case .shutdown:
                 try hello.shutdown()
             case .exit:
-                break
+                exit = true
             case .help:
                 menu()
             }
-        } while line != "x"
+        } while !exit
     } catch {
         print("Error: \(error)")
         return 1
