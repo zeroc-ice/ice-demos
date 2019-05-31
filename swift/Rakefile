@@ -164,7 +164,13 @@ end
 
 def target_add_swiftlint_build_phase(target, basedir)
     phase = target.new_shell_script_build_phase("Swiftformat & Swiftlint")
-    phase.shell_script = "$SRCROOT/config/xcode-swiftlint.sh $SRCROOT/#{basedir} $SRCROOT/.swiftlint.yml"
+    phase.shell_script = <<~SCRIPT
+        if which swiftlint >/dev/null; then
+            swiftlint --path "$SRCROOT/#{basedir}" --config "$SRCROOT/.swiftlint.yml"
+        else
+            echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
+        fi
+    SCRIPT
 end
 
 def target_name(basename, suffix)
@@ -182,15 +188,28 @@ def target_add_slice2swift_build_rule(project, target, prefix = nil)
     rule = project.new(Xcodeproj::Project::PBXBuildRule)
     rule.compiler_spec = "com.apple.compilers.proxy.script"
     rule.file_type = "pattern.proxy"
+
+    script = <<~SCRIPT
+        if [ -f /usr/local/opt/slice2swift/bin/slice2swift ]; then
+            SLICE2SWIFT=/usr/local/bin/slice2swift
+            SLICEDIR=/usr/local/ice/slice
+        else
+            SLICE2SWIFT=$ICE_HOME/cpp/bin/slice2swift
+            SLICEDIR=$ICE_HOME/slice
+        fi
+
+        "$SLICE2SWIFT" -I"$SLICEDIR" -I"$INPUT_FILE_DIR" --output-dir "$DERIVED_FILE_DIR" "$INPUT_FILE_PATH"
+    SCRIPT
+
     if prefix then
         rule.name = "Slice Compiler for #{prefix}/*.ice"
         rule.file_patterns = "*/#{prefix}/*.ice"
-        rule.script = "$SRCROOT/config/xcode-slice2swift.sh #{prefix}"
+        rule.script = script
         rule.output_files = ["$(DERIVED_FILE_DIR)/#{prefix}_$(INPUT_FILE_BASE).swift"]
     else
         rule.name = "Slice Compiler"
         rule.file_patterns = "*.ice"
-        rule.script = "$SRCROOT/config/xcode-slice2swift.sh"
+        rule.script = script
         rule.output_files = ["$(DERIVED_FILE_DIR)/$(INPUT_FILE_BASE).swift"]
     end
     target.build_rules << rule
