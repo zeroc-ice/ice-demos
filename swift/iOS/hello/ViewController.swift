@@ -307,7 +307,12 @@ class ViewController: UIViewController,
 
     func exception(_ ex: Error) {
         let alert = UIAlertController(title: "Error", message: "\(ex)", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
         ready()
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        return textField.resignFirstResponder()
     }
 }

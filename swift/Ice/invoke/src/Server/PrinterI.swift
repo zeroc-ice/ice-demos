@@ -61,8 +61,8 @@ class PrinterI: Ice.Blobject {
             print("Printing struct sequence: \(seq)")
             return (ok: true, outParams: Data())
         case "printClass":
-            var c: Value?
-            try inStream.read { c = $0 }
+            var c: C?
+            try inStream.read { c = $0 as? C }
             try inStream.readPendingValues()
             try inStream.endEncapsulation()
             print("Printing class: \(c!)")

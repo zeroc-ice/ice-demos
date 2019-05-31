@@ -50,8 +50,8 @@ environment variable before starting XCode.
 
 ### Running the Demos
 
-For most demos, you can simply run `client` and `server` in separate Command
-Prompt windows.  Refer to the README.md file in each demo directory for the
+For most demos, you can simply run `client` and `server` in separate command
+prompt windows.  Refer to the README.md file in each demo directory for the
 exact usage instructions.
 
 Some demos require Ice services such as IceGrid and IceStorm that are not
