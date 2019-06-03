@@ -8,6 +8,7 @@ $demos = {
     :osx => ["Ice/async",
              "Ice/asyncInvocation",
              "Ice/bidir",
+             "Ice/context",
              "Ice/hello",
              "Ice/invoke",
              "Ice/latency",
