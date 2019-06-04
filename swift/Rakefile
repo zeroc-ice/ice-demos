@@ -191,12 +191,15 @@ def target_add_slice2swift_build_rule(project, target, prefix = nil)
     rule.file_type = "pattern.proxy"
 
     script = <<~SCRIPT
-        if [ -f /usr/local/opt/slice2swift/bin/slice2swift ]; then
+        if [ -f "$ICE_HOME/cpp/bin/slice2swift" ]; then
+            SLICE2SWIFT="$ICE_HOME/cpp/bin/slice2swift"
+            SLICEDIR="$ICE_HOME/slice"
+        elif [ -f /usr/local/bin/slice2swift ]; then
             SLICE2SWIFT=/usr/local/bin/slice2swift
             SLICEDIR=/usr/local/ice/slice
         else
-            SLICE2SWIFT=$ICE_HOME/cpp/bin/slice2swift
-            SLICEDIR=$ICE_HOME/slice
+            echo "Failed to locate slice2swift compiler"
+            exit 1
         fi
 
         "$SLICE2SWIFT" -I"$SLICEDIR" -I"$INPUT_FILE_DIR" --output-dir "$DERIVED_FILE_DIR" "$INPUT_FILE_PATH"
