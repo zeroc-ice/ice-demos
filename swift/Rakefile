@@ -191,7 +191,7 @@ def target_add_slice2swift_build_rule(project, target, prefix = nil)
     rule.file_type = "pattern.proxy"
 
     script = <<~SCRIPT
-        if [ -f "$ICE_HOME/cpp/bin/slice2swift" ]; then
+        if [ -f "${ICE_HOME-unset}/cpp/bin/slice2swift" ]; then
             SLICE2SWIFT="$ICE_HOME/cpp/bin/slice2swift"
             SLICEDIR="$ICE_HOME/slice"
         elif [ -f /usr/local/bin/slice2swift ]; then
