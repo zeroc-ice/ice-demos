@@ -44,23 +44,21 @@ func menu() {
 func run() -> Int32 {
     do {
         var args = CommandLine.arguments
-
         let communicator = try Ice.initialize(args: &args, configFile: "config.client")
         defer {
             communicator.destroy()
         }
-
         guard args.count == 1 else {
             print("too many arguments")
             return 1
         }
-
         guard let defaultRouter = communicator.getDefaultRouter(),
             let router = try checkedCast(prx: defaultRouter, type: Glacier2.RouterPrx.self) else {
             return 1
         }
 
         // Prompt user for authentication
+        // Will continue to loop until a session is successfully created
         var session: SessionPrx?
         while session == nil {
             print("This demo accepts any user-id / password combination.")
@@ -87,8 +85,12 @@ func run() -> Int32 {
             print("The Glacier2 session has been destroyed.")
         }
 
-        let callbackReceiverIdent = try Identity(name: "cabackReceiver", category: router.getCategoryForClient())
-        let callbackReceiverFakeIdent = Identity(name: "cabackReceiver", category: "fake")
+        // The Glacier2 router routes bidirectional calls to objects in the client only when these objects have the
+        // correct Glacier2-issued category. The purpose of the callbackReceiverFakeIdent is to demonstrate this.
+        // The name that is provided as an arguement is not parsed by the server.
+        let uuid = UUID()
+        let callbackReceiverIdent = try Identity(name: uuid.uuidString, category: router.getCategoryForClient())
+        let callbackReceiverFakeIdent = Identity(name: uuid.uuidString, category: "fake")
 
         guard let base = try communicator.propertyToProxy("Callback.Proxy"),
             let twoway = try checkedCast(prx: base, type: CallbackPrx.self)
@@ -102,8 +104,7 @@ func run() -> Int32 {
         let adapter = try communicator.createObjectAdapterWithRouter(name: "", rtr: router)
         try adapter.activate()
         try adapter.add(servant: CallbackReceiverI(), id: callbackReceiverIdent)
-
-        // Should never be called for the fake identity.
+        // Callback will never be called for a fake identity
         try adapter.add(servant: CallbackReceiverI(), id: callbackReceiverFakeIdent)
 
         var twowayR = try uncheckedCast(prx: adapter.createProxy(callbackReceiverIdent), type: CallbackReceiverPrx.self)
@@ -115,7 +116,7 @@ func run() -> Int32 {
 
         menu()
 
-        // Comand Prompt
+        // Client REPL
         repeat {
             print("==> ", terminator: "")
             guard let line = readLine(strippingNewline: true) else {
@@ -125,25 +126,15 @@ func run() -> Int32 {
             if let option = Option(rawValue: line) {
                 switch option {
                 case .twoway:
-                    var context = Context()
-                    context["_fwd"] = option.rawValue
-                    if !override.isEmpty {
-                        context["_ovrd"] = override
-                    }
-                    try twoway.initiateCallback(twowayR, context: context)
+                    try twoway.initiateCallback(twowayR, context: nil)
                 case .oneway:
                     var context = Context()
-                    context["_fwd"] = option.rawValue
-                    if !override.isEmpty {
-                        context["_ovrd"] = override
-                    }
+                    context["_ovrd"] = (!override.isEmpty) ? override : nil
                     try oneway.initiateCallback(onewayR, context: context)
                 case .batchOneway:
                     var context = Context()
-                    context["_fwd"] = option.rawValue
-                    if !override.isEmpty {
-                        context["_ovrd"] = override
-                    }
+                    context["_fwd"] = "O"
+                    context["_ovrd"] = (!override.isEmpty) ? override : nil
                     try batchOneway.initiateCallback(onewayR, context: context)
                 case .flush:
                     try batchOneway.ice_flushBatchRequests()
