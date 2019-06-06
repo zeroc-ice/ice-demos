@@ -46,8 +46,8 @@ $demo_extra_frameworks = {
 
     "IceStorm/clock" => ["IceStorm.framework"],
 
-    "iOS/Chat" => ["Glacier2.framework"],
-    "iOS/Database/library" => ["Glacier2.framework"]
+    "iOS/chat" => ["Glacier2.framework"],
+    "iOS/library" => ["Glacier2.framework"]
 }
 
 $demo_resources = {
