@@ -2,8 +2,8 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-import Ice
 import Dispatch
+import Ice
 import PromiseKit
 
 func menu() {
@@ -62,7 +62,6 @@ func run() -> Int32 {
 
         var exit = false
         repeat {
-
             print("==> ", terminator: "")
             guard let line = readLine(strippingNewline: true) else {
                 return 0
@@ -100,8 +99,8 @@ func run() -> Int32 {
                     // Invoke operation.
                     //
                     let r = try obj.ice_invoke(operation: "printStringSequence",
-                                                mode: .Normal,
-                                                inEncaps: outStream.finished())
+                                               mode: .Normal,
+                                               inEncaps: outStream.finished())
                     if !r.ok {
                         print("Unknown user exception")
                     }
@@ -218,7 +217,7 @@ func run() -> Int32 {
                     let inStream = Ice.InputStream(communicator: communicator, bytes: r.outEncaps)
                     try inStream.startEncapsulation()
                     var c: C?
-                    try inStream.read { c = $0 as? C}
+                    try inStream.read { c = $0 as? C }
                     let str: String = try inStream.read()
                     try inStream.readPendingValues()
 
