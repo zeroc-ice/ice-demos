@@ -35,17 +35,10 @@ func run() -> Int32 {
         }
 
         //
-        // Create a proxy for the root directory
+        // Create a proxy for the root directory and down-cast the proxy to a Directory proxy
         //
-        guard let obj = try communicator.stringToProxy("RootDir:default -h localhost -p 10000") else {
-            print("Invalid proxy")
-            return 1
-        }
-
-        //
-        // Down-cast the proxy to a Directory proxy
-        //
-        guard let rootDir = try checkedCast(prx: obj, type: DirectoryPrx.self) else {
+        guard let obj = try communicator.stringToProxy("RootDir:default -h localhost -p 10000"),
+              let rootDir = try checkedCast(prx: obj, type: DirectoryPrx.self) else {
             print("Invalid proxy")
             return 1
         }
