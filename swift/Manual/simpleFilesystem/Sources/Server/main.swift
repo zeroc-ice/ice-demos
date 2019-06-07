@@ -2,92 +2,90 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-import Ice
 import Foundation
+import Ice
 
 class FileI: File {
 
-    var _name: String
-    var _parent: DirectoryI
-    var _id: Ice.Identity
-    var _lines: [String]
+    var name: String
+    var parent: DirectoryI
+    var id: Ice.Identity
+    var lines: [String]
 
     init(communicator: Ice.Communicator, name: String, parent: DirectoryI, lines: [String] = []) {
-        _name = name
-        _parent = parent
+        self.name = name
+        self.parent = parent
 
         //
         // Create an identity
         //
-        _id = Ice.Identity()
-        _id.name = UUID().uuidString
+        self.id = Ice.Identity()
+        self.id.name = UUID().uuidString
 
-        _lines = lines
+        self.lines = lines
     }
 
     // Slice Node::name() operation
     func name(current: Ice.Current) throws -> String {
-        return _name
+        return self.name
     }
 
     // Slice File::read() operation
     func read(current: Ice.Current) throws -> [String] {
-        return _lines
+        return self.lines
     }
 
     // Slice File::write() operation
     func write(text: [String], current: Ice.Current) {
-        _lines = text
+        self.lines = text
     }
 
     // Add servant to ASM and parent's _contents map.
     func activate(adapter: Ice.ObjectAdapter) throws {
-        try _parent.addChild(child: uncheckedCast(prx: adapter.add(servant: self, id: _id), type: NodePrx.self))
+        try self.parent.addChild(child: uncheckedCast(prx: adapter.add(servant: self, id: self.id), type: NodePrx.self))
     }
 }
 
 class DirectoryI: Directory {
-    var _name: String
-    var _parent: DirectoryI?
-    var _id: Ice.Identity
-    var _contents: [NodePrx?]
-    // DirectoryI constructor
+    var name: String
+    var parent: DirectoryI?
+    var id: Ice.Identity
+    var contents: [NodePrx?]
 
+    // DirectoryI constructor
     init(communicator: Ice.Communicator, name: String, parent: DirectoryI?) {
-        _name = name
-        _parent = parent
+        self.name = name
+        self.parent = parent
 
         //
         // Create an identity. The root directory has the fixed identity "RootDir"
         //
-        _id = Ice.Identity()
-        _id.name = _parent == nil ? "RootDir" : UUID().uuidString
+        self.id = Ice.Identity()
+        self.id.name = self.parent == nil ? "RootDir" : UUID().uuidString
 
-        _contents = []
+        self.contents = []
     }
 
     // Slice Node::name() operation
     func name(current: Ice.Current) throws -> String {
-        return _name
+        return self.name
     }
 
     // Slice Directory::list() operation
     func list(current: Ice.Current) throws -> [NodePrx?] {
-        return _contents
+        return self.contents
     }
 
     // addChild is called by the child in order to add
-    // itself to the _contents member of the parent
+    // itself to the contents member of the parent
     func addChild(child: NodePrx) throws {
-        _contents.append(child)
+        self.contents.append(child)
     }
 
-    // Add servant to ASM and parent's _contents map.
+    // Add servant to ASM and parent's contents map.
     func activate(adapter: Ice.ObjectAdapter) throws {
-        let thisNode = try uncheckedCast(prx: adapter.add(servant: self, id: _id), type: NodePrx.self)
-        if let parent = _parent {
-            try parent.addChild(child: thisNode)
-        }
+        let thisNode = try uncheckedCast(prx: adapter.add(servant: self, id: self.id), type: NodePrx.self)
+        try parent?.addChild(child: thisNode)
     }
 }
 

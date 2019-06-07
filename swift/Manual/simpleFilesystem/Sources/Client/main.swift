@@ -2,8 +2,8 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-import Ice
 import Foundation
+import Ice
 
 // Recursively print the contents of directory "dir" in tree fashion.
 // For files, show the contents of each file. The "depth"

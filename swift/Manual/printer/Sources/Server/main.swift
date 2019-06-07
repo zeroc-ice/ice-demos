@@ -2,8 +2,8 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-import Ice
 import Foundation
+import Ice
 
 class PrinterI: Printer {
     func printString(s: String, current: Ice.Current) {
