@@ -6,7 +6,7 @@ import Foundation
 import Ice
 
 class PrinterI: Printer {
-    func printString(s: String, current: Ice.Current) {
+    func printString(s: String, current _: Ice.Current) {
         print(s)
     }
 }
