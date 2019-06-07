@@ -2,16 +2,16 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
+import Foundation
 import Ice
 import IceStorm
-import Foundation
 
 func usage() {
     print("Usage: [--batch] [--datagram|--twoway|--ordered|--oneway] [--retryCount count] [--id id] [topic]")
 }
 
 class ClockI: Clock {
-    func tick(time date: String, current: Ice.Current) throws {
+    func tick(time date: String, current _: Ice.Current) throws {
         print("DATE: \(date)")
     }
 }
@@ -39,7 +39,7 @@ func run() -> Int32 {
         var id: String?
         var retryCount: String?
 
-        for var i in 0..<args.count {
+        for var i in 0..< args.count {
             let oldoption = option
             if let o = Option(rawValue: args[i]) {
                 option = o
@@ -68,7 +68,7 @@ func run() -> Int32 {
                 break
             }
 
-            if oldoption != option && oldoption != .none {
+            if oldoption != option, oldoption != .none {
                 usage()
                 return 1
             }
@@ -77,14 +77,14 @@ func run() -> Int32 {
         if retryCount != nil {
             if option == .none {
                 option = .twoway
-            } else if option != .twoway && option != .ordered {
+            } else if option != .twoway, option != .ordered {
                 usage()
                 return 1
             }
         }
 
         guard let base = try communicator.propertyToProxy("TopicManager.Proxy"),
-              let manager = try checkedCast(prx: base, type: IceStorm.TopicManagerPrx.self) else {
+            let manager = try checkedCast(prx: base, type: IceStorm.TopicManagerPrx.self) else {
             print("invalid proxy")
             return 1
         }

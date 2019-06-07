@@ -2,9 +2,9 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
+import Foundation
 import Ice
 import IceStorm
-import Foundation
 
 func usage() {
     print("Usage: [--datagram|--twoway|--oneway] [topic]")
@@ -28,7 +28,7 @@ func run() -> Int32 {
         var option: Option = .none
         var topicName = "time"
 
-        for var i in 0..<args.count {
+        for var i in 0 ..< args.count {
             let oldoption = option
 
             if args[i].starts(with: "--") {
@@ -43,16 +43,16 @@ func run() -> Int32 {
                 break
             }
 
-            if oldoption != option && oldoption != .none {
+            if oldoption != option, oldoption != .none {
                 usage()
                 return 1
             }
         }
 
         guard let base = try communicator.propertyToProxy("TopicManager.Proxy"),
-              let manager = try checkedCast(prx: base, type: IceStorm.TopicManagerPrx.self) else {
-                print("invalid proxy")
-                return 1
+            let manager = try checkedCast(prx: base, type: IceStorm.TopicManagerPrx.self) else {
+            print("invalid proxy")
+            return 1
         }
 
         //
