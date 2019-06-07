@@ -11,7 +11,7 @@ class FileI: File {
     var id: Ice.Identity
     var lines: [String]
 
-    init(communicator _: Ice.Communicator, name: String, parent: DirectoryI, lines: [String] = []) {
+    init(name: String, parent: DirectoryI, lines: [String] = []) {
         self.name = name
         self.parent = parent
 
@@ -52,7 +52,7 @@ class DirectoryI: Directory {
     var contents: [NodePrx?]
 
     // DirectoryI constructor
-    init(communicator _: Ice.Communicator, name: String, parent: DirectoryI?) {
+    init(name: String, parent: DirectoryI?) {
         self.name = name
         self.parent = parent
 
@@ -104,26 +104,26 @@ func run() -> Int32 {
         //
         // Create the root directory (with name "/" and no parent)
         //
-        let root = DirectoryI(communicator: communicator, name: "/", parent: nil)
+        let root = DirectoryI(name: "/", parent: nil)
         try root.activate(adapter: adapter)
 
         //
         // Create a file called "README" in the root directory
         //
-        var file = FileI(communicator: communicator, name: "README", parent: root,
+        var file = FileI(name: "README", parent: root,
                          lines: ["This file system contains a collection of poetry."])
         try file.activate(adapter: adapter)
 
         //
         // Create a directory called "Coleridge" in the root directory
         //
-        let coleridge = DirectoryI(communicator: communicator, name: "Coleridge", parent: root)
+        let coleridge = DirectoryI(name: "Coleridge", parent: root)
         try coleridge.activate(adapter: adapter)
 
         //
         // Create a file called "Kubla_Khan" in the Coleridge directory
         //
-        file = FileI(communicator: communicator, name: "Kubla_Khan", parent: coleridge,
+        file = FileI(name: "Kubla_Khan", parent: coleridge,
                      lines: ["In Xanadu did Kubla Khan",
                              "A stately pleasure-dome decree:",
                              "Where Alph, the sacred river, ran",
