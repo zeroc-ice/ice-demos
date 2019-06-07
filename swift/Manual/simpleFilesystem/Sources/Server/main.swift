@@ -11,7 +11,7 @@ class FileI: File {
     var id: Ice.Identity
     var lines: [String]
 
-    init(name: String, parent: DirectoryI, lines: [String] = []) {
+    init(name: String, parent: DirectoryI) {
         self.name = name
         self.parent = parent
 
@@ -21,7 +21,7 @@ class FileI: File {
         id = Ice.Identity()
         id.name = UUID().uuidString
 
-        self.lines = lines
+        self.lines = []
     }
 
     // Slice Node::name() operation
@@ -35,7 +35,7 @@ class FileI: File {
     }
 
     // Slice File::write() operation
-    func write(text: [String], current _: Ice.Current) {
+    func write(text: [String], current _: Ice.Current = Ice.Current()) {
         lines = text
     }
 
@@ -110,8 +110,9 @@ func run() -> Int32 {
         //
         // Create a file called "README" in the root directory
         //
-        var file = FileI(name: "README", parent: root,
-                         lines: ["This file system contains a collection of poetry."])
+        var file = FileI(name: "README", parent: root)
+        file.write(text: ["This file system contains a collection of poetry."])
+
         try file.activate(adapter: adapter)
 
         //
@@ -123,12 +124,12 @@ func run() -> Int32 {
         //
         // Create a file called "Kubla_Khan" in the Coleridge directory
         //
-        file = FileI(name: "Kubla_Khan", parent: coleridge,
-                     lines: ["In Xanadu did Kubla Khan",
-                             "A stately pleasure-dome decree:",
-                             "Where Alph, the sacred river, ran",
-                             "Through caverns measureless to man",
-                             "Down to a sunless sea."])
+        file = FileI(name: "Kubla_Khan", parent: coleridge)
+        file.write(text: ["In Xanadu did Kubla Khan",
+                          "A stately pleasure-dome decree:",
+                          "Where Alph, the sacred river, ran",
+                          "Through caverns measureless to man",
+                          "Down to a sunless sea."])
         try file.activate(adapter: adapter)
 
         //
