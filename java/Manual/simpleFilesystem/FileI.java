@@ -4,7 +4,7 @@
 
 import com.zeroc.demos.Manual.simpleFilesystem.Filesystem.*;
 
-class FileI extends NodeI implements File
+final class FileI extends NodeI implements File
 {
     // FileI constructor
     FileI(String name, DirectoryI parent)
