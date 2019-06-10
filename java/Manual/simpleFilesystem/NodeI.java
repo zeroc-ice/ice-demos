@@ -11,12 +11,6 @@ class NodeI implements Node
     {
         _name = name;
         _parent = parent;
-
-        //
-        // Create an identity
-        //
-        _id = new com.zeroc.Ice.Identity();
-        _id.name = parent == null ? "RootDir" : java.util.UUID.randomUUID().toString();
     }
 
     // Slice Node::name() operation
@@ -27,7 +21,13 @@ class NodeI implements Node
 
     void activate(com.zeroc.Ice.ObjectAdapter a)
     {
-        NodePrx thisNode = NodePrx.uncheckedCast(a.add(this, _id));
+        //
+        // Create an identity
+        //
+        com.zeroc.Ice.Identity id = new com.zeroc.Ice.Identity();
+        id.name = _parent == null ? "RootDir" : java.util.UUID.randomUUID().toString();
+
+        NodePrx thisNode = NodePrx.uncheckedCast(a.add(this, id));
         if(_parent != null)
         {
             _parent.addChild(thisNode);
@@ -36,5 +36,4 @@ class NodeI implements Node
 
     private String _name;
     private DirectoryI _parent;
-    private com.zeroc.Ice.Identity _id;
 }
