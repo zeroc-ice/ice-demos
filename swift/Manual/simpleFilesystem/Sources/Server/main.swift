@@ -5,29 +5,40 @@
 import Foundation
 import Ice
 
-class FileI: File {
-    var name: String
-    var parent: DirectoryI
-    var id: Ice.Identity
-    var lines: [String]
+/// Servant class for Node.
+class NodeI: Node {
+    private let name: String
+    private let parent: DirectoryI?
 
-    init(name: String, parent: DirectoryI) {
+    init(name: String, parent: DirectoryI?) {
         self.name = name
         self.parent = parent
-
-        //
-        // Create an identity
-        //
-        id = Ice.Identity()
-        id.name = UUID().uuidString
-
-        self.lines = []
     }
 
     // Slice Node::name() operation
-    func name(current _: Ice.Current) throws -> String {
+    func name(current _: Ice.Current) -> String {
         return name
     }
+
+    // Add servant to ASM and parent's contents map.
+    func activate(adapter: Ice.ObjectAdapter) throws {
+        let id = Ice.Identity(name: parent == nil ? "RootDir" : UUID().uuidString,
+                              category: "")
+        let prx = try adapter.add(servant: makeDisp(), id: id)
+
+        // call addChild with proxy to `self` only if parent is not nil
+        parent?.addChild(child: uncheckedCast(prx: prx, type: NodePrx.self))
+    }
+
+    // Create a dispatcher for servant `self`
+    func makeDisp() -> Ice.Disp {
+        return NodeDisp(self)
+    }
+}
+
+/// Servant class for File, reuses Node servant implementation.
+class FileI: NodeI, File {
+    private var lines: [String] = []
 
     // Slice File::read() operation
     func read(current _: Ice.Current) throws -> [String] {
@@ -39,37 +50,15 @@ class FileI: File {
         lines = text
     }
 
-    // Add servant to ASM and parent's _contents map.
-    func activate(adapter: Ice.ObjectAdapter) throws {
-        try parent.addChild(child: uncheckedCast(prx: adapter.add(servant: FileDisp(self), id: id),
-                                                 type: NodePrx.self))
+    // Create a dispatcher for servant `self`
+    override func makeDisp() -> Ice.Disp {
+        return FileDisp(self)
     }
 }
 
-class DirectoryI: Directory {
-    var name: String
-    var parent: DirectoryI?
-    var id: Ice.Identity
-    var contents: [NodePrx?]
-
-    // DirectoryI constructor
-    init(name: String, parent: DirectoryI?) {
-        self.name = name
-        self.parent = parent
-
-        //
-        // Create an identity. The root directory has the fixed identity "RootDir"
-        //
-        id = Ice.Identity()
-        id.name = self.parent == nil ? "RootDir" : UUID().uuidString
-
-        contents = []
-    }
-
-    // Slice Node::name() operation
-    func name(current _: Ice.Current) throws -> String {
-        return name
-    }
+/// Servant class for Directory, reuses Node servant implementation.
+class DirectoryI: NodeI, Directory {
+    private var contents: [NodePrx?] = []
 
     // Slice Directory::list() operation
     func list(current _: Ice.Current) throws -> [NodePrx?] {
@@ -78,15 +67,13 @@ class DirectoryI: Directory {
 
     // addChild is called by the child in order to add
     // itself to the contents member of the parent
-    func addChild(child: NodePrx) throws {
+    func addChild(child: NodePrx) {
         contents.append(child)
     }
 
-    // Add servant to ASM and parent's contents map.
-    func activate(adapter: Ice.ObjectAdapter) throws {
-        let thisNode = try uncheckedCast(prx: adapter.add(servant: DirectoryDisp(self), id: id),
-                                         type: NodePrx.self)
-        try parent?.addChild(child: thisNode)
+    // Create a dispatcher for servant `self`
+    override func makeDisp() -> Ice.Disp {
+        return DirectoryDisp(self)
     }
 }
 

@@ -8,7 +8,6 @@ import Ice
 // Recursively print the contents of directory "dir" in tree fashion.
 // For files, show the contents of each file. The "depth"
 // parameter is the current nesting level (for indentation).
-
 func listRecursive(dir: DirectoryPrx, depth: Int = 0) throws {
     let indent = String(repeating: "\t", count: depth + 1)
     let contents = try dir.list()
@@ -38,7 +37,7 @@ func run() -> Int32 {
         // Create a proxy for the root directory and down-cast the proxy to a Directory proxy
         //
         guard let obj = try communicator.stringToProxy("RootDir:default -h localhost -p 10000"),
-              let rootDir = try checkedCast(prx: obj, type: DirectoryPrx.self) else {
+            let rootDir = try checkedCast(prx: obj, type: DirectoryPrx.self) else {
             print("Invalid proxy")
             return 1
         }

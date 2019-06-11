@@ -2,8 +2,8 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-import Ice
 import Foundation
+import Ice
 
 class HelloI: Hello {
     var name: String
@@ -12,7 +12,7 @@ class HelloI: Hello {
         self.name = name
     }
 
-    func getGreeting(current: Ice.Current) throws -> String {
+    func getGreeting(current _: Ice.Current) throws -> String {
         return "\(name) says Hello World!"
     }
 
@@ -38,7 +38,7 @@ func run() -> Int32 {
         }
 
         let adapter = try communicator.createObjectAdapter("Hello")
-        try adapter.add(servant: HelloI(communicator.getProperties().getProperty("Ice.ProgramName")),
+        try adapter.add(servant: HelloDisp(HelloI(communicator.getProperties().getProperty("Ice.ProgramName"))),
                         id: Ice.stringToIdentity("hello"))
         try adapter.activate()
 
