@@ -32,7 +32,7 @@ class NodeI: Node {
 
     // Create a dispatcher for servant `self`
     func makeDisp() -> Ice.Disp {
-        return NodeDisp(self)
+        fatalError("Abstract method")
     }
 }
 
