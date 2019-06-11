@@ -5,7 +5,6 @@
 import Foundation
 import Glacier2
 import Ice
-import PromiseKit
 
 class CallbackReceiverI: CallbackReceiver {
     func callback(current _: Current) throws {
@@ -54,6 +53,7 @@ func run() -> Int32 {
         }
         guard let defaultRouter = communicator.getDefaultRouter(),
             let router = try checkedCast(prx: defaultRouter, type: Glacier2.RouterPrx.self) else {
+                print("Default router not set")
             return 1
         }
 
@@ -75,12 +75,10 @@ func run() -> Int32 {
                 print("Cannot created session: \(error)")
             }
         }
-
-        guard let acmTimeout = try? router.getACMTimeout(),
-            let connection = router.ice_getCachedConnection() else {
-            return 1
-        }
+        let acmTimeout = try router.getACMTimeout()
+        guard let connection = router.ice_getCachedConnection() else { fatalError() }
         connection.setACM(timeout: acmTimeout, close: nil, heartbeat: .HeartbeatAlways)
+
         try connection.setCloseCallback { _ in
             print("The Glacier2 session has been destroyed.")
         }
@@ -122,41 +120,26 @@ func run() -> Int32 {
             guard let line = readLine(strippingNewline: true) else {
                 return 0
             }
-
             if let option = Option(rawValue: line) {
                 switch option {
                 case .twoway:
-                    try twoway.initiateCallback(twowayR, context: nil)
+                    try twoway.initiateCallback(twowayR)
                 case .oneway:
-                    var context = Context()
-                    context["_ovrd"] = (!override.isEmpty) ? override : nil
+                    let context: Context? = override.isEmpty ? nil : ["_ovrd": override]
                     try oneway.initiateCallback(onewayR, context: context)
                 case .batchOneway:
-                    var context = Context()
-                    context["_fwd"] = "O"
-                    context["_ovrd"] = (!override.isEmpty) ? override : nil
+                    let context: Context = override.isEmpty ? ["_fwd": "O"] : ["_fwd": "O", "_ovrd": override]
                     try batchOneway.initiateCallback(onewayR, context: context)
                 case .flush:
                     try batchOneway.ice_flushBatchRequests()
                 case .overrideContextField:
-                    if override.isEmpty {
-                        override = "some_value"
-                        print("override context field is now \(override)")
-                    } else {
-                        override = ""
-                    }
+                    override = override.isEmpty ? "some_value" : ""
+                    print("override context field is now \(override)")
                 case .fakeCategory:
                     fake = !fake
-                    twowayR = fake
-                        ? uncheckedCast(prx: twowayR.ice_identity(callbackReceiverFakeIdent),
-                                        type: CallbackReceiverPrx.self)
-                        : uncheckedCast(prx: twowayR.ice_identity(callbackReceiverIdent),
-                                        type: CallbackReceiverPrx.self)
-                    onewayR = fake
-                        ? uncheckedCast(prx: onewayR.ice_identity(callbackReceiverFakeIdent),
-                                        type: CallbackReceiverPrx.self)
-                        : uncheckedCast(prx: onewayR.ice_identity(callbackReceiverIdent),
-                                        type: CallbackReceiverPrx.self)
+                    let ident = fake ? callbackReceiverFakeIdent : callbackReceiverIdent
+                    twowayR = uncheckedCast(prx: twowayR.ice_identity(ident), type: CallbackReceiverPrx.self)
+                    onewayR = uncheckedCast(prx: onewayR.ice_identity(ident), type: CallbackReceiverPrx.self)
                     print("callback receiver identity: \(identityToString(id: twowayR.ice_getIdentity()))")
                 case .shutdown:
                     try twoway.shutdown()

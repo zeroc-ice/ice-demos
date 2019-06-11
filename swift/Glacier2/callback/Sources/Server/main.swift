@@ -5,7 +5,6 @@
 import Foundation
 import Glacier2
 import Ice
-import PromiseKit
 
 class CallbackI: Callback {
     func initiateCallback(proxy: CallbackReceiverPrx?, current: Current) throws {
@@ -24,8 +23,6 @@ class CallbackI: Callback {
     }
 }
 
-var communicator: Communicator?
-
 func run() -> Int32 {
     do {
         var args = CommandLine.arguments
@@ -38,8 +35,7 @@ func run() -> Int32 {
             return 1
         }
         let adapter = try communicator.createObjectAdapter("Callback.Server")
-        let cb = CallbackI()
-        try adapter.add(servant: cb, id: stringToIdentity("callback"))
+        try adapter.add(servant: CallbackI(), id: stringToIdentity("callback"))
         try adapter.activate()
         communicator.waitForShutdown()
     } catch {
