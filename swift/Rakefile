@@ -109,7 +109,8 @@ def create_commandline_targets(project, demo, aggregate_target)
             target_add_carthage_framework(target, :osx, "IceImpl.framework")
             target_add_carthage_framework(target, :osx, "Ice.framework")
             target_add_carthage_framework(target, :osx, "PromiseKit.framework")
-
+	    target_add_carthage_framework(target, :osx, "MessageKit.framework")
+	    target_add_carthage_framework(target, :osx, "InputBarAccessoryView.framework")
             extra_frameworks = $demo_extra_frameworks[demo] || []
             extra_frameworks.each do |f|
                 target_add_carthage_framework(target, :osx, f)
@@ -142,6 +143,8 @@ def create_uikit_targets(project, demo, aggregate_target)
     target_add_carthage_framework(target, :ios, "IceImpl.framework", true)
     target_add_carthage_framework(target, :ios, "Ice.framework", true)
     target_add_carthage_framework(target, :ios, "PromiseKit.framework", true)
+    target_add_carthage_framework(target, :ios, "MessageKit.framework", true)
+    target_add_carthage_framework(target, :ios, "InputBarAccessoryView.framework", true)
 
     extra_frameworks = $demo_extra_frameworks[demo] || []
     extra_frameworks.each do |f|
