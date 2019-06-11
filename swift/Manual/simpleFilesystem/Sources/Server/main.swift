@@ -41,7 +41,7 @@ class FileI: NodeI, File {
     private var lines: [String] = []
 
     // Slice File::read() operation
-    func read(current _: Ice.Current) throws -> [String] {
+    func read(current _: Ice.Current) -> [String] {
         return lines
     }
 
@@ -61,7 +61,7 @@ class DirectoryI: NodeI, Directory {
     private var contents: [NodePrx?] = []
 
     // Slice Directory::list() operation
-    func list(current _: Ice.Current) throws -> [NodePrx?] {
+    func list(current _: Ice.Current) -> [NodePrx?] {
         return contents
     }
 
