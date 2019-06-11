@@ -116,7 +116,7 @@ func run() -> Int32 {
         //
         let subId = Ice.Identity(name: id ?? UUID().uuidString, category: "")
 
-        var subscriber = try adapter.add(servant: ClockI(), id: subId)
+        var subscriber = try adapter.add(servant: ClockDisp(ClockI()), id: subId)
 
         //
         // Activate the object adapter before subscribing.

@@ -19,7 +19,7 @@ func run() -> Int32 {
         }
 
         let adapter = try communicator.createObjectAdapter("ContactDB")
-        try adapter.add(servant: ContactDBI(), id: Ice.stringToIdentity("contactdb"))
+        try adapter.add(servant: ContactDBDisp(ContactDBI()), id: Ice.stringToIdentity("contactdb"))
         try adapter.activate()
 
         communicator.waitForShutdown()

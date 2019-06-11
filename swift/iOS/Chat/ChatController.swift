@@ -132,7 +132,8 @@ class ChatController: UIViewController,
 
         // The callback is registered in clear:, otherwise the callbacks can arrive
         // prior to the IBOutlet connections being setup.
-        let prx = try adapter.add(servant: self, id: Ice.Identity(name: UUID().uuidString, category: category))
+        let prx = try adapter.add(servant: ChatRoomCallbackDisp(self),
+                                  id: Ice.Identity(name: UUID().uuidString, category: category))
         self.callbackProxy = uncheckedCast(prx: prx, type: ChatRoomCallbackPrx.self)
     }
 

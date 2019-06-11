@@ -5,7 +5,7 @@
 import Foundation
 import Ice
 
-class PrinterI: Printer {
+struct PrinterI: Printer {
     func printString(s: String, current _: Ice.Current) {
         print(s)
     }
@@ -20,7 +20,8 @@ func run() -> Int32 {
 
         let adapter = try communicator.createObjectAdapterWithEndpoints(name: "SimplePrinterAdapter",
                                                                         endpoints: "default -h localhost -p 10000")
-        try adapter.add(servant: PrinterI(), id: Ice.stringToIdentity("SimplePrinter"))
+        try adapter.add(servant: PrinterDisp(PrinterI()),
+                        id: Ice.stringToIdentity("SimplePrinter"))
         try adapter.activate()
 
         communicator.waitForShutdown()

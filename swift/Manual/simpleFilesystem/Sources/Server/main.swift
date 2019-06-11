@@ -41,7 +41,8 @@ class FileI: File {
 
     // Add servant to ASM and parent's _contents map.
     func activate(adapter: Ice.ObjectAdapter) throws {
-        try parent.addChild(child: uncheckedCast(prx: adapter.add(servant: self, id: id), type: NodePrx.self))
+        try parent.addChild(child: uncheckedCast(prx: adapter.add(servant: FileDisp(self), id: id),
+                                                 type: NodePrx.self))
     }
 }
 
@@ -83,7 +84,8 @@ class DirectoryI: Directory {
 
     // Add servant to ASM and parent's contents map.
     func activate(adapter: Ice.ObjectAdapter) throws {
-        let thisNode = try uncheckedCast(prx: adapter.add(servant: self, id: id), type: NodePrx.self)
+        let thisNode = try uncheckedCast(prx: adapter.add(servant: DirectoryDisp(self), id: id),
+                                         type: NodePrx.self)
         try parent?.addChild(child: thisNode)
     }
 }

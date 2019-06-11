@@ -19,7 +19,7 @@ func run() -> Int32 {
         }
 
         let adapter = try communicator.createObjectAdapter("Printer")
-        try adapter.add(servant: PrinterI(), id: Ice.stringToIdentity("printer"))
+        try adapter.add(servant: Ice.BlobjectDisp(PrinterI()), id: Ice.stringToIdentity("printer"))
         try adapter.activate()
         communicator.waitForShutdown()
         return 0

@@ -5,7 +5,7 @@
 import Ice
 import Foundation
 
-class HelloI: Hello {
+struct HelloI: Hello {
     func sayHello(current: Ice.Current) throws {
         print("Hello World!")
     }
@@ -19,7 +19,7 @@ do {
 
     let adapter = try communicator.createObjectAdapterWithEndpoints(name: "Hello",
                                                                     endpoints: "default -h localhost -p 10000")
-    try adapter.add(servant: HelloI(), id: Ice.stringToIdentity("hello"))
+    try adapter.add(servant: HelloDisp(HelloI()), id: Ice.stringToIdentity("hello"))
     try adapter.activate()
     communicator.waitForShutdown()
 } catch {

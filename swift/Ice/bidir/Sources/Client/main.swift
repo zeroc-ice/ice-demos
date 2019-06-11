@@ -34,7 +34,8 @@ func run() -> Int32 {
         //
         // Register the callback receiver servant with the object adapter
         //
-        let proxy = try uncheckedCast(prx: adapter.addWithUUID(CallbackReceiverI()), type: CallbackReceiverPrx.self)
+        let proxy = try uncheckedCast(prx: adapter.addWithUUID(CallbackReceiverDisp(CallbackReceiverI())),
+                                      type: CallbackReceiverPrx.self)
 
         //
         // Associate the object adapter with the bidirectional connection.
