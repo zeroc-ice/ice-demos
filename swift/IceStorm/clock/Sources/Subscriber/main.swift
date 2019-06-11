@@ -39,7 +39,7 @@ func run() -> Int32 {
         var id: String?
         var retryCount: String?
 
-        for var i in 0..< args.count {
+        for var i in 0..<args.count {
             let oldoption = option
             if let o = Option(rawValue: args[i]) {
                 option = o
