@@ -1,1 +1,3 @@
 github "zeroc-ice/ice" "swift"
+github "MessageKit/MessageKit"
+
