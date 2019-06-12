@@ -46,7 +46,7 @@ class FileI: NodeI, File {
     }
 
     // Slice File::write() operation
-    func write(text: [String], current _: Ice.Current = Ice.Current()) {
+    func write(text: [String], current _: Ice.Current) {
         lines = text
     }
 
@@ -100,8 +100,8 @@ func run() -> Int32 {
         // Create a file called "README" in the root directory
         //
         var file = FileI(name: "README", parent: root)
-        file.write(text: ["This file system contains a collection of poetry."])
-
+        file.write(text: ["This file system contains a collection of poetry."],
+                   current: Ice.Current())
         try file.activate(adapter: adapter)
 
         //
@@ -118,7 +118,8 @@ func run() -> Int32 {
                           "A stately pleasure-dome decree:",
                           "Where Alph, the sacred river, ran",
                           "Through caverns measureless to man",
-                          "Down to a sunless sea."])
+                          "Down to a sunless sea."],
+                   current: Ice.Current())
         try file.activate(adapter: adapter)
 
         //
