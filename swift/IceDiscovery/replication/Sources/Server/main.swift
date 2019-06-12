@@ -18,9 +18,7 @@ class HelloI: Hello {
 
     func shutdown(current: Ice.Current) throws {
         print("Shutting down...")
-        if let adapter = current.adapter {
-            adapter.getCommunicator().shutdown()
-        }
+        current.adapter?.getCommunicator().shutdown()
     }
 }
 
@@ -43,11 +41,11 @@ func run() -> Int32 {
         try adapter.activate()
 
         communicator.waitForShutdown()
+        return 0
     } catch {
         print("Error: \(error)\n")
         return 1
     }
-    return 0
 }
 
 exit(run())

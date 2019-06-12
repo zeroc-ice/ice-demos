@@ -5,7 +5,7 @@
 import Ice
 import Foundation
 
-class PingI: Ping {}
+struct PingI: Ping {}
 
 func run() -> Int32 {
     do {

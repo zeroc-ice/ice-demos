@@ -4,7 +4,6 @@
 
 import Foundation
 import Ice
-import PromiseKit
 
 class CallbackSenderI: CallbackSender {
     var clients: [CallbackReceiverPrx] = []

@@ -45,8 +45,8 @@ func run() -> Int32 {
             return 1
         }
 
-        guard let throughput = try checkedCast(prx: communicator.propertyToProxy("Throughput.Proxy")!,
-                                               type: ThroughputPrx.self) else {
+        guard let obj = try communicator.propertyToProxy("Throughput.Proxy"),
+              let throughput = try checkedCast(prx: obj, type: ThroughputPrx.self) else {
             print("invalid proxy")
             return 1
         }
@@ -61,6 +61,7 @@ func run() -> Int32 {
 
         var line = ""
         var currentType = "1"
+
         repeat {
 
             print("==> ", terminator: "")
@@ -234,11 +235,11 @@ func run() -> Int32 {
                 menu()
             }
         } while line != "x"
+        return 0
     } catch {
         print("Error \(error)\n")
         return 1
     }
-    return 0
 }
 
 exit(run())

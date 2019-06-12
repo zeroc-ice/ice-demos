@@ -66,199 +66,187 @@ func run() -> Int32 {
             guard let line = readLine(strippingNewline: true) else {
                 return 0
             }
-            if let option = Option(rawValue: line) {
-                switch option {
-                case .printString:
-                    //
-                    // Marshal the in parameter.
-                    //
-                    let outStream = Ice.OutputStream(communicator: communicator)
-                    outStream.startEncapsulation()
-                    outStream.write("The streaming API works!")
-                    outStream.endEncapsulation()
 
-                    //
-                    // Invoke operation.
-                    //
-                    let r = try obj.ice_invoke(operation: "printString",
-                                               mode: .Normal,
-                                               inEncaps: outStream.finished())
-                    if !r.ok {
-                        print("Unknown user exception")
-                    }
-                case .printStringSeq:
-                    //
-                    // Marshal the in parameter.
-                    //
-                    let outStream = Ice.OutputStream(communicator: communicator)
-                    outStream.startEncapsulation()
-                    outStream.write(["The", "streaming", "API", "works!"])
-                    outStream.endEncapsulation()
-
-                    //
-                    // Invoke operation.
-                    //
-                    let r = try obj.ice_invoke(operation: "printStringSequence",
-                                               mode: .Normal,
-                                               inEncaps: outStream.finished())
-                    if !r.ok {
-                        print("Unknown user exception")
-                    }
-                case .printDictionary:
-                    //
-                    // Marshal the in parameter.
-                    //
-                    let outStream = Ice.OutputStream(communicator: communicator)
-                    outStream.startEncapsulation()
-                    StringDictHelper.write(to: outStream, value: ["The": "streaming",
-                                                                  "API": "works!"])
-                    outStream.endEncapsulation()
-
-                    //
-                    // Invoke operation.
-                    //
-                    let r = try obj.ice_invoke(operation: "printDictionary",
-                                               mode: .Normal,
-                                               inEncaps: outStream.finished())
-                    if !r.ok {
-                        print("Unknown user exception")
-                    }
-                case .printEnum:
-                    //
-                    // Marshal the in parameter.
-                    //
-                    let outStream = Ice.OutputStream(communicator: communicator)
-                    outStream.startEncapsulation()
-                    outStream.write(.green)
-                    outStream.endEncapsulation()
-
-                    //
-                    // Invoke operation.
-                    //
-                    let r = try obj.ice_invoke(operation: "printEnum",
-                                               mode: .Normal,
-                                               inEncaps: outStream.finished())
-                    if !r.ok {
-                        print("Unknown user exception")
-                    }
-                case .printStruct:
-                    //
-                    // Marshal the in parameter.
-                    //
-                    let outStream = Ice.OutputStream(communicator: communicator)
-                    outStream.startEncapsulation()
-                    outStream.write(Structure(name: "red", value: Color.red))
-                    outStream.endEncapsulation()
-
-                    //
-                    // Invoke operation.
-                    //
-                    let r = try obj.ice_invoke(operation: "printStruct",
-                                               mode: .Normal,
-                                               inEncaps: outStream.finished())
-                    if !r.ok {
-                        print("Unknown user exception")
-                    }
-                case .printStructSequence:
-                    //
-                    // Marshal the in parameter.
-                    //
-                    let outStream = Ice.OutputStream(communicator: communicator)
-                    outStream.startEncapsulation()
-                    StructureSeqHelper.write(to: outStream,
-                                             value: [Structure(name: "red", value: .red),
-                                                     Structure(name: "green", value: .green),
-                                                     Structure(name: "blue", value: .blue)])
-                    outStream.endEncapsulation()
-
-                    //
-                    // Invoke operation.
-                    //
-                    let r = try obj.ice_invoke(operation: "printStructSequence",
-                                               mode: .Normal,
-                                               inEncaps: outStream.finished())
-                    if !r.ok {
-                        print("Unknown user exception")
-                    }
-                case .printClass:
-                    //
-                    // Marshal the in parameter.
-                    //
-                    let outStream = Ice.OutputStream(communicator: communicator)
-                    outStream.startEncapsulation()
-                    outStream.write(C(s: Structure(name: "blue", value: .blue)))
-                    outStream.writePendingValues()
-                    outStream.endEncapsulation()
-
-                    //
-                    // Invoke operation.
-                    //
-                    let r = try obj.ice_invoke(operation: "printClass",
-                                               mode: .Normal,
-                                               inEncaps: outStream.finished())
-                    if !r.ok {
-                        print("Unknown user exception")
-                    }
-                case .getValues:
-                    //
-                    // Invoke operation.
-                    //
-                    let r = try obj.ice_invoke(operation: "getValues",
-                                               mode: .Normal,
-                                               inEncaps: Data())
-                    if !r.ok {
-                        print("Unknown user exception")
-                        continue
-                    }
-
-                    //
-                    // Unmarshal the results.
-                    //
-                    let inStream = Ice.InputStream(communicator: communicator, bytes: r.outEncaps)
-                    try inStream.startEncapsulation()
-                    var c: C?
-                    try inStream.read { c = $0 as? C }
-                    let str: String = try inStream.read()
-                    try inStream.readPendingValues()
-
-                    print("Got string `\(str)' and class: \(c!)")
-
-                case .throwException:
-                    //
-                    // Invoke operation.
-                    //
-                    let r = try obj.ice_invoke(operation: "throwPrintFailure",
-                                               mode: .Normal,
-                                               inEncaps: Data())
-                    if r.ok {
-                        print("Expected exception")
-                        continue
-                    }
-
-                    let inStream = Ice.InputStream(communicator: communicator, bytes: r.outEncaps)
-                    try inStream.startEncapsulation()
-                    do {
-                        try inStream.throwException()
-                    } catch is PrintFailure {
-                        // Expected.
-                    } catch is Ice.UserException {
-                        print("Unknown user exception")
-                    }
-                    try inStream.endEncapsulation()
-                case .shutdownServer:
-                    //
-                    // Invoke operation.
-                    //
-                    _ = try obj.ice_invoke(operation: "shutdown",
-                                           mode: .Normal,
-                                           inEncaps: Data())
-                case .exit:
-                    exit = true
-                case .help:
-                    menu()
-                }
-            } else {
+            guard let option = Option(rawValue: line) else {
                 print("unknown command `\(line)'")
+                menu()
+                continue
+            }
+
+            switch option {
+            case .printString:
+                //
+                // Marshal the in parameter.
+                //
+                let outStream = Ice.OutputStream(communicator: communicator)
+                outStream.startEncapsulation()
+                outStream.write("The streaming API works!")
+                outStream.endEncapsulation()
+
+                //
+                // Invoke operation.
+                //
+                let r = try obj.ice_invoke(operation: "printString", mode: .Normal, inEncaps: outStream.finished())
+                if !r.ok {
+                    print("Unknown user exception")
+                }
+            case .printStringSeq:
+                //
+                // Marshal the in parameter.
+                //
+                let outStream = Ice.OutputStream(communicator: communicator)
+                outStream.startEncapsulation()
+                outStream.write(["The", "streaming", "API", "works!"])
+                outStream.endEncapsulation()
+
+                //
+                // Invoke operation.
+                //
+                let r = try obj.ice_invoke(operation: "printStringSequence",
+                                           mode: .Normal,
+                                           inEncaps: outStream.finished())
+                if !r.ok {
+                    print("Unknown user exception")
+                }
+            case .printDictionary:
+                //
+                // Marshal the in parameter.
+                //
+                let outStream = Ice.OutputStream(communicator: communicator)
+                outStream.startEncapsulation()
+                StringDictHelper.write(to: outStream, value: ["The": "streaming",
+                                                              "API": "works!"])
+                outStream.endEncapsulation()
+
+                //
+                // Invoke operation.
+                //
+                let r = try obj.ice_invoke(operation: "printDictionary", mode: .Normal, inEncaps: outStream.finished())
+                if !r.ok {
+                    print("Unknown user exception")
+                }
+            case .printEnum:
+                //
+                // Marshal the in parameter.
+                //
+                let outStream = Ice.OutputStream(communicator: communicator)
+                outStream.startEncapsulation()
+                outStream.write(.green)
+                outStream.endEncapsulation()
+
+                //
+                // Invoke operation.
+                //
+                let r = try obj.ice_invoke(operation: "printEnum", mode: .Normal, inEncaps: outStream.finished())
+                if !r.ok {
+                    print("Unknown user exception")
+                }
+            case .printStruct:
+                //
+                // Marshal the in parameter.
+                //
+                let outStream = Ice.OutputStream(communicator: communicator)
+                outStream.startEncapsulation()
+                outStream.write(Structure(name: "red", value: Color.red))
+                outStream.endEncapsulation()
+
+                //
+                // Invoke operation.
+                //
+                let r = try obj.ice_invoke(operation: "printStruct", mode: .Normal, inEncaps: outStream.finished())
+                if !r.ok {
+                    print("Unknown user exception")
+                }
+            case .printStructSequence:
+                //
+                // Marshal the in parameter.
+                //
+                let outStream = Ice.OutputStream(communicator: communicator)
+                outStream.startEncapsulation()
+                StructureSeqHelper.write(to: outStream,
+                                         value: [Structure(name: "red", value: .red),
+                                                 Structure(name: "green", value: .green),
+                                                 Structure(name: "blue", value: .blue)])
+                outStream.endEncapsulation()
+
+                //
+                // Invoke operation.
+                //
+                let r = try obj.ice_invoke(operation: "printStructSequence", mode: .Normal,
+                                           inEncaps: outStream.finished())
+                if !r.ok {
+                    print("Unknown user exception")
+                }
+            case .printClass:
+                //
+                // Marshal the in parameter.
+                //
+                let outStream = Ice.OutputStream(communicator: communicator)
+                outStream.startEncapsulation()
+                outStream.write(C(s: Structure(name: "blue", value: .blue)))
+                outStream.writePendingValues()
+                outStream.endEncapsulation()
+
+                //
+                // Invoke operation.
+                //
+                let r = try obj.ice_invoke(operation: "printClass", mode: .Normal, inEncaps: outStream.finished())
+                if !r.ok {
+                    print("Unknown user exception")
+                }
+            case .getValues:
+                //
+                // Invoke operation.
+                //
+                let r = try obj.ice_invoke(operation: "getValues", mode: .Normal, inEncaps: Data())
+                if !r.ok {
+                    print("Unknown user exception")
+                    continue
+                }
+
+                //
+                // Unmarshal the results.
+                //
+                let inStream = Ice.InputStream(communicator: communicator, bytes: r.outEncaps)
+                try inStream.startEncapsulation()
+                var c: C?
+                try inStream.read { c = $0 as? C }
+                let str: String = try inStream.read()
+                try inStream.readPendingValues()
+
+                print("Got string `\(str)' and class: \(c!)")
+
+            case .throwException:
+                //
+                // Invoke operation.
+                //
+                let r = try obj.ice_invoke(operation: "throwPrintFailure", mode: .Normal, inEncaps: Data())
+                if r.ok {
+                    print("Expected exception")
+                    continue
+                }
+
+                let inStream = Ice.InputStream(communicator: communicator, bytes: r.outEncaps)
+                try inStream.startEncapsulation()
+                do {
+                    try inStream.throwException()
+                } catch is PrintFailure {
+                    // Expected.
+                } catch is Ice.UserException {
+                    print("Unknown user exception")
+                }
+                try inStream.endEncapsulation()
+            case .shutdownServer:
+                //
+                // Invoke operation.
+                //
+                let r = try obj.ice_invoke(operation: "shutdown", mode: .Normal, inEncaps: Data())
+                if !r.ok {
+                    print("Unknown user exception")
+                }
+            case .exit:
+                exit = true
+            case .help:
                 menu()
             }
         } while !exit

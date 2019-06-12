@@ -50,7 +50,7 @@ func run() -> Int32 {
         }
 
         guard let base = try communicator.propertyToProxy("TopicManager.Proxy"),
-            let manager = try checkedCast(prx: base, type: IceStorm.TopicManagerPrx.self) else {
+              let manager = try checkedCast(prx: base, type: IceStorm.TopicManagerPrx.self) else {
             print("invalid proxy")
             return 1
         }
@@ -78,6 +78,7 @@ func run() -> Int32 {
             print("Error getting publisher proxy")
             return 1
         }
+
         switch option {
         case .datagram:
             publisher = publisher.ice_datagram()

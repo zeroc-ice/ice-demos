@@ -21,8 +21,8 @@ func run() -> Int32 {
 
         guard let base = try communicator.propertyToProxy("Calculator.Proxy"),
               let calculator = try checkedCast(prx: base, type: CalculatorPrx.self) else {
-                print("invalid proxy")
-                return 1
+            print("invalid proxy")
+            return 1
         }
 
         var status: Int32 = 0

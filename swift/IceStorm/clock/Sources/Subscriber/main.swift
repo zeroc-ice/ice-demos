@@ -84,7 +84,7 @@ func run() -> Int32 {
         }
 
         guard let base = try communicator.propertyToProxy("TopicManager.Proxy"),
-            let manager = try checkedCast(prx: base, type: IceStorm.TopicManagerPrx.self) else {
+              let manager = try checkedCast(prx: base, type: IceStorm.TopicManagerPrx.self) else {
             print("invalid proxy")
             return 1
         }
@@ -148,11 +148,9 @@ func run() -> Int32 {
 
         do {
             _ = try topic.subscribeAndGetPublisher(theQoS: qos, subscriber: subscriber)
-        } catch let ex as IceStorm.AlreadySubscribed {
-            // If we're manually setting the subscriber id ignore.
-            if id == nil {
-                throw ex
-            }
+        } catch is IceStorm.AlreadySubscribed {
+            // Must never happen when subscribing with an UUID
+            precondition(id != nil)
             print("reactivating persistent subscriber")
         }
         communicator.waitForShutdown()

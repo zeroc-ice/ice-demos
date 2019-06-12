@@ -6,7 +6,7 @@ import Ice
 import Foundation
 
 struct HelloI: Hello {
-    func sayHello(current: Ice.Current) throws {
+    func sayHello(current _: Ice.Current) throws {
         print("Hello World!")
     }
 }

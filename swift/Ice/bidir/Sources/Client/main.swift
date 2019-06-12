@@ -6,7 +6,7 @@ import Ice
 import Foundation
 
 class CallbackReceiverI: CallbackReceiver {
-    func callback(num: Int32, current: Current) throws {
+    func callback(num: Int32, current _: Current) throws {
         print("received callback #\(num)")
     }
 }

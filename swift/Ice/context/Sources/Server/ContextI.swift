@@ -12,6 +12,6 @@ class ContextI: Context {
 
     func shutdown(current: Ice.Current) {
         print("Shutting down...")
-        current.adapter!.getCommunicator().shutdown()
+        current.adapter?.getCommunicator().shutdown()
     }
 }

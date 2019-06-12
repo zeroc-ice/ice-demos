@@ -44,8 +44,8 @@ func run() -> Int32 {
 
         guard let base = try communicator.propertyToProxy("Context.Proxy"),
               let proxy = try checkedCast(prx: base, type: ContextPrx.self) else {
-                print("invalid proxy")
-                return 1
+            print("invalid proxy")
+            return 1
         }
 
         menu()
@@ -71,10 +71,10 @@ func run() -> Int32 {
             case .perProxyRequestContext:
                 try proxy.ice_context(["type": "Per-Proxy"]).call()
             case .implicitRequestContext:
-                let ic = communicator.getImplicitContext()
-                ic.setContext(["type": "Implicit"])
+                let implicitContext = communicator.getImplicitContext()
+                implicitContext.setContext(["type": "Implicit"])
                 try proxy.call()
-                ic.setContext([:])
+                implicitContext.setContext([:])
             case .shutdown:
                 try proxy.shutdown()
             case .exit:
