@@ -2,12 +2,12 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-import UIKit
-import PromiseKit
 import Foundation
+import PromiseKit
+import UIKit
 
-import Ice
 import Glacier2
+import Ice
 
 struct ChatMessage {
     let timestamp: Date
@@ -35,9 +35,9 @@ struct ChatMessage {
 }
 
 class MessageCell: UITableViewCell {
-    @IBOutlet weak var timestamp: UILabel!
-    @IBOutlet weak var who: UILabel!
-    @IBOutlet weak var body: UILabel!
+    @IBOutlet var timestamp: UILabel!
+    @IBOutlet var who: UILabel!
+    @IBOutlet var body: UILabel!
 
     var dateFormatter: DateFormatter
     var message: ChatMessage!
@@ -65,13 +65,12 @@ class MessageCell: UITableViewCell {
 }
 
 class ChatController: UIViewController,
-                      UITableViewDelegate,
-                      UITableViewDataSource,
-                      UITextFieldDelegate,
-                      ChatRoomCallback {
-
-    @IBOutlet weak var chatView: UITableView!
-    @IBOutlet weak var inputField: UITextField!
+    UITableViewDelegate,
+    UITableViewDataSource,
+    UITextFieldDelegate,
+    ChatRoomCallback {
+    @IBOutlet var chatView: UITableView!
+    @IBOutlet var inputField: UITextField!
 
     var users: [String] = []
     var messages: [ChatMessage] = []
@@ -121,7 +120,6 @@ class ChatController: UIViewController,
                acmTimeout: Int32,
                router: Glacier2.RouterPrx,
                category: String) throws {
-
         self.communicator = communicator
         self.session = session
         self.router = router
@@ -134,10 +132,10 @@ class ChatController: UIViewController,
         // prior to the IBOutlet connections being setup.
         let prx = try adapter.add(servant: ChatRoomCallbackDisp(self),
                                   id: Ice.Identity(name: UUID().uuidString, category: category))
-        self.callbackProxy = uncheckedCast(prx: prx, type: ChatRoomCallbackPrx.self)
+        callbackProxy = uncheckedCast(prx: prx, type: ChatRoomCallbackPrx.self)
     }
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    override func prepare(for segue: UIStoryboardSegue, sender _: Any?) {
         // Get reference to the destination view controller
         if segue.identifier == "showUsers", let userController = segue.destination as? UserController {
             // Pass any objects to the view controller here, like...
@@ -158,7 +156,7 @@ class ChatController: UIViewController,
         // calls block.
         //
         if let communicator = self.communicator, let router = self.router {
-            self.session = nil
+            session = nil
             self.communicator = nil
             self.router = nil
             DispatchQueue.global().async {
@@ -189,19 +187,19 @@ class ChatController: UIViewController,
         //
         // The session is invalid, clear.
         //
-        if self.session != nil, let controller = self.navigationController {
+        if session != nil, let controller = self.navigationController {
             controller.popToRootViewController(animated: true)
 
             //
             // The session is invalid, clear.
             //
-            self.session = nil
-            self.router = nil
+            session = nil
+            router = nil
 
             //
             // Clean up the remainder.
             //
-            self.destroySession()
+            destroySession()
 
             //
             // Open an alert with just an OK button
@@ -230,46 +228,46 @@ class ChatController: UIViewController,
 
             self.messages.append(message)
             self.chatView.reloadData()
-            /*self.chatView.scrollToRow(at: IndexPath(indexes: [0, self.messages.count - 1]),
-                                      at: .bottom, animated: false)*/
+            /* self.chatView.scrollToRow(at: IndexPath(indexes: [0, self.messages.count - 1]),
+             at: .bottom, animated: false) */
         }
     }
 
-    func `init`(users: StringSeq, current: Current) throws {
+    func `init`(users: StringSeq, current _: Current) throws {
         self.users = users
     }
 
-    func send(timestamp: Int64, name: String, message: String, current: Current) throws {
+    func send(timestamp: Int64, name: String, message: String, current _: Current) throws {
         append(ChatMessage(text: message, who: name, timestamp: timestamp))
     }
 
-    func join(timestamp: Int64, name: String, current: Current) throws {
+    func join(timestamp: Int64, name: String, current _: Current) throws {
         append(ChatMessage(text: "\(name) joined.\n", who: "system message", timestamp: timestamp))
         users.append(name)
         navigationItem.rightBarButtonItem!.title = "\(users.count) " + (users.count > 1 ? "Users" : "User")
     }
 
-    func leave(timestamp: Int64, name: String, current: Current) throws {
+    func leave(timestamp: Int64, name: String, current _: Current) throws {
         append(ChatMessage(text: "\(name) left.\n", who: "system message", timestamp: timestamp))
         users.removeAll(where: { $0 == name })
         navigationItem.rightBarButtonItem!.title = "\(users.count) " + (users.count > 1 ? "Users" : "User")
     }
 
-    func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in _: UITableView) -> Int {
         return 1
     }
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         return messages.count
     }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = chatView.dequeueReusableCell(withIdentifier: "MessageCell") as! MessageCell
         cell.setMessage(messages[indexPath.row])
         return cell
     }
 
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_: Bool) {
         //
         // Register for keyboard show/hide notifications.
         //
@@ -279,7 +277,7 @@ class ChatController: UIViewController,
                                                name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
+    override func viewWillDisappear(_: Bool) {
         view.endEditing(true)
 
         //
@@ -291,12 +289,12 @@ class ChatController: UIViewController,
 
     @objc func keyboardWillShow(_ notification: NSNotification) {
         if let keyboardSize = notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? CGRect {
-            self.view.frame.origin.y -= keyboardSize.height
+            view.frame.origin.y -= keyboardSize.height
         }
     }
 
-    @objc func keyboardWillHide(_ notification: NSNotification) {
-        self.view.frame.origin.y = 0
+    @objc func keyboardWillHide(_: NSNotification) {
+        view.frame.origin.y = 0
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

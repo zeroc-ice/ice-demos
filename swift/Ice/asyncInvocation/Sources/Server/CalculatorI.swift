@@ -5,7 +5,6 @@
 import Ice
 
 class CalculatorI: Calculator {
-
     func add(x: Int32, y: Int32, current _: Ice.Current) throws -> Int32 {
         return x + y
     }

@@ -2,11 +2,11 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-import UIKit
-import PromiseKit
 import Ice
+import PromiseKit
+import UIKit
 
-protocol  DetailControllerDelegate: AnyObject {
+protocol DetailControllerDelegate: AnyObject {
     func bookUpdated(_ book: BookDescription)
     func bookDeleted()
     func destroySession()
@@ -16,7 +16,7 @@ class DetailController: UIViewController {
     var book: BookDescription!
     var updated: BookDescription!
 
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet var tableView: UITableView!
 
     var selectedIndexPath: IndexPath!
 
@@ -28,7 +28,7 @@ class DetailController: UIViewController {
         navigationItem.rightBarButtonItem = editButtonItem
     }
 
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_: Bool) {
         //
         // Remove any existing selection.
         //
@@ -44,8 +44,8 @@ class DetailController: UIViewController {
         tableView.reloadData()
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        if isMovingToParent && changed {
+    override func viewWillDisappear(_: Bool) {
+        if isMovingToParent, changed {
             delegate!.bookUpdated(book!)
         }
     }
@@ -60,7 +60,7 @@ class DetailController: UIViewController {
         }
     }
 
-    @IBAction func removeBook(sender: AnyObject?) {
+    @IBAction func removeBook(sender _: AnyObject?) {
         navigationController?.popViewController(animated: true)
         delegate.bookDeleted()
     }
@@ -102,7 +102,7 @@ class DetailController: UIViewController {
 
         if let proxy = book?.proxy {
             proxy.setTitleAsync(title).done {
-                    self.commitEdit()
+                self.commitEdit()
             }.catch { error in
                 self.exception(error)
             }
@@ -143,13 +143,12 @@ class DetailController: UIViewController {
 
         book.proxy!.rentBookAsync(value).done {
             self.commitEdit()
-        }.catch {error in
+        }.catch { error in
             self.exception(error)
         }
     }
 
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
+    override func prepare(for segue: UIStoryboardSegue, sender _: Any?) {
         if segue.identifier == "ShowEdit" {
             let ec = segue.destination as! EditController
             var name: String!
@@ -178,7 +177,6 @@ class DetailController: UIViewController {
 
     @IBAction func unwindFromEdit(segue: UIStoryboardSegue) {
         if segue.source is EditController {
-
             let ec = segue.source as! EditController
             let value = ec.textField.text!
 
@@ -198,7 +196,6 @@ class DetailController: UIViewController {
     }
 
     func exception(_ error: Error) {
-
         saving(false)
         // Discard the edit.
         updated = nil
@@ -248,7 +245,7 @@ class DetailController: UIViewController {
 }
 
 extension DetailController: UITableViewDelegate, UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in _: UITableView) -> Int {
         //
         // If we're in "add book mode" then the rented-by section is not visible.
         // 4 sections. ISBN, Title, Authors, Rented By | Remove books.
@@ -256,17 +253,17 @@ extension DetailController: UITableViewDelegate, UITableViewDataSource {
         return book.proxy == nil ? 3 : 4
     }
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
         var nrows: Int = 1
         if section == 2 { // Authors
-            nrows = self.isEditing ? book.authors.count + 1 : book.authors.count
+            nrows = isEditing ? book.authors.count + 1 : book.authors.count
         }
         return nrows
     }
 
-    func tableView(_ tableView: UITableView,
+    func tableView(_: UITableView,
                    editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        if !self.isEditing || saving || indexPath.section != 2 {
+        if !isEditing || saving || indexPath.section != 2 {
             return .none
         }
 
@@ -276,7 +273,6 @@ extension DetailController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView,
                    commit editingStyle: UITableViewCell.EditingStyle,
                    forRowAt indexPath: IndexPath) {
-
         //
         // If row is deleted, remove it from the list.
         //
@@ -310,17 +306,16 @@ extension DetailController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView,
                    heightForHeaderInSection section: Int) -> CGFloat {
-        if isEditing && section == 3 {
+        if isEditing, section == 3 {
             return 0 // Remove button
         } else {
             return tableView.sectionHeaderHeight
         }
     }
 
-    func tableView(_ tableView: UITableView,
+    func tableView(_: UITableView,
                    heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 1 {
-
             if book.title.isEmpty {
                 return 44
             }
@@ -330,11 +325,12 @@ extension DetailController: UITableViewDelegate, UITableViewDataSource {
             // go past 200px.
             //
             let rect = book.title.boundingRect(
-                                        with: isEditing ? CGSize(width: 250, height: 200) :
-                                                          CGSize(width: 260, height: 200),
-                                        options: [.usesLineFragmentOrigin, .usesFontLeading],
-                                        attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)],
-                                        context: nil)
+                with: isEditing ? CGSize(width: 250, height: 200) :
+                    CGSize(width: 260, height: 200),
+                options: [.usesLineFragmentOrigin, .usesFontLeading],
+                attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)],
+                context: nil
+            )
             return rect.size.height + 20 // 20px padding.
         } else {
             return 44 // 20px padding + 22.f for the 20pt font.
@@ -345,7 +341,7 @@ extension DetailController: UITableViewDelegate, UITableViewDataSource {
         //
         // 4 Possible sections. Section 1 and 4 are special. The title section, and the remove book section.
         //
-        if indexPath.section == 1 {  // Title
+        if indexPath.section == 1 { // Title
             var cell = tableView.dequeueReusableCell(withIdentifier: "TitleCell")
             if cell == nil {
                 //
@@ -365,17 +361,18 @@ extension DetailController: UITableViewDelegate, UITableViewDataSource {
 
             let textView = cell!.contentView.subviews[0] as! UILabel
             let rect = book.title.boundingRect(
-                                           with: isEditing ? CGSize(width: 250, height: 200) :
-                                                             CGSize(width: 260, height: 200),
-                                           options: [.usesLineFragmentOrigin, .usesFontLeading],
-                                           attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 18)],
-                                           context: nil)
+                with: isEditing ? CGSize(width: 250, height: 200) :
+                    CGSize(width: 260, height: 200),
+                options: [.usesLineFragmentOrigin, .usesFontLeading],
+                attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 18)],
+                context: nil
+            )
             textView.frame = CGRect(x: 10, y: 10, width: rect.size.width, height: rect.size.height + 10)
             textView.text = book.title
             return cell!
         }
 
-        if indexPath.section == 3 && isEditing { // Remove book section OR rented by section
+        if indexPath.section == 3, isEditing { // Remove book section OR rented by section
             // Remove book section.
             var cell: UITableViewCell! = tableView.dequeueReusableCell(withIdentifier: "RemoveBook")
             if cell == nil {
@@ -430,7 +427,7 @@ extension DetailController: UITableViewDelegate, UITableViewDataSource {
         return cell!
     }
 
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_: UITableView, titleForHeaderInSection section: Int) -> String? {
         var title: String?
         // Return the displayed title for the specified section.
         switch section {
@@ -448,7 +445,7 @@ extension DetailController: UITableViewDelegate, UITableViewDataSource {
         return title
     }
 
-    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+    func tableView(_: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         if indexPath.section == 3 {
             return indexPath
         }
@@ -458,7 +455,7 @@ extension DetailController: UITableViewDelegate, UITableViewDataSource {
         return isEditing ? indexPath : nil
     }
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         //
         // Do not accept edit commands while saving is in progress.
         //

@@ -39,7 +39,7 @@ func run() -> Int32 {
         var id: String?
         var retryCount: String?
 
-        for var i in 0..<args.count {
+        for var i in 0 ..< args.count {
             let oldoption = option
             if let o = Option(rawValue: args[i]) {
                 option = o
@@ -84,7 +84,7 @@ func run() -> Int32 {
         }
 
         guard let base = try communicator.propertyToProxy("TopicManager.Proxy"),
-              let manager = try checkedCast(prx: base, type: IceStorm.TopicManagerPrx.self) else {
+            let manager = try checkedCast(prx: base, type: IceStorm.TopicManagerPrx.self) else {
             print("invalid proxy")
             return 1
         }

@@ -53,7 +53,7 @@ func run() -> Int32 {
         }
 
         guard let base = try communicator.propertyToProxy("Hello.Proxy"),
-              var twoway = try checkedCast(prx: base.ice_twoway().ice_secure(false), type: HelloPrx.self) else {
+            var twoway = try checkedCast(prx: base.ice_twoway().ice_secure(false), type: HelloPrx.self) else {
             print("invalid proxy")
             return 1
         }
@@ -70,7 +70,6 @@ func run() -> Int32 {
         var timeout = Int32(-1)
         var delay = Int32(0)
         repeat {
-
             print("==> ", terminator: "")
             guard let line = readLine(strippingNewline: true) else {
                 return 0

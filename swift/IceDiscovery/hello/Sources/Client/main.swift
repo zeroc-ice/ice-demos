@@ -53,7 +53,7 @@ func run() -> Int32 {
         }
 
         guard let base = try communicator.stringToProxy("hello"),
-              var twoway = try checkedCast(prx: base.ice_twoway().ice_secure(false), type: HelloPrx.self) else {
+            var twoway = try checkedCast(prx: base.ice_twoway().ice_secure(false), type: HelloPrx.self) else {
             print("invalid proxy")
             return 1
         }

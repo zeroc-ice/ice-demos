@@ -2,13 +2,13 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-import Ice
 import Foundation
+import Ice
 
 class HelloI: Hello {
     func sayHello(delay: Int32, current _: Ice.Current) throws {
         if delay > 0 {
-             Thread.sleep(forTimeInterval: TimeInterval(delay) / 1000)
+            Thread.sleep(forTimeInterval: TimeInterval(delay) / 1000)
         }
         print("Hello World!")
     }

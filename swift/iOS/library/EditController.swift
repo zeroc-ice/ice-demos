@@ -5,12 +5,12 @@
 import UIKit
 
 class EditController: UIViewController {
-    @IBOutlet weak var textField: UITextField!
+    @IBOutlet var textField: UITextField!
     var initialValue: String!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        textField.placeholder = self.title
+        textField.placeholder = title
         textField.text = initialValue
     }
 

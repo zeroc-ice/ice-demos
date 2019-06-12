@@ -2,22 +2,21 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-import UIKit
-import PromiseKit
-import Ice
 import Glacier2
+import Ice
+import PromiseKit
+import UIKit
 
 let usernameKey = "usernameKey"
 let passwordKey = "passwordKey"
 let sslKey = "sslKey"
 
 class LoginController: UIViewController, UITextFieldDelegate, UIAlertViewDelegate {
-
-    @IBOutlet weak var usernameField: UITextField!
-    @IBOutlet weak var passwordField: UITextField!
-    @IBOutlet weak var loginButton: UIButton!
-    @IBOutlet weak var statusLabel: UILabel!
-    @IBOutlet weak var statusActivity: UIActivityIndicatorView!
+    @IBOutlet var usernameField: UITextField!
+    @IBOutlet var passwordField: UITextField!
+    @IBOutlet var loginButton: UIButton!
+    @IBOutlet var statusLabel: UILabel!
+    @IBOutlet var statusActivity: UIActivityIndicatorView!
 
     weak var currentField: UITextField?
     var oldFieldValue: String?
@@ -32,7 +31,7 @@ class LoginController: UIViewController, UITextFieldDelegate, UIAlertViewDelegat
         super.viewDidLoad()
 
         // Set the default values, and show the clear button in the text field.
-        usernameField.text =  UserDefaults.standard.string(forKey: usernameKey)
+        usernameField.text = UserDefaults.standard.string(forKey: usernameKey)
         usernameField.clearButtonMode = .whileEditing
         passwordField.text = UserDefaults.standard.string(forKey: passwordKey)
         passwordField.clearButtonMode = .whileEditing
@@ -80,7 +79,7 @@ class LoginController: UIViewController, UITextFieldDelegate, UIAlertViewDelegat
     }
 
     func textFieldShouldBeginEditing(_ field: UITextField) -> Bool {
-        self.currentField = field
+        currentField = field
         oldFieldValue = field.text
         return true
     }
@@ -141,7 +140,7 @@ class LoginController: UIViewController, UITextFieldDelegate, UIAlertViewDelegat
         present(alert, animated: true, completion: nil)
     }
 
-    @IBAction func login(_ sender: Any) {
+    @IBAction func login(_: Any) {
         let properties = Ice.createProperties()
         properties.setProperty(key: "Ice.Plugin.IceSSL", value: "1")
         properties.setProperty(key: "Ice.Default.Router",

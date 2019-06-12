@@ -2,14 +2,13 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-import UIKit
 import Ice
 import PromiseKit
+import UIKit
 
 class MainController: UIViewController,
-                      DetailControllerDelegate {
-
-    @IBOutlet weak var searchTableView: UITableView!
+    DetailControllerDelegate {
+    @IBOutlet var searchTableView: UITableView!
     var communicator: Ice.Communicator!
     var session: SessionAdapter!
     var library: LibraryPrx!
@@ -40,14 +39,13 @@ class MainController: UIViewController,
         self.communicator = communicator
         self.session = session
         self.library = library
-        self.query = nil
+        query = nil
         nrows = 0
         rowsQueried = 10
         books.removeAll()
     }
 
     @objc func destroySession() {
-
         precondition(session != nil)
         session.destroy()
         session = nil
@@ -61,7 +59,7 @@ class MainController: UIViewController,
         }
     }
 
-    @IBAction func logout(sender: AnyObject) {
+    @IBAction func logout(sender _: AnyObject) {
         destroySession()
         navigationController?.popViewController(animated: true)
     }
@@ -96,7 +94,7 @@ class MainController: UIViewController,
         removeCurrentBook()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_: Bool) {
         //
         // There was a fatal error and the session was destroyed.
         //
@@ -109,7 +107,7 @@ class MainController: UIViewController,
         searchTableView.reloadData()
     }
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    override func prepare(for segue: UIStoryboardSegue, sender _: Any?) {
         if segue.identifier == "ShowDetail", let dc = segue.destination as? DetailController {
             dc.delegate = self
             dc.startEdit(books[currentIndexPath.row])
@@ -212,17 +210,16 @@ extension MainController: UITableViewDelegate, UITableViewDataSource {
         return 1
     }
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         return nrows
     }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = searchTableView.dequeueReusableCell(withIdentifier: "MyIdentifier") ??
             UITableViewCell(style: .default, reuseIdentifier: "MyIdentifier")
         cell.accessoryType = UITableViewCell.AccessoryType.detailDisclosureButton
 
         if indexPath.row > books.count - 1 {
-
             //
             // Here we are past the available cached set of data. rowsQueried records
             // how many rows of data we've actually asked for.
@@ -250,13 +247,13 @@ extension MainController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
 
-    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+    func tableView(_: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         // Selecting a <loading> book does nothing.
         if indexPath.row > books.count - 1 {
             return nil
         }
 
-        self.currentIndexPath = indexPath
+        currentIndexPath = indexPath
         performSegue(withIdentifier: "ShowDetail", sender: self)
         return nil
     }

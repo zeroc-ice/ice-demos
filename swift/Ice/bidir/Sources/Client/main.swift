@@ -2,8 +2,8 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-import Ice
 import Foundation
+import Ice
 
 class CallbackReceiverI: CallbackReceiver {
     func callback(num: Int32, current _: Current) throws {
@@ -20,7 +20,7 @@ func run() -> Int32 {
         }
 
         guard let base = try communicator.propertyToProxy("CallbackSender.Proxy"),
-              let server = try checkedCast(prx: base, type: CallbackSenderPrx.self) else {
+            let server = try checkedCast(prx: base, type: CallbackSenderPrx.self) else {
             print("invalid proxy")
             return 1
         }

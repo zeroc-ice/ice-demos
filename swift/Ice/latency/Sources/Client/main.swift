@@ -2,8 +2,8 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-import Ice
 import Dispatch
+import Ice
 import PromiseKit
 
 func run() -> Int32 {
@@ -25,9 +25,9 @@ func run() -> Int32 {
         }
 
         let start = DispatchTime.now()
-        let repetitions = 100000
+        let repetitions = 100_000
         print("pinging server \(repetitions) times (this may take a while)")
-        for _ in 0..<repetitions {
+        for _ in 0 ..< repetitions {
             try ping.ice_ping()
         }
 

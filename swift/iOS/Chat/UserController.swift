@@ -2,18 +2,18 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-import UIKit
 import Ice
+import UIKit
 
 class UserController: UITableViewController {
-    @IBOutlet weak var usersTableView: UITableView!
+    @IBOutlet var usersTableView: UITableView!
     var users: [String] = []
 
     func numberOfSectionsInTableView(_: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(_: UITableView, numberOfRowsInSection: Int) -> Int {
+    override func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         return users.count
     }
 
@@ -29,7 +29,7 @@ class UserController: UITableViewController {
         return cell!
     }
 
-    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+    override func tableView(_: UITableView, willSelectRowAt _: IndexPath) -> IndexPath? {
         return nil
     }
 }

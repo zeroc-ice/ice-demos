@@ -2,8 +2,8 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-import Ice
 import Foundation
+import Ice
 
 func menu() {
     print(
@@ -46,7 +46,7 @@ func run() -> Int32 {
         }
 
         guard let obj = try communicator.propertyToProxy("Throughput.Proxy"),
-              let throughput = try checkedCast(prx: obj, type: ThroughputPrx.self) else {
+            let throughput = try checkedCast(prx: obj, type: ThroughputPrx.self) else {
             print("invalid proxy")
             return 1
         }
@@ -63,7 +63,6 @@ func run() -> Int32 {
         var currentType = "1"
 
         repeat {
-
             print("==> ", terminator: "")
             guard let l = readLine(strippingNewline: true) else {
                 return 0
@@ -133,7 +132,7 @@ func run() -> Int32 {
                 }
                 print("...")
 
-                for _ in 0..<repetitions {
+                for _ in 0 ..< repetitions {
                     switch currentType {
                     case "1":
                         switch line {
@@ -213,7 +212,7 @@ func run() -> Int32 {
                     wireSize = structSeq[0].s.count
                     wireSize += 8 // Size of double on the wire.
                 case "4":
-                    wireSize = 16; // Sizes of two ints and a double on the wire.
+                    wireSize = 16 // Sizes of two ints and a double on the wire.
                 default:
                     precondition(false)
                 }

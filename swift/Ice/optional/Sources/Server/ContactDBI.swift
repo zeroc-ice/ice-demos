@@ -4,7 +4,6 @@
 import Ice
 
 class ContactDBI: ContactDB {
-
     var contacts = [String: Contact]()
 
     func addContact(name: String, type: NumberType?, number: String?, dialGroup: Int32?, current _: Ice.Current) {

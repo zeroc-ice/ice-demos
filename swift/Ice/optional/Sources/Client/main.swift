@@ -19,7 +19,7 @@ func run() -> Int32 {
         }
 
         guard let base = try communicator.propertyToProxy("ContactDB.Proxy"),
-              let contactdb = try checkedCast(prx: base, type: ContactDBPrx.self) else {
+            let contactdb = try checkedCast(prx: base, type: ContactDBPrx.self) else {
             print("invalid proxy")
             return 1
         }
@@ -50,9 +50,9 @@ func run() -> Int32 {
             }
 
             guard let info = try contactdb.query("john"),
-                      info.type == NumberType.HOME,
-                      info.number == johnNumber,
-                      info.dialGroup == 0 else {
+                info.type == NumberType.HOME,
+                info.number == johnNumber,
+                info.dialGroup == 0 else {
                 print("info is incorrect")
                 return 1
             }
@@ -80,9 +80,9 @@ func run() -> Int32 {
             }
 
             guard let info = try contactdb.query("steve"),
-                      info.type == .HOME,
-                      info.number == steveNumber,
-                      info.dialGroup == 1 else {
+                info.type == .HOME,
+                info.number == steveNumber,
+                info.dialGroup == 1 else {
                 print("info is incorrect")
                 return 1
             }
@@ -112,9 +112,9 @@ func run() -> Int32 {
             // The dial group field should be unset.
             //
             guard let info = try contactdb.query("frank"),
-                      info.dialGroup == nil,
-                      info.type == .CELL,
-                      info.number == frankNumber else {
+                info.dialGroup == nil,
+                info.type == .CELL,
+                info.number == frankNumber else {
                 print("info is incorrect")
                 return 1
             }
@@ -143,9 +143,9 @@ func run() -> Int32 {
             // The number field should be unset.
             //
             guard let info = try contactdb.query("anne"),
-                      info.number == nil,
-                      info.type == .OFFICE,
-                      info.dialGroup == 2 else {
+                info.number == nil,
+                info.type == .OFFICE,
+                info.dialGroup == 2 else {
                 print("info is incorrect ")
                 return 1
             }
@@ -169,9 +169,9 @@ func run() -> Int32 {
                 return 1
             }
             guard let info = try contactdb.query("anne"),
-                      info.number == anneNumber,
-                      info.type == .OFFICE,
-                      info.dialGroup == 2 else {
+                info.number == anneNumber,
+                info.type == .OFFICE,
+                info.dialGroup == 2 else {
                 print("info is incorrect")
                 return 1
             }

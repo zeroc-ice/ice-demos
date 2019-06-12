@@ -43,7 +43,7 @@ func run() -> Int32 {
         }
 
         guard let base = try communicator.propertyToProxy("Hello.Proxy"),
-              let hello = try checkedCast(prx: base, type: HelloPrx.self) else {
+            let hello = try checkedCast(prx: base, type: HelloPrx.self) else {
             print("invalid proxy")
             return 1
         }

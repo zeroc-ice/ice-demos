@@ -2,10 +2,10 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-import UIKit
 import Darwin
 import Ice
 import PromiseKit
+import UIKit
 
 enum DeliveryMode: Int {
     case Twoway = 0
@@ -21,21 +21,20 @@ enum DeliveryMode: Int {
 let hostnameKey = "hostnameKey"
 
 class ViewController: UIViewController,
-                      UIPickerViewDataSource,
-                      UIPickerViewDelegate,
-                      UITextFieldDelegate,
-                      UIAlertViewDelegate {
-
-    @IBOutlet weak var sayHelloButton: UIButton!
-    @IBOutlet weak var shutdownButton: UIButton!
-    @IBOutlet weak var flushButton: UIButton!
-    @IBOutlet weak var useDiscovery: UISwitch!
-    @IBOutlet weak var hostnameTextField: UITextField!
-    @IBOutlet weak var statusLabel: UILabel!
-    @IBOutlet weak var modePicker: UIPickerView!
-    @IBOutlet weak var timeoutSlider: UISlider!
-    @IBOutlet weak var delaySlider: UISlider!
-    @IBOutlet weak var activity: UIActivityIndicatorView!
+    UIPickerViewDataSource,
+    UIPickerViewDelegate,
+    UITextFieldDelegate,
+    UIAlertViewDelegate {
+    @IBOutlet var sayHelloButton: UIButton!
+    @IBOutlet var shutdownButton: UIButton!
+    @IBOutlet var flushButton: UIButton!
+    @IBOutlet var useDiscovery: UISwitch!
+    @IBOutlet var hostnameTextField: UITextField!
+    @IBOutlet var statusLabel: UILabel!
+    @IBOutlet var modePicker: UIPickerView!
+    @IBOutlet var timeoutSlider: UISlider!
+    @IBOutlet var delaySlider: UISlider!
+    @IBOutlet var activity: UIActivityIndicatorView!
 
     var communicator: Ice.Communicator!
     var helloPrx: HelloPrx!
@@ -73,9 +72,9 @@ class ViewController: UIViewController,
             }
 
             let delay = Int32(delaySlider.value * 1000) // Convert to ms.
-            if deliveryMode != .OnewayBatch &&
-               deliveryMode != .OnewaySecureBatch &&
-               deliveryMode != .DatagramBatch {
+            if deliveryMode != .OnewayBatch,
+                deliveryMode != .OnewaySecureBatch,
+                deliveryMode != .DatagramBatch {
                 var response = false
                 firstly {
                     helloPrx.sayHelloAsync(delay) { _ in
@@ -133,18 +132,17 @@ class ViewController: UIViewController,
                 return
             }
 
-            if deliveryMode != .OnewayBatch &&
-               deliveryMode != .OnewaySecureBatch &&
-               deliveryMode != .DatagramBatch {
-
+            if deliveryMode != .OnewayBatch,
+                deliveryMode != .OnewaySecureBatch,
+                deliveryMode != .DatagramBatch {
                 sendingRequest()
                 var response = false
                 firstly {
                     helloPrx.shutdownAsync { _ in
-                            if !response {
-                                self.requestSent()
-                            }
+                        if !response {
+                            self.requestSent()
                         }
+                    }
                 }.done {
                     response = true
                     self.ready()
@@ -157,19 +155,19 @@ class ViewController: UIViewController,
                 queuedRequest("shutdown")
             }
         } catch {
-            self.exception(error)
+            exception(error)
         }
     }
 
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+    func numberOfComponents(in _: UIPickerView) -> Int {
         return 1
     }
 
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(_: UIPickerView, numberOfRowsInComponent _: Int) -> Int {
         return 8
     }
 
-    func pickerView(_ view: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(_: UIPickerView, titleForRow row: Int, forComponent _: Int) -> String? {
         guard let mode = DeliveryMode(rawValue: row) else {
             return nil
         }
@@ -200,11 +198,11 @@ class ViewController: UIViewController,
             fatalError()
         }
 
-        if helloPrx != nil &&
-           hostnameTextField.text == hostname &&
-           timeout == t &&
-           deliveryMode == mode &&
-           discovery == useDiscovery.isOn {
+        if helloPrx != nil,
+            hostnameTextField.text == hostname,
+            timeout == t,
+            deliveryMode == mode,
+            discovery == useDiscovery.isOn {
             return
         }
 
@@ -213,7 +211,7 @@ class ViewController: UIViewController,
         hostname = hostnameTextField.text
         discovery = useDiscovery.isOn
 
-        if discovery == false && hostname == "" {
+        if discovery == false, hostname == "" {
             helloPrx = nil
             return
         }

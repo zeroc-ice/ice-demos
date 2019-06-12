@@ -21,7 +21,7 @@ class AddController: DetailController {
         navigationItem.setHidesBackButton(false, animated: animated)
     }
 
-    @IBAction func save(sender: Any?) {
+    @IBAction func save(sender _: Any?) {
         saving(true)
 
         library.createBookAsync(isbn: book.isbn, title: book.title, authors: book.authors).done { _ in

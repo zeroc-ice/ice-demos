@@ -1,5 +1,5 @@
-import Ice
 import Foundation
+import Ice
 
 do {
     let communicator = try Ice.initialize(CommandLine.arguments)

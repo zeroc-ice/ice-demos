@@ -2,8 +2,8 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-import Ice
 import Foundation
+import Ice
 
 func run() -> Int32 {
     do {
@@ -27,8 +27,8 @@ func run() -> Int32 {
         // endpoints.
         //
         guard let base = try communicator.stringToProxy("hello")?
-                                         .ice_connectionCached(false)
-                                         .ice_locatorCacheTimeout(0),
+            .ice_connectionCached(false)
+            .ice_locatorCacheTimeout(0),
             let hello = try checkedCast(prx: base, type: HelloPrx.self) else {
             print("invalid proxy")
             return 1
@@ -50,7 +50,7 @@ func run() -> Int32 {
 
             let delay = max(0, Int(l2) ?? 500)
 
-            for _ in 0..<count {
+            for _ in 0 ..< count {
                 print(try hello.getGreeting())
                 Thread.sleep(forTimeInterval: TimeInterval(delay) / 1000)
             }

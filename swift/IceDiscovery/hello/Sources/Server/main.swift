@@ -2,8 +2,8 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-import Ice
 import Foundation
+import Ice
 
 class HelloI: Hello {
     func sayHello(delay: Int32, current _: Ice.Current) throws {

@@ -2,8 +2,8 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-import Ice
 import Foundation
+import Ice
 
 struct HelloI: Hello {
     func sayHello(current _: Ice.Current) throws {

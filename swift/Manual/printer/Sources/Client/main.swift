@@ -13,7 +13,7 @@ func run() -> Int32 {
         }
 
         guard let obj = try communicator.stringToProxy("SimplePrinter:default -h localhost -p 10000"),
-              let printer = try checkedCast(prx: obj, type: PrinterPrx.self) else {
+            let printer = try checkedCast(prx: obj, type: PrinterPrx.self) else {
             print("Invalid proxy")
             return 1
         }

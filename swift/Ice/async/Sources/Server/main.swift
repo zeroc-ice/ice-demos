@@ -7,7 +7,6 @@ import Ice
 import PromiseKit
 
 class HelloI: Hello {
-
     var done = false
     var serialQueue = DispatchQueue(label: "com.zeroc.demo.ice.async.server")
 
@@ -22,14 +21,14 @@ class HelloI: Hello {
                         seal.reject(RequestCanceledException())
                         return
                     }
-                    self.serialQueue.asyncAfter(deadline: .now() + .milliseconds(Int(delay)), execute: {
+                    self.serialQueue.asyncAfter(deadline: .now() + .milliseconds(Int(delay))) {
                         guard self.done == false else {
                             seal.reject(RequestCanceledException())
                             return
                         }
                         print("Belated Hello World!")
                         seal.fulfill(())
-                    })
+                    }
                 }
             }
         }

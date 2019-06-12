@@ -2,13 +2,13 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-import Ice
 import Glacier2
+import Ice
 
 import Foundation
 
-import UIKit
 import PromiseKit
+import UIKit
 
 let usernameKey = "usernameKey"
 let passwordKey = "passwordKey"
@@ -18,7 +18,6 @@ protocol SessionAdapter {
 }
 
 class Glacier2SessionAdapter: SessionAdapter {
-
     let router: Glacier2.RouterPrx
 
     init(_ router: Glacier2.RouterPrx) {
@@ -43,13 +42,13 @@ class DemoSessionAdapter: SessionAdapter {
 }
 
 class LoginController: UIViewController,
-                       UITextFieldDelegate,
-                       UIAlertViewDelegate {
-    @IBOutlet weak var usernameField: UITextField!
-    @IBOutlet weak var passwordField: UITextField!
-    @IBOutlet weak var loginButton: UIButton!
-    @IBOutlet weak var statusLabel: UILabel!
-    @IBOutlet weak var statusActivity: UIActivityIndicatorView!
+    UITextFieldDelegate,
+    UIAlertViewDelegate {
+    @IBOutlet var usernameField: UITextField!
+    @IBOutlet var passwordField: UITextField!
+    @IBOutlet var loginButton: UIButton!
+    @IBOutlet var statusLabel: UILabel!
+    @IBOutlet var statusActivity: UIActivityIndicatorView!
 
     var currentField: UITextField!
     var oldFieldValue: String?
@@ -63,7 +62,7 @@ class LoginController: UIViewController,
     override func viewDidLoad() {
         super.viewDidLoad()
         do {
-            //Load initialization data here so that we check if the username/passwords fields should be hidden.
+            // Load initialization data here so that we check if the username/passwords fields should be hidden.
             let properties = Ice.createProperties()
             let resourcesPath = Bundle.main.resourcePath!
             try properties.load("\(resourcesPath)/config.client")
@@ -164,7 +163,7 @@ class LoginController: UIViewController,
         if let communicator = self.communicator {
             communicator.destroy()
         }
-        self.communicator = nil
+        communicator = nil
 
         //
         // open an alert with just an OK button
@@ -186,10 +185,10 @@ class LoginController: UIViewController,
         loginButton.isEnabled = !connecting
     }
 
-    @IBAction func login(sender: Any?) {
+    @IBAction func login(sender _: Any?) {
         do {
-            precondition(self.communicator == nil)
-            self.communicator = try Ice.initialize(initializationData)
+            precondition(communicator == nil)
+            communicator = try Ice.initialize(initializationData)
 
             if let router = communicator.getDefaultRouter() {
                 connecting(true)
@@ -227,12 +226,12 @@ class LoginController: UIViewController,
                 let properties = communicator.getProperties()
                 guard let proxy = try communicator.stringToProxy(properties.getProperty("SessionFactory.Proxy")) else {
                     exception("Error neither Ice.Default.Router nor SessionFactory.Proxy" +
-                              "are defined in the application config file")
+                        "are defined in the application config file")
                     return
                 }
                 connecting(true)
-                let factory  = uncheckedCast(prx: proxy, type: SessionFactoryPrx.self)
-                var session: SessionPrx! = nil
+                let factory = uncheckedCast(prx: proxy, type: SessionFactoryPrx.self)
+                var session: SessionPrx!
                 factory.createAsync().then { s -> Promise<LibraryPrx?> in
                     session = s
                     return session.getLibraryAsync()
