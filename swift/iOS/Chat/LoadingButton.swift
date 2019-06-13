@@ -5,7 +5,6 @@
 import UIKit
 
 class LoadingButton: UIButton {
-
     var title: String?
     private var indicator: UIActivityIndicatorView!
 
@@ -31,17 +30,17 @@ class LoadingButton: UIButton {
 
     private func centerIndicator() {
         let xCenter = NSLayoutConstraint(item: self,
-                                                   attribute: .centerX,
-                                                   relatedBy: .equal,
-                                                   toItem: indicator,
-                                                   attribute: .centerX,
-                                                   multiplier: 1, constant: 0)
+                                         attribute: .centerX,
+                                         relatedBy: .equal,
+                                         toItem: indicator,
+                                         attribute: .centerX,
+                                         multiplier: 1, constant: 0)
         let yCenter = NSLayoutConstraint(item: self,
-                                                   attribute: .centerY,
-                                                   relatedBy: .equal,
-                                                   toItem: indicator,
-                                                   attribute: .centerY,
-                                                   multiplier: 1, constant: 0)
+                                         attribute: .centerY,
+                                         relatedBy: .equal,
+                                         toItem: indicator,
+                                         attribute: .centerY,
+                                         multiplier: 1, constant: 0)
         addConstraint(yCenter)
         addConstraint(xCenter)
     }
