@@ -24,7 +24,7 @@ Ice.ACM.Client.Timeout=0
 #
 # SSL Configuration
 #
-Ice.Plugin.IceSSL=IceSSL:createIceSSL
+Ice.Plugin.IceSSL=1
 IceSSL.DefaultDir=../../../certs
 IceSSL.CAs=cacert.pem
 IceSSL.CertFile=client.p12
