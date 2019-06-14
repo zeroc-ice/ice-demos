@@ -13,5 +13,5 @@ In a separate window, start the client:
 client
 ```
 
-[1]: https://doc.zeroc.com/display/Ice37/Optional+Data+Members
-[2]: https://doc.zeroc.com/display/Ice37/Operations
+[1]: https://doc.zeroc.com/display/IceSwift/Optional+Data+Members
+[2]: https://doc.zeroc.com/display/IceSwift/Operations

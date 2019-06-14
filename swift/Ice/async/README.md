@@ -18,8 +18,8 @@ To test [timeouts][5] you can use 'T' to set an invocation timeout on the
 client proxy and 'P' to set a delayed response in the server to cause a
 timeout.
 
-[1]: https://doc.zeroc.com/display/Ice37/Oneway+Invocations
-[2]: https://doc.zeroc.com/display/Ice37/Datagram+Invocations
-[3]: https://doc.zeroc.com/display/Ice37/IceSSL
-[4]: https://doc.zeroc.com/display/Ice37/Batched+Invocations
-[5]: https://doc.zeroc.com/display/Ice37/Invocation+Timeouts
+[1]: https://doc.zeroc.com/display/IceSwift/Oneway+Invocations
+[2]: https://doc.zeroc.com/display/IceSwift/Datagram+Invocations
+[3]: https://doc.zeroc.com/display/IceSwift/IceSSL
+[4]: https://doc.zeroc.com/display/IceSwift/Batched+Invocations
+[5]: https://doc.zeroc.com/display/IceSwift/Invocation+Timeouts

@@ -8,7 +8,7 @@ Demos in this directory:
 - [asyncInvocation](./asyncInvocation)
 
   This demo illustrates the use of Asynchronous Method Invocation
-  (AMI), with both futures and callbacks.
+  (AMI).
 
 - [bidir](./bidir)
 
@@ -48,5 +48,4 @@ Demos in this directory:
 
   A simple throughput demo that allows you to send sequences of
   various types between client and server and to measure the maximum
-  bandwidth that can be achieved using serialized synchronous
-  requests.
+  bandwidth that can be achieved using serialized synchronous requests.

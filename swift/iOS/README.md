@@ -12,6 +12,6 @@ Demos in this directory:
 
 - [library](./library)
 
-  This demo is an iOS client for the [Database/library](../../java/Database/library) server.
+  This demo is an iOS client for the [Database/library](../../java/Database/library) demo.
 
 [1]: https://doc.zeroc.com/technical-articles/general-topics/chat-demo

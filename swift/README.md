@@ -8,12 +8,12 @@ coding technique.
 
 Most of the subdirectories here correspond directly to Ice components, such as
 [Glacier2](./Glacier2), [IceStorm](./IceStorm), and so on. We've also included the
-following additional subdirectories:
+following additional sub-directories:
 
 - [Manual](./Manual) contains complete examples for some of the code snippets
 in the [Ice manual][1].
 
-- [iOS/Chat](./iOS/Chat) contains an iOS client for the ZeroC [Chat Demo][2].
+- [iOS](./iOS) contains iOS sample applications.
 
 Refer to the [C++11 demos](../cpp11) for more examples that use the Ice services
 (Glacier2, IceGrid, IceStorm).
@@ -25,7 +25,7 @@ Refer to the [C++11 demos](../cpp11) for more examples that use the Ice services
 In order to build the Ice for Swift sample programs, you need:
  * XCode
  * Slice for Swift and Slice for C++ Slice compilers
- * [Carthage][3]
+ * [Carthage][2]
 
 ### Install required dependencies using Carthage:
 
@@ -57,10 +57,9 @@ exact usage instructions.
 Some demos require Ice services such as IceGrid and IceStorm that are not
 included in the Ice for Swift distribution. To run these demos, the simplest
 is to first install the Ice Homebrew packages. Please refer to
-[Using the macOS Binary Distributions][4] for additional information.
+[Using the macOS Binary Distributions][3] for additional information.
 
 
-[1]: https://doc.zeroc.com/display/Ice37/Ice+Manual
-[2]: https://zeroc.com/chat/index.html
-[3]: https://github.com/Carthage/Carthage
-[4]: https://doc.zeroc.com/display/Rel/Using+the+macOS+Binary+Distribution+for+Ice+3.7.2
+[1]: https://doc.zeroc.com/display/IceSwift/Ice+Manual
+[2]: https://github.com/Carthage/Carthage
+[3]: https://doc.zeroc.com/display/Rel/Using+the+macOS+Binary+Distribution+for+Ice+3.7.2
