@@ -140,4 +140,4 @@ set PATH=%USERPROFILE%\ice-demos\cpp98\packages\zeroc.ice.v140.3.7.2\build\nativ
 
 Then refer to the README.md file in each demo directory for usage instructions.
 
-[1]: https://doc.zeroc.com/display/Ice37/Ice+Manual
+[1]: https://doc.zeroc.com/ice/3.7/introduction

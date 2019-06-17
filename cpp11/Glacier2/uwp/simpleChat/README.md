@@ -42,4 +42,4 @@ sure to copy these certificates (the `certs` directory) to the other system.
  > update its certificates. Make sure to manually un-install this app before
  > redeploying it.
 
-[1]: https://doc.zeroc.com/display/Ice37/Glacier2+SessionHelper+Class
+[1]: https://doc.zeroc.com/ice/3.7/ice-services/glacier2/glacier2-sessionhelper-class

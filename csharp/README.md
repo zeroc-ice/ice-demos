@@ -150,9 +150,9 @@ included in the `zeroc.ice.net` NuGet package. To run these demos, the simplest
 is to first install the Ice binary distribution for your platform  and add its bin
 directory to your PATH. Please refer to the [Release Notes][6] for additional information.
 
-[1]: https://doc.zeroc.com/display/Ice37/Ice+Manual
+[1]: https://doc.zeroc.com/ice/3.7/introduction
 [2]: https://zeroc.com/chat/index.html
 [3]: https://marketplace.visualstudio.com/items?itemName=ZeroCInc.IceBuilder
 [4]: https://doc.zeroc.com/display/Rel/Using+the+Windows+Binary+Distributions+for+Ice+3.7.2
 [5]: https://dotnet.microsoft.com/download/dotnet-core/2.1
-[6]: https://doc.zeroc.com/display/Ice37/Ice+Release+Notes
+[6]: https://doc.zeroc.com/ice/3.7/release-notes

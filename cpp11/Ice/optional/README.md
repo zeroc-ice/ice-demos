@@ -13,5 +13,5 @@ In a separate window, start the client:
 client
 ```
 
-[1]: https://doc.zeroc.com/display/Ice37/Optional+Data+Members
-[2]: https://doc.zeroc.com/display/Ice37/Operations
+[1]: https://doc.zeroc.com/ice/3.7/the-slice-language/optional-data-members
+[2]: https://doc.zeroc.com/ice/3.7/the-slice-language/interfaces-operations-and-exceptions/operations

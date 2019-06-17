@@ -41,9 +41,9 @@ In a separate window, start the qt client:
 client
 ```
 
-[1]: https://doc.zeroc.com/display/Ice37/Oneway+Invocations
-[2]: https://doc.zeroc.com/display/Ice37/Datagram+Invocations
-[3]: https://doc.zeroc.com/display/Ice37/Batched+Invocations
-[4]: https://doc.zeroc.com/display/Ice37/IceSSL
+[1]: https://doc.zeroc.com/ice/3.7/client-side-features/oneway-invocations
+[2]: https://doc.zeroc.com/ice/3.7/client-side-features/datagram-invocations
+[4]: https://doc.zeroc.com/ice/3.7/client-side-features/batched-invocations
+[3]: https://doc.zeroc.com/ice/3.7/ice-plugins/icessl
 [5]: https://marketplace.visualstudio.com/items?itemName=TheQtCompany.QtVisualStudioTools2015
 [6]: https://github.com/zeroc-ice/ice-builder-visualstudio

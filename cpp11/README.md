@@ -195,6 +195,6 @@ Right click on the desired demo in the Solution Explorer window and select `Buil
 
 Refer to the README.md file in each demo directory for usage instructions.
 
-[1]: https://doc.zeroc.com/display/Ice37/Ice+Manual
+[1]: https://doc.zeroc.com/ice/3.7/introduction
 [2]: https://doc.zeroc.com/display/Doc/Chat+Demo
 [3]: https://github.com/zeroc-ice/ice-builder-xcode

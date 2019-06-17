@@ -11,4 +11,4 @@ In a separate window, run the client:
 ruby client.rb
 ```
 
-[1]: https://doc.zeroc.com/display/Ice37/Example+of+a+File+System+Client+in+Ruby
+[1]: https://doc.zeroc.com/ice/3.7/language-mappings/ruby-mapping/client-side-slice-to-ruby-mapping/example-of-a-file-system-client-in-ruby

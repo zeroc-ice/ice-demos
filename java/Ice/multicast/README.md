@@ -23,4 +23,4 @@ By default this demo uses IPv4. If you want to use IPv6 UDP multicast
 instead, uncomment the alternative IPv6 configuration in `config.client`
 and `config.server`.
 
-[1]: https://doc.zeroc.com/display/Ice37/Datagram+Invocations
+[2]: https://doc.zeroc.com/ice/3.7/client-side-features/datagram-invocations

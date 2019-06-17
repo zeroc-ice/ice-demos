@@ -105,6 +105,6 @@ login with the admin tools. In a real world deployment, you would
 instead typically use the file-based permissions verifier or a custom
 permissions verifier implementation.
 
-[1]: https://doc.zeroc.com/display/Ice37/Securing+IceGrid
-[2]: https://doc.zeroc.com/display/Ice37/Securing+a+Glacier2+Router
-[3]: https://doc.zeroc.com/display/Ice37/Security+Considerations+for+Administrative+Facets
+[1]: https://doc.zeroc.com/ice/3.7/ice-services/icegrid/securing-icegrid
+[2]: https://doc.zeroc.com/ice/3.7/ice-services/glacier2/securing-a-glacier2-router
+[3]: https://doc.zeroc.com/ice/3.7/administration-and-diagnostics/administrative-facility/security-considerations-for-administrative-facets

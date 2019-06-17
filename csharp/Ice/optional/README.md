@@ -13,5 +13,5 @@ In a separate window, start the client:
 | ------------------ | ------------------- |
 | `client`           | `dotnet client.dll` |
 
-[1]: https://doc.zeroc.com/display/Ice37/C-Sharp+Mapping+for+Optional+Values
-[2]: https://doc.zeroc.com/display/Ice37/C-Sharp+Mapping+for+Operations
+[1]: https://doc.zeroc.com/ice/3.7/language-mappings/c-sharp-mapping/client-side-slice-to-c-sharp-mapping/c-sharp-mapping-for-optional-values
+[2]: https://doc.zeroc.com/ice/3.7/language-mappings/c-sharp-mapping/client-side-slice-to-c-sharp-mapping/c-sharp-mapping-for-operations

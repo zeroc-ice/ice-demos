@@ -15,4 +15,4 @@ In a separate window, start the client:
 client
 ```
 
-[1]: https://doc.zeroc.com/display/Ice37/Bidirectional+Connections
+[1]: https://doc.zeroc.com/ice/3.7/client-server-features/connection-management/bidirectional-connections

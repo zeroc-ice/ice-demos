@@ -7,4 +7,4 @@ To run the demo, first you need to start an Ice bidir server from
 another language mapping (Java, C++, C#, or Python). If you want
 to get started quickly, we recommend using the Python server.
 
-[1]: https://doc.zeroc.com/display/Ice37/Bidirectional+Connections
+[1]: https://doc.zeroc.com/ice/3.7/client-server-features/connection-management/bidirectional-connections

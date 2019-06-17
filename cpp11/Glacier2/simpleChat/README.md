@@ -39,4 +39,4 @@ sessions associated with each connection from a Glacier2 router,
 and destroys these sessions when the connection is closed. You can
 kill the Glacier2 router to see this cleanup occur.
 
-[1]: https://doc.zeroc.com/display/Ice37/Getting+Started+with+Glacier2
+[1]: https://doc.zeroc.com/ice/3.7/ice-services/glacier2/getting-started-with-glacier2

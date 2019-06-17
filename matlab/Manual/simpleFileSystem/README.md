@@ -10,5 +10,3 @@ After starting the server, run the MATLAB client:
 ```
 client
 ```
-
-[1]: https://doc.zeroc.com/display/Ice37/Example+of+a+File+System+Client+in+Matlab

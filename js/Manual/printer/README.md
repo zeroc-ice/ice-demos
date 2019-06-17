@@ -19,4 +19,4 @@ client:
 node Client.js
 ```
 
-[1]: https://doc.zeroc.com/display/Ice37/Writing+an+Ice+Application+with+Javascript
+[1]: https://doc.zeroc.com/ice/3.7/hello-world-application/writing-an-ice-application-with-javascript

@@ -13,4 +13,4 @@ option. If you're running the python server this would look like:
 python server.py --Ice.Default.Protocol=ws
 ```
 
-[1]: https://doc.zeroc.com/display/Ice37/Example+of+a+File+System+Client+in+Javascript
+[1]: https://doc.zeroc.com/ice/3.7/language-mappings/javascript-mapping/client-side-slice-to-javascript-mapping/example-of-a-file-system-client-in-javascript

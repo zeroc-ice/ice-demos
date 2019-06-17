@@ -116,6 +116,6 @@ java -jar build/libs/client.jar books
 Omit the "books" argument if you have already populated the server's
 database.
 
-[1]: https://doc.zeroc.com/display/Ice37/Servant+Locators
-[2]: https://doc.zeroc.com/display/Ice37/Dispatch+Interceptors
-[3]: https://doc.zeroc.com/display/Ice37/Glacier2
+[1]: https://doc.zeroc.com/ice/3.7/server-side-features/servant-locators
+[2]: https://doc.zeroc.com/ice/3.7/server-side-features/dispatch-interceptors
+[3]: https://doc.zeroc.com/ice/3.7/ice-services/glacier2

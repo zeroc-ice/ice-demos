@@ -15,4 +15,4 @@ In a separate window, start the client:
 java -jar build/libs/client.jar
 ```
 
-[1]: https://doc.zeroc.com/display/Ice37/The+Properties+Facet
+[1]: https://doc.zeroc.com/ice/3.7/administration-and-diagnostics/administrative-facility/the-properties-facet

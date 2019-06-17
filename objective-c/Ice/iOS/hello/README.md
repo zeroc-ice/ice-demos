@@ -55,9 +55,9 @@ is listening on an accessible network interface.
 See the README file of the IceDiscovery hello demo for more information on
 how to start the server.
 
-[1]: https://doc.zeroc.com/display/Ice37/Oneway+Invocations
-[2]: https://doc.zeroc.com/display/Ice37/Datagram+Invocations
-[3]: https://doc.zeroc.com/display/Ice37/Batched+Invocations
-[4]: https://doc.zeroc.com/display/Ice37/IceSSL
-[5]: https://doc.zeroc.com/display/Ice37/Invocation+Timeouts
-[6]: https://doc.zeroc.com/display/Ice37/IceDiscovery
+[1]: https://doc.zeroc.com/ice/3.7/client-side-features/oneway-invocations
+[2]: https://doc.zeroc.com/ice/3.7/client-side-features/datagram-invocations
+[4]: https://doc.zeroc.com/ice/3.7/client-side-features/batched-invocations
+[3]: https://doc.zeroc.com/ice/3.7/ice-plugins/icessl
+[5]: https://doc.zeroc.com/ice/3.7/client-side-features/invocation-timeouts
+[6]: https://doc.zeroc.com/ice/3.7/ice-plugins/icediscovery
