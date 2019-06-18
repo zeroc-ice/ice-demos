@@ -207,3 +207,5 @@ Resource.designer.cs
 swift/Carthage
 *.swiftmodule
 *.app
+*.framework
+*.framework.dSYM
