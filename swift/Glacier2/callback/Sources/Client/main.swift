@@ -7,7 +7,7 @@ import Glacier2
 import Ice
 
 class CallbackReceiverI: CallbackReceiver {
-    func callback(current _: Current) throws {
+    func callback(current _: Current) {
         print("Received callback")
     }
 }
@@ -101,9 +101,9 @@ func run() -> Int32 {
         let batchOneway = twoway.ice_batchOneway()
         let adapter = try communicator.createObjectAdapterWithRouter(name: "", rtr: router)
         try adapter.activate()
-        try adapter.add(servant: CallbackReceiverI(), id: callbackReceiverIdent)
+        try adapter.add(servant: CallbackReceiverDisp(CallbackReceiverI()), id: callbackReceiverIdent)
         // Callback will never be called for a fake identity
-        try adapter.add(servant: CallbackReceiverI(), id: callbackReceiverFakeIdent)
+        try adapter.add(servant: CallbackReceiverDisp(CallbackReceiverI()), id: callbackReceiverFakeIdent)
 
         var twowayR = try uncheckedCast(prx: adapter.createProxy(callbackReceiverIdent), type: CallbackReceiverPrx.self)
         var onewayR = twowayR.ice_oneway()

@@ -3,11 +3,10 @@
 //
 
 import Foundation
-import Glacier2
 import Ice
 
 class CallbackI: Callback {
-    func initiateCallback(proxy: CallbackReceiverPrx?, current: Current) throws {
+    func initiateCallback(proxy: CallbackReceiverPrx?, current: Current) {
         do {
             let proxyName = current.adapter?.getCommunicator().proxyToString(proxy)
             print("Initiating callback to: \(String(describing: proxyName)))")
@@ -17,7 +16,7 @@ class CallbackI: Callback {
         }
     }
 
-    func shutdown(current: Current) throws {
+    func shutdown(current: Current) {
         print("Shutting down...")
         current.adapter?.getCommunicator().shutdown()
     }
@@ -35,7 +34,7 @@ func run() -> Int32 {
             return 1
         }
         let adapter = try communicator.createObjectAdapter("Callback.Server")
-        try adapter.add(servant: CallbackI(), id: stringToIdentity("callback"))
+        try adapter.add(servant: CallbackDisp(CallbackI()), id: stringToIdentity("callback"))
         try adapter.activate()
         communicator.waitForShutdown()
     } catch {
