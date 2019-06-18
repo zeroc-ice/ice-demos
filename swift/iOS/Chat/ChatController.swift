@@ -58,6 +58,10 @@ class ChatController: ChatLayoutController, ChatRoomCallback {
         }
     }
 
+    deinit {
+        print("De init")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
