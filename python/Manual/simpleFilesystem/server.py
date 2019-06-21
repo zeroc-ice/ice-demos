@@ -11,25 +11,39 @@ Ice.loadSlice('Filesystem.ice')
 import Filesystem
 
 
-class DirectoryI(Filesystem.Directory):
+class NodeI(Filesystem.Node):
     def __init__(self, name, parent):
         self._name = name
         self._parent = parent
-        self._contents = []
-        #
-        # Create an identity. The root directory has the fixed identity "RootDir"
-        #
-        self._id = Ice.Identity()
-        if self._parent:
-            self._id.name = Ice.generateUUID()
-        else:
-            self._id.name = "RootDir"
 
     #
     # Slice Node::name() operation
     #
     def name(self, current):
         return self._name
+
+    #
+    # Add servant to ASM and Parent's _contents map.
+    #
+    def activate(self, a):
+        #
+        # Create an identity. The root directory has the fixed identity "RootDir"
+        #
+        id = Ice.Identity()
+        if self._parent:
+            id.name = Ice.generateUUID()
+        else:
+            id.name = "RootDir"
+
+        thisNode = Filesystem.NodePrx.uncheckedCast(a.add(self, id))
+        if self._parent:
+            self._parent.addChild(thisNode)
+
+
+class DirectoryI(NodeI, Filesystem.Directory):
+    def __init__(self, name, parent):
+        NodeI.__init__(self, name, parent)
+        self._contents = []
 
     #
     # Slice Directory::list() operation
@@ -44,33 +58,11 @@ class DirectoryI(Filesystem.Directory):
     def addChild(self, child):
         self._contents.append(child)
 
-    #
-    # Add servant to ASM and Parent's _contents map.
-    #
-    def activate(self, a):
-        thisNode = Filesystem.DirectoryPrx.uncheckedCast(a.add(self, self._id))
-        if self._parent:
-            self._parent.addChild(thisNode)
 
-
-class FileI(Filesystem.File):
+class FileI(NodeI, Filesystem.File):
     def __init__(self, name, parent):
-        self._name = name
-        self._parent = parent
+        NodeI.__init__(self, name, parent)
         self.lines = []
-
-        assert(self._parent is not None)
-        #
-        # Create an identity
-        #
-        self._id = Ice.Identity()
-        self._id.name = Ice.generateUUID()
-
-    #
-    # Slice Node::name() operation
-    #
-    def name(self, current):
-        return self._name
 
     #
     # Slice File::read() operation
@@ -83,13 +75,6 @@ class FileI(Filesystem.File):
     #
     def write(self, text, current):
         self._lines = text
-
-    #
-    # Add servant to ASM and Parent's _contents map.
-    #
-    def activate(self, a):
-        thisNode = Filesystem.FilePrx.uncheckedCast(a.add(self, self._id))
-        self._parent.addChild(thisNode)
 
 
 def run(communicator):
