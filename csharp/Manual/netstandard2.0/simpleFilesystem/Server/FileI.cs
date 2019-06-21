@@ -8,8 +8,7 @@ using System.Diagnostics;
 public class FileI : FileDisp_
 {
     // FileI constructor
-
-    public FileI(Ice.Communicator communicator, string name, DirectoryI parent)
+    public FileI(string name, DirectoryI parent)
     {
         _name = name;
         _parent = parent;
@@ -24,28 +23,24 @@ public class FileI : FileDisp_
     }
 
     // Slice Node::name() operation
-
     public override string name(Ice.Current current)
     {
         return _name;
     }
 
     // Slice File::read() operation
-
     public override string[] read(Ice.Current current)
     {
         return _lines;
     }
 
     // Slice File::write() operation
-
     public override void write(string[] text, Ice.Current current = null)
     {
         _lines = text;
     }
 
     // Add servant to ASM and parent's _contents map.
-
     public void activate(Ice.ObjectAdapter a)
     {
         var thisNode = NodePrxHelper.uncheckedCast(a.add(this, _id));

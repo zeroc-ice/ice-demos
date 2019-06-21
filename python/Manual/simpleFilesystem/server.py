@@ -12,7 +12,7 @@ import Filesystem
 
 
 class DirectoryI(Filesystem.Directory):
-    def __init__(self, communicator, name, parent):
+    def __init__(self, name, parent):
         self._name = name
         self._parent = parent
         self._contents = []
@@ -54,7 +54,7 @@ class DirectoryI(Filesystem.Directory):
 
 
 class FileI(Filesystem.File):
-    def __init__(self, communicator, name, parent):
+    def __init__(self, name, parent):
         self._name = name
         self._parent = parent
         self.lines = []
@@ -102,13 +102,13 @@ def run(communicator):
     #
     # Create the root directory (with name "/" and no parent)
     #
-    root = DirectoryI(communicator, "/", None)
+    root = DirectoryI("/", None)
     root.activate(adapter)
 
     #
     # Create a file called "README" in the root directory
     #
-    file = FileI(communicator, "README", root)
+    file = FileI("README", root)
     text = ["This file system contains a collection of poetry."]
     try:
         file.write(text, None)
@@ -119,13 +119,13 @@ def run(communicator):
     #
     # Create a directory called "Coleridge" in the root directory
     #
-    coleridge = DirectoryI(communicator, "Coleridge", root)
+    coleridge = DirectoryI("Coleridge", root)
     coleridge.activate(adapter)
 
     #
     # Create a file called "Kubla_Khan" in the Coleridge directory
     #
-    file = FileI(communicator, "Kubla_Khan", coleridge)
+    file = FileI("Kubla_Khan", coleridge)
     text = ["In Xanadu did Kubla Khan",
             "A stately pleasure-dome decree:",
             "Where Alph, the sacred river, ran",
