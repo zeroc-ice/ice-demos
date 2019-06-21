@@ -4,10 +4,20 @@
 
 #include <Ice/Ice.h>
 #include <Glacier2/Glacier2.h>
-#include <CallbackI.h>
+#include <Callback.h>
 
 using namespace std;
 using namespace Demo;
+
+class CallbackReceiverI : public Demo::CallbackReceiver
+{
+public:
+
+    virtual void callback(const Ice::Current&) override
+    {
+        cout << "received callback" << endl;
+    }
+};
 
 void run(const shared_ptr<Ice::Communicator>&);
 
