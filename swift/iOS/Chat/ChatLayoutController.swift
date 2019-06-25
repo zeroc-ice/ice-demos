@@ -1,8 +1,5 @@
 //
-//  ChatLayoutController.swift
-//  IOSChat
-//
-//  Created by Reece Humphreys on 6/18/19.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
 import Foundation
@@ -19,12 +16,15 @@ class ChatLayoutController: MessagesViewController {
     var users: [ChatUser] = []
     var currentUser: ChatUser!
 
+    let formatter = DateFormatter()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messageCellDelegate = self
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
+        formatter.dateStyle = .medium
     }
 
     func isLastSectionVisible() -> Bool {
@@ -89,11 +89,6 @@ extension ChatLayoutController: MessageCellDelegate {
     }
 
     func messageBottomLabelAttributedText(for message: MessageType, at _: IndexPath) -> NSAttributedString? {
-        let formatter: DateFormatter = {
-            let formatter = DateFormatter()
-            formatter.dateStyle = .medium
-            return formatter
-        }()
         let dateString = formatter.string(from: message.sentDate)
         let font = UIFont.preferredFont(forTextStyle: .caption2)
         return NSAttributedString(string: dateString,

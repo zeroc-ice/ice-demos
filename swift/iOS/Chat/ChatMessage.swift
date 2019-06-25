@@ -1,8 +1,5 @@
 //
-//  ChatMessage.swift
-//  IOSChat
-//
-//  Created by Reece Humphreys on 6/18/19.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
 import MessageKit
