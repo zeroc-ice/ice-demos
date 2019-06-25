@@ -46,12 +46,9 @@ class LoadingButton: UIButton {
     }
 
     private func createActivityIndicator(color: UIColor) -> UIActivityIndicatorView {
-        var indicator: UIActivityIndicatorView {
-            let i = UIActivityIndicatorView()
-            i.color = color
-            i.hidesWhenStopped = true
-            return i
-        }
+        var indicator = UIActivityIndicatorView()
+        indicator.color = color
+        indicator.hidesWhenStopped = true
         return indicator
     }
 
