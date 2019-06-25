@@ -194,10 +194,10 @@ class LoginController: UIViewController, UITextFieldDelegate, UIAlertViewDelegat
             }.done { category -> Void in
 
                 try chatController!.setup(communicator: self.communicator!,
-                                               session: chatsession!,
-                                               acmTimeout: acmTimeout,
-                                               router: router,
-                                               category: category)
+                                          session: chatsession!,
+                                          acmTimeout: acmTimeout,
+                                          router: router,
+                                          category: category)
 
                 self.connecting = false
                 chatController?.currentUser = ChatUser(name: username)

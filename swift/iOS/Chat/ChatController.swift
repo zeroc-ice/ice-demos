@@ -139,7 +139,6 @@ class ChatController: ChatLayoutController, ChatRoomCallback {
                 self.communicator = nil
                 self.router = nil
                 self.session = nil
-
             }
         }
     }
