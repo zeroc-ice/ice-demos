@@ -12,6 +12,7 @@ struct Configuration {
         case user = "usernameKey"
         case password = "passwordKey"
         case ssl = "sslKey"
+        case rememberMe = "rememberKey"
     }
 }
 
@@ -20,9 +21,9 @@ class LoginController: UIViewController, UITextFieldDelegate, UIAlertViewDelegat
     @IBOutlet var passwordField: UITextField!
     @IBOutlet var loginButton: LoadingButton!
     @IBOutlet var keyboardHeightLayoutConstraint: NSLayoutConstraint?
+    @IBOutlet var rememberSwitch: UISwitch!
 
     weak var currentField: UITextField?
-    var oldFieldValue: String?
     var communicator: Ice.Communicator?
 
     var connecting: Bool = false {
@@ -34,21 +35,19 @@ class LoginController: UIViewController, UITextFieldDelegate, UIAlertViewDelegat
         }
     }
 
-    func initialize() {
-        UserDefaults.standard.register(defaults: [Configuration.Keys.user.rawValue: "",
-                                                  Configuration.Keys.password.rawValue: "",
-                                                  Configuration.Keys.ssl.rawValue: true])
+    var remembering: Bool = false {
+        didSet {
+            if remembering == false { initialize() }
+        }
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Set the default values, and show the clear button in the text field.
-        usernameField.text = UserDefaults.standard.string(forKey: Configuration.Keys.user.rawValue)
-        usernameField.clearButtonMode = .whileEditing
-        passwordField.text = UserDefaults.standard.string(forKey: Configuration.Keys.password.rawValue)
-        passwordField.clearButtonMode = .whileEditing
-
+        configureDefaultValues()
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardWillShow(_:)),
                                                name: UIResponder.keyboardWillShowNotification,
@@ -59,60 +58,8 @@ class LoginController: UIViewController, UITextFieldDelegate, UIAlertViewDelegat
                                                object: nil)
     }
 
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-
-    @objc func didEnterBackground() {
-        if let communicator = communicator {
-            DispatchQueue.global().async {
-                communicator.destroy()
-            }
-        }
-    }
-
-    @objc func keyboardWillShow(_ notification: NSNotification) {
-        let frame = notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue
-        if let keyboardSize = frame?.cgRectValue {
-            if view.frame.origin.y == 0 {
-                view.frame.origin.y -= keyboardSize.height / 2
-            }
-        }
-    }
-
-    @objc func keyboardWillHide(_: NSNotification) {
-        view.frame.origin.y = 0
-    }
-
     override func viewWillAppear(_ animated: Bool) {
-        if (usernameField.text ?? "").isEmpty {
-            loginButton.isEnabled = false
-            loginButton.alpha = 0.5
-        } else {
-            loginButton.isEnabled = true
-            loginButton.alpha = 1.0
-        }
         super.viewWillAppear(animated)
-    }
-
-    func textFieldShouldBeginEditing(_ field: UITextField) -> Bool {
-        currentField = field
-        oldFieldValue = field.text
-        return true
-    }
-
-    func textFieldShouldReturn(_ field: UITextField) -> Bool {
-        precondition(field == currentField, "theTextField == currentTextField")
-
-        // When the user presses return, take focus away from the text
-        // field so that the keyboard is dismissed.
-
-        if field == usernameField {
-            UserDefaults.standard.set(field.text, forKey: Configuration.Keys.user.rawValue)
-        } else if field == passwordField {
-            UserDefaults.standard.set(field.text, forKey: Configuration.Keys.password.rawValue)
-        }
-
         if (usernameField.text ?? "").isEmpty {
             loginButton.isEnabled = false
             loginButton.alpha = 0.5
@@ -120,40 +67,9 @@ class LoginController: UIViewController, UITextFieldDelegate, UIAlertViewDelegat
             loginButton.isEnabled = true
             loginButton.alpha = 1.0
         }
-
-        field.resignFirstResponder()
-        currentField = nil
-        return true
     }
 
-    //
-    // A touch outside the keyboard dismisses the keyboard, and
-    // sets back the old field value.
-    //
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let field = currentField {
-            field.resignFirstResponder()
-            field.text = oldFieldValue
-            currentField = nil
-        }
-        super.touchesBegan(touches, with: event)
-    }
-
-    func exception(_ message: String) {
-        connecting = false
-        if (usernameField.text ?? "").isEmpty {
-            loginButton.isEnabled = false
-            loginButton.alpha = 0.5
-        } else {
-            loginButton.isEnabled = true
-            loginButton.alpha = 1.0
-        }
-
-        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        present(alert, animated: true, completion: nil)
-    }
-
+    // Observing touchUpInside on UIButton
     @IBAction func login(_: Any) {
         var properties: Properties {
             let prop = Ice.createProperties()
@@ -205,6 +121,12 @@ class LoginController: UIViewController, UITextFieldDelegate, UIAlertViewDelegat
                 //
                 // The communicator is now owned by the ChatController.
                 //
+
+                if self.remembering == true {
+                    UserDefaults.standard.set(username, forKey: Configuration.Keys.user.rawValue)
+                    UserDefaults.standard.set(password, forKey: Configuration.Keys.password.rawValue)
+                }
+
                 self.communicator = nil
                 self.navigationController!.pushViewController(chatController!, animated: true)
             }.catch { err in
@@ -221,5 +143,87 @@ class LoginController: UIViewController, UITextFieldDelegate, UIAlertViewDelegat
         } catch {
             exception("Error: \(error)")
         }
+    }
+
+    // Observing touchUpInside on UISwitch
+    @IBAction func didTapSwitch(_: UISwitch) {
+        remembering = !remembering
+        UserDefaults.standard.set(remembering, forKey: Configuration.Keys.rememberMe.rawValue)
+    }
+
+    // Observing input changes to UITextFields
+    @IBAction func didChange(_: UITextField) {
+        validate(username: usernameField.text, password: passwordField.text)
+    }
+
+    @objc func dismssKeyboard(_: UITapGestureRecognizer) {
+        view.endEditing(true)
+    }
+
+    @objc func didEnterBackground() {
+        if let communicator = communicator {
+            DispatchQueue.global().async {
+                communicator.destroy()
+            }
+        }
+    }
+
+    @objc func keyboardWillShow(_ notification: NSNotification) {
+        let frame = notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue
+        if let keyboardSize = frame?.cgRectValue {
+            if view.frame.origin.y == 0 {
+                view.frame.origin.y -= keyboardSize.height / 2
+            }
+        }
+    }
+
+    @objc func keyboardWillHide(_: NSNotification) {
+        view.frame.origin.y = 0
+    }
+
+    func validate(username: String?, password _: String?) {
+        if (username ?? "").isEmpty {
+            loginButton.isEnabled = false
+            loginButton.alpha = 0.5
+        } else {
+            loginButton.isEnabled = true
+            loginButton.alpha = 1.0
+        }
+    }
+
+    func initialize() {
+        UserDefaults.standard.register(defaults: [Configuration.Keys.user.rawValue: "",
+                                                  Configuration.Keys.password.rawValue: "",
+                                                  Configuration.Keys.ssl.rawValue: true,
+                                                  Configuration.Keys.rememberMe.rawValue: false])
+    }
+
+    func configureDefaultValues() {
+        let bool = UserDefaults.standard.bool(forKey: Configuration.Keys.rememberMe.rawValue)
+        remembering = bool
+        rememberSwitch.setOn(bool, animated: false)
+        if bool == true {
+            passwordField.text = UserDefaults.standard.string(forKey: Configuration.Keys.password.rawValue)
+            usernameField.text = UserDefaults.standard.string(forKey: Configuration.Keys.user.rawValue)
+        }
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismssKeyboard(_:)))
+        view.addGestureRecognizer(tapGesture)
+        usernameField.clearButtonMode = .whileEditing
+        passwordField.clearButtonMode = .whileEditing
+    }
+
+    func exception(_ message: String) {
+        connecting = false
+        if (usernameField.text ?? "").isEmpty {
+            loginButton.isEnabled = false
+            loginButton.alpha = 0.5
+        } else {
+            loginButton.isEnabled = true
+            loginButton.alpha = 1.0
+        }
+
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
 }
