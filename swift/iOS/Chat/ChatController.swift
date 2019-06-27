@@ -54,7 +54,7 @@ class ChatController: ChatLayoutController, ChatRoomCallback {
         destroySession()
         if let controller = navigationController {
             dismiss(animated: true, completion: nil)
-            self.view.endEditing(true)
+            view.endEditing(true)
             controller.popViewController(animated: true)
         }
     }
