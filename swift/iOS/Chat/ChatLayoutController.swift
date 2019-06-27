@@ -12,6 +12,7 @@ extension UIColor {
 }
 
 class ChatLayoutController: MessagesViewController {
+
     var messages: [ChatMessage] = []
     var users: [ChatUser] = []
     var currentUser: ChatUser!
