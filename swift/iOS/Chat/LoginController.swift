@@ -116,7 +116,6 @@ class LoginController: UIViewController, UITextFieldDelegate, UIAlertViewDelegat
                                           category: category)
 
                 self.connecting = false
-                chatController?.currentUser = ChatUser(name: username)
 
                 //
                 // The communicator is now owned by the ChatController.
@@ -126,7 +125,7 @@ class LoginController: UIViewController, UITextFieldDelegate, UIAlertViewDelegat
                     UserDefaults.standard.set(username, forKey: Configuration.Keys.user.rawValue)
                     UserDefaults.standard.set(password, forKey: Configuration.Keys.password.rawValue)
                 }
-
+                chatController?.currentUser = ChatUser(name: username)
                 self.communicator = nil
                 self.navigationController!.pushViewController(chatController!, animated: true)
             }.catch { err in
