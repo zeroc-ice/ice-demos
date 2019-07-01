@@ -209,3 +209,6 @@ swift/Carthage
 *.app
 *.framework
 *.framework.dSYM
+
+.build
+Package.resolved
