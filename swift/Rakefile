@@ -106,6 +106,7 @@ def create_commandline_targets(project, demo, aggregate_target)
             target_add_files(target, group, "#{project.project_dir}/#{demo}/Sources",
                              demo_variant_sources(demo, variant))
 
+            target_add_carthage_framework(target, :osx, "IceObjc.framework")
             target_add_carthage_framework(target, :osx, "Ice.framework")
             target_add_carthage_framework(target, :osx, "PromiseKit.framework")
 
@@ -138,6 +139,7 @@ def create_uikit_targets(project, demo, aggregate_target)
         target.add_resources(group_add_files(group, "#{project.project_dir}", $demo_resources[demo]))
     end
 
+    target_add_carthage_framework(target, :ios, "IceObjc.framework", true)
     target_add_carthage_framework(target, :ios, "Ice.framework", true)
     target_add_carthage_framework(target, :ios, "PromiseKit.framework", true)
 
