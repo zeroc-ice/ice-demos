@@ -25,7 +25,6 @@
   <PropertyGroup Label="Globals">
     <ProjectName>helloservice</ProjectName>
     <ProjectGuid>{9DA82A4E-9CE3-4788-AA4E-715FE7F1A03E}</ProjectGuid>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">

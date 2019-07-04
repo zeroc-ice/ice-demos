@@ -27,7 +27,6 @@
   <PropertyGroup Label="Globals">
     <ProjectName>subscriber</ProjectName>
     <ProjectGuid>{780D8169-71C8-48C3-8123-02A9DA1A94BC}</ProjectGuid>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup>

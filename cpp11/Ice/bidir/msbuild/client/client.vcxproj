@@ -26,7 +26,6 @@
     <ProjectName>client</ProjectName>
     <ProjectGuid>{7074C2B1-CBA9-494C-BFE5-955721AE44B0}</ProjectGuid>
     <RootNamespace>Ice.bidir.client</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

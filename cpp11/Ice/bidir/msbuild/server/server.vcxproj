@@ -26,7 +26,6 @@
     <ProjectName>server</ProjectName>
     <ProjectGuid>{FC895988-01DA-4B5C-8D38-C1CB68F93EF5}</ProjectGuid>
     <RootNamespace>Ice.bidir.server</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

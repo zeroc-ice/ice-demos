@@ -28,7 +28,6 @@
     <ProjectName>server</ProjectName>
     <ProjectGuid>{966B1F47-A385-4CC7-9E13-27B34808152C}</ProjectGuid>
     <RootNamespace>Ice.async.server</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup>
