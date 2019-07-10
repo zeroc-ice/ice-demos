@@ -266,11 +266,8 @@ run(const shared_ptr<Ice::Communicator>& communicator, int argc, char* argv[])
     }
     catch(const IceStorm::AlreadySubscribed&)
     {
-        // If we're manually setting the subscriber id ignore.
-        if(id.empty())
-        {
-            throw;
-        }
+        // This should never occur when subscribing with an UUID
+        assert(!id.empty());
         cout << "reactivating persistent subscriber" << endl;
     }
 

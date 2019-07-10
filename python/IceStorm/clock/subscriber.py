@@ -139,10 +139,9 @@ def run(communicator):
 
     try:
         topic.subscribeAndGetPublisher(qos, subscriber)
-    except IceStorm.AlreadySubscribed as ex:
-        # If we're manually setting the subscriber id ignore.
-        if len(id) == 0:
-            raise
+    except IceStorm.AlreadySubscribed:
+        # This should never occur when subscribing with an UUID
+        assert(id)
         print("reactivating persistent subscriber")
 
     communicator.waitForShutdown()

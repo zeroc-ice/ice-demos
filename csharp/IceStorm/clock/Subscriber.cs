@@ -12,7 +12,7 @@ public class Subscriber
     {
         public override void tick(string date, Ice.Current current)
         {
-            System.Console.Out.WriteLine(date);
+            Console.WriteLine(date);
         }
     }
 
@@ -243,12 +243,9 @@ public class Subscriber
         }
         catch(IceStorm.AlreadySubscribed)
         {
-            // If we're manually setting the subscriber id ignore.
-            if(id == null)
-            {
-                throw;
-            }
-            System.Console.Out.WriteLine("reactivating persistent subscriber");
+            // This should never occur when subscribing with an UUID
+            Debug.Assert(id != null);
+            Console.WriteLine("reactivating persistent subscriber");
         }
 
         communicator.waitForShutdown();

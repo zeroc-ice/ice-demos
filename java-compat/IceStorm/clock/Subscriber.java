@@ -288,16 +288,13 @@ public class Subscriber
         }
         catch(IceStorm.AlreadySubscribed e)
         {
-            // If we're manually setting the subscriber id ignore.
+            // This should never occur when subscribing with an UUID
             if(id == null)
             {
                 e.printStackTrace();
                 return 1;
             }
-            else
-            {
-                System.out.println("reactivating persistent subscriber");
-            }
+            System.out.println("reactivating persistent subscriber");
         }
         catch(IceStorm.InvalidSubscriber e)
         {
