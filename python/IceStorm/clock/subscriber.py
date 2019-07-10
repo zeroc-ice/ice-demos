@@ -64,13 +64,6 @@ def run(communicator):
     if len(args) > 0:
         topicName = args[0]
 
-    if len(retryCount) > 0:
-        if option == "None":
-            option = "Twoway"
-        elif option != "Twoway" and option != "Ordered":
-            print(sys.argv[0] + ": retryCount requires a twoway proxy")
-            sys.exit(1)
-
     if batch and (option in ("Twoway", "Ordered")):
         print(sys.argv[0] + ": batch can only be set with oneway or datagram")
         sys.exit(1)

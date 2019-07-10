@@ -171,19 +171,6 @@ public class Subscriber
             return 1;
         }
 
-        if(retryCount != null)
-        {
-            if(option.equals("None"))
-            {
-                option = "Twoway";
-            }
-            else if(!option.equals("Twoway") && !option.equals("Ordered"))
-            {
-                usage();
-                return 1;
-            }
-        }
-
         if(batch && (option.equals("Twoway") || option.equals("Ordered")))
         {
             System.err.println("batch can only be set with oneway or datagram");

@@ -4,6 +4,7 @@
 
 using Demo;
 using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 
 public class Subscriber
@@ -125,19 +126,6 @@ public class Subscriber
         {
             usage();
             return 1;
-        }
-
-        if(retryCount != null)
-        {
-            if(option.Equals("None"))
-            {
-                option = "Twoway";
-            }
-            else if(!option.Equals("Twoway") && !option.Equals("Ordered"))
-            {
-                usage();
-                return 1;
-            }
         }
 
         if(batch && (option.Equals("Twoway") || option.Equals("Ordered")))
