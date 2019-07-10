@@ -6,8 +6,8 @@
 def demos = [
     'Ice' : ['async', 'asyncInvocation', 'bidir', 'callback', 'hello', 'invoke',
     'interrupt', 'latency', 'minimal', 'multicast', 'nested',
-    'plugin', 'properties', 'serialize','session', 'swing',
-    'throughput', 'optional','context'],
+    'oauth', 'plugin', 'properties', 'serialize','session',
+     'swing', 'throughput', 'optional','context'],
     'IceDiscovery' : ['hello', 'replication'],
     'Database' : ['library'],
     'IceBox' : ['hello'],

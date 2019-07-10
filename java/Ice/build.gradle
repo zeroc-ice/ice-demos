@@ -3,7 +3,7 @@
 //
 
 ['async', 'asyncInvocation', 'bidir', 'callback', 'hello', 'invoke',
- 'interrupt', 'latency', 'minimal', 'multicast', 'nested',
+ 'interrupt', 'latency', 'minimal', 'multicast', 'nested', 'oauth',
  'plugin', 'properties', 'serialize','session',
  'throughput', 'optional','context'].each {
     def name = it
