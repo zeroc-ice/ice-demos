@@ -66,8 +66,14 @@ run(const shared_ptr<Ice::Communicator>& communicator)
 {
     shared_ptr<Glacier2::RouterPrx> router = Ice::checkedCast<Glacier2::RouterPrx>(communicator->getDefaultRouter());
     shared_ptr<Glacier2::SessionPrx> session;
+    //
+    // Loop until we have successfully create a session.
+    //
     while(!session)
     {
+        //
+        // Prompt the user for the creadentials to create the session.
+        //
         cout << "This demo accepts any user-id / password combination.\n";
 
         string id;
@@ -78,6 +84,10 @@ run(const shared_ptr<Ice::Communicator>& communicator)
         cout << "password: " << flush;
         getline(cin, pw);
 
+        //
+        // Try to create a session and break the loop if succeed,
+        // otherwise try again after printing the error message.
+        //
         try
         {
             session = router->createSession(id, pw);
@@ -102,12 +112,19 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                                      cout << "The Glacier2 session has been destroyed." << endl;
                                  });
 
+    //
+    // The Glacier2 router routes bidirectional calls to objects in the client only
+    // when these objects have the correct Glacier2-issued category. The purpose of
+    // the callbackReceiverFakeIdent is to demonstrate this.
+    //
+    // The Identity name is not checked by the server any value can be used.
+    //
     Ice::Identity callbackReceiverIdent;
-    callbackReceiverIdent.name = "cabackReceiver";
+    callbackReceiverIdent.name = Ice::generateUUID();
     callbackReceiverIdent.category = router->getCategoryForClient();
 
     Ice::Identity callbackReceiverFakeIdent;
-    callbackReceiverFakeIdent.name = "cabackReceiver";
+    callbackReceiverFakeIdent.name = Ice::generateUUID();
     callbackReceiverFakeIdent.category = "fake";
 
     auto base = communicator->propertyToProxy("Callback.Proxy");
@@ -120,7 +137,9 @@ run(const shared_ptr<Ice::Communicator>& communicator)
 
     adapter->add(make_shared<CallbackReceiverI>(), callbackReceiverIdent);
 
-    // Should never be called for the fake identity.
+    //
+    // Callback will never be called for a fake identity.
+    //
     adapter->add(make_shared<CallbackReceiverI>(), callbackReceiverFakeIdent);
 
     auto twowayR = Ice::uncheckedCast<CallbackReceiverPrx>(adapter->createProxy(callbackReceiverIdent));
@@ -131,6 +150,9 @@ run(const shared_ptr<Ice::Communicator>& communicator)
 
     menu();
 
+    //
+    // Client REPL.
+    //
     char c = 'x';
     do
     {
@@ -138,18 +160,11 @@ run(const shared_ptr<Ice::Communicator>& communicator)
         cin >> c;
         if(c == 't')
         {
-            Ice::Context context;
-            context["_fwd"] = "t";
-            if(!override.empty())
-            {
-                context["_ovrd"] = override;
-            }
-            twoway->initiateCallback(twowayR, context);
+            twoway->initiateCallback(twowayR);
         }
         else if(c == 'o')
         {
             Ice::Context context;
-            context["_fwd"] = "o";
             if(!override.empty())
             {
                 context["_ovrd"] = override;

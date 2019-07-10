@@ -35,8 +35,15 @@ public class Client
     {
         Glacier2.RouterPrx router = Glacier2.RouterPrxHelper.checkedCast(communicator.getDefaultRouter());
         Glacier2.SessionPrx session;
+
+        //
+        // Loop until we have successfully create a session.
+        //
         while(true)
         {
+            //
+            // Prompt the user for the credentials to create the session.
+            //
             java.io.BufferedReader in = new java.io.BufferedReader(new java.io.InputStreamReader(System.in));
             System.out.println("This demo accepts any user-id / password combination.");
 
@@ -58,6 +65,10 @@ public class Client
                 continue;
             }
 
+            //
+            // Try to create a session and break the loop if succeed,
+            // otherwise try again after printing the error message.
+            //
             try
             {
                 session = router.createSession(id, pw);
@@ -81,8 +92,17 @@ public class Client
                           new Ice.Optional<Ice.ACMHeartbeat>(Ice.ACMHeartbeat.HeartbeatAlways));
         connection.setCloseCallback(new CloseCallbackI());
 
-        Ice.Identity callbackReceiverIdent = new Ice.Identity("callbackReceiver", router.getCategoryForClient());
-        Ice.Identity callbackReceiverFakeIdent = new Ice.Identity("fake", "callbackReceiver");
+        //
+        // The Glacier2 router routes bidirectional calls to objects in the client only
+        // when these objects have the correct Glacier2-issued category. The purpose of
+        // the callbackReceiverFakeIdent is to demonstrate this.
+        //
+        // The Identity name is not checked by the server any value can be used.
+        //
+        Ice.Identity callbackReceiverIdent =
+            new Ice.Identity(java.util.UUID.randomUUID().toString(), router.getCategoryForClient());
+        Ice.Identity callbackReceiverFakeIdent =
+            new Ice.Identity(java.util.UUID.randomUUID().toString(), "fake");
 
         Ice.ObjectPrx base = communicator.propertyToProxy("Callback.Proxy");
         CallbackPrx twoway = CallbackPrxHelper.checkedCast(base);
@@ -90,6 +110,9 @@ public class Client
         CallbackPrx batchOneway = CallbackPrxHelper.uncheckedCast(twoway.ice_batchOneway());
 
         Ice.ObjectAdapter adapter = communicator.createObjectAdapterWithRouter("", router);
+        //
+        // Callback will never be called for a fake identity.
+        //
         adapter.add(new CallbackReceiverI(), callbackReceiverFakeIdent);
 
         CallbackReceiverPrx twowayR = CallbackReceiverPrxHelper.uncheckedCast(adapter.add(new CallbackReceiverI(),
@@ -100,6 +123,9 @@ public class Client
 
         menu();
 
+        //
+        // Client REPL
+        //
         String line = null;
         String override = null;
         boolean fake = false;
@@ -125,13 +151,7 @@ public class Client
 
             if(line.equals("t"))
             {
-                java.util.Map<String, String> context = new java.util.HashMap<String, String>();
-                context.put("_fwd", "t");
-                if(override != null)
-                {
-                    context.put("_ovrd", override);
-                }
-                twoway.initiateCallback(twowayR, context);
+                twoway.initiateCallback(twowayR);
             }
             else if(line.equals("o"))
             {
@@ -146,7 +166,6 @@ public class Client
             else if(line.equals("O"))
             {
                 java.util.Map<String, String> context = new java.util.HashMap<String, String>();
-                context.put("_fwd", "O");
                 if(override != null)
                 {
                     context.put("_ovrd", override);
