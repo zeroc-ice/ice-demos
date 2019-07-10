@@ -156,7 +156,6 @@ public class Client
             else if(line.equals("o"))
             {
                 java.util.Map<String, String> context = new java.util.HashMap<String, String>();
-                context.put("_fwd", "o");
                 if(override != null)
                 {
                     context.put("_ovrd", override);
@@ -166,6 +165,7 @@ public class Client
             else if(line.equals("O"))
             {
                 java.util.Map<String, String> context = new java.util.HashMap<String, String>();
+                context.put("_fwd", "O");
                 if(override != null)
                 {
                     context.put("_ovrd", override);
