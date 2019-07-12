@@ -5,7 +5,7 @@
 namespace Demo
 {
     //
-    // Because the Distance generated class is defined as a partial class,
+    // Because the Distance generated struct is defined as a partial type,
     // we can manually add some extra methods that are covenient for our
     // application.
     //
@@ -36,7 +36,7 @@ namespace Demo
         }
     }
     //
-    // Because the Speed generated class is defined as a partial class,
+    // Because the Speed generated class is defined as a partial type,
     // we can manually add some extra methods that are covenient for our
     // application.
     //

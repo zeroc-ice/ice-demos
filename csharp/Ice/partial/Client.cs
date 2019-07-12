@@ -54,12 +54,12 @@ public class Client
         }
 
         //
-        // Get a radom measurement.
+        // Get a random measurement.
         //
         var distance = station.getDistance();
 
         //
-        // Using the properties defined in the partial struct `Distance' we can access
+        // Using the properties defined in the partial struct Distance we can access
         // the value represented by this object in a more convenient way.
         //
         Console.WriteLine("distance: {0} meters equal {1} yards", Math.Round(distance.Meters, 4),
@@ -73,7 +73,7 @@ public class Client
                                                                   Math.Round(distance.Yards, 4));
 
         //
-        // The same apply for generated class types like `Speed'
+        // The same apply for generated class types like Speed.
         //
         var speed = station.getSpeed();
 
@@ -83,7 +83,7 @@ public class Client
             Math.Round(speed.MilesPerHour, 4));
 
         //
-        // Again this works equally well for objects created locally
+        // Again this works equally well for objects created locally.
         //
         speed = new Speed(1);
 
