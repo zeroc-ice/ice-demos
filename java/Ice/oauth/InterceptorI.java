@@ -28,8 +28,6 @@ public class InterceptorI extends com.zeroc.Ice.DispatchInterceptor
         throws com.zeroc.Ice.UserException
     {
         com.zeroc.Ice.Current current = request.getCurrent();
-        //TODO
-        current.encoding = new com.zeroc.Ice.EncodingVersion((byte)1, (byte)1);
         //
         // Check if the operation requires authorization to invoke.
         //
