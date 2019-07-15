@@ -17,6 +17,9 @@ public class InterceptorI extends com.zeroc.Ice.DispatchInterceptor
         this.provider = provider;
 
         securedOperations = new java.util.ArrayList<String>();
+        //
+        // We only require authorization for the 'setTemp' operation.
+        //
         securedOperations.add("setTemp");
     }
 
@@ -25,13 +28,8 @@ public class InterceptorI extends com.zeroc.Ice.DispatchInterceptor
         throws com.zeroc.Ice.UserException
     {
         com.zeroc.Ice.Current current = request.getCurrent();
-        //
-        // Required for a work-around to "https://github.com/zeroc-ice/ice/issues/435"
-        // We hard-code the request to use the Ice 1.1 Protocol, since it's not set
-        // automatically when the interceptor throws an exception. TODO
-        //
+        //TODO
         current.encoding = new com.zeroc.Ice.EncodingVersion((byte)1, (byte)1);
-
         //
         // Check if the operation requires authorization to invoke.
         //

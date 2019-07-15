@@ -7,7 +7,7 @@ import com.zeroc.demos.Ice.oauth.Demo.*;
 public class Client
 {
     // Per-application ID for OAuth validation.
-    private static final String CLIENT_ID = "a380f08e6cbb2114192ae0972a29e57a";
+    public static final String CLIENT_ID = "a380f08e6cbb2114192ae0972a29e57a";
 
     public static void main(String[] args)
     {
@@ -68,7 +68,7 @@ public class Client
         java.util.Map<String, String> params = new java.util.HashMap<String, String>();
         params.put("grant_type", "password");
         params.put("username", "admin");
-        params.put("password", "1234good");
+        params.put("password", "1234");
         params.put("client_id", CLIENT_ID);
         String response = sendPostRequest("http://" + host + ":" + port, params);
         if(response == null)
