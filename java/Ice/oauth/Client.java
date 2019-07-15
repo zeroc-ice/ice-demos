@@ -47,18 +47,42 @@ public class Client
         }
 
         //
+        // Read in values from the command line.
+        //
+        String username;
+        String password;
+        float desiredTemp;
+        try(java.util.Scanner userIn = new java.util.Scanner(System.in))
+        {
+            System.out.println("Username:");
+            username = userIn.nextLine();
+            System.out.println("Password:");
+            password = userIn.nextLine();
+            System.out.println("Enter desired temperature:");
+            desiredTemp = Float.parseFloat(userIn.nextLine());
+            System.out.println();
+        }
+        catch(NumberFormatException ex)
+        {
+            System.err.println("Error: Specified temperature is not a valid float.");
+            return 1;
+        }
+
+        //
         // Tries calling 'setTemp' without authorization and receives an exception.
         //
+        System.out.println("Attempting to set temperature without access token...");
         try
         {
-            System.out.println("Current temperature is " + thermostat.getTemp());
-            thermostat.setTemp(20.2f);
-            System.out.println("New temperature is " + thermostat.getTemp());
+            System.out.println("\tCurrent temperature is " + thermostat.getTemp());
+            thermostat.setTemp(desiredTemp);
+            System.out.println("\tNew temperature is " + thermostat.getTemp());
         }
         catch(AuthorizationException ex)
         {
-            System.err.println("Failed to set temperature. Access denied!");
+            System.err.println("\tFailed to set temperature. Access denied!");
         }
+        System.out.println();
 
         //
         // Request an access token from the OAuth provider.
@@ -67,17 +91,18 @@ public class Client
         int port = Integer.parseInt(communicator.getProperties().getProperty("OAuth.Provider.Port"));
         java.util.Map<String, String> params = new java.util.HashMap<String, String>();
         params.put("grant_type", "password");
-        params.put("username", "admin");
-        params.put("password", "1234");
+        params.put("username", username);
+        params.put("password", password);
         params.put("client_id", CLIENT_ID);
-        String response = sendPostRequest("http://" + host + ":" + port, params);
-        if(response == null)
+
+        java.util.Map<String, String> response = sendPostRequest("http://" + host + ":" + port, params);
+        String token = response.get("access_token");
+        if(token == null)
         {
-            System.err.println("Failed to retreive token from provider server.");
+            System.err.println("Failed to retrieve access token.");
             return 1;
         }
-        System.out.println(response);//TODO THIS TOO!
-        String token = "token?";// TODO REQUEST THE ACCESS TOKEN HERE!
+        System.out.println("Issued access token from provider: \"" + token + "\"\n");
 
         //
         // Add the access token to the proxy's context, so it will be
@@ -94,26 +119,31 @@ public class Client
         //
         // Tries calling 'setTemp' again, this time with the access token.
         //
+        System.out.println("Attempting to set temperature with access token...");
         try
         {
-            System.out.println("Current temperature is " + thermostat.getTemp());
-            thermostat.setTemp(19.8f);
-            System.out.println("New temperature is " + thermostat.getTemp());
+            System.out.println("\tCurrent temperature is " + thermostat.getTemp());
+            thermostat.setTemp(desiredTemp);
+            System.out.println("\tNew temperature is " + thermostat.getTemp());
         }
         catch(AuthorizationException ex)
         {
-            System.err.println("Failed to set temperature. Access denied!");
+            //
+            // No longer thrown since the client has authorization to use 'setTemp' now.
+            //
+            System.err.println("\tFailed to set temperature. Access denied!");
         }
 
         return 0;
     }
 
-    private static String sendPostRequest(String urlString, java.util.Map<String, String> params)
+    private static java.util.Map<String, String> sendPostRequest(String urlString, java.util.Map<String, String> params)
     {
+        java.util.Map<String, String> responseParameters = new java.util.HashMap<String, String>();
         try
         {
             //
-            // Create the POST payload data.
+            // Create the POST request.
             //
             StringBuilder request = new StringBuilder();
             for(java.util.Map.Entry<String, String> param : params.entrySet())
@@ -126,7 +156,7 @@ public class Client
                 request.append('=');
                 request.append(java.net.URLEncoder.encode(param.getValue(), "UTF-8"));
             }
-            byte[] data = request.append('\n').toString().getBytes("UTF-8");//TODO REMOVE THE NEED FOR THE LAST NEWLINE?
+            byte[] data = request.toString().getBytes("UTF-8");
 
             //
             // Open a connection to the OAuth server and send the request
@@ -138,36 +168,58 @@ public class Client
             connection.setRequestProperty("Content-Length", Integer.toString(data.length));
             connection.setUseCaches(false);
             connection.setDoOutput(true);
-            try(java.io.DataOutputStream out = new java.io.DataOutputStream(connection.getOutputStream()))
-            {
-                out.write(data);
-            }
+            connection.getOutputStream().write(data);
 
             //
-            // Read the response and return it as a string.
+            // Read the response.
             //
             int responseCode = connection.getResponseCode();
-            StringBuilder response = new StringBuilder();
-            try(java.io.BufferedReader in =
-                new java.io.BufferedReader(new java.io.InputStreamReader(connection.getInputStream(), "UTF-8")))
+            byte[] responseData = new byte[connection.getContentLength()];
+            if(responseCode == 200)
             {
-                int c;
-                do
-                {
-                    c = in.read();
-                    response.append((char)c);
-                } while(c > 0);
+                connection.getInputStream().read(responseData);
             }
-            return response.toString();
+            else
+            {
+                connection.getErrorStream().read(responseData);
+                System.err.println("Server returned error code: " + responseCode);
+                String response = new String(responseData, "UTF-8");
+                System.err.println("Response:\n" + response);
+                return responseParameters;
+            }
+            String response = new String(responseData, "UTF-8");
+            
+            //
+            // Parse the response into parameters.
+            //
+            for(String line : response.split("\r\n"))
+            {
+                line = line.trim();
+                int delimIndex = line.indexOf(':');
+                if(delimIndex > 0)
+                {
+                    // Remove any commas at the end of the line, or leading/trailing whitespace.
+                    if(line.charAt(line.length() - 1) == ',')
+                    {
+                        line = line.substring(0, (line.length() - 1));
+                    }
+
+                    // Remove any wrapping quotes.
+                    String parameter = line.substring(0, delimIndex).replaceAll("^\"|\"$", "");
+                    String value = line.substring(delimIndex + 1).replaceAll("^\"|\"$", "");
+                    responseParameters.put(parameter, value);
+                }
+            }
         }
         catch(java.net.MalformedURLException ex)
         {
-            System.err.println("Invalid provider url");
+            System.err.println("Invalid provider url.");
         }
         catch(java.io.IOException ex)
         {
+            System.err.println("Error occured while requesting access token.");
             ex.printStackTrace();
         }
-        return null;
+        return responseParameters;
     }
 }

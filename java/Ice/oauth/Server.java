@@ -35,11 +35,19 @@ public class Server
                 //
                 // Start the OAuth provider server.
                 //
-                int port = Integer.parseInt(communicator.getProperties().getProperty("OAuth.Provider.Port"));
-                provider = new OAuthProvider(port);
-                providerThread = new Thread(provider);
-                providerThread.start();
-                System.out.println("OAuth provider started on port " + port);
+                try
+                {
+                    int port = Integer.parseInt(communicator.getProperties().getProperty("OAuth.Provider.Port"));
+                    provider = new OAuthProvider(port);
+                    providerThread = new Thread(provider);
+                    providerThread.start();
+                    System.out.println("OAuth provider started on port " + port);
+                }
+                catch(java.io.IOException ex)
+                {
+                    System.err.println("Failed to start OAuth provider server");
+                    ex.printStackTrace();
+                }
 
                 com.zeroc.Ice.ObjectAdapter adapter = communicator.createObjectAdapter("Thermostat");
                 //
