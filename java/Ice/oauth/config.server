@@ -1,14 +1,10 @@
 #
-# The server creates one single object adapter with the name
-# "Thermostat". The following line sets the endpoints for this
-# adapter.
+# The server creates two object adapters with the names
+# "Thermostat" and "Authenticator". The following lines sets
+# the endpoints for each adapter respectively.
 #
 Thermostat.Endpoints=tcp -p 10000
-
-#
-# The port that the OAuth provider is listening on.
-#
-OAuth.Provider.Port=10010
+Authenticator.Endpoints=tcp -p 10001
 
 #
 # Only listen on the localhost interface by default.

@@ -2,12 +2,10 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-import com.zeroc.demos.Ice.oauth.Demo.*;
+import com.zeroc.demos.Ice.interceptor.Demo.*;
 
 public class ThermostatI implements Thermostat
 {
-    private float temperature = 23.5f;
-
     @Override
     public float getTemp(com.zeroc.Ice.Current current)
     {
@@ -34,4 +32,6 @@ public class ThermostatI implements Thermostat
         System.out.println("Shutting down...");
         current.adapter.getCommunicator().shutdown();
     }
+
+    private float temperature = 23.5f;
 }

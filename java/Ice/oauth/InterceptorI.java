@@ -3,24 +3,20 @@
 //
 
 import java.util.concurrent.CompletionStage;
-import com.zeroc.demos.Ice.oauth.Demo.*;
+import com.zeroc.demos.Ice.interceptor.Demo.*;
 
 public class InterceptorI extends com.zeroc.Ice.DispatchInterceptor
 {
-    private final java.util.List<String> securedOperations;
-    private final com.zeroc.Ice.Object servant;
-    private final OAuthProvider provider;
-
-    public InterceptorI(com.zeroc.Ice.Object servant, OAuthProvider provider)
+    public InterceptorI(com.zeroc.Ice.Object servant, AuthenticatorI authenticator)
     {
-        this.servant = servant;
-        this.provider = provider;
+        _servant = servant;
+        _authenticator = authenticator;
+        _securedOperations = new java.util.ArrayList<String>();
 
-        securedOperations = new java.util.ArrayList<String>();
         //
         // We only require authorization for the 'setTemp' operation.
         //
-        securedOperations.add("setTemp");
+        _securedOperations.add("setTemp");
     }
 
     @Override
@@ -31,16 +27,18 @@ public class InterceptorI extends com.zeroc.Ice.DispatchInterceptor
         //
         // Check if the operation requires authorization to invoke.
         //
-        if(securedOperations.contains(current.operation))
+        if(_securedOperations.contains(current.operation))
         {
             //
             // Validate the client's access token before dispatching to the servant.
+            // 'validateToken' throws an exception if the token is invalid or expired.
             //
-            if(!provider.checkToken(current.ctx.get("accessToken")))
-            {
-                throw new AuthorizationException();
-            }
+            _authenticator.validateToken(current.ctx.get("accessToken"), current);
         }
-        return servant.ice_dispatch(request);
+        return _servant.ice_dispatch(request);
     }
+
+    private final java.util.List<String> _securedOperations;
+    private final com.zeroc.Ice.Object _servant;
+    private final AuthenticatorI _authenticator;
 }

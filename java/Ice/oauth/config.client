@@ -5,9 +5,10 @@
 Thermostat.Proxy=thermostat:tcp -p 10000
 
 #
-# The port that the OAuth provider is listening on.
+# The client reads this property to create the reference to the
+# "authenticator" object in the server.
 #
-OAuth.Provider.Port=10010
+Authenticator.Proxy=authenticator:tcp -p 10001
 
 #
 # Only connect to the localhost interface by default.
