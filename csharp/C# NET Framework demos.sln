@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2010
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29025.244
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Manual", "Manual", "{AC5C2F48-9B17-4C83-9362-6E0645CE25D9}"
 EndProject
@@ -269,17 +269,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Chat", "Chat", "{BD048975-1
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatDemoGUI", "Chat\net45\ChatDemoGUI.csproj", "{F1A64A0A-7666-4E7E-82C5-DC34BA15D59A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Manual\net45\lifecycle\Client\Client.csproj", "{E6B38408-D998-40CE-A018-C53529B270D5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Manual\net45\lifecycle\Client\Client.csproj", "{E6B38408-D998-40CE-A018-C53529B270D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Manual\net45\lifecycle\Server\Server.csproj", "{710B7320-A714-4560-BCB0-A50FCA6ECAC5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Manual\net45\lifecycle\Server\Server.csproj", "{710B7320-A714-4560-BCB0-A50FCA6ECAC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Manual\net45\printer\Client\Client.csproj", "{07861488-87F0-4EA6-8774-08E39ABDD468}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Manual\net45\printer\Client\Client.csproj", "{07861488-87F0-4EA6-8774-08E39ABDD468}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Manual\net45\printer\Server\Server.csproj", "{2374126D-F982-4E2F-B9F3-278F8B38A310}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Manual\net45\printer\Server\Server.csproj", "{2374126D-F982-4E2F-B9F3-278F8B38A310}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Manual\net45\simpleFilesystem\Client\Client.csproj", "{2E01BB07-5E3A-4563-AE3B-C357672BEEF7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Manual\net45\simpleFilesystem\Client\Client.csproj", "{2E01BB07-5E3A-4563-AE3B-C357672BEEF7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Manual\net45\simpleFilesystem\Server\Server.csproj", "{ECF4A31E-8545-4A9D-ADC2-2020E53C9B46}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Manual\net45\simpleFilesystem\Server\Server.csproj", "{ECF4A31E-8545-4A9D-ADC2-2020E53C9B46}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "partial", "partial", "{AD13920A-A972-48FA-98DC-579711B65B0A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "Ice\partial\msbuild\server\net45\server.csproj", "{F89CDE81-6E5B-444D-9854-79732080C0A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "Ice\partial\msbuild\client\net45\client.csproj", "{1F03F02F-E3B7-4C5A-A628-03C553523DF8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -527,6 +533,14 @@ Global
 		{ECF4A31E-8545-4A9D-ADC2-2020E53C9B46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ECF4A31E-8545-4A9D-ADC2-2020E53C9B46}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ECF4A31E-8545-4A9D-ADC2-2020E53C9B46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F89CDE81-6E5B-444D-9854-79732080C0A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F89CDE81-6E5B-444D-9854-79732080C0A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F89CDE81-6E5B-444D-9854-79732080C0A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F89CDE81-6E5B-444D-9854-79732080C0A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F03F02F-E3B7-4C5A-A628-03C553523DF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F03F02F-E3B7-4C5A-A628-03C553523DF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F03F02F-E3B7-4C5A-A628-03C553523DF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F03F02F-E3B7-4C5A-A628-03C553523DF8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -621,6 +635,9 @@ Global
 		{2374126D-F982-4E2F-B9F3-278F8B38A310} = {BADDBD20-7FD0-41FF-9E79-E16BBCA69813}
 		{2E01BB07-5E3A-4563-AE3B-C357672BEEF7} = {42B96E9A-A291-49A7-871D-AA14FFE1CF5A}
 		{ECF4A31E-8545-4A9D-ADC2-2020E53C9B46} = {42B96E9A-A291-49A7-871D-AA14FFE1CF5A}
+		{AD13920A-A972-48FA-98DC-579711B65B0A} = {34840371-BFEE-4515-8578-E079C2815B69}
+		{F89CDE81-6E5B-444D-9854-79732080C0A7} = {AD13920A-A972-48FA-98DC-579711B65B0A}
+		{1F03F02F-E3B7-4C5A-A628-03C553523DF8} = {AD13920A-A972-48FA-98DC-579711B65B0A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ECCF2FC8-468B-43DA-BAC3-EAB797D87A24}
