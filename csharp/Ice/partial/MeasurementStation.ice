@@ -6,15 +6,23 @@
 
 module Demo
 {
-    const double YardConversionFactor = 1.0936;
+    //
+    // A struct type representing distance measurements, the raw value stores
+    // the distance in meters, C# public properties to access the value using
+    // different units are provided in Meassumernts.cs using a partial struct
+    // definition.
+    //
     ["protected"] struct Distance
     {
         double value;
     }
 
-    const double MilesPerHourConversionFactor = 2.2369;
-    const double KilometresPerHourConversionFactor = 3.6;
-
+    //
+    // A class type representing speed measurements, the raw value stores
+    // the speed in meters per second (mps), C# public properties to access
+    // the value using different units are provided in Meassumernts.cs using
+    // a partial class definition.
+    //
     ["protected"] class Speed
     {
         double value;

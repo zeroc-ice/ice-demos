@@ -15,11 +15,11 @@ namespace Demo
         {
             get
             {
-                return value * YardConversionFactor.value;
+                return value * YardConversionFactor;
             }
             set
             {
-                this.value = value / YardConversionFactor.value;
+                this.value = value / YardConversionFactor;
             }
         }
 
@@ -34,6 +34,8 @@ namespace Demo
                 this.value = value;
             }
         }
+
+        private const double YardConversionFactor = 1.0936;
     }
     //
     // Because the Speed generated class is defined as a partial type,
@@ -46,27 +48,27 @@ namespace Demo
         {
             get
             {
-                return value * MilesPerHourConversionFactor.value;
+                return value * MilesPerHourConversionFactor;
             }
             set
             {
-                this.value = value / MilesPerHourConversionFactor.value;
+                this.value = value / MilesPerHourConversionFactor;
             }
         }
 
-        public double KilometresPerHour
+        public double KilometersPerHour
         {
             get
             {
-                return value * KilometresPerHourConversionFactor.value;
+                return value * KilometersPerHourConversionFactor;
             }
             set
             {
-                this.value = value / KilometresPerHourConversionFactor.value;
+                this.value = value / KilometersPerHourConversionFactor;
             }
         }
 
-        public double MetrePerSecond
+        public double MetersPerSecond
         {
             get
             {
@@ -77,5 +79,8 @@ namespace Demo
                 this.value = value;
             }
         }
+
+        private const double MilesPerHourConversionFactor = 2.2369;
+        private const double KilometersPerHourConversionFactor = 3.6;
     }
 }

@@ -78,8 +78,8 @@ public class Client
         var speed = station.getSpeed();
 
         Console.WriteLine("speed: {0} m/s is equal {1} km/h {2} mph",
-            Math.Round(speed.MetrePerSecond, 4),
-            Math.Round(speed.KilometresPerHour, 4),
+            Math.Round(speed.MetersPerSecond, 4),
+            Math.Round(speed.KilometersPerHour, 4),
             Math.Round(speed.MilesPerHour, 4));
 
         //
@@ -88,22 +88,22 @@ public class Client
         speed = new Speed(1);
 
         Console.WriteLine("speed: {0} m/s is equal {1} km/h {2} mph",
-            Math.Round(speed.MetrePerSecond, 4),
-            Math.Round(speed.KilometresPerHour, 4),
+            Math.Round(speed.MetersPerSecond, 4),
+            Math.Round(speed.KilometersPerHour, 4),
             Math.Round(speed.MilesPerHour, 4));
 
-        speed.KilometresPerHour = 1;
+        speed.KilometersPerHour = 1;
 
         Console.WriteLine("speed: {0} m/s is equal {1} km/h {2} mph",
-            Math.Round(speed.MetrePerSecond, 4),
-            Math.Round(speed.KilometresPerHour, 4),
+            Math.Round(speed.MetersPerSecond, 4),
+            Math.Round(speed.KilometersPerHour, 4),
             Math.Round(speed.MilesPerHour, 4));
 
         speed.MilesPerHour = 1;
 
         Console.WriteLine("speed: {0} m/s is equal {1} km/h {2} mph",
-            Math.Round(speed.MetrePerSecond, 4),
-            Math.Round(speed.KilometresPerHour, 4),
+            Math.Round(speed.MetersPerSecond, 4),
+            Math.Round(speed.KilometersPerHour, 4),
             Math.Round(speed.MilesPerHour, 4));
 
         station.shutdown();
