@@ -33,7 +33,18 @@ public class InterceptorI extends com.zeroc.Ice.DispatchInterceptor
             // Validate the client's access token before dispatching to the servant.
             // 'validateToken' throws an exception if the token is invalid or expired.
             //
-            _authenticator.validateToken(current.ctx.get("accessToken"), current);
+            String tokenId = current.ctx.get("accessToken");
+            if(tokenId != null)
+            {
+                _authenticator.validateToken(tokenId);
+            }
+            else
+            {
+                //
+                // If the client didn't include an accessToken, throw an exception.
+                //
+                throw new AuthorizationException();
+            }
         }
         return _servant.ice_dispatch(request);
     }

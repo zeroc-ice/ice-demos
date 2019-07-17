@@ -20,8 +20,6 @@ module Demo
     interface Authenticator
     {
         Token getToken(string username, string password);
-        idempotent void validateToken(string tokenId)
-            throws AuthorizationException;
     }
 
     interface Thermostat

@@ -42,8 +42,7 @@ public class AuthenticatorI implements Authenticator
         return token;
     }
 
-    @Override
-    public void validateToken(String tokenId, com.zeroc.Ice.Current current)
+    public void validateToken(String tokenId)
         throws AuthorizationException
     {
         synchronized(_tokenLock)

@@ -63,7 +63,7 @@ public class Client
         }
         catch(NumberFormatException ex)
         {
-            System.err.println("Error: Specified temperature is not a valid float.");
+            System.err.println("Specified temperature is not a valid float.");
             return 1;
         }
 
@@ -99,11 +99,11 @@ public class Client
             System.err.println("Failed to retrieve access token.");
             return 1;
         }
-        System.out.println("Successfully received access token: \"" + token.id + "\"\n");
+        System.out.println("Successfully retrieved access token: \"" + token.id + "\"\n");
 
         //
-        // Add the access token to the proxy's context, so it will be
-        // sent along with every request made through the proxy.
+        // Add the access token to the thermostat proxy's context, so it will be
+        // sent along with every request made through it.
         //
         java.util.Map<String, String> context = thermostat.ice_getContext();
         if(context == null)
@@ -126,7 +126,7 @@ public class Client
         catch(AuthorizationException ex)
         {
             //
-            // No longer thrown since the client has authorization to use 'setTemp' now.
+            // No longer encountered since the client has authorization to use 'setTemp' now.
             //
             System.err.println("\tFailed to set temperature. Access denied!");
         }
