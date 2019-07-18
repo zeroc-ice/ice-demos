@@ -10,6 +10,6 @@ public struct ChatUser: SenderType {
 
     init(name: String) {
         displayName = name
-        senderId = name.replacingOccurrences(of: " ", with: "")
+        senderId = name.replacingOccurrences(of: " ", with: "").lowercased()
     }
 }

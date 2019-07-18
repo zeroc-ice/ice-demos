@@ -125,7 +125,7 @@ class LoginController: UIViewController, UITextFieldDelegate, UIAlertViewDelegat
                     UserDefaults.standard.set(username, forKey: Configuration.Keys.user.rawValue)
                     UserDefaults.standard.set(password, forKey: Configuration.Keys.password.rawValue)
                 }
-            
+
                 chatController?.currentUser = ChatUser(name: username.lowercased())
                 self.communicator = nil
                 self.navigationController!.pushViewController(chatController!, animated: true)
