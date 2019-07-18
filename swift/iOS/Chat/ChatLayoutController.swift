@@ -66,15 +66,15 @@ extension ChatLayoutController: MessagesDisplayDelegate {
                              for message: MessageType,
                              at _: IndexPath,
                              in _: MessagesCollectionView) {
-        let currentUser = message.sender.displayName
-        let avatar = Avatar(image: nil, initials: "\(currentUser.first ?? "A")")
+        let name = message.sender.displayName
+        let avatar = Avatar(image: nil, initials: "\(name.first ?? "A")")
         avatarView.set(avatar: avatar)
     }
 }
 
 extension ChatLayoutController: MessageCellDelegate {
     func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
-        if indexPath.section % 3 == 0 {
+        if indexPath.section % 7 == 0 {
             return NSAttributedString(string: MessageKitDateFormatter.shared.string(from: message.sentDate),
                                       attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 10),
                                                    NSAttributedString.Key.foregroundColor: UIColor.darkGray])
