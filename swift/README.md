@@ -74,7 +74,7 @@ swift build
 ### Running the demos
 
 Swift Package Manager puts the executables in the build output directory. Refer to
-the printer's [README.md][./Manual/spm/printer/README.md] for more information.
+the printer's [README.md](./Manual/spm/printer/README.md) for more information.
 
 [1]: https://doc.zeroc.com/display/IceSwift/Ice+Manual
 [2]: https://github.com/Carthage/Carthage
