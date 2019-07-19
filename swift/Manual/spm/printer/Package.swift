@@ -15,7 +15,7 @@ let package = Package(
   ],
   dependencies: [
     .package(url: "https://github.com/mxcl/PromiseKit.git", from: "6.8.10"),
-    .package(url: "https://github.com/zeroc-ice/ice.git", from: "3.7.3-beta.0+spm")
+    .package(url: "https://github.com/zeroc-ice/ice.git", from: "3.7.3-beta.2+spm")
   ],
   targets: [
     .target(name: "Client", dependencies: ["Ice", "PromiseKit"]),
