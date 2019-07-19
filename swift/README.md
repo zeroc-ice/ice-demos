@@ -18,12 +18,12 @@ in the [Ice manual][1].
 Refer to the [C++11 demos](../cpp11) for more examples that use the Ice services
 (Glacier2, IceGrid, IceStorm).
 
-## Building and running the Demos
+## Building and running the demos with Xcode and Carthage
 
 ### Build Requirements
 
 In order to build the Ice for Swift sample programs, you need:
- * XCode
+ * Xcode
  * Slice for Swift and Slice for C++ Slice compilers
  * [Carthage][2]
 
@@ -39,18 +39,18 @@ programs and install them in `Carthage/Build/` directory.
 To use the Slice for Swift and Slice for C++ Slice compilers from the source distribution
 you must set `ICE_HOME` environment variable before running `carthage update`.
 
-### Building the demos using XCode
+### Building the demos
 
 Open project file `demos.xcodeproj` to build the sample programs.
 
 The demos are configured to use the `Ice` and `PromiseKit` frameworks from Carthage
 builds and the Slice for Swift compiler from the binary distribution, to build the sample
 programs using the Slice for Swift compiler from a source distribution you must set `ICE_HOME`
-environment variable before starting XCode.
+environment variable before starting Xcode.
 
 ### Running the Demos
 
-For most demos, you can simply run `client` and `server` in separate command
+For most demos, you can simply run `server` and `client` in separate command
 prompt windows.  Refer to the README.md file in each demo directory for the
 exact usage instructions.
 
@@ -58,6 +58,26 @@ Some demos require Ice services such as IceGrid and IceStorm that are not
 included in the Ice for Swift distribution. To run these demos, the simplest
 is to first install the Ice Homebrew packages. Please refer to
 [Using the macOS Binary Distributions][3] for additional information.
+
+## Building and running the demos with Swift Package Manager (SPM)
+
+*Currently only one demo with command-line build*
+
+### Building the demos
+
+Run `swift build` from the demo directory.
+
+```
+cd Manual/spm/printer
+swift build
+```
+
+### Running the demos
+
+Swift Package Manager put the executable in the build output directory, you can
+run them as `.build/debug/Server` and `.build/debug/Client` in separate command
+prompt windows. Refer to the README.md file in each demo directory for the
+exact usage instructions.
 
 
 [1]: https://doc.zeroc.com/display/IceSwift/Ice+Manual
