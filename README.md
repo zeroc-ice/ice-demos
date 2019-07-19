@@ -16,6 +16,7 @@ The sample programs are grouped by programming language:
 * [PHP](./php)
 * [Python](./python)
 * [Ruby](./ruby)
+* [Swift](./swift)
 * [TypeScript](./typescript)
 
 For example, the [cpp11](./cpp11) folder contains all the sample programs written
