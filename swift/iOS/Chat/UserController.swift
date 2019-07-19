@@ -7,7 +7,7 @@ import UIKit
 
 class UserController: UITableViewController {
     @IBOutlet var usersTableView: UITableView!
-    var users: [String] = []
+    var users: [ChatUser] = []
 
     func numberOfSectionsInTableView(_: UITableView) -> Int {
         return 1
@@ -25,7 +25,7 @@ class UserController: UITableViewController {
         if cell == nil {
             cell = UITableViewCell(style: .default, reuseIdentifier: myIdentifier)
         }
-        cell!.textLabel?.text = users[indexPath.row]
+        cell!.textLabel?.text = users[indexPath.row].displayName
         return cell!
     }
 

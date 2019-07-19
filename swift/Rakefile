@@ -48,7 +48,9 @@ $demo_extra_frameworks = {
 
     "IceStorm/clock" => ["IceStorm.framework"],
 
-    "iOS/chat" => ["Glacier2.framework"],
+    "iOS/chat" => ["Glacier2.framework",
+		   "MessageKit.framework",
+		   "InputBarAccessoryView.framework"],
     "iOS/library" => ["Glacier2.framework"]
 }
 
@@ -109,7 +111,6 @@ def create_commandline_targets(project, demo, aggregate_target)
             target_add_carthage_framework(target, :osx, "IceImpl.framework")
             target_add_carthage_framework(target, :osx, "Ice.framework")
             target_add_carthage_framework(target, :osx, "PromiseKit.framework")
-
             extra_frameworks = $demo_extra_frameworks[demo] || []
             extra_frameworks.each do |f|
                 target_add_carthage_framework(target, :osx, f)
