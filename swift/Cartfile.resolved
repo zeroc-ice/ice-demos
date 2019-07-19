@@ -1,2 +1,2 @@
 github "mxcl/PromiseKit" "6.10.0"
-github "zeroc-ice/ice" "224c102bae8829358a56c3ddddd3ffa0a52b2dea"
+github "zeroc-ice/ice" "v3.7-beta2-swift"
