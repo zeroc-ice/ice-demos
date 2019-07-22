@@ -14,4 +14,4 @@ In a separate window, start the client:
 | ------------------ | ------------------- |
 | `client`           | `dotnet client.dll` |
 
-[1]: https://doc.zeroc.com/display/Ice37/Asynchronous+Method+Invocation+%28AMI%29+in+C-Sharp
+[1]: https://doc.zeroc.com/ice/3.7/language-mappings/c-sharp-mapping/client-side-slice-to-c-sharp-mapping/asynchronous-method-invocation-ami-in-c-sharp

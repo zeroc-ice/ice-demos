@@ -71,5 +71,5 @@ how to start the server.
 > discover servers running on the local machine due to network isolation
 > restrictions of Windows Store applications.
 
-[1]: https://doc.zeroc.com/display/Ice37/Invocation+Timeouts
-[2]: https://doc.zeroc.com/display/Ice37/IceDiscovery
+[5]: https://doc.zeroc.com/ice/3.7/client-side-features/invocation-timeouts
+[2]: https://doc.zeroc.com/ice/3.7/ice-plugins/icediscovery

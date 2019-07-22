@@ -29,4 +29,4 @@ that supports its preferred currency.
 You can edit `config.client` to change or comment out the client's
 preferred currency.
 
-[1]: https://doc.zeroc.com/display/Ice37/Load+Balancing
+[1]: https://doc.zeroc.com/ice/3.7/ice-services/icegrid/load-balancing

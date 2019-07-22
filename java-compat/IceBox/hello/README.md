@@ -19,4 +19,4 @@ To shut down IceBox, use IceBox.Admin:
 java IceBox.Admin --Ice.Config=config.admin shutdown
 ```
 
-[1]: https://doc.zeroc.com/display/Ice37/IceBox
+[1]: https://doc.zeroc.com/ice/3.7/icebox

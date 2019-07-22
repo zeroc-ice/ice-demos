@@ -44,4 +44,4 @@ icegridadmin `registry show` or `node show` commands or with the
 IceGridGUI. The standard error files contain the registry and
 node traces.
 
-[1]: https://doc.zeroc.com/display/Ice37/Registry+Replication
+[1]: https://doc.zeroc.com/ice/3.7/ice-services/icegrid/registry-replication

@@ -60,6 +60,11 @@ Demos in this directory:
 
   This demo shows the use of the optional keyword.
 
+- [partial](./partial)
+
+  This demo ilustrates how to use partial classes and protected data members
+  together to extend the generated code classes.
+
 - [plugin](./plugin)
 
   A demo to illustrate how to write and use Ice plugins.

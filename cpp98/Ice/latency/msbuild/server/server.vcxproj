@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\..\..\packages\zeroc.ice.v142.3.7.2\build\native\zeroc.ice.v142.props" Condition="Exists('..\..\..\..\packages\zeroc.ice.v142.3.7.2\build\native\zeroc.ice.v142.props')" />
   <Import Project="..\..\..\..\packages\zeroc.icebuilder.msbuild.5.0.4\build\zeroc.icebuilder.msbuild.props" Condition="Exists('..\..\..\..\packages\zeroc.icebuilder.msbuild.5.0.4\build\zeroc.icebuilder.msbuild.props')" />
   <Import Project="..\..\..\..\packages\zeroc.ice.v100.3.7.2\build\native\zeroc.ice.v100.props" Condition="Exists('..\..\..\..\packages\zeroc.ice.v100.3.7.2\build\native\zeroc.ice.v100.props')" />
   <Import Project="..\..\..\..\packages\zeroc.ice.v141.3.7.2\build\native\zeroc.ice.v141.props" Condition="Exists('..\..\..\..\packages\zeroc.ice.v141.3.7.2\build\native\zeroc.ice.v141.props')" />
@@ -26,7 +27,6 @@
   <PropertyGroup Label="Globals">
     <ProjectName>server</ProjectName>
     <ProjectGuid>{DF4C0DA9-DD64-44D1-B56E-FDC3C1CE4A44}</ProjectGuid>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup>
@@ -66,6 +66,7 @@
     <Import Project="..\..\..\..\packages\zeroc.ice.v141.3.7.2\build\native\zeroc.ice.v141.targets" Condition="Exists('..\..\..\..\packages\zeroc.ice.v141.3.7.2\build\native\zeroc.ice.v141.targets')" />
     <Import Project="..\..\..\..\packages\zeroc.ice.v100.3.7.2\build\native\zeroc.ice.v100.targets" Condition="Exists('..\..\..\..\packages\zeroc.ice.v100.3.7.2\build\native\zeroc.ice.v100.targets')" />
     <Import Project="..\..\..\..\packages\zeroc.icebuilder.msbuild.5.0.4\build\zeroc.icebuilder.msbuild.targets" Condition="Exists('..\..\..\..\packages\zeroc.icebuilder.msbuild.5.0.4\build\zeroc.icebuilder.msbuild.targets')" />
+    <Import Project="..\..\..\..\packages\zeroc.ice.v142.3.7.2\build\native\zeroc.ice.v142.targets" Condition="Exists('..\..\..\..\packages\zeroc.ice.v142.3.7.2\build\native\zeroc.ice.v142.targets')" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -266,5 +267,7 @@
     <Error Condition="!Exists('..\..\..\..\packages\zeroc.ice.v100.3.7.2\build\native\zeroc.ice.v100.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.v100.3.7.2\build\native\zeroc.ice.v100.targets'))" />
     <Error Condition="!Exists('..\..\..\..\packages\zeroc.icebuilder.msbuild.5.0.4\build\zeroc.icebuilder.msbuild.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.icebuilder.msbuild.5.0.4\build\zeroc.icebuilder.msbuild.props'))" />
     <Error Condition="!Exists('..\..\..\..\packages\zeroc.icebuilder.msbuild.5.0.4\build\zeroc.icebuilder.msbuild.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.icebuilder.msbuild.5.0.4\build\zeroc.icebuilder.msbuild.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\packages\zeroc.ice.v142.3.7.2\build\native\zeroc.ice.v142.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.v142.3.7.2\build\native\zeroc.ice.v142.props'))" />
+    <Error Condition="!Exists('..\..\..\..\packages\zeroc.ice.v142.3.7.2\build\native\zeroc.ice.v142.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.v142.3.7.2\build\native\zeroc.ice.v142.targets'))" />
   </Target>
 </Project>

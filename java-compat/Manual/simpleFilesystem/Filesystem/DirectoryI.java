@@ -7,9 +7,8 @@ package Filesystem;
 public final class DirectoryI extends _DirectoryDisp
 {
     // DirectoryI constructor
-
     public
-    DirectoryI(Ice.Communicator communicator, String name, DirectoryI parent)
+    DirectoryI(String name, DirectoryI parent)
     {
         _name = name;
         _parent = parent;
@@ -21,7 +20,6 @@ public final class DirectoryI extends _DirectoryDisp
     }
 
     // Slice Node::name() operation
-
     public String
     name(Ice.Current current)
     {
@@ -29,7 +27,6 @@ public final class DirectoryI extends _DirectoryDisp
     }
 
     // Slice Directory::list() operation
-
     public NodePrx[]
     list(Ice.Current current)
     {
@@ -40,7 +37,6 @@ public final class DirectoryI extends _DirectoryDisp
 
     // addChild is called by the child in order to add
     // itself to the _contents member of the parent
-
     void
     addChild(NodePrx child)
     {
@@ -49,7 +45,6 @@ public final class DirectoryI extends _DirectoryDisp
 
     // activate adds the servant to the object adapter and
     // adds child nodes ot the parent's _contents list.
-
     public void
     activate(Ice.ObjectAdapter a)
     {

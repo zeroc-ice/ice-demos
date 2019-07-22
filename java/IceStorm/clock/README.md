@@ -167,4 +167,4 @@ the processes with this property enabled displays a log of Ice's
 network activity and may help you to identify the problem more
 quickly.
 
-[1]: https://doc.zeroc.com/display/Ice37/IceStorm
+[1]: https://doc.zeroc.com/ice/3.7/ice-services/icestorm

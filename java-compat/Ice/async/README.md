@@ -20,5 +20,5 @@ process the request. While a long request is processing, short
 requests are still able to be processed and more long requests can be
 queued for processing by the worker thread.
 
-[1]: https://doc.zeroc.com/display/Ice37/Asynchronous+Method+Invocation+%28AMI%29+in+Java+Compat
-[2]: https://doc.zeroc.com/display/Ice37/Asynchronous+Method+Dispatch+%28AMD%29+in+Java+Compat
+[1]: https://doc.zeroc.com/ice/3.7/language-mappings/java-compat-mapping/client-side-slice-to-java-compat-mapping/asynchronous-method-invocation-ami-in-java-compat
+[2]: https://doc.zeroc.com/ice/3.7/language-mappings/java-compat-mapping/server-side-slice-to-java-compat-mapping/asynchronous-method-dispatch-amd-in-java-compat

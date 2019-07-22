@@ -43,4 +43,4 @@ icegridadmin --Ice.Config=config.grid -e \ "application update application-multi
 
 Messages will be displayed in the IceGrid service window.
 
-[1]: https://doc.zeroc.com/display/Ice37/Resource+Allocation+using+IceGrid+Sessions
+[1]: https://doc.zeroc.com/ice/3.7/ice-services/icegrid/resource-allocation-using-icegrid-sessions

@@ -20,6 +20,7 @@ public class PrinterI : Ice.Blobject
     public override bool ice_invoke(byte[] inParams, out byte[] outParams, Ice.Current current)
     {
         outParams = null;
+        bool result = true;
 
         var communicator = current.adapter.getCommunicator();
 
@@ -33,14 +34,11 @@ public class PrinterI : Ice.Blobject
         if(current.operation.Equals("printString"))
         {
             var message = inStream.readString();
-            inStream.endEncapsulation();
             Console.WriteLine("Printing string `" + message + "'");
-            return true;
         }
         else if(current.operation.Equals("printStringSequence"))
         {
             var seq = StringSeqHelper.read(inStream);
-            inStream.endEncapsulation();
             Console.Write("Printing string sequence {");
             for(int i = 0; i < seq.Length; ++i)
             {
@@ -51,12 +49,10 @@ public class PrinterI : Ice.Blobject
                 Console.Write("'" + seq[i] + "'");
             }
             Console.WriteLine("}");
-            return true;
         }
         else if(current.operation.Equals("printDictionary"))
         {
             var dict = StringDictHelper.read(inStream);
-            inStream.endEncapsulation();
             Console.Write("Printing dictionary {");
             bool first = true;
             foreach(var e in dict)
@@ -69,26 +65,20 @@ public class PrinterI : Ice.Blobject
                 Console.Write(e.Key + "=" + e.Value);
             }
             Console.WriteLine("}");
-            return true;
         }
         else if(current.operation.Equals("printEnum"))
         {
             var c = ColorHelper.read(inStream);
-            inStream.endEncapsulation();
             Console.WriteLine("Printing enum " + c);
-            return true;
         }
         else if(current.operation.Equals("printStruct"))
         {
             var s = Structure.ice_read(inStream);
-            inStream.endEncapsulation();
             Console.WriteLine("Printing struct: name=" + s.name + ", value=" + s.value);
-            return true;
         }
         else if(current.operation.Equals("printStructSequence"))
         {
             var seq = StructureSeqHelper.read(inStream);
-            inStream.endEncapsulation();
             Console.Write("Printing struct sequence: {");
             for(int i = 0; i < seq.Length; ++i)
             {
@@ -99,17 +89,14 @@ public class PrinterI : Ice.Blobject
                 Console.Write(seq[i].name + "=" + seq[i].value);
             }
             Console.WriteLine("}");
-            return true;
         }
         else if(current.operation.Equals("printClass"))
         {
             var cb = new ReadValueCallback();
             inStream.readValue(cb.invoke);
             inStream.readPendingValues();
-            inStream.endEncapsulation();
             var c = cb.obj as C;
             Console.WriteLine("Printing class: s.name=" + c.s.name + ", s.value=" + c.s.value);
-            return true;
         }
         else if(current.operation.Equals("getValues"))
         {
@@ -121,7 +108,6 @@ public class PrinterI : Ice.Blobject
             outStream.writePendingValues();
             outStream.endEncapsulation();
             outParams = outStream.finished();
-            return true;
         }
         else if(current.operation.Equals("throwPrintFailure"))
         {
@@ -132,16 +118,21 @@ public class PrinterI : Ice.Blobject
             outStream.writeException(ex);
             outStream.endEncapsulation();
             outParams = outStream.finished();
-            return false;
+            result = false;
         }
         else if(current.operation.Equals("shutdown"))
         {
             current.adapter.getCommunicator().shutdown();
-            return true;
         }
         else
         {
             throw new Ice.OperationNotExistException(current.id, current.facet, current.operation);
         }
+
+        //
+        // Make sure we read all in parameters
+        //
+        inStream.endEncapsulation();
+        return result;
     }
 }

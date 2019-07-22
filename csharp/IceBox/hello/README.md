@@ -19,4 +19,4 @@ In the second window, start the client:
 | ------------------ | ------------------- |
 | `client`           | `dotnet client.dll` |
 
-[1]: https://doc.zeroc.com/display/Ice37/IceBox
+[1]: https://doc.zeroc.com/ice/3.7/icebox

@@ -206,5 +206,5 @@ Next go to _Settings -> Security -> Install from storage_, and choose
 `cacert.pem`. Enter a name and press OK.
 
 [1]: https://zeroc.com/chat/index.html
-[2]: https://doc.zeroc.com/display/Ice37/Ice+Manual
+[2]: https://doc.zeroc.com/ice/3.7/introduction
 [3]: http://nodejs.org

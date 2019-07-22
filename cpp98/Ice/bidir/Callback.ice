@@ -4,8 +4,6 @@
 
 #pragma once
 
-#include <Ice/Identity.ice>
-
 module Demo
 {
     interface CallbackReceiver

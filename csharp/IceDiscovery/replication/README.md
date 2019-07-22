@@ -23,4 +23,4 @@ While the client is running and invoking on the server, you can try to
 stop some of the servers. As long as one server is still running, the
 client will continue to work.
 
-[1]: https://doc.zeroc.com/display/Ice37/IceDiscovery
+[1]: https://doc.zeroc.com/ice/3.7/ice-plugins/icediscovery

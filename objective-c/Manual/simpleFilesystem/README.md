@@ -13,5 +13,5 @@ Then run the client in a separate window:
 client
 ```
 
-[1]: https://doc.zeroc.com/display/Ice37/Example+of+a+File+System+Client+in+Objective-C
-[2]: https://doc.zeroc.com/display/Ice37/Example+of+a+File+System+Server+in+Objective-C
+[1]: https://doc.zeroc.com/ice/3.7/language-mappings/objective-c-mapping/client-side-slice-to-objective-c-mapping/example-of-a-file-system-client-in-objective-c
+[2]: https://doc.zeroc.com/ice/3.7/language-mappings/objective-c-mapping/server-side-slice-to-objective-c-mapping/example-of-a-file-system-server-in-objective-c

@@ -18,5 +18,5 @@ servant for this demo.
 Please review the client and server configuration files to see the
 plug-in configuration.
 
-[1]: https://doc.zeroc.com/display/Ice37/Plug-in+Facility
-[2]: https://doc.zeroc.com/display/Ice37/Logger+Plug-ins
+[1]: https://doc.zeroc.com/ice/3.7/communicator-and-other-core-local-features/plug-in-facility
+[2]: https://doc.zeroc.com/ice/3.7/administration-and-diagnostics/logger-facility/logger-plug-ins

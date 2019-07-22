@@ -11,4 +11,4 @@ In a separate window, start the WPF client:
 client
 ```
 
-[1]: https://doc.zeroc.com/display/Ice37/Glacier2+SessionHelper+Class
+[1]: https://doc.zeroc.com/ice/3.7/ice-services/glacier2/glacier2-sessionhelper-class

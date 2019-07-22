@@ -48,8 +48,14 @@ public class Client
     {
         var router = Glacier2.RouterPrxHelper.checkedCast(communicator.getDefaultRouter());
         Glacier2.SessionPrx session;
+        //
+        // Loop until we have successfully create a session.
+        //
         while(true)
         {
+            //
+            // Prompt the user for the credentials to create the session.
+            //
             Console.WriteLine("This demo accepts any user-id / password combination.");
 
             string id;
@@ -67,7 +73,7 @@ public class Client
 
                 Console.Write("password: ");
                 Console.Out.Flush();
-                pw = Console.In.ReadLine().Trim();
+                pw = Console.In.ReadLine();
                 if(pw == null)
                 {
                     throw new Ice.CommunicatorDestroyedException();
@@ -80,6 +86,10 @@ public class Client
                 continue;
             }
 
+            //
+            // Try to create a session and break the loop if succeed,
+            // otherwise try again after printing the error message.
+            //
             try
             {
                 session = router.createSession(id, pw);
@@ -101,8 +111,17 @@ public class Client
         connection.setACM(acmTimeout, Ice.Util.None, Ice.ACMHeartbeat.HeartbeatAlways);
         connection.setCloseCallback(_ => Console.WriteLine("The Glacier2 session has been destroyed."));
 
-        Ice.Identity callbackReceiverIdent = new Ice.Identity("callbackReceiver", router.getCategoryForClient());
-        Ice.Identity callbackReceiverFakeIdent = new Ice.Identity("fake", "callbackReceiver");
+        //
+        // The Glacier2 router routes bidirectional calls to objects in the client only
+        // when these objects have the correct Glacier2-issued category. The purpose of
+        // the callbackReceiverFakeIdent is to demonstrate this.
+        //
+        // The Identity name is not checked by the server any value can be used.
+        //
+        Ice.Identity callbackReceiverIdent =
+            new Ice.Identity(System.Guid.NewGuid().ToString(), router.getCategoryForClient());
+        Ice.Identity callbackReceiverFakeIdent =
+            new Ice.Identity(System.Guid.NewGuid().ToString(), "fake");
 
         Ice.ObjectPrx @base = communicator.propertyToProxy("Callback.Proxy");
         CallbackPrx twoway = CallbackPrxHelper.checkedCast(@base);
@@ -110,6 +129,9 @@ public class Client
         CallbackPrx batchOneway = CallbackPrxHelper.uncheckedCast(twoway.ice_batchOneway());
 
         var adapter = communicator.createObjectAdapterWithRouter("", router);
+        //
+        // Callback will never be called for a fake identity.
+        //
         adapter.add(new CallbackReceiverI(), callbackReceiverFakeIdent);
 
         CallbackReceiverPrx twowayR = CallbackReceiverPrxHelper.uncheckedCast(
@@ -120,6 +142,9 @@ public class Client
 
         menu();
 
+        //
+        // Client REPL
+        //
         string line = null;
         string @override = null;
         bool fake = false;
@@ -134,18 +159,11 @@ public class Client
             }
             if(line.Equals("t"))
             {
-                Dictionary<string, string> context = new Dictionary<string, string>();
-                context["_fwd"] = "t";
-                if(@override != null)
-                {
-                    context["_ovrd"] = @override;
-                }
-                twoway.initiateCallback(twowayR, context);
+                twoway.initiateCallback(twowayR);
             }
             else if(line.Equals("o"))
             {
                 Dictionary<string, string> context = new Dictionary<string, string>();
-                context["_fwd"] = "o";
                 if(@override != null)
                 {
                     context["_ovrd"] = @override;

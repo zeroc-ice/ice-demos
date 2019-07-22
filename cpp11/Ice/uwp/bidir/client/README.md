@@ -28,4 +28,4 @@ CheckNetIsolation LoopbackExempt -a -n=ice-bidir-client_3qjctahehqazm
 This is automatically done when you start the client application from
 Visual Studio `Debug -> Start new instance`.
 
-[1]: https://doc.zeroc.com/display/Ice37/Bidirectional+Connections
+[1]: https://doc.zeroc.com/ice/3.7/client-server-features/connection-management/bidirectional-connections

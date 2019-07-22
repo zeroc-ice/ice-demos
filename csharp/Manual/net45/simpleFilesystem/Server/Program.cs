@@ -47,13 +47,13 @@ public class Program
         //
         // Create the root directory (with name "/" and no parent)
         //
-        var root = new DirectoryI(communicator, "/", null);
+        var root = new DirectoryI("/", null);
         root.activate(adapter);
 
         //
         // Create a file called "README" in the root directory
         //
-        var file = new FileI(communicator, "README", root);
+        var file = new FileI("README", root);
         var text = new string[]{ "This file system contains a collection of poetry." };
         try
         {
@@ -68,13 +68,13 @@ public class Program
         //
         // Create a directory called "Coleridge" in the root directory
         //
-        var coleridge = new DirectoryI(communicator, "Coleridge", root);
+        var coleridge = new DirectoryI("Coleridge", root);
         coleridge.activate(adapter);
 
         //
         // Create a file called "Kubla_Khan" in the Coleridge directory
         //
-        file = new FileI(communicator, "Kubla_Khan", coleridge);
+        file = new FileI("Kubla_Khan", coleridge);
         text = new string[]{ "In Xanadu did Kubla Khan",
                              "A stately pleasure-dome decree:",
                              "Where Alph, the sacred river, ran",

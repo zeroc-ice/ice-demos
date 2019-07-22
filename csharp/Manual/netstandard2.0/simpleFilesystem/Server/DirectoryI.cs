@@ -8,8 +8,7 @@ using System.Collections.Generic;
 public class DirectoryI : DirectoryDisp_
 {
     // DirectoryI constructor
-
-    public DirectoryI(Ice.Communicator communicator, string name, DirectoryI parent)
+    public DirectoryI(string name, DirectoryI parent)
     {
         _name = name;
         _parent = parent;
@@ -22,14 +21,12 @@ public class DirectoryI : DirectoryDisp_
     }
 
     // Slice Node::name() operation
-
     public override string name(Ice.Current current)
     {
         return _name;
     }
 
     // Slice Directory::list() operation
-
     public override NodePrx[] list(Ice.Current current)
     {
         return _contents.ToArray();
@@ -37,14 +34,12 @@ public class DirectoryI : DirectoryDisp_
 
     // addChild is called by the child in order to add
     // itself to the _contents member of the parent
-
     public void addChild(NodePrx child)
     {
         _contents.Add(child);
     }
 
     // Add servant to ASM and parent's _contents map.
-
     public void activate(Ice.ObjectAdapter a)
     {
         var thisNode = NodePrxHelper.uncheckedCast(a.add(this, _id));
