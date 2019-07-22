@@ -12,7 +12,7 @@ Authenticator.Proxy=authenticator:tcp -p 10001
 
 #
 # Creates an implicit context on the communicator that is shared
-# across all threads. The client uses this to store and send it'send
+# across all threads. The client uses this to store and send it's
 # authorization tokens to the server.
 #
 Ice.ImplicitContext=Shared
