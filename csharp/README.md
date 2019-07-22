@@ -153,6 +153,6 @@ directory to your PATH. Please refer to the [Release Notes][6] for additional in
 [1]: https://doc.zeroc.com/ice/3.7/introduction
 [2]: https://zeroc.com/chat/index.html
 [3]: https://marketplace.visualstudio.com/items?itemName=ZeroCInc.IceBuilder
-[4]: https://doc.zeroc.com/display/Rel/Using+the+Windows+Binary+Distributions+for+Ice+3.7.2
+[4]: https://doc.zeroc.com/display/Rel/Using+the+Windows+Binary+Distributions+for+Ice+3.7.3
 [5]: https://dotnet.microsoft.com/download/dotnet-core/2.1
 [6]: https://doc.zeroc.com/ice/3.7/release-notes

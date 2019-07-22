@@ -78,4 +78,4 @@ the printer's [README.md](./Manual/spm/printer/README.md) for more information.
 
 [1]: https://doc.zeroc.com/display/IceSwift/Ice+Manual
 [2]: https://github.com/Carthage/Carthage
-[3]: https://doc.zeroc.com/display/Rel/Using+the+macOS+Binary+Distribution+for+Ice+3.7.2
+[3]: https://doc.zeroc.com/display/Rel/Using+the+macOS+Binary+Distribution+for+Ice+3.7.3
