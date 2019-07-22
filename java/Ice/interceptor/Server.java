@@ -38,11 +38,15 @@ public class Server
                 authenticatorAdapter.activate();
 
                 //
+                // List of all the operations to require authorization for.
+                //
+                java.util.List<String> securedOperations = java.util.Arrays.asList("setTemp");
+                //
                 // Create an object adapter for the thermostat.
                 //
                 com.zeroc.Ice.ObjectAdapter thermostatAdapter = communicator.createObjectAdapter("Thermostat");
                 ThermostatI thermostat = new ThermostatI();
-                thermostatAdapter.add(new InterceptorI(thermostat, authenticator), com.zeroc.Ice.Util.stringToIdentity("thermostat"));
+                thermostatAdapter.add(new InterceptorI(thermostat, authenticator, securedOperations), com.zeroc.Ice.Util.stringToIdentity("thermostat"));
                 thermostatAdapter.activate();
 
                 communicator.waitForShutdown();

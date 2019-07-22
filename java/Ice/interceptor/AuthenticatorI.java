@@ -4,11 +4,12 @@
 
 import com.zeroc.demos.Ice.interceptor.Demo.*;
 
-public class AuthenticatorI implements Authenticator
+class AuthenticatorI implements Authenticator
 {
     public AuthenticatorI()
     {
         _tokenStore = new java.util.ArrayList<Token>();
+        _rand = new java.security.SecureRandom();
     }
 
     @Override
@@ -17,8 +18,8 @@ public class AuthenticatorI implements Authenticator
         //
         // Generate a random 32 character long token.
         //
-        java.util.Random rand = new java.util.Random();
-        String chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_";
+        java.security.SecureRandom rand = new java.security.SecureRandom();
+        String chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
         StringBuilder tokenBuilder = new StringBuilder(32);
         for(int i = 0; i < 32; i++)
         {
@@ -34,25 +35,25 @@ public class AuthenticatorI implements Authenticator
         // Create a token object, store a copy, and return it.
         //
         Token token = new Token(tokenBuilder.toString(), username, expireTime);
-        synchronized(_tokenLock)
+        synchronized(_tokenStore)
         {
             _tokenStore.add(token.clone());
         }
-        System.out.println("Issuing new access token for user: " + username + ". Token=" + token.id);
+        System.out.println("Issuing new access token for user: " + username + ". Token=" + token.value);
         return token;
     }
 
-    public void validateToken(String tokenId)
+    public void validateToken(String tokenValue)
         throws AuthorizationException
     {
-        synchronized(_tokenLock)
+        synchronized(_tokenStore)
         {
             for(Token token : _tokenStore)
             {
                 //
-                // Check if the authenticator has issued any tokens with a matching Id.
+                // Check if the authenticator has issued any tokens with a matching value.
                 //
-                if(token.id.equals(tokenId))
+                if(token.value.equals(tokenValue))
                 {
                     //
                     // Delete the token if it has expired.
@@ -68,11 +69,11 @@ public class AuthenticatorI implements Authenticator
                     }
                 }
             }
-            throw new AuthorizationException();
         }
+        throw new AuthorizationException();
     }
 
     public static final long TOKEN_LIFETIME = 1000 * 60 * 60;
+    private final java.security.SecureRandom _rand;
     private final java.util.List<Token> _tokenStore;
-    private final Object _tokenLock = new Object();
 }

@@ -12,8 +12,8 @@ module Demo
 
     struct Token
     {
-        string id;
-        string user;
+        string value;
+        string username;
         long expireTime;
     }
 
@@ -27,6 +27,5 @@ module Demo
         idempotent float getTemp();
         idempotent void setTemp(float temp)
             throws AuthorizationException;
-        void shutdown();
     }
 }

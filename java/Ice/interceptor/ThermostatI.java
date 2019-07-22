@@ -4,7 +4,7 @@
 
 import com.zeroc.demos.Ice.interceptor.Demo.*;
 
-public class ThermostatI implements Thermostat
+class ThermostatI implements Thermostat
 {
     @Override
     public float getTemp(com.zeroc.Ice.Current current)
@@ -12,7 +12,6 @@ public class ThermostatI implements Thermostat
         return temperature;
     }
 
-    @Override
     //
     // Even though the actual operation never throws an AuthorizationException
     // it's still required since the dispatch interceptor that checks for
@@ -20,18 +19,13 @@ public class ThermostatI implements Thermostat
     // the exception as if the operation threw it itself, hence why the
     // exception must be specified here.
     //
+    @Override
     public void setTemp(float temp, com.zeroc.Ice.Current current)
         throws AuthorizationException
     {
         temperature = temp;
     }
 
-    @Override
-    public void shutdown(com.zeroc.Ice.Current current)
-    {
-        System.out.println("Shutting down...");
-        current.adapter.getCommunicator().shutdown();
-    }
-
+    // Temperature in Celsius.
     private float temperature = 23.5f;
 }

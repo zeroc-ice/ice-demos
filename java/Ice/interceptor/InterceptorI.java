@@ -5,18 +5,13 @@
 import java.util.concurrent.CompletionStage;
 import com.zeroc.demos.Ice.interceptor.Demo.*;
 
-public class InterceptorI extends com.zeroc.Ice.DispatchInterceptor
+class InterceptorI extends com.zeroc.Ice.DispatchInterceptor
 {
-    public InterceptorI(com.zeroc.Ice.Object servant, AuthenticatorI authenticator)
+    public InterceptorI(com.zeroc.Ice.Object servant, AuthenticatorI authenticator, java.util.List<String> securedOperations)
     {
         _servant = servant;
         _authenticator = authenticator;
-        _securedOperations = new java.util.ArrayList<String>();
-
-        //
-        // We only require authorization for the 'setTemp' operation.
-        //
-        _securedOperations.add("setTemp");
+        _securedOperations = securedOperations;
     }
 
     @Override
@@ -33,10 +28,10 @@ public class InterceptorI extends com.zeroc.Ice.DispatchInterceptor
             // Validate the client's access token before dispatching to the servant.
             // 'validateToken' throws an exception if the token is invalid or expired.
             //
-            String tokenId = current.ctx.get("accessToken");
-            if(tokenId != null)
+            String tokenValue = current.ctx.get("accessToken");
+            if(tokenValue != null)
             {
-                _authenticator.validateToken(tokenId);
+                _authenticator.validateToken(tokenValue);
             }
             else
             {
@@ -49,7 +44,7 @@ public class InterceptorI extends com.zeroc.Ice.DispatchInterceptor
         return _servant.ice_dispatch(request);
     }
 
-    private final java.util.List<String> _securedOperations;
     private final com.zeroc.Ice.Object _servant;
     private final AuthenticatorI _authenticator;
+    private final java.util.List<String> _securedOperations;
 }

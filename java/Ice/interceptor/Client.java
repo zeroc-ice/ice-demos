@@ -94,24 +94,14 @@ public class Client
             return 1;
         }
         Token token = authenticator.getToken(username, password);
-        if(token == null)
-        {
-            System.err.println("Failed to retrieve access token.");
-            return 1;
-        }
-        System.out.println("Successfully retrieved access token: \"" + token.id + "\"\n");
+        System.out.println("Successfully retrieved access token: \"" + token.value + "\"\n");
 
         //
-        // Add the access token to the thermostat proxy's context, so it will be
+        // Add the access token to the communicator's context, so it will be
         // sent along with every request made through it.
         //
-        java.util.Map<String, String> context = thermostat.ice_getContext();
-        if(context == null)
-        {
-            context = new java.util.HashMap<String, String>();
-        }
-        context.put("accessToken", token.id);
-        thermostat = thermostat.ice_context(context);
+        com.zeroc.Ice.ImplicitContext context = communicator.getImplicitContext();
+        context.put("accessToken", token.value);
 
         //
         // Tries calling 'setTemp' again, this time with the access token.

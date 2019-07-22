@@ -11,6 +11,13 @@ Thermostat.Proxy=thermostat:tcp -p 10000
 Authenticator.Proxy=authenticator:tcp -p 10001
 
 #
+# Creates an implicit context on the communicator that is shared
+# across all threads. The client uses this to store and send it'send
+# authorization tokens to the server.
+#
+Ice.ImplicitContext=Shared
+
+#
 # Only connect to the localhost interface by default.
 #
 Ice.Default.Host=localhost
@@ -37,11 +44,3 @@ Ice.Warn.Connections=1
 # 1 = trace protocol messages
 #
 #Ice.Trace.Protocol=1
-
-#
-# IceMX configuration.
-#
-#Ice.Admin.Endpoints=tcp -h localhost -p 10003
-Ice.Admin.InstanceName=client
-IceMX.Metrics.Debug.GroupBy=id
-IceMX.Metrics.ByParent.GroupBy=parent
