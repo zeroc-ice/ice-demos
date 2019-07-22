@@ -5,18 +5,13 @@
 using Demo;
 using System.Threading.Tasks.Task;
 
-public class InterceptorI : Ice.DispatchInterceptor
+class InterceptorI : Ice.DispatchInterceptor
 {
-    public InterceptorI(Ice.Object servant, AuthenticatorI authenticator)
+    public InterceptorI(Ice.Object servant, AuthenticatorI authenticator, List<String> securedOperations)
     {
         _servant = servant;
         _authenticator = authenticator;
-        _securedOperations = new List<String>();
-
-        //
-        // We only require authorization for the 'setTemp' operation.
-        //
-        _securedOperations.Add("setTemp");
+        _securedOperations = securedOperations;
     }
 
     public override Task<Ice.OutputStream> dispatch(Ice.Request request)
@@ -31,10 +26,10 @@ public class InterceptorI : Ice.DispatchInterceptor
             // Validate the client's access token before dispatching to the servant.
             // 'validateToken' throws an exception if the token is invalid or expired.
             //
-            string tokenId = "";
-            if(current.ctx.TryGetValue("accessToken", out tokenId))
+            string tokenValue = "";
+            if(current.ctx.TryGetValue("accessToken", out tokenValue))
             {
-                _authenticator.validateToken(tokenId);
+                _authenticator.validateToken(tokenValue);
             }
             else
             {
@@ -47,7 +42,7 @@ public class InterceptorI : Ice.DispatchInterceptor
         return _servant.ice_dispatch(request);
     }
 
-    private readonly List<String> _securedOperations;
     private readonly Ice.Object _servant;
     private readonly AuthenticatorI _authenticator;
+    private readonly List<String> _securedOperations;
 }

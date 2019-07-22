@@ -39,11 +39,15 @@ public class Server
                     authenticatorAdapter.activate();
 
                     //
+                    // List of all the operations to require authorization for.
+                    //
+                    List<String> securedOperations = new List<String>() {"setTemp"};
+                    //
                     // Create an object adapter for the thermostat.
                     //
                     var thermostatAdapter = communicator.createObjectAdapter("Thermostat");
                     var thermostat = new ThermostatI();
-                    authenticatorAdapter.add(new InterceptorI(thermostat, authenticator), Ice.Util.stringToIdentity("thermostat"));
+                    authenticatorAdapter.add(new InterceptorI(thermostat, authenticator, securedOperations), Ice.Util.stringToIdentity("thermostat"));
                     thermostatAdapter.activate();
 
                     communicator.waitForShutdown();

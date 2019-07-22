@@ -5,12 +5,14 @@
 using Demo;
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography.RNGCryptoServiceProvider;
 
-public AuthenticatorI : AuthenticatorDisp_
+class AuthenticatorI : AuthenticatorDisp_
 {
     public AuthenticatorI()
     {
         _tokenStore = new List<String>();
+        _rand = new RNGCryptoServiceProvider();
     }
 
     public override Token getToken(string username, string password, Ice.Current current)
@@ -18,8 +20,8 @@ public AuthenticatorI : AuthenticatorDisp_
         //
         // Generate a random 32 character long token.
         //
-        Random rand = new Random();
-        string chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_";
+        RNGCryptoServiceProvider rand = new RNGCryptoServiceProvider();
+        string chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
         StringBuilder tokenBuilder = new StringBuilder(32);
         for(var i = 0; i < 32; i++)
         {
@@ -35,24 +37,24 @@ public AuthenticatorI : AuthenticatorDisp_
         // Create a token object, store a copy, and return it.
         //
         Token token = new Token(tokenBuilder.ToString(), username, expireTime);
-        lock(_tokenLock)
+        lock(_tokenStore)
         {
-            _tokenStore.Add(token);//TODO MAKE THIS A CLONE!
+            _tokenStore.Add(token.Clone());
         }
-        Console.Out.WriteLine("Issuing new access token for user: " + username + ". Token=" + token.id);
+        Console.Out.WriteLine("Issuing new access token for user: " + username + ". Token=" + token.value);
         return token;
     }
 
-    public void validateToken(string tokenId)
+    public void validateToken(string tokenValue)
     {
-        lock(_tokenLock)
+        lock(_tokenStore)
         {
             foreach(var token in _tokenStore)
             {
                 //
-                // Check if the authenticator has issued any tokens with a matching Id.
+                // Check if the authenticator has issued any tokens with a matching value.
                 //
-                if(token.id == tokenId)
+                if(token.value == tokenValue)
                 {
                     //
                     // Delete the token if it has expired.
@@ -73,6 +75,6 @@ public AuthenticatorI : AuthenticatorDisp_
     }
 
     public static const long TOKEN_LIFETIME = 1000 * 60 * 60;
-    private readonly List<string> _tokenStore();
-    private readonly object _tokenLock = new Object();
+    private readonly RNGCryptoServiceProvider _rand;
+    private readonly List<string> _tokenStore;
 }

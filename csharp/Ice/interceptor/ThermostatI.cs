@@ -4,7 +4,7 @@
 
 using Demo;
 
-public class ThermostatI : ThermostatDisp_
+class ThermostatI : ThermostatDisp_
 {
     public override float getTemp(Ice.Current current)
     {
@@ -16,11 +16,6 @@ public class ThermostatI : ThermostatDisp_
         temperature = temp;
     }
 
-    public override void shutdown(Ice.Current current)
-    {
-        System.out.println("Shutting down...");
-        current.adapter.getCommunicator().shutdown();
-    }
-
+    // Temperature in Celsius.
     private float temperature = 23.5f;
 }

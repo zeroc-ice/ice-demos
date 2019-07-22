@@ -102,24 +102,14 @@ public class Client
             return 1;
         }
         Token token = authenticator.getToken(username, password);
-        if(token == null)
-        {
-            Console.Error.WriteLine("Failed to retrieve access token.");
-            return 1;
-        }
-        Console.Out.WriteLine("Successfully retrieved access token: \"" + token.id + "\"\n");
+        Console.Out.WriteLine("Successfully retrieved access token: \"" + token.value + "\"\n");
 
         //
-        // Add the access token to the proxy's context, so it will be
+        // Add the access token to the communicator's context, so it will be
         // sent along with every request made through it.
         //
-        var context = thermostat.ice_getContext();
-        if(context == null)
-        {
-            context = new Dictionary<string, string>();
-        }
-        context.Add("accessToken", token.id);
-        thermostat = thermostat.ice_context(context);
+        var context = communicator.getImplicitContext();
+        context.put("accessToken", token.value);
 
         //
         // Tries calling 'setTemp' again, this time with the access token.
