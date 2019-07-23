@@ -18,12 +18,11 @@ class AuthenticatorI implements Authenticator
         //
         // Generate a random 32 character long token.
         //
-        java.security.SecureRandom rand = new java.security.SecureRandom();
         String chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
         StringBuilder tokenBuilder = new StringBuilder(32);
         for(int i = 0; i < 32; i++)
         {
-            tokenBuilder.append(chars.charAt(rand.nextInt(chars.length())));
+            tokenBuilder.append(chars.charAt(_rand.nextInt(chars.length())));
         }
 
         //

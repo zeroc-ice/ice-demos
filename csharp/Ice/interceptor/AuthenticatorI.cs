@@ -23,13 +23,12 @@ class AuthenticatorI : AuthenticatorDisp_
         //
         // Generate a random 32 character long token.
         //
-        RNGCryptoServiceProvider rand = new RNGCryptoServiceProvider();
         string chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
         StringBuilder tokenBuilder = new StringBuilder(32);
         for(var i = 0; i < 32; i++)
         {
             do {
-                rand.GetBytes(nextRandom);
+                _rand.GetBytes(nextRandom);
             } while(nextRandom[0] >= chars.Length);
 
             tokenBuilder.Append(chars[nextRandom[0]]);
