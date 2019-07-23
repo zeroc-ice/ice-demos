@@ -8,14 +8,14 @@ class ThermostatI : ThermostatDisp_
 {
     public override float getTemp(Ice.Current current)
     {
-        return temperature;
+        return _temperature;
     }
 
     public override void setTemp(float temp, Ice.Current current)
     {
-        temperature = temp;
+        _temperature = temp;
     }
 
     // Temperature in Celsius.
-    private float temperature = 23.5f;
+    private float _temperature = 23.5f;
 }

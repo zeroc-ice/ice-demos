@@ -9,7 +9,7 @@ class ThermostatI implements Thermostat
     @Override
     public float getTemp(com.zeroc.Ice.Current current)
     {
-        return temperature;
+        return _temperature;
     }
 
     //
@@ -23,9 +23,9 @@ class ThermostatI implements Thermostat
     public void setTemp(float temp, com.zeroc.Ice.Current current)
         throws AuthorizationException
     {
-        temperature = temp;
+        _temperature = temp;
     }
 
     // Temperature in Celsius.
-    private float temperature = 23.5f;
+    private float _temperature = 23.5f;
 }
