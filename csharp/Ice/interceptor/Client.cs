@@ -70,7 +70,7 @@ public class Client
             desiredTemp = float.Parse(Console.ReadLine());
             Console.Out.WriteLine();
         }
-        catch(FormatException ex)
+        catch(FormatException)
         {
             Console.Error.WriteLine("Specified temperature is not a float value.");
             return 1;
@@ -86,7 +86,7 @@ public class Client
             thermostat.setTemp(desiredTemp);
             Console.Out.WriteLine("\tNew temperature is " + thermostat.getTemp());
         }
-        catch(AuthorizationException ex)
+        catch(AuthorizationException)
         {
             Console.Error.WriteLine("\tFailed to set temperature. Access denied!");
         }
@@ -95,7 +95,7 @@ public class Client
         //
         // Request an access token from the server's authentication object.
         //
-        var authenticator = AuthenticatorPrxHelper.checkCast(communicator.propertyToProxy("Authenticator.Proxy"));
+        var authenticator = AuthenticatorPrxHelper.checkedCast(communicator.propertyToProxy("Authenticator.Proxy"));
         if(authenticator == null)
         {
             Console.Error.WriteLine("invalid authenticator proxy");
@@ -121,7 +121,7 @@ public class Client
             thermostat.setTemp(desiredTemp);
             Console.Out.WriteLine("\tNew temperature is " + thermostat.getTemp());
         }
-        catch(AuthorizationException ex)
+        catch(AuthorizationException)
         {
             //
             // No longer encountered since the client has authorization to use 'setTemp' now.
@@ -129,5 +129,7 @@ public class Client
             Console.Error.WriteLine("\tFailed to set temperature. Access denied!");
         }
         Console.Out.WriteLine();
+
+        return 0;
     }
 }

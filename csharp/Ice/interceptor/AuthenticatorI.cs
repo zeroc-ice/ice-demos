@@ -5,18 +5,21 @@
 using Demo;
 using System;
 using System.Collections.Generic;
-using System.Security.Cryptography.RNGCryptoServiceProvider;
+using System.Security.Cryptography;
+using System.Text;
 
 class AuthenticatorI : AuthenticatorDisp_
 {
     public AuthenticatorI()
     {
-        _tokenStore = new List<String>();
+        _tokenStore = new List<Token>();
         _rand = new RNGCryptoServiceProvider();
     }
 
     public override Token getToken(string username, string password, Ice.Current current)
     {
+        // Byte array for holding randomly generated value.
+        byte[] nextRandom = new byte[1];
         //
         // Generate a random 32 character long token.
         //
@@ -25,7 +28,11 @@ class AuthenticatorI : AuthenticatorDisp_
         StringBuilder tokenBuilder = new StringBuilder(32);
         for(var i = 0; i < 32; i++)
         {
-            tokenBuilder.Append(chars[rand.Next(chars.Length)]);
+            do {
+                rand.GetBytes(nextRandom);
+            } while(nextRandom[0] >= chars.Length);
+
+            tokenBuilder.Append(chars[nextRandom[0]]);
         }
 
         //
@@ -39,7 +46,7 @@ class AuthenticatorI : AuthenticatorDisp_
         Token token = new Token(tokenBuilder.ToString(), username, expireTime);
         lock(_tokenStore)
         {
-            _tokenStore.Add(token.Clone());
+            _tokenStore.Add((Token)token.Clone());
         }
         Console.Out.WriteLine("Issuing new access token for user: " + username + ". Token=" + token.value);
         return token;
@@ -61,7 +68,7 @@ class AuthenticatorI : AuthenticatorDisp_
                     //
                     if(token.expireTime <= DateTimeOffset.UtcNow.ToUnixTimeMilliseconds())
                     {
-                        _tokenStore.remove(token);
+                        _tokenStore.Remove(token);
                         throw new TokenExpiredException();
                     }
                     else
@@ -74,7 +81,7 @@ class AuthenticatorI : AuthenticatorDisp_
         }
     }
 
-    public static const long TOKEN_LIFETIME = 1000 * 60 * 60;
+    public const long TOKEN_LIFETIME = 1000 * 60 * 60;
     private readonly RNGCryptoServiceProvider _rand;
-    private readonly List<string> _tokenStore;
+    private readonly List<Token> _tokenStore;
 }

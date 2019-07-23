@@ -3,6 +3,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 
 public class Server
 {
@@ -47,7 +48,7 @@ public class Server
                     //
                     var thermostatAdapter = communicator.createObjectAdapter("Thermostat");
                     var thermostat = new ThermostatI();
-                    authenticatorAdapter.add(new InterceptorI(thermostat, authenticator, securedOperations), Ice.Util.stringToIdentity("thermostat"));
+                    thermostatAdapter.add(new InterceptorI(thermostat, authenticator, securedOperations), Ice.Util.stringToIdentity("thermostat"));
                     thermostatAdapter.activate();
 
                     communicator.waitForShutdown();
@@ -56,7 +57,7 @@ public class Server
         }
         catch(Exception ex)
         {
-            Console.Error.WriteLine();
+            Console.Error.WriteLine(ex);
             status = 1;
         }
 

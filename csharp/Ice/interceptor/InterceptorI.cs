@@ -3,11 +3,12 @@
 //
 
 using Demo;
-using System.Threading.Tasks.Task;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 class InterceptorI : Ice.DispatchInterceptor
 {
-    public InterceptorI(Ice.Object servant, AuthenticatorI authenticator, List<String> securedOperations)
+    public InterceptorI(Ice.Object servant, AuthenticatorI authenticator, List<string> securedOperations)
     {
         _servant = servant;
         _authenticator = authenticator;
@@ -44,5 +45,5 @@ class InterceptorI : Ice.DispatchInterceptor
 
     private readonly Ice.Object _servant;
     private readonly AuthenticatorI _authenticator;
-    private readonly List<String> _securedOperations;
+    private readonly List<string> _securedOperations;
 }
