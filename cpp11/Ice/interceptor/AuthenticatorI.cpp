@@ -27,7 +27,7 @@ AuthenticatorI::getToken(string username, string password, const Ice::Current&)
     // Generate a random 32 character long token.
     //
     string chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    uniform_int_distribution<int> dist(0, chars.length());
+    uniform_int_distribution<int> dist(0, (int)chars.length());
     char tokenBuilder[32];
     for(auto i = 0; i < 32; i++)
     {
