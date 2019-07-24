@@ -47,7 +47,6 @@ main(int argc, char* argv[])
         {
             status = run(communicator, argv[0]);
         }
-        
     }
     catch(const exception& e)
     {

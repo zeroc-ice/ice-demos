@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
             auto authenticator = make_shared<AuthenticatorI>();
             authenticatorAdapter.add(authenticator, Ice::stringToIdentity("authenticator"));
             authenticatorAdapter.activate();
-            
+
             //
             // List of all the operations to require authorization for.
             //
@@ -67,7 +67,6 @@ int main(int argc, char* argv[])
 
             communicator->waitForShutdown();
         }
-        
     }
     catch(const exception& e)
     {
