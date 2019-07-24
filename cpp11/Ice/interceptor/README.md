@@ -3,13 +3,13 @@ This demo shows how to use [Dispatch Interceptors][1] to implement a token based
 To run the demo, first start the server:
 
 ```
-java -jar build/libs/server.jar
+server
 ```
 
 In a separate window, start the client:
 
 ```
-java -jar build/libs/client.jar
+client
 ```
 
 The demo models a remote controlled thermostat with operations for getting and setting its temperature. The demo is configured so that any client can
@@ -17,7 +17,7 @@ get the thermostat's temperature, but only clients authenticated with the server
 the thermostat, and another for handling authentication requests.
 
 The authenticator object only has one exposed operation which takes a username and password, and (if they're valid) issues an access token
-(this demo doesn't actually check login credentials, so any username and password can be used with the demo). After authenticating, the client add
+(this demo doesn't actually check login credentials, so any username and password can be used with the demo). After authenticating, the client adds
 this access token to its [Request Context][2], so it's transmitted alongside any requests it makes to the server.
 
 Internally, the server keeps a list of valid access tokens, and uses a [Dispatch Interceptor][1] to intercept incoming requests to the thermostat object.

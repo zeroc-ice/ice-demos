@@ -34,6 +34,12 @@ Demos in this directory:
   well as how to invoke oneway operations, use datagrams, secure
   invocations, and how to use batched invocations.
 
+- [interceptor](./interceptor)
+
+  This demo shows how to use dispatch interceptors to secure operations
+  with a token based authentication system, in addition to the use of
+  implicit contexts.
+
 - [interrupt](./interrupt)
 
   This demo shows how to use Thread.interrupt to interrupt blocking
