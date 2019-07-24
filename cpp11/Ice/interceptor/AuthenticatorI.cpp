@@ -9,7 +9,7 @@
 
 using namespace std;
 
-long getCurrentTimeMillis()
+long long int getCurrentTimeMillis()
 {
     auto duration = chrono::system_clock::now().time_since_epoch();
     return chrono::duration_cast<chrono::milliseconds>(duration).count();
@@ -21,7 +21,7 @@ AuthenticatorI::AuthenticatorI() :
 }
 
 Demo::Token
-AuthenticatorI::getToken(string username, string password, Ice::Current& current)
+AuthenticatorI::getToken(string username, string password, const Ice::Current&)
 {
     //
     // Generate a random 32 character long token.
@@ -35,15 +35,16 @@ AuthenticatorI::getToken(string username, string password, Ice::Current& current
     }
 
     //
-    // By default tokens are valid for 1 hour after being issued.
-    //
-    long expireTime = getCurrentTimeMillis() + TOKEN_LIFETIME;
-
-    //
     // Create a token object, store a copy, and return it.
     //
-    String tokenValue(tokenBuilder);
-    Demo::Token token = Token(tokenValue, username, expireTime);
+    Demo::Token token;
+    string tokenValue(tokenBuilder);
+    token.value = tokenValue;
+    token.username = username;
+    //
+    // By default tokens are valid for 1 hour after being issued.
+    //
+    token.expireTime = getCurrentTimeMillis() + TOKEN_LIFETIME;
     {
         lock_guard<mutex> lock(_tokenLock);
         _tokenStore.push_back(token);
@@ -53,11 +54,11 @@ AuthenticatorI::getToken(string username, string password, Ice::Current& current
 }
 
 void
-AuthenticatorI::validateToken(const string& tokenValue) const
+AuthenticatorI::validateToken(const string& tokenValue)
 {
     lock_guard<mutex> lock(_tokenLock);
 
-    for(auto i = 0; i < _tokenStore.size(); i++)
+    for(unsigned int i = 0; i < _tokenStore.size(); i++)
     {
         auto token = _tokenStore[i];
         //

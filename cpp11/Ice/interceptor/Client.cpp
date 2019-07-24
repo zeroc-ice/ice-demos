@@ -2,7 +2,7 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <Ice.h/Ice.h>
+#include <Ice/Ice.h>
 #include <Interceptor.h>
 
 using namespace std;
@@ -32,7 +32,7 @@ main(int argc, char* argv[])
         ctrlCHandler.setCallback(
             [communicator](int)
             {
-                communicator.destroy();
+                communicator->destroy();
             });
 
         //
@@ -45,10 +45,10 @@ main(int argc, char* argv[])
         }
         else
         {
-            status = run(communicator, argv[0]);
+            status = run(communicator);
         }
     }
-    catch(const exception& e)
+    catch(const exception& ex)
     {
         cerr << ex.what() << endl;
         status = 1;
@@ -82,10 +82,10 @@ run(const shared_ptr<Ice::Communicator>& communicator)
         cout << "Password:" << endl;
         getline(cin, password);
         cout << "Enter desired temperature:" << endl;
-        getline(cin, temp)
+        getline(cin, temp);
         desiredTemp = stof(temp);
     }
-    catch(const invalid_argument& e)
+    catch(const invalid_argument&)
     {
         cerr << "Specified temperature is not a float value." << endl;
         return 1;
@@ -97,11 +97,11 @@ run(const shared_ptr<Ice::Communicator>& communicator)
     cout << "Attempting to set temperature without access token..." << endl;
     try
     {
-        cout << "Current temperature is " + thermostat->getTemp() << endl;
+        cout << "Current temperature is " << thermostat->getTemp() << endl;
         thermostat->setTemp(desiredTemp);
-        cout << "New temperature is " + thermostat->getTemp() << endl;
+        cout << "New temperature is " << thermostat->getTemp() << endl;
     }
-    catch(const Demo::AuthorizationException& e)
+    catch(const Demo::AuthorizationException&)
     {
         cout << "Failed to set temperature. Access denied!" << endl;
     }
@@ -114,7 +114,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
     if(!authenticator)
     {
         cerr << "invalid authenticator proxy" << endl;
-        status = 1;
+        return 1;
     }
     Demo::Token token = authenticator->getToken(username, password);
     cout << "Successfully retrieved access token: \"" + token.value + "\"" << endl;
@@ -124,7 +124,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
     // sent along with every request made through it.
     //
     auto context = communicator->getImplicitContext();
-    context.put("accessToken", token.value);
+    context->put("accessToken", token.value);
 
     //
     // Tries calling 'setTemp' again, this time with the access token.
@@ -132,11 +132,11 @@ run(const shared_ptr<Ice::Communicator>& communicator)
     cout << "Attempting to set temperature with access token..." << endl;
     try
     {
-        cout << "Current temperature is " + thermostat->getTemp() << endl;
+        cout << "Current temperature is " << thermostat->getTemp() << endl;
         thermostat->setTemp(desiredTemp);
-        cout << "New temperature is " + thermostat->getTemp() << endl;
+        cout << "New temperature is " << thermostat->getTemp() << endl;
     }
-    catch(const Demo::AuthorizationException& e)
+    catch(const Demo::AuthorizationException&)
     {
         //
         // No longer encountered since the client has authorization to use 'setTemp' now.

@@ -14,7 +14,7 @@ class InterceptorI : public Ice::DispatchInterceptor
 public:
 
     InterceptorI(std::shared_ptr<Ice::Object>, std::shared_ptr<AuthenticatorI>, std::vector<std::string>);
-    virtual bool dispatch(Ice.Request&) override;
+    virtual bool dispatch(Ice::Request&) override;
 
 private:
 

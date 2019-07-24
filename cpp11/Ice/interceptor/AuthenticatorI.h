@@ -16,9 +16,9 @@ public:
 
     AuthenticatorI();
     virtual Demo::Token getToken(std::string, std::string, const Ice::Current&) override;
-    void validateToken(const std::string&) const;
+    void validateToken(const std::string&);
 
-    static const long TOKEN_LIFETIME = 1000 * 60 * 60;
+    static const long long int TOKEN_LIFETIME = 1000 * 60 * 60;
 
 private:
 

@@ -6,13 +6,13 @@
 #include <ThermostatI.h>
 
 float
-ThermostatI::getTemp(const Ice::Current& current) const
+ThermostatI::getTemp(const Ice::Current&) const
 {
     return _temperature;
 }
 
 void
-ThermostatI::setTemp(float temp, const Ice::Current& current)
+ThermostatI::setTemp(float temp, const Ice::Current&)
 {
     _temperature = temp;
 }

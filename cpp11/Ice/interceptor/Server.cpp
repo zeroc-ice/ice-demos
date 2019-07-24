@@ -50,8 +50,8 @@ int main(int argc, char* argv[])
             //
             auto authenticatorAdapter = communicator->createObjectAdapter("Authenticator");
             auto authenticator = make_shared<AuthenticatorI>();
-            authenticatorAdapter.add(authenticator, Ice::stringToIdentity("authenticator"));
-            authenticatorAdapter.activate();
+            authenticatorAdapter->add(authenticator, Ice::stringToIdentity("authenticator"));
+            authenticatorAdapter->activate();
 
             //
             // List of all the operations to require authorization for.
@@ -62,13 +62,13 @@ int main(int argc, char* argv[])
             //
             auto thermostatAdapter = communicator->createObjectAdapter("Thermostat");
             auto thermostat = make_shared<ThermostatI>();
-            thermostatAdapter.add(make_shared<InterceptorI>(thermostat, authenticator, securedOperations));
-            thermostatAdapter.activate();
+            thermostatAdapter->add(make_shared<InterceptorI>(thermostat, authenticator, securedOperations), Ice::stringToIdentity("thermostat"));
+            thermostatAdapter->activate();
 
             communicator->waitForShutdown();
         }
     }
-    catch(const exception& e)
+    catch(const exception& ex)
     {
         cerr << ex.what() << endl;
         status = 1;
