@@ -10,7 +10,7 @@ subprojects {
 	apply plugin: 'java'
 	apply from: "$rootProject.projectDir/gradle/ice.gradle"
 
-	project.version = "3.6.4"
+	project.version = "3.6.5"
 
 	repositories {
 		if (slice.jarDir) {

@@ -73,15 +73,15 @@
     <DebugType>none</DebugType>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Glacier2, Version=3.6.4.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Glacier2, Version=3.6.5.0, Culture=neutral, processorArchitecture=MSIL">
       <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="Ice, Version=3.6.4.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Ice, Version=3.6.5.0, Culture=neutral, processorArchitecture=MSIL">
       <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="IceSSL, Version=3.6.4.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="IceSSL, Version=3.6.5.0, Culture=neutral, processorArchitecture=MSIL">
       <Private>True</Private>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
