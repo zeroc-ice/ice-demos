@@ -1,197 +1,363 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="4dU-vC-6ir">
-    <device id="retina6_5" orientation="portrait">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="tFJ-YR-WQ1">
+    <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Hello Controller-->
+        <!--Navigation Controller-->
+        <scene sceneID="Aw8-1z-PfE">
+            <objects>
+                <navigationController id="tFJ-YR-WQ1" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="vHc-pf-gnw">
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="4dU-vC-6ir" kind="relationship" relationship="rootViewController" id="Ijh-Rr-0ka"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5jD-6v-1fx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-12" y="-506"/>
+        </scene>
+        <!--Hello World-->
         <scene sceneID="eQE-te-PoZ">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zII-Gl-VjE" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="4dU-vC-6ir" customClass="HelloController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" id="HBb-0W-zeW">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="82g-xr-U0l">
-                                <rect key="frame" x="20" y="226.66666666666666" width="374" height="442.66666666666674"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="82g-xr-U0l">
+                                <rect key="frame" x="16" y="104" width="343" height="472"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Hello World" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SAZ-sX-Jxx">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="20.333333333333332"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="firstBaseline" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="VBG-E2-TVU" userLabel="Hostname Stack">
-                                        <rect key="frame" x="0.0" y="22.333333333333346" width="374" height="49.333333333333343"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="VBG-E2-TVU" userLabel="Hostname Stack">
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="106"/>
                                         <subviews>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hostname:" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="DAm-eI-dVW">
-                                                <rect key="frame" x="8" y="15.999999999999998" width="83" height="20.333333333333329"/>
-                                                <inset key="insetFor6xAndEarlier" minX="0.0" minY="20" maxX="0.0" maxY="-20"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <textField opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" horizontalHuggingPriority="48" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="942-aX-Rn9">
-                                                <rect key="frame" x="99" y="11.333333333333314" width="267" height="30"/>
-                                                <inset key="insetFor6xAndEarlier" minX="0.0" minY="20" maxX="0.0" maxY="-20"/>
-                                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" keyboardType="URL" returnKeyType="done"/>
-                                                <connections>
-                                                    <outlet property="delegate" destination="4dU-vC-6ir" id="flj-Mh-agf"/>
-                                                </connections>
-                                            </textField>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9oJ-HD-xAB">
+                                                <rect key="frame" x="8" y="8" width="327" height="90"/>
+                                                <subviews>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FZT-zT-oIe">
+                                                        <rect key="frame" x="0.0" y="0.0" width="327" height="90"/>
+                                                        <subviews>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalCentering" spacing="-4" translatesAutoresizingMaskIntoConstraints="NO" id="bWf-pQ-cO1" userLabel="Hostname Stack">
+                                                                <rect key="frame" x="0.0" y="0.0" width="327" height="90"/>
+                                                                <subviews>
+                                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="voJ-AQ-97m">
+                                                                        <rect key="frame" x="8" y="16" width="311" height="31"/>
+                                                                        <subviews>
+                                                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Hostname:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="Hbe-J5-6ka">
+                                                                                <rect key="frame" x="0.0" y="0.0" width="83" height="31"/>
+                                                                                <inset key="insetFor6xAndEarlier" minX="0.0" minY="20" maxX="0.0" maxY="-20"/>
+                                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                                                <nil key="highlightedColor"/>
+                                                                            </label>
+                                                                            <textField opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" horizontalHuggingPriority="48" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="942-aX-Rn9">
+                                                                                <rect key="frame" x="91" y="0.0" width="220" height="31"/>
+                                                                                <inset key="insetFor6xAndEarlier" minX="0.0" minY="20" maxX="0.0" maxY="-20"/>
+                                                                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
+                                                                                <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" keyboardType="URL" returnKeyType="done"/>
+                                                                                <connections>
+                                                                                    <outlet property="delegate" destination="4dU-vC-6ir" id="flj-Mh-agf"/>
+                                                                                </connections>
+                                                                            </textField>
+                                                                        </subviews>
+                                                                    </stackView>
+                                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="zWQ-40-xNy" userLabel="Use Ice Discovery Stack">
+                                                                        <rect key="frame" x="8" y="51" width="311" height="31"/>
+                                                                        <subviews>
+                                                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Use Ice Discovery:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="9xD-BM-5yC">
+                                                                                <rect key="frame" x="0.0" y="0.0" width="254" height="31"/>
+                                                                                <inset key="insetFor6xAndEarlier" minX="0.0" minY="20" maxX="0.0" maxY="-20"/>
+                                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                                                <nil key="highlightedColor"/>
+                                                                            </label>
+                                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4pV-R9-k3O">
+                                                                                <rect key="frame" x="262" y="0.0" width="51" height="31"/>
+                                                                                <accessibility key="accessibilityConfiguration" label="">
+                                                                                    <bool key="isElement" value="YES"/>
+                                                                                </accessibility>
+                                                                                <connections>
+                                                                                    <action selector="useDiscovery:" destination="4dU-vC-6ir" eventType="valueChanged" id="W9V-6z-FeJ"/>
+                                                                                </connections>
+                                                                            </switch>
+                                                                        </subviews>
+                                                                    </stackView>
+                                                                </subviews>
+                                                                <constraints>
+                                                                    <constraint firstItem="Hbe-J5-6ka" firstAttribute="height" secondItem="9xD-BM-5yC" secondAttribute="height" id="1dE-9O-VcP"/>
+                                                                    <constraint firstAttribute="height" constant="90" id="pcJ-c1-wqb"/>
+                                                                </constraints>
+                                                                <edgeInsets key="layoutMargins" top="16" left="8" bottom="8" right="8"/>
+                                                                <variation key="default">
+                                                                    <mask key="constraints">
+                                                                        <exclude reference="pcJ-c1-wqb"/>
+                                                                    </mask>
+                                                                </variation>
+                                                                <variation key="heightClass=regular-widthClass=compact">
+                                                                    <mask key="constraints">
+                                                                        <exclude reference="pcJ-c1-wqb"/>
+                                                                    </mask>
+                                                                </variation>
+                                                            </stackView>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="bottom" secondItem="bWf-pQ-cO1" secondAttribute="bottom" id="C8s-zS-EZa"/>
+                                                            <constraint firstAttribute="trailing" secondItem="bWf-pQ-cO1" secondAttribute="trailing" id="CFZ-bz-dkA"/>
+                                                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="150" id="DEo-ca-XJQ"/>
+                                                            <constraint firstItem="bWf-pQ-cO1" firstAttribute="leading" secondItem="FZT-zT-oIe" secondAttribute="leading" id="aXV-L1-5f1"/>
+                                                            <constraint firstItem="bWf-pQ-cO1" firstAttribute="top" secondItem="FZT-zT-oIe" secondAttribute="top" id="kqi-fc-lNr"/>
+                                                        </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                <integer key="value" value="8"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                        <variation key="default">
+                                                            <mask key="constraints">
+                                                                <exclude reference="DEo-ca-XJQ"/>
+                                                            </mask>
+                                                        </variation>
+                                                        <variation key="heightClass=regular-widthClass=compact">
+                                                            <mask key="constraints">
+                                                                <include reference="DEo-ca-XJQ"/>
+                                                            </mask>
+                                                        </variation>
+                                                    </view>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="bottom" secondItem="FZT-zT-oIe" secondAttribute="bottom" id="11u-Ah-3LG"/>
+                                                    <constraint firstAttribute="trailing" secondItem="FZT-zT-oIe" secondAttribute="trailing" id="IZe-pp-V2r"/>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="90" id="LEW-ve-9Fk"/>
+                                                    <constraint firstItem="FZT-zT-oIe" firstAttribute="top" secondItem="9oJ-HD-xAB" secondAttribute="top" id="R8Q-lw-Isa"/>
+                                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="100" id="jZo-vH-aza"/>
+                                                    <constraint firstItem="FZT-zT-oIe" firstAttribute="leading" secondItem="9oJ-HD-xAB" secondAttribute="leading" id="qoa-L1-pmk"/>
+                                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="75" id="vXN-pj-YNk">
+                                                        <variation key="heightClass=regular-widthClass=compact" constant="100"/>
+                                                    </constraint>
+                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="8"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowOpacity">
+                                                        <real key="value" value="0.10000000000000001"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowRadius">
+                                                        <integer key="value" value="5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.shouldRasterize" value="YES"/>
+                                                </userDefinedRuntimeAttributes>
+                                                <variation key="default">
+                                                    <mask key="constraints">
+                                                        <exclude reference="LEW-ve-9Fk"/>
+                                                        <exclude reference="vXN-pj-YNk"/>
+                                                    </mask>
+                                                </variation>
+                                                <variation key="heightClass=regular-widthClass=compact">
+                                                    <mask key="constraints">
+                                                        <include reference="LEW-ve-9Fk"/>
+                                                        <exclude reference="jZo-vH-aza"/>
+                                                        <include reference="vXN-pj-YNk"/>
+                                                    </mask>
+                                                </variation>
+                                            </view>
                                         </subviews>
-                                        <edgeInsets key="layoutMargins" top="16" left="8" bottom="8" right="8"/>
+                                        <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
                                     </stackView>
-                                    <pickerView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gMK-i8-vxe">
-                                        <rect key="frame" x="0.0" y="73.666666666666657" width="374" height="215.99999999999997"/>
-                                        <inset key="insetFor6xAndEarlier" minX="0.0" minY="20" maxX="0.0" maxY="-20"/>
-                                        <connections>
-                                            <outlet property="dataSource" destination="4dU-vC-6ir" id="9MQ-Zc-2tx"/>
-                                            <outlet property="delegate" destination="4dU-vC-6ir" id="mfx-2I-fL4"/>
-                                        </connections>
-                                    </pickerView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="zWQ-40-xNy" userLabel="Use Ice Discovery Stack">
-                                        <rect key="frame" x="0.0" y="291.66666666666674" width="374" height="31"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="aTC-vt-fOe">
+                                        <rect key="frame" x="0.0" y="107" width="343" height="365"/>
                                         <subviews>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Use Ice Discovery" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="9xD-BM-5yC">
-                                                <rect key="frame" x="0.0" y="0.0" width="317" height="31"/>
-                                                <inset key="insetFor6xAndEarlier" minX="0.0" minY="20" maxX="0.0" maxY="-20"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4pV-R9-k3O">
-                                                <rect key="frame" x="325" y="0.0" width="51" height="31"/>
-                                                <accessibility key="accessibilityConfiguration" label="">
-                                                    <bool key="isElement" value="YES"/>
-                                                </accessibility>
-                                                <connections>
-                                                    <action selector="useDiscovery:" destination="4dU-vC-6ir" eventType="valueChanged" id="W9V-6z-FeJ"/>
-                                                </connections>
-                                            </switch>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2OB-oq-FtR">
+                                                <rect key="frame" x="8" y="8" width="327" height="349"/>
+                                                <subviews>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C9G-xr-I0p">
+                                                        <rect key="frame" x="0.0" y="0.0" width="327" height="349"/>
+                                                        <subviews>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="rXf-qM-3bo">
+                                                                <rect key="frame" x="0.0" y="0.0" width="327" height="349"/>
+                                                                <subviews>
+                                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Invocation Mode:" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="GSY-P6-I0a">
+                                                                        <rect key="frame" x="8" y="16" width="311" height="25"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="height" constant="25" id="z5c-It-s24"/>
+                                                                        </constraints>
+                                                                        <inset key="insetFor6xAndEarlier" minX="0.0" minY="20" maxX="0.0" maxY="-20"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                        <variation key="default">
+                                                                            <mask key="constraints">
+                                                                                <exclude reference="z5c-It-s24"/>
+                                                                            </mask>
+                                                                        </variation>
+                                                                        <variation key="heightClass=regular-widthClass=compact">
+                                                                            <mask key="constraints">
+                                                                                <include reference="z5c-It-s24"/>
+                                                                            </mask>
+                                                                        </variation>
+                                                                    </label>
+                                                                    <pickerView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="255" verticalHuggingPriority="255" translatesAutoresizingMaskIntoConstraints="NO" id="gMK-i8-vxe">
+                                                                        <rect key="frame" x="8" y="49" width="311" height="216"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="250" id="9r7-Ol-q8F">
+                                                                                <variation key="heightClass=regular-widthClass=compact" constant="150"/>
+                                                                            </constraint>
+                                                                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="150" id="Inz-fR-N2v">
+                                                                                <variation key="heightClass=regular-widthClass=compact" constant="300"/>
+                                                                            </constraint>
+                                                                        </constraints>
+                                                                        <inset key="insetFor6xAndEarlier" minX="0.0" minY="20" maxX="0.0" maxY="-20"/>
+                                                                        <variation key="default">
+                                                                            <mask key="constraints">
+                                                                                <exclude reference="Inz-fR-N2v"/>
+                                                                            </mask>
+                                                                        </variation>
+                                                                        <variation key="heightClass=regular-widthClass=compact">
+                                                                            <mask key="constraints">
+                                                                                <exclude reference="9r7-Ol-q8F"/>
+                                                                                <include reference="Inz-fR-N2v"/>
+                                                                            </mask>
+                                                                        </variation>
+                                                                        <connections>
+                                                                            <outlet property="dataSource" destination="4dU-vC-6ir" id="9MQ-Zc-2tx"/>
+                                                                            <outlet property="delegate" destination="4dU-vC-6ir" id="mfx-2I-fL4"/>
+                                                                        </connections>
+                                                                    </pickerView>
+                                                                    <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="u3f-ES-erF">
+                                                                        <rect key="frame" x="8" y="273" width="311" height="30"/>
+                                                                        <subviews>
+                                                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Delay:" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="kJg-Yl-cTy">
+                                                                                <rect key="frame" x="0.0" y="5" width="70.666666666666671" height="20.333333333333332"/>
+                                                                                <inset key="insetFor6xAndEarlier" minX="0.0" minY="20" maxX="0.0" maxY="-20"/>
+                                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                                                <nil key="highlightedColor"/>
+                                                                            </label>
+                                                                            <slider opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="Npu-n7-zbT">
+                                                                                <rect key="frame" x="76.666666666666671" y="0.0" width="236.33333333333331" height="31"/>
+                                                                                <inset key="insetFor6xAndEarlier" minX="0.0" minY="20" maxX="0.0" maxY="-20"/>
+                                                                            </slider>
+                                                                        </subviews>
+                                                                    </stackView>
+                                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="iwq-XQ-ugu">
+                                                                        <rect key="frame" x="8" y="311" width="311" height="30"/>
+                                                                        <subviews>
+                                                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="751" text="Timeout:" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="sLE-wA-Lzr">
+                                                                                <rect key="frame" x="0.0" y="0.0" width="70.666666666666671" height="30"/>
+                                                                                <inset key="insetFor6xAndEarlier" minX="0.0" minY="20" maxX="0.0" maxY="-20"/>
+                                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                                                <nil key="highlightedColor"/>
+                                                                            </label>
+                                                                            <slider opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="U5i-4Z-CFT">
+                                                                                <rect key="frame" x="76.666666666666671" y="0.0" width="236.33333333333331" height="31"/>
+                                                                                <inset key="insetFor6xAndEarlier" minX="0.0" minY="20" maxX="0.0" maxY="-20"/>
+                                                                            </slider>
+                                                                        </subviews>
+                                                                    </stackView>
+                                                                </subviews>
+                                                                <constraints>
+                                                                    <constraint firstItem="gMK-i8-vxe" firstAttribute="centerY" secondItem="rXf-qM-3bo" secondAttribute="centerY" id="7v9-KC-ON3"/>
+                                                                    <constraint firstItem="kJg-Yl-cTy" firstAttribute="width" secondItem="sLE-wA-Lzr" secondAttribute="width" id="8ro-rQ-O7g"/>
+                                                                    <constraint firstItem="Npu-n7-zbT" firstAttribute="height" secondItem="U5i-4Z-CFT" secondAttribute="height" id="iU1-oA-Aje"/>
+                                                                    <constraint firstItem="U5i-4Z-CFT" firstAttribute="width" secondItem="Npu-n7-zbT" secondAttribute="width" id="u41-ER-eDL"/>
+                                                                </constraints>
+                                                                <edgeInsets key="layoutMargins" top="16" left="8" bottom="8" right="8"/>
+                                                                <variation key="heightClass=regular-widthClass=compact">
+                                                                    <mask key="constraints">
+                                                                        <exclude reference="7v9-KC-ON3"/>
+                                                                    </mask>
+                                                                </variation>
+                                                            </stackView>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstItem="rXf-qM-3bo" firstAttribute="top" secondItem="C9G-xr-I0p" secondAttribute="top" id="HFf-gP-nIZ"/>
+                                                            <constraint firstItem="rXf-qM-3bo" firstAttribute="leading" secondItem="C9G-xr-I0p" secondAttribute="leading" id="J0Y-CB-HXr"/>
+                                                            <constraint firstAttribute="trailing" secondItem="rXf-qM-3bo" secondAttribute="trailing" id="e9C-9g-Ok8"/>
+                                                            <constraint firstAttribute="bottom" secondItem="rXf-qM-3bo" secondAttribute="bottom" id="jLP-HC-ysc"/>
+                                                        </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                <integer key="value" value="8"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </view>
+                                                </subviews>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="275" id="8Lz-Qf-bX6">
+                                                        <variation key="heightClass=regular-widthClass=compact" constant="275"/>
+                                                    </constraint>
+                                                    <constraint firstItem="C9G-xr-I0p" firstAttribute="top" secondItem="2OB-oq-FtR" secondAttribute="top" id="B7u-Xx-4J0"/>
+                                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="400" id="GU0-9T-OQp">
+                                                        <variation key="heightClass=regular-widthClass=compact" constant="350"/>
+                                                    </constraint>
+                                                    <constraint firstAttribute="bottom" secondItem="C9G-xr-I0p" secondAttribute="bottom" id="Wqb-j6-UIh"/>
+                                                    <constraint firstItem="C9G-xr-I0p" firstAttribute="leading" secondItem="2OB-oq-FtR" secondAttribute="leading" id="fE1-E0-Fcx"/>
+                                                    <constraint firstAttribute="trailing" secondItem="C9G-xr-I0p" secondAttribute="trailing" id="vm5-yo-cVB"/>
+                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="8"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowOpacity">
+                                                        <real key="value" value="0.10000000000000001"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowRadius">
+                                                        <integer key="value" value="5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.shouldRasterize" value="YES"/>
+                                                </userDefinedRuntimeAttributes>
+                                                <variation key="default">
+                                                    <mask key="constraints">
+                                                        <exclude reference="8Lz-Qf-bX6"/>
+                                                    </mask>
+                                                </variation>
+                                                <variation key="heightClass=regular-widthClass=compact">
+                                                    <mask key="constraints">
+                                                        <include reference="8Lz-Qf-bX6"/>
+                                                    </mask>
+                                                </variation>
+                                            </view>
                                         </subviews>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="fZX-Kv-uZg">
-                                        <rect key="frame" x="0.0" y="324.66666666666674" width="374" height="30"/>
-                                        <subviews>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Delay:" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="weC-Lf-wk9">
-                                                <rect key="frame" x="0.0" y="5" width="67.666666666666671" height="20.333333333333332"/>
-                                                <inset key="insetFor6xAndEarlier" minX="0.0" minY="20" maxX="0.0" maxY="-20"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <slider opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="UUC-Bl-xsX">
-                                                <rect key="frame" x="73.666666666666657" y="0.0" width="302.33333333333337" height="31"/>
-                                                <inset key="insetFor6xAndEarlier" minX="0.0" minY="20" maxX="0.0" maxY="-20"/>
-                                            </slider>
-                                        </subviews>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="k29-US-y5B">
-                                        <rect key="frame" x="0.0" y="356.66666666666674" width="374" height="30"/>
-                                        <subviews>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="751" text="Timeout:" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="s21-gx-zSZ">
-                                                <rect key="frame" x="0.0" y="0.0" width="67.666666666666671" height="30"/>
-                                                <inset key="insetFor6xAndEarlier" minX="0.0" minY="20" maxX="0.0" maxY="-20"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <slider opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="PDC-Gu-DRy">
-                                                <rect key="frame" x="73.666666666666657" y="0.0" width="302.33333333333337" height="31"/>
-                                                <inset key="insetFor6xAndEarlier" minX="0.0" minY="20" maxX="0.0" maxY="-20"/>
-                                            </slider>
-                                        </subviews>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="firstBaseline" translatesAutoresizingMaskIntoConstraints="NO" id="qfk-wO-U0i" userLabel="Button Stack">
-                                        <rect key="frame" x="0.0" y="388.66666666666674" width="374" height="54"/>
-                                        <subviews>
-                                            <button opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ner-Np-myR">
-                                                <rect key="frame" x="7.9999999999999929" y="16" width="119.33333333333331" height="30"/>
-                                                <inset key="insetFor6xAndEarlier" minX="0.0" minY="20" maxX="0.0" maxY="-20"/>
-                                                <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="15"/>
-                                                <state key="normal" title="Say Hello!"/>
-                                                <connections>
-                                                    <action selector="sayHello:" destination="4dU-vC-6ir" eventType="touchUpInside" id="nt5-JZ-pvf"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tDK-7x-qsD">
-                                                <rect key="frame" x="127.33333333333334" y="16" width="119.33333333333334" height="30"/>
-                                                <inset key="insetFor6xAndEarlier" minX="0.0" minY="20" maxX="0.0" maxY="-20"/>
-                                                <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="15"/>
-                                                <state key="normal" title="Flush"/>
-                                                <connections>
-                                                    <action selector="flushBatch:" destination="4dU-vC-6ir" eventType="touchUpInside" id="uej-9H-KoA"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EvV-fg-b5w">
-                                                <rect key="frame" x="246.66666666666671" y="16" width="119.33333333333334" height="30"/>
-                                                <inset key="insetFor6xAndEarlier" minX="0.0" minY="20" maxX="0.0" maxY="-20"/>
-                                                <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="15"/>
-                                                <state key="normal" title="Shutdown"/>
-                                                <connections>
-                                                    <action selector="shutdown:" destination="4dU-vC-6ir" eventType="touchUpInside" id="3CP-AA-yJX"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstItem="ner-Np-myR" firstAttribute="width" secondItem="tDK-7x-qsD" secondAttribute="width" id="BBC-Sm-Yyr"/>
-                                            <constraint firstItem="EvV-fg-b5w" firstAttribute="width" secondItem="tDK-7x-qsD" secondAttribute="width" id="RLf-c9-Lx9"/>
-                                        </constraints>
-                                        <edgeInsets key="layoutMargins" top="16" left="8" bottom="8" right="8"/>
+                                        <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
                                     </stackView>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstItem="UUC-Bl-xsX" firstAttribute="width" secondItem="PDC-Gu-DRy" secondAttribute="width" id="mZ4-BO-dvG"/>
-                                </constraints>
                             </stackView>
-                            <activityIndicatorView hidden="YES" opaque="NO" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Dgl-qV-nls">
-                                <rect key="frame" x="20" y="842" width="20" height="20"/>
-                                <inset key="insetFor6xAndEarlier" minX="0.0" minY="20" maxX="0.0" maxY="-20"/>
-                            </activityIndicatorView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" text="The Status" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ggq-ib-5DW">
-                                <rect key="frame" x="48" y="842.66666666666663" width="346" height="20.333333333333371"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.94484144449999996" green="0.94879990820000004" blue="0.96527463199999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="Ggq-ib-5DW" firstAttribute="bottom" secondItem="0hn-Z7-th9" secondAttribute="bottom" constant="1" id="0Ql-80-uKa"/>
-                            <constraint firstItem="82g-xr-U0l" firstAttribute="centerY" secondItem="HBb-0W-zeW" secondAttribute="centerY" id="5gf-rE-GmT"/>
-                            <constraint firstItem="0hn-Z7-th9" firstAttribute="bottom" secondItem="Dgl-qV-nls" secondAttribute="bottom" id="BoH-Lf-HCa"/>
-                            <constraint firstItem="82g-xr-U0l" firstAttribute="leading" secondItem="0hn-Z7-th9" secondAttribute="leading" constant="20" id="F3i-dC-woD"/>
-                            <constraint firstItem="Dgl-qV-nls" firstAttribute="leading" secondItem="0hn-Z7-th9" secondAttribute="leading" constant="20" id="GpC-44-tiB"/>
-                            <constraint firstItem="Ggq-ib-5DW" firstAttribute="leading" secondItem="Dgl-qV-nls" secondAttribute="trailing" constant="8" id="YQg-h4-bcf"/>
-                            <constraint firstItem="0hn-Z7-th9" firstAttribute="trailing" secondItem="82g-xr-U0l" secondAttribute="trailing" constant="20" id="nho-xw-e3E"/>
-                            <constraint firstItem="0hn-Z7-th9" firstAttribute="trailing" secondItem="Ggq-ib-5DW" secondAttribute="trailing" constant="20" id="tGo-bX-qJP"/>
+                            <constraint firstAttribute="trailing" secondItem="82g-xr-U0l" secondAttribute="trailing" constant="16" id="7d4-CC-qAa"/>
+                            <constraint firstItem="82g-xr-U0l" firstAttribute="leading" secondItem="HBb-0W-zeW" secondAttribute="leading" constant="16" id="812-Zz-t8x"/>
+                            <constraint firstItem="82g-xr-U0l" firstAttribute="centerX" secondItem="HBb-0W-zeW" secondAttribute="centerX" id="Xwz-Rh-Jg7"/>
+                            <constraint firstItem="82g-xr-U0l" firstAttribute="top" secondItem="0hn-Z7-th9" secondAttribute="top" constant="16" id="fgG-BN-b9H"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="0hn-Z7-th9"/>
                     </view>
-                    <navigationItem key="navigationItem" id="ScU-T7-9NV"/>
+                    <navigationItem key="navigationItem" title="Hello World" id="ScU-T7-9NV"/>
                     <connections>
-                        <outlet property="activity" destination="Dgl-qV-nls" id="fXF-HM-xMa"/>
-                        <outlet property="delaySlider" destination="UUC-Bl-xsX" id="Tqf-FW-fsL"/>
-                        <outlet property="flushButton" destination="tDK-7x-qsD" id="GLh-Of-Iap"/>
                         <outlet property="hostnameTextField" destination="942-aX-Rn9" id="z61-uq-vzR"/>
                         <outlet property="modePicker" destination="gMK-i8-vxe" id="9To-KX-6te"/>
-                        <outlet property="sayHelloButton" destination="ner-Np-myR" id="D7K-wE-y8F"/>
-                        <outlet property="shutdownButton" destination="EvV-fg-b5w" id="0Hg-aH-qj5"/>
-                        <outlet property="statusLabel" destination="Ggq-ib-5DW" id="4Xg-ea-Zj4"/>
-                        <outlet property="timeoutSlider" destination="PDC-Gu-DRy" id="zEl-5K-zni"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="zII-Gl-VjE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="863.768115942029" y="-506.25"/>
+            <point key="canvasLocation" x="863.20000000000005" y="-506.89655172413796"/>
         </scene>
     </scenes>
 </document>
