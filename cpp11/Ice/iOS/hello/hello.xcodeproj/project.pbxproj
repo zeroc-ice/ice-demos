@@ -241,7 +241,7 @@
 					"/usr/local/opt/ice/sdk/$(PLATFORM_NAME).sdk/usr/include",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LIBRARY_SEARCH_PATHS = "/usr/local/opt/ice/sdk/$(PLATFORM_NAME).sdk/usr/lib";
 				OTHER_CFLAGS = "-fobjc-arc-exceptions";
 				OTHER_CPLUSPLUSFLAGS = "";
@@ -282,7 +282,7 @@
 					"/usr/local/opt/ice/sdk/$(PLATFORM_NAME).sdk/usr/include",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LIBRARY_SEARCH_PATHS = "/usr/local/opt/ice/sdk/$(PLATFORM_NAME).sdk/usr/lib";
 				OTHER_CFLAGS = "-fobjc-arc-exceptions";
 				OTHER_CPLUSPLUSFLAGS = "";
