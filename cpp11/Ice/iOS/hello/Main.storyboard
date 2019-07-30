@@ -57,14 +57,14 @@
                                                                                 <rect key="frame" x="8" y="16" width="303" height="31"/>
                                                                                 <subviews>
                                                                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Hostname:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="Hbe-J5-6ka">
-                                                                                        <rect key="frame" x="0.0" y="0.0" width="83" height="31"/>
+                                                                                        <rect key="frame" x="0.0" y="0.0" width="85.333333333333329" height="31"/>
                                                                                         <inset key="insetFor6xAndEarlier" minX="0.0" minY="20" maxX="0.0" maxY="-20"/>
-                                                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                                                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                                                         <nil key="highlightedColor"/>
                                                                                     </label>
                                                                                     <textField opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" horizontalHuggingPriority="48" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="942-aX-Rn9">
-                                                                                        <rect key="frame" x="91" y="0.0" width="212" height="31"/>
+                                                                                        <rect key="frame" x="93.333333333333357" y="0.0" width="209.66666666666663" height="31"/>
                                                                                         <inset key="insetFor6xAndEarlier" minX="0.0" minY="20" maxX="0.0" maxY="-20"/>
                                                                                         <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
                                                                                         <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" keyboardType="URL" returnKeyType="done"/>
@@ -80,7 +80,7 @@
                                                                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Use Ice Discovery:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="9xD-BM-5yC">
                                                                                         <rect key="frame" x="0.0" y="0.0" width="246" height="31"/>
                                                                                         <inset key="insetFor6xAndEarlier" minX="0.0" minY="20" maxX="0.0" maxY="-20"/>
-                                                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                                                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                                                         <nil key="highlightedColor"/>
                                                                                     </label>
@@ -199,7 +199,7 @@
                                                                                     <constraint firstAttribute="height" constant="25" id="z5c-It-s24"/>
                                                                                 </constraints>
                                                                                 <inset key="insetFor6xAndEarlier" minX="0.0" minY="20" maxX="0.0" maxY="-20"/>
-                                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                                                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                                                 <nil key="highlightedColor"/>
                                                                                 <variation key="default">
@@ -237,21 +237,21 @@
                                                                                 </variation>
                                                                                 <connections>
                                                                                     <outlet property="dataSource" destination="4dU-vC-6ir" id="9MQ-Zc-2tx"/>
-                                                                                    <outlet property="delegate" destination="4dU-vC-6ir" id="mfx-2I-fL4"/>
+                                                                                    <outlet property="delegate" destination="4dU-vC-6ir" id="cby-de-8Pm"/>
                                                                                 </connections>
                                                                             </pickerView>
                                                                             <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="u3f-ES-erF">
                                                                                 <rect key="frame" x="8" y="273" width="303" height="30.666666666666686"/>
                                                                                 <subviews>
                                                                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Delay:" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="kJg-Yl-cTy">
-                                                                                        <rect key="frame" x="0.0" y="6" width="118.66666666666667" height="18.666666666666668"/>
+                                                                                        <rect key="frame" x="0.0" y="6" width="94.666666666666671" height="18.666666666666668"/>
                                                                                         <inset key="insetFor6xAndEarlier" minX="0.0" minY="20" maxX="0.0" maxY="-20"/>
-                                                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                                                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                                                         <nil key="highlightedColor"/>
                                                                                     </label>
                                                                                     <slider opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="Npu-n7-zbT">
-                                                                                        <rect key="frame" x="124.66666666666664" y="0.0" width="180.33333333333337" height="31.666666666666668"/>
+                                                                                        <rect key="frame" x="100.66666666666664" y="0.0" width="204.33333333333337" height="31.666666666666668"/>
                                                                                         <inset key="insetFor6xAndEarlier" minX="0.0" minY="20" maxX="0.0" maxY="-20"/>
                                                                                     </slider>
                                                                                 </subviews>
@@ -264,12 +264,12 @@
                                                                                 <rect key="frame" x="8" y="311.66666666666669" width="303" height="30.333333333333314"/>
                                                                                 <subviews>
                                                                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="751" text="Timeout:" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="sLE-wA-Lzr">
-                                                                                        <rect key="frame" x="0.0" y="0.0" width="118.66666666666667" height="30.333333333333332"/>
+                                                                                        <rect key="frame" x="0.0" y="0.0" width="94.666666666666671" height="30.333333333333332"/>
                                                                                         <constraints>
                                                                                             <constraint firstAttribute="width" constant="100" id="rrW-Kf-Kpk"/>
                                                                                         </constraints>
                                                                                         <inset key="insetFor6xAndEarlier" minX="0.0" minY="20" maxX="0.0" maxY="-20"/>
-                                                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                                                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                                                         <nil key="highlightedColor"/>
                                                                                         <variation key="default">
@@ -284,7 +284,7 @@
                                                                                         </variation>
                                                                                     </label>
                                                                                     <slider opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="U5i-4Z-CFT">
-                                                                                        <rect key="frame" x="124.66666666666664" y="0.0" width="180.33333333333337" height="31.333333333333332"/>
+                                                                                        <rect key="frame" x="100.66666666666664" y="0.0" width="204.33333333333337" height="31.333333333333332"/>
                                                                                         <inset key="insetFor6xAndEarlier" minX="0.0" minY="20" maxX="0.0" maxY="-20"/>
                                                                                     </slider>
                                                                                 </subviews>
