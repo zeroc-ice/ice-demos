@@ -161,8 +161,13 @@ run(const Ice::CommunicatorPtr& communicator)
     char c = 'x';
     do
     {
-        cout << "==> ";
+        cout << "==> " << flush;
+#ifdef __IBMCPP__
+	// With xlC, cin >> locks out other streams including ostringstream
+	c = static_cast<char>(getchar());
+#else
         cin >> c;
+#endif
         if(c == 't')
         {
             twoway->initiateCallback(twowayR);

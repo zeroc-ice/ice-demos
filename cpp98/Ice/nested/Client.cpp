@@ -83,7 +83,7 @@ run(const Ice::CommunicatorPtr& communicator)
     {
         try
         {
-            cout << "enter nesting level or 'x' for exit: ";
+	    cout << "enter nesting level or 'x' for exit: " << flush;
             cin >> s;
             int level = atoi(s.c_str());
             if(level > 0)
