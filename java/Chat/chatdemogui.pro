@@ -5,8 +5,12 @@
 -dontusemixedcaseclassnames
 -dontpreverify
 
+-dontnote com.sum.**
+-dontnote Ice.**
+-dontnote IceInternal.**
 -dontnote com.jgoodies.**
--dontnote com.javafx.**
+-dontnote jdk.internal.jimage.**
+-dontnote jdk.internal.jrtfs.**
 
 # Keep - Applications. Keep all application classes, along with their 'main'
 # methods.
