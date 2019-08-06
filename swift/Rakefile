@@ -61,15 +61,15 @@ $demo_resources = {
 desc "Generate Xcode projects required to build Ice for Swift Demo Applications"
 task :iceproj do
     project = Xcodeproj::Project.new("demos.xcodeproj")
-    aggregate_target = project.new_aggregate_target("allDemos")
+    aggregate_target_macos = project.new_aggregate_target("allDemos macOS")
+    aggregate_target_ios = project.new_aggregate_target("allDemos iOS")
     group_add_files(project.main_group, "#{project.project_dir}", ["README.md"])
     $demos.each do |platform, demos|
         demos.each do |demo|
-
             if platform == :ios then
-                create_uikit_targets(project, demo, aggregate_target)
+                create_uikit_targets(project, demo, aggregate_target_ios)
             else
-                create_commandline_targets(project, demo, aggregate_target)
+                create_commandline_targets(project, demo, aggregate_target_macos)
             end
         end
     end
