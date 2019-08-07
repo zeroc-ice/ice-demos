@@ -43,7 +43,8 @@ files that is disabled by default:
 - Ice/hello
 - Ice/latency
 - Ice/throughput
-- Glacier2/chat
+- IceDiscovery/hello
+- Glacier2/simpleChat
 - IceStorm/clock
 
 To enable IceMX, you need to un-comment the following property in the
