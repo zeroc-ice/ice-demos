@@ -121,7 +121,7 @@ public class LoginController
                     }
                     else
                     {
-                    _communicator = Ice.Util.initialize(initData);
+                        _communicator = Ice.Util.initialize(initData);
                     }
 
 
@@ -144,6 +144,17 @@ public class LoginController
                             Demo.Glacier2SessionPrxHelper.uncheckedCast(glacier2session);
                         final Demo.LibraryPrx library = sess.getLibrary();
                         refreshTimeout = (router.getSessionTimeout() * 1000) / 2;
+
+                        final int acmTimeout = router.getACMTimeout();
+                        if(acmTimeout > 0)
+                        {
+                            //
+                            // Configure the connection to send heartbeats in order to keep our session alive.
+                            //
+                            final Ice.Connection connection = router.ice_getCachedConnection();
+                            connection.setACM(Ice.Optional.O(acmTimeout), null,
+                                              Ice.Optional.O(Ice.ACMHeartbeat.HeartbeatAlways));
+                        }
 
                         session = new SessionAdapter()
                         {
@@ -171,7 +182,7 @@ public class LoginController
                     }
                     else
                     {
-                        Ice.ObjectPrx proxy = _communicator.stringToProxy("LibraryDemo.Proxy");
+                        Ice.ObjectPrx proxy = _communicator.propertyToProxy("LibraryDemo.Proxy");
 
                         Demo.SessionFactoryPrx factory = Demo.SessionFactoryPrxHelper.checkedCast(proxy);
                         if(factory == null)
@@ -182,7 +193,6 @@ public class LoginController
 
                         final Demo.SessionPrx sess = factory.create();
                         final Demo.LibraryPrx library = sess.getLibrary();
-                        refreshTimeout = (factory.getSessionTimeout() * 1000) / 2;
 
                         session = new SessionAdapter()
                         {
@@ -227,7 +237,7 @@ public class LoginController
                             return;
                         }
 
-                        _sessionController = new SessionController(_handler, _communicator, session, username, refreshTimeout);
+                        _sessionController = new SessionController(_handler, _communicator, session, username);
                         if(_loginListener != null)
                         {
                             final Listener listener = _loginListener;

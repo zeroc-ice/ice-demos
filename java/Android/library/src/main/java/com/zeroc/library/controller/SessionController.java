@@ -26,51 +26,6 @@ public class SessionController
 
     private SessionAdapter _session;
 
-    class SessionRefreshThread extends Thread
-    {
-        SessionRefreshThread(long timeout)
-        {
-            _timeout = timeout; // seconds.
-        }
-
-        synchronized public void run()
-        {
-            while(!_terminated)
-            {
-                // check idle.
-                try
-                {
-                    wait(_timeout);
-                }
-                catch(InterruptedException e)
-                {
-                }
-                if(!_terminated)
-                {
-                    try
-                    {
-                        _session.refresh();
-                    }
-                    catch(Ice.LocalException ex)
-                    {
-                        postSessionDestroyed();
-                        _terminated = true;
-                    }
-                }
-            }
-        }
-
-        synchronized private void terminate()
-        {
-            _terminated = true;
-            notify();
-        }
-
-        final private long _timeout;
-        private boolean _terminated = false;
-    }
-    private SessionRefreshThread _refresh;
-
     synchronized private void postSessionDestroyed()
     {
         _fatal = true;
@@ -87,14 +42,11 @@ public class SessionController
         }
     }
 
-    SessionController(Handler handler, Ice.Communicator communicator, SessionAdapter session, String username, long refreshTimeout)
+    SessionController(Handler handler, Ice.Communicator communicator, SessionAdapter session, String username)
     {
         _communicator = communicator;
         _session = session;
         _handler = handler;
-
-        _refresh = new SessionRefreshThread(refreshTimeout);
-        _refresh.start();
 
         _username = username;
 
@@ -115,18 +67,6 @@ public class SessionController
             public void run()
             {
                 _queryController.destroy();
-
-                _refresh.terminate();
-                while(_refresh.isAlive())
-                {
-                    try
-                    {
-                        _refresh.join();
-                    }
-                    catch(InterruptedException e)
-                    {
-                    }
-                }
 
                 try
                 {
