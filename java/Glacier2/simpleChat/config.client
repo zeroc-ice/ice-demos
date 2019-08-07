@@ -40,7 +40,7 @@ IceSSL.Password=password
 #
 # IceMX configuration.
 #
-#Ice.Admin.Endpoints=tcp -h localhost -p 10003
+#Ice.Admin.Endpoints=tcp -h localhost -p 10004
 Ice.Admin.InstanceName=client
 IceMX.Metrics.Debug.GroupBy=id
 IceMX.Metrics.ByParent.GroupBy=parent
