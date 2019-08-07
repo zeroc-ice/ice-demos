@@ -6,10 +6,11 @@
 
 buildscript {
     repositories {
+        google()
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath 'com.android.tools.build:gradle:3.3.2'
     }
 }
 
@@ -22,6 +23,9 @@ subprojects {
     apply from: "$rootProject.projectDir/../gradle/ice.gradle"
 
     repositories {
+
+        google()
+
         if(slice.jarDir != null) {
             flatDir {
                 name "local"
@@ -30,12 +34,12 @@ subprojects {
         }
 
         if (!useLocalOnly) {
-            maven {
-                url "https://${iceMavenRepo}/nexus/content/repositories/thirdparty"
+            if(this.devRepo) {
+                maven {
+                    url this.devRepo
+                }
             }
-            maven {
-                url "https://${iceMavenRepo}/nexus/content/repositories/releases"
-            }
+            mavenCentral()
         }
     }
 }
@@ -45,5 +49,5 @@ subprojects {
 // the version of gradle needed to build Ice.
 //
 task wrapper(type: Wrapper) {
-    gradleVersion = "4.0.1"
+    gradleVersion = "4.10.1"
 }

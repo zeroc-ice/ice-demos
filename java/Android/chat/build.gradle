@@ -57,6 +57,6 @@ clean {
 }
 
 dependencies {
-    compile localDependency('ice')
-    compile localDependency('glacier2')
+    implementation localDependency('ice')
+    implementation localDependency('glacier2')
 }

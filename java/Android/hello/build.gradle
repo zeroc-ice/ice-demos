@@ -55,6 +55,6 @@ clean {
 }
 
 dependencies {
-    compile localDependency('ice')
+    implementation localDependency('ice')
 }
 
