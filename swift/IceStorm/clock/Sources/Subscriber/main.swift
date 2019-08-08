@@ -15,7 +15,7 @@ func usage() {
 
 class ClockI: Clock {
     func tick(time date: String, current _: Ice.Current) throws {
-        print("DATE: \(date)")
+        print(date)
     }
 }
 

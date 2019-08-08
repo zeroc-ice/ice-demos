@@ -11,7 +11,7 @@ setbuf(__stdoutp, nil)
 
 class CallbackReceiverI: CallbackReceiver {
     func callback(current _: Current) {
-        print("Received callback")
+        print("received callback")
     }
 }
 
@@ -65,9 +65,9 @@ func run() -> Int32 {
         var session: SessionPrx?
         while session == nil {
             print("This demo accepts any user-id / password combination.")
-            print("Username: ", terminator: "")
+            print("user id: ", terminator: "")
             let username = readLine(strippingNewline: true)!
-            print("Password: ", terminator: "")
+            print("password: ", terminator: "")
             let password = readLine(strippingNewline: true)!
 
             // Create session

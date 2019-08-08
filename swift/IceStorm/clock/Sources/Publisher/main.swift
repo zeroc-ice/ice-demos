@@ -97,8 +97,7 @@ func run() -> Int32 {
         print("publishing tick events. Press ^C to terminate the application.")
 
         let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .short
-        dateFormatter.timeStyle = .medium
+        dateFormatter.dateFormat = "dd/MM/YYYY HH:mm:ss"
 
         do {
             while true {

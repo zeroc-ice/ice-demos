@@ -12,7 +12,7 @@ class CallbackI: Callback {
     func initiateCallback(proxy: CallbackReceiverPrx?, current: Current) {
         do {
             let proxyName = current.adapter?.getCommunicator().proxyToString(proxy)
-            print("Initiating callback to: \(String(describing: proxyName)))")
+            print("initiating callback to: \(String(describing: proxyName)))")
             try proxy?.callback()
         } catch {
             print("Error \(error)")
@@ -20,7 +20,7 @@ class CallbackI: Callback {
     }
 
     func shutdown(current: Current) {
-        print("Shutting down...")
+        print("shutting down...")
         current.adapter?.getCommunicator().shutdown()
     }
 }
