@@ -16,8 +16,8 @@ func usage() {
 enum Option: String {
     case none = ""
     case datagram = "--datagram"
-    case twoway = "-twoway"
-    case oneway = "-oneway"
+    case twoway = "--twoway"
+    case oneway = "--oneway"
 }
 
 func run() -> Int32 {
