@@ -5,6 +5,9 @@
 import Foundation
 import Ice
 
+// Automatically flush stdout
+setbuf(__stdoutp, nil)
+
 class CallbackSenderI: CallbackSender {
     var clients: [CallbackReceiverPrx] = []
     var num: Int32 = 0

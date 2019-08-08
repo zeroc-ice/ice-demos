@@ -5,6 +5,9 @@
 import Foundation
 import Ice
 
+// Automatically flush stdout
+setbuf(__stdoutp, nil)
+
 struct PrinterI: Printer {
     func printString(s: String, current _: Ice.Current) {
         print(s)

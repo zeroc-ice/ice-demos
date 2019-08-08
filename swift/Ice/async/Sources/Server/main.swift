@@ -6,6 +6,9 @@ import Foundation
 import Ice
 import PromiseKit
 
+// Automatically flush stdout
+setbuf(__stdoutp, nil)
+
 class HelloI: Hello {
     var done = false
     var serialQueue = DispatchQueue(label: "com.zeroc.demo.ice.async.server")

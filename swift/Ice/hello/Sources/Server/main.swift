@@ -5,6 +5,9 @@
 import Foundation
 import Ice
 
+// Automatically flush stdout
+setbuf(__stdoutp, nil)
+
 class HelloI: Hello {
     func sayHello(delay: Int32, current _: Ice.Current) throws {
         if delay > 0 {

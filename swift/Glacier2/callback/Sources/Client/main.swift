@@ -6,6 +6,9 @@ import Foundation
 import Glacier2
 import Ice
 
+// Automatically flush stdout
+setbuf(__stdoutp, nil)
+
 class CallbackReceiverI: CallbackReceiver {
     func callback(current _: Current) {
         print("Received callback")

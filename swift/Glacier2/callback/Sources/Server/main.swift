@@ -5,6 +5,9 @@
 import Foundation
 import Ice
 
+// Automatically flush stdout
+setbuf(__stdoutp, nil)
+
 class CallbackI: Callback {
     func initiateCallback(proxy: CallbackReceiverPrx?, current: Current) {
         do {

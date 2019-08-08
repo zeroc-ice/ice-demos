@@ -5,6 +5,9 @@
 import Foundation
 import Ice
 
+// Automatically flush stdout
+setbuf(__stdoutp, nil)
+
 class CallbackReceiverI: CallbackReceiver {
     func callback(num: Int32, current _: Current) throws {
         print("received callback #\(num)")

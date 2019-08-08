@@ -6,6 +6,10 @@ import Foundation
 import Ice
 import PromiseKit
 
+
+// Automatically flush stdout
+setbuf(__stdoutp, nil)
+
 // Use global queue to avoid blocking REPL which runs on main thread
 PromiseKit.conf.Q.return = .global()
 

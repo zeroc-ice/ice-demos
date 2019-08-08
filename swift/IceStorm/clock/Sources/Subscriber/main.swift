@@ -6,6 +6,9 @@ import Foundation
 import Ice
 import IceStorm
 
+// Automatically flush stdout
+setbuf(__stdoutp, nil)
+
 func usage() {
     print("Usage: [--batch] [--datagram|--twoway|--ordered|--oneway] [--retryCount count] [--id id] [topic]")
 }

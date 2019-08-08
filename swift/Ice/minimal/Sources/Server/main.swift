@@ -5,6 +5,9 @@
 import Foundation
 import Ice
 
+// Automatically flush stdout
+setbuf(__stdoutp, nil)
+
 struct HelloI: Hello {
     func sayHello(current _: Ice.Current) throws {
         print("Hello World!")

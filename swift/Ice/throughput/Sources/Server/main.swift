@@ -5,6 +5,9 @@
 import Foundation
 import Ice
 
+// Automatically flush stdout
+setbuf(__stdoutp, nil)
+
 class ThroughputI: Throughput {
     var byteSeq: ByteSeq
     var stringSeq: StringSeq
