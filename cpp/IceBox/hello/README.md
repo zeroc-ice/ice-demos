@@ -17,7 +17,7 @@ as follows:
 
 You can find more details in our online documentation.
 
-https://doc.zeroc.com/display/Ice36/Starting+the+IceBox+Server
+https://doc.zeroc.com/ice/3.6/icebox/starting-the-icebox-server
 
 In the second window, run the client:
 

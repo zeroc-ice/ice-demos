@@ -33,5 +33,5 @@ the `-rubygems` option as shown in the example below:
 
     ruby -rubygems Client.rb
 
-[1]: https://doc.zeroc.com/display/Ice36/Ice+Manual
-[2]: https://doc.zeroc.com/display/Ice36/Using+the+Ruby+Distribution
+[1]: https://doc.zeroc.com/ice/3.6/introduction
+[2]: https://doc.zeroc.com/rel/ice-releases/ice-3-6/ice-3-6-5-release-notes/using-the-ruby-distribution-for-ice-3-6-5
