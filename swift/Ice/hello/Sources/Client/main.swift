@@ -73,81 +73,85 @@ func run() -> Int32 {
         var timeout = Int32(-1)
         var delay = Int32(0)
         repeat {
-            print("==> ", terminator: "")
-            guard let line = readLine(strippingNewline: true) else {
-                return 0
-            }
-
-            guard let option = Option(rawValue: line) else {
-                print("unknown command `\(line)'")
-                menu()
-                continue
-            }
-
-            switch option {
-            case .twoway:
-                try twoway.sayHello(delay)
-            case .oneway:
-                try oneway.sayHello(delay)
-            case .batchOneway:
-                try batchOneway.sayHello(delay)
-            case .datagram:
-                if secure {
-                    print("secure datagrams are not supported")
-                } else {
-                    try datagram.sayHello(delay)
+            do {
+                print("==> ", terminator: "")
+                guard let line = readLine(strippingNewline: true) else {
+                    return 0
                 }
-            case .batchDatagram:
-                if secure {
-                    print("secure datagrams are not supported")
-                } else {
-                    try batchDatagram.sayHello(delay)
-                }
-            case .flushBatchRequests:
-                try batchOneway.ice_flushBatchRequests()
-                if !secure {
-                    try batchDatagram.ice_flushBatchRequests()
-                }
-            case .timeout:
-                timeout = timeout == -1 ? 2000 : -1
 
-                twoway = twoway.ice_invocationTimeout(timeout)
-                oneway = oneway.ice_invocationTimeout(timeout)
-                batchOneway = batchOneway.ice_invocationTimeout(timeout)
-
-                if timeout == -1 {
-                    print("timeout is now switched off")
-                } else {
-                    print("timeout is now set to 2000ms")
+                guard let option = Option(rawValue: line) else {
+                    print("unknown command `\(line)'")
+                    menu()
+                    continue
                 }
-            case .delay:
-                delay = delay == 0 ? 2500 : 0
 
-                if delay == 0 {
-                    print("server delay is now deactivated")
-                } else {
-                    print("server delay is now set to 2500ms")
+                switch option {
+                case .twoway:
+                    try twoway.sayHello(delay)
+                case .oneway:
+                    try oneway.sayHello(delay)
+                case .batchOneway:
+                    try batchOneway.sayHello(delay)
+                case .datagram:
+                    if secure {
+                        print("secure datagrams are not supported")
+                    } else {
+                        try datagram.sayHello(delay)
+                    }
+                case .batchDatagram:
+                    if secure {
+                        print("secure datagrams are not supported")
+                    } else {
+                        try batchDatagram.sayHello(delay)
+                    }
+                case .flushBatchRequests:
+                    try batchOneway.ice_flushBatchRequests()
+                    if !secure {
+                        try batchDatagram.ice_flushBatchRequests()
+                    }
+                case .timeout:
+                    timeout = timeout == -1 ? 2000 : -1
+
+                    twoway = twoway.ice_invocationTimeout(timeout)
+                    oneway = oneway.ice_invocationTimeout(timeout)
+                    batchOneway = batchOneway.ice_invocationTimeout(timeout)
+
+                    if timeout == -1 {
+                        print("timeout is now switched off")
+                    } else {
+                        print("timeout is now set to 2000ms")
+                    }
+                case .delay:
+                    delay = delay == 0 ? 2500 : 0
+
+                    if delay == 0 {
+                        print("server delay is now deactivated")
+                    } else {
+                        print("server delay is now set to 2500ms")
+                    }
+                case .switchSecure:
+                    secure = !secure
+
+                    twoway = twoway.ice_secure(secure)
+                    oneway = oneway.ice_secure(secure)
+                    batchOneway = batchOneway.ice_secure(secure)
+                    datagram = datagram.ice_secure(secure)
+                    batchDatagram = batchDatagram.ice_secure(secure)
+
+                    if secure {
+                        print("secure mode is now on")
+                    } else {
+                        print("secure mode is now off")
+                    }
+                case .shutdown:
+                    try twoway.shutdown()
+                case .exit:
+                    exit = true
+                case .help:
+                    menu()
                 }
-            case .switchSecure:
-                secure = !secure
-
-                twoway = twoway.ice_secure(secure)
-                oneway = oneway.ice_secure(secure)
-                batchOneway = batchOneway.ice_secure(secure)
-                datagram = datagram.ice_secure(secure)
-                batchDatagram = batchDatagram.ice_secure(secure)
-
-                if secure {
-                    print("secure mode is now on")
-                } else {
-                    print("secure mode is now off")
-                }
-            case .shutdown:
-                try twoway.shutdown()
-            case .exit:
-                exit = true
-            case .help:
-                menu()
+            } catch let ex as Ice.Exception {
+                print(ex)
             }
         } while !exit
         return 0
