@@ -17,21 +17,21 @@
     "slice2js": "^3.7.3"
   },
   "devDependencies": {
-    "@types/jquery": "^3.3.29",
-    "del": "^3.0.0",
-    "gulp": "^4.0.0",
+    "@types/jquery": "^3.3.31",
+    "del": "^5.0.0",
+    "gulp": "^4.0.2",
     "gulp-ext-replace": "^0.3.0",
     "gulp-ice-builder": "^3.0.2",
     "gulp-newer": "^1.4.0",
     "gulp-open": "^3.0.1",
-    "gulp-terser": "^1.1.6",
-    "gulp-typescript": "^5.0.0",
+    "gulp-terser": "^1.2.0",
+    "gulp-typescript": "^5.0.1",
     "hogan.js": "^3.0.2",
     "http-proxy": "^1.17.0",
     "pump": "^3.0.0",
-    "rollup": "^1.0.1",
-    "rollup-plugin-node-resolve": "^4.0.0",
-    "typescript": "^3.2.2",
-    "vinyl-paths": "^2.1.0"
+    "rollup": "^1.19.4",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "typescript": "^3.5.3",
+    "vinyl-paths": "^3.0.0"
   }
 }
