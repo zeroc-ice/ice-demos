@@ -27,10 +27,23 @@ enum Option: String {
 func run() -> Int32 {
     do {
         var args = [String](CommandLine.arguments.dropFirst())
+        signal(SIGTERM, SIG_IGN)
+        signal(SIGINT, SIG_IGN)
+
         let communicator = try Ice.initialize(args: &args, configFile: "config.sub")
         defer {
             communicator.destroy()
         }
+
+        let sigintSource = DispatchSource.makeSignalSource(signal: SIGINT,
+                                                           queue: DispatchQueue.global())
+        let sigtermSource = DispatchSource.makeSignalSource(signal: SIGTERM,
+                                                            queue: DispatchQueue.global())
+        sigintSource.setEventHandler { communicator.shutdown() }
+        sigtermSource.setEventHandler { communicator.shutdown() }
+        sigintSource.resume()
+        sigtermSource.resume()
+
         args = try communicator.getProperties().parseCommandLineOptions(prefix: "Clock", options: args)
 
         var topicName = "time"
