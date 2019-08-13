@@ -7,7 +7,7 @@ import com.zeroc.demos.Ice.interceptor.Demo.*;
 
 class InterceptorI extends com.zeroc.Ice.DispatchInterceptor
 {
-    public InterceptorI(com.zeroc.Ice.Object servant, AuthenticatorI authenticator, java.util.List<String> securedOperations)
+    InterceptorI(com.zeroc.Ice.Object servant, AuthenticatorI authenticator, java.util.List<String> securedOperations)
     {
         _servant = servant;
         _authenticator = authenticator;

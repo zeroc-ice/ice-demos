@@ -4,7 +4,7 @@
 
 import com.zeroc.demos.Ice.interceptor.Demo.*;
 
-public class Client
+class Client
 {
     public static void main(String[] args)
     {

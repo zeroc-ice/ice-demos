@@ -6,7 +6,7 @@ import com.zeroc.demos.Ice.interceptor.Demo.*;
 
 class AuthenticatorI implements Authenticator
 {
-    public AuthenticatorI()
+    AuthenticatorI()
     {
         _tokenStore = new java.util.ArrayList<Token>();
         _rand = new java.security.SecureRandom();
@@ -42,7 +42,7 @@ class AuthenticatorI implements Authenticator
         return token;
     }
 
-    public void validateToken(String tokenValue)
+    void validateToken(String tokenValue)
         throws AuthorizationException
     {
         synchronized(_tokenStore)

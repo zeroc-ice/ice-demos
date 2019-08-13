@@ -5,9 +5,9 @@
 using System;
 using System.Collections.Generic;
 
-public class Server
+class Server
 {
-    public static int Main(string[] args)
+    static int Main(string[] args)
     {
         int status = 0;
 

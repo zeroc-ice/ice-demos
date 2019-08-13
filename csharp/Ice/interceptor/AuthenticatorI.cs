@@ -10,7 +10,7 @@ using System.Text;
 
 class AuthenticatorI : AuthenticatorDisp_
 {
-    public AuthenticatorI()
+    internal AuthenticatorI()
     {
         _tokenStore = new List<Token>();
         _rand = new RNGCryptoServiceProvider();
@@ -51,7 +51,7 @@ class AuthenticatorI : AuthenticatorDisp_
         return token;
     }
 
-    public void validateToken(string tokenValue)
+    internal void validateToken(string tokenValue)
     {
         lock(_tokenStore)
         {

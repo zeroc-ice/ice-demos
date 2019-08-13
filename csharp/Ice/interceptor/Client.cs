@@ -5,9 +5,9 @@
 using Demo;
 using System;
 
-public class Client
+class Client
 {
-    public static int Main(String[] args)
+    static int Main(String[] args)
     {
         int status = 0;
 
@@ -44,7 +44,7 @@ public class Client
         return status;
     }
 
-    private static int run(Ice.Communicator communicator)
+    static int run(Ice.Communicator communicator)
     {
         var thermostat = ThermostatPrxHelper.checkedCast(communicator.propertyToProxy("Thermostat.Proxy"));
         if(thermostat == null)
