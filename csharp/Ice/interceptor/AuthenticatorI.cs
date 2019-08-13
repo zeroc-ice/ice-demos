@@ -18,31 +18,25 @@ class AuthenticatorI : AuthenticatorDisp_
 
     public override Token getToken(string username, string password, Ice.Current current)
     {
-        // Byte array for holding randomly generated value.
-        byte[] nextRandom = new byte[1];
         //
         // Generate a random 32 character long token.
         //
         string chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        StringBuilder tokenBuilder = new StringBuilder(32);
-        for(var i = 0; i < 32; i++)
-        {
-            do {
-                _rand.GetBytes(nextRandom);
-            } while(nextRandom[0] >= chars.Length);
+        char[] tokenValue = new char[32];
+        byte[] bytes = new byte[tokenValue.Length];
+        _rand.GetBytes(bytes);
 
-            tokenBuilder.Append(chars[nextRandom[0]]);
+        for(var i = 0; i < bytes.Length; i++)
+        {
+            tokenValue[i] = chars[bytes[i] % chars.Length];
         }
 
         //
+        // Create a token object, store a copy, and return it.
         // By default tokens are valid for 1 hour after being issued.
         //
-        long expireTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + TOKEN_LIFETIME;
-
-        //
-        // Create a token object, store a copy, and return it.
-        //
-        Token token = new Token(tokenBuilder.ToString(), username, expireTime);
+        Token token = new Token(new string(tokenValue), username,
+                                DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + TOKEN_LIFETIME);
         lock(_tokenStore)
         {
             _tokenStore.Add((Token)token.Clone());

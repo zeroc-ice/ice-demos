@@ -19,21 +19,21 @@ class AuthenticatorI implements Authenticator
         // Generate a random 32 character long token.
         //
         String chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        StringBuilder tokenBuilder = new StringBuilder(32);
-        for(int i = 0; i < 32; i++)
+        char[] tokenValue = new char[32];
+        byte[] bytes = new byte[tokenValue.length];
+        _rand.nextBytes(bytes);
+
+        for(int i = 0; i < bytes.length; i++)
         {
-            tokenBuilder.append(chars.charAt(_rand.nextInt(chars.length())));
+            tokenValue[i] = chars.charAt((bytes[i] + 128) % chars.length);
         }
 
         //
+        // Create a token object, store a copy, and return it.
         // By default tokens are valid for 1 hour after being issued.
         //
-        long expireTime = System.currentTimeMillis() + TOKEN_LIFETIME;
-
-        //
-        // Create a token object, store a copy, and return it.
-        //
-        Token token = new Token(tokenBuilder.toString(), username, expireTime);
+        Token token = new Token(new String(tokenValue), username,
+                                System.currentTimeMillis() + TOKEN_LIFETIME);
         synchronized(_tokenStore)
         {
             _tokenStore.add(token.clone());

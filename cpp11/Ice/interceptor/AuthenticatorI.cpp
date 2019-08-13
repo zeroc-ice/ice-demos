@@ -38,8 +38,7 @@ AuthenticatorI::getToken(string username, string password, const Ice::Current&)
     // Create a token object, store a copy, and return it.
     //
     Demo::Token token;
-    string tokenValue(tokenBuilder);
-    token.value = tokenValue;
+    token.value = string(tokenBuilder);
     token.username = username;
     //
     // By default tokens are valid for 1 hour after being issued.
@@ -49,7 +48,7 @@ AuthenticatorI::getToken(string username, string password, const Ice::Current&)
         lock_guard<mutex> lock(_tokenLock);
         _tokenStore.push_back(token);
     }
-    cout << "Issuing new access token for user: " + username + ". Token=" + tokenValue << endl;
+    cout << "Issuing new access token for user: " + username + ". Token=" + token.value << endl;
     return token;
 }
 
