@@ -17,7 +17,7 @@ public:
 private:
 
     // Temperature in Celsius.
-    float _temperature;
+    float _temperature = 23.5f;
 };
 
 #endif
