@@ -4,6 +4,7 @@
 
 #pragma once
 
+["java:package:com.zeroc.demos.Ice.interceptor"]
 module Demo
 {
     exception AuthorizationException {}
@@ -23,6 +24,7 @@ module Demo
 
     interface Thermostat
     {
+        ["cpp:const"]
         idempotent float getTemp();
         idempotent void setTemp(float temp)
             throws AuthorizationException;
