@@ -15,7 +15,7 @@ class AuthenticatorI : public Demo::Authenticator
 public:
 
     AuthenticatorI();
-    virtual Demo::Token getToken(std::string, std::string, const Ice::Current&) override;
+    virtual std::string getToken(const Ice::Current&) override;
     void validateToken(const std::string&);
 
     static const long long TOKEN_LIFETIME = 1000 * 60 * 60;
@@ -23,7 +23,7 @@ public:
 private:
 
     std::mt19937_64 _rand;
-    std::map<std::string, Demo::Token> _tokenStore;
+    std::map<std::string, long long> _tokenStore;
     std::mutex _tokenLock;
 };
 

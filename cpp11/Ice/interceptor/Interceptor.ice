@@ -10,16 +10,9 @@ module Demo
     exception AuthorizationException {}
     exception TokenExpiredException extends AuthorizationException {}
 
-    struct Token
-    {
-        string value;
-        string username;
-        long expireTime;
-    }
-
     interface Authenticator
     {
-        Token getToken(string username, string password);
+        string getToken();
     }
 
     interface Thermostat
@@ -27,6 +20,7 @@ module Demo
         idempotent float getTemp();
         idempotent void setTemp(float temp)
             throws AuthorizationException;
-        void shutdown();
+        void shutdown()
+            throws AuthorizationException;
     }
 }

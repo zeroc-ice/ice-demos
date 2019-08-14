@@ -94,20 +94,16 @@ class Client
                     }
                     case "get-token":
                     {
-                        Console.Out.WriteLine("Username:");
-                        string username = Console.ReadLine();
-                        Console.Out.WriteLine("Password:");
-                        string password = Console.ReadLine();
                         //
                         // Request an access token from the server's authentication object.
                         //
-                        Token token = authenticator.getToken(username, password);
-                        Console.Out.WriteLine("Successfully retrieved access token: \"" + token.value + "\"\n");
+                        string token = authenticator.getToken();
+                        Console.Out.WriteLine("Successfully retrieved access token: \"" + token + "\"");
                         //
                         // Add the access token to the communicator's context, so it will be
                         // sent along with every request made through it.
                         //
-                        context.put("accessToken", token.value);
+                        context.put("accessToken", token);
                         break;
                     }
                     case "release-token":
@@ -124,7 +120,14 @@ class Client
                     }
                     case "shutdown":
                     {
-                        thermostat.shutdown();
+                        try
+                        {
+                            thermostat.shutdown();
+                        }
+                        catch(AuthorizationException)
+                        {
+                            Console.Error.WriteLine("Failed to shutdown thermostat. Access denied!");
+                        }
                         break;
                     }
                     case "x":

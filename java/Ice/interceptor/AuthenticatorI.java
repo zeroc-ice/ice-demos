@@ -8,12 +8,12 @@ class AuthenticatorI implements Authenticator
 {
     AuthenticatorI()
     {
-        _tokenStore = new java.util.HashMap<String, Token>();
+        _tokenStore = new java.util.HashMap<String, Long>();
         _rand = new java.security.SecureRandom();
     }
 
     @Override
-    public Token getToken(String username, String password, com.zeroc.Ice.Current current)
+    public String getToken(com.zeroc.Ice.Current current)
     {
         //
         // Generate a random 32 character long token.
@@ -28,17 +28,15 @@ class AuthenticatorI implements Authenticator
             tokenValue[i] = chars.charAt((bytes[i] + 128) % chars.length());
         }
 
-        //
-        // Create a token object, store a copy, and return it.
-        // By default tokens are valid for 1 hour after being issued.
-        //
-        Token token = new Token(new String(tokenValue), username,
-                                System.currentTimeMillis() + TOKEN_LIFETIME);
+        String token = new String(tokenValue);
         synchronized(_tokenStore)
         {
-            _tokenStore.put(token.value, token.clone());
+            //
+            // By default tokens are valid for 1 hour after being issued.
+            //
+            _tokenStore.put(token, System.currentTimeMillis() + TOKEN_LIFETIME);
         }
-        System.out.println("Issuing new access token for user: " + username + ". Token=" + token.value);
+        System.out.println("Issuing new access token. Token=" + token);
         return token;
     }
 
@@ -50,13 +48,12 @@ class AuthenticatorI implements Authenticator
             //
             // Check if the authenticator has issued any tokens with a matching value.
             //
-            Token token = _tokenStore.get(tokenValue);
-            if(token != null)
+            if(_tokenStore.containsKey(tokenValue))
             {
                 //
                 // Delete the token if it has expired.
                 //
-                if(token.expireTime <= System.currentTimeMillis())
+                if(_tokenStore.get(tokenValue) <= System.currentTimeMillis())
                 {
                     _tokenStore.remove(tokenValue);
                     throw new TokenExpiredException();
@@ -72,5 +69,5 @@ class AuthenticatorI implements Authenticator
 
     public static final long TOKEN_LIFETIME = 1000 * 60 * 60;
     private final java.security.SecureRandom _rand;
-    private final java.util.Map<String, Token> _tokenStore;
+    private final java.util.Map<String, Long> _tokenStore;
 }

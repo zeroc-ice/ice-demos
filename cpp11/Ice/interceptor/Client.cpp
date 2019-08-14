@@ -100,21 +100,16 @@ run(const shared_ptr<Ice::Communicator>& communicator)
             }
             else if(line == "get-token")
             {
-                string username, password;
-                cout << "Username:" << endl;
-                getline(cin, username);
-                cout << "Password:" << endl;
-                getline(cin, password);
                 //
                 // Request an access token from the server's authentication object.
                 //
-                Demo::Token token = authenticator->getToken(username, password);
-                cout << "Successfully retrieved access token: \"" + token.value + "\"" << endl;
+                string token = authenticator->getToken();
+                cout << "Successfully retrieved access token: \"" << token << "\"" << endl;
                 //
                 // Add the access token to the communicator's context, so it will be
                 // sent along with every request made through it.
                 //
-                context->put("accessToken", token.value);
+                context->put("accessToken", token);
             }
             else if(line == "release-token")
             {
@@ -129,7 +124,14 @@ run(const shared_ptr<Ice::Communicator>& communicator)
             }
             else if(line == "shutdown")
             {
-                thermostat->shutdown();
+                try
+                {
+                    thermostat->shutdown();
+                }
+                catch(const Demo::AuthorizationException&)
+                {
+                    cout << "Failed to shutdown thermostat. Access denied!" << endl;
+                }
             }
             else if(line == "x")
             {

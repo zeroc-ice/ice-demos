@@ -97,20 +97,16 @@ class Client
                     }
                     case "get-token":
                     {
-                        System.out.println("Username: ");
-                        String username = in.readLine();
-                        System.out.println("Password: ");
-                        String password = in.readLine();
                         //
                         // Request an access token from the server's authentication object.
                         //
-                        Token token = authenticator.getToken(username, password);
-                        System.out.println("Successfully retrieved access token: \"" + token.value + "\"\n");
+                        String token = authenticator.getToken();
+                        System.out.println("Successfully retrieved access token: \"" + token + "\"");
                         //
                         // Add the access token to the communicator's context, so it will be
                         // sent along with every request made through it.
                         //
-                        context.put("accessToken", token.value);
+                        context.put("accessToken", token);
                         break;
                     }
                     case "release-token":
@@ -127,7 +123,14 @@ class Client
                     }
                     case "shutdown":
                     {
-                        thermostat.shutdown();
+                        try
+                        {
+                            thermostat.shutdown();
+                        }
+                        catch(AuthorizationException ex)
+                        {
+                            System.err.println("Failed to shutdown thermostat. Access denied!");
+                        }
                         break;
                     }
                     case "x":

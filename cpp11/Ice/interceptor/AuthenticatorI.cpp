@@ -20,8 +20,8 @@ AuthenticatorI::AuthenticatorI() :
 {
 }
 
-Demo::Token
-AuthenticatorI::getToken(string username, string password, const Ice::Current&)
+string
+AuthenticatorI::getToken(const Ice::Current&)
 {
     //
     // Generate a random 32 character long token.
@@ -34,21 +34,16 @@ AuthenticatorI::getToken(string username, string password, const Ice::Current&)
         tokenBuilder[i] = chars.at(dist(_rand));
     }
 
-    //
-    // Create a token object, store a copy, and return it.
-    //
-    Demo::Token token;
-    token.value = string(tokenBuilder);
-    token.username = username;
+    string token = string(tokenBuilder);
     //
     // By default tokens are valid for 1 hour after being issued.
     //
-    token.expireTime = getCurrentTimeMillis() + TOKEN_LIFETIME;
+    long long expireTime = getCurrentTimeMillis() + TOKEN_LIFETIME;
     {
         lock_guard<mutex> lock(_tokenLock);
-        _tokenStore.insert(pair<string, Demo::Token>(token.value, token));
+        _tokenStore.insert(pair<string, long long>(token, expireTime));
     }
-    cout << "Issuing new access token for user: " + username + ". Token=" + token.value << endl;
+    cout << "Issuing new access token. Token=" << token << endl;
     return token;
 }
 
@@ -66,7 +61,7 @@ AuthenticatorI::validateToken(const string& tokenValue)
         //
         // Delete the token if it has expired.
         //
-        if(token->second.expireTime <= getCurrentTimeMillis())
+        if(token->second <= getCurrentTimeMillis())
         {
             _tokenStore.erase(token);
             throw Demo::TokenExpiredException();

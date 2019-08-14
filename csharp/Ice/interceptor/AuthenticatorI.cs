@@ -12,11 +12,11 @@ class AuthenticatorI : AuthenticatorDisp_
 {
     internal AuthenticatorI()
     {
-        _tokenStore = new Dictionary<String, Token>();
+        _tokenStore = new Dictionary<String, long>();
         _rand = new RNGCryptoServiceProvider();
     }
 
-    public override Token getToken(string username, string password, Ice.Current current)
+    public override string getToken(Ice.Current current)
     {
         //
         // Generate a random 32 character long token.
@@ -31,15 +31,14 @@ class AuthenticatorI : AuthenticatorDisp_
             tokenValue[i] = chars[bytes[i] % chars.Length];
         }
 
+        string token = new string(tokenValue);
         //
-        // Create a token object, store a copy, and return it.
         // By default tokens are valid for 1 hour after being issued.
         //
-        Token token = new Token(new string(tokenValue), username,
-                                DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + TOKEN_LIFETIME);
+        long expireTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + TOKEN_LIFETIME;
         lock(_tokenStore)
         {
-            _tokenStore.Add(token.value, (Token)token.Clone());
+            _tokenStore.Add(token, expireTime);
         }
         Console.Out.WriteLine("Issuing new access token for user: " + username + ". Token=" + token.value);
         return token;
@@ -52,13 +51,13 @@ class AuthenticatorI : AuthenticatorDisp_
             //
             // Check if the authenticator has issued any tokens with a matching value.
             //
-            Token token;
-            if(_tokenStore.TryGetValue(tokenValue, out token))
+            long expireTime;
+            if(_tokenStore.TryGetValue(tokenValue, out expireTime))
             {
                 //
                 // Delete the token if it has expired.
                 //
-                if(token.expireTime <= DateTimeOffset.UtcNow.ToUnixTimeMilliseconds())
+                if(expireTime <= DateTimeOffset.UtcNow.ToUnixTimeMilliseconds())
                 {
                     _tokenStore.Remove(tokenValue);
                     throw new TokenExpiredException();
@@ -74,5 +73,5 @@ class AuthenticatorI : AuthenticatorDisp_
 
     public const long TOKEN_LIFETIME = 1000 * 60 * 60;
     private readonly RNGCryptoServiceProvider _rand;
-    private readonly Dictionary<String, Token> _tokenStore;
+    private readonly Dictionary<String, long> _tokenStore;
 }

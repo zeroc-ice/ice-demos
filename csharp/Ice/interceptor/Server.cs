@@ -42,7 +42,7 @@ class Server
                     //
                     // List of all the operations to require authorization for.
                     //
-                    HashSet<String> securedOperations = new HashSet<String>(new String[] {"setTemp"});
+                    HashSet<String> securedOperations = new HashSet<String>(new String[] {"setTemp", "shutdown"});
                     //
                     // Create an object adapter for the thermostat.
                     //
