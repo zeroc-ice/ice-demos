@@ -25,7 +25,7 @@ class AuthenticatorI implements Authenticator
 
         for(int i = 0; i < bytes.length; i++)
         {
-            tokenValue[i] = chars.charAt((bytes[i] + 128) % chars.length);
+            tokenValue[i] = chars.charAt((bytes[i] + 128) % chars.length());
         }
 
         //

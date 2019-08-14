@@ -12,7 +12,7 @@ class AuthenticatorI : AuthenticatorDisp_
 {
     internal AuthenticatorI()
     {
-        _tokenStore = new List<String, Token>();
+        _tokenStore = new Dictionary<String, Token>();
         _rand = new RNGCryptoServiceProvider();
     }
 
@@ -53,7 +53,7 @@ class AuthenticatorI : AuthenticatorDisp_
             // Check if the authenticator has issued any tokens with a matching value.
             //
             Token token;
-            if(_tokenStore.TryGetValue(tokenValue, token))
+            if(_tokenStore.TryGetValue(tokenValue, out token))
             {
                 //
                 // Delete the token if it has expired.

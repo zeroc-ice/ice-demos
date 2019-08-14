@@ -12,12 +12,11 @@
 
 class AuthenticatorI : public Demo::Authenticator
 {
-    AuthenticatorI();
-    void validateToken(const std::string&);
-
 public:
 
+    AuthenticatorI();
     virtual Demo::Token getToken(std::string, std::string, const Ice::Current&) override;
+    void validateToken(const std::string&);
 
     static const long long TOKEN_LIFETIME = 1000 * 60 * 60;
 
