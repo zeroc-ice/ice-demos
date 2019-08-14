@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 class InterceptorI : Ice.DispatchInterceptor
 {
-    internal InterceptorI(Ice.Object servant, AuthenticatorI authenticator, List<string> securedOperations)
+    internal InterceptorI(Ice.Object servant, AuthenticatorI authenticator, HashSet<string> securedOperations)
     {
         _servant = servant;
         _authenticator = authenticator;
@@ -45,5 +45,5 @@ class InterceptorI : Ice.DispatchInterceptor
 
     private readonly Ice.Object _servant;
     private readonly AuthenticatorI _authenticator;
-    private readonly List<string> _securedOperations;
+    private readonly HashSet<string> _securedOperations;
 }

@@ -40,7 +40,7 @@ class Server
                 //
                 // List of all the operations to require authorization for.
                 //
-                java.util.List<String> securedOperations = java.util.Arrays.asList("setTemp");
+                java.util.HashSet<String> securedOperations = new java.util.HashSet(java.util.Arrays.asList("setTemp"));
                 //
                 // Create an object adapter for the thermostat.
                 //

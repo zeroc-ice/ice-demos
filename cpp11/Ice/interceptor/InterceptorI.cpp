@@ -8,7 +8,7 @@
 using namespace std;
 
 InterceptorI::InterceptorI(shared_ptr<Ice::Object> servant, shared_ptr<AuthenticatorI> authenticator,
-                           vector<string> securedOperations) :
+                           unordered_set<string> securedOperations) :
     _servant(move(servant)), _authenticator(authenticator), _securedOperations(securedOperations)
 {
 }
@@ -20,7 +20,7 @@ InterceptorI::dispatch(Ice::Request& request)
     //
     // Check if the operation requires authorization to invoke.
     //
-    if(find(_securedOperations.begin(), _securedOperations.end(), current.operation) != _securedOperations.end())
+    if(_securedOperations.count(current.operation) > 0)
     {
         //
         // Validate the client's access token before dispatching to the servant.

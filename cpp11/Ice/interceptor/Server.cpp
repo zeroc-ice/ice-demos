@@ -2,7 +2,7 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <vector>
+#include <unordered_set>
 #include <Ice/Ice.h>
 #include <AuthenticatorI.h>
 #include <InterceptorI.h>
@@ -56,7 +56,7 @@ int main(int argc, char* argv[])
             //
             // List of all the operations to require authorization for.
             //
-            vector<string> securedOperations {"setTemp"};
+            unordered_set<string> securedOperations({ "setTemp" });
             //
             // Create an object adapter for the thermostat.
             //
