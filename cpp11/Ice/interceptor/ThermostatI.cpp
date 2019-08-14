@@ -6,14 +6,16 @@
 #include <ThermostatI.h>
 
 float
-ThermostatI::getTemp(const Ice::Current&) const
+ThermostatI::getTemp(const Ice::Current&)
 {
+    std::lock_guard<std::mutex> lock(_thermostatLock);
     return _temperature;
 }
 
 void
 ThermostatI::setTemp(float temp, const Ice::Current&)
 {
+    std::lock_guard<std::mutex> lock(_thermostatLock);
     _temperature = temp;
 }
 

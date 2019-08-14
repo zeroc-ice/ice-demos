@@ -24,7 +24,6 @@ module Demo
 
     interface Thermostat
     {
-        ["cpp:const"]
         idempotent float getTemp();
         idempotent void setTemp(float temp)
             throws AuthorizationException;

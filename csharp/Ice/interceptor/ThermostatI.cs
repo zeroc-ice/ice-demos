@@ -9,12 +9,18 @@ class ThermostatI : ThermostatDisp_
 {
     public override float getTemp(Ice.Current current)
     {
-        return _temperature;
+        lock(_thermostatLock)
+        {
+            return _temperature;
+        }
     }
 
     public override void setTemp(float temp, Ice.Current current)
     {
-        _temperature = temp;
+        lock(_thermostatLock)
+        {
+            _temperature = temp;
+        }
     }
 
     public override void shutdown(Ice.Current current)
@@ -25,4 +31,5 @@ class ThermostatI : ThermostatDisp_
 
     // Temperature in Celsius.
     private float _temperature = 23.5f;
+    private readonly object _thermostatLock = new object();
 }
