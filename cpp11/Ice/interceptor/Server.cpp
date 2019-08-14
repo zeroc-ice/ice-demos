@@ -56,13 +56,12 @@ int main(int argc, char* argv[])
             //
             // List of all the operations to require authorization for.
             //
-            unordered_set<string> securedOperations({ "setTemp" });
+            unordered_set<string> securedOperations({ "setTemp", "shutdown" });
             //
             // Create an object adapter for the thermostat.
             //
             auto thermostatAdapter = communicator->createObjectAdapter("Thermostat");
-            auto thermostat = make_shared<ThermostatI>();
-            thermostatAdapter->add(make_shared<InterceptorI>(thermostat, authenticator, securedOperations), Ice::stringToIdentity("thermostat"));
+            thermostatAdapter->add(make_shared<InterceptorI>(make_shared<ThermostatI>(), authenticator, securedOperations), Ice::stringToIdentity("thermostat"));
             thermostatAdapter->activate();
 
             communicator->waitForShutdown();

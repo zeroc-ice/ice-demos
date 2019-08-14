@@ -17,23 +17,11 @@ main(int argc, char* argv[])
     try
     {
         //
-        // CtrlCHandler must be created before the communicator
-        // or any other threads are started.
-        //
-        Ice::CtrlCHandler ctrlCHandler;
-
-        //
         // CommunicatorHolder's ctor initializes an Ice communicator,
         // and its dtor destroys this communicator.
         //
         Ice::CommunicatorHolder ich(argc, argv, "config.client");
         auto communicator = ich.communicator();
-
-        ctrlCHandler.setCallback(
-            [communicator](int)
-            {
-                communicator->destroy();
-            });
 
         //
         // The communicator intialization removes all Ice-related arguments from argc/argv.

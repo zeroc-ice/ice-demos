@@ -19,11 +19,6 @@ class Client
             //
             using(var communicator = Ice.Util.initialize(ref args, "config.client"))
             {
-                //
-                // Destroy the communicator on Ctrl+C or Ctrl+Break
-                //
-                Console.CancelKeyPress += (sender, eventArgs) => communicator.destroy();
-
                 if(args.Length > 0)
                 {
                     Console.Error.WriteLine("too many arguments");

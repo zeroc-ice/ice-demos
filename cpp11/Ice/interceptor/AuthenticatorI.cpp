@@ -9,7 +9,7 @@
 
 using namespace std;
 
-long long int getCurrentTimeMillis()
+long long getCurrentTimeMillis()
 {
     auto duration = chrono::system_clock::now().time_since_epoch();
     return chrono::duration_cast<chrono::milliseconds>(duration).count();
