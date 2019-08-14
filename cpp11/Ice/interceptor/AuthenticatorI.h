@@ -7,7 +7,7 @@
 
 #include <mutex>
 #include <random>
-#include <vector>
+#include <map>
 #include <Interceptor.h>
 
 class AuthenticatorI : public Demo::Authenticator
@@ -24,7 +24,7 @@ public:
 private:
 
     std::mt19937_64 _rand;
-    std::vector<Demo::Token> _tokenStore;
+    std::map<std::string, Demo::Token> _tokenStore;
     std::mutex _tokenLock;
 };
 

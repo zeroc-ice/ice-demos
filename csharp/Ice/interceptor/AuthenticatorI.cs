@@ -12,7 +12,7 @@ class AuthenticatorI : AuthenticatorDisp_
 {
     internal AuthenticatorI()
     {
-        _tokenStore = new List<Token>();
+        _tokenStore = new List<String, Token>();
         _rand = new RNGCryptoServiceProvider();
     }
 
@@ -39,7 +39,7 @@ class AuthenticatorI : AuthenticatorDisp_
                                 DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + TOKEN_LIFETIME);
         lock(_tokenStore)
         {
-            _tokenStore.Add((Token)token.Clone());
+            _tokenStore.Add(token.value, (Token)token.Clone());
         }
         Console.Out.WriteLine("Issuing new access token for user: " + username + ". Token=" + token.value);
         return token;
@@ -49,25 +49,23 @@ class AuthenticatorI : AuthenticatorDisp_
     {
         lock(_tokenStore)
         {
-            foreach(var token in _tokenStore)
+            //
+            // Check if the authenticator has issued any tokens with a matching value.
+            //
+            Token token;
+            if(_tokenStore.TryGetValue(tokenValue, token))
             {
                 //
-                // Check if the authenticator has issued any tokens with a matching value.
+                // Delete the token if it has expired.
                 //
-                if(token.value == tokenValue)
+                if(token.expireTime <= DateTimeOffset.UtcNow.ToUnixTimeMilliseconds())
                 {
-                    //
-                    // Delete the token if it has expired.
-                    //
-                    if(token.expireTime <= DateTimeOffset.UtcNow.ToUnixTimeMilliseconds())
-                    {
-                        _tokenStore.Remove(token);
-                        throw new TokenExpiredException();
-                    }
-                    else
-                    {
-                        return;
-                    }
+                    _tokenStore.Remove(tokenValue);
+                    throw new TokenExpiredException();
+                }
+                else
+                {
+                    return;
                 }
             }
             throw new AuthorizationException();
@@ -76,5 +74,5 @@ class AuthenticatorI : AuthenticatorDisp_
 
     public const long TOKEN_LIFETIME = 1000 * 60 * 60;
     private readonly RNGCryptoServiceProvider _rand;
-    private readonly List<Token> _tokenStore;
+    private readonly Dictionary<String, Token> _tokenStore;
 }

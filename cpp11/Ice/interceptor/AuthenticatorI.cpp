@@ -27,7 +27,7 @@ AuthenticatorI::getToken(string username, string password, const Ice::Current&)
     // Generate a random 32 character long token.
     //
     string chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    uniform_int_distribution<int> dist(0, (int)chars.length());
+    uniform_int_distribution<int> dist(0, static_cast<int>(chars.length()));
     char tokenBuilder[32];
     for(auto i = 0; i < 32; i++)
     {
@@ -46,7 +46,7 @@ AuthenticatorI::getToken(string username, string password, const Ice::Current&)
     token.expireTime = getCurrentTimeMillis() + TOKEN_LIFETIME;
     {
         lock_guard<mutex> lock(_tokenLock);
-        _tokenStore.push_back(token);
+        _tokenStore.insert(pair<string, Demo::Token>(token.value, token));
     }
     cout << "Issuing new access token for user: " + username + ". Token=" + token.value << endl;
     return token;
@@ -57,26 +57,23 @@ AuthenticatorI::validateToken(const string& tokenValue)
 {
     lock_guard<mutex> lock(_tokenLock);
 
-    for(unsigned int i = 0; i < _tokenStore.size(); i++)
+    //
+    // Check if the authenticator has issued any tokens with a matching value.
+    //
+    auto token = _tokenStore.find(tokenValue);
+    if(token != _tokenStore.end())
     {
-        auto token = _tokenStore[i];
         //
-        // Check if the authenticator has issued any tokens with a matching value.
+        // Delete the token if it has expired.
         //
-        if(token.value == tokenValue)
+        if(token->second.expireTime <= getCurrentTimeMillis())
         {
-            //
-            // Delete the token if it has expired.
-            //
-            if(token.expireTime <= getCurrentTimeMillis())
-            {
-                _tokenStore.erase(_tokenStore.begin() + i);
-                throw Demo::TokenExpiredException();
-            }
-            else
-            {
-                return;
-            }
+            _tokenStore.erase(token);
+            throw Demo::TokenExpiredException();
+        }
+        else
+        {
+            return;
         }
     }
     throw Demo::AuthorizationException();

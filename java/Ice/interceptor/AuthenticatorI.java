@@ -8,7 +8,7 @@ class AuthenticatorI implements Authenticator
 {
     AuthenticatorI()
     {
-        _tokenStore = new java.util.ArrayList<Token>();
+        _tokenStore = new java.util.HashMap<String, Token>();
         _rand = new java.security.SecureRandom();
     }
 
@@ -36,7 +36,7 @@ class AuthenticatorI implements Authenticator
                                 System.currentTimeMillis() + TOKEN_LIFETIME);
         synchronized(_tokenStore)
         {
-            _tokenStore.add(token.clone());
+            _tokenStore.put(token.value, token.clone());
         }
         System.out.println("Issuing new access token for user: " + username + ". Token=" + token.value);
         return token;
@@ -47,25 +47,23 @@ class AuthenticatorI implements Authenticator
     {
         synchronized(_tokenStore)
         {
-            for(Token token : _tokenStore)
+            //
+            // Check if the authenticator has issued any tokens with a matching value.
+            //
+            Token token = _tokenStore.get(tokenValue);
+            if(token != null)
             {
                 //
-                // Check if the authenticator has issued any tokens with a matching value.
+                // Delete the token if it has expired.
                 //
-                if(token.value.equals(tokenValue))
+                if(token.expireTime <= System.currentTimeMillis())
                 {
-                    //
-                    // Delete the token if it has expired.
-                    //
-                    if(token.expireTime <= System.currentTimeMillis())
-                    {
-                        _tokenStore.remove(token);
-                        throw new TokenExpiredException();
-                    }
-                    else
-                    {
-                        return;
-                    }
+                    _tokenStore.remove(tokenValue);
+                    throw new TokenExpiredException();
+                }
+                else
+                {
+                    return;
                 }
             }
         }
@@ -74,5 +72,5 @@ class AuthenticatorI implements Authenticator
 
     public static final long TOKEN_LIFETIME = 1000 * 60 * 60;
     private final java.security.SecureRandom _rand;
-    private final java.util.List<Token> _tokenStore;
+    private final java.util.Map<String, Token> _tokenStore;
 }
