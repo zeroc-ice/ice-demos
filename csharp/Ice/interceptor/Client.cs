@@ -117,7 +117,7 @@ class Client
                     }
                     case "release-token":
                     {
-                        if(context.ContainsKey("accessToken"))
+                        if(context.containsKey("accessToken"))
                         {
                             context.remove("accessToken");
                         }
