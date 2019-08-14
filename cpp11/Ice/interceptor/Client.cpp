@@ -57,9 +57,12 @@ main(int argc, char* argv[])
     return status;
 }
 
+void menu();
+
 int
 run(const shared_ptr<Ice::Communicator>& communicator)
 {
+    auto context = communicator->getImplicitContext();
     auto thermostat = Ice::checkedCast<Demo::ThermostatPrx>(communicator->propertyToProxy("Thermostat.Proxy"));
     if(!thermostat)
     {
@@ -67,83 +70,113 @@ run(const shared_ptr<Ice::Communicator>& communicator)
         return 1;
     }
 
-    //
-    // Read in values from the command line for the username, password, and
-    // the temperature to try and set the thermostat to.
-    //
-    string username;
-    string password;
-    string temp;
-    float desiredTemp;
-    try
-    {
-        cout << "Username:" << endl;
-        getline(cin, username);
-        cout << "Password:" << endl;
-        getline(cin, password);
-        cout << "Enter desired temperature:" << endl;
-        getline(cin, temp);
-        desiredTemp = stof(temp);
-    }
-    catch(const invalid_argument&)
-    {
-        cerr << "Specified temperature is not a float value." << endl;
-        return 1;
-    }
-
-    //
-    // Tries calling 'setTemp' without authorization and receives an exception.
-    //
-    cout << "Attempting to set temperature without access token..." << endl;
-    try
-    {
-        cout << "Current temperature is " << thermostat->getTemp() << endl;
-        thermostat->setTemp(desiredTemp);
-        cout << "New temperature is " << thermostat->getTemp() << endl;
-    }
-    catch(const Demo::AuthorizationException&)
-    {
-        cout << "Failed to set temperature. Access denied!" << endl;
-    }
-    cout << endl;
-
-    //
-    // Request an access token from the server's authentication object.
-    //
     auto authenticator = Ice::checkedCast<Demo::AuthenticatorPrx>(communicator->propertyToProxy("Authenticator.Proxy"));
     if(!authenticator)
     {
         cerr << "invalid authenticator proxy" << endl;
         return 1;
     }
-    Demo::Token token = authenticator->getToken(username, password);
-    cout << "Successfully retrieved access token: \"" + token.value + "\"" << endl;
 
-    //
-    // Add the access token to the communicator's context, so it will be
-    // sent along with every request made through it.
-    //
-    auto context = communicator->getImplicitContext();
-    context->put("accessToken", token.value);
+    menu();
 
-    //
-    // Tries calling 'setTemp' again, this time with the access token.
-    //
-    cout << "Attempting to set temperature with access token..." << endl;
-    try
+    string line;
+    do
     {
-        cout << "Current temperature is " << thermostat->getTemp() << endl;
-        thermostat->setTemp(desiredTemp);
-        cout << "New temperature is " << thermostat->getTemp() << endl;
+        try
+        {
+            cout << "\n==> ";
+            getline(cin, line);
+
+            if(line == "get-temp")
+            {
+                cout << "Current temperature is " << thermostat->getTemp() << endl;
+            }
+            else if(line == "set-temp")
+            {
+                try
+                {
+                    cout << "Enter desired temperature:" << endl;
+                    string temp;
+                    getline(cin, temp);
+                    thermostat->setTemp(stof(temp));
+                    cout << "New temperature is " << thermostat->getTemp() << endl;
+                }
+                catch(const invalid_argument&)
+                {
+                    cout << "Provided temperature is not a parsable float.";
+                }
+                catch(const Demo::AuthorizationException&)
+                {
+                    cout << "Failed to set temperature. Access denied!" << endl;
+                }
+            }
+            else if(line == "get-token")
+            {
+                string username, password;
+                cout << "Username:" << endl;
+                getline(cin, username);
+                cout << "Password:" << endl;
+                getline(cin, password);
+                //
+                // Request an access token from the server's authentication object.
+                //
+                Demo::Token token = authenticator->getToken(username, password);
+                cout << "Successfully retrieved access token: \"" + token.value + "\"" << endl;
+                //
+                // Add the access token to the communicator's context, so it will be
+                // sent along with every request made through it.
+                //
+                context->put("accessToken", token.value);
+            }
+            else if(line == "release-token")
+            {
+                if(context->containsKey("accessToken"))
+                {
+                    context->remove("accessToken");
+                }
+                else
+                {
+                    cout << "There is no access token to release." << endl;
+                }
+            }
+            else if(line == "shutdown")
+            {
+                thermostat->shutdown();
+            }
+            else if(line == "x")
+            {
+                // Nothing to do
+            }
+            else if(line == "?")
+            {
+                menu();
+            }
+            else
+            {
+                cout << "Unknown command `" << line << "'" << endl;
+                menu();
+            }
+        }
+        catch(const Ice::Exception& ex)
+        {
+            cerr << ex << endl;
+        }
     }
-    catch(const Demo::AuthorizationException&)
-    {
-        //
-        // No longer encountered since the client has authorization to use 'setTemp' now.
-        //
-        cout << "Failed to set temperature. Access denied!" << endl;
-    }
-    cout << endl;
+    while(cin.good() && (line != "x"));
 
     return 0;
+}
+
+void
+menu()
+{
+    cout <<
+        "usage:\n"
+        "get-temp: gets the current temperature\n"
+        "set-temp: sets the temperature\n"
+        "get-token: gets a new token from the server\n"
+        "release-token: releases the currently held token\n"
+        "shutdown: shutdown server\n"
+        "x: exit\n"
+        "?: help\n";
 }
