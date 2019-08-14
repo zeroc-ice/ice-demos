@@ -46,6 +46,7 @@ class Client
 
     static int run(Ice.Communicator communicator)
     {
+        var context = communicator.getImplicitContext();
         var thermostat = ThermostatPrxHelper.checkedCast(communicator.propertyToProxy("Thermostat.Proxy"));
         if(thermostat == null)
         {
@@ -53,83 +54,126 @@ class Client
             return 1;
         }
 
-        //
-        // Read in values from the command line for the username, password, and
-        // the temperature to try and set the thermostat to.
-        //
-        string username;
-        string password;
-        float desiredTemp;
-        try
-        {
-            Console.Out.WriteLine("Username:");
-            username = Console.ReadLine();
-            Console.Out.WriteLine("Password:");
-            password = Console.ReadLine();
-            Console.Out.WriteLine("Enter desired temperature:");
-            desiredTemp = float.Parse(Console.ReadLine());
-            Console.Out.WriteLine();
-        }
-        catch(FormatException)
-        {
-            Console.Error.WriteLine("Specified temperature is not a float value.");
-            return 1;
-        }
-
-        //
-        // Tries calling 'setTemp' without authorization and receives an exception.
-        //
-        Console.Out.WriteLine("Attempting to set temperature without access token...");
-        try
-        {
-            Console.Out.WriteLine("\tCurrent temperature is " + thermostat.getTemp());
-            thermostat.setTemp(desiredTemp);
-            Console.Out.WriteLine("\tNew temperature is " + thermostat.getTemp());
-        }
-        catch(AuthorizationException)
-        {
-            Console.Error.WriteLine("\tFailed to set temperature. Access denied!");
-        }
-        Console.Out.WriteLine();
-
-        //
-        // Request an access token from the server's authentication object.
-        //
         var authenticator = AuthenticatorPrxHelper.checkedCast(communicator.propertyToProxy("Authenticator.Proxy"));
         if(authenticator == null)
         {
             Console.Error.WriteLine("invalid authenticator proxy");
             return 1;
         }
-        Token token = authenticator.getToken(username, password);
-        Console.Out.WriteLine("Successfully retrieved access token: \"" + token.value + "\"\n");
 
-        //
-        // Add the access token to the communicator's context, so it will be
-        // sent along with every request made through it.
-        //
-        var context = communicator.getImplicitContext();
-        context.put("accessToken", token.value);
+        menu();
 
-        //
-        // Tries calling 'setTemp' again, this time with the access token.
-        //
-        Console.Out.WriteLine("Attempting to set temperature with access token...");
-        try
+        string line = null;
+        do
         {
-            Console.Out.WriteLine("\tCurrent temperature is " + thermostat.getTemp());
-            thermostat.setTemp(desiredTemp);
-            Console.Out.WriteLine("\tNew temperature is " + thermostat.getTemp());
+            try
+            {
+                Console.Out.Write("\n==>");
+                Console.Out.Flush();
+                line = Console.ReadLine();
+
+                switch(line)
+                {
+                    case "get-temp":
+                    {
+                        Console.Out.WriteLine("Current temperature is " + thermostat.getTemp());
+                        break;
+                    }
+                    case "set-temp":
+                    {
+                        try
+                        {
+                            Console.Out.WriteLine("Enter desired temperature: ");
+                            thermostat.setTemp(float.Parse(Console.ReadLine()));
+                            Console.Out.WriteLine("New temperature is " + thermostat.getTemp());
+                        }
+                        catch(FormatException)
+                        {
+                            Console.Error.WriteLine("Provided temperature is not a parsable float.");
+                        }
+                        catch(AuthorizationException)
+                        {
+                            Console.Error.WriteLine("Failed to set temperature. Access denied!");
+                        }
+                        break;
+                    }
+                    case "get-token":
+                    {
+                        Console.Out.WriteLine("Username:");
+                        string username = Console.ReadLine();
+                        Console.Out.WriteLine("Password:");
+                        string password = Console.ReadLine();
+                        //
+                        // Request an access token from the server's authentication object.
+                        //
+                        Token token = authenticator.getToken(username, password);
+                        Console.Out.WriteLine("Successfully retrieved access token: \"" + token.value + "\"\n");
+                        //
+                        // Add the access token to the communicator's context, so it will be
+                        // sent along with every request made through it.
+                        //
+                        context.put("accessToken", token.value);
+                        break;
+                    }
+                    case "release-token":
+                    {
+                        if(context.ContainsKey("accessToken"))
+                        {
+                            context.remove("accessToken");
+                        }
+                        else
+                        {
+                            Console.Out.WriteLine("There is no access token to release.");
+                        }
+                        break;
+                    }
+                    case "shutdown":
+                    {
+                        thermostat.shutdown();
+                        break;
+                    }
+                    case "x":
+                    {
+                        // Nothing to do
+                        break;
+                    }
+                    case "?":
+                    {
+                        menu();
+                        break;
+                    }
+                    default:
+                    {
+                        Console.Out.WriteLine("Unknown command `" + line + "'");
+                        menu();
+                        break;
+                    }
+                }
+            }
+            catch(System.IO.IOException ex)
+            {
+                Console.Error.WriteLine(ex);
+            }
+            catch(Ice.LocalException ex)
+            {
+                Console.Error.WriteLine(ex);
+            }
         }
-        catch(AuthorizationException)
-        {
-            //
-            // No longer encountered since the client has authorization to use 'setTemp' now.
-            //
-            Console.Error.WriteLine("\tFailed to set temperature. Access denied!");
-        }
-        Console.Out.WriteLine();
+        while(!line.Equals("x"));
 
         return 0;
+    }
+
+    private static void menu()
+    {
+        Console.Out.Write(
+            "usage:\n" +
+            "get-temp: gets the current temperature\n" +
+            "set-temp: sets the temperature\n" +
+            "get-token: gets a new token from the server\n" +
+            "release-token: releases the currently held token\n" +
+            "shutdown: shutdown server\n" +
+            "x: exit\n" +
+            "?: help\n");
     }
 }
