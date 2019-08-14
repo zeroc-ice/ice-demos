@@ -69,6 +69,7 @@ class Client
                 {
                     break;
                 }
+
                 switch(line)
                 {
                     case "get-temp":
@@ -114,7 +115,14 @@ class Client
                     }
                     case "release-token":
                     {
-                        context.remove("accessToken");
+                        if(context.containsKey("accessToken"))
+                        {
+                            context.remove("accessToken");
+                        }
+                        else
+                        {
+                            System.out.println("There is no access token to release.");
+                        }
                         break;
                     }
                     case "shutdown":
@@ -128,18 +136,19 @@ class Client
                         break;
                     }
                     case "?":
+                    {
                         menu();
                         break;
+                    }
                     default:
-                        System.out.println("unknown command `" + line + "'");
+                    {
+                        System.out.println("Unknown command `" + line + "'");
                         menu();
+                        break;
+                    }
                 }
             }
-            catch(java.io.IOException ex)
-            {
-                ex.printStackTrace();
-            }
-            catch(com.zeroc.Ice.LocalException ex)
+            catch(java.io.IOException|com.zeroc.Ice.LocalException ex)
             {
                 ex.printStackTrace();
             }
