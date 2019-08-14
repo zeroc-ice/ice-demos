@@ -16,3 +16,10 @@ ThermostatI::setTemp(float temp, const Ice::Current&)
 {
     _temperature = temp;
 }
+
+void
+ThermostatI::shutdown(const Ice::Current& current)
+{
+    std::cout << "Shutting down..." << std::endl;
+    current.adapter->getCommunicator()->shutdown();
+}

@@ -28,5 +28,6 @@ module Demo
         idempotent float getTemp();
         idempotent void setTemp(float temp)
             throws AuthorizationException;
+        void shutdown();
     }
 }

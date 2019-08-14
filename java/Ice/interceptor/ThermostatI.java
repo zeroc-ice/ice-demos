@@ -26,6 +26,13 @@ class ThermostatI implements Thermostat
         _temperature = temp;
     }
 
+    @Override
+    public void shutdown(com.zeroc.Ice.Current current)
+    {
+        System.out.println("Shutting down...");
+        current.adapter.getCommunicator().shutdown();
+    }
+
     // Temperature in Celsius.
     private float _temperature = 23.5f;
 }

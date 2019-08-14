@@ -3,6 +3,7 @@
 //
 
 using Demo;
+using System;
 
 class ThermostatI : ThermostatDisp_
 {
@@ -14,6 +15,12 @@ class ThermostatI : ThermostatDisp_
     public override void setTemp(float temp, Ice.Current current)
     {
         _temperature = temp;
+    }
+
+    public override void shutdown(Ice.Current current)
+    {
+        Console.Out.WriteLine("Shutting down...");
+        current.adapter.getCommunicator().shutdown();
     }
 
     // Temperature in Celsius.

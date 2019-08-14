@@ -13,6 +13,7 @@ public:
 
     virtual float getTemp(const Ice::Current&) const override;
     virtual void setTemp(float, const Ice::Current&) override;
+    virtual void shutdown(const Ice::Current&) override;
 
 private:
 
