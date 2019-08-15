@@ -362,7 +362,7 @@ static NSString* hostnameKey = @"hostnameKey";
     hostnameTextField.text = [[NSUserDefaults standardUserDefaults] stringForKey:hostnameKey];
     flushButton.enabled = NO;
     [flushButton setAlpha:0.5];
-    [useDiscovery setOn:NO];
+    [useDiscovery setOn:YES];
 
     // This generates a compile time warning, but does actually work!
     [delaySlider setShowValue:YES];

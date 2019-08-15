@@ -10,7 +10,6 @@
 - (void)setBorderColorFromUIColor:(UIColor *)color
 {
     self.borderColor = color.CGColor;
-    NSLog(@"Got here and called the function");
 }
 @end
 
