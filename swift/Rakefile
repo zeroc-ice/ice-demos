@@ -18,10 +18,10 @@ $demos = {
              "Ice/optional",
              "Ice/throughput",
 
-             "IceGrid/simple",
-
              "IceDiscovery/hello",
              "IceDiscovery/replication",
+
+ 	     "IceGrid/simple",
 
              "IceStorm/clock",
 
@@ -47,8 +47,6 @@ $demo_variant_sources = {
 
 $demo_extra_frameworks = {
     "Glacier2/callback" => ["Glacier2.framework"],
-
-    "IceGrid/simple" => ["IceGrid.framework"],
 
     "IceStorm/clock" => ["IceStorm.framework"],
 

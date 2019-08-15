@@ -34,12 +34,11 @@ func run() -> Int32 {
         defer {
             communicator.destroy()
         }
-        communicator.getProperties().setProperty(key: "Ice.Default.Package", value: "com.zeroc.demos.IceGrid.simple")
         guard args.count == 1 else {
             print("too many arguments")
             return 1
         }
-        var hello: HelloPrx?
+        var hello: HelloPrx!
         do {
             let base = try communicator.stringToProxy("hello")!
             hello = try checkedCast(prx: base, type: HelloPrx.self)
@@ -50,11 +49,11 @@ func run() -> Int32 {
                 hello = try checkedCast(prx: prx, type: HelloPrx.self)
             }
         }
-        if hello == nil {
+        guard hello != nil else {
             print("couldn't find a `::Demo::Hello' object")
             return 1
         }
-        menu();
+        menu()
         var exit = false
         repeat {
             print("==> ", terminator: "")
@@ -68,9 +67,9 @@ func run() -> Int32 {
             }
             switch choice {
             case .greeting:
-                try hello?.sayHello()
+                try hello.sayHello()
             case .shutdown:
-                try hello?.shutdown()
+                try hello.shutdown()
             case .exit:
                 exit = true
             case .help:
@@ -81,8 +80,7 @@ func run() -> Int32 {
         print("Error: \(error)\n")
         return 1
     }
-    return 0;
-    
+    return 0
 }
 
 exit(run())

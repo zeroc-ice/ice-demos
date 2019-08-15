@@ -6,19 +6,18 @@ import Foundation
 import Ice
 
 class HelloI: Hello {
-    
     private var name: String
-    
+
     init(name: String) {
         self.name = name
     }
-    
-    func sayHello(current: Current) throws {
+
+    func sayHello(current _: Current) throws {
         print(name + " says Hello World!")
     }
-    
+
     func shutdown(current: Current) throws {
-         print(name + " shutting down...")
+        print(name + " shutting down...")
         current.adapter?.getCommunicator().shutdown()
     }
 }
@@ -33,7 +32,6 @@ func run() -> Int32 {
         defer {
             communicator.destroy()
         }
-        communicator.getProperties().setProperty(key: "Ice.Default.Package", value: "com.zeroc.demos.IceGrid.simple")
         guard args.count == 1 else {
             print("too many arguments")
             return 1
@@ -42,7 +40,7 @@ func run() -> Int32 {
         let properties = communicator.getProperties()
         let id = try Ice.stringToIdentity(properties.getProperty("Identity"))
         let servant = HelloDisp(HelloI(name: properties.getProperty("Ice.ProgramName")))
-        try adapter.add(servant:servant,id: id)
+        try adapter.add(servant: servant, id: id)
         try adapter.activate()
         communicator.waitForShutdown()
         return 0
