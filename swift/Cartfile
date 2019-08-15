@@ -1,1 +1,2 @@
-github "MessageKit/MessageKit"
+github "MessageKit/MessageKit" ~> 3.0
+github "zeroc-ice/ice" "3.7"
