@@ -152,19 +152,6 @@ run(const shared_ptr<Ice::Communicator>& communicator, int argc, char* argv[])
         return 1;
     }
 
-    if(!retryCount.empty())
-    {
-        if(option == Option::None)
-        {
-            option = Option::Twoway;
-        }
-        else if(option != Option::Twoway && option != Option::Ordered)
-        {
-            cerr << argv[0] << ": retryCount requires a twoway proxy" << endl;
-            return 1;
-        }
-    }
-
     if(batch && (option == Option::Twoway || option == Option::Ordered))
     {
         cerr << argv[0] << ": batch can only be set with oneway or datagram" << endl;
@@ -266,11 +253,8 @@ run(const shared_ptr<Ice::Communicator>& communicator, int argc, char* argv[])
     }
     catch(const IceStorm::AlreadySubscribed&)
     {
-        // If we're manually setting the subscriber id ignore.
-        if(id.empty())
-        {
-            throw;
-        }
+        // This should never occur when subscribing with an UUID
+        assert(!id.empty());
         cout << "reactivating persistent subscriber" << endl;
     }
 

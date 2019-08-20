@@ -27,7 +27,6 @@
   <PropertyGroup Label="Globals">
     <ProjectName>locator</ProjectName>
     <ProjectGuid>{F6307AF8-3DD8-4C32-B2DC-0B0FBEF9E6A1}</ProjectGuid>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup>

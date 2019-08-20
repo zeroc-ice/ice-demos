@@ -36,8 +36,14 @@ public class Client
         com.zeroc.Glacier2.RouterPrx router = com.zeroc.Glacier2.RouterPrx.checkedCast(communicator.getDefaultRouter());
         com.zeroc.Glacier2.SessionPrx session;
 
+        //
+        // Loop until we have successfully create a session.
+        //
         while(true)
         {
+            //
+            // Prompt the user for the credentials to create the session.
+            //
             java.io.BufferedReader in = new java.io.BufferedReader(new java.io.InputStreamReader(System.in));
             System.out.println("This demo accepts any user-id / password combination.");
 
@@ -59,6 +65,10 @@ public class Client
                 continue;
             }
 
+            //
+            // Try to create a session and break the loop if succeed,
+            // otherwise try again after printing the error message.
+            //
             try
             {
                 session = router.createSession(id, pw);
@@ -81,10 +91,21 @@ public class Client
                           java.util.Optional.of(com.zeroc.Ice.ACMHeartbeat.HeartbeatAlways));
         connection.setCloseCallback(con -> System.out.println("The Glacier2 session has been destroyed."));
 
+        //
+        // The Glacier2 router routes bidirectional calls to objects in the client only
+        // when these objects have the correct Glacier2-issued category. The purpose of
+        // the callbackReceiverFakeIdent is to demonstrate this.
+        //
+        // The Identity name is not checked by the server any value can be used.
+        //
         com.zeroc.Ice.Identity callbackReceiverIdent =
-            new com.zeroc.Ice.Identity("callbackReceiver", router.getCategoryForClient());
+            new com.zeroc.Ice.Identity(java.util.UUID.randomUUID().toString(), router.getCategoryForClient());
 
-        com.zeroc.Ice.Identity callbackReceiverFakeIdent = new com.zeroc.Ice.Identity("fake", "callbackReceiver");
+        //
+        // Callback will never be called for a fake identity.
+        //
+        com.zeroc.Ice.Identity callbackReceiverFakeIdent =
+            new com.zeroc.Ice.Identity(java.util.UUID.randomUUID().toString(), "fake");
 
         com.zeroc.Ice.ObjectPrx base = communicator.propertyToProxy("Callback.Proxy");
         CallbackPrx twoway = CallbackPrx.checkedCast(base);
@@ -94,13 +115,16 @@ public class Client
         com.zeroc.Ice.ObjectAdapter adapter = communicator.createObjectAdapterWithRouter("", router);
         adapter.add(new CallbackReceiverI(), callbackReceiverFakeIdent);
 
-        CallbackReceiverPrx twowayR = CallbackReceiverPrx.uncheckedCast(
-                                                                        adapter.add(new CallbackReceiverI(), callbackReceiverIdent));
+        CallbackReceiverPrx twowayR = CallbackReceiverPrx.uncheckedCast(adapter.add(new CallbackReceiverI(),
+                                                                                    callbackReceiverIdent));
         adapter.activate();
         CallbackReceiverPrx onewayR = twowayR.ice_oneway();
 
         menu();
 
+        //
+        // Client REPL
+        //
         String line = null;
         String override = null;
         boolean fake = false;
@@ -126,18 +150,11 @@ public class Client
 
             if(line.equals("t"))
             {
-                java.util.Map<String, String> context = new java.util.HashMap<>();
-                context.put("_fwd", "t");
-                if(override != null)
-                {
-                    context.put("_ovrd", override);
-                }
-                twoway.initiateCallback(twowayR, context);
+                twoway.initiateCallback(twowayR);
             }
             else if(line.equals("o"))
             {
                 java.util.Map<String, String> context = new java.util.HashMap<>();
-                context.put("_fwd", "o");
                 if(override != null)
                 {
                     context.put("_ovrd", override);
