@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 class InterceptorI : Ice.DispatchInterceptor
 {
-    internal InterceptorI(Ice.Object servant, AuthenticatorI authenticator, HashSet<string> securedOperations)
+    internal InterceptorI(Ice.Object servant, AuthenticatorI authenticator,
+                          HashSet<string> securedOperations)
     {
         _servant = servant;
         _authenticator = authenticator;
@@ -27,7 +28,7 @@ class InterceptorI : Ice.DispatchInterceptor
             // Validate the client's access token before dispatching to the servant.
             // 'validateToken' throws an exception if the token is invalid or expired.
             //
-            string tokenValue = "";
+            string tokenValue;
             if(current.ctx.TryGetValue("accessToken", out tokenValue))
             {
                 _authenticator.validateToken(tokenValue);

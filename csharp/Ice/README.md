@@ -68,7 +68,7 @@ Demos in this directory:
 
 - [partial](./partial)
 
-  This demo ilustrates how to use partial classes and protected data members
+  This demo illustrates how to use partial classes and protected data members
   together to extend the generated code classes.
 
 - [plugin](./plugin)

@@ -3,20 +3,24 @@
 //
 
 import com.zeroc.demos.Ice.interceptor.Demo.*;
+import com.zeroc.Ice.Communicator;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 class Client
 {
     public static void main(String[] args)
     {
         int status = 0;
-        java.util.List<String> extraArgs = new java.util.ArrayList<String>();
+        List<String> extraArgs = new ArrayList<>();
 
         //
         // Try with resources block - communicator is automatically destroyed
         // at the end of this try block
         //
-        try(com.zeroc.Ice.Communicator communicator =
-            com.zeroc.Ice.Util.initialize(args, "config.client", extraArgs))
+        try(Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.client", extraArgs))
         {
             communicator.getProperties().setProperty("Ice.Default.Package", "com.zeroc.demos.Ice.interceptor");
 
@@ -34,7 +38,7 @@ class Client
         System.exit(status);
     }
 
-    private static int run(com.zeroc.Ice.Communicator communicator)
+    private static int run(Communicator communicator)
     {
         com.zeroc.Ice.ImplicitContext context = communicator.getImplicitContext();
         ThermostatPrx thermostat =
@@ -55,12 +59,10 @@ class Client
 
         menu();
 
-        java.io.BufferedReader in = new java.io.BufferedReader(new java.io.InputStreamReader(System.in));
-
-        String line = null;
-        do
+        try(BufferedReader in = new BufferedReader(new InputStreamReader(System.in)))
         {
-            try
+            String line = null;
+            do
             {
                 System.out.print("\n==> ");
                 System.out.flush();
@@ -88,6 +90,10 @@ class Client
                         catch(NumberFormatException ex)
                         {
                             System.err.println("Provided temperature is not a parsable float.");
+                        }
+                        catch(TokenExpiredException ex)
+                        {
+                            System.err.println("Failed to set temperature. Token expired!");
                         }
                         catch(AuthorizationException ex)
                         {
@@ -127,6 +133,10 @@ class Client
                         {
                             thermostat.shutdown();
                         }
+                        catch(TokenExpiredException ex)
+                        {
+                            System.err.println("Failed to shutdown thermostat. Token expired!");
+                        }
                         catch(AuthorizationException ex)
                         {
                             System.err.println("Failed to shutdown thermostat. Access denied!");
@@ -135,7 +145,7 @@ class Client
                     }
                     case "x":
                     {
-                        // Nothing to do
+                        // Nothing to do, the loop will exit on it's own.
                         break;
                     }
                     case "?":
@@ -150,13 +160,12 @@ class Client
                         break;
                     }
                 }
-            }
-            catch(java.io.IOException|com.zeroc.Ice.LocalException ex)
-            {
-                ex.printStackTrace();
-            }
+            } while(!line.equals("x"));
         }
-        while(!line.equals("x"));
+        catch(java.io.IOException|com.zeroc.Ice.LocalException ex)
+        {
+            ex.printStackTrace();
+        }
 
         return 0;
     }

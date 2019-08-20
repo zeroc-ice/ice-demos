@@ -8,7 +8,7 @@ class AuthenticatorI implements Authenticator
 {
     AuthenticatorI()
     {
-        _tokenStore = new java.util.HashMap<String, Long>();
+        _tokenStore = new java.util.HashMap<>();
         _rand = new java.security.SecureRandom();
     }
 
@@ -29,12 +29,13 @@ class AuthenticatorI implements Authenticator
         }
 
         String token = new String(tokenValue);
+        //
+        // By default tokens are valid for 1 hour after being issued.
+        //
+        long expireTime = System.currentTimeMillis() + (1000 * 60 * 60);
         synchronized(_tokenStore)
         {
-            //
-            // By default tokens are valid for 1 hour after being issued.
-            //
-            _tokenStore.put(token, System.currentTimeMillis() + TOKEN_LIFETIME);
+            _tokenStore.put(token, expireTime);
         }
         System.out.println("Issuing new access token. Token=" + token);
         return token;
@@ -50,24 +51,23 @@ class AuthenticatorI implements Authenticator
             //
             if(_tokenStore.containsKey(tokenValue))
             {
+                long expireTime = _tokenStore.get(tokenValue);
                 //
                 // Delete the token if it has expired.
                 //
-                if(_tokenStore.get(tokenValue) <= System.currentTimeMillis())
+                if(expireTime <= System.currentTimeMillis())
                 {
                     _tokenStore.remove(tokenValue);
                     throw new TokenExpiredException();
                 }
-                else
-                {
-                    return;
-                }
+            }
+            else
+            {
+                throw new AuthorizationException();
             }
         }
-        throw new AuthorizationException();
     }
 
-    public static final long TOKEN_LIFETIME = 1000 * 60 * 60;
     private final java.security.SecureRandom _rand;
     private final java.util.Map<String, Long> _tokenStore;
 }

@@ -15,8 +15,11 @@ long long getCurrentTimeMillis()
     return chrono::duration_cast<chrono::milliseconds>(duration).count();
 }
 
+//
+// Use a value generated from a random device to seed the RNG.
+//
 AuthenticatorI::AuthenticatorI() :
-    _rand(getCurrentTimeMillis())
+    _rand(random_device()())
 {
 }
 
@@ -26,19 +29,20 @@ AuthenticatorI::getToken(const Ice::Current&)
     //
     // Generate a random 32 character long token.
     //
+    const int tokenLength = 32;
     string chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    uniform_int_distribution<int> dist(0, static_cast<int>(chars.length()));
-    char tokenBuilder[32];
-    for(auto i = 0; i < 32; i++)
+    uniform_int_distribution<int> dist(0, static_cast<int>(chars.length() - 1));
+    char tokenBuilder[tokenLength];
+    for(auto i = 0; i < tokenLength; i++)
     {
         tokenBuilder[i] = chars.at(dist(_rand));
     }
 
-    string token = string(tokenBuilder);
+    string token(tokenBuilder, tokenLength);
     //
     // By default tokens are valid for 1 hour after being issued.
     //
-    long long expireTime = getCurrentTimeMillis() + TOKEN_LIFETIME;
+    long long expireTime = getCurrentTimeMillis() + (1000 * 60 * 60);
     {
         lock_guard<mutex> lock(_tokenLock);
         _tokenStore.insert(pair<string, long long>(token, expireTime));
@@ -66,10 +70,9 @@ AuthenticatorI::validateToken(const string& tokenValue)
             _tokenStore.erase(token);
             throw Demo::TokenExpiredException();
         }
-        else
-        {
-            return;
-        }
     }
-    throw Demo::AuthorizationException();
+    else
+    {
+        throw Demo::AuthorizationException();
+    }
 }

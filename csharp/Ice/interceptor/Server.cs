@@ -42,13 +42,14 @@ class Server
                     //
                     // List of all the operations to require authorization for.
                     //
-                    HashSet<String> securedOperations = new HashSet<String>(new String[] {"setTemp", "shutdown"});
+                    HashSet<string> securedOperations =
+                        new HashSet<string>(new String[] {"setTemp", "shutdown"});
                     //
                     // Create an object adapter for the thermostat.
                     //
                     var thermostatAdapter = communicator.createObjectAdapter("Thermostat");
-                    var thermostat = new ThermostatI();
-                    thermostatAdapter.add(new InterceptorI(thermostat, authenticator, securedOperations), Ice.Util.stringToIdentity("thermostat"));
+                    var interceptor = new InterceptorI(new ThermostatI(), authenticator, securedOperations);
+                    thermostatAdapter.add(interceptor, Ice.Util.stringToIdentity("thermostat"));
                     thermostatAdapter.activate();
 
                     communicator.waitForShutdown();

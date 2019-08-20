@@ -5,23 +5,25 @@
 #include <Ice/Ice.h>
 #include <ThermostatI.h>
 
+using namespace std;
+
 float
 ThermostatI::getTemp(const Ice::Current&)
 {
-    std::lock_guard<std::mutex> lock(_thermostatLock);
+    lock_guard<mutex> lock(_thermostatLock);
     return _temperature;
 }
 
 void
 ThermostatI::setTemp(float temp, const Ice::Current&)
 {
-    std::lock_guard<std::mutex> lock(_thermostatLock);
+    lock_guard<mutex> lock(_thermostatLock);
     _temperature = temp;
 }
 
 void
 ThermostatI::shutdown(const Ice::Current& current)
 {
-    std::cout << "Shutting down..." << std::endl;
+    cout << "Shutting down..." << endl;
     current.adapter->getCommunicator()->shutdown();
 }

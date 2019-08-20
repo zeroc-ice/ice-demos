@@ -18,8 +18,6 @@ public:
     virtual std::string getToken(const Ice::Current&) override;
     void validateToken(const std::string&);
 
-    static const long long TOKEN_LIFETIME = 1000 * 60 * 60;
-
 private:
 
     std::mt19937_64 _rand;

@@ -7,7 +7,7 @@ using System;
 
 class Client
 {
-    static int Main(String[] args)
+    static int Main(string[] args)
     {
         int status = 0;
 
@@ -42,14 +42,16 @@ class Client
     static int run(Ice.Communicator communicator)
     {
         var context = communicator.getImplicitContext();
-        var thermostat = ThermostatPrxHelper.checkedCast(communicator.propertyToProxy("Thermostat.Proxy"));
+        var thermostat =
+            ThermostatPrxHelper.checkedCast(communicator.propertyToProxy("Thermostat.Proxy"));
         if(thermostat == null)
         {
             Console.Error.WriteLine("invalid thermostat proxy");
             return 1;
         }
 
-        var authenticator = AuthenticatorPrxHelper.checkedCast(communicator.propertyToProxy("Authenticator.Proxy"));
+        var authenticator =
+            AuthenticatorPrxHelper.checkedCast(communicator.propertyToProxy("Authenticator.Proxy"));
         if(authenticator == null)
         {
             Console.Error.WriteLine("invalid authenticator proxy");
@@ -58,12 +60,12 @@ class Client
 
         menu();
 
-        string line = null;
-        do
+        try
         {
-            try
+            string line = null;
+            do
             {
-                Console.Out.Write("\n==>");
+                Console.Out.Write("\n==> ");
                 Console.Out.Flush();
                 line = Console.ReadLine();
 
@@ -85,6 +87,10 @@ class Client
                         catch(FormatException)
                         {
                             Console.Error.WriteLine("Provided temperature is not a parsable float.");
+                        }
+                        catch(TokenExpiredException)
+                        {
+                            Console.Error.WriteLine("Failed to set temperature. Token expired!");
                         }
                         catch(AuthorizationException)
                         {
@@ -124,6 +130,10 @@ class Client
                         {
                             thermostat.shutdown();
                         }
+                        catch(TokenExpiredException)
+                        {
+                            Console.Error.WriteLine("Failed to shutdown thermostat. Token expired!");
+                        }
                         catch(AuthorizationException)
                         {
                             Console.Error.WriteLine("Failed to shutdown thermostat. Access denied!");
@@ -132,7 +142,7 @@ class Client
                     }
                     case "x":
                     {
-                        // Nothing to do
+                        // Nothing to do, the loop will exit on it's own.
                         break;
                     }
                     case "?":
@@ -147,17 +157,16 @@ class Client
                         break;
                     }
                 }
-            }
-            catch(System.IO.IOException ex)
-            {
-                Console.Error.WriteLine(ex);
-            }
-            catch(Ice.LocalException ex)
-            {
-                Console.Error.WriteLine(ex);
-            }
+            } while(!line.Equals("x"));
         }
-        while(!line.Equals("x"));
+        catch(System.IO.IOException ex)
+        {
+            Console.Error.WriteLine(ex);
+        }
+        catch(Ice.LocalException ex)
+        {
+            Console.Error.WriteLine(ex);
+        }
 
         return 0;
     }

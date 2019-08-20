@@ -51,14 +51,16 @@ int
 run(const shared_ptr<Ice::Communicator>& communicator)
 {
     auto context = communicator->getImplicitContext();
-    auto thermostat = Ice::checkedCast<Demo::ThermostatPrx>(communicator->propertyToProxy("Thermostat.Proxy"));
+    auto thermostat =
+        Ice::checkedCast<Demo::ThermostatPrx>(communicator->propertyToProxy("Thermostat.Proxy"));
     if(!thermostat)
     {
         cerr << "invalid thermostat proxy" << endl;
         return 1;
     }
 
-    auto authenticator = Ice::checkedCast<Demo::AuthenticatorPrx>(communicator->propertyToProxy("Authenticator.Proxy"));
+    auto authenticator =
+        Ice::checkedCast<Demo::AuthenticatorPrx>(communicator->propertyToProxy("Authenticator.Proxy"));
     if(!authenticator)
     {
         cerr << "invalid authenticator proxy" << endl;
@@ -68,11 +70,11 @@ run(const shared_ptr<Ice::Communicator>& communicator)
     menu();
 
     string line;
-    do
+    try
     {
-        try
+        do
         {
-            cout << "\n==> ";
+            cout << "\n==> " << flush;
             getline(cin, line);
 
             if(line == "get-temp")
@@ -91,7 +93,11 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 }
                 catch(const invalid_argument&)
                 {
-                    cout << "Provided temperature is not a parsable float.";
+                    cout << "Provided temperature is not a parsable float." << endl;
+                }
+                catch(const Demo::TokenExpiredException&)
+                {
+                    cout << "Failed to set temperature. Access denied!" << endl;
                 }
                 catch(const Demo::AuthorizationException&)
                 {
@@ -128,6 +134,10 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 {
                     thermostat->shutdown();
                 }
+                catch(const Demo::TokenExpiredException&)
+                {
+                    cout << "Failed to shutdown thermostat. Access denied!" << endl;
+                }
                 catch(const Demo::AuthorizationException&)
                 {
                     cout << "Failed to shutdown thermostat. Access denied!" << endl;
@@ -135,7 +145,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
             }
             else if(line == "x")
             {
-                // Nothing to do
+                // Nothing to do, the loop will exit on it's own.
             }
             else if(line == "?")
             {
@@ -146,13 +156,12 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 cout << "Unknown command `" << line << "'" << endl;
                 menu();
             }
-        }
-        catch(const Ice::Exception& ex)
-        {
-            cerr << ex << endl;
-        }
+        } while(cin.good() && (line != "x"));
     }
-    while(cin.good() && (line != "x"));
+    catch(const Ice::Exception& ex)
+    {
+        cerr << ex << endl;
+    }
 
     return 0;
 }

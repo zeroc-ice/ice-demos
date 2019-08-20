@@ -2,7 +2,6 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <algorithm>
 #include <InterceptorI.h>
 
 using namespace std;

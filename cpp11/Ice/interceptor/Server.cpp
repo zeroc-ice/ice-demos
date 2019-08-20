@@ -61,7 +61,10 @@ int main(int argc, char* argv[])
             // Create an object adapter for the thermostat.
             //
             auto thermostatAdapter = communicator->createObjectAdapter("Thermostat");
-            thermostatAdapter->add(make_shared<InterceptorI>(make_shared<ThermostatI>(), authenticator, securedOperations), Ice::stringToIdentity("thermostat"));
+            auto thermostat = make_shared<ThermostatI>();
+            auto interceptor =
+                make_shared<InterceptorI>(move(thermostat), authenticator, move(securedOperations));
+            thermostatAdapter->add(interceptor, Ice::stringToIdentity("thermostat"));
             thermostatAdapter->activate();
 
             communicator->waitForShutdown();
