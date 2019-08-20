@@ -145,7 +145,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
             }
             else if(line == "x")
             {
-                // Nothing to do, the loop will exit on it's own.
+                // Nothing to do, the loop will exit on its own.
             }
             else if(line == "?")
             {

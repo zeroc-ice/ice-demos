@@ -142,7 +142,7 @@ class Client
                     }
                     case "x":
                     {
-                        // Nothing to do, the loop will exit on it's own.
+                        // Nothing to do, the loop will exit on its own.
                         break;
                     }
                     case "?":
