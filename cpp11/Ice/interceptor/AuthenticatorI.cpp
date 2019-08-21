@@ -19,6 +19,7 @@ AuthenticatorI::AuthenticatorI() :
 string
 AuthenticatorI::getToken(const Ice::Current&)
 {
+    lock_guard<mutex> lock(_tokenLock);
     //
     // Generate a random 32 character long token.
     //
@@ -36,10 +37,8 @@ AuthenticatorI::getToken(const Ice::Current&)
     // By default tokens are valid for 30 seconds after being issued.
     //
     auto expireTime = chrono::steady_clock::now() + chrono::seconds(30);
-    {
-        lock_guard<mutex> lock(_tokenLock);
-        _tokenStore.insert(pair<string, chrono::time_point<std::chrono::steady_clock>>(token, expireTime));
-    }
+    _tokenStore.insert(pair<string, chrono::time_point<std::chrono::steady_clock>>(token, expireTime));
+
     cout << "Issuing new access token. Token=" << token << endl;
     return token;
 }
