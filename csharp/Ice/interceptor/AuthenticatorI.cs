@@ -12,7 +12,7 @@ class AuthenticatorI : AuthenticatorDisp_
 {
     internal AuthenticatorI()
     {
-        _tokenStore = new Dictionary<string, long>();
+        _tokenStore = new Dictionary<string, DateTimeOffset>();
         _rand = new RNGCryptoServiceProvider();
     }
 
@@ -35,7 +35,7 @@ class AuthenticatorI : AuthenticatorDisp_
         //
         // By default tokens are valid for 1 hour after being issued.
         //
-        long expireTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + (1000 * 60 * 60);
+        DateTimeOffset expireTime = DateTimeOffset.UtcNow.AddHours(1);
         lock(_tokenStore)
         {
             _tokenStore.Add(token, expireTime);
@@ -51,13 +51,13 @@ class AuthenticatorI : AuthenticatorDisp_
             //
             // Check if the authenticator has issued any tokens with a matching value.
             //
-            long expireTime;
+            DateTimeOffset expireTime;
             if(_tokenStore.TryGetValue(tokenValue, out expireTime))
             {
                 //
                 // Delete the token if it has expired.
                 //
-                if(expireTime <= DateTimeOffset.UtcNow.ToUnixTimeMilliseconds())
+                if(expireTime <= DateTimeOffset.UtcNow)
                 {
                     _tokenStore.Remove(tokenValue);
                     throw new TokenExpiredException();
@@ -71,5 +71,5 @@ class AuthenticatorI : AuthenticatorDisp_
     }
 
     private readonly RNGCryptoServiceProvider _rand;
-    private readonly Dictionary<string, long> _tokenStore;
+    private readonly Dictionary<string, DateTimeOffset> _tokenStore;
 }

@@ -5,6 +5,7 @@
 #ifndef AUTHENTICATOR_I_H
 #define AUTHENTICATOR_I_H
 
+#include <chrono>
 #include <mutex>
 #include <random>
 #include <map>
@@ -21,7 +22,7 @@ public:
 private:
 
     std::mt19937_64 _rand;
-    std::map<std::string, long long> _tokenStore;
+    std::map<std::string, std::chrono::time_point<std::chrono::steady_clock>> _tokenStore;
     std::mutex _tokenLock;
 };
 

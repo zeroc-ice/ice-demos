@@ -2,18 +2,11 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <chrono>
 #include <iostream>
 #include <Ice/Ice.h>
 #include <AuthenticatorI.h>
 
 using namespace std;
-
-long long getCurrentTimeMillis()
-{
-    auto duration = chrono::system_clock::now().time_since_epoch();
-    return chrono::duration_cast<chrono::milliseconds>(duration).count();
-}
 
 //
 // Use a value generated from a random device to seed the RNG.
@@ -42,10 +35,10 @@ AuthenticatorI::getToken(const Ice::Current&)
     //
     // By default tokens are valid for 1 hour after being issued.
     //
-    long long expireTime = getCurrentTimeMillis() + (1000 * 60 * 60);
+    auto expireTime = chrono::steady_clock::now() + chrono::hours(1);
     {
         lock_guard<mutex> lock(_tokenLock);
-        _tokenStore.insert(pair<string, long long>(token, expireTime));
+        _tokenStore.insert(pair<string, chrono::time_point<std::chrono::steady_clock>>(token, expireTime));
     }
     cout << "Issuing new access token. Token=" << token << endl;
     return token;
@@ -65,7 +58,7 @@ AuthenticatorI::validateToken(const string& tokenValue)
         //
         // Delete the token if it has expired.
         //
-        if(token->second <= getCurrentTimeMillis())
+        if(token->second <= chrono::steady_clock::now())
         {
             _tokenStore.erase(token);
             throw Demo::TokenExpiredException();
