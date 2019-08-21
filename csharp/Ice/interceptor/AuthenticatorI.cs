@@ -33,9 +33,9 @@ class AuthenticatorI : AuthenticatorDisp_
 
         string token = new string(tokenValue);
         //
-        // By default tokens are valid for 1 hour after being issued.
+        // By default tokens are valid for 30 seconds after being issued.
         //
-        DateTimeOffset expireTime = DateTimeOffset.UtcNow.AddHours(1);
+        DateTimeOffset expireTime = DateTimeOffset.UtcNow.AddSeconds(30);
         lock(_tokenStore)
         {
             _tokenStore.Add(token, expireTime);

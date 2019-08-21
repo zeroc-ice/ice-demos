@@ -30,9 +30,9 @@ class AuthenticatorI implements Authenticator
 
         String token = new String(tokenValue);
         //
-        // By default tokens are valid for 1 hour after being issued.
+        // By default tokens are valid for 30 seconds after being issued.
         //
-        long expireTime = System.currentTimeMillis() + (1000 * 60 * 60);
+        long expireTime = System.currentTimeMillis() + (1000 * 30);
         synchronized(_tokenStore)
         {
             _tokenStore.put(token, expireTime);
