@@ -7,19 +7,19 @@ import com.zeroc.demos.Ice.interceptor.Demo.*;
 class ThermostatI implements Thermostat
 {
     @Override
-    public synchronized float getTemp(com.zeroc.Ice.Current current)
+    public float getTemp(com.zeroc.Ice.Current current)
     {
         return _temperature;
     }
 
     @Override
-    public synchronized void setTemp(float temp, com.zeroc.Ice.Current current)
+    public void setTemp(float temp, com.zeroc.Ice.Current current)
     {
         _temperature = temp;
     }
 
     @Override
-    public synchronized void shutdown(com.zeroc.Ice.Current current)
+    public void shutdown(com.zeroc.Ice.Current current)
     {
         System.out.println("Shutting down...");
         current.adapter.getCommunicator().shutdown();
