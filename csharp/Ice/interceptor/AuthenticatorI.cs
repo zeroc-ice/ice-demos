@@ -49,23 +49,23 @@ class AuthenticatorI : AuthenticatorDisp_
         lock(_tokenStore)
         {
             //
-            // Check if the authenticator has issued any tokens with a matching value.
+            // Remove any expired tokens.
             //
-            DateTimeOffset expireTime;
-            if(_tokenStore.TryGetValue(tokenValue, out expireTime))
+            foreach(string token in new List<String>(_tokenStore.Keys))
             {
-                //
-                // Delete the token if it has expired.
-                //
-                if(expireTime <= DateTimeOffset.UtcNow)
+                if(_tokenStore[token] <= DateTimeOffset.UtcNow)
                 {
-                    _tokenStore.Remove(tokenValue);
-                    throw new TokenExpiredException();
+                    _tokenStore.Remove(token);
                 }
             }
-            else
+
+            //
+            // We assume if the client passed a token, but there's no
+            // stored values matching it, that it must of expired.
+            //
+            if(!_tokenStore.ContainsKey(tokenValue))
             {
-                throw new AuthorizationException();
+                throw new TokenExpiredException();
             }
         }
     }

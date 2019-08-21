@@ -3,17 +3,23 @@
 //
 
 import com.zeroc.demos.Ice.interceptor.Demo.*;
+import com.zeroc.Ice.Current;
+import java.security.SecureRandom;
+import java.util.Iterator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 
 class AuthenticatorI implements Authenticator
 {
     AuthenticatorI()
     {
-        _tokenStore = new java.util.HashMap<>();
-        _rand = new java.security.SecureRandom();
+        _tokenStore = new HashMap<>();
+        _rand = new SecureRandom();
     }
 
     @Override
-    public String getToken(com.zeroc.Ice.Current current)
+    public String getToken(Current current)
     {
         //
         // Generate a random 32 character long token.
@@ -47,27 +53,27 @@ class AuthenticatorI implements Authenticator
         synchronized(_tokenStore)
         {
             //
-            // Check if the authenticator has issued any tokens with a matching value.
+            // Remove any expired tokens.
             //
-            if(_tokenStore.containsKey(tokenValue))
+            for(String token : new HashSet<String>(_tokenStore.keySet()))
             {
-                long expireTime = _tokenStore.get(tokenValue);
-                //
-                // Delete the token if it has expired.
-                //
-                if(expireTime <= System.currentTimeMillis())
+                if(_tokenStore.get(token) <= System.currentTimeMillis())
                 {
-                    _tokenStore.remove(tokenValue);
-                    throw new TokenExpiredException();
+                    _tokenStore.remove(token);
                 }
             }
-            else
+
+            //
+            // We assume if the client passed a token, but there's no
+            // stored values matching it, that it must of expired.
+            //
+            if(!_tokenStore.containsKey(tokenValue))
             {
-                throw new AuthorizationException();
+                throw new TokenExpiredException();
             }
         }
     }
 
-    private final java.security.SecureRandom _rand;
-    private final java.util.Map<String, Long> _tokenStore;
+    private final SecureRandom _rand;
+    private final Map<String, Long> _tokenStore;
 }

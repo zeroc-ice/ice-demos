@@ -50,22 +50,22 @@ AuthenticatorI::validateToken(const string& tokenValue)
     lock_guard<mutex> lock(_tokenLock);
 
     //
-    // Check if the authenticator has issued any tokens with a matching value.
+    // Remove any expired tokens.
     //
-    auto token = _tokenStore.find(tokenValue);
-    if(token != _tokenStore.end())
+    for(auto token = _tokenStore.begin(); token != _tokenStore.end();)
     {
-        //
-        // Delete the token if it has expired.
-        //
         if(token->second <= chrono::steady_clock::now())
         {
-            _tokenStore.erase(token);
-            throw Demo::TokenExpiredException();
+            token = _tokenStore.erase(token);
         }
     }
-    else
+
+    //
+    // We assume if the client passed a token, but there's no
+    // stored values matching it, that it must of expired.
+    //
+    if(_tokenStore.find(tokenValue) == _tokenStore.end())
     {
-        throw Demo::AuthorizationException();
+        throw Demo::TokenExpiredException();
     }
 }
