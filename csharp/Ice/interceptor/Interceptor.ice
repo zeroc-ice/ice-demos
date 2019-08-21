@@ -6,8 +6,13 @@
 
 module Demo
 {
-    exception AuthorizationException {}
-    exception TokenExpiredException extends AuthorizationException {}
+    exception AuthorizationException
+    {
+    }
+
+    exception TokenExpiredException extends AuthorizationException
+    {
+    }
 
     interface Authenticator
     {
