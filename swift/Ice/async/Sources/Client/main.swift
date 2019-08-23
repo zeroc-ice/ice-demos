@@ -6,7 +6,6 @@ import Foundation
 import Ice
 import PromiseKit
 
-
 // Automatically flush stdout
 setbuf(__stdoutp, nil)
 
