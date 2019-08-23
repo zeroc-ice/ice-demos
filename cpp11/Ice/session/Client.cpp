@@ -89,7 +89,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
             {
                 string s;
                 s += c;
-                size_t index = atoi(s.c_str());
+                size_t index = static_cast<size_t>(atoi(s.c_str()));
                 if(index < hellos.size())
                 {
                     hellos[index]->sayHello();

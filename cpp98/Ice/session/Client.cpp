@@ -100,7 +100,7 @@ run(const Ice::CommunicatorPtr& communicator)
             {
                 string s;
                 s += c;
-                vector<HelloPrx>::size_type index = atoi(s.c_str());
+                size_t index = static_cast<size_t>(atoi(s.c_str()));
                 if(index < hellos.size())
                 {
                     hellos[index]->sayHello();

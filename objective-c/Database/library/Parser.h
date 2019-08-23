@@ -10,6 +10,9 @@
 // Stuff for flex and bison
 //
 
+#pragma clang diagnostic ignored "-Wconversion"
+#pragma clang diagnostic ignored "-Wdocumentation"
+
 #define YYSTYPE ICE_STRONG_QUALIFIER NSMutableArray*
 #define YY_DECL int yylex(YYSTYPE* yylvalp)
 YY_DECL;
