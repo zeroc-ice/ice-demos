@@ -21,6 +21,8 @@ $demos = {
              "IceDiscovery/hello",
              "IceDiscovery/replication",
 
+ 	     "IceGrid/simple",
+
              "IceStorm/clock",
 
              "Manual/printer",
@@ -55,7 +57,8 @@ $demo_extra_frameworks = {
 }
 
 $demo_resources = {
-    "iOS/hello" => ["../certs"]
+    "iOS/hello" => ["../certs"],
+    "IceGrid/simple" => ["IceGrid/simple"] #For adding xml
 }
 
 desc "Generate Xcode projects required to build Ice for Swift Demo Applications"
