@@ -18,7 +18,7 @@ class HelloI: Hello {
 
     func shutdown(current: Current) throws {
         print(name + " shutting down...")
-        current.adapter?.getCommunicator().shutdown()
+        current.adapter!.getCommunicator().shutdown()
     }
 }
 
