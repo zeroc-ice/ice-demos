@@ -18,6 +18,7 @@
 		34F173000FE75375002B0E95 /* client.p12 in Resources */ = {isa = PBXBuildFile; fileRef = 34F172FE0FE75375002B0E95 /* client.p12 */; };
 		8229108B1464A85E003DC504 /* HelloController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8229108A1464A85E003DC504 /* HelloController.mm */; };
 		82D3968C1823207D000BA551 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 82D3968B1823207D000BA551 /* Images.xcassets */; };
+		A7CA654D22EA168100072ADA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7CA654C22EA168100072ADA /* QuartzCore.framework */; };
 		D84D770021C95527006BD1C5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D84D76FE21C95527006BD1C5 /* LaunchScreen.storyboard */; };
 		D84D770121C95527006BD1C5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D84D76FF21C95527006BD1C5 /* Main.storyboard */; };
 /* End PBXBuildFile section */
@@ -33,7 +34,7 @@
 				"$(DERIVED_FILE_DIR)/$(INPUT_FILE_BASE).h",
 				"$(DERIVED_FILE_DIR)/$(INPUT_FILE_BASE).cpp",
 			);
-			script = "/usr/local/bin/icebuilder --cpp";
+			script = "/usr/local/bin/icebuilder --cpp\n";
 		};
 /* End PBXBuildRule section */
 
@@ -53,6 +54,7 @@
 		8229108A1464A85E003DC504 /* HelloController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HelloController.mm; sourceTree = "<group>"; };
 		82D3968B1823207D000BA551 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A7CA654C22EA168100072ADA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		D84D76FE21C95527006BD1C5 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D84D76FF21C95527006BD1C5 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -62,6 +64,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A7CA654D22EA168100072ADA /* QuartzCore.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				14A268EB0E83FD0A00E562FE /* CFNetwork.framework in Frameworks */,
 				14A268EC0E83FD0A00E562FE /* Security.framework in Frameworks */,
@@ -128,6 +131,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A7CA654C22EA168100072ADA /* QuartzCore.framework */,
 				14A268E90E83FD0A00E562FE /* CFNetwork.framework */,
 				14A268EA0E83FD0A00E562FE /* Security.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
@@ -169,6 +173,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
@@ -236,7 +241,7 @@
 					"/usr/local/opt/ice/sdk/$(PLATFORM_NAME).sdk/usr/include",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LIBRARY_SEARCH_PATHS = "/usr/local/opt/ice/sdk/$(PLATFORM_NAME).sdk/usr/lib";
 				OTHER_CFLAGS = "-fobjc-arc-exceptions";
 				OTHER_CPLUSPLUSFLAGS = "";
@@ -263,7 +268,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = R78S3EAE59;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -277,7 +282,7 @@
 					"/usr/local/opt/ice/sdk/$(PLATFORM_NAME).sdk/usr/include",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LIBRARY_SEARCH_PATHS = "/usr/local/opt/ice/sdk/$(PLATFORM_NAME).sdk/usr/lib";
 				OTHER_CFLAGS = "-fobjc-arc-exceptions";
 				OTHER_CPLUSPLUSFLAGS = "";
@@ -288,7 +293,7 @@
 					"-lbz2",
 					"-liconv",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.zeroc.Hello-Cpp";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ReeceHumphreys.Hello-Cpp";
 				PRODUCT_NAME = hello;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
