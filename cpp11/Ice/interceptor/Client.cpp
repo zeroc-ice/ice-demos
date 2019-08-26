@@ -21,7 +21,6 @@ main(int argc, char* argv[])
         // and its dtor destroys this communicator.
         //
         Ice::CommunicatorHolder ich(argc, argv, "config.client");
-        auto communicator = ich.communicator();
 
         //
         // The communicator intialization removes all Ice-related arguments from argc/argv.
@@ -33,7 +32,7 @@ main(int argc, char* argv[])
         }
         else
         {
-            status = run(communicator);
+            status = run(ich.communicator());
         }
     }
     catch(const exception& ex)
@@ -97,7 +96,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 }
                 catch(const Demo::TokenExpiredException&)
                 {
-                    cout << "Failed to set temperature. Access denied!" << endl;
+                    cout << "Failed to set temperature. Token expired!" << endl;
                 }
                 catch(const Demo::AuthorizationException&)
                 {
@@ -136,7 +135,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 }
                 catch(const Demo::TokenExpiredException&)
                 {
-                    cout << "Failed to shutdown thermostat. Access denied!" << endl;
+                    cout << "Failed to shutdown thermostat. Token expired!" << endl;
                 }
                 catch(const Demo::AuthorizationException&)
                 {
@@ -156,7 +155,8 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 cout << "Unknown command `" << line << "'" << endl;
                 menu();
             }
-        } while(cin.good() && (line != "x"));
+        }
+        while(cin.good() && (line != "x"));
     }
     catch(const Ice::Exception& ex)
     {

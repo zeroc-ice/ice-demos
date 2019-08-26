@@ -24,8 +24,8 @@ After retrieving a token, the client adds it to the communicator's [Request Cont
 so it's transmitted alongside any requests it makes to the server.
 
 Internally, the server keeps a list of valid access tokens, and uses a [Dispatch Interceptor][1]
-to intercept incoming requests to the thermostat object. The interceptor ensures the request has
-a valid access token before letting it invoke any secured operations.
+to intercept incoming requests to the thermostat object. The interceptor ensures the
+request has a valid access token before letting it invoke any secured operations.
 
 [1]: https://doc.zeroc.com/ice/3.7/server-side-features/dispatch-interceptors
 [2]: https://doc.zeroc.com/ice/3.7/client-side-features/request-contexts

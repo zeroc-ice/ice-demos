@@ -160,7 +160,8 @@ class Client
                         break;
                     }
                 }
-            } while(!line.equals("x"));
+            }
+            while(!line.equals("x"));
         }
         catch(java.io.IOException|com.zeroc.Ice.LocalException ex)
         {

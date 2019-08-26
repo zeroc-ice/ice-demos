@@ -157,7 +157,8 @@ class Client
                         break;
                     }
                 }
-            } while(!line.Equals("x"));
+            }
+            while(!line.Equals("x"));
         }
         catch(System.IO.IOException ex)
         {
