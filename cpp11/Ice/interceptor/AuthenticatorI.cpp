@@ -24,15 +24,14 @@ AuthenticatorI::getToken(const Ice::Current&)
     // Generate a random 32 character long token.
     //
     const int tokenLength = 32;
-    string chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    static string chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     uniform_int_distribution<int> dist(0, static_cast<int>(chars.length() - 1));
-    char tokenBuilder[tokenLength];
-    for(auto i = 0; i < tokenLength; i++)
+    string token(tokenLength, '\0');
+    for(auto& c : token)
     {
-        tokenBuilder[i] = chars.at(dist(_rand));
+        c = chars.at(dist(_rand));
     }
 
-    string token(tokenBuilder, tokenLength);
     //
     // By default tokens are valid for 30 seconds after being issued.
     //
