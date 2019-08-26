@@ -19,6 +19,9 @@ class Client
             //
             using(var communicator = Ice.Util.initialize(ref args, "config.client"))
             {
+                //
+                // The communicator intialization removes all Ice-related arguments from args.
+                //
                 if(args.Length > 0)
                 {
                     Console.Error.WriteLine("too many arguments");

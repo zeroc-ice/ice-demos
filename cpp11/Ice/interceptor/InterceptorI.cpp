@@ -19,7 +19,7 @@ InterceptorI::dispatch(Ice::Request& request)
     //
     // Check if the operation requires authorization to invoke.
     //
-    if(_securedOperations.count(current.operation) > 0)
+    if(_securedOperations.find(current.operation) != _securedOperations.end())
     {
         //
         // Validate the client's access token before dispatching to the servant.

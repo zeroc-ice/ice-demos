@@ -31,6 +31,10 @@ class AuthenticatorI implements Authenticator
 
         for(int i = 0; i < bytes.length; i++)
         {
+            //
+            // Since bytes are signed in java, we need to shift their values
+            // up by 128 (Byte.MIN_VALUE) before using their remainder as indexes.
+            //
             tokenValue[i] = chars.charAt((bytes[i] + 128) % chars.length());
         }
 
