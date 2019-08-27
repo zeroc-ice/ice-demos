@@ -4,6 +4,7 @@
 
 import com.zeroc.demos.Ice.interceptor.Demo.*;
 import com.zeroc.Ice.Communicator;
+import com.zeroc.Ice.ImplicitContext;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -40,7 +41,6 @@ class Client
 
     private static int run(Communicator communicator)
     {
-        com.zeroc.Ice.ImplicitContext context = communicator.getImplicitContext();
         ThermostatPrx thermostat =
             ThermostatPrx.checkedCast(communicator.propertyToProxy("Thermostat.Proxy"));
         if(thermostat == null)
@@ -48,7 +48,6 @@ class Client
             System.err.println("invalid thermostat proxy");
             return 1;
         }
-
         AuthenticatorPrx authenticator =
             AuthenticatorPrx.checkedCast(communicator.propertyToProxy("Authenticator.Proxy"));
         if(authenticator == null)
@@ -112,11 +111,12 @@ class Client
                         // Add the access token to the communicator's context, so it will be
                         // sent along with every request made through it.
                         //
-                        context.put("accessToken", token);
+                        communicator.getImplicitContext().put("accessToken", token);
                         break;
                     }
                     case "release-token":
                     {
+                        ImplicitContext context = communicator.getImplicitContext();
                         if(context.containsKey("accessToken"))
                         {
                             context.remove("accessToken");

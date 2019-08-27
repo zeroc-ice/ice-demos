@@ -47,6 +47,10 @@ int main(int argc, char* argv[])
         {
             //
             // Create an object adapter for the authenticator.
+            // We use separate adapters to allow for fine-grained control of the endpoints;
+            // Only secure endpoints for the authenticator, and non-secure endpoints for
+            // the thermostat. This demo doesn't make use of this, but is implemented this
+            // way regardless to illustrate best practices.
             //
             auto authenticatorAdapter = communicator->createObjectAdapter("Authenticator");
             auto authenticator = make_shared<AuthenticatorI>();
@@ -62,8 +66,7 @@ int main(int argc, char* argv[])
             //
             auto thermostatAdapter = communicator->createObjectAdapter("Thermostat");
             auto thermostat = make_shared<ThermostatI>();
-            auto interceptor =
-                make_shared<InterceptorI>(move(thermostat), authenticator, move(securedOperations));
+            auto interceptor = make_shared<InterceptorI>(move(thermostat), authenticator, move(securedOperations));
             thermostatAdapter->add(interceptor, Ice::stringToIdentity("thermostat"));
             thermostatAdapter->activate();
 

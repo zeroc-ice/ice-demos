@@ -10,8 +10,7 @@ import java.util.Set;
 
 class InterceptorI extends com.zeroc.Ice.DispatchInterceptor
 {
-    InterceptorI(com.zeroc.Ice.Object servant, AuthenticatorI authenticator,
-                 Set<String> securedOperations)
+    InterceptorI(com.zeroc.Ice.Object servant, AuthenticatorI authenticator, Set<String> securedOperations)
     {
         _servant = servant;
         _authenticator = authenticator;

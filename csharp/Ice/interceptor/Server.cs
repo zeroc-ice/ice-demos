@@ -33,6 +33,10 @@ class Server
                 {
                     //
                     // Create an object adapter for the authenticator.
+                    // We use separate adapters to allow for fine-grained control of the endpoints;
+                    // Only secure endpoints for the authenticator, and non-secure endpoints for
+                    // the thermostat. This demo doesn't make use of this, but is implemented this
+                    // way regardless to illustrate best practices.
                     //
                     var authenticatorAdapter = communicator.createObjectAdapter("Authenticator");
                     var authenticator = new AuthenticatorI();
@@ -42,8 +46,7 @@ class Server
                     //
                     // List of all the operations to require authorization for.
                     //
-                    HashSet<string> securedOperations =
-                        new HashSet<string>(new String[] {"setTemp", "shutdown"});
+                    HashSet<string> securedOperations = new HashSet<string>(new String[] {"setTemp", "shutdown"});
                     //
                     // Create an object adapter for the thermostat.
                     //

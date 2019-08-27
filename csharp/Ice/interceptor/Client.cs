@@ -44,17 +44,13 @@ class Client
 
     static int run(Ice.Communicator communicator)
     {
-        var context = communicator.getImplicitContext();
-        var thermostat =
-            ThermostatPrxHelper.checkedCast(communicator.propertyToProxy("Thermostat.Proxy"));
+        var thermostat = ThermostatPrxHelper.checkedCast(communicator.propertyToProxy("Thermostat.Proxy"));
         if(thermostat == null)
         {
             Console.Error.WriteLine("invalid thermostat proxy");
             return 1;
         }
-
-        var authenticator =
-            AuthenticatorPrxHelper.checkedCast(communicator.propertyToProxy("Authenticator.Proxy"));
+        var authenticator = AuthenticatorPrxHelper.checkedCast(communicator.propertyToProxy("Authenticator.Proxy"));
         if(authenticator == null)
         {
             Console.Error.WriteLine("invalid authenticator proxy");
@@ -112,11 +108,12 @@ class Client
                         // Add the access token to the communicator's context, so it will be
                         // sent along with every request made through it.
                         //
-                        context.put("accessToken", token);
+                        communicator.getImplicitContext().put("accessToken", token);
                         break;
                     }
                     case "release-token":
                     {
+                        var context = communicator.getImplicitContext();
                         if(context.containsKey("accessToken"))
                         {
                             context.remove("accessToken");

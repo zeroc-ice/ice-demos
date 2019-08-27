@@ -49,7 +49,6 @@ void menu();
 int
 run(const shared_ptr<Ice::Communicator>& communicator)
 {
-    auto context = communicator->getImplicitContext();
     auto thermostat =
         Ice::checkedCast<Demo::ThermostatPrx>(communicator->propertyToProxy("Thermostat.Proxy"));
     if(!thermostat)
@@ -57,7 +56,6 @@ run(const shared_ptr<Ice::Communicator>& communicator)
         cerr << "invalid thermostat proxy" << endl;
         return 1;
     }
-
     auto authenticator =
         Ice::checkedCast<Demo::AuthenticatorPrx>(communicator->propertyToProxy("Authenticator.Proxy"));
     if(!authenticator)
@@ -114,10 +112,11 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 // Add the access token to the communicator's context, so it will be
                 // sent along with every request made through it.
                 //
-                context->put("accessToken", token);
+                communicator->getImplicitContext()->put("accessToken", token);
             }
             else if(line == "release-token")
             {
+                auto context = communicator->getImplicitContext();
                 if(context->containsKey("accessToken"))
                 {
                     context->remove("accessToken");
