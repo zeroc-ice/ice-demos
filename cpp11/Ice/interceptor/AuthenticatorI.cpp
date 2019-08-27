@@ -50,7 +50,7 @@ AuthenticatorI::validateToken(const string& tokenValue)
     //
     // Remove any expired tokens.
     //
-    for(auto token = _tokenStore.begin(); token != _tokenStore.end();)
+    for(auto token = _tokenStore.begin(); token != _tokenStore.end(); token++)
     {
         if(token->second <= chrono::steady_clock::now())
         {
