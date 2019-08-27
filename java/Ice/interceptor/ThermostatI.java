@@ -8,13 +8,13 @@ import com.zeroc.Ice.Current;
 class ThermostatI implements Thermostat
 {
     @Override
-    public float getTemp(Current current)
+    public synchronized float getTemp(Current current)
     {
         return _temperature;
     }
 
     @Override
-    public void setTemp(float temp, Current current)
+    public synchronized void setTemp(float temp, Current current)
     {
         _temperature = temp;
     }
@@ -27,5 +27,5 @@ class ThermostatI implements Thermostat
     }
 
     // Temperature in Celsius.
-    private volatile float _temperature = 23.5f;
+    private float _temperature = 23.5f;
 }
