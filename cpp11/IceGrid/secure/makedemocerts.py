@@ -55,10 +55,10 @@ except Exception as ex:
     print("warning: couldn't generate JKS certificate `ca.jks':\n" + str(ex))
 
 # Create and the certificates for the different components
-factory.create("Master", dns="localhost").save(os.path.join("certs", "master.p12"))
-factory.create("Slave", dns="localhost").save(os.path.join("certs", "slave.p12"))
-factory.create("Node", dns="localhost").save(os.path.join("certs", "node.p12"))
-factory.create("Glacier2", dns="localhost").save(os.path.join("certs", "glacier2.p12"))
-factory.create("Server", dns="localhost").save(os.path.join("certs", "server.p12"))
+factory.create("Master", dns="localhost", extendedKeyUsage="serverAuth").save(os.path.join("certs", "master.p12"))
+factory.create("Slave", dns="localhost", extendedKeyUsage="serverAuth").save(os.path.join("certs", "slave.p12"))
+factory.create("Node", dns="localhost", extendedKeyUsage="serverAuth").save(os.path.join("certs", "node.p12"))
+factory.create("Glacier2", dns="localhost", extendedKeyUsage="serverAuth").save(os.path.join("certs", "glacier2.p12"))
+factory.create("Server", dns="localhost", extendedKeyUsage="serverAuth").save(os.path.join("certs", "server.p12"))
 
 factory.destroy()
