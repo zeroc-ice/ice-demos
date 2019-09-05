@@ -125,6 +125,7 @@ func run() -> Int32 {
                 exit(0)
             } catch {
                 t.suspend()
+                print("Error: \(error)\n")
                 communicator.destroy()
                 exit(1)
             }
