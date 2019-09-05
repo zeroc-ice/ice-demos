@@ -18,7 +18,7 @@ $1:: $(PROJECT)
                    -sdk $2 $4
 endef
 
-demos.xcodeproj: Rakefile carthage
+demos.xcodeproj: Rakefile | carthage
 	rake
 
 all:: demos
