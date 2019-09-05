@@ -3,6 +3,7 @@
 //
 
 import Foundation
+import PromiseKit
 import Ice
 import IceStorm
 
@@ -31,13 +32,18 @@ func run() -> Int32 {
             communicator.destroy()
         }
 
-        let sigintSource = DispatchSource.makeSignalSource(signal: SIGINT,
-                                                           queue: DispatchQueue.global())
-        let sigtermSource = DispatchSource.makeSignalSource(signal: SIGTERM,
-                                                            queue: DispatchQueue.global())
-        sigintSource.setEventHandler { communicator.destroy() }
-        sigtermSource.setEventHandler { communicator.destroy() }
+        let sigintSource = DispatchSource.makeSignalSource(signal: SIGINT, queue: DispatchQueue.main)
+        sigintSource.setEventHandler {
+            communicator.destroy()
+            exit(0)
+        }
         sigintSource.resume()
+
+        let sigtermSource = DispatchSource.makeSignalSource(signal: SIGTERM, queue: DispatchQueue.main)
+        sigtermSource.setEventHandler {
+            communicator.destroy()
+            exit(0)
+        }
         sigtermSource.resume()
 
         var option: Option = .none
@@ -111,14 +117,19 @@ func run() -> Int32 {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/YYYY HH:mm:ss"
 
-        do {
-            while true {
-                try clock.tick(dateFormatter.string(from: Date()))
-                Thread.sleep(forTimeInterval: TimeInterval(1))
+        let t = DispatchSource.makeTimerSource()
+        t.schedule(deadline: .now(), repeating: .seconds(1))
+        t.setEventHandler {
+            firstly {
+                clock.tickAsync(dateFormatter.string(from: Date()))
+            }.catch { _ in
+                t.suspend()
+                communicator.destroy()
+                exit(1)
             }
-        } catch is Ice.CommunicatorDestroyedException {} // Ignore
-
-        return 0
+        }
+        t.activate()
+        Dispatch.dispatchMain()
     } catch {
         print("Error: \(error)\n")
         return 1
