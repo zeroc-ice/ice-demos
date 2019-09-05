@@ -35,14 +35,12 @@ func run() -> Int32 {
         let sigintSource = DispatchSource.makeSignalSource(signal: SIGINT, queue: DispatchQueue.main)
         sigintSource.setEventHandler {
             communicator.destroy()
-            exit(0)
         }
         sigintSource.resume()
 
         let sigtermSource = DispatchSource.makeSignalSource(signal: SIGTERM, queue: DispatchQueue.main)
         sigtermSource.setEventHandler {
             communicator.destroy()
-            exit(0)
         }
         sigtermSource.resume()
 
@@ -120,9 +118,12 @@ func run() -> Int32 {
         let t = DispatchSource.makeTimerSource()
         t.schedule(deadline: .now(), repeating: .seconds(1))
         t.setEventHandler {
-            firstly {
-                clock.tickAsync(dateFormatter.string(from: Date()))
-            }.catch { _ in
+            do {
+                try clock.tick(dateFormatter.string(from: Date()))
+            } catch is CommunicatorDestroyedException {
+                t.suspend()
+                exit(0)
+            } catch {
                 t.suspend()
                 communicator.destroy()
                 exit(1)
