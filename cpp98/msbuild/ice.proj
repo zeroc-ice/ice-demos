@@ -48,6 +48,7 @@
         <CppPlatformToolset Include="v120"/>
         <CppPlatformToolset Include="v140"/>
         <CppPlatformToolset Include="v141"/>
+        <CppPlatformToolset Include="v142"/>
     </ItemGroup>
 
     <!--
