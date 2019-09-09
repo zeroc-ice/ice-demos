@@ -28,7 +28,7 @@ TopicManager.Proxy=DemoIceStorm/TopicManager:default -h localhost -p 10000
 #
 # IceMX configuration.
 #
-#Ice.Admin.Endpoints=tcp -h localhost -p 10002
+#Ice.Admin.Endpoints=tcp -h localhost -p 10004
 Ice.Admin.InstanceName=subscriber
 IceMX.Metrics.Debug.GroupBy=id
 IceMX.Metrics.ByParent.GroupBy=parent

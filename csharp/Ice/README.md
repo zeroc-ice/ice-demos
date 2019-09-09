@@ -34,6 +34,12 @@ Demos in this directory:
   well as how to invoke oneway operations, use datagrams, secure
   invocations, and how to use batched invocations.
 
+- [interceptor](./interceptor)
+
+  This demo shows how to use dispatch interceptors to secure operations
+  with a token based authentication system, in addition to the use of
+  implicit contexts.
+
 - [invoke](./invoke)
 
   This demo illustrates the use of the Ice streaming API.
@@ -62,7 +68,7 @@ Demos in this directory:
 
 - [partial](./partial)
 
-  This demo ilustrates how to use partial classes and protected data members
+  This demo illustrates how to use partial classes and protected data members
   together to extend the generated code classes.
 
 - [plugin](./plugin)
