@@ -30,9 +30,7 @@ module Demo
         // the exception as if the operation threw it itself, hence why the
         // exception must be specified here.
         //
-        idempotent void setTemp(float temp)
-            throws AuthorizationException;
-        void shutdown()
-            throws AuthorizationException;
+        idempotent void setTemp(float temp) throws AuthorizationException;
+        void shutdown() throws AuthorizationException;
     }
 }
