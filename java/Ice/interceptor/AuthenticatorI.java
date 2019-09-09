@@ -29,7 +29,7 @@ class AuthenticatorI implements Authenticator
         byte[] bytes = new byte[tokenValue.length];
         _rand.nextBytes(bytes);
 
-        for(int i = 0; i < bytes.length; i++)
+        for(int i = 0; i < bytes.length; ++i)
         {
             //
             // Since bytes are signed in java, we need to shift their values
@@ -47,7 +47,6 @@ class AuthenticatorI implements Authenticator
         {
             _tokenStore.put(token, expireTime);
         }
-        System.out.println("Issuing new access token. Token=" + token);
         return token;
     }
 

@@ -26,7 +26,7 @@ class AuthenticatorI : AuthenticatorDisp_
         byte[] bytes = new byte[tokenValue.Length];
         _rand.GetBytes(bytes);
 
-        for(var i = 0; i < bytes.Length; i++)
+        for(var i = 0; i < bytes.Length; ++i)
         {
             tokenValue[i] = chars[bytes[i] % chars.Length];
         }
@@ -40,7 +40,6 @@ class AuthenticatorI : AuthenticatorDisp_
         {
             _tokenStore.Add(token, expireTime);
         }
-        Console.Out.WriteLine("Issuing new access token. Token=" + token);
         return token;
     }
 

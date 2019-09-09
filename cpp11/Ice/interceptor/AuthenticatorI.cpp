@@ -37,8 +37,6 @@ AuthenticatorI::getToken(const Ice::Current&)
     //
     auto expireTime = chrono::steady_clock::now() + chrono::seconds(30);
     _tokenStore.insert(pair<string, chrono::time_point<std::chrono::steady_clock>>(token, expireTime));
-
-    cout << "Issuing new access token. Token=" << token << endl;
     return token;
 }
 
@@ -50,11 +48,15 @@ AuthenticatorI::validateToken(const string& tokenValue)
     //
     // Remove any expired tokens.
     //
-    for(auto token = _tokenStore.begin(); token != _tokenStore.end(); token++)
+    for(auto token = _tokenStore.begin(); token != _tokenStore.end();)
     {
         if(token->second <= chrono::steady_clock::now())
         {
             token = _tokenStore.erase(token);
+        }
+        else
+        {
+            ++token;
         }
     }
 
