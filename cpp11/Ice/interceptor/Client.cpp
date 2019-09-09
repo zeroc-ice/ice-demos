@@ -74,11 +74,11 @@ run(const shared_ptr<Ice::Communicator>& communicator)
             cout << "\n==> " << flush;
             getline(cin, line);
 
-            if(line == "get-temp")
+            if(line == "1")
             {
                 cout << "Current temperature is " << thermostat->getTemp() << endl;
             }
-            else if(line == "set-temp")
+            else if(line == "2")
             {
                 try
                 {
@@ -101,7 +101,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                     cout << "Failed to set temperature. Access denied!" << endl;
                 }
             }
-            else if(line == "get-token")
+            else if(line == "3")
             {
                 //
                 // Request an access token from the server's authentication object.
@@ -114,7 +114,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 //
                 communicator->getImplicitContext()->put("accessToken", token);
             }
-            else if(line == "release-token")
+            else if(line == "4")
             {
                 auto context = communicator->getImplicitContext();
                 if(context->containsKey("accessToken"))
@@ -126,7 +126,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                     cout << "There is no access token to release." << endl;
                 }
             }
-            else if(line == "shutdown")
+            else if(line == "s")
             {
                 try
                 {
@@ -170,11 +170,11 @@ menu()
 {
     cout <<
         "usage:\n"
-        "get-temp: gets the current temperature\n"
-        "set-temp: sets the temperature\n"
-        "get-token: gets a new token from the server\n"
-        "release-token: releases the currently held token\n"
-        "shutdown: shutdown server\n"
+        "1: gets the current temperature\n"
+        "2: sets the temperature\n"
+        "3: gets a new token from the server\n"
+        "4: releases the currently held token\n"
+        "s: shutdown server\n"
         "x: exit\n"
         "?: help\n";
 }

@@ -70,12 +70,12 @@ class Client
 
                 switch(line)
                 {
-                    case "get-temp":
+                    case "1":
                     {
                         Console.Out.WriteLine("Current temperature is " + thermostat.getTemp());
                         break;
                     }
-                    case "set-temp":
+                    case "2":
                     {
                         try
                         {
@@ -97,7 +97,7 @@ class Client
                         }
                         break;
                     }
-                    case "get-token":
+                    case "3":
                     {
                         //
                         // Request an access token from the server's authentication object.
@@ -111,7 +111,7 @@ class Client
                         communicator.getImplicitContext().put("accessToken", token);
                         break;
                     }
-                    case "release-token":
+                    case "4":
                     {
                         var context = communicator.getImplicitContext();
                         if(context.containsKey("accessToken"))
@@ -124,7 +124,7 @@ class Client
                         }
                         break;
                     }
-                    case "shutdown":
+                    case "s":
                     {
                         try
                         {
@@ -176,11 +176,11 @@ class Client
     {
         Console.Out.Write(
             "usage:\n" +
-            "get-temp: gets the current temperature\n" +
-            "set-temp: sets the temperature\n" +
-            "get-token: gets a new token from the server\n" +
-            "release-token: releases the currently held token\n" +
-            "shutdown: shutdown server\n" +
+            "1: gets the current temperature\n" +
+            "2: sets the temperature\n" +
+            "3: gets a new token from the server\n" +
+            "4: releases the currently held token\n" +
+            "s: shutdown server\n" +
             "x: exit\n" +
             "?: help\n");
     }
