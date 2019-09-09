@@ -31,12 +31,14 @@ class Server
                 }
                 else
                 {
+                    // We use separate object adapters for the authenticator and the thermostat in
+                    // this demo, so each object has its own endpoints. This way accessibility can
+                    // be fined tuned on each object separately, through firewall rules for example.
+                    // It's implemented this way to illustrate best practices, even if the demo
+                    // doesn't make use of it for simplicity's sake.
+
                     //
                     // Create an object adapter for the authenticator.
-                    // We use separate adapters to allow for fine-grained control of the endpoints;
-                    // Only secure endpoints for the authenticator, and non-secure endpoints for
-                    // the thermostat. This demo doesn't make use of this, but is implemented this
-                    // way regardless to illustrate best practices.
                     //
                     var authenticatorAdapter = communicator.createObjectAdapter("Authenticator");
                     var authenticator = new AuthenticatorI();
@@ -44,7 +46,7 @@ class Server
                     authenticatorAdapter.activate();
 
                     //
-                    // List of all the operations to require authorization for.
+                    // Set of all the operations to require authorization for.
                     //
                     HashSet<string> securedOperations = new HashSet<string>(new String[] {"setTemp", "shutdown"});
                     //
