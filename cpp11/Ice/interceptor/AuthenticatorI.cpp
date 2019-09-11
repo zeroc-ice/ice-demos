@@ -25,7 +25,7 @@ AuthenticatorI::getToken(const Ice::Current&)
     //
     const int tokenLength = 32;
     static string chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    uniform_int_distribution<int> dist(0, static_cast<int>(chars.length() - 1));
+    uniform_int_distribution<size_t> dist(0, chars.length() - 1);
     string token(tokenLength, '\0');
     for(auto& c : token)
     {
