@@ -36,7 +36,7 @@ AuthenticatorI::getToken(const Ice::Current&)
     // By default tokens are valid for 30 seconds after being issued.
     //
     auto expireTime = chrono::steady_clock::now() + chrono::seconds(30);
-    _tokenStore.insert(pair<string, chrono::time_point<std::chrono::steady_clock>>(token, expireTime));
+    _tokenStore.insert(make_pair(token, expireTime));
     return token;
 }
 
