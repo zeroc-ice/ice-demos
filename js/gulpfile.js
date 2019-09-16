@@ -340,7 +340,7 @@ gulp.task("run", gulp.series("build",
                              () =>
                              {
                                  httpServer();
-                                 return gulp.src(__filename).pipe(open({uri: "http://127.0.0.1:8080/index.html"}));
+                                 return gulp.src(__filename).pipe(open({uri: "http://localhost:8080/index.html"}));
                              }));
 
 gulp.task("default", gulp.series("build"));
