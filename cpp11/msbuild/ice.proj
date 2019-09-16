@@ -46,6 +46,9 @@
         <CppPlatformToolset Include="v140"/>
         <CppPlatformToolset Include="v141"/>
         <CppPlatformToolset Include="v142"/>
+
+        <UWPPlatformToolset Include="v140"/>
+        <UWPPlatformToolset Include="v141"/>
     </ItemGroup>
 
     <!--
@@ -87,13 +90,13 @@
             DependsOnTargets="RemovePackages;GetNuGet"
             Condition="Exists('$(IceHome)\cpp')">
 
-        <Copy SourceFiles="$(IceHome)\cpp\msbuild\zeroc.ice.uwp.%(CppPlatformToolset.Identity).props"
-              DestinationFolder="$(MSBuildThisFileDirectory)..\packages\zeroc.ice.uwp.%(CppPlatformToolset.Identity).$(IceVersion)\build\native\" />
+        <Copy SourceFiles="$(IceHome)\cpp\msbuild\zeroc.ice.uwp.%(UWPPlatformToolset.Identity).props"
+              DestinationFolder="$(MSBuildThisFileDirectory)..\packages\zeroc.ice.uwp.%(UWPPlatformToolset.Identity).$(IceVersion)\build\native\" />
 
-        <Copy SourceFiles="$(IceHome)\cpp\msbuild\zeroc.ice.uwp.%(CppPlatformToolset.Identity).targets"
-              DestinationFiles="$(MSBuildThisFileDirectory)..\packages\zeroc.ice.uwp.%(CppPlatformToolset.Identity).x86.$(IceVersion)\build\native\zeroc.ice.uwp.%(CppPlatformToolset.Identity).x86.targets" />
-        <Copy SourceFiles="$(IceHome)\cpp\msbuild\zeroc.ice.uwp.%(CppPlatformToolset.Identity).targets"
-              DestinationFiles="$(MSBuildThisFileDirectory)..\packages\zeroc.ice.uwp.%(CppPlatformToolset.Identity).x64.$(IceVersion)\build\native\zeroc.ice.uwp.%(CppPlatformToolset.Identity).x64.targets" />
+        <Copy SourceFiles="$(IceHome)\cpp\msbuild\zeroc.ice.uwp.%(UWPPlatformToolset.Identity).targets"
+              DestinationFiles="$(MSBuildThisFileDirectory)..\packages\zeroc.ice.uwp.%(UWPPlatformToolset.Identity).x86.$(IceVersion)\build\native\zeroc.ice.uwp.%(UWPPlatformToolset.Identity).x86.targets" />
+        <Copy SourceFiles="$(IceHome)\cpp\msbuild\zeroc.ice.uwp.%(UWPPlatformToolset.Identity).targets"
+              DestinationFiles="$(MSBuildThisFileDirectory)..\packages\zeroc.ice.uwp.%(UWPPlatformToolset.Identity).x64.$(IceVersion)\build\native\zeroc.ice.uwp.%(UWPPlatformToolset.Identity).x64.targets" />
         <Exec Command="rmdir /s /q $(MSBuildThisFileDirectory)..\packages\zeroc.ice.$(DefaultPlatformToolset).$(IceVersion)"
               Condition="Exists('$(MSBuildThisFileDirectory)..\packages\zeroc.ice.$(DefaultPlatformToolset).$(IceVersion)')"/>
 
