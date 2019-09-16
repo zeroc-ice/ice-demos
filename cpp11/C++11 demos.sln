@@ -243,8 +243,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IceStorm", "IceStorm", "{3E
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "callback", "callback", "{D8064124-0D75-4576-A09B-319C7C559B2C}"
+	ProjectSection(SolutionItems) = preProject
+		Glacier2\callback\README.md = Glacier2\callback\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "simpleChat", "simpleChat", "{E01B000E-6F76-485F-9C4D-F0651A005F08}"
+	ProjectSection(SolutionItems) = preProject
+		Glacier2\simpleChat\README.md = Glacier2\simpleChat\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "hello", "hello", "{F808FE5F-CABC-49E9-845B-255BF48F6423}"
 	ProjectSection(SolutionItems) = preProject
@@ -1225,5 +1231,8 @@ Global
 		{E0D028F5-7111-465F-B7AB-3E1F60BC29D7} = {44504257-9751-4CA1-AF97-86995FE49C45}
 		{B1F08922-D984-49AD-ADC3-4A77D13A7E1F} = {60A225B4-F05B-412D-82B6-50B9A1539B6A}
 		{7A216D2F-18DC-415A-96E7-A417B1DC7FB4} = {B1F08922-D984-49AD-ADC3-4A77D13A7E1F}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {637833EA-7321-4124-9416-0A38CE37CA31}
 	EndGlobalSection
 EndGlobal
