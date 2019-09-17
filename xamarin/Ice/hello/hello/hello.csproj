@@ -5,13 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="cacert.der" />
-    <None Remove="client.p12" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="cacert.der" />
-    <EmbeddedResource Include="client.p12" />
+    <EmbeddedResource Include="..\..\..\..\certs\cacert.der" Link="cacert.der" />
+    <EmbeddedResource Include="..\..\..\..\certs\client.p12" Link="client.p12" />
   </ItemGroup>
 
   <ItemGroup>
