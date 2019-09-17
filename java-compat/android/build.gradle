@@ -8,22 +8,13 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.0'
+        classpath 'com.android.tools.build:gradle:3.5.0'
     }
 }
 
 subprojects {
     project.group = "com.zeroc"
     apply plugin: 'idea'
-}
-
-//
-// Used to build the gradle wrapper to automatically download and install
-// the version of gradle needed to build Ice.
-//
-wrapper {
-    gradleVersion = "4.10.2"
-    distributionType = Wrapper.DistributionType.ALL
 }
 
 allprojects {
@@ -40,7 +31,7 @@ allprojects {
 }
 
 ext {
-    compileSdkVersion = 28
+    compileSdkVersion = 29
     minSdkVersion = 21
-    targetSdkVersion = 28
+    targetSdkVersion = 29
 }
