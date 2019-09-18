@@ -28,8 +28,10 @@ class CallbackSenderI: CallbackSender {
                 c.callbackAsync(num).catch { e in
                     DispatchQueue.global(qos: .background).async(flags: .barrier) {
                         precondition(e is Ice.Exception)
-                        print("removing client \(Ice.identityToString(id: c.ice_getIdentity())):\n:\(e)")
-                        self.clients.removeAll { $0 == c }
+                        if let i = self.clients.firstIndex(where: { $0 == c }) {
+                            print("removing client \(Ice.identityToString(id: c.ice_getIdentity())):\n:\(e)")
+                            self.clients.remove(at: i)
+                        }
                     }
                 }
             }

@@ -12,7 +12,7 @@ void
 CallbackSenderI::addClient(std::shared_ptr<CallbackReceiverPrx> client, const Ice::Current& current)
 {
     lock_guard<mutex> lock(_mutex);
-    cout << "adding client `" << Ice::identityToString(client->ice_getIdentity()) << "'"<< endl;
+    cout << "adding client `" << Ice::identityToString(client->ice_getIdentity()) << "'" << endl;
     _clients.push_back(client->ice_fixed(current.con));
 }
 
@@ -83,18 +83,19 @@ CallbackSenderI::invokeCallback()
 void
 CallbackSenderI::removeClient(const shared_ptr<CallbackReceiverPrx>& client, exception_ptr eptr)
 {
-    try
-    {
-        rethrow_exception(eptr);
-    }
-    catch(const Ice::Exception& ex)
-    {
-        cerr << "removing client `" << Ice::identityToString(client->ice_getIdentity()) << "':\n"
-             << ex << endl;
-    }
-
     lock_guard<mutex> lock(_mutex);
     auto p = find(_clients.begin(), _clients.end(), client);
-    assert(p != _clients.end());
-    _clients.erase(p);
+    if(p != _clients.end())
+    {
+        try
+        {
+            rethrow_exception(eptr);
+        }
+        catch(const Ice::Exception& ex)
+        {
+            cerr << "removing client `" << Ice::identityToString(client->ice_getIdentity()) << "':\n"
+                 << ex << endl;
+        }
+        _clients.erase(p);
+    }
 }
