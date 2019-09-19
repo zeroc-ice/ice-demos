@@ -174,9 +174,7 @@
     <None Include="config.client">
       <Link>config.client</Link>
     </None>
-    <None Include="..\README.md">
-      <Link>README.md</Link>
-    </None>
+    <None Include="README.md" />
     <None Include="Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
