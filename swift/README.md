@@ -7,8 +7,8 @@ examples are provided to get you started on using a particular Ice feature or
 coding technique.
 
 Most of the subdirectories here correspond directly to Ice components, such as
-[Glacier2](./Glacier2), [IceStorm](./IceStorm), and so on. We've also included the
-following additional sub-directories:
+[Glacier2](./Glacier2), [IceStorm](./IceStorm), and so on. We've also included
+the following additional sub-directories:
 
 - [Manual](./Manual) contains complete examples for some of the code snippets
 in the [Ice manual][1].
@@ -33,25 +33,32 @@ In order to build these Ice for Swift sample programs, you need:
 carthage update
 ```
 
-This command will build the `Ice` and `PromiseKit` frameworks required by the sample
-programs and install them in the `Carthage/Build/` directory.
+This command will build the `Ice` and `PromiseKit` frameworks required by the
+sample programs and install them in the `Carthage/Build/` directory.
 
-To use the Slice for Swift and Slice for C++ Slice compilers from the source distribution
-you must set the `ICE_HOME` environment variable before running `carthage update`.
+Note: building `Ice macOS` and `Ice iOS` from source during `carthage update`
+takes some time, please be patient.
+
+If you want to use the `slice2swift` and `slice2cpp` compilers from a source
+distribution, set the `ICE_HOME` environment variable before running
+`carthage update`.
 
 ### Building the demos
 
 Open the project file `demos.xcodeproj` to build the sample programs.
 
-The demos are configured to use the `Ice` and `PromiseKit` frameworks from the Carthage
-builds and the Slice-to-Swift compiler from the binary distribution.
-If you want to build the sample programs using the Slice-to-Swift compiler from a source 
-distribution, set the `ICE_HOME` environment variable before starting Xcode.
+The demos are configured to use the `Ice` and `PromiseKit` frameworks from the
+Carthage builds and the Slice-to-Swift compiler from the binary distribution.
+
+If you want to build the sample programs using `slice2swift` compiler from a
+source distribution, set the `ICE_HOME` environment variable before starting
+Xcode.
 
 ### Running the Demos
 
 For most demos, you can simply run `server` and `client` in separate terminals.
-Refer to the README.md file in each demo directory for the exact usage instructions.
+Refer to the README.md file in each demo directory for the exact usage
+instructions.
 
 Some demos require Ice services such as IceGrid and IceStorm that are not
 included in the Ice for Swift distribution. To run these demos, the simplest
@@ -73,9 +80,10 @@ swift build
 
 ### Running the demos
 
-Swift Package Manager puts the executables in the build output directory. Refer to
-the printer's [README.md](./Manual/spm/printer/README.md) for more information.
+Swift Package Manager puts the executables in the build output directory. Refer
+to the printer's [README.md](./Manual/spm/printer/README.md) for more
+information.
 
 [1]: https://doc.zeroc.com/display/IceSwift/Ice+Manual
 [2]: https://github.com/Carthage/Carthage
-[3]: https://doc.zeroc.com/display/Rel/Using+the+macOS+Binary+Distribution+for+Ice+3.7.3
+[3]: https://doc.zeroc.com/ice/3.7/release-notes/using-the-macos-binary-distribution
