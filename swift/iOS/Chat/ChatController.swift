@@ -10,6 +10,23 @@ import UIKit
 import Glacier2
 import Ice
 
+class ChatRoomCallbackInterceptor: Disp {
+    private let servantDisp: Disp
+    init(_ servantDisp: Disp) {
+        self.servantDisp = servantDisp
+    }
+
+    func dispatch(request: Request, current: Current) throws -> Promise<Ice.OutputStream>? {
+        //
+        // Dispatch the request to the main thread in order
+        // to modify the UI in a thread safe manner.
+        //
+        return try DispatchQueue.main.sync {
+            try self.servantDisp.dispatch(request: request, current: current)
+        }
+    }
+}
+
 class ChatController: ChatLayoutController, ChatRoomCallback {
     var communicator: Ice.Communicator?
     var session: ChatSessionPrx?
@@ -39,14 +56,12 @@ class ChatController: ChatLayoutController, ChatRoomCallback {
     }
 
     func append(_ message: ChatMessage) {
-        DispatchQueue.main.async {
-            if self.messages.count > 100 { // max 100 messages
-                self.messages.remove(at: 0)
-            }
-            self.messages.append(message)
-            self.messagesCollectionView.reloadData()
-            self.messagesCollectionView.scrollToBottom(animated: true)
+        if messages.count > 100 { // max 100 messages
+            messages.remove(at: 0)
         }
+        messages.append(message)
+        messagesCollectionView.reloadData()
+        messagesCollectionView.scrollToBottom(animated: true)
     }
 
     @objc func logout(_: UIBarButtonItem) {
@@ -81,9 +96,16 @@ class ChatController: ChatLayoutController, ChatRoomCallback {
 
             do {
                 try conn.setCloseCallback { _ in
-                    self.closed()
+                    //
+                    // Dispatch the connection close callback to the main thread
+                    // in order to modify the UI in a thread safe manner.
+                    //
+                    DispatchQueue.main.async {
+                        self.closed()
+                    }
                 }
-            } catch {}
+            } catch {
+            }
         }
 
         // Register the chat callback.
@@ -106,46 +128,48 @@ class ChatController: ChatLayoutController, ChatRoomCallback {
 
         let adapter = try communicator.createObjectAdapterWithRouter(name: "ChatDemo.Client", rtr: router)
         try adapter.activate()
-        let prx = try adapter.add(servant: ChatRoomCallbackDisp(self),
+        let prx = try adapter.add(servant: ChatRoomCallbackInterceptor(ChatRoomCallbackDisp(self)),
                                   id: Ice.Identity(name: UUID().uuidString, category: category))
         callbackProxy = uncheckedCast(prx: prx, type: ChatRoomCallbackPrx.self)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender _: Any?) {
-        // Get reference to the destination view controller
         if segue.identifier == "showUsers", let userController = segue.destination as? UserController {
-            // Pass any objects to the view controller here, like...
             userController.users = users
         }
     }
 
     @objc func didEnterBackground() {
         destroySession()
-        if let controller = navigationController { controller.popViewController(animated: false) }
+        if let controller = navigationController {
+            controller.popViewController(animated: false)
+        }
     }
 
     func destroySession() {
-        // Destroy the session and destroy the communicator from another thread since these
-        // calls block.
         messages = []
         users = []
         currentUser = nil
 
-        if let communicator = self.communicator, let router = self.router {
+        if let communicator = self.communicator {
+            self.communicator = nil
+            let router = self.router
+            self.router = nil
+            self.session = nil
+            //
+            // Destroy the session and the communicator asyncrhonously
+            // to avoid blocking the main thread.
+            //
             DispatchQueue.global().async {
                 do {
-                    try router.destroySession()
+                    try router?.destroySession()
                 } catch {}
                 communicator.destroy()
-                self.communicator = nil
-                self.router = nil
-                self.session = nil
             }
         }
     }
 
     func exception(err: Error) {
-        // Open an alert with just an OK button
         let alert = UIAlertController(title: "Error", message: "error: \(err)", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
@@ -160,13 +184,11 @@ class ChatController: ChatLayoutController, ChatRoomCallback {
     func closed() {
         // The session is invalid, clear.
         if session != nil, let controller = navigationController {
-            controller.popToRootViewController(animated: true)
-
-            // The session is invalid, clear.
             session = nil
             router = nil
 
-            // Clean up the remainder.
+            controller.popToRootViewController(animated: true)
+
             destroySession()
 
             // Open an alert with just an OK button
