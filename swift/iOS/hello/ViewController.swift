@@ -77,7 +77,7 @@ class ViewController: UIViewController,
                 deliveryMode != .DatagramBatch {
                 var response = false
                 firstly {
-                    helloPrx.sayHelloAsync(delay) { _ in
+                    helloPrx.sayHelloAsync(delay, sentOn: DispatchQueue.main) { _ in
                         if !response {
                             self.requestSent()
                         }
