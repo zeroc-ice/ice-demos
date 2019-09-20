@@ -24,7 +24,7 @@ Refer to the [C++11 demos](../cpp11) for more examples that use the Ice services
 
 In order to build these Ice for Swift sample programs, you need:
  * Xcode
- * Slice for Swift and Slice for C++ Slice compilers
+ * Slice to Swift and Slice to C++ compilers
  * [Carthage][2]
 
 ### Install required dependencies using Carthage:
@@ -48,7 +48,7 @@ distribution, set the `ICE_HOME` environment variable before running
 Open the project file `demos.xcodeproj` to build the sample programs.
 
 The demos are configured to use the `Ice` and `PromiseKit` frameworks from the
-Carthage builds and the Slice-to-Swift compiler from the binary distribution.
+Carthage builds and the `slice2swift` compiler from the binary distribution.
 
 If you want to build the sample programs using `slice2swift` compiler from a
 source distribution, set the `ICE_HOME` environment variable before starting
