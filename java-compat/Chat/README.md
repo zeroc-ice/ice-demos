@@ -11,4 +11,4 @@ file when launching the application:
 java -jar ChatGUI.jar --Ice.Config=config.client
 ```
 
-[1]: https://zeroc.com/chat/index.html
+[1]: https://doc.zeroc.com/technical-articles/general-topics/chat-demo

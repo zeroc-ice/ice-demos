@@ -151,8 +151,8 @@ is to first install the Ice binary distribution for your platform  and add its b
 directory to your PATH. Please refer to the [Release Notes][6] for additional information.
 
 [1]: https://doc.zeroc.com/ice/3.7/introduction
-[2]: https://zeroc.com/chat/index.html
+[2]: https://doc.zeroc.com/technical-articles/general-topics/chat-demo
 [3]: https://marketplace.visualstudio.com/items?itemName=ZeroCInc.IceBuilder
-[4]: https://doc.zeroc.com/display/Rel/Using+the+Windows+Binary+Distributions+for+Ice+3.7.3
+[4]: https://doc.zeroc.com/ice/3.7/release-notes/using-the-windows-binary-distributions
 [5]: https://dotnet.microsoft.com/download/dotnet-core/2.1
-[6]: https://doc.zeroc.com/ice/3.7/release-notes
+[6]: https://doc.zeroc.com/rel/ice-releases/ice-3-7/ice-3-7-3-release-notes

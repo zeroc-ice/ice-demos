@@ -12,4 +12,4 @@ In a separate window, start the client:
 client
 ```
 
-[1]: https://doc.zeroc.com/display/IceSwift/Request+Contexts
+[1]: https://doc.zeroc.com/ice/3.7/client-side-features/request-contexts

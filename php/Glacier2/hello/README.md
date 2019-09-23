@@ -51,5 +51,5 @@ Web server, you will need to modify the router's endpoint in
 `config.glacier2` and `Login.php`. To run the hello server on a different
 host, modify the endpoint in `Session.php`.
 
-[1]: https://doc.zeroc.com/ice/latest/language-mappings/php-mapping/client-side-slice-to-php-mapping/application-notes-for-php
-[2]: https://doc.zeroc.com/display/Rel/Ice+3.7.3+Release+Notes
+[1]: https://doc.zeroc.com/ice/3.7/language-mappings/php-mapping/client-side-slice-to-php-mapping/application-notes-for-php
+[2]: https://doc.zeroc.com/rel/ice-releases/ice-3-7/ice-3-7-3-release-notes
