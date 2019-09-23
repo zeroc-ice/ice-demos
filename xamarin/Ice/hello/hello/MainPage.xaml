@@ -5,7 +5,7 @@
              xmlns:local="clr-namespace:hello"
              x:Class="hello.MainPage">
 
-    <StackLayout>
+    <StackLayout Margin="10,40,10,10" Padding="10">
 
         <Label Text="Hostname"/>
         <Entry x:Name="Hostname" Text="127.0.0.1"/>

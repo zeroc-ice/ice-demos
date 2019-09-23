@@ -36,6 +36,7 @@ namespace hello
             Hostname.Text = defaultHost;
             Hostname.TextChanged += Hostname_TextChanged;
             Mode.SelectedIndexChanged += Mode_SelectedIndexChanged;
+            Timeout.ValueChanged += Timeout_ValueChanged;
 
             Hello.Clicked += Hello_Clicked;
             Shutdown.Clicked += Shutdown_Clicked;
@@ -55,6 +56,11 @@ namespace hello
             plugin.setCertificates(loadCertificate("client.p12", "password"));
             plugin.setCACertificates(loadCertificate("cacert.der"));
             _communicator.getPluginManager().initializePlugins();
+        }
+
+        private void Timeout_ValueChanged(object sender, ValueChangedEventArgs e)
+        {
+            _helloPrx = null;
         }
 
         public X509Certificate2Collection loadCertificate(string name, string password = "")
@@ -89,8 +95,9 @@ namespace hello
                 Hello.IsEnabled = true;
                 Shutdown.IsEnabled = true;
                 Flush.IsEnabled = false;
-                Status.Text = "No hostname";
             }
+            _helloPrx = null;
+
         }
 
         private void Mode_SelectedIndexChanged(object sender, EventArgs e)
