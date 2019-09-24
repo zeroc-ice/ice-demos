@@ -163,7 +163,7 @@ namespace hello
             var prx = _communicator.stringToProxy(s);
             prx = deliveryModeApply(prx);
             int timeout = (int)Timeout.Value;
-            if (timeout != 0)
+            if(timeout != 0)
             {
                 prx = prx.ice_invocationTimeout(timeout);
             }
@@ -197,7 +197,7 @@ namespace hello
 
         private async void Shutdown_Clicked(object sender, EventArgs e)
         {
-            if (_helloPrx == null)
+            if(_helloPrx == null)
             {
                 updateProxy();
             }
@@ -206,7 +206,7 @@ namespace hello
 
             try
             {
-                if (!deliveryModeIsBatch())
+                if(!deliveryModeIsBatch())
                 {
                     Status.Text = "Sending request";
                     await _helloPrx.shutdownAsync();
@@ -219,7 +219,7 @@ namespace hello
                     Status.Text = "Queued shutdown request";
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 handleException(ex);
             }
@@ -227,7 +227,7 @@ namespace hello
 
         private async void Hello_Clicked(object sender, EventArgs e)
         {
-            if (_helloPrx == null)
+            if(_helloPrx == null)
             {
                 updateProxy();
             }
@@ -235,7 +235,7 @@ namespace hello
             int delay = (int)Delay.Value;
             try
             {
-                if (!deliveryModeIsBatch())
+                if(!deliveryModeIsBatch())
                 {
                     Status.Text = "Sending request";
                     bool haveResponse = false;
@@ -243,7 +243,7 @@ namespace hello
                             {
                                 if(!haveResponse)
                                 {
-                                    if (Mode.SelectedItem.Equals(TWOWAY) || Mode.SelectedItem.Equals(TWOWAY_SECURE))
+                                    if(Mode.SelectedItem.Equals(TWOWAY) || Mode.SelectedItem.Equals(TWOWAY_SECURE))
                                     {
                                         Status.Text = "Waiting for response";
                                     }
@@ -263,7 +263,7 @@ namespace hello
                     Status.Text = "Queued sayHello request";
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 handleException(ex);
             }
