@@ -56,8 +56,8 @@ func run() -> Int32 {
         let throughputOneway = throughput.ice_oneway()
 
         let byteSeq = ByteSeq(repeating: 0, count: Int(ByteSeqSize))
-        var stringSeq = StringSeq(repeating: "hello", count: Int(StringSeqSize))
-        var structSeq = StringDoubleSeq(repeating: StringDouble(s: "hello", d: 3.14), count: Int(StringDoubleSeqSize))
+        let stringSeq = StringSeq(repeating: "hello", count: Int(StringSeqSize))
+        let structSeq = StringDoubleSeq(repeating: StringDouble(s: "hello", d: 3.14), count: Int(StringDoubleSeqSize))
         let fixedSeq = FixedSeq(repeating: Fixed(i: 0, j: 0, d: 0), count: Int(FixedSeqSize))
 
         menu()
