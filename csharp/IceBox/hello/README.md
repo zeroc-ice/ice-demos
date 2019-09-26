@@ -2,9 +2,9 @@ This demo shows how to create an [IceBox][1] service.
 
 To run the demo, first start the IceBox server:
 
-| .NET Framework 4.5                   | .NET Core                                       |
-| ------------------------------------ | ----------------------------------------------- |
-| iceboxnet --Ice.Config=config.icebox | dotnet iceboxnet.dll --Ice.Config=config.icebox |
+| .NET Framework 4.5                     | .NET Core                                         |
+| -------------------------------------- | ------------------------------------------------- |
+| `iceboxnet --Ice.Config=config.icebox` | `dotnet iceboxnet.dll --Ice.Config=config.icebox` |
 
 In a separate window, start the client:
 ```
