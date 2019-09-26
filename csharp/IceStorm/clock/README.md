@@ -48,28 +48,33 @@ subscriber --oneway
 The subscriber receives events as oneway messages. This is the
 default.
 
+---
 ```
 subscriber --datagram
 ```
 The subscriber receives events as datagrams.
 
+---
 ```
 subscriber --twoway
 ```
 The subscriber receives events as twoway messages.
 
+---
 ```
 subscriber --ordered
 ```
 The subscriber receives events as twoway messages with guaranteed
 ordering.
 
+---
 ```
 subscriber --batch
 ```
 This is an additional flag that forwards datagram and oneway events
 to the subscriber in batches.
 
+---
 ```
 subscriber --id <id>
 ```
@@ -82,6 +87,7 @@ subscriber --Clock.Subscriber.Endpoints="tcp -p <port> -h <host>"
 ```
 Replace `tcp` with `udp` when using the `--datagram` option.
 
+---
 ```
 subscriber --retryCount <count>
 ```
@@ -96,11 +102,13 @@ publisher --oneway
 ```
 The publisher sends events as oneway messages. This is the default.
 
+---
 ```
 publisher --datagram
 ```
 The publisher sends events as datagrams.
 
+---
 ```
 publisher --twoway
 ```
