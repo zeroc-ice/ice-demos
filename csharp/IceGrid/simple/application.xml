@@ -1,10 +1,4 @@
-<!--
- **********************************************************************
-
- Copyright (c) ZeroC, Inc. All rights reserved.
-
- **********************************************************************
--->
+<!-- Copyright (c) ZeroC, Inc. All rights reserved. -->
 
 <icegrid>
 
@@ -12,7 +6,7 @@
 
     <node name="node1">
 
-      <server id="SimpleServer" exe="./server.exe" activation="on-demand">
+      <server id="SimpleServer" exe="./server" activation="on-demand">
         <adapter name="Hello" endpoints="tcp -h localhost">
           <object identity="hello" type="::Demo::Hello" property="Identity"/>
         </adapter>

@@ -1,10 +1,4 @@
-<!--
- **********************************************************************
-
- Copyright (c) ZeroC, Inc. All rights reserved.
-
- **********************************************************************
--->
+<!-- Copyright (c) ZeroC, Inc. All rights reserved. -->
 
 <icegrid>
 
@@ -12,7 +6,7 @@
 
     <server-template id="SimpleServer">
       <parameter name="index"/>
-      <server id="SimpleServer-${index}" exe="./server.exe" activation="on-demand">
+      <server id="SimpleServer-${index}" exe="./server" activation="on-demand">
         <adapter name="Hello" endpoints="tcp -h localhost">
           <object identity="hello-${index}" type="::Demo::Hello" property="Identity"/>
         </adapter>
