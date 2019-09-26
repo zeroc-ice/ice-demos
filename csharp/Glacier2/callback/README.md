@@ -2,22 +2,27 @@ This example demonstrates the use of several Glacier2 features, including
 [callbacks][1] and [request contexts][2].
 
 To run the demo, first start the server:
-
-| .NET Framework 4.5 | .NET Core 2.0        |
-| ------------------ | -------------------- |
-| `server`           | `dotnet server.dll`  |
-
+```
+server
+```
 In a separate window, start the Glacier2 router:
-
 ```
 glacier2router --Ice.Config=config.glacier2
 ```
-
 In a separate window, start the client:
+```
+client
+```
 
-| .NET Framework 4.5 | .NET Core 2.0       |
-| ------------------ | ------------------- |
-| `client`           | `dotnet client.dll` |
+> With .NET Core 2.x, use instead:
+> ```
+> dotnet server.dll
+> ```
+> and
+> ```
+> dotnet client.dll
+> ```
+> to start the server and client.
 
 If you plan to run this demo using clients on different hosts than
 the router, you must first modify the configuration. You need to

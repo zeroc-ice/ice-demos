@@ -11,16 +11,23 @@ This configuration assumes there is a subdirectory named `db` in the
 current working directory.
 
 In a separate window:
-
-| .NET Framework 4.5 | .NET Core 2.0           |
-| ------------------ | ----------------------- |
-| `subscriber`       | `dotnet subscriber.dll` |
-
+```
+subscriber
+```
 In another window:
+```
+publisher
+```
 
-| .NET Framework 4.5 | .NET Core 2.0          |
-| ------------------ | ---------------------- |
-| `publisher`        | `dotnet publisher.dll` |
+> With .NET Core 2.x, use instead `dotnet` to start your publisher and
+> subscriber:
+> ```
+> dotnet subscriber.dll
+> ```
+> and
+> ```
+> dotnet publisher.dll
+> ```
 
 While the publisher continues to run, "tick" messages should be
 displayed in the subscriber window.
@@ -35,80 +42,68 @@ publisher can use different QoS for sending and receiving messages.
 
 ## For the subscriber
 
-| .NET Framework 4.5    | .NET Core 2.0                    |
-| --------------------- | -------------------------------- |
-| `subscriber --oneway` | `dotnet subscriber.dll --oneway` |
-
+```
+subscriber --oneway
+```
 The subscriber receives events as oneway messages. This is the
 default.
 
-| .NET Framework 4.5      | .NET Core 2.0                      |
-| ----------------------- | ---------------------------------- |
-| `subscriber --datagram` | `dotnet subscriber.dll --datagram` |
-
+```
+subscriber --datagram
+```
 The subscriber receives events as datagrams.
 
-| .NET Framework 4.5    | .NET Core 2.0                    |
-| --------------------- | -------------------------------- |
-| `subscriber --twoway` | `dotnet subscriber.dll --twoway` |
-
+```
+subscriber --twoway
+```
 The subscriber receives events as twoway messages.
 
-| .NET Framework 4.5     | .NET Core 2.0                     |
-| ---------------------- | --------------------------------- |
-| `subscriber --ordered` | `dotnet subscriber.dll --ordered` |
-
+```
+subscriber --ordered
+```
 The subscriber receives events as twoway messages with guaranteed
 ordering.
 
-| .NET Framework 4.5   | .NET Core 2.0                   |
-| -------------------- | ------------------------------- |
-| `subscriber --batch` | `dotnet subscriber.dll --batch` |
-
+```
+subscriber --batch
+```
 This is an additional flag that forwards datagram and oneway events
 to the subscriber in batches.
 
-| .NET Framework 4.5     | .NET Core 2.0                     |
-| ---------------------- | --------------------------------- |
-| `subscriber --id <id>` | `dotnet subscriber.dll --id <id>` |
-
+```
+subscriber --id <id>
+```
 This option specifies a unique identity for this subscriber. When
 you use this option, you should also run the subscriber on a fixed
 port by setting the `Clock.Subscriber.Endpoints` property. For
 example:
-
-| .NET Framework 4.5                                                  | .NET Core 2.0                                                                  |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
-| `subscriber --Clock.Subscriber.Endpoints="tcp -p <port> -h <host>"` | `dotnet subscriber.dll --Clock.Subscriber.Endpoints="tcp -p <port> -h <host>"` |
-
+```
+subscriber --Clock.Subscriber.Endpoints="tcp -p <port> -h <host>"
+```
 Replace `tcp` with `udp` when using the `--datagram` option.
 
-| .NET Framework 4.5                | .NET Core 2.0                                |
-| --------------------------------- | -------------------------------------------- |
-| `subscriber --retryCount <count>` | `dotnet subscriber.dll --retryCount <count>` |
-
+```
+subscriber --retryCount <count>
+```
 This option sets the retry count for a subscriber. This option
 should be used in conjunction with the `--id` option. Setting
 `retryCount` changes the default subscriber QoS to twoway.
 
 ## For the publisher
 
-| .NET Framework 4.5   | .NET Core 2.0                   |
-| -------------------- | ------------------------------- |
-| `publisher --oneway` | `dotnet publisher.dll --oneway` |
-
+```
+publisher --oneway
+```
 The publisher sends events as oneway messages. This is the default.
 
-| .NET Framework 4.5     | .NET Core 2.0                     |
-| ---------------------- | --------------------------------- |
-| `publisher --datagram` | `dotnet publisher.dll --datagram` |
-
+```
+publisher --datagram
+```
 The publisher sends events as datagrams.
 
-| .NET Framework 4.5   | .NET Core 2.0                   |
-| -------------------- | ------------------------------- |
-| `publisher --twoway` | `dotnet publisher.dll --twoway` |
-
+```
+publisher --twoway
+```
 The publisher sends events as twoway messages.
 
 ## Running the demo on several hosts

@@ -25,16 +25,22 @@ Note that it is also necessary for your .NET class to be located in
 an assembly that is referenced by both the client and server.
 
 To run the demo, first start the server:
-
-| .NET Framework 4.5 | .NET Core 2.0        |
-| ------------------ | -------------------- |
-| `server`           | `dotnet server.dll`  |
-
+```
+server
+```
 In a separate window, start the client:
+```
+client
+```
 
-| .NET Framework 4.5 | .NET Core 2.0       |
-| ------------------ | ------------------- |
-| `client`           | `dotnet client.dll` |
+> With .NET Core 2.x, use instead:
+> ```
+> dotnet server.dll
+> ```
+> and
+> ```
+> dotnet client.dll
+> ```
 
 The client allows you to toggle between sending a real class instance
 and sending a null value, to show that passing null is supported.

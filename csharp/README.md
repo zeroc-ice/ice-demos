@@ -83,14 +83,14 @@ refer to [Using the Windows Binary Distributions][4] for additional information.
 
 In order to build Ice for .NET sample programs, you need all of the following:
 
- - the [.NET Core 2.1 SDK][5]
+ - the [.NET Core SDK][5] version 2.1, 2.2 or 3.0
  - Slice to C# compiler, for Windows platform the Slice to C# compiler is included
    with the `zeroc.ice.net` NuGet package installed during build, for other platforms
    refer to the [Release Notes][6].
 
-You can build from the command-line or with Visual Studio 2017 (for Windows or Mac).
-If you use Visual Studio 2017, the [Ice Builder][3] extension is optional on Windows,
-and not available on macOS.
+You can build from the command-line or with Visual Studio (2017 or 2019, for
+Windows or Mac). If you use Visual Studio, the [Ice Builder][3] extension is
+optional on Windows, and not available on macOS.
 
 ### Building the demos using NuGet packages:
 
@@ -141,9 +141,9 @@ dotnet msbuild "C# NET Core demos.sln"
 
 ### Running the Demos
 
-For most demos, you can simply run `dotnet client.dll` and `dotnet server.dll` in
-separate Command Prompt windows.  Refer to the README.md file in each demo directory
-for the exact usage instructions.
+For most demos, you can simply run `server` and `client` in separate Command
+Prompt windows.  Refer to the README.md file in each demo directory for the
+exact usage instructions.
 
 Some demos require Ice services such as IceGrid and IceStorm that are not
 included in the `zeroc.ice.net` NuGet package. To run these demos, the simplest
@@ -154,5 +154,5 @@ directory to your PATH. Please refer to the [Release Notes][6] for additional in
 [2]: https://doc.zeroc.com/technical-articles/general-topics/chat-demo
 [3]: https://marketplace.visualstudio.com/items?itemName=ZeroCInc.IceBuilder
 [4]: https://doc.zeroc.com/ice/3.7/release-notes/using-the-windows-binary-distributions
-[5]: https://dotnet.microsoft.com/download/dotnet-core/2.1
+[5]: https://dotnet.microsoft.com/download/dotnet-core
 [6]: https://doc.zeroc.com/rel/ice-releases/ice-3-7/ice-3-7-3-release-notes

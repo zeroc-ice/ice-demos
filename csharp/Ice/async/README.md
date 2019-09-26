@@ -2,16 +2,22 @@ This demo illustrates the use of [Asynchronous Method Invocation (AMI)][1]
 and [Asynchronous Method Dispatch (AMD)][2].
 
 To run the demo, first start the server:
-
-| .NET Framework 4.5 | .NET Core 2.0        |
-| ------------------ | -------------------- |
-| `server`           | `dotnet server.dll`  |
-
+```
+server
+```
 In a separate window, start the client:
+```
+client
+```
 
-| .NET Framework 4.5 | .NET Core 2.0       |
-| ------------------ | ------------------- |
-| `client`           | `dotnet client.dll` |
+> With .NET Core 2.x, use instead:
+> ```
+> dotnet server.dll
+> ```
+> and
+> ```
+> dotnet client.dll
+> ```
 
 The demo invocation can either have a short response time or require a
 significant amount of time to complete. For the long running request

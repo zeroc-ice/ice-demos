@@ -6,7 +6,7 @@ as how to make [oneway][1], [datagram][2], [secure][3], and
 To run the demo, first start the hello server:
 
 ```
-cd ..\..\ hello
+cd ..\..\hello
 server
 ```
 

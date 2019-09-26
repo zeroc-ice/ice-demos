@@ -2,16 +2,22 @@ This demo shows how to use [Dispatch Interceptors][1] to implement a token based
 authentication system for securing operations on a remote object.
 
 To run the demo, first start the server:
-
-| .NET Framework 4.5 | .NET Core 2.0        |
-| ------------------ | -------------------- |
-| `server`           | `dotnet server.dll`  |
-
+```
+server
+```
 In a separate window, start the client:
+```
+client
+```
 
-| .NET Framework 4.5 | .NET Core 2.0       |
-| ------------------ | ------------------- |
-| `client`           | `dotnet client.dll` |
+> With .NET Core 2.x, use instead:
+> ```
+> dotnet server.dll
+> ```
+> and
+> ```
+> dotnet client.dll
+> ```
 
 The demo models a remote controlled thermostat with operations for getting and setting
 its temperature, and for shutting down the thermostat server. The demo is configured so

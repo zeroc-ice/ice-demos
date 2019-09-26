@@ -1,18 +1,27 @@
 This demo shows how to use replication with [IceDiscovery][1].
 
 To run the demo, start the 3 servers:
-
-| .NET Framework 4.5                    | .NET Core 2.0                                    |
-| --------------------------------------| ------------------------------------------------ |
-| `server  --Ice.Config=config.server1` | `dotnet server.dll  --Ice.Config=config.server1` |
-| `server  --Ice.Config=config.server2` | `dotnet server.dll  --Ice.Config=config.server2` |
-| `server  --Ice.Config=config.server3` | `dotnet server.dll  --Ice.Config=config.server3` |
+```
+server --Ice.Config=config.server1
+server --Ice.Config=config.server2
+server --Ice.Config=config.server3
+```
 
 In a separate window, start the client:
+```
+client
+```
 
-| .NET Framework 4.5 | .NET Core 2.0       |
-| ------------------ | ------------------- |
-| `client`           | `dotnet client.dll` |
+> With .NET Core 2.x, use instead:
+> ```
+> dotnet server.dll --Ice.Config=config.server1
+> dotnet server.dll --Ice.Config=config.server2
+> dotnet server.dll --Ice.Config=config.server3
+> ```
+> and
+> ```
+> dotnet client.dll
+> ```
 
 The client invokes the number of specified iterations with a given
 delay on a well-known proxy configured to use per-request load
