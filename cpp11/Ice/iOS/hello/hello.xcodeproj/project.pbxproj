@@ -270,7 +270,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = R78S3EAE59;
+				DEVELOPMENT_TEAM = "";
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -295,7 +295,7 @@
 					"-lbz2",
 					"-liconv",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ReeceHumphreys.Hello-Cpp";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.zeroc.Hello-Cpp";
 				PRODUCT_NAME = hello;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
