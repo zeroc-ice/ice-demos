@@ -10,11 +10,12 @@ $iOSDeploymentTarget = "11.3"
 $demos = {
     :osx => ["Glacier2/callback",
 
-    	     "Ice/async",
+             "Ice/async",
              "Ice/asyncInvocation",
              "Ice/bidir",
              "Ice/context",
              "Ice/hello",
+             "Ice/interceptor",
              "Ice/invoke",
              "Ice/latency",
              "Ice/minimal",
@@ -24,7 +25,7 @@ $demos = {
              "IceDiscovery/hello",
              "IceDiscovery/replication",
 
- 	     "IceGrid/simple",
+             "IceGrid/simple",
 
              "IceStorm/clock",
 
@@ -54,8 +55,8 @@ $demo_extra_frameworks = {
     "IceStorm/clock" => ["IceStorm.framework"],
 
     "iOS/chat" => ["Glacier2.framework",
-		   "MessageKit.framework",
-		   "InputBarAccessoryView.framework"],
+                   "MessageKit.framework",
+                   "InputBarAccessoryView.framework"],
     "iOS/library" => ["Glacier2.framework"]
 }
 
