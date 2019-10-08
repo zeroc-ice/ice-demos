@@ -4,7 +4,6 @@
 
 #pragma once
 
-["java:package:com.zeroc.demos.Ice.interceptor"]
 module Demo
 {
     exception AuthorizationException

@@ -45,7 +45,7 @@ class AuthenticatorI: Authenticator {
         // We assume if the client passed a token, but there's no
         // stored values matching it, that it must of expired.
         //
-        if (!_tokenStore.contains { $0.key == tokenValue }) {
+        guard (_tokenStore.contains { $0.key == tokenValue }) else {
             throw TokenExpiredException()
         }
     }

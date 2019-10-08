@@ -25,14 +25,13 @@ class InterceptorI: Ice.Disp {
             // Validate the client's access token before dispatching to the servant.
             // 'validateToken' throws an exception if the token is invalid or expired.
             //
-            if let tokenValue = current.ctx["accessToken"] {
-                try _authenticator.validateToken(tokenValue: tokenValue)
-            } else {
+            guard let tokenValue = current.ctx["accessToken"] else {
                 //
                 // If the client didn't include an access token, throw an exception.
                 //
                 throw AuthorizationException()
             }
+            try _authenticator.validateToken(tokenValue: tokenValue)
         }
 
         return try _dispatcher.dispatch(request: request, current: current)
