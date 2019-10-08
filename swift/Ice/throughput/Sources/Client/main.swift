@@ -115,7 +115,6 @@ func run() -> Int32 {
 
                 print(" \(repetitions) ", terminator: "")
 
-                print("currentType: \(currentType)")
                 switch currentType {
                 case "1":
                     print("byte", terminator: "")
