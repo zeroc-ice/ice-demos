@@ -5,6 +5,9 @@
 import Foundation
 import Ice
 
+// Automatically flush stdout
+setbuf(__stdoutp, nil)
+
 func menu() {
     print(
         """
@@ -92,7 +95,7 @@ func run() -> Int32 {
                 // Request an access token from the server's authentication object.
                 //
                 let token = try authenticator.getToken()
-                print("Successfully retrieved access token: \(token)")
+                print("Successfully retrieved access token: \"\(token)\"")
                 //
                 // Add the access token to the communicator's context, so it will be
                 // sent along with every request made through it.

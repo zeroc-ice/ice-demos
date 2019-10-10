@@ -5,6 +5,9 @@
 import Foundation
 import Ice
 
+// Automatically flush stdout
+setbuf(__stdoutp, nil)
+
 func run() -> Int32 {
     do {
         var args = CommandLine.arguments
