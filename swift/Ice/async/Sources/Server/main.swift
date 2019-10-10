@@ -41,7 +41,7 @@ class HelloI: Hello {
         serialQueue.async {
             print("Shutting down...")
             self.done = true
-            current.adapter?.getCommunicator().shutdown()
+            current.adapter!.getCommunicator().shutdown()
         }
     }
 }

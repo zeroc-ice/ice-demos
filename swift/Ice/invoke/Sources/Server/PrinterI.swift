@@ -76,7 +76,7 @@ class PrinterI: Ice.Blobject {
             outStream.endEncapsulation()
             ret = (ok: false, outParams: outStream.finished())
         case "shutdown":
-            current.adapter?.getCommunicator().shutdown()
+            current.adapter!.getCommunicator().shutdown()
             ret = (ok: true, outParams: Data())
         default:
             throw Ice.OperationNotExistException(id: current.id, facet: current.facet, operation: current.operation)

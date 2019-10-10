@@ -70,7 +70,7 @@ class ThroughputI: Throughput {
     }
 
     func shutdown(current: Current) throws {
-        current.adapter?.getCommunicator().shutdown()
+        current.adapter!.getCommunicator().shutdown()
     }
 }
 

@@ -34,6 +34,6 @@ class CalculatorI: Calculator {
     }
 
     func shutdown(current: Ice.Current) {
-        current.adapter?.getCommunicator().shutdown()
+        current.adapter!.getCommunicator().shutdown()
     }
 }

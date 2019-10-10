@@ -11,8 +11,8 @@ setbuf(__stdoutp, nil)
 class CallbackI: Callback {
     func initiateCallback(proxy: CallbackReceiverPrx?, current: Current) {
         do {
-            let proxyName = current.adapter?.getCommunicator().proxyToString(proxy)
-            print("initiating callback to: \(String(describing: proxyName)))")
+            let proxyName = current.adapter!.getCommunicator().proxyToString(proxy)
+            print("initiating callback to: \(proxyName)")
             try proxy?.callback()
         } catch {
             print("Error \(error)")
@@ -21,7 +21,7 @@ class CallbackI: Callback {
 
     func shutdown(current: Current) {
         print("shutting down...")
-        current.adapter?.getCommunicator().shutdown()
+        current.adapter!.getCommunicator().shutdown()
     }
 }
 
