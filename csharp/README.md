@@ -52,6 +52,15 @@ dotnet restore "C# NET Core demos.sln"
 dotnet msbuild "C# NET Core demos.sln"
 ```
 
+The demo applications target `netcoreapp3.0` framework, you can change the target
+framework by setting the `AppTargetFramework` property to a different Target
+Framework Moniker value, for example:
+
+```
+dotnet restore "C# NET Core demos.sln /p:AppTargetFramework=netcoreapp2.1"
+dotnet msbuild "C# NET Core demos.sln /p:AppTargetFramework=netcoreapp2.1"
+```
+
 The demos are configured to use the Ice NuGet packages. These packages are automatically
 downloaded from nuget.org during the build.
 
