@@ -9,12 +9,14 @@ icegridnode --Ice.Config=config.grid
 
 In a separate window:
 ```
-icegridadmin --Ice.Config=config.grid -e "application add application.xml" client
+icegridadmin --Ice.Config=config.grid -e "application add application.xml"
+client
 ```
 
 > With .NET Core 2.x, use instead:
 > ```
-> icegridadmin --Ice.Config=config.grid -e "application add application-netcore2.xml" dotnet client.dll
+> icegridadmin --Ice.Config=config.grid -e "application add application-netcore2.xml"
+> dotnet client.dll
 > ```
 
 This will deploy the application and start the client. Messages will
