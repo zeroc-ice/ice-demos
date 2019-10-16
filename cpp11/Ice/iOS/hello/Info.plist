@@ -36,9 +36,9 @@
 	<string>Main</string>
 	<key>UIRequiresFullScreen</key>
 	<true/>
-	<key>UISupportedExternalAccessoryProtocols</key>
+	<key>UISupportedInterfaceOrientations</key>
 	<array>
-		<string>com.zeroc.helloWorld</string>
+		<string>UIInterfaceOrientationPortrait</string>
 	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>

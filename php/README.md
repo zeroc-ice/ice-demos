@@ -39,4 +39,4 @@ variable to this installation directory before executing `build.php`.
 Refer to the README.md file in each demo directory for usage instructions.
 
 [1]: https://doc.zeroc.com/technical-articles/general-topics/chat-demo
-[2]: https://doc.zeroc.com/ice/latest/the-slice-language
+[2]: https://doc.zeroc.com/ice/3.7/the-slice-language

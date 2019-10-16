@@ -97,7 +97,7 @@ client = factory.create("client")
 client.save("client.p12")
 
 # Server certificate
-server = factory.create("server", cn = (dns if usedns else ip), ip=ip, dns=dns)
+server = factory.create("server", cn = (dns if usedns else ip), ip=ip, dns=dns, extendedKeyUsage="serverAuth,clientAuth")
 server.save("server.p12")
 
 try:

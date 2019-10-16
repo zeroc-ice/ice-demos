@@ -6,7 +6,7 @@ ordinary (twoway) operations, as well as how to make [oneway][1],
 
 ### Prerequisites
 
-The demo requires QT 5 package from https://www.qt.io/
+The demo requires [QT 5 SDK][7].
 
 ### Building the demo
 
@@ -19,12 +19,18 @@ make
 
 ### Prerequisites
 
-The project requires the [Qt Visual Studio Tools][5] and [Ice Builder for Visual
+The project requires the [Qt 5 SDK][7], [Qt Visual Studio Tools][5] and [Ice Builder for Visual
 Studio][6] extensions.
+
+**When installing Qt 5 SDK ensure you select the MSVC 2015 64-bit component**
 
 ### Building the demo
 
-Open `C++11 Qt demos.sln` Visual Studio solution and build the client project
+Open `C++11 Qt demos.sln` Visual Studio solution and uset `Qt VS Tools` menu to setup
+your Qt 5 Visual Studio 2015 Version, then use the `Change Solution's Qt Version`
+option in the solution context menu to set the Qt version that will be used, once the Qt version
+has been set you can build the solution.
+
 
 ## Running the demo
 
@@ -47,3 +53,4 @@ client
 [3]: https://doc.zeroc.com/ice/3.7/ice-plugins/icessl
 [5]: https://marketplace.visualstudio.com/items?itemName=TheQtCompany.QtVisualStudioTools2015
 [6]: https://github.com/zeroc-ice/ice-builder-visualstudio
+[7]: https://www.qt.io/

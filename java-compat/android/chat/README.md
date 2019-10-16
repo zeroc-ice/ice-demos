@@ -16,6 +16,6 @@ about the chat system, or to download the source code for the chat
 system so that you can run your own server, please visit the link
 below:
 
-  https://zeroc.com/chat/index.html
+  https://doc.zeroc.com/technical-articles/general-topics/chat-demo
 
 Refer to the [java-compat README.md](../../README.md) for build instructions.

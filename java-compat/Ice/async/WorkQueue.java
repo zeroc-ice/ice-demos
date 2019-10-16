@@ -29,7 +29,7 @@ public class WorkQueue extends Thread
                 }
             }
 
-            if(_callbacks.size() != 0)
+            if(!_done && _callbacks.size() != 0)
             {
                 //
                 // Get next work item.

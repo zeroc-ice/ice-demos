@@ -73,11 +73,11 @@ class CallbackSenderI implements CallbackSender
 
     synchronized private void removeClient(CallbackReceiverPrx p, Throwable t)
     {
-        System.err.println("removing client `" +
-                           com.zeroc.Ice.Util.identityToString(p.ice_getIdentity()) +
-                           "':");
-        t.printStackTrace();
-        _clients.remove(p);
+        if(_clients.remove(p))
+        {
+            System.err.println("removing client `" + com.zeroc.Ice.Util.identityToString(p.ice_getIdentity()) + "':");
+            t.printStackTrace();
+        }
     }
 
     private ScheduledExecutorService _executorService = Executors.newSingleThreadScheduledExecutor();

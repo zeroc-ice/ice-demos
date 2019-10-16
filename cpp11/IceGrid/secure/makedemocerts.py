@@ -54,11 +54,19 @@ try:
 except Exception as ex:
     print("warning: couldn't generate JKS certificate `ca.jks':\n" + str(ex))
 
+#
+# Extended key usage for the certificates. Apple requires serverAuth to be set for
+# server certificates since Catalina (https://support.apple.com/en-us/HT210176).
+# Since Ice servers also registering with IceGrid also establish client connections
+# we need to also add clientAuth
+#
+eku = "serverAuth,clientAuth"
+
 # Create and the certificates for the different components
-factory.create("Master").save(os.path.join("certs", "master.p12"))
-factory.create("Slave").save(os.path.join("certs", "slave.p12"))
-factory.create("Node").save(os.path.join("certs", "node.p12"))
-factory.create("Glacier2").save(os.path.join("certs", "glacier2.p12"))
-factory.create("Server").save(os.path.join("certs", "server.p12"))
+factory.create("Master", dns="localhost", extendedKeyUsage=eku).save(os.path.join("certs", "master.p12"))
+factory.create("Slave", dns="localhost", extendedKeyUsage=eku).save(os.path.join("certs", "slave.p12"))
+factory.create("Node", dns="localhost", extendedKeyUsage=eku).save(os.path.join("certs", "node.p12"))
+factory.create("Glacier2", dns="localhost", extendedKeyUsage=eku).save(os.path.join("certs", "glacier2.p12"))
+factory.create("Server", dns="localhost", extendedKeyUsage=eku).save(os.path.join("certs", "server.p12"))
 
 factory.destroy()

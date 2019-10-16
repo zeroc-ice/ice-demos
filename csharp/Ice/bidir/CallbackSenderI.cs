@@ -69,10 +69,13 @@ class CallbackSenderI : CallbackSenderDisp_
 
     private void removeClient(CallbackReceiverPrx c, Exception ex)
     {
-        Console.Error.WriteLine("removing client `" + Ice.Util.identityToString(c.ice_getIdentity()) + "':\n" + ex);
         lock(this)
         {
-            _clients.Remove(c);
+            if(_clients.Remove(c))
+            {
+                Console.Error.WriteLine("removing client `" + Ice.Util.identityToString(c.ice_getIdentity()) + "':\n" +
+                                        ex);
+            }
         }
     }
 

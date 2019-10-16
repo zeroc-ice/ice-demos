@@ -14,6 +14,10 @@
 // Stuff for flex and bison
 //
 
+#if defined(__clang__)
+#   pragma clang diagnostic ignored "-Wconversion"
+#endif
+
 #define YYSTYPE std::list<std::string>
 #define YY_DECL int yylex(YYSTYPE* yylvalp)
 YY_DECL;
@@ -43,7 +47,7 @@ public:
 
     void usage();
     void list(bool);
-    void list(const std::shared_ptr<Filesystem::DirectoryPrx>&, bool, int);
+    void list(const std::shared_ptr<Filesystem::DirectoryPrx>&, bool, size_t);
     void createFile(const std::list<std::string>&);
     void createDir(const std::list<std::string>&);
     void pwd();

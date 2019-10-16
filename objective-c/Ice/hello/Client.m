@@ -79,7 +79,7 @@ run(id<ICECommunicator> communicator)
 
             do
             {
-                c = getchar();
+                c = (char)getchar();
             }
             while(c != EOF && c == '\n');
             if(c == 't')

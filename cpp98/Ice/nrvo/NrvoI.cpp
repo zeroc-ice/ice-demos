@@ -51,7 +51,7 @@ NrvoI::op3(int size, const Ice::Current&)
         // RVO (Return Value Optimization): return value
         // is constructed in place.
         //
-        return MyStringSeq(size, "hello");
+        return MyStringSeq(static_cast<size_t>(size), "hello");
     }
 
     //

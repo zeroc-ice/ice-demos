@@ -36,4 +36,4 @@ ruby -rubygems Client.rb
 ```
 
 [1]: https://doc.zeroc.com/ice/3.7/introduction
-[2]: https://doc.zeroc.com/display/Rel/Using+the+Ruby+Distribution+for+Ice+3.7.2
+[2]: https://doc.zeroc.com/ice/3.7/release-notes/using-the-ruby-distribution

@@ -162,7 +162,7 @@ run(const Ice::CommunicatorPtr& communicator)
     {
         try
         {
-            cout << "==> ";
+	    cout << "==> " << flush;
             cin >> c;
 
             IceUtil::Time tm = IceUtil::Time::now(IceUtil::Time::Monotonic);
