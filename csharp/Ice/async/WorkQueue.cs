@@ -44,7 +44,7 @@ public class WorkQueue
                     Monitor.Wait(this);
                 }
 
-                if(_tasks.Count != 0)
+                if(!_done && _tasks.Count != 0)
                 {
                     //
                     // Get next work item.

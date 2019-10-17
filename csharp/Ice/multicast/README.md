@@ -2,16 +2,22 @@ This demo illustrates how to use [UDP multicast][1] to implement a
 discovery service.
 
 To run the demo, first start multiple instances of the server:
-
-| .NET Framework 4.5 | .NET Core 2.0        |
-| ------------------ | -------------------- |
-| `server`           | `dotnet server.dll`  |
-
+```
+server
+```
 In a separate window, start the client:
+```
+client
+```
 
-| .NET Framework 4.5 | .NET Core 2.0       |
-| ------------------ | ------------------- |
-| `client`           | `dotnet client.dll` |
+> With .NET Core 2.x, use instead:
+> ```
+> dotnet server.dll
+> ```
+> and
+> ```
+> dotnet client.dll
+> ```
 
 On startup the client will send out a broadcast message containing a
 callback proxy and waits for a response. Any servers that are up and
@@ -23,4 +29,4 @@ By default this demo uses IPv4. If you want to use IPv6 UDP multicast
 instead, uncomment the alternative IPv6 configuration in config.client
 and config.server.
 
-[1]: https://doc.zeroc.com/display/Ice37/Datagram+Invocations
+[1]: https://doc.zeroc.com/ice/3.7/client-side-features/datagram-invocations

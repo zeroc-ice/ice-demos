@@ -4,7 +4,13 @@ buildscript {
     }
 
     dependencies {
-        classpath "net.sf.proguard:proguard-gradle:6.0.2"
+        // Use older proguard version when compile with Java 1.7
+        if(JavaVersion.current() < JavaVersion.VERSION_1_8) {
+            classpath "net.sf.proguard:proguard-gradle:6.0.2"
+        }
+        else {
+            classpath "net.sf.proguard:proguard-gradle:6.1.1"
+        }
     }
 }
 

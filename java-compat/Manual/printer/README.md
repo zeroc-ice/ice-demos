@@ -12,4 +12,4 @@ In a separate window, run the client:
 java -jar client/build/libs/client.jar
 ```
 
-[1]: https://doc.zeroc.com/display/Ice37/Writing+an+Ice+Application+with+Java+Compat
+[1]: https://doc.zeroc.com/ice/3.7/hello-world-application/writing-an-ice-application-with-java+Compat

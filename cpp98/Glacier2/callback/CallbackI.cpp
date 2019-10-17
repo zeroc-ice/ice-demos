@@ -9,12 +9,6 @@ using namespace std;
 using namespace Demo;
 
 void
-CallbackReceiverI::callback(const Ice::Current&)
-{
-    cout << "received callback" << endl;
-}
-
-void
 CallbackI::initiateCallback(const CallbackReceiverPrx& proxy, const Ice::Current& current)
 {
     cout << "initiating callback to: " << current.adapter->getCommunicator()->proxyToString(proxy) << endl;

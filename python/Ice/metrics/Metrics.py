@@ -192,7 +192,7 @@ def printMetricsMap(admin, viewName, mapName, map):
             for so in o.remotes:
                 printMetrics("Remote", metricsField(so))
             for co in o.collocated:
-                printMetrics("Collocated", metricsField(so))
+                printMetrics("Collocated", metricsField(co))
 
     #
     # Print the table footer.

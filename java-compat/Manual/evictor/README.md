@@ -11,4 +11,4 @@ The evictor implementation relies on a linked list that allows items
 to be added and removed without invalidating iterators. Such an
 implementation is provided in `LinkedList.java`.
 
-[1]: https://doc.zeroc.com/display/Ice37/Implementing+a+Servant+Evictor+in+Java
+[1]: https://doc.zeroc.com/ice/3.7/best-practices/servant-evictors

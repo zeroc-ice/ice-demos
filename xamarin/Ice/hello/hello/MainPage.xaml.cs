@@ -36,6 +36,7 @@ namespace hello
             Hostname.Text = defaultHost;
             Hostname.TextChanged += Hostname_TextChanged;
             Mode.SelectedIndexChanged += Mode_SelectedIndexChanged;
+            Timeout.ValueChanged += Timeout_ValueChanged;
 
             Hello.Clicked += Hello_Clicked;
             Shutdown.Clicked += Shutdown_Clicked;
@@ -55,6 +56,11 @@ namespace hello
             plugin.setCertificates(loadCertificate("client.p12", "password"));
             plugin.setCACertificates(loadCertificate("cacert.der"));
             _communicator.getPluginManager().initializePlugins();
+        }
+
+        private void Timeout_ValueChanged(object sender, ValueChangedEventArgs e)
+        {
+            _helloPrx = null;
         }
 
         public X509Certificate2Collection loadCertificate(string name, string password = "")
@@ -89,8 +95,9 @@ namespace hello
                 Hello.IsEnabled = true;
                 Shutdown.IsEnabled = true;
                 Flush.IsEnabled = false;
-                Status.Text = "No hostname";
             }
+            _helloPrx = null;
+
         }
 
         private void Mode_SelectedIndexChanged(object sender, EventArgs e)
@@ -156,7 +163,7 @@ namespace hello
             var prx = _communicator.stringToProxy(s);
             prx = deliveryModeApply(prx);
             int timeout = (int)Timeout.Value;
-            if (timeout != 0)
+            if(timeout != 0)
             {
                 prx = prx.ice_invocationTimeout(timeout);
             }
@@ -190,7 +197,7 @@ namespace hello
 
         private async void Shutdown_Clicked(object sender, EventArgs e)
         {
-            if (_helloPrx == null)
+            if(_helloPrx == null)
             {
                 updateProxy();
             }
@@ -199,7 +206,7 @@ namespace hello
 
             try
             {
-                if (!deliveryModeIsBatch())
+                if(!deliveryModeIsBatch())
                 {
                     Status.Text = "Sending request";
                     await _helloPrx.shutdownAsync();
@@ -212,7 +219,7 @@ namespace hello
                     Status.Text = "Queued shutdown request";
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 handleException(ex);
             }
@@ -220,7 +227,7 @@ namespace hello
 
         private async void Hello_Clicked(object sender, EventArgs e)
         {
-            if (_helloPrx == null)
+            if(_helloPrx == null)
             {
                 updateProxy();
             }
@@ -228,7 +235,7 @@ namespace hello
             int delay = (int)Delay.Value;
             try
             {
-                if (!deliveryModeIsBatch())
+                if(!deliveryModeIsBatch())
                 {
                     Status.Text = "Sending request";
                     bool haveResponse = false;
@@ -236,7 +243,7 @@ namespace hello
                             {
                                 if(!haveResponse)
                                 {
-                                    if (Mode.SelectedItem.Equals(TWOWAY) || Mode.SelectedItem.Equals(TWOWAY_SECURE))
+                                    if(Mode.SelectedItem.Equals(TWOWAY) || Mode.SelectedItem.Equals(TWOWAY_SECURE))
                                     {
                                         Status.Text = "Waiting for response";
                                     }
@@ -256,7 +263,7 @@ namespace hello
                     Status.Text = "Queued sayHello request";
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 handleException(ex);
             }

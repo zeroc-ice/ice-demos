@@ -13,5 +13,5 @@ In a separate window, start the client:
 java -jar build/libs/client.jar
 ```
 
-[1]: https://doc.zeroc.com/display/Ice37/Java+Mapping+for+Optional+Data+Members
-[2]: https://doc.zeroc.com/display/Ice37/Java+Mapping+for+Operations
+[1]: https://doc.zeroc.com/ice/3.7/language-mappings/java-mapping/client-side-slice-to-java-mapping/java-mapping-for-optional-data-members
+[2]: https://doc.zeroc.com/ice/3.7/language-mappings/java-mapping/client-side-slice-to-java-mapping/java-mapping-for-operations

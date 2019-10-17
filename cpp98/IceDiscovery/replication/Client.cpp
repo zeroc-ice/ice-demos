@@ -73,10 +73,10 @@ run(const Ice::CommunicatorPtr& communicator)
     string s;
     do
     {
-        cout << "enter the number of iterations: ";
+        cout << "enter the number of iterations: " << flush;
         cin >> s;
         int count = atoi(s.c_str());
-        cout << "enter the delay between each greetings (in ms): ";
+        cout << "enter the delay between each greetings (in ms): " << flush;
         cin >> s;
         int delay = atoi(s.c_str());
         if(delay < 0)

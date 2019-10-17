@@ -42,7 +42,7 @@ WorkQueue::run()
             _condition.wait(lock);
         }
 
-        if(!_callbacks.empty())
+        if(!_done && !_callbacks.empty())
         {
             //
             // Get next work item.

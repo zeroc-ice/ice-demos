@@ -6,4 +6,4 @@ through a WebSocket reverse proxy hosted on zeroc.com.
 
 You may use any user name and password when connecting.
 
-[1]: https://zeroc.com/chat/index.html
+[1]: https://doc.zeroc.com/technical-articles/general-topics/chat-demo

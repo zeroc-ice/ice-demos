@@ -21,12 +21,10 @@ public class PrinterI implements com.zeroc.Ice.Blobject
         {
             String message = in.readString();
             System.out.println("Printing string `" + message + "'");
-            in.endEncapsulation();
         }
         else if(current.operation.equals("printStringSequence"))
         {
             String[] seq = in.readStringSeq();
-            in.endEncapsulation();
             System.out.print("Printing string sequence {");
             for(int i = 0; i < seq.length; ++i)
             {
@@ -41,7 +39,6 @@ public class PrinterI implements com.zeroc.Ice.Blobject
         else if(current.operation.equals("printDictionary"))
         {
             java.util.Map<String, String> dict = StringDictHelper.read(in);
-            in.endEncapsulation();
             System.out.print("Printing dictionary {");
             boolean first = true;
             for(java.util.Map.Entry<String, String> i : dict.entrySet())
@@ -58,19 +55,16 @@ public class PrinterI implements com.zeroc.Ice.Blobject
         else if(current.operation.equals("printEnum"))
         {
             Color c = Color.ice_read(in);
-            in.endEncapsulation();
             System.out.println("Printing enum " + c);
         }
         else if(current.operation.equals("printStruct"))
         {
             Structure s = Structure.ice_read(in);
-            in.endEncapsulation();
             System.out.println("Printing struct: name=" + s.name + ", value=" + s.value);
         }
         else if(current.operation.equals("printStructSequence"))
         {
             Structure[] seq = StructureSeqHelper.read(in);
-            in.endEncapsulation();
             System.out.print("Printing struct sequence: {");
             for(int i = 0; i < seq.length; ++i)
             {
@@ -91,7 +85,6 @@ public class PrinterI implements com.zeroc.Ice.Blobject
             final Holder h = new Holder();
             in.readValue(v -> h.obj = (C)v);
             in.readPendingValues();
-            in.endEncapsulation();
             System.out.println("Printing class: s.name=" + h.obj.s.name + ", s.value=" + h.obj.s.value);
         }
         else if(current.operation.equals("getValues"))
@@ -133,6 +126,10 @@ public class PrinterI implements com.zeroc.Ice.Blobject
             throw ex;
         }
 
+        //
+        // Verify we read all in parameters
+        //
+        in.endEncapsulation();
         return r;
     }
 }

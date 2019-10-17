@@ -10,6 +10,7 @@ public class PrinterI extends Ice.Blobject
     {
         Ice.Communicator communicator = current.adapter.getCommunicator();
 
+        boolean result = true;
         Ice.InputStream in = new Ice.InputStream(communicator, inParams);
         in.startEncapsulation();
 
@@ -17,13 +18,10 @@ public class PrinterI extends Ice.Blobject
         {
             String message = in.readString();
             System.out.println("Printing string `" + message + "'");
-            in.endEncapsulation();
-            return true;
         }
         else if(current.operation.equals("printStringSequence"))
         {
             String[] seq = Demo.StringSeqHelper.read(in);
-            in.endEncapsulation();
             System.out.print("Printing string sequence {");
             for(int i = 0; i < seq.length; ++i)
             {
@@ -34,12 +32,10 @@ public class PrinterI extends Ice.Blobject
                 System.out.print("'" + seq[i] + "'");
             }
             System.out.println("}");
-            return true;
         }
         else if(current.operation.equals("printDictionary"))
         {
             java.util.Map<String, String> dict = Demo.StringDictHelper.read(in);
-            in.endEncapsulation();
             System.out.print("Printing dictionary {");
             boolean first = true;
             for(java.util.Map.Entry<String, String> i : dict.entrySet())
@@ -52,26 +48,20 @@ public class PrinterI extends Ice.Blobject
                 System.out.print(i.getKey() + "=" + i.getValue());
             }
             System.out.println("}");
-            return true;
         }
         else if(current.operation.equals("printEnum"))
         {
             Demo.Color c = Demo.Color.ice_read(in);
-            in.endEncapsulation();
             System.out.println("Printing enum " + c);
-            return true;
         }
         else if(current.operation.equals("printStruct"))
         {
             Demo.Structure s = Demo.Structure.ice_read(in);
-            in.endEncapsulation();
             System.out.println("Printing struct: name=" + s.name + ", value=" + s.value);
-            return true;
         }
         else if(current.operation.equals("printStructSequence"))
         {
             Demo.Structure[] seq = Demo.StructureSeqHelper.read(in);
-            in.endEncapsulation();
             System.out.print("Printing struct sequence: {");
             for(int i = 0; i < seq.length; ++i)
             {
@@ -82,16 +72,13 @@ public class PrinterI extends Ice.Blobject
                 System.out.print(seq[i].name + "=" + seq[i].value);
             }
             System.out.println("}");
-            return true;
         }
         else if(current.operation.equals("printClass"))
         {
             Demo.CHolder c = new Demo.CHolder();
             in.readValue(c);
             in.readPendingValues();
-            in.endEncapsulation();
             System.out.println("Printing class: s.name=" + c.value.s.name + ", s.value=" + c.value.s.value);
-            return true;
         }
         else if(current.operation.equals("getValues"))
         {
@@ -106,7 +93,6 @@ public class PrinterI extends Ice.Blobject
             out.writePendingValues();
             out.endEncapsulation();
             outParams.value = out.finished();
-            return true;
         }
         else if(current.operation.equals("throwPrintFailure"))
         {
@@ -118,12 +104,11 @@ public class PrinterI extends Ice.Blobject
             out.writeException(ex);
             out.endEncapsulation();
             outParams.value = out.finished();
-            return false;
+            result = false;
         }
         else if(current.operation.equals("shutdown"))
         {
             current.adapter.getCommunicator().shutdown();
-            return true;
         }
         else
         {
@@ -133,5 +118,8 @@ public class PrinterI extends Ice.Blobject
             ex.operation = current.operation;
             throw ex;
         }
+
+        in.endEncapsulation();
+        return result;
     }
 }

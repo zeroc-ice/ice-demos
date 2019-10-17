@@ -28,5 +28,5 @@ the `Glacier2.Client.Endpoints` property in `config.glacier2` and the
 replace the "-h 127.0.0.1" parameter with the actual external address
 of the machine on which glacier2router is running.
 
-[1]: https://doc.zeroc.com/display/Ice37/Callbacks+through+Glacier2
-[2]: https://doc.zeroc.com/display/Ice37/How+Glacier2+uses+Request+Contexts
+[1]: https://doc.zeroc.com/ice/3.7/ice-services/glacier2/callbacks-through-glacier2
+[2]: https://doc.zeroc.com/ice/3.7/ice-services/glacier2/how-glacier2-uses-request-contexts

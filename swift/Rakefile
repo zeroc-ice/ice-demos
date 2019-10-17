@@ -1,0 +1,326 @@
+#!/usr/bin/env ruby
+
+require 'xcodeproj'
+
+$top_level = File.expand_path(File.dirname(__FILE__))
+
+$macOSDeploymentTarget = "10.14"
+$iOSDeploymentTarget = "11.3"
+
+$demos = {
+    :osx => ["Glacier2/callback",
+
+             "Ice/async",
+             "Ice/asyncInvocation",
+             "Ice/bidir",
+             "Ice/context",
+             "Ice/hello",
+             "Ice/interceptor",
+             "Ice/invoke",
+             "Ice/latency",
+             "Ice/minimal",
+             "Ice/optional",
+             "Ice/throughput",
+
+             "IceDiscovery/hello",
+             "IceDiscovery/replication",
+
+             "IceGrid/simple",
+
+             "IceStorm/clock",
+
+             "Manual/printer",
+             "Manual/simpleFilesystem"],
+
+    :ios => ["iOS/chat",
+             "iOS/library",
+             "iOS/hello"]
+}
+
+$demo_variants = ["Client", "Server", "Publisher", "Subscriber"]
+
+#
+# Default sources for each variant
+#
+$demo_variant_sources = {
+    "Client" => ["Client/*.swift"],
+    "Server" => ["Server/*.swift"],
+    "Publisher" => ["Publisher/*.swift"],
+    "Subscriber" => ["Subscriber/*.swift"]
+}
+
+$demo_extra_frameworks = {
+    "Glacier2/callback" => ["Glacier2.framework"],
+
+    "IceStorm/clock" => ["IceStorm.framework"],
+
+    "iOS/chat" => ["Glacier2.framework",
+                   "MessageKit.framework",
+                   "InputBarAccessoryView.framework"],
+    "iOS/library" => ["Glacier2.framework"]
+}
+
+$demo_resources = {
+    "iOS/hello" => ["../certs"],
+    "IceGrid/simple" => ["IceGrid/simple"] #For adding xml
+}
+
+desc "Generate Xcode projects required to build Ice for Swift Demo Applications"
+task :iceproj do
+    project = Xcodeproj::Project.new("demos.xcodeproj")
+    aggregate_target_macos = project.new_aggregate_target("allDemos macOS")
+    aggregate_target_ios = project.new_aggregate_target("allDemos iOS")
+    group_add_files(project.main_group, "#{project.project_dir}", ["README.md"])
+    $demos.each do |platform, demos|
+        demos.each do |demo|
+            if platform == :ios then
+                create_uikit_targets(project, demo, aggregate_target_ios)
+            else
+                create_commandline_targets(project, demo, aggregate_target_macos)
+            end
+        end
+    end
+
+    attributes = project.root_object.attributes
+    attributes["TargetAttributes"] ||= {}
+    project.targets.each do |target|
+        attributes["TargetAttributes"][target.uuid] ||= {}
+        attributes["TargetAttributes"][target.uuid]["ProvisioningStyle"] = "Automatic"
+    end
+    project.root_object.development_region = "en"
+    project.root_object.known_regions = ["Base", "en"]
+
+    #
+    # Sort the project and save it
+    #
+    project.sort({:groups_position => :above})
+    project.save()
+end
+
+task :default => [:iceproj]
+
+def create_commandline_targets(project, demo, aggregate_target)
+    $demo_variants.each do |variant|
+        if demo_has_variant(demo, variant)
+            target = project.new_target(:command_line_tool, target_name(demo, variant), :osx)
+            aggregate_target.add_dependency(target)
+            target_set_common_build_settings(target, variant.downcase, "$SRCROOT/#{demo}", :osx)
+
+            target.frameworks_build_phases.clear()
+            group = project_group(project, demo)
+            group_add_files(group, "#{project.project_dir}/#{demo}", ["README.md", "config.*"])
+            target_add_files(target, group, "#{project.project_dir}/#{demo}/Sources", ["*.ice"])
+
+            group = project_group(project, "#{demo}/#{variant}")
+            target_add_files(target, group, "#{project.project_dir}/#{demo}/Sources",
+                             demo_variant_sources(demo, variant))
+
+            target_add_carthage_framework(target, :osx, "IceImpl.framework")
+            target_add_carthage_framework(target, :osx, "Ice.framework")
+            target_add_carthage_framework(target, :osx, "PromiseKit.framework")
+            extra_frameworks = $demo_extra_frameworks[demo] || []
+            extra_frameworks.each do |f|
+                target_add_carthage_framework(target, :osx, f)
+            end
+
+            target_set_framework_build_settings(target, :osx)
+            target_add_slice2swift_build_rule(project, target)
+            target_add_swiftlint_build_phase(target, "#{demo}/Sources/#{variant}")
+        end
+    end
+end
+
+def create_uikit_targets(project, demo, aggregate_target)
+    target = project.new_target(:application, target_name(demo, ""), :ios)
+    aggregate_target.add_dependency(target)
+    target_set_common_build_settings(target, product_name(demo), "$SRCROOT/#{demo}", :ios, "$SRCROOT/#{demo}/Info.plist")
+
+    target.frameworks_build_phases.clear()
+    group = project_group(project, demo)
+    group_add_files(group, "#{project.project_dir}/#{demo}", ["README.md"])
+    target_add_files(target, group, "#{project.project_dir}/#{demo}", ["*.swift", "*.ice"])
+    target_add_files(target, group, "#{project.project_dir}/#{demo}", ["*.xcassets"])
+    target_add_files(target, group, "#{project.project_dir}/#{demo}/Base.lproj", ["*.storyboard"])
+    target.add_resources(group_add_files(group, "#{project.project_dir}/#{demo}", ["config.client"]))
+
+    if $demo_resources.include? demo
+        target.add_resources(group_add_files(group, "#{project.project_dir}", $demo_resources[demo]))
+    end
+
+    target_add_carthage_framework(target, :ios, "IceImpl.framework", true)
+    target_add_carthage_framework(target, :ios, "Ice.framework", true)
+    target_add_carthage_framework(target, :ios, "PromiseKit.framework", true)
+
+    extra_frameworks = $demo_extra_frameworks[demo] || []
+    extra_frameworks.each do |f|
+        target_add_carthage_framework(target, :ios, f, true)
+    end
+
+    target_set_framework_build_settings(target, :ios)
+    target_add_slice2swift_build_rule(project, target)
+    target_add_swiftlint_build_phase(target, demo)
+
+    target.build_configurations.each { |config|
+        config.build_settings["CODE_SIGN_IDENTITY"] = "-"
+    }
+    return target
+end
+
+def project_group(project, name)
+    group = project.main_group
+    name.split("/").each { |item|
+        new_group = group[item]
+        unless new_group
+            new_group = group.new_group(item)
+        end
+        group = new_group
+    }
+    group
+end
+
+def target_add_swiftlint_build_phase(target, basedir)
+    phase = target.new_shell_script_build_phase("Swiftformat & Swiftlint")
+    phase.shell_script = <<~SCRIPT
+        if which swiftlint >/dev/null; then
+            swiftlint --path "$SRCROOT/#{basedir}" --config "$SRCROOT/.swiftlint.yml"
+        else
+            echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
+        fi
+    SCRIPT
+end
+
+def target_name(basename, suffix)
+    basename.split("/").map{ |item| item[0].upcase + item[1..-1]}.join() + suffix
+end
+
+def product_name(basename)
+    basename.split("/")[-1].downcase
+end
+
+def target_add_slice2swift_build_rule(project, target, prefix = nil)
+    #
+    # Add Slice Compiler build rule to the target
+    #
+    rule = project.new(Xcodeproj::Project::PBXBuildRule)
+    rule.compiler_spec = "com.apple.compilers.proxy.script"
+    rule.file_type = "pattern.proxy"
+
+    script = <<~SCRIPT
+        if [ -f "${ICE_HOME-unset}/cpp/bin/slice2swift" ]; then
+            SLICE2SWIFT="$ICE_HOME/cpp/bin/slice2swift"
+            SLICEDIR="$ICE_HOME/slice"
+        elif [ -f /usr/local/bin/slice2swift ]; then
+            SLICE2SWIFT=/usr/local/bin/slice2swift
+            SLICEDIR=/usr/local/share/ice/slice
+        else
+            echo "Failed to locate slice2swift compiler"
+            exit 1
+        fi
+
+        "$SLICE2SWIFT" -I"$SLICEDIR" -I"$INPUT_FILE_DIR" --output-dir "$DERIVED_FILE_DIR" "$INPUT_FILE_PATH"
+    SCRIPT
+
+    if prefix then
+        rule.name = "Slice Compiler for #{prefix}/*.ice"
+        rule.file_patterns = "*/#{prefix}/*.ice"
+        rule.script = script
+        rule.output_files = ["$(DERIVED_FILE_DIR)/#{prefix}_$(INPUT_FILE_BASE).swift"]
+    else
+        rule.name = "Slice Compiler"
+        rule.file_patterns = "*.ice"
+        rule.script = script
+        rule.output_files = ["$(DERIVED_FILE_DIR)/$(INPUT_FILE_BASE).swift"]
+    end
+    target.build_rules << rule
+end
+
+def group_add_files(group, basedir, patterns, exclude = [])
+    files = []
+    Dir.chdir(basedir) do
+        patterns.each do |p|
+            Dir.glob(p) do |file|
+                files << file
+            end
+        end
+    end
+    files = files.reject { |item| exclude.any? { |pattern| item.match(pattern) } }
+    files = files.uniq
+    files.map { |file|  group.find_subpath(File.basename(file)) ||  group.new_file("#{basedir}/#{file}") }
+end
+
+def target_add_files(target, group, basedir, patterns, excludes = [])
+    target.add_file_references(group_add_files(group, basedir, patterns, excludes))
+end
+
+def target_add_headers(target, group, basedir, patterns, excludes: [], attributes: ["Public"])
+    files = group_add_files(group, basedir, patterns, excludes)
+    if attributes.include? "Public" then
+        files.each do |file|
+            header = target.headers_build_phase.add_file_reference(file)
+            header.settings = { "ATTRIBUTES" => attributes }
+        end
+    end
+end
+
+def target_set_common_build_settings(target, product, build_dir, platform, plist = nil)
+    target.build_configurations.each { |config|
+        config.build_settings["ENABLE_TESTABILITY"] = "NO"
+        config.build_settings["CODE_SIGN_STYLE"] = "Automatic"
+        config.build_settings["CURRENT_PROJECT_VERSION"] = "3.7.3"
+        config.build_settings["DYLIB_CURRENT_VERSION"] = "3.7.3"
+        config.build_settings["DYLIB_COMPATIBILITY_VERSION"] = "0"
+        config.build_settings["SWIFT_VERSION"] = "5.0"
+        if plist != nil then
+            config.build_settings["INFOPLIST_FILE"] = plist
+        end
+        config.build_settings["PRODUCT_NAME"] = product
+        config.build_settings["CONFIGURATION_BUILD_DIR"] = build_dir
+        config.build_settings["PRODUCT_BUNDLE_IDENTIFIER"] = "com.zeroc.demo.#{product}"
+
+        if platform == :osx
+            config.build_settings["MACOSX_DEPLOYMENT_TARGET"] = $macOSDeploymentTarget
+        else
+            config.build_settings["IPHONEOS_DEPLOYMENT_TARGET"] = $iOSDeploymentTarget
+        end
+    }
+end
+
+def target_set_framework_build_settings(target, platform)
+    carthage_prefix = (platform == :osx) ? "Mac" : "iOS"
+    target.build_configurations.each { |config|
+        config.build_settings["FRAMEWORK_SEARCH_PATHS"] = "$SRCROOT/Carthage/Build/#{carthage_prefix}"
+        if carthage_prefix == "Mac" then
+            config.build_settings["LD_RUNPATH_SEARCH_PATHS"] = "$SRCROOT/Carthage/Build/#{carthage_prefix}"
+        end
+    }
+end
+
+def target_add_carthage_framework(target, platform, framework, copy=false)
+    group = target.project.frameworks_group[(platform == :osx ? "OS X" : "iOS")]
+    carthage_prefix = (platform == :osx) ? "Mac" : "iOS"
+    group_add_files(group, "#{$top_level}/Carthage/Build/#{carthage_prefix}", [framework]).each do |ref|
+        target.frameworks_build_phases.add_file_reference(ref, true)
+
+        if copy then
+            copy_phase = target.shell_script_build_phases.select { |script| script.name == "Copy Frameworks" }.first
+            unless copy_phase then
+                copy_phase = target.new_shell_script_build_phase("Copy Frameworks")
+                copy_phase.shell_script = "/usr/local/bin/carthage copy-frameworks"
+            end
+            copy_phase.input_paths << "$(SRCROOT)/Carthage/Build/#{carthage_prefix}/#{framework}"
+            copy_phase.output_paths << "$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/#{framework}"
+        end
+    end
+end
+
+#
+# Check if the test include the given variant
+#
+def demo_has_variant(demo, variant)
+    return File.file?("#{demo}/Sources/#{variant}/main.swift") ||
+           File.file?("#{demo}/#{variant}/AppDelegate.swift")
+end
+
+def demo_variant_sources(demo, variant)
+    $demo_variant_sources[variant] || []
+end

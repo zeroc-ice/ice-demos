@@ -24,7 +24,7 @@ WorkQueue::run()
             _monitor.wait();
         }
 
-        if(_callbacks.size() != 0)
+        if(!_done && _callbacks.size() != 0)
         {
             //
             // Get next work item.

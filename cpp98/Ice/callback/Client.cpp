@@ -95,8 +95,9 @@ run(const Ice::CommunicatorPtr& communicator)
     {
         try
         {
-            cout << "==> ";
+	    cout << "==> " << flush;
             cin >> c;
+
             if(c == 't')
             {
                 sender->initiateCallback(receiver);

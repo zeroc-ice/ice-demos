@@ -7,6 +7,11 @@ To run the demo, first start the IceGrid service:
 icegridnode --Ice.Config=config.grid
 ```
 
+Note that for Windows builds you need to use the icegridnode executable from the
+Nuget package matching the platform (Win32 or x64) and configuration (Debug or
+Release) used to build the demo project. Please refer to the [Ice release
+notes][2] for more information on the layout of the Ice Nuget packages.
+
 In a separate window:
 
 ```
@@ -29,4 +34,5 @@ that supports its preferred currency.
 You can edit `config.client` to change or comment out the client's
 preferred currency.
 
-[1]: https://doc.zeroc.com/display/Ice37/Load+Balancing
+[1]: https://doc.zeroc.com/ice/3.7/ice-services/icegrid/load-balancing
+[2]: https://doc.zeroc.com/ice/3.7/release-notes/using-the-windows-binary-distributions

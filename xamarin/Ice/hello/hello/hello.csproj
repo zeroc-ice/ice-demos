@@ -5,18 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="cacert.der" />
-    <None Remove="client.p12" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="cacert.der" />
-    <EmbeddedResource Include="client.p12" />
+    <EmbeddedResource Include="..\..\..\..\certs\cacert.der" Link="cacert.der" />
+    <EmbeddedResource Include="..\..\..\..\certs\client.p12" Link="client.p12" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Xamarin.Forms" Version="3.4.0.1029999" />
-    <PackageReference Include="zeroc.ice.net" Version="3.7.2" />
+    <PackageReference Include="zeroc.ice.net" Version="3.7.3" />
     <PackageReference Include="zeroc.icebuilder.msbuild" Version="5.0.4" />
     <Compile Update="generated\Hello.cs">
       <SliceCompileSource>Hello.ice</SliceCompileSource>

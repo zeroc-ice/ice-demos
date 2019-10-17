@@ -1,15 +1,21 @@
 This demo illustrates how to use [request contexts][1].
 
 To run the demo, first start the server:
-
-| .NET Framework 4.5 | .NET Core 2.0        |
-| ------------------ | -------------------- |
-| `server`           | `dotnet server.dll`  |
-
+```
+server
+```
 In a separate window, start the client:
+```
+client
+```
 
-| .NET Framework 4.5 | .NET Core 2.0       |
-| ------------------ | ------------------- |
-| `client`           | `dotnet client.dll` |
+> With .NET Core 2.x, use instead:
+> ```
+> dotnet server.dll
+> ```
+> and
+> ```
+> dotnet client.dll
+> ```
 
-[1]: https://doc.zeroc.com/display/Ice37/Request+Contexts
+[1]: https://doc.zeroc.com/ice/3.7/client-side-features/request-contexts

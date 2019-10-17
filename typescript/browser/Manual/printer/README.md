@@ -12,4 +12,4 @@ option. If you're running the python server this would look like:
 python server.py --Ice.Default.Protocol=ws
 ```
 
-[1]: https://doc.zeroc.com/display/Ice37/Writing+an+Ice+Application+with+Javascript
+[1]: https://doc.zeroc.com/ice/3.7/hello-world-application/writing-an-ice-application-with-javascript

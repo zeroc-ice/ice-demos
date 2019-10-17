@@ -8,7 +8,7 @@ import Ice
 import Glacier2
 Ice.loadSlice('Callback.ice')
 import Demo
-
+import uuid
 
 def menu():
     print("""
@@ -33,7 +33,13 @@ class CallbackReceiverI(Demo.CallbackReceiver):
 def run(communicator):
     router = Glacier2.RouterPrx.checkedCast(communicator.getDefaultRouter())
     session = None
+    #
+    # Loop until we have successfully create a session.
+    #
     while not session:
+        #
+        # Prompt the user for the credentials to create the session.
+        #
         print("This demo accepts any user-id / password combination.")
         sys.stdout.write("user id: ")
         sys.stdout.flush()
@@ -41,6 +47,11 @@ def run(communicator):
         sys.stdout.write("password: ")
         sys.stdout.flush()
         pw = sys.stdin.readline().strip()
+
+        #
+        # Try to create a session and break the loop if succeed,
+        # otherwise try again after printing the error message.
+        #
         try:
             session = router.createSession(id, pw)
             break
@@ -56,13 +67,15 @@ def run(communicator):
     # Note: we use sys.stdout.write instead of print because print can't be used in a lambda with Python 2.x
     connection.setCloseCallback(lambda conn: sys.stdout.write("The Glacier2 session has been destroyed.\n"))
 
-    callbackReceiverIdent = Ice.Identity()
-    callbackReceiverIdent.name = "callbackReceiver"
-    callbackReceiverIdent.category = router.getCategoryForClient()
-
-    callbackReceiverFakeIdent = Ice.Identity()
-    callbackReceiverFakeIdent.name = "callbackReceiver"
-    callbackReceiverFakeIdent.category = "fake"
+    #
+    # The Glacier2 router routes bidirectional calls to objects in the client only
+    # when these objects have the correct Glacier2-issued category. The purpose of
+    # the callbackReceiverFakeIdent is to demonstrate this.
+    #
+    # The Identity name is not checked by the server any value can be used.
+    #
+    callbackReceiverIdent = Ice.Identity("callbackReceiver", router.getCategoryForClient())
+    callbackReceiverFakeIdent = Ice.Identity(str(uuid.uuid4()), "fake")
 
     base = communicator.propertyToProxy('Callback.Proxy')
     twoway = Demo.CallbackPrx.checkedCast(base)
@@ -72,17 +85,22 @@ def run(communicator):
     adapter = communicator.createObjectAdapterWithRouter("", router)
     adapter.add(CallbackReceiverI(), callbackReceiverIdent)
 
-    # Should never be called for the fake identity.
+    #
+    # Callback will never be called for a fake identity.
+    #
     adapter.add(CallbackReceiverI(), callbackReceiverFakeIdent)
 
     twowayR = Demo.CallbackReceiverPrx.uncheckedCast(adapter.createProxy(callbackReceiverIdent))
     onewayR = Demo.CallbackReceiverPrx.uncheckedCast(twowayR.ice_oneway())
 
-    override = ''
+    override = None
     fake = False
 
     menu()
 
+    #
+    # Client REPL
+    #
     c = None
     while c != 'x':
         try:
@@ -90,31 +108,23 @@ def run(communicator):
             sys.stdout.flush()
             c = sys.stdin.readline().strip()
             if c == 't':
-                context = {}
-                context["_fwd"] = "t"
-                if not len(override) == 0:
-                    context["_ovrd"] = override
-                twoway.initiateCallback(twowayR, context)
+                twoway.initiateCallback(twowayR)
             elif c == 'o':
-                context = {}
-                context["_fwd"] = "o"
-                if not len(override) == 0:
-                    context["_ovrd"] = override
-                oneway.initiateCallback(onewayR, context)
+                oneway.initiateCallback(onewayR, {"_ovrd": override} if override else {})
             elif c == 'O':
                 context = {}
                 context["_fwd"] = "O"
-                if not len(override) == 0:
+                if override:
                     context["_ovrd"] = override
                 batchOneway.initiateCallback(onewayR, context)
             elif c == 'f':
                 batchOneway.ice_flushBatchRequests()
             elif c == 'v':
-                if len(override) == 0:
+                if not override:
                     override = "some_value"
                     print("override context field is now `" + override + "'")
                 else:
-                    override = ''
+                    override = None
                     print("override context field is empty")
             elif c == 'F':
                 fake = not fake

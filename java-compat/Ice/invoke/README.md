@@ -12,4 +12,4 @@ In a separate window, start the client:
 java -jar build/libs/client.jar
 ```
 
-[1]: https://doc.zeroc.com/display/Ice37/Streaming+Interfaces
+[1]: https://doc.zeroc.com/ice/3.7/client-server-features/dynamic-ice/streaming-interfaces

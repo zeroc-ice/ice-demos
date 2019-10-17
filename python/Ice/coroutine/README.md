@@ -13,4 +13,4 @@ In a second window, start the client:
 python client.py
 ```
 
-[1]: https://doc.zeroc.com/display/Ice37/Asynchronous+Method+Dispatch+%28AMD%29+in+Python
+[1]: https://doc.zeroc.com/ice/3.7/language-mappings/python-mapping/server-side-slice-to-python-mapping/asynchronous-m

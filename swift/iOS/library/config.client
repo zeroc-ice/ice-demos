@@ -1,0 +1,18 @@
+#
+# By default connect to WebSocket proxy on zeroc.com
+#
+#Ice.Default.Router=DemoGlacier2/router:wss -p 443 -h zeroc.com -r /demo-proxy/library/glacier2 -t 10000
+
+#
+# Alternately, connect directly to library server
+#
+# Comment out Ice.Default.Router above
+#
+#SessionFactory.Proxy=SessionFactory:tcp -h demo2.zeroc.com -p 10000
+SessionFactory.Proxy=SessionFactory:wss -h zeroc.com -p 443 -r /demo-proxy/library/direct
+
+#
+# IceSSL Configuration
+#
+IceSSL.UsePlatformCAs=1
+IceSSL.CheckCertName=1

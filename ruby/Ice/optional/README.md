@@ -12,5 +12,5 @@ After starting the server, run the Ruby client:
 ruby client.rb
 ```
 
-[1]: https://doc.zeroc.com/display/Ice37/Optional+Data+Members
-[2]: https://doc.zeroc.com/display/Ice37/Ruby+Mapping+for+Operations
+[1]: https://doc.zeroc.com/ice/3.7/the-slice-language/optional-data-members
+[2]: https://doc.zeroc.com/ice/3.7/language-mappings/ruby-mapping/client-side-slice-to-ruby-mapping/ruby-mapping-for-operations

@@ -28,7 +28,7 @@ public class WorkQueue extends Thread
                 }
             }
 
-            if(_futures.size() != 0)
+            if(!_done && _futures.size() != 0)
             {
                 //
                 // Get next work item.

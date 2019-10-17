@@ -44,7 +44,8 @@ files that is disabled by default:
 - Ice/hello
 - Ice/latency
 - Ice/throughput
-- Glacier2/chat
+- IceDiscovery/hello
+- Glacier2/simeplChat
 - IceStorm/clock
 
 To enable IceMX, you need to un-comment the following property in the
@@ -91,4 +92,4 @@ ByParent metrics view groups metrics by parent (the parent is usually
 either the Ice communicator or object adapter depending on the object
 monitored).
 
-[1]: https://doc.zeroc.com/display/Ice37/Instrumentation+Facility
+[1]: https://doc.zeroc.com/ice/3.7/administration-and-diagnostics/instrumentation-facility

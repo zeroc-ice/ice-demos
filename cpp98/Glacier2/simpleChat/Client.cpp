@@ -20,7 +20,13 @@ public:
     message(const string& data, const Ice::Current&)
     {
         IceUtil::Mutex::Lock lock(coutMutex);
+#ifdef __IBMCPP__
+	// Work-around for cin locking out other streams
+	printf("%s\n", data.c_str());
+	fflush(stdout);
+#else
         cout << data << endl;
+#endif
     }
 };
 
@@ -32,7 +38,13 @@ public:
     closed(const Ice::ConnectionPtr&)
     {
         IceUtil::Mutex::Lock lock(coutMutex);
+#ifdef __IBMCPP__
+        // Work-around for cin locking out other streams                                                                   
+        printf("The Glacier2 session has been destroyed.\n");
+        fflush(stdout);
+#else
         cout << "The Glacier2 session has been destroyed." << endl;
+#endif
     }
 };
 
@@ -133,7 +145,7 @@ run(const Ice::CommunicatorPtr& communicator)
         string s;
         {
             IceUtil::Mutex::Lock lock(coutMutex);
-            cout << "==> ";
+            cout << "==> " << flush;
         }
         getline(cin, s);
         s = trim(s);

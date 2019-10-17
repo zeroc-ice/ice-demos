@@ -79,9 +79,8 @@ This Android Studio project uses Gradle for its build system.
 Building any Ice application for Android requires Android Studio and the Android
 SDK build tools. We tested with the following components:
 
-- Android Studio 3.1.2
-- Android SDK 24
-- Android Build Tools 27.0.3
+- Android Studio 3.5
+- Android SDK 29
 
 Ice for Java requires at minimum API level 24:
 
@@ -113,5 +112,5 @@ Follow these steps to open the project in Android Studio:
 
 Refer to the README.md file in each demo directory for usage instructions.
 
-[1]: https://doc.zeroc.com/display/Ice37/Ice+Manual
-[2]: https://zeroc.com/chat/index.html
+[1]: https://doc.zeroc.com/ice/3.7/introduction
+[2]: https://doc.zeroc.com/technical-articles/general-topics/chat-demo

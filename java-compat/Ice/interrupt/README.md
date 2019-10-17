@@ -39,4 +39,4 @@ Only a single blocking invocation can be active at once.
 Pressing 't' in the client runs the task on the server using a
 non-blocking AMI invocation.
 
-[1]: https://doc.zeroc.com/display/Ice37/Handling+Interrupts+in+Java+Compat
+[1]: https://doc.zeroc.com/ice/3.7/language-mappings/java-compat-mapping/handling-interrupts-in-java-compat

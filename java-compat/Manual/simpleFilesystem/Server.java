@@ -50,13 +50,13 @@ public class Server
         //
         // Create the root directory (with name "/" and no parent)
         //
-        DirectoryI root = new DirectoryI(communicator, "/", null);
+        DirectoryI root = new DirectoryI("/", null);
         root.activate(adapter);
 
         //
         // Create a file called "README" in the root directory
         //
-        FileI file = new FileI(communicator, "README", root);
+        FileI file = new FileI("README", root);
         String[] text;
         text = new String[]{ "This file system contains a collection of poetry." };
         try
@@ -72,13 +72,13 @@ public class Server
         //
         // Create a directory called "Coleridge" in the root directory
         //
-        DirectoryI coleridge = new DirectoryI(communicator, "Coleridge", root);
+        DirectoryI coleridge = new DirectoryI("Coleridge", root);
         coleridge.activate(adapter);
 
         //
         // Create a file called "Kubla_Khan" in the Coleridge directory
         //
-        file = new FileI(communicator, "Kubla_Khan", coleridge);
+        file = new FileI("Kubla_Khan", coleridge);
         text = new String[]{ "In Xanadu did Kubla Khan",
                              "A stately pleasure-dome decree:",
                              "Where Alph, the sacred river, ran",

@@ -7,13 +7,6 @@
 
 #include <Callback.h>
 
-class CallbackReceiverI : public Demo::CallbackReceiver
-{
-public:
-
-    virtual void callback(const Ice::Current&) override;
-};
-
 class CallbackI : public Demo::Callback
 {
 public:

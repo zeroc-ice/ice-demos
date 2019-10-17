@@ -17,6 +17,6 @@ Android developers:
 
 Refer to the [java-compat README.md](../../README.md) for build instructions.
 
-[1]: https://doc.zeroc.com/display/Ice37/Datagram+Invocations
-[2]: https://doc.zeroc.com/display/Ice37/Asynchronous+Method+Invocation+%28AMI%29+in+Java+Compat
-[3]: https://doc.zeroc.com/display/Ice37/Bidirectional+Connections
+[2]: https://doc.zeroc.com/ice/3.7/client-side-features/datagram-invocations
+[2]: https://doc.zeroc.com/ice/3.7/language-mappings/java-compat-mapping/client-side-slice-to-java-compat-mapping/asynchronous-method-invocation-ami-in-java-compat
+[3]: https://doc.zeroc.com/ice/3.7/client-server-features/connection-management/bidirectional-connections

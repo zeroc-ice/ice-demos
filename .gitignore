@@ -11,7 +11,12 @@ talk
 !**/msbuild/locator
 !**/msbuild/publisher
 !**/msbuild/subscriber
-!**/msbuild/locator
+
+!**/Sources/client
+!**/Sources/server
+!**/Sources/locator
+!**/Sources/publisher
+!**/Sources/subscriber
 
 .gradle
 *.jar
@@ -198,3 +203,13 @@ local.properties
 **/res/raw/*.bks
 
 Resource.designer.cs
+
+swift/Carthage
+*.swiftmodule
+*.app
+*.framework
+*.framework.dSYM
+*.dSYM
+
+.build
+Package.resolved

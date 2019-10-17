@@ -1,0 +1,10 @@
+#
+# The client reads this property to create the reference to the
+# "MeasurementStation" object in the server.
+#
+MeasurementStation.Proxy=measurementstation:default -p 10000 -h localhost
+
+#
+# Warn about connection exceptions
+#
+Ice.Warn.Connections=1

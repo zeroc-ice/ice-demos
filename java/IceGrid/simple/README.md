@@ -7,9 +7,6 @@ To run the demo, first start the IceGrid service:
 icegridnode --Ice.Config=config.grid
 ```
 
-Note that for debug Windows builds you will need to use icegridnoded
-rather than icegridnode as the executable name.
-
 In a separate window:
 
 ```
@@ -49,6 +46,6 @@ following command to deploy a new server:
 icegridadmin --Ice.Config=config.grid -e "server template instantiate Simple node1 SimpleServer index=4"
 ```
 
-[1]: https://doc.zeroc.com/display/Ice37/IceGrid
-[2]: https://doc.zeroc.com/display/Ice37/IceGrid+Templates
-[3]: https://doc.zeroc.com/display/Ice37/Object+Adapter+Replication
+[1]: https://doc.zeroc.com/ice/3.7/ice-services/icegrid
+[2]: https://doc.zeroc.com/ice/3.7/ice-services/icegrid/icegrid-templates
+[3]: https://doc.zeroc.com/ice/3.7/ice-services/icegrid/object-adapter-replication

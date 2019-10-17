@@ -114,7 +114,7 @@ Follow these steps:
    that does not validate passwords, so you can log in using any
    username/password combination.
 
-[1]: https://doc.zeroc.com/display/Ice37/Using+IceGrid+Deployment
-[2]: https://doc.zeroc.com/display/Ice37/IceBox
-[3]: https://doc.zeroc.com/display/Ice37/IceGrid+GUI+Tool
-[4]: https://doc.zeroc.com/display/Ice37/Glacier2+Integration+with+IceGrid
+[1]: https://doc.zeroc.com/ice/3.7/ice-services/icegrid/using-icegrid-deployment
+[2]: https://doc.zeroc.com/ice/3.7/icebox
+[3]: https://doc.zeroc.com/ice/3.7/ice-services/icegrid/icegrid-gui-tool
+[4]: https://doc.zeroc.com/ice/3.7/ice-services/glacier2/icegrid-and-glacier2-integration

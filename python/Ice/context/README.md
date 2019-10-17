@@ -12,4 +12,4 @@ In a separate window, start the client:
 python client.py
 ```
 
-[1]: https://doc.zeroc.com/display/Ice37/Request+Contexts
+[1]: https://doc.zeroc.com/ice/3.7/client-side-features/request-contexts
