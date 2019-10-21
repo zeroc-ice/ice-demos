@@ -41,7 +41,6 @@ Glacier2.SessionTimeout=30
 #Glacier2.Client.Buffered=0
 #Glacier2.Server.Buffered=0
 
-
 #
 # To prevent Glacier2 from being flooded with requests from or to one
 # particular client, Glacier2 can be configured to sleep for a certain

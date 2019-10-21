@@ -31,7 +31,6 @@ your Qt 5 Visual Studio 2015 Version, then use the `Change Solution's Qt Version
 option in the solution context menu to set the Qt version that will be used, once the Qt version
 has been set you can build the solution.
 
-
 ## Running the demo
 
 To run the demo, first start the hello server:
