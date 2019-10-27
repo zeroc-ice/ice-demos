@@ -36,4 +36,3 @@ $(foreach p,$(platforms),$(eval $(call make-xcodebuild-rule,demos,$p,allDemos,bu
 $(foreach p,$(platforms),$(eval $(call make-xcodebuild-rule,clean,$p,allDemos,clean)))
 
 $(foreach p,$(supported-platforms),$(eval $(call make-xcodebuild-rule,distclean,$p,allDemos,clean)))
-

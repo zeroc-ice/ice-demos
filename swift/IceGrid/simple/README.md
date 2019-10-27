@@ -49,4 +49,3 @@ icegridadmin --Ice.Config=config.grid -e "server template instantiate Simple nod
 [1]: https://doc.zeroc.com/ice/3.7/ice-services/icegrid
 [2]: https://doc.zeroc.com/ice/3.7/ice-services/icegrid/icegrid-templates
 [3]: https://doc.zeroc.com/ice/3.7/ice-services/icegrid/object-adapter-replication
-

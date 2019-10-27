@@ -7,7 +7,7 @@ Demos in this directory:
 - [hello](./hello)
 
   This demo is an iOS client for the [Ice/hello](../Ice/hello) demo, the demo
-  illustrates how to invoke ordinary (twoway) operations, as well as how to invoke 
+  illustrates how to invoke ordinary (twoway) operations, as well as how to invoke
   oneway operations, use datagrams, secure invocations, and how to use batched invocations.
 
 - [library](./library)

@@ -21,9 +21,9 @@ public:
     {
         IceUtil::Mutex::Lock lock(coutMutex);
 #ifdef __IBMCPP__
-	// Work-around for cin locking out other streams
-	printf("%s\n", data.c_str());
-	fflush(stdout);
+        // Work-around for cin locking out other streams
+        printf("%s\n", data.c_str());
+        fflush(stdout);
 #else
         cout << data << endl;
 #endif
@@ -39,7 +39,7 @@ public:
     {
         IceUtil::Mutex::Lock lock(coutMutex);
 #ifdef __IBMCPP__
-        // Work-around for cin locking out other streams                                                                   
+        // Work-around for cin locking out other streams
         printf("The Glacier2 session has been destroyed.\n");
         fflush(stdout);
 #else
