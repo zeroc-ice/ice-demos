@@ -27,9 +27,9 @@ public struct PrinterTraits: Ice.SliceTraits {
 ///
 /// PrinterPrx Methods:
 ///
-///  - printString: 
+///  - printString:
 ///
-///  - printStringAsync: 
+///  - printStringAsync:
 public protocol PrinterPrx: Ice.ObjectPrx {}
 
 private final class PrinterPrxI: Ice.ObjectPrxI, PrinterPrx {
@@ -109,9 +109,9 @@ public extension Ice.InputStream {
 ///
 /// PrinterPrx Methods:
 ///
-///  - printString: 
+///  - printString:
 ///
-///  - printStringAsync: 
+///  - printStringAsync:
 public extension PrinterPrx {
     ///
     /// - parameter _: `Swift.String`
@@ -153,7 +153,6 @@ public extension PrinterPrx {
     }
 }
 
-
 /// Dispatcher for `Printer` servants.
 public struct PrinterDisp: Ice.Disp {
     public let servant: Printer
@@ -194,7 +193,7 @@ public protocol Printer {
 ///
 /// Printer Methods:
 ///
-///  - printString: 
+///  - printString:
 public extension Printer {
     func _iceD_printString(incoming inS: Ice.Incoming, current: Ice.Current) throws -> PromiseKit.Promise<Ice.OutputStream>? {
         let iceP_s: Swift.String = try inS.read { istr in
