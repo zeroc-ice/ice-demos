@@ -40,7 +40,6 @@
 
     <Target Name="Net45NuGetRestore" DependsOnTargets="GetNuGet" Condition="!Exists('$(IceHome)\csharp')">
         <Exec Command="$(NuGetExe) restore &quot;$(MSBuildThisFileDirectory)..\C# NET Framework demos.sln&quot;"/>
-        <MSbuild Projects="$(MSBuildThisFileDirectory)..\C# NET Core demos.sln" Targets="Restore" Condition="$(VisualStudioVersion) == '15.0'" />
     </Target>
 
     <Target Name="Net45Build" DependsOnTargets="Net45InstallLocalPackages;Net45NuGetRestore">
