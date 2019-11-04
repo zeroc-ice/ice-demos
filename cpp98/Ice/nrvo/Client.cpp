@@ -84,7 +84,7 @@ run(const Ice::CommunicatorPtr& communicator)
     {
         try
         {
-	    cout << "==> " << flush;
+        cout << "==> " << flush;
             cin >> c;
 
             switch(c)

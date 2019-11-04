@@ -163,8 +163,8 @@ run(const Ice::CommunicatorPtr& communicator)
     {
         cout << "==> " << flush;
 #ifdef __IBMCPP__
-	// With xlC, cin >> locks out other streams including ostringstream
-	c = static_cast<char>(getchar());
+    // With xlC, cin >> locks out other streams including ostringstream
+    c = static_cast<char>(getchar());
 #else
         cin >> c;
 #endif

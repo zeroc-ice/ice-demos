@@ -103,7 +103,7 @@ run(const Ice::CommunicatorPtr& communicator, bool addContext)
     {
         try
         {
-	    cout << "==> " << flush;
+        cout << "==> " << flush;
             cin >> c;
             if(c == 't')
             {
