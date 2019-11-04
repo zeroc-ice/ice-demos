@@ -26,7 +26,7 @@ all:: demos
 # Workaround for carthage sporadic SEGFAULT (https://github.com/Carthage/Carthage/issues/2760).
 # If it SEGFAULT we retry.
 carthage:
-	cd .. && carthage update --cache-builds || if [ $$? = 139 ]; then carthage update --cache-builds; fi
+	carthage update --cache-builds || if [ $$? = 139 ]; then carthage update --cache-builds; fi
 
 demos:: carthage
 
