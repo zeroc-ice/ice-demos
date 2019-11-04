@@ -95,9 +95,9 @@ run(const Ice::CommunicatorPtr& communicator)
         {
             printer->print("==> ");
 #ifdef __IBMCPP__
-	    c = static_cast<char>(getchar());
+        c = static_cast<char>(getchar());
 #else
-	    cin >> c;
+        cin >> c;
 #endif
             if(c == 'i')
             {

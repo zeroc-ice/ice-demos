@@ -104,7 +104,7 @@ run(const Ice::CommunicatorPtr& communicator)
     {
         try
         {
-	    cout << "==> " << flush;
+        cout << "==> " << flush;
             cin >> c;
             if(c == '1' || c == '2')
             {
