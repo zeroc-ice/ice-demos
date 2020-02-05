@@ -163,9 +163,9 @@ included in the `zeroc.ice.net` NuGet package. To run these demos, the simplest
 is to first install the Ice MSI and add its bin directory to your PATH. Please
 refer to [Using the Windows Binary Distributions][4] for additional information.
 
-[1]: https://doc.zeroc.com/ice/3.7/introduction
+[1]: https://doc.zeroc.com/ice/4.0/introduction
 [2]: https://doc.zeroc.com/technical-articles/general-topics/chat-demo
 [3]: https://marketplace.visualstudio.com/items?itemName=ZeroCInc.IceBuilder
-[4]: https://doc.zeroc.com/ice/3.7/release-notes/using-the-windows-binary-distributions
+[4]: https://doc.zeroc.com/ice/4.0/release-notes/using-the-windows-binary-distributions
 [5]: https://dotnet.microsoft.com/download/dotnet-core
-[6]: https://doc.zeroc.com/rel/ice-releases/ice-3-7/ice-3-7-3-release-notes
+[6]: https://doc.zeroc.com/rel/ice-releases/ice-4-0/ice-4-0-0-release-notes

@@ -112,5 +112,5 @@ Follow these steps to open the project in Android Studio:
 
 Refer to the README.md file in each demo directory for usage instructions.
 
-[1]: https://doc.zeroc.com/ice/3.7/introduction
+[1]: https://doc.zeroc.com/ice/4.0/introduction
 [2]: https://doc.zeroc.com/technical-articles/general-topics/chat-demo

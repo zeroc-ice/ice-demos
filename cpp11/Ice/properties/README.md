@@ -15,4 +15,4 @@ In a separate window, start the client:
 client
 ```
 
-[1]: https://doc.zeroc.com/ice/3.7/administration-and-diagnostics/administrative-facility/the-properties-facet
+[1]: https://doc.zeroc.com/ice/4.0/administration-and-diagnostics/administrative-facility/the-properties-facet

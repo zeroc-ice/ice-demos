@@ -99,4 +99,4 @@ cd typescript/nodejs/Ice/hello
 node Client
 ```
 
-[1]: https://doc.zeroc.com/ice/3.7/introduction
+[1]: https://doc.zeroc.com/ice/4.0/introduction

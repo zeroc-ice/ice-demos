@@ -27,5 +27,5 @@ the `Glacier2.Client.Endpoints` property in `config.glacier2` and the
 parameter with the actual external address of the machine on which
 glacier2router is running.
 
-[1]: https://doc.zeroc.com/ice/3.7/ice-services/glacier2/callbacks-through-glacier2
-[2]: https://doc.zeroc.com/ice/3.7/ice-services/glacier2/how-glacier2-uses-request-contexts
+[1]: https://doc.zeroc.com/ice/4.0/ice-services/glacier2/callbacks-through-glacier2
+[2]: https://doc.zeroc.com/ice/4.0/ice-services/glacier2/how-glacier2-uses-request-contexts

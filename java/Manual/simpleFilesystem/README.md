@@ -13,5 +13,5 @@ Then run the client in a separate window:
 java -jar build/libs/client.jar
 ```
 
-[1]: https://doc.zeroc.com/ice/3.7/language-mappings/java-mapping/client-side-slice-to-java-mapping/example-of-a-file-system-client-in-java
-[2]: https://doc.zeroc.com/ice/3.7/language-mappings/java-mapping/server-side-slice-to-java-mapping/example-of-a-file-system-server-in-java
+[1]: https://doc.zeroc.com/ice/4.0/language-mappings/java-mapping/client-side-slice-to-java-mapping/example-of-a-file-system-client-in-java
+[2]: https://doc.zeroc.com/ice/4.0/language-mappings/java-mapping/server-side-slice-to-java-mapping/example-of-a-file-system-server-in-java

@@ -84,6 +84,6 @@ Swift Package Manager puts the executables in the build output directory. Refer
 to the printer's [README.md](./Manual/spm/printer/README.md) for more
 information.
 
-[1]: https://doc.zeroc.com/ice/3.7/introduction
+[1]: https://doc.zeroc.com/ice/4.0/introduction
 [2]: https://github.com/Carthage/Carthage
-[3]: https://doc.zeroc.com/ice/3.7/release-notes/using-the-macos-binary-distribution
+[3]: https://doc.zeroc.com/ice/4.0/release-notes/using-the-macos-binary-distribution

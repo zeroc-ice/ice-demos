@@ -26,5 +26,5 @@ process the request. While a long request is processing, short
 requests are still able to be processed and more long requests can be
 queued for processing by the worker thread.
 
-[1]: https://doc.zeroc.com/ice/3.7/language-mappings/c-sharp-mapping/client-side-slice-to-c-sharp-mapping/asynchronous-method-invocation-ami-in-c-sharp
-[2]: https://doc.zeroc.com/ice/3.7/language-mappings/c-sharp-mapping/server-side-slice-to-c-sharp-mapping/asynchronous-method-dispatch-amd-in-c-sharp
+[1]: https://doc.zeroc.com/ice/4.0/language-mappings/c-sharp-mapping/client-side-slice-to-c-sharp-mapping/asynchronous-method-invocation-ami-in-c-sharp
+[2]: https://doc.zeroc.com/ice/4.0/language-mappings/c-sharp-mapping/server-side-slice-to-c-sharp-mapping/asynchronous-method-dispatch-amd-in-c-sharp

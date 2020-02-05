@@ -1,4 +1,4 @@
 github "MessageKit/MessageKit" "3.0.0"
 github "mxcl/PromiseKit" "6.11.0"
 github "nathantannar4/InputBarAccessoryView" "4.2.1"
-github "zeroc-ice/ice" "v3.7.3"
+github "zeroc-ice/ice" "v4.0.0-alpha.0"

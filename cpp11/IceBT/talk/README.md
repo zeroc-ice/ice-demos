@@ -10,4 +10,4 @@ talk
 
 On another device, start the command-line program or Android app.
 
-[1]: https://doc.zeroc.com/ice/3.7/ice-plugins/icebt
+[1]: https://doc.zeroc.com/ice/4.0/ice-plugins/icebt

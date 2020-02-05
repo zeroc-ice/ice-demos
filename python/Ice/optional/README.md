@@ -13,5 +13,5 @@ In a separate window, start the client:
 python client.py
 ```
 
-[1]: https://doc.zeroc.com/ice/3.7/the-slice-language/optional-data-members
-[2]: https://doc.zeroc.com/ice/3.7/language-mappings/python-mapping/client-side-slice-to-python-mapping/python-mapping-for-operations
+[1]: https://doc.zeroc.com/ice/4.0/the-slice-language/optional-data-members
+[2]: https://doc.zeroc.com/ice/4.0/language-mappings/python-mapping/client-side-slice-to-python-mapping/python-mapping-for-operations

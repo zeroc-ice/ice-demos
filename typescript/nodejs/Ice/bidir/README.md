@@ -14,4 +14,4 @@ client:
 node Client.js
 ```
 
-[1]: https://doc.zeroc.com/ice/3.7/client-server-features/connection-management/bidirectional-connections
+[1]: https://doc.zeroc.com/ice/4.0/client-server-features/connection-management/bidirectional-connections

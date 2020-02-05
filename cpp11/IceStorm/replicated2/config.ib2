@@ -7,7 +7,7 @@ Ice.Admin.InstanceName=icebox2
 #
 # The IceStorm service
 #
-IceBox.Service.IceStorm=IceStormService,37:createIceStorm --Ice.Config=config.s2
+IceBox.Service.IceStorm=IceStormService,40a0:createIceStorm --Ice.Config=config.s2
 
 #
 # Warn about connection exceptions

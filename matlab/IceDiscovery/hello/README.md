@@ -13,4 +13,4 @@ client
 The client uses IceDiscovery to locate the Ice hello object. See the
 `config.client` file for details on the IceDiscovery configuration.
 
-[1]: https://doc.zeroc.com/ice/3.7/ice-plugins/icediscovery
+[1]: https://doc.zeroc.com/ice/4.0/ice-plugins/icediscovery

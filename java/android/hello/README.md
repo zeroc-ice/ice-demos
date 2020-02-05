@@ -16,4 +16,4 @@ on starting the server.
 
 Refer to the [java README.md](../../README.md) for build instructions.
 
-[1]: https://doc.zeroc.com/ice/3.7/ice-plugins/icediscovery
+[1]: https://doc.zeroc.com/ice/4.0/ice-plugins/icediscovery

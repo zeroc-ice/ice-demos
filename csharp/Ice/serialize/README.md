@@ -45,4 +45,4 @@ client
 The client allows you to toggle between sending a real class instance
 and sending a null value, to show that passing null is supported.
 
-[1]: https://doc.zeroc.com/ice/3.7/language-mappings/c-sharp-mapping/client-side-slice-to-c-sharp-mapping/serializable-objects-in-c-sharp
+[1]: https://doc.zeroc.com/ice/4.0/language-mappings/c-sharp-mapping/client-side-slice-to-c-sharp-mapping/serializable-objects-in-c-sharp

@@ -13,4 +13,4 @@ In a second window, start the client:
 ```
 client
 ```
-[1]: https://doc.zeroc.com/ice/3.7/language-mappings/c++11-mapping/client-side-slice-to-c++11-mapping/asynchronous-method-invocation-ami-in-c++11
+[1]: https://doc.zeroc.com/ice/4.0/language-mappings/c++11-mapping/client-side-slice-to-c++11-mapping/asynchronous-method-invocation-ami-in-c++11

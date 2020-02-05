@@ -55,9 +55,9 @@ listening on an accessible network interface.
 See the README file of the IceDiscovery hello demo for more information on
 how to start the server.
 
-[1]: https://doc.zeroc.com/ice/3.7/client-side-features/oneway-invocations
-[2]: https://doc.zeroc.com/ice/3.7/client-side-features/datagram-invocations
-[4]: https://doc.zeroc.com/ice/3.7/client-side-features/batched-invocations
-[3]: https://doc.zeroc.com/ice/3.7/ice-plugins/icessl
-[5]: https://doc.zeroc.com/ice/3.7/client-side-features/invocation-timeouts
-[6]: https://doc.zeroc.com/ice/3.7/ice-plugins/icediscovery
+[1]: https://doc.zeroc.com/ice/4.0/client-side-features/oneway-invocations
+[2]: https://doc.zeroc.com/ice/4.0/client-side-features/datagram-invocations
+[4]: https://doc.zeroc.com/ice/4.0/client-side-features/batched-invocations
+[3]: https://doc.zeroc.com/ice/4.0/ice-plugins/icessl
+[5]: https://doc.zeroc.com/ice/4.0/client-side-features/invocation-timeouts
+[6]: https://doc.zeroc.com/ice/4.0/ice-plugins/icediscovery

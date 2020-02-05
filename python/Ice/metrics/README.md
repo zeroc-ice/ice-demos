@@ -92,4 +92,4 @@ ByParent metrics view groups metrics by parent (the parent is usually
 either the Ice communicator or object adapter depending on the object
 monitored).
 
-[1]: https://doc.zeroc.com/ice/3.7/administration-and-diagnostics/instrumentation-facility
+[1]: https://doc.zeroc.com/ice/4.0/administration-and-diagnostics/instrumentation-facility

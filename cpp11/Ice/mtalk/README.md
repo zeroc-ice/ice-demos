@@ -9,4 +9,4 @@ client
 
 On another device, start the command-line program or Android app.
 
-[2]: https://doc.zeroc.com/ice/3.7/client-side-features/datagram-invocations
+[2]: https://doc.zeroc.com/ice/4.0/client-side-features/datagram-invocations

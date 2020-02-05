@@ -12,4 +12,4 @@ After starting the server, run the MATLAB client:
 client
 ```
 
-[1]: https://doc.zeroc.com/ice/3.7/language-mappings/matlab-mapping/client-side-slice-to-matlab-mapping/asynchronous-method-invocation-ami-in-matlab
+[1]: https://doc.zeroc.com/ice/4.0/language-mappings/matlab-mapping/client-side-slice-to-matlab-mapping/asynchronous-method-invocation-ami-in-matlab

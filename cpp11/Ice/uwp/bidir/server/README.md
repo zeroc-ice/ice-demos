@@ -21,4 +21,4 @@ or right click on the project and select `Debug -> Start new instance`.
 * On another computer build and start the Ice/bidir client of your choice and
 connect using the public IP address of the machine running the server.
 
-[1]: https://doc.zeroc.com/ice/3.7/client-server-features/connection-management/bidirectional-connections
+[1]: https://doc.zeroc.com/ice/4.0/client-server-features/connection-management/bidirectional-connections

@@ -34,4 +34,4 @@ to do anything special to take advantage of the replication. The
 subscriber and publisher are identical to those contained in the clock
 demo. See ../clock/README for instructions on running them.
 
-[1]: https://doc.zeroc.com/ice/3.7/ice-services/icestorm/highly-available-icestorm
+[1]: https://doc.zeroc.com/ice/4.0/ice-services/icestorm/highly-available-icestorm

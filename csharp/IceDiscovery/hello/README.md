@@ -22,5 +22,5 @@ To test [timeouts][2] you can use 'T' to set an invocation timeout on the
 client proxy and 'P' to set a delayed response in the server to cause a
 timeout.
 
-[1]: https://doc.zeroc.com/ice/3.7/ice-plugins/icediscovery
-[5]: https://doc.zeroc.com/ice/3.7/client-side-features/invocation-timeouts
+[1]: https://doc.zeroc.com/ice/4.0/ice-plugins/icediscovery
+[5]: https://doc.zeroc.com/ice/4.0/client-side-features/invocation-timeouts

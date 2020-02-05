@@ -4,4 +4,4 @@ This example presents a very simple chat server to demonstrate the use of a
 To run the demo, first follow the instructions from the C++ Glacier2
 simpleChat demo README to start the server.
 
-[1]: https://doc.zeroc.com/ice/3.7/ice-services/glacier2/getting-started-with-glacier2
+[1]: https://doc.zeroc.com/ice/4.0/ice-services/glacier2/getting-started-with-glacier2

@@ -12,4 +12,4 @@ In a separate window, run the client:
 python client.py
 ```
 
-[1]: https://doc.zeroc.com/ice/3.7/hello-world-application/writing-an-ice-application-with-python
+[1]: https://doc.zeroc.com/ice/4.0/hello-world-application/writing-an-ice-application-with-python

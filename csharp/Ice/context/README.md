@@ -18,4 +18,4 @@ client
 > dotnet client.dll
 > ```
 
-[1]: https://doc.zeroc.com/ice/3.7/client-side-features/request-contexts
+[1]: https://doc.zeroc.com/ice/4.0/client-side-features/request-contexts

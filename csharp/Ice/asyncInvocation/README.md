@@ -20,4 +20,4 @@ client
 > dotnet client.dll
 > ```
 
-[1]: https://doc.zeroc.com/ice/3.7/language-mappings/c-sharp-mapping/client-side-slice-to-c-sharp-mapping/asynchronous-method-invocation-ami-in-c-sharp
+[1]: https://doc.zeroc.com/ice/4.0/language-mappings/c-sharp-mapping/client-side-slice-to-c-sharp-mapping/asynchronous-method-invocation-ami-in-c-sharp

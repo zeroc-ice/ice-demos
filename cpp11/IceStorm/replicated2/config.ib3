@@ -7,7 +7,7 @@ Ice.Admin.InstanceName=icebox3
 #
 # The IceStorm service
 #
-IceBox.Service.IceStorm=IceStormService,37:createIceStorm --Ice.Config=config.s3
+IceBox.Service.IceStorm=IceStormService,40a0:createIceStorm --Ice.Config=config.s3
 
 #
 # Warn about connection exceptions

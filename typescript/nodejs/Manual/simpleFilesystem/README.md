@@ -20,4 +20,4 @@ client:
 node Client.js
 ```
 
-[1]: https://doc.zeroc.com/ice/3.7/language-mappings/javascript-mapping/client-side-slice-to-javascript-mapping/example-of-a-file-system-client-in-javascript
+[1]: https://doc.zeroc.com/ice/4.0/language-mappings/javascript-mapping/client-side-slice-to-javascript-mapping/example-of-a-file-system-client-in-javascript
