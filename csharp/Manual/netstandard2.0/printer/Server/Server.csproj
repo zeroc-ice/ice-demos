@@ -14,6 +14,9 @@
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
         <FileVersion>1.0.0.0</FileVersion>
     </PropertyGroup>
+    <PropertyGroup Condition="'$(AppTargetFramework)' == 'netcoreapp3.1'">
+         <UseAppHost>true</UseAppHost>
+    </PropertyGroup>
     <ItemGroup>
         <SliceCompile Include="../Printer.ice" />
         <PackageReference Include="zeroc.ice.net" Version="3.7.3" />

@@ -22,7 +22,7 @@ The demo build system copies the `iceboxnet` app to the demo's folder. With the
 | Platform            | Path                               |
 | --------------------| ---------------------------------- |
 | .NET Framework 4.5  | `tools\net45\iceboxnet.exe`        |
-| .NET Core 2.1/2.2   | `tools\netcoreapp2.1\iceboxnet.dll`|
-| .NET Core 3.0       | `tools\netcoreapp3.0\iceboxnet.dll`|
+| .NET Core 2.1       | `tools\netcoreapp2.1\iceboxnet.dll`|
+| .NET Core 3.1       | `tools\netcoreapp3.1\iceboxnet.dll`|
 
 [1]: https://doc.zeroc.com/ice/3.7/icebox

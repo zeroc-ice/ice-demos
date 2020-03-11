@@ -13,6 +13,9 @@
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
         <FileVersion>1.0.0.0</FileVersion>
     </PropertyGroup>
+    <PropertyGroup Condition="'$(AppTargetFramework)' == 'netcoreapp3.1'">
+         <UseAppHost>true</UseAppHost>
+    </PropertyGroup>
     <PropertyGroup Condition=" '$(RunConfiguration)' == 'Default' ">
         <StartAction>Project</StartAction>
         <StartWorkingDirectory>..\..\..</StartWorkingDirectory>
