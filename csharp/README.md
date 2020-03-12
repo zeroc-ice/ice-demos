@@ -28,7 +28,7 @@ Refer to the [C++11 demos](../cpp11) for more examples that use the Ice services
 
 In order to build Ice for .NET sample programs, you need all of the following:
 
- - the [.NET Core SDK][5] version 2.1, 2.2 or 3.0
+ - the [.NET Core SDK][5] version 2.1 or 3.1
  - Slice to C# compiler, for Windows platform the Slice to C# compiler is included
    with the `zeroc.ice.net` NuGet package installed during build, for other platforms
    refer to the [Release Notes][6].
@@ -52,7 +52,7 @@ dotnet restore "C# NET Core demos.sln"
 dotnet msbuild "C# NET Core demos.sln"
 ```
 
-The demo applications target the `netcoreapp3.0` framework by default. You
+The demo applications target the `netcoreapp3.1` framework by default. You
 can change the target framework by setting the `AppTargetFramework` property
 to a different value, for example:
 

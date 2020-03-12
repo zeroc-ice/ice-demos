@@ -14,6 +14,9 @@
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
         <FileVersion>1.0.0.0</FileVersion>
     </PropertyGroup>
+    <PropertyGroup Condition="'$(AppTargetFramework)' == 'netcoreapp3.1'">
+         <UseAppHost>true</UseAppHost>
+    </PropertyGroup>
     <PropertyGroup Condition=" '$(RunConfiguration)' == 'Default' ">
         <StartAction>Project</StartAction>
         <StartWorkingDirectory>..\..\..</StartWorkingDirectory>
@@ -22,7 +25,7 @@
     <ItemGroup>
         <Compile Include="../../../Client.cs" />
         <SliceCompile Include="../../../Contact.ice" />
-        <PackageReference Include="zeroc.ice.net" Version="3.7.3" />
+        <PackageReference Include="zeroc.ice.net" Version="3.7.3.1" />
         <PackageReference Include="zeroc.icebuilder.msbuild" Version="5.0.4" />
         <Compile Update="generated\Contact.cs">
           <SliceCompileSource>../../../Contact.ice</SliceCompileSource>
