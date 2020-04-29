@@ -111,8 +111,17 @@ def demoJar(name, mainClass = name.capitalize()) {
     }
 }
 
+def localDependency(artifactId) {
+    if (slice.jarDir != null) {
+        return files("${project.slice.jarDir}/${artifactId}-${project.iceArtifactVersion}.jar")
+    } else {
+        return "com.zeroc:${artifactId}:${project.iceArtifactVersion}"
+    }
+}
+
 ext {
     demoJar = this.&demoJar
+    localDependency = this.&localDependency
 }
 
 def demoIceBoxServer() {
@@ -121,9 +130,9 @@ def demoIceBoxServer() {
     }
 
     dependencies {
-        iceboxserver "com.zeroc:ice:${project.iceArtifactVersion}"
-        iceboxserver "com.zeroc:icessl:${project.iceArtifactVersion}"
-        iceboxserver "com.zeroc:icebox:${project.iceArtifactVersion}"
+        iceboxserver localDependency("ice")
+        iceboxserver localDependency("icessl")
+        iceboxserver localDependency("icebox")
         iceboxserver "org.apache.commons:commons-compress:1.14"
     }
 

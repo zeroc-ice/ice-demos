@@ -41,9 +41,9 @@ clean {
 }
 
 dependencies {
-    implementation "com.zeroc:ice:${project.iceArtifactVersion}"
-    implementation "com.zeroc:icessl:${project.iceArtifactVersion}"
-    runtimeOnly "com.zeroc:icediscovery:${project.iceArtifactVersion}"
+    implementation localDependency("ice")
+    implementation localDependency("icessl")
+    runtimeOnly localDependency("icediscovery")
     implementation "androidx.fragment:fragment:1.1.0"
     implementation "androidx.appcompat:appcompat:1.1.0"
 }
