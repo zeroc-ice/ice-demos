@@ -48,8 +48,8 @@ clean {
 }
 
 dependencies {
-    implementation "com.zeroc:ice-compat:${project.iceArtifactVersion}"
-    implementation "com.zeroc:glacier2-compat:${project.iceArtifactVersion}"
+    implementation localDependency("ice-compat")
+    implementation localDependency("glacier2-compat")
     implementation "androidx.fragment:fragment:1.1.0"
     implementation "androidx.appcompat:appcompat:1.1.0"
 }

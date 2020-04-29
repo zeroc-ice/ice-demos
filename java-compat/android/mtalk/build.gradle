@@ -41,5 +41,5 @@ clean {
 }
 
 dependencies {
-    implementation "com.zeroc:ice-compat:${project.iceArtifactVersion}"
+    implementation localDependency("ice-compat")
 }
