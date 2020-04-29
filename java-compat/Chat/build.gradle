@@ -32,8 +32,8 @@ dependencies {
 
 if(JavaVersion.current() == JavaVersion.VERSION_11) {
     jar {
-        archiveName = "ChatGUI.jar"
-        destinationDir = new File("${projectDir}")
+        archiveFileName = "ChatGUI.jar"
+        destinationDirectory = new File("${projectDir}")
         manifest {
             attributes 'Main-Class': "ChatDemoGUI.MainView"
             attributes("Class-Path": configurations.runtimeClasspath.resolve().collect{ it.toURI() }.join(' '))
@@ -42,7 +42,7 @@ if(JavaVersion.current() == JavaVersion.VERSION_11) {
 }
 else {
     jar {
-        archiveName = "ChatGUITEMP.jar"
+        archiveFileName = "ChatGUITEMP.jar"
         manifest {
             attributes 'Main-Class': "ChatDemoGUI.MainView"
         }
