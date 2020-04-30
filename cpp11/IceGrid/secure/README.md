@@ -17,12 +17,12 @@ makedemocerts.py
 ```
 
 Follow the instructions provided by the script. Note that to run the
-script you must install the zeroc-icecertutils package from the
+script you must install the zeroc-icecertutils >= 1.0.4 package from the
 [Python package repository](https://pypi.python.org/pypi). To install
 this package with [pip](https://pip.pypa.io):
 
 ```
-pip install zeroc-icecertutils
+pip install "zeroc-icecertutils >= 1.0.4"
 ```
 
 The keytool utility from the Java Development Kit is also required to

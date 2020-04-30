@@ -19,7 +19,7 @@ package from a separate [ZeroC repository][1]. You can install this package as
 follows:
 
 ```
-pip install zeroc-icecertutils
+pip install "zeroc-icecertutils >= 1.0.4"
 ```
 
 ## Usage
