@@ -114,7 +114,7 @@ def demoJar(name, mainClass = name.capitalize()) {
 }
 
 def localDependency(artifactId) {
-    if (slice.jarDir != null) {
+    if (slice.srcDist) {
         return files("${project.slice.jarDir}/${artifactId}-${project.iceArtifactVersion}.jar")
     } else {
         return "com.zeroc:${artifactId}:${project.iceArtifactVersion}"
