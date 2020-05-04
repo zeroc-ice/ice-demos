@@ -94,8 +94,8 @@ def demoJar(name, mainClass = name.capitalize()) {
     def taskName = name + "Jar"
     // Create a jar for the client & server which includes everything in the demo.
     def jarTask = tasks.create(name: taskName, type: Jar) {
-        archiveVersion = ""
-        archiveBaseName = name
+        version = ""
+        baseName = name
         from(sourceSets.main.output) {
             include "**"
         }
@@ -139,8 +139,8 @@ def demoIceBoxServer() {
 
     // Create a jar for the client & server which includes everything in the demo.
     def jarTask = tasks.create(name: "IceBoxServerJar", type: Jar) {
-        archiveVersion = ""
-        archiveBaseName = "iceboxserver"
+        version = ""
+        baseName = "iceboxserver"
     }
 
     jarTask.manifest {

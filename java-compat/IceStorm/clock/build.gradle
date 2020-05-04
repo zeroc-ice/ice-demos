@@ -25,16 +25,16 @@ dependencies {
 
 // Create a jar for the publisher & subscriber which includes everything in the demo.
 task publisherJar(type: Jar) {
-    archiveVersion = ""
-    archiveBaseName = "publisher"
+    version = ""
+    baseName = "publisher"
     from(sourceSets.main.output) {
         include "**"
     }
 }
 
 task subscriberJar(type: Jar) {
-    archiveVersion = ""
-    archiveBaseName = "subscriber"
+    version = ""
+    baseName = "subscriber"
     from(sourceSets.main.output) {
         include "**"
     }
