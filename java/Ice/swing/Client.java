@@ -36,6 +36,7 @@ public class Client extends JFrame
             catch(com.zeroc.Ice.LocalException e)
             {
                 JOptionPane.showMessageDialog(null, e.toString(), "Initialization failed", JOptionPane.ERROR_MESSAGE);
+                System.exit(1);
             }
         });
     }
@@ -45,21 +46,14 @@ public class Client extends JFrame
         //
         // Initialize an Ice communicator.
         //
-        try
-        {
-            com.zeroc.Ice.InitializationData initData = new com.zeroc.Ice.InitializationData();
-            initData.properties = com.zeroc.Ice.Util.createProperties();
-            initData.properties.load("config.client");
-            initData.properties.setProperty("Ice.Default.Package", "com.zeroc.demos.Ice.swing");
-            initData.dispatcher = (runnable, connection) -> SwingUtilities.invokeLater(runnable);
+        com.zeroc.Ice.InitializationData initData = new com.zeroc.Ice.InitializationData();
+        initData.properties = com.zeroc.Ice.Util.createProperties();
+        initData.properties.load("config.client");
+        initData.properties.setProperty("Ice.Default.Package", "com.zeroc.demos.Ice.swing");
+        initData.dispatcher = (runnable, connection) -> SwingUtilities.invokeLater(runnable);
 
-            _communicator = com.zeroc.Ice.Util.initialize(args, initData);
-            Runtime.getRuntime().addShutdownHook(new Thread(() -> _communicator.destroy()));
-        }
-        catch(Throwable ex)
-        {
-            handleException(ex);
-        }
+        _communicator = com.zeroc.Ice.Util.initialize(args, initData);
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> _communicator.destroy()));
 
         Container cp = this;
 
@@ -542,7 +536,8 @@ public class Client extends JFrame
         {
             return;
         }
-        _status.setText(ex.getClass().getName());
+
+        JOptionPane.showMessageDialog(this, ex.toString(), "Error", JOptionPane.ERROR_MESSAGE);
     }
 
     private static class SliderListener implements ChangeListener

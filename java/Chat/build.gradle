@@ -18,15 +18,15 @@ dependencies {
     implementation 'com.jgoodies:jgoodies-common:1.8.0'
     implementation 'com.jgoodies:jgoodies-looks:2.6.0'
     implementation 'com.jgoodies:jgoodies-forms:1.8.0'
-    implementation "com.zeroc:ice:${project.iceArtifactVersion}"
-    runtimeOnly "com.zeroc:icessl:${project.iceArtifactVersion}"
-    implementation "com.zeroc:glacier2:${project.iceArtifactVersion}"
+    implementation localDependency("ice")
+    runtimeOnly localDependency("icessl")
+    implementation localDependency("glacier2")
 }
 
 if(JavaVersion.current() == JavaVersion.VERSION_11) {
     jar {
-        archiveName = "Chat.jar"
-        destinationDir = new File("${projectDir}")
+        archiveFileName = "Chat.jar"
+        destinationDirectory = new File("${projectDir}")
         manifest {
             attributes 'Main-Class': "com.zeroc.demos.Chat.MainView"
             attributes("Class-Path": configurations.runtimeClasspath.resolve().collect{ it.toURI() }.join(' '))
@@ -35,7 +35,7 @@ if(JavaVersion.current() == JavaVersion.VERSION_11) {
 }
 else {
     jar {
-        archiveName = "ChatTEMP.jar"
+        archiveFileName = "ChatTEMP.jar"
         manifest {
             attributes 'Main-Class': "com.zeroc.demos.Chat.MainView"
         }

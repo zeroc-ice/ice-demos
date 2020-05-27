@@ -18,24 +18,24 @@ sourceSets {
 }
 
 dependencies {
-    implementation "com.zeroc:ice:${project.iceArtifactVersion}"
-    runtimeOnly "com.zeroc:icessl:${project.iceArtifactVersion}"
-    implementation "com.zeroc:icestorm:${project.iceArtifactVersion}"
+    implementation localDependency("ice")
+    runtimeOnly localDependency("icessl")
+    implementation localDependency("icestorm")
     runtimeOnly "org.apache.commons:commons-compress:1.14"
 }
 
 // Create a jar for the publisher & subscriber which includes everything in the demo.
 task publisherJar(type: Jar) {
-    version = ""
-    baseName = "publisher"
+    archiveVersion = ""
+    archiveBaseName = "publisher"
     from(sourceSets.main.output) {
         include "**"
     }
 }
 
 task subscriberJar(type: Jar) {
-    version = ""
-    baseName = "subscriber"
+    archiveVersion = ""
+    archiveBaseName = "subscriber"
     from(sourceSets.main.output) {
         include "**"
     }

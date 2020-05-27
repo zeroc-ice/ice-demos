@@ -126,24 +126,35 @@ ChatRoom::message(const string& data) const
 void
 ChatRoom::deadRouter(const Ice::ConnectionPtr& con)
 {
-    cout << "Detected dead router - destroying all associated sessions " << endl;
-
-    list<ChatSessionPrx> sessions;
+    try
     {
-        IceUtil::Mutex::Lock sync(_mutex);
-        map<Ice::ConnectionPtr, list<ChatSessionPrx> >::iterator p = _connectionMap.find(con);
-        if(p != _connectionMap.end())
-        {
-            sessions.swap(p->second);
-            _connectionMap.erase(p);
-        }
+        con->throwException();
     }
-    for(list<ChatSessionPrx>::const_iterator s = sessions.begin(); s != sessions.end(); ++s)
+    catch(const Ice::ObjectAdapterDeactivatedException&)
     {
-        //
-        // Collocated calls to the Chat Sessions
-        //
-        (*s)->destroy();
+        // Ignore server is being shutdown
+    }
+    catch(...)
+    {
+        cout << "Detected dead router - destroying all associated sessions " << endl;
+
+        list<ChatSessionPrx> sessions;
+        {
+            IceUtil::Mutex::Lock sync(_mutex);
+            map<Ice::ConnectionPtr, list<ChatSessionPrx> >::iterator p = _connectionMap.find(con);
+            if(p != _connectionMap.end())
+            {
+                sessions.swap(p->second);
+                _connectionMap.erase(p);
+            }
+        }
+        for(list<ChatSessionPrx>::const_iterator s = sessions.begin(); s != sessions.end(); ++s)
+        {
+            //
+            // Collocated calls to the Chat Sessions
+            //
+            (*s)->destroy();
+        }
     }
 }
 

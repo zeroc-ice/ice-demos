@@ -83,8 +83,14 @@ ChatRoom::leave(const shared_ptr<ChatCallbackPrx>& callback, const Ice::Current&
 {
     lock_guard<mutex> sync(_mutex);
 
-    _callbacks.remove_if([&callback](const shared_ptr<ChatCallbackPrx>& cb) { return Ice::proxyIdentityEqual(callback, cb); });
-    _connectionMap[current.con].remove_if([&current](const shared_ptr<ChatSessionPrx>& s) { return current.id == s->ice_getIdentity(); });
+    _callbacks.remove_if([&callback](const shared_ptr<ChatCallbackPrx>& cb)
+                         {
+                             return Ice::proxyIdentityEqual(callback, cb);
+                         });
+    _connectionMap[current.con].remove_if([&current](const shared_ptr<ChatSessionPrx>& s)
+                                          {
+                                              return current.id == s->ice_getIdentity();
+                                          });
 }
 
 void
@@ -100,24 +106,35 @@ ChatRoom::message(const string& data) const
 void
 ChatRoom::deadRouter(const shared_ptr<Ice::Connection>& con)
 {
-    cout << "Detected dead router - destroying all associated sessions " << endl;
-
-    list<shared_ptr<ChatSessionPrx>> sessions;
+    try
     {
-        lock_guard<mutex> sync(_mutex);
-        auto p = _connectionMap.find(con);
-        if(p != _connectionMap.end())
-        {
-            sessions.swap(p->second);
-            _connectionMap.erase(p);
-        }
+        con->throwException();
     }
-    for(auto& s : sessions)
+    catch(const Ice::ObjectAdapterDeactivatedException&)
     {
-        //
-        // Collocated calls to the Chat Sessions
-        //
-        s->destroy();
+        // Ignore server is being shutdown
+    }
+    catch(...)
+    {
+        cout << "Detected dead router - destroying all associated sessions " << endl;
+
+        list<shared_ptr<ChatSessionPrx>> sessions;
+        {
+            lock_guard<mutex> sync(_mutex);
+            auto p = _connectionMap.find(con);
+            if(p != _connectionMap.end())
+            {
+                sessions.swap(p->second);
+                _connectionMap.erase(p);
+            }
+        }
+        for(auto& s : sessions)
+        {
+            //
+            // Collocated calls to the Chat Sessions
+            //
+            s->destroy();
+        }
     }
 }
 

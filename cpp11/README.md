@@ -133,7 +133,7 @@ You need to add the Ice `bin` directory to your PATH before running the demos.
 If you are building Debug, add both the Debug and Release `bin` directories with a
 command similar to:
 ```
-set PATH=%USERPROFILE%\ice-demos\cpp11\packages\zeroc.ice.v140.3.7.3\build\native\bin\x64\Debug;%USERPROFILE%\ice-demos\cpp11\packages\zeroc.ice.v140.3.7.3\build\native\bin\x64\Release;%PATH%
+set PATH=%USERPROFILE%\ice-demos\cpp11\packages\zeroc.ice.v140.3.7.4\build\native\bin\x64\Debug;%USERPROFILE%\ice-demos\cpp11\packages\zeroc.ice.v140.3.7.4\build\native\bin\x64\Release;%PATH%
 ```
 
 This is required because the Debug `bin` directories provide only a subset of all
@@ -142,7 +142,7 @@ Ice services and tools. For example, they don't provide `glacier2router`.
 If you are building Release, you should add only the Release `bin` directory to
 your PATH with a command similar to:
 ```
-set PATH=%USERPROFILE%\ice-demos\cpp11\packages\zeroc.ice.v140.3.7.3\build\native\bin\x64\Release;%PATH%
+set PATH=%USERPROFILE%\ice-demos\cpp11\packages\zeroc.ice.v140.3.7.4\build\native\bin\x64\Release;%PATH%
 ```
 
 Then refer to the README.md file in each demo directory for usage instructions.

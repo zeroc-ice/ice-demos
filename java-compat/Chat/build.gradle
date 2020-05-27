@@ -26,8 +26,8 @@ dependencies {
     implementation 'com.jgoodies:jgoodies-common:1.8.0'
     implementation 'com.jgoodies:jgoodies-looks:2.6.0'
     implementation 'com.jgoodies:jgoodies-forms:1.8.0'
-    implementation "com.zeroc:ice-compat:${project.iceArtifactVersion}"
-    implementation "com.zeroc:glacier2-compat:${project.iceArtifactVersion}"
+    implementation localDependency("ice-compat")
+    implementation localDependency("glacier2-compat")
 }
 
 if(JavaVersion.current() == JavaVersion.VERSION_11) {

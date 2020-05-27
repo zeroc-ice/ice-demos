@@ -28,6 +28,7 @@ public class Client extends JFrame
                 {
                     JOptionPane.showMessageDialog(null, e.toString(), "Initialization failed",
                                                   JOptionPane.ERROR_MESSAGE);
+                    System.exit(1);
                 }
             }
         });
@@ -38,23 +39,21 @@ public class Client extends JFrame
         //
         // Initialize an Ice communicator.
         //
-        try
-        {
-            Ice.InitializationData initData = new Ice.InitializationData();
-            initData.properties = Ice.Util.createProperties();
-            initData.properties.load("config.client");
-            initData.dispatcher = new Ice.Dispatcher()
+        Ice.InitializationData initData = new Ice.InitializationData();
+        initData.properties = Ice.Util.createProperties();
+        initData.properties.load("config.client");
+        initData.dispatcher = new Ice.Dispatcher()
             {
                 @Override
                 public void
-                dispatch(Runnable runnable, Ice.Connection connection)
+                    dispatch(Runnable runnable, Ice.Connection connection)
                 {
                     SwingUtilities.invokeLater(runnable);
                 }
             };
-            _communicator = Ice.Util.initialize(args, initData);
+        _communicator = Ice.Util.initialize(args, initData);
 
-            Runtime.getRuntime().addShutdownHook(new Thread("Shutdown hook")
+        Runtime.getRuntime().addShutdownHook(new Thread("Shutdown hook")
             {
                 @Override
                 public void run()
@@ -62,11 +61,6 @@ public class Client extends JFrame
                     _communicator.destroy();
                 }
             });
-        }
-        catch(Throwable ex)
-        {
-            handleException(ex);
-        }
 
         Container cp = this;
 
@@ -583,7 +577,8 @@ public class Client extends JFrame
         {
             return;
         }
-        _status.setText(ex.getClass().getName());
+
+        JOptionPane.showMessageDialog(this, ex.toString(), "Error", JOptionPane.ERROR_MESSAGE);
     }
 
     private static class SliderListener implements ChangeListener
