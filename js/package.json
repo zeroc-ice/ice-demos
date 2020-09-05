@@ -37,7 +37,7 @@
     "gulp-terser": "^1.2.0",
     "gulp-uglifyes": "^0.2.1",
     "hogan.js": "^3.0.2",
-    "http-proxy": "^1.17.0",
+    "http-proxy": "^1.18.1",
     "pump": "^3.0.0",
     "regenerator-runtime": "^0.13.5",
     "vinyl-paths": "^3.0.1"
