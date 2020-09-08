@@ -2,7 +2,7 @@
 # The client reads this property to create the reference to the
 # "hello" object in the server.
 #
-Hello.Proxy=hello:tcp -h localhost -p 10000
+Hello.Proxy=ice+tcp://localhost:10000/hello
 
 #
 # Warn about connection exceptions
@@ -10,14 +10,14 @@ Hello.Proxy=hello:tcp -h localhost -p 10000
 Ice.Warn.Connections=1
 
 #
-# Network Tracing
+# Transport Tracing
 #
-# 0 = no network tracing
+# 0 = no transport tracing
 # 1 = trace connection establishment and closure
 # 2 = like 1, but more detailed
 # 3 = like 2, but also trace data transfer
 #
-#Ice.Trace.Network=1
+#Ice.Trace.Transport=1
 
 #
 # Protocol Tracing
@@ -26,9 +26,3 @@ Ice.Warn.Connections=1
 # 1 = trace protocol messages
 #
 #Ice.Trace.Protocol=1
-
-#
-# When using Ice for .NET Compact Framework, we need to specify
-# the assembly so that Ice can locate classes and exceptions.
-#
-Ice.FactoryAssemblies=client
