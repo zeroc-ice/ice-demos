@@ -22,10 +22,7 @@ public class WorkQueue
         public int delay;
     }
 
-    public void Join()
-    {
-        thread_.Join();
-    }
+    public void Join() => thread_.Join();
 
     public void Start()
     {
@@ -49,7 +46,7 @@ public class WorkQueue
                     //
                     // Get next work item.
                     //
-                    var entry = _tasks[0];
+                    TaskEntry entry = _tasks[0];
 
                     //
                     // Wait for the amount of time indicated in delay to
@@ -66,7 +63,7 @@ public class WorkQueue
                 }
             }
 
-            foreach(var e in _tasks)
+            foreach(TaskEntry e in _tasks)
             {
                 e.task.Start();
             }
@@ -97,7 +94,7 @@ public class WorkQueue
         return t;
     }
 
-    public void destroy()
+    public void Destroy()
     {
         lock(this)
         {
@@ -121,7 +118,7 @@ public class WorkQueue
         }
     }
 
-    private List<TaskEntry> _tasks = new List<TaskEntry>();
-    private bool _done = false;
+    private readonly List<TaskEntry> _tasks = new List<TaskEntry>();
+    private bool _done;
     private Thread thread_;
 }

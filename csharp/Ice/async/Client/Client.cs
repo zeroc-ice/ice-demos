@@ -4,17 +4,13 @@
 
 using Demo;
 using System;
-using System.Collections.Generic;
+using System.Configuration;
 using ZeroC.Ice;
 
 try
 {
-    var properties = new Dictionary<string, string>();
-    properties.LoadIceConfigFile("config.client");
-    properties.ParseIceArgs(ref args);
-
     // using statement - communicator is automatically destroyed at the end of this statement
-    using var communicator = new Communicator(properties);
+    using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
 
     // Destroy the communicator on Ctrl+C or Ctrl+Break
     Console.CancelKeyPress += (sender, eventArgs) => communicator.Dispose();
@@ -22,7 +18,7 @@ try
     if(args.Length > 0)
     {
         Console.Error.WriteLine("too many arguments");
-        Environment.Exit(1);
+        return 1;
     }
 
     IHelloPrx hello = communicator.GetPropertyAsProxy("Hello.Proxy", IHelloPrx.Factory) ??
@@ -78,8 +74,9 @@ try
 catch(Exception ex)
 {
     Console.Error.WriteLine(ex);
-    Environment.Exit(1);
+    return 1;
 }
+return 0;
 
 static void Menu()
 {

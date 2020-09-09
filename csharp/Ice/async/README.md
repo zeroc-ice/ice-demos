@@ -3,21 +3,14 @@ and [Asynchronous Method Dispatch (AMD)][2].
 
 To run the demo, first start the server:
 ```
-server
+cd server
+dotnet run
 ```
 In a separate window, start the client:
 ```
-client
+cd client
+dotnet run
 ```
-
-> With .NET Core 2.x, use instead:
-> ```
-> dotnet server.dll
-> ```
-> and
-> ```
-> dotnet client.dll
-> ```
 
 The demo invocation can either have a short response time or require a
 significant amount of time to complete. For the long running request
