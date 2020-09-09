@@ -1,16 +1,10 @@
-# Ignore executables
-client
-server
-locator
-publisher
-subscriber
-talk
-
-!**/msbuild/client
-!**/msbuild/server
-!**/msbuild/locator
-!**/msbuild/publisher
-!**/msbuild/subscriber
+# Ignore C++ executables
+cpp/**/client
+cpp/**/server
+cpp/**/locator
+cpp/**/publisher
+cpp/**/subscriber
+cpp/**/talk
 
 !**/Sources/client
 !**/Sources/server
