@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-        <AssemblyName>client</AssemblyName>
-        <OutputType>Exe</OutputType>
-        <TargetFramework>$(AppTargetFramework)</TargetFramework>
-        <OutputPath>.</OutputPath>
-        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-        <Company>ZeroC, Inc.</Company>
-        <AssemblyTitle>Manual printer demo client</AssemblyTitle>
-        <Description>Manual printer demo client</Description>
-        <Copyright>Copyright (c) ZeroC, Inc.</Copyright>
-        <Product>Ice</Product>
-        <AssemblyVersion>1.0.0.0</AssemblyVersion>
-        <FileVersion>1.0.0.0</FileVersion>
-    </PropertyGroup>
-    <ItemGroup>
-        <SliceCompile Include="../Printer.ice" />
-        <PackageReference Include="zeroc.ice.net" Version="4.0.0-alpha.0" />
-        <PackageReference Include="zeroc.icebuilder.msbuild" Version="5.0.4" />
-        <Compile Update="generated\Printer.cs">
-          <SliceCompileSource>../Printer.ice</SliceCompileSource>
-        </Compile>
-    </ItemGroup>
-    <ItemGroup />
+<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+  <PropertyGroup>
+    <AssemblyName>client</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>$(AppTargetFramework)</TargetFramework>
+    <OutputPath>.</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <Company>ZeroC, Inc.</Company>
+    <AssemblyTitle>Manual printer demo client</AssemblyTitle>
+    <Description>Manual printer demo client</Description>
+    <Copyright>Copyright (c) ZeroC, Inc.</Copyright>
+    <Product>Ice</Product>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <FileUpgradeFlags>40</FileUpgradeFlags>
+    <UpgradeBackupLocation>D:\4.0\ice-demos\csharp\Backup\Manual\netstandard2.0\printer\Client\</UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <SliceCompile Include="../Printer.ice" />
+    <PackageReference Include="zeroc.ice.net" Version="4.0.0-alpha.0" />
+    <PackageReference Include="zeroc.icebuilder.msbuild" Version="5.0.4" />
+    <Compile Update="generated\Printer.cs">
+      <SliceCompileSource>../Printer.ice</SliceCompileSource>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup />
 </Project>
