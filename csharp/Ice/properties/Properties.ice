@@ -4,11 +4,11 @@
 
 #pragma once
 
-#include <Ice/Properties.ice>
+#include <Ice/PropertiesAdmin.ice>
 
 module Demo
 {
-    interface Props
+    interface Properties
     {
         idempotent Ice::PropertyDict getChanges();
         void shutdown();
