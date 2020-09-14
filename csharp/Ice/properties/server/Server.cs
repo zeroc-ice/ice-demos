@@ -5,9 +5,9 @@
 
 using Demo;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Threading;
-using System.Collections.Generic;
 using ZeroC.Ice;
 
 
@@ -24,9 +24,7 @@ if (args.Length > 0)
 
 var props = new Properties();
 
-//
 // Retrieve the PropertiesAdmin facet and use props.updated as the update callback.
-//
 var admin = communicator.FindAdminFacet("Properties") as IPropertiesAdmin;
 admin.Updated += (sender, changes) => props.Updated(changes);
 
@@ -35,11 +33,8 @@ adapter.Add("properties", props);
 adapter.Activate();
 communicator.WaitForShutdown();
 
-
-//
-// The servant implements the Slice interface Demo::Props as well as the
-// native callback interface Ice.PropertiesAdminUpdateCallback.
-//
+// The servant implements the Slice interface Demo::Props as well as the native callback interface
+// Ice.PropertiesAdminUpdateCallback.
 class Properties : IProperties
 {
     private bool _called;
@@ -52,10 +47,7 @@ class Properties : IProperties
     {
         lock (_mutex)
         {
-            //
-            // Make sure that we have received the property updates before we
-            // return the results.
-            //
+            // Make sure that we have received the property updates before we return the results.
             while (!_called)
             {
                 Monitor.Wait(this);

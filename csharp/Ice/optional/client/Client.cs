@@ -60,9 +60,7 @@ else if (info.Type.Value != NumberType.HOME || info.Number != johnNumber || info
 Console.WriteLine("ok");
 
 
-// Add a contact for "steve". The behavior of the server is to default construct the Contact, and then assign  all set
-// parameters. Since the default value of NumberType in the slice definition is NumberType.HOME and in this case the
-// NumberType is unset it will take the default value.
+// Add a contact for "steve".
 
 string steveNumber = "234-567-8901";
 contactdb.AddContact("steve", null, steveNumber, 1);
