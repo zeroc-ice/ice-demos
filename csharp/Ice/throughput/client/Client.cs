@@ -269,7 +269,7 @@ static int Run(Communicator communicator)
                                     throughput.SendOnewayStructSeq(structSeq);
                                     break;
                                 }
-                                    case 'r':
+                                case 'r':
                                 {
                                     throughput.RecvStructSeq();
                                     break;
@@ -291,7 +291,7 @@ static int Run(Communicator communicator)
                                     throughput.SendFixedSeq(fixedSeq);
                                     break;
                                 }
-                                case 'o': 
+                                case 'o':
                                 {
                                     throughput.SendOnewayFixedSeq(fixedSeq);
                                     break;
