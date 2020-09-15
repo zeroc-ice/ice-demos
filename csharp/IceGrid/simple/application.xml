@@ -6,7 +6,11 @@
 
     <node name="node1">
 
-      <server id="SimpleServer" exe="./server" activation="on-demand">
+      <server id="SimpleServer" exe="dotnet" activation="on-demand">
+        <option>run</option>
+        <option>--project</option>
+        <option>server/server.csproj</option>
+        <option>--</option>
         <adapter name="Hello" endpoints="tcp -h localhost">
           <object identity="hello" type="::Demo::Hello" property="Identity"/>
         </adapter>
