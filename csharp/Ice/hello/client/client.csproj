@@ -8,6 +8,14 @@
 		<LangVersion>9.0</LangVersion>
     </PropertyGroup>
     <ItemGroup>
+      <None Include="..\..\..\..\certs\cacert.der" Link="cacert.der">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Include="..\..\..\..\certs\client.p12" Link="client.p12">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+    <ItemGroup>
         <SliceCompile Include="../Hello.ice" />
         <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0-preview.8.20407.11" />
         <PackageReference Include="zeroc.ice.net" Version="4.0.0-alpha.0" />
