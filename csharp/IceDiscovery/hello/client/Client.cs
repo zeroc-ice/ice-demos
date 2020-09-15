@@ -24,7 +24,7 @@ int delay = 0;
 
 Menu();
 
-string line = null;
+string? line = null;
 do
 {
     try

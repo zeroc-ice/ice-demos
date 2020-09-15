@@ -26,7 +26,7 @@ try
 
     Menu();
 
-    string line = null;
+    string? line = null;
     do
     {
         try
@@ -69,7 +69,7 @@ try
             Console.Error.WriteLine(ex);
         }
     }
-    while(!line.Equals("x"));
+    while(line != "x");
 }
 catch(Exception ex)
 {

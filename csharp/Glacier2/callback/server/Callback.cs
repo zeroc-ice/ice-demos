@@ -9,12 +9,12 @@ namespace Demo
 {
     public sealed class Callback : ICallback
     {
-        public void InitiateCallback(ICallbackReceiverPrx proxy, Current current)
+        public void InitiateCallback(ICallbackReceiverPrx? proxy, Current current)
         {
             Console.WriteLine($"initiating callback to: {proxy}");
             try
             {
-                proxy.Callback();
+                proxy!.Callback();
             }
             catch (Exception ex)
             {

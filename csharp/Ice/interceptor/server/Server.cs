@@ -48,7 +48,7 @@ try
             {
                 // Validate the client's access token before dispatching to the servant. 'validateToken' throws an
                 // exception if the token is invalid or expired.
-                if (current.Context.TryGetValue("accessToken", out string tokenValue))
+                if (current.Context.TryGetValue("accessToken", out string? tokenValue))
                 {
                     authenticator.ValidateToken(tokenValue);
                 }

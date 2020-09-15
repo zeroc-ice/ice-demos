@@ -26,7 +26,7 @@ int delay = 0;
 
 Menu();
 
-string line = null;
+string? line = null;
 do
 {
     try
@@ -38,12 +38,12 @@ do
         {
             break;
         }
-        if (line.Equals("t"))
+        if (line == "t")
         {
             var source = new CancellationTokenSource(TimeSpan.FromMilliseconds(timeout));
             twoway.SayHello(delay, cancel: source.Token);
         }
-        else if (line.Equals("T"))
+        else if (line == "T")
         {
             if (timeout == -1)
             {
@@ -56,7 +56,7 @@ do
                 Console.WriteLine("timeout is now switched off");
             }
         }
-        else if (line.Equals("P"))
+        else if (line == "P")
         {
             if (delay == 0)
             {
@@ -69,22 +69,22 @@ do
                 Console.WriteLine("server delay is now deactivated");
             }
         }
-        else if (line.Equals("S"))
+        else if (line == "S")
         {
             secure = !secure;
 
             twoway = twoway.Clone(preferNonSecure: !secure);
             Console.WriteLine(secure ? "secure mode is now on" : "secure mode is now off");
         }
-        else if (line.Equals("s"))
+        else if (line == "s")
         {
             twoway.Shutdown();
         }
-        else if (line.Equals("x"))
+        else if (line == "x")
         {
             // Nothing to do
         }
-        else if (line.Equals("?"))
+        else if (line == "?")
         {
             Menu();
         }
@@ -99,7 +99,7 @@ do
         Console.Error.WriteLine(ex);
     }
 }
-while (!line.Equals("x"));
+while (line != "x");
 
 static void Menu()
 {

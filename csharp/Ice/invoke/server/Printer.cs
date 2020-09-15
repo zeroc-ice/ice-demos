@@ -29,7 +29,8 @@ namespace Demo
             }
             else if (current.Operation == "printDictionary")
             {
-                Dictionary<string, string> dict = request.ReadParamList(current.Communicator, istr => istr.ReadStringDict());
+                Dictionary<string, string> dict = request.ReadParamList(current.Communicator, 
+                    istr => istr.ReadDictionary(1, 1, istr => istr.ReadString(), istr => istr.ReadString()));
                 Console.Write("Printing dictionary {");
                 bool first = true;
                 foreach ((string key, string value) in dict)

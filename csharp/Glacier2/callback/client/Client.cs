@@ -20,8 +20,10 @@ if (args.Length > 0)
     throw new ArgumentException("too many arguments");
 }
 
-ZeroC.Glacier2.IRouterPrx router = communicator.DefaultRouter.Clone(factory: ZeroC.Glacier2.IRouterPrx.Factory);
-ISessionPrx session;
+ZeroC.Glacier2.IRouterPrx router = communicator.DefaultRouter?.Clone(factory: ZeroC.Glacier2.IRouterPrx.Factory) ??
+    throw new ArgumentException("Ice.Default.Router not set");
+
+ISessionPrx? session;
 
 // Loop until we have successfully create a session.
 while(true)
@@ -31,8 +33,8 @@ while(true)
     //
     Console.WriteLine("This demo accepts any user-id / password combination.");
 
-    string id;
-    string pw;
+    string? id;
+    string? pw;
     try
     {
         Console.Write("user id: ");
@@ -55,7 +57,7 @@ while(true)
     }
     catch(System.IO.IOException ex)
     {
-        Console.WriteLine(ex.StackTrace.ToString());
+        Console.WriteLine(ex);
         continue;
     }
 
@@ -76,27 +78,26 @@ while(true)
 }
 
 int acmTimeout = router.GetACMTimeout();
-Connection connection = router.GetCachedConnection();
+Connection? connection = router.GetCachedConnection();
 Debug.Assert(connection != null);
 connection.Acm = new Acm(TimeSpan.FromSeconds(acmTimeout), AcmClose.Off, AcmHeartbeat.Always);
 connection.Closed += (sender, args) => Console.WriteLine("The Glacier2 session has been destroyed.");
 
-//
 // The Glacier2 router routes bidirectional calls to objects in the client only
 // when these objects have the correct Glacier2-issued category. The purpose of
 // the callbackReceiverFakeIdent is to demonstrate this.
 //
 // The Identity name is not checked by the server any value can be used.
-//
 var callbackReceiverIdent = new Identity(Guid.NewGuid().ToString(), router.GetCategoryForClient());
 var callbackReceiverFakeIdent = new Identity(Guid.NewGuid().ToString(), "fake");
 
-ICallbackPrx twoway = communicator.GetPropertyAsProxy("Callback.Proxy", ICallbackPrx.Factory);
+ICallbackPrx twoway = communicator.GetPropertyAsProxy("Callback.Proxy", ICallbackPrx.Factory) ??
+    throw new ArgumentException("invalid proxy");
 
 ObjectAdapter adapter = communicator.CreateObjectAdapterWithRouter(router);
 
 // Callback will never be called for a fake identity.
-ICallbackReceiverPrx twowayR = adapter.Add(callbackReceiverIdent,
+ICallbackReceiverPrx? twowayR = adapter.Add(callbackReceiverIdent,
                                            new CallbackReceiver(),
                                            ICallbackReceiverPrx.Factory);
 adapter.Activate();
@@ -105,7 +106,7 @@ Menu();
 
 
 // Client REPL
-string line = null;
+string? line = null;
 var context = new Dictionary<string, string>();
 bool fake = false;
 do

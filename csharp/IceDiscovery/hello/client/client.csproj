@@ -4,6 +4,8 @@
         <AssemblyName>client</AssemblyName>
         <OutputType>Exe</OutputType>
         <TargetFramework>net5</TargetFramework>
+		<Nullable>enable</Nullable>
+		<LangVersion>9.0</LangVersion>
     </PropertyGroup>
     <ItemGroup>
         <SliceCompile Include="../Hello.ice" />

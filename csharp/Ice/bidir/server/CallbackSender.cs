@@ -29,11 +29,11 @@ namespace Demo
             }
         }
 
-        public void AddClient(ICallbackReceiverPrx client, Current current)
+        public void AddClient(ICallbackReceiverPrx? client, Current current)
         {
             lock (this)
             {
-                Console.WriteLine($"adding client `{client.Identity}'");
+                Console.WriteLine($"adding client `{client!.Identity}'");
                 _clients.Add(client.Clone(fixedConnection: current.Connection));
             }
         }
@@ -62,7 +62,7 @@ namespace Demo
                             c.CallbackAsync(num).ContinueWith(t => {
                                 if (t.Exception != null)
                                 {
-                                    RemoveClient(c, t.Exception.InnerException);
+                                    RemoveClient(c, t.Exception.InnerException!);
                                 }
                             });
                         }

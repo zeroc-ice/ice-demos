@@ -8,7 +8,6 @@ using System.Configuration;
 using ZeroC.Ice;
 
 // The new communicator is automatically destroyed (disposed) at the end of the using statement
-
 using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
  
 // The communicator initialization removes all Ice-related arguments from args
@@ -17,17 +16,16 @@ if(args.Length > 0)
     throw new ArgumentException("too many arguments");
 }
 
-
-var sender = communicator.GetPropertyAsProxy("CallbackSender.Proxy", ICallbackSenderPrx.Factory) ??
+ICallbackSenderPrx sender = communicator.GetPropertyAsProxy("CallbackSender.Proxy", ICallbackSenderPrx.Factory) ??
     throw new ArgumentException("invalid proxy");
 
-var adapter = communicator.CreateObjectAdapter("Callback.Client");
-var receiver = adapter.Add("callbackReceiver", new CallbackReceiver(), ICallbackReceiverPrx.Factory);
+ObjectAdapter adapter = communicator.CreateObjectAdapter("Callback.Client");
+ICallbackReceiverPrx receiver = adapter.Add("callbackReceiver", new CallbackReceiver(), ICallbackReceiverPrx.Factory);
 adapter.Activate();
 
 Menu();
 
-string line = null;
+string? line = null;
 do
 {
     try
@@ -35,29 +33,29 @@ do
         Console.Out.Write("==> ");
         Console.Out.Flush();
         line = Console.In.ReadLine();
-        if(line == null)
+        if (line == null)
         {
             break;
         }
-        if(line.Equals("t"))
+        if (line == "t")
         {
             sender.InitiateCallback(receiver);
         }
-        else if(line.Equals("s"))
+        else if (line == "s")
         {
             sender.Shutdown();
         }
-        else if(line.Equals("x"))
+        else if (line == "x")
         {
             // Nothing to do
         }
-        else if(line.Equals("?"))
+        else if (line == "?")
         {
             Menu();
         }
         else
         {
-            Console.Out.WriteLine("unknown command `" + line + "'");
+            Console.Out.WriteLine($"unknown command `{line}'");
             Menu();
         }
     }
@@ -66,7 +64,7 @@ do
         Console.Error.WriteLine(ex);
     }
 }
-while(!line.Equals("x"));
+while(line != "x");
 
 static void Menu()
 {

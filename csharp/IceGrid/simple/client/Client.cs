@@ -5,6 +5,7 @@
 using Demo;
 using System;
 using System.Configuration;
+using System.Diagnostics;
 using ZeroC.Ice;
 using ZeroC.IceGrid;
 
@@ -24,14 +25,15 @@ try
 }
 catch (ObjectNotRegisteredException)
 {
-    IQueryPrx query = communicator.GetPropertyAsProxy("DemoIceGrid/Query", IQueryPrx.Factory);
-    hello = query.FindObjectByType("::Demo::Hello").CheckedCast(IHelloPrx.Factory) ??
+    IQueryPrx? query = communicator.GetPropertyAsProxy("DemoIceGrid/Query", IQueryPrx.Factory);
+    Debug.Assert(query != null);
+    hello = query.FindObjectByType("::Demo::Hello")?.CheckedCast(IHelloPrx.Factory) ??
         throw new InvalidOperationException("couldn't find a `::Demo::Hello' object");
 }
 
-    Menu();
+Menu();
 
-string line = null;
+string? line = null;
 do
 {
     try

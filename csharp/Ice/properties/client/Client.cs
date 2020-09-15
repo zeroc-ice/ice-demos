@@ -43,7 +43,7 @@ var batch2 = new Dictionary<string, string>()
 Show(admin);
 Menu();
 
-string line = null;
+string? line = null;
 do
 {
     try
@@ -55,7 +55,7 @@ do
         {
             break;
         }
-        if (line.Equals("1") || line.Equals("2"))
+        if (line == "1" || line == "2")
         {
             Dictionary<string, string> dict = line.Equals("1") ? batch1 : batch2;
             Console.Out.WriteLine("Sending:");
@@ -92,19 +92,19 @@ do
                 }
             }
         }
-        else if (line.Equals("c"))
+        else if (line == "c")
         {
             Show(admin);
         }
-        else if (line.Equals("s"))
+        else if (line == "s")
         {
             props.Shutdown();
         }
-        else if (line.Equals("x"))
+        else if (line == "x")
         {
             // Nothing to do
         }
-        else if (line.Equals("?"))
+        else if (line == "?")
         {
             Menu();
         }
@@ -119,7 +119,7 @@ do
         Console.Error.WriteLine(ex);
     }
 }
-while(!line.Equals("x"));
+while(line != "x");
 
 
 static void Menu()

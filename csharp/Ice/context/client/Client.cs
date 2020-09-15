@@ -26,7 +26,7 @@ try
 
     Menu();
 
-    string line = null;
+    string? line = null;
     do
     {
         try
@@ -47,26 +47,26 @@ try
                 var ctx = new Dictionary<string, string>() { { "type", "Explicit" } };
                 proxy.Call(ctx);
             }
-            else if (line.Equals("3"))
+            else if (line == "3")
             {
                 proxy.Clone(context: new Dictionary<string, string>() { { "type", "Per-Proxy" } }).Call();
             }
-            else if (line.Equals("4"))
+            else if (line == "4")
             {
                 Dictionary<string, string> currentContext = communicator.CurrentContext;
                 communicator.CurrentContext = new Dictionary<string, string>() { { "type", "Implicit" } };
                 proxy.Call();
                 communicator.CurrentContext = currentContext;
             }
-            else if (line.Equals("s"))
+            else if (line == "s")
             {
                 proxy.Shutdown();
             }
-            else if (line.Equals("x"))
+            else if (line == "x")
             {
                 // Nothing to do
             }
-            else if (line.Equals("?"))
+            else if (line == "?")
             {
                 Menu();
             }
@@ -81,7 +81,7 @@ try
             Console.Error.WriteLine(ex);
         }
     }
-    while (!line.Equals("x"));
+    while (line != "x");
 }
 catch(Exception ex)
 {

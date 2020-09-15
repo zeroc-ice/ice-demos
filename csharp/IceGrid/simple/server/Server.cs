@@ -18,7 +18,11 @@ if(args.Length > 0)
     throw new ArgumentException("too many arguments");
 }
 
-var adapter = communicator.CreateObjectAdapter("Hello");
-adapter.Add(communicator.GetProperty("Identity"), new Hello(communicator.GetProperty("Ice.ProgramName")));
+ObjectAdapter adapter = communicator.CreateObjectAdapter("Hello");
+string identity = communicator.GetProperty("Identity") ??
+    throw new ArgumentException("Identity property not set");
+string programName = communicator.GetProperty("Ice.ProgramName") ??
+    throw new InvalidOperationException("Ice.ProgramName property not set");
+adapter.Add(identity, new Hello(programName));
 adapter.Activate();
 communicator.WaitForShutdown();

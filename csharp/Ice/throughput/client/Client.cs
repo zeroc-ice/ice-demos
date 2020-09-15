@@ -105,7 +105,7 @@ static int Run(Communicator communicator)
     char currentType = '1';
     int seqSize = Constants.ByteSeqSize;
     var watch = new Stopwatch();
-    string line = null;
+    string? line = null;
     do
     {
         try
@@ -386,7 +386,7 @@ static int Run(Communicator communicator)
             Console.Error.WriteLine(ex);
         }
     }
-    while(!line.Equals("x"));
+    while(line != "x");
 
     return 0;
 }

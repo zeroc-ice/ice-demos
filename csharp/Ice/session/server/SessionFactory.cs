@@ -19,15 +19,15 @@ namespace Demo
             ISessionPrx collocProxy = proxy.Clone(endpoints: Array.Empty<Endpoint>());
 
             // Never close this connection from the client and turn on heartbeats with a timeout of 30s
-            current.Connection.Acm = new Acm(TimeSpan.FromSeconds(30), AcmClose.Off, AcmHeartbeat.Always);
-            current.Connection.Closed += (sender, args) =>
+            current.Connection!.Acm = new Acm(TimeSpan.FromSeconds(30), AcmClose.Off, AcmHeartbeat.Always);
+            current.Connection!.Closed += (sender, args) =>
             {
                 try
                 {
                     collocProxy.Destroy();
                     Console.WriteLine("Cleaned up dead client.");
                 }
-                catch (Exception)
+                catch
                 {
                     // The client already destroyed this session, or the server is shutting down
                 }

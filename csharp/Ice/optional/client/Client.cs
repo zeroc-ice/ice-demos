@@ -5,6 +5,7 @@
 using Demo;
 using System;
 using System.Configuration;
+using System.Diagnostics;
 using ZeroC.Ice;
 
 
@@ -19,7 +20,7 @@ if (args.Length > 0)
     throw new ArgumentException("too many arguments");
 }
 
-IContactDBPrx contactdb = communicator.GetPropertyAsProxy("ContactDB.Proxy", IContactDBPrx.Factory) ??
+IContactDBPrx? contactdb = communicator.GetPropertyAsProxy("ContactDB.Proxy", IContactDBPrx.Factory) ??
     throw new ArgumentException("invalid proxy");
 
 // Add a contact for "john". All parameters are provided.
@@ -30,7 +31,7 @@ Console.Write("Checking john... ");
 
 
 // Find the phone number for "john".
-string number = contactdb.QueryNumber("john");
+string? number = contactdb.QueryNumber("john");
 
 // HasValue tests if an optional value is set.
 if (number != johnNumber)
@@ -45,8 +46,9 @@ if (!dialgroup.HasValue || dialgroup.Value != 0)
     Console.Write("dialgroup is incorrect ");
 }
 
-Contact info = contactdb.Query("john");
+Contact? info = contactdb.Query("john");
 
+Debug.Assert(info != null);
 
 // All of the info parameters should be set. Each of the optional members of the class map to Ice.Optional<T> member.
 if (!info.Type.HasValue || !info.DialGroup.HasValue)
@@ -73,14 +75,14 @@ if (number != steveNumber)
 }
 
 info = contactdb.Query("steve");
-
+Debug.Assert(info != null);
 // Check the value for the NumberType.
 if (info.Type.HasValue)
 {
     Console.Write("info is incorrect ");
 }
 
-if (info.Number != steveNumber || info.DialGroup.Value != 1)
+if (info.Number != steveNumber || info.DialGroup != 1)
 {
     Console.Write("info is incorrect ");
 }
@@ -106,6 +108,7 @@ if (number != frankNumber)
 }
 
 info = contactdb.Query("frank");
+Debug.Assert(info != null);
 
 // The dial group field should be unset.
 if (info.DialGroup.HasValue)
@@ -113,7 +116,7 @@ if (info.DialGroup.HasValue)
     Console.Write("info is incorrect ");
 }
 
-if (info.Type.Value != NumberType.CELL || info.Number != frankNumber)
+if (info.Type != NumberType.CELL || info.Number != frankNumber)
 {
     Console.Write("info is incorrect ");
 }
@@ -137,6 +140,7 @@ if (number != null)
 }
 
 info = contactdb.Query("anne");
+Debug.Assert(info != null);
 
 // The number field should be unset.
 if (info.Number != null)
@@ -144,7 +148,7 @@ if (info.Number != null)
     Console.Write("info is incorrect ");
 }
 
-if (info.Type.Value != NumberType.OFFICE || info.DialGroup.Value != 2)
+if (info.Type != NumberType.OFFICE || info.DialGroup != 2)
 {
     Console.Write("info is incorrect ");
 }
@@ -166,7 +170,9 @@ if (number != anneNumber)
 }
 
 info = contactdb.Query("anne");
-if (info.Number != anneNumber || info.Type.Value != NumberType.OFFICE || info.DialGroup.Value != 2)
+Debug.Assert(info != null);
+
+if (info.Number != anneNumber || info.Type != NumberType.OFFICE || info.DialGroup != 2)
 {
     Console.Write("info is incorrect ");
 }

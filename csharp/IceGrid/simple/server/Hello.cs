@@ -9,7 +9,7 @@ namespace Demo
 {
     public class Hello : IHello
     {
-        private string _name;
+        private readonly string _name;
         public Hello(string name) => _name = name;
 
         public void SayHello(Current current) => Console.WriteLine($"{_name} says Hello World!");
@@ -20,5 +20,4 @@ namespace Demo
             current.Communicator.DisposeAsync();
         }
     }
-
 }

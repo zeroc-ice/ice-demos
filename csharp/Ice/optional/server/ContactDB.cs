@@ -19,7 +19,7 @@ namespace Demo
 
         public void UpdateContact(string name, NumberType? type, string? number, int? dialGroup, Current current)
         {
-            if (_contacts.TryGetValue(name, out Contact c))
+            if (_contacts.TryGetValue(name, out Contact? c))
             {
                 if (type.HasValue)
                 {
@@ -40,7 +40,7 @@ namespace Demo
 
         public Contact? Query(string name, Current current)
         {
-            if (_contacts.TryGetValue(name, out Contact c))
+            if (_contacts.TryGetValue(name, out Contact? c))
             {
                 return c;
             }
@@ -49,7 +49,7 @@ namespace Demo
 
         public string? QueryNumber(string name, Current current)
         {
-            if (_contacts.TryGetValue(name, out Contact c))
+            if (_contacts.TryGetValue(name, out Contact? c))
             {
                 return c.Number;
             }
@@ -58,7 +58,7 @@ namespace Demo
 
         public int? QueryDialgroup(string name, Current current)
         {
-            if (_contacts.TryGetValue(name, out Contact c))
+            if (_contacts.TryGetValue(name, out Contact? c))
             {
                 return c.DialGroup;
             }

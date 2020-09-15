@@ -3,6 +3,8 @@
     <PropertyGroup>
         <AssemblyName>LoggerPlugin</AssemblyName>
         <TargetFramework>net5</TargetFramework>
+		<Nullable>enable</Nullable>
+		<LangVersion>9.0</LangVersion>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="zeroc.ice.net" Version="4.0.0-alpha.0" />

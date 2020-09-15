@@ -76,7 +76,7 @@ ITopicManagerPrx manager = communicator.GetPropertyAsProxy("TopicManager.Proxy",
 
 
 // Retrieve the topic.
-ITopicPrx topic;
+ITopicPrx? topic;
 try
 {
     topic = manager.Retrieve(topicName);
@@ -93,6 +93,7 @@ catch (NoSuchTopic)
         return;
     }
 }
+Debug.Assert(topic != null);
 
 ObjectAdapter adapter = communicator.CreateObjectAdapter("Clock.Subscriber");
 

@@ -26,7 +26,7 @@ var props = new Properties();
 
 // Retrieve the PropertiesAdmin facet and use props.updated as the update callback.
 var admin = communicator.FindAdminFacet("Properties") as IPropertiesAdmin;
-admin.Updated += (sender, changes) => props.Updated(changes);
+admin!.Updated += (sender, changes) => props.Updated(changes);
 
 ObjectAdapter adapter = communicator.CreateObjectAdapter("Properties");
 adapter.Add("properties", props);
@@ -38,7 +38,7 @@ communicator.WaitForShutdown();
 class Properties : IProperties
 {
     private bool _called;
-    private IReadOnlyDictionary<string, string> _changes;
+    private IReadOnlyDictionary<string, string>? _changes;
     private readonly object _mutex = new object();
 
     public Properties() => _called = false;
@@ -54,7 +54,7 @@ class Properties : IProperties
             }
 
             _called = false;
-            return _changes;
+            return _changes!;
         }
     }
 

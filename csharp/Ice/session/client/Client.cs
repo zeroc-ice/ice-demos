@@ -7,6 +7,7 @@ using System;
 using System.Configuration;
 using System.Collections.Generic;
 using ZeroC.Ice;
+using System.Diagnostics;
 
 // The new communicator is automatically destroyed (disposed) at the end of the using statement
 using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
@@ -35,11 +36,12 @@ while (name.Length == 0);
 ISessionFactoryPrx factory = communicator.GetPropertyAsProxy("SessionFactory.Proxy", ISessionFactoryPrx.Factory) ??
     throw new ArgumentException("invalid proxy");
 
-ISessionPrx session = factory.Create(name);
+ISessionPrx? session = factory.Create(name);
+Debug.Assert(session != null);
 
 var hellos = new List<IHelloPrx>();
 
-menu();
+Menu();
 
 bool destroy = true;
 bool shutdown = false;
@@ -47,7 +49,7 @@ while (true)
 {
     Console.Out.Write("==> ");
     Console.Out.Flush();
-    string line = Console.In.ReadLine();
+    string? line = Console.In.ReadLine();
     if(line == null)
     {
         break;
@@ -68,7 +70,9 @@ while (true)
     }
     else if (line == "c")
     {
-        hellos.Add(session.CreateHello());
+        IHelloPrx? hello = session.CreateHello();
+        Debug.Assert(hello != null);
+        hellos.Add(hello);
         Console.Out.WriteLine($"Created hello object {(hellos.Count - 1)}");
     }
     else if (line == "s")
@@ -88,12 +92,12 @@ while (true)
     }
     else if (line == "?")
     {
-        menu();
+        Menu();
     }
     else
     {
         Console.Out.WriteLine($"Unknown command `{line}'.");
-        menu();
+        Menu();
     }
 }
 
@@ -107,7 +111,7 @@ if (shutdown)
     factory.Shutdown();
 }
 
-static void menu()
+static void Menu()
 {
     Console.Out.WriteLine(
 @"usage:

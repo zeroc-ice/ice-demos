@@ -9,7 +9,7 @@ namespace Demo
 {
     class HelloService : IService
     {
-        private ObjectAdapter _adapter;
+        private ObjectAdapter? _adapter;
 
         public void Start(string name, Communicator communicator, string[] args)
         {
@@ -18,7 +18,7 @@ namespace Demo
             _adapter.Activate();
         }
 
-        public void Stop() => _adapter.DisposeAsync();
+        public void Stop() => _adapter?.DisposeAsync();
     }
 
     public class Hello : IHello

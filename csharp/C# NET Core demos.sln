@@ -3,64 +3,148 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.30428.66
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ice", "Ice", "{0B69E55F-3828-41DC-B50D-22A9E7BEE80B}"
+	ProjectSection(SolutionItems) = preProject
+		Ice\README.md = Ice\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "callback", "callback", "{C5E59D04-A5DF-4CCD-A7A6-0021E6AD51DE}"
+	ProjectSection(SolutionItems) = preProject
+		Ice\callback\README.md = Ice\callback\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "session", "session", "{86DCC48B-624F-441C-A78E-88BB224CF554}"
+	ProjectSection(SolutionItems) = preProject
+		Ice\session\README.md = Ice\session\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bidir", "bidir", "{A1DE7220-B866-4216-A6A1-DA2B0D136A76}"
+	ProjectSection(SolutionItems) = preProject
+		Ice\bidir\README.md = Ice\bidir\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "invoke", "invoke", "{528E630C-A678-48E4-BA7D-92EF9D36B2D1}"
+	ProjectSection(SolutionItems) = preProject
+		Ice\invoke\README.md = Ice\invoke\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "plugin", "plugin", "{E077B04D-A862-4100-9A87-08D5EDD5E4E3}"
+	ProjectSection(SolutionItems) = preProject
+		Ice\plugin\README.md = Ice\plugin\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "async", "async", "{F54DD4A6-80C4-4D1E-80C6-A70945E0747A}"
+	ProjectSection(SolutionItems) = preProject
+		Ice\async\README.md = Ice\async\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "context", "context", "{D04FD855-69A8-43E5-8F94-FB16B3D8BCA8}"
+	ProjectSection(SolutionItems) = preProject
+		Ice\context\README.md = Ice\context\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "optional", "optional", "{A60AAB28-F5DB-40A1-AD62-5367D73FB4E2}"
+	ProjectSection(SolutionItems) = preProject
+		Ice\optional\README.md = Ice\optional\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "latency", "latency", "{B2FC503A-4ADD-4F11-85D0-D89F74EA51FB}"
+	ProjectSection(SolutionItems) = preProject
+		Ice\latency\README.md = Ice\latency\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "throughput", "throughput", "{E6FA2D0A-C9DE-4056-A5F0-8AFC5B0326A0}"
+	ProjectSection(SolutionItems) = preProject
+		Ice\throughput\README.md = Ice\throughput\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "asyncInvocation", "asyncInvocation", "{DAB4B5F8-0E76-4D07-B595-4CF4A91B62FA}"
+	ProjectSection(SolutionItems) = preProject
+		Ice\asyncInvocation\README.md = Ice\asyncInvocation\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "interceptor", "interceptor", "{74F6056C-417C-444A-B6F9-31DC07763E9C}"
+	ProjectSection(SolutionItems) = preProject
+		Ice\interceptor\README.md = Ice\interceptor\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "multicast", "multicast", "{05C1EBF5-7D10-487B-9FEC-6A79F4039670}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "hello", "hello", "{EF32701E-BC0D-4629-A78A-ABEA0B97B88E}"
+	ProjectSection(SolutionItems) = preProject
+		Ice\hello\README.md = Ice\hello\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "properties", "properties", "{39EF97B7-9F35-45FA-A6DF-DE3477EF13D9}"
+	ProjectSection(SolutionItems) = preProject
+		Ice\properties\README.md = Ice\properties\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "minimal", "minimal", "{4571CDDC-0FCA-450C-BCCA-F63013F55F87}"
+	ProjectSection(SolutionItems) = preProject
+		Ice\minimal\README.md = Ice\minimal\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IceGrid", "IceGrid", "{CC58C91C-1DA0-4E26-8745-830E077ABA35}"
+	ProjectSection(SolutionItems) = preProject
+		IceGrid\README.md = IceGrid\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "icebox", "icebox", "{5E8304AD-9D29-4EAD-80DE-48BCCD2234C8}"
+	ProjectSection(SolutionItems) = preProject
+		IceGrid\icebox\README.md = IceGrid\icebox\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "simple", "simple", "{3DC2FE14-9BA3-41B2-8A3B-CC4478E75F1B}"
+	ProjectSection(SolutionItems) = preProject
+		IceGrid\simple\README.md = IceGrid\simple\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IceDiscovery", "IceDiscovery", "{E3A11CDD-DDA4-4CC9-8E00-2627B62CE6A6}"
+	ProjectSection(SolutionItems) = preProject
+		IceDiscovery\README.md = IceDiscovery\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "replication", "replication", "{813B391B-77C9-469B-9302-B176FF534F1B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "hello", "hello", "{9ECA9E96-A3F1-48CF-B171-7BF053C8DC97}"
+	ProjectSection(SolutionItems) = preProject
+		IceDiscovery\hello\README.md = IceDiscovery\hello\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Glacier2", "Glacier2", "{A2346AB2-A45A-4FD2-B221-CCBC1B38FC1B}"
+	ProjectSection(SolutionItems) = preProject
+		Glacier2\README.md = Glacier2\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "callback", "callback", "{EDB5C69F-71AA-487F-A2BA-9D25F1C0AC4E}"
+	ProjectSection(SolutionItems) = preProject
+		Glacier2\callback\README.md = Glacier2\callback\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IceBox", "IceBox", "{39AD09B2-C8CE-452B-8DA6-0781D4FBC11C}"
+	ProjectSection(SolutionItems) = preProject
+		IceBox\README.md = IceBox\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "hello", "hello", "{040671C4-CDCB-4756-9C5B-291B7BF82324}"
+	ProjectSection(SolutionItems) = preProject
+		IceBox\hello\README.md = IceBox\hello\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IceStorm", "IceStorm", "{ECE5B57E-34B6-43CE-A5D4-67DBB3FF90DF}"
+	ProjectSection(SolutionItems) = preProject
+		IceStorm\README.md = IceStorm\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "clock", "clock", "{15D635FE-6478-49DA-BB98-1096C0C79C38}"
+	ProjectSection(SolutionItems) = preProject
+		IceStorm\clock\README.md = IceStorm\clock\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Manual", "Manual", "{7A4BAB22-6A9C-4235-805D-D3D3C6BB5424}"
+	ProjectSection(SolutionItems) = preProject
+		Manual\README.md = Manual\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "partial", "partial", "{E1988A01-5724-44FD-A7E2-46D86B15EDA7}"
 EndProject
@@ -131,12 +215,18 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "server", "Ice\callback\server\server.csproj", "{6636DC46-D57C-472D-82EB-C163914684E8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "printer", "printer", "{B354870B-F725-4523-9594-A4E7680FD599}"
+	ProjectSection(SolutionItems) = preProject
+		Manual\printer\README.md = Manual\printer\README.md
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "client", "Manual\printer\client\client.csproj", "{2C095BF0-555D-4444-A97B-8EAF9D7F5667}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "server", "Manual\printer\server\server.csproj", "{00F21BAB-67F7-4E2A-9460-599E74F981D2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "simpleFilesystem", "simpleFilesystem", "{FAFD9F87-C951-42B2-BDAA-10F26B6C564E}"
+	ProjectSection(SolutionItems) = preProject
+		Manual\simpleFilesystem\README.md = Manual\simpleFilesystem\README.md
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "client", "Manual\simpleFilesystem\client\client.csproj", "{9DB8AFE5-3F05-44F8-9F46-D840FE9BA3BB}"
 EndProject
@@ -153,6 +243,18 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "server", "Glacier2\callback\server\server.csproj", "{58620FC4-D276-40CF-9BBE-B328C152E796}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "client", "Glacier2\callback\client\client.csproj", "{03873FF1-494A-4C38-904A-48DEE4F7970F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "client", "IceGrid\simple\client\client.csproj", "{29A3B2B5-6FA3-4AC4-81C4-37F06058ED3B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "server", "IceGrid\simple\server\server.csproj", "{B170B4C1-102A-4C39-BEF7-79B82A693212}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "client", "IceGrid\icebox\client\client.csproj", "{E9E37FE6-6942-4BC5-9E20-5705203CD489}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "helloservice", "IceGrid\icebox\helloservice\helloservice.csproj", "{BF425EFA-DE48-434F-94B3-CF364BFE71C4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "publisher", "IceStorm\clock\publisher\publisher.csproj", "{C9D4DF22-A60A-4195-BF63-D3230467C624}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "subscriber", "IceStorm\clock\subscriber\subscriber.csproj", "{B322331E-5B4C-4E2B-B9EE-F951F2C482E2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -680,6 +782,78 @@ Global
 		{03873FF1-494A-4C38-904A-48DEE4F7970F}.Release|x64.Build.0 = Release|Any CPU
 		{03873FF1-494A-4C38-904A-48DEE4F7970F}.Release|x86.ActiveCfg = Release|Any CPU
 		{03873FF1-494A-4C38-904A-48DEE4F7970F}.Release|x86.Build.0 = Release|Any CPU
+		{29A3B2B5-6FA3-4AC4-81C4-37F06058ED3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29A3B2B5-6FA3-4AC4-81C4-37F06058ED3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29A3B2B5-6FA3-4AC4-81C4-37F06058ED3B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{29A3B2B5-6FA3-4AC4-81C4-37F06058ED3B}.Debug|x64.Build.0 = Debug|Any CPU
+		{29A3B2B5-6FA3-4AC4-81C4-37F06058ED3B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{29A3B2B5-6FA3-4AC4-81C4-37F06058ED3B}.Debug|x86.Build.0 = Debug|Any CPU
+		{29A3B2B5-6FA3-4AC4-81C4-37F06058ED3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29A3B2B5-6FA3-4AC4-81C4-37F06058ED3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29A3B2B5-6FA3-4AC4-81C4-37F06058ED3B}.Release|x64.ActiveCfg = Release|Any CPU
+		{29A3B2B5-6FA3-4AC4-81C4-37F06058ED3B}.Release|x64.Build.0 = Release|Any CPU
+		{29A3B2B5-6FA3-4AC4-81C4-37F06058ED3B}.Release|x86.ActiveCfg = Release|Any CPU
+		{29A3B2B5-6FA3-4AC4-81C4-37F06058ED3B}.Release|x86.Build.0 = Release|Any CPU
+		{B170B4C1-102A-4C39-BEF7-79B82A693212}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B170B4C1-102A-4C39-BEF7-79B82A693212}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B170B4C1-102A-4C39-BEF7-79B82A693212}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B170B4C1-102A-4C39-BEF7-79B82A693212}.Debug|x64.Build.0 = Debug|Any CPU
+		{B170B4C1-102A-4C39-BEF7-79B82A693212}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B170B4C1-102A-4C39-BEF7-79B82A693212}.Debug|x86.Build.0 = Debug|Any CPU
+		{B170B4C1-102A-4C39-BEF7-79B82A693212}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B170B4C1-102A-4C39-BEF7-79B82A693212}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B170B4C1-102A-4C39-BEF7-79B82A693212}.Release|x64.ActiveCfg = Release|Any CPU
+		{B170B4C1-102A-4C39-BEF7-79B82A693212}.Release|x64.Build.0 = Release|Any CPU
+		{B170B4C1-102A-4C39-BEF7-79B82A693212}.Release|x86.ActiveCfg = Release|Any CPU
+		{B170B4C1-102A-4C39-BEF7-79B82A693212}.Release|x86.Build.0 = Release|Any CPU
+		{E9E37FE6-6942-4BC5-9E20-5705203CD489}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9E37FE6-6942-4BC5-9E20-5705203CD489}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9E37FE6-6942-4BC5-9E20-5705203CD489}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E9E37FE6-6942-4BC5-9E20-5705203CD489}.Debug|x64.Build.0 = Debug|Any CPU
+		{E9E37FE6-6942-4BC5-9E20-5705203CD489}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E9E37FE6-6942-4BC5-9E20-5705203CD489}.Debug|x86.Build.0 = Debug|Any CPU
+		{E9E37FE6-6942-4BC5-9E20-5705203CD489}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9E37FE6-6942-4BC5-9E20-5705203CD489}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9E37FE6-6942-4BC5-9E20-5705203CD489}.Release|x64.ActiveCfg = Release|Any CPU
+		{E9E37FE6-6942-4BC5-9E20-5705203CD489}.Release|x64.Build.0 = Release|Any CPU
+		{E9E37FE6-6942-4BC5-9E20-5705203CD489}.Release|x86.ActiveCfg = Release|Any CPU
+		{E9E37FE6-6942-4BC5-9E20-5705203CD489}.Release|x86.Build.0 = Release|Any CPU
+		{BF425EFA-DE48-434F-94B3-CF364BFE71C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF425EFA-DE48-434F-94B3-CF364BFE71C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF425EFA-DE48-434F-94B3-CF364BFE71C4}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BF425EFA-DE48-434F-94B3-CF364BFE71C4}.Debug|x64.Build.0 = Debug|Any CPU
+		{BF425EFA-DE48-434F-94B3-CF364BFE71C4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BF425EFA-DE48-434F-94B3-CF364BFE71C4}.Debug|x86.Build.0 = Debug|Any CPU
+		{BF425EFA-DE48-434F-94B3-CF364BFE71C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF425EFA-DE48-434F-94B3-CF364BFE71C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF425EFA-DE48-434F-94B3-CF364BFE71C4}.Release|x64.ActiveCfg = Release|Any CPU
+		{BF425EFA-DE48-434F-94B3-CF364BFE71C4}.Release|x64.Build.0 = Release|Any CPU
+		{BF425EFA-DE48-434F-94B3-CF364BFE71C4}.Release|x86.ActiveCfg = Release|Any CPU
+		{BF425EFA-DE48-434F-94B3-CF364BFE71C4}.Release|x86.Build.0 = Release|Any CPU
+		{C9D4DF22-A60A-4195-BF63-D3230467C624}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9D4DF22-A60A-4195-BF63-D3230467C624}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9D4DF22-A60A-4195-BF63-D3230467C624}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C9D4DF22-A60A-4195-BF63-D3230467C624}.Debug|x64.Build.0 = Debug|Any CPU
+		{C9D4DF22-A60A-4195-BF63-D3230467C624}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C9D4DF22-A60A-4195-BF63-D3230467C624}.Debug|x86.Build.0 = Debug|Any CPU
+		{C9D4DF22-A60A-4195-BF63-D3230467C624}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9D4DF22-A60A-4195-BF63-D3230467C624}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9D4DF22-A60A-4195-BF63-D3230467C624}.Release|x64.ActiveCfg = Release|Any CPU
+		{C9D4DF22-A60A-4195-BF63-D3230467C624}.Release|x64.Build.0 = Release|Any CPU
+		{C9D4DF22-A60A-4195-BF63-D3230467C624}.Release|x86.ActiveCfg = Release|Any CPU
+		{C9D4DF22-A60A-4195-BF63-D3230467C624}.Release|x86.Build.0 = Release|Any CPU
+		{B322331E-5B4C-4E2B-B9EE-F951F2C482E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B322331E-5B4C-4E2B-B9EE-F951F2C482E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B322331E-5B4C-4E2B-B9EE-F951F2C482E2}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B322331E-5B4C-4E2B-B9EE-F951F2C482E2}.Debug|x64.Build.0 = Debug|Any CPU
+		{B322331E-5B4C-4E2B-B9EE-F951F2C482E2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B322331E-5B4C-4E2B-B9EE-F951F2C482E2}.Debug|x86.Build.0 = Debug|Any CPU
+		{B322331E-5B4C-4E2B-B9EE-F951F2C482E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B322331E-5B4C-4E2B-B9EE-F951F2C482E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B322331E-5B4C-4E2B-B9EE-F951F2C482E2}.Release|x64.ActiveCfg = Release|Any CPU
+		{B322331E-5B4C-4E2B-B9EE-F951F2C482E2}.Release|x64.Build.0 = Release|Any CPU
+		{B322331E-5B4C-4E2B-B9EE-F951F2C482E2}.Release|x86.ActiveCfg = Release|Any CPU
+		{B322331E-5B4C-4E2B-B9EE-F951F2C482E2}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -754,6 +928,12 @@ Global
 		{EB9F6BB1-E497-4386-9577-DAA0D2B26557} = {9ECA9E96-A3F1-48CF-B171-7BF053C8DC97}
 		{58620FC4-D276-40CF-9BBE-B328C152E796} = {EDB5C69F-71AA-487F-A2BA-9D25F1C0AC4E}
 		{03873FF1-494A-4C38-904A-48DEE4F7970F} = {EDB5C69F-71AA-487F-A2BA-9D25F1C0AC4E}
+		{29A3B2B5-6FA3-4AC4-81C4-37F06058ED3B} = {3DC2FE14-9BA3-41B2-8A3B-CC4478E75F1B}
+		{B170B4C1-102A-4C39-BEF7-79B82A693212} = {3DC2FE14-9BA3-41B2-8A3B-CC4478E75F1B}
+		{E9E37FE6-6942-4BC5-9E20-5705203CD489} = {5E8304AD-9D29-4EAD-80DE-48BCCD2234C8}
+		{BF425EFA-DE48-434F-94B3-CF364BFE71C4} = {5E8304AD-9D29-4EAD-80DE-48BCCD2234C8}
+		{C9D4DF22-A60A-4195-BF63-D3230467C624} = {15D635FE-6478-49DA-BB98-1096C0C79C38}
+		{B322331E-5B4C-4E2B-B9EE-F951F2C482E2} = {15D635FE-6478-49DA-BB98-1096C0C79C38}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AD1B97D6-4013-4702-90E4-CF52837339ED}

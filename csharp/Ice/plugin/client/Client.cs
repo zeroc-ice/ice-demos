@@ -17,7 +17,7 @@ if(args.Length > 0)
     throw new ArgumentException("too many arguments");
 }
 
-var hello = communicator.GetPropertyAsProxy("Hello.Proxy", IHelloPrx.Factory) ??
+IHelloPrx hello = communicator.GetPropertyAsProxy("Hello.Proxy", IHelloPrx.Factory) ??
     throw new ArgumentException("invalid proxy");
 
 Menu();
@@ -61,7 +61,7 @@ do
         Console.Error.WriteLine(ex);
     }
 }
-while (!line.Equals("x"));
+while (line != "x");
 
 static void Menu()
 {

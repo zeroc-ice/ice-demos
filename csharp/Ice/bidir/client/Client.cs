@@ -31,7 +31,7 @@ try
     ICallbackReceiverPrx proxy = adapter.AddWithUUID(new CallbackReceiver(), ICallbackReceiverPrx.Factory);
 
     // Associate the object adapter with the bidirectional connection.
-    server.GetConnection().Adapter = adapter;
+    server.GetConnection()!.Adapter = adapter;
 
     // Provide the proxy of the callback receiver object to the server and wait for shutdown.
     server.AddClient(proxy);

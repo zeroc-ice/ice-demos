@@ -6,119 +6,122 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using Demo;
 
-public class WorkQueue
+namespace Demo
 {
-    private class TaskEntry
+    public class WorkQueue
     {
-        public TaskEntry(Task task, int delay)
+        private readonly List<TaskEntry> _tasks = new List<TaskEntry>();
+        private bool _done;
+        private Thread? _thread;
+
+        public void Join() => _thread?.Join();
+
+        public void Start()
         {
-            this.task = task;
-            this.delay = delay;
+            _thread = new Thread(new ThreadStart(Run));
+            _thread.Start();
         }
 
-        public Task task;
-        public int delay;
-    }
-
-    public void Join() => thread_.Join();
-
-    public void Start()
-    {
-        thread_ = new Thread(new ThreadStart(Run));
-        thread_.Start();
-    }
-
-    public void Run()
-    {
-        lock(this)
+        public void Run()
         {
-            while(!_done)
+            lock (this)
             {
-                if(_tasks.Count == 0)
+                while (!_done)
                 {
-                    Monitor.Wait(this);
-                }
-
-                if(!_done && _tasks.Count != 0)
-                {
-                    //
-                    // Get next work item.
-                    //
-                    TaskEntry entry = _tasks[0];
-
-                    //
-                    // Wait for the amount of time indicated in delay to
-                    // emulate a process that takes a significant period of
-                    // time to complete.
-                    //
-                    Monitor.Wait(this, entry.delay);
-
-                    if(!_done)
+                    if (_tasks.Count == 0)
                     {
-                        _tasks.RemoveAt(0);
-                        entry.task.Start();
+                        Monitor.Wait(this);
+                    }
+
+                    if (!_done && _tasks.Count != 0)
+                    {
+                        //
+                        // Get next work item.
+                        //
+                        TaskEntry entry = _tasks[0];
+
+                        //
+                        // Wait for the amount of time indicated in delay to
+                        // emulate a process that takes a significant period of
+                        // time to complete.
+                        //
+                        Monitor.Wait(this, entry.delay);
+
+                        if (!_done)
+                        {
+                            _tasks.RemoveAt(0);
+                            entry.task.Start();
+                        }
                     }
                 }
-            }
 
-            foreach(TaskEntry e in _tasks)
-            {
-                e.task.Start();
-            }
-        }
-    }
-
-    public Task Add(int delay)
-    {
-        Task t;
-
-        lock(this)
-        {
-            if(!_done)
-            {
-                if(_tasks.Count == 0)
+                foreach (TaskEntry e in _tasks)
                 {
-                    Monitor.Pulse(this);
+                    e.task.Start();
                 }
-                t = new Task(() => RunTask());
-                _tasks.Add(new TaskEntry(t, delay));
-            }
-            else
-            {
-                t = Task.Factory.StartNew(() => RunTask());
             }
         }
 
-        return t;
-    }
-
-    public void Destroy()
-    {
-        lock(this)
+        public Task Add(int delay)
         {
-            _done = true;
-            Monitor.Pulse(this);
-        }
-    }
+            Task t;
 
-    private void RunTask()
-    {
-        lock(this)
+            lock (this)
+            {
+                if (!_done)
+                {
+                    if (_tasks.Count == 0)
+                    {
+                        Monitor.Pulse(this);
+                    }
+                    t = new Task(() => RunTask());
+                    _tasks.Add(new TaskEntry(t, delay));
+                }
+                else
+                {
+                    t = Task.Factory.StartNew(() => RunTask());
+                }
+            }
+
+            return t;
+        }
+
+        public void Destroy()
         {
-            if(!_done)
+            lock (this)
             {
-                Console.Out.WriteLine("Belated Hello World!");
+                _done = true;
+                Monitor.Pulse(this);
             }
-            else
+        }
+
+        private void RunTask()
+        {
+            lock (this)
             {
-                throw new RequestCanceledException();
+                if (!_done)
+                {
+                    Console.Out.WriteLine("Belated Hello World!");
+                }
+                else
+                {
+                    throw new RequestCanceledException();
+                }
             }
+        }
+
+        private class TaskEntry
+        {
+            public TaskEntry(Task task, int delay)
+            {
+                this.task = task;
+                this.delay = delay;
+            }
+
+            public Task task;
+            public int delay;
         }
     }
 
-    private readonly List<TaskEntry> _tasks = new List<TaskEntry>();
-    private bool _done;
-    private Thread thread_;
 }

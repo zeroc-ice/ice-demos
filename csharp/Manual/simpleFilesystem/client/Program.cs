@@ -23,13 +23,13 @@ ListRecursive(rootDir, 0);
 // For files, show the contents of each file. The "depth"
 // parameter is the current nesting level (for indentation).
 
-void ListRecursive(IDirectoryPrx dir, int depth)
+static void ListRecursive(IDirectoryPrx dir, int depth)
 {
-    var indent = new string('\t', ++depth);
+    string indent = new string('\t', ++depth);
 
-    foreach (INodePrx node in dir.List())
+    foreach (INodePrx? node in dir.List())
     {
-        if (node.CheckedCast(IDirectoryPrx.Factory) is IDirectoryPrx subdir)
+        if (node!.CheckedCast(IDirectoryPrx.Factory) is IDirectoryPrx subdir)
         {
             Console.WriteLine($"{indent}{node.Name()} (directory):");
             ListRecursive(subdir, depth);
@@ -38,7 +38,7 @@ void ListRecursive(IDirectoryPrx dir, int depth)
         {
             Console.WriteLine($"{indent}{node.Name()} (file):");
             IFilePrx file = node.Clone(factory: IFilePrx.Factory);
-            var text = file.Read();
+            string[] text = file.Read();
             for (int j = 0; j < text.Length; ++j)
             {
                 Console.WriteLine(indent + "\t" + text[j]);

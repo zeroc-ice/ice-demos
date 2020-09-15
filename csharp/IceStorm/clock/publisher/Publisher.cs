@@ -5,6 +5,7 @@
 using Demo;
 using System;
 using System.Configuration;
+using System.Diagnostics;
 using System.Globalization;
 using ZeroC.Ice;
 using ZeroC.IceStorm;
@@ -25,7 +26,7 @@ ITopicManagerPrx manager = communicator.GetPropertyAsProxy("TopicManager.Proxy",
     throw new ArgumentException("invalid proxy");
 
 // Retrieve the topic.
-ITopicPrx topic;
+ITopicPrx? topic;
 try
 {
     topic = manager.Retrieve(topicName);
@@ -42,10 +43,12 @@ catch (NoSuchTopic)
         return;
     }
 }
+Debug.Assert(topic != null);
 
 // Get the topic's publisher object, and create a Clock proxy with the mode specified as an argument of this
 // application.
-IObjectPrx publisher = topic.GetPublisher();
+IObjectPrx? publisher = topic.GetPublisher();
+Debug.Assert(publisher != null);
 IClockPrx clock = publisher.Clone(factory: IClockPrx.Factory);
 
 Console.WriteLine("publishing tick events. Press ^C to terminate the application.");

@@ -11,7 +11,7 @@ namespace Demo
     {
         public void Call(Current current)
         {
-            if (current.Context.TryGetValue("type", out string value))
+            if (current.Context.TryGetValue("type", out string? value))
             {
                 Console.WriteLine($"Type = {value}");
             }

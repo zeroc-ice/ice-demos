@@ -35,11 +35,12 @@ return 0;
 
 static void Run(Communicator communicator)
 {
-    IPrinterPrx prx = communicator.GetPropertyAsProxy("Printer.Proxy", IPrinterPrx.Factory);
+    IPrinterPrx prx = communicator.GetPropertyAsProxy("Printer.Proxy", IPrinterPrx.Factory) ??
+        throw new ArgumentException("invalid proxy");
 
     Menu();
 
-    string line = null;
+    string? line = null;
     do
     {
         Console.Write("==> ");
@@ -230,7 +231,7 @@ static void Run(Communicator communicator)
         }
         else if(line.Equals("9"))
         {
-            OutgoingRequestFrame request = OutgoingRequestFrame.WithEmptyParamList(prx, "throwPrintFailure", false);
+            var request = OutgoingRequestFrame.WithEmptyParamList(prx, "throwPrintFailure", false);
             IncomingResponseFrame response = prx.Invoke(request);
 
             try
