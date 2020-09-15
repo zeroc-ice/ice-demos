@@ -8,113 +8,98 @@ using System.Configuration;
 using System.Threading;
 using ZeroC.Ice;
 
-try
+// The new communicator is automatically destroyed (disposed) at the end of the using statement
+using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
+
+// The communicator initialization removes all Ice-related arguments from args
+if (args.Length > 0)
 {
-    // The new communicator is automatically destroyed (disposed) at the end of the using statement
-    using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
+    throw new ArgumentException("too many arguments");
+}
 
-    // The communicator initialization removes all Ice-related arguments from args
-    if(args.Length > 0)
+IHelloPrx twoway =  communicator.GetPropertyAsProxy("Hello.Proxy", IHelloPrx.Factory) ??
+    throw new ArgumentException("invalid proxy");
+
+bool secure = false;
+int timeout = -1;
+int delay = 0;
+
+Menu();
+
+string line = null;
+do
+{
+    try
     {
-        throw new ArgumentException("too many arguments");
-    }
-
-    IHelloPrx twoway =  communicator.GetPropertyAsProxy("Hello.Proxy", IHelloPrx.Factory);
-    if (twoway == null)
-    {
-        Console.Error.WriteLine("invalid proxy");
-        return 1;
-    }
-
-    bool secure = false;
-    int timeout = -1;
-    int delay = 0;
-
-    Menu();
-
-    string line = null;
-    do
-    {
-        try
+        Console.Out.Write("==> ");
+        Console.Out.Flush();
+        line = Console.In.ReadLine();
+        if (line == null)
         {
-            Console.Out.Write("==> ");
-            Console.Out.Flush();
-            line = Console.In.ReadLine();
-            if (line == null)
+            break;
+        }
+        if (line.Equals("t"))
+        {
+            var source = new CancellationTokenSource(TimeSpan.FromMilliseconds(timeout));
+            twoway.SayHello(delay, cancel: source.Token);
+        }
+        else if (line.Equals("T"))
+        {
+            if (timeout == -1)
             {
-                break;
-            }
-            if (line.Equals("t"))
-            {
-                var source = new CancellationTokenSource(TimeSpan.FromMilliseconds(timeout));
-                twoway.SayHello(delay, cancel: source.Token);
-            }
-            else if (line.Equals("T"))
-            {
-                if (timeout == -1)
-                {
-                    timeout = 2000;
-                    Console.WriteLine("timeout is now set to 2000ms");
-                }
-                else
-                {
-                    timeout = -1;
-                    Console.WriteLine("timeout is now switched off");
-                }
-            }
-            else if (line.Equals("P"))
-            {
-                if (delay == 0)
-                {
-                    delay = 2500;
-                    Console.WriteLine("server delay is now set to 2500ms");
-                }
-                else
-                {
-                    delay = 0;
-                    Console.WriteLine("server delay is now deactivated");
-                }
-            }
-            else if (line.Equals("S"))
-            {
-                secure = !secure;
-
-                twoway = twoway.Clone(preferNonSecure: !secure);
-                Console.WriteLine(secure ? "secure mode is now on" : "secure mode is now off");
-            }
-            else if (line.Equals("s"))
-            {
-                twoway.Shutdown();
-            }
-            else if (line.Equals("x"))
-            {
-                // Nothing to do
-            }
-            else if (line.Equals("?"))
-            {
-                Menu();
+                timeout = 2000;
+                Console.WriteLine("timeout is now set to 2000ms");
             }
             else
             {
-                Console.WriteLine($"unknown command `{line}'");
-                Menu();
+                timeout = -1;
+                Console.WriteLine("timeout is now switched off");
             }
         }
-        catch (Exception ex)
+        else if (line.Equals("P"))
         {
-            Console.Error.WriteLine(ex);
+            if (delay == 0)
+            {
+                delay = 2500;
+                Console.WriteLine("server delay is now set to 2500ms");
+            }
+            else
+            {
+                delay = 0;
+                Console.WriteLine("server delay is now deactivated");
+            }
+        }
+        else if (line.Equals("S"))
+        {
+            secure = !secure;
+
+            twoway = twoway.Clone(preferNonSecure: !secure);
+            Console.WriteLine(secure ? "secure mode is now on" : "secure mode is now off");
+        }
+        else if (line.Equals("s"))
+        {
+            twoway.Shutdown();
+        }
+        else if (line.Equals("x"))
+        {
+            // Nothing to do
+        }
+        else if (line.Equals("?"))
+        {
+            Menu();
+        }
+        else
+        {
+            Console.WriteLine($"unknown command `{line}'");
+            Menu();
         }
     }
-    while (!line.Equals("x"));
-
+    catch (Exception ex)
+    {
+        Console.Error.WriteLine(ex);
+    }
 }
-catch(Exception ex)
-{
-    Console.Error.WriteLine(ex);
-    return 1;
-}
-return 0;
-
+while (!line.Equals("x"));
 
 static void Menu()
 {
