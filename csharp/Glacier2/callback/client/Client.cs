@@ -26,7 +26,7 @@ ZeroC.Glacier2.IRouterPrx router = communicator.DefaultRouter?.Clone(factory: Ze
 ISessionPrx? session;
 
 // Loop until we have successfully create a session.
-while(true)
+while (true)
 {
     //
     // Prompt the user for the credentials to create the session.
@@ -40,7 +40,7 @@ while(true)
         Console.Write("user id: ");
         Console.Out.Flush();
         id = Console.In.ReadLine();
-        if(id == null)
+        if (id == null)
         {
             return;
         }
@@ -49,13 +49,13 @@ while(true)
         Console.Write("password: ");
         Console.Out.Flush();
         pw = Console.In.ReadLine();
-        if(pw == null)
+        if (pw == null)
         {
             return;
         }
         pw = pw.Trim();
     }
-    catch(System.IO.IOException ex)
+    catch (System.IO.IOException ex)
     {
         Console.WriteLine(ex);
         continue;
@@ -67,11 +67,11 @@ while(true)
         session = router.CreateSession(id, pw);
         break;
     }
-    catch(PermissionDeniedException ex)
+    catch (PermissionDeniedException ex)
     {
         Console.WriteLine($"permission denied:\n{ex.Reason}");
     }
-    catch(CannotCreateSessionException ex)
+    catch (CannotCreateSessionException ex)
     {
         Console.WriteLine($"cannot create session:\n{ex.Reason}");
     }
@@ -135,11 +135,11 @@ do
             Console.WriteLine("override context field is empty");
         }
     }
-    else if(line == "F")
+    else if (line == "F")
     {
         fake = !fake;
 
-        if(fake)
+        if (fake)
         {
             twowayR = twowayR.Clone(ICallbackReceiverPrx.Factory, identity: callbackReceiverFakeIdent);
         }
@@ -150,15 +150,15 @@ do
 
         Console.WriteLine($"callback receiver identity: {twowayR.Identity}");
     }
-    else if(line == "s")
+    else if (line == "s")
     {
         twoway.Shutdown();
     }
-    else if(line == "x")
+    else if (line == "x")
     {
         // Nothing to do
     }
-    else if(line == "?")
+    else if (line == "?")
     {
         Menu();
     }
@@ -168,7 +168,7 @@ do
         Menu();
     }
 }
-while(line != "x");
+while (line != "x");
 
 static void Menu()
 {

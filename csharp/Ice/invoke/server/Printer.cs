@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using ZeroC.Ice;
 
@@ -22,14 +21,15 @@ namespace Demo
             }
             else if (current.Operation == "printStringSequence")
             {
-                string[] messages = request.ReadParamList(current.Communicator, istr => istr.ReadStringSeq());
+                string[] messages = request.ReadParamList(current.Communicator,
+                                                          istr => istr.ReadArray(1, istr => istr.ReadString()));
                 Console.Write("Printing string sequence {");
                 Console.Write(string.Join(", ", messages));
                 Console.WriteLine("}");
             }
             else if (current.Operation == "printDictionary")
             {
-                Dictionary<string, string> dict = request.ReadParamList(current.Communicator, 
+                Dictionary<string, string> dict = request.ReadParamList(current.Communicator,
                     istr => istr.ReadDictionary(1, 1, istr => istr.ReadString(), istr => istr.ReadString()));
                 Console.Write("Printing dictionary {");
                 bool first = true;
@@ -54,7 +54,7 @@ namespace Demo
                 Structure s = request.ReadParamList(current.Communicator, Structure.IceReader);
                 Console.WriteLine($"Printing struct: name={s.Name}, value={s.Value}");
             }
-            else if (current.Operation.Equals("printStructSequence"))
+            else if (current.Operation == "printStructSequence")
             {
                 Structure[] seq = request.ReadParamList(
                     current.Communicator,

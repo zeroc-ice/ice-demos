@@ -12,7 +12,7 @@ using ZeroC.Ice;
 using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
 
 // The communicator initialization removes all Ice-related arguments from args
-if(args.Length > 0)
+if (args.Length > 0)
 {
     throw new ArgumentException("too many arguments");
 }
@@ -30,23 +30,23 @@ do
         Console.Out.Write("==> ");
         Console.Out.Flush();
         line = Console.In.ReadLine();
-        if(line == null)
+        if (line == null)
         {
             break;
         }
-        if(line == "t")
+        if (line == "t")
         {
             hello.SayHello();
         }
-        else if(line == "s")
+        else if (line == "s")
         {
             hello.Shutdown();
         }
-        else if(line == "x")
+        else if (line == "x")
         {
             // Nothing to do
         }
-        else if(line == "?")
+        else if (line == "?")
         {
             Menu();
         }
@@ -56,7 +56,7 @@ do
             Menu();
         }
     }
-    catch(Exception ex)
+    catch (Exception ex)
     {
         Console.Error.WriteLine(ex);
     }

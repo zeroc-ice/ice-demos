@@ -27,7 +27,7 @@ bool ordered = false;
 string? id = null;
 string? retryCount = null;
 int i;
-for(i = 0; i < args.Length; ++i)
+for (i = 0; i < args.Length; ++i)
 {
     if (args[i] == "--ordered")
     {
@@ -65,7 +65,7 @@ for(i = 0; i < args.Length; ++i)
     }
 }
 
-if(i != args.Length)
+if (i != args.Length)
 {
     Usage();
     return;

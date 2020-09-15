@@ -17,7 +17,7 @@ using var communicator = new Communicator(ref args, ConfigurationManager.AppSett
 Console.CancelKeyPress += (sender, eventArgs) => communicator.DisposeAsync();
 
 string topicName = args.Length == 0 ? "time" : args[0];
-if(args.Length > 1)
+if (args.Length > 1)
 {
     throw new ArgumentException("too many arguments");
 }
@@ -37,7 +37,7 @@ catch (NoSuchTopic)
     {
         topic = manager.Create(topicName);
     }
-    catch(TopicExists)
+    catch (TopicExists)
     {
         Console.WriteLine("temporary error. try again.");
         return;
@@ -54,7 +54,7 @@ IClockPrx clock = publisher.Clone(factory: IClockPrx.Factory);
 Console.WriteLine("publishing tick events. Press ^C to terminate the application.");
 try
 {
-    while(true)
+    while (true)
     {
         clock.Tick(DateTime.Now.ToString("G", DateTimeFormatInfo.InvariantInfo));
         System.Threading.Thread.Sleep(1000);

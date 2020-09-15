@@ -15,7 +15,7 @@ try
     // Destroy the communicator on Ctrl+C or Ctrl+Break
     Console.CancelKeyPress += (sender, eventArgs) => communicator.DisposeAsync();
 
-    if(args.Length > 0)
+    if (args.Length > 0)
     {
         Console.Error.WriteLine("too many arguments");
         return 1;
@@ -26,7 +26,7 @@ try
     adapter.Activate();
     communicator.WaitForShutdown();
 }
-catch(Exception ex)
+catch (Exception ex)
 {
     Console.Error.WriteLine(ex);
     return 1;

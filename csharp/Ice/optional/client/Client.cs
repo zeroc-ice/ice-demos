@@ -40,7 +40,7 @@ if (number != johnNumber)
 }
 
 // Optional can also be used in an out parameter.
-int? dialgroup =  contactdb.QueryDialgroup("john");
+int? dialgroup = contactdb.QueryDialgroup("john");
 if (!dialgroup.HasValue || dialgroup.Value != 0)
 {
     Console.Write("dialgroup is incorrect ");

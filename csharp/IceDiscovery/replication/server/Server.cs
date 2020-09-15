@@ -12,7 +12,7 @@ using var communicator = new Communicator(ref args);
 // Destroy the communicator on Ctrl+C or Ctrl+Break
 Console.CancelKeyPress += (sender, eventArgs) => communicator.DisposeAsync();
 
-if(args.Length > 0)
+if (args.Length > 0)
 {
     throw new ArgumentException("too many arguments");
 }

@@ -6,7 +6,7 @@ using System;
 using ZeroC.Ice;
 
 using var communicator = new Communicator(ref args);
-ObjectAdapter adapter = communicator.CreateObjectAdapterWithEndpoints("SimplePrinterAdapter", 
+ObjectAdapter adapter = communicator.CreateObjectAdapterWithEndpoints("SimplePrinterAdapter",
                                                                       "ice+tcp://localhost:10000");
 adapter.Add("SimplePrinter", new Demo.Printer());
 adapter.Activate();

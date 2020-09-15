@@ -25,7 +25,7 @@ try
     adapter.Activate();
     communicator.WaitForShutdown();
 }
-catch(Exception ex)
+catch (Exception ex)
 {
     Console.Error.WriteLine(ex);
     return 1;

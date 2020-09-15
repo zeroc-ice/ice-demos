@@ -20,7 +20,7 @@ namespace Filesystem
         }
 
         // Slice Node::name() operation
-        public string Name(Current current) =>_name;
+        public string Name(Current current) => _name;
 
         // Slice Directory::list() operation
         public IEnumerable<INodePrx> List(Current current) => _contents;

@@ -3,10 +3,9 @@
 //
 
 using Demo;
-
 using System;
-using System.Configuration;
 using System.Collections.Generic;
+using System.Configuration;
 using ZeroC.Ice;
 
 try
@@ -16,7 +15,7 @@ try
 
 
     // The communicator initialization removes all Ice-related arguments from args
-    if(args.Length > 0)
+    if (args.Length > 0)
     {
         Console.Error.WriteLine("too many arguments");
         return 1;
@@ -38,11 +37,11 @@ try
             {
                 break;
             }
-            if (line.Equals("1"))
+            if (line == "1")
             {
                 proxy.Call();
             }
-            else if (line.Equals("2"))
+            else if (line == "2")
             {
                 var ctx = new Dictionary<string, string>() { { "type", "Explicit" } };
                 proxy.Call(ctx);
@@ -83,7 +82,7 @@ try
     }
     while (line != "x");
 }
-catch(Exception ex)
+catch (Exception ex)
 {
     Console.Error.WriteLine(ex);
     return 1;

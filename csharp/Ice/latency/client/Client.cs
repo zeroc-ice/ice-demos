@@ -27,7 +27,7 @@ IPingPrx ping = communicator.GetPropertyAsProxy("Ping.Proxy", IPingPrx.Factory) 
 
 Console.Error.Write("warming up the JIT compiler...");
 Console.Error.Flush();
-for(int i = 0; i < 20000; i++)
+for (int i = 0; i < 20000; i++)
 {
     ping.IcePing();
 }

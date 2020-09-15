@@ -11,12 +11,12 @@ using ZeroC.Ice;
 using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
 
 // The communicator initialization removes all Ice-related arguments from args
-if(args.Length > 0)
+if (args.Length > 0)
 {
     throw new ArgumentException("too many arguments");
 }
 
-IHelloPrx twoway =  communicator.GetPropertyAsProxy("Hello.Proxy", IHelloPrx.Factory) ??
+IHelloPrx twoway = communicator.GetPropertyAsProxy("Hello.Proxy", IHelloPrx.Factory) ??
     throw new ArgumentException("invalid proxy");
 
 bool secure = false;

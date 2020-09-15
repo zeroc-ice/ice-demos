@@ -15,7 +15,7 @@ try
     var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
 
     // The communicator initialization removes all Ice-related arguments from args
-    if(args.Length > 0)
+    if (args.Length > 0)
     {
         Console.Error.WriteLine("too many arguments");
         status = 1;
@@ -25,7 +25,7 @@ try
         status = Run(communicator);
     }
 }
-catch(Exception ex)
+catch (Exception ex)
 {
     Console.Error.WriteLine(ex);
     status = 1;
@@ -40,19 +40,19 @@ static int Run(Communicator communicator)
     byte[] byteSeq = new byte[Constants.ByteSeqSize];
 
     string[] stringSeq = new string[Constants.StringSeqSize];
-    for(int i = 0; i < Constants.StringSeqSize; ++i)
+    for (int i = 0; i < Constants.StringSeqSize; ++i)
     {
         stringSeq[i] = "hello";
     }
 
     var structSeq = new StringDouble[Constants.StringDoubleSeqSize];
-    for(int i = 0; i < Constants.StringDoubleSeqSize; ++i)
+    for (int i = 0; i < Constants.StringDoubleSeqSize; ++i)
     {
         structSeq[i] = new StringDouble("hello", 3.14);
     }
 
     var fixedSeq = new Fixed[Constants.FixedSeqSize];
-    for(int i = 0; i < Constants.FixedSeqSize; ++i)
+    for (int i = 0; i < Constants.FixedSeqSize; ++i)
     {
         fixedSeq[i].I = 0;
         fixedSeq[i].J = 0;
@@ -67,7 +67,7 @@ static int Run(Communicator communicator)
     //
     {
         byte[] warmupBytes = new byte[1];
-        string[] warmupStrings = new string[] { "hello"};
+        string[] warmupStrings = new string[] { "hello" };
         var warmupStructs = new StringDouble[] { new StringDouble("hello", 3.14) };
         var warmupFixed = new Fixed[1];
 
@@ -75,7 +75,7 @@ static int Run(Communicator communicator)
 
         Console.Error.Write("warming up the client/server...");
         Console.Error.Flush();
-        for(int i = 0; i < 10000; i++)
+        for (int i = 0; i < 10000; i++)
         {
             throughput.SendByteSeq(warmupBytes);
             throughput.SendStringSeq(warmupStrings);
@@ -113,14 +113,14 @@ static int Run(Communicator communicator)
             Console.Write("==> ");
             Console.Out.Flush();
             line = Console.In.ReadLine();
-            if(line == null)
+            if (line == null)
             {
                 break;
             }
 
             double repetitions = 100;
 
-            if(line == "1" || line == "2" || line == "3" || line == "4")
+            if (line == "1" || line == "2" || line == "3" || line == "4")
             {
                 if (line == "1")
                 {
@@ -137,7 +137,7 @@ static int Run(Communicator communicator)
                 Console.WriteLine(message);
                 seqSize = size;
             }
-            else if(line.Equals("t") || line.Equals("o") || line.Equals("r") || line.Equals("e"))
+            else if (line == "t" || line == "o" || line == "r" || line == "e")
             {
                 char c = line[0];
                 switch (c)
@@ -165,7 +165,7 @@ static int Run(Communicator communicator)
                 }
 
                 Console.Write(" " + repetitions);
-                switch(currentType)
+                switch (currentType)
                 {
                     case '1':
                     {
@@ -190,7 +190,7 @@ static int Run(Communicator communicator)
                 }
                 Console.Write(" sequences of size " + seqSize);
 
-                if(c == 'o')
+                if (c == 'o')
                 {
                     Console.Write(" as oneway");
                 }
@@ -199,30 +199,27 @@ static int Run(Communicator communicator)
                 watch.Restart();
                 for (int i = 0; i < repetitions; ++i)
                 {
-                    switch(currentType)
+                    switch (currentType)
                     {
                         case '1':
                         {
-                            switch(c)
+                            switch (c)
                             {
                                 case 't':
                                 {
                                     throughput.SendByteSeq(byteSeq);
                                     break;
                                 }
-
                                 case 'o':
                                 {
-                                    //throughputOneway.sendByteSeq(byteSeq);
+                                    throughput.SendOnewayByteSeq(byteSeq);
                                     break;
                                 }
-
                                 case 'r':
                                 {
                                     throughput.RecvByteSeq();
                                     break;
                                 }
-
                                 case 'e':
                                 {
                                     throughput.EchoByteSeq(byteSeq);
@@ -231,29 +228,25 @@ static int Run(Communicator communicator)
                             }
                             break;
                         }
-
                         case '2':
                         {
-                            switch(c)
+                            switch (c)
                             {
                                 case 't':
                                 {
                                     throughput.SendStringSeq(stringSeq);
                                     break;
                                 }
-
                                 case 'o':
                                 {
-                                    //throughputOneway.sendStringSeq(stringSeq);
+                                    throughput.SendOnewayStringSeq(stringSeq);
                                     break;
                                 }
-
                                 case 'r':
                                 {
                                     throughput.RecvStringSeq();
                                     break;
                                 }
-
                                 case 'e':
                                 {
                                     throughput.EchoStringSeq(stringSeq);
@@ -262,29 +255,25 @@ static int Run(Communicator communicator)
                             }
                             break;
                         }
-
                         case '3':
                         {
-                            switch(c)
+                            switch (c)
                             {
                                 case 't':
                                 {
                                     throughput.SendStructSeq(structSeq);
                                     break;
                                 }
-
                                 case 'o':
                                 {
-                                    //throughputOneway.sendStructSeq(structSeq);
+                                    throughput.SendOnewayStructSeq(structSeq);
                                     break;
                                 }
-
-                                case 'r':
+                                    case 'r':
                                 {
                                     throughput.RecvStructSeq();
                                     break;
                                 }
-
                                 case 'e':
                                 {
                                     throughput.EchoStructSeq(structSeq);
@@ -293,29 +282,25 @@ static int Run(Communicator communicator)
                             }
                             break;
                         }
-
                         case '4':
                         {
-                            switch(c)
+                            switch (c)
                             {
                                 case 't':
                                 {
                                     throughput.SendFixedSeq(fixedSeq);
                                     break;
                                 }
-
-                                case 'o':
+                                case 'o': 
                                 {
-                                    //throughputOneway.sendFixedSeq(fixedSeq);
+                                    throughput.SendOnewayFixedSeq(fixedSeq);
                                     break;
                                 }
-
                                 case 'r':
                                 {
                                     throughput.RecvFixedSeq();
                                     break;
                                 }
-
                                 case 'e':
                                 {
                                     throughput.EchoFixedSeq(fixedSeq);
@@ -332,7 +317,7 @@ static int Run(Communicator communicator)
                 Console.WriteLine("time for " + repetitions + " sequences: " + dmsec.ToString("F") + "ms");
                 Console.WriteLine("time per sequence: " + ((double)(dmsec / repetitions)).ToString("F") + "ms");
                 int wireSize = 0;
-                switch(currentType)
+                switch (currentType)
                 {
                     case '1':
                     {
@@ -357,36 +342,36 @@ static int Run(Communicator communicator)
                     }
                 }
                 double mbit = repetitions * seqSize * wireSize * 8.0 / dmsec / 1000.0;
-                if(c == 'e')
+                if (c == 'e')
                 {
                     mbit *= 2;
                 }
                 Console.WriteLine("throughput: " + mbit.ToString("#.##") + "Mbps");
             }
-            else if(line.Equals("s"))
+            else if (line == "s")
             {
                 throughput.Shutdown();
             }
-            else if(line.Equals("x"))
+            else if (line == "x")
             {
                 // Nothing to do
             }
-            else if(line.Equals("?"))
+            else if (line == "?")
             {
                 Menu();
             }
             else
             {
-                Console.WriteLine("unknown command `" + line + "'");
+                Console.WriteLine($"unknown command `{line}'");
                 Menu();
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Console.Error.WriteLine(ex);
         }
     }
-    while(line != "x");
+    while (line != "x");
 
     return 0;
 }
@@ -411,5 +396,6 @@ static void Menu()
     other commands
     s: shutdown server
     x: exit
-    ?: help");
+    ?: help
+");
 }

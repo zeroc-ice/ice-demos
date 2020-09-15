@@ -36,13 +36,13 @@ namespace Demo
         public void SayHello(Current current)
         {
             Console.WriteLine(Environment.GetEnvironmentVariable("LANG") ?? "en" switch
-                {
-                    "fr" => $"Bonjour, {_serviceName}",
-                    "de" => $"Hallo, {_serviceName}",
-                    "es" => $"Hola, {_serviceName}",
-                    "it" => $"Ciao, {_serviceName}",
-                    _ => $"Hello, {_serviceName}"
-                });
+            {
+                "fr" => $"Bonjour, {_serviceName}",
+                "de" => $"Hallo, {_serviceName}",
+                "es" => $"Hola, {_serviceName}",
+                "it" => $"Ciao, {_serviceName}",
+                _ => $"Hello, {_serviceName}"
+            });
         }
     }
 

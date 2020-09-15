@@ -4,16 +4,16 @@
 
 using Demo;
 using System;
-using System.Configuration;
 using System.Collections.Generic;
-using ZeroC.Ice;
+using System.Configuration;
 using System.Diagnostics;
+using ZeroC.Ice;
 
 // The new communicator is automatically destroyed (disposed) at the end of the using statement
 using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
 
 // The communicator initialization removes all Ice-related arguments from args
-if(args.Length > 0)
+if (args.Length > 0)
 {
     throw new ArgumentException("too many arguments");
 }
@@ -50,11 +50,11 @@ while (true)
     Console.Out.Write("==> ");
     Console.Out.Flush();
     string? line = Console.In.ReadLine();
-    if(line == null)
+    if (line == null)
     {
         break;
     }
-    
+
     if (int.TryParse(line, out int index))
     {
         if (index < hellos.Count)

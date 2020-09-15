@@ -15,7 +15,7 @@ try
     // Destroy the communicator on Ctrl+C or Ctrl+Break
     Console.CancelKeyPress += (sender, eventArgs) => communicator.Dispose();
 
-    if(args.Length > 0)
+    if (args.Length > 0)
     {
         Console.Error.WriteLine("too many arguments");
         return 1;
@@ -34,27 +34,27 @@ try
             Console.Out.Write("==> ");
             Console.Out.Flush();
             line = Console.In.ReadLine();
-            if(line == null)
+            if (line == null)
             {
                 break;
             }
-            if(line.Equals("i"))
+            if (line == "i")
             {
                 hello.SayHello(0);
             }
-            else if(line.Equals("d"))
+            else if (line == "d")
             {
                 await hello.SayHelloAsync(5000);
             }
-            else if(line.Equals("s"))
+            else if (line == "s")
             {
                 hello.Shutdown();
             }
-            else if(line.Equals("x"))
+            else if (line == "x")
             {
                 // Nothing to do
             }
-            else if(line.Equals("?"))
+            else if (line == "?")
             {
                 Menu();
             }
@@ -64,14 +64,14 @@ try
                 Menu();
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Console.Error.WriteLine(ex);
         }
     }
-    while(line != "x");
+    while (line != "x");
 }
-catch(Exception ex)
+catch (Exception ex)
 {
     Console.Error.WriteLine(ex);
     return 1;

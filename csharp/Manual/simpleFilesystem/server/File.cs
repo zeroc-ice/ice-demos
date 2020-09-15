@@ -2,9 +2,7 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using ZeroC.Ice;
 
 namespace Filesystem
@@ -23,7 +21,7 @@ namespace Filesystem
         }
 
         // Slice Node::name() operation
-        public string Name(Current current) =>_name;
+        public string Name(Current current) => _name;
 
         // Slice File::read() operation
         public IEnumerable<string> Read(Current current) => _lines;

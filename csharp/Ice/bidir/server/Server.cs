@@ -14,7 +14,7 @@ try
     // using statement - communicator is automatically destroyed at the end of this statement
     using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
 
-    if(args.Length > 0)
+    if (args.Length > 0)
     {
         Console.Error.WriteLine("too many arguments");
         return 1;
@@ -49,7 +49,7 @@ try
         Console.WriteLine("Destroy joined");
     }
 }
-catch(Exception ex)
+catch (Exception ex)
 {
     Console.Error.WriteLine(ex);
     return 1;

@@ -3,8 +3,8 @@
 //
 
 using System;
-using System.IO;
 using System.Configuration;
+using System.IO;
 using ZeroC.Ice;
 
 Console.WriteLine($"The current directory is {Directory.GetCurrentDirectory()}");
@@ -15,7 +15,7 @@ using var communicator = new Communicator(ref args, ConfigurationManager.AppSett
 // Destroy the communicator on Ctrl+C or Ctrl+Break
 Console.CancelKeyPress += (sender, eventArgs) => communicator.DisposeAsync();
 
-if(args.Length > 0)
+if (args.Length > 0)
 {
     throw new ArgumentException("too many arguments");
 }

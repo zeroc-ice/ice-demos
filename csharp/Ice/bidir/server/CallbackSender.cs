@@ -59,7 +59,8 @@ namespace Demo
                         // calling thread.
                         foreach (ICallbackReceiverPrx c in _clients)
                         {
-                            c.CallbackAsync(num).ContinueWith(t => {
+                            c.CallbackAsync(num).ContinueWith(t =>
+                            {
                                 if (t.Exception != null)
                                 {
                                     RemoveClient(c, t.Exception.InnerException!);

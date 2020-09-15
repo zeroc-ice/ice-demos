@@ -55,7 +55,7 @@ do
         }
         else if (line == "P")
         {
-            if(delay == 0)
+            if (delay == 0)
             {
                 delay = 2500;
                 Console.WriteLine("server delay is now set to 2500ms");
@@ -66,12 +66,12 @@ do
                 Console.WriteLine("server delay is now deactivated");
             }
         }
-        else if(line == "S")
+        else if (line == "S")
         {
             secure = !secure;
 
             twoway = twoway.Clone(preferNonSecure: !secure);
-            Console.WriteLine(secure? "secure mode is now on" : "secure mode is now off");
+            Console.WriteLine(secure ? "secure mode is now on" : "secure mode is now off");
         }
         else if (line == "s")
         {

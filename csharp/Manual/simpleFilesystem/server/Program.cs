@@ -14,7 +14,7 @@ using var communicator = new Communicator(ref args);
 Console.CancelKeyPress += (sender, eventArgs) => communicator.DisposeAsync();
 
 // Create an object adapter.
-ObjectAdapter adapter = communicator.CreateObjectAdapterWithEndpoints("SimpleFilesystem", 
+ObjectAdapter adapter = communicator.CreateObjectAdapterWithEndpoints("SimpleFilesystem",
                                                                       "ice+tcp://localhost:10000");
 
 // Create the root directory (with name "/" and no parent)
@@ -25,7 +25,7 @@ root.Activate(adapter);
 var file = new File(
     "README",
     root,
-    new string[]{ "This file system contains a collection of poetry." });
+    new string[] { "This file system contains a collection of poetry." });
 
 
 file.Activate(adapter);

@@ -16,7 +16,7 @@ try
     // Destroy the communicator on Ctrl+C or Ctrl+Break
     Console.CancelKeyPress += (sender, eventArgs) => communicator.DisposeAsync();
 
-    if(args.Length > 0)
+    if (args.Length > 0)
     {
         Console.Error.WriteLine("too many arguments");
         return 1;
@@ -32,7 +32,7 @@ try
         (int result, int remainder) = await calculator.DivideAsync(13, 5);
         Console.WriteLine($"13 / 5  is {result} with a remainder of {remainder}");
     }
-    catch(Demo.DivideByZeroException)
+    catch (Demo.DivideByZeroException)
     {
         Console.WriteLine("You cannot divide by 0");
     }
@@ -42,7 +42,7 @@ try
         (int result, int remainder) = await calculator.DivideAsync(13, 0);
         Console.WriteLine($"13 / 0  is {result} with a remainder of {remainder}");
     }
-    catch(Demo.DivideByZeroException)
+    catch (Demo.DivideByZeroException)
     {
         Console.WriteLine("You cannot divide by 0");
     }
@@ -54,13 +54,13 @@ try
         var hypotenuse = await calculator.SquareRootAsync(await calculator.AddAsync(squares[0], squares[1]));
         Console.WriteLine($"The hypotenuse of a triangle with side lengths of 6 and 8 is {hypotenuse}");
     }
-    catch(NegativeRootException)
+    catch (NegativeRootException)
     {
         Console.WriteLine("You Cannot take the square root of a negative number");
     }
     await calculator.ShutdownAsync();
 }
-catch(Exception ex)
+catch (Exception ex)
 {
     Console.Error.WriteLine(ex);
     return 1;

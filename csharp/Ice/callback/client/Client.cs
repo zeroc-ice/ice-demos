@@ -9,9 +9,9 @@ using ZeroC.Ice;
 
 // The new communicator is automatically destroyed (disposed) at the end of the using statement
 using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
- 
+
 // The communicator initialization removes all Ice-related arguments from args
-if(args.Length > 0)
+if (args.Length > 0)
 {
     throw new ArgumentException("too many arguments");
 }
@@ -59,12 +59,12 @@ do
             Menu();
         }
     }
-    catch(Exception ex)
+    catch (Exception ex)
     {
         Console.Error.WriteLine(ex);
     }
 }
-while(line != "x");
+while (line != "x");
 
 static void Menu()
 {

@@ -27,7 +27,7 @@ while (true)
     Console.Out.Write("enter the number of iterations: ");
     Console.Out.Flush();
     string? line = Console.In.ReadLine();
-    if(line == null || line == "x")
+    if (line == null || line == "x")
     {
         break;
     }
@@ -36,18 +36,18 @@ while (true)
     Console.Out.Write("enter the delay between each greetings (in ms): ");
     Console.Out.Flush();
     line = Console.In.ReadLine();
-    if(line == null || line == "x")
+    if (line == null || line == "x")
     {
         break;
     }
     int delay = Convert.ToInt32(line);
 
-    if(delay < 0)
+    if (delay < 0)
     {
         delay = 500; // 500 milli-seconds
     }
 
-    for(int i = 0; i < count; i++)
+    for (int i = 0; i < count; i++)
     {
         Console.Out.WriteLine(hello.GetGreeting());
         System.Threading.Thread.Sleep(delay);

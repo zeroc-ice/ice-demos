@@ -57,9 +57,9 @@ do
         }
         if (line == "1" || line == "2")
         {
-            Dictionary<string, string> dict = line.Equals("1") ? batch1 : batch2;
+            Dictionary<string, string> dict = line == "1" ? batch1 : batch2;
             Console.Out.WriteLine("Sending:");
-            foreach((string key, string value) in dict)
+            foreach ((string key, string value) in dict)
             {
                 if (key.StartsWith("Demo"))
                 {
@@ -119,7 +119,7 @@ do
         Console.Error.WriteLine(ex);
     }
 }
-while(line != "x");
+while (line != "x");
 
 
 static void Menu()
@@ -139,7 +139,7 @@ static void Show(IPropertiesAdminPrx admin)
 {
     Dictionary<string, string> props = admin.GetPropertiesForPrefix("Demo");
     Console.Out.WriteLine("Server's current settings:");
-    foreach((string key, string value) in props)
+    foreach ((string key, string value) in props)
     {
         Console.Out.WriteLine($"  {key}={value}");
     }

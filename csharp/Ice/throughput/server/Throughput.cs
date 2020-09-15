@@ -2,7 +2,6 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-using Demo;
 using System;
 using System.Collections.Generic;
 using ZeroC.Ice;
@@ -62,11 +61,19 @@ namespace Demo
         {
         }
 
+        public void SendOnewayByteSeq(byte[] seq, Current current)
+        {
+        }
+
         public ReadOnlyMemory<byte> RecvByteSeq(Current current) => _warmup ? _warmupByteSeq : _byteSeq;
 
         public ReadOnlyMemory<byte> EchoByteSeq(byte[] seq, Current current) => seq;
 
         public void SendStringSeq(string[] seq, Current current)
+        {
+        }
+
+        public void SendOnewayStringSeq(string[] seq, Current current)
         {
         }
 
@@ -78,11 +85,19 @@ namespace Demo
         {
         }
 
+        public void SendOnewayStructSeq(StringDouble[] seq, Current current)
+        {
+        }
+
         public IEnumerable<StringDouble> RecvStructSeq(Current current) => _warmup ? _warmupStructSeq : _structSeq;
 
         public IEnumerable<StringDouble> EchoStructSeq(StringDouble[] seq, Current current) => seq;
 
         public void SendFixedSeq(Fixed[] seq, Current current)
+        {
+        }
+
+        public void SendOnewayFixedSeq(Fixed[] seq, Current current)
         {
         }
 

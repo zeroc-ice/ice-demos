@@ -41,7 +41,7 @@ do
         Console.Write("==> ");
         Console.Out.Flush();
         line = Console.In.ReadLine();
-        if(line == null)
+        if (line == null)
         {
             break;
         }
