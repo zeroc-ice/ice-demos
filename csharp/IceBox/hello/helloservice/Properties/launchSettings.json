@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "helloservice": {
+      "commandName": "Project"
+    }
+  }
+}

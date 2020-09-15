@@ -5,13 +5,13 @@
 #
 # Enable Ice.Admin object:
 #
-Ice.Admin.Endpoints=tcp -p 9996 -h localhost
+Ice.Admin.Endpoints=ice+tcp://localhost:9996
 Ice.Admin.InstanceName=DemoIceBox
 
 #
 # The hello service
 #
-IceBox.Service.Hello=helloservice.dll:HelloServiceI --Ice.Config=config.service
+IceBox.Service.Hello=helloservice.dll:Demo.HelloService --Ice.Config=config.service
 
 #
 # Warn about connection exceptions

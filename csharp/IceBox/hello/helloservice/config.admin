@@ -1,0 +1,5 @@
+#
+# Proxy to the IceBox ServiceManager:
+#
+
+IceBoxAdmin.ServiceManager.Proxy=ice+tcp://localhost:9996/DemoIceBox/admin#IceBox.ServiceManager
