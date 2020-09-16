@@ -3,13 +3,11 @@ and [Asynchronous Method Dispatch (AMD)][2].
 
 To run the demo, first start the server:
 ```
-cd server
-dotnet run
+dotnet run --project server\server.csproj
 ```
 In a separate window, start the client:
 ```
-cd client
-dotnet run
+dotnet run --project client\client.csproj
 ```
 
 The demo invocation can either have a short response time or require a

@@ -3,21 +3,12 @@ This demo illustrates the use of [optional class members][1] and
 
 To run the demo, first start the server:
 ```
-server
+dotnet run --project server\server.csproj
 ```
 In a separate window, start the client:
 ```
-client
+dotnet run --project client\client.csproj
 ```
-
-> With .NET Core 2.x, use instead:
-> ```
-> dotnet server.dll
-> ```
-> and
-> ```
-> dotnet client.dll
-> ```
 
 [1]: https://doc.zeroc.com/ice/4.0/language-mappings/c-sharp-mapping/client-side-slice-to-c-sharp-mapping/c-sharp-mapping-for-optional-values
 [2]: https://doc.zeroc.com/ice/4.0/language-mappings/c-sharp-mapping/client-side-slice-to-c-sharp-mapping/c-sharp-mapping-for-operations

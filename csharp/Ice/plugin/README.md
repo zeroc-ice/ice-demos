@@ -3,21 +3,12 @@ as well as an Ice [Logger plug-in][2].
 
 To run the demo, first start the server:
 ```
-server
+dotnet run --project server\server.csproj
 ```
 In a separate window, start the client:
 ```
-client
+dotnet run --project client\client.csproj
 ```
-
-> With .NET Core 2.x, use instead:
-> ```
-> dotnet server.dll
-> ```
-> and
-> ```
-> dotnet client.dll
-> ```
 
 Both the client and server use a custom logger that is loaded as
 a logger plug-in. The server also uses a plug-in to implement the

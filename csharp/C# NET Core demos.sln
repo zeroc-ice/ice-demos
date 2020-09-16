@@ -105,6 +105,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IceDiscovery", "IceDiscover
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "replication", "replication", "{813B391B-77C9-469B-9302-B176FF534F1B}"
+	ProjectSection(SolutionItems) = preProject
+		IceDiscovery\replication\README.md = IceDiscovery\replication\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "hello", "hello", "{9ECA9E96-A3F1-48CF-B171-7BF053C8DC97}"
 	ProjectSection(SolutionItems) = preProject

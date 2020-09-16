@@ -12,22 +12,12 @@ current working directory.
 
 In a separate window:
 ```
-subscriber
+dotnet run --project subscriber\subscriber.csproj
 ```
 In another window:
 ```
-publisher
+dotnet run --project publisher\publisher.csproj
 ```
-
-> With .NET Core 2.x, use instead `dotnet` to start your publisher and
-> subscriber:
-> ```
-> dotnet subscriber.dll
-> ```
-> and
-> ```
-> dotnet publisher.dll
-> ```
 
 While the publisher continues to run, "tick" messages should be
 displayed in the subscriber window.

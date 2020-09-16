@@ -10,14 +10,8 @@ icegridnode --Ice.Config=config.grid
 In a separate window:
 ```
 icegridadmin --Ice.Config=config.grid -e "application add application.xml"
-client
+dotnet run --project client\client.csproj
 ```
-
-> With .NET Core 2.x, use instead:
-> ```
-> icegridadmin --Ice.Config=config.grid -e "application add application-netcore2.xml"
-> dotnet client.dll
-> ```
 
 This will deploy the application and start the client. Messages will
 be displayed in the IceGrid service window.
@@ -25,16 +19,12 @@ be displayed in the IceGrid service window.
 You can also use the descriptors in the following files to deploy the
 application:
 
-* `application_with_template.xml` and
-  `application-netcore_with_template.xml`: These descriptors
-  demonstrate the use of templates for the server definition.
-  Templates make it easy to deploy multiple instances of the same
-  server.
+* `application_with_template.xml` This descriptor demonstrate the use of
+  templates for the server definition. Templates make it easy to deploy
+  multiple instances of the same server.
 
-* `application_with_replication.xml` and
-  `application_with_replication.xml`: These descriptors demonstrate
-  the use of replication to balance the load of the application over
-  several servers.
+* `application_with_replication.xml`: This descriptor demonstrate the use
+  of replication to balance the load of the application over several servers.
 
 If you have already deployed the application, you can update it to try
 a new set of descriptors, for example:
@@ -42,11 +32,6 @@ a new set of descriptors, for example:
 ```
 icegridadmin --Ice.Config=config.grid -e "application update application_with_template.xml"
 ```
-
-> With .NET Core 2.x, use instead the `-netcore2` XML files, for example:
-> ```
-> icegridadmin --Ice.Config=config.grid -e "application update application-netcore2_with_template.xml"
-> ```
 
 When using the descriptors from `application_with_template.xml`, or
 `application_with_replication.xml`, you can easily deploy more servers

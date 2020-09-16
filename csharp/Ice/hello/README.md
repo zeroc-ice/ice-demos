@@ -4,21 +4,12 @@ well as how to make [oneway][1], [datagram][2], [secure][3], and
 
 To run the demo, first start the server:
 ```
-server
+dotnet run --project server\server.csproj
 ```
 In a separate window, start the client:
 ```
-client
+dotnet run --project client\client.csproj
 ```
-
-> With .NET Core 2.x, use instead:
-> ```
-> dotnet server.dll
-> ```
-> and
-> ```
-> dotnet client.dll
-> ```
 
 To test [timeouts][5] you can use 'T' to set an invocation timeout on the
 client proxy and 'P' to set a delayed response in the server to cause a
