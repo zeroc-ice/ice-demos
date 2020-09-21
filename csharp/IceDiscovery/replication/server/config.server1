@@ -9,7 +9,7 @@
 # client resolves an indirect proxy refering to this replica group,
 # the locator implementation will return the endpoints of all the
 # object adapters part of the replica group.
-Hello.Endpoints=tcp -h localhost
+Hello.Endpoints=ice+tcp://localhost:0
 Hello.AdapterId=HelloAdapter1
 Hello.ReplicaGroupId=ReplicatedHelloAdapter
 

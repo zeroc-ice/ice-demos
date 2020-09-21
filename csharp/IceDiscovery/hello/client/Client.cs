@@ -16,7 +16,7 @@ if (args.Length > 0)
     throw new ArgumentException("too many arguments");
 }
 
-IHelloPrx twoway = IHelloPrx.Parse("hello", communicator) ?? throw new ArgumentException("invalid proxy");
+IHelloPrx twoway = IHelloPrx.Parse("ice:hello", communicator) ?? throw new ArgumentException("invalid proxy");
 
 bool secure = false;
 int timeout = -1;

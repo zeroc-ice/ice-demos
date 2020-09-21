@@ -19,7 +19,7 @@ if (args.Length > 0)
 // Get the hello proxy. We configure the proxy to not cache the server connection with the proxy and to disable the
 // locator cache. With this configuration, the IceGrid locator will be queried for each invocation on the proxy and
 // the invocation will be sent over the server connection matching the returned endpoints.
-var hello = IHelloPrx.Parse("hello", communicator);
+var hello = IHelloPrx.Parse("ice:hello", communicator);
 hello = hello.Clone(cacheConnection: false, locatorCacheTimeout: TimeSpan.Zero);
 
 while (true)
