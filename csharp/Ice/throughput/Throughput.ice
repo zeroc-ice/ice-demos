@@ -36,18 +36,22 @@ module Demo
         void endWarmup();
 
         void sendByteSeq(ByteSeq seq);
+        ["oneway"] void sendOnewayByteSeq(ByteSeq seq);
         ByteSeq recvByteSeq();
         ByteSeq echoByteSeq(ByteSeq seq);
 
         void sendStringSeq(StringSeq seq);
+        ["oneway"] void sendOnewayStringSeq(StringSeq seq);
         StringSeq recvStringSeq();
         StringSeq echoStringSeq(StringSeq seq);
 
         void sendStructSeq(StringDoubleSeq seq);
+        ["oneway"] void sendOnewayStructSeq(StringDoubleSeq seq);
         StringDoubleSeq recvStructSeq();
         StringDoubleSeq echoStructSeq(StringDoubleSeq seq);
 
         void sendFixedSeq(FixedSeq seq);
+        ["oneway"] void sendOnewayFixedSeq(FixedSeq seq);
         FixedSeq recvFixedSeq();
         FixedSeq echoFixedSeq(FixedSeq seq);
 

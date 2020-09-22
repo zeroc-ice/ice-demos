@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>InterceptorPlugin</AssemblyName>
+    <TargetFramework>net5</TargetFramework>
+    <Nullable>enable</Nullable>
+    <LangVersion>9.0</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="zeroc.ice.net" Version="4.0.0-alpha.0"/>
+  </ItemGroup>
+</Project>

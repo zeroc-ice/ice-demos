@@ -3,21 +3,12 @@ authentication system for securing operations on a remote object.
 
 To run the demo, first start the server:
 ```
-server
+dotnet run --project server\server.csproj
 ```
 In a separate window, start the client:
 ```
-client
+dotnet run --project client\client.csproj
 ```
-
-> With .NET Core 2.x, use instead:
-> ```
-> dotnet server.dll
-> ```
-> and
-> ```
-> dotnet client.dll
-> ```
 
 The demo models a remote controlled thermostat with operations for getting and setting
 its temperature, and for shutting down the thermostat server. The demo is configured so

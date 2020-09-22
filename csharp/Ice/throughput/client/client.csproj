@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>client</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5</TargetFramework>
+    <Nullable>enable</Nullable>
+    <LangVersion>9.0</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <SliceCompile Include="../Throughput.ice"/>
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0-preview.8.20407.11"/>
+    <PackageReference Include="zeroc.ice.net" Version="4.0.0-alpha.0"/>
+    <PackageReference Include="zeroc.icebuilder.msbuild" Version="5.0.4"/>
+    <Compile Update="generated\Throughput.cs">
+      <SliceCompileSource>../Throughput.ice</SliceCompileSource>
+    </Compile>
+  </ItemGroup>
+</Project>

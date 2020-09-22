@@ -4,21 +4,12 @@ that can be achieved using serialized synchronous requests.
 
 To run the demo, first start the server:
 ```
-server
+dotnet run --project server\server.csproj
 ```
 In a separate window, start the client:
 ```
-client
+dotnet run --project client\client.csproj
 ```
-
-> With .NET Core 2.x, use instead:
-> ```
-> dotnet server.dll
-> ```
-> and
-> ```
-> dotnet client.dll
-> ```
 
 The performance for byte sequences is expected to be greater than
 for other types because the cost of marshaling and unmarshaling is

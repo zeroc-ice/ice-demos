@@ -2,26 +2,15 @@ This demo shows how to use replication with [IceDiscovery][1].
 
 To run the demo, start the 3 servers:
 ```
-server --Ice.Config=config.server1
-server --Ice.Config=config.server2
-server --Ice.Config=config.server3
+dotnet run --project server\server.csproj -- --Ice.Config=config.server1
+dotnet run --project server\server.csproj -- --Ice.Config=config.server2
+dotnet run --project server\server.csproj -- --Ice.Config=config.server3
 ```
 
 In a separate window, start the client:
 ```
-client
+dotnet run --project client\client.csproj
 ```
-
-> With .NET Core 2.x, use instead:
-> ```
-> dotnet server.dll --Ice.Config=config.server1
-> dotnet server.dll --Ice.Config=config.server2
-> dotnet server.dll --Ice.Config=config.server3
-> ```
-> and
-> ```
-> dotnet client.dll
-> ```
 
 The client invokes the number of specified iterations with a given
 delay on a well-known proxy configured to use per-request load
