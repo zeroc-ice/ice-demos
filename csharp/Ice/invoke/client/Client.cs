@@ -1,13 +1,10 @@
-//
 // Copyright (c) ZeroC, Inc. All rights reserved.
-//
 
 using Demo;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using ZeroC.Ice;
-
 
 // The new communicator is automatically destroyed (disposed) at the end of the using statement
 using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
@@ -47,7 +44,6 @@ do
             "The streaming API works!",
             (ostr, value) => ostr.WriteString(value));
 
-
         // Invoke operation.
         IncomingResponseFrame response = prx.Invoke(request);
         if (response.ResultType == ResultType.Failure)
@@ -67,7 +63,6 @@ do
             context: null,
             new string[] { "The", "streaming", "API", "works!" },
             (ostr, value) => ostr.WriteSequence(value, (ostr, value) => ostr.WriteString(value)));
-
 
         // Invoke operation.
         IncomingResponseFrame response = prx.Invoke(request);
@@ -264,4 +259,3 @@ static void Menu()
     ?: help
 ");
 }
-

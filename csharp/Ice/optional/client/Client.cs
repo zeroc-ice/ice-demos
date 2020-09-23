@@ -1,13 +1,10 @@
-//
 // Copyright (c) ZeroC, Inc. All rights reserved.
-//
 
 using Demo;
 using System;
 using System.Configuration;
 using System.Diagnostics;
 using ZeroC.Ice;
-
 
 // using statement - communicator is automatically destroyed at the end of this statement
 using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
@@ -28,7 +25,6 @@ string johnNumber = "123-456-7890";
 contactdb.AddContact("john", NumberType.HOME, johnNumber, 0);
 
 Console.Write("Checking john... ");
-
 
 // Find the phone number for "john".
 string? number = contactdb.QueryNumber("john");
@@ -60,7 +56,6 @@ else if (info.Type.Value != NumberType.HOME || info.Number != johnNumber || info
     Console.Write("info is incorrect ");
 }
 Console.WriteLine("ok");
-
 
 // Add a contact for "steve".
 
@@ -127,7 +122,6 @@ if (dialgroup.HasValue)
     Console.Write("dialgroup is incorrect ");
 }
 Console.WriteLine("ok");
-
 
 // Add a contact from "anne". The number field isn't set.
 contactdb.AddContact("anne", NumberType.OFFICE, null, 2);

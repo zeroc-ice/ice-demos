@@ -1,6 +1,4 @@
-//
 // Copyright (c) ZeroC, Inc. All rights reserved.
-//
 
 using Demo;
 using System;
@@ -104,7 +102,6 @@ adapter.Activate();
 
 Menu();
 
-
 // Client REPL
 string? line = null;
 var context = new Dictionary<string, string>();
@@ -182,4 +179,3 @@ static void Menu()
     ?: help
 ");
 }
-

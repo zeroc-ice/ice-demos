@@ -1,6 +1,4 @@
-//
 // Copyright (c) ZeroC, Inc. All rights reserved.
-//
 
 using Demo;
 using System;
@@ -84,4 +82,3 @@ static void Menu()
     ?: help
 ");
 }
-

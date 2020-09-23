@@ -1,6 +1,4 @@
-//
 // Copyright (c) ZeroC, Inc. All rights reserved.
-//
 
 using Demo;
 using System;
@@ -12,7 +10,6 @@ try
 {
     // The new communicator is automatically destroyed (disposed) at the end of the using statement
     using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
-
 
     // The communicator initialization removes all Ice-related arguments from args
     if (args.Length > 0)
@@ -88,7 +85,6 @@ catch (Exception ex)
     return 1;
 }
 return 0;
-
 
 static void Menu()
 {

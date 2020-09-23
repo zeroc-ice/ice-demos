@@ -1,6 +1,4 @@
-//
 // Copyright (c) ZeroC, Inc. All rights reserved.
-//
 
 using Filesystem;
 using System;
@@ -8,7 +6,6 @@ using ZeroC.Ice;
 
 // using statement - communicator is automatically destroyed at the end of this statement
 using var communicator = new Communicator(ref args);
-
 
 // Destroy the communicator on Ctrl+C or Ctrl+Break
 Console.CancelKeyPress += (sender, eventArgs) => communicator.DisposeAsync();
@@ -27,7 +24,6 @@ var file = new File(
     root,
     new string[] { "This file system contains a collection of poetry." });
 
-
 file.Activate(adapter);
 
 // Create a directory called "Coleridge" in the root directory
@@ -44,7 +40,6 @@ file = new File(
                   "Through caverns measureless to man",
                   "Down to a sunless sea." });
 file.Activate(adapter);
-
 
 // All objects are created, allow client requests now
 adapter.Activate();

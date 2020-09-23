@@ -1,6 +1,4 @@
-//
 // Copyright (c) ZeroC, Inc. All rights reserved.
-//
 
 using Demo;
 using System;
@@ -73,7 +71,6 @@ if (i != args.Length)
 
 ITopicManagerPrx manager = communicator.GetPropertyAsProxy("TopicManager.Proxy", ITopicManagerPrx.Factory) ??
     throw new ArgumentException("invalid proxy");
-
 
 // Retrieve the topic.
 ITopicPrx? topic;

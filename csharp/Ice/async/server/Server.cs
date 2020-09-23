@@ -1,6 +1,4 @@
-//
 // Copyright (c) ZeroC, Inc. All rights reserved.
-//
 
 using Demo;
 using System;
@@ -20,7 +18,7 @@ try
 
     var workQueue = new WorkQueue();
 
-    // Shutdown the communicator and destroy the workqueue on Ctrl+C or Ctrl+Break 
+    // Shutdown the communicator and destroy the workqueue on Ctrl+C or Ctrl+Break
     // (shutdown always with Cancel = true)
     Console.CancelKeyPress += (sender, eventArgs) =>
     {

@@ -1,6 +1,4 @@
-//
 // Copyright (c) ZeroC, Inc. All rights reserved.
-//
 
 using Demo;
 using System;
@@ -97,7 +95,6 @@ do
     }
 }
 while (line != "x");
-
 
 static void Menu()
 {

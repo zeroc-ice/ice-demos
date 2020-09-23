@@ -1,6 +1,4 @@
-//
 // Copyright (c) ZeroC, Inc. All rights reserved.
-//
 
 using Demo;
 using System;
@@ -15,7 +13,6 @@ var adapter = communicator.CreateObjectAdapterWithEndpoints("Hello", "ice+tcp://
 adapter.Add("hello", new Hello());
 adapter.Activate();
 communicator.WaitForShutdown();
-
 
 public class Hello : IHello
 {

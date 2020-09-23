@@ -1,6 +1,4 @@
-//
 // Copyright (c) ZeroC, Inc. All rights reserved.
-//
 
 using Demo;
 using System;
@@ -8,17 +6,14 @@ using System.Collections.Generic;
 using System.Configuration;
 using ZeroC.Ice;
 
-
 // The new communicator is automatically destroyed (disposed) at the end of the using statement
 using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
-
 
 // The communicator initialization removes all Ice-related arguments from args
 if (args.Length > 0)
 {
     throw new ArgumentException("too many arguments");
 }
-
 
 IPropertiesPrx props = communicator.GetPropertyAsProxy("Properties.Proxy", Demo.IPropertiesPrx.Factory) ??
     throw new ArgumentException("invalid proxy");
@@ -120,7 +115,6 @@ do
     }
 }
 while (line != "x");
-
 
 static void Menu()
 {

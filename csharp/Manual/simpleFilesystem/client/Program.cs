@@ -1,11 +1,8 @@
-//
 // Copyright (c) ZeroC, Inc. All rights reserved.
-//
 
 using Filesystem;
 using System;
 using ZeroC.Ice;
-
 
 using var communicator = new Communicator(ref args);
 
@@ -17,7 +14,6 @@ IDirectoryPrx rootDir = IDirectoryPrx.Parse("ice+tcp://localhost:10000/RootDir",
 // Recursively list the contents of the root directory
 Console.WriteLine("Contents of root directory:");
 ListRecursive(rootDir, 0);
-
 
 // Recursively print the contents of directory "dir" in tree fashion.
 // For files, show the contents of each file. The "depth"

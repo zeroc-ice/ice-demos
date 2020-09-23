@@ -1,13 +1,10 @@
-//
 // Copyright (c) ZeroC, Inc. All rights reserved.
-//
 
 using Demo;
 using System;
 using System.Configuration;
 using System.Threading;
 using ZeroC.Ice;
-
 
 try
 {
