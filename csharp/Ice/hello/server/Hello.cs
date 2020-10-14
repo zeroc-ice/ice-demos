@@ -7,19 +7,16 @@ namespace Demo
 {
     public class Hello : IHello
     {
-        public void SayHello(int delay, Current current)
+        public void SayHello(Current current, global::System.Threading.CancellationToken cancel)
         {
-            if (delay > 0)
-            {
-                System.Threading.Thread.Sleep(delay);
-            }
             Console.Out.WriteLine("Hello World!");
         }
-
-        public void Shutdown(Current current)
+    }
+    public class Hi : IHi
+    {
+        public void SayHi(Current current, global::System.Threading.CancellationToken cancel)
         {
-            Console.Out.WriteLine("Shutting down...");
-            current.Adapter.Communicator.DisposeAsync();
+            Console.Out.WriteLine("Hi");
         }
     }
 }
