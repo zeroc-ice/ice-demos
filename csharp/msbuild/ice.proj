@@ -36,7 +36,7 @@
     </Choose>
 
     <Target Name="NuGetRestore" DependsOnTargets="GetNuGet" Condition="!Exists('$(IceHome)\csharp')">
-        <MSbuild Projects="$(MSBuildThisFileDirectory)..\C# NET Core demos.sln" Targets="Restore" Condition="$(VisualStudioVersion) == '15.0'" />
+        <MSbuild Projects="$(MSBuildThisFileDirectory)..\C# demos.sln" Targets="Restore" Condition="$(VisualStudioVersion) == '15.0'" />
     </Target>
 
     <Target Name="InstallLocalPackages"
@@ -57,14 +57,14 @@
         <RemoveDir Directories="$(NuGetGlobalPackages)\zeroc.ice.net" Condition="Exists('$(NuGetGlobalPackages)\zeroc.ice.net')"/>
         <Exec Command="dotnet nuget push $(PackagePath) --source $(NuGetGlobalPackages)" />
 
-        <MSBuild Projects="$(MSBuildThisFileDirectory)..\C# NET Core demos.sln"
+        <MSBuild Projects="$(MSBuildThisFileDirectory)..\C# demos.sln"
                  Targets="Restore"
                  RemoveProperties="IceHome"
                  Properties="Configuration=$(Configuration);Platform=Any CPU"/>
     </Target>
 
     <Target Name="Build" DependsOnTargets="InstallLocalPackages;NuGetRestore">
-        <MSbuild Projects="$(MSBuildThisFileDirectory)..\C# NET Core demos.sln"
+        <MSbuild Projects="$(MSBuildThisFileDirectory)..\C# demos.sln"
                  Targets="Build"
                  RemoveProperties="IceHome"
                  Properties="$(BuildProperties)"/>

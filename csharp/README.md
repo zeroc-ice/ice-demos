@@ -1,8 +1,7 @@
 # C# Demos
 
 - [Overview](#overview)
-- [Building and running the Demos with .NET Core on Windows, Linux, and macOS](#building-and-running-the-demos-with-net-core-on-windows-linux-and-macos)
-- [Building and running the Demos with .NET Framework on Windows](#building-and-running-the-demos-with-net-framework-on-windows)
+- [Building and running the demos](#building-and-running-the-demos)
 
 ## Overview
 
@@ -22,13 +21,13 @@ in the [Ice manual][1].
 Refer to the [C++11 demos](../cpp11) for more examples that use the Ice services
 (Glacier2, IceGrid, IceStorm).
 
-## Building and running the Demos with .NET Core on Windows, Linux, and macOS
+## Building and running the demos
 
 ### Build Requirements
 
 In order to build Ice for .NET sample programs, you need all of the following:
 
- - the [.NET Core SDK][5] version 5.0
+ - the [.NET SDK][5] version 5.0
  - Slice to C# compiler, for Windows platform the Slice to C# compiler is included
    with the `zeroc.ice.net` NuGet package installed during build, for other platforms
    refer to the [Release Notes][6].
@@ -48,8 +47,8 @@ cd csharp
 To build the sample programs run:
 
 ```
-dotnet restore "C# NET Core demos.sln"
-dotnet msbuild "C# NET Core demos.sln"
+dotnet restore "C# demos.sln"
+dotnet msbuild "C# demos.sln"
 ```
 
 The demos are configured to use the Ice NuGet packages. These packages are automatically
@@ -80,8 +79,8 @@ dotnet msbuild /p:IceHome=<Ice dist path> /t:InstallLocalPackages msbuild/ice.pr
 To build the sample programs run:
 
 ```
-dotnet restore "C# NET Core demos.sln"
-dotnet msbuild "C# NET Core demos.sln"
+dotnet restore "C# NET demos.sln"
+dotnet msbuild "C# NET demos.sln"
 ```
 
 ### Running the Demos
