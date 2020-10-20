@@ -9,9 +9,6 @@ module Demo
     interface Hello
     {
         void sayHello();
-    }
-    interface Hi
-    {
-        void sayHi();
+        string sayHi();
     }
 }

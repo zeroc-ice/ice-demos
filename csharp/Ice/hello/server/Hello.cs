@@ -7,16 +7,13 @@ namespace Demo
 {
     public class Hello : IHello
     {
+        public string SayHi(Current current, global::System.Threading.CancellationToken cancel)
+        {
+            return "Hi there!";
+        }
         public void SayHello(Current current, global::System.Threading.CancellationToken cancel)
         {
             Console.Out.WriteLine("Hello World!");
-        }
-    }
-    public class Hi : IHi
-    {
-        public void SayHi(Current current, global::System.Threading.CancellationToken cancel)
-        {
-            Console.Out.WriteLine("Hi");
         }
     }
 }
