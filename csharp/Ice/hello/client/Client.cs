@@ -13,4 +13,4 @@ IHelloPrx twoway = communicator.GetPropertyAsProxy("Hello.Proxy", IHelloPrx.Fact
     throw new ArgumentException("invalid proxy");
 
 twoway.SayHello();
-Console.Out.WriteLine(twoway.RecieveResponse());
+Console.Out.WriteLine(twoway.recieveResponse());
