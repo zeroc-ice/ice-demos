@@ -7,7 +7,7 @@ namespace Demo
 {
     public class Hello : IHello
     {
-        public string SayHi(Current current, global::System.Threading.CancellationToken cancel)
+        public string RecieveResponse(Current current, global::System.Threading.CancellationToken cancel)
         {
             return "Hi there!";
         }
