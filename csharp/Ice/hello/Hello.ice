@@ -8,7 +8,6 @@ module Demo
 {
     interface Hello
     {
-        void sayHello();
-        string recieveResponse();
+        string sayHello();
     }
 }
