@@ -8,13 +8,10 @@ namespace Demo
 {
     public class Hello : IHello
     {
-        public string SayHello(Current current, CancellationToken cancel, string[] greeting)
+        public string? SayHello(string? greeting, Current current, CancellationToken cancel)
         {
             Console.Out.WriteLine("Hello World!");
-            if (greeting.Length > 0)
-            {
-            return greeting;
-            }
+            return greeting + ", server!";
         }
     }
 }

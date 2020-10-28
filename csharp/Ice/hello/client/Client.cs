@@ -12,4 +12,6 @@ using var communicator = new Communicator(ref args, ConfigurationManager.AppSett
 IHelloPrx twoway = communicator.GetPropertyAsProxy("Hello.Proxy", IHelloPrx.Factory) ??
     throw new ArgumentException("invalid proxy");
 
+Console.Write("Say Hello: ");
+string? greeting = Console.ReadLine();
 Console.Out.WriteLine(twoway.SayHello(greeting));
