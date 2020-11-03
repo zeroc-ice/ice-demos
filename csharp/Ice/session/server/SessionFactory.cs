@@ -1,13 +1,14 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 
 using System;
+using System.Threading;
 using ZeroC.Ice;
 
 namespace Demo
 {
     public class SessionFactory : ISessionFactory
     {
-        public ISessionPrx Create(string name, Current current)
+        public ISessionPrx Create(string name, Current current, CancellationToken cancel)
         {
             var session = new Session(name);
             ISessionPrx proxy = current.Adapter.AddWithUUID(session, ISessionPrx.Factory);
@@ -33,7 +34,7 @@ namespace Demo
             return proxy;
         }
 
-        public void Shutdown(Current current)
+        public void Shutdown(Current current, CancellationToken cancel)
         {
             Console.Out.WriteLine("Shutting down...");
             current.Communicator.DisposeAsync();

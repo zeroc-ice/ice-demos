@@ -1,6 +1,7 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 
 using System;
+using System.Threading;
 using System.Collections.Generic;
 using ZeroC.Ice;
 
@@ -41,67 +42,67 @@ namespace Demo
             }
         }
 
-        public bool NeedsWarmup(Current current)
+        public bool NeedsWarmup(Current current, CancellationToken cancel)
         {
             _warmup = false;
             return _needsWarmup;
         }
 
-        public void StartWarmup(Current current) => _warmup = true;
+        public void StartWarmup(Current current, CancellationToken cancel) => _warmup = true;
 
-        public void EndWarmup(Current current)
+        public void EndWarmup(Current current, CancellationToken cancel)
         {
             _warmup = false;
             _needsWarmup = false;
         }
 
-        public void SendByteSeq(byte[] seq, Current current)
+        public void SendByteSeq(byte[] seq, Current current, CancellationToken cancel)
         {
         }
 
-        public void SendOnewayByteSeq(byte[] seq, Current current)
+        public void SendOnewayByteSeq(byte[] seq, Current current, CancellationToken cancel)
         {
         }
 
-        public ReadOnlyMemory<byte> RecvByteSeq(Current current) => _warmup ? _warmupByteSeq : _byteSeq;
+        public ReadOnlyMemory<byte> RecvByteSeq(Current current, CancellationToken cancel) => _warmup ? _warmupByteSeq : _byteSeq;
 
-        public ReadOnlyMemory<byte> EchoByteSeq(byte[] seq, Current current) => seq;
+        public ReadOnlyMemory<byte> EchoByteSeq(byte[] seq, Current current, CancellationToken cancel) => seq;
 
-        public void SendStringSeq(string[] seq, Current current)
+        public void SendStringSeq(string[] seq, Current current, CancellationToken cancel)
         {
         }
 
-        public void SendOnewayStringSeq(string[] seq, Current current)
+        public void SendOnewayStringSeq(string[] seq, Current current, CancellationToken cancel)
         {
         }
 
-        public IEnumerable<string> RecvStringSeq(Current current) => _warmup ? _warmupStringSeq : _stringSeq;
+        public IEnumerable<string> RecvStringSeq(Current current, CancellationToken cancel) => _warmup ? _warmupStringSeq : _stringSeq;
 
-        public IEnumerable<string> EchoStringSeq(string[] seq, Current current) => seq;
+        public IEnumerable<string> EchoStringSeq(string[] seq, Current current, CancellationToken cancel) => seq;
 
-        public void SendStructSeq(StringDouble[] seq, Current current)
+        public void SendStructSeq(StringDouble[] seq, Current current, CancellationToken cancel)
         {
         }
 
-        public void SendOnewayStructSeq(StringDouble[] seq, Current current)
+        public void SendOnewayStructSeq(StringDouble[] seq, Current current, CancellationToken cancel)
         {
         }
 
-        public IEnumerable<StringDouble> RecvStructSeq(Current current) => _warmup ? _warmupStructSeq : _structSeq;
+        public IEnumerable<StringDouble> RecvStructSeq(Current current, CancellationToken cancel) => _warmup ? _warmupStructSeq : _structSeq;
 
-        public IEnumerable<StringDouble> EchoStructSeq(StringDouble[] seq, Current current) => seq;
+        public IEnumerable<StringDouble> EchoStructSeq(StringDouble[] seq, Current current, CancellationToken cancel) => seq;
 
-        public void SendFixedSeq(Fixed[] seq, Current current)
+        public void SendFixedSeq(Fixed[] seq, Current current, CancellationToken cancel)
         {
         }
 
-        public void SendOnewayFixedSeq(Fixed[] seq, Current current)
+        public void SendOnewayFixedSeq(Fixed[] seq, Current current, CancellationToken cancel)
         {
         }
 
-        public IEnumerable<Fixed> RecvFixedSeq(Current current) => _warmup ? _warmupFixedSeq : _fixedSeq;
-        public IEnumerable<Fixed> EchoFixedSeq(Fixed[] seq, Current current) => seq;
-        public void Shutdown(Current current) => current.Adapter.Communicator.DisposeAsync();
+        public IEnumerable<Fixed> RecvFixedSeq(Current current, CancellationToken cancel) => _warmup ? _warmupFixedSeq : _fixedSeq;
+        public IEnumerable<Fixed> EchoFixedSeq(Fixed[] seq, Current current, CancellationToken cancel) => seq;
+        public void Shutdown(Current current, CancellationToken cancel) => current.Adapter.Communicator.DisposeAsync();
     }
 
 }

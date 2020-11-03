@@ -1,6 +1,7 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 
 using System;
+using System.Threading;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using ZeroC.Ice;
@@ -18,7 +19,7 @@ namespace Demo
             _rand = new RNGCryptoServiceProvider();
         }
 
-        public string GetToken(Current current)
+        public string GetToken(Current current, CancellationToken cancel)
         {
             //
             // Generate a random 32 character long token.

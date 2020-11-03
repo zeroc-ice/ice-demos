@@ -1,6 +1,7 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 
 using System;
+using System.Threading;
 using ZeroC.Ice;
 
 namespace Demo
@@ -10,7 +11,7 @@ namespace Demo
         // Temperature in Celsius.
         private float _temperature = 23.5f;
 
-        public float GetTemp(Current current)
+        public float GetTemp(Current current, CancellationToken cancel)
         {
             lock (this)
             {
@@ -18,7 +19,7 @@ namespace Demo
             }
         }
 
-        public void SetTemp(float temp, Current current)
+        public void SetTemp(float temp, Current current, CancellationToken cancel)
         {
             lock (this)
             {
@@ -26,7 +27,7 @@ namespace Demo
             }
         }
 
-        public void Shutdown(Current current)
+        public void Shutdown(Current current, CancellationToken cancel)
         {
             Console.Out.WriteLine("Shutting down...");
             current.Adapter.Communicator.DisposeAsync();

@@ -77,7 +77,7 @@ Install packages from the source build:
 On Windows
 
 ```
-msbuild /p:IceHome=<Ice dist path> /t:NetStandardInstallLocalPackages msbuild\ice.proj
+msbuild /p:IceHome=<Ice dist path> /t:InstallLocalPackages msbuild\ice.proj
 ```
 
 On Linux and macOS

@@ -6,7 +6,7 @@ using System.Threading;
 public class DiscoverReplyI : DiscoverReplyDisp_
 {
     public override void
-    reply(Ice.ObjectPrx obj, Ice.Current current)
+    reply(Ice.ObjectPrx obj, Ice.Current current, Ice.CancellationToken cancel)
     {
         lock(this)
         {

@@ -3,13 +3,14 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Threading;
 using ZeroC.Ice;
 
 namespace Demo
 {
     public class Printer : IObject
     {
-        public ValueTask<OutgoingResponseFrame> DispatchAsync(IncomingRequestFrame request, Current current)
+        public ValueTask<OutgoingResponseFrame> DispatchAsync(IncomingRequestFrame request, Current current, CancellationToken cancel)
         {
             OutgoingResponseFrame? response = null;
             if (current.Operation == "printString")

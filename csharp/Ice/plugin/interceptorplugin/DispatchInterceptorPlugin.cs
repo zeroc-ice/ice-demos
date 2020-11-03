@@ -1,6 +1,7 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 
 using System.Threading.Tasks;
+using System.Threading;
 using ZeroC.Ice;
 
 namespace Demo
@@ -9,12 +10,12 @@ namespace Demo
     {
         public void Initialize(PluginInitializationContext context)
         {
-            context.AddDispatchInterceptor((request, current, next) =>
+            context.AddDispatchInterceptor((request, current, cancel, next) =>
             {
                 string userName = request.BinaryContext[100].Read(istr => istr.ReadString());
                 current.Communicator.Logger.Print(
                     $"Dispatching operation: {current.Operation} invoke by user: {userName}");
-                return next(request, current);
+                return next(request, current, cancel);
             });
         }
 

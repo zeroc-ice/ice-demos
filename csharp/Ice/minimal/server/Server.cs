@@ -2,6 +2,7 @@
 
 using Demo;
 using System;
+using System.Threading;
 using ZeroC.Ice;
 
 using var communicator = new Communicator(ref args);
@@ -16,5 +17,5 @@ communicator.WaitForShutdown();
 
 public class Hello : IHello
 {
-    public void SayHello(Current current) => Console.WriteLine("Hello World!");
+    public void SayHello(Current current, CancellationToken cancel) => Console.WriteLine("Hello World!");
 }
