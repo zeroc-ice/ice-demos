@@ -19,7 +19,8 @@ namespace Demo
             ISessionPrx collocProxy = proxy.Clone(endpoints: Array.Empty<Endpoint>());
 
             // Never close this connection from the client and turn on heartbeats with a timeout of 30s
-            //      current.Connection!.IdleTimeout = TimeSpan.FromSeconds(30);
+            // TODO:
+            //          current.Connection!.IdleTimeout = TimeSpan.FromSeconds(30);
             // Removed for function, but this demo is somewhat pointless without this though
             current.Connection!.KeepAlive = true;
             current.Connection!.Closed += (sender, args) =>
