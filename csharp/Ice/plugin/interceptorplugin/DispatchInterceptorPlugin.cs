@@ -10,7 +10,7 @@ namespace Demo
     {
         public void Initialize(PluginInitializationContext context)
         {
-            context.AddDispatchInterceptor((request, current, cancel, next) =>
+            context.AddDispatchInterceptor((request, current, next, cancel) =>
             {
                 string userName = request.BinaryContext[100].Read(istr => istr.ReadString());
                 current.Communicator.Logger.Print(

@@ -29,7 +29,7 @@ namespace Demo
             {
                 if (_destroy)
                 {
-                    throw new ObjectNotExistException(current, cancel);
+                    throw new ObjectNotExistException();
                 }
 
                 IHelloPrx hello = current.Adapter.AddWithUUID(new Hello(_name, _nextId++), IHelloPrx.Factory);
@@ -44,7 +44,7 @@ namespace Demo
             {
                 if (_destroy)
                 {
-                    throw new ObjectNotExistException(current, cancel);
+                    throw new ObjectNotExistException();
                 }
 
                 return _name;
@@ -57,7 +57,7 @@ namespace Demo
             {
                 if (_destroy)
                 {
-                    throw new ObjectNotExistException(current);
+                    throw new ObjectNotExistException();
                 }
 
                 _destroy = true;
