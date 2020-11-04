@@ -10,7 +10,13 @@ namespace Demo
 {
     public class Printer : IObject
     {
-        public ValueTask<OutgoingResponseFrame> DispatchAsync(IncomingRequestFrame request, Current current, CancellationToken cancel)
+        public ValueTask<OutgoingResponseFrame> DispatchAsync(
+
+            IncomingRequestFrame request,
+
+            Current current,
+
+            CancellationToken cancel)
         {
             OutgoingResponseFrame? response = null;
             if (current.Operation == "printString")

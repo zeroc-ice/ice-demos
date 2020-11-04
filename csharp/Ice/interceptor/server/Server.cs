@@ -39,7 +39,7 @@ try
     ObjectAdapter thermostatAdapter = communicator.CreateObjectAdapter("Thermostat");
     thermostatAdapter.Add("thermostat", new Thermostat());
     thermostatAdapter.Activate(
-        (request, current, cancel, next) =>
+        (request, current, next, cancel) =>
         {
             // Check if the operation requires authorization to invoke.
             if (securedOperations.Contains(current.Operation))
