@@ -7,7 +7,7 @@ using Demo;
 public class HelloI : HelloDisp_
 {
     public override void
-    sayHello(Ice.Current current, Ice.CancellationToken cancel)
+    sayHello(Ice.Current current, CancellationToken cancel)
     {
         System.Console.Out.WriteLine("Hello World!");
     }
