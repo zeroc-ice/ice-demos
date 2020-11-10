@@ -1,5 +1,6 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 
+using System.Threading.Tasks;
 using ZeroC.Ice;
 
 namespace Demo
@@ -10,9 +11,9 @@ namespace Demo
 
         public Hello(string name) => _name = name;
 
-        public string GetGreeting(Current current) => $"{_name} says Hello World!";
+        public string GetGreeting(Current current, CancellationToken cancel) => $"{_name} says Hello World!";
 
-        public void Shutdown(Current current)
+        public void Shutdown(Current current, CancellationToken cancel)
         {
             System.Console.Out.WriteLine("Shutting down...");
             current.Communicator.DisposeAsync();

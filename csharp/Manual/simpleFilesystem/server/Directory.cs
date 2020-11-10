@@ -1,6 +1,7 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using ZeroC.Ice;
 
 namespace Filesystem
@@ -18,10 +19,10 @@ namespace Filesystem
         }
 
         // Slice Node::name() operation
-        public string Name(Current current) => _name;
+        public string Name(Current current, CancellationToken cancel) => _name;
 
         // Slice Directory::list() operation
-        public IEnumerable<INodePrx> List(Current current) => _contents;
+        public IEnumerable<INodePrx> List(Current current. CancellationToken cancel) => _contents;
 
         // AddChild is called by the child in order to add itself to the _contents member of the parent
         public void AddChild(INodePrx child) => _contents.Add(child);

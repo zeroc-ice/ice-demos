@@ -2,6 +2,7 @@
 
 using Demo;
 using System;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
@@ -137,6 +138,6 @@ namespace Demo
 {
     public class Clock : IClock
     {
-        public void Tick(string date, Current current) => Console.WriteLine(date);
+        public void Tick(string date, Current current, CancellationToken cancel) => Console.WriteLine(date);
     }
 }

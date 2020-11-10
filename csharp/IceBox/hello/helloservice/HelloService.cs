@@ -1,6 +1,7 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 
 using ZeroC.Ice;
+using System.Threading.Tasks;
 using ZeroC.IceBox;
 
 namespace Demo
@@ -21,6 +22,6 @@ namespace Demo
 
     public class Hello : IHello
     {
-        public void SayHello(Current current) => System.Console.WriteLine("Hello World!");
+        public void SayHello(Current current, CancellationToken cancel) => System.Console.WriteLine("Hello World!");
     }
 }
