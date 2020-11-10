@@ -8,19 +8,10 @@ namespace Demo
 {
     public class Hello : IHello
     {
-        public void SayHello(int delay, Current current, CancellationToken cancel)
+        public string? SayHello(string? greeting, Current current, CancellationToken cancel)
         {
-            if (delay > 0)
-            {
-                System.Threading.Thread.Sleep(delay);
-            }
             Console.Out.WriteLine("Hello World!");
-        }
-
-        public void Shutdown(Current current, CancellationToken cancel)
-        {
-            Console.Out.WriteLine("Shutting down...");
-            current.Adapter.Communicator.DisposeAsync();
+            return greeting + ", server!";
         }
     }
 }
