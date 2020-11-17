@@ -78,7 +78,8 @@ while (true)
 int acmTimeout = router.GetACMTimeout();
 Connection? connection = router.GetCachedConnection();
 Debug.Assert(connection != null);
-connection.Acm = new Acm(TimeSpan.FromSeconds(acmTimeout), AcmClose.Off, AcmHeartbeat.Always);
+connection.KeepAlive = true;
+connection.IdleTimeout = TimeSpan.FromSeconds(acmTimeout);
 connection.Closed += (sender, args) => Console.WriteLine("The Glacier2 session has been destroyed.");
 
 // The Glacier2 router routes bidirectional calls to objects in the client only

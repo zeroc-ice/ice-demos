@@ -1,7 +1,7 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 
 using System;
-using System.Threading.Tasks;
+using System.Threading;
 using ZeroC.Ice;
 
 using var communicator = new Communicator(ref args);
