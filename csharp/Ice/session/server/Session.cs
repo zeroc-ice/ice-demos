@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using ZeroC.Ice;
 
 namespace Demo
@@ -22,13 +23,13 @@ namespace Demo
             Console.Out.WriteLine($"The session {_name} is now created.");
         }
 
-        public IHelloPrx CreateHello(Current current)
+        public IHelloPrx CreateHello(Current current, CancellationToken cancel)
         {
             lock (_mutex)
             {
                 if (_destroy)
                 {
-                    throw new ObjectNotExistException(current);
+                    throw new ObjectNotExistException();
                 }
 
                 IHelloPrx hello = current.Adapter.AddWithUUID(new Hello(_name, _nextId++), IHelloPrx.Factory);
@@ -37,26 +38,26 @@ namespace Demo
             }
         }
 
-        public string GetName(Current current)
+        public string GetName(Current current, CancellationToken cancel)
         {
             lock (_mutex)
             {
                 if (_destroy)
                 {
-                    throw new ObjectNotExistException(current);
+                    throw new ObjectNotExistException();
                 }
 
                 return _name;
             }
         }
 
-        public void Destroy(Current current)
+        public void Destroy(Current current, CancellationToken cancel)
         {
             lock (_mutex)
             {
                 if (_destroy)
                 {
-                    throw new ObjectNotExistException(current);
+                    throw new ObjectNotExistException();
                 }
 
                 _destroy = true;

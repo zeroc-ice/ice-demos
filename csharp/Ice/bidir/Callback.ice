@@ -13,6 +13,6 @@ module Demo
 
     interface CallbackSender
     {
-        void addClient(CallbackReceiver* receiver);
+        void addClient(CallbackReceiver receiver);
     }
 }

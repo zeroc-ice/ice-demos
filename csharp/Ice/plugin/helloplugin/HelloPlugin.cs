@@ -1,5 +1,6 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 
+using System.Threading;
 using System.Threading.Tasks;
 using ZeroC.Ice;
 
@@ -7,10 +8,10 @@ namespace Demo
 {
     public class Hello : IHello
     {
-        public void SayHello(Current current) =>
+        public void SayHello(Current current, CancellationToken cancel) =>
             current.Communicator.Logger.Print("Hello World!");
 
-        public void Shutdown(Current current)
+        public void Shutdown(Current current, CancellationToken cancel)
         {
             current.Communicator.Logger.Print("Shutting down...");
             current.Communicator.DisposeAsync();

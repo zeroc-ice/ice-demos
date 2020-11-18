@@ -10,10 +10,10 @@ namespace Demo
     {
         public void Initialize(PluginInitializationContext context)
         {
-            context.AddInvocationInterceptor((prx, request, next) =>
+            context.AddInvocationInterceptor((prx, request, next, cancel) =>
             {
                 request.AddBinaryContextEntry(100, Environment.UserName, (ostr, value) => ostr.WriteString(value));
-                return next(prx, request);
+                return next(prx, request, cancel);
             });
         }
 

@@ -1,6 +1,7 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 
 using System.Collections.Generic;
+using System.Threading;
 using ZeroC.Ice;
 
 namespace Filesystem
@@ -19,13 +20,13 @@ namespace Filesystem
         }
 
         // Slice Node::name() operation
-        public string Name(Current current) => _name;
+        public string Name(Current current, CancellationToken cancel) => _name;
 
         // Slice File::read() operation
-        public IEnumerable<string> Read(Current current) => _lines;
+        public IEnumerable<string> Read(Current current, CancellationToken cancel) => _lines;
 
         // Slice File::write() operation
-        public void Write(string[] text, Current current) => _lines = text;
+        public void Write(string[] text, Current current, CancellationToken cancel) => _lines = text;
 
         // Add servant to ASM and parent's _contents map.
         public void Activate(ObjectAdapter adapter) =>

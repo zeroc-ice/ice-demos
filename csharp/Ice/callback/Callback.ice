@@ -13,7 +13,7 @@ module Demo
 
     interface CallbackSender
     {
-        void initiateCallback(CallbackReceiver* proxy);
+        void initiateCallback(CallbackReceiver proxy);
         void shutdown();
     }
 }

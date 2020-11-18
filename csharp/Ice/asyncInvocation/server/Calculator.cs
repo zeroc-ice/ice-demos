@@ -1,17 +1,18 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 
 using System;
+using System.Threading;
 using ZeroC.Ice;
 
 namespace Demo
 {
     public class Calculator : ICalculator
     {
-        public int Add(int x, int y, Current current) => x + y;
+        public int Add(int x, int y, Current current, CancellationToken cancel) => x + y;
 
-        public int Subtract(int x, int subtrahend, Current current) => x - subtrahend;
+        public int Subtract(int x, int subtrahend, Current current, CancellationToken cancel) => x - subtrahend;
 
-        public (int ReturnValue, int Remainder) Divide(int numerator, int denominator, Current current)
+        public (int ReturnValue, int Remainder) Divide(int numerator, int denominator, Current current, CancellationToken cancel)
         {
             if (denominator == 0)
             {
@@ -20,9 +21,9 @@ namespace Demo
             return (numerator / denominator, numerator % denominator);
         }
 
-        public int Square(int x, Current current) => x * x;
+        public int Square(int x, Current current, CancellationToken cancel) => x * x;
 
-        public double SquareRoot(int x, Current current)
+        public double SquareRoot(int x, Current current, CancellationToken cancel)
         {
             if (x < 0)
             {
@@ -31,7 +32,7 @@ namespace Demo
             return Math.Sqrt(x);
         }
 
-        public void Shutdown(Current current) => current.Adapter.Communicator.DisposeAsync();
+        public void Shutdown(Current current, CancellationToken cancel) => current.Adapter.Communicator.DisposeAsync();
     }
 
 }

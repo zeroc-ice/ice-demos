@@ -1,5 +1,7 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 
+using System;
+using System.Threading;
 using Demo;
 
 public class DiscoverI : DiscoverDisp_
@@ -11,7 +13,7 @@ public class DiscoverI : DiscoverDisp_
     }
 
     public override void
-    lookup(DiscoverReplyPrx reply, Ice.Current current)
+    lookup(DiscoverReplyPrx reply, Ice.Current current, Ice.CancellationToken cancel)
     {
         try
         {

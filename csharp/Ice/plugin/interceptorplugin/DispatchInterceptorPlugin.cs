@@ -9,12 +9,12 @@ namespace Demo
     {
         public void Initialize(PluginInitializationContext context)
         {
-            context.AddDispatchInterceptor((request, current, next) =>
+            context.AddDispatchInterceptor((request, current, next, cancel) =>
             {
                 string userName = request.BinaryContext[100].Read(istr => istr.ReadString());
                 current.Communicator.Logger.Print(
                     $"Dispatching operation: {current.Operation} invoke by user: {userName}");
-                return next(request, current);
+                return next(request, current, cancel);
             });
         }
 

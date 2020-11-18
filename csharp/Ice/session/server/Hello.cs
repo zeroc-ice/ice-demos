@@ -1,6 +1,7 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 
 using System;
+using System.Threading;
 using ZeroC.Ice;
 
 namespace Demo
@@ -16,7 +17,7 @@ namespace Demo
             _id = id;
         }
 
-        public void SayHello(Current c) =>
+        public void SayHello(Current current, CancellationToken cancel) =>
             Console.WriteLine($"Hello object #{_id} for session `{_name}' says:\nHello {_name}!");
     }
 
