@@ -1,6 +1,6 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 
-using System.Threading.Tasks;
+using System.Threading;
 using ZeroC.Ice;
 
 namespace Demo

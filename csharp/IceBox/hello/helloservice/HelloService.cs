@@ -1,7 +1,7 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 
+using System.Threading;
 using ZeroC.Ice;
-using System.Threading.Tasks;
 using ZeroC.IceBox;
 
 namespace Demo
