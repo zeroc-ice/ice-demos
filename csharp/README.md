@@ -1,58 +1,5 @@
 # C# Demos
 
-- [Overview](#overview)
-- [Building and running the demos](#building-and-running-the-demos)
-
-## Overview
-
-This directory contains C# sample programs for various Ice components. These
-examples are provided to get you started on using a particular Ice feature or
-coding technique.
-
-Most of the subdirectories here correspond directly to Ice components, such as
-[Glacier2](./Glacier2), [IceBox](./IceBox), and so on. We've also included the
-following additional subdirectories:
-
-- [Manual](./Manual) contains complete examples for some of the code snippets
-in the [Ice manual][1].
-
-- [Chat](./Chat) contains a .NET GUI client for the ZeroC [Chat Demo][2].
-
-Refer to the [C++11 demos](../cpp11) for more examples that use the Ice services
-(Glacier2, IceGrid, IceStorm).
-
-## Building and running the demos
-
-### Build Requirements
-
-In order to build Ice for .NET sample programs, you need all of the following:
-
- - the [.NET SDK][5] version 5.0
- - Slice to C# compiler, for Windows platform the Slice to C# compiler is included
-   with the `zeroc.ice.net` NuGet package installed during build, for other platforms
-   refer to the [Release Notes][6].
-
-You can build from the command-line or with Visual Studio (2017 or 2019, for
-Windows or Mac). If you use Visual Studio, the [Ice Builder][3] extension is
-optional on Windows, and not available on macOS.
-
-### Building the demos using NuGet packages:
-
-Open a command prompt and change to the `csharp` subdirectory:
-
-```
-cd csharp
-```
-
-To build the sample programs run:
-
-```
-dotnet restore "C# demos.sln"
-dotnet msbuild "C# demos.sln"
-```
-
-The demos are configured to use the Ice NuGet packages. These packages are automatically
-downloaded from nuget.org during the build.
 
 ### Building the demos using a source build:
 
@@ -79,8 +26,8 @@ dotnet msbuild /p:IceHome=<Ice dist path> /t:InstallLocalPackages msbuild/ice.pr
 To build the sample programs run:
 
 ```
-dotnet restore "C# NET demos.sln"
-dotnet msbuild "C# NET demos.sln"
+dotnet restore "C# demos.sln"
+dotnet msbuild "C# demos.sln" /p:IceToolsPath=<Ice dist path>/cpp/bin
 ```
 
 ### Running the Demos
