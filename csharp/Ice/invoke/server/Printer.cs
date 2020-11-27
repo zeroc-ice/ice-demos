@@ -18,12 +18,12 @@ namespace Demo
             OutgoingResponseFrame? response = null;
             if (current.Operation == "printString")
             {
-                string message = request.ReadArgs(current.Communicator, istr => istr.ReadString());
+                string message = request.ReadArgs(current.Connection, istr => istr.ReadString());
                 Console.WriteLine($"Printing string `{message}'");
             }
             else if (current.Operation == "printStringSequence")
             {
-                string[] messages = request.ReadArgs(current.Communicator,
+                string[] messages = request.ReadArgs(current.Connection,
                                                           istr => istr.ReadArray(1, istr => istr.ReadString()));
                 Console.Write("Printing string sequence {");
                 Console.Write(string.Join(", ", messages));
@@ -31,7 +31,7 @@ namespace Demo
             }
             else if (current.Operation == "printDictionary")
             {
-                Dictionary<string, string> dict = request.ReadArgs(current.Communicator,
+                Dictionary<string, string> dict = request.ReadArgs(current.Connection,
                     istr => istr.ReadDictionary(1, 1, istr => istr.ReadString(), istr => istr.ReadString()));
                 Console.Write("Printing dictionary {");
                 bool first = true;
@@ -48,18 +48,18 @@ namespace Demo
             }
             else if (current.Operation == "printEnum")
             {
-                Color color = request.ReadArgs(current.Communicator, ColorHelper.IceReader);
+                Color color = request.ReadArgs(current.Connection, ColorHelper.IceReader);
                 Console.WriteLine($"Printing enum {color}");
             }
             else if (current.Operation == "printStruct")
             {
-                Structure s = request.ReadArgs(current.Communicator, Structure.IceReader);
+                Structure s = request.ReadArgs(current.Connection, Structure.IceReader);
                 Console.WriteLine($"Printing struct: name={s.Name}, value={s.Value}");
             }
             else if (current.Operation == "printStructSequence")
             {
                 Structure[] seq = request.ReadArgs(
-                    current.Communicator,
+                    current.Connection,
                     istr => istr.ReadArray(minElementSize: 2, Structure.IceReader));
                 Console.Write("Printing struct sequence: {");
                 bool first = true;
@@ -76,7 +76,7 @@ namespace Demo
             }
             else if (current.Operation == "printClass")
             {
-                C c = request.ReadArgs(current.Communicator, istr => istr.ReadClass<C>(C.IceTypeId));
+                C c = request.ReadArgs(current.Connection, istr => istr.ReadClass<C>(C.IceTypeId));
                 Console.WriteLine($"Printing class: s.name={c.S.Name}, s.value={c.S.Value}");
             }
             else if (current.Operation == "getValues")

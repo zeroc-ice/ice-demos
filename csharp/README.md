@@ -25,6 +25,15 @@ dotnet msbuild /p:IceHome=<Ice dist path> /t:InstallLocalPackages msbuild/ice.pr
 
 To build the sample programs run:
 
+On Windows
+
+```
+dotnet restore "C# demos.sln"
+dotnet msbuild "C# demos.sln"
+```
+
+On Linux and macOS
+
 ```
 dotnet restore "C# demos.sln"
 dotnet msbuild "C# demos.sln" /p:IceToolsPath=<Ice dist path>/cpp/bin

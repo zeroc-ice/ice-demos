@@ -197,7 +197,7 @@ do
         else
         {
             (string s, C c) = response.ReadReturnValue(
-                communicator,
+                prx,
                 istr =>
                 {
                     string s = istr.ReadString();
@@ -214,7 +214,7 @@ do
 
         try
         {
-            response.ReadVoidReturnValue(communicator);
+            response.ReadVoidReturnValue(prx);
         }
         catch (PrintFailure)
         {
