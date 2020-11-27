@@ -49,8 +49,8 @@ try
             }
             else if (line == "4")
             {
-                Dictionary<string, string> currentContext = communicator.CurrentContext;
-                communicator.CurrentContext = new Dictionary<string, string>() { { "type", "Implicit" } };
+                SortedDictionary<string, string> currentContext = communicator.CurrentContext;
+                communicator.CurrentContext = new SortedDictionary<string, string>() { ["type"] = "Implicit" };
                 proxy.Call();
                 communicator.CurrentContext = currentContext;
             }
