@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!-- This file was written by IceGrid Admin -->
 <icegrid>
    <application name="HelloSimpsons">
 
@@ -12,13 +11,18 @@
 
       <service-template id="HelloService">
          <parameter name="name"/>
-         <service name="${name}" entry="helloservice.dll:HelloServiceI">
+         <service name="${name}" entry="helloservice/bin/Debug/net5.0/helloservice.dll:Demo.HelloService">
             <description>A very simple service named after ${name}</description>
             <properties>
                <properties refid="mx"/>
                <property name="Hello.Identity" value="hello"/>
+               <property name="Ice.ServerName" value="localhost"/>
             </properties>
-            <adapter name="Hello-${name}" endpoints="default" id="Hello-${name}" replica-group="HelloGroup" server-lifetime="false"/>
+            <adapter name="Hello-${name}"
+                     endpoints="tcp -h *"
+                     id="Hello-${name}"
+                     replica-group="HelloGroup"
+                     server-lifetime="false"/>
          </service>
       </service-template>
 
@@ -55,7 +59,7 @@
          </server-instance>
 
          <icebox id="IceBox" activation="on-demand" exe="dotnet">
-            <option>iceboxnet.dll</option>
+            <option>helloservice/bin/Debug/net5.0/iceboxnet.dll</option>
             <description>A sample IceBox server</description>
             <properties>
                <properties refid="mx"/>
@@ -66,7 +70,7 @@
             <service-instance template="HelloService" name="Bart"/>
             <service-instance template="HelloService" name="Lisa"/>
             <service-instance template="HelloService" name="Maggie"/>
-            <env>LANG=en</env>
+            <env>LANG=es</env>
          </icebox>
       </node>
    </application>

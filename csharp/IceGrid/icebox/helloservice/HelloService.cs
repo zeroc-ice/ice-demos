@@ -7,7 +7,7 @@ using ZeroC.IceBox;
 
 namespace Demo
 {
-    class HelloService : IService
+    public class HelloService : IService
     {
         private ObjectAdapter? _adapter;
 
@@ -34,7 +34,7 @@ namespace Demo
 
         public void SayHello(Current current, CancellationToken cancel)
         {
-            Console.WriteLine(Environment.GetEnvironmentVariable("LANG") ?? "en" switch
+            Console.WriteLine((Environment.GetEnvironmentVariable("LANG") ?? "en") switch
             {
                 "fr" => $"Bonjour, {_serviceName}",
                 "de" => $"Hallo, {_serviceName}",
