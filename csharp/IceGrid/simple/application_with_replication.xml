@@ -7,12 +7,11 @@
     <server-template id="SimpleServer">
       <parameter name="index"/>
       <server id="SimpleServer-${index}" exe="dotnet" activation="on-demand">
-        <option>run</option>
-        <option>--project</option>
-        <option>server/server.csproj</option>
-        <option>--</option>
-        <adapter name="Hello" endpoints="tcp -h localhost" replica-group="ReplicatedHelloAdapter"/>
+        <option>server/bin/Debug/net5.0/server.dll</option>
+        <adapter name="Hello" endpoints="tcp -h *" replica-group="ReplicatedHelloAdapter"/>
         <property name="Identity" value="hello"/>
+
+        <property name="Ice.ServerName" value="localhost"/>
 
         <property name="IceMX.Metrics.Debug.GroupBy" value="id"/>
         <property name="IceMX.Metrics.Debug.Disabled" value="1"/>

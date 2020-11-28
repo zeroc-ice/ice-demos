@@ -11,12 +11,13 @@ namespace Demo
         private readonly string _name;
         public Hello(string name) => _name = name;
 
-        public void SayHello(Current current, CancellationToken cancel) => Console.WriteLine($"{_name} says Hello World!");
+        public void SayHello(Current current, CancellationToken cancel) =>
+            Console.WriteLine($"{_name} says Hello World!");
 
         public void Shutdown(Current current, CancellationToken cancel)
         {
             Console.WriteLine($"{_name} shutting down...");
-            current.Communicator.DisposeAsync();
+            current.Communicator.ShutdownAsync();
         }
     }
 }

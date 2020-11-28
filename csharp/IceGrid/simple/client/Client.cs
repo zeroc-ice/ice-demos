@@ -21,11 +21,10 @@ try
 {
     hello.IcePing();
 }
-catch (ObjectNotRegisteredException)
+catch (NoEndpointException)
 {
-    IQueryPrx? query = communicator.GetPropertyAsProxy("DemoIceGrid/Query", IQueryPrx.Factory);
-    Debug.Assert(query != null);
-    hello = query.FindObjectByType("::Demo::Hello")?.CheckedCast(IHelloPrx.Factory) ??
+    IQueryPrx query = IQueryPrx.Parse("DemoIceGrid/Query", communicator)!;
+    hello = query.FindObjectByType("::Demo::Hello")?.Clone(IHelloPrx.Factory) ??
         throw new InvalidOperationException("couldn't find a `::Demo::Hello' object");
 }
 
