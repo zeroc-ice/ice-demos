@@ -21,4 +21,4 @@ Follow these steps to install the demo:
 4) Start a Web browser and open the index.html page to begin using the demo.
 
 [1]: https://doc.zeroc.com/technical-articles/general-topics/chat-demo
-[2]: https://doc.zeroc.com/rel/ice-releases/ice-3-7/ice-3-7-4-release-notes
+[2]: https://doc.zeroc.com/rel/ice-releases/ice-3-7/ice-3-7-5-release-notes

@@ -24,4 +24,4 @@ Follow these steps to install the demo:
    by default. If you have configured SSL for the Ice extension, edit
    `Client.php` and set the `have_ssl` variable to true.
 
-[1]: https://doc.zeroc.com/rel/ice-releases/ice-3-7/ice-3-7-4-release-notes
+[1]: https://doc.zeroc.com/rel/ice-releases/ice-3-7/ice-3-7-5-release-notes
