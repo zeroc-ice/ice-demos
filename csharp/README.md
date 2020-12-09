@@ -1,6 +1,7 @@
 # C# Demos
 
 - [Overview](#overview)
+- [Building and running the Demos with .NET 5.0 on Windows, Linux, and macOS](#building-and-running-the-demos-with-net-core-on-windows-linux-and-macos)
 - [Building and running the Demos with .NET Core on Windows, Linux, and macOS](#building-and-running-the-demos-with-net-core-on-windows-linux-and-macos)
 - [Building and running the Demos with .NET Framework on Windows](#building-and-running-the-demos-with-net-framework-on-windows)
 
@@ -21,6 +22,79 @@ in the [Ice manual][1].
 
 Refer to the [C++11 demos](../cpp11) for more examples that use the Ice services
 (Glacier2, IceGrid, IceStorm).
+
+## Building and running the Demos with .NET 5.0 on Windows, Linux, and macOS
+
+### Build Requirements
+
+In order to build Ice for .NET sample programs, you need all of the following:
+
+ - the [.NET Core SDK][5] version 5.0
+ - Slice to C# compiler, for Windows platform the Slice to C# compiler is included
+   with the `zeroc.ice.net` NuGet package installed during build, for other platforms
+   refer to the [Release Notes][6].
+
+You can build from the command-line or with Visual Studio (2017 or 2019, for
+Windows or Mac). If you use Visual Studio, the [Ice Builder][3] extension is
+optional on Windows, and not available on macOS.
+
+### Building the demos using NuGet packages:
+
+Open a command prompt and change to the `csharp` subdirectory:
+
+```
+cd csharp
+```
+
+To build the sample programs run:
+
+```
+dotnet restore "C# NET 5.0 demos.sln"
+dotnet msbuild "C# NET 5.0 demos.sln"
+```
+
+The demos are configured to use the Ice NuGet packages. These packages are automatically
+downloaded from nuget.org during the build.
+
+### Building the demos using a source build:
+
+Open a command prompt and change to the `csharp` subdirectory:
+
+```
+cd csharp
+```
+
+Install packages from the source build:
+
+On Windows
+
+```
+msbuild /p:IceHome=<Ice dist path> /t:Net5InstallLocalPackages msbuild\ice.proj
+```
+
+On Linux and macOS
+
+```
+dotnet msbuild /p:IceHome=<Ice dist path> /t:Net5InstallLocalPackages msbuild/ice.proj
+```
+
+To build the sample programs run:
+
+```
+dotnet restore "C# NET 5.0 demos.sln"
+dotnet msbuild "C# NET 5.0 demos.sln"
+```
+
+### Running the Demos
+
+For most demos, you can simply run `server` and `client` in separate Command
+Prompt windows.  Refer to the README.md file in each demo directory for the
+exact usage instructions.
+
+Some demos require Ice services such as IceGrid and IceStorm that are not
+included in the `zeroc.ice.net` NuGet package. To run these demos, the simplest
+is to first install the Ice binary distribution for your platform  and add its bin
+directory to your PATH. Please refer to the [Release Notes][6] for additional information.
 
 ## Building and running the Demos with .NET Core on Windows, Linux, and macOS
 

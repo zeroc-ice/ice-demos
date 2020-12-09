@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <AssemblyName>client</AssemblyName>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net5.0</TargetFramework>
+        <OutputPath>../../../</OutputPath>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <Company>ZeroC, Inc.</Company>
+        <AssemblyTitle>Ice latency demo client</AssemblyTitle>
+        <Description>Ice latency demo client</Description>
+        <Copyright>Copyright (c) ZeroC, Inc.</Copyright>
+        <Product>Ice</Product>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <FileVersion>1.0.0.0</FileVersion>
+        <UseAppHost>true</UseAppHost>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(RunConfiguration)' == 'Default' ">
+        <StartAction>Project</StartAction>
+        <StartWorkingDirectory>..\..\..</StartWorkingDirectory>
+        <ExternalConsole>true</ExternalConsole>
+    </PropertyGroup>
+    <ItemGroup>
+        <Compile Include="../../../Client.cs" />
+        <SliceCompile Include="../../../Latency.ice" />
+        <PackageReference Include="zeroc.ice.net" Version="3.7.5" />
+        <PackageReference Include="zeroc.icebuilder.msbuild" Version="5.0.4" />
+        <Compile Update="generated\Latency.cs">
+          <SliceCompileSource>../../../Latency.ice</SliceCompileSource>
+        </Compile>
+    </ItemGroup>
+</Project>

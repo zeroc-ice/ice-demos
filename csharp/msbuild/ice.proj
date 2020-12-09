@@ -99,4 +99,34 @@
                  Properties="$(BuildProperties)"/>
     </Target>
 
+    <Target Name="Net5InstallLocalPackages"
+            Condition="Exists('$(IceHome)\csharp')">
+        <Exec Command="dotnet nuget locals --list global-packages" ConsoleToMSBuild="true" EchoOff="yes">
+            <Output TaskParameter="ConsoleOutput" PropertyName="NuGetGlobalPackages" />
+        </Exec>
+
+        <PropertyGroup>
+            <NuGetGlobalPackages>$(NuGetGlobalPackages.Replace('info : global-packages: ', ''))</NuGetGlobalPackages>
+        </PropertyGroup>
+        <!-- Run the distribution NuGetPack target to ensure packages are up to date -->
+        <MSBuild Projects="$(IceHome)\csharp\msbuild\ice.proj"
+                 Properties="Platform=$(Platform);Configuration=$(Configuration)"
+                 RemoveProperties="IceHome"
+                 Targets="NuGetPack"/>
+
+        <RemoveDir Directories="$(NuGetGlobalPackages)\zeroc.ice.net" Condition="Exists('$(NuGetGlobalPackages)\zeroc.ice.net')"/>
+        <Exec Command="dotnet nuget push $(PackagePath) --source $(NuGetGlobalPackages)" />
+
+        <MSBuild Projects="$(MSBuildThisFileDirectory)..\C# NET 5 demos.sln"
+                 Targets="Restore"
+                 RemoveProperties="IceHome"
+                 Properties="Configuration=$(Configuration);Platform=Any CPU"/>
+    </Target>
+
+    <Target Name="NetStandardBuild" DependsOnTargets="Net5InstallLocalPackages;Net5NuGetRestore">
+        <MSbuild Projects="$(MSBuildThisFileDirectory)..\C# NET 5 demos.sln"
+                 Targets="Build"
+                 RemoveProperties="IceHome"
+                 Properties="$(BuildProperties)"/>
+    </Target>
 </Project>
