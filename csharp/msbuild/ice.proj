@@ -75,7 +75,8 @@
         </Exec>
 
         <PropertyGroup>
-            <NuGetGlobalPackages>$(NuGetGlobalPackages.Replace('info : global-packages: ', ''))</NuGetGlobalPackages>
+            <NuGetGlobalPackages>$(NuGetGlobalPackages.TrimStart('info : '))</NuGetGlobalPackages>
+            <NuGetGlobalPackages>$(NuGetGlobalPackages.TrimStart('global-packages: '))</NuGetGlobalPackages>
         </PropertyGroup>
         <!-- Run the distribution NuGetPack target to ensure packages are up to date -->
         <MSBuild Projects="$(IceHome)\csharp\msbuild\ice.proj"
@@ -106,7 +107,8 @@
         </Exec>
 
         <PropertyGroup>
-            <NuGetGlobalPackages>$(NuGetGlobalPackages.Replace('info : global-packages: ', ''))</NuGetGlobalPackages>
+            <NuGetGlobalPackages>$(NuGetGlobalPackages.TrimStart('info : '))</NuGetGlobalPackages>
+            <NuGetGlobalPackages>$(NuGetGlobalPackages.TrimStart('global-packages: '))</NuGetGlobalPackages>
         </PropertyGroup>
         <!-- Run the distribution NuGetPack target to ensure packages are up to date -->
         <MSBuild Projects="$(IceHome)\csharp\msbuild\ice.proj"
@@ -117,13 +119,13 @@
         <RemoveDir Directories="$(NuGetGlobalPackages)\zeroc.ice.net" Condition="Exists('$(NuGetGlobalPackages)\zeroc.ice.net')"/>
         <Exec Command="dotnet nuget push $(PackagePath) --source $(NuGetGlobalPackages)" />
 
-        <MSBuild Projects="$(MSBuildThisFileDirectory)..\C# NET 5 demos.sln"
+        <MSBuild Projects="$(MSBuildThisFileDirectory)..\C# NET 5.0 demos.sln"
                  Targets="Restore"
                  RemoveProperties="IceHome"
                  Properties="Configuration=$(Configuration);Platform=Any CPU"/>
     </Target>
 
-    <Target Name="NetStandardBuild" DependsOnTargets="Net5InstallLocalPackages;Net5NuGetRestore">
+    <Target Name="Net5Build" DependsOnTargets="Net5InstallLocalPackages;Net5NuGetRestore">
         <MSbuild Projects="$(MSBuildThisFileDirectory)..\C# NET 5 demos.sln"
                  Targets="Build"
                  RemoveProperties="IceHome"
