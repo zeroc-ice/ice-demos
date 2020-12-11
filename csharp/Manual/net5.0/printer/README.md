@@ -12,15 +12,4 @@ cd Client
 client
 ```
 
-> With .NET Core 2.x, use instead:
-> ```
-> cd Server
-> dotnet server.dll
-> ```
-> and
-> ```
-> cd Client
-> dotnet client.dll
-> ```
-
 [1]: https://doc.zeroc.com/ice/3.7/hello-world-application/writing-an-ice-application-with-c-sharp
