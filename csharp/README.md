@@ -1,6 +1,5 @@
 # C# Demos
 
-
 ### Building the demos using a source build:
 
 Open a command prompt and change to the `csharp` subdirectory:
