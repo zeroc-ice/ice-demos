@@ -7,7 +7,7 @@ using System.Configuration;
 using ZeroC.Ice;
 
 // The new communicator is automatically destroyed (disposed) at the end of the using statement
-using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
+await using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
 
 // The communicator initialization removes all Ice-related arguments from args
 if (args.Length > 0)
@@ -48,7 +48,7 @@ do
         IncomingResponseFrame response = prx.InvokeAsync(request).Result;
         if (response.ResultType == ResultType.Failure)
         {
-            Console.Error.WriteLine("Unknown user exception");
+            await Console.Error.WriteLineAsync("Unknown user exception");
         }
     }
     else if (line == "2")
@@ -68,7 +68,7 @@ do
         IncomingResponseFrame response = prx.InvokeAsync(request).Result;
         if (response.ResultType == ResultType.Failure)
         {
-            Console.Error.WriteLine("Unknown user exception");
+            await Console.Error.WriteLineAsync("Unknown user exception");
         }
     }
     else if (line == "3")
@@ -115,7 +115,7 @@ do
         IncomingResponseFrame response = prx.InvokeAsync(request).Result;
         if (response.ResultType == ResultType.Failure)
         {
-            Console.Error.WriteLine("Unknown user exception");
+            await Console.Error.WriteLineAsync("Unknown user exception");
         }
     }
     else if (line == "5")
@@ -135,7 +135,7 @@ do
         IncomingResponseFrame response = prx.InvokeAsync(request).Result;
         if (response.ResultType == ResultType.Failure)
         {
-            Console.Error.WriteLine("Unknown user exception");
+            await Console.Error.WriteLineAsync("Unknown user exception");
         }
     }
     else if (line == "6")
@@ -160,7 +160,7 @@ do
         IncomingResponseFrame response = prx.InvokeAsync(request).Result;
         if (response.ResultType == ResultType.Failure)
         {
-            Console.Error.WriteLine("Unknown user exception");
+            await Console.Error.WriteLineAsync("Unknown user exception");
         }
     }
     else if (line == "7")

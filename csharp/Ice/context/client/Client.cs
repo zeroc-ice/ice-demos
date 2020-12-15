@@ -9,7 +9,7 @@ using ZeroC.Ice;
 try
 {
     // The new communicator is automatically destroyed (disposed) at the end of the using statement
-    using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
+    await using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
 
     // The communicator initialization removes all Ice-related arguments from args
     if (args.Length > 0)
@@ -36,12 +36,12 @@ try
             }
             if (line == "1")
             {
-                proxy.Call();
+                await proxy.CallAsync();
             }
             else if (line == "2")
             {
                 var ctx = new Dictionary<string, string>() { { "type", "Explicit" } };
-                proxy.Call(ctx);
+                await proxy.CallAsync(ctx);
             }
             else if (line == "3")
             {
@@ -51,12 +51,12 @@ try
             {
                 SortedDictionary<string, string> currentContext = communicator.CurrentContext;
                 communicator.CurrentContext = new SortedDictionary<string, string>() { ["type"] = "Implicit" };
-                proxy.Call();
+                await proxy.CallAsync();
                 communicator.CurrentContext = currentContext;
             }
             else if (line == "s")
             {
-                proxy.Shutdown();
+                await proxy.ShutdownAsync();
             }
             else if (line == "x")
             {

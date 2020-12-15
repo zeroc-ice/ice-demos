@@ -8,10 +8,10 @@ using ZeroC.Ice;
 try
 {
     // using statement - communicator is automatically destroyed at the end of this statement
-    using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
+    await using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
 
     // Destroy the communicator on Ctrl+C or Ctrl+Break
-    Console.CancelKeyPress += (sender, eventArgs) => communicator.DisposeAsync();
+    Console.CancelKeyPress += (sender, eventArgs) => communicator.DestroyAsync();
 
     if (args.Length > 0)
     {
@@ -33,7 +33,7 @@ try
 
     // Provide the proxy of the callback receiver object to the server and wait for shutdown.
     server.AddClient(proxy);
-    communicator.WaitForShutdown();
+    await communicator.WaitForShutdownAsync();
 }
 catch (Exception ex)
 {

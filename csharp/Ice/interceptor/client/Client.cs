@@ -6,7 +6,7 @@ using System.Configuration;
 using ZeroC.Ice;
 
 // using statement - communicator is automatically destroyed at the end of this statement
-using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
+await using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
 
 // The communicator intialization removes all Ice-related arguments from args.
 if (args.Length > 0)
@@ -34,7 +34,7 @@ do
     {
         case "1":
         {
-            Console.Out.WriteLine($"Current temperature is {thermostat.GetTemp()}");
+            await Console.Out.WriteLineAsync($"Current temperature is {thermostat.GetTemp()}");
             break;
         }
         case "2":
@@ -46,21 +46,21 @@ do
                 {
                     break;
                 }
-                Console.Out.WriteLine("Enter desired temperature: ");
-                thermostat.SetTemp(float.Parse(value));
-                Console.Out.WriteLine($"New temperature is {thermostat.GetTemp()}");
+                await Console.Out.WriteLineAsync("Enter desired temperature: ");
+                await thermostat.SetTempAsync(float.Parse(value));
+                await Console.Out.WriteLineAsync($"New temperature is {thermostat.GetTemp()}");
             }
             catch (FormatException)
             {
-                Console.Error.WriteLine("Provided temperature can not be parsed as a float.");
+                await Console.Error.WriteLineAsync("Provided temperature can not be parsed as a float.");
             }
             catch (TokenExpiredException)
             {
-                Console.Error.WriteLine("Failed to set temperature. Token expired!");
+                await Console.Error.WriteLineAsync("Failed to set temperature. Token expired!");
             }
             catch (AuthorizationException)
             {
-                Console.Error.WriteLine("Failed to set temperature. Access denied!");
+                await Console.Error.WriteLineAsync("Failed to set temperature. Access denied!");
             }
             break;
         }
@@ -68,7 +68,7 @@ do
         {
             // Request an access token from the server's authentication object.
             string token = authenticator.GetToken();
-            Console.Out.WriteLine($"Successfully retrieved access token: \"{token}\"");
+            await Console.Out.WriteLineAsync($"Successfully retrieved access token: \"{token}\"");
 
             // Add the access token to the communicator's context, so it will be
             // sent along with every request made through it.
@@ -83,7 +83,7 @@ do
             }
             else
             {
-                Console.Out.WriteLine("There is no access token to release.");
+                await Console.Out.WriteLineAsync("There is no access token to release.");
             }
             break;
         }
@@ -91,15 +91,15 @@ do
         {
             try
             {
-                thermostat.Shutdown();
+                await thermostat.ShutdownAsync();
             }
             catch (TokenExpiredException)
             {
-                Console.Error.WriteLine("Failed to shutdown thermostat. Token expired!");
+                await Console.Error.WriteLineAsync("Failed to shutdown thermostat. Token expired!");
             }
             catch (AuthorizationException)
             {
-                Console.Error.WriteLine("Failed to shutdown thermostat. Access denied!");
+                await Console.Error.WriteLineAsync("Failed to shutdown thermostat. Access denied!");
             }
             break;
         }
@@ -115,7 +115,7 @@ do
         }
         default:
         {
-            Console.Out.WriteLine($"Unknown command `{line}'");
+            await Console.Out.WriteLineAsync($"Unknown command `{line}'");
             Menu();
             break;
         }
@@ -125,7 +125,7 @@ while (line != "x");
 
 static void Menu()
 {
-    Console.Out.Write(
+    Console.Out.WriteAsync(
 @"usage:
     1: gets the current temperature
     2: sets the temperature

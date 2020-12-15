@@ -102,7 +102,7 @@ namespace Demo
 
         public IEnumerable<Fixed> RecvFixedSeq(Current current, CancellationToken cancel) => _warmup ? _warmupFixedSeq : _fixedSeq;
         public IEnumerable<Fixed> EchoFixedSeq(Fixed[] seq, Current current, CancellationToken cancel) => seq;
-        public void Shutdown(Current current, CancellationToken cancel) => current.Adapter.Communicator.DisposeAsync();
+        public void Shutdown(Current current, CancellationToken cancel) => current.Adapter.Communicator.ShutdownAsync();
     }
 
 }

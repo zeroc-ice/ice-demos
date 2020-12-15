@@ -9,7 +9,7 @@ using ZeroC.Ice;
 try
 {
     // using statement - communicator is automatically destroyed at the end of this statement
-    using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
+    await using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
 
     if (args.Length > 0)
     {
@@ -22,7 +22,7 @@ try
         {
             Console.Write("disponse communicator...");
             eventArgs.Cancel = true;
-            communicator.DisposeAsync();
+            communicator.ShutdownAsync();
             Console.WriteLine("ok");
         };
 
