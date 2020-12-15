@@ -11,6 +11,7 @@ try
 {
     // The new communicator is automatically destroyed (disposed) at the end of the using statement
     var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
+    await communicator.ActivateAsync();
 
     // The communicator initialization removes all Ice-related arguments from args
     if (args.Length > 0)

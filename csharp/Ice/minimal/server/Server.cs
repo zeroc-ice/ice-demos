@@ -6,9 +6,10 @@ using System.Threading;
 using ZeroC.Ice;
 
 await using var communicator = new Communicator(ref args);
+await communicator.ActivateAsync();
 
 // Destroy the communicator on Ctrl+C or Ctrl+Break
-Console.CancelKeyPress += (sender, eventArgs) => communicator.ShutdownAsync();
+Console.CancelKeyPress += async (sender, eventArgs) => await communicator.ShutdownAsync();
 
 var adapter = communicator.CreateObjectAdapterWithEndpoints("Hello", "ice+tcp://localhost:10000");
 adapter.Add("hello", new Hello());

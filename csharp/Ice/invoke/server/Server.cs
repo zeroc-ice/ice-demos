@@ -9,9 +9,10 @@ try
 {
     // using statement - communicator is automatically destroyed at the end of this statement
     await using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
+    await communicator.ActivateAsync();
 
     // Destroy the communicator on Ctrl+C or Ctrl+Break
-    Console.CancelKeyPress += (sender, eventArgs) => communicator.ShutdownAsync();
+    Console.CancelKeyPress += async (sender, eventArgs) => await communicator.ShutdownAsync();
 
     if (args.Length > 0)
     {

@@ -7,6 +7,7 @@ using ZeroC.Ice;
 
 // using statement - communicator is automatically destroyed at the end of this statement
 await using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
+await communicator.ActivateAsync();
 
 // The communicator intialization removes all Ice-related arguments from args.
 if (args.Length > 0)
