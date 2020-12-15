@@ -13,6 +13,7 @@ PROJECT ?= demos.xcodeproj
 define make-xcodebuild-rule
 $1:: $(PROJECT)
 	xcodebuild -project $(PROJECT) \
+		   -xcconfig buildsettings.xcconfig \
                    -scheme "$3 $(if $(filter $2,macosx),macOS,iOS)" \
                    -configuration $(CONFIG) \
                    -sdk $2 $4
