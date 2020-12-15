@@ -1,6 +1,7 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using ZeroC.Ice;
 
@@ -18,12 +19,15 @@ namespace Demo
 
     public class LoggerPlugin : IPlugin
     {
-        public void Initialize(PluginInitializationContext context) => context.Logger = new Logger();
+        public Task ActivateAsync(CancellationToken cancel) => Task.CompletedTask;
+
         public ValueTask DisposeAsync() => default;
+
+        internal LoggerPlugin(Communicator communicator) => communicator.Logger = new Logger();
     }
 
     public class LoggerPluginFactory : IPluginFactory
     {
-        public IPlugin Create(Communicator communicator, string name, string[] args) => new LoggerPlugin();
+        public IPlugin Create(Communicator communicator, string name, string[] args) => new LoggerPlugin(communicator);
     }
 }

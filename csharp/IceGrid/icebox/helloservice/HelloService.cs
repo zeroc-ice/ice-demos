@@ -1,12 +1,13 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 
 using System;
+using System.Threading;
 using ZeroC.Ice;
 using ZeroC.IceBox;
 
 namespace Demo
 {
-    class HelloService : IService
+    public class HelloService : IService
     {
         private ObjectAdapter? _adapter;
 
@@ -31,9 +32,9 @@ namespace Demo
 
         public Hello(string serviceName) => _serviceName = serviceName;
 
-        public void SayHello(Current current)
+        public void SayHello(Current current, CancellationToken cancel)
         {
-            Console.WriteLine(Environment.GetEnvironmentVariable("LANG") ?? "en" switch
+            Console.WriteLine((Environment.GetEnvironmentVariable("LANG") ?? "en") switch
             {
                 "fr" => $"Bonjour, {_serviceName}",
                 "de" => $"Hallo, {_serviceName}",

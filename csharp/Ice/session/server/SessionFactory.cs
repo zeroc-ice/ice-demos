@@ -1,13 +1,14 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 
 using System;
+using System.Threading;
 using ZeroC.Ice;
 
 namespace Demo
 {
     public class SessionFactory : ISessionFactory
     {
-        public ISessionPrx Create(string name, Current current)
+        public ISessionPrx Create(string name, Current current, CancellationToken cancel)
         {
             var session = new Session(name);
             ISessionPrx proxy = current.Adapter.AddWithUUID(session, ISessionPrx.Factory);
@@ -17,7 +18,10 @@ namespace Demo
             ISessionPrx collocProxy = proxy.Clone(endpoints: Array.Empty<Endpoint>());
 
             // Never close this connection from the client and turn on heartbeats with a timeout of 30s
-            current.Connection!.Acm = new Acm(TimeSpan.FromSeconds(30), AcmClose.Off, AcmHeartbeat.Always);
+            // TODO:
+            //          current.Connection!.IdleTimeout = TimeSpan.FromSeconds(30);
+            // Removed for function, but this demo is somewhat pointless without this though
+            current.Connection!.KeepAlive = true;
             current.Connection!.Closed += (sender, args) =>
             {
                 try
@@ -33,7 +37,7 @@ namespace Demo
             return proxy;
         }
 
-        public void Shutdown(Current current)
+        public void Shutdown(Current current, CancellationToken cancel)
         {
             Console.Out.WriteLine("Shutting down...");
             current.Communicator.DisposeAsync();

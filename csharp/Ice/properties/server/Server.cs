@@ -40,7 +40,7 @@ class Properties : IProperties
 
     public Properties() => _called = false;
 
-    public IReadOnlyDictionary<string, string> GetChanges(Current current)
+    public IReadOnlyDictionary<string, string> GetChanges(Current current, CancellationToken cancel)
     {
         lock (_mutex)
         {
@@ -55,7 +55,7 @@ class Properties : IProperties
         }
     }
 
-    public void Shutdown(Current current) =>
+    public void Shutdown(Current current, CancellationToken cancel) =>
         current.Communicator.DisposeAsync();
 
     public void Updated(IReadOnlyDictionary<string, string> changes)

@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using ZeroC.Ice;
 
@@ -9,17 +10,20 @@ namespace Demo
 {
     public class Printer : IObject
     {
-        public ValueTask<OutgoingResponseFrame> DispatchAsync(IncomingRequestFrame request, Current current)
+        public ValueTask<OutgoingResponseFrame> DispatchAsync(
+            IncomingRequestFrame request,
+            Current current,
+            CancellationToken cancel)
         {
             OutgoingResponseFrame? response = null;
             if (current.Operation == "printString")
             {
-                string message = request.ReadParamList(current.Communicator, istr => istr.ReadString());
+                string message = request.ReadArgs(current.Connection, istr => istr.ReadString());
                 Console.WriteLine($"Printing string `{message}'");
             }
             else if (current.Operation == "printStringSequence")
             {
-                string[] messages = request.ReadParamList(current.Communicator,
+                string[] messages = request.ReadArgs(current.Connection,
                                                           istr => istr.ReadArray(1, istr => istr.ReadString()));
                 Console.Write("Printing string sequence {");
                 Console.Write(string.Join(", ", messages));
@@ -27,7 +31,7 @@ namespace Demo
             }
             else if (current.Operation == "printDictionary")
             {
-                Dictionary<string, string> dict = request.ReadParamList(current.Communicator,
+                Dictionary<string, string> dict = request.ReadArgs(current.Connection,
                     istr => istr.ReadDictionary(1, 1, istr => istr.ReadString(), istr => istr.ReadString()));
                 Console.Write("Printing dictionary {");
                 bool first = true;
@@ -44,18 +48,18 @@ namespace Demo
             }
             else if (current.Operation == "printEnum")
             {
-                Color color = request.ReadParamList(current.Communicator, ColorHelper.IceReader);
+                Color color = request.ReadArgs(current.Connection, ColorHelper.IceReader);
                 Console.WriteLine($"Printing enum {color}");
             }
             else if (current.Operation == "printStruct")
             {
-                Structure s = request.ReadParamList(current.Communicator, Structure.IceReader);
+                Structure s = request.ReadArgs(current.Connection, Structure.IceReader);
                 Console.WriteLine($"Printing struct: name={s.Name}, value={s.Value}");
             }
             else if (current.Operation == "printStructSequence")
             {
-                Structure[] seq = request.ReadParamList(
-                    current.Communicator,
+                Structure[] seq = request.ReadArgs(
+                    current.Connection,
                     istr => istr.ReadArray(minElementSize: 2, Structure.IceReader));
                 Console.Write("Printing struct sequence: {");
                 bool first = true;
@@ -72,7 +76,7 @@ namespace Demo
             }
             else if (current.Operation == "printClass")
             {
-                C c = request.ReadParamList(current.Communicator, istr => istr.ReadClass<C>(C.IceTypeId));
+                C c = request.ReadArgs(current.Connection, istr => istr.ReadClass<C>(C.IceTypeId));
                 Console.WriteLine($"Printing class: s.name={c.S.Name}, s.value={c.S.Value}");
             }
             else if (current.Operation == "getValues")
@@ -102,7 +106,7 @@ namespace Demo
             }
             else
             {
-                throw new OperationNotExistException(current.Identity, current.Facet, current.Operation);
+                throw new OperationNotExistException();
             }
 
             return new ValueTask<OutgoingResponseFrame>(

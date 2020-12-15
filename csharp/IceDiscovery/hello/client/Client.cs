@@ -68,7 +68,7 @@ do
         {
             secure = !secure;
 
-            twoway = twoway.Clone(preferNonSecure: !secure);
+            twoway = twoway.Clone(preferNonSecure: secure ? NonSecure.Never : NonSecure.Always);
             Console.WriteLine(secure ? "secure mode is now on" : "secure mode is now off");
         }
         else if (line == "s")

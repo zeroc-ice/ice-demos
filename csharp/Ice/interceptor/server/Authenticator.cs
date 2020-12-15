@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using System.Threading;
 using ZeroC.Ice;
 
 namespace Demo
@@ -18,7 +19,7 @@ namespace Demo
             _rand = new RNGCryptoServiceProvider();
         }
 
-        public string GetToken(Current current)
+        public string GetToken(Current current, CancellationToken cancel)
         {
             //
             // Generate a random 32 character long token.

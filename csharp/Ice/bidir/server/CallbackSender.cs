@@ -2,16 +2,17 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using ZeroC.Ice;
 
 namespace Demo
 {
-    class CallbackSender : ICallbackSender
+    internal class CallbackSender : ICallbackSender
     {
         private bool _destroy;
         private readonly List<ICallbackReceiverPrx> _clients;
 
-        public CallbackSender()
+        internal CallbackSender()
         {
             _destroy = false;
             _clients = new List<ICallbackReceiverPrx>();
@@ -27,7 +28,7 @@ namespace Demo
             }
         }
 
-        public void AddClient(ICallbackReceiverPrx? client, Current current)
+        public void AddClient(ICallbackReceiverPrx client, Current current, CancellationToken cancel)
         {
             lock (this)
             {

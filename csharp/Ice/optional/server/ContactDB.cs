@@ -1,6 +1,7 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 
 using System.Collections.Generic;
+using System.Threading;
 using ZeroC.Ice;
 
 namespace Demo
@@ -9,13 +10,13 @@ namespace Demo
     {
         readonly Dictionary<string, Contact> _contacts = new Dictionary<string, Contact>();
 
-        public void AddContact(string name, NumberType? type, string? number, int? dialGroup, Current current)
+        public void AddContact(string name, NumberType? type, string? number, int? dialGroup, Current current, CancellationToken cancel)
         {
             var contact = new Contact(name, type, number, dialGroup);
             _contacts[name] = contact;
         }
 
-        public void UpdateContact(string name, NumberType? type, string? number, int? dialGroup, Current current)
+        public void UpdateContact(string name, NumberType? type, string? number, int? dialGroup, Current current, CancellationToken cancel)
         {
             if (_contacts.TryGetValue(name, out Contact? c))
             {
@@ -36,7 +37,7 @@ namespace Demo
             }
         }
 
-        public Contact? Query(string name, Current current)
+        public Contact? Query(string name, Current current, CancellationToken cancel)
         {
             if (_contacts.TryGetValue(name, out Contact? c))
             {
@@ -45,7 +46,7 @@ namespace Demo
             return null;
         }
 
-        public string? QueryNumber(string name, Current current)
+        public string? QueryNumber(string name, Current current, CancellationToken cancel)
         {
             if (_contacts.TryGetValue(name, out Contact? c))
             {
@@ -54,7 +55,7 @@ namespace Demo
             return null;
         }
 
-        public int? QueryDialgroup(string name, Current current)
+        public int? QueryDialgroup(string name, Current current, CancellationToken cancel)
         {
             if (_contacts.TryGetValue(name, out Contact? c))
             {
@@ -63,7 +64,7 @@ namespace Demo
             return null;
         }
 
-        public void Shutdown(Current current)
+        public void Shutdown(Current current, CancellationToken cancel)
         {
             System.Console.WriteLine("Shutting down...");
             current.Communicator.DisposeAsync();

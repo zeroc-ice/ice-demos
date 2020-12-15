@@ -3,6 +3,7 @@
 using Demo;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Configuration;
 using ZeroC.Ice;
 
@@ -38,8 +39,8 @@ try
     // Create an object adapter for the thermostat.
     ObjectAdapter thermostatAdapter = communicator.CreateObjectAdapter("Thermostat");
     thermostatAdapter.Add("thermostat", new Thermostat());
-    thermostatAdapter.Activate(
-        (request, current, next) =>
+    thermostatAdapter.DispatchInterceptors = ImmutableList.Create<DispatchInterceptor>(
+        (request, current, next, cancel) =>
         {
             // Check if the operation requires authorization to invoke.
             if (securedOperations.Contains(current.Operation))
@@ -56,9 +57,10 @@ try
                     throw new AuthorizationException();
                 }
             }
-            return next(request, current);
+            return next(request, current, cancel);
         });
 
+    thermostatAdapter.Activate();
     communicator.WaitForShutdown();
 }
 catch (Exception ex)

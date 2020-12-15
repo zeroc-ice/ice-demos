@@ -3,7 +3,7 @@
   <PropertyGroup>
     <AssemblyName>server</AssemblyName>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net5</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <Nullable>enable</Nullable>
     <LangVersion>9.0</LangVersion>
   </PropertyGroup>

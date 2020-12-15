@@ -34,7 +34,7 @@ do
     if (line == "1")
     {
         // Create the request
-        var request = OutgoingRequestFrame.WithParamList(
+        var request = OutgoingRequestFrame.WithArgs(
             prx,
             "printString",
             false,
@@ -45,7 +45,7 @@ do
             (ostr, value) => ostr.WriteString(value));
 
         // Invoke operation.
-        IncomingResponseFrame response = prx.Invoke(request);
+        IncomingResponseFrame response = prx.InvokeAsync(request).Result;
         if (response.ResultType == ResultType.Failure)
         {
             Console.Error.WriteLine("Unknown user exception");
@@ -54,7 +54,7 @@ do
     else if (line == "2")
     {
         // Create the request
-        var request = OutgoingRequestFrame.WithParamList(
+        var request = OutgoingRequestFrame.WithArgs(
             prx,
             "printStringSequence",
             false,
@@ -65,7 +65,7 @@ do
             (ostr, value) => ostr.WriteSequence(value, (ostr, value) => ostr.WriteString(value)));
 
         // Invoke operation.
-        IncomingResponseFrame response = prx.Invoke(request);
+        IncomingResponseFrame response = prx.InvokeAsync(request).Result;
         if (response.ResultType == ResultType.Failure)
         {
             Console.Error.WriteLine("Unknown user exception");
@@ -74,7 +74,7 @@ do
     else if (line == "3")
     {
         // Create the request
-        var request = OutgoingRequestFrame.WithParamList(
+        var request = OutgoingRequestFrame.WithArgs(
             prx,
             "printDictionary",
             false,
@@ -92,7 +92,7 @@ do
                 (ostr, value) => ostr.WriteString(value)));
 
         // Invoke operation.
-        IncomingResponseFrame response = prx.Invoke(request);
+        IncomingResponseFrame response = prx.InvokeAsync(request).Result;
         if (response.ResultType == ResultType.Failure)
         {
             Console.Error.WriteLine("Unknown user exception");
@@ -101,7 +101,7 @@ do
     else if (line == "4")
     {
         // Create the request
-        var request = OutgoingRequestFrame.WithParamList(
+        var request = OutgoingRequestFrame.WithArgs(
             prx,
             "printEnum",
             false,
@@ -112,7 +112,7 @@ do
             (ostr, value) => ostr.Write(value));
 
         // Invoke operation.
-        IncomingResponseFrame response = prx.Invoke(request);
+        IncomingResponseFrame response = prx.InvokeAsync(request).Result;
         if (response.ResultType == ResultType.Failure)
         {
             Console.Error.WriteLine("Unknown user exception");
@@ -121,7 +121,7 @@ do
     else if (line == "5")
     {
         // Create the request
-        var request = OutgoingRequestFrame.WithParamList(
+        var request = OutgoingRequestFrame.WithArgs(
             prx,
             "printStruct",
             false,
@@ -132,7 +132,7 @@ do
             (ostr, value) => value.IceWrite(ostr));
 
         // Invoke operation.
-        IncomingResponseFrame response = prx.Invoke(request);
+        IncomingResponseFrame response = prx.InvokeAsync(request).Result;
         if (response.ResultType == ResultType.Failure)
         {
             Console.Error.WriteLine("Unknown user exception");
@@ -141,7 +141,7 @@ do
     else if (line == "6")
     {
         // Create the request
-        var request = OutgoingRequestFrame.WithParamList(
+        var request = OutgoingRequestFrame.WithArgs(
             prx,
             "printStructSequence",
             false,
@@ -157,7 +157,7 @@ do
             (ostr, value) => ostr.WriteSequence(value, (ostr, value) => value.IceWrite(ostr)));
 
         // Invoke operation.
-        IncomingResponseFrame response = prx.Invoke(request);
+        IncomingResponseFrame response = prx.InvokeAsync(request).Result;
         if (response.ResultType == ResultType.Failure)
         {
             Console.Error.WriteLine("Unknown user exception");
@@ -166,7 +166,7 @@ do
     else if (line == "7")
     {
         // Create the request
-        var request = OutgoingRequestFrame.WithParamList(
+        var request = OutgoingRequestFrame.WithArgs(
             prx,
             "printClass",
             false,
@@ -177,7 +177,7 @@ do
             (ostr, value) => ostr.WriteClass(value, C.IceTypeId));
 
         // Invoke operation.
-        IncomingResponseFrame response = prx.Invoke(request);
+        IncomingResponseFrame response = prx.InvokeAsync(request).Result;
         if (response.ResultType == ResultType.Failure)
         {
             Console.Error.WriteLine("Unknown user exception");
@@ -186,10 +186,10 @@ do
     else if (line == "8")
     {
         // Create the request
-        var request = OutgoingRequestFrame.WithEmptyParamList(prx, "getValues", false);
+        var request = OutgoingRequestFrame.WithEmptyArgs(prx, "getValues", false);
 
         // Invoke operation.
-        IncomingResponseFrame response = prx.Invoke(request);
+        IncomingResponseFrame response = prx.InvokeAsync(request).Result;
         if (response.ResultType == ResultType.Failure)
         {
             Console.Error.WriteLine("Unknown user exception");
@@ -197,7 +197,7 @@ do
         else
         {
             (string s, C c) = response.ReadReturnValue(
-                communicator,
+                prx,
                 istr =>
                 {
                     string s = istr.ReadString();
@@ -209,12 +209,12 @@ do
     }
     else if (line == "9")
     {
-        var request = OutgoingRequestFrame.WithEmptyParamList(prx, "throwPrintFailure", false);
-        IncomingResponseFrame response = prx.Invoke(request);
+        var request = OutgoingRequestFrame.WithEmptyArgs(prx, "throwPrintFailure", false);
+        IncomingResponseFrame response = prx.InvokeAsync(request).Result;
 
         try
         {
-            response.ReadVoidReturnValue(communicator);
+            response.ReadVoidReturnValue(prx);
         }
         catch (PrintFailure)
         {
@@ -223,7 +223,7 @@ do
     }
     else if (line == "s")
     {
-        prx.Invoke(OutgoingRequestFrame.WithEmptyParamList(prx, "shutdown", false));
+        prx.InvokeAsync(OutgoingRequestFrame.WithEmptyArgs(prx, "shutdown", false));
     }
     else if (line == "x")
     {

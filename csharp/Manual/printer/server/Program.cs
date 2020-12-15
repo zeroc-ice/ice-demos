@@ -1,6 +1,7 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 
 using System;
+using System.Threading;
 using ZeroC.Ice;
 
 using var communicator = new Communicator(ref args);
@@ -14,6 +15,6 @@ namespace Demo
 {
     public class Printer : Demo.IPrinter
     {
-        public void PrintString(string s, Current current) => Console.WriteLine(s);
+        public void PrintString(string s, Current current, CancellationToken cancel) => Console.WriteLine(s);
     }
 }

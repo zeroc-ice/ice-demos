@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
+using System.Threading;
 using ZeroC.Ice;
 using ZeroC.IceStorm;
 
@@ -137,6 +138,6 @@ namespace Demo
 {
     public class Clock : IClock
     {
-        public void Tick(string date, Current current) => Console.WriteLine(date);
+        public void Tick(string date, Current current, CancellationToken cancel) => Console.WriteLine(date);
     }
 }
