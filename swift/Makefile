@@ -23,10 +23,8 @@ demos.xcodeproj: Rakefile | carthage
 
 all:: demos
 
-# Workaround for carthage sporadic SEGFAULT (https://github.com/Carthage/Carthage/issues/2760).
-# If it SEGFAULT we retry.
 carthage:
-	carthage update --cache-builds || if [ $$? = 139 ]; then carthage update --cache-builds; fi
+	./carthage.sh bootstrap --cache-builds
 
 demos:: carthage
 
