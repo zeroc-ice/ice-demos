@@ -6,14 +6,18 @@ using System.Configuration;
 using System.Diagnostics;
 using ZeroC.Ice;
 
-// using statement - communicator is automatically destroyed at the end of this statement
+// await using - calls automatically DisposeAsync on communicator why it goes out of scope
 await using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
 // Activates the communicator. In a simple demo like this one, this activation typically does nothing. It is however
 // recommended to always activate a communicator.
 await communicator.ActivateAsync();
 
 // Calls DisposeAsync on Ctrl+C or Ctrl+Break, but does not wait until DisposeAsync completes.
-Console.CancelKeyPress += async (sender, eventArgs) => await communicator.DestroyAsync();
+Console.CancelKeyPress += (sender, eventArgs) =>
+    {
+        eventArgs.Cancel = true;
+        _ = communicator.DestroyAsync();
+    };
 
 if (args.Length > 0)
 {

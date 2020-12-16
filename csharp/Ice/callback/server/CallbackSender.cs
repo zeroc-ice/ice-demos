@@ -26,7 +26,7 @@ namespace Demo
             Console.Out.WriteLine("Shutting down...");
             try
             {
-                current.Communicator.ShutdownAsync();
+                _ = current.Communicator.ShutdownAsync();
             }
             catch (Exception ex)
             {

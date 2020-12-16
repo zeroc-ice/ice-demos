@@ -102,12 +102,12 @@ while (true)
 
 if (destroy)
 {
-    session.Destroy();
+    await session.DestroyAsync();
 }
 
 if (shutdown)
 {
-    factory.Shutdown();
+    await factory.ShutdownAsync();
 }
 
 static void Menu()

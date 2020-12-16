@@ -4,12 +4,15 @@ using System;
 using System.Configuration;
 using ZeroC.Ice;
 
-// Initiates communicator shutdown on Ctrl+C or Ctrl+Break, but does not wait for shutdown to complete.
 await using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
 await communicator.ActivateAsync();
 
-// Destroy the communicator on Ctrl+C or Ctrl+Break
-Console.CancelKeyPress += async (sender, eventArgs) => await communicator.ShutdownAsync();
+// Initiates communicator shutdown on Ctrl+C or Ctrl+Break, but does not wait for shutdown to complete.
+Console.CancelKeyPress += (sender, eventArgs) =>
+    {
+        eventArgs.Cancel = true;
+        communicator.ShutdownAsync();
+    };
 
 if (args.Length > 0)
 {

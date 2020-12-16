@@ -25,7 +25,7 @@ try
     {
         eventArgs.Cancel = true;
         workQueue.Destroy();
-        communicator.ShutdownAsync();
+        _ = communicator.ShutdownAsync();
     };
 
     ObjectAdapter adapter = communicator.CreateObjectAdapter("Hello");

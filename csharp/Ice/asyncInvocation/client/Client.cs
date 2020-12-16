@@ -13,7 +13,7 @@ try
     await communicator.ActivateAsync();
 
     // Destroy the communicator on Ctrl+C or Ctrl+Break
-    Console.CancelKeyPress += async (sender, eventArgs) => await communicator.DisposeAsync();
+    Console.CancelKeyPress += (sender, eventArgs) => communicator.DisposeAsync();
 
     if (args.Length > 0)
     {

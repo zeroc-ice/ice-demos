@@ -9,7 +9,11 @@ await using var communicator = new Communicator(ref args);
 await communicator.ActivateAsync();
 
 // Destroy the communicator on Ctrl+C or Ctrl+Break
-Console.CancelKeyPress += async (sender, eventArgs) => await communicator.ShutdownAsync();
+Console.CancelKeyPress += (sender, eventArgs) =>
+    {
+        eventArgs.Cancel = true;
+        communicator.ShutdownAsync();
+    };
 
 var adapter = communicator.CreateObjectAdapterWithEndpoints("Hello", "ice+tcp://localhost:10000");
 adapter.Add("hello", new Hello());

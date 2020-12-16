@@ -49,7 +49,7 @@ do
         IncomingResponseFrame response = prx.InvokeAsync(request).Result;
         if (response.ResultType == ResultType.Failure)
         {
-            await Console.Error.WriteLineAsync("Unknown user exception");
+            Console.Error.WriteLine("Unknown user exception");
         }
     }
     else if (line == "2")
@@ -69,7 +69,7 @@ do
         IncomingResponseFrame response = prx.InvokeAsync(request).Result;
         if (response.ResultType == ResultType.Failure)
         {
-            await Console.Error.WriteLineAsync("Unknown user exception");
+            Console.Error.WriteLine("Unknown user exception");
         }
     }
     else if (line == "3")
@@ -116,7 +116,7 @@ do
         IncomingResponseFrame response = prx.InvokeAsync(request).Result;
         if (response.ResultType == ResultType.Failure)
         {
-            await Console.Error.WriteLineAsync("Unknown user exception");
+            Console.Error.WriteLine("Unknown user exception");
         }
     }
     else if (line == "5")
@@ -136,7 +136,7 @@ do
         IncomingResponseFrame response = prx.InvokeAsync(request).Result;
         if (response.ResultType == ResultType.Failure)
         {
-            await Console.Error.WriteLineAsync("Unknown user exception");
+            Console.Error.WriteLine("Unknown user exception");
         }
     }
     else if (line == "6")
@@ -161,7 +161,7 @@ do
         IncomingResponseFrame response = prx.InvokeAsync(request).Result;
         if (response.ResultType == ResultType.Failure)
         {
-            await Console.Error.WriteLineAsync("Unknown user exception");
+            Console.Error.WriteLine("Unknown user exception");
         }
     }
     else if (line == "7")
@@ -224,7 +224,7 @@ do
     }
     else if (line == "s")
     {
-        prx.InvokeAsync(OutgoingRequestFrame.WithEmptyArgs(prx, "shutdown", false));
+        await prx.InvokeAsync(OutgoingRequestFrame.WithEmptyArgs(prx, "shutdown", false));
     }
     else if (line == "x")
     {

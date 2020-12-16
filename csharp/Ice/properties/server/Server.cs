@@ -13,7 +13,11 @@ await using var communicator = new Communicator(ref args, ConfigurationManager.A
 await communicator.ActivateAsync();
 
 // Destroy the communicator on Ctrl+C or Ctrl+Break
-Console.CancelKeyPress += async (sender, eventArgs) => await communicator.DisposeAsync();
+Console.CancelKeyPress += (sender, eventArgs) =>
+    {
+        eventArgs.Cancel = true;
+        communicator.ShutdownAsync();
+    };
 
 if (args.Length > 0)
 {
@@ -57,7 +61,7 @@ class Properties : IProperties
     }
 
     public void Shutdown(Current current, CancellationToken cancel) =>
-        current.Communicator.ShutdownAsync();
+        _ = current.Communicator.ShutdownAsync();
 
     public void Updated(IReadOnlyDictionary<string, string> changes)
     {

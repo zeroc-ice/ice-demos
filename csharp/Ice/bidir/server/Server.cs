@@ -21,9 +21,9 @@ try
     // Shutdown the communicator on Ctrl+C or Ctrl+Break (shutdown always with Cancel = true)
     Console.CancelKeyPress += (eventSender, eventArgs) =>
         {
-            Console.Write("disponse communicator...");
+            Console.Write("shutdown communicator...");
             eventArgs.Cancel = true;
-            communicator.ShutdownAsync();
+            _ = communicator.ShutdownAsync();
             Console.WriteLine("ok");
         };
 

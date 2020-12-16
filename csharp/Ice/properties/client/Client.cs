@@ -94,7 +94,7 @@ do
         }
         else if (line == "s")
         {
-            props.Shutdown();
+            await props.ShutdownAsync();
         }
         else if (line == "x")
         {

@@ -76,20 +76,20 @@ static int Run(Communicator communicator)
         Console.Error.Flush();
         for (int i = 0; i < 10000; i++)
         {
-            throughput.SendByteSeq(warmupBytes);
-            throughput.SendStringSeq(warmupStrings);
-            throughput.SendStructSeq(warmupStructs);
-            throughput.SendFixedSeq(warmupFixed);
+            throughput.SendByteSeqAsync(warmupBytes);
+            throughput.SendStringSeqAsync(warmupStrings);
+            throughput.SendStructSeqAsync(warmupStructs);
+            throughput.SendFixedSeqAsync(warmupFixed);
 
-            throughput.RecvByteSeq();
-            throughput.RecvStringSeq();
-            throughput.RecvStructSeq();
-            throughput.RecvFixedSeq();
+            throughput.RecvByteSeqAsync();
+            throughput.RecvStringSeqAsync();
+            throughput.RecvStructSeqAsync();
+            throughput.RecvFixedSeqAsync();
 
-            throughput.EchoByteSeq(warmupBytes);
-            throughput.EchoStringSeq(warmupStrings);
-            throughput.EchoStructSeq(warmupStructs);
-            throughput.EchoFixedSeq(warmupFixed);
+            throughput.EchoByteSeqAsync(warmupBytes);
+            throughput.EchoStringSeqAsync(warmupStrings);
+            throughput.EchoStructSeqAsync(warmupStructs);
+            throughput.EchoFixedSeqAsync(warmupFixed);
         }
         throughput.EndWarmup();
 
@@ -349,7 +349,7 @@ static int Run(Communicator communicator)
             }
             else if (line == "s")
             {
-                throughput.Shutdown();
+                throughput.ShutdownAsync();
             }
             else if (line == "x")
             {

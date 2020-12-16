@@ -40,7 +40,8 @@ namespace Demo
         public void Shutdown(Current current, CancellationToken cancel)
         {
             Console.Out.WriteLine("Shutting down...");
-            current.Communicator.ShutdownAsync();
+            // Here we cannot await for shutdown to complete
+            _ = current.Communicator.ShutdownAsync();
         }
     }
 }

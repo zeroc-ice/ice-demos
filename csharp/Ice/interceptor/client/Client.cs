@@ -35,7 +35,7 @@ do
     {
         case "1":
         {
-            await Console.Out.WriteLineAsync($"Current temperature is {thermostat.GetTemp()}");
+            Console.Out.WriteLine($"Current temperature is {thermostat.GetTemp()}");
             break;
         }
         case "2":
@@ -47,21 +47,21 @@ do
                 {
                     break;
                 }
-                await Console.Out.WriteLineAsync("Enter desired temperature: ");
-                await thermostat.SetTempAsync(float.Parse(value));
-                await Console.Out.WriteLineAsync($"New temperature is {thermostat.GetTemp()}");
+                Console.Out.WriteLine("Enter desired temperature: ");
+                thermostat.SetTemp(float.Parse(value));
+                Console.Out.WriteLine($"New temperature is {thermostat.GetTemp()}");
             }
             catch (FormatException)
             {
-                await Console.Error.WriteLineAsync("Provided temperature can not be parsed as a float.");
+                Console.Error.WriteLine("Provided temperature can not be parsed as a float.");
             }
             catch (TokenExpiredException)
             {
-                await Console.Error.WriteLineAsync("Failed to set temperature. Token expired!");
+                Console.Error.WriteLine("Failed to set temperature. Token expired!");
             }
             catch (AuthorizationException)
             {
-                await Console.Error.WriteLineAsync("Failed to set temperature. Access denied!");
+                Console.Error.WriteLine("Failed to set temperature. Access denied!");
             }
             break;
         }
@@ -69,7 +69,7 @@ do
         {
             // Request an access token from the server's authentication object.
             string token = authenticator.GetToken();
-            await Console.Out.WriteLineAsync($"Successfully retrieved access token: \"{token}\"");
+            Console.Out.WriteLine($"Successfully retrieved access token: \"{token}\"");
 
             // Add the access token to the communicator's context, so it will be
             // sent along with every request made through it.
@@ -84,7 +84,7 @@ do
             }
             else
             {
-                await Console.Out.WriteLineAsync("There is no access token to release.");
+                Console.Out.WriteLine("There is no access token to release.");
             }
             break;
         }
@@ -96,11 +96,11 @@ do
             }
             catch (TokenExpiredException)
             {
-                await Console.Error.WriteLineAsync("Failed to shutdown thermostat. Token expired!");
+                Console.Error.WriteLine("Failed to shutdown thermostat. Token expired!");
             }
             catch (AuthorizationException)
             {
-                await Console.Error.WriteLineAsync("Failed to shutdown thermostat. Access denied!");
+                Console.Error.WriteLine("Failed to shutdown thermostat. Access denied!");
             }
             break;
         }
@@ -116,7 +116,7 @@ do
         }
         default:
         {
-            await Console.Out.WriteLineAsync($"Unknown command `{line}'");
+            Console.Out.WriteLine($"Unknown command `{line}'");
             Menu();
             break;
         }
