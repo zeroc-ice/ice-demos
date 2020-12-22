@@ -9,7 +9,7 @@ using ZeroC.Glacier2;
 using ZeroC.Ice;
 
 // The new communicator is automatically destroyed (disposed) at the end of the using statement
-using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
+await using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
 
 // The communicator initialization removes all Ice-related arguments from args
 

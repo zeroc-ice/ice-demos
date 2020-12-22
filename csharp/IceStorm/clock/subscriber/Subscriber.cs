@@ -12,7 +12,7 @@ using ZeroC.IceStorm;
 var properties = new Dictionary<string, string>();
 properties.ParseArgs(ref args, "Clock");
 // using statement - communicator is automatically destroyed at the end of this statement
-using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings, properties: properties);
+await using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings, properties: properties);
 
 // Shutdown the communicator on Ctrl+C or Ctrl+Break (always use Cancel = true with shutdown)
 Console.CancelKeyPress += (sender, eventArgs) =>
@@ -127,7 +127,7 @@ catch (AlreadySubscribed)
     Debug.Assert(id != null);
     Console.WriteLine("reactivating persistent subscriber");
 }
-communicator.WaitForShutdown();
+await communicator.WaitForShutdownAsync();
 
 static void Usage()
 {

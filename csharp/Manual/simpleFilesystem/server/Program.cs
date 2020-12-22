@@ -5,10 +5,14 @@ using System;
 using ZeroC.Ice;
 
 // using statement - communicator is automatically destroyed at the end of this statement
-using var communicator = new Communicator(ref args);
+await using var communicator = new Communicator(ref args);
 
 // Destroy the communicator on Ctrl+C or Ctrl+Break
-Console.CancelKeyPress += (sender, eventArgs) => communicator.DisposeAsync();
+Console.CancelKeyPress += (sender, eventArgs) =>
+    {
+        eventArgs.Cancel = true;
+        _ = communicator.ShutdownAsync();
+    };
 
 // Create an object adapter.
 ObjectAdapter adapter = communicator.CreateObjectAdapterWithEndpoints("SimpleFilesystem",
@@ -45,4 +49,4 @@ file.ActivateAsync(adapter);
 await adapter.ActivateAsync();
 
 // Wait until we are done
-communicator.WaitForShutdown();
+communicator.WaitForShutdownAsync();

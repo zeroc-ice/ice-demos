@@ -5,10 +5,14 @@ using System;
 using ZeroC.Ice;
 
 // using statement - communicator is automatically destroyed at the end of this statement.
-using var communicator = new Communicator(ref args);
+await using var communicator = new Communicator(ref args);
 
 // Destroy the communicator on Ctrl+C or Ctrl+Break
-Console.CancelKeyPress += (sender, eventArgs) => communicator.DisposeAsync();
+Console.CancelKeyPress += (sender, eventArgs) =>
+    {
+        eventArgs.Cancel = true;
+        _ = communicator.ShutdownAsync();
+    };
 
 if (args.Length > 0)
 {
@@ -18,4 +22,4 @@ if (args.Length > 0)
 ObjectAdapter adapter = communicator.CreateObjectAdapter("Hello");
 adapter.Add("hello", new Hello(communicator.GetProperty("Ice.ProgramName")!));
 await adapter.ActivateAsync();
-communicator.WaitForShutdown();
+await communicator.WaitForShutdownAsync();
