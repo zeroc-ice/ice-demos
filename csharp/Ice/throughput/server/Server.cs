@@ -25,7 +25,7 @@ try
 
     ObjectAdapter adapter = communicator.CreateObjectAdapter("Throughput");
     adapter.Add("throughput", new Demo.Throughput());
-    adapter.Activate();
+    await adapter.ActivateAsync();
     await communicator.WaitForShutdownAsync();
 }
 catch (Exception ex)

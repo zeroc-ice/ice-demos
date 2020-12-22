@@ -21,7 +21,7 @@ try
 
     ObjectAdapter adapter = communicator.CreateObjectAdapter("Printer");
     adapter.Add("printer", new Printer());
-    adapter.Activate();
+    await adapter.ActivateAsync();
     await communicator.WaitForShutdownAsync();
 }
 catch (Exception ex)

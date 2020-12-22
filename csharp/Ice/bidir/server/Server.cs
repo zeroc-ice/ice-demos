@@ -30,7 +30,7 @@ try
     ObjectAdapter adapter = communicator.CreateObjectAdapter("Callback.Server");
     var sender = new CallbackSender();
     adapter.Add("sender", sender);
-    adapter.Activate();
+    await adapter.ActivateAsync();
 
     var t = new Thread(new ThreadStart(sender.Run));
     t.Start();

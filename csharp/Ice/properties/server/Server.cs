@@ -32,7 +32,7 @@ admin!.Updated += (sender, changes) => props.Updated(changes);
 
 ObjectAdapter adapter = communicator.CreateObjectAdapter("Properties");
 adapter.Add("properties", props);
-adapter.Activate();
+await adapter.ActivateAsync();
 await communicator.WaitForShutdownAsync();
 
 // The servant implements the Slice interface Demo::Props as well as the native callback interface

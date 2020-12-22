@@ -20,7 +20,7 @@ ICallbackSenderPrx sender = communicator.GetPropertyAsProxy("CallbackSender.Prox
 
 ObjectAdapter adapter = communicator.CreateObjectAdapter("Callback.Client");
 ICallbackReceiverPrx receiver = adapter.Add("callbackReceiver", new CallbackReceiver(), ICallbackReceiverPrx.Factory);
-adapter.Activate();
+await adapter.ActivateAsync();
 
 Menu();
 

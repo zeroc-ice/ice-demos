@@ -17,7 +17,7 @@ Console.CancelKeyPress += (sender, eventArgs) =>
 
 var adapter = communicator.CreateObjectAdapterWithEndpoints("Hello", "ice+tcp://localhost:10000");
 adapter.Add("hello", new Hello());
-adapter.Activate();
+await adapter.ActivateAsync();
 await communicator.WaitForShutdownAsync();
 
 public class Hello : IHello

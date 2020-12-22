@@ -23,5 +23,5 @@ if (args.Length > 0)
 
 ObjectAdapter adapter = communicator.CreateObjectAdapter("ContactDB");
 adapter.Add("contactdb", new ContactDB());
-adapter.Activate();
+await adapter.ActivateAsync();
 await communicator.WaitForShutdownAsync();

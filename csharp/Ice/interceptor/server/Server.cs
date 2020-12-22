@@ -32,7 +32,7 @@ try
     ObjectAdapter authenticatorAdapter = communicator.CreateObjectAdapter("Authenticator");
     var authenticator = new Authenticator();
     authenticatorAdapter.Add("authenticator", authenticator);
-    authenticatorAdapter.Activate();
+    await authenticatorAdapter.ActivateAsync();
 
     // Set of all the operations to require authorization for.
     var securedOperations = new HashSet<string>(new string[] { "setTemp", "shutdown" });

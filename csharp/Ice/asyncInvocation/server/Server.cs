@@ -21,7 +21,7 @@ try
 
     ObjectAdapter adapter = communicator.CreateObjectAdapter("Calculator");
     adapter.Add("calculator", new Demo.Calculator());
-    adapter.Activate();
+    await adapter.ActivateAsync();
     await communicator.WaitForShutdownAsync();
 }
 catch (Exception ex)

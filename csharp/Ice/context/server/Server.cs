@@ -22,7 +22,7 @@ try
 
     ObjectAdapter adapter = communicator.CreateObjectAdapter("Context");
     adapter.Add("context", new Context());
-    adapter.Activate();
+    await adapter.ActivateAsync();
     await communicator.WaitForShutdownAsync();
 }
 catch (Exception ex)

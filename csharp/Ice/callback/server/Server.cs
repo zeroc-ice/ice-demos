@@ -20,5 +20,5 @@ if (args.Length > 0)
 
 var adapter = communicator.CreateObjectAdapter("Callback.Server");
 adapter.Add("callbackSender", new CallbackSender());
-adapter.Activate();
+await adapter.ActivateAsync();
 await communicator.WaitForShutdownAsync();

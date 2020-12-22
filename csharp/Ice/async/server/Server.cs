@@ -35,7 +35,7 @@ try
 
     try
     {
-        adapter.Activate();
+        await adapter.ActivateAsync();
         await communicator.WaitForShutdownAsync();
     }
     finally

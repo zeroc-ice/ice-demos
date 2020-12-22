@@ -23,5 +23,5 @@ if (args.Length > 0)
 
 ObjectAdapter adapter = communicator.CreateObjectAdapter("SessionFactory");
 adapter.Add("SessionFactory", new SessionFactory());
-adapter.Activate();
+await adapter.ActivateAsync();
 await communicator.WaitForShutdownAsync();

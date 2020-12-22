@@ -13,11 +13,15 @@ try
     await communicator.ActivateAsync();
 
     // Destroy the communicator on Ctrl+C or Ctrl+Break
-    Console.CancelKeyPress += async (sender, eventArgs) => _ = communicator.ShutdownAsync();
+    Console.CancelKeyPress += (sender, eventArgs) =>
+        {
+            eventArgs.Cancel = true;
+            _ = communicator.DestroyAsync();
+        };
 
     ObjectAdapter adapter = communicator.CreateObjectAdapter("Hello");
     adapter.Add("hello", new Hello());
-    adapter.Activate();
+    await adapter.ActivateAsync();
     await communicator.WaitForShutdownAsync();
 }
 catch (Exception ex)
