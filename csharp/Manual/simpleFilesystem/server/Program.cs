@@ -16,7 +16,7 @@ ObjectAdapter adapter = communicator.CreateObjectAdapterWithEndpoints("SimpleFil
 
 // Create the root directory (with name "/" and no parent)
 var root = new Directory("/", null);
-root.Activate(adapter);
+root.ActivateAsync(adapter);
 
 // Create a file called "README" in the root directory
 var file = new File(
@@ -24,11 +24,11 @@ var file = new File(
     root,
     new string[] { "This file system contains a collection of poetry." });
 
-file.Activate(adapter);
+file.ActivateAsync(adapter);
 
 // Create a directory called "Coleridge" in the root directory
 var coleridge = new Directory("Coleridge", root);
-coleridge.Activate(adapter);
+coleridge.ActivateAsync(adapter);
 
 // Create a file called "Kubla_Khan" in the Coleridge directory
 file = new File(
@@ -39,10 +39,10 @@ file = new File(
                   "Where Alph, the sacred river, ran",
                   "Through caverns measureless to man",
                   "Down to a sunless sea." });
-file.Activate(adapter);
+file.ActivateAsync(adapter);
 
 // All objects are created, allow client requests now
-adapter.Activate();
+await adapter.ActivateAsync();
 
 // Wait until we are done
 communicator.WaitForShutdown();

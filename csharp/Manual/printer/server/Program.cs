@@ -8,7 +8,7 @@ using var communicator = new Communicator(ref args);
 ObjectAdapter adapter = communicator.CreateObjectAdapterWithEndpoints("SimplePrinterAdapter",
                                                                       "ice+tcp://localhost:10000");
 adapter.Add("SimplePrinter", new Demo.Printer());
-adapter.Activate();
+await adapter.ActivateAsync();
 communicator.WaitForShutdown();
 
 namespace Demo

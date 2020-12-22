@@ -102,7 +102,7 @@ var subId = new Identity(id ?? Guid.NewGuid().ToString(), "");
 IClockPrx subscriber = adapter.Add(subId, new Clock(), IClockPrx.Factory);
 
 // Activate the object adapter before subscribing.
-adapter.Activate();
+await adapter.ActivateAsync();
 
 var qos = new Dictionary<string, string>();
 if (retryCount != null)

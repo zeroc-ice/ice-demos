@@ -20,5 +20,5 @@ if (args.Length > 0)
 
 var adapter = communicator.CreateObjectAdapter("Hello");
 adapter.Add("hello", new Hello());
-adapter.Activate();
+await adapter.ActivateAsync();
 communicator.WaitForShutdown();

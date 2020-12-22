@@ -99,7 +99,7 @@ ObjectAdapter adapter = communicator.CreateObjectAdapterWithRouter(router);
 ICallbackReceiverPrx? twowayR = adapter.Add(callbackReceiverIdent,
                                            new CallbackReceiver(),
                                            ICallbackReceiverPrx.Factory);
-adapter.Activate();
+await adapter.ActivateAsync();
 
 Menu();
 

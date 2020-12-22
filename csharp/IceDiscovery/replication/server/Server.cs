@@ -17,5 +17,5 @@ if (args.Length > 0)
 
 ObjectAdapter adapter = communicator.CreateObjectAdapter("Hello");
 adapter.Add("hello", new Hello(communicator.GetProperty("Ice.ProgramName")!));
-adapter.Activate();
+await adapter.ActivateAsync();
 communicator.WaitForShutdown();

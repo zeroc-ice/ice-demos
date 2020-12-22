@@ -18,5 +18,5 @@ if (args.Length > 0)
 
 ObjectAdapter adapter = communicator.CreateObjectAdapter("Callback.Server");
 adapter.Add("callback", new Callback());
-adapter.Activate();
+await adapter.ActivateAsync();
 communicator.WaitForShutdown();

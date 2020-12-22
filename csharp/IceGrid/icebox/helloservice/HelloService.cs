@@ -20,7 +20,7 @@ namespace Demo
             string programName = communicator.GetProperty("Ice.ProgramName") ??
                 throw new InvalidOperationException("property `Ice.ProgramName' was not set");
             _adapter.Add(identity, new Hello(programName));
-            _adapter.Activate();
+            _adapter.ActivateAsync();
         }
 
         public void Stop() => _adapter?.DisposeAsync();

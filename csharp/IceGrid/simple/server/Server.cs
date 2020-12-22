@@ -22,5 +22,5 @@ string identity = communicator.GetProperty("Identity") ??
 string programName = communicator.GetProperty("Ice.ProgramName") ??
     throw new InvalidOperationException("Ice.ProgramName property not set");
 adapter.Add(identity, new Hello(programName));
-adapter.Activate();
+await adapter.ActivateAsync();
 communicator.WaitForShutdown();
