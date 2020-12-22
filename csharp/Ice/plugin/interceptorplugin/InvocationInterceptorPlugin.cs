@@ -18,7 +18,7 @@ namespace Demo
              communicator.DefaultInvocationInterceptors = ImmutableList.Create<InvocationInterceptor>(
                 (prx, request, next, cancel) =>
                 {
-                    request.AddBinaryContextEntry(100, Environment.UserName, (ostr, value) => ostr.WriteString(value));
+                    request.BinaryContextOverride.Add(100, ostr => ostr.WriteString(Environment.UserName));
                     return next(prx, request, cancel);
                 }).AddRange(communicator.DefaultInvocationInterceptors);
     }
