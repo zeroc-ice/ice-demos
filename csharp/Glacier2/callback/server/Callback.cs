@@ -24,7 +24,7 @@ namespace Demo
         public void Shutdown(Current current, CancellationToken cancel)
         {
             Console.WriteLine("shutting down...");
-            current.Communicator.DestroyAsync();
+            current.Communicator.ShutdownAsync();
         }
     }
 

@@ -19,7 +19,7 @@ namespace Demo
         public void Shutdown(Current current, CancellationToken cancel)
         {
             System.Console.Out.WriteLine("Shutting down...");
-            current.Communicator.DestroyAsync();
+            _ = current.Communicator.ShutdownAsync(); // Initiate Shutdown
         }
     }
 }

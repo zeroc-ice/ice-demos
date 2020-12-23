@@ -32,7 +32,7 @@ namespace Demo
             return Math.Sqrt(x);
         }
 
-        public void Shutdown(Current current, CancellationToken cancel) => current.Adapter.Communicator.DestroyAsync();
+        public void Shutdown(Current current, CancellationToken cancel) => current.Adapter.Communicator.ShutdownAsync();
     }
 
 }

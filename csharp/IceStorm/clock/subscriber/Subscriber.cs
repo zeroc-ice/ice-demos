@@ -11,7 +11,6 @@ using ZeroC.IceStorm;
 
 var properties = new Dictionary<string, string>();
 properties.ParseArgs(ref args, "Clock");
-// using statement - communicator is automatically destroyed at the end of this statement
 await using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings, properties: properties);
 await communicator.ActivateAsync();
 

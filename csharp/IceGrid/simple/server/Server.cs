@@ -5,7 +5,6 @@ using System;
 using System.Configuration;
 using ZeroC.Ice;
 
-// using statement - communicator is automatically destroyed at the end of this statement.
 await using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
 await communicator.ActivateAsync();
 

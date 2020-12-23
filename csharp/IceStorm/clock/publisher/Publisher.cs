@@ -8,7 +8,6 @@ using System.Globalization;
 using ZeroC.Ice;
 using ZeroC.IceStorm;
 
-// using statement - communicator is automatically destroyed at the end of this statement
 await using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
 await communicator.ActivateAsync();
 
