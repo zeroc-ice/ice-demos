@@ -9,15 +9,16 @@
 # client resolves an indirect proxy refering to this replica group,
 # the locator implementation will return the endpoints of all the
 # object adapters part of the replica group.
-Hello.Endpoints=ice+tcp://localhost:0
+Hello.Endpoints=ice+tcp://[::0]:0
 Hello.AdapterId=HelloAdapter3
 Hello.ReplicaGroupId=ReplicatedHelloAdapter
+Ice.ServerName=localhost
 
 # Identify the server
 Ice.ProgramName=Server3
 
-# Enable the Ice discovery plugin
-Ice.Plugin.IceDiscovery=Ice:ZeroC.IceDiscovery.PluginFactory
+# Enable Discovery
+Ice.Default.Locator=discovery
 
 # Ensure connection establishment doesn't take too long.
 Ice.Override.ConnectTimeout=1000
