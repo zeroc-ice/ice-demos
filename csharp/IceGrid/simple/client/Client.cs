@@ -7,7 +7,6 @@ using System.Diagnostics;
 using ZeroC.Ice;
 using ZeroC.IceGrid;
 
-// The new communicator is automatically destroyed (disposed) at the end of the using statement.
 await using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
 await communicator.ActivateAsync();
 

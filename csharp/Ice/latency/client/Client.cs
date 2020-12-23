@@ -6,7 +6,6 @@ using System.Configuration;
 using System.Diagnostics;
 using ZeroC.Ice;
 
-// await using - calls automatically DisposeAsync on communicator why it goes out of scope
 await using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
 // Activates the communicator. In a simple demo like this one, this activation typically does nothing. It is however
 // recommended to always activate a communicator.

@@ -6,7 +6,6 @@ using System.Configuration;
 using System.Threading;
 using ZeroC.Ice;
 
-// The new communicator is automatically destroyed (disposed) at the end of the using statement
 await using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
 await communicator.ActivateAsync();
 
