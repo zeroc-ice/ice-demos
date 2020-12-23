@@ -5,6 +5,7 @@ using System;
 using ZeroC.Ice;
 
 await using var communicator = new Communicator(ref args);
+await communicator.ActivateAsync();
 
 // Create a proxy for the root directory
 

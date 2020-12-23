@@ -9,6 +9,7 @@ using ZeroC.Ice;
 // at the end of this statement
 //
 await using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
+await communicator.ActivateAsync();
 
 // Destroy the communicator on Ctrl+C or Ctrl+Break
 Console.CancelKeyPress += (sender, eventArgs) =>

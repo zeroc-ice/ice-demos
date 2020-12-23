@@ -6,6 +6,7 @@ using ZeroC.Ice;
 
 // using statement - communicator is automatically destroyed at the end of this statement
 await using var communicator = new Communicator(ref args);
+await communicator.ActivateAsync();
 
 // Destroy the communicator on Ctrl+C or Ctrl+Break
 Console.CancelKeyPress += (sender, eventArgs) =>
@@ -49,4 +50,4 @@ file.ActivateAsync(adapter);
 await adapter.ActivateAsync();
 
 // Wait until we are done
-communicator.WaitForShutdownAsync();
+await communicator.WaitForShutdownAsync();

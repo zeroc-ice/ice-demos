@@ -10,12 +10,13 @@ using ZeroC.IceStorm;
 
 // using statement - communicator is automatically destroyed at the end of this statement
 await using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
+await communicator.ActivateAsync();
 
 // Destroy the communicator on Ctrl+C or Ctrl+Break
 Console.CancelKeyPress += (sender, eventArgs) =>
     {
         eventArgs.Cancel = true;
-        _ = communicator.DisposeAsync();
+        _ = communicator.DestroyAsync();
     };
 
 string topicName = args.Length == 0 ? "time" : args[0];
