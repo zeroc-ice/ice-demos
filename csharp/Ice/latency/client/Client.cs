@@ -6,11 +6,17 @@ using System.Configuration;
 using System.Diagnostics;
 using ZeroC.Ice;
 
-// using statement - communicator is automatically destroyed at the end of this statement
-using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
+await using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
+// Activates the communicator. In a simple demo like this one, this activation typically does nothing. It is however
+// recommended to always activate a communicator.
+await communicator.ActivateAsync();
 
-// Destroy the communicator on Ctrl+C or Ctrl+Break
-Console.CancelKeyPress += (sender, eventArgs) => communicator.DisposeAsync();
+// Calls DisposeAsync on Ctrl+C or Ctrl+Break, but does not wait until DisposeAsync completes.
+Console.CancelKeyPress += (sender, eventArgs) =>
+    {
+        eventArgs.Cancel = true;
+        _ = communicator.DestroyAsync();
+    };
 
 if (args.Length > 0)
 {
@@ -27,7 +33,7 @@ Console.Error.Write("warming up the JIT compiler...");
 Console.Error.Flush();
 for (int i = 0; i < 20000; i++)
 {
-    ping.IcePing();
+    await ping.IcePingAsync();
 }
 Console.Error.WriteLine("ok");
 
@@ -37,7 +43,7 @@ double repetitions = 100000;
 Console.Out.WriteLine($"pinging server {repetitions} times (this may take a while)");
 for (int i = 0; i < repetitions; i++)
 {
-    ping.IcePing();
+    await ping.IcePingAsync();
 }
 watch.Stop();
 

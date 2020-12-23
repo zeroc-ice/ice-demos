@@ -4,7 +4,8 @@ using Filesystem;
 using System;
 using ZeroC.Ice;
 
-using var communicator = new Communicator(ref args);
+await using var communicator = new Communicator(ref args);
+await communicator.ActivateAsync();
 
 // Create a proxy for the root directory
 

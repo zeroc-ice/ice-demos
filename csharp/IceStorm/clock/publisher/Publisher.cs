@@ -8,11 +8,15 @@ using System.Globalization;
 using ZeroC.Ice;
 using ZeroC.IceStorm;
 
-// using statement - communicator is automatically destroyed at the end of this statement
-using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
+await using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
+await communicator.ActivateAsync();
 
 // Destroy the communicator on Ctrl+C or Ctrl+Break
-Console.CancelKeyPress += (sender, eventArgs) => communicator.DisposeAsync();
+Console.CancelKeyPress += (sender, eventArgs) =>
+    {
+        eventArgs.Cancel = true;
+        _ = communicator.DestroyAsync();
+    };
 
 string topicName = args.Length == 0 ? "time" : args[0];
 if (args.Length > 1)

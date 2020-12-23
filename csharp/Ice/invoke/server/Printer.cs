@@ -102,7 +102,7 @@ namespace Demo
             }
             else if (current.Operation == "shutdown")
             {
-                current.Adapter.Communicator.DisposeAsync();
+                current.Adapter.Communicator.ShutdownAsync();
             }
             else
             {

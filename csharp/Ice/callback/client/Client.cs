@@ -5,8 +5,8 @@ using System;
 using System.Configuration;
 using ZeroC.Ice;
 
-// The new communicator is automatically destroyed (disposed) at the end of the using statement
-using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
+await using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
+await communicator.ActivateAsync();
 
 // The communicator initialization removes all Ice-related arguments from args
 if (args.Length > 0)
@@ -19,7 +19,7 @@ ICallbackSenderPrx sender = communicator.GetPropertyAsProxy("CallbackSender.Prox
 
 ObjectAdapter adapter = communicator.CreateObjectAdapter("Callback.Client");
 ICallbackReceiverPrx receiver = adapter.Add("callbackReceiver", new CallbackReceiver(), ICallbackReceiverPrx.Factory);
-adapter.Activate();
+await adapter.ActivateAsync();
 
 Menu();
 
@@ -37,11 +37,11 @@ do
         }
         if (line == "t")
         {
-            sender.InitiateCallback(receiver);
+            await sender.InitiateCallbackAsync(receiver);
         }
         else if (line == "s")
         {
-            sender.Shutdown();
+            await sender.ShutdownAsync();
         }
         else if (line == "x")
         {

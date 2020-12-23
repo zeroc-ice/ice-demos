@@ -7,8 +7,8 @@ using ZeroC.Ice;
 
 try
 {
-    // using statement - communicator is automatically destroyed at the end of this statement
-    using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
+    await using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
+    await communicator.ActivateAsync();
 
     if (args.Length > 0)
     {
@@ -24,7 +24,7 @@ try
     {
         eventArgs.Cancel = true;
         workQueue.Destroy();
-        communicator.Dispose();
+        _ = communicator.ShutdownAsync();
     };
 
     ObjectAdapter adapter = communicator.CreateObjectAdapter("Hello");
@@ -34,8 +34,8 @@ try
 
     try
     {
-        adapter.Activate();
-        communicator.WaitForShutdown();
+        await adapter.ActivateAsync();
+        await communicator.WaitForShutdownAsync();
     }
     finally
     {

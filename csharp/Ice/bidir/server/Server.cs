@@ -8,8 +8,8 @@ using ZeroC.Ice;
 
 try
 {
-    // using statement - communicator is automatically destroyed at the end of this statement
-    using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
+    await using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
+    await communicator.ActivateAsync();
 
     if (args.Length > 0)
     {
@@ -20,16 +20,16 @@ try
     // Shutdown the communicator on Ctrl+C or Ctrl+Break (shutdown always with Cancel = true)
     Console.CancelKeyPress += (eventSender, eventArgs) =>
         {
-            Console.Write("disponse communicator...");
+            Console.Write("shutdown communicator...");
             eventArgs.Cancel = true;
-            communicator.DisposeAsync();
+            _ = communicator.ShutdownAsync();
             Console.WriteLine("ok");
         };
 
     ObjectAdapter adapter = communicator.CreateObjectAdapter("Callback.Server");
     var sender = new CallbackSender();
     adapter.Add("sender", sender);
-    adapter.Activate();
+    await adapter.ActivateAsync();
 
     var t = new Thread(new ThreadStart(sender.Run));
     t.Start();

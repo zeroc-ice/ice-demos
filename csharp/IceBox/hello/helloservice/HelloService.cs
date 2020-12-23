@@ -14,7 +14,7 @@ namespace Demo
         {
             _adapter = communicator.CreateObjectAdapter(name);
             _adapter.Add("hello", new Hello());
-            _adapter.Activate();
+            _adapter.ActivateAsync();
         }
 
         public void Stop() => _adapter?.DisposeAsync();

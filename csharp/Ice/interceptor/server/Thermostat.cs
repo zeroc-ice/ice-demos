@@ -30,7 +30,7 @@ namespace Demo
         public void Shutdown(Current current, CancellationToken cancel)
         {
             Console.Out.WriteLine("Shutting down...");
-            current.Adapter.Communicator.DisposeAsync();
+            current.Adapter.Communicator.ShutdownAsync();
         }
     }
 }

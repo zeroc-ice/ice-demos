@@ -10,10 +10,6 @@ public class Server
 
         try
         {
-            //
-            // using statement - communicator is automatically destroyed
-            // at the end of this statement
-            //
             using(var communicator = Ice.Util.initialize(ref args, "config.server"))
             {
                 //
@@ -31,7 +27,7 @@ public class Server
                     var adapter = communicator.createObjectAdapter("MeasurementStation");
                     adapter.add(new MeasurementStationI(), Ice.Util.stringToIdentity("measurementstation"));
                     adapter.activate();
-                    communicator.waitForShutdown();
+                    await communicator.waitForShutdown();
                 }
             }
         }

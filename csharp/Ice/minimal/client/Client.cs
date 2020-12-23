@@ -3,6 +3,7 @@
 using Demo;
 using ZeroC.Ice;
 
-using var communicator = new Communicator(ref args);
+await using var communicator = new Communicator(ref args);
+await communicator.ActivateAsync();
 var hello = IHelloPrx.Parse("ice+tcp://localhost:10000/hello", communicator);
 hello.SayHello();

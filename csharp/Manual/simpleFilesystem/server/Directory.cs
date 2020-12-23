@@ -28,7 +28,7 @@ namespace Filesystem
         public void AddChild(INodePrx child) => _contents.Add(child);
 
         // Add servant to ASM and parent's _contents map.
-        public void Activate(ObjectAdapter adapter)
+        public void ActivateAsync(ObjectAdapter adapter)
         {
             if (_parent == null)
             {

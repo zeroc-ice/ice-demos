@@ -28,6 +28,6 @@ public class Hello : IHello
     public void Shutdown(Current current, CancellationToken cancel)
     {
         _workQueue.Destroy();
-        current.Adapter.Communicator.DisposeAsync();
+        current.Adapter.Communicator.ShutdownAsync();
     }
 }

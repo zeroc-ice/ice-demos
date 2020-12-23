@@ -29,7 +29,7 @@ namespace Filesystem
         public void Write(string[] text, Current current, CancellationToken cancel) => _lines = text;
 
         // Add servant to ASM and parent's _contents map.
-        public void Activate(ObjectAdapter adapter) =>
+        public void ActivateAsync(ObjectAdapter adapter) =>
             _parent.AddChild(adapter.Add(System.Guid.NewGuid().ToString(), this, INodePrx.Factory));
     }
 

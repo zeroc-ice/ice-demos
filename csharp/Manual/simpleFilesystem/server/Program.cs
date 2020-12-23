@@ -4,11 +4,15 @@ using Filesystem;
 using System;
 using ZeroC.Ice;
 
-// using statement - communicator is automatically destroyed at the end of this statement
-using var communicator = new Communicator(ref args);
+await using var communicator = new Communicator(ref args);
+await communicator.ActivateAsync();
 
 // Destroy the communicator on Ctrl+C or Ctrl+Break
-Console.CancelKeyPress += (sender, eventArgs) => communicator.DisposeAsync();
+Console.CancelKeyPress += (sender, eventArgs) =>
+    {
+        eventArgs.Cancel = true;
+        _ = communicator.ShutdownAsync();
+    };
 
 // Create an object adapter.
 ObjectAdapter adapter = communicator.CreateObjectAdapterWithEndpoints("SimpleFilesystem",
@@ -16,7 +20,7 @@ ObjectAdapter adapter = communicator.CreateObjectAdapterWithEndpoints("SimpleFil
 
 // Create the root directory (with name "/" and no parent)
 var root = new Directory("/", null);
-root.Activate(adapter);
+root.ActivateAsync(adapter);
 
 // Create a file called "README" in the root directory
 var file = new File(
@@ -24,11 +28,11 @@ var file = new File(
     root,
     new string[] { "This file system contains a collection of poetry." });
 
-file.Activate(adapter);
+file.ActivateAsync(adapter);
 
 // Create a directory called "Coleridge" in the root directory
 var coleridge = new Directory("Coleridge", root);
-coleridge.Activate(adapter);
+coleridge.ActivateAsync(adapter);
 
 // Create a file called "Kubla_Khan" in the Coleridge directory
 file = new File(
@@ -39,10 +43,10 @@ file = new File(
                   "Where Alph, the sacred river, ran",
                   "Through caverns measureless to man",
                   "Down to a sunless sea." });
-file.Activate(adapter);
+file.ActivateAsync(adapter);
 
 // All objects are created, allow client requests now
-adapter.Activate();
+await adapter.ActivateAsync();
 
 // Wait until we are done
-communicator.WaitForShutdown();
+await communicator.WaitForShutdownAsync();

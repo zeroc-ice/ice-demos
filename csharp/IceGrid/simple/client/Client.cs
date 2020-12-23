@@ -7,8 +7,8 @@ using System.Diagnostics;
 using ZeroC.Ice;
 using ZeroC.IceGrid;
 
-// The new communicator is automatically destroyed (disposed) at the end of the using statement.
-using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
+await using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
+await communicator.ActivateAsync();
 
 // The communicator initialization removes all Ice-related arguments from args.
 if (args.Length > 0)
@@ -19,7 +19,7 @@ if (args.Length > 0)
 var hello = IHelloPrx.Parse("hello", communicator);
 try
 {
-    hello.IcePing();
+    await hello.IcePingAsync();
 }
 catch (NoEndpointException)
 {

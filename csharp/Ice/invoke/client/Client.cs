@@ -6,8 +6,8 @@ using System.Collections.Generic;
 using System.Configuration;
 using ZeroC.Ice;
 
-// The new communicator is automatically destroyed (disposed) at the end of the using statement
-using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
+await using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
+await communicator.ActivateAsync();
 
 // The communicator initialization removes all Ice-related arguments from args
 if (args.Length > 0)
@@ -223,7 +223,7 @@ do
     }
     else if (line == "s")
     {
-        prx.InvokeAsync(OutgoingRequestFrame.WithEmptyArgs(prx, "shutdown", false));
+        await prx.InvokeAsync(OutgoingRequestFrame.WithEmptyArgs(prx, "shutdown", false));
     }
     else if (line == "x")
     {

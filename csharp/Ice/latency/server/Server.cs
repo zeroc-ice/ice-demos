@@ -4,11 +4,15 @@ using System;
 using System.Configuration;
 using ZeroC.Ice;
 
-// using statement - communicator is automatically destroyed at the end of this statement
-using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
+await using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
+await communicator.ActivateAsync();
 
-// Destroy the communicator on Ctrl+C or Ctrl+Break
-Console.CancelKeyPress += (sender, eventArgs) => communicator.DisposeAsync();
+// Initiates communicator shutdown on Ctrl+C or Ctrl+Break, but does not wait for shutdown to complete.
+Console.CancelKeyPress += (sender, eventArgs) =>
+    {
+        eventArgs.Cancel = true;
+        communicator.ShutdownAsync();
+    };
 
 if (args.Length > 0)
 {
@@ -17,8 +21,8 @@ if (args.Length > 0)
 
 ObjectAdapter adapter = communicator.CreateObjectAdapter("Latency");
 adapter.Add("ping", new Ping());
-adapter.Activate();
-communicator.WaitForShutdown();
+await adapter.ActivateAsync();
+await communicator.WaitForShutdownAsync();
 
 class Ping : Demo.IPing
 {

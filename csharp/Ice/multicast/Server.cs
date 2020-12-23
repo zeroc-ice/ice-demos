@@ -10,10 +10,6 @@ public class Server
 
         try
         {
-            //
-            // using statement - communicator is automatically destroyed
-            // at the end of this statement
-            //
             using(var communicator = Ice.Util.initialize(ref args, "config.server"))
             {
                 //

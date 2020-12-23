@@ -9,11 +9,16 @@ using ZeroC.Ice;
 
 try
 {
-    // using statement - communicator is automatically destroyed at the end of this statement
-    using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
+    await using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
+    await communicator.ActivateAsync();
 
     // Destroy the communicator on Ctrl+C or Ctrl+Break
-    Console.CancelKeyPress += (sender, eventArgs) => communicator.DisposeAsync();
+    Console.CancelKeyPress += (sender, eventArgs) =>
+        {
+            eventArgs.Cancel = true;
+            _ = communicator.ShutdownAsync();
+        };
+
 
     if (args.Length > 0)
     {
@@ -31,7 +36,7 @@ try
     ObjectAdapter authenticatorAdapter = communicator.CreateObjectAdapter("Authenticator");
     var authenticator = new Authenticator();
     authenticatorAdapter.Add("authenticator", authenticator);
-    authenticatorAdapter.Activate();
+    await authenticatorAdapter.ActivateAsync();
 
     // Set of all the operations to require authorization for.
     var securedOperations = new HashSet<string>(new string[] { "setTemp", "shutdown" });
@@ -60,8 +65,8 @@ try
             return next(request, current, cancel);
         });
 
-    thermostatAdapter.Activate();
-    communicator.WaitForShutdown();
+    await thermostatAdapter.ActivateAsync();
+    await communicator.WaitForShutdownAsync();
 }
 catch (Exception ex)
 {

@@ -5,8 +5,8 @@ using System;
 using System.Configuration;
 using ZeroC.Ice;
 
-// using statement - communicator is automatically destroyed at the end of this statement
-using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
+await using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
+await communicator.ActivateAsync();
 
 // The communicator intialization removes all Ice-related arguments from args.
 if (args.Length > 0)
@@ -91,7 +91,7 @@ do
         {
             try
             {
-                thermostat.Shutdown();
+                await thermostat.ShutdownAsync();
             }
             catch (TokenExpiredException)
             {
@@ -125,7 +125,7 @@ while (line != "x");
 
 static void Menu()
 {
-    Console.Out.Write(
+    Console.Out.WriteAsync(
 @"usage:
     1: gets the current temperature
     2: sets the temperature

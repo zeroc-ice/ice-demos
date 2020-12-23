@@ -7,8 +7,8 @@ using System.Configuration;
 using System.Diagnostics;
 using ZeroC.Ice;
 
-// The new communicator is automatically destroyed (disposed) at the end of the using statement
-using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
+await using var communicator = new Communicator(ref args, ConfigurationManager.AppSettings);
+await communicator.ActivateAsync();
 
 // The communicator initialization removes all Ice-related arguments from args
 if (args.Length > 0)
@@ -101,12 +101,12 @@ while (true)
 
 if (destroy)
 {
-    session.Destroy();
+    await session.DestroyAsync();
 }
 
 if (shutdown)
 {
-    factory.Shutdown();
+    await factory.ShutdownAsync();
 }
 
 static void Menu()

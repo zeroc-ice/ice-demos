@@ -4,12 +4,13 @@ using System;
 using System.Threading;
 using ZeroC.Ice;
 
-using var communicator = new Communicator(ref args);
+await using var communicator = new Communicator(ref args);
+await communicator.ActivateAsync();
 ObjectAdapter adapter = communicator.CreateObjectAdapterWithEndpoints("SimplePrinterAdapter",
                                                                       "ice+tcp://localhost:10000");
 adapter.Add("SimplePrinter", new Demo.Printer());
-adapter.Activate();
-communicator.WaitForShutdown();
+await adapter.ActivateAsync();
+await communicator.WaitForShutdownAsync();
 
 namespace Demo
 {
