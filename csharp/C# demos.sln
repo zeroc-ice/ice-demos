@@ -155,9 +155,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "client", "Ice\plugin\client
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "server", "Ice\plugin\server\server.csproj", "{848FC1C7-BD13-47BA-9072-5286E3C57DC7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "client", "Ice\async\Client\client.csproj", "{712667F0-3D88-41B3-B5ED-B5DC43E0099F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "client", "Ice\async\client\client.csproj", "{712667F0-3D88-41B3-B5ED-B5DC43E0099F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "server", "Ice\async\Server\server.csproj", "{97C65DA6-7C08-44FC-9AFF-18937CB9B796}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "server", "Ice\async\server\server.csproj", "{97C65DA6-7C08-44FC-9AFF-18937CB9B796}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "client", "Ice\asyncInvocation\client\client.csproj", "{1802E9BE-7927-4341-BAEA-4100D4060550}"
 EndProject
