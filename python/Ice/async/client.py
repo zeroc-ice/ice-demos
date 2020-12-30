@@ -5,7 +5,6 @@
 
 import asyncio
 import sys
-import traceback
 import Ice
 
 Ice.loadSlice('Hello.ice')
@@ -91,5 +90,6 @@ s: shutdown server
 x: exit
 ?: help
 """)
+
 
 sys.exit(asyncio.run(main()))
