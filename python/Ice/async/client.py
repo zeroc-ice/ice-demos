@@ -3,6 +3,7 @@
 # Copyright (c) ZeroC, Inc. All rights reserved.
 #
 
+import asyncio
 import sys
 import traceback
 import Ice
@@ -11,47 +12,74 @@ Ice.loadSlice('Hello.ice')
 import Demo
 
 
-class Callback:
-    def response(self, f):
+async def main():
+
+    # Ice.initialize returns an initialized Ice communicator; the communicator is destroyed once it goes out of scope.
+    with Ice.initialize(sys.argv, "config.client") as communicator:
+
+        # The communicator initialization removes all Ice-related arguments from sys.argv
+        if len(sys.argv) > 1:
+            print(sys.argv[0] + ": too many arguments")
+            return 1
+
         try:
-            f.result()
-        except Demo.RequestCanceledException:
-            print("Demo.RequestCanceledException")
-        except Exception:
-            print("sayHello AMI call failed:")
-            traceback.print_exc()
+            hello = Demo.HelloPrx.checkedCast(communicator.propertyToProxy('Hello.Proxy'))
+        except Ice.Exception as ex:
+            print("invalid proxy:", ex)
+            return 1
 
+        menu()
 
-def run(communicator):
-    hello = Demo.HelloPrx.checkedCast(communicator.propertyToProxy('Hello.Proxy'))
-    if not hello:
-        print(sys.args[0] + ": invalid proxy")
-        sys.exit(1)
+        tasks = set()
+        done = set()
 
-    menu()
-
-    c = None
-    while c != 'x':
-        try:
+        while True:
             sys.stdout.write("==> ")
             sys.stdout.flush()
-            c = sys.stdin.readline().strip()
-            if c == 'i':
-                hello.sayHello(0)
-            elif c == 'd':
-                cb = Callback()
-                hello.sayHelloAsync(5000).add_done_callback(cb.response)
-            elif c == 's':
-                hello.shutdown()
-            elif c == 'x':
-                pass  # Nothing to do
-            elif c == '?':
-                menu()
-            else:
-                print("unknown command `" + c + "'")
-                menu()
-        except Ice.Exception as ex:
-            print(ex)
+            nextCharTask = asyncio.create_task(getNextChar())
+            tasks.add(nextCharTask)
+            while nextCharTask not in done:
+                done, tasks = await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
+                if nextCharTask in done:
+                    c = nextCharTask.result()
+                    if c == 'i':
+                        # create asyncio future from Ice future
+                        tasks.add(Ice.wrap_future(hello.sayHelloAsync(0)))
+                    elif c == 'd':
+                        # create asyncio task from coroutine returned by slowSayHello
+                        tasks.add(asyncio.create_task(slowSayHello(hello)))
+                    elif c == 's':
+                        tasks.add(Ice.wrap_future(hello.shutdownAsync()))
+                    elif c == 'x':
+                        # cancel all outstanding tasks
+                        for t in tasks:
+                            t.cancel()
+                        return 0
+                    elif c == '?':
+                        menu()
+                    else:
+                        print(f"unknown command {c!r}")
+                        menu()
+                else:
+                    # retrieve exceptions of done tasks, if any
+                    for t in done:
+                        try:
+                            t.result()
+                        except Ice.Exception as ex:
+                            print("task exception:", ex)
+                        except RuntimeError as ex:
+                            print("task runtime error:", ex)
+
+
+async def getNextChar():
+    # run blocking IO with default executor
+    c = await asyncio.get_running_loop().run_in_executor(None, sys.stdin.readline)
+    return c.strip()
+
+
+async def slowSayHello(hello):
+    await Ice.wrap_future(hello.sayHelloAsync(5000))
+    print("slow hello completed")
 
 
 def menu():
@@ -64,18 +92,4 @@ x: exit
 ?: help
 """)
 
-
-#
-# Ice.initialize returns an initialized Ice communicator,
-# the communicator is destroyed once it goes out of scope.
-#
-with Ice.initialize(sys.argv, "config.client") as communicator:
-
-    #
-    # The communicator initialization removes all Ice-related arguments from argv
-    #
-    if len(sys.argv) > 1:
-        print(sys.argv[0] + ": too many arguments")
-        sys.exit(1)
-
-    run(communicator)
+sys.exit(asyncio.run(main()))
