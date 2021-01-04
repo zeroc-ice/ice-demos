@@ -59,15 +59,14 @@ async def main():
                     else:
                         print(f"unknown command {c!r}")
                         menu()
-                else:
-                    # retrieve exceptions of done tasks, if any
-                    for t in done:
-                        try:
-                            t.result()
-                        except Ice.Exception as ex:
-                            print("task exception:", ex)
-                        except RuntimeError as ex:
-                            print("task runtime error:", ex)
+                # retrieve exceptions of done tasks, if any
+                for t in done:
+                    try:
+                        t.result()
+                    except Ice.Exception as ex:
+                        print("task exception:", ex)
+                    except RuntimeError as ex:
+                        print("task runtime error:", ex)
 
 
 async def getNextChar():
