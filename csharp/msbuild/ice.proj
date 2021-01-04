@@ -8,7 +8,7 @@
 
     <!-- Download nuget.exe if not present -->
     <Target Name="GetNuget" Condition="!Exists('$(NugetExe)')">
-        <Exec Command="powershell -ExecutionPolicy ByPass -Command &quot;(New-Object Net.WebClient).DownloadFile('$(NugetURL)', '$(NugetExe)')&quot;"/>
+        <Exec Command="powershell -ExecutionPolicy ByPass -Command &quot;[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;(New-Object Net.WebClient).DownloadFile('$(NugetURL)', '$(NugetExe)')&quot;"/>
     </Target>
 
     <Target Name="RemovePackages">
@@ -19,7 +19,7 @@
 
     <Target Name="DownloadSymbols" DependsOnTargets="NuGetRestore">
         <MakeDir Directories="$(TEMP)\SymbolCache" />
-        <Exec Command="symchk /r $(MSBuildThisFileDirectory)..\packages\zeroc.ice.net.3.7.4\lib\* /s SRV*$(TEMP)\SymbolCache*https://dev.zeroc.com/share/ice/master/nuget/zeroc.ice.net.store/" />
+        <Exec Command="symchk /r $(MSBuildThisFileDirectory)..\packages\zeroc.ice.net.3.7.5\lib\* /s SRV*$(TEMP)\SymbolCache*https://dev.zeroc.com/share/ice/master/nuget/zeroc.ice.net.store/" />
     </Target>
 
     <Target Name="Net45InstallLocalPackages"
@@ -52,13 +52,13 @@
     <Choose>
         <When Condition="'$(OS)' == 'Windows_NT'">
             <PropertyGroup>
-                <PackagePath>$(IceHome)\csharp\msbuild\zeroc.ice.net\zeroc.ice.net.3.7.4.nupkg</PackagePath>
+                <PackagePath>$(IceHome)\csharp\msbuild\zeroc.ice.net\zeroc.ice.net.3.7.5.nupkg</PackagePath>
                 <BuildProperties>Configuration=$(Configuration);Platform=Any CPU</BuildProperties>
             </PropertyGroup>
         </When>
         <Otherwise>
             <PropertyGroup>
-                <PackagePath>$(IceHome)/csharp/msbuild/zeroc.ice.net/zeroc.ice.net.3.7.4.nupkg</PackagePath>
+                <PackagePath>$(IceHome)/csharp/msbuild/zeroc.ice.net/zeroc.ice.net.3.7.5.nupkg</PackagePath>
                 <BuildProperties>Configuration=$(Configuration);Platform=Any CPU;IceToolsPath=$(IceHome)/cpp/bin</BuildProperties>
             </PropertyGroup>
         </Otherwise>
@@ -75,7 +75,8 @@
         </Exec>
 
         <PropertyGroup>
-            <NuGetGlobalPackages>$(NuGetGlobalPackages.Replace('info : global-packages: ', ''))</NuGetGlobalPackages>
+            <NuGetGlobalPackages>$(NuGetGlobalPackages.TrimStart('info : '))</NuGetGlobalPackages>
+            <NuGetGlobalPackages>$(NuGetGlobalPackages.TrimStart('global-packages: '))</NuGetGlobalPackages>
         </PropertyGroup>
         <!-- Run the distribution NuGetPack target to ensure packages are up to date -->
         <MSBuild Projects="$(IceHome)\csharp\msbuild\ice.proj"
@@ -99,4 +100,35 @@
                  Properties="$(BuildProperties)"/>
     </Target>
 
+    <Target Name="Net5InstallLocalPackages"
+            Condition="Exists('$(IceHome)\csharp')">
+        <Exec Command="dotnet nuget locals --list global-packages" ConsoleToMSBuild="true" EchoOff="yes">
+            <Output TaskParameter="ConsoleOutput" PropertyName="NuGetGlobalPackages" />
+        </Exec>
+
+        <PropertyGroup>
+            <NuGetGlobalPackages>$(NuGetGlobalPackages.TrimStart('info : '))</NuGetGlobalPackages>
+            <NuGetGlobalPackages>$(NuGetGlobalPackages.TrimStart('global-packages: '))</NuGetGlobalPackages>
+        </PropertyGroup>
+        <!-- Run the distribution NuGetPack target to ensure packages are up to date -->
+        <MSBuild Projects="$(IceHome)\csharp\msbuild\ice.proj"
+                 Properties="Platform=$(Platform);Configuration=$(Configuration)"
+                 RemoveProperties="IceHome"
+                 Targets="NuGetPack"/>
+
+        <RemoveDir Directories="$(NuGetGlobalPackages)\zeroc.ice.net" Condition="Exists('$(NuGetGlobalPackages)\zeroc.ice.net')"/>
+        <Exec Command="dotnet nuget push $(PackagePath) --source $(NuGetGlobalPackages)" />
+
+        <MSBuild Projects="$(MSBuildThisFileDirectory)..\C# NET 5.0 demos.sln"
+                 Targets="Restore"
+                 RemoveProperties="IceHome"
+                 Properties="Configuration=$(Configuration);Platform=Any CPU"/>
+    </Target>
+
+    <Target Name="Net5Build" DependsOnTargets="Net5InstallLocalPackages;Net5NuGetRestore">
+        <MSbuild Projects="$(MSBuildThisFileDirectory)..\C# NET 5 demos.sln"
+                 Targets="Build"
+                 RemoveProperties="IceHome"
+                 Properties="$(BuildProperties)"/>
+    </Target>
 </Project>
