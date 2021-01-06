@@ -1,9 +1,8 @@
 #
 # The server creates one single object adapter with the name
-# "Calculator". The following line sets the endpoints for this
-# adapter.
+# Fibonacci
 #
-Fetcher.Endpoints=tcp -h localhost -p 10000
+Fibonacci.Endpoints=tcp -h localhost -p 10000
 
 #
 # Warn about connection exceptions
