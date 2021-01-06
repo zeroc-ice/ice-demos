@@ -59,7 +59,7 @@ class FibonacciI(Demo.Fibonacci):
 
 
 if __name__ == "__main__":
-    with Ice.initialize(sys.argv, "config.server") as communicator:
+    with Ice.initialize(sys.argv, "config.server") as communicator, concurrent.futures.ProcessPoolExecutor() as exec:
 
         if len(sys.argv) > 1:
             print(sys.argv[0] + ": too many arguments")
@@ -70,8 +70,7 @@ if __name__ == "__main__":
         adapter = communicator.createObjectAdapter("Fibonacci")
 
         # We use a process pool to execute the Python CPU-intensive code in separate processes.
-        proxy = Demo.FibonacciBackEndPrx.uncheckedCast(
-            adapter.addWithUUID(FibonacciBackEndI(concurrent.futures.ProcessPoolExecutor())))
+        proxy = Demo.FibonacciBackEndPrx.uncheckedCast(adapter.addWithUUID(FibonacciBackEndI(exec)))
 
         adapter.add(FibonacciI(proxy), Ice.stringToIdentity("Fibonacci"))  # front-end
         adapter.activate()

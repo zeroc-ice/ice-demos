@@ -21,22 +21,22 @@ def run(communicator):
     except Demo.InvalidValue:
         pass  # expected
 
-    print("computing fibonacci number #35...")
+    print("computing fibonacci number 35...")
     start = time.perf_counter()
     v = fibonacci.compute(35)
     printResult(v, start)
 
-    print("computing fibonacci number #36...")
+    print("computing fibonacci number 36...")
     start = time.perf_counter()
     v = fibonacci.compute(36)
     printResult(v, start)
 
-    print("retrieving again fibonacci number #35...")
+    print("retrieving again fibonacci number 35...")
     start = time.perf_counter()
     v = fibonacci.compute(35)
     printResult(v, start)
 
-    print("retrieving again fibonacci number #36...")
+    print("retrieving again fibonacci number 36...")
     start = time.perf_counter()
     v = fibonacci.compute(36)
     printResult(v, start)
@@ -45,7 +45,7 @@ def run(communicator):
     fibonacci.clearCache()
 
     # We can see from the log timestamps the numbers are indeed computed in parallel.
-    print("computing fibonacci number #35 and #36 in parallel...")
+    print("computing fibonacci number 35 and 36 in parallel...")
     start = time.perf_counter()
     fa = fibonacci.computeAsync(35)
     fb = fibonacci.computeAsync(36)
