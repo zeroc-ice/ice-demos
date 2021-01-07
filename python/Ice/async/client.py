@@ -15,69 +15,70 @@ async def main():
 
     # Ice.initialize returns an initialized Ice communicator; the communicator is destroyed once it goes out of scope.
     with Ice.initialize(sys.argv, "config.client") as communicator:
-
         # The communicator initialization removes all Ice-related arguments from sys.argv
         if len(sys.argv) > 1:
             print(sys.argv[0] + ": too many arguments")
             return 1
 
         try:
-            hello = Demo.HelloPrx.checkedCast(communicator.propertyToProxy('Hello.Proxy'))
+            hello = Demo.HelloPrx.uncheckedCast(communicator.propertyToProxy('Hello.Proxy'))
         except Ice.Exception as ex:
             print("invalid proxy:", ex)
             return 1
 
         menu()
 
-        tasks = set()
-        done = set()
+        c = None
+        tasks = []
+        while c != 'x':
+            try:
+                sys.stdout.write("==> ")
+                sys.stdout.flush()
 
-        while True:
-            sys.stdout.write("==> ")
-            sys.stdout.flush()
-            nextCharTask = asyncio.create_task(getNextChar())
-            tasks.add(nextCharTask)
-            while nextCharTask not in done:
-                done, tasks = await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
-                if nextCharTask in done:
-                    c = nextCharTask.result()
-                    if c == 'i':
-                        # create asyncio future from Ice future
-                        tasks.add(Ice.wrap_future(hello.sayHelloAsync(0)))
-                    elif c == 'd':
-                        # create asyncio task from coroutine returned by slowSayHello
-                        tasks.add(asyncio.create_task(slowSayHello(hello)))
-                    elif c == 's':
-                        tasks.add(Ice.wrap_future(hello.shutdownAsync()))
-                    elif c == 'x':
-                        # cancel all outstanding tasks
+                # run blocking IO with default executor
+                c = (await asyncio.get_running_loop().run_in_executor(None, sys.stdin.readline)).strip()
+
+                # remove completed tasks from the tasks list
+                tasks = [t for t in tasks if not t.done()]
+
+                if c == 'i':
+                    # create asyncio future from Ice future
+                    await Ice.wrap_future(hello.sayHelloAsync(0))
+                elif c == 'd':
+                    # create asyncio task from coroutine returned by slowSayHello
+                    tasks.append(asyncio.create_task(slowSayHello(hello)))
+                elif c == 's':
+                    # create asyncio future from Ice future
+                    await Ice.wrap_future(hello.shutdownAsync())
+                elif c == 'x':
+                    # cancel pending tasks and wait for them to complete before to exit
+                    if len(tasks) > 0:
                         for t in tasks:
                             t.cancel()
-                        return 0
-                    elif c == '?':
-                        menu()
-                    else:
-                        print(f"unknown command {c!r}")
-                        menu()
-                # retrieve exceptions of done tasks, if any
-                for t in done:
-                    try:
-                        t.result()
-                    except Ice.Exception as ex:
-                        print("task exception:", ex)
-                    except RuntimeError as ex:
-                        print("task runtime error:", ex)
+                        await asyncio.wait(tasks)
+                elif c == '?':
+                    menu()
+                else:
+                    print(f"unknown command {c!r}")
+                    menu()
+            except Ice.Exception as ex:
+                print(ex)
 
-
-async def getNextChar():
-    # run blocking IO with default executor
-    c = await asyncio.get_running_loop().run_in_executor(None, sys.stdin.readline)
-    return c.strip()
+        return 0
 
 
 async def slowSayHello(hello):
-    await Ice.wrap_future(hello.sayHelloAsync(5000))
-    print("slow hello completed")
+    try:
+        # create asyncio future from Ice future
+        await Ice.wrap_future(hello.sayHelloAsync(5000))
+        print("slow hello completed")
+    except Ice.Exception as ex:
+        print("task exception:", ex)
+    except RuntimeError as ex:
+        print("task runtime error:", ex)
+    except asyncio.CancelledError:
+        # the task is cancelled on exit
+        pass
 
 
 def menu():
