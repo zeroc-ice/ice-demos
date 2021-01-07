@@ -26,7 +26,7 @@ class CallbackSenderI(Demo.CallbackSender):
 
 
 #
-# The Ice communicator is initlialized with Ice.initialize
+# The Ice communicator is initialized with Ice.initialize
 # The communicator is destroyed once it goes out of scope of the with statement
 #
 with Ice.initialize(sys.argv, "config.server") as communicator:

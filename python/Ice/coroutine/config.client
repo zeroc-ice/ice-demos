@@ -1,8 +1,8 @@
 #
 # The client reads this property to create the reference to the
-# "calculator" object in the server.
+# "Fibonacci" object in the server.
 #
-Fetcher.Proxy=fetcher:tcp -h localhost -p 10000
+Fibonacci.Proxy=Fibonacci:tcp -h localhost -p 10000
 
 #
 # Warn about connection exceptions
