@@ -25,11 +25,13 @@ def fibonacci(n):
 
 
 # The servant for the back-end. It would typically live in a separate back-end server.
-class FibonacciBackEndI(Demo.Fibonacci):
+class FibonacciBackEndI(Demo.FibonacciBackEnd):
     def __init__(self, executor):
         self._executor = executor
 
     def compute(self, n, current):
+        # We use a process pool to execute the Python CPU-intensive code in separate processes. With CPython,
+        # Python code locks the GIL and CPU-intensive code cannot execute in parallel on multiple cores.
         return self._executor.submit(fibonacci, n)
 
 
@@ -68,8 +70,6 @@ if __name__ == "__main__":
         signal.signal(signal.SIGINT, lambda signum, frame: communicator.shutdown())
 
         adapter = communicator.createObjectAdapter("Fibonacci")
-
-        # We use a process pool to execute the Python CPU-intensive code in separate processes.
         proxy = Demo.FibonacciBackEndPrx.uncheckedCast(adapter.addWithUUID(FibonacciBackEndI(exec)))
 
         adapter.add(FibonacciI(proxy), Ice.stringToIdentity("Fibonacci"))  # front-end

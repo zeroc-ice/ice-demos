@@ -17,7 +17,7 @@ def run(communicator):
 
     try:
         v = fibonacci.compute(-1)
-        print(f"fibonacci(-1) = {v:!r}")  # unexpected
+        assert False
     except Demo.InvalidValue:
         pass  # expected
 
