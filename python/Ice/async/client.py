@@ -15,7 +15,6 @@ async def main():
 
     # Ice.initialize returns an initialized Ice communicator; the communicator is destroyed once it goes out of scope.
     with Ice.initialize(sys.argv, "config.client") as communicator:
-
         # The communicator initialization removes all Ice-related arguments from sys.argv
         if len(sys.argv) > 1:
             print(sys.argv[0] + ": too many arguments")
@@ -30,6 +29,7 @@ async def main():
         menu()
 
         c = None
+        tasks = []
         while c != 'x':
             try:
                 sys.stdout.write("==> ")
@@ -38,15 +38,25 @@ async def main():
                 # run blocking IO with default executor
                 c = (await asyncio.get_running_loop().run_in_executor(None, sys.stdin.readline)).strip()
 
+                # remove completed tasks from the tasks list
+                tasks = [t for t in tasks if not t.done()]
+
                 if c == 'i':
                     # create asyncio future from Ice future
                     await Ice.wrap_future(hello.sayHelloAsync(0))
                 elif c == 'd':
                     # create asyncio task from coroutine returned by slowSayHello
-                    asyncio.create_task(slowSayHello(hello))
+                    tasks.append(asyncio.create_task(slowSayHello(hello)))
                 elif c == 's':
                     # create asyncio future from Ice future
                     await Ice.wrap_future(hello.shutdownAsync())
+                elif c == 'x':
+                    # cancel pending tasks and wait for them to complete before to exit
+                    if len(tasks) > 0:
+                        for t in tasks:
+                            t.cancel()
+                        await asyncio.wait(tasks)
+                    pass
                 elif c == '?':
                     menu()
                 else:
@@ -67,6 +77,9 @@ async def slowSayHello(hello):
         print("task exception:", ex)
     except RuntimeError as ex:
         print("task runtime error:", ex)
+    except asyncio.CancelledError:
+        # the task is cancelled on exit
+        pass
 
 
 def menu():
