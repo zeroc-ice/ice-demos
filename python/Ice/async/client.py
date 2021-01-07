@@ -56,7 +56,6 @@ async def main():
                         for t in tasks:
                             t.cancel()
                         await asyncio.wait(tasks)
-                    pass
                 elif c == '?':
                     menu()
                 else:
