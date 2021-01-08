@@ -16,16 +16,16 @@
     "slice2js": "^3.7.5"
   },
   "devDependencies": {
-    "@types/node": "^12.7.1",
+    "@types/node": "^12.19.12",
     "del": "^5.0.0",
     "gulp": "^4.0.2",
     "gulp-ext-replace": "^0.3.0",
     "gulp-ice-builder": "^3.0.2",
     "gulp-newer": "^1.4.0",
-    "gulp-terser": "^1.2.0",
+    "gulp-terser": "^1.4.1",
     "gulp-typescript": "^5.0.1",
     "pump": "^3.0.0",
-    "typescript": "^3.5.3",
+    "typescript": "^3.9.7",
     "vinyl-paths": "^3.0.0"
   }
 }
