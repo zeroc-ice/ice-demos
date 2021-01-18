@@ -27,7 +27,7 @@
         <Compile Include="../../../SessionI.cs" />
         <SliceCompile Include="../../../Session.ice" />
         <PackageReference Include="zeroc.ice.net" Version="3.7.5" />
-        <PackageReference Include="zeroc.icebuilder.msbuild" Version="5.0.4" />
+        <PackageReference Include="zeroc.icebuilder.msbuild" Version="5.0.6" />
         <Compile Update="generated\Session.cs">
           <SliceCompileSource>../../../Session.ice</SliceCompileSource>
         </Compile>
