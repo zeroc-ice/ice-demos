@@ -45,7 +45,7 @@ async def main():
         loop = asyncio.get_running_loop()
 
         # Install a signal handler to initiate communicator shutdown on Ctrl+C.
-        loop.add_signal_handler(signal.SIGINT, communicator.shutdown)
+        signal.signal(signal.SIGINT, lambda signum, frame: communicator.shutdown())
 
         adapter = communicator.createObjectAdapter("Hello")
         adapter.add(HelloI(loop), Ice.stringToIdentity("hello"))
