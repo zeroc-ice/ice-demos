@@ -13,6 +13,7 @@ PROJECT ?= demos.xcodeproj
 define make-xcodebuild-rule
 $1:: $(PROJECT)
 	xcodebuild -project $(PROJECT) \
+		   -xcconfig buildsettings.xcconfig \
                    -scheme "$3 $(if $(filter $2,macosx),macOS,iOS)" \
                    -configuration $(CONFIG) \
                    -sdk $2 $4
@@ -23,10 +24,8 @@ demos.xcodeproj: Rakefile | carthage
 
 all:: demos
 
-# Workaround for carthage sporadic SEGFAULT (https://github.com/Carthage/Carthage/issues/2760).
-# If it SEGFAULT we retry.
 carthage:
-	carthage update --cache-builds || if [ $$? = 139 ]; then carthage update --cache-builds; fi
+	./carthage.sh bootstrap --cache-builds
 
 demos:: carthage
 

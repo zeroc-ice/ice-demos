@@ -25,8 +25,8 @@
     <ItemGroup>
         <Compile Include="../../../Client.cs" />
         <SliceCompile Include="../../../Printer.ice" />
-        <PackageReference Include="zeroc.ice.net" Version="3.7.4" />
-        <PackageReference Include="zeroc.icebuilder.msbuild" Version="5.0.4" />
+        <PackageReference Include="zeroc.ice.net" Version="3.7.5" />
+        <PackageReference Include="zeroc.icebuilder.msbuild" Version="5.0.6" />
         <Compile Update="generated\Printer.cs">
           <SliceCompileSource>../../../Printer.ice</SliceCompileSource>
         </Compile>

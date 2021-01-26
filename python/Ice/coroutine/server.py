@@ -3,93 +3,75 @@
 # Copyright (c) ZeroC, Inc. All rights reserved.
 #
 
+import concurrent.futures
 import signal
 import sys
-import asyncio
-import urllib.parse
-import os
 import Ice
 
-Ice.loadSlice('Fetcher.ice')
+Ice.loadSlice('--all FibonacciBackEnd.ice')
 import Demo
 
-class FetcherI(Demo.Fetcher):
-    def __init__(self, loop):
-        self.loop = loop
 
-    async def fetch(self, url, current):
-        headers = ''
-        try:
-            #
-            # Parse the URL to determine how the connection should be opened.
-            #
-            r = urllib.parse.urlsplit(url)
-            if r.scheme == 'https':
-                con = asyncio.open_connection(r.hostname, 443, loop=self.loop, ssl=True)
-            else:
-                con = asyncio.open_connection(r.hostname, 80, loop=self.loop)
+# The actual recursive fibonacci implementation. It's written in Python so it executes with the GIL locked.
+def fibonacci(n):
+    if n <= 0:
+        raise Demo.InvalidValue(f"cannot compute fibonacci number for {n!r}")
+    elif n == 1:
+        return 0
+    elif n == 2:
+        return 1
+    else:
+        return fibonacci(n - 2) + fibonacci(n - 1)
 
-            #
-            # Wait for the connection to complete.
-            #
-            reader, writer = await con
 
-            #
-            # Submit a query.
-            #
-            query = ('HEAD {path} HTTP/1.0\r\n'
-                     'Host: {hostname}\r\n'
-                     '\r\n').format(path=r.path or '/', hostname=r.hostname)
-            writer.write(query.encode('latin-1'))
+# The servant for the back-end. It would typically live in a separate back-end server.
+class FibonacciBackEndI(Demo.FibonacciBackEnd):
+    def __init__(self, executor):
+        self._executor = executor
 
-            #
-            # Read all of the headers.
-            #
-            while True:
-                line = await reader.readline()
-                if not line:
-                    break
-                line = line.decode('latin1').rstrip()
-                if line:
-                    if headers:
-                        headers = headers + os.linesep + line
-                    else:
-                        headers = line
+    def compute(self, n, current):
+        # We use a process pool to execute the Python CPU-intensive code in separate processes. With CPython,
+        # Python code locks the GIL and CPU-intensive code cannot execute in parallel on multiple cores.
+        return self._executor.submit(fibonacci, n)
 
-            writer.close()
-        except Exception as ex:
-            raise Demo.FetchException(str(ex))
-        return headers
 
-    async def shutdown(self, current):
-        self.loop.call_soon_threadsafe(self.loop.stop)
+# The servant for Slice interface Fibonacci
+# It's thread-safe because the object adapter hosting this servant is configured to use a single thread created by the
+# underlying Ice C++ runtime.
+class FibonacciI(Demo.Fibonacci):
+    def __init__(self, proxy):
+        self._proxy = proxy
+        self._cache = dict()
 
-#
-# Ice.initialize returns an initialized Ice communicator,
-# the communicator is destroyed once it goes out of scope.
-#
-with Ice.initialize(sys.argv, "config.server") as communicator:
+    async def compute(self, n, current):
+        if n in self._cache:
+            return self._cache[n]
+        else:
+            # can raise InvalidValue
+            result = await self._proxy.computeAsync(n)
+            self._cache[n] = result
+            return result
 
-    #
-    # The communicator initialization removes all Ice-related arguments from argv
-    #
-    if len(sys.argv) > 1:
-        print(sys.argv[0] + ": too many arguments")
-        sys.exit(1)
+    def clearCache(self, current):
+        self._cache.clear()
 
-    loop = asyncio.get_event_loop()
+    def shutdown(self, current):
+        # initiate communicator shutdown
+        current.adapter.getCommunicator().shutdown()
 
-    #
-    # Install a signal handler to stop asyncio loop and shutdown the communicator on Ctrl-C
-    #
-    signal.signal(signal.SIGINT, lambda signum, frame: loop.call_soon_threadsafe(loop.stop))
 
-    adapter = communicator.createObjectAdapter("Fetcher")
-    adapter.add(FetcherI(loop), Ice.stringToIdentity("fetcher"))
-    adapter.activate()
+if __name__ == "__main__":
+    with Ice.initialize(sys.argv, "config.server") as communicator, concurrent.futures.ProcessPoolExecutor() as exec:
 
-    #
-    # Run the asyncio event loop until stop() is called.
-    #
-    loop.run_forever()
-    loop.close()
+        if len(sys.argv) > 1:
+            print(sys.argv[0] + ": too many arguments")
+            sys.exit(1)
+
+        signal.signal(signal.SIGINT, lambda signum, frame: communicator.shutdown())
+
+        adapter = communicator.createObjectAdapter("Fibonacci")
+        proxy = Demo.FibonacciBackEndPrx.uncheckedCast(adapter.addWithUUID(FibonacciBackEndI(exec)))
+
+        adapter.add(FibonacciI(proxy), Ice.stringToIdentity("Fibonacci"))  # front-end
+        adapter.activate()
+        communicator.waitForShutdown()

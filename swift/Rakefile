@@ -5,7 +5,7 @@ require 'xcodeproj'
 $top_level = File.expand_path(File.dirname(__FILE__))
 
 $macOSDeploymentTarget = "10.14"
-$iOSDeploymentTarget = "11.3"
+$iOSDeploymentTarget = "12.0"
 
 $demos = {
     :osx => ["Glacier2/callback",
@@ -162,6 +162,12 @@ def create_uikit_targets(project, demo, aggregate_target)
 
     target.build_configurations.each { |config|
         config.build_settings["CODE_SIGN_IDENTITY"] = "-"
+        config.build_settings["CODE_SIGN_STYLE"] = "Automatic"
+        if config.name == "Debug" or target.product_type == "com.apple.product-type.application" then
+            config.build_settings["CODE_SIGN_IDENTITY"] = "-";
+        else
+            config.build_settings["CODE_SIGN_IDENTITY"] = "";
+        end
     }
     return target
 end
@@ -219,16 +225,16 @@ def target_add_slice2swift_build_rule(project, target, prefix = nil)
 
         "$SLICE2SWIFT" -I"$SLICEDIR" -I"$INPUT_FILE_DIR" --output-dir "$DERIVED_FILE_DIR" "$INPUT_FILE_PATH"
     SCRIPT
+    rule.script = script
+    rule.run_once_per_architecture = "0"
 
     if prefix then
         rule.name = "Slice Compiler for #{prefix}/*.ice"
         rule.file_patterns = "*/#{prefix}/*.ice"
-        rule.script = script
         rule.output_files = ["$(DERIVED_FILE_DIR)/#{prefix}_$(INPUT_FILE_BASE).swift"]
     else
         rule.name = "Slice Compiler"
         rule.file_patterns = "*.ice"
-        rule.script = script
         rule.output_files = ["$(DERIVED_FILE_DIR)/$(INPUT_FILE_BASE).swift"]
     end
     target.build_rules << rule
@@ -266,8 +272,8 @@ def target_set_common_build_settings(target, product, build_dir, platform, plist
     target.build_configurations.each { |config|
         config.build_settings["ENABLE_TESTABILITY"] = "NO"
         config.build_settings["CODE_SIGN_STYLE"] = "Automatic"
-        config.build_settings["CURRENT_PROJECT_VERSION"] = "3.7.4"
-        config.build_settings["DYLIB_CURRENT_VERSION"] = "3.7.4"
+        config.build_settings["CURRENT_PROJECT_VERSION"] = "3.7.5"
+        config.build_settings["DYLIB_CURRENT_VERSION"] = "3.7.5"
         config.build_settings["DYLIB_COMPATIBILITY_VERSION"] = "0"
         config.build_settings["SWIFT_VERSION"] = "5.0"
         if plist != nil then
