@@ -1,6 +1,6 @@
 {
   "name": "ice-demos",
-  "version": "3.7.5",
+  "version": "3.7.6",
   "description": "Sample programs for Ice (Internet Communications Engine)",
   "author": "ZeroC, Inc.",
   "homepage": "https://zeroc.com",
@@ -12,8 +12,8 @@
     "clean": "gulp clean"
   },
   "dependencies": {
-    "ice": "^3.7.5",
-    "slice2js": "^3.7.5"
+    "ice": "^3.7.6",
+    "slice2js": "^3.7.6"
   },
   "devDependencies": {
     "@types/node": "^12.19.12",
