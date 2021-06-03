@@ -13,7 +13,6 @@ PROJECT ?= demos.xcodeproj
 define make-xcodebuild-rule
 $1:: $(PROJECT)
 	xcodebuild -project $(PROJECT) \
-		   -xcconfig buildsettings.xcconfig \
                    -scheme "$3 $(if $(filter $2,macosx),macOS,iOS)" \
                    -configuration $(CONFIG) \
                    -sdk $2 $4
@@ -25,7 +24,7 @@ demos.xcodeproj: Rakefile | carthage
 all:: demos
 
 carthage:
-	./carthage.sh bootstrap --cache-builds
+	carthage bootstrap --cache-builds --use-xcframeworks
 
 demos:: carthage
 

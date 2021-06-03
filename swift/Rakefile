@@ -50,14 +50,14 @@ $demo_variant_sources = {
 }
 
 $demo_extra_frameworks = {
-    "Glacier2/callback" => ["Glacier2.framework"],
+    "Glacier2/callback" => ["Glacier2.xcframework"],
 
-    "IceStorm/clock" => ["IceStorm.framework"],
+    "IceStorm/clock" => ["IceStorm.xcframework"],
 
-    "iOS/chat" => ["Glacier2.framework",
-                   "MessageKit.framework",
+    "iOS/chat" => ["Glacier2.xcframework",
+                   "MessageKit.xcframework",
                    "InputBarAccessoryView.framework"],
-    "iOS/library" => ["Glacier2.framework"]
+    "iOS/library" => ["Glacier2.xcframework"]
 }
 
 $demo_resources = {
@@ -115,9 +115,9 @@ def create_commandline_targets(project, demo, aggregate_target)
             target_add_files(target, group, "#{project.project_dir}/#{demo}/Sources",
                              demo_variant_sources(demo, variant))
 
-            target_add_carthage_framework(target, :osx, "IceImpl.framework")
-            target_add_carthage_framework(target, :osx, "Ice.framework")
-            target_add_carthage_framework(target, :osx, "PromiseKit.framework")
+            target_add_carthage_framework(target, :osx, "IceImpl.xcframework")
+            target_add_carthage_framework(target, :osx, "Ice.xcframework")
+            target_add_carthage_framework(target, :osx, "PromiseKit.xcframework")
             extra_frameworks = $demo_extra_frameworks[demo] || []
             extra_frameworks.each do |f|
                 target_add_carthage_framework(target, :osx, f)
@@ -147,9 +147,9 @@ def create_uikit_targets(project, demo, aggregate_target)
         target.add_resources(group_add_files(group, "#{project.project_dir}", $demo_resources[demo]))
     end
 
-    target_add_carthage_framework(target, :ios, "IceImpl.framework", true)
-    target_add_carthage_framework(target, :ios, "Ice.framework", true)
-    target_add_carthage_framework(target, :ios, "PromiseKit.framework", true)
+    target_add_carthage_framework(target, :ios, "IceImpl.xcframework", true)
+    target_add_carthage_framework(target, :ios, "Ice.xcframework", true)
+    target_add_carthage_framework(target, :ios, "PromiseKit.xcframework", true)
 
     extra_frameworks = $demo_extra_frameworks[demo] || []
     extra_frameworks.each do |f|
@@ -212,8 +212,8 @@ def target_add_slice2swift_build_rule(project, target, prefix = nil)
     rule.file_type = "pattern.proxy"
 
     script = <<~SCRIPT
-        if [ -f "${ICE_HOME-unset}/cpp/bin/slice2swift" ]; then
-            SLICE2SWIFT="$ICE_HOME/cpp/bin/slice2swift"
+        if [ -f "${ICE_HOME-unset}/bin/slice2swift" ]; then
+            SLICE2SWIFT="$ICE_HOME/bin/slice2swift"
             SLICEDIR="$ICE_HOME/slice"
         elif [ -f /usr/local/bin/slice2swift ]; then
             SLICE2SWIFT=/usr/local/bin/slice2swift
@@ -295,27 +295,13 @@ def target_set_framework_build_settings(target, platform)
     carthage_prefix = (platform == :osx) ? "Mac" : "iOS"
     target.build_configurations.each { |config|
         config.build_settings["FRAMEWORK_SEARCH_PATHS"] = "$SRCROOT/Carthage/Build/#{carthage_prefix}"
-        if carthage_prefix == "Mac" then
-            config.build_settings["LD_RUNPATH_SEARCH_PATHS"] = "$SRCROOT/Carthage/Build/#{carthage_prefix}"
-        end
     }
 end
 
 def target_add_carthage_framework(target, platform, framework, copy=false)
     group = target.project.frameworks_group[(platform == :osx ? "OS X" : "iOS")]
-    carthage_prefix = (platform == :osx) ? "Mac" : "iOS"
-    group_add_files(group, "#{$top_level}/Carthage/Build/#{carthage_prefix}", [framework]).each do |ref|
+    group_add_files(group, "#{$top_level}/Carthage/Build", [framework]).each do |ref|
         target.frameworks_build_phases.add_file_reference(ref, true)
-
-        if copy then
-            copy_phase = target.shell_script_build_phases.select { |script| script.name == "Copy Frameworks" }.first
-            unless copy_phase then
-                copy_phase = target.new_shell_script_build_phase("Copy Frameworks")
-                copy_phase.shell_script = "/usr/local/bin/carthage copy-frameworks"
-            end
-            copy_phase.input_paths << "$(SRCROOT)/Carthage/Build/#{carthage_prefix}/#{framework}"
-            copy_phase.output_paths << "$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/#{framework}"
-        end
     end
 end
 

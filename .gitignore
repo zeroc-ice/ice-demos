@@ -213,3 +213,4 @@ swift/Carthage
 
 .build
 Package.resolved
+*.bcsymbolmap
