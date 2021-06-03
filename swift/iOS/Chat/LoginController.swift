@@ -78,6 +78,7 @@ class LoginController: UIViewController, UITextFieldDelegate, UIAlertViewDelegat
                              value: "Glacier2/router:wss -p 443 -h zeroc.com -r /demo-proxy/chat/glacier2 -t 10000")
             prop.setProperty(key: "IceSSL.UsePlatformCAs", value: "1")
             prop.setProperty(key: "IceSSL.CheckCertName", value: "1")
+            prop.setProperty(key: "IceSSL.VerifyDepthMax", value: "5")
             prop.setProperty(key: "Ice.ACM.Client.Timeout", value: "0")
             prop.setProperty(key: "Ice.RetryIntervals", value: "-1")
             return prop

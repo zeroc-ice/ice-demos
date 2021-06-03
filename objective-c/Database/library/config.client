@@ -60,3 +60,4 @@ Ice.RetryIntervals=-1
 Ice.Plugin.IceSSL=IceSSL:createIceSSL
 IceSSL.UsePlatformCAs=1
 IceSSL.CheckCertName=1
+IceSSL.VerifyDepthMax=5

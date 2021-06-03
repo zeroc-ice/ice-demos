@@ -5,3 +5,4 @@ Ice.Default.Router=Glacier2/router:wss -p 443 -h zeroc.com -r /demo-proxy/chat/g
 
 IceSSL.UsePlatformCAs=1
 IceSSL.CheckCertName=1
+IceSSL.VerifyDepthMax=5

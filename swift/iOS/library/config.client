@@ -16,3 +16,4 @@ SessionFactory.Proxy=SessionFactory:wss -h zeroc.com -p 443 -r /demo-proxy/libra
 #
 IceSSL.UsePlatformCAs=1
 IceSSL.CheckCertName=1
+IceSSL.VerifyDepthMax=5

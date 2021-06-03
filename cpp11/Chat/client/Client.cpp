@@ -198,6 +198,7 @@ main(int argc, char* argv[])
         initData.properties->setProperty("Ice.Plugin.IceSSL","IceSSL:createIceSSL");
         initData.properties->setProperty("IceSSL.UsePlatformCAs", "1");
         initData.properties->setProperty("IceSSL.CheckCertName", "1");
+        initData.properties->setProperty("IceSSL.VerifyDepthMax", "5");
         initData.properties->setProperty("Ice.Default.Router",
                                          "Glacier2/router:wss -p 443 -h zeroc.com -r /demo-proxy/chat/glacier2");
     }
