@@ -54,6 +54,8 @@ $demo_extra_frameworks = {
 
     "IceStorm/clock" => ["IceStorm.xcframework"],
 
+    "IceGrid/simple" => ["Glacier2.xcframework", "IceGrid.xcframework"],
+
     "iOS/chat" => ["Glacier2.xcframework",
                    "MessageKit.xcframework",
                    "InputBarAccessoryView.framework"],
@@ -294,7 +296,10 @@ end
 def target_set_framework_build_settings(target, platform)
     carthage_prefix = (platform == :osx) ? "Mac" : "iOS"
     target.build_configurations.each { |config|
-        config.build_settings["FRAMEWORK_SEARCH_PATHS"] = "$SRCROOT/Carthage/Build/#{carthage_prefix}"
+        config.build_settings["FRAMEWORK_SEARCH_PATHS"] = "$SRCROOT/Carthage/Build/"
+        if carthage_prefix == "Mac" then
+            config.build_settings["LD_RUNPATH_SEARCH_PATHS"] = "@executable_path"
+        end
     }
 end
 

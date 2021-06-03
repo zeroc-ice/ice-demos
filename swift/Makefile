@@ -18,15 +18,15 @@ $1:: $(PROJECT)
                    -sdk $2 $4
 endef
 
-demos.xcodeproj: Rakefile | carthage
+demos.xcodeproj: Rakefile | carthage-bootstrap
 	rake
 
 all:: demos
 
-carthage:
+carthage-bootstrap:
 	carthage bootstrap --cache-builds --use-xcframeworks
 
-demos:: carthage
+demos:: carthage-bootstrap
 
 install::
 	@echo nothing to install
