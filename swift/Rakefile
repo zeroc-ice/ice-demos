@@ -58,7 +58,7 @@ $demo_extra_frameworks = {
 
     "iOS/chat" => ["Glacier2.xcframework",
                    "MessageKit.xcframework",
-                   "InputBarAccessoryView.framework"],
+                   "InputBarAccessoryView.xcframework"],
     "iOS/library" => ["Glacier2.xcframework"]
 }
 
@@ -282,7 +282,7 @@ def target_set_common_build_settings(target, product, build_dir, platform, plist
             config.build_settings["INFOPLIST_FILE"] = plist
         end
         config.build_settings["PRODUCT_NAME"] = product
-        config.build_settings["CONFIGURATION_BUILD_DIR"] = build_dir
+        config.build_settings["CONFIGURATION_BUILD_DIR"] = "#{build_dir}/Build"
         config.build_settings["PRODUCT_BUNDLE_IDENTIFIER"] = "com.zeroc.demo.#{product}"
 
         if platform == :osx
@@ -307,7 +307,20 @@ def target_add_carthage_framework(target, platform, framework, copy=false)
     group = target.project.frameworks_group[(platform == :osx ? "OS X" : "iOS")]
     group_add_files(group, "#{$top_level}/Carthage/Build", [framework]).each do |ref|
         target.frameworks_build_phases.add_file_reference(ref, true)
+
+        if copy then
+            embed_frameworks_build_phase = target.build_phases.find { |bp| bp.display_name == "Embed Frameworks" }
+            if !embed_frameworks_build_phase then
+                embed_frameworks_build_phase = target.new_copy_files_build_phase('Embed Frameworks')
+                embed_frameworks_build_phase.dst_subfolder_spec = "10" # Frameworks
+            end
+            build_file = embed_frameworks_build_phase.add_file_reference(ref, true)
+            # add 'CodeSignOnCopy' to the list to enable signing
+            build_file.settings = { 'ATTRIBUTES' => ['RemoveHeadersOnCopy'] }
+        end
+
     end
+
 end
 
 #
