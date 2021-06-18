@@ -30,18 +30,18 @@ In order to build these Ice for Swift sample programs, you need:
 ### Install required dependencies using Carthage:
 
 ```
-carthage update
+carthage bootstrap --cache-builds --use-xcframeworks
 ```
 
 This command will build the `Ice` and `PromiseKit` frameworks required by the
 sample programs and install them in the `Carthage/Build/` directory.
 
-Note: building `Ice macOS` and `Ice iOS` from source during `carthage update`
+Note: building `Ice macOS` and `Ice iOS` from source during `carthage bootstrap`
 takes some time, please be patient.
 
 If you want to use the `slice2swift` and `slice2cpp` compilers from a source
 distribution, set the `ICE_HOME` environment variable before running
-`carthage update`.
+`carthage bootstrap`.
 
 ### Building the demos
 
@@ -56,8 +56,8 @@ Xcode.
 
 ### Running the Demos
 
-For most demos, you can simply run `server` and `client` in separate terminals.
-Refer to the README.md file in each demo directory for the exact usage
+For most demos, you can simply run `./Build/server` and `./Build/client` in separate
+terminals. Refer to the README.md file in each demo directory for the exact usage
 instructions.
 
 Some demos require Ice services such as IceGrid and IceStorm that are not

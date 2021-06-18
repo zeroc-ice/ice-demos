@@ -15,13 +15,13 @@ current working directory.
 In a separate window:
 
 ```
-subscriber
+./Build/subscriber
 ```
 
 In another window:
 
 ```
-publisher
+./Build/publisher
 ```
 
 While the publisher continues to run, "tick" messages should be
@@ -40,40 +40,40 @@ Subscriber Options
 ------------------
 
 ```
-subscriber --oneway
+./Build/subscriber --oneway
 ```
 
 The subscriber receives events as oneway messages. This is the
 default.
 
 ```
-subscriber --datagram
+./Build/subscriber --datagram
 ```
 
 The subscriber receives events as datagrams.
 
 ```
-subscriber --twoway
+./Build/subscriber --twoway
 ```
 
 The subscriber receives events as twoway messages.
 
 ```
-subscriber --ordered
+./Build/subscriber --ordered
 ```
 
 The subscriber receives events as twoway messages with guaranteed
 ordering.
 
 ```
-subscriber --batch
+./Build/subscriber --batch
 ```
 
 This is an additional flag that forwards datagram and oneway events
 to the subscriber in batches.
 
 ```
-subscriber --id <id>
+./Build/subscriber --id <id>
 ```
 
 This option specifies a unique identity for this subscriber. When
@@ -82,13 +82,13 @@ port by setting the `Clock.Subscriber.Endpoints` property. For
 example:
 
 ```
-subscriber --Clock.Subscriber.Endpoints="tcp -p <port> -h <host>"
+./Build/subscriber --Clock.Subscriber.Endpoints="tcp -p <port> -h <host>"
 ```
 
 Replace "tcp" with "udp" when using the --datagram option.
 
 ```
-subscriber --retryCount <count>
+./Build/subscriber --retryCount <count>
 ```
 
 This option sets the retry count for a subscriber. This option
@@ -99,19 +99,19 @@ Publisher Options
 -----------------
 
 ```
-publisher --oneway
+./Build/publisher --oneway
 ```
 
 The publisher sends events as oneway messages. This is the default.
 
 ```
-publisher --datagram
+./Build/publisher --datagram
 ```
 
 The publisher sends events as datagrams.
 
 ```
-publisher --twoway
+./Build/publisher --twoway
 ```
 
 The publisher sends events as twoway messages.

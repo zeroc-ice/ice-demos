@@ -3,15 +3,15 @@ This demo shows how to use replication with [IceDiscovery][1].
 To run the demo, start the 3 servers:
 
 ```
-server --Ice.Config=config.server1
-server --Ice.Config=config.server2
-server --Ice.Config=config.server3
+./Build/server --Ice.Config=config.server1
+./Build/server --Ice.Config=config.server2
+./Build/server --Ice.Config=config.server3
 ```
 
 In a separate window:
 
 ```
-client
+./Build/client
 ```
 
 The client invokes the number of specified iterations with a given

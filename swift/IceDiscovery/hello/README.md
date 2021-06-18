@@ -3,13 +3,13 @@ This demo is the Ice hello world demo configured to use [IceDiscovery][1].
 To run the demo, first start the server:
 
 ```
-server
+./Build/server
 ```
 
 In a separate window, start the client:
 
 ```
-client
+./Build/client
 ```
 
 The client and server use IceDiscovery to enable the location of the

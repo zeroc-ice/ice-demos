@@ -5,11 +5,11 @@ call for the calculations without blocking.
 To run the demo, first start the server:
 
 ```
-server
+./Build/server
 ```
 
 In a second window, start the client:
 
 ```
-client
+./Build/client
 ```

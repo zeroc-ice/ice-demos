@@ -11,7 +11,7 @@ In a separate window:
 
 ```
 icegridadmin --Ice.Config=config.grid -e "application add application.xml"
-client
+./Build/client
 ```
 
 This will deploy the application described in the file

@@ -4,13 +4,13 @@ authentication system for securing operations on a remote object.
 To run the demo, first start the server:
 
 ```
-server
+./Build/server
 ```
 
 In a separate window, start the client:
 
 ```
-client
+./Build/client
 ```
 
 The demo models a remote controlled thermostat with operations for getting and setting

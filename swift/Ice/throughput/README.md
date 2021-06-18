@@ -5,11 +5,11 @@ that can be achieved using serialized synchronous requests.
 To run the demo, first start the server:
 
 ```
-server
+./Build/server
 ```
 
 In a separate window, start the client:
 
 ```
-client
+./Build/client
 ```

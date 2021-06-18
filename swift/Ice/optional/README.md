@@ -4,13 +4,13 @@ This demo illustrates the use of [optional class members][1] and
 To run the demo, first start the server:
 
 ```
-server
+./Build/server
 ```
 
 In a separate window, start the client:
 
 ```
-client
+./Build/client
 ```
 
 [1]: https://doc.zeroc.com/ice/3.7/the-slice-language/optional-data-members

@@ -5,13 +5,13 @@ well as how to make [oneway][1], [datagram][2], [secure][3], and
 To run the demo, first start the server:
 
 ```
-server
+./Build/server
 ```
 
 In a separate window, start the client:
 
 ```
-client
+./Build/client
 ```
 
 To test [timeouts][5] you can use 'T' to set an invocation timeout on the
