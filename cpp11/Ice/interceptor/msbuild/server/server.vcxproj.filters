@@ -39,13 +39,7 @@
     <ClInclude Include="x64\Release\Interceptor.h">
       <Filter>Header Files\x64\Release</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\AuthenticatorI.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\InterceptorI.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ThermostatI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

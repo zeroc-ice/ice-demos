@@ -26,7 +26,7 @@
         <Compile Include="../../../Subscriber.cs" />
         <SliceCompile Include="../../../Clock.ice" />
         <PackageReference Include="zeroc.ice.net" Version="3.7.6" />
-        <PackageReference Include="zeroc.icebuilder.msbuild" Version="5.0.6" />
+        <PackageReference Include="zeroc.icebuilder.msbuild" Version="5.0.7" />
         <Compile Update="generated\Clock.cs">
           <SliceCompileSource>../../../Clock.ice</SliceCompileSource>
         </Compile>
