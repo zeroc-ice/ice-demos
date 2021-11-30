@@ -23,7 +23,7 @@
     <ItemGroup>
         <Compile Include="../../../Client.cs" />
         <SliceCompile Include="../../../Props.ice" />
-        <PackageReference Include="zeroc.ice.net" Version="3.7.6" />
+        <PackageReference Include="zeroc.ice.net" Version="3.7.7" />
         <PackageReference Include="zeroc.icebuilder.msbuild" Version="5.0.7" />
         <Compile Update="generated\Props.cs">
           <SliceCompileSource>../../../Props.ice</SliceCompileSource>

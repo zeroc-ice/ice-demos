@@ -23,7 +23,7 @@
     <ItemGroup>
         <Compile Include="../../../Server.cs" />
         <SliceCompile Include="../../../Latency.ice" />
-        <PackageReference Include="zeroc.ice.net" Version="3.7.6" />
+        <PackageReference Include="zeroc.ice.net" Version="3.7.7" />
         <PackageReference Include="zeroc.icebuilder.msbuild" Version="5.0.7" />
         <Compile Update="generated\Latency.cs">
           <SliceCompileSource>../../../Latency.ice</SliceCompileSource>

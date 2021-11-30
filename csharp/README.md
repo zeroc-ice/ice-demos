@@ -242,4 +242,4 @@ refer to [Using the Windows Binary Distributions][4] for additional information.
 [3]: https://marketplace.visualstudio.com/items?itemName=ZeroCInc.IceBuilder
 [4]: https://doc.zeroc.com/ice/3.7/release-notes/using-the-windows-binary-distributions
 [5]: https://dotnet.microsoft.com/download/dotnet-core
-[6]: https://doc.zeroc.com/rel/ice-releases/ice-3-7/ice-3-7-6-release-notes
+[6]: https://doc.zeroc.com/rel/ice-releases/ice-3-7/ice-3-7-7-release-notes
