@@ -29,8 +29,8 @@ slice {
 // This is usually (but not always) the version of the Ice Jar files we want to use.
 //
 project.ext.iceArtifactVersion = slice.iceVersion
-
 project.version = project.iceArtifactVersion
+project.ext.srcDist = new File([project.slice.iceHome, "java-compat", "src"].join(File.separator)).exists()
 
 buildscript {
     //
@@ -67,10 +67,9 @@ buildscript {
 }
 
 repositories {
-    if(slice.jarDir != null) {
-        flatDir {
-            name "local"
-            dirs slice.jarDir
+    if(project.ext.srcDist) {
+        repositories {
+            flatDir dirs: "file://${project.slice.iceHome}/java-compat/lib"
         }
     }
 
@@ -114,8 +113,8 @@ def demoJar(name, mainClass = name.capitalize()) {
 }
 
 def localDependency(artifactId) {
-    if (slice.srcDist) {
-        return files("${project.slice.jarDir}/${artifactId}-${project.iceArtifactVersion}.jar")
+    if(project.ext.srcDist) {
+        return files("${project.slice.iceHome}/java-compat/lib/${artifactId}-${project.iceArtifactVersion}.jar")
     } else {
         return "com.zeroc:${artifactId}:${project.iceArtifactVersion}"
     }
