@@ -9,7 +9,8 @@ buildscript {
             classpath "net.sf.proguard:proguard-gradle:6.0.2"
         }
         else {
-            classpath "net.sf.proguard:proguard-gradle:6.1.1"
+            // TODO 7.2.x is required for Java 17 update to the final release
+            classpath "com.guardsquare:proguard-gradle:7.2.0-beta2"
         }
     }
 }
@@ -30,7 +31,7 @@ dependencies {
     implementation localDependency("glacier2-compat")
 }
 
-if(JavaVersion.current() == JavaVersion.VERSION_11) {
+if(JavaVersion.current() >= JavaVersion.VERSION_11) {
     jar {
         archiveName = "ChatGUI.jar"
         destinationDir = new File("${projectDir}")
