@@ -1,7 +1,7 @@
 # C# Demos
 
 - [Overview](#overview)
-- [Building and running the Demos with .NET 5.0 on Windows, Linux, and macOS](#building-and-running-the-demos-with-net-core-on-windows-linux-and-macos)
+- [Building and running the Demos with .NET 6.0 on Windows, Linux, and macOS](#building-and-running-the-demos-with-net-core-on-windows-linux-and-macos)
 - [Building and running the Demos with .NET Core on Windows, Linux, and macOS](#building-and-running-the-demos-with-net-core-on-windows-linux-and-macos)
 - [Building and running the Demos with .NET Framework on Windows](#building-and-running-the-demos-with-net-framework-on-windows)
 
@@ -23,20 +23,19 @@ in the [Ice manual][1].
 Refer to the [C++11 demos](../cpp11) for more examples that use the Ice services
 (Glacier2, IceGrid, IceStorm).
 
-## Building and running the Demos with .NET 5.0 on Windows, Linux, and macOS
+## Building and running the Demos with .NET 6.0 on Windows, Linux, and macOS
 
 ### Build Requirements
 
 In order to build Ice for .NET sample programs, you need all of the following:
 
- - the [.NET Core SDK][5] version 5.0
+ - the [.NET Core SDK][5] version 6.0
  - Slice to C# compiler, for Windows platform the Slice to C# compiler is included
    with the `zeroc.ice.net` NuGet package installed during build, for other platforms
    refer to the [Release Notes][6].
 
-You can build from the command-line or with Visual Studio (2017 or 2019, for
-Windows or Mac). If you use Visual Studio, the [Ice Builder][3] extension is
-optional on Windows, and not available on macOS.
+You can build from the command-line or with Visual Studio (2022 for Windows or Mac). If you use Visual Studio,
+the [Ice Builder][3] extension is optional on Windows, and not available on macOS.
 
 ### Building the demos using NuGet packages:
 
@@ -49,8 +48,8 @@ cd csharp
 To build the sample programs run:
 
 ```
-dotnet restore "C# NET 5.0 demos.sln"
-dotnet msbuild "C# NET 5.0 demos.sln"
+dotnet restore "C# NET 6.0 demos.sln"
+dotnet msbuild "C# NET 6.0 demos.sln"
 ```
 
 The demos are configured to use the Ice NuGet packages. These packages are automatically
@@ -69,20 +68,20 @@ Install packages from the source build:
 On Windows
 
 ```
-msbuild /p:IceHome=<Ice dist path> /t:Net5InstallLocalPackages msbuild\ice.proj
+msbuild /p:IceHome=<Ice dist path> /t:Net6InstallLocalPackages msbuild\ice.proj
 ```
 
 On Linux and macOS
 
 ```
-dotnet msbuild /p:IceHome=<Ice dist path> /t:Net5InstallLocalPackages msbuild/ice.proj
+dotnet msbuild /p:IceHome=<Ice dist path> /t:Net6InstallLocalPackages msbuild/ice.proj
 ```
 
 To build the sample programs run:
 
 ```
-dotnet restore "C# NET 5.0 demos.sln"
-dotnet msbuild "C# NET 5.0 demos.sln"
+dotnet restore "C# NET 6.0 demos.sln"
+dotnet msbuild "C# NET 6.0 demos.sln"
 ```
 
 ### Running the Demos
@@ -241,5 +240,5 @@ refer to [Using the Windows Binary Distributions][4] for additional information.
 [2]: https://doc.zeroc.com/technical-articles/general-topics/chat-demo
 [3]: https://marketplace.visualstudio.com/items?itemName=ZeroCInc.IceBuilder
 [4]: https://doc.zeroc.com/ice/3.7/release-notes/using-the-windows-binary-distributions
-[5]: https://dotnet.microsoft.com/download/dotnet-core
+[5]: https://download/dotnet/6.0
 [6]: https://doc.zeroc.com/rel/ice-releases/ice-3-7/ice-3-7-7-release-notes
