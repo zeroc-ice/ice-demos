@@ -1,11 +1,14 @@
+
 buildscript {
     repositories {
         mavenCentral()
     }
 
     dependencies {
-        // TODO 7.2.x is required for Java 17 update to the final release
-        classpath "com.guardsquare:proguard-gradle:7.2.0-beta2"
+        if (JavaVersion.current() > JavaVersion.VERSION_1_8) {
+            // TODO 7.2.x is required for Java 17 update to the final release
+            classpath "com.guardsquare:proguard-gradle:7.2.0-beta2"
+        }
     }
 }
 
@@ -24,17 +27,7 @@ dependencies {
     implementation localDependency("glacier2")
 }
 
-if(JavaVersion.current() == JavaVersion.VERSION_11) {
-    jar {
-        archiveFileName = "Chat.jar"
-        destinationDirectory = new File("${projectDir}")
-        manifest {
-            attributes 'Main-Class': "com.zeroc.demos.Chat.MainView"
-            attributes("Class-Path": configurations.runtimeClasspath.resolve().collect{ it.toURI() }.join(' '))
-        }
-    }
-}
-else {
+if(JavaVersion.current() > JavaVersion.VERSION_1_8) {
     jar {
         archiveFileName = "ChatTEMP.jar"
         manifest {
@@ -60,6 +53,16 @@ else {
         configuration "chatdemo.pro"
     }
     assemble.dependsOn(proguard)
+}
+else {
+    jar {
+        archiveFileName = "Chat.jar"
+        destinationDirectory = new File("${projectDir}")
+        manifest {
+            attributes 'Main-Class': "com.zeroc.demos.Chat.MainView"
+            attributes("Class-Path": configurations.runtimeClasspath.resolve().collect{ it.toURI() }.join(' '))
+        }
+    }
 }
 
 clean {

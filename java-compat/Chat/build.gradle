@@ -8,6 +8,9 @@ buildscript {
         if(JavaVersion.current() < JavaVersion.VERSION_1_8) {
             classpath "net.sf.proguard:proguard-gradle:6.0.2"
         }
+        else if (JavaVersion.current() == JavaVersion.VERSION_1_8) {
+            classpath "net.sf.proguard:proguard-gradle:6.1.1"
+        }
         else {
             // TODO 7.2.x is required for Java 17 update to the final release
             classpath "com.guardsquare:proguard-gradle:7.2.0-beta2"
