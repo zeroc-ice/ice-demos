@@ -71,6 +71,14 @@ repositories {
         }
     }
 
+    if(new File("/usr/share/maven-repo").exists()){
+        repositories {
+            maven {
+                url "file:///usr/share/maven-repo"
+            }
+        }
+    }
+
     if(project.devRepo) {
         maven {
             url project.devRepo
