@@ -18,7 +18,7 @@ Glacier2.Client.Endpoints=tcp -p 4063:ssl -p 4064:ws -p 5063:wss -p 5064
 # Only listen on the localhost interface by default. You can comment
 # out this property to allow listening on all available interfaces.
 #
-Ice.Default.Host=127.0.0.1
+Ice.Default.Host=localhost
 
 #
 # Disable client-side authentication. JavaScript clients using
