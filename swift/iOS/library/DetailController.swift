@@ -234,12 +234,10 @@ class DetailController: UIViewController {
         // open an alert with just an OK button
         //
         let alert = UIAlertController(title: "Error", message: s, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
-            if fatal {
-                self.delegate.destroySession()
-                self.navigationController?.popToRootViewController(animated: true)
-            }
-        })
+        // On iPad, action sheets must be presented from a popover.
+        alert.popoverPresentationController?.sourceView = self.tableView
+        alert.popoverPresentationController?.sourceRect =
+        CGRect(x: self.tableView.bounds.midX, y: self.tableView.bounds.maxY, width: 0, height: 0)
         present(alert, animated: true, completion: nil)
     }
 }
@@ -497,7 +495,10 @@ extension DetailController: UITableViewDelegate, UITableViewDataSource {
                         self.exception(error)
                     }
                 })
-
+                // On iPad, action sheets must be presented from a popover.
+                alert.popoverPresentationController?.sourceView = self.tableView
+                alert.popoverPresentationController?.sourceRect =
+                CGRect(x: self.tableView.bounds.midX, y: self.tableView.bounds.maxY, width: 0, height: 0)
                 present(alert, animated: true, completion: nil)
                 selectedIndexPath = indexPath
                 return
