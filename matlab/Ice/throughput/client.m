@@ -43,10 +43,8 @@ function client()
         if throughput.needsWarmup()
             warmupBytes = zeros(1, 1, 'uint8');
             warmupStrings = cell(1, 1);
-            warmupStructs = cell(1, 1);
-            warmupStructs{1} = StringDouble();
-            warmupFixed = cell(1, 1);
-            warmupFixed{1} = Fixed();
+            warmupStructs(1, 1) = StringDouble('hello', 3.14);
+            warmupFixed(1, 1) = Fixed(0, 0, 0);
 
             throughput.startWarmup();
 
