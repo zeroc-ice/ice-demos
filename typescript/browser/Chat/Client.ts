@@ -250,10 +250,10 @@ import {Chat} from "./generated";
                                 });
 
                         connection.setCloseCallback(() => reject(new Error("Connection lost")));
-                        $("#signout").click(() =>
+                        $("#signout").on('click', () =>
                                             {
                                                 connection.setCloseCallback(null);
-                                                resolve();
+                                                resolve(null);
                                             });
                     });
         }
@@ -300,17 +300,17 @@ import {Chat} from "./generated";
                                             $(from).css("display", "none");
                                             if(to)
                                             {
-                                                $(to).css("display", "block").fadeIn("slow", () => resolve());
+                                                $(to).css("display", "block").fadeIn("slow", () => resolve(null));
                                             }
                                             else
                                             {
-                                                resolve();
+                                                resolve(null);
                                             }
                                         });
                     }
                     else
                     {
-                        $(to).css("display", "block").fadeIn("slow", () => resolve());
+                        $(to).css("display", "block").fadeIn("slow", () => resolve(null));
                     }
                 });
     }

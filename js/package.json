@@ -13,19 +13,19 @@
     "run": "gulp run"
   },
   "dependencies": {
-    "ice": "^3.7.7-pre.1",
+    "ice": "^3.7.7",
     "slice2js": "^3.7.7"
   },
   "devDependencies": {
-    "@babel/cli": "^7.12.10",
-    "@babel/core": "^7.12.10",
-    "@babel/plugin-transform-async-to-generator": "^7.12.1",
-    "@babel/preset-env": "^7.12.11",
+    "@babel/cli": "^7.16.8",
+    "@babel/core": "^7.16.7",
+    "@babel/plugin-transform-async-to-generator": "^7.16.8",
+    "@babel/preset-env": "^7.16.8",
     "babel-plugin-transform-builtin-extend": "^1.1.2",
     "babel-preset-es2015-script": "^1.1.0",
-    "core-js": "^3.8.2",
-    "core-js-bundle": "^3.8.2",
-    "del": "^5.0.0",
+    "core-js": "^3.20.3",
+    "core-js-bundle": "^3.20.3",
+    "del": "^5.1.0",
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
     "gulp-concat": "^2.6.1",
@@ -39,7 +39,7 @@
     "hogan.js": "^3.0.2",
     "http-proxy": "^1.18.1",
     "pump": "^3.0.0",
-    "regenerator-runtime": "^0.13.7",
+    "regenerator-runtime": "^0.13.9",
     "vinyl-paths": "^3.0.1"
   }
 }

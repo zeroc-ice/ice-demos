@@ -116,10 +116,10 @@ async function runWithSession(router:Glacier2.RouterPrx, session:Demo.ChatSessio
                                 }
                             });
 
-                    $("#signout").click(() =>
+                    $("#signout").on('click', () =>
                                         {
                                             connection.setCloseCallback(null);
-                                            resolve();
+                                            resolve(null);
                                         });
                 });
         //
