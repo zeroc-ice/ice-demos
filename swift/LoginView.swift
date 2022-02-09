@@ -1,8 +1,5 @@
 //
-//  LoginView.swift
-//  IOSChat
-//
-//  Created by Reece Humphreys on 2/8/22.
+// Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
 import SwiftUI
@@ -10,6 +7,7 @@ import SwiftUI
 struct LoginView: View {
     
     @ObservedObject var loginViewModel = LoginViewModel()
+    @State var selection: Int? = nil
     
     func login(){
         
@@ -39,6 +37,7 @@ struct LoginView: View {
 //    }
     
     var body: some View {
+        NavigationView {
         VStack(spacing: 35) {
             Spacer()
             VStack(alignment: .leading, spacing: 35) {
@@ -54,22 +53,27 @@ struct LoginView: View {
                 }.accentColor(Color.blue)
             }.padding()
             Spacer()
-            Button("Login") {
-                loginViewModel.attemptLogin { success in
-                    if success {
-                        print("Yay")
-                    } else {
-                        print("Nay")
+            //let chatView: SwiftUIExampleView? = nil
+            NavigationLink(destination: chatView!, tag: 1, selection: $selection) {
+                Button("Login") {
+                    loginViewModel.attemptLogin { error, config in
+                        if error != nil {
+                            
+                        } else {
+                            //chatView = SwiftUIExampleView(config: config)
+                            self.selection = 1
+                        }
                     }
-                }
-            }.frame(maxWidth: .infinity, maxHeight: 50.0)
-                .background(loginViewModel.isSigninComplete ? Color.blue : Color.gray)
-             .accentColor(.white)
-             .cornerRadius(5.0)
-             .disabled(!loginViewModel.isSigninComplete)
+                }.frame(maxWidth: .infinity, maxHeight: 50.0)
+                    .background(loginViewModel.isSigninComplete ? Color.blue : Color.gray)
+                 .accentColor(.white)
+                 .cornerRadius(5.0)
+                 .disabled(!loginViewModel.isSigninComplete)
+            }
             Spacer()
         }
         .padding()
+        }
     }
 }
 

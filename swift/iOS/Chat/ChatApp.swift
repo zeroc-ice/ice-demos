@@ -4,9 +4,8 @@
 
 import SwiftUI
 
-@main 
+@main
 struct ChatApp: App {
-    
     var body: some Scene {
         WindowGroup {
             LoginView()
