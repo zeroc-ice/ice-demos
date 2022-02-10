@@ -164,9 +164,7 @@ class Client: ChatRoomCallback, ObservableObject {
         }
     }
     
-    @objc func logout(){
-        
-    }
+
 
     func destroySession() {
         messages = []
@@ -191,4 +189,10 @@ class Client: ChatRoomCallback, ObservableObject {
         }
     }
 
+}
+
+@objc extension Client {
+    func logout(_: UIBarButtonItem){
+        
+    }
 }

@@ -9,11 +9,36 @@ import PromiseKit
 
 final class MessageSwiftUIVC: MessagesViewController {
     
+    var client: Client?
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // Because SwiftUI wont automatically make our controller the first responder, we need to do it on viewDidAppear
         becomeFirstResponder()
         messagesCollectionView.scrollToLastItem(animated: true)
+    }
+    
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        let logoutButton = UIBarButtonItem(title: "Logout", style: .done, target: self, action: #selector(logout(_:)))
+        self.parent?.navigationItem.leftBarButtonItem = logoutButton
+        self.parent?.navigationItem.setHidesBackButton(true, animated: true)
+        
+        let usersButton = UIBarButtonItem(title: "Users", style: .plain, target: self, action: #selector(showUsers(_:)))
+        self.parent?.navigationItem.rightBarButtonItem = usersButton
+        
+    }
+    
+    @objc func showUsers(_ : UIBarButtonItem){
+        let swiftUIView = UsersView(users: client?.users ?? [])
+        let hostingController = UIHostingController(rootView: swiftUIView)
+        present(hostingController, animated: true, completion: nil)
+    }
+    
+    @objc func logout(_ : UIBarButtonItem){
+        client?.destroySession()
     }
 }
 
@@ -26,7 +51,7 @@ struct MessagesView: UIViewControllerRepresentable {
         
         print("making view")
         let messagesVC = MessageSwiftUIVC()
-        
+        messagesVC.client = client
         messagesVC.messagesCollectionView.messagesDisplayDelegate = context.coordinator
         messagesVC.messagesCollectionView.messagesLayoutDelegate = context.coordinator
         messagesVC.messagesCollectionView.messagesDataSource = context.coordinator
@@ -35,7 +60,6 @@ struct MessagesView: UIViewControllerRepresentable {
         messagesVC.maintainPositionOnKeyboardFrameChanged = true // default false
         messagesVC.showMessageTimestampOnSwipeLeft = true // default false
         
-        print("Navigation Controller: \(messagesVC.navigationController)")
 
         
         messagesVC.messageInputBar.inputTextView.placeholder = "Message"
@@ -44,7 +68,7 @@ struct MessagesView: UIViewControllerRepresentable {
                                                object: nil)
         precondition(client.session != nil)
         precondition(client.router != nil)
-        messagesVC.messagesCollectionView.reloadData()
+        //messagesVC.messagesCollectionView.reloadData()
 
         if let conn = client.router!.ice_getCachedConnection() {
             conn.setACM(timeout: client.acmTimeout, close: nil, heartbeat: .HeartbeatAlways)
@@ -101,12 +125,7 @@ struct MessagesView: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: MessagesViewController, context: Context) {
         uiViewController.messagesCollectionView.reloadData()
         scrollToBottom(uiViewController)
-        print("2 Navigation Controller: \(uiViewController.navigationController)")
-        let button = UIBarButtonItem(title: "Logout", style: .done, target: self, action: #selector(client.logout))
-        uiViewController.navigationItem.leftBarButtonItem = button
-        
-        let button2 = UIBarButtonItem(title: "Users", style: .done, target: self, action: #selector(client.logout))
-        uiViewController.navigationItem.rightBarButtonItem = button
+
     }
     
     private func scrollToBottom(_ uiViewController: MessagesViewController) {
