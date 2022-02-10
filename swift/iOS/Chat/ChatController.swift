@@ -10,22 +10,22 @@ import UIKit
 import Glacier2
 import Ice
 
-class ChatRoomCallbackInterceptor: Disp {
-    private let servantDisp: Disp
-    init(_ servantDisp: Disp) {
-        self.servantDisp = servantDisp
-    }
-
-    func dispatch(request: Request, current: Current) throws -> Promise<Ice.OutputStream>? {
-        //
-        // Dispatch the request to the main thread in order
-        // to modify the UI in a thread safe manner.
-        //
-        return try DispatchQueue.main.sync {
-            try self.servantDisp.dispatch(request: request, current: current)
-        }
-    }
-}
+//class ChatRoomCallbackInterceptor: Disp {
+//    private let servantDisp: Disp
+//    init(_ servantDisp: Disp) {
+//        self.servantDisp = servantDisp
+//    }
+//
+//    func dispatch(request: Request, current: Current) throws -> Promise<Ice.OutputStream>? {
+//        //
+//        // Dispatch the request to the main thread in order
+//        // to modify the UI in a thread safe manner.
+//        //
+//        return try DispatchQueue.main.sync {
+//            try self.servantDisp.dispatch(request: request, current: current)
+//        }
+//    }
+//}
 
 class ChatController: ChatLayoutController, ChatRoomCallback {
     var communicator: Ice.Communicator?

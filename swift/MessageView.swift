@@ -5,8 +5,10 @@
 import SwiftUI
 import MessageKit
 import InputBarAccessoryView
+import PromiseKit
 
 final class MessageSwiftUIVC: MessagesViewController {
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // Because SwiftUI wont automatically make our controller the first responder, we need to do it on viewDidAppear
@@ -18,10 +20,11 @@ final class MessageSwiftUIVC: MessagesViewController {
 struct MessagesView: UIViewControllerRepresentable {
     
     @State var initialized = false
-    @Binding var messages: [ChatMessage]
-    @Binding var currentUser: ChatUser
+    @EnvironmentObject var client: Client
     
     func makeUIViewController(context: Context) -> MessagesViewController {
+        
+        print("making view")
         let messagesVC = MessageSwiftUIVC()
         
         messagesVC.messagesCollectionView.messagesDisplayDelegate = context.coordinator
@@ -32,12 +35,78 @@ struct MessagesView: UIViewControllerRepresentable {
         messagesVC.maintainPositionOnKeyboardFrameChanged = true // default false
         messagesVC.showMessageTimestampOnSwipeLeft = true // default false
         
+        print("Navigation Controller: \(messagesVC.navigationController)")
+
+        
+        messagesVC.messageInputBar.inputTextView.placeholder = "Message"
+        client.messages = []
+        NotificationCenter.default.addObserver(self, selector: Selector("NO"), name: UIApplication.didEnterBackgroundNotification,
+                                               object: nil)
+        precondition(client.session != nil)
+        precondition(client.router != nil)
+        messagesVC.messagesCollectionView.reloadData()
+
+        if let conn = client.router!.ice_getCachedConnection() {
+            conn.setACM(timeout: client.acmTimeout, close: nil, heartbeat: .HeartbeatAlways)
+
+            do {
+                try conn.setCloseCallback { _ in
+                    //
+                    // Dispatch the connection close callback to the main thread
+                    // in order to modify the UI in a thread safe manner.
+                    //
+                    DispatchQueue.main.async {
+                        self.closed(messagesVC)
+                    }
+                }
+            } catch {
+            }
+        }
+
+        // Register the chat callback.
+        firstly {
+            client.session!.setCallbackAsync(client.callbackProxy)
+        }.catch { err in
+            print("ERRRIR!")
+            print(err)
+            // TODO
+//            self.exception(err: err)
+        }
         return messagesVC
     }
+    
+    func closed(_ uiViewController: MessagesViewController) {
+        // The session is invalid, clear.
+        if client.session != nil, let controller = uiViewController.navigationController {
+            client.session = nil
+            client.router = nil
+
+            controller.popToRootViewController(animated: true)
+
+            client.destroySession()
+
+            // Open an alert with just an OK button
+            let alert = UIAlertController(title: "Error",
+                                          message: "Lost connection with session!\n",
+                                          preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            //present(alert, animated: true, completion: nil)
+            // TODO
+            print("Prsennnt")
+        }
+    }
+    
+    
     
     func updateUIViewController(_ uiViewController: MessagesViewController, context: Context) {
         uiViewController.messagesCollectionView.reloadData()
         scrollToBottom(uiViewController)
+        print("2 Navigation Controller: \(uiViewController.navigationController)")
+        let button = UIBarButtonItem(title: "Logout", style: .done, target: self, action: #selector(client.logout))
+        uiViewController.navigationItem.leftBarButtonItem = button
+        
+        let button2 = UIBarButtonItem(title: "Users", style: .done, target: self, action: #selector(client.logout))
+        uiViewController.navigationItem.rightBarButtonItem = button
     }
     
     private func scrollToBottom(_ uiViewController: MessagesViewController) {
@@ -45,11 +114,12 @@ struct MessagesView: UIViewControllerRepresentable {
             // The initialized state variable allows us to start at the bottom with the initial messages without seeing the initial scroll flash by
             uiViewController.messagesCollectionView.scrollToLastItem(animated: self.initialized)
             self.initialized = true
+            print(client)
         }
     }
     
     func makeCoordinator() -> Coordinator {
-        return Coordinator(messages: $messages, currentUser: $currentUser)
+        return Coordinator(client: client)
     }
     
     final class Coordinator {
@@ -60,18 +130,17 @@ struct MessagesView: UIViewControllerRepresentable {
             return formatter
         }()
         
-        var messages: Binding<[ChatMessage]>
-        var currentUser: Binding<ChatUser>
-        init(messages: Binding<[ChatMessage]>, currentUser: Binding<ChatUser>) {
-            self.messages = messages
-            self.currentUser = currentUser
+        var client: Client
+        init(client: Client) {
+            
+            self.client = client
         }
         
     }
     
     private func isLastSectionVisible(_ uiViewController: MessagesViewController) -> Bool {
-        guard !messages.isEmpty else { return false }
-        let lastIndexPath = IndexPath(item: 0, section: messages.count - 1)
+        guard !$client.messages.isEmpty else { return false }
+        let lastIndexPath = IndexPath(item: 0, section: $client.messages.count - 1)
         return uiViewController.messagesCollectionView.indexPathsForVisibleItems.contains(lastIndexPath)
     }
 }
@@ -80,15 +149,15 @@ struct MessagesView: UIViewControllerRepresentable {
 
 extension MessagesView.Coordinator: MessagesDataSource {
     func currentSender() -> SenderType {
-        return currentUser.wrappedValue
+        return client.currentUser
     }
     
     func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {
-        return messages.wrappedValue[indexPath.section]
+        return client.messages[indexPath.section]
     }
     
     func numberOfSections(in messagesCollectionView: MessagesCollectionView) -> Int {
-        return messages.wrappedValue.count
+        return client.messages.count
     }
     
     func messageTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
@@ -121,17 +190,20 @@ extension MessagesView.Coordinator: InputBarAccessoryViewDelegate {
         inputBar.invalidatePlugins()
         inputBar.sendButton.startAnimating()
         inputBar.inputTextView.placeholder = "Sending"
-//        DispatchQueue.global(qos: .default).async {
-//            self.session?.sendAsync(text).catch {
-//                self.exception(err: $0)
-//            }.finally {
-//                self.messageInputBar.sendButton.stopAnimating()
-//                self.messageInputBar.inputTextView.placeholder = "Message"
+        DispatchQueue.global(qos: .default).async {
+            self.client.session?.sendAsync(text).catch {
+                print("Edwfepowjf \($0)")
+                //self.exception(err: $0)
+            }.finally {
+                inputBar.sendButton.stopAnimating()
+                inputBar.inputTextView.placeholder = "Message"
+                self
+
 //                if self.isLastSectionVisible() == true {
 //                    self.messagesCollectionView.scrollToBottom(animated: true)
 //                }
-//            }
-//        }
+            }
+        }
     }
 }
 
