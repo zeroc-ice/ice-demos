@@ -7,6 +7,7 @@ import MessageKit
 import InputBarAccessoryView
 import PromiseKit
 
+
 final class MessageSwiftUIVC: MessagesViewController {
     
     var client: Client?
@@ -259,4 +260,8 @@ extension MessagesView.Coordinator: MessagesLayoutDelegate, MessagesDisplayDeleg
     func messageBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
         return 16
     }
+}
+
+extension UIColor {
+    static let primaryColor = UIColor(red: 0.27, green: 0.50, blue: 0.82, alpha: 1.0)
 }

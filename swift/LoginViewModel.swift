@@ -11,14 +11,14 @@ import PromiseKit
 import Combine
 import SwiftUI
 
-//struct Configuration {
-//    enum Keys: String {
-//        case user = "usernameKey"
-//        case password = "passwordKey"
-//        case ssl = "sslKey"
-//        case rememberMe = "rememberKey"
-//    }
-//}
+struct Configuration {
+    enum Keys: String {
+        case user = "usernameKey"
+        case password = "passwordKey"
+        case ssl = "sslKey"
+        case rememberMe = "rememberKey"
+    }
+}
 
 class LoginViewModel: ObservableObject {
     
