@@ -8,6 +8,11 @@ struct LoginView: View {
     
     @ObservedObject var loginViewModel = LoginViewModel()
     @State var selection: Int? = nil
+    @State var messages: [ChatMessage] = [ChatMessage(text: "Hello World", who: "Amanda", timestamp: 100),
+                                          ChatMessage(text: "Hello World 2", who: "Amanda", timestamp: 20000000),
+                                          ChatMessage(text: "Hello World 3", who: "Reece", timestamp: 20000000),
+                                          ChatMessage(text: "Hello World 4", who: "Amanda", timestamp: 40000000)]
+    @State var currentUser: ChatUser = ChatUser(name: "Reece")
     
     func login(){
         
@@ -53,12 +58,12 @@ struct LoginView: View {
                 }.accentColor(Color.blue)
             }.padding()
             Spacer()
-            //let chatView: SwiftUIExampleView? = nil
-            NavigationLink(destination: chatView!, tag: 1, selection: $selection) {
+            let chatView = MessagesView(messages: $messages, currentUser: $currentUser)
+            NavigationLink(destination: chatView, tag: 1, selection: $selection) {
                 Button("Login") {
                     loginViewModel.attemptLogin { error, config in
                         if error != nil {
-                            
+
                         } else {
                             //chatView = SwiftUIExampleView(config: config)
                             self.selection = 1
