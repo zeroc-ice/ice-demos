@@ -4,9 +4,7 @@
 
 import Glacier2
 import Ice
-import Combine
 import PromiseKit
-import SwiftUI
 
 class ChatRoomCallbackInterceptor: Disp {
     private let servantDisp: Disp
@@ -63,25 +61,21 @@ class Client: ChatRoomCallback, ObservableObject {
     }
 
     func `init`(users: StringSeq, current _: Current) throws {
-        print("Hit 1init1")
         self.users = users.map { ChatUser(name: $0) }
     }
 
     func send(timestamp: Int64, name: String, message: String, current _: Current) throws {
-        print("Send")
         append(ChatMessage(text: message, who: name, timestamp: timestamp))
     }
 
     func join(timestamp: Int64, name: String, current _: Current) throws {
         append(ChatMessage(text: "\(name) joined.", who: "System Message", timestamp: timestamp))
         users.append(ChatUser(name: name))
-        //navigationItem.rightBarButtonItem!.title = "\(users.count) " + (users.count > 1 ? "Users" : "User")
     }
-
+    
     func leave(timestamp: Int64, name: String, current _: Current) throws {
         append(ChatMessage(text: "\(name) left.", who: "System Message", timestamp: timestamp))
         users.removeAll(where: { $0.displayName == name })
-        //navigationItem.rightBarButtonItem!.title = "\(users.count) " + (users.count > 1 ? "Users" : "User")
     }
 
     func append(_ message: ChatMessage) {
@@ -89,11 +83,9 @@ class Client: ChatRoomCallback, ObservableObject {
             messages.remove(at: 0)
         }
         messages.append(message)
-//        messagesCollectionView.reloadData()
-//        messagesCollectionView.scrollToBottom(animated: true)
     }
     
-    public func attemptLogin(completionBlock: @escaping (Error?) -> Void){
+    public func attemptLogin(completionBlock: @escaping (String?) -> Void){
         var properties: Properties {
             let prop = Ice.createProperties()
             prop.setProperty(key: "Ice.Plugin.IceSSL", value: "1")
@@ -143,33 +135,29 @@ class Client: ChatRoomCallback, ObservableObject {
                 }
                 
                 currentUser = ChatUser(name: loginViewModel.username.lowercased())
-                communicator = nil
                 completionBlock(nil)
             }.catch { err in
-                print("Err")
-                completionBlock(err)
-//                if let ex = err as? Glacier2.CannotCreateSessionException {
-//                    self.exception("Session creation failed: \(ex.reason)")
-//                } else if let ex = err as? Glacier2.PermissionDeniedException {
-//                    self.exception("Login failed: \(ex.reason)")
-//                } else if let ex = err as? Ice.EndpointParseException {
-//                    self.exception("Invalid router: \(ex)")
-//                } else {
-//                    self.exception("Error: \(err)")
-//                }
+                if let ex = err as? Glacier2.CannotCreateSessionException {
+                    completionBlock("Session creation failed: \(ex.reason)")
+                } else if let ex = err as? Glacier2.PermissionDeniedException {
+                    completionBlock("Login failed: \(ex.reason)")
+                } else if let ex = err as? Ice.EndpointParseException {
+                    completionBlock("Invalid router: \(ex)")
+                } else {
+                    completionBlock("Error: \(err)")
+                }
             }
         } catch {
-            completionBlock(error)
-//            exception("Error: \(error)")
+            completionBlock(error.localizedDescription)
         }
     }
     
+    public func destroySession() {
 
-
-    func destroySession() {
         messages = []
         users = []
         currentUser = nil
+        callbackProxy = nil
 
         if let communicator = self.communicator {
             self.communicator = nil
@@ -183,16 +171,11 @@ class Client: ChatRoomCallback, ObservableObject {
             DispatchQueue.global().async {
                 do {
                     try router?.destroySession()
-                } catch {}
+                } catch {
+                    print("Destory issue \(error.localizedDescription)")
+                }
                 communicator.destroy()
             }
         }
-    }
-
-}
-
-@objc extension Client {
-    func logout(_: UIBarButtonItem){
-        
     }
 }
