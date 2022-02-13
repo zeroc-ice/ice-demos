@@ -11,7 +11,6 @@ struct ContentView: View {
     func loadCommunicator() -> Ice.Communicator {
         var initData = Ice.InitializationData()
         let properties = Ice.createProperties()
-        
         properties.setProperty(key: "Ice.Plugin.IceDiscovery", value: "1")
         properties.setProperty(key: "Ice.Plugin.IceSSL", value: "1")
         properties.setProperty(key: "IceSSL.CheckCertName", value: "0")

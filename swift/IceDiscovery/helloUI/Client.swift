@@ -43,7 +43,11 @@ class Client: ObservableObject {
     func sayHello() {
         do {
             if helloPrx == nil {
-                return
+                do {
+                    try updateProxy()
+                } catch {
+                    exception(error)
+                }
             }
 
             let delay = Int32(proxySettings.delay)
@@ -75,7 +79,11 @@ class Client: ObservableObject {
 
     func flushBatch() {
         if helloPrx == nil {
-            return
+            do {
+                try updateProxy()
+            } catch {
+                exception(error)
+            }
         }
         flushEnabled = true
         firstly {
@@ -90,7 +98,11 @@ class Client: ObservableObject {
     func shutdown() {
         do {
             if helloPrx == nil {
-                return
+                do {
+                    try updateProxy()
+                } catch {
+                    exception(error)
+                }
             }
 
             if proxySettings.deliveryMode != .OnewayBatch,
@@ -106,6 +118,7 @@ class Client: ObservableObject {
                     }
                 }.done {
                     response = true
+                    self.configure(comm: self.communicator)
                     self.ready()
                 }.catch { error in
                     response = true
@@ -124,22 +137,8 @@ class Client: ObservableObject {
 
     func updateProxy() throws {
         let mode = proxySettings.deliveryMode
+        let s = "hello"
 
-        if proxySettings.useDiscovery == false, proxySettings.hostname == "" {
-            helloPrx = nil
-            return
-        }
-
-        var s: String
-        if proxySettings.useDiscovery {
-            s = "hello"
-        } else {
-            s = "hello:tcp -h \"\(proxySettings.hostname)\" -p 10000:" +
-                "ssl -h \"\(proxySettings.hostname)\" -p 10001:" +
-                "udp -h \"\(proxySettings.hostname)\" -p 10000"
-        }
-
-        UserDefaults.standard.set(proxySettings.hostname, forKey: hostnameKey)
         helloPrx = uncheckedCast(prx: try communicator.stringToProxy(s)!, type: HelloPrx.self)
 
         switch mode {
@@ -174,20 +173,17 @@ class Client: ObservableObject {
     }
 
     func requestSent() {
-        if proxySettings.useDiscovery {
-            if let connection = helloPrx.ice_getCachedConnection() {
-                do {
-                    // Loop through the connection informations until we find an IPConnectionInfo class.
-                    for info in sequence(first: try connection.getInfo(), next: { $0.underlying }) {
-                        if let ipinfo = info as? IPConnectionInfo {
-                            proxySettings.hostname = ipinfo.remoteAddress
-                            UserDefaults.standard.set(proxySettings.hostname, forKey: hostnameKey)
-                            break
-                        }
+        if let connection = helloPrx.ice_getCachedConnection() {
+            do {
+                // Loop through the connection informations until we find an IPConnectionInfo class.
+                for info in sequence(first: try connection.getInfo(), next: { $0.underlying }) {
+                    if let ipinfo = info as? IPConnectionInfo {
+                        proxySettings.hostname = ipinfo.remoteAddress
+                        break
                     }
-                } catch {
-                    // Ignore.
                 }
+            } catch {
+                // Ignore.
             }
         }
 

@@ -20,7 +20,6 @@ struct FormView: View {
             Form {
                 // Proxy Settings
                 ProxySettingsView(hostname: $client.proxySettings.hostname,
-                                  useDiscovery: $client.proxySettings.useDiscovery,
                                   delay: $client.proxySettings.delay,
                                   timeout: $client.proxySettings.timeout,
                                   methodIndex: $client.proxySettings.methodIndex).environmentObject(client)

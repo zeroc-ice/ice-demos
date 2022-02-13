@@ -6,7 +6,6 @@ import Foundation
 
 class ProxySettings {
     var hostname = ""
-    var useDiscovery = true
     var delay = 0.0
     var timeout = 0.0
     var deliveryMode: DeliveryMode = .Twoway

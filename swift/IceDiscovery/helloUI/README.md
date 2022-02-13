@@ -33,8 +33,7 @@ All invocations use asynchronous method invocations (AMI) or batch
 invocations to avoid blocking the GUI thread and ensure a responsive
 user experience.
 
-This demo runs against any hello server, such as the [Swift
-server](../../../Ice/hello).
+This demo runs against the hello discovery server [hello discovery server](../hello).
 
 ### Timeouts
 
@@ -44,10 +43,9 @@ in the server to cause a timeout.
 
 ### IceDiscovery
 
-Instead of configuring the IP address for the server you can use
+Instead of configuring the IP address for the server this demo uses
 [IceDiscovery][6] to discover the server.
 
-To enable IceDiscovery, touch the "Use IceDiscovery" button to switch it on.
 You must run the hello server from the IceDiscovery/hello demo (such as the
 [Swift server](../../../IceDiscovery/hello)) and ensure that the server
 is listening on an accessible network interface.
