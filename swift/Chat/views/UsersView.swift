@@ -5,10 +5,9 @@
 import SwiftUI
 
 struct UsersView: View {
-    
     @Environment(\.presentationMode) private var presentationMode
     var users: [ChatUser]
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             Button("Dismiss") {

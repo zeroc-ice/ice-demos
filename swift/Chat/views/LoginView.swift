@@ -5,7 +5,6 @@
 import SwiftUI
 
 struct LoginView: View {
-    
     @ObservedObject var client = Client()
     @State var showingUsers = false
     @State var showingAlert = false
@@ -49,14 +48,14 @@ struct LoginView: View {
                     .padding()
                     .frame(maxWidth: .infinity, maxHeight: 55)
                     .background(client.loginViewModel.isSigninComplete ? Color.activeBlue : Color.disabledBlue)
-                        .accentColor(.white)
-                        .cornerRadius(10.0)
-                        .disabled(!client.loginViewModel.isSigninComplete)
-                        .alert(isPresented: $showingAlert) {
-                            Alert(title: Text("Error"),
-                                              message: Text(loginError ?? ""),
-                                              dismissButton: .default(Text("Got it!")))
-                        }
+                    .accentColor(.white)
+                    .cornerRadius(10.0)
+                    .disabled(!client.loginViewModel.isSigninComplete)
+                    .alert(isPresented: $showingAlert) {
+                        Alert(title: Text("Error"),
+                              message: Text(loginError ?? ""),
+                              dismissButton: .default(Text("Got it!")))
+                    }
                     Spacer()
                 }
 
@@ -81,7 +80,7 @@ struct LoginView_Previews: PreviewProvider {
 extension View {
     @ViewBuilder func isHidden(_ isHidden: Bool) -> some View {
         if isHidden {
-            self.hidden()
+            hidden()
         } else {
             self
         }

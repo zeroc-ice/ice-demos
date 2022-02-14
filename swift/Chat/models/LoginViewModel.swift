@@ -22,7 +22,7 @@ class LoginViewModel: ObservableObject {
     @Published var password = ""
     @Published var loading = false
     @Published var inputEnabled = false
-    
+
     @Published var rememberMe = false {
         didSet { if rememberMe == false { initialize() } }
     }

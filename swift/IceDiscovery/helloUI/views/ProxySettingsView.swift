@@ -56,7 +56,7 @@ struct ProxySettingsView: View {
         } header: {
             Text("Proxy Settings")
         } footer: {
-            Text("*TODO Write any explanation of what the above settings are doing here.")
+            Text("*The proxy settings are explained in the README.md")
         }
         #if os(macOS)
         .padding()

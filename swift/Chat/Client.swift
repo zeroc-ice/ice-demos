@@ -24,14 +24,13 @@ class ChatRoomCallbackInterceptor: Disp {
 }
 
 class Client: ChatRoomCallback, ObservableObject {
-    
     var communicator: Ice.Communicator?
     var session: ChatSessionPrx?
     var router: Glacier2.RouterPrx?
 
     var callbackProxy: ChatRoomCallbackPrx?
     var acmTimeout: Int32 = 0
-    
+
     // Bindings
     @Published public var messages: [ChatMessage] = []
     @Published public var users: [ChatUser] = []
@@ -40,14 +39,16 @@ class Client: ChatRoomCallback, ObservableObject {
             isLoggedIn = (currentUser != nil)
         }
     }
+
     @Published public var isLoggedIn: Bool = false
     @Published var loginViewModel = LoginViewModel()
-    
+
     func setup(communicator: Ice.Communicator,
                session: ChatSessionPrx,
                acmTimeout: Int32,
                router: Glacier2.RouterPrx,
-               category: String) throws {
+               category: String) throws
+    {
         self.communicator = communicator
         self.session = session
         self.router = router
@@ -72,7 +73,7 @@ class Client: ChatRoomCallback, ObservableObject {
         append(ChatMessage(text: "\(name) joined.", who: "System Message", timestamp: timestamp))
         users.append(ChatUser(name: name))
     }
-    
+
     func leave(timestamp: Int64, name: String, current _: Current) throws {
         append(ChatMessage(text: "\(name) left.", who: "System Message", timestamp: timestamp))
         users.removeAll(where: { $0.displayName == name })
@@ -84,8 +85,8 @@ class Client: ChatRoomCallback, ObservableObject {
         }
         messages.append(message)
     }
-    
-    public func attemptLogin(completionBlock: @escaping (String?) -> Void){
+
+    public func attemptLogin(completionBlock: @escaping (String?) -> Void) {
         var properties: Properties {
             let prop = Ice.createProperties()
             prop.setProperty(key: "Ice.Plugin.IceSSL", value: "1")
@@ -103,7 +104,6 @@ class Client: ChatRoomCallback, ObservableObject {
 
         loginViewModel.connecting = true
 
-
         var chatsession: ChatSessionPrx?
         var acmTimeout: Int32 = 0
         do {
@@ -118,7 +118,7 @@ class Client: ChatRoomCallback, ObservableObject {
                 acmTimeout = timeout
                 return router.getCategoryForClientAsync()
             }.done { [self] category in
-                
+
                 try setup(communicator: self.communicator!,
                           session: chatsession!,
                           acmTimeout: acmTimeout,
@@ -133,7 +133,7 @@ class Client: ChatRoomCallback, ObservableObject {
                     UserDefaults.standard.set(loginViewModel.username, forKey: Configuration.Keys.user.rawValue)
                     UserDefaults.standard.set(loginViewModel.password, forKey: Configuration.Keys.password.rawValue)
                 }
-                
+
                 currentUser = ChatUser(name: loginViewModel.username.lowercased())
                 completionBlock(nil)
             }.catch { err in
@@ -151,19 +151,18 @@ class Client: ChatRoomCallback, ObservableObject {
             completionBlock(error.localizedDescription)
         }
     }
-    
-    public func destroySession() {
 
+    public func destroySession() {
         messages = []
         users = []
         currentUser = nil
         callbackProxy = nil
 
-        if let communicator = self.communicator {
+        if let communicator = communicator {
             self.communicator = nil
             let router = self.router
             self.router = nil
-            self.session = nil
+            session = nil
             //
             // Destroy the session and the communicator asyncrhonously
             // to avoid blocking the main thread.
