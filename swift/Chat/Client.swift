@@ -124,15 +124,6 @@ class Client: ChatRoomCallback, ObservableObject {
                               router: router,
                               category: category)
                     loginViewModel.connecting = false
-
-                    //
-                    // The communicator is now owned by the ChatController.
-                    //
-                    if loginViewModel.rememberMe == true {
-                        UserDefaults.standard.set(loginViewModel.username, forKey: Configuration.Keys.user.rawValue)
-                        UserDefaults.standard.set(loginViewModel.password, forKey: Configuration.Keys.password.rawValue)
-                    }
-
                     currentUser = ChatUser(name: loginViewModel.username.lowercased())
                     completionBlock(nil)
                 }.catch { err in

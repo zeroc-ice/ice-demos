@@ -11,13 +11,6 @@ struct LoginView: View {
     @State var showingAlert = false
     @State var loginError: String?
 
-    init() {
-        UserDefaults.standard.register(defaults: [Configuration.Keys.user.rawValue: "",
-                                                  Configuration.Keys.password.rawValue: "",
-                                                  Configuration.Keys.ssl.rawValue: true,
-                                                  Configuration.Keys.rememberMe.rawValue: false])
-    }
-
     var body: some View {
         NavigationView {
             VStack(spacing: 25) {
@@ -30,9 +23,6 @@ struct LoginView: View {
                     Text("Password")
                     TextField("Password", text: $client.loginViewModel.password)
                         .textFieldStyle(.roundedBorder)
-                    Toggle(isOn: $client.loginViewModel.rememberMe) {
-                        Text("Remember me")
-                    }.tint(Color.activeBlue)
                 }
                 .padding()
                 .offset(y: -35)
