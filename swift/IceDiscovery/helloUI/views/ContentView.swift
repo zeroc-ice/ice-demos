@@ -18,6 +18,7 @@ struct ContentView: View {
         properties.setProperty(key: "IceSSL.CAs", value: "cacert.der")
         properties.setProperty(key: "IceSSL.CertFile", value: "client.p12")
         properties.setProperty(key: "IceSSL.Password", value: "password")
+        properties.setProperty(key: "HelloProxy", value: "hello")
         initData.properties = properties
         do {
             return try Ice.initialize(initData)

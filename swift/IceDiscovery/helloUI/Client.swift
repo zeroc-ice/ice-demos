@@ -43,13 +43,8 @@ class Client: ObservableObject {
     func sayHello() {
         do {
             if helloPrx == nil {
-                do {
-                    try updateProxy()
-                } catch {
-                    exception(error)
-                }
+                return
             }
-
             let delay = Int32(proxySettings.delay)
             if proxySettings.deliveryMode != .OnewayBatch,
                proxySettings.deliveryMode != .OnewaySecureBatch,
@@ -80,17 +75,12 @@ class Client: ObservableObject {
 
     func flushBatch() {
         if helloPrx == nil {
-            do {
-                try updateProxy()
-            } catch {
-                exception(error)
-            }
+            return
         }
-        flushEnabled = true
         firstly {
             helloPrx.ice_flushBatchRequestsAsync()
         }.done {
-            self.statusMessage = "Flushed batch requests"
+            self.flushBatchSend()
         }.catch { error in
             self.exception(error)
         }
@@ -99,11 +89,7 @@ class Client: ObservableObject {
     func shutdown() {
         do {
             if helloPrx == nil {
-                do {
-                    try updateProxy()
-                } catch {
-                    exception(error)
-                }
+                return
             }
 
             if proxySettings.deliveryMode != .OnewayBatch,
@@ -139,9 +125,7 @@ class Client: ObservableObject {
 
     func updateProxy() throws {
         let mode = proxySettings.deliveryMode
-        let s = "hello"
-
-        helloPrx = uncheckedCast(prx: try communicator.stringToProxy(s)!, type: HelloPrx.self)
+        helloPrx = uncheckedCast(prx: try communicator.propertyToProxy("HelloProxy")!, type: HelloPrx.self)
 
         switch mode {
         case .Twoway:

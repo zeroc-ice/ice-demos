@@ -13,7 +13,7 @@ the following additional sub-directories:
 - [Manual](./Manual) contains complete examples for some of the code snippets
 in the [Ice manual][1].
 
-- [iOS](./iOS) contains iOS sample applications.
+- [Chat](./Chat) contains a SwiftUI client for the ZeroC [Chat Demo][2]
 
 Refer to the [C++11 demos](../cpp11) for more examples that use the Ice services
 (Glacier2, IceGrid, IceStorm).
