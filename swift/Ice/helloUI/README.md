@@ -1,5 +1,6 @@
-This demo illustrates how to integrate Ice with a simple graphical
-application.
+This demo illustrates how to write a SwiftUI application that invokes
+ordinary (twoway) operations, as well as how to make [oneway][1],
+[datagram][2], [secure][3], and [batched][4] invocations.
 
 The demo shows how to make:
 

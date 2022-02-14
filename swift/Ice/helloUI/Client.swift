@@ -45,7 +45,6 @@ class Client: ObservableObject {
             if helloPrx == nil {
                 return
             }
-
             let delay = Int32(proxySettings.delay)
             if proxySettings.deliveryMode != .OnewayBatch,
                proxySettings.deliveryMode != .OnewaySecureBatch,
@@ -78,11 +77,10 @@ class Client: ObservableObject {
         if helloPrx == nil {
             return
         }
-        flushEnabled = true
         firstly {
             helloPrx.ice_flushBatchRequestsAsync()
         }.done {
-            self.statusMessage = "Flushed batch requests"
+            self.flushBatchSend()
         }.catch { error in
             self.exception(error)
         }
@@ -171,21 +169,19 @@ class Client: ObservableObject {
     }
 
     func requestSent() {
-        if let connection = helloPrx.ice_getCachedConnection() {
-            do {
-                // Loop through the connection informations until we find an IPConnectionInfo class.
-                for info in sequence(first: try connection.getInfo(), next: { $0.underlying }) {
-                    if let ipinfo = info as? IPConnectionInfo {
-                        proxySettings.hostname = ipinfo.remoteAddress
-                        UserDefaults.standard.set(proxySettings.hostname, forKey: hostnameKey)
-                        break
+            if let connection = helloPrx.ice_getCachedConnection() {
+                do {
+                    // Loop through the connection informations until we find an IPConnectionInfo class.
+                    for info in sequence(first: try connection.getInfo(), next: { $0.underlying }) {
+                        if let ipinfo = info as? IPConnectionInfo {
+                            proxySettings.hostname = ipinfo.remoteAddress
+                            break
+                        }
                     }
+                } catch {
+                    // Ignore.
                 }
-            } catch {
-                // Ignore.
             }
-        }
-
         if proxySettings.deliveryMode == .Twoway || proxySettings.deliveryMode == .TwowaySecure {
             statusMessage = "Waiting for response"
         } else {
