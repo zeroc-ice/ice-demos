@@ -212,9 +212,13 @@ extension MessagesView.Coordinator: InputBarAccessoryViewDelegate {
         inputBar.sendButton.startAnimating()
         inputBar.inputTextView.placeholder = "Sending"
         DispatchQueue.global(qos: .default).async {
-            self.client.session?.sendAsync(text).catch {
-                print($0)
-                // self.exception(err: $0)
+            self.client.session?.sendAsync(text).catch { error in
+                let viewController = inputBar.superview?.window?.rootViewController
+                let alert = UIAlertController(title: "Error",
+                                              message: error.localizedDescription,
+                                              preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                viewController?.present(alert, animated: true, completion: nil)
             }.finally {
                 inputBar.sendButton.stopAnimating()
                 inputBar.inputTextView.placeholder = "Message"

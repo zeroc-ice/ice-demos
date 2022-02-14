@@ -5,12 +5,11 @@
 import SwiftUI
 
 struct LoginView: View {
+    
     @ObservedObject var client = Client()
     @State var showingUsers = false
     @State var showingAlert = false
     @State var loginError: String?
-
-    func login() {}
 
     init() {
         UserDefaults.standard.register(defaults: [Configuration.Keys.user.rawValue: "",

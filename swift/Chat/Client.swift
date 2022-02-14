@@ -87,20 +87,18 @@ class Client: ChatRoomCallback, ObservableObject {
     }
 
     public func attemptLogin(completionBlock: @escaping (String?) -> Void) {
-        var properties: Properties {
-            let prop = Ice.createProperties()
-            prop.setProperty(key: "Ice.Plugin.IceSSL", value: "1")
-            prop.setProperty(key: "Ice.Default.Router",
-                             value: "Glacier2/router:wss -p 443 -h zeroc.com -r /demo-proxy/chat/glacier2 -t 10000")
-            prop.setProperty(key: "IceSSL.UsePlatformCAs", value: "1")
-            prop.setProperty(key: "IceSSL.CheckCertName", value: "1")
-            prop.setProperty(key: "IceSSL.VerifyDepthMax", value: "5")
-            prop.setProperty(key: "Ice.ACM.Client.Timeout", value: "0")
-            prop.setProperty(key: "Ice.RetryIntervals", value: "-1")
-            return prop
-        }
+        let prop = Ice.createProperties()
+        prop.setProperty(key: "Ice.Plugin.IceSSL", value: "1")
+        prop.setProperty(key: "Ice.Default.Router",
+                         value: "Glacier2/router:wss -p 443 -h zeroc.com -r /demo-proxy/chat/glacier2 -t 10000")
+        prop.setProperty(key: "IceSSL.UsePlatformCAs", value: "1")
+        prop.setProperty(key: "IceSSL.CheckCertName", value: "1")
+        prop.setProperty(key: "IceSSL.VerifyDepthMax", value: "5")
+        prop.setProperty(key: "Ice.ACM.Client.Timeout", value: "0")
+        prop.setProperty(key: "Ice.RetryIntervals", value: "-1")
+        
         var initData = Ice.InitializationData()
-        initData.properties = properties
+        initData.properties = prop
 
         loginViewModel.connecting = true
 
