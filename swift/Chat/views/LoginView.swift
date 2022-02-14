@@ -8,7 +8,7 @@ struct LoginView: View {
     @ObservedObject var client = Client()
     @State var showingUsers = false
     @State var showingAlert = false
-    @State var loginError: String? = nil
+    @State var loginError: String?
 
     func login() {}
 
@@ -59,10 +59,14 @@ struct LoginView: View {
                     Spacer()
                 }
 
-                NavigationLink("Chat View", destination: MessagesView().environmentObject(client).navigationTitle("Messages"), isActive: $client.isLoggedIn).hidden()
-                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification), perform: { _ in
-                        client.destroySession()
-                    })
+                NavigationLink("Chat View",
+                               destination: MessagesView().environmentObject(client).navigationTitle("Messages"),
+                               isActive: $client.isLoggedIn)
+                    .hidden()
+                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification),
+                               perform: { _ in
+                                   client.destroySession()
+                               })
                 Spacer()
             }
             .padding()

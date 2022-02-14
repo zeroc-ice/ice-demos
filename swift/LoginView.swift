@@ -45,10 +45,17 @@ struct LoginView: View {
                     .cornerRadius(5.0)
                     .disabled(!client.loginViewModel.isSigninComplete)
 
-                NavigationLink("Chat View", destination: MessagesView().environmentObject(client).navigationTitle("Messages"), isActive: $client.isLoggedIn).hidden()
-                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification), perform: { _ in
-                        print("Pop")
-                    })
+                NavigationLink(
+                    "Chat View",
+                    destination: MessagesView().environmentObject(client).navigationTitle("Messages"),
+                    isActive: $client.isLoggedIn
+                ).hidden()
+                    .onReceive(
+                        NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification),
+                        perform: { _ in
+                            print("Pop")
+                        }
+                    )
                 Spacer()
             }
             .padding()

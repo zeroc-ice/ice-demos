@@ -25,7 +25,10 @@ final class MessageSwiftUIVC: MessagesViewController {
         parent?.navigationItem.setHidesBackButton(true, animated: true)
 
         let usersText = "\(client.users.count) " + (client.users.count > 1 ? "Users" : "User")
-        let usersButton = UIBarButtonItem(title: usersText, style: .plain, target: self, action: #selector(showUsers(_:)))
+        let usersButton = UIBarButtonItem(title: usersText,
+                                          style: .plain,
+                                          target: self,
+                                          action: #selector(showUsers(_:)))
         parent?.navigationItem.rightBarButtonItem = usersButton
     }
 
@@ -98,7 +101,10 @@ struct MessagesView: UIViewControllerRepresentable {
 
     func updateUIViewController(_ uiViewController: MessageSwiftUIVC, context _: Context) {
         let usersText = "\(client.users.count) " + (client.users.count > 1 ? "Users" : "User")
-        let usersButton = UIBarButtonItem(title: usersText, style: .plain, target: self, action: #selector(uiViewController.showUsers(_:)))
+        let usersButton = UIBarButtonItem(title: usersText,
+                                          style: .plain,
+                                          target: self,
+                                          action: #selector(uiViewController.showUsers(_:)))
         uiViewController.parent?.navigationItem.rightBarButtonItem = usersButton
         uiViewController.messagesCollectionView.reloadData()
         if isLastSectionVisible(uiViewController) == false {
@@ -146,7 +152,8 @@ struct MessagesView: UIViewControllerRepresentable {
 
     private func scrollToBottom(_ uiViewController: MessageSwiftUIVC) {
         DispatchQueue.main.async {
-            // The initialized state variable allows us to start at the bottom with the initial messages without seeing the initial scroll flash by
+            // The initialized state variable allows us to start at the bottom with the initial messages without seeing
+            // the initial scroll flash by
             uiViewController.messagesCollectionView.scrollToLastItem(animated: self.initialized)
             self.initialized = true
         }
@@ -191,7 +198,9 @@ extension MessagesView.Coordinator: MessagesDataSource {
         let sentDateString = MessageKitDateFormatter.shared.string(from: sentDate)
         let timeLabelFont: UIFont = .boldSystemFont(ofSize: 10)
         let timeLabelColor: UIColor = .systemGray
-        return NSAttributedString(string: sentDateString, attributes: [NSAttributedString.Key.font: timeLabelFont, NSAttributedString.Key.foregroundColor: timeLabelColor])
+        return NSAttributedString(string: sentDateString,
+                                  attributes: [NSAttributedString.Key.font: timeLabelFont,
+                                               NSAttributedString.Key.foregroundColor: timeLabelColor])
     }
 }
 
@@ -215,7 +224,10 @@ extension MessagesView.Coordinator: InputBarAccessoryViewDelegate {
 }
 
 extension MessagesView.Coordinator: MessagesLayoutDelegate, MessagesDisplayDelegate {
-    func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at _: IndexPath, in _: MessagesCollectionView) {
+    func configureAvatarView(_ avatarView: AvatarView,
+                             for message: MessageType,
+                             at _: IndexPath,
+                             in _: MessagesCollectionView) {
         let name = message.sender.displayName
         let avatar = Avatar(image: nil, initials: "\(name.first ?? "A")")
         avatarView.set(avatar: avatar)

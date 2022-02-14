@@ -110,43 +110,44 @@ class Client: ChatRoomCallback, ObservableObject {
             communicator = try Ice.initialize(initData)
             let router = uncheckedCast(prx: communicator!.getDefaultRouter()!, type: Glacier2.RouterPrx.self)
 
-            router.createSessionAsync(userId: loginViewModel.username, password: loginViewModel.password).then { session -> Promise<Int32> in
-                precondition(session != nil)
-                chatsession = uncheckedCast(prx: session!, type: ChatSessionPrx.self)
-                return router.getACMTimeoutAsync()
-            }.then { timeout -> Promise<String> in
-                acmTimeout = timeout
-                return router.getCategoryForClientAsync()
-            }.done { [self] category in
+            router.createSessionAsync(userId: loginViewModel.username, password: loginViewModel.password)
+                .then { session -> Promise<Int32> in
+                    precondition(session != nil)
+                    chatsession = uncheckedCast(prx: session!, type: ChatSessionPrx.self)
+                    return router.getACMTimeoutAsync()
+                }.then { timeout -> Promise<String> in
+                    acmTimeout = timeout
+                    return router.getCategoryForClientAsync()
+                }.done { [self] category in
 
-                try setup(communicator: self.communicator!,
-                          session: chatsession!,
-                          acmTimeout: acmTimeout,
-                          router: router,
-                          category: category)
-                loginViewModel.connecting = false
+                    try setup(communicator: self.communicator!,
+                              session: chatsession!,
+                              acmTimeout: acmTimeout,
+                              router: router,
+                              category: category)
+                    loginViewModel.connecting = false
 
-                //
-                // The communicator is now owned by the ChatController.
-                //
-                if loginViewModel.rememberMe == true {
-                    UserDefaults.standard.set(loginViewModel.username, forKey: Configuration.Keys.user.rawValue)
-                    UserDefaults.standard.set(loginViewModel.password, forKey: Configuration.Keys.password.rawValue)
+                    //
+                    // The communicator is now owned by the ChatController.
+                    //
+                    if loginViewModel.rememberMe == true {
+                        UserDefaults.standard.set(loginViewModel.username, forKey: Configuration.Keys.user.rawValue)
+                        UserDefaults.standard.set(loginViewModel.password, forKey: Configuration.Keys.password.rawValue)
+                    }
+
+                    currentUser = ChatUser(name: loginViewModel.username.lowercased())
+                    completionBlock(nil)
+                }.catch { err in
+                    if let ex = err as? Glacier2.CannotCreateSessionException {
+                        completionBlock("Session creation failed: \(ex.reason)")
+                    } else if let ex = err as? Glacier2.PermissionDeniedException {
+                        completionBlock("Login failed: \(ex.reason)")
+                    } else if let ex = err as? Ice.EndpointParseException {
+                        completionBlock("Invalid router: \(ex)")
+                    } else {
+                        completionBlock("Error: \(err)")
+                    }
                 }
-
-                currentUser = ChatUser(name: loginViewModel.username.lowercased())
-                completionBlock(nil)
-            }.catch { err in
-                if let ex = err as? Glacier2.CannotCreateSessionException {
-                    completionBlock("Session creation failed: \(ex.reason)")
-                } else if let ex = err as? Glacier2.PermissionDeniedException {
-                    completionBlock("Login failed: \(ex.reason)")
-                } else if let ex = err as? Ice.EndpointParseException {
-                    completionBlock("Invalid router: \(ex)")
-                } else {
-                    completionBlock("Error: \(err)")
-                }
-            }
         } catch {
             completionBlock(error.localizedDescription)
         }
