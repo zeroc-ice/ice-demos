@@ -1,4 +1,4 @@
-This demo is an SwiftUI client for the [ZeroC Chat Demo][1]. It connects to a
+This demo is a SwiftUI client for the [ZeroC Chat Demo][1]. It connects to a
 single chat room, allowing you to chat with other chat room participants.
 
 By default, the demo connects to the chat server hosted on demo.zeroc.com
