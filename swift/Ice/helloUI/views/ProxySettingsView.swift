@@ -8,7 +8,6 @@ struct ProxySettingsView: View {
     @EnvironmentObject var client: Client
 
     @Binding var hostname: String
-    @Binding var useDiscovery: Bool
     @Binding var delay: Double
     @Binding var timeout: Double
     @Binding var methodIndex: Int
@@ -18,18 +17,12 @@ struct ProxySettingsView: View {
     var body: some View {
         Section {
             TextField("Hostname", text: $hostname)
-                .disabled(useDiscovery == true)
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
             Picker(selection: $methodIndex, label: Text("Delivery Method")) {
                 ForEach(0 ..< deliveryMethodOptions.count) {
                     Text(self.deliveryMethodOptions[$0])
                 }
-            }
-            Toggle(isOn: $useDiscovery) {
-                Text("Use Ice Discovery")
-            }.onChange(of: useDiscovery) { value in
-                client.proxySettings.hostname = (value ? "" : UserDefaults.standard.string(forKey: hostnameKey)) ?? ""
             }
             HStack {
                 Text("Delay")

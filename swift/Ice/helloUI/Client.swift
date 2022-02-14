@@ -49,7 +49,8 @@ class Client: ObservableObject {
             let delay = Int32(proxySettings.delay)
             if proxySettings.deliveryMode != .OnewayBatch,
                proxySettings.deliveryMode != .OnewaySecureBatch,
-               proxySettings.deliveryMode != .DatagramBatch {
+               proxySettings.deliveryMode != .DatagramBatch
+            {
                 var response = false
                 firstly {
                     helloPrx.sayHelloAsync(delay, sentOn: DispatchQueue.main) { _ in
@@ -95,7 +96,8 @@ class Client: ObservableObject {
 
             if proxySettings.deliveryMode != .OnewayBatch,
                proxySettings.deliveryMode != .OnewaySecureBatch,
-               proxySettings.deliveryMode != .DatagramBatch {
+               proxySettings.deliveryMode != .DatagramBatch
+            {
                 sendingRequest()
                 var response = false
                 firstly {
@@ -125,19 +127,14 @@ class Client: ObservableObject {
     func updateProxy() throws {
         let mode = proxySettings.deliveryMode
 
-        if proxySettings.useDiscovery == false, proxySettings.hostname == "" {
+        if proxySettings.hostname == "" {
             helloPrx = nil
             return
         }
 
-        var s: String
-        if proxySettings.useDiscovery {
-            s = "hello"
-        } else {
-            s = "hello:tcp -h \"\(proxySettings.hostname)\" -p 10000:" +
-                "ssl -h \"\(proxySettings.hostname)\" -p 10001:" +
-                "udp -h \"\(proxySettings.hostname)\" -p 10000"
-        }
+        let s = "hello:tcp -h \"\(proxySettings.hostname)\" -p 10000:" +
+            "ssl -h \"\(proxySettings.hostname)\" -p 10001:" +
+            "udp -h \"\(proxySettings.hostname)\" -p 10000"
 
         UserDefaults.standard.set(proxySettings.hostname, forKey: hostnameKey)
         helloPrx = uncheckedCast(prx: try communicator.stringToProxy(s)!, type: HelloPrx.self)
@@ -174,20 +171,18 @@ class Client: ObservableObject {
     }
 
     func requestSent() {
-        if proxySettings.useDiscovery {
-            if let connection = helloPrx.ice_getCachedConnection() {
-                do {
-                    // Loop through the connection informations until we find an IPConnectionInfo class.
-                    for info in sequence(first: try connection.getInfo(), next: { $0.underlying }) {
-                        if let ipinfo = info as? IPConnectionInfo {
-                            proxySettings.hostname = ipinfo.remoteAddress
-                            UserDefaults.standard.set(proxySettings.hostname, forKey: hostnameKey)
-                            break
-                        }
+        if let connection = helloPrx.ice_getCachedConnection() {
+            do {
+                // Loop through the connection informations until we find an IPConnectionInfo class.
+                for info in sequence(first: try connection.getInfo(), next: { $0.underlying }) {
+                    if let ipinfo = info as? IPConnectionInfo {
+                        proxySettings.hostname = ipinfo.remoteAddress
+                        UserDefaults.standard.set(proxySettings.hostname, forKey: hostnameKey)
+                        break
                     }
-                } catch {
-                    // Ignore.
                 }
+            } catch {
+                // Ignore.
             }
         }
 

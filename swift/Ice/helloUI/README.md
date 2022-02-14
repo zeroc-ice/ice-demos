@@ -34,30 +34,10 @@ invocations to avoid blocking the GUI thread and ensure a responsive
 user experience.
 
 This demo runs against any hello server, such as the [Swift
-server](../../../Ice/hello).
+server](../hello).
 
 ### Timeouts
 
 To test [timeouts][5] you can use the timeout slider to set an invocation
 timeout in the client proxy and the delay slider to set a delayed response
 in the server to cause a timeout.
-
-### IceDiscovery
-
-Instead of configuring the IP address for the server you can use
-[IceDiscovery][6] to discover the server.
-
-To enable IceDiscovery, touch the "Use IceDiscovery" button to switch it on.
-You must run the hello server from the IceDiscovery/hello demo (such as the
-[Swift server](../../../IceDiscovery/hello)) and ensure that the server
-is listening on an accessible network interface.
-
-See the README file of the IceDiscovery hello demo for more information on
-how to start the server.
-
-[1]: https://doc.zeroc.com/ice/3.7/client-side-features/oneway-invocations
-[2]: https://doc.zeroc.com/ice/3.7/client-side-features/datagram-invocations
-[3]: https://doc.zeroc.com/ice/3.7/ice-plugins/icessl
-[4]: https://doc.zeroc.com/ice/3.7/client-side-features/batched-invocations
-[5]: https://doc.zeroc.com/ice/3.7/client-side-features/invocation-timeouts
-[6]: https://doc.zeroc.com/ice/3.7/ice-plugins/icediscovery

@@ -53,7 +53,8 @@ class Client: ObservableObject {
             let delay = Int32(proxySettings.delay)
             if proxySettings.deliveryMode != .OnewayBatch,
                proxySettings.deliveryMode != .OnewaySecureBatch,
-               proxySettings.deliveryMode != .DatagramBatch {
+               proxySettings.deliveryMode != .DatagramBatch
+            {
                 var response = false
                 firstly {
                     helloPrx.sayHelloAsync(delay, sentOn: DispatchQueue.main) { _ in
@@ -107,7 +108,8 @@ class Client: ObservableObject {
 
             if proxySettings.deliveryMode != .OnewayBatch,
                proxySettings.deliveryMode != .OnewaySecureBatch,
-               proxySettings.deliveryMode != .DatagramBatch {
+               proxySettings.deliveryMode != .DatagramBatch
+            {
                 sendingRequest()
                 var response = false
                 firstly {

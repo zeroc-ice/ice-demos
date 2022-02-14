@@ -19,6 +19,7 @@ struct ProxySettingsView: View {
             TextField("Hostname", text: $hostname)
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
+                .disabled(true)
             Picker(selection: $methodIndex, label: Text("Delivery Method")) {
                 ForEach(0 ..< deliveryMethodOptions.count) {
                     Text(self.deliveryMethodOptions[$0])
