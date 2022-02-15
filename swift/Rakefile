@@ -76,7 +76,7 @@ task :iceproj do
     $demos.each do |platform, demos|
         demos.each do |demo|
             if platform == :ios then
-                create_uikit_targets(project, demo, aggregate_target_ios)
+                create_swiftui_targets(project, demo, aggregate_target_ios)
             else
                 create_commandline_targets(project, demo, aggregate_target_macos)
             end
@@ -132,7 +132,7 @@ def create_commandline_targets(project, demo, aggregate_target)
     end
 end
 
-def create_uikit_targets(project, demo, aggregate_target)
+def create_swiftui_targets(project, demo, aggregate_target)
     target = project.new_target(:application, target_name(demo, ""), :ios)
     aggregate_target.add_dependency(target)
     target_set_common_build_settings(target, product_name(demo), "$SRCROOT/#{demo}", :ios, "$SRCROOT/#{demo}/Info.plist")
