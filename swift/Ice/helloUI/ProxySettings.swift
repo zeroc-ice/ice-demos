@@ -5,7 +5,7 @@
 import Foundation
 
 class ProxySettings {
-    var hostname = ""
+    var connection = ""
     var delay = 0.0
     var timeout = 0.0
     var deliveryMode: DeliveryMode = .Twoway
@@ -19,7 +19,15 @@ class ProxySettings {
         return DeliveryMode(rawValue: index) ?? .Twoway
     }
 
-    enum DeliveryMode: Int {
+    func isBatched() -> Bool {
+        return DeliveryMode.batchedCases.contains(deliveryMode)
+    }
+
+    enum DeliveryMode: Int, CaseIterable {
+        static var batchedCases: [DeliveryMode] {
+            return [.OnewayBatch, .OnewaySecureBatch, .DatagramBatch]
+        }
+
         case Twoway = 0
         case TwowaySecure = 1
         case ModeOneway = 2

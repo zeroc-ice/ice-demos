@@ -7,7 +7,7 @@ import SwiftUI
 struct ProxySettingsView: View {
     @EnvironmentObject var client: Client
 
-    @Binding var hostname: String
+    @Binding var connection: String
     @Binding var delay: Double
     @Binding var timeout: Double
     @Binding var methodIndex: Int
@@ -16,7 +16,7 @@ struct ProxySettingsView: View {
                                  "Oneway Secure", "Oneway Secure Batch", "Datagram", "Datagram Batch"]
     var body: some View {
         Section {
-            TextField("Hostname", text: $hostname)
+            TextField("localhost", text: $connection)
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
             Picker(selection: $methodIndex, label: Text("Delivery Method")) {

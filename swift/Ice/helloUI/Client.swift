@@ -7,20 +7,7 @@ import Ice
 import PromiseKit
 
 class Client: ObservableObject {
-    private var helloPrx: HelloPrx!
-    private var communicator: Ice.Communicator
-
-    // For Button view bindings
-    @Published var helloEnabled: Bool = true
-    @Published var shutdownEnabled = true
-    @Published var flushEnabled = false
-    @Published var proxySettings: ProxySettings = .init() {
-        didSet {
-            do { try updateProxy() } catch {
-                exception(error)
-            }
-        }
-    }
+    // MARK: - Public Properties
 
     // For Error bindings
     @Published var error: Error?
@@ -30,77 +17,35 @@ class Client: ObservableObject {
     @Published var isSpinning = false
     @Published var statusMessage = ""
 
+    // For Button view bindings
+    @Published var helloEnabled: Bool = true
+    @Published var shutdownEnabled = true
+    @Published var flushEnabled = false
+
+    @Published var proxySettings: ProxySettings = .init() {
+        didSet {
+            do { try updateProxy() } catch { exception(error) }
+        }
+    }
+
+    // MARK: - Private Properties
+
+    private var helloPrx: HelloPrx!
+    private var communicator: Ice.Communicator
+
+    // MARK: - Initialize the client with a communicator
+
     init() {
         communicator = Client.loadCommunicator()
+        do { try updateProxy() } catch { exception(error) }
     }
 
-    func exception(_ err: Error) {
-        error = err
-        showingError = true
-    }
-
-    func flushBatch() {
-        firstly {
-            helloPrx.ice_flushBatchRequestsAsync()
-        }.done {
-            self.flushBatchSend()
-        }.catch { error in
-            self.exception(error)
-        }
-    }
-
-    private class func loadCommunicator() -> Ice.Communicator {
-        var initData = Ice.InitializationData()
-        let properties = Ice.createProperties()
-
-        properties.setProperty(key: "Ice.Plugin.IceDiscovery", value: "0")
-        properties.setProperty(key: "Ice.Plugin.IceSSL", value: "1")
-        properties.setProperty(key: "IceSSL.CheckCertName", value: "0")
-        properties.setProperty(key: "IceSSL.DefaultDir", value: "certs")
-        properties.setProperty(key: "IceSSL.CAs", value: "cacert.der")
-        properties.setProperty(key: "IceSSL.CertFile", value: "client.p12")
-        properties.setProperty(key: "IceSSL.Password", value: "password")
-        initData.properties = properties
-        do {
-            return try Ice.initialize(initData)
-        } catch {
-            print(error)
-            fatalError()
-        }
-    }
-
-    func flushBatchSend() {
-        flushEnabled = false
-        statusMessage = "Flushed batch requests"
-    }
-
-    func queuedRequest(_ name: String) {
-        flushEnabled = true
-        statusMessage = "Queued \(name) request"
-    }
-
-    func ready() {
-        helloEnabled = true
-        shutdownEnabled = true
-        statusMessage = "Ready"
-        isSpinning = false
-    }
-
-    func requestSent() {
-        if proxySettings.deliveryMode == .Twoway || proxySettings.deliveryMode == .TwowaySecure {
-            statusMessage = "Waiting for response"
-        } else {
-            ready()
-        }
-    }
+    // MARK: - Public functions to send the say hello message, flush the batch requests, and shutdown the hello server
 
     func sayHello() {
         do {
             let delay = Int32(proxySettings.delay)
-            if proxySettings.deliveryMode != .OnewayBatch,
-               proxySettings.deliveryMode != .OnewaySecureBatch,
-               proxySettings.deliveryMode != .DatagramBatch
-            {
+            if !proxySettings.isBatched() {
                 // Non Batched requests get sent asynchronously
                 var response = false
                 firstly {
@@ -126,19 +71,19 @@ class Client: ObservableObject {
         }
     }
 
-    func sendingRequest() {
-        helloEnabled = false
-        shutdownEnabled = false
-        statusMessage = "Sending request"
-        isSpinning = true
+    func flushBatch() {
+        firstly {
+            helloPrx.ice_flushBatchRequestsAsync()
+        }.done {
+            self.flushBatchSend()
+        }.catch { error in
+            self.exception(error)
+        }
     }
 
     func shutdown() {
         do {
-            if proxySettings.deliveryMode != .OnewayBatch,
-               proxySettings.deliveryMode != .OnewaySecureBatch,
-               proxySettings.deliveryMode != .DatagramBatch
-            {
+            if !proxySettings.isBatched() {
                 sendingRequest()
                 var response = false
                 firstly {
@@ -165,14 +110,72 @@ class Client: ObservableObject {
         }
     }
 
-    func updateProxy() throws {
-        if proxySettings.hostname == "" {
-            return
-        }
+    // MARK: - Control the state of the client
 
-        let s = "hello:tcp -h \"\(proxySettings.hostname)\" -p 10000:" +
-            "ssl -h \"\(proxySettings.hostname)\" -p 10001:" +
-            "udp -h \"\(proxySettings.hostname)\" -p 10000"
+    private func exception(_ err: Error) {
+        error = err
+        showingError = true
+    }
+
+    private func flushBatchSend() {
+        flushEnabled = false
+        statusMessage = "Flushed batch requests"
+    }
+
+    private class func loadCommunicator() -> Ice.Communicator {
+        var initData = Ice.InitializationData()
+        let properties = Ice.createProperties()
+
+        properties.setProperty(key: "Ice.Plugin.IceDiscovery", value: "0")
+        properties.setProperty(key: "Ice.Plugin.IceSSL", value: "1")
+        properties.setProperty(key: "IceSSL.CheckCertName", value: "0")
+        properties.setProperty(key: "IceSSL.DefaultDir", value: "certs")
+        properties.setProperty(key: "IceSSL.CAs", value: "cacert.der")
+        properties.setProperty(key: "IceSSL.CertFile", value: "client.p12")
+        properties.setProperty(key: "IceSSL.Password", value: "password")
+        initData.properties = properties
+        do {
+            return try Ice.initialize(initData)
+        } catch {
+            print(error)
+            fatalError()
+        }
+    }
+
+    private func queuedRequest(_ name: String) {
+        flushEnabled = true
+        statusMessage = "Queued \(name) request"
+    }
+
+    private func ready() {
+        helloEnabled = true
+        shutdownEnabled = true
+        statusMessage = "Ready"
+        isSpinning = false
+    }
+
+    private func requestSent() {
+        if proxySettings.deliveryMode == .Twoway || proxySettings.deliveryMode == .TwowaySecure {
+            statusMessage = "Waiting for response"
+        } else {
+            ready()
+        }
+    }
+
+    private func sendingRequest() {
+        helloEnabled = false
+        shutdownEnabled = false
+        statusMessage = "Sending request"
+        isSpinning = true
+    }
+
+    private func updateProxy() throws {
+        let isHostEmpty = proxySettings.connection == ""
+        let hostname = isHostEmpty ? "localhost" : proxySettings.connection
+
+        let s = "hello:tcp -h \"\(hostname)\" -p 10000:" +
+            "ssl -h \"\(hostname)\" -p 10001:" +
+            "udp -h \"\(hostname)\" -p 10000"
 
         helloPrx = uncheckedCast(prx: try communicator.stringToProxy(s)!, type: HelloPrx.self)
 

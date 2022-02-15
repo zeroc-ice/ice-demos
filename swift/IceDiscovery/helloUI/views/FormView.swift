@@ -19,7 +19,7 @@ struct FormView: View {
         ZStack {
             Form {
                 // Proxy Settings
-                ProxySettingsView(hostname: $client.proxySettings.hostname,
+                ProxySettingsView(connection: $client.proxySettings.connection,
                                   delay: $client.proxySettings.delay,
                                   timeout: $client.proxySettings.timeout,
                                   methodIndex: $client.proxySettings.methodIndex).environmentObject(client)
@@ -43,32 +43,6 @@ struct FormView: View {
             Alert(title: Text("Error"),
                   message: Text(client.error?.localizedDescription ?? ""),
                   dismissButton: .default(Text("Got it!")))
-        }
-        .onAppear {
-            client.configure(comm: communicator)
-        }
-    }
-}
-
-struct FormView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            ContentView()
-                .previewDevice("iPhone 13 mini")
-                .previewDisplayName("iPhone 13 mini")
-                .previewInterfaceOrientation(.portrait)
-            ContentView()
-                .previewDevice("iPhone 13 Pro")
-                .previewDisplayName("iPhone 13 Pro")
-                .previewInterfaceOrientation(.portrait)
-            ContentView()
-                .previewDevice("iPhone 13 Pro Max")
-                .previewDisplayName("iPhone 13 Pro Max")
-                .previewInterfaceOrientation(.portrait)
-            ContentView()
-                .previewDevice("iPad Air (4th generation)")
-                .previewDisplayName("iPad Air")
-                .previewInterfaceOrientation(.landscapeLeft)
         }
     }
 }
