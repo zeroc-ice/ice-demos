@@ -6,42 +6,28 @@ import Glacier2
 import Ice
 import PromiseKit
 
-class ChatRoomCallbackInterceptor: Disp {
-    private let servantDisp: Disp
-    init(_ servantDisp: Disp) {
-        self.servantDisp = servantDisp
-    }
+class Client: ObservableObject {
+    // MARK: - Public Properties
 
-    func dispatch(request: Request, current: Current) throws -> Promise<Ice.OutputStream>? {
-        //
-        // Dispatch the request to the main thread in order
-        // to modify the UI in a thread safe manner.
-        //
-        return try DispatchQueue.main.sync {
-            try self.servantDisp.dispatch(request: request, current: current)
-        }
-    }
-}
-
-class Client: ChatRoomCallback, ObservableObject {
-    var communicator: Ice.Communicator?
     var session: ChatSessionPrx?
     var router: Glacier2.RouterPrx?
-
     var callbackProxy: ChatRoomCallbackPrx?
     var acmTimeout: Int32 = 0
 
+    // MARK: - Private Properties
+
+    private var communicator: Ice.Communicator?
+
     // Bindings
-    @Published public var messages: [ChatMessage] = []
-    @Published public var users: [ChatUser] = []
-    @Published public var currentUser: ChatUser! {
-        didSet {
-            isLoggedIn = (currentUser != nil)
-        }
+    @Published var messages: [ChatMessage] = []
+    @Published var users: [ChatUser] = []
+    @Published var isLoggedIn: Bool = false
+    @Published var loginViewModel = LoginViewModel()
+    @Published var currentUser: ChatUser! {
+        didSet { isLoggedIn = (currentUser != nil) }
     }
 
-    @Published public var isLoggedIn: Bool = false
-    @Published var loginViewModel = LoginViewModel()
+    // MARK: - Client management functions
 
     func setup(communicator: Ice.Communicator,
                session: ChatSessionPrx,
@@ -61,32 +47,7 @@ class Client: ChatRoomCallback, ObservableObject {
         callbackProxy = uncheckedCast(prx: prx, type: ChatRoomCallbackPrx.self)
     }
 
-    func `init`(users: StringSeq, current _: Current) throws {
-        self.users = users.map { ChatUser(name: $0) }
-    }
-
-    func send(timestamp: Int64, name: String, message: String, current _: Current) throws {
-        append(ChatMessage(text: message, who: name, timestamp: timestamp))
-    }
-
-    func join(timestamp: Int64, name: String, current _: Current) throws {
-        append(ChatMessage(text: "\(name) joined.", who: "System Message", timestamp: timestamp))
-        users.append(ChatUser(name: name))
-    }
-
-    func leave(timestamp: Int64, name: String, current _: Current) throws {
-        append(ChatMessage(text: "\(name) left.", who: "System Message", timestamp: timestamp))
-        users.removeAll(where: { $0.displayName == name })
-    }
-
-    func append(_ message: ChatMessage) {
-        if messages.count > 100 { // max 100 messages
-            messages.remove(at: 0)
-        }
-        messages.append(message)
-    }
-
-    public func attemptLogin(completionBlock: @escaping (String?) -> Void) {
+    func attemptLogin(completionBlock: @escaping (String?) -> Void) {
         let prop = Ice.createProperties()
         prop.setProperty(key: "Ice.Plugin.IceSSL", value: "1")
         prop.setProperty(key: "Ice.Default.Router",
@@ -96,7 +57,7 @@ class Client: ChatRoomCallback, ObservableObject {
         prop.setProperty(key: "IceSSL.VerifyDepthMax", value: "5")
         prop.setProperty(key: "Ice.ACM.Client.Timeout", value: "0")
         prop.setProperty(key: "Ice.RetryIntervals", value: "-1")
-        
+
         var initData = Ice.InitializationData()
         initData.properties = prop
 
@@ -142,7 +103,7 @@ class Client: ChatRoomCallback, ObservableObject {
         }
     }
 
-    public func destroySession() {
+    func destroySession() {
         messages = []
         users = []
         currentUser = nil
@@ -165,6 +126,49 @@ class Client: ChatRoomCallback, ObservableObject {
                 }
                 communicator.destroy()
             }
+        }
+    }
+}
+
+// MARK: - ChatRoomCallBack functions
+
+extension Client: ChatRoomCallback {
+    func `init`(users: StringSeq, current _: Current) throws {
+        self.users = users.map { ChatUser(name: $0) }
+    }
+
+    func send(timestamp: Int64, name: String, message: String, current _: Current) throws {
+        append(ChatMessage(text: message, who: name, timestamp: timestamp))
+    }
+
+    func join(timestamp: Int64, name: String, current _: Current) throws {
+        append(ChatMessage(text: "\(name) joined.", who: "System Message", timestamp: timestamp))
+        users.append(ChatUser(name: name))
+    }
+
+    func leave(timestamp: Int64, name: String, current _: Current) throws {
+        append(ChatMessage(text: "\(name) left.", who: "System Message", timestamp: timestamp))
+        users.removeAll(where: { $0.displayName == name })
+    }
+
+    func append(_ message: ChatMessage) {
+        if messages.count > 100 { // max 100 messages
+            messages.remove(at: 0)
+        }
+        messages.append(message)
+    }
+}
+
+class ChatRoomCallbackInterceptor: Disp {
+    private let servantDisp: Disp
+    init(_ servantDisp: Disp) {
+        self.servantDisp = servantDisp
+    }
+
+    func dispatch(request: Request, current: Current) throws -> Promise<Ice.OutputStream>? {
+        // Dispatch the request to the main thread in order to modify the UI in a thread safe manner.
+        return try DispatchQueue.main.sync {
+            try self.servantDisp.dispatch(request: request, current: current)
         }
     }
 }
