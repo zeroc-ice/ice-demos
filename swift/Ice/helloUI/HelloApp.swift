@@ -8,14 +8,14 @@ import SwiftUI
 struct HelloApp: App {
     var body: some Scene {
         WindowGroup {
-#if os(iOS)
-            NavigationView {
+            #if os(iOS)
+                NavigationView {
+                    FormView()
+                }
+                .navigationViewStyle(.stack)
+            #else
                 FormView()
-            }
-            .navigationViewStyle(.stack)
-#else
-            FormView()
-#endif
+            #endif
         }
     }
 }
