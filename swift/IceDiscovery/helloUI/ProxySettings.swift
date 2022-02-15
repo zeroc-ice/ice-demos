@@ -8,7 +8,7 @@ class ProxySettings {
     var connection = ""
     var delay = 0.0
     var timeout = 0.0
-    var deliveryMode: DeliveryMode = .Twoway
+    var deliveryMode: DeliveryMode = .twoway
     var methodIndex = 0 {
         didSet {
             deliveryMode = updateDeliveryMode(index: methodIndex)
@@ -16,25 +16,25 @@ class ProxySettings {
     }
 
     func updateDeliveryMode(index: Int) -> DeliveryMode {
-        return DeliveryMode(rawValue: index) ?? .Twoway
+        return DeliveryMode(rawValue: index) ?? .twoway
     }
 
-    func isBatched() -> Bool {
+    var isBatched: Bool {
         return DeliveryMode.batchedCases.contains(deliveryMode)
     }
 
     enum DeliveryMode: Int, CaseIterable {
         static var batchedCases: [DeliveryMode] {
-            return [.OnewayBatch, .OnewaySecureBatch, .DatagramBatch]
+            return [.onewayBatch, .onewaySecureBatch, .datagramBatch]
         }
 
-        case Twoway = 0
-        case TwowaySecure = 1
-        case ModeOneway = 2
-        case OnewayBatch = 3
-        case OnewaySecure = 4
-        case OnewaySecureBatch = 5
-        case Datagram = 6
-        case DatagramBatch = 7
+        case twoway
+        case twowaySecure
+        case oneway
+        case onewayBatch
+        case onewaySecure
+        case onewaySecureBatch
+        case datagram
+        case datagramBatch
     }
 }

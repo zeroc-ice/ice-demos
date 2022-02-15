@@ -45,7 +45,11 @@ class Client: ObservableObject {
     func sayHello() {
         do {
             let delay = Int32(proxySettings.delay)
-            if !proxySettings.isBatched() {
+            if proxySettings.isBatched {
+                // Batch requests get enqueued locally thus this call is non blocking
+                try helloPrx.sayHello(delay)
+                queuedRequest("hello")
+            } else {
                 // Non Batched requests get sent asynchronously
                 var response = false
                 firstly {
@@ -61,10 +65,6 @@ class Client: ObservableObject {
                     response = true
                     self.exception(error)
                 }
-            } else {
-                // Batch requests get enqueued locally thus this call is non blocking
-                try helloPrx.sayHello(delay)
-                queuedRequest("hello")
             }
         } catch {
             exception(error)
@@ -83,7 +83,10 @@ class Client: ObservableObject {
 
     func shutdown() {
         do {
-            if !proxySettings.isBatched() {
+            if proxySettings.isBatched {
+                try helloPrx.shutdown()
+                queuedRequest("shutdown")
+            } else {
                 sendingRequest()
                 var response = false
                 firstly {
@@ -100,9 +103,6 @@ class Client: ObservableObject {
                     self.exception(error)
                     self.ready()
                 }
-            } else {
-                try helloPrx.shutdown()
-                queuedRequest("shutdown")
             }
         } catch {
             exception(error)
@@ -169,7 +169,7 @@ class Client: ObservableObject {
                 // Ignore.
             }
         }
-        if proxySettings.deliveryMode == .Twoway || proxySettings.deliveryMode == .TwowaySecure {
+        if proxySettings.deliveryMode == .twoway || proxySettings.deliveryMode == .twowaySecure {
             statusMessage = "Waiting for response"
         } else {
             ready()
@@ -187,21 +187,21 @@ class Client: ObservableObject {
         helloPrx = uncheckedCast(prx: try communicator.propertyToProxy("HelloProxy")!, type: HelloPrx.self)
 
         switch proxySettings.deliveryMode {
-        case .Twoway:
+        case .twoway:
             helloPrx = helloPrx.ice_twoway()
-        case .TwowaySecure:
+        case .twowaySecure:
             helloPrx = helloPrx.ice_twoway().ice_secure(true)
-        case .ModeOneway:
+        case .oneway:
             helloPrx = helloPrx.ice_oneway()
-        case .OnewayBatch:
+        case .onewayBatch:
             helloPrx = helloPrx.ice_batchOneway()
-        case .OnewaySecure:
+        case .onewaySecure:
             helloPrx = helloPrx.ice_oneway().ice_secure(true)
-        case .OnewaySecureBatch:
+        case .onewaySecureBatch:
             helloPrx = helloPrx.ice_batchOneway().ice_secure(true)
-        case .Datagram:
+        case .datagram:
             helloPrx = helloPrx.ice_datagram()
-        case .DatagramBatch:
+        case .datagramBatch:
             helloPrx = helloPrx.ice_batchDatagram()
         }
 
