@@ -44,28 +44,25 @@ struct FormView: View {
                   message: Text(client.error?.localizedDescription ?? ""),
                   dismissButton: .default(Text("Got it!")))
         }
-        .onAppear {
-            client.configure(comm: communicator)
-        }
     }
 }
 
 struct FormView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ContentView()
+            FormView()
                 .previewDevice("iPhone 13 mini")
                 .previewDisplayName("iPhone 13 mini")
                 .previewInterfaceOrientation(.portrait)
-            ContentView()
+            FormView()
                 .previewDevice("iPhone 13 Pro")
                 .previewDisplayName("iPhone 13 Pro")
                 .previewInterfaceOrientation(.portrait)
-            ContentView()
+            FormView()
                 .previewDevice("iPhone 13 Pro Max")
                 .previewDisplayName("iPhone 13 Pro Max")
                 .previewInterfaceOrientation(.portrait)
-            ContentView()
+            FormView()
                 .previewDevice("iPad Air (4th generation)")
                 .previewDisplayName("iPad Air")
                 .previewInterfaceOrientation(.landscapeLeft)

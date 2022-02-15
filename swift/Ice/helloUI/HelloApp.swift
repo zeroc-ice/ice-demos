@@ -8,7 +8,14 @@ import SwiftUI
 struct HelloApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+#if os(iOS)
+            NavigationView {
+                FormView()
+            }
+            .navigationViewStyle(.stack)
+#else
+            FormView()
+#endif
         }
     }
 }
