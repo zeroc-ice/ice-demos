@@ -8,7 +8,37 @@ import PromiseKit
 import SwiftUI
 
 final class MessageSwiftUIVC: MessagesViewController {
+    // MARK: - Public properties
+
     var client: Client!
+
+    // MARK: - Overriding UIViewController methods
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        if let conn = client.router!.ice_getCachedConnection() {
+            conn.setACM(timeout: client.acmTimeout, close: nil, heartbeat: .HeartbeatAlways)
+            do {
+                try conn.setCloseCallback { _ in
+                    // Dispatch the connection close callback to the main thread in order to modify the UI in a thread
+                    // safe manner.
+                    DispatchQueue.main.async {
+                        self.closed()
+                    }
+                }
+            } catch {}
+        }
+        // Register the chat callback.
+        firstly {
+            client.session!.setCallbackAsync(client.callbackProxy)
+        }.catch { err in
+            let alert = UIAlertController(title: "Error",
+                                          message: err.localizedDescription,
+                                          preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.parent?.present(alert, animated: true, completion: nil)
+        }
+    }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -32,89 +62,19 @@ final class MessageSwiftUIVC: MessagesViewController {
         parent?.navigationItem.rightBarButtonItem = usersButton
     }
 
-    @objc public func showUsers(_: UIBarButtonItem) {
+    // MARK: - Public functions
+
+    @objc func showUsers(_: UIBarButtonItem) {
         let swiftUIView = UsersView(users: client?.users ?? [])
         let hostingController = UIHostingController(rootView: swiftUIView)
         present(hostingController, animated: true, completion: nil)
     }
 
-    @objc func logout(_: UIBarButtonItem) {
-        view.endEditing(true)
-        client?.destroySession()
-        if let controller = navigationController {
-            dismiss(animated: true, completion: nil)
-            view.endEditing(true)
-            controller.popViewController(animated: true)
-        }
-    }
-}
+    // MARK: - Private functions
 
-struct MessagesView: UIViewControllerRepresentable {
-    @State var initialized = false
-    @EnvironmentObject var client: Client
-
-    func makeUIViewController(context: Context) -> MessageSwiftUIVC {
-        let messagesVC = MessageSwiftUIVC()
-        messagesVC.client = client
-        messagesVC.messagesCollectionView.messagesDisplayDelegate = context.coordinator
-        messagesVC.messagesCollectionView.messagesLayoutDelegate = context.coordinator
-        messagesVC.messagesCollectionView.messagesDataSource = context.coordinator
-        messagesVC.messageInputBar.delegate = context.coordinator
-        messagesVC.scrollsToLastItemOnKeyboardBeginsEditing = true // default false
-        messagesVC.maintainPositionOnKeyboardFrameChanged = true // default false
-        messagesVC.showMessageTimestampOnSwipeLeft = true // default false
-        messagesVC.messageInputBar.inputTextView.placeholder = "Message"
-
-        client.messages = []
-
-        precondition(client.session != nil)
-        precondition(client.router != nil)
-
-        if let conn = client.router!.ice_getCachedConnection() {
-            conn.setACM(timeout: client.acmTimeout, close: nil, heartbeat: .HeartbeatAlways)
-
-            do {
-                try conn.setCloseCallback { _ in
-                    //
-                    // Dispatch the connection close callback to the main thread
-                    // in order to modify the UI in a thread safe manner.
-                    //
-                    DispatchQueue.main.async {
-                        self.closed(messagesVC)
-                    }
-                }
-            } catch {}
-        }
-
-        // Register the chat callback.
-        firstly {
-            client.session!.setCallbackAsync(client.callbackProxy)
-        }.catch { err in
-            let alert = UIAlertController(title: "Error",
-                                          message: err.localizedDescription,
-                                          preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            messagesVC.present(alert, animated: true, completion: nil)
-        }
-        return messagesVC
-    }
-
-    func updateUIViewController(_ uiViewController: MessageSwiftUIVC, context _: Context) {
-        let usersText = "\(client.users.count) " + (client.users.count > 1 ? "Users" : "User")
-        let usersButton = UIBarButtonItem(title: usersText,
-                                          style: .plain,
-                                          target: self,
-                                          action: #selector(uiViewController.showUsers(_:)))
-        uiViewController.parent?.navigationItem.rightBarButtonItem = usersButton
-        uiViewController.messagesCollectionView.reloadData()
-        if isLastSectionVisible(uiViewController) == false {
-            scrollToBottom(uiViewController)
-        }
-    }
-
-    func closed(_ uiViewController: MessageSwiftUIVC) {
+    private func closed() {
         // The session is invalid, clear.
-        if client.session != nil, let controller = uiViewController.navigationController {
+        if client.session != nil, let controller = navigationController {
             client.session = nil
             client.router = nil
 
@@ -127,8 +87,48 @@ struct MessagesView: UIViewControllerRepresentable {
                                           message: "Lost connection with session!\n",
                                           preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            uiViewController.present(alert, animated: true, completion: nil)
+            parent?.present(alert, animated: true, completion: nil)
         }
+    }
+
+    @objc private func logout(_: UIBarButtonItem) {
+        view.endEditing(true)
+        client?.destroySession()
+        if let controller = navigationController {
+            dismiss(animated: true, completion: nil)
+            view.endEditing(true)
+            controller.popViewController(animated: true)
+        }
+    }
+}
+
+struct MessagesView: UIViewControllerRepresentable {
+    @EnvironmentObject var client: Client
+    @State private var initialized = false
+
+    func makeUIViewController(context: Context) -> MessageSwiftUIVC {
+        let messagesVC = MessageSwiftUIVC()
+        messagesVC.client = client
+        messagesVC.messagesCollectionView.messagesDisplayDelegate = context.coordinator
+        messagesVC.messagesCollectionView.messagesLayoutDelegate = context.coordinator
+        messagesVC.messagesCollectionView.messagesDataSource = context.coordinator
+        messagesVC.messageInputBar.delegate = context.coordinator
+        messagesVC.scrollsToLastItemOnKeyboardBeginsEditing = true // default false
+        messagesVC.maintainPositionOnKeyboardFrameChanged = true // default false
+        messagesVC.showMessageTimestampOnSwipeLeft = true // default false
+        messagesVC.messageInputBar.inputTextView.placeholder = "Message"
+        return messagesVC
+    }
+
+    func updateUIViewController(_ uiViewController: MessageSwiftUIVC, context _: Context) {
+        let usersText = "\(client.users.count) " + (client.users.count > 1 ? "Users" : "User")
+        let usersButton = UIBarButtonItem(title: usersText,
+                                          style: .plain,
+                                          target: self,
+                                          action: #selector(uiViewController.showUsers(_:)))
+        uiViewController.parent?.navigationItem.rightBarButtonItem = usersButton
+        uiViewController.messagesCollectionView.reloadData()
+        scrollToBottom(uiViewController)
     }
 
     func makeCoordinator() -> Coordinator {
@@ -150,7 +150,7 @@ struct MessagesView: UIViewControllerRepresentable {
         }
     }
 
-    private func scrollToBottom(_ uiViewController: MessageSwiftUIVC) {
+    private func scrollToBottom(_ uiViewController: MessagesViewController) {
         DispatchQueue.main.async {
             // The initialized state variable allows us to start at the bottom with the initial messages without seeing
             // the initial scroll flash by
@@ -231,7 +231,8 @@ extension MessagesView.Coordinator: MessagesLayoutDelegate, MessagesDisplayDeleg
     func configureAvatarView(_ avatarView: AvatarView,
                              for message: MessageType,
                              at _: IndexPath,
-                             in _: MessagesCollectionView) {
+                             in _: MessagesCollectionView)
+    {
         let name = message.sender.displayName
         let avatar = Avatar(image: nil, initials: "\(name.first ?? "A")")
         avatarView.set(avatar: avatar)

@@ -22,7 +22,7 @@ class LoginViewModel: ObservableObject {
     }
 
     var isSigninComplete: Bool {
-        if !isUsernameValid() || !isPasswordValid() {
+        if !isUsernameValid() {
             return false
         }
         return true
@@ -31,9 +31,5 @@ class LoginViewModel: ObservableObject {
     // Validation methods
     private func isUsernameValid() -> Bool {
         return username != ""
-    }
-
-    private func isPasswordValid() -> Bool {
-        return true
     }
 }

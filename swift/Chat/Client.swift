@@ -27,48 +27,27 @@ class Client: ObservableObject {
         didSet { isLoggedIn = (currentUser != nil) }
     }
 
-    // MARK: - Client management functions
+    // MARK: - Initialize the client with a communicator
 
-    func setup(communicator: Ice.Communicator,
-               session: ChatSessionPrx,
-               acmTimeout: Int32,
-               router: Glacier2.RouterPrx,
-               category: String) throws
-    {
-        self.communicator = communicator
-        self.session = session
-        self.router = router
-        self.acmTimeout = acmTimeout
-
-        let adapter = try communicator.createObjectAdapterWithRouter(name: "ChatDemo.Client", rtr: router)
-        try adapter.activate()
-        let prx = try adapter.add(servant: ChatRoomCallbackInterceptor(ChatRoomCallbackDisp(self)),
-                                  id: Ice.Identity(name: UUID().uuidString, category: category))
-        callbackProxy = uncheckedCast(prx: prx, type: ChatRoomCallbackPrx.self)
+    init() {
+        communicator = Client.loadCommunicator()
     }
 
-    func attemptLogin(completionBlock: @escaping (String?) -> Void) {
-        let prop = Ice.createProperties()
-        prop.setProperty(key: "Ice.Plugin.IceSSL", value: "1")
-        prop.setProperty(key: "Ice.Default.Router",
-                         value: "Glacier2/router:wss -p 443 -h zeroc.com -r /demo-proxy/chat/glacier2 -t 10000")
-        prop.setProperty(key: "IceSSL.UsePlatformCAs", value: "1")
-        prop.setProperty(key: "IceSSL.CheckCertName", value: "1")
-        prop.setProperty(key: "IceSSL.VerifyDepthMax", value: "5")
-        prop.setProperty(key: "Ice.ACM.Client.Timeout", value: "0")
-        prop.setProperty(key: "Ice.RetryIntervals", value: "-1")
+    // MARK: - Client management functions
 
-        var initData = Ice.InitializationData()
-        initData.properties = prop
+    func attemptLogin(completionBlock: @escaping (String?) -> Void) {
+        if communicator == nil {
+            self.communicator = Client.loadCommunicator()
+        }
+        guard let communicator = communicator else {
+            return
+        }
 
         loginViewModel.connecting = true
-
         var chatsession: ChatSessionPrx?
         var acmTimeout: Int32 = 0
         do {
-            communicator = try Ice.initialize(initData)
-            let router = uncheckedCast(prx: communicator!.getDefaultRouter()!, type: Glacier2.RouterPrx.self)
-
+            let router = uncheckedCast(prx: communicator.getDefaultRouter()!, type: Glacier2.RouterPrx.self)
             router.createSessionAsync(userId: loginViewModel.username, password: loginViewModel.password)
                 .then { session -> Promise<Int32> in
                     precondition(session != nil)
@@ -78,12 +57,16 @@ class Client: ObservableObject {
                     acmTimeout = timeout
                     return router.getCategoryForClientAsync()
                 }.done { [self] category in
+                    self.session = chatsession
+                    self.acmTimeout = acmTimeout
+                    self.router = router
 
-                    try setup(communicator: self.communicator!,
-                              session: chatsession!,
-                              acmTimeout: acmTimeout,
-                              router: router,
-                              category: category)
+                    let adapter = try communicator.createObjectAdapterWithRouter(name: "ChatDemo.Client", rtr: router)
+                    try adapter.activate()
+                    let prx = try adapter.add(servant: ChatRoomCallbackInterceptor(ChatRoomCallbackDisp(self)),
+                                              id: Ice.Identity(name: UUID().uuidString, category: category))
+                    callbackProxy = uncheckedCast(prx: prx, type: ChatRoomCallbackPrx.self)
+
                     loginViewModel.connecting = false
                     currentUser = ChatUser(name: loginViewModel.username.lowercased())
                     completionBlock(nil)
@@ -98,8 +81,6 @@ class Client: ObservableObject {
                         completionBlock("Error: \(err)")
                     }
                 }
-        } catch {
-            completionBlock(error.localizedDescription)
         }
     }
 
@@ -114,10 +95,7 @@ class Client: ObservableObject {
             let router = self.router
             self.router = nil
             session = nil
-            //
-            // Destroy the session and the communicator asyncrhonously
-            // to avoid blocking the main thread.
-            //
+            // Destroy the session and the communicator asyncrhonously to avoid blocking the main thread.
             DispatchQueue.global().async {
                 do {
                     try router?.destroySession()
@@ -126,6 +104,29 @@ class Client: ObservableObject {
                 }
                 communicator.destroy()
             }
+        }
+    }
+
+    // MARK: - Private setup method
+
+    private class func loadCommunicator() -> Ice.Communicator {
+        var initData = Ice.InitializationData()
+        let properties = Ice.createProperties()
+
+        properties.setProperty(key: "Ice.Plugin.IceSSL", value: "1")
+        properties.setProperty(key: "Ice.Default.Router",
+                               value: "Glacier2/router:wss -p 443 -h zeroc.com -r /demo-proxy/chat/glacier2 -t 10000")
+        properties.setProperty(key: "IceSSL.UsePlatformCAs", value: "1")
+        properties.setProperty(key: "IceSSL.CheckCertName", value: "1")
+        properties.setProperty(key: "IceSSL.VerifyDepthMax", value: "5")
+        properties.setProperty(key: "Ice.ACM.Client.Timeout", value: "0")
+        properties.setProperty(key: "Ice.RetryIntervals", value: "-1")
+        initData.properties = properties
+        do {
+            return try Ice.initialize(initData)
+        } catch {
+            print(error)
+            fatalError()
         }
     }
 }
