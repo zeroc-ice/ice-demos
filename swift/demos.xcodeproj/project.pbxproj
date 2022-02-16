@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -51,6 +51,7 @@
 				1577F9299978B3890A54E257 /* PBXTargetDependency */,
 			);
 			name = "allDemos macOS";
+			productName = "allDemos macOS";
 		};
 		50404C35B730F02C93AF4914 /* allDemos iOS */ = {
 			isa = PBXAggregateTarget;
@@ -63,6 +64,7 @@
 				6EEE960E0AF569D8D84BF275 /* PBXTargetDependency */,
 			);
 			name = "allDemos iOS";
+			productName = "allDemos iOS";
 		};
 /* End PBXAggregateTarget section */
 
@@ -221,7 +223,7 @@
 		96663A86E8947C50DE6CDA5F /* IceImpl.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44E2EF3378D9F7C7F0D447C2 /* IceImpl.xcframework */; };
 		96B5842FACA240F8DEBC9DD6 /* Ice.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D79B76AFF6799725A4428FD2 /* Ice.xcframework */; };
 		96D4B6C4488BCA084AF4F6E8 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DFA602DEC55A1DE82BBF9F /* main.swift */; };
-		971C57C680EAC169FC02EB07 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA9D65FCBB43921AE081B19 /* AppDelegate.swift */; };
+		971C57C680EAC169FC02EB07 /* ChatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA9D65FCBB43921AE081B19 /* ChatApp.swift */; };
 		98FD99B2F95B728BABE886F2 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28DADE4A9B6DA1704649740D /* main.swift */; };
 		995DA1E74797D464FE505707 /* Ice.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28C558DB55A446508E4FF509 /* Ice.xcframework */; };
 		9AE8AEC03E8536793AB11110 /* IceImpl.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44E2EF3378D9F7C7F0D447C2 /* IceImpl.xcframework */; };
@@ -236,6 +238,8 @@
 		A2CB957E6B2B58561810243D /* IceImpl.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44E2EF3378D9F7C7F0D447C2 /* IceImpl.xcframework */; };
 		A3B2B498D40D1C15E5AD0CF1 /* IceImpl.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44E2EF3378D9F7C7F0D447C2 /* IceImpl.xcframework */; };
 		A5BA6CBA3AE407A039BD77E7 /* Ice.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28C558DB55A446508E4FF509 /* Ice.xcframework */; };
+		A768655B27B30C1400E41232 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A768655A27B30C1400E41232 /* LoginView.swift */; };
+		A768655D27B3134D00E41232 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A768655C27B3134D00E41232 /* LoginViewModel.swift */; };
 		A79DD7D200CA7A5B2F70B027 /* Images.xcassets in Sources */ = {isa = PBXBuildFile; fileRef = 45F2D35942591858FBD901DD /* Images.xcassets */; };
 		A89B2946882429C77330E49E /* IceImpl.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44E2EF3378D9F7C7F0D447C2 /* IceImpl.xcframework */; };
 		A8C98CD18E36973FE4CE89DC /* PromiseKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = E33F8EBD6359013AE72CB2C7 /* PromiseKit.xcframework */; };
@@ -330,6 +334,8 @@
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.ice";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			name = "Slice Compiler";
 			outputFiles = (
@@ -343,6 +349,8 @@
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.ice";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			name = "Slice Compiler";
 			outputFiles = (
@@ -356,6 +364,8 @@
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.ice";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			name = "Slice Compiler";
 			outputFiles = (
@@ -369,6 +379,8 @@
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.ice";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			name = "Slice Compiler";
 			outputFiles = (
@@ -382,6 +394,8 @@
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.ice";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			name = "Slice Compiler";
 			outputFiles = (
@@ -395,6 +409,8 @@
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.ice";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			name = "Slice Compiler";
 			outputFiles = (
@@ -408,6 +424,8 @@
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.ice";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			name = "Slice Compiler";
 			outputFiles = (
@@ -421,6 +439,8 @@
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.ice";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			name = "Slice Compiler";
 			outputFiles = (
@@ -434,6 +454,8 @@
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.ice";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			name = "Slice Compiler";
 			outputFiles = (
@@ -447,6 +469,8 @@
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.ice";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			name = "Slice Compiler";
 			outputFiles = (
@@ -460,6 +484,8 @@
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.ice";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			name = "Slice Compiler";
 			outputFiles = (
@@ -473,6 +499,8 @@
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.ice";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			name = "Slice Compiler";
 			outputFiles = (
@@ -486,6 +514,8 @@
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.ice";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			name = "Slice Compiler";
 			outputFiles = (
@@ -499,6 +529,8 @@
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.ice";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			name = "Slice Compiler";
 			outputFiles = (
@@ -512,6 +544,8 @@
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.ice";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			name = "Slice Compiler";
 			outputFiles = (
@@ -525,6 +559,8 @@
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.ice";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			name = "Slice Compiler";
 			outputFiles = (
@@ -538,6 +574,8 @@
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.ice";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			name = "Slice Compiler";
 			outputFiles = (
@@ -551,6 +589,8 @@
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.ice";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			name = "Slice Compiler";
 			outputFiles = (
@@ -564,6 +604,8 @@
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.ice";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			name = "Slice Compiler";
 			outputFiles = (
@@ -577,6 +619,8 @@
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.ice";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			name = "Slice Compiler";
 			outputFiles = (
@@ -590,6 +634,8 @@
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.ice";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			name = "Slice Compiler";
 			outputFiles = (
@@ -603,6 +649,8 @@
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.ice";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			name = "Slice Compiler";
 			outputFiles = (
@@ -616,6 +664,8 @@
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.ice";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			name = "Slice Compiler";
 			outputFiles = (
@@ -629,6 +679,8 @@
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.ice";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			name = "Slice Compiler";
 			outputFiles = (
@@ -642,6 +694,8 @@
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.ice";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			name = "Slice Compiler";
 			outputFiles = (
@@ -655,6 +709,8 @@
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.ice";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			name = "Slice Compiler";
 			outputFiles = (
@@ -668,6 +724,8 @@
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.ice";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			name = "Slice Compiler";
 			outputFiles = (
@@ -681,6 +739,8 @@
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.ice";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			name = "Slice Compiler";
 			outputFiles = (
@@ -694,6 +754,8 @@
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.ice";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			name = "Slice Compiler";
 			outputFiles = (
@@ -707,6 +769,8 @@
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.ice";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			name = "Slice Compiler";
 			outputFiles = (
@@ -720,6 +784,8 @@
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.ice";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			name = "Slice Compiler";
 			outputFiles = (
@@ -733,6 +799,8 @@
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.ice";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			name = "Slice Compiler";
 			outputFiles = (
@@ -746,6 +814,8 @@
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.ice";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			name = "Slice Compiler";
 			outputFiles = (
@@ -759,6 +829,8 @@
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.ice";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			name = "Slice Compiler";
 			outputFiles = (
@@ -772,6 +844,8 @@
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.ice";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			name = "Slice Compiler";
 			outputFiles = (
@@ -785,6 +859,8 @@
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.ice";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			name = "Slice Compiler";
 			outputFiles = (
@@ -798,6 +874,8 @@
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.ice";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			name = "Slice Compiler";
 			outputFiles = (
@@ -811,6 +889,8 @@
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.ice";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			name = "Slice Compiler";
 			outputFiles = (
@@ -824,6 +904,8 @@
 			compilerSpec = com.apple.compilers.proxy.script;
 			filePatterns = "*.ice";
 			fileType = pattern.proxy;
+			inputFiles = (
+			);
 			isEditable = 1;
 			name = "Slice Compiler";
 			outputFiles = (
@@ -1158,211 +1240,213 @@
 
 /* Begin PBXFileReference section */
 		00E639D7AAB89720BD2AF551 /* main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = main.swift; path = Ice/context/Sources/Client/main.swift; sourceTree = "<group>"; };
-		017A6BF2C245B1938F34C6C8 /* IceDiscoveryReplicationServer */ = {isa = PBXFileReference; includeInIndex = 0; path = IceDiscoveryReplicationServer; sourceTree = BUILT_PRODUCTS_DIR; };
-		018AF44E0CED15AAF2DDEC48 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = iOS/hello/README.md; sourceTree = "<group>"; };
+		017A6BF2C245B1938F34C6C8 /* IceDiscoveryReplicationServer */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = text; name = IceDiscoveryReplicationServer; path = server; sourceTree = BUILT_PRODUCTS_DIR; };
+		018AF44E0CED15AAF2DDEC48 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = iOS/hello/README.md; sourceTree = "<group>"; };
 		01DCB1638386E8F076C4527F /* main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = main.swift; path = IceDiscovery/hello/Sources/Server/main.swift; sourceTree = "<group>"; };
 		04B294665F8365C4660E5293 /* ChatController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ChatController.swift; path = iOS/chat/ChatController.swift; sourceTree = "<group>"; };
-		04E169866A28CE4C09EC830C /* IceAsyncInvocationServer */ = {isa = PBXFileReference; includeInIndex = 0; path = IceAsyncInvocationServer; sourceTree = BUILT_PRODUCTS_DIR; };
+		04E169866A28CE4C09EC830C /* IceAsyncInvocationServer */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = text; name = IceAsyncInvocationServer; path = server; sourceTree = BUILT_PRODUCTS_DIR; };
 		062D4FF632571C9B1EE57EDA /* main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = main.swift; path = Ice/async/Sources/Client/main.swift; sourceTree = "<group>"; };
 		06BE5622AC513229E4D8C1DA /* main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = main.swift; path = Ice/context/Sources/Server/main.swift; sourceTree = "<group>"; };
-		0942CEA562FE56F14AE24E39 /* Contact.ice */ = {isa = PBXFileReference; includeInIndex = 1; name = Contact.ice; path = Ice/optional/Sources/Contact.ice; sourceTree = "<group>"; };
-		0BF7011B044009FEDA7643A3 /* Hello.ice */ = {isa = PBXFileReference; includeInIndex = 1; name = Hello.ice; path = IceGrid/simple/Sources/Hello.ice; sourceTree = "<group>"; };
+		0942CEA562FE56F14AE24E39 /* Contact.ice */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Contact.ice; path = Ice/optional/Sources/Contact.ice; sourceTree = "<group>"; };
+		0BF7011B044009FEDA7643A3 /* Hello.ice */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Hello.ice; path = IceGrid/simple/Sources/Hello.ice; sourceTree = "<group>"; };
 		0C4552F3A57E06F1FE087CA3 /* main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = main.swift; path = Ice/interceptor/Sources/Server/main.swift; sourceTree = "<group>"; };
 		0CC9437BF449759BC05DF17E /* CalculatorI.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CalculatorI.swift; path = Ice/asyncInvocation/Sources/Server/CalculatorI.swift; sourceTree = "<group>"; };
-		10580C577F8088ACB4185AFF /* config.server */ = {isa = PBXFileReference; includeInIndex = 1; name = config.server; path = Ice/invoke/config.server; sourceTree = "<group>"; };
-		10A521847822A38F221AF2AF /* Callback.ice */ = {isa = PBXFileReference; includeInIndex = 1; name = Callback.ice; path = Glacier2/callback/Sources/Callback.ice; sourceTree = "<group>"; };
+		10580C577F8088ACB4185AFF /* config.server */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = config.server; path = Ice/invoke/config.server; sourceTree = "<group>"; };
+		10A521847822A38F221AF2AF /* Callback.ice */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Callback.ice; path = Glacier2/callback/Sources/Callback.ice; sourceTree = "<group>"; };
 		115E221C6424603632377848 /* ChatUser.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ChatUser.swift; path = iOS/chat/ChatUser.swift; sourceTree = "<group>"; };
-		16B1909C47C25A2F958F9B42 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = Ice/interceptor/README.md; sourceTree = "<group>"; };
-		16DBCF84A11CA84DB546F2A8 /* Calculator.ice */ = {isa = PBXFileReference; includeInIndex = 1; name = Calculator.ice; path = Ice/asyncInvocation/Sources/Calculator.ice; sourceTree = "<group>"; };
-		17040B3C51149ECC64FDA2F3 /* config.sub */ = {isa = PBXFileReference; includeInIndex = 1; name = config.sub; path = IceStorm/clock/config.sub; sourceTree = "<group>"; };
-		176C6FB865C900ACDE99E192 /* ChatSession.ice */ = {isa = PBXFileReference; includeInIndex = 1; name = ChatSession.ice; path = iOS/chat/ChatSession.ice; sourceTree = "<group>"; };
-		1778B75182C1B414605236A2 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = Ice/optional/README.md; sourceTree = "<group>"; };
+		16B1909C47C25A2F958F9B42 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = Ice/interceptor/README.md; sourceTree = "<group>"; };
+		16DBCF84A11CA84DB546F2A8 /* Calculator.ice */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Calculator.ice; path = Ice/asyncInvocation/Sources/Calculator.ice; sourceTree = "<group>"; };
+		17040B3C51149ECC64FDA2F3 /* config.sub */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = config.sub; path = IceStorm/clock/config.sub; sourceTree = "<group>"; };
+		176C6FB865C900ACDE99E192 /* ChatSession.ice */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = ChatSession.ice; path = iOS/chat/ChatSession.ice; sourceTree = "<group>"; };
+		1778B75182C1B414605236A2 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = Ice/optional/README.md; sourceTree = "<group>"; };
 		17C01B6B96D318BD91BCCED7 /* LoadingButton.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LoadingButton.swift; path = iOS/chat/LoadingButton.swift; sourceTree = "<group>"; };
 		196EF0A3C8C45D4604C52011 /* main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = main.swift; path = Ice/interceptor/Sources/Client/main.swift; sourceTree = "<group>"; };
-		1E17322B9B3129F67236C598 /* config.client */ = {isa = PBXFileReference; includeInIndex = 1; name = config.client; path = iOS/chat/config.client; sourceTree = "<group>"; };
-		1EA7D8DD444806C4FE809AC5 /* IceAsyncClient */ = {isa = PBXFileReference; includeInIndex = 0; path = IceAsyncClient; sourceTree = BUILT_PRODUCTS_DIR; };
-		2210BCF19216BBCAD944F9D6 /* ManualSimpleFilesystemClient */ = {isa = PBXFileReference; includeInIndex = 0; path = ManualSimpleFilesystemClient; sourceTree = BUILT_PRODUCTS_DIR; };
-		22C91647BDCDB9779AB19CA3 /* IceHelloServer */ = {isa = PBXFileReference; includeInIndex = 0; path = IceHelloServer; sourceTree = BUILT_PRODUCTS_DIR; };
+		1E17322B9B3129F67236C598 /* config.client */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = config.client; path = iOS/chat/config.client; sourceTree = "<group>"; };
+		1EA7D8DD444806C4FE809AC5 /* IceAsyncClient */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = text; name = IceAsyncClient; path = client; sourceTree = BUILT_PRODUCTS_DIR; };
+		2210BCF19216BBCAD944F9D6 /* ManualSimpleFilesystemClient */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = text; name = ManualSimpleFilesystemClient; path = client; sourceTree = BUILT_PRODUCTS_DIR; };
+		22C91647BDCDB9779AB19CA3 /* IceHelloServer */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = text; name = IceHelloServer; path = server; sourceTree = BUILT_PRODUCTS_DIR; };
 		22F9E0B5646525E4BCDD65DB /* ThermostatI.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ThermostatI.swift; path = Ice/interceptor/Sources/Server/ThermostatI.swift; sourceTree = "<group>"; };
-		243D3F8A601DE2B8A3FA36B3 /* config.client */ = {isa = PBXFileReference; includeInIndex = 1; name = config.client; path = Ice/interceptor/config.client; sourceTree = "<group>"; };
-		26C4F52C904CDC3D4D1A5308 /* config.client */ = {isa = PBXFileReference; includeInIndex = 1; name = config.client; path = Glacier2/callback/config.client; sourceTree = "<group>"; };
-		28C558DB55A446508E4FF509 /* Ice.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = Ice.xcframework; path = Carthage/Build/Ice.xcframework; sourceTree = "<group>"; };
+		243D3F8A601DE2B8A3FA36B3 /* config.client */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = config.client; path = Ice/interceptor/config.client; sourceTree = "<group>"; };
+		26C4F52C904CDC3D4D1A5308 /* config.client */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = config.client; path = Glacier2/callback/config.client; sourceTree = "<group>"; };
+		28C558DB55A446508E4FF509 /* Ice.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = Ice.xcframework; path = Carthage/Build/Ice.xcframework; sourceTree = "<group>"; };
 		28DADE4A9B6DA1704649740D /* main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = main.swift; path = Ice/asyncInvocation/Sources/Server/main.swift; sourceTree = "<group>"; };
-		2A4CA42CA6ED3C00EE5DC00C /* IceBidirServer */ = {isa = PBXFileReference; includeInIndex = 0; path = IceBidirServer; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BB13C7076DA20F0C7BFDC36 /* config.server */ = {isa = PBXFileReference; includeInIndex = 1; name = config.server; path = Ice/bidir/config.server; sourceTree = "<group>"; };
-		2C3DB1C65D1B9ED24051DE99 /* IceBidirClient */ = {isa = PBXFileReference; includeInIndex = 0; path = IceBidirClient; sourceTree = BUILT_PRODUCTS_DIR; };
+		2A4CA42CA6ED3C00EE5DC00C /* IceBidirServer */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = text; name = IceBidirServer; path = server; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BB13C7076DA20F0C7BFDC36 /* config.server */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = config.server; path = Ice/bidir/config.server; sourceTree = "<group>"; };
+		2C3DB1C65D1B9ED24051DE99 /* IceBidirClient */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = text; name = IceBidirClient; path = client; sourceTree = BUILT_PRODUCTS_DIR; };
 		2DA6A62EE8B96C49196C6104 /* Main.storyboard */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; name = Main.storyboard; path = iOS/chat/Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2F5252E6DE7462352320FB7A /* LoginController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LoginController.swift; path = iOS/chat/LoginController.swift; sourceTree = "<group>"; };
-		32029539794EF0F1BBB97D18 /* MessageKit.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = MessageKit.xcframework; path = Carthage/Build/MessageKit.xcframework; sourceTree = "<group>"; };
+		32029539794EF0F1BBB97D18 /* MessageKit.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = MessageKit.xcframework; path = Carthage/Build/MessageKit.xcframework; sourceTree = "<group>"; };
 		33A4936D644169FE316E54E1 /* main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = main.swift; path = Ice/optional/Sources/Client/main.swift; sourceTree = "<group>"; };
 		344F81939D64CD391A3B64BA /* main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = main.swift; path = Ice/optional/Sources/Server/main.swift; sourceTree = "<group>"; };
-		38D692F7A1A59D07B3A84D38 /* Context.ice */ = {isa = PBXFileReference; includeInIndex = 1; name = Context.ice; path = Ice/context/Sources/Context.ice; sourceTree = "<group>"; };
-		393A11CCE8A9AF5886257EB1 /* Printer.ice */ = {isa = PBXFileReference; includeInIndex = 1; name = Printer.ice; path = Manual/printer/Sources/Printer.ice; sourceTree = "<group>"; };
-		3963729A3421FF714DB83E79 /* IOSHello.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IOSHello.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		39C8A1A7AB5FD2BC8E5D7419 /* IceStormClockPublisher */ = {isa = PBXFileReference; includeInIndex = 0; path = IceStormClockPublisher; sourceTree = BUILT_PRODUCTS_DIR; };
-		3A68D8EB52D1135866BCA2C2 /* IceLatencyServer */ = {isa = PBXFileReference; includeInIndex = 0; path = IceLatencyServer; sourceTree = BUILT_PRODUCTS_DIR; };
-		3C8B097D24CC045E9397A8BF /* IceDiscoveryHelloClient */ = {isa = PBXFileReference; includeInIndex = 0; path = IceDiscoveryHelloClient; sourceTree = BUILT_PRODUCTS_DIR; };
-		3CF7DDAE1C22F11406087F6D /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = Ice/throughput/README.md; sourceTree = "<group>"; };
+		38D692F7A1A59D07B3A84D38 /* Context.ice */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Context.ice; path = Ice/context/Sources/Context.ice; sourceTree = "<group>"; };
+		393A11CCE8A9AF5886257EB1 /* Printer.ice */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Printer.ice; path = Manual/printer/Sources/Printer.ice; sourceTree = "<group>"; };
+		3963729A3421FF714DB83E79 /* IOSHello.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = IOSHello.app; path = hello.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		39C8A1A7AB5FD2BC8E5D7419 /* IceStormClockPublisher */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = text; name = IceStormClockPublisher; path = publisher; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A68D8EB52D1135866BCA2C2 /* IceLatencyServer */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = text; name = IceLatencyServer; path = server; sourceTree = BUILT_PRODUCTS_DIR; };
+		3C8B097D24CC045E9397A8BF /* IceDiscoveryHelloClient */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = text; name = IceDiscoveryHelloClient; path = client; sourceTree = BUILT_PRODUCTS_DIR; };
+		3CF7DDAE1C22F11406087F6D /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = Ice/throughput/README.md; sourceTree = "<group>"; };
 		3E73A8039907731FCD618C1F /* main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = main.swift; path = Glacier2/callback/Sources/Client/main.swift; sourceTree = "<group>"; };
-		3F541373F0B62EAD850F2FBD /* config.server */ = {isa = PBXFileReference; includeInIndex = 1; name = config.server; path = Ice/optional/config.server; sourceTree = "<group>"; };
-		4008AF26901E735EE9EC40FD /* config.server */ = {isa = PBXFileReference; includeInIndex = 1; name = config.server; path = Glacier2/callback/config.server; sourceTree = "<group>"; };
-		401F230285604E1ADBEA9689 /* Hello.ice */ = {isa = PBXFileReference; includeInIndex = 1; name = Hello.ice; path = IceDiscovery/replication/Sources/Hello.ice; sourceTree = "<group>"; };
-		40E1DE82E595DADFE3DE206F /* config.glacier2 */ = {isa = PBXFileReference; includeInIndex = 1; name = config.glacier2; path = Glacier2/callback/config.glacier2; sourceTree = "<group>"; };
+		3F541373F0B62EAD850F2FBD /* config.server */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = config.server; path = Ice/optional/config.server; sourceTree = "<group>"; };
+		4008AF26901E735EE9EC40FD /* config.server */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = config.server; path = Glacier2/callback/config.server; sourceTree = "<group>"; };
+		401F230285604E1ADBEA9689 /* Hello.ice */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Hello.ice; path = IceDiscovery/replication/Sources/Hello.ice; sourceTree = "<group>"; };
+		40E1DE82E595DADFE3DE206F /* config.glacier2 */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = config.glacier2; path = Glacier2/callback/config.glacier2; sourceTree = "<group>"; };
 		412158B51D090DBE79E8588C /* main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = main.swift; path = Manual/simpleFilesystem/Sources/Client/main.swift; sourceTree = "<group>"; };
-		418BEF74D1793129A5C72B23 /* IceInvokeServer */ = {isa = PBXFileReference; includeInIndex = 0; path = IceInvokeServer; sourceTree = BUILT_PRODUCTS_DIR; };
-		44E2EF3378D9F7C7F0D447C2 /* IceImpl.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = IceImpl.xcframework; path = Carthage/Build/IceImpl.xcframework; sourceTree = "<group>"; };
+		418BEF74D1793129A5C72B23 /* IceInvokeServer */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = text; name = IceInvokeServer; path = server; sourceTree = BUILT_PRODUCTS_DIR; };
+		44E2EF3378D9F7C7F0D447C2 /* IceImpl.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = IceImpl.xcframework; path = Carthage/Build/IceImpl.xcframework; sourceTree = "<group>"; };
 		452D5F978671BA38A3F94EB3 /* main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = main.swift; path = Ice/latency/Sources/Client/main.swift; sourceTree = "<group>"; };
 		45F2D35942591858FBD901DD /* Images.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = iOS/hello/Images.xcassets; sourceTree = "<group>"; };
-		48532032567C26634A42F761 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
-		489A8AB8E6B33500B4C3F442 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = IceStorm/clock/README.md; sourceTree = "<group>"; };
-		48B5E1B84C2F4810AF3BE092 /* Library.ice */ = {isa = PBXFileReference; includeInIndex = 1; name = Library.ice; path = iOS/library/Library.ice; sourceTree = "<group>"; };
-		49B861EA9E13E74C4707A9BD /* config.admin */ = {isa = PBXFileReference; includeInIndex = 1; name = config.admin; path = IceStorm/clock/config.admin; sourceTree = "<group>"; };
-		4B30F8E39455552DCCB5A76E /* config.server */ = {isa = PBXFileReference; includeInIndex = 1; name = config.server; path = Ice/latency/config.server; sourceTree = "<group>"; };
+		48532032567C26634A42F761 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		489A8AB8E6B33500B4C3F442 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = IceStorm/clock/README.md; sourceTree = "<group>"; };
+		48B5E1B84C2F4810AF3BE092 /* Library.ice */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Library.ice; path = iOS/library/Library.ice; sourceTree = "<group>"; };
+		49B861EA9E13E74C4707A9BD /* config.admin */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = config.admin; path = IceStorm/clock/config.admin; sourceTree = "<group>"; };
+		4B30F8E39455552DCCB5A76E /* config.server */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = config.server; path = Ice/latency/config.server; sourceTree = "<group>"; };
 		4D8C4A502C81A17810483EAC /* Images.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = iOS/library/Images.xcassets; sourceTree = "<group>"; };
 		4DCF7B3212E070F32DE5D06F /* Main.storyboard */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; name = Main.storyboard; path = iOS/hello/Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		4E1ACB62C85FF06D49A7E781 /* IceGridSimpleClient */ = {isa = PBXFileReference; includeInIndex = 0; path = IceGridSimpleClient; sourceTree = BUILT_PRODUCTS_DIR; };
+		4E1ACB62C85FF06D49A7E781 /* IceGridSimpleClient */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = text; name = IceGridSimpleClient; path = client; sourceTree = BUILT_PRODUCTS_DIR; };
 		5300F0985211B122CE67D3DE /* main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = main.swift; path = Ice/throughput/Sources/Client/main.swift; sourceTree = "<group>"; };
-		542A970BC1F69E2C31ED478B /* config.client */ = {isa = PBXFileReference; includeInIndex = 1; name = config.client; path = IceDiscovery/hello/config.client; sourceTree = "<group>"; };
-		555B4E4C32AB73151AC64B48 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = Ice/context/README.md; sourceTree = "<group>"; };
-		5570BD4237087EEDD3669912 /* config.client */ = {isa = PBXFileReference; includeInIndex = 1; name = config.client; path = Ice/invoke/config.client; sourceTree = "<group>"; };
-		55A37C8DED853A4C0C0212D7 /* PromiseKit.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = PromiseKit.xcframework; path = Carthage/Build/PromiseKit.xcframework; sourceTree = "<group>"; };
-		55BA08D94F88634B1FCC8444 /* config.client */ = {isa = PBXFileReference; includeInIndex = 1; name = config.client; path = Ice/async/config.client; sourceTree = "<group>"; };
-		55BD51CDE4F248ED184B9C03 /* IceInvokeClient */ = {isa = PBXFileReference; includeInIndex = 0; path = IceInvokeClient; sourceTree = BUILT_PRODUCTS_DIR; };
+		542A970BC1F69E2C31ED478B /* config.client */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = config.client; path = IceDiscovery/hello/config.client; sourceTree = "<group>"; };
+		555B4E4C32AB73151AC64B48 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = Ice/context/README.md; sourceTree = "<group>"; };
+		5570BD4237087EEDD3669912 /* config.client */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = config.client; path = Ice/invoke/config.client; sourceTree = "<group>"; };
+		55A37C8DED853A4C0C0212D7 /* PromiseKit.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = PromiseKit.xcframework; path = Carthage/Build/PromiseKit.xcframework; sourceTree = "<group>"; };
+		55BA08D94F88634B1FCC8444 /* config.client */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = config.client; path = Ice/async/config.client; sourceTree = "<group>"; };
+		55BD51CDE4F248ED184B9C03 /* IceInvokeClient */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = text; name = IceInvokeClient; path = client; sourceTree = BUILT_PRODUCTS_DIR; };
 		560295E3FB26C30FE4279071 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = iOS/chat/Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		564EEE78D51984E4FC201895 /* main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = main.swift; path = IceGrid/simple/Sources/Server/main.swift; sourceTree = "<group>"; };
 		572B6823AAC759EDC9E19B71 /* LoginController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LoginController.swift; path = iOS/library/LoginController.swift; sourceTree = "<group>"; };
-		5A69CA4F896CFA76B7F4FC54 /* IceLatencyClient */ = {isa = PBXFileReference; includeInIndex = 0; path = IceLatencyClient; sourceTree = BUILT_PRODUCTS_DIR; };
+		5A69CA4F896CFA76B7F4FC54 /* IceLatencyClient */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = text; name = IceLatencyClient; path = client; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CA1965D308C6B95B2D02B01 /* main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = main.swift; path = IceDiscovery/hello/Sources/Client/main.swift; sourceTree = "<group>"; };
-		60650B913C1E84C7982E4061 /* IceGridSimpleServer */ = {isa = PBXFileReference; includeInIndex = 0; path = IceGridSimpleServer; sourceTree = BUILT_PRODUCTS_DIR; };
-		6068627F8185893E1E823DD0 /* config.client */ = {isa = PBXFileReference; includeInIndex = 1; name = config.client; path = IceGrid/simple/config.client; sourceTree = "<group>"; };
-		6141C3CBC55BB9133DDD5F29 /* IceStormClockSubscriber */ = {isa = PBXFileReference; includeInIndex = 0; path = IceStormClockSubscriber; sourceTree = BUILT_PRODUCTS_DIR; };
+		60650B913C1E84C7982E4061 /* IceGridSimpleServer */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = text; name = IceGridSimpleServer; path = server; sourceTree = BUILT_PRODUCTS_DIR; };
+		6068627F8185893E1E823DD0 /* config.client */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = config.client; path = IceGrid/simple/config.client; sourceTree = "<group>"; };
+		6141C3CBC55BB9133DDD5F29 /* IceStormClockSubscriber */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = text; name = IceStormClockSubscriber; path = subscriber; sourceTree = BUILT_PRODUCTS_DIR; };
 		626DF7CBBBF14EA0C5B37ADA /* main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = main.swift; path = IceDiscovery/replication/Sources/Server/main.swift; sourceTree = "<group>"; };
-		62889D9BEFF1DD78E140F388 /* Throughput.ice */ = {isa = PBXFileReference; includeInIndex = 1; name = Throughput.ice; path = Ice/throughput/Sources/Throughput.ice; sourceTree = "<group>"; };
+		62889D9BEFF1DD78E140F388 /* Throughput.ice */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Throughput.ice; path = Ice/throughput/Sources/Throughput.ice; sourceTree = "<group>"; };
 		62F56BC2E31623E888EE6519 /* main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = main.swift; path = Ice/minimal/Sources/Server/main.swift; sourceTree = "<group>"; };
 		63215B9BDD9CB595E01658F8 /* main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = main.swift; path = Ice/bidir/Sources/Client/main.swift; sourceTree = "<group>"; };
-		6509D4615F63497D8F3A1415 /* IceInterceptorClient */ = {isa = PBXFileReference; includeInIndex = 0; path = IceInterceptorClient; sourceTree = BUILT_PRODUCTS_DIR; };
+		6509D4615F63497D8F3A1415 /* IceInterceptorClient */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = text; name = IceInterceptorClient; path = client; sourceTree = BUILT_PRODUCTS_DIR; };
 		6643D756BFA7EEC23DC768D2 /* EditController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EditController.swift; path = iOS/library/EditController.swift; sourceTree = "<group>"; };
-		664BB7725F3CE5BF2D6D1362 /* Chat.ice */ = {isa = PBXFileReference; includeInIndex = 1; name = Chat.ice; path = iOS/chat/Chat.ice; sourceTree = "<group>"; };
-		6827D0D0191C586EC4231BA4 /* Callback.ice */ = {isa = PBXFileReference; includeInIndex = 1; name = Callback.ice; path = Ice/bidir/Sources/Callback.ice; sourceTree = "<group>"; };
-		685E3D4F4F23123EA4349688 /* config.server1 */ = {isa = PBXFileReference; includeInIndex = 1; name = config.server1; path = IceDiscovery/replication/config.server1; sourceTree = "<group>"; };
-		6A9CC980FC134C230BC7EF63 /* Glacier2.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = Glacier2.xcframework; path = Carthage/Build/Glacier2.xcframework; sourceTree = "<group>"; };
-		6B62B83268F60F7C2F99ED08 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = IceGrid/simple/README.md; sourceTree = "<group>"; };
+		664BB7725F3CE5BF2D6D1362 /* Chat.ice */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Chat.ice; path = iOS/chat/Chat.ice; sourceTree = "<group>"; };
+		6827D0D0191C586EC4231BA4 /* Callback.ice */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Callback.ice; path = Ice/bidir/Sources/Callback.ice; sourceTree = "<group>"; };
+		685E3D4F4F23123EA4349688 /* config.server1 */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = config.server1; path = IceDiscovery/replication/config.server1; sourceTree = "<group>"; };
+		6A9CC980FC134C230BC7EF63 /* Glacier2.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = Glacier2.xcframework; path = Carthage/Build/Glacier2.xcframework; sourceTree = "<group>"; };
+		6B62B83268F60F7C2F99ED08 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = IceGrid/simple/README.md; sourceTree = "<group>"; };
 		6BE3E92C43F1D4A3709F9319 /* main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = main.swift; path = Glacier2/callback/Sources/Server/main.swift; sourceTree = "<group>"; };
 		6CA52058B78D6D362BFE4799 /* main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = main.swift; path = Ice/minimal/Sources/Client/main.swift; sourceTree = "<group>"; };
-		6D76908AFC77A69CC01C4A45 /* InputBarAccessoryView.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = InputBarAccessoryView.xcframework; path = Carthage/Build/InputBarAccessoryView.xcframework; sourceTree = "<group>"; };
-		6DA9D65FCBB43921AE081B19 /* AppDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = iOS/chat/AppDelegate.swift; sourceTree = "<group>"; };
-		6E24D220EF2E79E445C87850 /* Glacier2CallbackServer */ = {isa = PBXFileReference; includeInIndex = 0; path = Glacier2CallbackServer; sourceTree = BUILT_PRODUCTS_DIR; };
-		6E84CD23DB9FAE071A069EC8 /* config.server */ = {isa = PBXFileReference; includeInIndex = 1; name = config.server; path = IceDiscovery/hello/config.server; sourceTree = "<group>"; };
+		6D76908AFC77A69CC01C4A45 /* InputBarAccessoryView.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = InputBarAccessoryView.xcframework; path = Carthage/Build/InputBarAccessoryView.xcframework; sourceTree = "<group>"; };
+		6DA9D65FCBB43921AE081B19 /* ChatApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ChatApp.swift; path = iOS/chat/ChatApp.swift; sourceTree = "<group>"; };
+		6E24D220EF2E79E445C87850 /* Glacier2CallbackServer */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = text; name = Glacier2CallbackServer; path = server; sourceTree = BUILT_PRODUCTS_DIR; };
+		6E84CD23DB9FAE071A069EC8 /* config.server */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = config.server; path = IceDiscovery/hello/config.server; sourceTree = "<group>"; };
 		7011BF01BCEDBFABCB6AAB74 /* main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = main.swift; path = Ice/hello/Sources/Server/main.swift; sourceTree = "<group>"; };
-		70F2BD7A488A205C3F2FFF1F /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = iOS/library/README.md; sourceTree = "<group>"; };
+		70F2BD7A488A205C3F2FFF1F /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = iOS/library/README.md; sourceTree = "<group>"; };
 		7141F96B9E1438EE1FD9324B /* PrinterI.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PrinterI.swift; path = Ice/invoke/Sources/Server/PrinterI.swift; sourceTree = "<group>"; };
-		734F7EBAF5DD523F69E07AEA /* certs */ = {isa = PBXFileReference; includeInIndex = 1; name = certs; path = ../certs; sourceTree = "<group>"; };
+		734F7EBAF5DD523F69E07AEA /* certs */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = certs; path = ../certs; sourceTree = "<group>"; };
 		7451971287B9F34894391172 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = iOS/hello/Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		75A364B7B36A2F27E0C7B5EE /* IceAsyncServer */ = {isa = PBXFileReference; includeInIndex = 0; path = IceAsyncServer; sourceTree = BUILT_PRODUCTS_DIR; };
-		78FB10F066D761AF1A24DB94 /* Hello.ice */ = {isa = PBXFileReference; includeInIndex = 1; name = Hello.ice; path = Ice/hello/Sources/Hello.ice; sourceTree = "<group>"; };
-		795BDD345A8758BE1BCE1037 /* IOSChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IOSChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		75A364B7B36A2F27E0C7B5EE /* IceAsyncServer */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = text; name = IceAsyncServer; path = server; sourceTree = BUILT_PRODUCTS_DIR; };
+		78FB10F066D761AF1A24DB94 /* Hello.ice */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Hello.ice; path = Ice/hello/Sources/Hello.ice; sourceTree = "<group>"; };
+		795BDD345A8758BE1BCE1037 /* chat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = chat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D135994048263BF1FDD1606 /* main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = main.swift; path = Ice/latency/Sources/Server/main.swift; sourceTree = "<group>"; };
-		7E17AB21DCAF1F73A95C330A /* config.client */ = {isa = PBXFileReference; includeInIndex = 1; name = config.client; path = Ice/latency/config.client; sourceTree = "<group>"; };
+		7E17AB21DCAF1F73A95C330A /* config.client */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = config.client; path = Ice/latency/config.client; sourceTree = "<group>"; };
 		7EA465016479DB7783F7D599 /* main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = main.swift; path = IceStorm/clock/Sources/Subscriber/main.swift; sourceTree = "<group>"; };
 		7FE03B5CC4924485E04FC7BA /* ChatLayoutController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ChatLayoutController.swift; path = iOS/chat/ChatLayoutController.swift; sourceTree = "<group>"; };
-		81B6BBD37B3FB2976F76A36D /* IceOptionalClient */ = {isa = PBXFileReference; includeInIndex = 0; path = IceOptionalClient; sourceTree = BUILT_PRODUCTS_DIR; };
-		8328076C5A54A89E5C1C6A77 /* Clock.ice */ = {isa = PBXFileReference; includeInIndex = 1; name = Clock.ice; path = IceStorm/clock/Sources/Clock.ice; sourceTree = "<group>"; };
-		84A42613BC359BA2823E3450 /* config.client */ = {isa = PBXFileReference; includeInIndex = 1; name = config.client; path = Ice/optional/config.client; sourceTree = "<group>"; };
+		81B6BBD37B3FB2976F76A36D /* IceOptionalClient */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = text; name = IceOptionalClient; path = client; sourceTree = BUILT_PRODUCTS_DIR; };
+		8328076C5A54A89E5C1C6A77 /* Clock.ice */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Clock.ice; path = IceStorm/clock/Sources/Clock.ice; sourceTree = "<group>"; };
+		84A42613BC359BA2823E3450 /* config.client */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = config.client; path = Ice/optional/config.client; sourceTree = "<group>"; };
 		86E08919DF7384C8501E200E /* AuthenticatorI.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AuthenticatorI.swift; path = Ice/interceptor/Sources/Server/AuthenticatorI.swift; sourceTree = "<group>"; };
-		87326C9631EA22318B8FA8B7 /* IceContextServer */ = {isa = PBXFileReference; includeInIndex = 0; path = IceContextServer; sourceTree = BUILT_PRODUCTS_DIR; };
-		887EA3F372177378BBB92B74 /* config.grid */ = {isa = PBXFileReference; includeInIndex = 1; name = config.grid; path = IceGrid/simple/config.grid; sourceTree = "<group>"; };
+		87326C9631EA22318B8FA8B7 /* IceContextServer */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = text; name = IceContextServer; path = server; sourceTree = BUILT_PRODUCTS_DIR; };
+		887EA3F372177378BBB92B74 /* config.grid */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = config.grid; path = IceGrid/simple/config.grid; sourceTree = "<group>"; };
 		89D4B0BEAB0413B93B185EA9 /* Main.storyboard */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; name = Main.storyboard; path = iOS/library/Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		8B51D44CE59C7B800960E3A3 /* IOSLibrary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IOSLibrary.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		8B8E083932784B369B4A3549 /* ManualPrinterServer */ = {isa = PBXFileReference; includeInIndex = 0; path = ManualPrinterServer; sourceTree = BUILT_PRODUCTS_DIR; };
-		8D28BE3CE7F6D7DFC1075304 /* Hello.ice */ = {isa = PBXFileReference; includeInIndex = 1; name = Hello.ice; path = iOS/hello/Hello.ice; sourceTree = "<group>"; };
+		8B51D44CE59C7B800960E3A3 /* IOSLibrary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = IOSLibrary.app; path = library.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B8E083932784B369B4A3549 /* ManualPrinterServer */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = text; name = ManualPrinterServer; path = server; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D28BE3CE7F6D7DFC1075304 /* Hello.ice */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Hello.ice; path = iOS/hello/Hello.ice; sourceTree = "<group>"; };
 		9169D28F09D967F0B93C7D8A /* ChatMessage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ChatMessage.swift; path = iOS/chat/ChatMessage.swift; sourceTree = "<group>"; };
-		92D6613B14D8EF0FBDA1351F /* config.icebox */ = {isa = PBXFileReference; includeInIndex = 1; name = config.icebox; path = IceStorm/clock/config.icebox; sourceTree = "<group>"; };
-		94A052DBBD69CB6C57BB5E82 /* config.client */ = {isa = PBXFileReference; includeInIndex = 1; name = config.client; path = iOS/library/config.client; sourceTree = "<group>"; };
+		92D6613B14D8EF0FBDA1351F /* config.icebox */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = config.icebox; path = IceStorm/clock/config.icebox; sourceTree = "<group>"; };
+		94A052DBBD69CB6C57BB5E82 /* config.client */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = config.client; path = iOS/library/config.client; sourceTree = "<group>"; };
 		962F08EBB1AD8F2EDDCA79C2 /* main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = main.swift; path = Manual/printer/Sources/Client/main.swift; sourceTree = "<group>"; };
-		981FAA0E0B3E4FB23D50B8BA /* ManualPrinterClient */ = {isa = PBXFileReference; includeInIndex = 0; path = ManualPrinterClient; sourceTree = BUILT_PRODUCTS_DIR; };
-		9CA03B4D26961B069C956D97 /* config.client */ = {isa = PBXFileReference; includeInIndex = 1; name = config.client; path = Ice/bidir/config.client; sourceTree = "<group>"; };
-		9CB0C08B0D54EB988D212533 /* IceInterceptorServer */ = {isa = PBXFileReference; includeInIndex = 0; path = IceInterceptorServer; sourceTree = BUILT_PRODUCTS_DIR; };
-		9F40534B11EFC9339CC9F490 /* Glacier2.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = Glacier2.xcframework; path = Carthage/Build/Glacier2.xcframework; sourceTree = "<group>"; };
-		9F90CCBCA51A64124D15A8B4 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = Ice/hello/README.md; sourceTree = "<group>"; };
+		981FAA0E0B3E4FB23D50B8BA /* ManualPrinterClient */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = text; name = ManualPrinterClient; path = client; sourceTree = BUILT_PRODUCTS_DIR; };
+		9CA03B4D26961B069C956D97 /* config.client */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = config.client; path = Ice/bidir/config.client; sourceTree = "<group>"; };
+		9CB0C08B0D54EB988D212533 /* IceInterceptorServer */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = text; name = IceInterceptorServer; path = server; sourceTree = BUILT_PRODUCTS_DIR; };
+		9F40534B11EFC9339CC9F490 /* Glacier2.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = Glacier2.xcframework; path = Carthage/Build/Glacier2.xcframework; sourceTree = "<group>"; };
+		9F90CCBCA51A64124D15A8B4 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = Ice/hello/README.md; sourceTree = "<group>"; };
 		A1ED884AD886A6DEBBC3C728 /* Images.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = iOS/chat/Images.xcassets; sourceTree = "<group>"; };
-		A35F2233F0DE4E25E3574F31 /* config.client */ = {isa = PBXFileReference; includeInIndex = 1; name = config.client; path = IceDiscovery/replication/config.client; sourceTree = "<group>"; };
+		A35F2233F0DE4E25E3574F31 /* config.client */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = config.client; path = IceDiscovery/replication/config.client; sourceTree = "<group>"; };
 		A3DFA602DEC55A1DE82BBF9F /* main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = main.swift; path = Ice/throughput/Sources/Server/main.swift; sourceTree = "<group>"; };
-		A4422835E9642A1937348401 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = Manual/simpleFilesystem/README.md; sourceTree = "<group>"; };
-		A488AF4C5BBD8776F8442C44 /* Session.ice */ = {isa = PBXFileReference; includeInIndex = 1; name = Session.ice; path = iOS/library/Session.ice; sourceTree = "<group>"; };
+		A4422835E9642A1937348401 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = Manual/simpleFilesystem/README.md; sourceTree = "<group>"; };
+		A488AF4C5BBD8776F8442C44 /* Session.ice */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Session.ice; path = iOS/library/Session.ice; sourceTree = "<group>"; };
 		A6F51134D874C51E8A43C60F /* ViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = iOS/hello/ViewController.swift; sourceTree = "<group>"; };
+		A768655A27B30C1400E41232 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		A768655C27B3134D00E41232 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		A848D5911477BACC1B9C18C8 /* ContextI.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ContextI.swift; path = Ice/context/Sources/Server/ContextI.swift; sourceTree = "<group>"; };
-		AB95F2441E6D8C237C489342 /* config.server */ = {isa = PBXFileReference; includeInIndex = 1; name = config.server; path = Ice/context/config.server; sourceTree = "<group>"; };
+		AB95F2441E6D8C237C489342 /* config.server */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = config.server; path = Ice/context/config.server; sourceTree = "<group>"; };
 		ACA7351C60E3801D9AB14CB1 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = iOS/library/Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		AE6F2AD2D3EF1EAE5E359219 /* Latency.ice */ = {isa = PBXFileReference; includeInIndex = 1; name = Latency.ice; path = Ice/latency/Sources/Latency.ice; sourceTree = "<group>"; };
-		AE71E1166654BE7475DB36BA /* config.server */ = {isa = PBXFileReference; includeInIndex = 1; name = config.server; path = Ice/async/config.server; sourceTree = "<group>"; };
-		AEE29AA3114D5818B8752800 /* IceOptionalServer */ = {isa = PBXFileReference; includeInIndex = 0; path = IceOptionalServer; sourceTree = BUILT_PRODUCTS_DIR; };
+		AE6F2AD2D3EF1EAE5E359219 /* Latency.ice */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Latency.ice; path = Ice/latency/Sources/Latency.ice; sourceTree = "<group>"; };
+		AE71E1166654BE7475DB36BA /* config.server */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = config.server; path = Ice/async/config.server; sourceTree = "<group>"; };
+		AEE29AA3114D5818B8752800 /* IceOptionalServer */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = text; name = IceOptionalServer; path = server; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0EFBEDB18F101F76F3B4348 /* main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = main.swift; path = IceDiscovery/replication/Sources/Client/main.swift; sourceTree = "<group>"; };
-		B36636F185D07AF691E33EB1 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = Ice/asyncInvocation/README.md; sourceTree = "<group>"; };
-		B3914CEEB182107F446A7D22 /* IceAsyncInvocationClient */ = {isa = PBXFileReference; includeInIndex = 0; path = IceAsyncInvocationClient; sourceTree = BUILT_PRODUCTS_DIR; };
+		B36636F185D07AF691E33EB1 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = Ice/asyncInvocation/README.md; sourceTree = "<group>"; };
+		B3914CEEB182107F446A7D22 /* IceAsyncInvocationClient */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = text; name = IceAsyncInvocationClient; path = client; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9C206C3CF068A0923D1B6BE /* MainController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MainController.swift; path = iOS/library/MainController.swift; sourceTree = "<group>"; };
-		BA319441718A4B4410187238 /* Interceptor.ice */ = {isa = PBXFileReference; includeInIndex = 1; name = Interceptor.ice; path = Ice/interceptor/Sources/Interceptor.ice; sourceTree = "<group>"; };
-		BB8DE386B28B2E9220D3FC48 /* config.service */ = {isa = PBXFileReference; includeInIndex = 1; name = config.service; path = IceStorm/clock/config.service; sourceTree = "<group>"; };
-		C1C7EFC80BA45C6FAB2C053C /* IceStorm.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = IceStorm.xcframework; path = Carthage/Build/IceStorm.xcframework; sourceTree = "<group>"; };
-		C21EA1694662E040DC2608DE /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = Ice/async/README.md; sourceTree = "<group>"; };
-		C5AB75CEB64242F131C9C4BA /* Printer.ice */ = {isa = PBXFileReference; includeInIndex = 1; name = Printer.ice; path = Ice/invoke/Sources/Printer.ice; sourceTree = "<group>"; };
+		BA319441718A4B4410187238 /* Interceptor.ice */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Interceptor.ice; path = Ice/interceptor/Sources/Interceptor.ice; sourceTree = "<group>"; };
+		BB8DE386B28B2E9220D3FC48 /* config.service */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = config.service; path = IceStorm/clock/config.service; sourceTree = "<group>"; };
+		C1C7EFC80BA45C6FAB2C053C /* IceStorm.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = IceStorm.xcframework; path = Carthage/Build/IceStorm.xcframework; sourceTree = "<group>"; };
+		C21EA1694662E040DC2608DE /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = Ice/async/README.md; sourceTree = "<group>"; };
+		C5AB75CEB64242F131C9C4BA /* Printer.ice */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Printer.ice; path = Ice/invoke/Sources/Printer.ice; sourceTree = "<group>"; };
 		C7A2F7EE4FA803841AEE05E6 /* main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = main.swift; path = Ice/invoke/Sources/Client/main.swift; sourceTree = "<group>"; };
 		CA3625DECE4A1AD3E1926870 /* AppDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = iOS/library/AppDelegate.swift; sourceTree = "<group>"; };
 		CAB0E574877C807BE5637963 /* main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = main.swift; path = Ice/async/Sources/Server/main.swift; sourceTree = "<group>"; };
-		CAD4C6D304F2992DB034125B /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = Ice/latency/README.md; sourceTree = "<group>"; };
-		CBE746FB0E45B94FB26DBC9A /* Filesystem.ice */ = {isa = PBXFileReference; includeInIndex = 1; name = Filesystem.ice; path = Manual/simpleFilesystem/Sources/Filesystem.ice; sourceTree = "<group>"; };
+		CAD4C6D304F2992DB034125B /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = Ice/latency/README.md; sourceTree = "<group>"; };
+		CBE746FB0E45B94FB26DBC9A /* Filesystem.ice */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Filesystem.ice; path = Manual/simpleFilesystem/Sources/Filesystem.ice; sourceTree = "<group>"; };
 		CD67B4FA75F306DC428A91EC /* main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = main.swift; path = Ice/bidir/Sources/Server/main.swift; sourceTree = "<group>"; };
 		CE172FAF992BE42BF38A733D /* AddController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AddController.swift; path = iOS/library/AddController.swift; sourceTree = "<group>"; };
 		CF3CBA7BB3733BC3DFB8B8F3 /* main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = main.swift; path = IceGrid/simple/Sources/Client/main.swift; sourceTree = "<group>"; };
-		CF856DB0D368176513B5C713 /* config.server3 */ = {isa = PBXFileReference; includeInIndex = 1; name = config.server3; path = IceDiscovery/replication/config.server3; sourceTree = "<group>"; };
-		CFF54020CA34595CE4AAA3D1 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = iOS/chat/README.md; sourceTree = "<group>"; };
-		D2285D300CF1AFBB54CFC603 /* IceHelloClient */ = {isa = PBXFileReference; includeInIndex = 0; path = IceHelloClient; sourceTree = BUILT_PRODUCTS_DIR; };
-		D2F6B8689A468A5F9B352314 /* config.client */ = {isa = PBXFileReference; includeInIndex = 1; name = config.client; path = Ice/throughput/config.client; sourceTree = "<group>"; };
-		D36596AA2C4FC9D4E95F3AC4 /* config.server */ = {isa = PBXFileReference; includeInIndex = 1; name = config.server; path = Ice/asyncInvocation/config.server; sourceTree = "<group>"; };
+		CF856DB0D368176513B5C713 /* config.server3 */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = config.server3; path = IceDiscovery/replication/config.server3; sourceTree = "<group>"; };
+		CFF54020CA34595CE4AAA3D1 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = iOS/chat/README.md; sourceTree = "<group>"; };
+		D2285D300CF1AFBB54CFC603 /* IceHelloClient */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = text; name = IceHelloClient; path = client; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2F6B8689A468A5F9B352314 /* config.client */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = config.client; path = Ice/throughput/config.client; sourceTree = "<group>"; };
+		D36596AA2C4FC9D4E95F3AC4 /* config.server */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = config.server; path = Ice/asyncInvocation/config.server; sourceTree = "<group>"; };
 		D4B9142B71C331252B9ABD6C /* DetailController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DetailController.swift; path = iOS/library/DetailController.swift; sourceTree = "<group>"; };
-		D5C857A08E88266D524C21DE /* config.client */ = {isa = PBXFileReference; includeInIndex = 1; name = config.client; path = Ice/asyncInvocation/config.client; sourceTree = "<group>"; };
-		D79B76AFF6799725A4428FD2 /* Ice.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = Ice.xcframework; path = Carthage/Build/Ice.xcframework; sourceTree = "<group>"; };
+		D5C857A08E88266D524C21DE /* config.client */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = config.client; path = Ice/asyncInvocation/config.client; sourceTree = "<group>"; };
+		D79B76AFF6799725A4428FD2 /* Ice.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = Ice.xcframework; path = Carthage/Build/Ice.xcframework; sourceTree = "<group>"; };
 		D9225308B90D05589A4A6BDF /* InterceptorI.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = InterceptorI.swift; path = Ice/interceptor/Sources/Server/InterceptorI.swift; sourceTree = "<group>"; };
-		D97456E43139D24DB711B466 /* config.server */ = {isa = PBXFileReference; includeInIndex = 1; name = config.server; path = Ice/throughput/config.server; sourceTree = "<group>"; };
+		D97456E43139D24DB711B466 /* config.server */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = config.server; path = Ice/throughput/config.server; sourceTree = "<group>"; };
 		DA4598F4AC7F620B4079E250 /* main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = main.swift; path = Manual/simpleFilesystem/Sources/Server/main.swift; sourceTree = "<group>"; };
-		DB6321B16A4E43CD89148041 /* IceThroughputServer */ = {isa = PBXFileReference; includeInIndex = 0; path = IceThroughputServer; sourceTree = BUILT_PRODUCTS_DIR; };
-		DBFF5192CDC30041BE50C4E5 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = IceDiscovery/hello/README.md; sourceTree = "<group>"; };
-		DC44E9365BDEFE5223CA9AC7 /* IceImpl.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = IceImpl.xcframework; path = Carthage/Build/IceImpl.xcframework; sourceTree = "<group>"; };
-		DCADEBA495EB820A0A7E41C6 /* IceMinimalClient */ = {isa = PBXFileReference; includeInIndex = 0; path = IceMinimalClient; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB6321B16A4E43CD89148041 /* IceThroughputServer */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = text; name = IceThroughputServer; path = server; sourceTree = BUILT_PRODUCTS_DIR; };
+		DBFF5192CDC30041BE50C4E5 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = IceDiscovery/hello/README.md; sourceTree = "<group>"; };
+		DC44E9365BDEFE5223CA9AC7 /* IceImpl.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = IceImpl.xcframework; path = Carthage/Build/IceImpl.xcframework; sourceTree = "<group>"; };
+		DCADEBA495EB820A0A7E41C6 /* IceMinimalClient */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = text; name = IceMinimalClient; path = client; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCBEDF063E959A45ED0D1263 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		DE06C1F13EC4D1CDBC4FBC70 /* AppDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = iOS/hello/AppDelegate.swift; sourceTree = "<group>"; };
-		DFEF9402B01B02D0B30A052A /* config.pub */ = {isa = PBXFileReference; includeInIndex = 1; name = config.pub; path = IceStorm/clock/config.pub; sourceTree = "<group>"; };
-		DFF2A84050F27AAF801166DD /* config.client */ = {isa = PBXFileReference; includeInIndex = 1; name = config.client; path = Ice/context/config.client; sourceTree = "<group>"; };
+		DFEF9402B01B02D0B30A052A /* config.pub */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = config.pub; path = IceStorm/clock/config.pub; sourceTree = "<group>"; };
+		DFF2A84050F27AAF801166DD /* config.client */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = config.client; path = Ice/context/config.client; sourceTree = "<group>"; };
 		E0CEA765E2311A5EA908CCF7 /* UserController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UserController.swift; path = iOS/chat/UserController.swift; sourceTree = "<group>"; };
-		E33F8EBD6359013AE72CB2C7 /* PromiseKit.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = PromiseKit.xcframework; path = Carthage/Build/PromiseKit.xcframework; sourceTree = "<group>"; };
+		E33F8EBD6359013AE72CB2C7 /* PromiseKit.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = PromiseKit.xcframework; path = Carthage/Build/PromiseKit.xcframework; sourceTree = "<group>"; };
 		E4ED404F16F47126CD654B7B /* ContactDBI.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ContactDBI.swift; path = Ice/optional/Sources/Server/ContactDBI.swift; sourceTree = "<group>"; };
-		E6265EF8C479AA2FA0C01649 /* config.client */ = {isa = PBXFileReference; includeInIndex = 1; name = config.client; path = Ice/hello/config.client; sourceTree = "<group>"; };
-		E6E16C4D401F03FF0852CAF0 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = Ice/bidir/README.md; sourceTree = "<group>"; };
-		E7394F43D1595EA0A782488C /* Glacier2Session.ice */ = {isa = PBXFileReference; includeInIndex = 1; name = Glacier2Session.ice; path = iOS/library/Glacier2Session.ice; sourceTree = "<group>"; };
-		E766A925498F62424246E54C /* Hello.ice */ = {isa = PBXFileReference; includeInIndex = 1; name = Hello.ice; path = Ice/async/Sources/Hello.ice; sourceTree = "<group>"; };
-		E88C1C30A300233B9814D013 /* config.server */ = {isa = PBXFileReference; includeInIndex = 1; name = config.server; path = Ice/interceptor/config.server; sourceTree = "<group>"; };
-		E9F1D7FC36EFF1498901294C /* IceDiscoveryReplicationClient */ = {isa = PBXFileReference; includeInIndex = 0; path = IceDiscoveryReplicationClient; sourceTree = BUILT_PRODUCTS_DIR; };
+		E6265EF8C479AA2FA0C01649 /* config.client */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = config.client; path = Ice/hello/config.client; sourceTree = "<group>"; };
+		E6E16C4D401F03FF0852CAF0 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = Ice/bidir/README.md; sourceTree = "<group>"; };
+		E7394F43D1595EA0A782488C /* Glacier2Session.ice */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Glacier2Session.ice; path = iOS/library/Glacier2Session.ice; sourceTree = "<group>"; };
+		E766A925498F62424246E54C /* Hello.ice */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Hello.ice; path = Ice/async/Sources/Hello.ice; sourceTree = "<group>"; };
+		E88C1C30A300233B9814D013 /* config.server */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = config.server; path = Ice/interceptor/config.server; sourceTree = "<group>"; };
+		E9F1D7FC36EFF1498901294C /* IceDiscoveryReplicationClient */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = text; name = IceDiscoveryReplicationClient; path = client; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFABB932D97DA909193B1439 /* main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = main.swift; path = Ice/invoke/Sources/Server/main.swift; sourceTree = "<group>"; };
 		F1417615123189DBFB739754 /* main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = main.swift; path = Manual/printer/Sources/Server/main.swift; sourceTree = "<group>"; };
-		F205564C9B6D912980932EAB /* ManualSimpleFilesystemServer */ = {isa = PBXFileReference; includeInIndex = 0; path = ManualSimpleFilesystemServer; sourceTree = BUILT_PRODUCTS_DIR; };
+		F205564C9B6D912980932EAB /* ManualSimpleFilesystemServer */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = text; name = ManualSimpleFilesystemServer; path = server; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2DFDDEDAC25F902550766D4 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
-		F59BA32210DDA4AF9E06A751 /* Hello.ice */ = {isa = PBXFileReference; includeInIndex = 1; name = Hello.ice; path = IceDiscovery/hello/Sources/Hello.ice; sourceTree = "<group>"; };
-		F5A28E10628A4036DE52D88B /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = Manual/printer/README.md; sourceTree = "<group>"; };
-		F7449754D30A52F680857B55 /* IceContextClient */ = {isa = PBXFileReference; includeInIndex = 0; path = IceContextClient; sourceTree = BUILT_PRODUCTS_DIR; };
-		F78B443277F9161110BF4872 /* IceThroughputClient */ = {isa = PBXFileReference; includeInIndex = 0; path = IceThroughputClient; sourceTree = BUILT_PRODUCTS_DIR; };
-		F845036D52ADEC64757D9E9E /* Hello.ice */ = {isa = PBXFileReference; includeInIndex = 1; name = Hello.ice; path = Ice/minimal/Sources/Hello.ice; sourceTree = "<group>"; };
-		F901F95276B12496C039F7A0 /* IceDiscoveryHelloServer */ = {isa = PBXFileReference; includeInIndex = 0; path = IceDiscoveryHelloServer; sourceTree = BUILT_PRODUCTS_DIR; };
-		F94EBC11263108F8FE222AC8 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = IceDiscovery/replication/README.md; sourceTree = "<group>"; };
-		F96051CE81CCCA810E36B833 /* IceMinimalServer */ = {isa = PBXFileReference; includeInIndex = 0; path = IceMinimalServer; sourceTree = BUILT_PRODUCTS_DIR; };
-		FA3BF90C0656239819A25831 /* IceGrid.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = IceGrid.xcframework; path = Carthage/Build/IceGrid.xcframework; sourceTree = "<group>"; };
-		FA874A29A31065D4EA8361B7 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = Ice/minimal/README.md; sourceTree = "<group>"; };
-		FADC9269113326F3E56F51EB /* config.server */ = {isa = PBXFileReference; includeInIndex = 1; name = config.server; path = Ice/hello/config.server; sourceTree = "<group>"; };
+		F59BA32210DDA4AF9E06A751 /* Hello.ice */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Hello.ice; path = IceDiscovery/hello/Sources/Hello.ice; sourceTree = "<group>"; };
+		F5A28E10628A4036DE52D88B /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = Manual/printer/README.md; sourceTree = "<group>"; };
+		F7449754D30A52F680857B55 /* IceContextClient */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = text; name = IceContextClient; path = client; sourceTree = BUILT_PRODUCTS_DIR; };
+		F78B443277F9161110BF4872 /* IceThroughputClient */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = text; name = IceThroughputClient; path = client; sourceTree = BUILT_PRODUCTS_DIR; };
+		F845036D52ADEC64757D9E9E /* Hello.ice */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Hello.ice; path = Ice/minimal/Sources/Hello.ice; sourceTree = "<group>"; };
+		F901F95276B12496C039F7A0 /* IceDiscoveryHelloServer */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = text; name = IceDiscoveryHelloServer; path = server; sourceTree = BUILT_PRODUCTS_DIR; };
+		F94EBC11263108F8FE222AC8 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = IceDiscovery/replication/README.md; sourceTree = "<group>"; };
+		F96051CE81CCCA810E36B833 /* IceMinimalServer */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = text; name = IceMinimalServer; path = server; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA3BF90C0656239819A25831 /* IceGrid.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = IceGrid.xcframework; path = Carthage/Build/IceGrid.xcframework; sourceTree = "<group>"; };
+		FA874A29A31065D4EA8361B7 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = Ice/minimal/README.md; sourceTree = "<group>"; };
+		FADC9269113326F3E56F51EB /* config.server */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = config.server; path = Ice/hello/config.server; sourceTree = "<group>"; };
 		FB86282C2355E1B10F369CC5 /* main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = main.swift; path = Ice/asyncInvocation/Sources/Client/main.swift; sourceTree = "<group>"; };
-		FCD0FE371EB69FE1DCC961C0 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = Ice/invoke/README.md; sourceTree = "<group>"; };
-		FE066D1FEF2F83460BA73C41 /* config.server2 */ = {isa = PBXFileReference; includeInIndex = 1; name = config.server2; path = IceDiscovery/replication/config.server2; sourceTree = "<group>"; };
+		FCD0FE371EB69FE1DCC961C0 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = Ice/invoke/README.md; sourceTree = "<group>"; };
+		FE066D1FEF2F83460BA73C41 /* config.server2 */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = config.server2; path = IceDiscovery/replication/config.server2; sourceTree = "<group>"; };
 		FE183346DF16C34D553A5778 /* main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = main.swift; path = IceStorm/clock/Sources/Publisher/main.swift; sourceTree = "<group>"; };
 		FE4AC0DC09B8774590AF2DDF /* main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = main.swift; path = Ice/hello/Sources/Client/main.swift; sourceTree = "<group>"; };
-		FE75106F54717B3D51C0664A /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = Glacier2/callback/README.md; sourceTree = "<group>"; };
-		FFB00730E6A7AA37BA85E0C4 /* Glacier2CallbackClient */ = {isa = PBXFileReference; includeInIndex = 0; path = Glacier2CallbackClient; sourceTree = BUILT_PRODUCTS_DIR; };
+		FE75106F54717B3D51C0664A /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = Glacier2/callback/README.md; sourceTree = "<group>"; };
+		FFB00730E6A7AA37BA85E0C4 /* Glacier2CallbackClient */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = text; name = Glacier2CallbackClient; path = client; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2061,7 +2145,7 @@
 				6141C3CBC55BB9133DDD5F29 /* IceStormClockSubscriber */,
 				F78B443277F9161110BF4872 /* IceThroughputClient */,
 				DB6321B16A4E43CD89148041 /* IceThroughputServer */,
-				795BDD345A8758BE1BCE1037 /* IOSChat.app */,
+				795BDD345A8758BE1BCE1037 /* chat.app */,
 				3963729A3421FF714DB83E79 /* IOSHello.app */,
 				8B51D44CE59C7B800960E3A3 /* IOSLibrary.app */,
 				981FAA0E0B3E4FB23D50B8BA /* ManualPrinterClient */,
@@ -2436,7 +2520,8 @@
 		E801909DA95420F4BB54AC5E /* chat */ = {
 			isa = PBXGroup;
 			children = (
-				6DA9D65FCBB43921AE081B19 /* AppDelegate.swift */,
+				6DA9D65FCBB43921AE081B19 /* ChatApp.swift */,
+				A768655A27B30C1400E41232 /* LoginView.swift */,
 				664BB7725F3CE5BF2D6D1362 /* Chat.ice */,
 				04B294665F8365C4660E5293 /* ChatController.swift */,
 				7FE03B5CC4924485E04FC7BA /* ChatLayoutController.swift */,
@@ -2451,6 +2536,7 @@
 				2DA6A62EE8B96C49196C6104 /* Main.storyboard */,
 				CFF54020CA34595CE4AAA3D1 /* README.md */,
 				E0CEA765E2311A5EA908CCF7 /* UserController.swift */,
+				A768655C27B3134D00E41232 /* LoginViewModel.swift */,
 			);
 			name = chat;
 			sourceTree = "<group>";
@@ -3037,7 +3123,7 @@
 			);
 			name = IOSChat;
 			productName = IOSChat;
-			productReference = 795BDD345A8758BE1BCE1037 /* IOSChat.app */;
+			productReference = 795BDD345A8758BE1BCE1037 /* chat.app */;
 			productType = "com.apple.product-type.application";
 		};
 		A8AC5929B89E3A59CD81EB3D /* IceDiscoveryHelloServer */ = {
@@ -4410,7 +4496,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				971C57C680EAC169FC02EB07 /* AppDelegate.swift in Sources */,
+				971C57C680EAC169FC02EB07 /* ChatApp.swift in Sources */,
 				FBFDD84EB23AAB23A4EA92B3 /* Chat.ice in Sources */,
 				79FC71B6C00515F6554F4D00 /* ChatController.swift in Sources */,
 				D520CD53A7272E3F76CFDEF8 /* ChatLayoutController.swift in Sources */,
@@ -4418,6 +4504,8 @@
 				E40AAF9ECDB1DC1BD3038324 /* ChatSession.ice in Sources */,
 				542EAE25A13DA2240AF9C95E /* ChatUser.swift in Sources */,
 				76B0CC9749A0FD2086659FC3 /* Images.xcassets in Sources */,
+				A768655D27B3134D00E41232 /* LoginViewModel.swift in Sources */,
+				A768655B27B30C1400E41232 /* LoginView.swift in Sources */,
 				4D7FC87F7E92C427A0E2138E /* LaunchScreen.storyboard in Sources */,
 				21FC9E3C3F7CE1ED1AD557EE /* LoadingButton.swift in Sources */,
 				B48BED02CF9B848D55509544 /* LoginController.swift in Sources */,
@@ -4790,12 +4878,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/IceStorm/clock/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/IceStorm/clock/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.subscriber;
@@ -4809,12 +4897,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Ice/interceptor/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Ice/interceptor/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.client;
@@ -4828,12 +4916,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Ice/asyncInvocation/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Ice/asyncInvocation/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.server;
@@ -4847,12 +4935,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Ice/context/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Ice/context/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.server;
@@ -4866,12 +4954,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Ice/latency/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Ice/latency/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.server;
@@ -4888,15 +4976,18 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/iOS/library/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/iOS/library/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
-				INFOPLIST_FILE = "$SRCROOT/iOS/library/Info.plist";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
+				INFOPLIST_FILE = $SRCROOT/iOS/library/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.library;
 				PRODUCT_NAME = library;
 				SDKROOT = iphoneos;
@@ -4909,12 +5000,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Glacier2/callback/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Glacier2/callback/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.client;
@@ -4928,12 +5019,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Ice/optional/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Ice/optional/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.client;
@@ -4947,12 +5038,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Ice/bidir/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Ice/bidir/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.client;
@@ -5027,12 +5118,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/IceDiscovery/hello/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/IceDiscovery/hello/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.server;
@@ -5046,12 +5137,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Manual/printer/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Manual/printer/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.client;
@@ -5065,12 +5156,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Manual/simpleFilesystem/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Manual/simpleFilesystem/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.server;
@@ -5084,12 +5175,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/IceDiscovery/replication/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/IceDiscovery/replication/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.client;
@@ -5103,12 +5194,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Ice/context/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Ice/context/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.server;
@@ -5122,12 +5213,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Manual/simpleFilesystem/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Manual/simpleFilesystem/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.server;
@@ -5141,12 +5232,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Ice/minimal/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Ice/minimal/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.server;
@@ -5160,12 +5251,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Ice/asyncInvocation/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Ice/asyncInvocation/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.client;
@@ -5179,12 +5270,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Manual/printer/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Manual/printer/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.server;
@@ -5209,15 +5300,18 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/iOS/hello/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/iOS/hello/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
-				INFOPLIST_FILE = "$SRCROOT/iOS/hello/Info.plist";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
+				INFOPLIST_FILE = $SRCROOT/iOS/hello/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.hello;
 				PRODUCT_NAME = hello;
 				SDKROOT = iphoneos;
@@ -5231,12 +5325,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Ice/bidir/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Ice/bidir/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.server;
@@ -5250,12 +5344,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/IceDiscovery/replication/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/IceDiscovery/replication/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.client;
@@ -5269,12 +5363,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/IceGrid/simple/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/IceGrid/simple/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.client;
@@ -5288,12 +5382,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Ice/context/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Ice/context/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.client;
@@ -5307,12 +5401,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Ice/interceptor/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Ice/interceptor/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.server;
@@ -5326,12 +5420,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Ice/invoke/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Ice/invoke/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.client;
@@ -5353,12 +5447,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Ice/hello/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Ice/hello/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.server;
@@ -5372,12 +5466,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/IceDiscovery/hello/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/IceDiscovery/hello/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.client;
@@ -5391,12 +5485,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Ice/optional/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Ice/optional/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.server;
@@ -5418,12 +5512,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Ice/hello/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Ice/hello/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.client;
@@ -5437,12 +5531,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Ice/async/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Ice/async/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.client;
@@ -5456,12 +5550,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Ice/minimal/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Ice/minimal/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.client;
@@ -5475,12 +5569,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Ice/minimal/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Ice/minimal/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.client;
@@ -5494,12 +5588,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Ice/throughput/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Ice/throughput/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.client;
@@ -5513,12 +5607,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/IceGrid/simple/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/IceGrid/simple/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.server;
@@ -5532,12 +5626,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Ice/asyncInvocation/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Ice/asyncInvocation/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.server;
@@ -5551,12 +5645,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Ice/asyncInvocation/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Ice/asyncInvocation/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.client;
@@ -5570,12 +5664,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Ice/interceptor/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Ice/interceptor/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.server;
@@ -5589,12 +5683,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Glacier2/callback/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Glacier2/callback/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.server;
@@ -5611,15 +5705,18 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/iOS/library/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/iOS/library/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
-				INFOPLIST_FILE = "$SRCROOT/iOS/library/Info.plist";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
+				INFOPLIST_FILE = $SRCROOT/iOS/library/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.library;
 				PRODUCT_NAME = library;
 				SDKROOT = iphoneos;
@@ -5633,12 +5730,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/IceDiscovery/hello/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/IceDiscovery/hello/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.server;
@@ -5652,12 +5749,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/IceGrid/simple/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/IceGrid/simple/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.client;
@@ -5671,12 +5768,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Ice/invoke/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Ice/invoke/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.server;
@@ -5690,12 +5787,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Manual/simpleFilesystem/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Manual/simpleFilesystem/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.client;
@@ -5709,12 +5806,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Glacier2/callback/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Glacier2/callback/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.client;
@@ -5728,12 +5825,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Ice/latency/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Ice/latency/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.client;
@@ -5750,15 +5847,18 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/iOS/hello/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/iOS/hello/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
-				INFOPLIST_FILE = "$SRCROOT/iOS/hello/Info.plist";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
+				INFOPLIST_FILE = $SRCROOT/iOS/hello/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.hello;
 				PRODUCT_NAME = hello;
 				SDKROOT = iphoneos;
@@ -5771,12 +5871,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Ice/optional/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Ice/optional/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.server;
@@ -5791,17 +5891,21 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/iOS/chat/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/iOS/chat/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
+				DEVELOPMENT_TEAM = U4TBVKNQ7F;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
-				INFOPLIST_FILE = "$SRCROOT/iOS/chat/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
+				INFOPLIST_FILE = $SRCROOT/iOS/chat/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.chat;
 				PRODUCT_NAME = chat;
 				SDKROOT = iphoneos;
@@ -5815,12 +5919,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Ice/bidir/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Ice/bidir/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.server;
@@ -5834,12 +5938,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Ice/async/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Ice/async/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.server;
@@ -5853,12 +5957,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/IceStorm/clock/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/IceStorm/clock/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.subscriber;
@@ -5872,12 +5976,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Manual/printer/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Manual/printer/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.client;
@@ -5891,12 +5995,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/IceGrid/simple/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/IceGrid/simple/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.server;
@@ -5910,12 +6014,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Ice/async/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Ice/async/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.client;
@@ -5929,12 +6033,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Ice/hello/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Ice/hello/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.client;
@@ -5948,12 +6052,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Manual/printer/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Manual/printer/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.server;
@@ -5967,12 +6071,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/IceDiscovery/replication/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/IceDiscovery/replication/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.server;
@@ -5986,12 +6090,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Glacier2/callback/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Glacier2/callback/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.server;
@@ -6005,12 +6109,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Ice/latency/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Ice/latency/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.server;
@@ -6024,12 +6128,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Ice/context/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Ice/context/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.client;
@@ -6043,12 +6147,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Ice/async/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Ice/async/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.server;
@@ -6062,12 +6166,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Ice/latency/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Ice/latency/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.client;
@@ -6081,12 +6185,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Ice/bidir/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Ice/bidir/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.client;
@@ -6100,12 +6204,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Manual/simpleFilesystem/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Manual/simpleFilesystem/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.client;
@@ -6119,12 +6223,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/IceDiscovery/replication/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/IceDiscovery/replication/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.server;
@@ -6138,12 +6242,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Ice/invoke/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Ice/invoke/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.client;
@@ -6211,12 +6315,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/IceDiscovery/hello/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/IceDiscovery/hello/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.client;
@@ -6230,12 +6334,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/IceStorm/clock/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/IceStorm/clock/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.publisher;
@@ -6250,17 +6354,21 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/iOS/chat/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/iOS/chat/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
+				DEVELOPMENT_TEAM = U4TBVKNQ7F;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
-				INFOPLIST_FILE = "$SRCROOT/iOS/chat/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
+				INFOPLIST_FILE = $SRCROOT/iOS/chat/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.chat;
 				PRODUCT_NAME = chat;
 				SDKROOT = iphoneos;
@@ -6273,12 +6381,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Ice/throughput/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Ice/throughput/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.server;
@@ -6292,12 +6400,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Ice/optional/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Ice/optional/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.client;
@@ -6311,12 +6419,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Ice/hello/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Ice/hello/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.server;
@@ -6330,12 +6438,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Ice/throughput/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Ice/throughput/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.server;
@@ -6349,12 +6457,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Ice/throughput/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Ice/throughput/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.client;
@@ -6368,12 +6476,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Ice/minimal/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Ice/minimal/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.server;
@@ -6395,12 +6503,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/IceStorm/clock/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/IceStorm/clock/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.publisher;
@@ -6414,12 +6522,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Ice/interceptor/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Ice/interceptor/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.client;
@@ -6433,12 +6541,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CONFIGURATION_BUILD_DIR = "$SRCROOT/Ice/invoke/Build";
+				CONFIGURATION_BUILD_DIR = $SRCROOT/Ice/invoke/Build;
 				CURRENT_PROJECT_VERSION = 3.7.7;
 				DYLIB_COMPATIBILITY_VERSION = 0;
 				DYLIB_CURRENT_VERSION = 3.7.7;
 				ENABLE_TESTABILITY = NO;
-				FRAMEWORK_SEARCH_PATHS = "$SRCROOT/Carthage/Build/";
+				FRAMEWORK_SEARCH_PATHS = $SRCROOT/Carthage/Build/;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zeroc.demo.server;

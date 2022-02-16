@@ -5,7 +5,7 @@ require 'xcodeproj'
 $top_level = File.expand_path(File.dirname(__FILE__))
 
 $macOSDeploymentTarget = "10.14"
-$iOSDeploymentTarget = "12.0"
+$iOSDeploymentTarget = "15.0"
 
 $demos = {
     :osx => ["Glacier2/callback",
@@ -32,9 +32,9 @@ $demos = {
              "Manual/printer",
              "Manual/simpleFilesystem"],
 
-    :ios => ["iOS/chat",
-             "iOS/library",
-             "iOS/hello"]
+    :ios => ["IceDiscovery/helloUI",
+             "Ice/helloUI",
+             "Chat"]
 }
 
 $demo_variants = ["Client", "Server", "Publisher", "Subscriber"]
@@ -56,14 +56,14 @@ $demo_extra_frameworks = {
 
     "IceGrid/simple" => ["Glacier2.xcframework", "IceGrid.xcframework"],
 
-    "iOS/chat" => ["Glacier2.xcframework",
+    "Chat" => ["Glacier2.xcframework",
                    "MessageKit.xcframework",
-                   "InputBarAccessoryView.xcframework"],
-    "iOS/library" => ["Glacier2.xcframework"]
+                   "InputBarAccessoryView.xcframework"]
 }
 
 $demo_resources = {
-    "iOS/hello" => ["../certs"],
+    "Ice/helloUI" => ["../certs"],
+    "IceDiscovery/helloUI" => ["../certs"],
     "IceGrid/simple" => ["IceGrid/simple"] #For adding xml
 }
 
@@ -76,7 +76,7 @@ task :iceproj do
     $demos.each do |platform, demos|
         demos.each do |demo|
             if platform == :ios then
-                create_uikit_targets(project, demo, aggregate_target_ios)
+                create_swiftui_targets(project, demo, aggregate_target_ios)
             else
                 create_commandline_targets(project, demo, aggregate_target_macos)
             end
@@ -132,7 +132,7 @@ def create_commandline_targets(project, demo, aggregate_target)
     end
 end
 
-def create_uikit_targets(project, demo, aggregate_target)
+def create_swiftui_targets(project, demo, aggregate_target)
     target = project.new_target(:application, target_name(demo, ""), :ios)
     aggregate_target.add_dependency(target)
     target_set_common_build_settings(target, product_name(demo), "$SRCROOT/#{demo}", :ios, "$SRCROOT/#{demo}/Info.plist")
@@ -141,8 +141,13 @@ def create_uikit_targets(project, demo, aggregate_target)
     group = project_group(project, demo)
     group_add_files(group, "#{project.project_dir}/#{demo}", ["README.md"])
     target_add_files(target, group, "#{project.project_dir}/#{demo}", ["*.swift", "*.ice"])
+    if Dir.exists? "#{project.project_dir}/#{demo}/views"
+        target_add_files(target, group, "#{project.project_dir}/#{demo}/views", ["*.swift"])
+    end
+    if Dir.exists? "#{project.project_dir}/#{demo}/models"
+        target_add_files(target, group, "#{project.project_dir}/#{demo}/models", ["*.swift"])
+    end
     target_add_files(target, group, "#{project.project_dir}/#{demo}", ["*.xcassets"])
-    target_add_files(target, group, "#{project.project_dir}/#{demo}/Base.lproj", ["*.storyboard"])
     target.add_resources(group_add_files(group, "#{project.project_dir}/#{demo}", ["config.client"]))
 
     if $demo_resources.include? demo
