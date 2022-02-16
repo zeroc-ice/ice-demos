@@ -16,6 +16,9 @@ final class MessageSwiftUIVC: MessagesViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(handleKeyboardDidShow(_:)),
+                                               name: UIResponder.keyboardDidShowNotification, object: nil)
         if let conn = client.router!.ice_getCachedConnection() {
             conn.setACM(timeout: client.acmTimeout, close: nil, heartbeat: .HeartbeatAlways)
             do {
@@ -100,6 +103,12 @@ final class MessageSwiftUIVC: MessagesViewController {
             controller.popViewController(animated: true)
         }
     }
+
+    // TODO: - Work around for issue in message kit involving `messagesCollectionView.scrollToLastItem`
+    // Information about issue can be found at https://github.com/MessageKit/MessageKit/issues/1503
+    @objc private func handleKeyboardDidShow(_: Notification) {
+        messagesCollectionView.contentInset.bottom = 0
+    }
 }
 
 struct MessagesView: UIViewControllerRepresentable {
@@ -113,8 +122,9 @@ struct MessagesView: UIViewControllerRepresentable {
         messagesVC.messagesCollectionView.messagesLayoutDelegate = context.coordinator
         messagesVC.messagesCollectionView.messagesDataSource = context.coordinator
         messagesVC.messageInputBar.delegate = context.coordinator
-        messagesVC.scrollsToLastItemOnKeyboardBeginsEditing = true // default false
-        messagesVC.maintainPositionOnKeyboardFrameChanged = true // default false
+
+        messagesVC.scrollsToBottomOnKeyboardBeginsEditing = true
+        messagesVC.scrollsToLastItemOnKeyboardBeginsEditing = true
         messagesVC.showMessageTimestampOnSwipeLeft = true // default false
         messagesVC.messageInputBar.inputTextView.placeholder = "Message"
         return messagesVC
