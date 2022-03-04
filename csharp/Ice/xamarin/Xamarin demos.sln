@@ -7,13 +7,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ice", "Ice", "{56A88925-AA3
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "hello", "hello", "{FD634748-A4DF-43F7-91E6-72917DA516E4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "hello", "Ice\hello\hello\hello.csproj", "{2457F2C0-3CDC-4380-A5F1-5A4E3D2268F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "hello", "hello\hello\hello.csproj", "{2457F2C0-3CDC-4380-A5F1-5A4E3D2268F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hello.Android", "Ice\hello\hello.Android\hello.Android.csproj", "{89D2A0DA-91ED-467A-AF54-6F39064747F7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hello.Android", "hello\hello.Android\hello.Android.csproj", "{89D2A0DA-91ED-467A-AF54-6F39064747F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hello.iOS", "Ice\hello\hello.iOS\hello.iOS.csproj", "{8D6FE95D-0952-4393-BB37-85671B795BD8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hello.iOS", "hello\hello.iOS\hello.iOS.csproj", "{8D6FE95D-0952-4393-BB37-85671B795BD8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hello.UWP", "Ice\hello\hello.UWP\hello.UWP.csproj", "{B8C10ACD-9D3F-4523-9537-AA821E8D920A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hello.UWP", "hello\hello.UWP\hello.UWP.csproj", "{B8C10ACD-9D3F-4523-9537-AA821E8D920A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
