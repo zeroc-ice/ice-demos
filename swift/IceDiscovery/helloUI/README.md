@@ -50,10 +50,9 @@ You must run the hello server from the IceDiscovery/hello demo (such as the
 [Swift server](../../../IceDiscovery/hello)) and ensure that the server
 is listening on an accessible network interface.
 
-Note, for the helloUI demo to work correctly with the hello discovery server,
-it is recommended to run the helloUI demo on a physical device instead of
-the iOS simulator. Additionally, ensure that the physical device is on the same
-network as the server.
+We recommended running the helloUI demo on a physical device in place of the
+iOS simulator to improve reliability. Additionally, ensure that the physical
+device is on the same network as the server.
 
 See the README file of the IceDiscovery hello demo for more information on
 how to start the server.
