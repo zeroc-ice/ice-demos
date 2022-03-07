@@ -64,42 +64,6 @@
         </Otherwise>
     </Choose>
 
-    <Target Name="NetStandardNuGetRestore" DependsOnTargets="GetNuGet" Condition="!Exists('$(IceHome)\csharp')">
-        <MSbuild Projects="$(MSBuildThisFileDirectory)..\C# NET Core demos.sln" Targets="Restore" Condition="$(VisualStudioVersion) == '15.0'" />
-    </Target>
-
-    <Target Name="NetStandardInstallLocalPackages"
-            Condition="Exists('$(IceHome)\csharp')">
-        <Exec Command="dotnet nuget locals --list global-packages" ConsoleToMSBuild="true" EchoOff="yes">
-            <Output TaskParameter="ConsoleOutput" PropertyName="NuGetGlobalPackages" />
-        </Exec>
-
-        <PropertyGroup>
-            <NuGetGlobalPackages>$(NuGetGlobalPackages.TrimStart('info : '))</NuGetGlobalPackages>
-            <NuGetGlobalPackages>$(NuGetGlobalPackages.TrimStart('global-packages: '))</NuGetGlobalPackages>
-        </PropertyGroup>
-        <!-- Run the distribution NuGetPack target to ensure packages are up to date -->
-        <MSBuild Projects="$(IceHome)\csharp\msbuild\ice.proj"
-                 Properties="Platform=$(Platform);Configuration=$(Configuration)"
-                 RemoveProperties="IceHome"
-                 Targets="NuGetPack"/>
-
-        <RemoveDir Directories="$(NuGetGlobalPackages)\zeroc.ice.net" Condition="Exists('$(NuGetGlobalPackages)\zeroc.ice.net')"/>
-        <Exec Command="dotnet nuget push $(PackagePath) --source $(NuGetGlobalPackages)" />
-
-        <MSBuild Projects="$(MSBuildThisFileDirectory)..\C# NET Core demos.sln"
-                 Targets="Restore"
-                 RemoveProperties="IceHome"
-                 Properties="Configuration=$(Configuration);Platform=Any CPU"/>
-    </Target>
-
-    <Target Name="NetStandardBuild" DependsOnTargets="NetStandardInstallLocalPackages;NetStandardNuGetRestore">
-        <MSbuild Projects="$(MSBuildThisFileDirectory)..\C# NET Core demos.sln"
-                 Targets="Build"
-                 RemoveProperties="IceHome"
-                 Properties="$(BuildProperties)"/>
-    </Target>
-
     <Target Name="Net6InstallLocalPackages"
             Condition="Exists('$(IceHome)\csharp')">
         <Exec Command="dotnet nuget locals --list global-packages" ConsoleToMSBuild="true" EchoOff="yes">
