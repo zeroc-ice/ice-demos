@@ -10,17 +10,12 @@ Most of the subdirectories here correspond directly to Ice components, such as
 [Ice](./Ice) and [IceDiscovery](./IceDiscovery). We've also included the
 following additional subdirectories:
 
-- [Database](./Database)<p>
-Ice clients for our Java-based [Database library](../java/Database/library) demo.
-
 - [Manual](./Manual)<p>
 Complete examples for some of the code snippets in the [Ice manual][1].
 
 ## Build Instructions
 
 ### Prerequisites
-
-The iOS and Cocoa demos require the [Ice Builder for Xcode][2].
 
 The command-line demos require the Xcode Command Line Tools to be installed
 (use `xcode-select --install` to install them).
@@ -84,13 +79,8 @@ make V=1 Ice/hello
 make Ice/hello_distclean
 ```
 
-To build the iOS or Cocoa examples, open `Objective-C demos.xcworkspace` in
-Xcode. You will need to select a development team in the Xcode project `General`
-settings of each demo to test the demos on an iOS device or macOS.
-
 ## Running the Demos
 
 Refer to the README.md file in each demo directory for usage instructions.
 
 [1]: https://doc.zeroc.com/ice/3.7/introduction
-[2]: https://github.com/zeroc-ice/ice-builder-xcode
