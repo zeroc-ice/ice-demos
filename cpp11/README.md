@@ -28,8 +28,7 @@ for the ZeroC [Chat Demo][2].
 The makefiles require GNU make.
 
 On macOS, the command-line demos require the Xcode Command Line Tools (use
-`xcode-select --install` to install them). The Xcode sample program for iOS
-require the [Ice Builder for Xcode][3].
+`xcode-select --install` to install them).
 
 If you install Ice in a non-standard location, you need to set the `ICE_HOME`
 environment variable to the installation directory, for example:
@@ -62,8 +61,6 @@ for example:
 make V=1 Ice/hello
 make Ice/hello_distclean
 ```
-
-To build the Xcode iOS example, open `C++11 demos (iOS).xcworkspace` in Xcode.
 
 ### Running the Demos
 
@@ -197,4 +194,3 @@ Refer to the README.md file in each demo directory for usage instructions.
 
 [1]: https://doc.zeroc.com/ice/3.7/introduction
 [2]: https://doc.zeroc.com/technical-articles/general-topics/chat-demo
-[3]: https://github.com/zeroc-ice/ice-builder-xcode
