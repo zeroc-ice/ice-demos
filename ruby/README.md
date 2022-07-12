@@ -31,7 +31,7 @@ Refer to the README file in each demo directory for usage instructions.
 Note: When running a client with Ruby 1.8, you must start the interpreter with
 the `-rubygems` option as shown in the example below:
 
-```
+```shell
 ruby -rubygems Client.rb
 ```
 

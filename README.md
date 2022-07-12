@@ -5,19 +5,20 @@ The ice-demos repository provides sample programs for Ice.
 ## Layout
 
 The sample programs are grouped by programming language:
-* [C++11](./cpp11)
-* [C++98](./cpp98)
-* [C#](./csharp)
-* [Java](./java)
-* [Java-Compat](./java-compat)
-* [JavaScript](./js)
-* [MATLAB](./matlab)
-* [Objective-C](./objective-c)
-* [PHP](./php)
-* [Python](./python)
-* [Ruby](./ruby)
-* [Swift](./swift)
-* [TypeScript](./typescript)
+
+- [C++11](./cpp11)
+- [C++98](./cpp98)
+- [C#](./csharp)
+- [Java](./java)
+- [Java-Compat](./java-compat)
+- [JavaScript](./js)
+- [MATLAB](./matlab)
+- [Objective-C](./objective-c)
+- [PHP](./php)
+- [Python](./python)
+- [Ruby](./ruby)
+- [Swift](./swift)
+- [TypeScript](./typescript)
 
 For example, the [cpp11](./cpp11) folder contains all the sample programs written
 in C++ that demonstrate the Ice C++11 mapping.

@@ -23,13 +23,14 @@ Refer to the [C++11 demos](../cpp11) for more examples that use the Ice services
 ### Build Requirements
 
 In order to build these Ice for Swift sample programs, you need:
- * Xcode
- * Slice to Swift and Slice to C++ compilers
- * [Carthage][3]
 
-### Install required dependencies using Carthage:
+- Xcode
+- Slice to Swift and Slice to C++ compilers
+- [Carthage][3]
 
-```
+### Install required dependencies using Carthage
+
+```shell
 carthage bootstrap --cache-builds --use-xcframeworks
 ```
 
@@ -73,7 +74,7 @@ is to first install the Ice Homebrew packages. Please refer to
 
 Run `swift build` from the demo directory.
 
-```
+```shell
 cd Manual/spm/printer
 swift build
 ```
