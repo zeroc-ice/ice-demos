@@ -6,6 +6,7 @@
 #include <IceGrid/IceGrid.h>
 #include <Hello.h>
 #include <chrono>
+#include <thread>
 
 using namespace std;
 using namespace Demo;

@@ -4,6 +4,7 @@
 
 #include <Ice/Ice.h>
 #include <Hello.h>
+#include <thread>
 
 using namespace std;
 using namespace Demo;
