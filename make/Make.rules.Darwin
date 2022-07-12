@@ -25,6 +25,11 @@ iphonesimulator_ldflags         = $(iphonesimulator_cppflags)
 iphonesimulator_configs         = %xcodesdk
 iphonesimulator_targetdir       = $(if $(filter %/build,$5),/iphonesimulator)
 
+# If Homebrew is installed and ICE_HOME is not set, then set it to Homebrew's prefix.
+ifneq ($(shell command -v brew 2> /dev/null),)
+ICE_HOME                        ?= $(shell brew --prefix)
+endif
+
 # If building objects for a shared library, enable fPIC
 shared_cppflags = $(if $(filter-out program,$($1_target)),-fPIC) -fvisibility=hidden
 
