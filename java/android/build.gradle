@@ -10,7 +10,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.3'
+        classpath 'com.android.tools.build:gradle:7.2.1'
     }
 }
 
@@ -36,7 +36,7 @@ allprojects {
 }
 
 ext {
-    compileSdkVersion = 29
+    compileSdkVersion = 30
     minSdkVersion = 24
-    targetSdkVersion = 29
+    targetSdkVersion = 30
 }
