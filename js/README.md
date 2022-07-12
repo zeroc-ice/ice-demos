@@ -33,7 +33,7 @@ The JavaScript sample programs require an installation of [Node.js][3].
 With Node.js in your PATH, go to the [js directory](../js) and run the
 following command to install several dependencies:
 
-```
+```shell
 npm install
 ```
 
@@ -42,7 +42,7 @@ source and requires a C++ compiler such as Visual Studio 2015.
 
 Now use gulp to build the demos:
 
-```
+```shell
 npm run build
 ```
 
@@ -52,14 +52,14 @@ If you want to build the demos using the Ice source distribution, you must set
 the `ICE_HOME` environment variable with the path name of the Ice source
 directory and pass the `--only=dev` argument to `npm install`:
 
-```
+```shell
 export ICE_HOME=~/ice
 npm install --only=dev
 ```
 
 Now use gulp to build the demos:
 
-```
+```shell
 npm run build
 ```
 
@@ -67,14 +67,14 @@ On Windows you need to set the platform and configuration in order to locate
 slice2js. For example, if you have built C++ x64 Release mode, you can use the
 following command to build:
 
-```
+```shell
 npm run build -- --cppPlatform x64 --cppConfiguration Release
 ```
 
 Alternatively, you can use the CPP_PLATFORM and CPP_CONFIGURATION environment
 variables:
 
-```
+```shell
 set CPP_PLATFORM=x64
 set CPP_CONFIGURATION=Debug
 npm run build
@@ -88,7 +88,7 @@ first start its corresponding server from another Ice language mapping. If you
 want to get started quickly, we recommend using the Python server. For example,
 start the Python "hello" server:
 
-```
+```shell
 cd python/Ice/hello
 python Server.py
 ```
@@ -96,7 +96,7 @@ python Server.py
 To run the client, open another terminal window, change to the corresponding
 JavaScript demo directory, and run:
 
-```
+```shell
 cd js/Ice/hello
 node Client
 ```
@@ -106,7 +106,7 @@ in ES2017. For compatibility with JavaScript interpreters that only include
 support for ES5, the build creates `es5` versions of the demos using the Babel
 JavaScript compiler. The es5 versions can be run:
 
-```
+```shell
 cd js/Ice/hello/es5
 node Client
 ```
@@ -119,11 +119,11 @@ that supports WebSocket connections. For your convenience, this distribution
 includes a Node.js HTTP server pre-configured for the demos. Open another
 terminal window and run:
 
-```
+```shell
 npm run run
 ```
 
-This will load http://127.0.0.1:8080/index.html in the default browser. From
+This will load <http://127.0.0.1:8080/index.html/> in the default browser. From
 this page you can select the client that you want to run.
 
 Next, start the corresponding server from another Ice language mapping. Open a
@@ -134,15 +134,15 @@ instructions for running the server.
 To try a different client, terminate the server that you started earlier, change
 to the new server directory and start the server for the new client.
 
-#### Secure WebSockets
+### Secure WebSockets
 
 The demos use secure WebSocket (WSS) when you access the demo pages through
-https://127.0.0.1:9090/index.html, and non-secure WebSocket when you access
-them through http://127.0.0.1:8080/index.html. For demos that allow both
+<https://127.0.0.1:9090/index.html/>, and non-secure WebSocket when you access
+them through <http://127.0.0.1:8080/index.html/>. For demos that allow both
 secure and non-secure WebSocket connections, there is a `protocol` checkbox
 that allows you to switch between secure and non-secure WebSocket.
 
-##### Self-Signed Certificate
+#### Self-Signed Certificate
 
 The secure WebSocket (WSS) connections in these demos rely on a self-signed
 certificate, `cacert`, provided in the certs(../certs) directory.
@@ -178,7 +178,7 @@ the demos, and that the demo certificate authority be installed on your device.
 First you'll need to generate new certificates to match the IP address or DNS
 name of the computer hosting the demos:
 
-```
+```shell
 certs/makedemocerts.py --ip [IP address] --dns [DNS name] [--use-dns]
 ```
 

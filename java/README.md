@@ -33,7 +33,7 @@ compiler.
 
 To build the demos, open a command window and run:
 
-```
+```shell
 gradlew build
 ```
 
@@ -43,7 +43,7 @@ location. The build also downloads the Ice JAR files from Maven Central.
 If you've built the Slice-to-Java compiler and Ice for Java in a source tree,
 you'll need to pass some additional options to Gradle:
 
-```
+```shell
 gradlew -PiceHome=<path to source tree> -PcppConfiguration=<Release|Debug> \
     -PcppPlatform=<Win32|x64> build
 ```
@@ -55,7 +55,7 @@ includes the Slice-to-Java compiler.
 
 To build the demos, open a command window and run:
 
-```
+```shell
 gradlew build
 ```
 
@@ -66,7 +66,7 @@ distribution did not include them.
 If you've built the Slice-to-Java compiler and Ice for Java in a source tree,
 you'll need to pass an additional option to Gradle:
 
-```
+```shell
 gradlew -PiceHome=<path to source tree> build
 ```
 

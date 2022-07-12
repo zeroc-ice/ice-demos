@@ -23,7 +23,8 @@ Each demo contains one or more [Slice][2] files. You need to compile these Slice
 files into PHP code before running the demo. You can either run `slice2php`
 yourself as shown in the demo's README.md file, or compile all the demo Slice
 files by executing the `build.php` script:
-```
+
+```shell
 php build.php
 ```
 

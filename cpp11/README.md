@@ -32,7 +32,8 @@ On macOS, the command-line demos require the Xcode Command Line Tools (use
 
 If you install Ice in a non-standard location, you need to set the `ICE_HOME`
 environment variable to the installation directory, for example:
-```
+
+```shell
 export ICE_HOME=~/testing/ice
 ```
 
@@ -42,7 +43,8 @@ Review the settings in `../make/Make.rules`. For example, set `OPTIMIZE=yes`
 to build with optimization.
 
 When you are ready to start the build, run `make`, for example:
-```
+
+```shell
 make V=1
 ```
 
@@ -57,7 +59,8 @@ platform specified by the `CONFIGS` and `PLATFORMS` variables in `Make.rules`.
 
 You can also build or clean a single demo with `make <demo-path>[_clean|_distclean]`,
 for example:
-```
+
+```shell
 make V=1 Ice/hello
 make Ice/hello_distclean
 ```
@@ -71,13 +74,15 @@ Refer to the README.md file in each demo directory for usage instructions.
 ### Prerequisites
 
 If you are using Visual Studio 2017, you need to either:
- - install the following optional component of the `Desktop development with C++` workload:
+
+- install the following optional component of the `Desktop development with C++` workload:
    `Windows 8.1 SDK and UCRT SDK`
- - or retarget the solution to a version of the Windows 10 SDK already installed
+- or retarget the solution to a version of the Windows 10 SDK already installed
    (using `Project > Retarget solution`)
 
 Failure to perform this step results in error MSB8036 when building any project:
-```
+
+```shell
 The Windows SDK version 8.1 was not found. Install the required version of Windows SDK
 or change the SDK version in the project property pages or by right-clicking the solution and selecting "Retarget solution".
 ```
@@ -102,24 +107,28 @@ select `Build`.
 #### Building the demos with Ice source distribution:
 
 - Build from command line:
-  * Open a Visual Studio command prompt
-  ```
-  cd ice-demos\cpp11
-  MSBuild /p:IceHome=<Ice dist path> /p:Configuration=<Release or Debug> msbuild\ice.proj
-  ```
-  `Ice dist path` represents a source tree where you built Ice for C++.
+  - Open a Visual Studio command prompt:
+
+    ```shell
+    cd ice-demos\cpp11
+    MSBuild /p:IceHome=<Ice dist path> /p:Configuration=<Release or Debug> msbuild\ice.proj
+    ```
+
+    `Ice dist path` represents a source tree where you built Ice for C++.
 
 - Build from Visual Studio
-  * Open a Visual Studio command prompt
-  ```
-  cd ice-demos\cpp11
-  MSBuild /p:IceHome=<Ice dist path> /p:Configuration=<Release or Debug> /t:InstallLocalPackages msbuild\ice.proj
-  ```
-  The command above creates NuGet packages for the source tree designated by
-  `Ice dist path` (and first builds this source tree if needed), and then installs these
-  NuGet packages in the `ice-demos\cpp11\packages` folder.
+  - Open a Visual Studio command prompt:
 
-  * Start Visual Studio, open the `C++11 demos.sln` solution, and select your target
+    ```shell
+    cd ice-demos\cpp11
+    MSBuild /p:IceHome=<Ice dist path> /p:Configuration=<Release or Debug> /t:InstallLocalPackages msbuild\ice.proj
+    ```
+
+    The command above creates NuGet packages for the source tree designated by
+    `Ice dist path` (and first builds this source tree if needed), and then installs these
+    NuGet packages in the `ice-demos\cpp11\packages` folder.
+
+  - Start Visual Studio, open the `C++11 demos.sln` solution, and select your target
     configuration (Debug or Release) and platform (Win32 or x64). Right click on the
     desired demo in the Solution Explorer window and select `Build`.
 
@@ -129,7 +138,8 @@ You need to add the Ice `bin` directory to your PATH before running the demos.
 
 If you are building Debug, add both the Debug and Release `bin` directories with a
 command similar to:
-```
+
+```shell
 set PATH=%USERPROFILE%\ice-demos\cpp11\packages\zeroc.ice.v140.3.7.8\build\native\bin\x64\Debug;%USERPROFILE%\ice-demos\cpp11\packages\zeroc.ice.v140.3.7.8\build\native\bin\x64\Release;%PATH%
 ```
 
@@ -138,7 +148,8 @@ Ice services and tools. For example, they don't provide `glacier2router`.
 
 If you are building Release, you should add only the Release `bin` directory to
 your PATH with a command similar to:
-```
+
+```shell
 set PATH=%USERPROFILE%\ice-demos\cpp11\packages\zeroc.ice.v140.3.7.8\build\native\bin\x64\Release;%PATH%
 ```
 
@@ -148,7 +159,7 @@ Then refer to the README.md file in each demo directory for usage instructions.
 
 ### Building the Demos
 
-#### Building the demos using NuGet packages:
+#### Building the demos using NuGet packages
 
 Open the solution file `C++11 demos (Universal Windows).sln`.
 
@@ -164,27 +175,31 @@ faster as they use the local NuGet cache.
 Next, select your target configuration (Debug or Release), and platform (Win32 or x64).
 Right click on the desired demo in the Solution Explorer window and select `Build`.
 
-#### Building the demos using an Ice source build:
+#### Building the demos using an Ice source build
 
 - Build from command line:
-  * Open a Visual Studio command prompt
-  ```
-  cd ice-demos\cpp11
-  MSBuild /p:IceHome=<Ice dist path> /p:Configuration=<Release or Debug> /t:UWPBuild msbuild\ice.proj
-  ```
-  `Ice dist path` represents a source tree where you built Ice for C++.
+  - Open a Visual Studio command prompt
+
+    ```shell
+    cd ice-demos\cpp11
+    MSBuild /p:IceHome=<Ice dist path> /p:Configuration=<Release or Debug> /t:UWPBuild msbuild\ice.proj
+    ```
+
+    `Ice dist path` represents a source tree where you built Ice for C++.
 
 - Build from Visual Studio
-  * Open a Visual Studio command prompt
-  ```
-  cd ice-demos\cpp11
-  MSBuild /p:IceHome=<Ice dist path> /p:Configuration=<Release or Debug> /t:UWPInstallLocalPackages msbuild\ice.proj
-  ```
-  The command above creates NuGet packages for the source tree designated by
-  `Ice dist path` (and first builds this source tree if needed), and then installs these
-  NuGet packages in the `ice-demos\cpp11\packages` folder.
+  - Open a Visual Studio command prompt
 
-  * Start Visual Studio, open the `C++11 demos (Universal Windows).sln` solution, and
+    ```shell
+    cd ice-demos\cpp11
+    MSBuild /p:IceHome=<Ice dist path> /p:Configuration=<Release or Debug> /t:UWPInstallLocalPackages msbuild\ice.proj
+    ```
+
+    The command above creates NuGet packages for the source tree designated by
+    `Ice dist path` (and first builds this source tree if needed), and then installs these
+    NuGet packages in the `ice-demos\cpp11\packages` folder.
+
+  - Start Visual Studio, open the `C++11 demos (Universal Windows).sln` solution, and
     select your target configuration (Debug or Release) and platform (Win32 or x64).
     Right click on the desired demo in the Solution Explorer window and select `Build`.
 
