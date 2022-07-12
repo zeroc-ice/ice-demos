@@ -22,6 +22,6 @@
     <ItemGroup>
         <Compile Include="../../../MyGreeting.cs" />
         <PackageReference Include="zeroc.ice.net" Version="3.7.8" />
-        <PackageReference Include="zeroc.icebuilder.msbuild" Version="5.0.7" />
+        <PackageReference Include="zeroc.icebuilder.msbuild" Version="5.0.9" />
     </ItemGroup>
 </Project>
