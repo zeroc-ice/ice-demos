@@ -46,6 +46,7 @@
         <CppPlatformToolset Include="v140"/>
         <CppPlatformToolset Include="v141"/>
         <CppPlatformToolset Include="v142"/>
+        <CppPlatformToolset Include="v143"/>
 
         <UWPPlatformToolset Include="v140"/>
         <UWPPlatformToolset Include="v141"/>
