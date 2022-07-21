@@ -219,12 +219,13 @@ def target_add_slice2swift_build_rule(project, target, prefix = nil)
     rule.file_type = "pattern.proxy"
 
     script = <<~SCRIPT
+        BREW_PREFIX=$($SHELL -c 'brew --prefix' 2>/dev/null)
         if [ -f "${ICE_HOME-unset}/bin/slice2swift" ]; then
             SLICE2SWIFT="$ICE_HOME/bin/slice2swift"
             SLICEDIR="$ICE_HOME/slice"
-        elif [ -f /usr/local/bin/slice2swift ]; then
-            SLICE2SWIFT=/usr/local/bin/slice2swift
-            SLICEDIR=/usr/local/share/ice/slice
+        elif [ -f "${BREW_PREFIX-unset}/bin/slice2swift" ]; then
+            SLICE2SWIFT=$BREW_PREFIX/bin/slice2swift
+            SLICEDIR=$BREW_PREFIX/share/ice/slice
         else
             echo "Failed to locate slice2swift compiler"
             exit 1
