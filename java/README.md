@@ -79,8 +79,8 @@ This Android Studio project uses Gradle for its build system.
 Building any Ice application for Android requires Android Studio and the Android
 SDK build tools. We tested with the following components:
 
-- Android Studio 3.5
-- Android SDK 29
+- Android Studio Chipmunk
+- Android SDK 30
 
 Ice for Java requires at minimum API level 24:
 
