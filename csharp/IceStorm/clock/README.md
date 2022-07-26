@@ -19,7 +19,7 @@ In another window:
 publisher
 ```
 
-> With .NET Core 2.x, use instead `dotnet` to start your publisher and
+> With .NET 6, use instead `dotnet` to start your publisher and
 > subscriber:
 > ```
 > dotnet subscriber.dll

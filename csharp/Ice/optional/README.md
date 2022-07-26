@@ -10,7 +10,7 @@ In a separate window, start the client:
 client
 ```
 
-> With .NET Core 2.x, use instead:
+> With .NET 6, use instead:
 > ```
 > dotnet server.dll
 > ```
