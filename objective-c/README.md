@@ -10,8 +10,7 @@ Most of the subdirectories here correspond directly to Ice components, such as
 [Ice](./Ice) and [IceDiscovery](./IceDiscovery). We've also included the
 following additional subdirectories:
 
-- [Manual](./Manual)<p>
-Complete examples for some of the code snippets in the [Ice manual][1].
+- [Manual](./Manual) - Complete examples for some of the code snippets in the [Ice manual][1].
 
 ## Build Instructions
 
@@ -27,18 +26,19 @@ To build the command-line examples, first review the settings found in
 in a non-standard location, you'll also need to set the `ICE_HOME` environment
 variable with the path name of the installation directory:
 
-```
+```shell
 export ICE_HOME=~/testing/Ice
 ```
 
 Run `make` to start the build:
 
-```
+```shell
 make
 ```
 
 When you're ready to start the build, run `make`, for example:
-```
+
+```shell
 make V=1
 ```
 
@@ -53,13 +53,15 @@ platform specified with the `CONFIGS` and `PLATFORMS` variables in `Make.rules`.
 
 You can also build or clean a single demo with `make <demo-path>[_clean|_distclean]`,
 for example:
-```
+
+```shell
 make V=1 Ice/hello
 make Ice/hello_distclean
 ```
 
 When you're ready to start the build, run `make`, for example:
-```
+
+```shell
 make V=1
 ```
 
@@ -74,7 +76,8 @@ platform specified with the `CONFIGS` and `PLATFORMS` variables in `Make.rules`.
 
 You can also build or clean a single demo with `make <demo-path>[_clean|_distclean]`,
 for example:
-```
+
+```shell
 make V=1 Ice/hello
 make Ice/hello_distclean
 ```

@@ -13,9 +13,9 @@ icegridadmin --Ice.Config=config.grid -e "application add application.xml"
 client
 ```
 
-> With .NET Core 2.x, use instead:
+> With .NET 6, use instead:
 > ```
-> icegridadmin --Ice.Config=config.grid -e "application add application-netcore2.xml"
+> icegridadmin --Ice.Config=config.grid -e "application add application-net6.xml"
 > dotnet client.dll
 > ```
 
@@ -26,7 +26,7 @@ You can also use the descriptors in the following files to deploy the
 application:
 
 * `application_with_template.xml` and
-  `application-netcore_with_template.xml`: These descriptors
+  `application-net6_with_template.xml`: These descriptors
   demonstrate the use of templates for the server definition.
   Templates make it easy to deploy multiple instances of the same
   server.
@@ -43,9 +43,9 @@ a new set of descriptors, for example:
 icegridadmin --Ice.Config=config.grid -e "application update application_with_template.xml"
 ```
 
-> With .NET Core 2.x, use instead the `-netcore2` XML files, for example:
+> With .NET 6, use instead the `-net6` XML files, for example:
 > ```
-> icegridadmin --Ice.Config=config.grid -e "application update application-netcore2_with_template.xml"
+> icegridadmin --Ice.Config=config.grid -e "application update application-net6_with_template.xml"
 > ```
 
 When using the descriptors from `application_with_template.xml`, or

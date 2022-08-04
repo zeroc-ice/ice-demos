@@ -219,12 +219,13 @@ def target_add_slice2swift_build_rule(project, target, prefix = nil)
     rule.file_type = "pattern.proxy"
 
     script = <<~SCRIPT
+        BREW_PREFIX=$($SHELL -c 'brew --prefix' 2>/dev/null)
         if [ -f "${ICE_HOME-unset}/bin/slice2swift" ]; then
             SLICE2SWIFT="$ICE_HOME/bin/slice2swift"
             SLICEDIR="$ICE_HOME/slice"
-        elif [ -f /usr/local/bin/slice2swift ]; then
-            SLICE2SWIFT=/usr/local/bin/slice2swift
-            SLICEDIR=/usr/local/share/ice/slice
+        elif [ -f "${BREW_PREFIX-unset}/bin/slice2swift" ]; then
+            SLICE2SWIFT=$BREW_PREFIX/bin/slice2swift
+            SLICEDIR=$BREW_PREFIX/share/ice/slice
         else
             echo "Failed to locate slice2swift compiler"
             exit 1
@@ -279,8 +280,8 @@ def target_set_common_build_settings(target, product, build_dir, platform, plist
     target.build_configurations.each { |config|
         config.build_settings["ENABLE_TESTABILITY"] = "NO"
         config.build_settings["CODE_SIGN_STYLE"] = "Automatic"
-        config.build_settings["CURRENT_PROJECT_VERSION"] = "3.7.7"
-        config.build_settings["DYLIB_CURRENT_VERSION"] = "3.7.7"
+        config.build_settings["CURRENT_PROJECT_VERSION"] = "3.7.8"
+        config.build_settings["DYLIB_CURRENT_VERSION"] = "3.7.8"
         config.build_settings["DYLIB_COMPATIBILITY_VERSION"] = "0"
         config.build_settings["SWIFT_VERSION"] = "5.0"
         if plist != nil then

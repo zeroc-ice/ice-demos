@@ -23,8 +23,8 @@
         <Compile Include="../../../HelloI.cs" />
         <Compile Include="../../../HelloServiceI.cs" />
         <SliceCompile Include="../../../Hello.ice" />
-        <PackageReference Include="zeroc.ice.net" Version="3.7.7" />
-        <PackageReference Include="zeroc.icebuilder.msbuild" Version="5.0.7" />
+        <PackageReference Include="zeroc.ice.net" Version="3.7.8" />
+        <PackageReference Include="zeroc.icebuilder.msbuild" Version="5.0.9" />
         <IceBoxNet Include="$(IceHome)/tools/net6.0/*" />
         <Compile Update="generated\Hello.cs">
           <SliceCompileSource>../../../Hello.ice</SliceCompileSource>

@@ -23,17 +23,17 @@ the IceGrid GUI. If you prefer to use the command-line utility, use:
 icegridadmin --Ice.Config=config.grid -e "application add application.xml"
 ```
 
-## .NET Core Setup
+## .NET 6 Setup
 
 Start the IceGrid registry and node:
 ```
 icegridnode --Ice.Config=config.grid
 ```
 
-Deploy the `HelloSimpsons` application (in file `application-netcore.xml`) with
+Deploy the `HelloSimpsons` application (in file `application-net6.xml`) with
 the IceGrid GUI. If you prefer to use the command-line utility, use:
 ```
-icegridadmin --Ice.Config=config.grid -e "application add application-netcore.xml"
+icegridadmin --Ice.Config=config.grid -e "application add application-net6.xml"
 ```
 
 Using IceGrid GUI
@@ -75,7 +75,7 @@ Start the client with:
 client
 ```
 
-> With .NET Framework 2.x, use instead:
+> With .NET 6, use instead:
 > ```
 > dotnet client.dll
 > ```

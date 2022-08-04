@@ -1,8 +1,17 @@
 # C# Demos
 
-- [Overview](#overview)
-- [Building and running the Demos with .NET 6.0 on Windows, Linux, and macOS](#building-and-running-the-demos-with-net-60-on-windows-linux-and-macOS)
-- [Building and running the Demos with .NET Framework on Windows](#building-and-running-the-demos-with-net-framework-on-windows)
+- [C# Demos](#c-demos)
+  - [Overview](#overview)
+  - [Building and running the Demos with .NET 6.0 on Windows, Linux, and macOS](#building-and-running-the-demos-with-net-60-on-windows-linux-and-macos)
+    - [Build Requirements](#build-requirements)
+    - [Building the demos using NuGet packages](#building-the-demos-using-nuget-packages)
+    - [Building the demos using a source build](#building-the-demos-using-a-source-build)
+    - [Running the Demos](#running-the-demos)
+  - [Building and running the Demos with .NET Framework on Windows](#building-and-running-the-demos-with-net-framework-on-windows)
+    - [Build Requirements](#build-requirements-1)
+    - [Building the demos using NuGet packages](#building-the-demos-using-nuget-packages-1)
+    - [Building the demos using a source build](#building-the-demos-using-a-source-build-1)
+    - [Running the Demos](#running-the-demos-1)
 
 ## Overview
 
@@ -28,25 +37,25 @@ Refer to the [C++11 demos](../cpp11) for more examples that use the Ice services
 
 In order to build Ice for .NET sample programs, you need all of the following:
 
- - the [.NET Core SDK][5] version 6.0
- - Slice to C# compiler, for Windows platform the Slice to C# compiler is included
-   with the `zeroc.ice.net` NuGet package installed during build, for other platforms
-   refer to the [Release Notes][6].
+- the [.NET Core SDK][5] version 6.0
+- Slice to C# compiler, for Windows platform the Slice to C# compiler is included
+  with the `zeroc.ice.net` NuGet package installed during build, for other platforms
+  refer to the [Release Notes][6].
 
 You can build from the command-line or with Visual Studio (2022 for Windows or Mac). If you use Visual Studio,
 the [Ice Builder][3] extension is optional on Windows, and not available on macOS.
 
-### Building the demos using NuGet packages:
+### Building the demos using NuGet packages
 
 Open a command prompt and change to the `csharp` subdirectory:
 
-```
+```shell
 cd csharp
 ```
 
 To build the sample programs run:
 
-```
+```shell
 dotnet restore "C# NET 6.0 demos.sln"
 dotnet msbuild "C# NET 6.0 demos.sln"
 ```
@@ -54,11 +63,11 @@ dotnet msbuild "C# NET 6.0 demos.sln"
 The demos are configured to use the Ice NuGet packages. These packages are automatically
 downloaded from nuget.org during the build.
 
-### Building the demos using a source build:
+### Building the demos using a source build
 
 Open a command prompt and change to the `csharp` subdirectory:
 
-```
+```shell
 cd csharp
 ```
 
@@ -66,19 +75,19 @@ Install packages from the source build:
 
 On Windows
 
-```
+```shell
 msbuild /p:IceHome=<Ice dist path> /t:Net6InstallLocalPackages msbuild\ice.proj
 ```
 
 On Linux and macOS
 
-```
+```shell
 dotnet msbuild /p:IceHome=<Ice dist path> /t:Net6InstallLocalPackages msbuild/ice.proj
 ```
 
 To build the sample programs run:
 
-```
+```shell
 dotnet restore "C# NET 6.0 demos.sln"
 dotnet msbuild "C# NET 6.0 demos.sln"
 ```
@@ -99,8 +108,9 @@ directory to your PATH. Please refer to the [Release Notes][6] for additional in
 ### Build Requirements
 
 In order to build the Ice for .NET sample programs, you need:
- * Visual Studio
- * the [Ice Builder][3] Visual Studio extension
+
+- Visual Studio
+- the [Ice Builder][3] Visual Studio extension
 
 If you forget to install Ice Builder, the C# sample projects will fail to load and
 Visual Studio may give an error message that suggests a version migration problem:
@@ -109,7 +119,7 @@ Visual Studio may give an error message that suggests a version migration proble
 > This version of Visual Studio is unable to open the following projects. The project types may not be installed or this version of Visual Studio may not support them.
 > For more information on enabling these project types or otherwise migrating your assets, please see the details in the "Migration Report" displayed after clicking OK.
 
-### Building the demos using NuGet packages:
+### Building the demos using NuGet packages
 
 Open the solution file `C# NET Framework demos.sln` to build the sample programs.
 
@@ -124,23 +134,25 @@ Packages for Solution...` in Visual Studio.
 After restoring the packages, right click on the desired demo in the Solution
 Explorer window and select `Build`.
 
-### Building the demos using a source build:
+### Building the demos using a source build
 
 - Build from command line:
-  * Open a Visual Studio command prompt
-  ```
-  cd ice-demos\csharp
-  MSBuild /p:IceHome=<Ice dist path> /t:Net45Build msbuild\ice.proj
-  ```
+  - Open a Visual Studio command prompt
+
+    ```shell
+    cd ice-demos\csharp
+    MSBuild /p:IceHome=<Ice dist path> /t:Net45Build msbuild\ice.proj
+    ```
 
 - Build from Visual Studio:
-  * Open a Visual Studio command prompt
-  ```
-  cd ice-demos\csharp
-  MSBuild /p:IceHome=<Ice dist path> /t:Net45InstallLocalPackages msbuild\ice.proj
-  ```
+  - Open a Visual Studio command prompt
 
-  * Open the solution file `C# NET Framework demos.sln` to build the sample programs.
+    ```shell
+    cd ice-demos\csharp
+    MSBuild /p:IceHome=<Ice dist path> /t:Net45InstallLocalPackages msbuild\ice.proj
+    ```
+
+  - Open the solution file `C# NET Framework demos.sln` to build the sample programs.
 
 ### Running the Demos
 
@@ -158,4 +170,4 @@ refer to [Using the Windows Binary Distributions][4] for additional information.
 [3]: https://marketplace.visualstudio.com/items?itemName=ZeroCInc.IceBuilder
 [4]: https://doc.zeroc.com/ice/3.7/release-notes/using-the-windows-binary-distributions
 [5]: https://download/dotnet/6.0
-[6]: https://doc.zeroc.com/rel/ice-releases/ice-3-7/ice-3-7-7-release-notes
+[6]: https://doc.zeroc.com/rel/ice-releases/ice-3-7/ice-3-7-8-release-notes

@@ -73,7 +73,7 @@ if(document.location.protocol === "file:")
 {
     const setupDialog = "<div id=\"setup-modal\" class=\"reveal-modal\" data-reveal>" +
           "<p>The Ice for JavaScript demos require a web server. Please refer to the Sample Programs page from the " +
-          "Ice for JavaScript <a href=\"https://doc.zeroc.com/rel/ice-releases/ice-3-7/ice-3-7-7-release-notes\">" +
+          "Ice for JavaScript <a href=\"https://doc.zeroc.com/rel/ice-releases/ice-3-7/ice-3-7-8-release-notes\">" +
           " release notes</a> for instructions on how to run the web server included with your distribution.</p></div>";
 
     $("body").append(setupDialog);
@@ -102,7 +102,7 @@ function checkGenerated(files)
     const dialog = "<div id=\"build-required-modal\" class=\"reveal-modal\" data-reveal>" +
           "<p>Couldn't find generated file `%FILENAME%'. This is expected if you didn't build the JavaScript demos. " +
           "Please refer to the Sample Programs page from the Ice for JavaScript " +
-          "<a href=\"https://doc.zeroc.com/rel/ice-releases/ice-3-7/ice-3-7-7-release-notes\">release notes</a> " +
+          "<a href=\"https://doc.zeroc.com/rel/ice-releases/ice-3-7/ice-3-7-8-release-notes\">release notes</a> " +
           "for instructions on how to build the demos.</p>" +
           "</div>";
 

@@ -19,7 +19,7 @@
 
     <Target Name="DownloadSymbols" DependsOnTargets="NuGetRestore">
         <MakeDir Directories="$(TEMP)\SymbolCache" />
-        <Exec Command="symchk /r $(MSBuildThisFileDirectory)..\packages\zeroc.ice.net.3.7.7\lib\* /s SRV*$(TEMP)\SymbolCache*https://dev.zeroc.com/share/ice/master/nuget/zeroc.ice.net.store/" />
+        <Exec Command="symchk /r $(MSBuildThisFileDirectory)..\packages\zeroc.ice.net.3.7.8\lib\* /s SRV*$(TEMP)\SymbolCache*https://dev.zeroc.com/share/ice/master/nuget/zeroc.ice.net.store/" />
     </Target>
 
     <Target Name="Net45InstallLocalPackages"
@@ -52,13 +52,13 @@
     <Choose>
         <When Condition="'$(OS)' == 'Windows_NT'">
             <PropertyGroup>
-                <PackagePath>$(IceHome)\csharp\msbuild\zeroc.ice.net\zeroc.ice.net.3.7.7.nupkg</PackagePath>
+                <PackagePath>$(IceHome)\csharp\msbuild\zeroc.ice.net\zeroc.ice.net.3.7.8.nupkg</PackagePath>
                 <BuildProperties>Configuration=$(Configuration);Platform=Any CPU</BuildProperties>
             </PropertyGroup>
         </When>
         <Otherwise>
             <PropertyGroup>
-                <PackagePath>$(IceHome)/csharp/msbuild/zeroc.ice.net/zeroc.ice.net.3.7.7.nupkg</PackagePath>
+                <PackagePath>$(IceHome)/csharp/msbuild/zeroc.ice.net/zeroc.ice.net.3.7.8.nupkg</PackagePath>
                 <BuildProperties>Configuration=$(Configuration);Platform=Any CPU;IceToolsPath=$(IceHome)/cpp/bin</BuildProperties>
             </PropertyGroup>
         </Otherwise>

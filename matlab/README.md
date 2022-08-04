@@ -19,19 +19,19 @@ The following subdirectories contain sample programs:
 Open MATLAB, and change to the [matlab](../matlab) demo directory
 using the MATLAB console:
 
-```
+```shell
 cd matlab
 ```
 
 To build the demos run the `build.m` script:
 
-```
+```shell
 build
 ```
 
 To clean the demos run the `clean.m` script:
 
-```
+```shell
 clean
 ```
 
@@ -39,8 +39,8 @@ clean
 
 Add the following directories to your MATLAB search path:
 
- - `<IceHome>\matlab\lib`
- - `<IceHome>\matlab\lib\generated`
- - `<IceHome>\matlab\lib\x64\Release`
+- `<IceHome>\matlab\lib`
+- `<IceHome>\matlab\lib\generated`
+- `<IceHome>\matlab\lib\x64\Release`
 
 [1]: https://doc.zeroc.com/ice/3.7/introduction
