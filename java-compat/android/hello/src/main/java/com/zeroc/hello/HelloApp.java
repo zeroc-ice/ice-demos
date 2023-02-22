@@ -4,17 +4,17 @@
 
 package com.zeroc.hello;
 
-import Ice.Communicator;
 import android.app.Application;
 import android.content.Context;
 import android.net.wifi.WifiManager;
-import android.os.Build.VERSION;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import Ice.Communicator;
 
 public class HelloApp extends Application
 {
@@ -44,7 +44,6 @@ public class HelloApp extends Application
                     MessageReady ready = (MessageReady)m.obj;
                     _initialized = true;
                     _communicator = ready.communicator;
-                    _ex = ready.ex;
                 }
                 else if(m.what == MSG_EXCEPTION || m.what == MSG_RESPONSE)
                 {
@@ -65,74 +64,62 @@ public class HelloApp extends Application
             }
         };
 
-        _wifiManager = (WifiManager)getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 
         //
         // On some devices, a multicast lock must be acquired otherwise multicast packets are discarded.
         // The lock is initially unacquired.
         //
-        _lock = _wifiManager.createMulticastLock("com.zeroc.hello");
-        _lock.acquire();
+        WifiManager.MulticastLock lock = wifiManager.createMulticastLock("com.zeroc.hello");
+        lock.acquire();
 
         // SSL initialization can take some time. To avoid blocking the
         // calling thread, we perform the initialization in a separate thread.
-        new Thread(new Runnable()
-        {
-            public void run()
+        new Thread(() -> {
+            try
             {
-                try
-                {
-                    Ice.InitializationData initData = new Ice.InitializationData();
+                Ice.InitializationData initData = new Ice.InitializationData();
 
-                    initData.dispatcher = new Ice.Dispatcher()
-                    {
-                        @Override
-                        public void
-                        dispatch(Runnable runnable, Ice.Connection connection)
-                        {
-                            _uiHandler.post(runnable);
-                        }
-                    };
+                initData.dispatcher = (runnable, connection) -> _uiHandler.post(runnable);
 
-                    initData.properties = Ice.Util.createProperties();
-                    initData.properties.setProperty("Ice.Trace.Network", "3");
+                initData.properties = Ice.Util.createProperties();
+                initData.properties.setProperty("Ice.Trace.Network", "3");
 
-                    initData.properties.setProperty("IceSSL.Trace.Security", "3");
-                    initData.properties.setProperty("IceSSL.KeystoreType", "BKS");
-                    initData.properties.setProperty("IceSSL.TruststoreType", "BKS");
-                    initData.properties.setProperty("IceSSL.Password", "password");
-                    initData.properties.setProperty("Ice.Plugin.IceSSL", "IceSSL.PluginFactory");
-                    initData.properties.setProperty("Ice.Plugin.IceDiscovery", "IceDiscovery.PluginFactory");
+                initData.properties.setProperty("IceSSL.Trace.Security", "3");
+                initData.properties.setProperty("IceSSL.KeystoreType", "BKS");
+                initData.properties.setProperty("IceSSL.TruststoreType", "BKS");
+                initData.properties.setProperty("IceSSL.Password", "password");
+                initData.properties.setProperty("Ice.Plugin.IceSSL", "IceSSL.PluginFactory");
+                initData.properties.setProperty("Ice.Plugin.IceDiscovery", "IceDiscovery.PluginFactory");
 
-                    //
-                    // We need to postpone plug-in initialization so that we can configure IceSSL
-                    // with a resource stream for the certificate information.
-                    //
-                    initData.properties.setProperty("Ice.InitPlugins", "0");
+                //
+                // We need to postpone plug-in initialization so that we can configure IceSSL
+                // with a resource stream for the certificate information.
+                //
+                initData.properties.setProperty("Ice.InitPlugins", "0");
 
-                    Ice.Communicator c = Ice.Util.initialize(initData);
+                Communicator c = Ice.Util.initialize(initData);
 
-                    //
-                    // Now we complete the plug-in initialization.
-                    //
-                    IceSSL.Plugin plugin = (IceSSL.Plugin)c.getPluginManager().getPlugin("IceSSL");
-                    //
-                    // Be sure to pass the same input stream to the SSL plug-in for
-                    // both the keystore and the truststore. This makes startup a
-                    // little faster since the plug-in will not initialize
-                    // two keystores.
-                    //
-                    java.io.InputStream certs = getResources().openRawResource(R.raw.client);
-                    plugin.setKeystoreStream(certs);
-                    plugin.setTruststoreStream(certs);
-                    c.getPluginManager().initializePlugins();
+                //
+                // Now we complete the plug-in initialization.
+                //
+                IceSSL.Plugin plugin = (IceSSL.Plugin)c.getPluginManager().getPlugin("IceSSL");
+                //
+                // Be sure to pass the same input stream to the SSL plug-in for
+                // both the keystore and the truststore. This makes startup a
+                // little faster since the plug-in will not initialize
+                // two keystores.
+                //
+                java.io.InputStream certs = getResources().openRawResource(R.raw.client);
+                plugin.setKeystoreStream(certs);
+                plugin.setTruststoreStream(certs);
+                c.getPluginManager().initializePlugins();
 
-                    _uiHandler.sendMessage(Message.obtain(_uiHandler, MSG_READY, new MessageReady(c, null)));
-                }
-                catch(Ice.LocalException e)
-                {
-                    _uiHandler.sendMessage(Message.obtain(_uiHandler, MSG_READY, new MessageReady(null, e)));
-                }
+                _uiHandler.sendMessage(Message.obtain(_uiHandler, MSG_READY, new MessageReady(c, null)));
+            }
+            catch(Ice.LocalException e)
+            {
+                _uiHandler.sendMessage(Message.obtain(_uiHandler, MSG_READY, new MessageReady(null, e)));
             }
         }).start();
     }
@@ -386,10 +373,7 @@ public class HelloApp extends Application
     public static final int MSG_SENDING = 4;
     public static final int MSG_SENT = 5;
 
-    private WifiManager _wifiManager;
-    private WifiManager.MulticastLock _lock;
-
-    private List<Message> _queue = new LinkedList<Message>();
+    private final List<Message> _queue = new LinkedList<>();
     private Handler _uiHandler;
 
     private boolean _initialized;
@@ -400,8 +384,6 @@ public class HelloApp extends Application
     private Ice.AsyncResult _result;
     // The mode of the current request.
     private DeliveryMode _resultMode;
-
-    private Ice.LocalException _ex;
     private Handler _handler;
 
     // Proxy settings.
