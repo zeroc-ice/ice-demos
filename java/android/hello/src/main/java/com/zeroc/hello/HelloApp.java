@@ -5,6 +5,8 @@
 package com.zeroc.hello;
 
 import android.app.Application;
+import android.content.Context;
+import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -69,6 +71,16 @@ public class HelloApp extends Application
                 }
             }
         };
+
+        WifiManager wifiManager = (WifiManager)getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+
+        //
+        // On some devices, a multicast lock must be acquired otherwise multicast packets are discarded.
+        // The lock is initially unacquired.
+        //
+        WifiManager.MulticastLock lock = wifiManager.createMulticastLock("com.zeroc.hello");
+        lock.acquire();
+
 
         // SSL initialization can take some time. To avoid blocking the
         // calling thread, we perform the initialization in a separate thread.
