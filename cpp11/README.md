@@ -3,7 +3,6 @@
 - [Overview](#overview)
 - [Building and Running the Demos on Linux and macOS](#building-and-running-the-demos-on-linux-and-macos)
 - [Building and Running the Demos on Windows](#building-and-running-the-demos-on-windows)
-- [Building the Demo Apps for Universal Windows Platform (UWP)](#building-the-demo-apps-for-universal-windows-platform-uwp)
 
 ## Overview
 
@@ -154,58 +153,6 @@ set PATH=%USERPROFILE%\ice-demos\cpp11\packages\zeroc.ice.v140.3.7.9\build\nativ
 ```
 
 Then refer to the README.md file in each demo directory for usage instructions.
-
-## Building the Demo Apps for Universal Windows Platform (UWP)
-
-### Building the Demos
-
-#### Building the demos using NuGet packages
-
-Open the solution file `C++11 demos (Universal Windows).sln`.
-
-If you have disabled the automatic download of NuGet packages by Visual Studio,
-you need to restore the packages before you build using `Tools > NuGet Package
-Manager > Manage NuGet Packages for Solution...` in Visual Studio.
-
-The NuGet packages for UWP consist mostly of static libraries and PDB files
-and are very large (about 300 MB compressed for each compiler). As a result, the
-first restore can take a long time; subsequent restores on the same computer are
-faster as they use the local NuGet cache.
-
-Next, select your target configuration (Debug or Release), and platform (Win32 or x64).
-Right click on the desired demo in the Solution Explorer window and select `Build`.
-
-#### Building the demos using an Ice source build
-
-- Build from command line:
-  - Open a Visual Studio command prompt
-
-    ```shell
-    cd ice-demos\cpp11
-    MSBuild /p:IceHome=<Ice dist path> /p:Configuration=<Release or Debug> /t:UWPBuild msbuild\ice.proj
-    ```
-
-    `Ice dist path` represents a source tree where you built Ice for C++.
-
-- Build from Visual Studio
-  - Open a Visual Studio command prompt
-
-    ```shell
-    cd ice-demos\cpp11
-    MSBuild /p:IceHome=<Ice dist path> /p:Configuration=<Release or Debug> /t:UWPInstallLocalPackages msbuild\ice.proj
-    ```
-
-    The command above creates NuGet packages for the source tree designated by
-    `Ice dist path` (and first builds this source tree if needed), and then installs these
-    NuGet packages in the `ice-demos\cpp11\packages` folder.
-
-  - Start Visual Studio, open the `C++11 demos (Universal Windows).sln` solution, and
-    select your target configuration (Debug or Release) and platform (Win32 or x64).
-    Right click on the desired demo in the Solution Explorer window and select `Build`.
-
-### Running the Demos
-
-Refer to the README.md file in each demo directory for usage instructions.
 
 [1]: https://doc.zeroc.com/ice/3.7/introduction
 [2]: https://doc.zeroc.com/technical-articles/general-topics/chat-demo
