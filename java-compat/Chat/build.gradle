@@ -4,16 +4,7 @@ buildscript {
     }
 
     dependencies {
-        // Use older proguard version when compile with Java 1.7
-        if(JavaVersion.current() < JavaVersion.VERSION_1_8) {
-            classpath "net.sf.proguard:proguard-gradle:6.0.2"
-        }
-        else if (JavaVersion.current() == JavaVersion.VERSION_1_8) {
-            classpath "net.sf.proguard:proguard-gradle:6.1.1"
-        }
-        else {
-            classpath "com.guardsquare:proguard-gradle:7.2.2"
-        }
+        classpath "com.guardsquare:proguard-gradle:7.3.1"
     }
 }
 
@@ -33,43 +24,32 @@ dependencies {
     implementation localDependency("glacier2-compat")
 }
 
-if(JavaVersion.current() >= JavaVersion.VERSION_11) {
-    jar {
-        archiveName = "ChatGUI.jar"
-        destinationDir = new File("${projectDir}")
-        manifest {
-            attributes 'Main-Class': "ChatDemoGUI.MainView"
-            attributes("Class-Path": configurations.runtimeClasspath.resolve().collect{ it.toURI() }.join(' '))
-        }
+jar {
+    archiveName = "ChatGUITEMP.jar"
+    manifest {
+        attributes 'Main-Class': "ChatDemoGUI.MainView"
     }
 }
-else {
-    jar {
-        archiveName = "ChatGUITEMP.jar"
-        manifest {
-            attributes 'Main-Class': "ChatDemoGUI.MainView"
-        }
-    }
 
-    def javaHome = System.properties['java.home']
+def javaHome = System.properties['java.home']
 
-    task proguard(type: proguard.gradle.ProGuardTask, dependsOn: jar) {
-        injars configurations.runtimeClasspath.resolve(), filter: '!META-INF/**'
-        injars "${buildDir}/libs/ChatGUITEMP.jar"
-        if(JavaVersion.current() <= JavaVersion.VERSION_1_8) {
-            libraryjars "${javaHome}/lib/rt.jar"
-            libraryjars "${javaHome}/lib/jsse.jar"
-        } else {
-            libraryjars "${javaHome}/jmods/java.base.jmod"
-            libraryjars "${javaHome}/jmods/java.logging.jmod"
-            libraryjars "${javaHome}/jmods/java.desktop.jmod"
-            libraryjars "${javaHome}/jmods/java.prefs.jmod"
-        }
-        outjars "ChatGUI.jar"
-        configuration "chatdemogui.pro"
+task proguard(type: proguard.gradle.ProGuardTask, dependsOn: jar) {
+    injars configurations.runtimeClasspath.resolve(), filter: '!META-INF/**'
+    injars "${buildDir}/libs/ChatGUITEMP.jar"
+    if(JavaVersion.current() <= JavaVersion.VERSION_1_8) {
+        libraryjars "${javaHome}/lib/rt.jar"
+        libraryjars "${javaHome}/lib/jsse.jar"
+    } else {
+        libraryjars "${javaHome}/jmods/java.base.jmod"
+        libraryjars "${javaHome}/jmods/java.logging.jmod"
+        libraryjars "${javaHome}/jmods/java.desktop.jmod"
+        libraryjars "${javaHome}/jmods/java.prefs.jmod"
     }
-    assemble.dependsOn(proguard)
+    outjars "ChatGUI.jar"
+    configuration "chatdemogui.pro"
 }
+assemble.dependsOn(proguard)
+
 
 clean {
     delete("ChatGUI.jar")
