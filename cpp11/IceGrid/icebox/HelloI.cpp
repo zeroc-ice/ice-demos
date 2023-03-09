@@ -12,8 +12,8 @@
 
 using namespace std;
 
-HelloI::HelloI(const string& serviceName) :
-    _serviceName(serviceName)
+HelloI::HelloI(string serviceName) :
+    _serviceName(std::move(serviceName))
 {
 }
 
@@ -21,7 +21,7 @@ void
 HelloI::sayHello(const Ice::Current&)
 {
     char* val = getenv("LANG");
-    string lang = val ? string(val) : "en";
+    const string lang = val ? string(val) : "en";
 
     string greeting = "Hello, ";
     if(lang == "fr")

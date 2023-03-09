@@ -28,7 +28,7 @@ main(int argc, char* argv[])
         // CommunicatorHolder's ctor initializes an Ice communicator,
         // and its dtor destroys this communicator.
         //
-        Ice::CommunicatorHolder ich(argc, argv, "config.client");
+        const Ice::CommunicatorHolder ich(argc, argv, "config.client");
 
         //
         // The communicator initialization removes all Ice-related arguments from argc/argv
@@ -79,10 +79,10 @@ run(const shared_ptr<Ice::Communicator>& communicator)
     {
         cout << "enter the number of iterations: ";
         cin >> s;
-        int count = atoi(s.c_str());
+        const int count = stoi(s);
         cout << "enter the delay between each greetings (in ms): ";
         cin >> s;
-        int delay = atoi(s.c_str());
+        int delay = stoi(s);
         if(delay < 0)
         {
             delay = 500; // 500 milliseconds

@@ -18,7 +18,7 @@ CounterI::CounterI(const shared_ptr<IceStorm::TopicPrx>& topic) :
 void
 CounterI::subscribe(shared_ptr<CounterObserverPrx> observer, const Ice::Current&)
 {
-    lock_guard<mutex> sync(_mutex);
+    const lock_guard<mutex> sync(_mutex);
 
     //
     // Subscribe to the IceStorm topic. This returns a per-subscriber
@@ -38,7 +38,7 @@ CounterI::unsubscribe(shared_ptr<CounterObserverPrx> observer, const Ice::Curren
 void
 CounterI::inc(int value, const Ice::Current&)
 {
-    lock_guard<mutex> sync(_mutex);
+    const lock_guard<mutex> sync(_mutex);
 
     _value += value;
     _publisher->inc(value);

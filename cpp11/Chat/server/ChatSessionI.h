@@ -12,7 +12,7 @@ class ChatSessionI : public Chat::ChatSession
 {
 public:
 
-    ChatSessionI(const std::shared_ptr<ChatRoom>&, const std::string&, bool trace, const std::shared_ptr<Ice::Logger>& logger);
+    ChatSessionI(const std::shared_ptr<ChatRoom>&, const std::string, bool trace, const std::shared_ptr<Ice::Logger>& logger);
 
     virtual void setCallback(std::shared_ptr<Chat::ChatRoomCallbackPrx>, const Ice::Current&) override;
     virtual long long send(std::string, const Ice::Current&) override;

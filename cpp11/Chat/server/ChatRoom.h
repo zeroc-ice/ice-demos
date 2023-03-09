@@ -30,7 +30,7 @@ public:
     void unreserve(const std::string&);
     void join(const std::string&, const std::shared_ptr<ChatRoomCallbackAdapter>&);
     void leave(const std::string&);
-    long long send(const std::string&, std::string);
+    long long send(const std::string&, const std::string&);
 
 private:
 

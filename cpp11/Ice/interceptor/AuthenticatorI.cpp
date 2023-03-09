@@ -19,7 +19,7 @@ AuthenticatorI::AuthenticatorI() :
 string
 AuthenticatorI::getToken(const Ice::Current&)
 {
-    lock_guard<mutex> lock(_tokenLock);
+    const lock_guard<mutex> lock(_tokenLock);
     //
     // Generate a random 32 character long token.
     //
@@ -43,7 +43,7 @@ AuthenticatorI::getToken(const Ice::Current&)
 void
 AuthenticatorI::validateToken(const string& tokenValue)
 {
-    lock_guard<mutex> lock(_tokenLock);
+    const lock_guard<mutex> lock(_tokenLock);
 
     //
     // Remove any expired tokens.

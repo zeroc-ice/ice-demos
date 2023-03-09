@@ -23,7 +23,7 @@ class GetUpdatesTask
 {
 public:
 
-    GetUpdatesTask(const shared_ptr<PollingChat::PollingChatSessionPrx>& session) :
+    explicit GetUpdatesTask(const shared_ptr<PollingChat::PollingChatSessionPrx>& session) :
         _session(session)
     {
     }
@@ -31,7 +31,7 @@ public:
     ~GetUpdatesTask()
     {
         {
-            lock_guard<mutex> lock(_mutex);
+            const lock_guard<mutex> lock(_mutex);
             _done = true;
         }
         _cond.notify_all();
@@ -67,7 +67,7 @@ public:
                     auto joinedEvt = dynamic_pointer_cast<PollingChat::UserJoinedEvent>(u);
                     if(joinedEvt)
                     {
-                        lock_guard<mutex> lkg(coutMutex);
+                        const lock_guard<mutex> lkg(coutMutex);
                         cout << ">>>> " << joinedEvt->name << " joined." << endl;
                     }
                     else
@@ -75,7 +75,7 @@ public:
                         auto leftEvt = dynamic_pointer_cast<PollingChat::UserLeftEvent>(u);
                         if(leftEvt)
                         {
-                            lock_guard<mutex> lkg(coutMutex);
+                            const lock_guard<mutex> lkg(coutMutex);
                             cout << ">>>> " << leftEvt->name << " left." << endl;
                         }
                         else
@@ -83,7 +83,7 @@ public:
                             auto messageEvt = dynamic_pointer_cast<PollingChat::MessageEvent>(u);
                             if(messageEvt)
                             {
-                                lock_guard<mutex> lkg(coutMutex);
+                                const lock_guard<mutex> lkg(coutMutex);
                                 cout << messageEvt->name << " > " << ChatUtils::unstripHtml(messageEvt->message) << endl;
                             }
                         }
@@ -93,7 +93,7 @@ public:
             catch(const Ice::LocalException& ex)
             {
                 {
-                    lock_guard<mutex> lkg(_mutex);
+                    const lock_guard<mutex> lkg(_mutex);
                     _done = true;
                 }
                 if(!dynamic_cast<const Ice::ObjectNotExistException*>(&ex))
@@ -112,7 +112,7 @@ public:
 
     bool isDone() const
     {
-        lock_guard<mutex> lock(const_cast<mutex&>(_mutex));
+        const lock_guard<mutex> lock(const_cast<mutex&>(_mutex));
         return _done;
     }
 
@@ -157,7 +157,7 @@ main(int argc, char* argv[])
             initData.properties->setProperty("OverrideSessionEndpoints", "1");
          }
 
-        Ice::CommunicatorHolder ich(argc, argv, initData);
+        const Ice::CommunicatorHolder ich(argc, argv, initData);
 
         if(argc > 1)
         {
@@ -242,7 +242,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
 
     auto users = session->getInitialUsers();
     {
-        lock_guard<mutex> lock(coutMutex);
+        const lock_guard<mutex> lock(coutMutex);
         cout << "Users: ";
         for(auto it = users.begin(); it != users.end();)
         {
@@ -278,7 +278,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 {
                     if(s.size() > maxMessageSize)
                     {
-                        lock_guard<mutex> lock(coutMutex);
+                        const lock_guard<mutex> lock(coutMutex);
                         cout << "Message length exceeded, maximum length is " << maxMessageSize << " characters.";
                     }
                     else
@@ -316,6 +316,6 @@ run(const shared_ptr<Ice::Communicator>& communicator)
 void
 menu()
 {
-    lock_guard<mutex> lock(coutMutex);
+    const lock_guard<mutex> lock(coutMutex);
     cout << "enter /quit to exit." << endl;
 }

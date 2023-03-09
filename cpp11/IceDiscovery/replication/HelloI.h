@@ -11,7 +11,7 @@ class HelloI : public Demo::Hello
 {
 public:
 
-    HelloI(const std::string&);
+    HelloI(std::string);
 
     virtual std::string getGreeting(const Ice::Current&) override;
     virtual void shutdown(const Ice::Current&) override;

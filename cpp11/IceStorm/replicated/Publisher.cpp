@@ -39,8 +39,8 @@ main(int argc, char* argv[])
         // CommunicatorHolder's ctor initializes an Ice communicator,
         // and its dtor destroys this communicator.
         //
-        Ice::CommunicatorHolder ich(argc, argv, "config.pub");
-        auto communicator = ich.communicator();
+        const Ice::CommunicatorHolder ich(argc, argv, "config.pub");
+        const auto& communicator = ich.communicator();
 
         ctrlCHandler.setCallback(
             [communicator](int)
@@ -75,8 +75,8 @@ run(const shared_ptr<Ice::Communicator>& communicator, int argc, char* argv[])
 
     for(i = 1; i < argc; ++i)
     {
-        string optionString = argv[i];
-        Option oldoption = option;
+        const string optionString = argv[i];
+        const Option oldoption = option;
         if(optionString == "--datagram")
         {
             option = Option::Datagram;
@@ -163,10 +163,9 @@ run(const shared_ptr<Ice::Communicator>& communicator, int argc, char* argv[])
     auto clock = Ice::uncheckedCast<ClockPrx>(publisher);
 
     cout << "publishing tick events. Press ^C to terminate the application." << endl;
-    try
+    while(true)
     {
-        bool stop = false;
-        while(!stop)
+        try
         {
             auto now = chrono::system_clock::to_time_t(chrono::system_clock::now());
             char timeString[100];
@@ -177,10 +176,10 @@ run(const shared_ptr<Ice::Communicator>& communicator, int argc, char* argv[])
             clock->tick(timeString);
             this_thread::sleep_for(chrono::seconds(1));
         }
-    }
-    catch(const Ice::CommunicatorDestroyedException&)
-    {
-        // Ignore
+        catch(const Ice::CommunicatorDestroyedException&)
+        {
+            break;
+        }
     }
 
     return 0;

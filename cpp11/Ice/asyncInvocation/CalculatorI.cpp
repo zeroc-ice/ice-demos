@@ -4,7 +4,7 @@
 
 #include <Ice/Ice.h>
 #include <CalculatorI.h>
-#include <math.h>
+#include <cmath>
 
 using namespace std;
 

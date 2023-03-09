@@ -14,7 +14,7 @@ main(int argc, char* argv[])
 {
     try
     {
-        Ice::CommunicatorHolder ich(argc, argv);
+        const Ice::CommunicatorHolder ich(argc, argv);
         auto base = ich->stringToProxy("SimplePrinter:default -p 10000");
         auto printer = Ice::checkedCast<PrinterPrx>(base);
         if(!printer)

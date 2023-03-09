@@ -14,35 +14,35 @@ public:
     virtual void
     init(Ice::StringSeq users) override
     {
-        lock_guard<mutex> sync(_mutex);
-        _users = move(users);
+        const lock_guard<mutex> sync(_mutex);
+        _users = std::move(users);
     }
 
     virtual void
     send(const shared_ptr<PollingChat::MessageEvent>& e) override
     {
-        lock_guard<mutex> sync(_mutex);
+        const lock_guard<mutex> sync(_mutex);
         _updates.push_back(e);
     }
 
     virtual void
     join(const shared_ptr<PollingChat::UserJoinedEvent>& e) override
     {
-        lock_guard<mutex> sync(_mutex);
+        const lock_guard<mutex> sync(_mutex);
         _updates.push_back(e);
     }
 
     virtual void
     leave(const shared_ptr<PollingChat::UserLeftEvent>& e) override
     {
-        lock_guard<mutex> sync(_mutex);
+        const lock_guard<mutex> sync(_mutex);
         _updates.push_back(e);
     }
 
     Ice::StringSeq
     getInitialUsers()
     {
-        lock_guard<mutex> sync(_mutex);
+        const lock_guard<mutex> sync(_mutex);
         Ice::StringSeq users;
         users.swap(_users);
         return users;
@@ -51,7 +51,7 @@ public:
     PollingChat::ChatRoomEventSeq
     getUpdates()
     {
-        lock_guard<mutex> sync(_mutex);
+        const lock_guard<mutex> sync(_mutex);
         PollingChat::ChatRoomEventSeq updates;
         updates.swap(_updates);
         return updates;
@@ -78,7 +78,7 @@ PollingChatSessionI::PollingChatSessionI(const shared_ptr<ChatRoom>& chatRoom, c
 Ice::StringSeq
 PollingChatSessionI::getInitialUsers(const Ice::Current&)
 {
-    lock_guard<mutex> sync(_mutex);
+    const lock_guard<mutex> sync(_mutex);
     if(_destroy)
     {
         if(_trace)
@@ -94,7 +94,7 @@ PollingChatSessionI::getInitialUsers(const Ice::Current&)
 PollingChat::ChatRoomEventSeq
 PollingChatSessionI::getUpdates(const Ice::Current&)
 {
-    lock_guard<mutex> sync(_mutex);
+    const lock_guard<mutex> sync(_mutex);
     if(_destroy)
     {
         if(_trace)
@@ -110,7 +110,7 @@ PollingChatSessionI::getUpdates(const Ice::Current&)
 Ice::Long
 PollingChatSessionI::send(string message, const Ice::Current&)
 {
-    lock_guard<mutex> sync(_mutex);
+    const lock_guard<mutex> sync(_mutex);
     if(_destroy)
     {
         if(_trace)
@@ -134,13 +134,13 @@ PollingChatSessionI::send(string message, const Ice::Current&)
         }
         throw Chat::InvalidMessageException(ex.what());
     }
-    return _chatRoom->send(_name, move(msg));
+    return _chatRoom->send(_name, std::move(msg));
 }
 
 void
 PollingChatSessionI::destroy(const Ice::Current& current)
 {
-    lock_guard<mutex> sync(_mutex);
+    const lock_guard<mutex> sync(_mutex);
     if(_destroy)
     {
         if(_trace)

@@ -18,7 +18,7 @@ WorkQueue::start()
         {
             this->run();
         });
-    _thread = move(t);
+    _thread = std::move(t);
 }
 
 void
@@ -81,7 +81,7 @@ WorkQueue::run()
 void
 WorkQueue::add(int delay, function<void ()> response, function<void (exception_ptr)> error)
 {
-    unique_lock<mutex> lock(_mutex);
+    const unique_lock<mutex> lock(_mutex);
 
     if(!_done)
     {
@@ -92,7 +92,7 @@ WorkQueue::add(int delay, function<void ()> response, function<void (exception_p
         {
             _condition.notify_one();
         }
-        _callbacks.push_back(make_tuple(delay, move(response), move(error)));
+        _callbacks.emplace_back(delay, std::move(response), std::move(error));
     }
     else
     {
@@ -106,7 +106,7 @@ WorkQueue::add(int delay, function<void ()> response, function<void (exception_p
 void
 WorkQueue::destroy()
 {
-    unique_lock<mutex> lock(_mutex);
+    const unique_lock<mutex> lock(_mutex);
 
     //
     // Set done flag and notify.

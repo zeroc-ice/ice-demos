@@ -9,7 +9,7 @@ using namespace std;
 using namespace Demo;
 
 NestedI::NestedI(shared_ptr<NestedPrx> self) :
-    _self(move(self))
+    _self(std::move(self))
 {
 }
 

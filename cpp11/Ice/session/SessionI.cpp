@@ -11,8 +11,8 @@ class HelloI : public Hello
 {
 public:
 
-    HelloI(const string& name, int id) :
-        _name(name),
+    HelloI(string name, int id) :
+        _name(std::move(name)),
         _id(id)
     {
     }
@@ -35,8 +35,8 @@ private:
     const int _id;
 };
 
-SessionI::SessionI(const string& name) :
-    _name(name),
+SessionI::SessionI(string name) :
+    _name(std::move(name)),
     _nextId(0),
     _destroy(false)
 {
@@ -46,7 +46,7 @@ SessionI::SessionI(const string& name) :
 shared_ptr<HelloPrx>
 SessionI::createHello(const Ice::Current& current)
 {
-    lock_guard<mutex> sync(_mutex);
+    const lock_guard<mutex> sync(_mutex);
     if(_destroy)
     {
         throw Ice::ObjectNotExistException(__FILE__, __LINE__);
@@ -61,7 +61,7 @@ SessionI::createHello(const Ice::Current& current)
 string
 SessionI::getName(const Ice::Current&)
 {
-    lock_guard<mutex> sync(_mutex);
+    const lock_guard<mutex> sync(_mutex);
     if(_destroy)
     {
         throw Ice::ObjectNotExistException(__FILE__, __LINE__);
@@ -73,7 +73,7 @@ SessionI::getName(const Ice::Current&)
 void
 SessionI::destroy(const Ice::Current& current)
 {
-    lock_guard<mutex> sync(_mutex);
+    const lock_guard<mutex> sync(_mutex);
     if(_destroy)
     {
         throw Ice::ObjectNotExistException(__FILE__, __LINE__);

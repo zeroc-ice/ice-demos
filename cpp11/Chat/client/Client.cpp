@@ -27,7 +27,7 @@ public:
     virtual void
     init(Ice::StringSeq names, const Ice::Current&) override
     {
-        lock_guard<mutex> lock(coutMutex);
+        const lock_guard<mutex> lock(coutMutex);
         cout << "Users: ";
         for(auto it = names.begin(); it != names.end();)
         {
@@ -44,21 +44,21 @@ public:
     virtual void
     join(long long, string name, const Ice::Current&) override
     {
-        lock_guard<mutex> lock(coutMutex);
+        const lock_guard<mutex> lock(coutMutex);
         cout << ">>>> " << name << " joined." << endl;
     }
 
     virtual void
     leave(long long, string name, const Ice::Current&) override
     {
-        lock_guard<mutex> lock(coutMutex);
+        const lock_guard<mutex> lock(coutMutex);
         cout << "<<<< " << name << " left." << endl;
     }
 
     virtual void
     send(long long, string name, string message, const Ice::Current&) override
     {
-        lock_guard<mutex> lock(coutMutex);
+        const lock_guard<mutex> lock(coutMutex);
         cout << name << " > " << ChatUtils::unstripHtml(message) << endl;
     }
 };
@@ -156,7 +156,7 @@ public:
                 {
                     if(s.size() > maxMessageSize)
                     {
-                        lock_guard<mutex> lock(coutMutex);
+                        const lock_guard<mutex> lock(coutMutex);
                         cout << "Message length exceeded, maximum length is " << maxMessageSize << " characters.";
                     }
                     else
@@ -175,7 +175,7 @@ private:
     void
     menu()
     {
-        lock_guard<mutex> lock(coutMutex);
+        const lock_guard<mutex> lock(coutMutex);
         cout << "enter /quit to exit." << endl;
     }
 };

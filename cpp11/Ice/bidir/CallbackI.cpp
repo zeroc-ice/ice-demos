@@ -11,7 +11,7 @@ using namespace Demo;
 void
 CallbackSenderI::addClient(std::shared_ptr<CallbackReceiverPrx> client, const Ice::Current& current)
 {
-    lock_guard<mutex> lock(_mutex);
+    const lock_guard<mutex> lock(_mutex);
     cout << "adding client `" << Ice::identityToString(client->ice_getIdentity()) << "'" << endl;
     _clients.push_back(client->ice_fixed(current.con));
 }
@@ -20,7 +20,7 @@ void
 CallbackSenderI::destroy()
 {
     {
-        lock_guard<mutex> lock(_mutex);
+        const lock_guard<mutex> lock(_mutex);
         cout << "destroying callback sender" << endl;
         _destroy = true;
     }
@@ -83,7 +83,7 @@ CallbackSenderI::invokeCallback()
 void
 CallbackSenderI::removeClient(const shared_ptr<CallbackReceiverPrx>& client, exception_ptr eptr)
 {
-    lock_guard<mutex> lock(_mutex);
+    const lock_guard<mutex> lock(_mutex);
     auto p = find(_clients.begin(), _clients.end(), client);
     if(p != _clients.end())
     {
