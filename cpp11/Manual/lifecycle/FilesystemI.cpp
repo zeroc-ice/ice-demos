@@ -76,7 +76,7 @@ FilesystemI::FileI::write(Lines text, const Ice::Current& c)
         throw Ice::ObjectNotExistException(__FILE__, __LINE__, c.id, c.facet, c.operation);
     }
 
-    _lines = move(text);
+    _lines = std::move(text);
 }
 
 // Slice File::destroy() operation.

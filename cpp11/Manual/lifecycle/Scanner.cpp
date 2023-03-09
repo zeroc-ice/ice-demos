@@ -525,6 +525,10 @@ char *yytext;
 #   pragma GCC diagnostic ignored "-Wsign-compare"
 #endif
 
+#if defined(__clang__)
+#   pragma clang diagnostic ignored "-Wregister"
+#endif
+
 using namespace std;
 
 #ifdef _MSC_VER

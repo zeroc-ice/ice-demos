@@ -35,6 +35,10 @@
 #   pragma GCC diagnostic ignored "-Wsign-compare"
 #endif
 
+#if defined(__clang__)
+#   pragma clang diagnostic ignored "-Wconversion"
+#endif
+
 using namespace std;
 
 #ifdef _MSC_VER
