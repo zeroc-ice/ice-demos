@@ -74,16 +74,56 @@ run(const shared_ptr<Ice::Communicator>& communicator)
     string s;
     do
     {
-        cout << "enter the number of iterations: ";
-        cin >> s;
-        const int count = stoi(s);
-        cout << "enter the delay between each greetings (in ms): ";
-        cin >> s;
-        int delay = stoi(s);
-        if(delay < 0)
+        int count;
+        int delay = 500;
+
+        // Read the iterations parameter from stdin.
+        do
         {
-            delay = 500; // 500 milli-seconds
+            cout << "enter the number of iterations or 'x' to exit: ";
+            cin >> s;
+            if(s == "x")
+            {
+                return 0;
+            }
+
+            try
+            {
+                count = stoi(s);
+                break;
+            }
+            catch(invalid_argument)
+            {
+                cerr << "'" << s << "'"
+                     << " is not a valid value for the iterations parameter, it has to be a positive integer"
+                     << endl;
+            }
         }
+        while(true);
+
+        // Read the delay parameter from stdin.
+        do
+        {
+            cout << "enter the delay between each greetings (in ms): ";
+            cin >> s;
+            try
+            {
+                delay = stoi(s);
+                break;
+            }
+            catch(invalid_argument)
+            {
+                cerr << "'" << s << "' is not a valid value for the delay parameter, it has to be a positive integer"
+                     << endl;
+                continue;
+            }
+
+            if(delay < 0)
+            {
+                delay = 500; // 500 milliseconds
+            }
+        }
+        while(true);
 
         for(int i = 0; i < count; i++)
         {
@@ -91,7 +131,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
             this_thread::sleep_for(chrono::milliseconds(delay));
         }
     }
-    while(cin.good() && s != "x");
+    while(cin.good());
 
     return 0;
 }
