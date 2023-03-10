@@ -91,7 +91,7 @@ ChatRoom::send(const string& name, const string& message)
     const long long timestamp =
         chrono::duration_cast<chrono::milliseconds>(chrono::system_clock::now().time_since_epoch()).count();
 
-    auto e = make_shared<PollingChat::MessageEvent>(timestamp, name, std::move(message));
+    auto e = make_shared<PollingChat::MessageEvent>(timestamp, name, message);
     for(const auto& q: _members)
     {
         q.second->send(e);
