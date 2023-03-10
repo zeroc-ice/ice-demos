@@ -25,7 +25,7 @@ HelloI::sayHelloAsync(int delay,
     }
     else
     {
-        _workQueue->add(delay, move(response), move(error));
+        _workQueue->add(delay, std::move(response), std::move(error));
     }
 }
 

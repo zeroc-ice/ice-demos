@@ -42,8 +42,8 @@ int main(int argc, char* argv[])
         // CommunicatorHolder's ctor initializes an Ice communicator,
         // and its dtor destroys this communicator.
         //
-        Ice::CommunicatorHolder ich(argc, argv, "config.sub");
-        auto communicator = ich.communicator();
+        const Ice::CommunicatorHolder ich(argc, argv, "config.sub");
+        const auto& communicator = ich.communicator();
 
         ctrlCHandler.setCallback(
             [communicator](int)
@@ -86,8 +86,8 @@ run(const shared_ptr<Ice::Communicator>& communicator, int argc, char* argv[])
 
     for(i = 1; i < argc; ++i)
     {
-        string optionString = argv[i];
-        Option oldoption = option;
+        const string optionString = argv[i];
+        const Option oldoption = option;
         if(optionString == "--datagram")
         {
             option = Option::Datagram;

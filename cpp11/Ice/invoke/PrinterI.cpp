@@ -47,7 +47,7 @@ PrinterI::ice_invoke(vector<Ice::Byte> inParams, vector<Ice::Byte>& outParams, c
         Demo::StringSeq seq;
         in.read(seq);
         cout << "Printing string sequence {";
-        for(Demo::StringSeq::iterator p = seq.begin(); p != seq.end(); ++p)
+        for(auto p = seq.begin(); p != seq.end(); ++p)
         {
             if(p != seq.begin())
             {
@@ -62,7 +62,7 @@ PrinterI::ice_invoke(vector<Ice::Byte> inParams, vector<Ice::Byte>& outParams, c
         Demo::StringDict dict;
         in.read(dict);
         cout << "Printing dictionary {";
-        for(Demo::StringDict::iterator p = dict.begin(); p != dict.end(); ++p)
+        for(auto p = dict.begin(); p != dict.end(); ++p)
         {
             if(p != dict.begin())
             {
@@ -89,7 +89,7 @@ PrinterI::ice_invoke(vector<Ice::Byte> inParams, vector<Ice::Byte>& outParams, c
         Demo::StructureSeq seq;
         in.read(seq);
         cout << "Printing struct sequence: {";
-        for(Demo::StructureSeq::iterator p = seq.begin(); p != seq.end(); ++p)
+        for(auto p = seq.begin(); p != seq.end(); ++p)
         {
             if(p != seq.begin())
             {
@@ -135,11 +135,7 @@ PrinterI::ice_invoke(vector<Ice::Byte> inParams, vector<Ice::Byte>& outParams, c
     }
     else
     {
-        Ice::OperationNotExistException ex(__FILE__, __LINE__);
-        ex.id = current.id;
-        ex.facet = current.facet;
-        ex.operation = current.operation;
-        throw ex;
+        throw Ice::OperationNotExistException(__FILE__, __LINE__, current.id, current.facet, current.operation);
     }
 
     //

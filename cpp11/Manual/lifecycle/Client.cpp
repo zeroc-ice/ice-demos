@@ -20,7 +20,7 @@ main(int argc, char* argv[])
         // CommunicatorHolder's ctor initializes an Ice communicator,
         // and its dtor destroys this communicator.
         //
-        Ice::CommunicatorHolder ich(argc, argv);
+        const Ice::CommunicatorHolder ich(argc, argv);
 
         //
         // Create a proxy for the root directory

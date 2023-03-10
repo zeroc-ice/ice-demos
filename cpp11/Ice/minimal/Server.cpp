@@ -17,8 +17,8 @@ main(int argc, char* argv[])
         //
         Ice::CtrlCHandler ctrlCHandler;
 
-        Ice::CommunicatorHolder ich(argc, argv);
-        auto communicator = ich.communicator();
+        const Ice::CommunicatorHolder ich(argc, argv);
+        const auto& communicator = ich.communicator();
 
         ctrlCHandler.setCallback(
             [communicator](int)

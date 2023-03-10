@@ -13,7 +13,7 @@ main(int argc, char* argv[])
 {
     try
     {
-        Ice::CommunicatorHolder ich(argc, argv);
+        const Ice::CommunicatorHolder ich(argc, argv);
         auto hello = Ice::checkedCast<HelloPrx>(ich->stringToProxy("hello:default -h localhost -p 10000"));
         hello->sayHello();
     }

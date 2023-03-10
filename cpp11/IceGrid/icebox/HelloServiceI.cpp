@@ -27,7 +27,7 @@ HelloServiceI::start(const string& name, const shared_ptr<Ice::Communicator>& co
 {
     _adapter = communicator->createObjectAdapter("Hello-" + name);
 
-    string helloIdentity = communicator->getProperties()->getProperty("Hello.Identity");
+    const string helloIdentity = communicator->getProperties()->getProperty("Hello.Identity");
 
     auto hello = make_shared<HelloI>(name);
     _adapter->add(hello, Ice::stringToIdentity(helloIdentity));

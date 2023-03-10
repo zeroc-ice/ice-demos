@@ -15,8 +15,8 @@ Filesystem::NodeI::name(const Ice::Current&)
 }
 
 // NodeI constructor
-Filesystem::NodeI::NodeI(const string& nm, const shared_ptr<DirectoryI>& parent) :
-    _name(nm),
+Filesystem::NodeI::NodeI(string name, const shared_ptr<DirectoryI>& parent) :
+    _name(std::move(name)),
     _parent(parent)
 {
     // Create an identity. The root directory has the fixed identity "RootDir"
@@ -49,8 +49,8 @@ Filesystem::FileI::write(Filesystem::Lines text, const Ice::Current&)
 }
 
 // FileI constructor
-Filesystem::FileI::FileI(const string& nm, const shared_ptr<DirectoryI>& parent) :
-    NodeI(nm, parent)
+Filesystem::FileI::FileI(string name, const shared_ptr<DirectoryI>& parent) :
+    NodeI(std::move(name), parent)
 {
 }
 
@@ -62,8 +62,8 @@ Filesystem::DirectoryI::list(const Ice::Current&)
 }
 
 // DirectoryI constructor
-Filesystem::DirectoryI::DirectoryI(const string& nm, const shared_ptr<DirectoryI>& parent) :
-    NodeI(nm, parent)
+Filesystem::DirectoryI::DirectoryI(string name, const shared_ptr<DirectoryI>& parent) :
+    NodeI(std::move(name), parent)
 {
 }
 

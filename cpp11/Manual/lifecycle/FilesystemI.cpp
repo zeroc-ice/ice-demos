@@ -13,7 +13,7 @@ using namespace FilesystemI;
 std::string
 FilesystemI::NodeI::name(const Ice::Current& c)
 {
-    lock_guard<mutex> lock(_mutex);
+    const lock_guard<mutex> lock(_mutex);
 
     if(_destroyed)
     {
@@ -54,7 +54,7 @@ FilesystemI::NodeI::NodeI(const string& nm, const shared_ptr<DirectoryI>& parent
 Lines
 FilesystemI::FileI::read(const Ice::Current& c)
 {
-    lock_guard<mutex> lock(_mutex);
+    const lock_guard<mutex> lock(_mutex);
 
     if(_destroyed)
     {
@@ -69,14 +69,14 @@ FilesystemI::FileI::read(const Ice::Current& c)
 void
 FilesystemI::FileI::write(Lines text, const Ice::Current& c)
 {
-    lock_guard<mutex> lock(_mutex);
+    const lock_guard<mutex> lock(_mutex);
 
     if(_destroyed)
     {
         throw Ice::ObjectNotExistException(__FILE__, __LINE__, c.id, c.facet, c.operation);
     }
 
-    _lines = move(text);
+    _lines = std::move(text);
 }
 
 // Slice File::destroy() operation.
@@ -85,7 +85,7 @@ void
 FilesystemI::FileI::destroy(const Ice::Current& c)
 {
     {
-        lock_guard<mutex> lock(_mutex);
+        const lock_guard<mutex> lock(_mutex);
 
         if(_destroyed)
         {
@@ -111,7 +111,7 @@ FilesystemI::FileI::FileI(const string& nm, const shared_ptr<DirectoryI>& parent
 NodeDescSeq
 FilesystemI::DirectoryI::list(const Ice::Current& c)
 {
-    lock_guard<mutex> lock(_mutex);
+    const lock_guard<mutex> lock(_mutex);
 
     if(_destroyed)
     {
@@ -135,7 +135,7 @@ FilesystemI::DirectoryI::list(const Ice::Current& c)
 NodeDesc
 FilesystemI::DirectoryI::find(string nm, const Ice::Current& c)
 {
-    lock_guard<mutex> lock(_mutex);
+    const lock_guard<mutex> lock(_mutex);
 
     if(_destroyed)
     {
@@ -161,7 +161,7 @@ FilesystemI::DirectoryI::find(string nm, const Ice::Current& c)
 shared_ptr<FilePrx>
 FilesystemI::DirectoryI::createFile(string nm, const Ice::Current& c)
 {
-    lock_guard<mutex> lock(_mutex);
+    const lock_guard<mutex> lock(_mutex);
 
     if(_destroyed)
     {
@@ -184,7 +184,7 @@ FilesystemI::DirectoryI::createFile(string nm, const Ice::Current& c)
 shared_ptr<DirectoryPrx>
 FilesystemI::DirectoryI::createDirectory(string nm, const Ice::Current& c)
 {
-    lock_guard<mutex> lock(_mutex);
+    const lock_guard<mutex> lock(_mutex);
 
     if(_destroyed)
     {
@@ -213,7 +213,7 @@ FilesystemI::DirectoryI::destroy(const Ice::Current& c)
     }
 
     {
-        lock_guard<mutex> lock(_mutex);
+        const lock_guard<mutex> lock(_mutex);
 
         if(_destroyed)
         {
@@ -244,7 +244,7 @@ FilesystemI::DirectoryI::DirectoryI(const string& nm, const shared_ptr<Directory
 void
 FilesystemI::DirectoryI::removeEntry(const string& nm)
 {
-    lock_guard<mutex> lock(_mutex);
+    const lock_guard<mutex> lock(_mutex);
     auto i = _contents.find(nm);
     if(i != _contents.end())
     {

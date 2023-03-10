@@ -26,8 +26,8 @@ int main(int argc, char* argv[])
         // CommunicatorHolder's ctor initializes an Ice communicator,
         // and its dtor destroys this communicator.
         //
-        Ice::CommunicatorHolder ich(argc, argv, "config.server");
-        auto communicator = ich.communicator();
+        const Ice::CommunicatorHolder ich(argc, argv, "config.server");
+        const auto& communicator = ich.communicator();
 
         ctrlCHandler.setCallback(
             [communicator](int)
@@ -68,7 +68,10 @@ int main(int argc, char* argv[])
             //
             auto thermostatAdapter = communicator->createObjectAdapter("Thermostat");
             auto thermostat = make_shared<ThermostatI>();
-            auto interceptor = make_shared<InterceptorI>(move(thermostat), authenticator, move(securedOperations));
+            auto interceptor = make_shared<InterceptorI>(
+                std::move(thermostat),
+                authenticator,
+                std::move(securedOperations));
             thermostatAdapter->add(interceptor, Ice::stringToIdentity("thermostat"));
             thermostatAdapter->activate();
 

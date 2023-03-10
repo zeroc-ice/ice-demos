@@ -7,8 +7,8 @@
 
 using namespace std;
 
-HelloI::HelloI(const string& name) :
-    _name(name)
+HelloI::HelloI(string name) :
+    _name(std::move(name))
 {
 }
 

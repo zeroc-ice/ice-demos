@@ -52,7 +52,7 @@ Parser::list(bool recursive)
 void
 Parser::list(const shared_ptr<DirectoryPrx>& dir, bool recursive, size_t depth)
 {
-    string indent(depth++, '\t');
+    const string indent(depth++, '\t');
 
     auto contents = dir->list();
 

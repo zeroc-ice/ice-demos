@@ -43,7 +43,7 @@ main(int argc, char* argv[])
         // CommunicatorHolder's ctor initializes an Ice communicator,
         // and its dtor destroys this communicator.
         //
-        Ice::CommunicatorHolder ich(argc, argv, "config.client");
+        const Ice::CommunicatorHolder ich(argc, argv, "config.client");
 
         //
         // The communicator initialization removes all Ice-related arguments from argc/argv
@@ -111,7 +111,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 Ice::ByteSeq inParams, outParams;
                 Ice::OutputStream out(communicator);
                 out.startEncapsulation();
-                Demo::StringSeq arr({"The", "streaming", "API", "works!"});
+                const Demo::StringSeq arr({"The", "streaming", "API", "works!"});
                 out.write(arr);
                 out.endEncapsulation();
                 out.finished(inParams);
@@ -132,7 +132,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 Ice::ByteSeq inParams, outParams;
                 Ice::OutputStream out(communicator);
                 out.startEncapsulation();
-                Demo::StringDict dict
+                const Demo::StringDict dict
                     {
                         {"The", "streaming"},
                         {"API", "works!"}
@@ -251,7 +251,8 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 //
                 // Invoke operation.
                 //
-                Ice::ByteSeq inParams, outParams;
+                const Ice::ByteSeq inParams;
+                Ice::ByteSeq outParams;
                 if(!obj->ice_invoke("getValues", Ice::OperationMode::Normal, inParams, outParams))
                 {
                     cout << "Unknown user exception" << endl;
@@ -277,7 +278,8 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 //
                 // Invoke operation.
                 //
-                Ice::ByteSeq inParams, outParams;
+                const Ice::ByteSeq inParams;
+                Ice::ByteSeq outParams;
                 if(obj->ice_invoke("throwPrintFailure", Ice::OperationMode::Normal, inParams, outParams))
                 {
                     cout << "Expected exception" << endl;
@@ -302,7 +304,8 @@ run(const shared_ptr<Ice::Communicator>& communicator)
             }
             else if(ch == 's')
             {
-                Ice::ByteSeq inParams, outParams;
+                const Ice::ByteSeq inParams;
+                Ice::ByteSeq outParams;
                 obj->ice_invoke("shutdown", Ice::OperationMode::Normal, inParams, outParams);
             }
             else if(ch == 'x')

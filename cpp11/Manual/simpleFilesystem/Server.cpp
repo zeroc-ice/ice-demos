@@ -25,8 +25,8 @@ int main(int argc, char* argv[])
         // CommunicatorHolder's ctor initializes an Ice communicator,
         // and its dtor destroys this communicator.
         //
-        Ice::CommunicatorHolder ich(argc, argv);
-        auto communicator = ich.communicator();
+        const Ice::CommunicatorHolder ich(argc, argv);
+        const auto& communicator = ich.communicator();
 
         auto appName = argv[0];
         ctrlCHandler.setCallback(

@@ -17,7 +17,7 @@ class LocatorRegistryI : public Ice::LocatorRegistry
 {
 public:
 
-    LocatorRegistryI(const shared_ptr<Ice::LocatorRegistryPrx>& registry) :
+    explicit LocatorRegistryI(const shared_ptr<Ice::LocatorRegistryPrx>& registry) :
         _registry(registry)
     {
     }
@@ -137,8 +137,8 @@ int main(int argc, char* argv[])
         // CommunicatorHolder's ctor initializes an Ice communicator,
         // and its dtor destroys this communicator.
         //
-        Ice::CommunicatorHolder ich(argc, argv, "config.locator");
-        auto communicator = ich.communicator();
+        const Ice::CommunicatorHolder ich(argc, argv, "config.locator");
+        const auto& communicator = ich.communicator();
 
         ctrlCHandler.setCallback(
             [communicator](int)

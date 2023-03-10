@@ -109,10 +109,6 @@ run(const Ice::CommunicatorPtr& communicator, bool addContext)
             {
                 hello->sayHello();
             }
-            else if(c == 't')
-            {
-                hello->sayHello();
-            }
             else if(c == 's')
             {
                 hello->shutdown();

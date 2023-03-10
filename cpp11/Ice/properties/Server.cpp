@@ -14,11 +14,6 @@ class PropsI : public Demo::Props
 {
 public:
 
-    PropsI() :
-        _called(false)
-    {
-    }
-
     virtual Ice::PropertyDict getChanges(const Ice::Current&) override
     {
         unique_lock<mutex> lock(_mutex);
@@ -43,7 +38,7 @@ public:
 
     void updated(const Ice::PropertyDict& changes)
     {
-        lock_guard<mutex> lock(_mutex);
+        const lock_guard<mutex> lock(_mutex);
 
         _changes = changes;
         _called = true;
@@ -53,7 +48,7 @@ public:
 private:
 
     Ice::PropertyDict _changes;
-    bool _called;
+    bool _called = false;
     mutex _mutex;
     condition_variable _cv;
 };
@@ -77,8 +72,8 @@ int main(int argc, char* argv[])
         // CommunicatorHolder's ctor initializes an Ice communicator,
         // and its dtor destroys this communicator.
         //
-        Ice::CommunicatorHolder ich(argc, argv, "config.server");
-        auto communicator = ich.communicator();
+        const Ice::CommunicatorHolder ich(argc, argv, "config.server");
+        const auto& communicator = ich.communicator();
 
         ctrlCHandler.setCallback(
             [communicator](int)

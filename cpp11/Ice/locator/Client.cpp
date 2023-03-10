@@ -21,7 +21,7 @@ main(int argc, char* argv[])
         // CommunicatorHolder's ctor initializes an Ice communicator,
         // and its dtor destroys this communicator.
         //
-        Ice::CommunicatorHolder ich(argc, argv, "config.client");
+        const Ice::CommunicatorHolder ich(argc, argv, "config.client");
 
         //
         // The communicator initialization removes all Ice-related arguments from argc/argv

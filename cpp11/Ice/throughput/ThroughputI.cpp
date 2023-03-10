@@ -45,13 +45,13 @@ ThroughputI::recvByteSeq(const Ice::Current& current)
     if(_warmup)
     {
         Demo::ByteSeq warmupBytesBuf(1);
-        std::pair<const Ice::Byte*, const Ice::Byte*> ret =
+        const std::pair<const Ice::Byte*, const Ice::Byte*> ret =
             std::make_pair(warmupBytesBuf.data(), warmupBytesBuf.data() + warmupBytesBuf.size());
         return RecvByteSeqMarshaledResult(ret, current);
     }
     else
     {
-        std::pair<const Ice::Byte*, const Ice::Byte*> ret =
+        const std::pair<const Ice::Byte*, const Ice::Byte*> ret =
             std::make_pair(_byteSeq.data(), _byteSeq.data() + _byteSeq.size());
         return RecvByteSeqMarshaledResult(ret, current);
     }

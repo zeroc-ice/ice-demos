@@ -54,7 +54,7 @@ validateMessage(const string& in)
     }
     // Strip html codes in the message
     string out;
-    for(char c : in)
+    for(const char c : in)
     {
         switch(c)
         {
