@@ -78,52 +78,43 @@ run(const shared_ptr<Ice::Communicator>& communicator)
         int delay = 500;
 
         // Read the iterations parameter from stdin.
-        do
+        cout << "enter the number of iterations or 'x' to exit: ";
+        cin >> s;
+        if(s == "x")
         {
-            cout << "enter the number of iterations or 'x' to exit: ";
-            cin >> s;
-            if(s == "x")
-            {
-                return 0;
-            }
-
-            try
-            {
-                count = stoi(s);
-                break;
-            }
-            catch(invalid_argument)
-            {
-                cerr << "'" << s << "'"
-                     << " is not a valid value for the iterations parameter, it has to be a positive integer"
-                     << endl;
-            }
+            break;
         }
-        while(true);
+
+        try
+        {
+            count = stoi(s);
+        }
+        catch(invalid_argument)
+        {
+            cerr << "'" << s << "'"
+                 << " is not a valid value for the iterations parameter, it has to be a positive integer"
+                 << endl;
+            return 1;
+        }
 
         // Read the delay parameter from stdin.
-        do
+        cout << "enter the delay between each greetings (in ms): ";
+        cin >> s;
+        try
         {
-            cout << "enter the delay between each greetings (in ms): ";
-            cin >> s;
-            try
-            {
-                delay = stoi(s);
-                break;
-            }
-            catch(invalid_argument)
-            {
-                cerr << "'" << s << "' is not a valid value for the delay parameter, it has to be a positive integer"
-                     << endl;
-                continue;
-            }
-
-            if(delay < 0)
-            {
-                delay = 500; // 500 milliseconds
-            }
+            delay = stoi(s);
         }
-        while(true);
+        catch(invalid_argument)
+        {
+            cerr << "'" << s << "' is not a valid value for the delay parameter, it has to be a positive integer"
+                 << endl;
+            return 1;
+        }
+
+        if(delay < 0)
+        {
+            delay = 500; // 500 milliseconds
+        }
 
         for(int i = 0; i < count; i++)
         {
