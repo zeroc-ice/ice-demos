@@ -92,7 +92,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
         {
             count = stoi(s);
         }
-        catch(invalid_argument)
+        catch(const invalid_argument&)
         {
             cerr << "'" << s << "'"
                  << " is not a valid value for the iterations parameter, it has to be a positive integer"
@@ -106,7 +106,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
         {
             delay = stoi(s);
         }
-        catch(invalid_argument)
+        catch(const invalid_argument&)
         {
             cerr << "'" << s << "' is not a valid value for the delay parameter, it has to be a positive integer"
                  << endl;
