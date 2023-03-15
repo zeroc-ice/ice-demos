@@ -64,7 +64,7 @@
         </Otherwise>
     </Choose>
 
-    <Target Name="Net6InstallLocalPackages"
+    <Target Name="NetInstallLocalPackages"
             Condition="Exists('$(IceHome)\csharp')">
         <Exec Command="dotnet nuget locals --list global-packages" ConsoleToMSBuild="true" EchoOff="yes">
             <Output TaskParameter="ConsoleOutput" PropertyName="NuGetGlobalPackages" />
@@ -83,14 +83,14 @@
         <RemoveDir Directories="$(NuGetGlobalPackages)\zeroc.ice.net" Condition="Exists('$(NuGetGlobalPackages)\zeroc.ice.net')"/>
         <Exec Command="dotnet nuget push $(PackagePath) --source $(NuGetGlobalPackages)" />
 
-        <MSBuild Projects="$(MSBuildThisFileDirectory)..\C# NET 6.0 demos.sln"
+        <MSBuild Projects="$(MSBuildThisFileDirectory)..\C# NET demos.sln"
                  Targets="Restore"
                  RemoveProperties="IceHome"
                  Properties="Configuration=$(Configuration);Platform=Any CPU"/>
     </Target>
 
-    <Target Name="Net6Build" DependsOnTargets="Net6InstallLocalPackages;Net6NuGetRestore">
-        <MSbuild Projects="$(MSBuildThisFileDirectory)..\C# NET 6.0 demos.sln"
+    <Target Name="NetBuild" DependsOnTargets="NetInstallLocalPackages;NetNuGetRestore">
+        <MSbuild Projects="$(MSBuildThisFileDirectory)..\C# NET demos.sln"
                  Targets="Build"
                  RemoveProperties="IceHome"
                  Properties="$(BuildProperties)"/>
