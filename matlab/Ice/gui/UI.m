@@ -109,6 +109,8 @@ classdef UI < handle
                     proxy = proxy.ice_oneway();
                 case 'Oneway Batch'
                     proxy = proxy.ice_batchOneway();
+                case 'Oneway Secure'
+                    proxy = proxy.ice_oneway().ice_secure(1);
                 case 'Oneway Secure Batch'
                     proxy = proxy.ice_batchOneway().ice_secure(1);
                 case 'Datagram'
