@@ -58,21 +58,16 @@ public class Client
                 switch (line)
                 {
                     case null:
+                    case "x":
                         break;
 
                     case "i":
-                        hello.sayHello(0);
-                        break;
-
                     case "d":
-                        _ = HelloAsync(hello);
+                        Task _ = HelloAsync(hello, delay: line == "i" ? 0 : 5000);
                         break;
 
                     case "s":
                         hello.shutdown();
-                        break;
-
-                    case "x":
                         break;
 
                     case "?":
@@ -90,16 +85,16 @@ public class Client
                 Console.WriteLine(exception);
             }
         }
-        while (!line.Equals("x"));
+        while (line != "x");
 
         return 0;
     }
 
-    private static async Task HelloAsync(HelloPrx hello)
+    private static async Task HelloAsync(HelloPrx hello, int delay)
     {
         try
         {
-            await hello.sayHelloAsync(5000);
+            await hello.sayHelloAsync(delay);
         }
         catch (RequestCanceledException)
         {

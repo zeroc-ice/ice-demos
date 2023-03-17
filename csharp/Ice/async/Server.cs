@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 public class Server
 {
-    public static async Task<int> Main(string[] args)
+    public static int Main(string[] args)
     {
         int status = 0;
 
@@ -32,18 +32,12 @@ public class Server
                         };
 
                         Ice.ObjectAdapter adapter = communicator.createObjectAdapter("Hello");
-                        _ = adapter.add(new HelloI(cts), Ice.Util.stringToIdentity("hello"));
+                        adapter.add(new HelloI(cts), Ice.Util.stringToIdentity("hello"));
                         adapter.activate();
 
                         // cts is canceled by Ctrl+C or a shutdown request.
-                        try
-                        {
-                            await Task.Delay(-1, cts.Token);
-                        }
-                        catch (OperationCanceledException)
-                        {
-                            // expected
-                        }
+                        // In modern C#, you should call: await Task.Delay(-1, cts.Token)
+                        cts.Token.WaitHandle.WaitOne();
                         communicator.shutdown();
                     }
                 }
