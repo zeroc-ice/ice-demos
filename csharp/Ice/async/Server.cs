@@ -3,60 +3,55 @@
 //
 
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 public class Server
 {
-    public static int Main(string[] args)
+    public static async Task<int> Main(string[] args)
     {
         int status = 0;
 
         try
         {
-            //
-            // using statement - communicator is automatically destroyed
-            // at the end of this statement
-            //
-            using(var communicator = Ice.Util.initialize(ref args, "config.server"))
+            using (Ice.Communicator communicator = Ice.Util.initialize(ref args, "config.server"))
             {
-                if(args.Length > 0)
+                if (args.Length > 0)
                 {
-                    Console.Error.WriteLine("too many arguments");
+                    Console.WriteLine("too many arguments");
                     status = 1;
                 }
                 else
                 {
-                    var workQueue = new WorkQueue();
-
-                    //
-                    // Shutdown the communicator and destroy the workqueue on Ctrl+C or Ctrl+Break
-                    // (shutdown always with Cancel = true)
-                    //
-                    Console.CancelKeyPress += (sender, eventArgs) =>
+                    using (var cts = new CancellationTokenSource())
                     {
-                        eventArgs.Cancel = true;
-                        workQueue.destroy();
-                        communicator.shutdown();
-                    };
+                        Console.CancelKeyPress += (sender, eventArgs) =>
+                        {
+                            eventArgs.Cancel = true;
+                            cts.Cancel();
+                        };
 
-                    var adapter = communicator.createObjectAdapter("Hello");
-                    adapter.add(new HelloI(workQueue), Ice.Util.stringToIdentity("hello"));
-
-                    workQueue.Start();
-                    try
-                    {
+                        Ice.ObjectAdapter adapter = communicator.createObjectAdapter("Hello");
+                        _ = adapter.add(new HelloI(cts), Ice.Util.stringToIdentity("hello"));
                         adapter.activate();
-                        communicator.waitForShutdown();
-                    }
-                    finally
-                    {
-                        workQueue.Join();
+
+                        // cts is canceled by Ctrl+C or a shutdown request.
+                        try
+                        {
+                            await Task.Delay(-1, cts.Token);
+                        }
+                        catch (OperationCanceledException)
+                        {
+                            // expected
+                        }
+                        communicator.shutdown();
                     }
                 }
             }
         }
-        catch(Exception ex)
+        catch (Exception exception)
         {
-            Console.Error.WriteLine(ex);
+            Console.WriteLine(exception);
             status = 1;
         }
 

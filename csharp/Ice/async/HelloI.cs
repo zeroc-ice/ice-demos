@@ -3,34 +3,42 @@
 //
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Demo;
 
-public class HelloI : HelloDisp_
+internal class HelloI : HelloDisp_
 {
-    public HelloI(WorkQueue workQueue)
-    {
-        _workQueue = workQueue;
-    }
+    private readonly CancellationTokenSource _cts;
 
-    public override Task sayHelloAsync(int delay, Ice.Current current)
+    public override async Task sayHelloAsync(int delay, Ice.Current current)
     {
-       if(delay == 0)
-       {
-           Console.Out.WriteLine("Hello World!");
-           return null;
-       }
-       else
-       {
-           return _workQueue.Add(delay);
-       }
+        if (delay == 0)
+        {
+            Console.WriteLine("Hello World!");
+        }
+        else
+        {
+            try
+            {
+                await Task.Delay(delay, _cts.Token);
+                Console.WriteLine("Belated Hello World!");
+            }
+            catch (OperationCanceledException)
+            {
+                Console.WriteLine("sayHello was canceled by shutdown");
+                throw new RequestCanceledException();
+            }
+        }
     }
 
     public override void shutdown(Ice.Current current)
     {
-        _workQueue.destroy();
-        current.adapter.getCommunicator().shutdown();
+        _cts.Cancel();
     }
 
-    private WorkQueue _workQueue;
+    internal HelloI(CancellationTokenSource cts)
+    {
+        _cts = cts;
+    }
 }
