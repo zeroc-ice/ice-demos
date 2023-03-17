@@ -75,7 +75,7 @@ public class Client
                         break;
 
                     default:
-                        Console.WriteLine("unknown command `" + line + "'");
+                        Console.WriteLine($"unknown command `{line}'");
                         Menu();
                         break;
                 }
@@ -102,19 +102,19 @@ public class Client
         }
         catch (Exception exception)
         {
-            Console.WriteLine("sayHello AMI call failed:");
-            Console.WriteLine(exception);
+            Console.WriteLine($"sayHello AMI call failed: {exception}");
         }
     }
 
     private static void Menu()
     {
         Console.WriteLine(
-            "usage:\n" +
-            "i: send immediate greeting\n" +
-            "d: send delayed greeting\n" +
-            "s: shutdown server\n" +
-            "x: exit\n" +
-            "?: help\n");
+            @"usage:
+i: send immediate greeting
+d: send delayed greeting
+s: shutdown server
+x: exit
+?: help
+");
     }
 }
