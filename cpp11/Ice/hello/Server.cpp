@@ -29,8 +29,8 @@ int main(int argc, char* argv[])
         Ice::CtrlCHandler ctrlCHandler([&] (int) { requestShutdown(); });
 
         //
-        // CommunicatorHolder's ctor initializes an Ice communicator,
-        // and its dtor destroys this communicator.
+        // CommunicatorHolder's ctor initializes an Ice communicator and its dtor destroys this communicator.
+        // The destroy operation shuts down the communicator.
         //
         const Ice::CommunicatorHolder ich(argc, argv, "config.server");
         const auto& communicator = ich.communicator();
@@ -49,10 +49,9 @@ int main(int argc, char* argv[])
             adapter->add(make_shared<HelloI>(requestShutdown), Ice::stringToIdentity("hello"));
             adapter->activate();
 
-            // The shutdown can be requested by Hello::shutdown or the CtrlCHandler.
+            // Wait until Hello::shutdown or the CtrlCHandler call requestShutdown.
             shutdownRequested.wait();
         }
-        communicator->shutdown();
     }
     catch(const std::exception& ex)
     {
