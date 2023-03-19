@@ -4,6 +4,7 @@
 
 #include <Ice/Ice.h>
 #include <HelloI.h>
+#include <future>
 
 using namespace std;
 
@@ -20,9 +21,12 @@ int main(int argc, char* argv[])
     try
     {
         //
-        // CtrlCHandler must be created before the communicator or any other threads are started
+        // CtrlCHandler must be created before the communicator or any other threads are started.
         //
-        Ice::CtrlCHandler ctrlCHandler;
+        promise<void> requestShutdownPromise;
+        future<void> shutdownRequested = requestShutdownPromise.get_future();
+        auto requestShutdown = [&] { requestShutdownPromise.set_value(); };
+        Ice::CtrlCHandler ctrlCHandler([&] (int) { requestShutdown(); });
 
         //
         // CommunicatorHolder's ctor initializes an Ice communicator,
@@ -30,12 +34,6 @@ int main(int argc, char* argv[])
         //
         const Ice::CommunicatorHolder ich(argc, argv, "config.server");
         const auto& communicator = ich.communicator();
-
-        ctrlCHandler.setCallback(
-            [communicator](int)
-            {
-                communicator->shutdown();
-            });
 
         //
         // The communicator initialization removes all Ice-related arguments from argc/argv
@@ -48,11 +46,13 @@ int main(int argc, char* argv[])
         else
         {
             auto adapter = communicator->createObjectAdapter("Hello");
-            adapter->add(make_shared<HelloI>(), Ice::stringToIdentity("hello"));
+            adapter->add(make_shared<HelloI>(requestShutdown), Ice::stringToIdentity("hello"));
             adapter->activate();
 
-            communicator->waitForShutdown();
+            // The shutdown can be requested by Hello::shutdown or the CtrlCHandler.
+            shutdownRequested.wait();
         }
+        communicator->shutdown();
     }
     catch(const std::exception& ex)
     {

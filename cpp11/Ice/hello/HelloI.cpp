@@ -8,6 +8,11 @@
 
 using namespace std;
 
+HelloI::HelloI(const function<void()>& requestShutdown) :
+    _requestShutdown(requestShutdown)
+{
+}
+
 void
 HelloI::sayHello(int delay, const Ice::Current&)
 {
@@ -19,8 +24,8 @@ HelloI::sayHello(int delay, const Ice::Current&)
 }
 
 void
-HelloI::shutdown(const Ice::Current& c)
+HelloI::shutdown(const Ice::Current&)
 {
     cout << "Shutting down..." << endl;
-    c.adapter->getCommunicator()->shutdown();
+    _requestShutdown();
 }
