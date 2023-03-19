@@ -36,7 +36,7 @@ int main(int argc, char* argv[])
         const auto& communicator = ich.communicator();
 
         //
-        // The communicator initialization removes all Ice-related arguments from argc/argv
+        // The communicator initialization removes all Ice-related arguments from argc/argv.
         //
         if(argc > 1)
         {
