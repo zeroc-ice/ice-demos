@@ -19,7 +19,7 @@ client
 > dotnet client.dll
 > ```
 
-The shutdown of an server (and its object adapter) waits for outstanding dispatches
+The shutdown of a server (and its object adapter) waits for outstanding dispatches
 to complete. In this demo, we use a CancellationTokenSource to cancel outstanding
 dispatches when the application requests a shutdown; this ensures a speedy shutdown.
 

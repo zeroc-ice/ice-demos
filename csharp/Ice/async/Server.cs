@@ -4,7 +4,6 @@
 
 using System;
 using System.Threading;
-using System.Threading.Tasks;
 
 public class Server
 {
@@ -36,7 +35,7 @@ public class Server
                         adapter.activate();
 
                         // cts is canceled by Ctrl+C or a shutdown request.
-                        // In modern C#, you should call: await Task.Delay(-1, cts.Token)
+                        // With C# 7.1 and up, you should make Main async and call: await Task.Delay(-1, cts.Token)
                         cts.Token.WaitHandle.WaitOne();
                         communicator.shutdown();
                     }
