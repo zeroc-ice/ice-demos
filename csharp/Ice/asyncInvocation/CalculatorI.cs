@@ -4,9 +4,12 @@
 
 using Demo;
 using System;
+using System.Threading;
 
-public class CalculatorI : CalculatorDisp_
+internal class CalculatorI : CalculatorDisp_
 {
+    private readonly ManualResetEventSlim _shutdownRequested;
+
     public override int add(int x, int y, Ice.Current current)
     {
         return x + y;
@@ -19,7 +22,7 @@ public class CalculatorI : CalculatorDisp_
 
     public override int divide(int numerator, int denominator, out int remainder, Ice.Current current)
     {
-        if(denominator == 0)
+        if (denominator == 0)
         {
             throw new Demo.DivideByZeroException();
         }
@@ -34,7 +37,7 @@ public class CalculatorI : CalculatorDisp_
 
     public override double squareRoot(int x, Ice.Current current)
     {
-        if(x < 0)
+        if (x < 0)
         {
             throw new NegativeRootException();
         }
@@ -43,6 +46,11 @@ public class CalculatorI : CalculatorDisp_
 
     public override void shutdown(Ice.Current current)
     {
-        current.adapter.getCommunicator().shutdown();
+        _shutdownRequested.Set();
+    }
+
+    internal CalculatorI(ManualResetEventSlim shutdownRequested)
+    {
+        _shutdownRequested = shutdownRequested;
     }
 }

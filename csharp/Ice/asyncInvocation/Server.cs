@@ -3,6 +3,7 @@
 //
 
 using System;
+using System.Threading;
 
 public class Server
 {
@@ -12,34 +13,35 @@ public class Server
 
         try
         {
-            //
-            // using statement - communicator is automatically destroyed
-            // at the end of this statement
-            //
-            using(var communicator = Ice.Util.initialize(ref args, "config.server"))
+            using (Ice.Communicator communicator = Ice.Util.initialize(ref args, "config.server"))
             {
-                //
-                // Destroy the communicator on Ctrl+C or Ctrl+Break
-                //
-                Console.CancelKeyPress += (sender, eventArgs) => communicator.destroy();
-
-                if(args.Length > 0)
+                if (args.Length > 0)
                 {
                     Console.Error.WriteLine("too many arguments");
                     status = 1;
                 }
                 else
                 {
-                    var adapter = communicator.createObjectAdapter("Calculator");
-                    adapter.add(new CalculatorI(), Ice.Util.stringToIdentity("calculator"));
+                    var shutdownRequested = new ManualResetEventSlim();
+                    Console.CancelKeyPress += (sender, eventArgs) =>
+                    {
+                        eventArgs.Cancel = true;
+                        shutdownRequested.Set();
+                    };
+
+                    Ice.ObjectAdapter adapter = communicator.createObjectAdapter("Calculator");
+                    adapter.add(new CalculatorI(shutdownRequested), Ice.Util.stringToIdentity("calculator"));
                     adapter.activate();
-                    communicator.waitForShutdown();
+
+                    // Wait until shutdown is requested by Ctrl+C or a shutdown request.
+                    shutdownRequested.Wait();
+                    communicator.shutdown();
                 }
             }
         }
-        catch(Exception ex)
+        catch (Exception exception)
         {
-            Console.Error.WriteLine(ex);
+            Console.WriteLine(exception);
             status = 1;
         }
 
