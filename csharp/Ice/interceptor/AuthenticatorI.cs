@@ -6,14 +6,13 @@ using Demo;
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
-using System.Text;
 
 class AuthenticatorI : AuthenticatorDisp_
 {
     internal AuthenticatorI()
     {
         _tokenStore = new Dictionary<string, DateTimeOffset>();
-        _rand = new RNGCryptoServiceProvider();
+        _rand = RandomNumberGenerator.Create();
     }
 
     public override string getToken(Ice.Current current)
@@ -69,6 +68,6 @@ class AuthenticatorI : AuthenticatorDisp_
         }
     }
 
-    private readonly RNGCryptoServiceProvider _rand;
+    private readonly RandomNumberGenerator _rand;
     private readonly Dictionary<string, DateTimeOffset> _tokenStore;
 }
