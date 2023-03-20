@@ -119,9 +119,6 @@
     <Compile Include="..\..\..\Server.cs">
       <Link>Server.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\WorkQueue.cs">
-      <Link>WorkQueue.cs</Link>
-    </Compile>
     <SliceCompile Include="..\..\..\Hello.ice">
       <Link>Hello.ice</Link>
     </SliceCompile>

@@ -3,6 +3,7 @@
 //
 
 using System;
+using System.Threading;
 
 public class Server
 {
@@ -12,51 +13,38 @@ public class Server
 
         try
         {
-            //
-            // using statement - communicator is automatically destroyed
-            // at the end of this statement
-            //
-            using(var communicator = Ice.Util.initialize(ref args, "config.server"))
+            using (Ice.Communicator communicator = Ice.Util.initialize(ref args, "config.server"))
             {
-                if(args.Length > 0)
+                if (args.Length > 0)
                 {
-                    Console.Error.WriteLine("too many arguments");
+                    Console.WriteLine("too many arguments");
                     status = 1;
                 }
                 else
                 {
-                    var workQueue = new WorkQueue();
-
-                    //
-                    // Shutdown the communicator and destroy the workqueue on Ctrl+C or Ctrl+Break
-                    // (shutdown always with Cancel = true)
-                    //
-                    Console.CancelKeyPress += (sender, eventArgs) =>
+                    using (var cts = new CancellationTokenSource())
                     {
-                        eventArgs.Cancel = true;
-                        workQueue.destroy();
-                        communicator.shutdown();
-                    };
+                        Console.CancelKeyPress += (sender, eventArgs) =>
+                        {
+                            eventArgs.Cancel = true;
+                            cts.Cancel();
+                        };
 
-                    var adapter = communicator.createObjectAdapter("Hello");
-                    adapter.add(new HelloI(workQueue), Ice.Util.stringToIdentity("hello"));
-
-                    workQueue.Start();
-                    try
-                    {
+                        Ice.ObjectAdapter adapter = communicator.createObjectAdapter("Hello");
+                        adapter.add(new HelloI(cts), Ice.Util.stringToIdentity("hello"));
                         adapter.activate();
-                        communicator.waitForShutdown();
-                    }
-                    finally
-                    {
-                        workQueue.Join();
+
+                        // cts is canceled by Ctrl+C or a shutdown request.
+                        // With C# 7.1 and up, you should make Main async and call: await Task.Delay(-1, cts.Token)
+                        cts.Token.WaitHandle.WaitOne();
+                        communicator.shutdown();
                     }
                 }
             }
         }
-        catch(Exception ex)
+        catch (Exception exception)
         {
-            Console.Error.WriteLine(ex);
+            Console.WriteLine(exception);
             status = 1;
         }
 
