@@ -4,12 +4,9 @@
 
 using Demo;
 using System;
-using System.Threading;
 
 internal class CalculatorI : CalculatorDisp_
 {
-    private readonly ManualResetEventSlim _shutdownRequested;
-
     public override int add(int x, int y, Ice.Current current)
     {
         return x + y;
@@ -46,11 +43,6 @@ internal class CalculatorI : CalculatorDisp_
 
     public override void shutdown(Ice.Current current)
     {
-        _shutdownRequested.Set();
-    }
-
-    internal CalculatorI(ManualResetEventSlim shutdownRequested)
-    {
-        _shutdownRequested = shutdownRequested;
+       current.adapter.getCommunicator().shutdown();
     }
 }
