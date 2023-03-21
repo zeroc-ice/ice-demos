@@ -3,7 +3,6 @@
 //
 
 using System;
-using System.Threading;
 
 public class Server
 {
@@ -22,20 +21,17 @@ public class Server
                 }
                 else
                 {
-                    var shutdownRequested = new ManualResetEventSlim();
                     Console.CancelKeyPress += (sender, eventArgs) =>
                     {
                         eventArgs.Cancel = true;
-                        shutdownRequested.Set();
+                        communicator.shutdown();
                     };
 
                     Ice.ObjectAdapter adapter = communicator.createObjectAdapter("Calculator");
-                    adapter.add(new CalculatorI(shutdownRequested), Ice.Util.stringToIdentity("calculator"));
+                    adapter.add(new CalculatorI(), Ice.Util.stringToIdentity("calculator"));
                     adapter.activate();
 
-                    // Wait until shutdown is requested by Ctrl+C or a shutdown request.
-                    shutdownRequested.Wait();
-                    communicator.shutdown();
+                    communicator.waitForShutdown();
                 }
             }
         }
