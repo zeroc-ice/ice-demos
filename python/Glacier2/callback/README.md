@@ -19,13 +19,12 @@ In a separate window, start the client:
 python client.py
 ```
 
-If you plan to run this demo using clients on different hosts than
-the router, you must first modify the configuration. You need to
-change the `Glacier2.Client.Endpoints` property in `config.glacier2` and
-the `Ice.Default.Router` and `Callback.Client.Router` properties in
-`config.client`. In all cases you must replace the `-h 127.0.0.1`
-parameter with the actual external address of the machine on which
-glacier2router is running.
+If you plan to run this demo using clients on different hosts than the
+router, you must first modify the configuration. You need to change
+the `Glacier2.Client.Endpoints` property in `config.glacier2` and the
+`Ice.Default.Router` property in `config.client`. In all cases you must
+set the `-h x.x.x.x` endpoint parameter with the actual external
+address of the machine on which glacier2router is running.
 
 [1]: https://doc.zeroc.com/ice/3.7/ice-services/glacier2/callbacks-through-glacier2
 [2]: https://doc.zeroc.com/ice/3.7/ice-services/glacier2/how-glacier2-uses-request-contexts

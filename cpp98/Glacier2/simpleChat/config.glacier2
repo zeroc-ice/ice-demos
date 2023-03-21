@@ -12,7 +12,7 @@ Glacier2.InstanceName=DemoGlacier2
 # isn't set, the endpoints will listen on all available network
 # interfaces.
 #
-Glacier2.Client.Endpoints=tcp -p 4063:ssl -p 4064:ws -p 5063:wss -p 5064
+Glacier2.Client.Endpoints=tcp -p 4063 -h 192.168.1.132:ssl -p 4064 -h 192.168.1.132:ws -p 5063 -h 192.168.1.132:wss -p 5064 -h 192.168.1.132
 
 #
 # Only listen on the localhost interface by default. You can comment
