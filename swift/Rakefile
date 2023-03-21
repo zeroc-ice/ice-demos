@@ -4,7 +4,7 @@ require 'xcodeproj'
 
 $top_level = File.expand_path(File.dirname(__FILE__))
 
-$macOSDeploymentTarget = "10.14"
+$macOSDeploymentTarget = "11"
 $iOSDeploymentTarget = "15.0"
 
 $demos = {
@@ -165,15 +165,16 @@ def create_swiftui_targets(project, demo, aggregate_target)
     target_set_framework_build_settings(target, :ios)
     target_add_slice2swift_build_rule(project, target)
 
-    target.build_configurations.each { |config|
-        config.build_settings["CODE_SIGN_IDENTITY"] = "-"
-        config.build_settings["CODE_SIGN_STYLE"] = "Automatic"
-        if config.name == "Debug" or target.product_type == "com.apple.product-type.application" then
-            config.build_settings["CODE_SIGN_IDENTITY"] = "-";
-        else
-            config.build_settings["CODE_SIGN_IDENTITY"] = "";
-        end
-    }
+    if ENV.has_key?("DEVELOPMENT_TEAM") then
+        target.build_configurations.each { |config|
+            if target.product_type == "com.apple.product-type.application" or
+              target.product_type == "com.apple.product-type.bundle" then
+                config.build_settings["CODE_SIGN_STYLE"] = "Automatic"
+                config.build_settings["CODE_SIGN_IDENTITY"] = "Apple Development"
+                config.build_settings["DEVELOPMENT_TEAM"] = ENV["DEVELOPMENT_TEAM"]
+            end
+        }
+    end
     return target
 end
 
@@ -309,7 +310,7 @@ def target_add_carthage_framework(target, platform, framework, copy=false)
             end
             build_file = embed_frameworks_build_phase.add_file_reference(ref, true)
             # add 'CodeSignOnCopy' to the list to enable signing
-            build_file.settings = { 'ATTRIBUTES' => ['RemoveHeadersOnCopy'] }
+            build_file.settings = { 'ATTRIBUTES' => ['RemoveHeadersOnCopy', 'CodeSignOnCopy'] }
         end
 
     end
