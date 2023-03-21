@@ -55,6 +55,16 @@ If you want to build the sample programs using `slice2swift` compiler from a
 source distribution, set the `ICE_HOME` environment variable before starting
 Xcode.
 
+Building the demo applications to deploy to an iOS device requires
+signing the applications with a developer certificate. You need to update the Xcode projects
+to use your Apple development certificates by setting `DEVELOPMENT_TEAM` environment
+variable to the Id of your development team and regenerate the projects with `rake`.
+
+```
+export DEVELOPMENT_TEAM=U4TBVKNQ7F
+rake
+```
+
 ### Running the Demos
 
 For most demos, you can simply run `./Build/server` and `./Build/client` in separate
