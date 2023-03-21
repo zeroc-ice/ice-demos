@@ -2,7 +2,7 @@
 # The proxy to the Glacier2 router for all outgoing connections. This
 # must match the value of Glacier2.Client.Endpoints in config.glacier2.
 #
-Ice.Default.Router=DemoGlacier2/router:ssl -p 4064 -h 192.168.1.132
+Ice.Default.Router=DemoGlacier2/router:ssl -p 4064 -h localhost
 
 #
 # Warn about connection exceptions
