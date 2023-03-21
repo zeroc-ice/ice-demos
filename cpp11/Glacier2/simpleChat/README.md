@@ -19,13 +19,13 @@ In a separate window, start the client:
 client
 ```
 
-If you plan to run this demo using clients running on different
-hosts than the glacier2router, it is necessary to first modify the
+If you plan to run this demo using clients running on different hosts
+than the glacier2router, it is necessary to first modify the
 configuration. You need to change the `Glacier2.Client.Endpoints`
-property in `config.glacier2` and the `Ice.Default.Router` and
-`Chat.Client.Router` properties in config. In all cases you must
-replace the `-h 127.0.0.1` parameter with the actual external address
-of the machine on which glacier2router is running.
+property in `config.glacier2` and the `Ice.Default.Router` property in
+`config.client`. In all cases you must set the host parameter of the
+`-h host` endpoint option to the actual external address of the machine
+on which glacier2router is running.
 
 When using Glacier2 session, the Glacier2 router destroys your
 sessions when a client goes away and otherwise becomes unresponsive.
