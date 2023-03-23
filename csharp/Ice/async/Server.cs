@@ -37,6 +37,11 @@ public class Server
                         // cts is canceled by Ctrl+C or a shutdown request.
                         // With C# 7.1 and up, you should make Main async and call: await Task.Delay(-1, cts.Token)
                         cts.Token.WaitHandle.WaitOne();
+
+                        // Wait for all dispatches to complete before disposing cts since the dispatches use cts or
+                        // cts.Token
+                        communicator.shutdown();
+                        communicator.waitForShutdown();
                     }
                 }
             }
