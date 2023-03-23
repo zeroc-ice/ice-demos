@@ -9,44 +9,40 @@ public class Server
 {
     public static int Main(string[] args)
     {
-        int status = 0;
+        if (args.Length > 0)
+        {
+            Console.WriteLine("too many arguments");
+            return 1;
+        }
 
         try
         {
-            using (Ice.Communicator communicator = Ice.Util.initialize(ref args, "config.server"))
+            using (var cts = new CancellationTokenSource())
             {
-                if (args.Length > 0)
+                using (Ice.Communicator communicator = Ice.Util.initialize(ref args, "config.server"))
                 {
-                    Console.WriteLine("too many arguments");
-                    status = 1;
-                }
-                else
-                {
-                    using (var cts = new CancellationTokenSource())
+                    Console.CancelKeyPress += (sender, eventArgs) =>
                     {
-                        Console.CancelKeyPress += (sender, eventArgs) =>
-                        {
-                            eventArgs.Cancel = true;
-                            cts.Cancel();
-                        };
+                        eventArgs.Cancel = true;
+                        cts.Cancel();
+                    };
 
-                        Ice.ObjectAdapter adapter = communicator.createObjectAdapter("Hello");
-                        adapter.add(new HelloI(cts), Ice.Util.stringToIdentity("hello"));
-                        adapter.activate();
+                    Ice.ObjectAdapter adapter = communicator.createObjectAdapter("Hello");
+                    adapter.add(new HelloI(cts), Ice.Util.stringToIdentity("hello"));
+                    adapter.activate();
 
-                        // cts is canceled by Ctrl+C or a shutdown request.
-                        // With C# 7.1 and up, you should make Main async and call: await Task.Delay(-1, cts.Token)
-                        cts.Token.WaitHandle.WaitOne();
-                    }
+                    // cts is canceled by Ctrl+C or a shutdown request.
+                    // With C# 7.1 and up, you should make Main async and call: await Task.Delay(-1, cts.Token)
+                    cts.Token.WaitHandle.WaitOne();
                 }
             }
         }
         catch (Exception exception)
         {
             Console.WriteLine(exception);
-            status = 1;
+            return 1;
         }
 
-        return status;
+        return 0;
     }
 }
