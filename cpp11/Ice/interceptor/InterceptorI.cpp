@@ -8,7 +8,9 @@ using namespace std;
 
 InterceptorI::InterceptorI(shared_ptr<Ice::Object> servant, shared_ptr<AuthenticatorI> authenticator,
                            unordered_set<string> securedOperations) :
-    _servant(move(servant)), _authenticator(move(authenticator)), _securedOperations(move(securedOperations))
+    _servant(std::move(servant)),
+    _authenticator(std::move(authenticator)),
+    _securedOperations(std::move(securedOperations))
 {
 }
 

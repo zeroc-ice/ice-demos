@@ -2,7 +2,7 @@
 
 - [C# Demos](#c-demos)
   - [Overview](#overview)
-  - [Building and running the Demos with .NET 6.0 on Windows, Linux, and macOS](#building-and-running-the-demos-with-net-60-on-windows-linux-and-macos)
+  - [Building and running the Demos with .NET on Windows, Linux, and macOS](#building-and-running-the-demos-with-net-60-on-windows-linux-and-macos)
     - [Build Requirements](#build-requirements)
     - [Building the demos using NuGet packages](#building-the-demos-using-nuget-packages)
     - [Building the demos using a source build](#building-the-demos-using-a-source-build)
@@ -31,13 +31,13 @@ in the [Ice manual][1].
 Refer to the [C++11 demos](../cpp11) for more examples that use the Ice services
 (Glacier2, IceGrid, IceStorm).
 
-## Building and running the Demos with .NET 6.0 on Windows, Linux, and macOS
+## Building and running the Demos with .NET on Windows, Linux, and macOS
 
 ### Build Requirements
 
 In order to build Ice for .NET sample programs, you need all of the following:
 
-- the [.NET Core SDK][5] version 6.0
+- the [.NET Core SDK][5] version 6.0 or later
 - Slice to C# compiler, for Windows platform the Slice to C# compiler is included
   with the `zeroc.ice.net` NuGet package installed during build, for other platforms
   refer to the [Release Notes][6].
@@ -56,8 +56,8 @@ cd csharp
 To build the sample programs run:
 
 ```shell
-dotnet restore "C# NET 6.0 demos.sln"
-dotnet msbuild "C# NET 6.0 demos.sln"
+dotnet restore "C# NET demos.sln"
+dotnet msbuild "C# NET demos.sln"
 ```
 
 The demos are configured to use the Ice NuGet packages. These packages are automatically
@@ -76,20 +76,20 @@ Install packages from the source build:
 On Windows
 
 ```shell
-msbuild /p:IceHome=<Ice dist path> /t:Net6InstallLocalPackages msbuild\ice.proj
+msbuild /p:IceHome=<Ice dist path> /t:NetInstallLocalPackages msbuild\ice.proj
 ```
 
 On Linux and macOS
 
 ```shell
-dotnet msbuild /p:IceHome=<Ice dist path> /t:Net6InstallLocalPackages msbuild/ice.proj
+dotnet msbuild /p:IceHome=<Ice dist path> /t:NetInstallLocalPackages msbuild/ice.proj
 ```
 
 To build the sample programs run:
 
 ```shell
-dotnet restore "C# NET 6.0 demos.sln"
-dotnet msbuild "C# NET 6.0 demos.sln"
+dotnet restore "C# NET demos.sln"
+dotnet msbuild "C# NET demos.sln"
 ```
 
 ### Running the Demos
@@ -170,4 +170,4 @@ refer to [Using the Windows Binary Distributions][4] for additional information.
 [3]: https://marketplace.visualstudio.com/items?itemName=ZeroCInc.IceBuilder
 [4]: https://doc.zeroc.com/ice/3.7/release-notes/using-the-windows-binary-distributions
 [5]: https://download/dotnet/6.0
-[6]: https://doc.zeroc.com/rel/ice-releases/ice-3-7/ice-3-7-8-release-notes
+[6]: https://doc.zeroc.com/rel/ice-releases/ice-3-7/ice-3-7-9-release-notes

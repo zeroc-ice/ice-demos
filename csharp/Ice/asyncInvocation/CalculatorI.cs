@@ -5,7 +5,7 @@
 using Demo;
 using System;
 
-public class CalculatorI : CalculatorDisp_
+internal class CalculatorI : CalculatorDisp_
 {
     public override int add(int x, int y, Ice.Current current)
     {
@@ -19,7 +19,7 @@ public class CalculatorI : CalculatorDisp_
 
     public override int divide(int numerator, int denominator, out int remainder, Ice.Current current)
     {
-        if(denominator == 0)
+        if (denominator == 0)
         {
             throw new Demo.DivideByZeroException();
         }
@@ -34,7 +34,7 @@ public class CalculatorI : CalculatorDisp_
 
     public override double squareRoot(int x, Ice.Current current)
     {
-        if(x < 0)
+        if (x < 0)
         {
             throw new NegativeRootException();
         }
@@ -43,6 +43,6 @@ public class CalculatorI : CalculatorDisp_
 
     public override void shutdown(Ice.Current current)
     {
-        current.adapter.getCommunicator().shutdown();
+       current.adapter.getCommunicator().shutdown();
     }
 }

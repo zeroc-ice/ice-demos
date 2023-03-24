@@ -5,9 +5,7 @@ buildscript {
     }
 
     dependencies {
-        if (JavaVersion.current() > JavaVersion.VERSION_1_8) {
-            classpath "com.guardsquare:proguard-gradle:7.2.2"
-        }
+        classpath "com.guardsquare:proguard-gradle:7.3.1"
     }
 }
 
@@ -26,43 +24,31 @@ dependencies {
     implementation localDependency("glacier2")
 }
 
-if(JavaVersion.current() > JavaVersion.VERSION_1_8) {
-    jar {
-        archiveFileName = "ChatTEMP.jar"
-        manifest {
-            attributes 'Main-Class': "com.zeroc.demos.Chat.MainView"
-        }
-    }
-
-    def javaHome = System.properties['java.home']
-
-    task proguard(type: proguard.gradle.ProGuardTask, dependsOn: jar) {
-        injars configurations.runtimeClasspath.resolve(), filter: '!META-INF/**,!module-info.class'
-        injars "${buildDir}/libs/ChatTEMP.jar"
-        if(JavaVersion.current() <= JavaVersion.VERSION_1_8) {
-            libraryjars "${javaHome}/lib/rt.jar"
-            libraryjars "${javaHome}/lib/jsse.jar"
-        } else {
-            libraryjars "${javaHome}/jmods/java.base.jmod"
-            libraryjars "${javaHome}/jmods/java.logging.jmod"
-            libraryjars "${javaHome}/jmods/java.desktop.jmod"
-            libraryjars "${javaHome}/jmods/java.prefs.jmod"
-        }
-        outjars "Chat.jar"
-        configuration "chatdemo.pro"
-    }
-    assemble.dependsOn(proguard)
-}
-else {
-    jar {
-        archiveFileName = "Chat.jar"
-        destinationDirectory = new File("${projectDir}")
-        manifest {
-            attributes 'Main-Class': "com.zeroc.demos.Chat.MainView"
-            attributes("Class-Path": configurations.runtimeClasspath.resolve().collect{ it.toURI() }.join(' '))
-        }
+jar {
+    archiveFileName = "ChatTEMP.jar"
+    manifest {
+        attributes 'Main-Class': "com.zeroc.demos.Chat.MainView"
     }
 }
+
+def javaHome = System.properties['java.home']
+
+task proguard(type: proguard.gradle.ProGuardTask, dependsOn: jar) {
+    injars configurations.runtimeClasspath.resolve(), filter: '!META-INF/**,!module-info.class'
+    injars "${buildDir}/libs/ChatTEMP.jar"
+    if(JavaVersion.current() <= JavaVersion.VERSION_1_8) {
+        libraryjars "${javaHome}/lib/rt.jar"
+        libraryjars "${javaHome}/lib/jsse.jar"
+    } else {
+        libraryjars "${javaHome}/jmods/java.base.jmod"
+        libraryjars "${javaHome}/jmods/java.logging.jmod"
+        libraryjars "${javaHome}/jmods/java.desktop.jmod"
+        libraryjars "${javaHome}/jmods/java.prefs.jmod"
+    }
+    outjars "Chat.jar"
+    configuration "chatdemo.pro"
+}
+assemble.dependsOn(proguard)
 
 clean {
     delete("Chat.jar")

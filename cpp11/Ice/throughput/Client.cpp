@@ -27,7 +27,7 @@ main(int argc, char* argv[])
         // CommunicatorHolder's ctor initializes an Ice communicator,
         // and its dtor destroys this communicator.
         //
-        Ice::CommunicatorHolder ich(argc, argv, "config.client");
+        const Ice::CommunicatorHolder ich(argc, argv, "config.client");
 
         //
         // The communicator initialization removes all Ice-related arguments from argc/argv
@@ -69,10 +69,10 @@ run(const shared_ptr<Ice::Communicator>& communicator)
     auto byteArr = make_pair(byteSeq.data(), byteSeq.data() + byteSeq.size());
 
     StringSeq stringSeq(StringSeqSize, "hello");
-    vector<Util::string_view> stringViewSeq(StringSeqSize, "hello");
+    const vector<Util::string_view> stringViewSeq(StringSeqSize, "hello");
 
     StringDoubleSeq structSeq(StringDoubleSeqSize, { "hello", 3.14 });
-    FixedSeq fixedSeq(FixedSeqSize, { 0, 0, 0.0 });
+    const FixedSeq fixedSeq(FixedSeqSize, { 0, 0, 0.0 });
 
     //
     // To allow cross-language tests we may need to "warm up" the
@@ -87,9 +87,9 @@ run(const shared_ptr<Ice::Communicator>& communicator)
         ByteSeq warmupBytesBuf(1);
         auto warmupBytes = make_pair(warmupBytesBuf.data(), warmupBytesBuf.data() + warmupBytesBuf.size());
 
-        vector<Util::string_view> warmupStringViews(1);
-        StringDoubleSeq warmupStructs(1);
-        FixedSeq warmupFixed(1);
+        const vector<Util::string_view> warmupStringViews(1);
+        const StringDoubleSeq warmupStructs(1);
+        const FixedSeq warmupFixed(1);
 
         cout << "warming up the server... " << flush;
         for(int i = 0; i < 10000; i++)
@@ -369,7 +369,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
 
                 auto duration = chrono::duration<float, chrono::milliseconds::period>(chrono::high_resolution_clock::now() - start);
                 cout << "time for " << repetitions << " sequences: " << duration.count() << "ms" << endl;
-                cout << "time per sequence: " << duration.count() / repetitions << "ms" << endl;
+                cout << "time per sequence: " << duration.count() / static_cast<float>(repetitions) << "ms" << endl;
                 int wireSize = 0;
                 switch(currentType)
                 {

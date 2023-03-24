@@ -20,7 +20,7 @@ main(int argc, char* argv[])
         // CommunicatorHolder's ctor initializes an Ice communicator,
         // and its dtor destroys this communicator.
         //
-        Ice::CommunicatorHolder ich(argc, argv, "config.client");
+        const Ice::CommunicatorHolder ich(argc, argv, "config.client");
 
         //
         // The communicator intialization removes all Ice-related arguments from argc/argv.
@@ -106,7 +106,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 //
                 // Request an access token from the server's authentication object.
                 //
-                string token = authenticator->getToken();
+                const string token = authenticator->getToken();
                 cout << "Successfully retrieved access token: \"" << token << "\"" << endl;
                 //
                 // Add the access token to the communicator's context, so it will be

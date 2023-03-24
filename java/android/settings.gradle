@@ -2,10 +2,5 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-// Main source
-include ':chat', ':hello', ':library', ':mtalk', ':talk'
-project(':chat').projectDir = new File('chat')
+include ':hello'
 project(':hello').projectDir = new File('hello')
-project(':library').projectDir = new File('library')
-project(':mtalk').projectDir = new File('mtalk')
-project(':talk').projectDir = new File('talk')

@@ -4,7 +4,7 @@ require 'xcodeproj'
 
 $top_level = File.expand_path(File.dirname(__FILE__))
 
-$macOSDeploymentTarget = "10.14"
+$macOSDeploymentTarget = "11"
 $iOSDeploymentTarget = "15.0"
 
 $demos = {
@@ -127,7 +127,6 @@ def create_commandline_targets(project, demo, aggregate_target)
 
             target_set_framework_build_settings(target, :osx)
             target_add_slice2swift_build_rule(project, target)
-            target_add_swiftlint_build_phase(target, "#{demo}/Sources/#{variant}")
         end
     end
 end
@@ -165,17 +164,17 @@ def create_swiftui_targets(project, demo, aggregate_target)
 
     target_set_framework_build_settings(target, :ios)
     target_add_slice2swift_build_rule(project, target)
-    target_add_swiftlint_build_phase(target, demo)
 
-    target.build_configurations.each { |config|
-        config.build_settings["CODE_SIGN_IDENTITY"] = "-"
-        config.build_settings["CODE_SIGN_STYLE"] = "Automatic"
-        if config.name == "Debug" or target.product_type == "com.apple.product-type.application" then
-            config.build_settings["CODE_SIGN_IDENTITY"] = "-";
-        else
-            config.build_settings["CODE_SIGN_IDENTITY"] = "";
-        end
-    }
+    if ENV.has_key?("DEVELOPMENT_TEAM") then
+        target.build_configurations.each { |config|
+            if target.product_type == "com.apple.product-type.application" or
+              target.product_type == "com.apple.product-type.bundle" then
+                config.build_settings["CODE_SIGN_STYLE"] = "Automatic"
+                config.build_settings["CODE_SIGN_IDENTITY"] = "Apple Development"
+                config.build_settings["DEVELOPMENT_TEAM"] = ENV["DEVELOPMENT_TEAM"]
+            end
+        }
+    end
     return target
 end
 
@@ -189,17 +188,6 @@ def project_group(project, name)
         group = new_group
     }
     group
-end
-
-def target_add_swiftlint_build_phase(target, basedir)
-    phase = target.new_shell_script_build_phase("Swiftformat & Swiftlint")
-    phase.shell_script = <<~SCRIPT
-        if which swiftlint >/dev/null; then
-            swiftlint --path "$SRCROOT/#{basedir}" --config "$SRCROOT/.swiftlint.yml"
-        else
-            echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
-        fi
-    SCRIPT
 end
 
 def target_name(basename, suffix)
@@ -280,8 +268,8 @@ def target_set_common_build_settings(target, product, build_dir, platform, plist
     target.build_configurations.each { |config|
         config.build_settings["ENABLE_TESTABILITY"] = "NO"
         config.build_settings["CODE_SIGN_STYLE"] = "Automatic"
-        config.build_settings["CURRENT_PROJECT_VERSION"] = "3.7.8"
-        config.build_settings["DYLIB_CURRENT_VERSION"] = "3.7.8"
+        config.build_settings["CURRENT_PROJECT_VERSION"] = "3.7.9"
+        config.build_settings["DYLIB_CURRENT_VERSION"] = "3.7.9"
         config.build_settings["DYLIB_COMPATIBILITY_VERSION"] = "0"
         config.build_settings["SWIFT_VERSION"] = "5.0"
         if plist != nil then
@@ -322,7 +310,7 @@ def target_add_carthage_framework(target, platform, framework, copy=false)
             end
             build_file = embed_frameworks_build_phase.add_file_reference(ref, true)
             # add 'CodeSignOnCopy' to the list to enable signing
-            build_file.settings = { 'ATTRIBUTES' => ['RemoveHeadersOnCopy'] }
+            build_file.settings = { 'ATTRIBUTES' => ['RemoveHeadersOnCopy', 'CodeSignOnCopy'] }
         end
 
     end

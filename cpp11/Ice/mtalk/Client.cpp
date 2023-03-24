@@ -142,7 +142,7 @@ public:
     ~DiscoverTask()
     {
         {
-            lock_guard<mutex> lock(_mutex);
+            const lock_guard<mutex> lock(_mutex);
             _destroyed = true;
         }
         _condition.notify_one();
@@ -332,7 +332,7 @@ ChatApp::run(const shared_ptr<Ice::Communicator>& communicator)
 void
 ChatApp::discoveredPeer(const string& name, const shared_ptr<MTalk::PeerPrx>& peer)
 {
-    lock_guard<mutex> lock(_mutex);
+    const lock_guard<mutex> lock(_mutex);
 
     //
     // We also receive multicast messages that we send, so ignore requests from ourself.
@@ -361,7 +361,7 @@ ChatApp::connect(const string& name, const shared_ptr<MTalk::PeerPrx>& peer)
     // Called for a new incoming connection request.
     //
 
-    lock_guard<mutex> lock(_mutex);
+    const lock_guard<mutex> lock(_mutex);
 
     if(_remote)
     {
@@ -394,7 +394,7 @@ ChatApp::connect(const string& name, const shared_ptr<MTalk::PeerPrx>& peer)
 void
 ChatApp::message(const string& text)
 {
-    lock_guard<mutex> lock(_mutex);
+    const lock_guard<mutex> lock(_mutex);
 
     if(_remote)
     {
@@ -405,7 +405,7 @@ ChatApp::message(const string& text)
 void
 ChatApp::disconnect(const Ice::Identity& id, const shared_ptr<Ice::Connection>& con, bool incoming)
 {
-    lock_guard<mutex> lock(_mutex);
+    const lock_guard<mutex> lock(_mutex);
 
     if(_remote)
     {
@@ -424,7 +424,7 @@ ChatApp::disconnect(const Ice::Identity& id, const shared_ptr<Ice::Connection>& 
 void
 ChatApp::closed()
 {
-    lock_guard<mutex> lock(_mutex);
+    const lock_guard<mutex> lock(_mutex);
 
     _remote = nullptr;
 
@@ -450,7 +450,7 @@ ChatApp::doConnect(const string& cmd)
 
     shared_ptr<MTalk::PeerPrx> remote;
     {
-        lock_guard<mutex> lock(_mutex);
+        const lock_guard<mutex> lock(_mutex);
 
         if(_remote)
         {
@@ -529,7 +529,7 @@ ChatApp::doConnect(const string& cmd)
 void
 ChatApp::doList()
 {
-    lock_guard<mutex> lock(_mutex);
+    const lock_guard<mutex> lock(_mutex);
 
     if(_peers.empty())
     {
@@ -550,7 +550,7 @@ ChatApp::doDisconnect()
     shared_ptr<MTalk::PeerPrx> peer;
 
     {
-        lock_guard<mutex> lock(_mutex);
+        const lock_guard<mutex> lock(_mutex);
 
         if(!_remote)
         {
@@ -577,7 +577,7 @@ ChatApp::doMessage(const string& text)
     shared_ptr<MTalk::PeerPrx> peer;
 
     {
-        lock_guard<mutex> lock(_mutex);
+        const lock_guard<mutex> lock(_mutex);
 
         if(!_remote)
         {
@@ -604,7 +604,7 @@ ChatApp::failed(const Ice::LocalException& ex)
     shared_ptr<MTalk::PeerPrx> peer;
 
     {
-        lock_guard<mutex> lock(_mutex);
+        const lock_guard<mutex> lock(_mutex);
         peer = _remote;
         _remote = nullptr;
     }

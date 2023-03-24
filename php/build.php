@@ -60,7 +60,12 @@ foreach($demos as $demo)
 {
     echo "Building $demo... ";
     $inputFiles = "$demo/*.ice";
-    $command = "\"$slice2php\" -I\"$sliceDir\" -I$demo --output-dir $demo $inputFiles";
+    $command = "\"$slice2php\" ";
+    if(PHP_VERSION_ID < 70000)
+    {
+        $command .= "--php5 ";
+    }
+    $command .= "-I\"$sliceDir\" -I$demo --output-dir $demo $inputFiles";
 
     system($command, $retval);
     if($retval != 0)

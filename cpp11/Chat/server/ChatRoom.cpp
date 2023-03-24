@@ -15,7 +15,7 @@ ChatRoom::ChatRoom(bool trace, const shared_ptr<Ice::Logger>& logger) :
 void
 ChatRoom::reserve(const string& name)
 {
-    lock_guard<mutex> sync(_mutex);
+    const lock_guard<mutex> sync(_mutex);
     if(_reserved.find(name) != _reserved.end() || _members.find(name) != _members.end())
     {
         throw runtime_error("The name " + name + " is already in use.");
@@ -26,15 +26,16 @@ ChatRoom::reserve(const string& name)
 void
 ChatRoom::unreserve(const string& name)
 {
-    lock_guard<mutex> sync(_mutex);
+    const lock_guard<mutex> sync(_mutex);
     _reserved.erase(name);
 }
 
 void
 ChatRoom::join(const string& name, const shared_ptr<ChatRoomCallbackAdapter>& callback)
 {
-    lock_guard<mutex> sync(_mutex);
-    long long timestamp = chrono::duration_cast<chrono::milliseconds>(chrono::system_clock::now().time_since_epoch()).count();
+    const lock_guard<mutex> sync(_mutex);
+    const long long timestamp =
+        chrono::duration_cast<chrono::milliseconds>(chrono::system_clock::now().time_since_epoch()).count();
 
     _reserved.erase(name);
 
@@ -44,7 +45,7 @@ ChatRoom::join(const string& name, const shared_ptr<ChatRoomCallbackAdapter>& ca
         names.push_back(q.first);
     }
 
-    callback->init(move(names));
+    callback->init(std::move(names));
 
     _members[name] = callback;
 
@@ -64,8 +65,9 @@ ChatRoom::join(const string& name, const shared_ptr<ChatRoomCallbackAdapter>& ca
 void
 ChatRoom::leave(const string& name)
 {
-    lock_guard<mutex> sync(_mutex);
-    long long timestamp = chrono::duration_cast<chrono::milliseconds>(chrono::system_clock::now().time_since_epoch()).count();
+    const lock_guard<mutex> sync(_mutex);
+    const long long timestamp =
+        chrono::duration_cast<chrono::milliseconds>(chrono::system_clock::now().time_since_epoch()).count();
 
     _members.erase(name);
 
@@ -83,10 +85,11 @@ ChatRoom::leave(const string& name)
 }
 
 Ice::Long
-ChatRoom::send(const string& name, string message)
+ChatRoom::send(const string& name, const string& message)
 {
-    lock_guard<mutex> sync(_mutex);
-    long long timestamp = chrono::duration_cast<chrono::milliseconds>(chrono::system_clock::now().time_since_epoch()).count();
+    const lock_guard<mutex> sync(_mutex);
+    const long long timestamp =
+        chrono::duration_cast<chrono::milliseconds>(chrono::system_clock::now().time_since_epoch()).count();
 
     auto e = make_shared<PollingChat::MessageEvent>(timestamp, name, message);
     for(const auto& q: _members)

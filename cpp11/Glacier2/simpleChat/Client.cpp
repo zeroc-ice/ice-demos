@@ -19,7 +19,7 @@ public:
     virtual void
     message(string data, const Ice::Current&) override
     {
-        lock_guard<mutex> lock(coutMutex);
+        const lock_guard<mutex> lock(coutMutex);
         cout << data << endl;
     }
 };
@@ -41,7 +41,7 @@ main(int argc, char* argv[])
         // CommunicatorHolder's ctor initializes an Ice communicator,
         // and its dtor destroys this communicator.
         //
-        Ice::CommunicatorHolder ich(argc, argv, "config.client");
+        const Ice::CommunicatorHolder ich(argc, argv, "config.client");
 
         //
         // The communicator initialization removes all Ice-related arguments from argc/argv
@@ -70,7 +70,8 @@ string trim(const string&);
 void
 run(const shared_ptr<Ice::Communicator>& communicator)
 {
-    shared_ptr<Glacier2::RouterPrx> router = Ice::checkedCast<Glacier2::RouterPrx>(communicator->getDefaultRouter());
+    const shared_ptr<Glacier2::RouterPrx> router =
+        Ice::checkedCast<Glacier2::RouterPrx>(communicator->getDefaultRouter());
     shared_ptr<ChatSessionPrx> session;
     while(!session)
     {
@@ -99,13 +100,13 @@ run(const shared_ptr<Ice::Communicator>& communicator)
         }
     }
 
-    Ice::Int acmTimeout = router->getACMTimeout();
-    Ice::ConnectionPtr connection = router->ice_getCachedConnection();
+    const Ice::Int acmTimeout = router->getACMTimeout();
+    const Ice::ConnectionPtr connection = router->ice_getCachedConnection();
     assert(connection);
     connection->setACM(acmTimeout, IceUtil::None, Ice::ACMHeartbeat::HeartbeatAlways);
     connection->setCloseCallback([](Ice::ConnectionPtr)
                                  {
-                                     lock_guard<mutex> lock(coutMutex);
+                                     const lock_guard<mutex> lock(coutMutex);
                                      cout << "The Glacier2 session has been destroyed." << endl;
                                  });
 
@@ -126,7 +127,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
     {
         string s;
         {
-            lock_guard<mutex> lock(coutMutex);
+            const lock_guard<mutex> lock(coutMutex);
             cout << "==> ";
         }
         getline(cin, s);
@@ -153,7 +154,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
 void
 menu()
 {
-    lock_guard<mutex> lock(coutMutex);
+    const lock_guard<mutex> lock(coutMutex);
     cout << "enter /quit to exit." << endl;
 }
 

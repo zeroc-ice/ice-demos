@@ -19,12 +19,9 @@ client
 > dotnet client.dll
 > ```
 
-The demo invocation can either have a short response time or require a
-significant amount of time to complete. For the long running request
-the client uses AMI and the server uses AMD plus a worker thread to
-process the request. While a long request is processing, short
-requests are still able to be processed and more long requests can be
-queued for processing by the worker thread.
+The shutdown of a server (and its object adapter) waits for outstanding dispatches
+to complete. In this demo, we use a CancellationTokenSource to cancel outstanding
+dispatches when the application requests a shutdown; this ensures a speedy shutdown.
 
 [1]: https://doc.zeroc.com/ice/3.7/language-mappings/c-sharp-mapping/client-side-slice-to-c-sharp-mapping/asynchronous-method-invocation-ami-in-c-sharp
 [2]: https://doc.zeroc.com/ice/3.7/language-mappings/c-sharp-mapping/server-side-slice-to-c-sharp-mapping/asynchronous-method-dispatch-amd-in-c-sharp

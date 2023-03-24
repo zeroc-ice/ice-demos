@@ -14,12 +14,14 @@ public:
 
     SessionCallbackAdapter(const shared_ptr<Chat::ChatRoomCallbackPrx>& callback,
                            const shared_ptr<Chat::ChatSessionPrx>& session,
-                           bool trace, const shared_ptr<Ice::Logger>& logger, const std::string& name) :
+                           bool trace,
+                           const shared_ptr<Ice::Logger>& logger,
+                           std::string name) :
         _callback(callback),
         _session(session),
         _trace(trace),
         _logger(logger),
-        _name(name)
+        _name(std::move(name))
     {
     }
 
@@ -28,7 +30,7 @@ public:
         auto self = shared_from_this();
         try
         {
-            _callback->initAsync(users, nullptr, [self](std::exception_ptr eptr) { self->failed(eptr); });
+            _callback->initAsync(users, nullptr, [self](exception_ptr) { self->failed(); });
         }
         catch(const Ice::CommunicatorDestroyedException&)
         {
@@ -41,20 +43,20 @@ public:
         auto self = shared_from_this();
         try
         {
-            _callback->joinAsync(e->timestamp, e->name, nullptr, [self](exception_ptr eptr) { self->failed(eptr); });
+            _callback->joinAsync(e->timestamp, e->name, nullptr, [self](exception_ptr) { self->failed(); });
         }
         catch(const Ice::CommunicatorDestroyedException&)
         {
             // Ignored server is being shutdown
         }
-        }
+    }
 
     void leave(const shared_ptr<PollingChat::UserLeftEvent>& e) override
     {
         auto self = shared_from_this();
         try
         {
-            _callback->leaveAsync(e->timestamp, e->name, nullptr, [self](exception_ptr eptr) { self->failed(eptr); });
+            _callback->leaveAsync(e->timestamp, e->name, nullptr, [self](exception_ptr) { self->failed(); });
         }
         catch(const Ice::CommunicatorDestroyedException&)
         {
@@ -67,7 +69,7 @@ public:
         auto self = shared_from_this();
         try
         {
-            _callback->sendAsync(e->timestamp, e->name, e->message, nullptr, [self](exception_ptr eptr) { self->failed(eptr); });
+            _callback->sendAsync(e->timestamp, e->name, e->message, nullptr, [self](exception_ptr) { self->failed(); });
         }
         catch(const Ice::CommunicatorDestroyedException&)
         {
@@ -75,7 +77,7 @@ public:
         }
     }
 
-    void failed(exception_ptr)
+    void failed()
     {
         if(_trace)
         {
@@ -100,9 +102,9 @@ private:
     const string _name;
 };
 
-ChatSessionI::ChatSessionI(const shared_ptr<ChatRoom>& chatRoom, const string& name, bool trace, const shared_ptr<Ice::Logger>& logger) :
+ChatSessionI::ChatSessionI(const shared_ptr<ChatRoom>& chatRoom, string name, bool trace, const shared_ptr<Ice::Logger>& logger) :
     _chatRoom(chatRoom),
-    _name(name),
+    _name(std::move(name)),
     _trace(trace),
     _logger(logger)
 {
@@ -111,7 +113,7 @@ ChatSessionI::ChatSessionI(const shared_ptr<ChatRoom>& chatRoom, const string& n
 void
 ChatSessionI::setCallback(shared_ptr<Chat::ChatRoomCallbackPrx> callback, const Ice::Current& current)
 {
-    lock_guard<mutex> sync(_mutex);
+    const lock_guard<mutex> sync(_mutex);
     if(_destroy)
     {
         if(_trace)
@@ -139,7 +141,7 @@ ChatSessionI::setCallback(shared_ptr<Chat::ChatRoomCallbackPrx> callback, const 
 long long
 ChatSessionI::send(string message, const Ice::Current&)
 {
-    lock_guard<mutex> sync(_mutex);
+    const lock_guard<mutex> sync(_mutex);
     if(_destroy)
     {
         if(_trace)
@@ -172,13 +174,13 @@ ChatSessionI::send(string message, const Ice::Current&)
         }
         throw Chat::InvalidMessageException(ex.what());
     }
-    return _chatRoom->send(_name, move(msg));
+    return _chatRoom->send(_name, msg);
 }
 
 void
 ChatSessionI::destroy(const Ice::Current& current)
 {
-    lock_guard<mutex> sync(_mutex);
+    const lock_guard<mutex> sync(_mutex);
     if(_destroy)
     {
         if(_trace)

@@ -4,7 +4,6 @@
 
 using Demo;
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 
 public class Client
@@ -15,121 +14,107 @@ public class Client
 
         try
         {
-            //
-            // using statement - communicator is automatically destroyed
-            // at the end of this statement
-            //
-            using(var communicator = Ice.Util.initialize(ref args, "config.client"))
+            using (Ice.Communicator communicator = Ice.Util.initialize(ref args, "config.client"))
             {
-                //
-                // Destroy the communicator on Ctrl+C or Ctrl+Break
-                //
-                Console.CancelKeyPress += (sender, eventArgs) => communicator.destroy();
-
-                if(args.Length > 0)
+                if (args.Length > 0)
                 {
-                    Console.Error.WriteLine("too many arguments");
+                    Console.WriteLine("too many arguments");
                     status = 1;
                 }
                 else
                 {
-                    status = run(communicator);
+                    status = Run(communicator);
                 }
             }
         }
-        catch(Exception ex)
+        catch (Exception exception)
         {
-            Console.Error.WriteLine(ex);
+            Console.WriteLine(exception);
             status = 1;
         }
 
         return status;
     }
 
-    private static int run(Ice.Communicator communicator)
+    private static int Run(Ice.Communicator communicator)
     {
-        var hello = HelloPrxHelper.checkedCast(communicator.propertyToProxy("Hello.Proxy"));
-        if(hello == null)
+        HelloPrx hello = HelloPrxHelper.checkedCast(communicator.propertyToProxy("Hello.Proxy"));
+        if (hello == null)
         {
-            Console.Error.WriteLine("invalid proxy");
+            Console.WriteLine("invalid proxy");
             return 1;
         }
 
-        menu();
+        Menu();
 
         string line = null;
         do
         {
             try
             {
-                Console.Out.Write("==> ");
+                Console.Write("==> ");
                 Console.Out.Flush();
                 line = Console.In.ReadLine();
-                if(line == null)
+                switch (line)
                 {
-                    break;
-                }
-                if(line.Equals("i"))
-                {
-                    hello.sayHello(0);
-                }
-                else if(line.Equals("d"))
-                {
-                    helloAsync(hello);
-                }
-                else if(line.Equals("s"))
-                {
-                    hello.shutdown();
-                }
-                else if(line.Equals("x"))
-                {
-                    // Nothing to do
-                }
-                else if(line.Equals("?"))
-                {
-                    menu();
-                }
-                else
-                {
-                    Console.Out.WriteLine("unknown command `" + line + "'");
-                    menu();
+                    case null:
+                    case "x":
+                        break;
+
+                    case "i":
+                    case "d":
+                        Task _ = HelloAsync(hello, delay: line == "i" ? 0 : 5000);
+                        break;
+
+                    case "s":
+                        hello.shutdown();
+                        break;
+
+                    case "?":
+                        Menu();
+                        break;
+
+                    default:
+                        Console.WriteLine($"unknown command `{line}'");
+                        Menu();
+                        break;
                 }
             }
-            catch(Ice.Exception ex)
+            catch (Exception exception)
             {
-                Console.Error.WriteLine(ex);
+                Console.WriteLine(exception);
             }
         }
-        while(!line.Equals("x"));
+        while (line != "x");
 
         return 0;
     }
 
-    private static async void helloAsync(HelloPrx hello)
+    private static async Task HelloAsync(HelloPrx hello, int delay)
     {
         try
         {
-            await hello.sayHelloAsync(5000);
+            await hello.sayHelloAsync(delay);
         }
-        catch(RequestCanceledException)
+        catch (RequestCanceledException)
         {
-            Console.Error.WriteLine("RequestCanceledException");
+            Console.WriteLine("RequestCanceledException");
         }
-        catch(Exception ex)
+        catch (Exception exception)
         {
-            Console.Error.WriteLine("sayHello AMI call failed:");
-            Console.Error.WriteLine(ex);
+            Console.WriteLine($"sayHello AMI call failed: {exception}");
         }
     }
 
-    private static void menu()
+    private static void Menu()
     {
-        Console.Out.WriteLine(
-            "usage:\n" +
-            "i: send immediate greeting\n" +
-            "d: send delayed greeting\n" +
-            "s: shutdown server\n" +
-            "x: exit\n" +
-            "?: help\n");
+        Console.WriteLine(
+            @"usage:
+i: send immediate greeting
+d: send delayed greeting
+s: shutdown server
+x: exit
+?: help
+");
     }
 }

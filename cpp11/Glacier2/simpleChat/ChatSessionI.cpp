@@ -47,7 +47,7 @@ void
 ChatRoom::enter(const shared_ptr<ChatSessionPrx>& session, const shared_ptr<ChatCallbackPrx>& callback,
                 const Ice::Current& current)
 {
-    lock_guard<mutex> sync(_mutex);
+    const lock_guard<mutex> sync(_mutex);
     _callbacks.push_back(callback);
 
     auto p = _connectionMap.find(current.con);
@@ -81,7 +81,7 @@ ChatRoom::enter(const shared_ptr<ChatSessionPrx>& session, const shared_ptr<Chat
 void
 ChatRoom::leave(const shared_ptr<ChatCallbackPrx>& callback, const Ice::Current& current)
 {
-    lock_guard<mutex> sync(_mutex);
+    const lock_guard<mutex> sync(_mutex);
 
     _callbacks.remove_if([&callback](const shared_ptr<ChatCallbackPrx>& cb)
                          {
@@ -96,7 +96,7 @@ ChatRoom::leave(const shared_ptr<ChatCallbackPrx>& callback, const Ice::Current&
 void
 ChatRoom::message(const string& data) const
 {
-    lock_guard<mutex> sync(const_cast<mutex&>(_mutex));
+    const lock_guard<mutex> sync(const_cast<mutex&>(_mutex));
     for(const auto& cb : _callbacks)
     {
         cb->messageAsync(data);
@@ -120,7 +120,7 @@ ChatRoom::deadRouter(const shared_ptr<Ice::Connection>& con)
 
         list<shared_ptr<ChatSessionPrx>> sessions;
         {
-            lock_guard<mutex> sync(_mutex);
+            const lock_guard<mutex> sync(_mutex);
             auto p = _connectionMap.find(con);
             if(p != _connectionMap.end())
             {
@@ -144,7 +144,7 @@ ChatRoom::destroy()
     //
     // We could also destroy each session first
     //
-    lock_guard<mutex> sync(_mutex);
+    const lock_guard<mutex> sync(_mutex);
     _callbacks.clear();
     _connectionMap.clear();
 }
@@ -153,15 +153,15 @@ ChatRoom::destroy()
 // ChatSessionI
 //
 
-ChatSessionI::ChatSessionI(const string& userId) :
-    _userId(userId)
+ChatSessionI::ChatSessionI(string userId) :
+    _userId(std::move(userId))
 {
 }
 
 void
 ChatSessionI::setCallback(shared_ptr<ChatCallbackPrx> callback, const Ice::Current& current)
 {
-    lock_guard<mutex> sync(_mutex);
+    const lock_guard<mutex> sync(_mutex);
     if(!_callback)
     {
         _callback = callback;
@@ -174,7 +174,7 @@ ChatSessionI::setCallback(shared_ptr<ChatCallbackPrx> callback, const Ice::Curre
 void
 ChatSessionI::say(string data, const Ice::Current&)
 {
-    lock_guard<mutex> sync(_mutex);
+    const lock_guard<mutex> sync(_mutex);
     ChatRoom::instance()->message(_userId + " says: " + data);
 }
 
@@ -182,7 +182,7 @@ void
 ChatSessionI::destroy(const Ice::Current& current)
 {
     cout << "Destroying session for " << _userId << endl;
-    lock_guard<mutex> sync(_mutex);
+    const lock_guard<mutex> sync(_mutex);
     if(_callback)
     {
         auto chatRoom = ChatRoom::instance();
@@ -200,7 +200,7 @@ ChatSessionI::destroy(const Ice::Current& current)
 shared_ptr<Glacier2::SessionPrx>
 ChatSessionManagerI::create(string userId, shared_ptr<Glacier2::SessionControlPrx>, const Ice::Current& current)
 {
-    Ice::Identity ident = { Ice::generateUUID(), "session" };
+    const Ice::Identity ident = { Ice::generateUUID(), "session" };
     return Ice::uncheckedCast<Glacier2::SessionPrx>(current.adapter->add(make_shared<ChatSessionI>(userId), ident));
 }
 

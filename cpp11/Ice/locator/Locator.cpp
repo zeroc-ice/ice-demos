@@ -68,8 +68,8 @@ public:
 
     LocatorI(shared_ptr<LocatorRegistryI> registry,
              shared_ptr<Ice::LocatorRegistryPrx> registryPrx) :
-        _registry(move(registry)),
-        _registryPrx(move(registryPrx))
+        _registry(std::move(registry)),
+        _registryPrx(std::move(registryPrx))
     {
     }
 
@@ -120,8 +120,8 @@ int main(int argc, char* argv[])
         // CommunicatorHolder's ctor initializes an Ice communicator,
         // and its dtor destroys this communicator.
         //
-        Ice::CommunicatorHolder ich(argc, argv, "config.locator");
-        auto communicator = ich.communicator();
+        const Ice::CommunicatorHolder ich(argc, argv, "config.locator");
+        const auto& communicator = ich.communicator();
 
         ctrlCHandler.setCallback(
             [communicator](int)
@@ -145,7 +145,7 @@ int main(int argc, char* argv[])
             auto registryPrx = Ice::uncheckedCast<Ice::LocatorRegistryPrx>(
                 adapter->add(registry, Ice::stringToIdentity("registry")));
 
-            adapter->add(make_shared<LocatorI>(move(registry), move(registryPrx)),
+            adapter->add(make_shared<LocatorI>(std::move(registry), std::move(registryPrx)),
                          Ice::stringToIdentity("locator"));
             adapter->activate();
 

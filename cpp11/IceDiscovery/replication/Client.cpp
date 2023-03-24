@@ -27,7 +27,7 @@ main(int argc, char* argv[])
         // CommunicatorHolder's ctor initializes an Ice communicator,
         // and its dtor destroys this communicator.
         //
-        Ice::CommunicatorHolder ich(argc, argv, "config.client");
+        const Ice::CommunicatorHolder ich(argc, argv, "config.client");
 
         //
         // The communicator initialization removes all Ice-related arguments from argc/argv
@@ -74,15 +74,46 @@ run(const shared_ptr<Ice::Communicator>& communicator)
     string s;
     do
     {
-        cout << "enter the number of iterations: ";
+        int count;
+        int delay = 500;
+
+        // Read the iterations parameter from stdin.
+        cout << "enter the number of iterations or 'x' to exit: ";
         cin >> s;
-        int count = atoi(s.c_str());
+        if(s == "x")
+        {
+            break;
+        }
+
+        try
+        {
+            count = stoi(s);
+        }
+        catch(const invalid_argument&)
+        {
+            cerr << "'" << s << "'"
+                 << " is not a valid value for the iterations parameter, it has to be a positive integer"
+                 << endl;
+            return 1;
+        }
+
+        // Read the delay parameter from stdin.
         cout << "enter the delay between each greetings (in ms): ";
         cin >> s;
-        int delay = atoi(s.c_str());
+        try
+        {
+            delay = stoi(s);
+        }
+        catch(const invalid_argument&)
+        {
+            cerr << "'" << s << "' is not a valid value for the delay parameter, it has to be a positive integer"
+                 << endl;
+            return 1;
+        }
+
         if(delay < 0)
         {
-            delay = 500; // 500 milli-seconds
+            delay = 500; // 500 milliseconds
         }
 
         for(int i = 0; i < count; i++)
@@ -91,7 +122,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
             this_thread::sleep_for(chrono::milliseconds(delay));
         }
     }
-    while(cin.good() && s != "x");
+    while(cin.good());
 
     return 0;
 }

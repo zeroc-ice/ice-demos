@@ -23,7 +23,7 @@ class NodeI : public virtual Node, public std::enable_shared_from_this<NodeI>
 public:
 
     virtual std::string name(const Ice::Current&) override;
-    NodeI(const std::string&, const std::shared_ptr<DirectoryI>&);
+    NodeI(std::string, const std::shared_ptr<DirectoryI>&);
     void activate(const std::shared_ptr<Ice::ObjectAdapter>&);
 
 private:
@@ -40,7 +40,7 @@ public:
     virtual Lines read(const Ice::Current&) override;
     virtual void write(Lines, const Ice::Current&) override;
 
-    FileI(const std::string&, const std::shared_ptr<DirectoryI>&);
+    FileI(std::string, const std::shared_ptr<DirectoryI>&);
 
 private:
 
@@ -52,7 +52,7 @@ class DirectoryI : public Directory, public NodeI
 public:
 
     virtual NodeSeq list(const Ice::Current&) override;
-    DirectoryI(const std::string&, const std::shared_ptr<DirectoryI>&);
+    DirectoryI(std::string, const std::shared_ptr<DirectoryI>&);
     void addChild(const std::shared_ptr<NodePrx>&);
 
 private:

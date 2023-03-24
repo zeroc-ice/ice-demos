@@ -18,7 +18,7 @@ using namespace Filesystem;
 static void
 listRecursive(const shared_ptr<DirectoryPrx>& dir, size_t depth = 0)
 {
-    string indent(++depth, '\t');
+    const string indent(++depth, '\t');
 
     auto contents = dir->list();
 
@@ -49,7 +49,7 @@ main(int argc, char* argv[])
     {
         // Create Ice communicator
         //
-        Ice::CommunicatorHolder ich(argc, argv);
+        const Ice::CommunicatorHolder ich(argc, argv);
 
         // Create a proxy for the root directory
         //

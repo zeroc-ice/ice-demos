@@ -34,8 +34,8 @@ main(int argc, char* argv[])
         // CommunicatorHolder's ctor initializes an Ice communicator,
         // and its dtor destroys this communicator.
         //
-        Ice::CommunicatorHolder ich(argc, argv, "config.client");
-        auto communicator = ich.communicator();
+        const Ice::CommunicatorHolder ich(argc, argv, "config.client");
+        const auto& communicator = ich.communicator();
 
         ctrlCHandler.setCallback(
             [communicator](int)
@@ -133,7 +133,7 @@ auto throughput = Ice::checkedCast<ThroughputPrx>(communicator->propertyToProxy(
     cout << "time for " << repetitions << " sequences: " << duration.count() << "ms" << endl;
     cout << "time per sequence: " << duration.count() / repetitions << "ms" << endl;
 
-    double mbit = 2 * repetitions * ByteSeqSize * 1 * 8.0 / duration.count() / 1000;
+    const double mbit = 2 * repetitions * ByteSeqSize * 1 * 8.0 / duration.count() / 1000;
 
     cout << "throughput: " << setprecision(5) << mbit << "Mbps" << endl;
 

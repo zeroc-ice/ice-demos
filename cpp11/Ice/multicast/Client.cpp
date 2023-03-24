@@ -22,7 +22,7 @@ public:
     reply(shared_ptr<Ice::ObjectPrx> obj, const Ice::Current&) override
     {
         {
-            lock_guard<mutex> lk(_mutex);
+            const lock_guard<mutex> lock(_mutex);
             if(!_obj)
             {
                 _obj = obj;
@@ -35,11 +35,11 @@ public:
     waitReply(int seconds)
     {
         auto until = chrono::system_clock::now() + chrono::seconds(seconds);
-        unique_lock<mutex> lk(_mutex);
+        unique_lock<mutex> lock(_mutex);
         bool timedOut = false;
         do
         {
-            timedOut = _cond.wait_until(lk, until) == cv_status::timeout;
+            timedOut = _cond.wait_until(lock, until) == cv_status::timeout;
         } while(!_obj && !timedOut);
 
         return _obj;
@@ -74,8 +74,8 @@ main(int argc, char* argv[])
         // CommunicatorHolder's ctor initializes an Ice communicator,
         // and its dtor destroys this communicator.
         //
-        Ice::CommunicatorHolder ich(argc, argv, "config.client");
-        auto communicator = ich.communicator();
+        const Ice::CommunicatorHolder ich(argc, argv, "config.client");
+        const auto& communicator = ich.communicator();
 
         ctrlCHandler.setCallback(
             [communicator](int)

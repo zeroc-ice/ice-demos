@@ -23,8 +23,8 @@ private:
 bool
 ChatServer::start(int, char*[], int& status)
 {
-    int timeout = communicator()->getProperties()->getPropertyAsIntWithDefault("PollingChatSessionTimeout", 10);
-    bool traceEnabled = communicator()->getProperties()->getPropertyAsIntWithDefault("Server.Trace", 0) != 0;
+    const int timeout = communicator()->getProperties()->getPropertyAsIntWithDefault("PollingChatSessionTimeout", 10);
+    const bool traceEnabled = communicator()->getProperties()->getPropertyAsIntWithDefault("Server.Trace", 0) != 0;
     auto logger = communicator()->getLogger();
 
     try

@@ -14,7 +14,7 @@ class SessionI : public Demo::Session
 {
 public:
 
-    SessionI(const std::string&);
+    SessionI(std::string);
 
     virtual std::shared_ptr<Demo::HelloPrx> createHello(const Ice::Current&) override;
     virtual std::string getName(const Ice::Current&) override;

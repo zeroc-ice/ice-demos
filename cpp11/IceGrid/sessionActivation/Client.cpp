@@ -26,7 +26,7 @@ main(int argc, char* argv[])
         // CommunicatorHolder's ctor initializes an Ice communicator,
         // and its dtor destroys this communicator.
         //
-        Ice::CommunicatorHolder ich(argc, argv, "config.client");
+        const Ice::CommunicatorHolder ich(argc, argv, "config.client");
 
         //
         // The communicator initialization removes all Ice-related arguments from argc/argv
@@ -171,7 +171,7 @@ string
 trim(const string& s)
 {
     static const string delims = "\t\r\n ";
-    string::size_type last = s.find_last_not_of(delims);
+    const string::size_type last = s.find_last_not_of(delims);
     if(last != string::npos)
     {
         return s.substr(s.find_first_not_of(delims), last+1);

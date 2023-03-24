@@ -28,8 +28,8 @@ main(int argc, char* argv[])
         // CommunicatorHolder's ctor initializes an Ice communicator,
         // and its dtor destroys this communicator.
         //
-        Ice::CommunicatorHolder ich(argc, argv, "config.client");
-        auto communicator = ich.communicator();
+        const Ice::CommunicatorHolder ich(argc, argv, "config.client");
+        const auto& communicator = ich.communicator();
 
         ctrlCHandler.setCallback(
             [communicator](int)
@@ -62,7 +62,7 @@ main(int argc, char* argv[])
 int
 run(const shared_ptr<Ice::Communicator>& communicator, const string& appName)
 {
-    auto calculator = Ice::checkedCast<Demo::CalculatorPrx>(communicator->propertyToProxy("Calculator.Proxy"));
+    const auto calculator = Ice::checkedCast<Demo::CalculatorPrx>(communicator->propertyToProxy("Calculator.Proxy"));
     if(!calculator)
     {
         cerr << appName << ": invalid proxy" << endl;

@@ -13,7 +13,7 @@ class ChatSessionI : public Demo::ChatSession
 {
 public:
 
-    ChatSessionI(const std::string&);
+    ChatSessionI(std::string);
 
     virtual void setCallback(std::shared_ptr<Demo::ChatCallbackPrx>, const Ice::Current&) override;
     virtual void say(std::string, const Ice::Current&) override;

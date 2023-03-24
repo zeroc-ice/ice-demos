@@ -10,14 +10,14 @@ using namespace std;
 float
 ThermostatI::getTemp(const Ice::Current&)
 {
-    lock_guard<mutex> lock(_thermostatLock);
+    const lock_guard<mutex> lock(_thermostatLock);
     return _temperature;
 }
 
 void
 ThermostatI::setTemp(float temp, const Ice::Current&)
 {
-    lock_guard<mutex> lock(_thermostatLock);
+    const lock_guard<mutex> lock(_thermostatLock);
     _temperature = temp;
 }
 

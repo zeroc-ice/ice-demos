@@ -1,6 +1,6 @@
 {
   "name": "ice-demos",
-  "version": "3.7.8",
+  "version": "3.7.9",
   "description": "Sample programs for Ice (Internet Communications Engine)",
   "author": "ZeroC, Inc.",
   "homepage": "https://zeroc.com",
@@ -13,18 +13,18 @@
     "run": "gulp run"
   },
   "dependencies": {
-    "ice": "^3.7.80",
-    "slice2js": "^3.7.8"
+    "ice": "^3.7.90",
+    "slice2js": "^3.7.9"
   },
   "devDependencies": {
-    "@babel/cli": "^7.16.8",
-    "@babel/core": "^7.16.7",
-    "@babel/plugin-transform-async-to-generator": "^7.16.8",
-    "@babel/preset-env": "^7.16.8",
+    "@babel/cli": "^7.21.0",
+    "@babel/core": "^7.21.3",
+    "@babel/plugin-transform-async-to-generator": "^7.20.7",
+    "@babel/preset-env": "^7.20.2",
     "babel-plugin-transform-builtin-extend": "^1.1.2",
     "babel-preset-es2015-script": "^1.1.0",
-    "core-js": "^3.20.3",
-    "core-js-bundle": "^3.20.3",
+    "core-js": "^3.29.1",
+    "core-js-bundle": "^3.29.1",
     "del": "^5.1.0",
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
@@ -39,7 +39,7 @@
     "hogan.js": "^3.0.2",
     "http-proxy": "^1.18.1",
     "pump": "^3.0.0",
-    "regenerator-runtime": "^0.13.9",
+    "regenerator-runtime": "^0.13.11",
     "vinyl-paths": "^3.0.1"
   }
 }
