@@ -150,7 +150,7 @@ main(int argc, char* argv[])
         {
             initData.properties->setProperty("Ice.Plugin.IceSSL","IceSSL:createIceSSL");
             initData.properties->setProperty("IceSSL.UsePlatformCAs", "1");
-            initData.properties->setProperty("IceSSL.CheckCertName", "1");
+            initData.properties->setProperty("IceSSL.CheckCertName", "2");
             initData.properties->setProperty("IceSSL.VerifyDepthMax", "5");
             initData.properties->setProperty("PollingChatSessionFactory",
                 "PollingChatSessionFactory:wss -h zeroc.com -p 443 -r /demo-proxy/chat/poll");
