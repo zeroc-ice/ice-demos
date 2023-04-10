@@ -37,7 +37,7 @@ if($data->properties->getProperty("PollingChatSessionFactory") == '')
 {
     $data->properties->setProperty("Ice.Plugin.IceSSL", "IceSSL:createIceSSL");
     $data->properties->setProperty("IceSSL.UsePlatformCAs", "1");
-    $data->properties->setProperty("IceSSL.CheckCertName", "1");
+    $data->properties->setProperty("IceSSL.CheckCertName", "2");
     $data->properties->setProperty("IceSSL.VerifyDepthMax", "5");
     $data->properties->setProperty("PollingChatSessionFactory",
                                    "PollingChatSessionFactory:wss -h zeroc.com -p 443 -r /demo-proxy/chat/poll");
