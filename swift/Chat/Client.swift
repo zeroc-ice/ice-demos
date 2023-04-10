@@ -117,7 +117,7 @@ class Client: ObservableObject {
         properties.setProperty(key: "Ice.Default.Router",
                                value: "Glacier2/router:wss -p 443 -h zeroc.com -r /demo-proxy/chat/glacier2 -t 10000")
         properties.setProperty(key: "IceSSL.UsePlatformCAs", value: "1")
-        properties.setProperty(key: "IceSSL.CheckCertName", value: "1")
+        properties.setProperty(key: "IceSSL.CheckCertName", value: "2")
         properties.setProperty(key: "IceSSL.VerifyDepthMax", value: "5")
         properties.setProperty(key: "Ice.ACM.Client.Timeout", value: "0")
         properties.setProperty(key: "Ice.RetryIntervals", value: "-1")
