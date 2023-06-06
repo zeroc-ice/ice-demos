@@ -1,10 +1,10 @@
 Demos in this directory:
 
-- [evictor](./evictor)
+~~- [evictor](./evictor)~~
 
-  This is the source code for the evictor implementation described in
+  ~~This is the source code for the evictor implementation described in
   the Ice Run Time chapter. You can copy and modify this code to
-  suit your needs.
+  suit your needs.~~
 
 - [lifecycle](./lifecycle)
 
