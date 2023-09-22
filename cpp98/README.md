@@ -136,7 +136,7 @@ If you are building Debug, add both the Debug and Release `bin` directories with
 command similar to:
 
 ```shell
-set PATH=%USERPROFILE%\ice-demos\cpp98\packages\zeroc.ice.v140.3.7.9\build\native\bin\x64\Debug;%USERPROFILE%\ice-demos\cpp98\packages\zeroc.ice.v140.3.7.9\build\native\bin\x64\Release;%PATH%
+set PATH=%USERPROFILE%\ice-demos\cpp98\packages\zeroc.ice.v140.3.7.10\build\native\bin\x64\Debug;%USERPROFILE%\ice-demos\cpp98\packages\zeroc.ice.v140.3.7.10\build\native\bin\x64\Release;%PATH%
 ```
 
 This is required because the Debug `bin` directories provide only a subset of all
@@ -146,7 +146,7 @@ If you are building Release, you should add only the Release `bin` directory to
 your PATH with a command similar to:
 
 ```shell
-set PATH=%USERPROFILE%\ice-demos\cpp98\packages\zeroc.ice.v140.3.7.9\build\native\bin\x64\Release;%PATH%
+set PATH=%USERPROFILE%\ice-demos\cpp98\packages\zeroc.ice.v140.3.7.10\build\native\bin\x64\Release;%PATH%
 ```
 
 Then refer to the README.md file in each demo directory for usage instructions.
