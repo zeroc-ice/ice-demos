@@ -28,6 +28,7 @@ android {
     lintOptions {
         disable 'UnusedAttribute' // autofillHints is only used with API level 26 and older
     }
+    namespace 'com.zeroc.hello'
 }
 
 task copyBksTask(type: Copy) {
