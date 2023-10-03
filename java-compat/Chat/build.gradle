@@ -25,7 +25,7 @@ dependencies {
 }
 
 jar {
-    archiveName = "ChatGUITEMP.jar"
+    archiveFileName = "ChatGUITEMP.jar"
     manifest {
         attributes 'Main-Class': "ChatDemoGUI.MainView"
     }
