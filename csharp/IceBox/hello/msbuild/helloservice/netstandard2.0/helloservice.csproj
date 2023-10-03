@@ -25,7 +25,7 @@
         <SliceCompile Include="../../../Hello.ice" />
         <PackageReference Include="zeroc.ice.net" Version="3.7.10" />
         <PackageReference Include="zeroc.icebuilder.msbuild" Version="5.0.9" />
-        <IceBoxNet Include="$(IceHome)/tools/net6.0/*" />
+        <IceBoxNet Include="$(IceHome)/tools/$(AppTargetFramework)/*" />
         <Compile Update="generated\Hello.cs">
           <SliceCompileSource>..\..\..\Hello.ice</SliceCompileSource>
         </Compile>
