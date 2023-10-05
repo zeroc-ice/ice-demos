@@ -21,7 +21,7 @@
         <ExternalConsole>true</ExternalConsole>
     </PropertyGroup>
     <ItemGroup>
-        <Compile Include="../../../HelloI.cs" />
+        <Compile Include="../../../Printer.cs" />
         <Compile Include="../../../Server.cs" />
         <SliceCompile Include="../../../Hello.ice" />
         <PackageReference Include="zeroc.ice.net" Version="3.7.9" />
