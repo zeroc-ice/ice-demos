@@ -113,8 +113,8 @@
     <Compile Include="generated\Hello.cs">
       <SliceCompileSource>..\..\..\Hello.ice</SliceCompileSource>
     </Compile>
-    <Compile Include="..\..\..\HelloI.cs">
-      <Link>HelloI.cs</Link>
+    <Compile Include="..\..\..\Printer.cs">
+      <Link>Printer.cs</Link>
     </Compile>
     <Compile Include="..\..\..\Server.cs">
       <Link>Server.cs</Link>
