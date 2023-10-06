@@ -1,11 +1,5 @@
 Demos in this directory:
 
-- [evictor](./evictor)
-
-  This is the source code for the evictor implementation described in
-  the Ice Run Time chapter. You can copy and modify this code to
-  suit your needs.
-
 - [lifecycle](./lifecycle)
 
   An implementation of the file system that supports life cycle operations.
