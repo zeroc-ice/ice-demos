@@ -24,7 +24,7 @@ demos.xcodeproj: Rakefile | carthage-bootstrap
 all:: demos
 
 carthage-bootstrap:
-	carthage bootstrap --cache-builds --use-xcframeworks
+	carthage bootstrap --cache-builds --use-xcframeworks --platform macOS,iOS
 
 demos:: carthage-bootstrap
 

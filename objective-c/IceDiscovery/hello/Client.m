@@ -222,8 +222,7 @@ run(id<ICECommunicator> communicator)
     return 0;
 }
 
-void
-menu()
+void menu(void)
 {
     printf("usage:\n"
            "t: send greeting as twoway\n"
