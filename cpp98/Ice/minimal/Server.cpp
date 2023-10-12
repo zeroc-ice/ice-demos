@@ -3,7 +3,7 @@
 //
 
 #include <Ice/Ice.h>
-#include <HelloI.h>
+#include <Printer.h>
 
 using namespace std;
 
@@ -15,7 +15,7 @@ main(int argc, char* argv[])
         Ice::CommunicatorHolder ich(argc, argv);
         Ice::ObjectAdapterPtr adapter =
             ich->createObjectAdapterWithEndpoints("Hello", "default -h localhost -p 10000");
-        adapter->add(new HelloI, Ice::stringToIdentity("hello"));
+        adapter->add(new Printer, Ice::stringToIdentity("hello"));
         adapter->activate();
         ich->waitForShutdown();
     }

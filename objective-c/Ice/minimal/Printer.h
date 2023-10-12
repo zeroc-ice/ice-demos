@@ -4,5 +4,5 @@
 
 #import <Hello.h>
 
-@interface HelloI : DemoHello<DemoHello>
+@interface Printer : DemoHello<DemoHello>
 @end

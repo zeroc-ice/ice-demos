@@ -3,7 +3,7 @@
 //
 
 #include <Ice/Ice.h>
-#include <HelloI.h>
+#include <Printer.h>
 
 using namespace std;
 
@@ -27,7 +27,7 @@ main(int argc, char* argv[])
             });
 
         auto adapter = communicator->createObjectAdapterWithEndpoints("Hello", "default -h localhost -p 10000");
-        adapter->add(make_shared<HelloI>(), Ice::stringToIdentity("hello"));
+        adapter->add(make_shared<Printer>(), Ice::stringToIdentity("hello"));
         adapter->activate();
         communicator->waitForShutdown();
     }

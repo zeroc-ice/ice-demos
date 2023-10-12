@@ -3,12 +3,12 @@
 //
 
 #include <Ice/Ice.h>
-#include <HelloI.h>
+#include <Printer.h>
 
 using namespace std;
 
 void
-HelloI::sayHello(const Ice::Current&)
+Printer::sayHello(const Ice::Current&)
 {
     cout << "Hello World!" << endl;
 }

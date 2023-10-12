@@ -3,7 +3,7 @@
 //
 
 #import <objc/Ice.h>
-#import <HelloI.h>
+#import <Printer.h>
 
 int
 main(int argc, char* argv[])
@@ -24,7 +24,7 @@ main(int argc, char* argv[])
             {
                 id<ICEObjectAdapter> adapter = [communicator createObjectAdapterWithEndpoints:@"Hello"
                                                                                     endpoints:@"default -p 10000"];
-                [adapter add:[HelloI hello] identity:[ICEUtil stringToIdentity:@"hello"]];
+                [adapter add:[Printer hello] identity:[ICEUtil stringToIdentity:@"hello"]];
                 [adapter activate];
                 [communicator waitForShutdown];
             }

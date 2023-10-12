@@ -11,7 +11,7 @@ Ice.loadSlice('Hello.ice')
 import Demo
 
 
-class HelloI(Demo.Hello):
+class Printer(Demo.Hello):
     def sayHello(self, current):
         print("Hello World!")
 

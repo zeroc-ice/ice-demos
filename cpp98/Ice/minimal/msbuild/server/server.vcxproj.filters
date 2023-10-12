@@ -55,7 +55,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\HelloI.cpp">
+    <ClCompile Include="..\..\Printer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Server.cpp">
@@ -75,7 +75,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\HelloI.h">
+    <ClInclude Include="..\..\Printer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Win32\Debug\Hello.h">

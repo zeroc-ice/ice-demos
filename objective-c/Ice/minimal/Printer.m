@@ -2,11 +2,11 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#import <HelloI.h>
+#import <Printer.h>
 
 #include <stdio.h>
 
-@implementation HelloI
+@implementation Printer
 -(void) sayHello:(ICECurrent*)current
 {
     printf("Hello World!\n");

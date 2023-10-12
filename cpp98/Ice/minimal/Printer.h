@@ -2,12 +2,12 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#ifndef HELLO_I_H
-#define HELLO_I_H
+#ifndef PRINTER_H
+#define PRINTER_H
 
 #include <Hello.h>
 
-class HelloI : public Demo::Hello
+class Printer : public Demo::Hello
 {
 public:
 
