@@ -4,7 +4,7 @@
 
 import com.zeroc.demos.Ice.minimal.Demo.*;
 
-public class HelloI implements Hello
+public class Printer implements Hello
 {
     @Override
     public void sayHello(com.zeroc.Ice.Current current)

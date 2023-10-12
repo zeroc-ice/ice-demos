@@ -10,7 +10,7 @@ public class Server
         public void
         run()
         {
-            _communicator.destroy();
+            _communicator.shutdown();
         }
 
         ShutdownHook(Ice.Communicator communicator)
@@ -26,15 +26,12 @@ public class Server
     {
         try(Ice.Communicator communicator = Ice.Util.initialize(args))
         {
-            //
-            // Install shutdown hook to (also) destroy communicator during JVM shutdown.
-            // This ensures the communicator gets destroyed when the user interrupts the application with Ctrl-C.
-            //
+            // Shut down the communicator on Ctrl+C
             Runtime.getRuntime().addShutdownHook(new ShutdownHook(communicator));
 
             Ice.ObjectAdapter adapter =
                 communicator.createObjectAdapterWithEndpoints("Hello", "default -h localhost -p 10000");
-            adapter.add(new HelloI(), Ice.Util.stringToIdentity("hello"));
+            adapter.add(new Printer(), Ice.Util.stringToIdentity("hello"));
             adapter.activate();
             communicator.waitForShutdown();
         }
