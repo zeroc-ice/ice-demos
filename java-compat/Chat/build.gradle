@@ -4,7 +4,7 @@ buildscript {
     }
 
     dependencies {
-        classpath "com.guardsquare:proguard-gradle:7.3.1"
+        classpath "com.guardsquare:proguard-gradle:7.4.0-beta02"
     }
 }
 
@@ -25,7 +25,7 @@ dependencies {
 }
 
 jar {
-    archiveName = "ChatGUITEMP.jar"
+    archiveFileName = "ChatGUITEMP.jar"
     manifest {
         attributes 'Main-Class': "ChatDemoGUI.MainView"
     }

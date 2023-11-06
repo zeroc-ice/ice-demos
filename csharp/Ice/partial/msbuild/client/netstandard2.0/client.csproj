@@ -24,7 +24,7 @@
         <Compile Include="../../../Client.cs" />
         <Compile Include="../../../Measurements.cs" />
         <SliceCompile Include="../../../MeasurementStation.ice" />
-        <PackageReference Include="zeroc.ice.net" Version="3.7.9" />
+        <PackageReference Include="zeroc.ice.net" Version="3.7.10" />
         <PackageReference Include="zeroc.icebuilder.msbuild" Version="5.0.9" />
         <Compile Update="generated\MeasurementStation.cs">
           <SliceCompileSource>../../../MeasurementStation.ice</SliceCompileSource>

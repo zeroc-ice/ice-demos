@@ -32,7 +32,7 @@
 
     <Target Name="DownloadSymbols" DependsOnTargets="NuGetRestore">
         <Exec IgnoreExitCode="True"
-              Command="symchk /r $(MSBuildThisFileDirectory)..\packages\zeroc.ice.$(DefaultPlatformToolset).3.7.9\build\native\bin\$(Platform)\$(Configuration)\* /s $(SymbolServer)">
+              Command="symchk /r $(MSBuildThisFileDirectory)..\packages\zeroc.ice.$(DefaultPlatformToolset).3.7.10\build\native\bin\$(Platform)\$(Configuration)\* /s $(SymbolServer)">
               <Output TaskParameter="ExitCode" PropertyName="ErrorCode"/>
         </Exec>
         <Warning Text="PDBs download failed, stack traces might be missing or incomplete" Condition="'$(ErrorCode)' != '0'" />
