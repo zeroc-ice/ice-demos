@@ -97,7 +97,7 @@ interface PollingChatSession
     /**
      *
      * This operation returns a sequence of ChatRoomEvent with the
-     * events that occured in the chat room since the last time the
+     * events that occurred in the chat room since the last time the
      * client called getUpdates.
      *
      * @return The sequence of chat room events.

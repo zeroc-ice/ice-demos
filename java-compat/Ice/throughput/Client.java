@@ -169,7 +169,7 @@ public class Client
                 {
                     if(currentType == '1')
                     {
-                        repetitions = 1000; // Use more iterations for  byte sequences as it's a lot faster
+                        repetitions = 1000; // Use more iterations for byte sequences as it's a lot faster
                     }
 
                     char c = line.charAt(0);

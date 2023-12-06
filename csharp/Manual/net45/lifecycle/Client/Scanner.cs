@@ -117,7 +117,7 @@ class Scanner
     //
     // unget only works with one character.
     //
-    private void  unget(char c)
+    private void unget(char c)
     {
         Debug.Assert(!_unget);
         _unget = true;

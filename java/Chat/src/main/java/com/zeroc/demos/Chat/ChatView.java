@@ -104,15 +104,15 @@ public class ChatView extends JPanel
                     vertivalScrollbar.setValue(vertivalScrollbar.getMaximum());
                 }
 
-                public void  componentHidden(ComponentEvent e)
+                public void componentHidden(ComponentEvent e)
                 {
                 }
 
-                public void  componentMoved(ComponentEvent e)
+                public void componentMoved(ComponentEvent e)
                 {
                 }
 
-                public void  componentShown(ComponentEvent e)
+                public void componentShown(ComponentEvent e)
                 {
                 }
             });

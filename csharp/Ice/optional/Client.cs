@@ -108,7 +108,7 @@ public class Client
 
         //
         // Add a contact for "steve". The behavior of the server is to
-        // default construct the Contact, and then assign  all set parameters.
+        // default construct the Contact, and then assign all set parameters.
         // Since the default value of NumberType in the slice definition
         // is NumberType.HOME and in this case the NumberType is unset it will take
         // the default value.

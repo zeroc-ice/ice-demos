@@ -83,7 +83,7 @@ func run() -> Int32 {
                 case "1":
                     print("using byte sequences")
                     seqSize = ByteSeqSize
-                    repetitions = 1000 // Use more iterations for  byte sequences as it's a lot faster
+                    repetitions = 1000 // Use more iterations for byte sequences as it's a lot faster
                 case "2":
                     print("using string sequences")
                     seqSize = StringSeqSize

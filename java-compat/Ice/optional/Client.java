@@ -128,7 +128,7 @@ public class Client
         // since we are not passing the NumberType parameter.
         //
         // The behavior of the server is to default construct the
-        // Contact, and then assign  all set parameters.  Since the
+        // Contact, and then assign all set parameters. Since the
         // default value of NumberType in the slice definition is
         // NumberType.HOME and in this case the NumberType is unset
         // it will take the default value.

@@ -4321,7 +4321,7 @@ Form.EventObserver = Class.create(Abstract.EventObserver, {
     var docElement = document.documentElement,
      body = document.body || { scrollTop: 0 };
 
-    return  event.pageY || (event.clientY +
+    return event.pageY || (event.clientY +
        (docElement.scrollTop || body.scrollTop) -
        (docElement.clientTop || 0));
   }

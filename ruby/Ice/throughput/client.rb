@@ -107,7 +107,7 @@ def run(communicator, args)
             elsif c == 't' or c == 'o' or c == 'r' or c == 'e'
 
                 if currentType == '1'
-                    repetitions = 1000 # Use more iterations for  byte sequences as it's a lot faster
+                    repetitions = 1000 # Use more iterations for byte sequences as it's a lot faster
                 end
 
                 if c == 't' or c == 'o'

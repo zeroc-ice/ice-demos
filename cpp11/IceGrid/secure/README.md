@@ -26,8 +26,8 @@ pip install "zeroc-icecertutils >= 1.0.4"
 ```
 
 The keytool utility from the Java Development Kit is also required to
-generate Java KeyStore files so you need to add the the JDK bin
-directory to your PATH (if it's not found, `makedemocerts.py` will print
+generate Java KeyStore files so you need to add the JDK bin directory
+to your PATH (if it's not found, `makedemocerts.py` will print
 a warning).
 
 For simplicity, the certificates created by `makedemocerts.py` are not
