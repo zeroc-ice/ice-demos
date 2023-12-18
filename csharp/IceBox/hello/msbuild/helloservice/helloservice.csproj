@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <AssemblyName>helloservice</AssemblyName>
+        <TargetFramework>$(AppTargetFramework)</TargetFramework>
+        <OutputPath>../../</OutputPath>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    </PropertyGroup>
+    <ItemGroup>
+        <Compile Include="../../HelloI.cs" />
+        <Compile Include="../../HelloServiceI.cs" />
+        <SliceCompile Include="../../Hello.ice" />
+        <PackageReference Include="zeroc.ice.net" Version="3.7.10" />
+        <PackageReference Include="zeroc.icebuilder.msbuild" Version="5.0.9" />
+        <IceBoxNet Include="$(IceHome)/tools/$(AppTargetFramework)/*" />
+    </ItemGroup>
+    <Target AfterTargets="Build" Name="CopyIceBoxNet">
+        <Copy DestinationFolder="$(OutputPath)" SourceFiles="@(IceBoxNet)" />
+    </Target>
+    <Target AfterTargets="Clean" Name="CleanIceBoxNet">
+        <Delete Files="@(IceBoxNet->'$(OutputPath)%(Identity)')" />
+    </Target>
+</Project>

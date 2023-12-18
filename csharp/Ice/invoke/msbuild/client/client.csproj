@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <AssemblyName>client</AssemblyName>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>$(AppTargetFramework)</TargetFramework>
+        <OutputPath>../../</OutputPath>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    </PropertyGroup>
+    <ItemGroup>
+        <Compile Include="../../Client.cs" />
+        <SliceCompile Include="../../Printer.ice" />
+        <PackageReference Include="zeroc.ice.net" Version="3.7.10" />
+        <PackageReference Include="zeroc.icebuilder.msbuild" Version="5.0.9" />
+    </ItemGroup>
+</Project>
