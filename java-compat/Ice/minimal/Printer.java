@@ -4,11 +4,10 @@
 
 import Demo.*;
 
-public class HelloI extends _HelloDisp
+public class Printer extends _HelloDisp
 {
     @Override
-    public void
-    sayHello(Ice.Current current)
+    public void sayHello(Ice.Current current)
     {
         System.out.println("Hello World!");
     }
