@@ -2,23 +2,17 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <Ice/Ice.h>
 #include <HelloI.h>
+#include <Ice/Ice.h>
 
 using namespace std;
 
-HelloI::HelloI(const shared_ptr<WorkQueue>& workQueue) :
-    _workQueue(workQueue)
-{
-}
+HelloI::HelloI(const shared_ptr<WorkQueue>& workQueue) : _workQueue(workQueue) {}
 
 void
-HelloI::sayHelloAsync(int delay,
-                      function<void()> response,
-                      function<void(exception_ptr)> error,
-                      const Ice::Current&)
+HelloI::sayHelloAsync(int delay, function<void()> response, function<void(exception_ptr)> error, const Ice::Current&)
 {
-    if(delay == 0)
+    if (delay == 0)
     {
         cout << "Hello World!" << endl;
         response();

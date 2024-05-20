@@ -2,8 +2,8 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <Ice/Ice.h>
 #include <Hello.h>
+#include <Ice/Ice.h>
 
 using namespace std;
 using namespace Demo;
@@ -31,7 +31,7 @@ main(int argc, char* argv[])
         //
         // The communicator initialization removes all Ice-related arguments from argc/argv
         //
-        if(argc > 1)
+        if (argc > 1)
         {
             cerr << argv[0] << ": too many arguments" << endl;
             status = 1;
@@ -41,7 +41,7 @@ main(int argc, char* argv[])
             status = run(ich.communicator());
         }
     }
-    catch(const std::exception& ex)
+    catch (const std::exception& ex)
     {
         cerr << argv[0] << ": " << ex.what() << endl;
         status = 1;
@@ -55,10 +55,9 @@ void menu();
 int
 run(const shared_ptr<Ice::Communicator>& communicator)
 {
-
     auto twoway = Ice::checkedCast<HelloPrx>(
         communicator->propertyToProxy("Hello.Proxy")->ice_twoway()->ice_timeout(-1)->ice_secure(false));
-    if(!twoway)
+    if (!twoway)
     {
         cerr << "invalid proxy" << endl;
         return 1;
@@ -79,21 +78,21 @@ run(const shared_ptr<Ice::Communicator>& communicator)
         {
             cout << "==> ";
             cin >> c;
-            if(c == 't')
+            if (c == 't')
             {
                 twoway->sayHello();
             }
-            else if(c == 'o')
+            else if (c == 'o')
             {
                 oneway->sayHello();
             }
-            else if(c == 'O')
+            else if (c == 'O')
             {
                 batchOneway->sayHello();
             }
-            else if(c == 'd')
+            else if (c == 'd')
             {
-                if(secure)
+                if (secure)
                 {
                     cout << "secure datagrams are not supported" << endl;
                 }
@@ -102,9 +101,9 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                     datagram->sayHello();
                 }
             }
-            else if(c == 'D')
+            else if (c == 'D')
             {
-                if(secure)
+                if (secure)
                 {
                     cout << "secure datagrams are not supported" << endl;
                 }
@@ -113,15 +112,15 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                     batchDatagram->sayHello();
                 }
             }
-            else if(c == 'f')
+            else if (c == 'f')
             {
                 batchOneway->ice_flushBatchRequests();
-                if(!secure)
+                if (!secure)
                 {
                     batchDatagram->ice_flushBatchRequests();
                 }
             }
-            else if(c == 'S')
+            else if (c == 'S')
             {
                 secure = !secure;
 
@@ -131,7 +130,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 datagram = datagram->ice_secure(secure);
                 batchDatagram = batchDatagram->ice_secure(secure);
 
-                if(secure)
+                if (secure)
                 {
                     cout << "secure mode is now on" << endl;
                 }
@@ -140,11 +139,11 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                     cout << "secure mode is now off" << endl;
                 }
             }
-            else if(c == 'x')
+            else if (c == 'x')
             {
                 // Nothing to do
             }
-            else if(c == '?')
+            else if (c == '?')
             {
                 menu();
             }
@@ -154,12 +153,11 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 menu();
             }
         }
-        catch(const Ice::Exception& ex)
+        catch (const Ice::Exception& ex)
         {
             cerr << ex << endl;
         }
-    }
-    while(cin.good() && c != 'x');
+    } while (cin.good() && c != 'x');
 
     return 0;
 }
@@ -167,15 +165,14 @@ run(const shared_ptr<Ice::Communicator>& communicator)
 void
 menu()
 {
-    cout <<
-        "usage:\n"
-        "t: send greeting as twoway\n"
-        "o: send greeting as oneway\n"
-        "O: send greeting as batch oneway\n"
-        "d: send greeting as datagram\n"
-        "D: send greeting as batch datagram\n"
-        "f: flush all batch requests\n"
-        "S: switch secure mode on/off\n"
-        "x: exit\n"
-        "?: help\n";
+    cout << "usage:\n"
+            "t: send greeting as twoway\n"
+            "o: send greeting as oneway\n"
+            "O: send greeting as batch oneway\n"
+            "d: send greeting as datagram\n"
+            "D: send greeting as batch datagram\n"
+            "f: flush all batch requests\n"
+            "S: switch secure mode on/off\n"
+            "x: exit\n"
+            "?: help\n";
 }

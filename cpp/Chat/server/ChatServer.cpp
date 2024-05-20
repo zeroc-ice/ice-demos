@@ -2,8 +2,8 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <Ice/Ice.h>
 #include <ChatSessionManagerI.h>
+#include <Ice/Ice.h>
 #include <PollingChatSessionFactoryI.h>
 
 using namespace std;
@@ -11,12 +11,10 @@ using namespace std;
 class ChatServer : public Ice::Service
 {
 public:
-
     virtual bool start(int argc, char* argv[], int&) override;
     virtual bool stop() override;
 
 private:
-
     shared_ptr<Ice::ObjectAdapter> _adapter;
 };
 
@@ -32,36 +30,38 @@ ChatServer::start(int, char*[], int& status)
         _adapter = communicator()->createObjectAdapter("ChatServer");
 
         auto chatRoom = make_shared<ChatRoom>(traceEnabled, logger);
-        if(traceEnabled)
+        if (traceEnabled)
         {
             Ice::Trace out(logger, "info");
             out << "Chat room created ok.";
         }
-        _adapter->add(make_shared<ChatSessionManagerI>(chatRoom, traceEnabled, logger),
-                      Ice::stringToIdentity("ChatSessionManager"));
+        _adapter->add(
+            make_shared<ChatSessionManagerI>(chatRoom, traceEnabled, logger),
+            Ice::stringToIdentity("ChatSessionManager"));
 
-        if(traceEnabled)
+        if (traceEnabled)
         {
             Ice::Trace out(logger, "info");
             out << "Chat session manager created ok.";
         }
-        _adapter->add(make_shared<PollingChatSessionFactoryI>(chatRoom, timeout, traceEnabled, logger),
-                      Ice::stringToIdentity("PollingChatSessionFactory"));
+        _adapter->add(
+            make_shared<PollingChatSessionFactoryI>(chatRoom, timeout, traceEnabled, logger),
+            Ice::stringToIdentity("PollingChatSessionFactory"));
 
-        if(traceEnabled)
+        if (traceEnabled)
         {
             Ice::Trace out(logger, "info");
             out << "Polling chat session factory created ok.";
         }
 
         _adapter->activate();
-        if(traceEnabled)
+        if (traceEnabled)
         {
             Ice::Trace out(logger, "info");
             out << "Chat server started ok.";
         }
     }
-    catch(const Ice::LocalException&)
+    catch (const Ice::LocalException&)
     {
         status = 1;
         throw;

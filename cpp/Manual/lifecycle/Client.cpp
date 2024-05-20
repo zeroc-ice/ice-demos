@@ -2,8 +2,8 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <Ice/Ice.h>
 #include <Filesystem.h>
+#include <Ice/Ice.h>
 #include <Parser.h>
 
 using namespace std;
@@ -31,7 +31,7 @@ main(int argc, char* argv[])
         // Down-cast the proxy to a Directory proxy.
         //
         auto rootDir = Ice::checkedCast<DirectoryPrx>(base);
-        if(!rootDir)
+        if (!rootDir)
         {
             cerr << "Invalid proxy" << endl;
             status = 1;
@@ -42,7 +42,7 @@ main(int argc, char* argv[])
             status = p->parse();
         }
     }
-    catch(const std::exception& ex)
+    catch (const std::exception& ex)
     {
         cerr << argv[0] << ": " << ex.what() << endl;
         status = 1;

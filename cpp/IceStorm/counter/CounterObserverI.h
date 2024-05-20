@@ -13,12 +13,10 @@ void print(const std::string&);
 class CounterObserverI : public Demo::CounterObserver
 {
 public:
-
     virtual void init(int, const Ice::Current&) override;
     virtual void inc(int, const Ice::Current&) override;
 
 private:
-
     int _value = 0;
     std::mutex _mutex;
 };

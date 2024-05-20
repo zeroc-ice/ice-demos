@@ -11,17 +11,17 @@ using namespace Demo;
 static ostream&
 operator<<(ostream& out, Color c)
 {
-    switch(c)
+    switch (c)
     {
-    case Color::red:
-        out << "red";
-        break;
-    case Color::green:
-        out << "green";
-        break;
-    case Color::blue:
-        out << "blue";
-        break;
+        case Color::red:
+            out << "red";
+            break;
+        case Color::green:
+            out << "green";
+            break;
+        case Color::blue:
+            out << "blue";
+            break;
     }
     return out;
 }
@@ -48,7 +48,7 @@ main(int argc, char* argv[])
         //
         // The communicator initialization removes all Ice-related arguments from argc/argv
         //
-        if(argc > 1)
+        if (argc > 1)
         {
             cerr << argv[0] << ": too many arguments" << endl;
             status = 1;
@@ -58,7 +58,7 @@ main(int argc, char* argv[])
             status = run(ich.communicator());
         }
     }
-    catch(const std::exception& ex)
+    catch (const std::exception& ex)
     {
         cerr << argv[0] << ": " << ex.what() << endl;
         status = 1;
@@ -83,7 +83,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
         {
             cout << "==> ";
             cin >> ch;
-            if(ch == '1')
+            if (ch == '1')
             {
                 //
                 // Marshal the in parameter.
@@ -98,12 +98,12 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 //
                 // Invoke operation.
                 //
-                if(!obj->ice_invoke("printString", Ice::OperationMode::Normal, inParams, outParams))
+                if (!obj->ice_invoke("printString", Ice::OperationMode::Normal, inParams, outParams))
                 {
                     cout << "Unknown user exception" << endl;
                 }
             }
-            else if(ch == '2')
+            else if (ch == '2')
             {
                 //
                 // Marshal the in parameter.
@@ -119,12 +119,12 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 //
                 // Invoke operation.
                 //
-                if(!obj->ice_invoke("printStringSequence", Ice::OperationMode::Normal, inParams, outParams))
+                if (!obj->ice_invoke("printStringSequence", Ice::OperationMode::Normal, inParams, outParams))
                 {
                     cout << "Unknown user exception" << endl;
                 }
             }
-            else if(ch == '3')
+            else if (ch == '3')
             {
                 //
                 // Marshal the in parameter.
@@ -132,11 +132,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 Ice::ByteSeq inParams, outParams;
                 Ice::OutputStream out(communicator);
                 out.startEncapsulation();
-                const Demo::StringDict dict
-                    {
-                        {"The", "streaming"},
-                        {"API", "works!"}
-                    };
+                const Demo::StringDict dict{{"The", "streaming"}, {"API", "works!"}};
                 out.write(dict);
                 out.endEncapsulation();
                 out.finished(inParams);
@@ -144,12 +140,12 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 //
                 // Invoke operation.
                 //
-                if(!obj->ice_invoke("printDictionary", Ice::OperationMode::Normal, inParams, outParams))
+                if (!obj->ice_invoke("printDictionary", Ice::OperationMode::Normal, inParams, outParams))
                 {
                     cout << "Unknown user exception" << endl;
                 }
             }
-            else if(ch == '4')
+            else if (ch == '4')
             {
                 //
                 // Marshal the in parameter.
@@ -164,12 +160,12 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 //
                 // Invoke operation.
                 //
-                if(!obj->ice_invoke("printEnum", Ice::OperationMode::Normal, inParams, outParams))
+                if (!obj->ice_invoke("printEnum", Ice::OperationMode::Normal, inParams, outParams))
                 {
                     cout << "Unknown user exception" << endl;
                 }
             }
-            else if(ch == '5')
+            else if (ch == '5')
             {
                 //
                 // Marshal the in parameter.
@@ -187,12 +183,12 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 //
                 // Invoke operation.
                 //
-                if(!obj->ice_invoke("printStruct", Ice::OperationMode::Normal, inParams, outParams))
+                if (!obj->ice_invoke("printStruct", Ice::OperationMode::Normal, inParams, outParams))
                 {
                     cout << "Unknown user exception" << endl;
                 }
             }
-            else if(ch == '6')
+            else if (ch == '6')
             {
                 //
                 // Marshal the in parameter.
@@ -217,12 +213,12 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 //
                 // Invoke operation.
                 //
-                if(!obj->ice_invoke("printStructSequence", Ice::OperationMode::Normal, inParams, outParams))
+                if (!obj->ice_invoke("printStructSequence", Ice::OperationMode::Normal, inParams, outParams))
                 {
                     cout << "Unknown user exception" << endl;
                 }
             }
-            else if(ch == '7')
+            else if (ch == '7')
             {
                 //
                 // Marshal the in parameter.
@@ -241,19 +237,19 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 //
                 // Invoke operation.
                 //
-                if(!obj->ice_invoke("printClass", Ice::OperationMode::Normal, inParams, outParams))
+                if (!obj->ice_invoke("printClass", Ice::OperationMode::Normal, inParams, outParams))
                 {
                     cout << "Unknown user exception" << endl;
                 }
             }
-            else if(ch == '8')
+            else if (ch == '8')
             {
                 //
                 // Invoke operation.
                 //
                 const Ice::ByteSeq inParams;
                 Ice::ByteSeq outParams;
-                if(!obj->ice_invoke("getValues", Ice::OperationMode::Normal, inParams, outParams))
+                if (!obj->ice_invoke("getValues", Ice::OperationMode::Normal, inParams, outParams))
                 {
                     cout << "Unknown user exception" << endl;
                     continue;
@@ -270,17 +266,17 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 in.read(str);
                 in.readPendingValues();
                 in.endEncapsulation();
-                cout << "Got string `" << str << "' and class: s.name=" << c->s.name
-                     << ", s.value=" << c->s.value << endl;
+                cout << "Got string `" << str << "' and class: s.name=" << c->s.name << ", s.value=" << c->s.value
+                     << endl;
             }
-            else if(ch == '9')
+            else if (ch == '9')
             {
                 //
                 // Invoke operation.
                 //
                 const Ice::ByteSeq inParams;
                 Ice::ByteSeq outParams;
-                if(obj->ice_invoke("throwPrintFailure", Ice::OperationMode::Normal, inParams, outParams))
+                if (obj->ice_invoke("throwPrintFailure", Ice::OperationMode::Normal, inParams, outParams))
                 {
                     cout << "Expected exception" << endl;
                     continue;
@@ -292,27 +288,27 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 {
                     in.throwException();
                 }
-                catch(const Demo::PrintFailure&)
+                catch (const Demo::PrintFailure&)
                 {
                     // Expected.
                 }
-                catch(const Ice::UserException&)
+                catch (const Ice::UserException&)
                 {
                     cout << "Unknown user exception" << endl;
                 }
                 in.endEncapsulation();
             }
-            else if(ch == 's')
+            else if (ch == 's')
             {
                 const Ice::ByteSeq inParams;
                 Ice::ByteSeq outParams;
                 obj->ice_invoke("shutdown", Ice::OperationMode::Normal, inParams, outParams);
             }
-            else if(ch == 'x')
+            else if (ch == 'x')
             {
                 // Nothing to do.
             }
-            else if(ch == '?')
+            else if (ch == '?')
             {
                 menu();
             }
@@ -322,12 +318,11 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 menu();
             }
         }
-        catch(const Ice::Exception& ex)
+        catch (const Ice::Exception& ex)
         {
             cerr << ex << endl;
         }
-    }
-    while(cin.good() && ch != 'x');
+    } while (cin.good() && ch != 'x');
 
     return 0;
 }
@@ -335,18 +330,17 @@ run(const shared_ptr<Ice::Communicator>& communicator)
 void
 menu()
 {
-    cout <<
-        "usage:\n"
-        "1: print string\n"
-        "2: print string sequence\n"
-        "3: print dictionary\n"
-        "4: print enum\n"
-        "5: print struct\n"
-        "6: print struct sequence\n"
-        "7: print class\n"
-        "8: get values\n"
-        "9: throw exception\n"
-        "s: shutdown server\n"
-        "x: exit\n"
-        "?: help\n";
+    cout << "usage:\n"
+            "1: print string\n"
+            "2: print string sequence\n"
+            "3: print dictionary\n"
+            "4: print enum\n"
+            "5: print struct\n"
+            "6: print struct sequence\n"
+            "7: print class\n"
+            "8: get values\n"
+            "9: throw exception\n"
+            "s: shutdown server\n"
+            "x: exit\n"
+            "?: help\n";
 }

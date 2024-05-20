@@ -10,8 +10,8 @@
 class ThroughputI : public Demo::Throughput
 {
 public:
-
-    virtual EchoByteSeqMarshaledResult echoByteSeq(std::pair<const Ice::Byte*, const Ice::Byte*>, const Ice::Current&) override;
+    virtual EchoByteSeqMarshaledResult
+    echoByteSeq(std::pair<const Ice::Byte*, const Ice::Byte*>, const Ice::Current&) override;
 
     virtual void shutdown(const Ice::Current&) override;
 };

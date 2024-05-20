@@ -30,7 +30,7 @@ main(int argc, char* argv[])
         //
         // The communicator initialization removes all Ice-related arguments from argc/argv
         //
-        if(argc > 1)
+        if (argc > 1)
         {
             cerr << argv[0] << ": too many arguments" << endl;
             status = 1;
@@ -40,7 +40,7 @@ main(int argc, char* argv[])
             status = run(ich.communicator());
         }
     }
-    catch(const std::exception& ex)
+    catch (const std::exception& ex)
     {
         cerr << argv[0] << ": " << ex.what() << endl;
         status = 1;
@@ -53,7 +53,7 @@ int
 run(const shared_ptr<Ice::Communicator>& communicator)
 {
     auto nested = Ice::checkedCast<NestedPrx>(communicator->propertyToProxy("Nested.Proxy"));
-    if(!nested)
+    if (!nested)
     {
         cerr << "invalid proxy" << endl;
         return 1;
@@ -86,17 +86,16 @@ run(const shared_ptr<Ice::Communicator>& communicator)
             cout << "enter nesting level or 'x' for exit: ";
             cin >> s;
             int level = atoi(s.c_str());
-            if(level > 0)
+            if (level > 0)
             {
                 nested->nestedCall(level, self);
             }
         }
-        catch(const Ice::Exception& ex)
+        catch (const Ice::Exception& ex)
         {
             cerr << ex << endl;
         }
-    }
-    while(cin.good() && s != "x");
+    } while (cin.good() && s != "x");
 
     return 0;
 }

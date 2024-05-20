@@ -7,24 +7,19 @@
 
 using namespace std;
 
-WorkQueue::WorkQueue() : _done(false)
-{
-}
+WorkQueue::WorkQueue() : _done(false) {}
 
 void
 WorkQueue::start()
 {
-    thread t([this]()
-        {
-            this->run();
-        });
+    thread t([this]() { this->run(); });
     _thread = std::move(t);
 }
 
 void
 WorkQueue::join()
 {
-    if(_thread.joinable())
+    if (_thread.joinable())
     {
         _thread.join();
     }
@@ -35,14 +30,14 @@ WorkQueue::run()
 {
     unique_lock<mutex> lock(_mutex);
 
-    while(!_done)
+    while (!_done)
     {
-        if(_callbacks.empty())
+        if (_callbacks.empty())
         {
             _condition.wait(lock);
         }
 
-        if(!_done && !_callbacks.empty())
+        if (!_done && !_callbacks.empty())
         {
             //
             // Get next work item.
@@ -56,7 +51,7 @@ WorkQueue::run()
             //
             _condition.wait_for(lock, chrono::milliseconds(get<0>(entry)));
 
-            if(!_done)
+            if (!_done)
             {
                 //
                 // Print greeting and send response.
@@ -72,23 +67,23 @@ WorkQueue::run()
     //
     // Throw exception for any outstanding requests.
     //
-    for(auto& entry : _callbacks)
+    for (auto& entry : _callbacks)
     {
         get<2>(entry)(make_exception_ptr(Demo::RequestCanceledException()));
     }
 }
 
 void
-WorkQueue::add(int delay, function<void ()> response, function<void (exception_ptr)> error)
+WorkQueue::add(int delay, function<void()> response, function<void(exception_ptr)> error)
 {
     const unique_lock<mutex> lock(_mutex);
 
-    if(!_done)
+    if (!_done)
     {
         //
         // Add work item.
         //
-        if(_callbacks.size() == 0)
+        if (_callbacks.size() == 0)
         {
             _condition.notify_one();
         }

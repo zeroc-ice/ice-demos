@@ -2,15 +2,16 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <unordered_set>
-#include <Ice/Ice.h>
 #include <AuthenticatorI.h>
+#include <Ice/Ice.h>
 #include <InterceptorI.h>
 #include <ThermostatI.h>
+#include <unordered_set>
 
 using namespace std;
 
-int main(int argc, char* argv[])
+int
+main(int argc, char* argv[])
 {
     int status = 0;
 
@@ -29,16 +30,12 @@ int main(int argc, char* argv[])
         const Ice::CommunicatorHolder ich(argc, argv, "config.server");
         const auto& communicator = ich.communicator();
 
-        ctrlCHandler.setCallback(
-            [communicator](int)
-            {
-                communicator->shutdown();
-            });
+        ctrlCHandler.setCallback([communicator](int) { communicator->shutdown(); });
 
         //
         // The communicator initialization removes all Ice-related arguments from argc/argv
         //
-        if(argc > 1)
+        if (argc > 1)
         {
             cerr << argv[0] << ": too many arguments" << endl;
             status = 1;
@@ -62,23 +59,21 @@ int main(int argc, char* argv[])
             //
             // Set of all the operations to require authorization for.
             //
-            unordered_set<string> securedOperations({ "setTemp", "shutdown" });
+            unordered_set<string> securedOperations({"setTemp", "shutdown"});
             //
             // Create an object adapter for the thermostat.
             //
             auto thermostatAdapter = communicator->createObjectAdapter("Thermostat");
             auto thermostat = make_shared<ThermostatI>();
-            auto interceptor = make_shared<InterceptorI>(
-                std::move(thermostat),
-                authenticator,
-                std::move(securedOperations));
+            auto interceptor =
+                make_shared<InterceptorI>(std::move(thermostat), authenticator, std::move(securedOperations));
             thermostatAdapter->add(interceptor, Ice::stringToIdentity("thermostat"));
             thermostatAdapter->activate();
 
             communicator->waitForShutdown();
         }
     }
-    catch(const exception& ex)
+    catch (const exception& ex)
     {
         cerr << ex.what() << endl;
         status = 1;

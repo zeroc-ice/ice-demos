@@ -2,9 +2,9 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
+#include <Hello.h>
 #include <Ice/Ice.h>
 #include <IceGrid/IceGrid.h>
-#include <Hello.h>
 
 using namespace std;
 using namespace Demo;
@@ -27,16 +27,16 @@ main(int argc, char* argv[])
         //
         // The communicator initialization removes all Ice-related arguments from argc/argv
         //
-        if(argc > 2)
+        if (argc > 2)
         {
             cerr << argv[0] << ": too many arguments" << endl;
             status = 1;
         }
         else
         {
-            if(argc == 2)
+            if (argc == 2)
             {
-                if(string(argv[1]) == "--context")
+                if (string(argv[1]) == "--context")
                 {
                     status = run(ich.communicator(), true);
                 }
@@ -52,7 +52,7 @@ main(int argc, char* argv[])
             }
         }
     }
-    catch(const std::exception& ex)
+    catch (const std::exception& ex)
     {
         cerr << argv[0] << ": " << ex.what() << endl;
         status = 1;
@@ -69,7 +69,7 @@ run(const shared_ptr<Ice::Communicator>& communicator, bool addContext)
     //
     // Add the context entry that allows the client to use the locator
     //
-    if(addContext)
+    if (addContext)
     {
         auto locator = communicator->getDefaultLocator();
         Ice::Context ctx;
@@ -81,7 +81,7 @@ run(const shared_ptr<Ice::Communicator>& communicator, bool addContext)
     // Now we try to connect to the object with the `hello' identity.
     //
     auto hello = Ice::checkedCast<HelloPrx>(communicator->stringToProxy("hello"));
-    if(!hello)
+    if (!hello)
     {
         cerr << "couldn't find a `hello' object." << endl;
         return 1;
@@ -96,19 +96,19 @@ run(const shared_ptr<Ice::Communicator>& communicator, bool addContext)
         {
             cout << "==> ";
             cin >> c;
-            if(c == 't')
+            if (c == 't')
             {
                 hello->sayHello();
             }
-            else if(c == 's')
+            else if (c == 's')
             {
                 hello->shutdown();
             }
-            else if(c == 'x')
+            else if (c == 'x')
             {
                 // Nothing to do
             }
-            else if(c == '?')
+            else if (c == '?')
             {
                 menu();
             }
@@ -118,12 +118,11 @@ run(const shared_ptr<Ice::Communicator>& communicator, bool addContext)
                 menu();
             }
         }
-        catch(const Ice::Exception& ex)
+        catch (const Ice::Exception& ex)
         {
             cerr << ex << endl;
         }
-    }
-    while(cin.good() && c != 'x');
+    } while (cin.good() && c != 'x');
 
     return 0;
 }
@@ -131,10 +130,9 @@ run(const shared_ptr<Ice::Communicator>& communicator, bool addContext)
 void
 menu()
 {
-    cout <<
-        "usage:\n"
-        "t: send greeting\n"
-        "s: shutdown server\n"
-        "x: exit\n"
-        "?: help\n";
+    cout << "usage:\n"
+            "t: send greeting\n"
+            "s: shutdown server\n"
+            "x: exit\n"
+            "?: help\n";
 }

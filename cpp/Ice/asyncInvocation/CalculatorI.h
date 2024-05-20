@@ -10,7 +10,6 @@
 class CalculatorI : public Demo::Calculator
 {
 public:
-
     virtual int add(int, int, const Ice::Current&) override;
     virtual int subtract(int, int, const Ice::Current&) override;
     virtual int divide(int, int, int&, const Ice::Current&) override;

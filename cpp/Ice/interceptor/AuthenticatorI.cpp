@@ -2,19 +2,16 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <iostream>
-#include <Ice/Ice.h>
 #include <AuthenticatorI.h>
+#include <Ice/Ice.h>
+#include <iostream>
 
 using namespace std;
 
 //
 // Use a value generated from a random device to seed the RNG.
 //
-AuthenticatorI::AuthenticatorI() :
-    _rand(random_device()())
-{
-}
+AuthenticatorI::AuthenticatorI() : _rand(random_device()()) {}
 
 string
 AuthenticatorI::getToken(const Ice::Current&)
@@ -27,7 +24,7 @@ AuthenticatorI::getToken(const Ice::Current&)
     static string chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     uniform_int_distribution<size_t> dist(0, chars.length() - 1);
     string token(tokenLength, '\0');
-    for(auto& c : token)
+    for (auto& c : token)
     {
         c = chars.at(dist(_rand));
     }
@@ -48,9 +45,9 @@ AuthenticatorI::validateToken(const string& tokenValue)
     //
     // Remove any expired tokens.
     //
-    for(auto token = _tokenStore.begin(); token != _tokenStore.end();)
+    for (auto token = _tokenStore.begin(); token != _tokenStore.end();)
     {
-        if(token->second <= chrono::steady_clock::now())
+        if (token->second <= chrono::steady_clock::now())
         {
             token = _tokenStore.erase(token);
         }
@@ -64,7 +61,7 @@ AuthenticatorI::validateToken(const string& tokenValue)
     // We assume if the client passed a token, but there's no
     // stored values matching it, that it must of expired.
     //
-    if(_tokenStore.find(tokenValue) == _tokenStore.end())
+    if (_tokenStore.find(tokenValue) == _tokenStore.end())
     {
         throw Demo::TokenExpiredException();
     }

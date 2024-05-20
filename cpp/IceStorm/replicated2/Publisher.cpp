@@ -4,12 +4,12 @@
 
 #ifdef _MSC_VER
 // For localtime warning
-#  define _CRT_SECURE_NO_WARNINGS
+#    define _CRT_SECURE_NO_WARNINGS
 #endif
 
+#include <Clock.h>
 #include <Ice/Ice.h>
 #include <IceStorm/IceStorm.h>
-#include <Clock.h>
 #include <chrono>
 #include <ctime>
 #include <thread>
@@ -42,15 +42,11 @@ main(int argc, char* argv[])
         const Ice::CommunicatorHolder ich(argc, argv, "config.pub");
         const auto& communicator = ich.communicator();
 
-        ctrlCHandler.setCallback(
-            [communicator](int)
-            {
-                communicator->destroy();
-            });
+        ctrlCHandler.setCallback([communicator](int) { communicator->destroy(); });
 
         status = run(communicator, argc, argv);
     }
-    catch(const std::exception& ex)
+    catch (const std::exception& ex)
     {
         cerr << ex.what() << endl;
         status = 1;
@@ -68,28 +64,34 @@ usage(const string& n)
 int
 run(const shared_ptr<Ice::Communicator>& communicator, int argc, char* argv[])
 {
-    enum class Option { None, Datagram, Twoway, Oneway };
+    enum class Option
+    {
+        None,
+        Datagram,
+        Twoway,
+        Oneway
+    };
     Option option = Option::None;
     string topicName = "time";
     int i;
 
-    for(i = 1; i < argc; ++i)
+    for (i = 1; i < argc; ++i)
     {
         const string optionString = argv[i];
         const Option oldoption = option;
-        if(optionString == "--datagram")
+        if (optionString == "--datagram")
         {
             option = Option::Datagram;
         }
-        else if(optionString == "--twoway")
+        else if (optionString == "--twoway")
         {
             option = Option::Twoway;
         }
-        else if(optionString == "--oneway")
+        else if (optionString == "--oneway")
         {
             option = Option::Oneway;
         }
-        else if(optionString.substr(0, 2) == "--")
+        else if (optionString.substr(0, 2) == "--")
         {
             usage(argv[0]);
             return 1;
@@ -100,22 +102,21 @@ run(const shared_ptr<Ice::Communicator>& communicator, int argc, char* argv[])
             break;
         }
 
-        if(oldoption != option && oldoption != Option::None)
+        if (oldoption != option && oldoption != Option::None)
         {
             usage(argv[0]);
             return 1;
         }
     }
 
-    if(i != argc)
+    if (i != argc)
     {
         usage(argv[0]);
         return 1;
     }
 
-    auto manager = Ice::checkedCast<IceStorm::TopicManagerPrx>(
-        communicator->propertyToProxy("TopicManager.Proxy"));
-    if(!manager)
+    auto manager = Ice::checkedCast<IceStorm::TopicManagerPrx>(communicator->propertyToProxy("TopicManager.Proxy"));
+    if (!manager)
     {
         cerr << argv[0] << ": invalid proxy" << endl;
         return 1;
@@ -129,13 +130,13 @@ run(const shared_ptr<Ice::Communicator>& communicator, int argc, char* argv[])
     {
         topic = manager->retrieve(topicName);
     }
-    catch(const IceStorm::NoSuchTopic&)
+    catch (const IceStorm::NoSuchTopic&)
     {
         try
         {
             topic = manager->create(topicName);
         }
-        catch(const IceStorm::TopicExists&)
+        catch (const IceStorm::TopicExists&)
         {
             cerr << argv[0] << ": temporary failure. try again." << endl;
             return 1;
@@ -147,15 +148,15 @@ run(const shared_ptr<Ice::Communicator>& communicator, int argc, char* argv[])
     // the mode specified as an argument of this application.
     //
     auto publisher = topic->getPublisher();
-    if(option == Option::Datagram)
+    if (option == Option::Datagram)
     {
         publisher = publisher->ice_datagram();
     }
-    else if(option == Option::Twoway)
+    else if (option == Option::Twoway)
     {
         // Do nothing.
     }
-    else if(option == Option::Oneway || option == Option::None)
+    else if (option == Option::Oneway || option == Option::None)
     {
         publisher = publisher->ice_oneway();
     }
@@ -163,20 +164,20 @@ run(const shared_ptr<Ice::Communicator>& communicator, int argc, char* argv[])
     auto clock = Ice::uncheckedCast<ClockPrx>(publisher);
 
     cout << "publishing tick events. Press ^C to terminate the application." << endl;
-    while(true)
+    while (true)
     {
         try
         {
             auto now = chrono::system_clock::to_time_t(chrono::system_clock::now());
             char timeString[100];
-            if(strftime(timeString, sizeof(timeString), "%x %X", localtime(&now)) == 0)
+            if (strftime(timeString, sizeof(timeString), "%x %X", localtime(&now)) == 0)
             {
                 timeString[0] = '\0';
             }
             clock->tick(timeString);
             this_thread::sleep_for(chrono::seconds(1));
         }
-        catch(const Ice::CommunicatorDestroyedException&)
+        catch (const Ice::CommunicatorDestroyedException&)
         {
             break;
         }

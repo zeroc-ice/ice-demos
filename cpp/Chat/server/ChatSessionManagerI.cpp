@@ -2,24 +2,27 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <ChatSessionManagerI.h>
 #include <ChatSessionI.h>
+#include <ChatSessionManagerI.h>
 #include <ChatUtils.h>
 
 using namespace std;
 
-ChatSessionManagerI::ChatSessionManagerI(const shared_ptr<ChatRoom>& chatRoom, bool trace,
-                                         const shared_ptr<Ice::Logger>& logger) :
-    _chatRoom(chatRoom),
-    _trace(trace),
-    _logger(logger)
+ChatSessionManagerI::ChatSessionManagerI(
+    const shared_ptr<ChatRoom>& chatRoom,
+    bool trace,
+    const shared_ptr<Ice::Logger>& logger)
+    : _chatRoom(chatRoom),
+      _trace(trace),
+      _logger(logger)
 {
 }
 
 shared_ptr<Glacier2::SessionPrx>
-ChatSessionManagerI::create(string name,
-                            shared_ptr<Glacier2::SessionControlPrx> sessionControl,
-                            const Ice::Current& current)
+ChatSessionManagerI::create(
+    string name,
+    shared_ptr<Glacier2::SessionControlPrx> sessionControl,
+    const Ice::Current& current)
 {
     string vname;
     try
@@ -27,9 +30,9 @@ ChatSessionManagerI::create(string name,
         vname = validateName(name);
         _chatRoom->reserve(vname);
     }
-    catch(const exception& ex)
+    catch (const exception& ex)
     {
-        if(_trace)
+        if (_trace)
         {
             Ice::Trace out(_logger, "info");
             out << "Cannot create push session:\n" << ex;
@@ -47,21 +50,21 @@ ChatSessionManagerI::create(string name,
         ids.push_back(proxy->ice_getIdentity());
         sessionControl->identities()->add(ids);
     }
-    catch(const Ice::LocalException& ex)
+    catch (const Ice::LocalException& ex)
     {
-        if(_trace)
+        if (_trace)
         {
             Ice::Trace out(_logger, "info");
             out << "Cannot create push session for user '" << vname << "':\n" << ex;
         }
-        if(proxy)
+        if (proxy)
         {
             proxy->destroy();
         }
         throw Glacier2::CannotCreateSessionException("internal server error");
     }
 
-    if(_trace)
+    if (_trace)
     {
         Ice::Trace out(_logger, "info");
         out << "Push session created for user '" << vname << "'.";

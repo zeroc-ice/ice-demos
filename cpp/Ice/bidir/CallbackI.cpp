@@ -2,8 +2,8 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <Ice/Ice.h>
 #include <CallbackI.h>
+#include <Ice/Ice.h>
 
 using namespace std;
 using namespace Demo;
@@ -26,18 +26,18 @@ CallbackSenderI::destroy()
     }
     _cv.notify_one();
 
-    if(_result.valid())
+    if (_result.valid())
     {
         try
         {
             // wait for async task to complete
             _result.get();
         }
-        catch(const Ice::CommunicatorDestroyedException&)
+        catch (const Ice::CommunicatorDestroyedException&)
         {
             // expected, if you CTRL-C the server while it's sending callbacks
         }
-        catch(const std::exception& ex)
+        catch (const std::exception& ex)
         {
             cerr << "sender task failed with: " << ex.what() << endl;
         }
@@ -56,11 +56,11 @@ CallbackSenderI::invokeCallback()
 {
     int num = 0;
     unique_lock<mutex> lock(_mutex);
-    while(!_destroy)
+    while (!_destroy)
     {
         _cv.wait_for(lock, chrono::seconds(2));
 
-        if(!_destroy && !_clients.empty())
+        if (!_destroy && !_clients.empty())
         {
             ++num;
 
@@ -70,11 +70,10 @@ CallbackSenderI::invokeCallback()
             //
             // The exception callback, if called, is called by an Ice thread, and never the
             // calling thread.
-            for(const auto& p : _clients)
+            for (const auto& p : _clients)
             {
                 auto self = shared_from_this();
-                p->callbackAsync(num, nullptr,
-                    [self, p](exception_ptr eptr) { self->removeClient(p, eptr); });
+                p->callbackAsync(num, nullptr, [self, p](exception_ptr eptr) { self->removeClient(p, eptr); });
             }
         }
     }
@@ -85,16 +84,15 @@ CallbackSenderI::removeClient(const shared_ptr<CallbackReceiverPrx>& client, exc
 {
     const lock_guard<mutex> lock(_mutex);
     auto p = find(_clients.begin(), _clients.end(), client);
-    if(p != _clients.end())
+    if (p != _clients.end())
     {
         try
         {
             rethrow_exception(eptr);
         }
-        catch(const Ice::Exception& ex)
+        catch (const Ice::Exception& ex)
         {
-            cerr << "removing client `" << Ice::identityToString(client->ice_getIdentity()) << "':\n"
-                 << ex << endl;
+            cerr << "removing client `" << Ice::identityToString(client->ice_getIdentity()) << "':\n" << ex << endl;
         }
         _clients.erase(p);
     }

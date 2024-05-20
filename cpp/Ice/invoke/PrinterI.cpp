@@ -11,17 +11,17 @@ using namespace Demo;
 static ostream&
 operator<<(ostream& out, Color c)
 {
-    switch(c)
+    switch (c)
     {
-    case Color::red:
-        out << "red";
-        break;
-    case Color::green:
-        out << "green";
-        break;
-    case Color::blue:
-        out << "blue";
-        break;
+        case Color::red:
+            out << "red";
+            break;
+        case Color::green:
+            out << "green";
+            break;
+        case Color::blue:
+            out << "blue";
+            break;
     }
     return out;
 }
@@ -36,20 +36,20 @@ PrinterI::ice_invoke(vector<Ice::Byte> inParams, vector<Ice::Byte>& outParams, c
     Ice::InputStream in(communicator, inParams);
     in.startEncapsulation();
 
-    if(current.operation == "printString")
+    if (current.operation == "printString")
     {
         string message;
         in.read(message);
         cout << "Printing string `" << message << "'" << endl;
     }
-    else if(current.operation == "printStringSequence")
+    else if (current.operation == "printStringSequence")
     {
         Demo::StringSeq seq;
         in.read(seq);
         cout << "Printing string sequence {";
-        for(auto p = seq.begin(); p != seq.end(); ++p)
+        for (auto p = seq.begin(); p != seq.end(); ++p)
         {
-            if(p != seq.begin())
+            if (p != seq.begin())
             {
                 cout << ", ";
             }
@@ -57,14 +57,14 @@ PrinterI::ice_invoke(vector<Ice::Byte> inParams, vector<Ice::Byte>& outParams, c
         }
         cout << "}" << endl;
     }
-    else if(current.operation == "printDictionary")
+    else if (current.operation == "printDictionary")
     {
         Demo::StringDict dict;
         in.read(dict);
         cout << "Printing dictionary {";
-        for(auto p = dict.begin(); p != dict.end(); ++p)
+        for (auto p = dict.begin(); p != dict.end(); ++p)
         {
-            if(p != dict.begin())
+            if (p != dict.begin())
             {
                 cout << ", ";
             }
@@ -72,26 +72,26 @@ PrinterI::ice_invoke(vector<Ice::Byte> inParams, vector<Ice::Byte>& outParams, c
         }
         cout << "}" << endl;
     }
-    else if(current.operation == "printEnum")
+    else if (current.operation == "printEnum")
     {
         Demo::Color c;
         in.read(c);
         cout << "Printing enum " << c << endl;
     }
-    else if(current.operation == "printStruct")
+    else if (current.operation == "printStruct")
     {
         Demo::Structure s;
         in.read(s);
         cout << "Printing struct: name=" << s.name << ", value=" << s.value << endl;
     }
-    else if(current.operation == "printStructSequence")
+    else if (current.operation == "printStructSequence")
     {
         Demo::StructureSeq seq;
         in.read(seq);
         cout << "Printing struct sequence: {";
-        for(auto p = seq.begin(); p != seq.end(); ++p)
+        for (auto p = seq.begin(); p != seq.end(); ++p)
         {
-            if(p != seq.begin())
+            if (p != seq.begin())
             {
                 cout << ", ";
             }
@@ -99,13 +99,13 @@ PrinterI::ice_invoke(vector<Ice::Byte> inParams, vector<Ice::Byte>& outParams, c
         }
         cout << "}" << endl;
     }
-    else if(current.operation == "printClass")
+    else if (current.operation == "printClass")
     {
         shared_ptr<Demo::C> c;
         in.read(c);
         cout << "Printing class: s.name=" << c->s.name << ", s.value=" << c->s.value << endl;
     }
-    else if(current.operation == "getValues")
+    else if (current.operation == "getValues")
     {
         auto c = make_shared<Demo::C>();
         c->s.name = "green";
@@ -117,7 +117,7 @@ PrinterI::ice_invoke(vector<Ice::Byte> inParams, vector<Ice::Byte>& outParams, c
         out.endEncapsulation();
         out.finished(outParams);
     }
-    else if(current.operation == "throwPrintFailure")
+    else if (current.operation == "throwPrintFailure")
     {
         cout << "Throwing PrintFailure" << endl;
         Demo::PrintFailure ex;
@@ -129,7 +129,7 @@ PrinterI::ice_invoke(vector<Ice::Byte> inParams, vector<Ice::Byte>& outParams, c
         out.finished(outParams);
         result = false;
     }
-    else if(current.operation == "shutdown")
+    else if (current.operation == "shutdown")
     {
         current.adapter->getCommunicator()->shutdown();
     }

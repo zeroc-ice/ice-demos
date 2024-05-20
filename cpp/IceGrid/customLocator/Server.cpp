@@ -2,12 +2,13 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <Ice/Ice.h>
 #include <HelloI.h>
+#include <Ice/Ice.h>
 
 using namespace std;
 
-int main(int argc, char* argv[])
+int
+main(int argc, char* argv[])
 {
     int status = 0;
 
@@ -32,16 +33,12 @@ int main(int argc, char* argv[])
         const Ice::CommunicatorHolder ich(argc, argv, initData);
         const auto& communicator = ich.communicator();
 
-        ctrlCHandler.setCallback(
-            [communicator](int)
-            {
-                communicator->shutdown();
-            });
+        ctrlCHandler.setCallback([communicator](int) { communicator->shutdown(); });
 
         //
         // The communicator initialization removes all Ice-related arguments from argc/argv
         //
-        if(argc > 1)
+        if (argc > 1)
         {
             cerr << argv[0] << ": too many arguments" << endl;
             status = 1;
@@ -58,7 +55,7 @@ int main(int argc, char* argv[])
             communicator->waitForShutdown();
         }
     }
-    catch(const std::exception& ex)
+    catch (const std::exception& ex)
     {
         cerr << ex.what() << endl;
         status = 1;

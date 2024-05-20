@@ -34,16 +34,12 @@ main(int argc, char* argv[])
         const Ice::CommunicatorHolder ich(argc, argv, "config.client");
         const auto& communicator = ich.communicator();
 
-        ctrlCHandler.setCallback(
-            [communicator](int)
-            {
-                communicator->destroy();
-            });
+        ctrlCHandler.setCallback([communicator](int) { communicator->destroy(); });
 
         //
         // The communicator initialization removes all Ice-related arguments from argc/argv
         //
-        if(argc > 1)
+        if (argc > 1)
         {
             cerr << argv[0] << ": too many arguments" << endl;
             status = 1;
@@ -53,7 +49,7 @@ main(int argc, char* argv[])
             status = run(communicator, argv[0]);
         }
     }
-    catch(const std::exception& ex)
+    catch (const std::exception& ex)
     {
         cerr << ex.what() << endl;
         status = 1;
@@ -65,8 +61,8 @@ main(int argc, char* argv[])
 int
 run(const shared_ptr<Ice::Communicator>& communicator, const string& appName)
 {
-    auto ping =  Ice::checkedCast<PingPrx>(communicator->propertyToProxy("Ping.Proxy"));
-    if(!ping)
+    auto ping = Ice::checkedCast<PingPrx>(communicator->propertyToProxy("Ping.Proxy"));
+    if (!ping)
     {
         cerr << appName << ": invalid proxy" << endl;
         return 1;
@@ -79,7 +75,7 @@ run(const shared_ptr<Ice::Communicator>& communicator, const string& appName)
 
     const int repetitions = 100000;
     cout << "pinging server " << repetitions << " times (this may take a while)" << endl;
-    for(int i = 0; i < repetitions; ++i)
+    for (int i = 0; i < repetitions; ++i)
     {
         ping->ice_ping();
     }

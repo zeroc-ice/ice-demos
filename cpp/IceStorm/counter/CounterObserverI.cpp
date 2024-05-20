@@ -8,7 +8,8 @@
 
 using namespace std;
 
-void print(const string& str)
+void
+print(const string& str)
 {
     static mutex _coutMutex;
     const lock_guard<mutex> sync(_coutMutex);

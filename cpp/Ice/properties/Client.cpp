@@ -30,7 +30,7 @@ main(int argc, char* argv[])
         //
         // The communicator initialization removes all Ice-related arguments from argc/argv
         //
-        if(argc > 1)
+        if (argc > 1)
         {
             cerr << argv[0] << ": too many arguments" << endl;
             status = 1;
@@ -40,7 +40,7 @@ main(int argc, char* argv[])
             status = run(ich.communicator());
         }
     }
-    catch(const std::exception& ex)
+    catch (const std::exception& ex)
     {
         cerr << argv[0] << ": " << ex.what() << endl;
         status = 1;
@@ -56,7 +56,7 @@ int
 run(const shared_ptr<Ice::Communicator>& communicator)
 {
     auto props = Ice::checkedCast<PropsPrx>(communicator->propertyToProxy("Props.Proxy"));
-    if(!props)
+    if (!props)
     {
         cerr << "invalid proxy" << endl;
         return 1;
@@ -84,13 +84,13 @@ run(const shared_ptr<Ice::Communicator>& communicator)
         {
             cout << "==> ";
             cin >> c;
-            if(c == '1' || c == '2')
+            if (c == '1' || c == '2')
             {
                 auto dict = c == '1' ? batch1 : batch2;
                 cout << "Sending:" << endl;
-                for(const auto& p : dict)
+                for (const auto& p : dict)
                 {
-                    if(p.first.find("Demo") == 0)
+                    if (p.first.find("Demo") == 0)
                     {
                         cout << "  " << p.first << "=" << p.second << endl;
                     }
@@ -101,16 +101,16 @@ run(const shared_ptr<Ice::Communicator>& communicator)
 
                 cout << "Changes:" << endl;
                 const Ice::PropertyDict changes = props->getChanges();
-                if(changes.empty())
+                if (changes.empty())
                 {
                     cout << "  None." << endl;
                 }
                 else
                 {
-                    for(const auto& p : changes)
+                    for (const auto& p : changes)
                     {
                         cout << "  " << p.first;
-                        if(p.second.empty())
+                        if (p.second.empty())
                         {
                             cout << " was removed" << endl;
                         }
@@ -121,19 +121,19 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                     }
                 }
             }
-            else if(c == 'c')
+            else if (c == 'c')
             {
                 show(admin);
             }
-            else if(c == 's')
+            else if (c == 's')
             {
                 props->shutdown();
             }
-            else if(c == 'x')
+            else if (c == 'x')
             {
                 // Nothing to do
             }
-            else if(c == '?')
+            else if (c == '?')
             {
                 menu();
             }
@@ -143,12 +143,11 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 menu();
             }
         }
-        catch(const Ice::Exception& ex)
+        catch (const Ice::Exception& ex)
         {
             cerr << ex << endl;
         }
-    }
-    while(cin.good() && c != 'x');
+    } while (cin.good() && c != 'x');
 
     return 0;
 }
@@ -156,14 +155,14 @@ run(const shared_ptr<Ice::Communicator>& communicator)
 void
 menu()
 {
-    cout << endl <<
-        "usage:\n"
-        "1: set properties (batch 1)\n"
-        "2: set properties (batch 2)\n"
-        "c: show current properties\n"
-        "s: shutdown server\n"
-        "x: exit\n"
-        "?: help\n";
+    cout << endl
+         << "usage:\n"
+            "1: set properties (batch 1)\n"
+            "2: set properties (batch 2)\n"
+            "c: show current properties\n"
+            "s: shutdown server\n"
+            "x: exit\n"
+            "?: help\n";
 }
 
 void
@@ -171,7 +170,7 @@ show(const shared_ptr<Ice::PropertiesAdminPrx>& admin)
 {
     auto props = admin->getPropertiesForPrefix("Demo");
     cout << "Server's current settings:" << endl;
-    for(const auto& p : props)
+    for (const auto& p : props)
     {
         cout << "  " << p.first << "=" << p.second << endl;
     }

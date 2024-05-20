@@ -5,8 +5,8 @@
 #ifndef PARSER_H
 #define PARSER_H
 
-#include <Ice/Ice.h>
 #include <Filesystem.h>
+#include <Ice/Ice.h>
 #include <list>
 #include <stdio.h>
 
@@ -15,7 +15,7 @@
 //
 
 #if defined(__clang__)
-#   pragma clang diagnostic ignored "-Wconversion"
+#    pragma clang diagnostic ignored "-Wconversion"
 #endif
 
 #define YYSTYPE std::list<std::string>
@@ -30,7 +30,7 @@ int yyparse();
 // YYSTYPE, since YYSTYPE is a C++ type, with constructor, destructor,
 // assignment operator, etc.
 //
-#define YYMAXDEPTH  10000
+#define YYMAXDEPTH 10000
 #define YYINITDEPTH YYMAXDEPTH // Initial depth is set to max depth, for the reasons described above.
 
 //
@@ -42,7 +42,6 @@ int yyparse();
 class Parser
 {
 public:
-
     Parser(const std::shared_ptr<Filesystem::DirectoryPrx>&);
 
     void usage();
@@ -75,7 +74,6 @@ public:
     int parse(bool = false);
 
 private:
-
     std::list<std::shared_ptr<Filesystem::DirectoryPrx>> _dirs;
 
     bool _continue;

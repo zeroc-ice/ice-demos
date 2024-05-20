@@ -2,9 +2,9 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
+#include <Hello.h>
 #include <Ice/Ice.h>
 #include <IceGrid/IceGrid.h>
-#include <Hello.h>
 #include <chrono>
 #include <thread>
 
@@ -33,7 +33,7 @@ main(int argc, char* argv[])
         //
         // The communicator initialization removes all Ice-related arguments from argc/argv
         //
-        if(argc > 1)
+        if (argc > 1)
         {
             cerr << argv[0] << ": too many arguments" << endl;
             status = 1;
@@ -43,7 +43,7 @@ main(int argc, char* argv[])
             status = run(ich.communicator());
         }
     }
-    catch(const std::exception& ex)
+    catch (const std::exception& ex)
     {
         cerr << argv[0] << ": " << ex.what() << endl;
         status = 1;
@@ -68,7 +68,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
     obj = obj->ice_locatorCacheTimeout(0);
 
     auto hello = Ice::checkedCast<HelloPrx>(obj);
-    if(!hello)
+    if (!hello)
     {
         cerr << "couldn't find a `::Demo::Hello' object." << endl;
         return 1;
@@ -83,7 +83,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
         // Read the iterations parameter from stdin.
         cout << "enter the number of iterations or 'x' to exit: ";
         cin >> s;
-        if(s == "x")
+        if (s == "x")
         {
             break;
         }
@@ -92,11 +92,10 @@ run(const shared_ptr<Ice::Communicator>& communicator)
         {
             count = stoi(s);
         }
-        catch(const invalid_argument&)
+        catch (const invalid_argument&)
         {
             cerr << "'" << s << "'"
-                 << " is not a valid value for the iterations parameter, it has to be a positive integer"
-                 << endl;
+                 << " is not a valid value for the iterations parameter, it has to be a positive integer" << endl;
             return 1;
         }
 
@@ -106,25 +105,24 @@ run(const shared_ptr<Ice::Communicator>& communicator)
         {
             delay = stoi(s);
         }
-        catch(const invalid_argument&)
+        catch (const invalid_argument&)
         {
             cerr << "'" << s << "' is not a valid value for the delay parameter, it has to be a positive integer"
                  << endl;
             return 1;
         }
 
-        if(delay < 0)
+        if (delay < 0)
         {
             delay = 500; // 500 milliseconds
         }
 
-        for(int i = 0; i < count; i++)
+        for (int i = 0; i < count; i++)
         {
             cout << hello->getGreeting() << endl;
             this_thread::sleep_for(chrono::milliseconds(delay));
         }
-    }
-    while(cin.good());
+    } while (cin.good());
 
     return 0;
 }

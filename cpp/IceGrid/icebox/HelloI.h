@@ -10,13 +10,11 @@
 class HelloI : public Demo::Hello
 {
 public:
-
     HelloI(std::string);
 
     virtual void sayHello(const Ice::Current&) override;
 
 private:
-
     const std::string _serviceName;
 };
 

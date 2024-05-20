@@ -10,12 +10,19 @@
 class ContactDBI : public Demo::ContactDB
 {
 public:
+    virtual void addContact(
+        std::string,
+        Ice::optional<Demo::NumberType>,
+        Ice::optional<std::string>,
+        Ice::optional<int>,
+        const Ice::Current&) override;
 
-    virtual void addContact(std::string, Ice::optional<Demo::NumberType>, Ice::optional<std::string>, Ice::optional<int>,
-                            const Ice::Current&) override;
-
-    virtual void updateContact(std::string, Ice::optional<Demo::NumberType>, Ice::optional<std::string>, Ice::optional<int>,
-                               const Ice::Current&) override;
+    virtual void updateContact(
+        std::string,
+        Ice::optional<Demo::NumberType>,
+        Ice::optional<std::string>,
+        Ice::optional<int>,
+        const Ice::Current&) override;
 
     virtual Demo::ContactPtr query(std::string, const Ice::Current&) override;
 
@@ -26,7 +33,6 @@ public:
     virtual void shutdown(const Ice::Current&) override;
 
 private:
-
     std::map<std::string, std::shared_ptr<Demo::Contact>> _contacts;
 };
 

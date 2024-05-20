@@ -2,8 +2,8 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <Ice/Ice.h>
 #include <ChatSessionI.h>
+#include <Ice/Ice.h>
 #include <list>
 
 using namespace std;
@@ -16,7 +16,6 @@ using namespace Demo;
 class ChatRoom
 {
 public:
-
     static ChatRoom* instance();
 
     void enter(const shared_ptr<ChatSessionPrx>&, const shared_ptr<ChatCallbackPrx>&, const Ice::Current&);
@@ -26,7 +25,6 @@ public:
     void destroy();
 
 private:
-
     mutex _mutex;
     list<shared_ptr<ChatCallbackPrx>> _callbacks;
 
@@ -44,14 +42,16 @@ ChatRoom::instance()
 }
 
 void
-ChatRoom::enter(const shared_ptr<ChatSessionPrx>& session, const shared_ptr<ChatCallbackPrx>& callback,
-                const Ice::Current& current)
+ChatRoom::enter(
+    const shared_ptr<ChatSessionPrx>& session,
+    const shared_ptr<ChatCallbackPrx>& callback,
+    const Ice::Current& current)
 {
     const lock_guard<mutex> sync(_mutex);
     _callbacks.push_back(callback);
 
     auto p = _connectionMap.find(current.con);
-    if(p == _connectionMap.end())
+    if (p == _connectionMap.end())
     {
         cout << "enter: create new entry in connection map" << endl;
 
@@ -62,14 +62,15 @@ ChatRoom::enter(const shared_ptr<ChatSessionPrx>& session, const shared_ptr<Chat
         //
         current.con->setACM(30, Ice::ACMClose::CloseOff, Ice::ACMHeartbeat::HeartbeatAlways);
 
-        current.con->setCloseCallback([this](const shared_ptr<Ice::Connection>& con)
-                                      {
-                                          //
-                                          // The Glacier2 router died or otherwise closed its connection
-                                          // to this server, so we cleanup all associated sessions
-                                          //
-                                          deadRouter(con);
-                                      });
+        current.con->setCloseCallback(
+            [this](const shared_ptr<Ice::Connection>& con)
+            {
+                //
+                // The Glacier2 router died or otherwise closed its connection
+                // to this server, so we cleanup all associated sessions
+                //
+                deadRouter(con);
+            });
     }
     else
     {
@@ -84,20 +85,16 @@ ChatRoom::leave(const shared_ptr<ChatCallbackPrx>& callback, const Ice::Current&
     const lock_guard<mutex> sync(_mutex);
 
     _callbacks.remove_if([&callback](const shared_ptr<ChatCallbackPrx>& cb)
-                         {
-                             return Ice::proxyIdentityEqual(callback, cb);
-                         });
+                         { return Ice::proxyIdentityEqual(callback, cb); });
     _connectionMap[current.con].remove_if([&current](const shared_ptr<ChatSessionPrx>& s)
-                                          {
-                                              return current.id == s->ice_getIdentity();
-                                          });
+                                          { return current.id == s->ice_getIdentity(); });
 }
 
 void
 ChatRoom::message(const string& data) const
 {
     const lock_guard<mutex> sync(const_cast<mutex&>(_mutex));
-    for(const auto& cb : _callbacks)
+    for (const auto& cb : _callbacks)
     {
         cb->messageAsync(data);
     }
@@ -110,11 +107,11 @@ ChatRoom::deadRouter(const shared_ptr<Ice::Connection>& con)
     {
         con->throwException();
     }
-    catch(const Ice::ObjectAdapterDeactivatedException&)
+    catch (const Ice::ObjectAdapterDeactivatedException&)
     {
         // Ignore server is being shutdown
     }
-    catch(...)
+    catch (...)
     {
         cout << "Detected dead router - destroying all associated sessions " << endl;
 
@@ -122,13 +119,13 @@ ChatRoom::deadRouter(const shared_ptr<Ice::Connection>& con)
         {
             const lock_guard<mutex> sync(_mutex);
             auto p = _connectionMap.find(con);
-            if(p != _connectionMap.end())
+            if (p != _connectionMap.end())
             {
                 sessions.swap(p->second);
                 _connectionMap.erase(p);
             }
         }
-        for(auto& s : sessions)
+        for (auto& s : sessions)
         {
             //
             // Collocated calls to the Chat Sessions
@@ -153,21 +150,21 @@ ChatRoom::destroy()
 // ChatSessionI
 //
 
-ChatSessionI::ChatSessionI(string userId) :
-    _userId(std::move(userId))
-{
-}
+ChatSessionI::ChatSessionI(string userId) : _userId(std::move(userId)) {}
 
 void
 ChatSessionI::setCallback(shared_ptr<ChatCallbackPrx> callback, const Ice::Current& current)
 {
     const lock_guard<mutex> sync(_mutex);
-    if(!_callback)
+    if (!_callback)
     {
         _callback = callback;
         auto chatRoom = ChatRoom::instance();
         chatRoom->message(_userId + " has entered the chat room.");
-        chatRoom->enter(Ice::uncheckedCast<ChatSessionPrx>(current.adapter->createProxy(current.id)), callback, current);
+        chatRoom->enter(
+            Ice::uncheckedCast<ChatSessionPrx>(current.adapter->createProxy(current.id)),
+            callback,
+            current);
     }
 }
 
@@ -183,7 +180,7 @@ ChatSessionI::destroy(const Ice::Current& current)
 {
     cout << "Destroying session for " << _userId << endl;
     const lock_guard<mutex> sync(_mutex);
-    if(_callback)
+    if (_callback)
     {
         auto chatRoom = ChatRoom::instance();
         chatRoom->leave(_callback, current);
@@ -200,7 +197,7 @@ ChatSessionI::destroy(const Ice::Current& current)
 shared_ptr<Glacier2::SessionPrx>
 ChatSessionManagerI::create(string userId, shared_ptr<Glacier2::SessionControlPrx>, const Ice::Current& current)
 {
-    const Ice::Identity ident = { Ice::generateUUID(), "session" };
+    const Ice::Identity ident = {Ice::generateUUID(), "session"};
     return Ice::uncheckedCast<Glacier2::SessionPrx>(current.adapter->add(make_shared<ChatSessionI>(userId), ident));
 }
 

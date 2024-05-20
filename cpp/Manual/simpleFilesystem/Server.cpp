@@ -2,15 +2,16 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <Ice/Ice.h>
 #include <FilesystemI.h>
+#include <Ice/Ice.h>
 
 using namespace std;
 using namespace Filesystem;
 
 int run(const shared_ptr<Ice::Communicator>& communicator);
 
-int main(int argc, char* argv[])
+int
+main(int argc, char* argv[])
 {
     int status = 0;
 
@@ -39,7 +40,7 @@ int main(int argc, char* argv[])
         //
         // The communicator initialization removes all Ice-related arguments from argc/argv
         //
-        if(argc > 1)
+        if (argc > 1)
         {
             cerr << argv[0] << ": too many arguments" << endl;
             status = 1;
@@ -49,7 +50,7 @@ int main(int argc, char* argv[])
             status = run(communicator);
         }
     }
-    catch(const std::exception& ex)
+    catch (const std::exception& ex)
     {
         cerr << ex.what() << endl;
         status = 1;
@@ -64,8 +65,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
     //
     // Create an object adapter.
     //
-    auto adapter = communicator->createObjectAdapterWithEndpoints(
-        "SimpleFilesystem", "default -h localhost -p 10000");
+    auto adapter = communicator->createObjectAdapterWithEndpoints("SimpleFilesystem", "default -h localhost -p 10000");
 
     //
     // Create the root directory (with name "/" and no parent)
@@ -91,14 +91,12 @@ run(const shared_ptr<Ice::Communicator>& communicator)
     // Create a file called "Kubla_Khan" in the Coleridge directory
     //
     file = make_shared<FileI>("Kubla_Khan", coleridge);
-    text =
-        {
-            "In Xanadu did Kubla Khan",
-            "A stately pleasure-dome decree:",
-            "Where Alph, the sacred river, ran",
-            "Through caverns measureless to man",
-            "Down to a sunless sea."
-        };
+    text = {
+        "In Xanadu did Kubla Khan",
+        "A stately pleasure-dome decree:",
+        "Where Alph, the sacred river, ran",
+        "Through caverns measureless to man",
+        "Down to a sunless sea."};
     file->write(text, Ice::emptyCurrent);
     file->activate(adapter);
 

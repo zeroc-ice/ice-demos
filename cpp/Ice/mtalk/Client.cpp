@@ -3,17 +3,16 @@
 //
 
 #include <Ice/Ice.h>
-#include <condition_variable>
-#include <mutex>
-#include <future>
 #include <MTalk.h>
+#include <condition_variable>
+#include <future>
+#include <mutex>
 
 using namespace std;
 
 class ChatApp
 {
 public:
-
     int run(const shared_ptr<Ice::Communicator>&);
 
     void discoveredPeer(const string&, const shared_ptr<MTalk::PeerPrx>&);
@@ -23,7 +22,6 @@ public:
     void closed();
 
 private:
-
     void doConnect(const string&);
     void doList();
     void doDisconnect();
@@ -47,11 +45,7 @@ private:
 class DiscoveryI : public MTalk::Discovery
 {
 public:
-
-    DiscoveryI(ChatApp* app) :
-        _app(app)
-    {
-    }
+    DiscoveryI(ChatApp* app) : _app(app) {}
 
     virtual void announce(string name, shared_ptr<MTalk::PeerPrx> peer, const Ice::Current&) override
     {
@@ -59,7 +53,6 @@ public:
     }
 
 private:
-
     ChatApp* _app;
 };
 
@@ -69,29 +62,18 @@ private:
 class IncomingPeerI : public MTalk::Peer
 {
 public:
-
-    IncomingPeerI(ChatApp* app) :
-        _app(app)
-    {
-    }
+    IncomingPeerI(ChatApp* app) : _app(app) {}
 
     virtual void connect(string name, shared_ptr<MTalk::PeerPrx> peer, const Ice::Current& current) override
     {
         _app->connect(name, peer->ice_fixed(current.con));
     }
 
-    virtual void message(string text, const Ice::Current&) override
-    {
-        _app->message(text);
-    }
+    virtual void message(string text, const Ice::Current&) override { _app->message(text); }
 
-    virtual void disconnect(const Ice::Current& current) override
-    {
-        _app->disconnect(current.id, current.con, true);
-    }
+    virtual void disconnect(const Ice::Current& current) override { _app->disconnect(current.id, current.con, true); }
 
 private:
-
     ChatApp* _app;
 };
 
@@ -101,29 +83,18 @@ private:
 class OutgoingPeerI : public MTalk::Peer
 {
 public:
-
-    OutgoingPeerI(ChatApp* app) :
-        _app(app)
-    {
-    }
+    OutgoingPeerI(ChatApp* app) : _app(app) {}
 
     virtual void connect(string, shared_ptr<MTalk::PeerPrx>, const Ice::Current&) override
     {
         throw MTalk::ConnectionException("already connected");
     }
 
-    virtual void message(string text, const Ice::Current&) override
-    {
-        _app->message(text);
-    }
+    virtual void message(string text, const Ice::Current&) override { _app->message(text); }
 
-    virtual void disconnect(const Ice::Current& current) override
-    {
-        _app->disconnect(current.id, current.con, false);
-    }
+    virtual void disconnect(const Ice::Current& current) override { _app->disconnect(current.id, current.con, false); }
 
 private:
-
     ChatApp* _app;
 };
 
@@ -133,9 +104,10 @@ private:
 class DiscoverTask
 {
 public:
-
-    DiscoverTask(shared_ptr<MTalk::DiscoveryPrx> d, string n, shared_ptr<MTalk::PeerPrx> p) :
-        _discovery(d), _name(n), _proxy(p)
+    DiscoverTask(shared_ptr<MTalk::DiscoveryPrx> d, string n, shared_ptr<MTalk::PeerPrx> p)
+        : _discovery(d),
+          _name(n),
+          _proxy(p)
     {
     }
 
@@ -147,13 +119,13 @@ public:
         }
         _condition.notify_one();
 
-        if(_result.valid())
+        if (_result.valid())
         {
             try
             {
                 _result.get();
             }
-            catch(const std::exception& ex)
+            catch (const std::exception& ex)
             {
                 cerr << "Discover task raised exception " << ex.what() << endl;
             }
@@ -163,28 +135,28 @@ public:
     void start()
     {
         assert(!_result.valid());
-        _result = async(launch::async,
-                        [this]
+        _result = async(
+            launch::async,
+            [this]
+            {
+                while (true)
+                {
+                    {
+                        unique_lock<mutex> lock(_mutex);
+                        _condition.wait_for(lock, chrono::seconds(2));
+
+                        if (_destroyed)
                         {
-                            while(true)
-                            {
-                                {
-                                    unique_lock<mutex> lock(_mutex);
-                                    _condition.wait_for(lock, chrono::seconds(2));
+                            break;
+                        }
+                    }
 
-                                    if(_destroyed)
-                                    {
-                                        break;
-                                    }
-                                }
-
-                                _discovery->announce(_name, _proxy);
-                            }
-                        });
+                    _discovery->announce(_name, _proxy);
+                }
+            });
     }
 
 private:
-
     shared_ptr<MTalk::DiscoveryPrx> _discovery;
     string _name;
     shared_ptr<MTalk::PeerPrx> _proxy;
@@ -215,7 +187,7 @@ main(int argc, char* argv[])
         //
         // The communicator initialization removes all Ice-related arguments from argc/argv
         //
-        if(argc > 1)
+        if (argc > 1)
         {
             cerr << argv[0] << ": too many arguments" << endl;
             status = 1;
@@ -226,7 +198,7 @@ main(int argc, char* argv[])
             status = app.run(communicator);
         }
     }
-    catch(const std::exception& ex)
+    catch (const std::exception& ex)
     {
         cerr << ex.what() << endl;
         status = 1;
@@ -257,7 +229,7 @@ ChatApp::run(const shared_ptr<Ice::Communicator>& communicator)
         _peerAdapter->add(make_shared<IncomingPeerI>(this), Ice::stringToIdentity("peer")));
     _peerAdapter->activate();
 
-    while(_name.empty())
+    while (_name.empty())
     {
         cout << ">>>> Enter your name: " << flush;
         getline(cin, _name);
@@ -286,23 +258,23 @@ ChatApp::run(const shared_ptr<Ice::Communicator>& communicator)
             cout << "";
             getline(cin, s);
 
-            if(!s.empty())
+            if (!s.empty())
             {
-                if(s[0] == '/')
+                if (s[0] == '/')
                 {
-                    if(s.size() > 8 && s.substr(0, 8) == "/connect")
+                    if (s.size() > 8 && s.substr(0, 8) == "/connect")
                     {
                         doConnect(s);
                     }
-                    else if(s == "/disconnect")
+                    else if (s == "/disconnect")
                     {
                         doDisconnect();
                     }
-                    else if(s == "/list")
+                    else if (s == "/list")
                     {
                         doList();
                     }
-                    else if(s == "/quit")
+                    else if (s == "/quit")
                     {
                         break;
                     }
@@ -316,8 +288,7 @@ ChatApp::run(const shared_ptr<Ice::Communicator>& communicator)
                     doMessage(s);
                 }
             }
-        }
-        while(cin.good());
+        } while (cin.good());
     }
 
     //
@@ -337,13 +308,13 @@ ChatApp::discoveredPeer(const string& name, const shared_ptr<MTalk::PeerPrx>& pe
     //
     // We also receive multicast messages that we send, so ignore requests from ourself.
     //
-    if(name == _name)
+    if (name == _name)
     {
         return;
     }
 
     auto p = _peers.find(name);
-    if(p == _peers.end())
+    if (p == _peers.end())
     {
         cout << endl << ">>>> Discovered peer " << name << endl;
         _peers[name] = peer;
@@ -363,7 +334,7 @@ ChatApp::connect(const string& name, const shared_ptr<MTalk::PeerPrx>& peer)
 
     const lock_guard<mutex> lock(_mutex);
 
-    if(_remote)
+    if (_remote)
     {
         throw MTalk::ConnectionException("already connected");
     }
@@ -372,17 +343,13 @@ ChatApp::connect(const string& name, const shared_ptr<MTalk::PeerPrx>& peer)
     // Install a connection callback and enable ACM heartbeats.
     //
     auto con = peer->ice_getConnection();
-    con->setCloseCallback(
-        [this](const shared_ptr<Ice::Connection>&)
-        {
-            this->closed();
-        });
+    con->setCloseCallback([this](const shared_ptr<Ice::Connection>&) { this->closed(); });
     con->setACM(30, Ice::ACMClose::CloseOff, Ice::ACMHeartbeat::HeartbeatAlways);
 
     _remote = peer->ice_invocationTimeout(5000);
 
     auto info = con->getInfo();
-    if(info->underlying)
+    if (info->underlying)
     {
         info = info->underlying;
     }
@@ -396,7 +363,7 @@ ChatApp::message(const string& text)
 {
     const lock_guard<mutex> lock(_mutex);
 
-    if(_remote)
+    if (_remote)
     {
         cout << "Peer says: " << text << endl;
     }
@@ -407,13 +374,13 @@ ChatApp::disconnect(const Ice::Identity& id, const shared_ptr<Ice::Connection>& 
 {
     const lock_guard<mutex> lock(_mutex);
 
-    if(_remote)
+    if (_remote)
     {
         cout << ">>>> Peer disconnected" << endl;
         _remote = nullptr;
     }
 
-    if(!incoming)
+    if (!incoming)
     {
         _peerAdapter->remove(id);
     }
@@ -435,13 +402,13 @@ void
 ChatApp::doConnect(const string& cmd)
 {
     auto sp = cmd.find(' ');
-    if(sp == string::npos)
+    if (sp == string::npos)
     {
         usage();
         return;
     }
     sp = cmd.find_first_not_of(' ', sp);
-    if(sp == string::npos)
+    if (sp == string::npos)
     {
         usage();
         return;
@@ -452,14 +419,14 @@ ChatApp::doConnect(const string& cmd)
     {
         const lock_guard<mutex> lock(_mutex);
 
-        if(_remote)
+        if (_remote)
         {
             cout << ">>>> Already connected" << endl;
             return;
         }
 
         auto p = _peers.find(name);
-        if(p == _peers.end())
+        if (p == _peers.end())
         {
             cout << ">>>> No peer found matching `" << name << "'" << endl;
             return;
@@ -491,11 +458,7 @@ ChatApp::doConnect(const string& cmd)
         //
         // Install a connection callback and enable ACM heartbeats.
         //
-        con->setCloseCallback(
-            [this](const shared_ptr<Ice::Connection>&)
-            {
-                this->closed();
-            });
+        con->setCloseCallback([this](const shared_ptr<Ice::Connection>&) { this->closed(); });
         con->setACM(30, Ice::ACMClose::CloseOff, Ice::ACMHeartbeat::HeartbeatAlways);
 
         //
@@ -504,20 +467,20 @@ ChatApp::doConnect(const string& cmd)
         remote->connect(_name, localPeer);
         cout << ">>>> Connected to " << name << endl;
     }
-    catch(const MTalk::ConnectionException& ex)
+    catch (const MTalk::ConnectionException& ex)
     {
         cout << ">>>> Connection failed: " << ex.reason << endl;
-        if(localPeer)
+        if (localPeer)
         {
             _peerAdapter->remove(localPeer->ice_getIdentity());
         }
         _remote = nullptr;
         return;
     }
-    catch(const Ice::Exception& ex)
+    catch (const Ice::Exception& ex)
     {
         cout << ">>>> " << ex << endl;
-        if(localPeer)
+        if (localPeer)
         {
             _peerAdapter->remove(localPeer->ice_getIdentity());
         }
@@ -531,13 +494,13 @@ ChatApp::doList()
 {
     const lock_guard<mutex> lock(_mutex);
 
-    if(_peers.empty())
+    if (_peers.empty())
     {
         cout << ">>>> No known peers" << endl;
     }
     else
     {
-        for(const auto& p: _peers)
+        for (const auto& p : _peers)
         {
             cout << ">>>> " << p.first << endl;
         }
@@ -552,7 +515,7 @@ ChatApp::doDisconnect()
     {
         const lock_guard<mutex> lock(_mutex);
 
-        if(!_remote)
+        if (!_remote)
         {
             cout << ">>>> Not connected" << endl;
             return;
@@ -566,7 +529,7 @@ ChatApp::doDisconnect()
     {
         peer->disconnect();
     }
-    catch(const Ice::LocalException&)
+    catch (const Ice::LocalException&)
     {
     }
 }
@@ -579,7 +542,7 @@ ChatApp::doMessage(const string& text)
     {
         const lock_guard<mutex> lock(_mutex);
 
-        if(!_remote)
+        if (!_remote)
         {
             cout << ">>>> Not connected" << endl;
             return;
@@ -592,7 +555,7 @@ ChatApp::doMessage(const string& text)
     {
         peer->message(text);
     }
-    catch(const Ice::LocalException& ex)
+    catch (const Ice::LocalException& ex)
     {
         failed(ex);
     }
@@ -611,10 +574,10 @@ ChatApp::failed(const Ice::LocalException& ex)
 
     cout << ">>>> Action failed:" << endl << ex << endl;
 
-    if(peer)
+    if (peer)
     {
         auto con = peer->ice_getCachedConnection();
-        if(con)
+        if (con)
         {
             con->close(Ice::ConnectionClose::Forcefully);
         }

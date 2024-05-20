@@ -9,120 +9,112 @@ using namespace std;
 namespace
 {
 
-//
-// This LocatorRegistryI forwards everything to the provided (IceGrid) registry
-//
+    //
+    // This LocatorRegistryI forwards everything to the provided (IceGrid) registry
+    //
 
-class LocatorRegistryI : public Ice::LocatorRegistry
-{
-public:
-
-    explicit LocatorRegistryI(const shared_ptr<Ice::LocatorRegistryPrx>& registry) :
-        _registry(registry)
+    class LocatorRegistryI : public Ice::LocatorRegistry
     {
-    }
+    public:
+        explicit LocatorRegistryI(const shared_ptr<Ice::LocatorRegistryPrx>& registry) : _registry(registry) {}
 
-    virtual void
-    setAdapterDirectProxyAsync(string id,
-                               shared_ptr<Ice::ObjectPrx> proxy,
-                               function<void()> response,
-                               function<void(exception_ptr)> exception,
-                               const Ice::Current&) override
-    {
-        // AMI call using the AMD callbacks
-        _registry->setAdapterDirectProxyAsync(id, proxy, response, exception);
-    }
-
-    virtual void
-    setReplicatedAdapterDirectProxyAsync(string id,
-                                         string group,
-                                         shared_ptr<Ice::ObjectPrx> proxy,
-                                         function<void()> response,
-                                         function<void(exception_ptr)> exception,
-                                         const Ice::Current&) override
-    {
-        _registry->setReplicatedAdapterDirectProxyAsync(id, group, proxy, response, exception);
-    }
-
-    virtual void
-    setServerProcessProxyAsync(string id,
-                               shared_ptr<Ice::ProcessPrx> proxy,
-                               function<void()> response,
-                               function<void(exception_ptr)> exception,
-                               const Ice::Current&) override
-    {
-        _registry->setServerProcessProxyAsync(id, proxy, response, exception);
-    }
-
-private:
-
-    const shared_ptr<Ice::LocatorRegistryPrx> _registry;
-};
-
-//
-// Likewise, LocatorI forwards everything to the provided (IceGrid) locator
-// when the context contains SECRET == LetMeIn
-//
-class LocatorI : public Ice::Locator
-{
-public:
-
-    LocatorI(const shared_ptr<Ice::LocatorPrx>& locator,
-             const shared_ptr<Ice::LocatorRegistryPrx>& registry) :
-        _locator(locator),
-        _registry(registry)
-    {
-    }
-
-    virtual void
-    findObjectByIdAsync(Ice::Identity id,
-                        function<void(const shared_ptr<Ice::ObjectPrx>&)> response,
-                        function<void(exception_ptr)> exception,
-                        const Ice::Current& current) const override
-    {
-        auto p = current.ctx.find("SECRET");
-        if(p != current.ctx.end() && p->second == "LetMeIn")
+        virtual void setAdapterDirectProxyAsync(
+            string id,
+            shared_ptr<Ice::ObjectPrx> proxy,
+            function<void()> response,
+            function<void(exception_ptr)> exception,
+            const Ice::Current&) override
         {
-            _locator->findObjectByIdAsync(id, response, exception);
+            // AMI call using the AMD callbacks
+            _registry->setAdapterDirectProxyAsync(id, proxy, response, exception);
         }
-        else
-        {
-            response(nullptr);
-        }
-    }
 
-    virtual void
-    findAdapterByIdAsync(string id,
-                         function<void(const shared_ptr<Ice::ObjectPrx>&)> response,
-                         function<void(exception_ptr)> exception,
-                         const Ice::Current& current) const override
+        virtual void setReplicatedAdapterDirectProxyAsync(
+            string id,
+            string group,
+            shared_ptr<Ice::ObjectPrx> proxy,
+            function<void()> response,
+            function<void(exception_ptr)> exception,
+            const Ice::Current&) override
+        {
+            _registry->setReplicatedAdapterDirectProxyAsync(id, group, proxy, response, exception);
+        }
+
+        virtual void setServerProcessProxyAsync(
+            string id,
+            shared_ptr<Ice::ProcessPrx> proxy,
+            function<void()> response,
+            function<void(exception_ptr)> exception,
+            const Ice::Current&) override
+        {
+            _registry->setServerProcessProxyAsync(id, proxy, response, exception);
+        }
+
+    private:
+        const shared_ptr<Ice::LocatorRegistryPrx> _registry;
+    };
+
+    //
+    // Likewise, LocatorI forwards everything to the provided (IceGrid) locator
+    // when the context contains SECRET == LetMeIn
+    //
+    class LocatorI : public Ice::Locator
     {
-        auto p = current.ctx.find("SECRET");
-        if(p != current.ctx.end() && p->second == "LetMeIn")
+    public:
+        LocatorI(const shared_ptr<Ice::LocatorPrx>& locator, const shared_ptr<Ice::LocatorRegistryPrx>& registry)
+            : _locator(locator),
+              _registry(registry)
         {
-            _locator->findAdapterByIdAsync(id, response, exception);
         }
-        else
+
+        virtual void findObjectByIdAsync(
+            Ice::Identity id,
+            function<void(const shared_ptr<Ice::ObjectPrx>&)> response,
+            function<void(exception_ptr)> exception,
+            const Ice::Current& current) const override
         {
-            response(nullptr);
+            auto p = current.ctx.find("SECRET");
+            if (p != current.ctx.end() && p->second == "LetMeIn")
+            {
+                _locator->findObjectByIdAsync(id, response, exception);
+            }
+            else
+            {
+                response(nullptr);
+            }
         }
-    }
 
-    virtual shared_ptr<Ice::LocatorRegistryPrx>
-    getRegistry(const Ice::Current&) const override
-    {
-        return _registry;
-    }
+        virtual void findAdapterByIdAsync(
+            string id,
+            function<void(const shared_ptr<Ice::ObjectPrx>&)> response,
+            function<void(exception_ptr)> exception,
+            const Ice::Current& current) const override
+        {
+            auto p = current.ctx.find("SECRET");
+            if (p != current.ctx.end() && p->second == "LetMeIn")
+            {
+                _locator->findAdapterByIdAsync(id, response, exception);
+            }
+            else
+            {
+                response(nullptr);
+            }
+        }
 
-private:
+        virtual shared_ptr<Ice::LocatorRegistryPrx> getRegistry(const Ice::Current&) const override
+        {
+            return _registry;
+        }
 
-    const shared_ptr<Ice::LocatorPrx> _locator;
-    const shared_ptr<Ice::LocatorRegistryPrx> _registry;
-};
+    private:
+        const shared_ptr<Ice::LocatorPrx> _locator;
+        const shared_ptr<Ice::LocatorRegistryPrx> _registry;
+    };
 
 }
 
-int main(int argc, char* argv[])
+int
+main(int argc, char* argv[])
 {
     int status = 0;
 
@@ -140,16 +132,12 @@ int main(int argc, char* argv[])
         const Ice::CommunicatorHolder ich(argc, argv, "config.locator");
         const auto& communicator = ich.communicator();
 
-        ctrlCHandler.setCallback(
-            [communicator](int)
-            {
-                communicator->shutdown();
-            });
+        ctrlCHandler.setCallback([communicator](int) { communicator->shutdown(); });
 
         //
         // The communicator initialization removes all Ice-related arguments from argc/argv
         //
-        if(argc > 1)
+        if (argc > 1)
         {
             cerr << argv[0] << ": too many arguments" << endl;
             status = 1;
@@ -176,7 +164,7 @@ int main(int argc, char* argv[])
             communicator->waitForShutdown();
         }
     }
-    catch(const std::exception& ex)
+    catch (const std::exception& ex)
     {
         cerr << ex.what() << endl;
         status = 1;

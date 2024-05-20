@@ -15,7 +15,7 @@ FilesystemI::NodeI::name(const Ice::Current& c)
 {
     const lock_guard<mutex> lock(_mutex);
 
-    if(_destroyed)
+    if (_destroyed)
     {
         throw Ice::ObjectNotExistException(__FILE__, __LINE__, c.id, c.facet, c.operation);
     }
@@ -34,12 +34,14 @@ FilesystemI::NodeI::id() const
 // NodeI constructor.
 
 FilesystemI::NodeI::NodeI(const string& nm, const shared_ptr<DirectoryI>& parent)
-    : _name(nm), _parent(parent), _destroyed(false)
+    : _name(nm),
+      _parent(parent),
+      _destroyed(false)
 {
     //
     // Create an identity. The root directory has the fixed identity "RootDir".
     //
-    if(parent != nullptr)
+    if (parent != nullptr)
     {
         _id.name = Ice::generateUUID();
     }
@@ -56,7 +58,7 @@ FilesystemI::FileI::read(const Ice::Current& c)
 {
     const lock_guard<mutex> lock(_mutex);
 
-    if(_destroyed)
+    if (_destroyed)
     {
         throw Ice::ObjectNotExistException(__FILE__, __LINE__, c.id, c.facet, c.operation);
     }
@@ -71,7 +73,7 @@ FilesystemI::FileI::write(Lines text, const Ice::Current& c)
 {
     const lock_guard<mutex> lock(_mutex);
 
-    if(_destroyed)
+    if (_destroyed)
     {
         throw Ice::ObjectNotExistException(__FILE__, __LINE__, c.id, c.facet, c.operation);
     }
@@ -87,7 +89,7 @@ FilesystemI::FileI::destroy(const Ice::Current& c)
     {
         const lock_guard<mutex> lock(_mutex);
 
-        if(_destroyed)
+        if (_destroyed)
         {
             throw Ice::ObjectNotExistException(__FILE__, __LINE__, c.id, c.facet, c.operation);
         }
@@ -101,10 +103,7 @@ FilesystemI::FileI::destroy(const Ice::Current& c)
 
 // FileI constructor.
 
-FilesystemI::FileI::FileI(const string& nm, const shared_ptr<DirectoryI>& parent)
-    : NodeI(nm, parent)
-{
-}
+FilesystemI::FileI::FileI(const string& nm, const shared_ptr<DirectoryI>& parent) : NodeI(nm, parent) {}
 
 // Slice Directory::list() operation.
 
@@ -113,13 +112,13 @@ FilesystemI::DirectoryI::list(const Ice::Current& c)
 {
     const lock_guard<mutex> lock(_mutex);
 
-    if(_destroyed)
+    if (_destroyed)
     {
         throw Ice::ObjectNotExistException(__FILE__, __LINE__, c.id, c.facet, c.operation);
     }
 
     NodeDescSeq ret;
-    for(const auto& i: _contents)
+    for (const auto& i : _contents)
     {
         NodeDesc d;
         d.name = i.first;
@@ -137,13 +136,13 @@ FilesystemI::DirectoryI::find(string nm, const Ice::Current& c)
 {
     const lock_guard<mutex> lock(_mutex);
 
-    if(_destroyed)
+    if (_destroyed)
     {
         throw Ice::ObjectNotExistException(__FILE__, __LINE__, c.id, c.facet, c.operation);
     }
 
     auto pos = _contents.find(nm);
-    if(pos == _contents.end())
+    if (pos == _contents.end())
     {
         throw NoSuchName(nm);
     }
@@ -163,12 +162,12 @@ FilesystemI::DirectoryI::createFile(string nm, const Ice::Current& c)
 {
     const lock_guard<mutex> lock(_mutex);
 
-    if(_destroyed)
+    if (_destroyed)
     {
         throw Ice::ObjectNotExistException(__FILE__, __LINE__, c.id, c.facet, c.operation);
     }
 
-    if(nm.empty() || _contents.find(nm) != _contents.end())
+    if (nm.empty() || _contents.find(nm) != _contents.end())
     {
         throw NameInUse(nm);
     }
@@ -186,12 +185,12 @@ FilesystemI::DirectoryI::createDirectory(string nm, const Ice::Current& c)
 {
     const lock_guard<mutex> lock(_mutex);
 
-    if(_destroyed)
+    if (_destroyed)
     {
         throw Ice::ObjectNotExistException(__FILE__, __LINE__, c.id, c.facet, c.operation);
     }
 
-    if(nm.empty() || _contents.find(nm) != _contents.end())
+    if (nm.empty() || _contents.find(nm) != _contents.end())
     {
         throw NameInUse(nm);
     }
@@ -207,7 +206,7 @@ FilesystemI::DirectoryI::createDirectory(string nm, const Ice::Current& c)
 void
 FilesystemI::DirectoryI::destroy(const Ice::Current& c)
 {
-    if(!_parent)
+    if (!_parent)
     {
         throw PermissionDenied("Cannot destroy root directory");
     }
@@ -215,12 +214,12 @@ FilesystemI::DirectoryI::destroy(const Ice::Current& c)
     {
         const lock_guard<mutex> lock(_mutex);
 
-        if(_destroyed)
+        if (_destroyed)
         {
             throw Ice::ObjectNotExistException(__FILE__, __LINE__, c.id, c.facet, c.operation);
         }
 
-        if(!_contents.empty())
+        if (!_contents.empty())
         {
             throw PermissionDenied("Cannot destroy non-empty directory");
         }
@@ -234,10 +233,7 @@ FilesystemI::DirectoryI::destroy(const Ice::Current& c)
 
 // DirectoryI constructor.
 
-FilesystemI::DirectoryI::DirectoryI(const string& nm, const shared_ptr<DirectoryI>& parent) :
-    NodeI(nm, parent)
-{
-}
+FilesystemI::DirectoryI::DirectoryI(const string& nm, const shared_ptr<DirectoryI>& parent) : NodeI(nm, parent) {}
 
 // Remove the entry from the _contents map.
 
@@ -246,7 +242,7 @@ FilesystemI::DirectoryI::removeEntry(const string& nm)
 {
     const lock_guard<mutex> lock(_mutex);
     auto i = _contents.find(nm);
-    if(i != _contents.end())
+    if (i != _contents.end())
     {
         _contents.erase(i);
     }

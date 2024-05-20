@@ -4,12 +4,12 @@
 
 #include <Ice/Ice.h>
 
-#include <Hello.h>
 #include <Discovery.h>
+#include <Hello.h>
 
-#include <mutex>
-#include <condition_variable>
 #include <chrono>
+#include <condition_variable>
+#include <mutex>
 
 using namespace std;
 using namespace Demo;
@@ -17,13 +17,11 @@ using namespace Demo;
 class DiscoverReplyI : public DiscoverReply
 {
 public:
-
-    virtual void
-    reply(shared_ptr<Ice::ObjectPrx> obj, const Ice::Current&) override
+    virtual void reply(shared_ptr<Ice::ObjectPrx> obj, const Ice::Current&) override
     {
         {
             const lock_guard<mutex> lock(_mutex);
-            if(!_obj)
+            if (!_obj)
             {
                 _obj = obj;
             }
@@ -31,8 +29,7 @@ public:
         _cond.notify_all();
     }
 
-    shared_ptr<Ice::ObjectPrx>
-    waitReply(int seconds)
+    shared_ptr<Ice::ObjectPrx> waitReply(int seconds)
     {
         auto until = chrono::system_clock::now() + chrono::seconds(seconds);
         unique_lock<mutex> lock(_mutex);
@@ -40,13 +37,12 @@ public:
         do
         {
             timedOut = _cond.wait_until(lock, until) == cv_status::timeout;
-        } while(!_obj && !timedOut);
+        } while (!_obj && !timedOut);
 
         return _obj;
     }
 
 private:
-
     shared_ptr<Ice::ObjectPrx> _obj;
     mutex _mutex;
     condition_variable _cond;
@@ -77,16 +73,12 @@ main(int argc, char* argv[])
         const Ice::CommunicatorHolder ich(argc, argv, "config.client");
         const auto& communicator = ich.communicator();
 
-        ctrlCHandler.setCallback(
-            [communicator](int)
-            {
-                communicator->destroy();
-            });
+        ctrlCHandler.setCallback([communicator](int) { communicator->destroy(); });
 
         //
         // The communicator initialization removes all Ice-related arguments from argc/argv
         //
-        if(argc > 1)
+        if (argc > 1)
         {
             cerr << argv[0] << ": too many arguments" << endl;
             status = 1;
@@ -96,7 +88,7 @@ main(int argc, char* argv[])
             status = run(communicator, argv[0]);
         }
     }
-    catch(const std::exception& ex)
+    catch (const std::exception& ex)
     {
         cerr << ex.what() << endl;
         status = 1;
@@ -116,13 +108,13 @@ run(const shared_ptr<Ice::Communicator>& communicator, const string& appName)
     auto discover = Ice::uncheckedCast<DiscoverPrx>(communicator->propertyToProxy("Discover.Proxy")->ice_datagram());
     discover->lookup(reply);
     auto base = replyI->waitReply(2);
-    if(!base)
+    if (!base)
     {
         cerr << appName << ": no replies" << endl;
         return 1;
     }
     auto hello = Ice::checkedCast<HelloPrx>(base);
-    if(!hello)
+    if (!hello)
     {
         cerr << appName << ": invalid reply" << endl;
         return 1;

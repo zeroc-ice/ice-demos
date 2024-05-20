@@ -13,7 +13,6 @@
 class SessionI : public Demo::Session
 {
 public:
-
     SessionI(std::string);
 
     virtual std::shared_ptr<Demo::HelloPrx> createHello(const Ice::Current&) override;
@@ -21,7 +20,6 @@ public:
     virtual void destroy(const Ice::Current&) override;
 
 private:
-
     std::mutex _mutex;
     const std::string _name;
     int _nextId; // The per-session id of the next hello object. This is used for tracing purposes.

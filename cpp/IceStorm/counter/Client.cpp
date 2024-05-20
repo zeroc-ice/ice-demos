@@ -2,8 +2,8 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <Ice/Ice.h>
 #include <CounterObserverI.h>
+#include <Ice/Ice.h>
 
 using namespace std;
 using namespace Demo;
@@ -26,7 +26,7 @@ main(int argc, char* argv[])
         //
         // The communicator initialization removes all Ice-related arguments from argc/argv
         //
-        if(argc > 1)
+        if (argc > 1)
         {
             cerr << argv[0] << ": too many arguments" << endl;
             status = 1;
@@ -36,7 +36,7 @@ main(int argc, char* argv[])
             status = run(ich.communicator());
         }
     }
-    catch(const std::exception& ex)
+    catch (const std::exception& ex)
     {
         cerr << argv[0] << ": " << ex.what() << endl;
         status = 1;
@@ -50,19 +50,18 @@ void menu();
 int
 run(const shared_ptr<Ice::Communicator>& communicator)
 {
-
     auto properties = communicator->getProperties();
 
     const string proxyProperty = "Counter.Proxy";
     auto proxy = properties->getProperty(proxyProperty);
-    if(proxy.empty())
+    if (proxy.empty())
     {
         cerr << "property `" << proxyProperty << "' not set" << endl;
         return 1;
     }
 
     auto counter = Ice::uncheckedCast<CounterPrx>(communicator->stringToProxy(proxy));
-    if(!counter)
+    if (!counter)
     {
         cerr << "invalid proxy" << endl;
         return 1;
@@ -83,19 +82,19 @@ run(const shared_ptr<Ice::Communicator>& communicator)
         {
             print("==> ");
             cin >> c;
-            if(c == 'i')
+            if (c == 'i')
             {
                 counter->inc(1);
             }
-            else if(c == 'd')
+            else if (c == 'd')
             {
                 counter->inc(-1);
             }
-            else if(c == 'x')
+            else if (c == 'x')
             {
                 // Nothing to do
             }
-            else if(c == '?')
+            else if (c == '?')
             {
                 menu();
             }
@@ -105,12 +104,11 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 menu();
             }
         }
-        catch(const Ice::Exception& ex)
+        catch (const Ice::Exception& ex)
         {
             cerr << ex << endl;
         }
-    }
-    while(cin.good() && c != 'x');
+    } while (cin.good() && c != 'x');
 
     counter->unsubscribe(observer);
 

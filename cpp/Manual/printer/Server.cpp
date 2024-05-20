@@ -11,7 +11,6 @@ using namespace Demo;
 class PrinterI : public Printer
 {
 public:
-
     virtual void printString(string s, const Ice::Current&) override;
 };
 
@@ -34,7 +33,7 @@ main(int argc, char* argv[])
 
         ich->waitForShutdown();
     }
-    catch(const std::exception& e)
+    catch (const std::exception& e)
     {
         cerr << e.what() << endl;
         return 1;

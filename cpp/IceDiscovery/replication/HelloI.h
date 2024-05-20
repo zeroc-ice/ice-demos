@@ -10,14 +10,12 @@
 class HelloI : public Demo::Hello
 {
 public:
-
     HelloI(std::string);
 
     virtual std::string getGreeting(const Ice::Current&) override;
     virtual void shutdown(const Ice::Current&) override;
 
 private:
-
     const std::string _name;
 };
 

@@ -12,7 +12,6 @@
 class ChatSessionI : public Demo::ChatSession
 {
 public:
-
     ChatSessionI(std::string);
 
     virtual void setCallback(std::shared_ptr<Demo::ChatCallbackPrx>, const Ice::Current&) override;
@@ -20,7 +19,6 @@ public:
     virtual void destroy(const Ice::Current&) override;
 
 private:
-
     std::mutex _mutex;
     const std::string _userId;
     std::shared_ptr<Demo::ChatCallbackPrx> _callback;
@@ -29,7 +27,6 @@ private:
 class ChatSessionManagerI : public Glacier2::SessionManager
 {
 public:
-
     virtual std::shared_ptr<Glacier2::SessionPrx>
     create(std::string, std::shared_ptr<Glacier2::SessionControlPrx>, const Ice::Current&) override;
 

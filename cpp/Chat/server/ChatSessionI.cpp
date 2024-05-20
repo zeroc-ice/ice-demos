@@ -7,21 +7,20 @@
 
 using namespace std;
 
-class SessionCallbackAdapter : public ChatRoomCallbackAdapter,
-                               public enable_shared_from_this<SessionCallbackAdapter>
+class SessionCallbackAdapter : public ChatRoomCallbackAdapter, public enable_shared_from_this<SessionCallbackAdapter>
 {
 public:
-
-    SessionCallbackAdapter(const shared_ptr<Chat::ChatRoomCallbackPrx>& callback,
-                           const shared_ptr<Chat::ChatSessionPrx>& session,
-                           bool trace,
-                           const shared_ptr<Ice::Logger>& logger,
-                           std::string name) :
-        _callback(callback),
-        _session(session),
-        _trace(trace),
-        _logger(logger),
-        _name(std::move(name))
+    SessionCallbackAdapter(
+        const shared_ptr<Chat::ChatRoomCallbackPrx>& callback,
+        const shared_ptr<Chat::ChatSessionPrx>& session,
+        bool trace,
+        const shared_ptr<Ice::Logger>& logger,
+        std::string name)
+        : _callback(callback),
+          _session(session),
+          _trace(trace),
+          _logger(logger),
+          _name(std::move(name))
     {
     }
 
@@ -32,7 +31,7 @@ public:
         {
             _callback->initAsync(users, nullptr, [self](exception_ptr) { self->failed(); });
         }
-        catch(const Ice::CommunicatorDestroyedException&)
+        catch (const Ice::CommunicatorDestroyedException&)
         {
             // Ignored server is being shutdown
         }
@@ -45,7 +44,7 @@ public:
         {
             _callback->joinAsync(e->timestamp, e->name, nullptr, [self](exception_ptr) { self->failed(); });
         }
-        catch(const Ice::CommunicatorDestroyedException&)
+        catch (const Ice::CommunicatorDestroyedException&)
         {
             // Ignored server is being shutdown
         }
@@ -58,7 +57,7 @@ public:
         {
             _callback->leaveAsync(e->timestamp, e->name, nullptr, [self](exception_ptr) { self->failed(); });
         }
-        catch(const Ice::CommunicatorDestroyedException&)
+        catch (const Ice::CommunicatorDestroyedException&)
         {
             // Ignored server is being shutdown
         }
@@ -71,7 +70,7 @@ public:
         {
             _callback->sendAsync(e->timestamp, e->name, e->message, nullptr, [self](exception_ptr) { self->failed(); });
         }
-        catch(const Ice::CommunicatorDestroyedException&)
+        catch (const Ice::CommunicatorDestroyedException&)
         {
             // Ignored server is being shutdown
         }
@@ -79,7 +78,7 @@ public:
 
     void failed()
     {
-        if(_trace)
+        if (_trace)
         {
             Ice::Trace out(_logger, "info");
             out << "Error sending request to user '" << _name << "'. The user's session will be destroyed.";
@@ -88,13 +87,12 @@ public:
         {
             _session->ice_endpoints(Ice::EndpointSeq())->destroy(); // Collocated call.
         }
-        catch(const Ice::LocalException&)
+        catch (const Ice::LocalException&)
         {
         }
     }
 
 private:
-
     const shared_ptr<Chat::ChatRoomCallbackPrx> _callback;
     const shared_ptr<Chat::ChatSessionPrx> _session;
     const bool _trace;
@@ -102,11 +100,15 @@ private:
     const string _name;
 };
 
-ChatSessionI::ChatSessionI(const shared_ptr<ChatRoom>& chatRoom, string name, bool trace, const shared_ptr<Ice::Logger>& logger) :
-    _chatRoom(chatRoom),
-    _name(std::move(name)),
-    _trace(trace),
-    _logger(logger)
+ChatSessionI::ChatSessionI(
+    const shared_ptr<ChatRoom>& chatRoom,
+    string name,
+    bool trace,
+    const shared_ptr<Ice::Logger>& logger)
+    : _chatRoom(chatRoom),
+      _name(std::move(name)),
+      _trace(trace),
+      _logger(logger)
 {
 }
 
@@ -114,9 +116,9 @@ void
 ChatSessionI::setCallback(shared_ptr<Chat::ChatRoomCallbackPrx> callback, const Ice::Current& current)
 {
     const lock_guard<mutex> sync(_mutex);
-    if(_destroy)
+    if (_destroy)
     {
-        if(_trace)
+        if (_trace)
         {
             Ice::Trace out(_logger, "info");
             out << "User '" << _name << "' tried to set the session callback but the session is already destroyed.";
@@ -124,7 +126,7 @@ ChatSessionI::setCallback(shared_ptr<Chat::ChatRoomCallbackPrx> callback, const 
         throw Ice::ObjectNotExistException(__FILE__, __LINE__);
     }
 
-    if(_callback || !callback)
+    if (_callback || !callback)
     {
         return;
     }
@@ -134,7 +136,9 @@ ChatSessionI::setCallback(shared_ptr<Chat::ChatRoomCallbackPrx> callback, const 
     _callback = make_shared<SessionCallbackAdapter>(
         callback->ice_context(ctx),
         Ice::uncheckedCast<Chat::ChatSessionPrx>(current.adapter->createProxy(current.id)),
-        _trace, _logger, _name);
+        _trace,
+        _logger,
+        _name);
     _chatRoom->join(_name, _callback);
 }
 
@@ -142,18 +146,18 @@ long long
 ChatSessionI::send(string message, const Ice::Current&)
 {
     const lock_guard<mutex> sync(_mutex);
-    if(_destroy)
+    if (_destroy)
     {
-        if(_trace)
+        if (_trace)
         {
             Ice::Trace out(_logger, "info");
             out << "User '" << _name << "' tried to send a message but the session is already destroyed.";
         }
         throw Ice::ObjectNotExistException(__FILE__, __LINE__);
     }
-    if(!_callback)
+    if (!_callback)
     {
-        if(_trace)
+        if (_trace)
         {
             Ice::Trace out(_logger, "info");
             out << "User '" << _name << "' tried to send a message without setting the callback.";
@@ -165,9 +169,9 @@ ChatSessionI::send(string message, const Ice::Current&)
     {
         msg = validateMessage(message);
     }
-    catch(const exception& ex)
+    catch (const exception& ex)
     {
-        if(_trace)
+        if (_trace)
         {
             Ice::Trace out(_logger, "info");
             out << "User '" << _name << "' sent an invalid message:\n" << ex;
@@ -181,9 +185,9 @@ void
 ChatSessionI::destroy(const Ice::Current& current)
 {
     const lock_guard<mutex> sync(_mutex);
-    if(_destroy)
+    if (_destroy)
     {
-        if(_trace)
+        if (_trace)
         {
             Ice::Trace out(_logger, "info");
             out << "Trying to destroy the session for user '" << _name << "' but the session is already destroyed.";
@@ -193,7 +197,7 @@ ChatSessionI::destroy(const Ice::Current& current)
     try
     {
         current.adapter->remove(current.id);
-        if(_callback)
+        if (_callback)
         {
             _chatRoom->leave(_name);
         }
@@ -202,11 +206,11 @@ ChatSessionI::destroy(const Ice::Current& current)
             _chatRoom->unreserve(_name);
         }
     }
-    catch(const Ice::ObjectAdapterDeactivatedException&)
+    catch (const Ice::ObjectAdapterDeactivatedException&)
     {
         // No need to clean up, the server is shutting down.
     }
-    if(_trace)
+    if (_trace)
     {
         Ice::Trace out(_logger, "info");
         out << "Push session for user '" << _name << "' destroyed.";

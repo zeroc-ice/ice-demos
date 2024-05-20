@@ -6,11 +6,13 @@
 
 using namespace std;
 
-InterceptorI::InterceptorI(shared_ptr<Ice::Object> servant, shared_ptr<AuthenticatorI> authenticator,
-                           unordered_set<string> securedOperations) :
-    _servant(std::move(servant)),
-    _authenticator(std::move(authenticator)),
-    _securedOperations(std::move(securedOperations))
+InterceptorI::InterceptorI(
+    shared_ptr<Ice::Object> servant,
+    shared_ptr<AuthenticatorI> authenticator,
+    unordered_set<string> securedOperations)
+    : _servant(std::move(servant)),
+      _authenticator(std::move(authenticator)),
+      _securedOperations(std::move(securedOperations))
 {
 }
 
@@ -21,14 +23,14 @@ InterceptorI::dispatch(Ice::Request& request)
     //
     // Check if the operation requires authorization to invoke.
     //
-    if(_securedOperations.find(current.operation) != _securedOperations.end())
+    if (_securedOperations.find(current.operation) != _securedOperations.end())
     {
         //
         // Validate the client's access token before dispatching to the servant.
         // 'validateToken' throws an exception if the token is invalid or expired.
         //
         auto tokenValue = current.ctx.find("accessToken");
-        if(tokenValue != current.ctx.end())
+        if (tokenValue != current.ctx.end())
         {
             _authenticator->validateToken(tokenValue->second);
         }

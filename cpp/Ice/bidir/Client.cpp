@@ -2,8 +2,8 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <Ice/Ice.h>
 #include <Callback.h>
+#include <Ice/Ice.h>
 
 using namespace std;
 using namespace Demo;
@@ -11,12 +11,7 @@ using namespace Demo;
 class CallbackReceiverI : public CallbackReceiver
 {
 public:
-
-    virtual void
-    callback(Ice::Int num, const Ice::Current&) override
-    {
-        cout << "received callback #" << num << endl;
-    }
+    virtual void callback(Ice::Int num, const Ice::Current&) override { cout << "received callback #" << num << endl; }
 };
 
 int run(const shared_ptr<Ice::Communicator>&, const string&);
@@ -44,16 +39,12 @@ main(int argc, char* argv[])
         const Ice::CommunicatorHolder ich(argc, argv, "config.client");
         const auto& communicator = ich.communicator();
 
-        ctrlCHandler.setCallback(
-            [communicator](int)
-            {
-                communicator->destroy();
-            });
+        ctrlCHandler.setCallback([communicator](int) { communicator->destroy(); });
 
         //
         // The communicator initialization removes all Ice-related arguments from argc/argv
         //
-        if(argc > 1)
+        if (argc > 1)
         {
             cerr << argv[0] << ": too many arguments" << endl;
             status = 1;
@@ -63,7 +54,7 @@ main(int argc, char* argv[])
             status = run(communicator, argv[0]);
         }
     }
-    catch(const std::exception& ex)
+    catch (const std::exception& ex)
     {
         cerr << ex.what() << endl;
         status = 1;
@@ -76,7 +67,7 @@ int
 run(const shared_ptr<Ice::Communicator>& communicator, const string& appName)
 {
     auto server = Ice::checkedCast<CallbackSenderPrx>(communicator->propertyToProxy("CallbackSender.Proxy"));
-    if(!server)
+    if (!server)
     {
         cerr << appName << ": invalid proxy" << endl;
         return 1;

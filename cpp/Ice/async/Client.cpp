@@ -2,8 +2,8 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <Ice/Ice.h>
 #include <Hello.h>
+#include <Ice/Ice.h>
 #include <exception>
 
 using namespace std;
@@ -26,7 +26,7 @@ main(int argc, char* argv[])
         //
         // The communicator initialization removes all Ice-related arguments from argc/argv
         //
-        if(argc > 1)
+        if (argc > 1)
         {
             cerr << argv[0] << ": too many arguments" << endl;
             status = 1;
@@ -36,7 +36,7 @@ main(int argc, char* argv[])
             status = run(ich.communicator());
         }
     }
-    catch(const std::exception& ex)
+    catch (const std::exception& ex)
     {
         cerr << argv[0] << ": " << ex.what() << endl;
         status = 1;
@@ -51,7 +51,7 @@ int
 run(const shared_ptr<Ice::Communicator>& communicator)
 {
     auto hello = Ice::checkedCast<Demo::HelloPrx>(communicator->propertyToProxy("Hello.Proxy"));
-    if(!hello)
+    if (!hello)
     {
         cerr << "invalid proxy" << endl;
         return 1;
@@ -66,11 +66,11 @@ run(const shared_ptr<Ice::Communicator>& communicator)
         {
             cout << "==> ";
             cin >> c;
-            if(c == 'i')
+            if (c == 'i')
             {
                 hello->sayHello(0);
             }
-            else if(c == 'd')
+            else if (c == 'd')
             {
                 hello->sayHelloAsync(
                     5000,
@@ -81,21 +81,21 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                         {
                             rethrow_exception(e);
                         }
-                        catch(const exception& ex)
+                        catch (const exception& ex)
                         {
                             cerr << "sayHello AMI call failed:\n" << ex.what() << endl;
                         }
                     });
             }
-            else if(c == 's')
+            else if (c == 's')
             {
                 hello->shutdown();
             }
-            else if(c == 'x')
+            else if (c == 'x')
             {
                 // Nothing to do
             }
-            else if(c == '?')
+            else if (c == '?')
             {
                 menu();
             }
@@ -105,12 +105,11 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 menu();
             }
         }
-        catch(const Ice::Exception& ex)
+        catch (const Ice::Exception& ex)
         {
             cerr << ex << endl;
         }
-    }
-    while(cin.good() && c != 'x');
+    } while (cin.good() && c != 'x');
 
     return 0;
 }
@@ -118,11 +117,10 @@ run(const shared_ptr<Ice::Communicator>& communicator)
 void
 menu()
 {
-    cout <<
-        "usage:\n"
-        "i: send immediate greeting\n"
-        "d: send delayed greeting\n"
-        "s: shutdown server\n"
-        "x: exit\n"
-        "?: help\n";
+    cout << "usage:\n"
+            "i: send immediate greeting\n"
+            "d: send delayed greeting\n"
+            "s: shutdown server\n"
+            "x: exit\n"
+            "?: help\n";
 }

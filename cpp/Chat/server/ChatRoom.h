@@ -12,7 +12,6 @@
 class ChatRoomCallbackAdapter
 {
 public:
-
     virtual ~ChatRoomCallbackAdapter() = default;
 
     virtual void init(Ice::StringSeq) = 0;
@@ -24,7 +23,6 @@ public:
 class ChatRoom
 {
 public:
-
     ChatRoom(bool trace, const std::shared_ptr<Ice::Logger>& logger);
     void reserve(const std::string&);
     void unreserve(const std::string&);
@@ -33,7 +31,6 @@ public:
     long long send(const std::string&, const std::string&);
 
 private:
-
     using ChatRoomCallbackMap = std::map<std::string, std::shared_ptr<ChatRoomCallbackAdapter>>;
 
     ChatRoomCallbackMap _members;
