@@ -7,18 +7,15 @@
 
 #include <Callback.h>
 
-class CallbackSenderI : public Demo::CallbackSender,
-                        public std::enable_shared_from_this<CallbackSenderI>
+class CallbackSenderI : public Demo::CallbackSender, public std::enable_shared_from_this<CallbackSenderI>
 {
 public:
-
     virtual void addClient(std::shared_ptr<Demo::CallbackReceiverPrx>, const Ice::Current&) override;
 
     void destroy();
     void start();
 
 private:
-
     void invokeCallback();
     void removeClient(const std::shared_ptr<Demo::CallbackReceiverPrx>&, std::exception_ptr);
 

@@ -9,9 +9,9 @@
 using namespace std;
 using namespace Demo;
 
-CounterI::CounterI(const shared_ptr<IceStorm::TopicPrx>& topic) :
-    _topic(topic),
-    _publisher(Ice::uncheckedCast<CounterObserverPrx>(topic->getPublisher()))
+CounterI::CounterI(const shared_ptr<IceStorm::TopicPrx>& topic)
+    : _topic(topic),
+      _publisher(Ice::uncheckedCast<CounterObserverPrx>(topic->getPublisher()))
 {
 }
 

@@ -1,0 +1,8 @@
+{
+    "C_Cpp.autoAddFileAssociations": false,
+    "files.associations": {
+        "Make.*": "makefile"
+    },
+    "C_Cpp.default.cppStandard": "c++17",
+    "gradle.nestedProjects": true
+}

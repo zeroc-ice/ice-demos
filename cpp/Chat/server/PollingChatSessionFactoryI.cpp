@@ -2,19 +2,22 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
+#include <ChatUtils.h>
 #include <Ice/Ice.h>
 #include <PollingChatSessionFactoryI.h>
 #include <PollingChatSessionI.h>
-#include <ChatUtils.h>
 
 using namespace std;
 
-PollingChatSessionFactoryI::PollingChatSessionFactoryI(const shared_ptr<ChatRoom>& chatRoom,
-                                                       int timeout, bool trace, const shared_ptr<Ice::Logger>& logger) :
-    _chatRoom(chatRoom),
-    _timeout(timeout),
-    _trace(trace),
-    _logger(logger)
+PollingChatSessionFactoryI::PollingChatSessionFactoryI(
+    const shared_ptr<ChatRoom>& chatRoom,
+    int timeout,
+    bool trace,
+    const shared_ptr<Ice::Logger>& logger)
+    : _chatRoom(chatRoom),
+      _timeout(timeout),
+      _trace(trace),
+      _logger(logger)
 {
 }
 
@@ -27,9 +30,9 @@ PollingChatSessionFactoryI::create(string name, string, const Ice::Current& curr
         vname = validateName(name);
         _chatRoom->reserve(vname);
     }
-    catch(const exception& ex)
+    catch (const exception& ex)
     {
-        if(_trace)
+        if (_trace)
         {
             Ice::Trace out(_logger, "info");
             out << "Cannot create poll session:\n" << ex;
@@ -51,23 +54,24 @@ PollingChatSessionFactoryI::create(string name, string, const Ice::Current& curr
 
     auto trace = _trace;
     auto logger = _logger;
-    current.con->setCloseCallback([collocProxy, trace, logger](const shared_ptr<Ice::Connection>&)
-                                  {
-                                      try
-                                      {
-                                          collocProxy->destroy();
-                                          if(trace)
-                                          {
-                                              Ice::Trace out(logger, "info");
-                                              out << "Session: " << collocProxy << " reaped.";
-                                          }
-                                      }
-                                      catch(const Ice::LocalException&)
-                                      {
-                                          // Session already destroyed or server shutting down
-                                      }
-                                  });
-    if(_trace)
+    current.con->setCloseCallback(
+        [collocProxy, trace, logger](const shared_ptr<Ice::Connection>&)
+        {
+            try
+            {
+                collocProxy->destroy();
+                if (trace)
+                {
+                    Ice::Trace out(logger, "info");
+                    out << "Session: " << collocProxy << " reaped.";
+                }
+            }
+            catch (const Ice::LocalException&)
+            {
+                // Session already destroyed or server shutting down
+            }
+        });
+    if (_trace)
     {
         Ice::Trace out(_logger, "info");
         out << "Poll session created for user '" << vname << "'.";

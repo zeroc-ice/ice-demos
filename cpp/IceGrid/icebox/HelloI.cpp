@@ -4,18 +4,15 @@
 
 #ifdef _MSC_VER
 // For getenv
-#  define _CRT_SECURE_NO_WARNINGS
+#    define _CRT_SECURE_NO_WARNINGS
 #endif
 
-#include <Ice/Ice.h>
 #include <HelloI.h>
+#include <Ice/Ice.h>
 
 using namespace std;
 
-HelloI::HelloI(string serviceName) :
-    _serviceName(std::move(serviceName))
-{
-}
+HelloI::HelloI(string serviceName) : _serviceName(std::move(serviceName)) {}
 
 void
 HelloI::sayHello(const Ice::Current&)
@@ -24,19 +21,19 @@ HelloI::sayHello(const Ice::Current&)
     const string lang = val ? string(val) : "en";
 
     string greeting = "Hello, ";
-    if(lang == "fr")
+    if (lang == "fr")
     {
         greeting = "Bonjour, ";
     }
-    else if(lang == "de")
+    else if (lang == "de")
     {
         greeting = "Hallo, ";
     }
-    else if(lang == "es")
+    else if (lang == "es")
     {
         greeting = "Hola, ";
     }
-    else if(lang == "it")
+    else if (lang == "it")
     {
         greeting = "Ciao, ";
     }

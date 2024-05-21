@@ -4,8 +4,8 @@
 
 #include <Ice/Ice.h>
 
-#include <PollingChat.h>
 #include <ChatUtils.h>
+#include <PollingChat.h>
 #include <chrono>
 
 using namespace std;
@@ -14,19 +14,15 @@ static const unsigned int maxMessageSize = 1024;
 namespace
 {
 
-// mutex to prevent intertwined cout output
-mutex coutMutex;
+    // mutex to prevent intertwined cout output
+    mutex coutMutex;
 
 }
 
 class GetUpdatesTask
 {
 public:
-
-    explicit GetUpdatesTask(const shared_ptr<PollingChat::PollingChatSessionPrx>& session) :
-        _session(session)
-    {
-    }
+    explicit GetUpdatesTask(const shared_ptr<PollingChat::PollingChatSessionPrx>& session) : _session(session) {}
 
     ~GetUpdatesTask()
     {
@@ -41,7 +37,7 @@ public:
         {
             _asyncResult.get();
         }
-        catch(const std::exception& ex)
+        catch (const std::exception& ex)
         {
             cerr << "Update task failed with: " << ex.what() << endl;
         }
@@ -56,16 +52,16 @@ public:
     void run(int period)
     {
         unique_lock<mutex> lock(_mutex);
-        while(!_done)
+        while (!_done)
         {
             lock.unlock();
             try
             {
                 auto updates = _session->getUpdates();
-                for(const auto& u : updates)
+                for (const auto& u : updates)
                 {
                     auto joinedEvt = dynamic_pointer_cast<PollingChat::UserJoinedEvent>(u);
-                    if(joinedEvt)
+                    if (joinedEvt)
                     {
                         const lock_guard<mutex> lkg(coutMutex);
                         cout << ">>>> " << joinedEvt->name << " joined." << endl;
@@ -73,7 +69,7 @@ public:
                     else
                     {
                         auto leftEvt = dynamic_pointer_cast<PollingChat::UserLeftEvent>(u);
-                        if(leftEvt)
+                        if (leftEvt)
                         {
                             const lock_guard<mutex> lkg(coutMutex);
                             cout << ">>>> " << leftEvt->name << " left." << endl;
@@ -81,29 +77,30 @@ public:
                         else
                         {
                             auto messageEvt = dynamic_pointer_cast<PollingChat::MessageEvent>(u);
-                            if(messageEvt)
+                            if (messageEvt)
                             {
                                 const lock_guard<mutex> lkg(coutMutex);
-                                cout << messageEvt->name << " > " << ChatUtils::unstripHtml(messageEvt->message) << endl;
+                                cout << messageEvt->name << " > " << ChatUtils::unstripHtml(messageEvt->message)
+                                     << endl;
                             }
                         }
                     }
                 }
             }
-            catch(const Ice::LocalException& ex)
+            catch (const Ice::LocalException& ex)
             {
                 {
                     const lock_guard<mutex> lkg(_mutex);
                     _done = true;
                 }
-                if(!dynamic_cast<const Ice::ObjectNotExistException*>(&ex))
+                if (!dynamic_cast<const Ice::ObjectNotExistException*>(&ex))
                 {
                     cerr << "session lost:" << ex << endl;
                 }
             }
 
             lock.lock();
-            if(!_done)
+            if (!_done)
             {
                 _cond.wait_for(lock, chrono::seconds(period));
             }
@@ -117,7 +114,6 @@ public:
     }
 
 private:
-
     const shared_ptr<PollingChat::PollingChatSessionPrx> _session;
     std::future<void> _asyncResult; // only used by the main thread
 
@@ -146,20 +142,21 @@ main(int argc, char* argv[])
         //
         // Set PollingChatSessionFactory if not set
         //
-        if(initData.properties->getProperty("PollingChatSessionFactory").empty())
+        if (initData.properties->getProperty("PollingChatSessionFactory").empty())
         {
-            initData.properties->setProperty("Ice.Plugin.IceSSL","IceSSL:createIceSSL");
+            initData.properties->setProperty("Ice.Plugin.IceSSL", "IceSSL:createIceSSL");
             initData.properties->setProperty("IceSSL.UsePlatformCAs", "1");
             initData.properties->setProperty("IceSSL.CheckCertName", "2");
             initData.properties->setProperty("IceSSL.VerifyDepthMax", "5");
-            initData.properties->setProperty("PollingChatSessionFactory",
+            initData.properties->setProperty(
+                "PollingChatSessionFactory",
                 "PollingChatSessionFactory:wss -h zeroc.com -p 443 -r /demo-proxy/chat/poll");
             initData.properties->setProperty("OverrideSessionEndpoints", "1");
-         }
+        }
 
         const Ice::CommunicatorHolder ich(argc, argv, initData);
 
-        if(argc > 1)
+        if (argc > 1)
         {
             cerr << argv[0] << ": too many arguments" << endl;
             status = 1;
@@ -169,7 +166,7 @@ main(int argc, char* argv[])
             status = run(ich.communicator());
         }
     }
-    catch(const std::exception& ex)
+    catch (const std::exception& ex)
     {
         cerr << argv[0] << ": " << ex.what() << endl;
         status = 1;
@@ -183,18 +180,17 @@ void menu();
 int
 run(const shared_ptr<Ice::Communicator>& communicator)
 {
-    auto sessionFactory =
-        Ice::checkedCast<PollingChat::PollingChatSessionFactoryPrx>(
-            communicator->propertyToProxy("PollingChatSessionFactory"));
+    auto sessionFactory = Ice::checkedCast<PollingChat::PollingChatSessionFactoryPrx>(
+        communicator->propertyToProxy("PollingChatSessionFactory"));
 
-    if(!sessionFactory)
+    if (!sessionFactory)
     {
         cerr << "PollingChatSessionFactory proxy is not properly configured" << endl;
         return 1;
     }
 
     shared_ptr<PollingChat::PollingChatSessionPrx> session;
-    while(!session)
+    while (!session)
     {
         cout << "This demo accepts any user ID and password.\n";
 
@@ -212,16 +208,16 @@ run(const shared_ptr<Ice::Communicator>& communicator)
         {
             session = sessionFactory->create(id, pw);
         }
-        catch(const PollingChat::CannotCreateSessionException& ex)
+        catch (const PollingChat::CannotCreateSessionException& ex)
         {
             cout << "Login failed:\n" << ex.reason << endl;
         }
-        catch(const Ice::LocalException& ex)
+        catch (const Ice::LocalException& ex)
         {
             cout << "Communication with the server failed:\n" << ex << endl;
         }
 
-        if(session)
+        if (session)
         {
             break;
         }
@@ -230,7 +226,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
     //
     // Override session proxy's endpoints if necessary
     //
-    if(communicator->getProperties()->getPropertyAsInt("OverrideSessionEndpoints") != 0)
+    if (communicator->getProperties()->getPropertyAsInt("OverrideSessionEndpoints") != 0)
     {
         session = session->ice_endpoints(sessionFactory->ice_getEndpoints());
     }
@@ -244,11 +240,11 @@ run(const shared_ptr<Ice::Communicator>& communicator)
     {
         const lock_guard<mutex> lock(coutMutex);
         cout << "Users: ";
-        for(auto it = users.begin(); it != users.end();)
+        for (auto it = users.begin(); it != users.end();)
         {
             cout << *it;
             it++;
-            if(it != users.end())
+            if (it != users.end())
             {
                 cout << ", ";
             }
@@ -264,11 +260,11 @@ run(const shared_ptr<Ice::Communicator>& communicator)
             cout << "";
             getline(cin, s);
             s = ChatUtils::trim(s);
-            if(!s.empty())
+            if (!s.empty())
             {
-                if(s[0] == '/')
+                if (s[0] == '/')
                 {
-                    if(s == "/quit")
+                    if (s == "/quit")
                     {
                         break;
                     }
@@ -276,7 +272,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 }
                 else
                 {
-                    if(s.size() > maxMessageSize)
+                    if (s.size() > maxMessageSize)
                     {
                         const lock_guard<mutex> lock(coutMutex);
                         cout << "Message length exceeded, maximum length is " << maxMessageSize << " characters.";
@@ -287,17 +283,16 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                     }
                 }
             }
-        }
-        while(cin.good() && !getUpdatesTask.isDone());
+        } while (cin.good() && !getUpdatesTask.isDone());
     }
-    catch(const Ice::LocalException& ex)
+    catch (const Ice::LocalException& ex)
     {
         cerr << "Communication with the server failed:\n" << ex << endl;
         try
         {
             session->destroy();
         }
-        catch(const Ice::LocalException&)
+        catch (const Ice::LocalException&)
         {
         }
         return 1;
@@ -307,7 +302,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
     {
         session->destroy();
     }
-    catch(const Ice::LocalException&)
+    catch (const Ice::LocalException&)
     {
     }
     return 0;

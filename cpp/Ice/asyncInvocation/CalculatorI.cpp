@@ -2,8 +2,8 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <Ice/Ice.h>
 #include <CalculatorI.h>
+#include <Ice/Ice.h>
 #include <cmath>
 
 using namespace std;
@@ -23,7 +23,7 @@ CalculatorI::subtract(int x, int subtrahend, const Ice::Current&)
 int
 CalculatorI::divide(int numerator, int denominator, int& remainder, const Ice::Current&)
 {
-    if(denominator == 0)
+    if (denominator == 0)
     {
         throw Demo::DivideByZeroException();
     }
@@ -40,7 +40,7 @@ CalculatorI::square(int x, const Ice::Current&)
 double
 CalculatorI::squareRoot(int x, const Ice::Current&)
 {
-    if(x < 0)
+    if (x < 0)
     {
         throw Demo::NegativeRootException();
     }

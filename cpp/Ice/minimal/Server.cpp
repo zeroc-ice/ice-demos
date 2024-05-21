@@ -2,8 +2,8 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <Ice/Ice.h>
 #include <HelloI.h>
+#include <Ice/Ice.h>
 
 using namespace std;
 
@@ -20,18 +20,14 @@ main(int argc, char* argv[])
         const Ice::CommunicatorHolder ich(argc, argv);
         const auto& communicator = ich.communicator();
 
-        ctrlCHandler.setCallback(
-            [communicator](int)
-            {
-                communicator->shutdown();
-            });
+        ctrlCHandler.setCallback([communicator](int) { communicator->shutdown(); });
 
         auto adapter = communicator->createObjectAdapterWithEndpoints("Hello", "default -h localhost -p 10000");
         adapter->add(make_shared<HelloI>(), Ice::stringToIdentity("hello"));
         adapter->activate();
         communicator->waitForShutdown();
     }
-    catch(const std::exception& ex)
+    catch (const std::exception& ex)
     {
         cerr << ex.what() << endl;
         return 1;

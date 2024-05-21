@@ -2,8 +2,8 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <Ice/Ice.h>
 #include <Filesystem.h>
+#include <Ice/Ice.h>
 #include <iostream>
 #include <iterator>
 #include <stdexcept>
@@ -22,11 +22,11 @@ listRecursive(const shared_ptr<DirectoryPrx>& dir, size_t depth = 0)
 
     auto contents = dir->list();
 
-    for(const auto& node : contents)
+    for (const auto& node : contents)
     {
         auto subdir = Ice::checkedCast<DirectoryPrx>(node);
         cout << indent << node->name() << (subdir ? " (directory):" : " (file):") << endl;
-        if(subdir)
+        if (subdir)
         {
             listRecursive(subdir, depth);
         }
@@ -34,7 +34,7 @@ listRecursive(const shared_ptr<DirectoryPrx>& dir, size_t depth = 0)
         {
             auto file = Ice::uncheckedCast<FilePrx>(node);
             auto text = file->read();
-            for(const auto& line : text)
+            for (const auto& line : text)
             {
                 cout << indent << "\t" << line << endl;
             }
@@ -58,7 +58,7 @@ main(int argc, char* argv[])
         // Down-cast the proxy to a Directory proxy
         //
         auto rootDir = Ice::checkedCast<DirectoryPrx>(base);
-        if(!rootDir)
+        if (!rootDir)
         {
             throw std::runtime_error("Invalid proxy");
         }
@@ -67,9 +67,8 @@ main(int argc, char* argv[])
         //
         cout << "Contents of root directory:" << endl;
         listRecursive(rootDir);
-
     }
-    catch(const std::exception& e)
+    catch (const std::exception& e)
     {
         cerr << e.what() << endl;
         return 1;

@@ -10,8 +10,8 @@
 namespace ChatUtils
 {
 
-std::string unstripHtml(const std::string&);
-std::string trim(const std::string&);
+    std::string unstripHtml(const std::string&);
+    std::string trim(const std::string&);
 
 }
 

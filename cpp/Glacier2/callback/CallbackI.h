@@ -10,10 +10,8 @@
 class CallbackI : public Demo::Callback
 {
 public:
-
     virtual void initiateCallback(std::shared_ptr<Demo::CallbackReceiverPrx>, const Ice::Current&) override;
     virtual void shutdown(const Ice::Current&) override;
-
 };
 
 #endif

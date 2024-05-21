@@ -2,9 +2,9 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <Ice/Ice.h>
-#include <Glacier2/Glacier2.h>
 #include <Callback.h>
+#include <Glacier2/Glacier2.h>
+#include <Ice/Ice.h>
 
 using namespace std;
 using namespace Demo;
@@ -12,11 +12,7 @@ using namespace Demo;
 class CallbackReceiverI : public Demo::CallbackReceiver
 {
 public:
-
-    virtual void callback(const Ice::Current&) override
-    {
-        cout << "received callback" << endl;
-    }
+    virtual void callback(const Ice::Current&) override { cout << "received callback" << endl; }
 };
 
 void run(const shared_ptr<Ice::Communicator>&);
@@ -41,7 +37,7 @@ main(int argc, char* argv[])
         //
         // The communicator initialization removes all Ice-related arguments from argc/argv
         //
-        if(argc > 1)
+        if (argc > 1)
         {
             cerr << argv[0] << ": too many arguments" << endl;
             status = 1;
@@ -51,7 +47,7 @@ main(int argc, char* argv[])
             run(ich.communicator());
         }
     }
-    catch(const std::exception& ex)
+    catch (const std::exception& ex)
     {
         cerr << argv[0] << ": " << ex.what() << endl;
         status = 1;
@@ -70,7 +66,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
     //
     // Loop until we have successfully create a session.
     //
-    while(!session)
+    while (!session)
     {
         //
         // Prompt the user for the creadentials to create the session.
@@ -94,11 +90,11 @@ run(const shared_ptr<Ice::Communicator>& communicator)
             session = router->createSession(id, pw);
             break;
         }
-        catch(const Glacier2::PermissionDeniedException& ex)
+        catch (const Glacier2::PermissionDeniedException& ex)
         {
             cout << "permission denied:\n" << ex.reason << endl;
         }
-        catch(const Glacier2::CannotCreateSessionException& ex)
+        catch (const Glacier2::CannotCreateSessionException& ex)
         {
             cout << "cannot create session:\n" << ex.reason << endl;
         }
@@ -109,9 +105,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
     assert(connection);
     connection->setACM(acmTimeout, IceUtil::None, Ice::ACMHeartbeat::HeartbeatAlways);
     connection->setCloseCallback([](Ice::ConnectionPtr)
-                                 {
-                                     cout << "The Glacier2 session has been destroyed." << endl;
-                                 });
+                                 { cout << "The Glacier2 session has been destroyed." << endl; });
 
     //
     // The Glacier2 router routes bidirectional calls to objects in the client only
@@ -159,36 +153,36 @@ run(const shared_ptr<Ice::Communicator>& communicator)
     {
         cout << "==> ";
         cin >> c;
-        if(c == 't')
+        if (c == 't')
         {
             twoway->initiateCallback(twowayR);
         }
-        else if(c == 'o')
+        else if (c == 'o')
         {
             Ice::Context context;
-            if(!override.empty())
+            if (!override.empty())
             {
                 context["_ovrd"] = override;
             }
             oneway->initiateCallback(onewayR, context);
         }
-        else if(c == 'O')
+        else if (c == 'O')
         {
             Ice::Context context;
             context["_fwd"] = "O";
-            if(!override.empty())
+            if (!override.empty())
             {
                 context["_ovrd"] = override;
             }
             batchOneway->initiateCallback(onewayR, context);
         }
-        else if(c == 'f')
+        else if (c == 'f')
         {
             batchOneway->ice_flushBatchRequests();
         }
-        else if(c == 'v')
+        else if (c == 'v')
         {
-            if(override.empty())
+            if (override.empty())
             {
                 override = "some_value";
                 cout << "override context field is now `" << override << "'" << endl;
@@ -199,11 +193,11 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 cout << "override context field is empty" << endl;
             }
         }
-        else if(c == 'F')
+        else if (c == 'F')
         {
             fake = !fake;
 
-            if(fake)
+            if (fake)
             {
                 twowayR = Ice::uncheckedCast<CallbackReceiverPrx>(twowayR->ice_identity(callbackReceiverFakeIdent));
                 onewayR = Ice::uncheckedCast<CallbackReceiverPrx>(onewayR->ice_identity(callbackReceiverFakeIdent));
@@ -214,18 +208,17 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 onewayR = Ice::uncheckedCast<CallbackReceiverPrx>(onewayR->ice_identity(callbackReceiverIdent));
             }
 
-            cout << "callback receiver identity: " << Ice::identityToString(twowayR->ice_getIdentity())
-                 << endl;
+            cout << "callback receiver identity: " << Ice::identityToString(twowayR->ice_getIdentity()) << endl;
         }
-        else if(c == 's')
+        else if (c == 's')
         {
             twoway->shutdown();
         }
-        else if(c == 'x')
+        else if (c == 'x')
         {
             // Nothing to do
         }
-        else if(c == '?')
+        else if (c == '?')
         {
             menu();
         }
@@ -234,22 +227,20 @@ run(const shared_ptr<Ice::Communicator>& communicator)
             cout << "unknown command `" << c << "'" << endl;
             menu();
         }
-    }
-    while(cin.good() && c != 'x');
+    } while (cin.good() && c != 'x');
 }
 
 void
 menu()
 {
-    cout <<
-        "usage:\n"
-        "t: invoke callback as twoway\n"
-        "o: invoke callback as oneway\n"
-        "O: invoke callback as batch oneway\n"
-        "f: flush all batch requests\n"
-        "v: set/reset override context field\n"
-        "F: set/reset fake category\n"
-        "s: shutdown server\n"
-        "x: exit\n"
-        "?: help\n";
+    cout << "usage:\n"
+            "t: invoke callback as twoway\n"
+            "o: invoke callback as oneway\n"
+            "O: invoke callback as batch oneway\n"
+            "f: flush all batch requests\n"
+            "v: set/reset override context field\n"
+            "F: set/reset fake category\n"
+            "s: shutdown server\n"
+            "x: exit\n"
+            "?: help\n";
 }

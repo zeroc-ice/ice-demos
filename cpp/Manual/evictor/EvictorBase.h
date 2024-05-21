@@ -2,27 +2,25 @@
 #define EVICTORBASE_H
 
 #include <Ice/Ice.h>
-#include <map>
 #include <list>
+#include <map>
 #include <mutex>
 
 class EvictorBase : public Ice::ServantLocator
 {
 public:
-
     EvictorBase(int size = 1000);
 
     virtual std::shared_ptr<Ice::Object> locate(const Ice::Current&, std::shared_ptr<void>&) override;
-    virtual void finished(const Ice::Current&, const std::shared_ptr<Ice::Object>&, const std::shared_ptr<void>&) override;
+    virtual void
+    finished(const Ice::Current&, const std::shared_ptr<Ice::Object>&, const std::shared_ptr<void>&) override;
     virtual void deactivate(const std::string&) override;
 
 protected:
-
     virtual std::shared_ptr<Ice::Object> add(const Ice::Current&, std::shared_ptr<void>&) = 0;
     virtual void evict(const std::shared_ptr<Ice::Object>&, const std::shared_ptr<void>&) = 0;
 
 private:
-
     struct EvictorEntry;
 
     using EvictorMap = std::map<Ice::Identity, std::shared_ptr<EvictorEntry>>;

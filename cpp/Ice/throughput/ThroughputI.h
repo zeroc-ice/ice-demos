@@ -10,7 +10,6 @@
 class ThroughputI : public Demo::Throughput
 {
 public:
-
     ThroughputI();
 
     virtual bool needsWarmup(const Ice::Current&) override;
@@ -19,7 +18,8 @@ public:
 
     virtual void sendByteSeq(std::pair<const Ice::Byte*, const Ice::Byte*>, const Ice::Current&) override;
     virtual RecvByteSeqMarshaledResult recvByteSeq(const Ice::Current&) override;
-    virtual EchoByteSeqMarshaledResult echoByteSeq(std::pair<const Ice::Byte*, const Ice::Byte*>, const Ice::Current&) override;
+    virtual EchoByteSeqMarshaledResult
+    echoByteSeq(std::pair<const Ice::Byte*, const Ice::Byte*>, const Ice::Current&) override;
 
     virtual void sendStringSeq(std::vector<Util::string_view>, const Ice::Current&) override;
     virtual RecvStringSeqMarshaledResult recvStringSeq(const Ice::Current&) override;
@@ -36,7 +36,6 @@ public:
     virtual void shutdown(const Ice::Current&) override;
 
 private:
-
     Demo::ByteSeq _byteSeq;
     Demo::StringSeq _stringSeq;
     std::vector<Util::string_view> _stringViewSeq;

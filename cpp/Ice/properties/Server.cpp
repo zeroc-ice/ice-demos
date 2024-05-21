@@ -13,7 +13,6 @@ using namespace std;
 class PropsI : public Demo::Props
 {
 public:
-
     virtual Ice::PropertyDict getChanges(const Ice::Current&) override
     {
         unique_lock<mutex> lock(_mutex);
@@ -22,7 +21,7 @@ public:
         // Make sure that we have received the property updates before we
         // return the results.
         //
-        while(!_called)
+        while (!_called)
         {
             _cv.wait(lock);
         }
@@ -31,10 +30,7 @@ public:
         return _changes;
     }
 
-    virtual void shutdown(const Ice::Current& current) override
-    {
-        current.adapter->getCommunicator()->shutdown();
-    }
+    virtual void shutdown(const Ice::Current& current) override { current.adapter->getCommunicator()->shutdown(); }
 
     void updated(const Ice::PropertyDict& changes)
     {
@@ -46,14 +42,14 @@ public:
     }
 
 private:
-
     Ice::PropertyDict _changes;
     bool _called = false;
     mutex _mutex;
     condition_variable _cv;
 };
 
-int main(int argc, char* argv[])
+int
+main(int argc, char* argv[])
 {
 #ifdef ICE_STATIC_LIBS
     Ice::registerIceSSL();
@@ -75,16 +71,12 @@ int main(int argc, char* argv[])
         const Ice::CommunicatorHolder ich(argc, argv, "config.server");
         const auto& communicator = ich.communicator();
 
-        ctrlCHandler.setCallback(
-            [communicator](int)
-            {
-                communicator->shutdown();
-            });
+        ctrlCHandler.setCallback([communicator](int) { communicator->shutdown(); });
 
         //
         // The communicator initialization removes all Ice-related arguments from argc/argv
         //
-        if(argc > 1)
+        if (argc > 1)
         {
             cerr << argv[0] << ": too many arguments" << endl;
             status = 1;
@@ -106,7 +98,7 @@ int main(int argc, char* argv[])
             communicator->waitForShutdown();
         }
     }
-    catch(const std::exception& ex)
+    catch (const std::exception& ex)
     {
         cerr << ex.what() << endl;
         status = 1;

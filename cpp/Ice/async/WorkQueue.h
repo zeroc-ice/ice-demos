@@ -7,30 +7,25 @@
 
 #include <Hello.h>
 
-#include <list>
 #include <condition_variable>
+#include <list>
 #include <mutex>
 #include <thread>
 
 class WorkQueue
 {
 public:
-
     WorkQueue();
 
     void run();
 
-    void add(int, std::function<void ()>, std::function<void (std::exception_ptr)>);
+    void add(int, std::function<void()>, std::function<void(std::exception_ptr)>);
     void destroy();
     void start();
     void join();
 
 private:
-
-    using CallbackEntry = std::tuple<
-        int,
-        std::function<void ()>,
-        std::function<void (std::exception_ptr)>>;
+    using CallbackEntry = std::tuple<int, std::function<void()>, std::function<void(std::exception_ptr)>>;
 
     std::mutex _mutex;
     std::condition_variable _condition;

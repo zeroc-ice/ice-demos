@@ -11,7 +11,6 @@
 class SessionFactoryI : public Demo::SessionFactory
 {
 public:
-
     virtual std::shared_ptr<Demo::SessionPrx> create(std::string, const Ice::Current&) override;
     virtual void shutdown(const Ice::Current&) override;
 };

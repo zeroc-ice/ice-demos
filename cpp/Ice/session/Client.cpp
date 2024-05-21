@@ -30,7 +30,7 @@ main(int argc, char* argv[])
         //
         // The communicator initialization removes all Ice-related arguments from argc/argv
         //
-        if(argc > 1)
+        if (argc > 1)
         {
             cerr << argv[0] << ": too many arguments" << endl;
             status = 1;
@@ -40,7 +40,7 @@ main(int argc, char* argv[])
             status = run(ich.communicator());
         }
     }
-    catch(const std::exception& ex)
+    catch (const std::exception& ex)
     {
         cerr << argv[0] << ": " << ex.what() << endl;
         status = 1;
@@ -57,14 +57,14 @@ run(const shared_ptr<Ice::Communicator>& communicator)
     string name;
     cout << "Please enter your name ==> ";
     cin >> name;
-    if(!cin.good())
+    if (!cin.good())
     {
         return 1;
     }
 
     auto base = communicator->propertyToProxy("SessionFactory.Proxy");
     auto factory = Ice::checkedCast<SessionFactoryPrx>(base);
-    if(!factory)
+    if (!factory)
     {
         cerr << "invalid proxy" << endl;
         return 1;
@@ -83,14 +83,14 @@ run(const shared_ptr<Ice::Communicator>& communicator)
         cout << "==> ";
         char c;
         cin >> c;
-        if(cin.good())
+        if (cin.good())
         {
-            if(isdigit(c))
+            if (isdigit(c))
             {
                 string s;
                 s += c;
                 const auto index = static_cast<size_t>(stoi(s));
-                if(index < hellos.size())
+                if (index < hellos.size())
                 {
                     hellos[index]->sayHello();
                 }
@@ -100,27 +100,27 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                          << "Use `c' to create a new hello object." << endl;
                 }
             }
-            else if(c == 'c')
+            else if (c == 'c')
             {
                 hellos.push_back(session->createHello());
                 cout << "Created hello object " << hellos.size() - 1 << endl;
             }
-            else if(c == 's')
+            else if (c == 's')
             {
                 destroy = false;
                 shutdown = true;
                 break;
             }
-            else if(c == 'x')
+            else if (c == 'x')
             {
                 break;
             }
-            else if(c == 't')
+            else if (c == 't')
             {
                 destroy = false;
                 break;
             }
-            else if(c == '?')
+            else if (c == '?')
             {
                 menu();
             }
@@ -130,14 +130,14 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 menu();
             }
         }
-    } while(cin.good());
+    } while (cin.good());
 
-    if(cin.good() && destroy)
+    if (cin.good() && destroy)
     {
         session->destroy();
     }
 
-    if(shutdown)
+    if (shutdown)
     {
         factory->shutdown();
     }
@@ -148,12 +148,11 @@ run(const shared_ptr<Ice::Communicator>& communicator)
 void
 menu()
 {
-    cout <<
-        "usage:\n"
-        "c:     create a new per-client hello object\n"
-        "0-9:   send a greeting to a hello object\n"
-        "s:     shutdown the server and exit\n"
-        "x:     exit\n"
-        "t:     exit without destroying the session\n"
-        "?:     help\n";
+    cout << "usage:\n"
+            "c:     create a new per-client hello object\n"
+            "0-9:   send a greeting to a hello object\n"
+            "s:     shutdown the server and exit\n"
+            "x:     exit\n"
+            "t:     exit without destroying the session\n"
+            "?:     help\n";
 }

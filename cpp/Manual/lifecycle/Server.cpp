@@ -2,14 +2,15 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <Ice/Ice.h>
 #include <FilesystemI.h>
+#include <Ice/Ice.h>
 
 using namespace std;
 using namespace Filesystem;
 using namespace FilesystemI;
 
-int main(int argc, char* argv[])
+int
+main(int argc, char* argv[])
 {
     int status = 0;
 
@@ -38,7 +39,7 @@ int main(int argc, char* argv[])
         //
         // The communicator initialization removes all Ice-related arguments from argc/argv
         //
-        if(argc > 1)
+        if (argc > 1)
         {
             cerr << argv[0] << ": too many arguments" << endl;
             status = 1;
@@ -70,7 +71,7 @@ int main(int argc, char* argv[])
             communicator->waitForShutdown();
         }
     }
-    catch(const std::exception& ex)
+    catch (const std::exception& ex)
     {
         cerr << ex.what() << endl;
         status = 1;

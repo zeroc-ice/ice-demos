@@ -2,15 +2,12 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <Ice/Ice.h>
 #include <HelloI.h>
+#include <Ice/Ice.h>
 
 using namespace std;
 
-HelloI::HelloI(const string& name) :
-    _name(name)
-{
-}
+HelloI::HelloI(const string& name) : _name(name) {}
 
 string
 HelloI::getGreeting(const Ice::Current&)

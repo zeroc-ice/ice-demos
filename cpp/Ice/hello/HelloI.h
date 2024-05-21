@@ -10,7 +10,6 @@
 class HelloI : public Demo::Hello
 {
 public:
-
     virtual void sayHello(int delay, const Ice::Current&) override;
     virtual void shutdown(const Ice::Current&) override;
 };

@@ -8,16 +8,13 @@
 using namespace std;
 using namespace Demo;
 
-NestedI::NestedI(shared_ptr<NestedPrx> self) :
-    _self(std::move(self))
-{
-}
+NestedI::NestedI(shared_ptr<NestedPrx> self) : _self(std::move(self)) {}
 
 void
 NestedI::nestedCall(int level, shared_ptr<NestedPrx> proxy, const Ice::Current&)
 {
     cout << level << endl;
-    if(--level > 0)
+    if (--level > 0)
     {
         //
         // Ensure the invocation times out if the nesting level is too

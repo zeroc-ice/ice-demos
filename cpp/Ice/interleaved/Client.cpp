@@ -37,16 +37,12 @@ main(int argc, char* argv[])
         const Ice::CommunicatorHolder ich(argc, argv, "config.client");
         const auto& communicator = ich.communicator();
 
-        ctrlCHandler.setCallback(
-            [communicator](int)
-            {
-                communicator->destroy();
-            });
+        ctrlCHandler.setCallback([communicator](int) { communicator->destroy(); });
 
         //
         // The communicator initialization removes all Ice-related arguments from argc/argv
         //
-        if(argc > 1)
+        if (argc > 1)
         {
             cerr << argv[0] << ": too many arguments" << endl;
             status = 1;
@@ -56,7 +52,7 @@ main(int argc, char* argv[])
             status = run(communicator, argv[0]);
         }
     }
-    catch(const std::exception& ex)
+    catch (const std::exception& ex)
     {
         cerr << ex.what() << endl;
         status = 1;
@@ -68,8 +64,8 @@ main(int argc, char* argv[])
 int
 run(const shared_ptr<Ice::Communicator>& communicator, const string& appName)
 {
-auto throughput = Ice::checkedCast<ThroughputPrx>(communicator->propertyToProxy("Throughput.Proxy"));
-    if(!throughput)
+    auto throughput = Ice::checkedCast<ThroughputPrx>(communicator->propertyToProxy("Throughput.Proxy"));
+    if (!throughput)
     {
         cerr << appName << ": invalid proxy" << endl;
         return 1;
@@ -93,15 +89,15 @@ auto throughput = Ice::checkedCast<ThroughputPrx>(communicator->propertyToProxy(
     auto start = chrono::high_resolution_clock::now();
 
     list<future<ByteSeq>> results;
-    for(int i = 0; i < repetitions; ++i)
+    for (int i = 0; i < repetitions; ++i)
     {
         results.push_back(throughput->echoByteSeqAsync(byteArr));
 
         // Remove any completed requests from the list
         auto p = results.begin();
-        while(p != results.end())
+        while (p != results.end())
         {
-            if(p->wait_for(std::chrono::seconds(0)) == std::future_status::ready)
+            if (p->wait_for(std::chrono::seconds(0)) == std::future_status::ready)
             {
                 p = results.erase(p);
             }
@@ -113,7 +109,7 @@ auto throughput = Ice::checkedCast<ThroughputPrx>(communicator->propertyToProxy(
 
         // This avoids too many outstanding requests. This is desirable if the server doesn't limit the
         // number of threads, or the server process requests slower than then client can send them.
-        while(maxOutstanding != -1 && static_cast<int>(results.size()) > maxOutstanding)
+        while (maxOutstanding != -1 && static_cast<int>(results.size()) > maxOutstanding)
         {
             results.front().wait();
             results.pop_front();
@@ -122,7 +118,7 @@ auto throughput = Ice::checkedCast<ThroughputPrx>(communicator->propertyToProxy(
 
     // Wait for all outstanding requests to complete
     //
-    while(results.size() > 0)
+    while (results.size() > 0)
     {
         results.front().wait();
         results.pop_front();

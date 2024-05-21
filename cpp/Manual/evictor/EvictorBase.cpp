@@ -2,8 +2,7 @@
 
 using namespace std;
 
-EvictorBase::EvictorBase(int size) :
-    _size(size)
+EvictorBase::EvictorBase(int size) : _size(size)
 {
     if (_size < 0)
     {
@@ -21,7 +20,7 @@ EvictorBase::locate(const Ice::Current& c, shared_ptr<void>& cookie)
     //
     shared_ptr<EvictorEntry> entry;
     auto i = _map.find(c.id);
-    if(i != _map.end())
+    if (i != _map.end())
     {
         //
         // Got an entry already, dequeue the entry from its current position.
@@ -37,7 +36,7 @@ EvictorBase::locate(const Ice::Current& c, shared_ptr<void>& cookie)
         //
         entry = make_shared<EvictorEntry>();
         entry->servant = add(c, entry->userCookie); // Down-call
-        if(!entry->servant)
+        if (!entry->servant)
         {
             return 0;
         }
@@ -91,10 +90,10 @@ EvictorBase::evictServants()
     auto p = _queue.rbegin();
     auto excessEntries = static_cast<int>(_map.size() - _size);
 
-    for(int i = 0; i < excessEntries; ++i)
+    for (int i = 0; i < excessEntries; ++i)
     {
         auto mapPos = *p;
-        if(mapPos->second->useCount == 0)
+        if (mapPos->second->useCount == 0)
         {
             evict(mapPos->second->servant, mapPos->second->userCookie); // Down-call
             p = EvictorQueue::reverse_iterator(_queue.erase(mapPos->second->queuePos));

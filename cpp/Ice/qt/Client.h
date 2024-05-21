@@ -5,18 +5,17 @@
 #ifndef MAIN_WINDOW_H
 #define MAIN_WINDOW_H
 
+#include <Hello.h>
+#include <Ice/Ice.h>
 #include <QtGui>
 #include <QtWidgets>
 #include <memory>
-#include <Ice/Ice.h>
-#include <Hello.h>
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-
     MainWindow();
     virtual bool event(QEvent*);
 
@@ -28,7 +27,6 @@ public slots:
     void updateProxy();
 
 private:
-
     QLineEdit* _hostname;
     QComboBox* _mode;
     QSlider* _timeout;

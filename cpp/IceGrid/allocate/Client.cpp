@@ -2,9 +2,9 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
+#include <Hello.h>
 #include <Ice/Ice.h>
 #include <IceGrid/IceGrid.h>
-#include <Hello.h>
 
 using namespace std;
 using namespace Demo;
@@ -31,7 +31,7 @@ main(int argc, char* argv[])
         //
         // The communicator initialization removes all Ice-related arguments from argc/argv
         //
-        if(argc > 1)
+        if (argc > 1)
         {
             cerr << argv[0] << ": too many arguments" << endl;
             status = 1;
@@ -41,7 +41,7 @@ main(int argc, char* argv[])
             status = run(ich.communicator());
         }
     }
-    catch(const std::exception& ex)
+    catch (const std::exception& ex)
     {
         cerr << argv[0] << ": " << ex.what() << endl;
         status = 1;
@@ -56,19 +56,17 @@ string trim(const string&);
 int
 run(const shared_ptr<Ice::Communicator>& communicator)
 {
-
     int status = 0;
 
-    auto registry = Ice::checkedCast<IceGrid::RegistryPrx>(
-        communicator->stringToProxy("DemoIceGrid/Registry"));
-    if(!registry)
+    auto registry = Ice::checkedCast<IceGrid::RegistryPrx>(communicator->stringToProxy("DemoIceGrid/Registry"));
+    if (!registry)
     {
         cerr << "could not contact registry" << endl;
         return 1;
     }
 
     shared_ptr<IceGrid::SessionPrx> session;
-    while(!session)
+    while (!session)
     {
         cout << "This demo accepts any user-id / password combination.\n";
 
@@ -87,7 +85,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
             session = registry->createSession(id, password);
             break;
         }
-        catch(const IceGrid::PermissionDeniedException& ex)
+        catch (const IceGrid::PermissionDeniedException& ex)
         {
             cout << "permission denied:\n" << ex.reason << endl;
         }
@@ -112,7 +110,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
         {
             hello = Ice::checkedCast<HelloPrx>(session->allocateObjectById(Ice::stringToIdentity("hello")));
         }
-        catch(const IceGrid::ObjectNotRegisteredException&)
+        catch (const IceGrid::ObjectNotRegisteredException&)
         {
             hello = Ice::checkedCast<HelloPrx>(session->allocateObjectByType("::Demo::Hello"));
         }
@@ -126,19 +124,19 @@ run(const shared_ptr<Ice::Communicator>& communicator)
             {
                 cout << "==> ";
                 cin >> c;
-                if(c == 't')
+                if (c == 't')
                 {
                     hello->sayHello();
                 }
-                else if(c == 's')
+                else if (c == 's')
                 {
                     hello->shutdown();
                 }
-                else if(c == 'x')
+                else if (c == 'x')
                 {
                     // Nothing to do
                 }
-                else if(c == '?')
+                else if (c == '?')
                 {
                     menu();
                 }
@@ -148,19 +146,18 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                     menu();
                 }
             }
-            catch(const Ice::Exception& ex)
+            catch (const Ice::Exception& ex)
             {
                 cerr << ex << endl;
             }
-        }
-        while(cin.good() && c != 'x');
+        } while (cin.good() && c != 'x');
     }
-    catch(const IceGrid::AllocationException& ex)
+    catch (const IceGrid::AllocationException& ex)
     {
         cerr << "could not allocate object: " << ex.reason << endl;
         status = 1;
     }
-    catch(const std::exception& ex)
+    catch (const std::exception& ex)
     {
         cerr << "unexpected exception: " << ex.what() << endl;
         status = 1;
@@ -174,12 +171,11 @@ run(const shared_ptr<Ice::Communicator>& communicator)
 void
 menu()
 {
-    cout <<
-        "usage:\n"
-        "t: send greeting\n"
-        "s: shutdown server\n"
-        "x: exit\n"
-        "?: help\n";
+    cout << "usage:\n"
+            "t: send greeting\n"
+            "s: shutdown server\n"
+            "x: exit\n"
+            "?: help\n";
 }
 
 string
@@ -187,9 +183,9 @@ trim(const string& s)
 {
     static const string delims = "\t\r\n ";
     const string::size_type last = s.find_last_not_of(delims);
-    if(last != string::npos)
+    if (last != string::npos)
     {
-        return s.substr(s.find_first_not_of(delims), last+1);
+        return s.substr(s.find_first_not_of(delims), last + 1);
     }
     return s;
 }

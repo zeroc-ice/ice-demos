@@ -2,8 +2,8 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <Ice/Ice.h>
 #include <HelloI.h>
+#include <Ice/Ice.h>
 #include <thread>
 
 using namespace std;
@@ -11,7 +11,7 @@ using namespace std;
 void
 HelloI::sayHello(int delay, const Ice::Current&)
 {
-    if(delay != 0)
+    if (delay != 0)
     {
         this_thread::sleep_for(chrono::milliseconds(delay));
     }

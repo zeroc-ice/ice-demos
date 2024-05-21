@@ -2,11 +2,11 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <ChatUtils.h>
 #include <Chat.h>
+#include <ChatUtils.h>
 
-#include <sstream>
 #include <algorithm>
+#include <sstream>
 
 using namespace std;
 
@@ -20,19 +20,19 @@ static const unsigned int maxMessageSize = 1024;
 string
 validateName(const string& in)
 {
-    if(in.size() > maxNameSize || in.size() < minNameSize)
+    if (in.size() > maxNameSize || in.size() < minNameSize)
     {
         ostringstream msg;
         msg << "Your name must be between " << minNameSize << " and " << maxNameSize << " characters in length.";
         throw invalid_argument(msg.str());
     }
-    if(in.find_last_not_of(nameRange) != string::npos)
+    if (in.find_last_not_of(nameRange) != string::npos)
     {
         throw invalid_argument("Invalid character in name. Valid characters are letter and digits.");
     }
     string out = in;
     transform(out.begin(), out.end(), out.begin(), ::tolower);
-    if(out.begin() != out.end())
+    if (out.begin() != out.end())
     {
         transform(out.begin(), out.begin() + 1, out.begin(), ::toupper);
     }
@@ -42,21 +42,21 @@ validateName(const string& in)
 string
 validateMessage(const string& in)
 {
-    if(in.size() > maxMessageSize)
+    if (in.size() > maxMessageSize)
     {
         ostringstream os;
         os << "Message length exceeded, maximum length is " << maxMessageSize << " characters.";
         throw Chat::InvalidMessageException(os.str());
     }
-    if(in.find_last_not_of(isEmptyTokens) == string::npos)
+    if (in.find_last_not_of(isEmptyTokens) == string::npos)
     {
         throw invalid_argument("Your message is empty and was ignored.");
     }
     // Strip html codes in the message
     string out;
-    for(const char c : in)
+    for (const char c : in)
     {
-        switch(c)
+        switch (c)
         {
             case '&':
             {

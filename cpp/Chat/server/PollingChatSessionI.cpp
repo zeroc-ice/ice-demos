@@ -2,45 +2,39 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <PollingChatSessionI.h>
 #include <ChatUtils.h>
+#include <PollingChatSessionI.h>
 
 using namespace std;
 
 class PollCallbackAdapter : public ChatRoomCallbackAdapter
 {
 public:
-
-    virtual void
-    init(Ice::StringSeq users) override
+    virtual void init(Ice::StringSeq users) override
     {
         const lock_guard<mutex> sync(_mutex);
         _users = std::move(users);
     }
 
-    virtual void
-    send(const shared_ptr<PollingChat::MessageEvent>& e) override
+    virtual void send(const shared_ptr<PollingChat::MessageEvent>& e) override
     {
         const lock_guard<mutex> sync(_mutex);
         _updates.push_back(e);
     }
 
-    virtual void
-    join(const shared_ptr<PollingChat::UserJoinedEvent>& e) override
+    virtual void join(const shared_ptr<PollingChat::UserJoinedEvent>& e) override
     {
         const lock_guard<mutex> sync(_mutex);
         _updates.push_back(e);
     }
 
-    virtual void
-    leave(const shared_ptr<PollingChat::UserLeftEvent>& e) override
+    virtual void leave(const shared_ptr<PollingChat::UserLeftEvent>& e) override
     {
         const lock_guard<mutex> sync(_mutex);
         _updates.push_back(e);
     }
 
-    Ice::StringSeq
-    getInitialUsers()
+    Ice::StringSeq getInitialUsers()
     {
         const lock_guard<mutex> sync(_mutex);
         Ice::StringSeq users;
@@ -48,8 +42,7 @@ public:
         return users;
     }
 
-    PollingChat::ChatRoomEventSeq
-    getUpdates()
+    PollingChat::ChatRoomEventSeq getUpdates()
     {
         const lock_guard<mutex> sync(_mutex);
         PollingChat::ChatRoomEventSeq updates;
@@ -58,19 +51,21 @@ public:
     }
 
 private:
-
     Ice::StringSeq _users;
     PollingChat::ChatRoomEventSeq _updates;
     mutex _mutex;
 };
 
-PollingChatSessionI::PollingChatSessionI(const shared_ptr<ChatRoom>& chatRoom, const string& name, bool trace,
-                                         const shared_ptr<Ice::Logger>& logger) :
-    _chatRoom(chatRoom),
-    _name(name),
-    _callback(make_shared<PollCallbackAdapter>()),
-    _trace(trace),
-    _logger(logger)
+PollingChatSessionI::PollingChatSessionI(
+    const shared_ptr<ChatRoom>& chatRoom,
+    const string& name,
+    bool trace,
+    const shared_ptr<Ice::Logger>& logger)
+    : _chatRoom(chatRoom),
+      _name(name),
+      _callback(make_shared<PollCallbackAdapter>()),
+      _trace(trace),
+      _logger(logger)
 {
     _chatRoom->join(name, _callback);
 }
@@ -79,9 +74,9 @@ Ice::StringSeq
 PollingChatSessionI::getInitialUsers(const Ice::Current&)
 {
     const lock_guard<mutex> sync(_mutex);
-    if(_destroy)
+    if (_destroy)
     {
-        if(_trace)
+        if (_trace)
         {
             Ice::Trace out(_logger, "info");
             out << "User '" << _name << "' requested initial users list but the session is already destroyed.";
@@ -95,9 +90,9 @@ PollingChat::ChatRoomEventSeq
 PollingChatSessionI::getUpdates(const Ice::Current&)
 {
     const lock_guard<mutex> sync(_mutex);
-    if(_destroy)
+    if (_destroy)
     {
-        if(_trace)
+        if (_trace)
         {
             Ice::Trace out(_logger, "info");
             out << "User '" << _name << "' requested session updates list but the session is already destroyed.";
@@ -111,9 +106,9 @@ Ice::Long
 PollingChatSessionI::send(string message, const Ice::Current&)
 {
     const lock_guard<mutex> sync(_mutex);
-    if(_destroy)
+    if (_destroy)
     {
-        if(_trace)
+        if (_trace)
         {
             Ice::Trace out(_logger, "info");
             out << "User '" << _name << "' tried to send a message but the session is already destroyed.";
@@ -125,9 +120,9 @@ PollingChatSessionI::send(string message, const Ice::Current&)
     {
         msg = validateMessage(message);
     }
-    catch(const exception& ex)
+    catch (const exception& ex)
     {
-        if(_trace)
+        if (_trace)
         {
             Ice::Trace out(_logger, "info");
             out << "User '" << _name << "' sent an invalid message:\n" << ex;
@@ -141,9 +136,9 @@ void
 PollingChatSessionI::destroy(const Ice::Current& current)
 {
     const lock_guard<mutex> sync(_mutex);
-    if(_destroy)
+    if (_destroy)
     {
-        if(_trace)
+        if (_trace)
         {
             Ice::Trace out(_logger, "info");
             out << "User '" << _name << "' tried to destroy the session but the session is already destroyed.";
@@ -155,11 +150,11 @@ PollingChatSessionI::destroy(const Ice::Current& current)
         current.adapter->remove(current.id);
         _chatRoom->leave(_name);
     }
-    catch(const Ice::ObjectAdapterDeactivatedException&)
+    catch (const Ice::ObjectAdapterDeactivatedException&)
     {
         // No need to clean up, the server is shutting down.
     }
-    if(_trace)
+    if (_trace)
     {
         Ice::Trace out(_logger, "info");
         out << "Poll session for user '" << _name << "' destroyed.";

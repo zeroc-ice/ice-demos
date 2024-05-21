@@ -2,53 +2,61 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <Ice/Ice.h>
 #include <ContactDBI.h>
+#include <Ice/Ice.h>
 
 using namespace std;
 using namespace Demo;
 
 void
-ContactDBI::addContact(string name, Ice::optional<NumberType> type, Ice::optional<string> number,
-                       Ice::optional<int> dialGroup, const Ice::Current&)
+ContactDBI::addContact(
+    string name,
+    Ice::optional<NumberType> type,
+    Ice::optional<string> number,
+    Ice::optional<int> dialGroup,
+    const Ice::Current&)
 {
     auto contact = make_shared<Contact>();
     contact->name = name;
-    if(type)
+    if (type)
     {
         contact->type = std::move(type);
     }
-    if(number)
+    if (number)
     {
         contact->number = std::move(number);
     }
-    if(dialGroup)
+    if (dialGroup)
     {
         contact->dialGroup = std::move(dialGroup);
     }
     auto p = _contacts.insert(make_pair(name, contact));
-    if(!p.second)
+    if (!p.second)
     {
         p.first->second = contact;
     }
 }
 
 void
-ContactDBI::updateContact(string name, Ice::optional<NumberType> type, Ice::optional<string> number,
-                          Ice::optional<int> dialGroup, const Ice::Current&)
+ContactDBI::updateContact(
+    string name,
+    Ice::optional<NumberType> type,
+    Ice::optional<string> number,
+    Ice::optional<int> dialGroup,
+    const Ice::Current&)
 {
     auto p = _contacts.find(name);
-    if(p != _contacts.end())
+    if (p != _contacts.end())
     {
-        if(type)
+        if (type)
         {
             p->second->type = std::move(type);
         }
-        if(number)
+        if (number)
         {
             p->second->number = std::move(number);
         }
-        if(dialGroup)
+        if (dialGroup)
         {
             p->second->dialGroup = std::move(dialGroup);
         }
@@ -59,7 +67,7 @@ shared_ptr<Contact>
 ContactDBI::query(string name, const Ice::Current&)
 {
     auto p = _contacts.find(name);
-    if(p != _contacts.end())
+    if (p != _contacts.end())
     {
         return p->second;
     }
@@ -70,7 +78,7 @@ Ice::optional<string>
 ContactDBI::queryNumber(string name, const Ice::Current&)
 {
     auto p = _contacts.find(name);
-    if(p != _contacts.end())
+    if (p != _contacts.end())
     {
         return p->second->number;
     }
@@ -81,7 +89,7 @@ void
 ContactDBI::queryDialgroup(string name, Ice::optional<int>& dialGroup, const Ice::Current&)
 {
     auto p = _contacts.find(name);
-    if(p != _contacts.end())
+    if (p != _contacts.end())
     {
         dialGroup = p->second->dialGroup;
     }

@@ -12,7 +12,6 @@ using namespace std;
 class TalkApp
 {
 public:
-
     int run(const shared_ptr<Ice::Communicator>& communicator);
 
     void connect(const shared_ptr<Talk::PeerPrx>&);
@@ -21,7 +20,6 @@ public:
     void closed();
 
 private:
-
     void doConnect(const string&);
     void doList();
     void doDisconnect();
@@ -42,29 +40,18 @@ private:
 class IncomingPeerI : public Talk::Peer
 {
 public:
-
-    IncomingPeerI(TalkApp* app) :
-        _app(app)
-    {
-    }
+    IncomingPeerI(TalkApp* app) : _app(app) {}
 
     virtual void connect(shared_ptr<Talk::PeerPrx> peer, const Ice::Current& current) override
     {
         _app->connect(peer->ice_fixed(current.con));
     }
 
-    virtual void send(string text, const Ice::Current&) override
-    {
-        _app->message(text);
-    }
+    virtual void send(string text, const Ice::Current&) override { _app->message(text); }
 
-    virtual void disconnect(const Ice::Current& current) override
-    {
-        _app->disconnect(current.id, current.con, true);
-    }
+    virtual void disconnect(const Ice::Current& current) override { _app->disconnect(current.id, current.con, true); }
 
 private:
-
     TalkApp* _app;
 };
 
@@ -74,29 +61,18 @@ private:
 class OutgoingPeerI : public Talk::Peer
 {
 public:
-
-    OutgoingPeerI(TalkApp* app) :
-        _app(app)
-    {
-    }
+    OutgoingPeerI(TalkApp* app) : _app(app) {}
 
     virtual void connect(shared_ptr<Talk::PeerPrx>, const Ice::Current&) override
     {
         throw Talk::ConnectionException("already connected");
     }
 
-    virtual void send(string text, const Ice::Current&) override
-    {
-        _app->message(text);
-    }
+    virtual void send(string text, const Ice::Current&) override { _app->message(text); }
 
-    virtual void disconnect(const Ice::Current& current) override
-    {
-        _app->disconnect(current.id, current.con, false);
-    }
+    virtual void disconnect(const Ice::Current& current) override { _app->disconnect(current.id, current.con, false); }
 
 private:
-
     TalkApp* _app;
 };
 
@@ -125,7 +101,7 @@ main(int argc, char* argv[])
         //
         // The communicator initialization removes all Ice-related arguments from argc/argv
         //
-        if(argc > 1)
+        if (argc > 1)
         {
             cerr << argv[0] << ": too many arguments" << endl;
             status = 1;
@@ -136,7 +112,7 @@ main(int argc, char* argv[])
             status = app.run(communicator);
         }
     }
-    catch(const std::exception& ex)
+    catch (const std::exception& ex)
     {
         cerr << ex.what() << endl;
         status = 1;
@@ -173,23 +149,23 @@ TalkApp::run(const shared_ptr<Ice::Communicator>& communicator)
         cout << "";
         getline(cin, s);
 
-        if(!s.empty())
+        if (!s.empty())
         {
-            if(s[0] == '/')
+            if (s[0] == '/')
             {
-                if(s.size() > 8 && (s.substr(0, 8) == "/connect" || s.substr(0, 9) == "/sconnect"))
+                if (s.size() > 8 && (s.substr(0, 8) == "/connect" || s.substr(0, 9) == "/sconnect"))
                 {
                     doConnect(s);
                 }
-                else if(s == "/disconnect")
+                else if (s == "/disconnect")
                 {
                     doDisconnect();
                 }
-                else if(s == "/list")
+                else if (s == "/list")
                 {
                     doList();
                 }
-                else if(s == "/quit")
+                else if (s == "/quit")
                 {
                     break;
                 }
@@ -203,8 +179,7 @@ TalkApp::run(const shared_ptr<Ice::Communicator>& communicator)
                 doMessage(s);
             }
         }
-    }
-    while(cin.good());
+    } while (cin.good());
 
     //
     // There may still be objects (connections and servants) that hold pointers to this object, so we destroy
@@ -224,7 +199,7 @@ TalkApp::connect(const shared_ptr<Talk::PeerPrx>& peer)
 
     lock_guard<mutex> lock(_mutex);
 
-    if(_remote)
+    if (_remote)
     {
         throw Talk::ConnectionException("already connected");
     }
@@ -233,17 +208,13 @@ TalkApp::connect(const shared_ptr<Talk::PeerPrx>& peer)
     // Install a connection callback and enable ACM heartbeats.
     //
     auto con = peer->ice_getConnection();
-    con->setCloseCallback(
-        [this](const shared_ptr<Ice::Connection>&)
-        {
-            this->closed();
-        });
+    con->setCloseCallback([this](const shared_ptr<Ice::Connection>&) { this->closed(); });
     con->setACM(30, Ice::ACMClose::CloseOff, Ice::ACMHeartbeat::HeartbeatAlways);
 
     _remote = peer->ice_invocationTimeout(10000);
 
     auto info = con->getInfo();
-    if(info->underlying)
+    if (info->underlying)
     {
         info = info->underlying;
     }
@@ -257,7 +228,7 @@ TalkApp::message(const string& text)
 {
     lock_guard<mutex> lock(_mutex);
 
-    if(_remote)
+    if (_remote)
     {
         cout << "Peer says: " << text << endl;
     }
@@ -268,13 +239,13 @@ TalkApp::disconnect(const Ice::Identity& id, const shared_ptr<Ice::Connection>& 
 {
     lock_guard<mutex> lock(_mutex);
 
-    if(_remote)
+    if (_remote)
     {
         cout << ">>>> Peer disconnected" << endl;
         _remote = nullptr;
     }
 
-    if(!incoming)
+    if (!incoming)
     {
         _adapter->remove(id);
     }
@@ -298,13 +269,13 @@ TalkApp::doConnect(const string& cmd)
     const bool secure = cmd.find("/sconnect") == 0;
 
     string::size_type sp = cmd.find(' ');
-    if(sp == string::npos)
+    if (sp == string::npos)
     {
         usage();
         return;
     }
     sp = cmd.find_first_not_of(' ', sp);
-    if(sp == string::npos)
+    if (sp == string::npos)
     {
         usage();
         return;
@@ -318,7 +289,7 @@ TalkApp::doConnect(const string& cmd)
         {
             lock_guard<mutex> lock(_mutex);
 
-            if(_remote)
+            if (_remote)
             {
                 cout << ">>>> Already connected" << endl;
                 return;
@@ -329,7 +300,7 @@ TalkApp::doConnect(const string& cmd)
             // and the well-known UUID for the talk service.
             //
             string proxy = "peer:";
-            if(secure)
+            if (secure)
             {
                 proxy += "bts -a \"" + addr + "\" -u " + btsUUID;
             }
@@ -355,11 +326,7 @@ TalkApp::doConnect(const string& cmd)
         //
         // Install a connection callback and enable ACM heartbeats.
         //
-        con->setCloseCallback(
-            [this](const shared_ptr<Ice::Connection>&)
-            {
-                this->closed();
-            });
+        con->setCloseCallback([this](const shared_ptr<Ice::Connection>&) { this->closed(); });
         con->setACM(30, Ice::ACMClose::CloseOff, Ice::ACMHeartbeat::HeartbeatAlways);
 
         //
@@ -368,32 +335,32 @@ TalkApp::doConnect(const string& cmd)
         remote->connect(local);
         cout << ">>>> Connected to " << addr << endl;
     }
-    catch(const Talk::ConnectionException& ex)
+    catch (const Talk::ConnectionException& ex)
     {
         lock_guard<mutex> lock(_mutex);
 
         cout << ">>>> Connection failed: " << ex.reason << endl;
-        if(local)
+        if (local)
         {
             _adapter->remove(local->ice_getIdentity());
         }
 
-        if(_remote == remote)
+        if (_remote == remote)
         {
             _remote = nullptr;
         }
     }
-    catch(const Ice::Exception& ex)
+    catch (const Ice::Exception& ex)
     {
         lock_guard<mutex> lock(_mutex);
 
         cout << ">>>> " << ex << endl;
-        if(local)
+        if (local)
         {
             _adapter->remove(local->ice_getIdentity());
         }
 
-        if(_remote == remote)
+        if (_remote == remote)
         {
             _remote = nullptr;
         }
@@ -410,21 +377,21 @@ TalkApp::doList()
     assert(plugin);
 
     auto devices = plugin->getDevices();
-    if(devices.empty())
+    if (devices.empty())
     {
         cout << ">>>> No known devices" << endl;
     }
     else
     {
-        for(auto p : devices)
+        for (auto p : devices)
         {
             string name;
             auto q = p.second.find("Name");
-            if(q == p.second.end())
+            if (q == p.second.end())
             {
                 q = p.second.find("Alias");
             }
-            if(q == p.second.end())
+            if (q == p.second.end())
             {
                 name = "Unknown";
             }
@@ -445,7 +412,7 @@ TalkApp::doDisconnect()
     {
         lock_guard<mutex> lock(_mutex);
 
-        if(!_remote)
+        if (!_remote)
         {
             cout << ">>>> Not connected" << endl;
             return;
@@ -461,12 +428,12 @@ TalkApp::doDisconnect()
     {
         peer->disconnect();
     }
-    catch(const Ice::LocalException& ex)
+    catch (const Ice::LocalException& ex)
     {
         failed(ex);
     }
 
-    if(con)
+    if (con)
     {
         con->close(Ice::ConnectionClose::Gracefully);
     }
@@ -480,7 +447,7 @@ TalkApp::doMessage(const string& text)
     {
         lock_guard<mutex> lock(_mutex);
 
-        if(!_remote)
+        if (!_remote)
         {
             cout << ">>>> Not connected" << endl;
             return;
@@ -493,7 +460,7 @@ TalkApp::doMessage(const string& text)
     {
         peer->send(text);
     }
-    catch(const Ice::LocalException& ex)
+    catch (const Ice::LocalException& ex)
     {
         failed(ex);
     }
@@ -512,10 +479,10 @@ TalkApp::failed(const Ice::LocalException& ex)
 
     cout << ">>>> Action failed:" << endl << ex << endl;
 
-    if(peer)
+    if (peer)
     {
         auto con = peer->ice_getCachedConnection();
-        if(con)
+        if (con)
         {
             con->close(Ice::ConnectionClose::Forcefully);
         }

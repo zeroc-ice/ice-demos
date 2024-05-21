@@ -9,103 +9,105 @@ using namespace std;
 namespace
 {
 
-class LocatorRegistryI : public Ice::LocatorRegistry
-{
-public:
-
-    virtual void
-    setAdapterDirectProxyAsync(string id, shared_ptr<Ice::ObjectPrx> proxy,
-                               function<void()> response,
-                               function<void(exception_ptr)>,
-                               const Ice::Current&) override
+    class LocatorRegistryI : public Ice::LocatorRegistry
     {
-        if(!proxy)
+    public:
+        virtual void setAdapterDirectProxyAsync(
+            string id,
+            shared_ptr<Ice::ObjectPrx> proxy,
+            function<void()> response,
+            function<void(exception_ptr)>,
+            const Ice::Current&) override
         {
-            _adapters.erase(id);
+            if (!proxy)
+            {
+                _adapters.erase(id);
+            }
+            else
+            {
+                _adapters[id] = proxy;
+            }
+            response();
         }
-        else
+
+        virtual void setReplicatedAdapterDirectProxyAsync(
+            string,
+            string,
+            shared_ptr<Ice::ObjectPrx>,
+            function<void()> response,
+            function<void(exception_ptr)>,
+            const Ice::Current&) override
         {
-            _adapters[id] = proxy;
+            assert(false); // Not used by this demo
+            response();
         }
-        response();
-    }
 
-    virtual void
-    setReplicatedAdapterDirectProxyAsync(string, string, shared_ptr<Ice::ObjectPrx>, function<void()> response,
-                                         function<void(exception_ptr)>, const Ice::Current&) override
-    {
-        assert(false); // Not used by this demo
-        response();
-    }
-
-    virtual void
-    setServerProcessProxyAsync(string, shared_ptr<Ice::ProcessPrx>, function<void()> response,
-                               function<void(exception_ptr)>, const Ice::Current&) override
-    {
-        assert(false); // Not used by this demo
-        response();
-    }
-
-    shared_ptr<Ice::ObjectPrx>
-    getAdapter(const string& id)
-    {
-        auto p = _adapters.find(id);
-        if(p == _adapters.end())
+        virtual void setServerProcessProxyAsync(
+            string,
+            shared_ptr<Ice::ProcessPrx>,
+            function<void()> response,
+            function<void(exception_ptr)>,
+            const Ice::Current&) override
         {
-            throw Ice::AdapterNotFoundException();
+            assert(false); // Not used by this demo
+            response();
         }
-        return p->second;
-    }
 
-private:
+        shared_ptr<Ice::ObjectPrx> getAdapter(const string& id)
+        {
+            auto p = _adapters.find(id);
+            if (p == _adapters.end())
+            {
+                throw Ice::AdapterNotFoundException();
+            }
+            return p->second;
+        }
 
-    map<string, shared_ptr<Ice::ObjectPrx>> _adapters;
-};
+    private:
+        map<string, shared_ptr<Ice::ObjectPrx>> _adapters;
+    };
 
-class LocatorI : public Ice::Locator
-{
-public:
-
-    LocatorI(shared_ptr<LocatorRegistryI> registry,
-             shared_ptr<Ice::LocatorRegistryPrx> registryPrx) :
-        _registry(std::move(registry)),
-        _registryPrx(std::move(registryPrx))
+    class LocatorI : public Ice::Locator
     {
-    }
+    public:
+        LocatorI(shared_ptr<LocatorRegistryI> registry, shared_ptr<Ice::LocatorRegistryPrx> registryPrx)
+            : _registry(std::move(registry)),
+              _registryPrx(std::move(registryPrx))
+        {
+        }
 
-    virtual void
-    findObjectByIdAsync(Ice::Identity,
-                        function<void(const shared_ptr<Ice::ObjectPrx>&)> response,
-                        function<void(exception_ptr)>,
-                        const Ice::Current&) const override
-    {
-        response(nullptr);
-    }
+        virtual void findObjectByIdAsync(
+            Ice::Identity,
+            function<void(const shared_ptr<Ice::ObjectPrx>&)> response,
+            function<void(exception_ptr)>,
+            const Ice::Current&) const override
+        {
+            response(nullptr);
+        }
 
-    virtual void
-    findAdapterByIdAsync(string id,
-                         function<void(const shared_ptr<Ice::ObjectPrx>&)> response,
-                         function<void(exception_ptr)>,
-                         const Ice::Current&) const override
-    {
-        response(_registry->getAdapter(id));
-    }
+        virtual void findAdapterByIdAsync(
+            string id,
+            function<void(const shared_ptr<Ice::ObjectPrx>&)> response,
+            function<void(exception_ptr)>,
+            const Ice::Current&) const override
+        {
+            response(_registry->getAdapter(id));
+        }
 
-    virtual shared_ptr<Ice::LocatorRegistryPrx>
-    getRegistry(const Ice::Current&) const override
-    {
-        return _registryPrx;
-    }
+        virtual shared_ptr<Ice::LocatorRegistryPrx> getRegistry(const Ice::Current&) const override
+        {
+            return _registryPrx;
+        }
 
-private:
-
-    const shared_ptr<LocatorRegistryI> _registry;
-    const shared_ptr<Ice::LocatorRegistryPrx> _registryPrx;
-};
+    private:
+        const shared_ptr<LocatorRegistryI> _registry;
+        const shared_ptr<Ice::LocatorRegistryPrx> _registryPrx;
+    };
 
 }
 
-int main(int argc, char* argv[])
+int
+main(int argc, char* argv[])
 {
     int status = 0;
 
@@ -123,16 +125,12 @@ int main(int argc, char* argv[])
         const Ice::CommunicatorHolder ich(argc, argv, "config.locator");
         const auto& communicator = ich.communicator();
 
-        ctrlCHandler.setCallback(
-            [communicator](int)
-            {
-                communicator->shutdown();
-            });
+        ctrlCHandler.setCallback([communicator](int) { communicator->shutdown(); });
 
         //
         // The communicator initialization removes all Ice-related arguments from argc/argv
         //
-        if(argc > 1)
+        if (argc > 1)
         {
             cerr << argv[0] << ": too many arguments" << endl;
             status = 1;
@@ -142,17 +140,18 @@ int main(int argc, char* argv[])
             auto adapter = communicator->createObjectAdapter("Locator");
             auto registry = make_shared<LocatorRegistryI>();
 
-            auto registryPrx = Ice::uncheckedCast<Ice::LocatorRegistryPrx>(
-                adapter->add(registry, Ice::stringToIdentity("registry")));
+            auto registryPrx =
+                Ice::uncheckedCast<Ice::LocatorRegistryPrx>(adapter->add(registry, Ice::stringToIdentity("registry")));
 
-            adapter->add(make_shared<LocatorI>(std::move(registry), std::move(registryPrx)),
-                         Ice::stringToIdentity("locator"));
+            adapter->add(
+                make_shared<LocatorI>(std::move(registry), std::move(registryPrx)),
+                Ice::stringToIdentity("locator"));
             adapter->activate();
 
             communicator->waitForShutdown();
         }
     }
-    catch(const std::exception& ex)
+    catch (const std::exception& ex)
     {
         cerr << ex.what() << endl;
         status = 1;

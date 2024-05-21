@@ -5,8 +5,8 @@
 #include <Parser.h>
 
 #ifdef HAVE_READLINE
-#   include <readline/readline.h>
-#   include <readline/history.h>
+#    include <readline/history.h>
+#    include <readline/readline.h>
 #endif
 
 using namespace std;
@@ -16,26 +16,22 @@ extern FILE* yyin;
 
 Parser* parser;
 
-Parser::Parser(const shared_ptr<DirectoryPrx>& root)
-{
-    _dirs.push_front(root);
-}
+Parser::Parser(const shared_ptr<DirectoryPrx>& root) { _dirs.push_front(root); }
 
 void
 Parser::usage()
 {
-    cout <<
-        "help                    Print this message.\n"
-        "pwd                     Print current directory (/ = root).\n"
-        "cd [DIR]                Change directory (/ or empty = root).\n"
-        "ls                      List current directory.\n"
-        "lr                      Recursively list current directory.\n"
-        "mkdir DIR [DIR...]      Create directories DIR in current directory.\n"
-        "mkfile FILE [FILE...]   Create files FILE in current directory.\n"
-        "rm NAME [NAME...]       Delete directory or file NAME (rm * to delete all).\n"
-        "cat FILE                List the contents of FILE.\n"
-        "write FILE [STRING...]  Write STRING to FILE.\n"
-        "exit, quit              Exit this program.\n";
+    cout << "help                    Print this message.\n"
+            "pwd                     Print current directory (/ = root).\n"
+            "cd [DIR]                Change directory (/ or empty = root).\n"
+            "ls                      List current directory.\n"
+            "lr                      Recursively list current directory.\n"
+            "mkdir DIR [DIR...]      Create directories DIR in current directory.\n"
+            "mkfile FILE [FILE...]   Create files FILE in current directory.\n"
+            "rm NAME [NAME...]       Delete directory or file NAME (rm * to delete all).\n"
+            "cat FILE                List the contents of FILE.\n"
+            "write FILE [STRING...]  Write STRING to FILE.\n"
+            "exit, quit              Exit this program.\n";
 }
 
 // Print the contents of directory "dir". If recursive is true,
@@ -56,15 +52,15 @@ Parser::list(const shared_ptr<DirectoryPrx>& dir, bool recursive, size_t depth)
 
     auto contents = dir->list();
 
-    for(const auto& i: contents)
+    for (const auto& i : contents)
     {
         shared_ptr<DirectoryPrx> d;
-        if(i.type == NodeType::DirType)
+        if (i.type == NodeType::DirType)
         {
             d = Ice::uncheckedCast<DirectoryPrx>(i.proxy);
         }
         cout << indent << i.name << (d ? " (directory)" : " (file)");
-        if(d && recursive)
+        if (d && recursive)
         {
             cout << ":" << endl;
             list(d, true, depth);
@@ -81,9 +77,9 @@ Parser::createFile(const std::list<string>& names)
 {
     auto dir = _dirs.front();
 
-    for(const auto& i: names)
+    for (const auto& i : names)
     {
-        if(i == "..")
+        if (i == "..")
         {
             cout << "Cannot create a file named `..'" << endl;
             continue;
@@ -93,7 +89,7 @@ Parser::createFile(const std::list<string>& names)
         {
             dir->createFile(i);
         }
-        catch(const NameInUse&)
+        catch (const NameInUse&)
         {
             cout << "`" << i << "' exists already" << endl;
         }
@@ -105,9 +101,9 @@ Parser::createDir(const std::list<string>& names)
 {
     auto dir = _dirs.front();
 
-    for(const auto& i: names)
+    for (const auto& i : names)
     {
-        if(i == "..")
+        if (i == "..")
         {
             cout << "Cannot create a directory named `..'" << endl;
             continue;
@@ -117,7 +113,7 @@ Parser::createDir(const std::list<string>& names)
         {
             dir->createDirectory(i);
         }
-        catch(const NameInUse&)
+        catch (const NameInUse&)
         {
             cout << "`" << i << "' exists already" << endl;
         }
@@ -127,7 +123,7 @@ Parser::createDir(const std::list<string>& names)
 void
 Parser::pwd()
 {
-    if(_dirs.size() == 1)
+    if (_dirs.size() == 1)
     {
         cout << "/";
     }
@@ -135,7 +131,7 @@ Parser::pwd()
     {
         auto i = _dirs.rbegin();
         ++i;
-        while(i != _dirs.rend())
+        while (i != _dirs.rend())
         {
             cout << "/" << (*i)->name();
             ++i;
@@ -147,22 +143,22 @@ Parser::pwd()
 void
 Parser::cd(const string& name)
 {
-    if(name == "/")
+    if (name == "/")
     {
-       while(_dirs.size() > 1)
-       {
-           _dirs.pop_front();
-       }
-       return;
+        while (_dirs.size() > 1)
+        {
+            _dirs.pop_front();
+        }
+        return;
     }
 
-    if(name == "..")
+    if (name == "..")
     {
-       if(_dirs.size() > 1)
-       {
-           _dirs.pop_front();
-       }
-       return;
+        if (_dirs.size() > 1)
+        {
+            _dirs.pop_front();
+        }
+        return;
     }
 
     auto dir = _dirs.front();
@@ -171,12 +167,12 @@ Parser::cd(const string& name)
     {
         d = dir->find(name);
     }
-    catch(const NoSuchName&)
+    catch (const NoSuchName&)
     {
         cout << "`" << name << "': no such directory" << endl;
         return;
     }
-    if(d.type == NodeType::FileType)
+    if (d.type == NodeType::FileType)
     {
         cout << "`" << name << "': not a directory" << endl;
         return;
@@ -193,19 +189,19 @@ Parser::cat(const string& name)
     {
         d = dir->find(name);
     }
-    catch(const NoSuchName&)
+    catch (const NoSuchName&)
     {
         cout << "`" << name << "': no such file" << endl;
         return;
     }
-    if(d.type == NodeType::DirType)
+    if (d.type == NodeType::DirType)
     {
         cout << "`" << name << "': not a file" << endl;
         return;
     }
     auto f = Ice::uncheckedCast<FilePrx>(d.proxy);
     auto lines = f->read();
-    for(const auto& i: lines)
+    for (const auto& i : lines)
     {
         cout << i << endl;
     }
@@ -222,12 +218,12 @@ Parser::write(std::list<string>& args)
     {
         d = dir->find(name);
     }
-    catch(const NoSuchName&)
+    catch (const NoSuchName&)
     {
         cout << "`" << name << "': no such file" << endl;
         return;
     }
-    if(d.type == NodeType::DirType)
+    if (d.type == NodeType::DirType)
     {
         cout << "`" << name << "': not a file" << endl;
         return;
@@ -235,7 +231,7 @@ Parser::write(std::list<string>& args)
     auto f = Ice::uncheckedCast<FilePrx>(d.proxy);
 
     Lines l;
-    for(const auto& i: args)
+    for (const auto& i : args)
     {
         l.push_back(i);
     }
@@ -247,18 +243,18 @@ Parser::destroy(const std::list<string>& names)
 {
     auto dir = _dirs.front();
 
-    for(const auto& i: names)
+    for (const auto& i : names)
     {
-        if(i == "*")
+        if (i == "*")
         {
             auto nodes = dir->list();
-            for(auto& j: nodes)
+            for (auto& j : nodes)
             {
                 try
                 {
                     j.proxy->destroy();
                 }
-                catch(const PermissionDenied& ex)
+                catch (const PermissionDenied& ex)
                 {
                     cout << "cannot remove `" << j.name << "': " << ex.reason << endl;
                 }
@@ -272,7 +268,7 @@ Parser::destroy(const std::list<string>& names)
             {
                 d = dir->find(i);
             }
-            catch(const NoSuchName&)
+            catch (const NoSuchName&)
             {
                 cout << "`" << i << "': no such file or directory" << endl;
                 return;
@@ -281,7 +277,7 @@ Parser::destroy(const std::list<string>& names)
             {
                 d.proxy->destroy();
             }
-            catch(const PermissionDenied& ex)
+            catch (const PermissionDenied& ex)
             {
                 cout << "cannot remove `" << i << "': " << ex.reason << endl;
             }
@@ -309,19 +305,19 @@ Parser::getInput(char* buf, size_t& result, size_t maxSize)
 
     auto prompt = parser->getPrompt();
     auto line = readline(const_cast<char*>(prompt));
-    if(!line)
+    if (!line)
     {
         result = 0;
     }
     else
     {
-        if(*line)
+        if (*line)
         {
             add_history(line);
         }
 
         result = strlen(line) + 1;
-        if(result > maxSize)
+        if (result > maxSize)
         {
             free(line);
             error("input line too long");
@@ -344,9 +340,9 @@ Parser::getInput(char* buf, size_t& result, size_t maxSize)
     do
     {
         c = getc(yyin);
-        if(c == EOF)
+        if (c == EOF)
         {
-            if(line.size())
+            if (line.size())
             {
                 line += '\n';
             }
@@ -355,10 +351,10 @@ Parser::getInput(char* buf, size_t& result, size_t maxSize)
         {
             line += static_cast<char>(c);
         }
-    } while(c != EOF && c != '\n');
+    } while (c != EOF && c != '\n');
 
     result = line.length();
-    if(result > maxSize)
+    if (result > maxSize)
     {
         error("input line too long");
         buf[0] = EOF;
@@ -366,11 +362,11 @@ Parser::getInput(char* buf, size_t& result, size_t maxSize)
     }
     else
     {
-#   ifdef _WIN32
+#    ifdef _WIN32
         strcpy_s(buf, result + 1, line.c_str());
-#   else
+#    else
         strcpy(buf, line.c_str());
-#   endif
+#    endif
     }
 
 #endif
@@ -385,7 +381,7 @@ Parser::continueLine()
 const char*
 Parser::getPrompt()
 {
-    if(_continue)
+    if (_continue)
     {
         _continue = false;
         return "(cont) ";
@@ -439,7 +435,7 @@ Parser::parse(bool debug)
     usage();
 
     int status = yyparse();
-    if(_errors)
+    if (_errors)
     {
         status = 1;
     }

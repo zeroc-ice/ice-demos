@@ -5,13 +5,13 @@
 #include <Ice/Ice.h>
 #include <ThroughputI.h>
 
-ThroughputI::ThroughputI() :
-    _byteSeq(Demo::ByteSeqSize),
-    _stringSeq(Demo::StringSeqSize, "hello"),
-    _stringViewSeq(Demo::StringSeqSize, "hello"),
-    _structSeq(Demo::StringDoubleSeqSize, { "hello", 3.14 }),
-    _fixedSeq(Demo::FixedSeqSize, { 0, 0, 0.0 }),
-    _warmup(false)
+ThroughputI::ThroughputI()
+    : _byteSeq(Demo::ByteSeqSize),
+      _stringSeq(Demo::StringSeqSize, "hello"),
+      _stringViewSeq(Demo::StringSeqSize, "hello"),
+      _structSeq(Demo::StringDoubleSeqSize, {"hello", 3.14}),
+      _fixedSeq(Demo::FixedSeqSize, {0, 0, 0.0}),
+      _warmup(false)
 {
 }
 
@@ -42,7 +42,7 @@ ThroughputI::sendByteSeq(std::pair<const Ice::Byte*, const Ice::Byte*>, const Ic
 Demo::Throughput::RecvByteSeqMarshaledResult
 ThroughputI::recvByteSeq(const Ice::Current& current)
 {
-    if(_warmup)
+    if (_warmup)
     {
         Demo::ByteSeq warmupBytesBuf(1);
         const std::pair<const Ice::Byte*, const Ice::Byte*> ret =
@@ -71,7 +71,7 @@ ThroughputI::sendStringSeq(std::vector<Util::string_view>, const Ice::Current&)
 Demo::Throughput::RecvStringSeqMarshaledResult
 ThroughputI::recvStringSeq(const Ice::Current& current)
 {
-    if(_warmup)
+    if (_warmup)
     {
         return RecvStringSeqMarshaledResult(std::vector<Util::string_view>(1), current);
     }
@@ -95,7 +95,7 @@ ThroughputI::sendStructSeq(Demo::StringDoubleSeq, const Ice::Current&)
 Demo::StringDoubleSeq
 ThroughputI::recvStructSeq(const Ice::Current&)
 {
-    if(_warmup)
+    if (_warmup)
     {
         return Demo::StringDoubleSeq(1);
     }
@@ -119,7 +119,7 @@ ThroughputI::sendFixedSeq(Demo::FixedSeq, const Ice::Current&)
 Demo::FixedSeq
 ThroughputI::recvFixedSeq(const Ice::Current&)
 {
-    if(_warmup)
+    if (_warmup)
     {
         return Demo::FixedSeq(1);
     }

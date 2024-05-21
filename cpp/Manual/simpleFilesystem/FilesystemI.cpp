@@ -2,8 +2,8 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <Ice/Ice.h>
 #include <FilesystemI.h>
+#include <Ice/Ice.h>
 
 using namespace std;
 
@@ -15,9 +15,7 @@ Filesystem::NodeI::name(const Ice::Current&)
 }
 
 // NodeI constructor
-Filesystem::NodeI::NodeI(string name, const shared_ptr<DirectoryI>& parent) :
-    _name(std::move(name)),
-    _parent(parent)
+Filesystem::NodeI::NodeI(string name, const shared_ptr<DirectoryI>& parent) : _name(std::move(name)), _parent(parent)
 {
     // Create an identity. The root directory has the fixed identity "RootDir"
     _id.name = parent ? Ice::generateUUID() : "RootDir";
@@ -28,7 +26,7 @@ void
 Filesystem::NodeI::activate(const shared_ptr<Ice::ObjectAdapter>& adapter)
 {
     auto self = Ice::uncheckedCast<NodePrx>(adapter->add(shared_from_this(), _id));
-    if(_parent)
+    if (_parent)
     {
         _parent->addChild(self);
     }
@@ -49,10 +47,7 @@ Filesystem::FileI::write(Filesystem::Lines text, const Ice::Current&)
 }
 
 // FileI constructor
-Filesystem::FileI::FileI(string name, const shared_ptr<DirectoryI>& parent) :
-    NodeI(std::move(name), parent)
-{
-}
+Filesystem::FileI::FileI(string name, const shared_ptr<DirectoryI>& parent) : NodeI(std::move(name), parent) {}
 
 // Slice Directory::list() operation
 Filesystem::NodeSeq
@@ -62,8 +57,7 @@ Filesystem::DirectoryI::list(const Ice::Current&)
 }
 
 // DirectoryI constructor
-Filesystem::DirectoryI::DirectoryI(string name, const shared_ptr<DirectoryI>& parent) :
-    NodeI(std::move(name), parent)
+Filesystem::DirectoryI::DirectoryI(string name, const shared_ptr<DirectoryI>& parent) : NodeI(std::move(name), parent)
 {
 }
 

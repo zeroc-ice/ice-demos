@@ -4,11 +4,11 @@
 
 // TODO: remove when no longer needed
 #ifdef _MSC_VER
-#    pragma warning(disable:4702) // unreachable code in optional
+#    pragma warning(disable : 4702) // unreachable code in optional
 #endif
 
-#include <Ice/Ice.h>
 #include <Contact.h>
+#include <Ice/Ice.h>
 
 using namespace std;
 using namespace Demo;
@@ -38,16 +38,12 @@ main(int argc, char* argv[])
         const Ice::CommunicatorHolder ich(argc, argv, "config.client");
         const auto& communicator = ich.communicator();
 
-        ctrlCHandler.setCallback(
-            [communicator](int)
-            {
-                communicator->destroy();
-            });
+        ctrlCHandler.setCallback([communicator](int) { communicator->destroy(); });
 
         //
         // The communicator initialization removes all Ice-related arguments from argc/argv
         //
-        if(argc > 1)
+        if (argc > 1)
         {
             cerr << argv[0] << ": too many arguments" << endl;
             status = 1;
@@ -57,7 +53,7 @@ main(int argc, char* argv[])
             status = run(communicator, argv[0]);
         }
     }
-    catch(const std::exception& ex)
+    catch (const std::exception& ex)
     {
         cerr << ex.what() << endl;
         status = 1;
@@ -70,7 +66,7 @@ int
 run(const shared_ptr<Ice::Communicator>& communicator, const string& appName)
 {
     auto contactdb = Ice::checkedCast<ContactDBPrx>(communicator->propertyToProxy("ContactDB.Proxy"));
-    if(!contactdb)
+    if (!contactdb)
     {
         cerr << appName << ": invalid proxy" << endl;
         return 1;
@@ -94,7 +90,7 @@ run(const shared_ptr<Ice::Communicator>& communicator, const string& appName)
     //
     // tests if an optional value is set.
     //
-    if(!number)
+    if (!number)
     {
         cout << "number is incorrect " << flush;
     }
@@ -102,7 +98,7 @@ run(const shared_ptr<Ice::Communicator>& communicator, const string& appName)
     //
     // Operator overloading makes comparison convenient.
     //
-    if(number != johnNumber)
+    if (number != johnNumber)
     {
         cout << "number is incorrect " << flush;
     }
@@ -110,7 +106,7 @@ run(const shared_ptr<Ice::Communicator>& communicator, const string& appName)
     //
     // .value() can also be called to get the value directly if necessary.
     //
-    if(number.value() != johnNumber)
+    if (number.value() != johnNumber)
     {
         cout << "number is incorrect " << flush;
     }
@@ -119,7 +115,7 @@ run(const shared_ptr<Ice::Communicator>& communicator, const string& appName)
     // operator-> is overloaded, meaning members of the contained type
     // can be called directly.
     //
-    if(number->size() != johnNumber.size())
+    if (number->size() != johnNumber.size())
     {
         cout << "number is incorrect " << flush;
     }
@@ -127,7 +123,7 @@ run(const shared_ptr<Ice::Communicator>& communicator, const string& appName)
     // Optional can also be used in an out parameter.
     Ice::optional<int> dialgroup;
     contactdb->queryDialgroup("john", dialgroup);
-    if(!dialgroup || dialgroup != 0)
+    if (!dialgroup || dialgroup != 0)
     {
         cout << "dialgroup is incorrect " << flush;
     }
@@ -136,11 +132,11 @@ run(const shared_ptr<Ice::Communicator>& communicator, const string& appName)
     //
     // All of the info parameters should be set.
     //
-    if(!info->type || !info->number || !info->dialGroup)
+    if (!info->type || !info->number || !info->dialGroup)
     {
         cout << "info is incorrect " << flush;
     }
-    if(info->type != NumberType::HOME || info->number != johnNumber || info->dialGroup != 0)
+    if (info->type != NumberType::HOME || info->number != johnNumber || info->dialGroup != 0)
     {
         cout << "info is incorrect " << flush;
     }
@@ -158,7 +154,7 @@ run(const shared_ptr<Ice::Communicator>& communicator, const string& appName)
 
     cout << "Checking steve... " << flush;
     number = contactdb->queryNumber("steve");
-    if(number != steveNumber)
+    if (number != steveNumber)
     {
         cout << "number is incorrect " << flush;
     }
@@ -167,18 +163,18 @@ run(const shared_ptr<Ice::Communicator>& communicator, const string& appName)
     //
     // Check the value for the NumberType.
     //
-    if(!info->type || info->type != NumberType::HOME)
+    if (!info->type || info->type != NumberType::HOME)
     {
         cout << "info is incorrect " << flush;
     }
 
-    if(info->number != steveNumber || info->dialGroup != 1)
+    if (info->number != steveNumber || info->dialGroup != 1)
     {
         cout << "info is incorrect " << flush;
     }
 
     contactdb->queryDialgroup("steve", dialgroup);
-    if(!dialgroup || dialgroup != 1)
+    if (!dialgroup || dialgroup != 1)
     {
         cout << "dialgroup is incorrect " << flush;
     }
@@ -194,7 +190,7 @@ run(const shared_ptr<Ice::Communicator>& communicator, const string& appName)
     cout << "Checking frank... " << flush;
 
     number = contactdb->queryNumber("frank");
-    if(number != frankNumber)
+    if (number != frankNumber)
     {
         cout << "number is incorrect " << flush;
     }
@@ -203,17 +199,17 @@ run(const shared_ptr<Ice::Communicator>& communicator, const string& appName)
     //
     // The dial group field should be unset.
     //
-    if(info->dialGroup)
+    if (info->dialGroup)
     {
         cout << "info is incorrect " << flush;
     }
-    if(info->type != NumberType::CELL || info->number != frankNumber)
+    if (info->type != NumberType::CELL || info->number != frankNumber)
     {
         cout << "info is incorrect " << flush;
     }
 
     contactdb->queryDialgroup("frank", dialgroup);
-    if(dialgroup)
+    if (dialgroup)
     {
         cout << "dialgroup is incorrect " << flush;
     }
@@ -226,7 +222,7 @@ run(const shared_ptr<Ice::Communicator>& communicator, const string& appName)
 
     cout << "Checking anne... " << flush;
     number = contactdb->queryNumber("anne");
-    if(number)
+    if (number)
     {
         cout << "number is incorrect " << flush;
     }
@@ -235,17 +231,17 @@ run(const shared_ptr<Ice::Communicator>& communicator, const string& appName)
     //
     // The number field should be unset.
     //
-    if(info->number)
+    if (info->number)
     {
         cout << "info is incorrect " << flush;
     }
-    if(info->type != NumberType::OFFICE || info->dialGroup != 2)
+    if (info->type != NumberType::OFFICE || info->dialGroup != 2)
     {
         cout << "info is incorrect " << flush;
     }
 
     contactdb->queryDialgroup("anne", dialgroup);
-    if(!dialgroup || dialgroup != 2)
+    if (!dialgroup || dialgroup != 2)
     {
         cout << "dialgroup is incorrect " << flush;
     }
@@ -258,12 +254,12 @@ run(const shared_ptr<Ice::Communicator>& communicator, const string& appName)
     const string anneNumber = "456-789-0123";
     contactdb->updateContact("anne", Ice::nullopt, anneNumber, Ice::nullopt);
     number = contactdb->queryNumber("anne");
-    if(number != anneNumber)
+    if (number != anneNumber)
     {
         cout << "number is incorrect " << flush;
     }
     info = contactdb->query("anne");
-    if(info->number != anneNumber || info->type != NumberType::OFFICE || info->dialGroup != 2)
+    if (info->number != anneNumber || info->type != NumberType::OFFICE || info->dialGroup != 2)
     {
         cout << "info is incorrect " << flush;
     }
