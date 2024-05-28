@@ -22,7 +22,7 @@
     </Target>
 
     <Target Name="NuGetRestore" DependsOnTargets="GetNuGet" Condition="!Exists('$(IceHome)\cpp')">
-      <Exec Command="$(NuGetExe) restore &quot;$(MSBuildThisFileDirectory)..\C++11 demos.sln&quot;"/>
+      <Exec Command="$(NuGetExe) restore &quot;$(MSBuildThisFileDirectory)..\C++ demos.sln&quot;"/>
     </Target>
 
     <PropertyGroup>

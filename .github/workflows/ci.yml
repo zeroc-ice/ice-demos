@@ -15,6 +15,7 @@ concurrency:
 
 env:
   ICE_HOME: ${{ github.workspace }}/ice
+  PLATFORM: x64
 
 jobs:
   ci:
