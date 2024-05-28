@@ -2,8 +2,9 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
+#include "Props.h"
 #include <Ice/Ice.h>
-#include <Props.h>
+#include <iostream>
 
 using namespace std;
 

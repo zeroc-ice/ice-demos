@@ -5,13 +5,13 @@
 #ifndef CALLBACK_I_H
 #define CALLBACK_I_H
 
-#include <Callback.h>
+#include "Callback.h"
 
-class CallbackSenderI : public Demo::CallbackSender
+class CallbackSenderI final : public Demo::CallbackSender
 {
 public:
-    virtual void initiateCallback(std::shared_ptr<Demo::CallbackReceiverPrx>, const Ice::Current&) override;
-    virtual void shutdown(const Ice::Current&) override;
+    void initiateCallback(std::optional<Demo::CallbackReceiverPrx>, const Ice::Current&) final;
+    void shutdown(const Ice::Current&) final;
 };
 
 #endif

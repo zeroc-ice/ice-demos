@@ -24,13 +24,6 @@ Glacier2.Server.Endpoints=tcp -h 127.0.0.1
 Glacier2.PermissionsVerifier=DemoGlacier2/NullPermissionsVerifier
 
 #
-# The timeout for inactive sessions. If any client session is inactive
-# for longer than this value, the session expires and is removed. The
-# unit is seconds.
-#
-Glacier2.SessionTimeout=30
-
-#
 # Glacier can forward requests buffered or unbuffered. Unbuffered
 # means a lower resource consumption, as buffering requires one
 # additional thread per connected client or server. However, without

@@ -64,7 +64,7 @@ Filesystem::DirectoryI::DirectoryI(string name, const shared_ptr<DirectoryI>& pa
 // addChild is called by the child in order to add
 // itself to the _contents member of the parent
 void
-Filesystem::DirectoryI::addChild(const shared_ptr<NodePrx>& child)
+Filesystem::DirectoryI::addChild(const optional<NodePrx>& child)
 {
     _contents.push_back(child);
 }

@@ -2,11 +2,12 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
+#include "Calculator.h"
+
 #include <Ice/Ice.h>
 
+#include <iostream>
 #include <tuple>
-
-#include <Calculator.h>
 
 using namespace std;
 
@@ -71,18 +72,18 @@ run(const shared_ptr<Ice::Communicator>& communicator, const string& appName)
 
     // Calculate 13 / 5
     auto fut2 = calculator->divideAsync(13, 5);
-    // Since the 'divide' operation has output parameters, the result of 'get' is a struct
+    // Since the 'divide' operation has output parameters, the result of 'get' is a tuple
     {
-        auto result = fut2.get();
-        cout << "13 / 5 is " << result.returnValue << " with a remainder of " << result.remainder << endl;
+        auto [returnValue, remainder] = fut2.get();
+        cout << "13 / 5 is " << returnValue << " with a remainder of " << remainder << endl;
     }
 
     // same with 13 / 0, which throws an exception
     try
     {
         auto fut3 = calculator->divideAsync(13, 0);
-        auto result = fut3.get();
-        cout << "13 / 0 is " << result.returnValue << " with a remainder of " << result.remainder << endl;
+        auto [returnValue, remainder] = fut3.get();
+        cout << "13 / 0 is " << returnValue << " with a remainder of " << remainder << endl;
     }
     catch (const Demo::DivideByZeroException&)
     {

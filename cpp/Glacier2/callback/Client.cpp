@@ -2,17 +2,18 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <Callback.h>
+#include "Callback.h"
 #include <Glacier2/Glacier2.h>
 #include <Ice/Ice.h>
+#include <iostream>
 
 using namespace std;
 using namespace Demo;
 
-class CallbackReceiverI : public Demo::CallbackReceiver
+class CallbackReceiverI final : public Demo::CallbackReceiver
 {
 public:
-    virtual void callback(const Ice::Current&) override { cout << "received callback" << endl; }
+    void callback(const Ice::Current&) final { cout << "received callback" << endl; }
 };
 
 void run(const shared_ptr<Ice::Communicator>&);
@@ -60,16 +61,22 @@ void menu();
 void
 run(const shared_ptr<Ice::Communicator>& communicator)
 {
-    const shared_ptr<Glacier2::RouterPrx> router =
-        Ice::checkedCast<Glacier2::RouterPrx>(communicator->getDefaultRouter());
-    shared_ptr<Glacier2::SessionPrx> session;
+    optional<Ice::RouterPrx> defaultRouter = communicator->getDefaultRouter();
+    if (!defaultRouter)
+    {
+        cerr << "no router configured" << endl;
+        return;
+    }
+    const Glacier2::RouterPrx router = Glacier2::RouterPrx(*communicator->getDefaultRouter());
+
+    optional<Glacier2::SessionPrx> session;
     //
     // Loop until we have successfully create a session.
     //
     while (!session)
     {
         //
-        // Prompt the user for the creadentials to create the session.
+        // Prompt the user for the credentials to create the session.
         //
         cout << "This demo accepts any user-id / password combination.\n";
 
@@ -100,10 +107,8 @@ run(const shared_ptr<Ice::Communicator>& communicator)
         }
     }
 
-    const Ice::Int acmTimeout = router->getACMTimeout();
     const Ice::ConnectionPtr connection = router->ice_getCachedConnection();
     assert(connection);
-    connection->setACM(acmTimeout, IceUtil::None, Ice::ACMHeartbeat::HeartbeatAlways);
     connection->setCloseCallback([](Ice::ConnectionPtr)
                                  { cout << "The Glacier2 session has been destroyed." << endl; });
 

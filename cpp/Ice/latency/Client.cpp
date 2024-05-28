@@ -2,8 +2,9 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
+#include "Latency.h"
 #include <Ice/Ice.h>
-#include <Latency.h>
+#include <iostream>
 
 using namespace std;
 using namespace Demo;

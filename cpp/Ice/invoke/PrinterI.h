@@ -5,12 +5,12 @@
 #ifndef PRINTER_I_H
 #define PRINTER_I_H
 
-#include <Printer.h>
+#include "Printer.h"
 
-class PrinterI : public Ice::Blobject
+class PrinterI final : public Ice::Blobject
 {
 public:
-    virtual bool ice_invoke(std::vector<Ice::Byte>, std::vector<Ice::Byte>&, const Ice::Current&) override;
+    bool ice_invoke(std::vector<std::byte>, std::vector<std::byte>&, const Ice::Current&) final;
 };
 
 #endif

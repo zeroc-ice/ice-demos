@@ -2,9 +2,9 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <Hello.h>
+#include "Hello.h"
 #include <Ice/Ice.h>
-#include <exception>
+#include <iostream>
 
 using namespace std;
 

@@ -2,9 +2,10 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <Hello.h>
+#include "Hello.h"
 #include <Ice/Ice.h>
 #include <IceGrid/IceGrid.h>
+#include <iostream>
 
 using namespace std;
 using namespace Demo;

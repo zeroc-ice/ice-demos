@@ -2,17 +2,17 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <ChatSessionManagerI.h>
+#include "ChatSessionManagerI.h"
+#include "PollingChatSessionFactoryI.h"
 #include <Ice/Ice.h>
-#include <PollingChatSessionFactoryI.h>
-
+#include <Ice/Service.h>
 using namespace std;
 
-class ChatServer : public Ice::Service
+class ChatServer final : public Ice::Service
 {
 public:
-    virtual bool start(int argc, char* argv[], int&) override;
-    virtual bool stop() override;
+    bool start(int argc, char* argv[], int&) final;
+    bool stop() final;
 
 private:
     shared_ptr<Ice::ObjectAdapter> _adapter;
@@ -21,7 +21,6 @@ private:
 bool
 ChatServer::start(int, char*[], int& status)
 {
-    const int timeout = communicator()->getProperties()->getPropertyAsIntWithDefault("PollingChatSessionTimeout", 10);
     const bool traceEnabled = communicator()->getProperties()->getPropertyAsIntWithDefault("Server.Trace", 0) != 0;
     auto logger = communicator()->getLogger();
 
@@ -45,7 +44,7 @@ ChatServer::start(int, char*[], int& status)
             out << "Chat session manager created ok.";
         }
         _adapter->add(
-            make_shared<PollingChatSessionFactoryI>(chatRoom, timeout, traceEnabled, logger),
+            make_shared<PollingChatSessionFactoryI>(chatRoom, traceEnabled, logger),
             Ice::stringToIdentity("PollingChatSessionFactory"));
 
         if (traceEnabled)

@@ -2,9 +2,10 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <ChatSessionI.h>
+#include "ChatSessionI.h"
 #include <Glacier2/Glacier2.h>
 #include <Ice/Ice.h>
+#include <iostream>
 
 using namespace std;
 using namespace Demo;

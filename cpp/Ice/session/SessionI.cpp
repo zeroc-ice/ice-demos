@@ -2,7 +2,8 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <SessionI.h>
+#include "SessionI.h"
+#include <iostream>
 
 using namespace std;
 using namespace Demo;
@@ -30,7 +31,7 @@ SessionI::SessionI(string name) : _name(std::move(name)), _nextId(0), _destroy(f
     cout << "The session " << _name << " is now created." << endl;
 }
 
-shared_ptr<HelloPrx>
+optional<HelloPrx>
 SessionI::createHello(const Ice::Current& current)
 {
     const lock_guard<mutex> sync(_mutex);

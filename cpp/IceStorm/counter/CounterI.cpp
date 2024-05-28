@@ -2,21 +2,20 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
+#include "CounterI.h"
 #include <Ice/Ice.h>
-
-#include <CounterI.h>
 
 using namespace std;
 using namespace Demo;
 
-CounterI::CounterI(const shared_ptr<IceStorm::TopicPrx>& topic)
+CounterI::CounterI(const optional<IceStorm::TopicPrx>& topic)
     : _topic(topic),
       _publisher(Ice::uncheckedCast<CounterObserverPrx>(topic->getPublisher()))
 {
 }
 
 void
-CounterI::subscribe(shared_ptr<CounterObserverPrx> observer, const Ice::Current&)
+CounterI::subscribe(optional<CounterObserverPrx> observer, const Ice::Current&)
 {
     const lock_guard<mutex> sync(_mutex);
 
@@ -30,7 +29,7 @@ CounterI::subscribe(shared_ptr<CounterObserverPrx> observer, const Ice::Current&
 }
 
 void
-CounterI::unsubscribe(shared_ptr<CounterObserverPrx> observer, const Ice::Current&)
+CounterI::unsubscribe(optional<CounterObserverPrx> observer, const Ice::Current&)
 {
     _topic->unsubscribe(observer);
 }

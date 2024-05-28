@@ -9,8 +9,6 @@ Glacier2.Server.Endpoints=ssl -h localhost
 Glacier2.SessionManager=DemoIceGrid/AdminSessionManager
 Glacier2.PermissionsVerifier=DemoGlacier2/NullPermissionsVerifier
 
-Glacier2.SessionTimeout=30
-
 Ice.Default.Locator=DemoIceGrid/Locator:ssl -h localhost -p 4062
 
 #

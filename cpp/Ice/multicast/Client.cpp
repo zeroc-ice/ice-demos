@@ -2,22 +2,21 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
+#include "Discovery.h"
+#include "Hello.h"
 #include <Ice/Ice.h>
-
-#include <Discovery.h>
-#include <Hello.h>
-
 #include <chrono>
 #include <condition_variable>
+#include <iostream>
 #include <mutex>
 
 using namespace std;
 using namespace Demo;
 
-class DiscoverReplyI : public DiscoverReply
+class DiscoverReplyI final : public DiscoverReply
 {
 public:
-    virtual void reply(shared_ptr<Ice::ObjectPrx> obj, const Ice::Current&) override
+    void reply(optional<Ice::ObjectPrx> obj, const Ice::Current&) final
     {
         {
             const lock_guard<mutex> lock(_mutex);
@@ -29,7 +28,7 @@ public:
         _cond.notify_all();
     }
 
-    shared_ptr<Ice::ObjectPrx> waitReply(int seconds)
+    optional<Ice::ObjectPrx> waitReply(int seconds)
     {
         auto until = chrono::system_clock::now() + chrono::seconds(seconds);
         unique_lock<mutex> lock(_mutex);
@@ -43,7 +42,7 @@ public:
     }
 
 private:
-    shared_ptr<Ice::ObjectPrx> _obj;
+    optional<Ice::ObjectPrx> _obj;
     mutex _mutex;
     condition_variable _cond;
 };

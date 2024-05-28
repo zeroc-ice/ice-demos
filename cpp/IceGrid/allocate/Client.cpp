@@ -2,9 +2,10 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <Hello.h>
+#include "Hello.h"
 #include <Ice/Ice.h>
 #include <IceGrid/IceGrid.h>
+#include <iostream>
 
 using namespace std;
 using namespace Demo;
@@ -65,7 +66,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
         return 1;
     }
 
-    shared_ptr<IceGrid::SessionPrx> session;
+    optional<IceGrid::SessionPrx> session;
     while (!session)
     {
         cout << "This demo accepts any user-id / password combination.\n";
@@ -91,12 +92,6 @@ run(const shared_ptr<Ice::Communicator>& communicator)
         }
     }
 
-    //
-    // Enable heartbeats on the session connection to maintain the
-    // connection alive even if idle.
-    //
-    session->ice_getConnection()->setACM(registry->getACMTimeout(), Ice::nullopt, Ice::ACMHeartbeat::HeartbeatAlways);
-
     try
     {
         //
@@ -105,7 +100,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
         // we retrieve object by type, which will succeed if the
         // application-multiple.xml descriptor is used.
         //
-        shared_ptr<HelloPrx> hello;
+        optional<HelloPrx> hello;
         try
         {
             hello = Ice::checkedCast<HelloPrx>(session->allocateObjectById(Ice::stringToIdentity("hello")));

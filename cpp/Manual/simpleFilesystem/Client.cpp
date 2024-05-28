@@ -5,8 +5,6 @@
 #include <Filesystem.h>
 #include <Ice/Ice.h>
 #include <iostream>
-#include <iterator>
-#include <stdexcept>
 
 using namespace std;
 using namespace Filesystem;
@@ -16,7 +14,7 @@ using namespace Filesystem;
 // parameter is the current nesting level (for indentation).
 
 static void
-listRecursive(const shared_ptr<DirectoryPrx>& dir, size_t depth = 0)
+listRecursive(const optional<DirectoryPrx>& dir, size_t depth = 0)
 {
     const string indent(++depth, '\t');
 

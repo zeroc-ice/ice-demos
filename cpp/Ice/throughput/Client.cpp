@@ -2,9 +2,10 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
+#include "Throughput.h"
 #include <Ice/Ice.h>
-#include <Throughput.h>
 #include <iomanip>
+#include <iostream>
 
 using namespace std;
 using namespace Demo;
@@ -69,7 +70,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
     auto byteArr = make_pair(byteSeq.data(), byteSeq.data() + byteSeq.size());
 
     StringSeq stringSeq(StringSeqSize, "hello");
-    const vector<Util::string_view> stringViewSeq(StringSeqSize, "hello");
+    const vector<std::string> stringViewSeq(StringSeqSize, "hello");
 
     StringDoubleSeq structSeq(StringDoubleSeqSize, {"hello", 3.14});
     const FixedSeq fixedSeq(FixedSeqSize, {0, 0, 0.0});
@@ -87,7 +88,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
         ByteSeq warmupBytesBuf(1);
         auto warmupBytes = make_pair(warmupBytesBuf.data(), warmupBytesBuf.data() + warmupBytesBuf.size());
 
-        const vector<Util::string_view> warmupStringViews(1);
+        const vector<std::string> warmupStringViews(1);
         const StringDoubleSeq warmupStructs(1);
         const FixedSeq warmupFixed(1);
 

@@ -5,15 +5,14 @@
 #ifndef THROUGHPUT_I_H
 #define THROUGHPUT_I_H
 
-#include <Throughput.h>
+#include "Throughput.h"
 
-class ThroughputI : public Demo::Throughput
+class ThroughputI final : public Demo::Throughput
 {
 public:
-    virtual EchoByteSeqMarshaledResult
-    echoByteSeq(std::pair<const Ice::Byte*, const Ice::Byte*>, const Ice::Current&) override;
+    EchoByteSeqMarshaledResult echoByteSeq(std::pair<const std::byte*, const std::byte*>, const Ice::Current&) final;
 
-    virtual void shutdown(const Ice::Current&) override;
+    void shutdown(const Ice::Current&) final;
 };
 
 #endif

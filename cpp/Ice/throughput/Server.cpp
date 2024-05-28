@@ -2,8 +2,9 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
+#include "ThroughputI.h"
 #include <Ice/Ice.h>
-#include <ThroughputI.h>
+#include <iostream>
 
 using namespace std;
 

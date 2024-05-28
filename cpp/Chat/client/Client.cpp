@@ -2,11 +2,11 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
+#include "ChatSession.h"
+#include "ChatUtils.h"
 #include <Glacier2/Glacier2.h>
 #include <Ice/Ice.h>
-
-#include <ChatSession.h>
-#include <ChatUtils.h>
+#include <iostream>
 
 using namespace std;
 
@@ -14,16 +14,20 @@ static const unsigned int maxMessageSize = 1024;
 
 namespace
 {
-
     // mutex to prevent intertwined cout output
     mutex coutMutex;
 
+    void menu()
+    {
+        const lock_guard<mutex> lock(coutMutex);
+        cout << "enter /quit to exit." << endl;
+    }
 }
 
-class ChatRoomCallbackI : public Chat::ChatRoomCallback
+class ChatRoomCallbackI final : public Chat::ChatRoomCallback
 {
 public:
-    virtual void init(Ice::StringSeq names, const Ice::Current&) override
+    void init(Ice::StringSeq names, const Ice::Current&) final
     {
         const lock_guard<mutex> lock(coutMutex);
         cout << "Users: ";
@@ -39,132 +43,132 @@ public:
         cout << endl;
     }
 
-    virtual void join(long long, string name, const Ice::Current&) override
+    void join(long long, string name, const Ice::Current&) final
     {
         const lock_guard<mutex> lock(coutMutex);
         cout << ">>>> " << name << " joined." << endl;
     }
 
-    virtual void leave(long long, string name, const Ice::Current&) override
+    void leave(long long, string name, const Ice::Current&) final
     {
         const lock_guard<mutex> lock(coutMutex);
         cout << "<<<< " << name << " left." << endl;
     }
 
-    virtual void send(long long, string name, string message, const Ice::Current&) override
+    void send(long long, string name, string message, const Ice::Current&) final
     {
         const lock_guard<mutex> lock(coutMutex);
         cout << name << " > " << ChatUtils::unstripHtml(message) << endl;
     }
 };
 
-class ChatClient : public Glacier2::Application
+Chat::ChatSessionPrx
+createSession(Glacier2::RouterPrx router)
 {
-public:
-    ChatClient()
-        : //
-          // Since this is an interactive demo we don't want any signal
-          // handling.
-          //
-          Application(Ice::SignalPolicy::NoSignalHandling)
+    while (true)
     {
-    }
+        cout << "This demo accepts any user ID and password.\n";
 
-    virtual shared_ptr<Glacier2::SessionPrx> createSession() override
-    {
-        shared_ptr<Glacier2::SessionPrx> sessionPrx;
-        while (!sessionPrx)
+        string id;
+        cout << "user id: " << flush;
+        getline(cin, id);
+        id = ChatUtils::trim(id);
+
+        string pw;
+        cout << "password: " << flush;
+        getline(cin, pw);
+        pw = ChatUtils::trim(pw);
+
+        try
         {
-            cout << "This demo accepts any user ID and password.\n";
-
-            string id;
-            cout << "user id: " << flush;
-            getline(cin, id);
-            id = ChatUtils::trim(id);
-
-            string pw;
-            cout << "password: " << flush;
-            getline(cin, pw);
-            pw = ChatUtils::trim(pw);
-
-            try
+            optional<Chat::ChatSessionPrx> session{router->createSession(id, pw)};
+            if (!session)
             {
-                sessionPrx = router()->createSession(id, pw);
-                break;
+                cerr << "Glaicer2::createSession return null. Is the SessionManager configured?" << endl;
+                exit(1);
             }
-            catch (const Glacier2::CannotCreateSessionException& ex)
-            {
-                cout << "Login failed:\n" << ex.reason << endl;
-            }
-            catch (const Glacier2::PermissionDeniedException& ex)
-            {
-                cout << "Login failed:\n" << ex.reason << endl;
-            }
-            catch (const Ice::LocalException& ex)
-            {
-                cerr << "Communication with the server failed:\n" << ex << endl;
-            }
-        }
-        return sessionPrx;
-    }
-
-    virtual void sessionDestroyed() override { cerr << "Session destroyed " << endl; }
-
-    virtual int runWithSession(int argc, char*[]) override
-    {
-        if (argc > 1)
-        {
-            const string message = "usage: ";
-            throw runtime_error(message + appName());
-        }
-
-        auto sessionPrx = Ice::uncheckedCast<Chat::ChatSessionPrx>(this->session());
-        sessionPrx->setCallback(
-            Ice::uncheckedCast<Chat::ChatRoomCallbackPrx>(addWithUUID(make_shared<ChatRoomCallbackI>())));
-
-        menu();
-
-        do
-        {
-            string s;
-            cout << "";
-            getline(cin, s);
-            s = ChatUtils::trim(s);
-
-            if (!s.empty())
-            {
-                if (s[0] == '/')
+            router->ice_getCachedConnection()->setCloseCallback(
+                [](Ice::ConnectionPtr)
                 {
-                    if (s == "/quit")
-                    {
-                        break;
-                    }
-                    menu();
+                    const lock_guard<mutex> lock(coutMutex);
+                    cout << "The Glacier2 session has been destroyed." << endl;
+                });
+            return *session;
+        }
+        catch (const Glacier2::CannotCreateSessionException& ex)
+        {
+            cout << "Login failed:\n" << ex.reason << endl;
+        }
+        catch (const Glacier2::PermissionDeniedException& ex)
+        {
+            cout << "Login failed:\n" << ex.reason << endl;
+        }
+        catch (const Ice::LocalException& ex)
+        {
+            cerr << "Communication with the server failed:\n" << ex << endl;
+        }
+    }
+}
+
+void
+run(shared_ptr<Ice::Communicator> communicator)
+{
+    optional<Glacier2::RouterPrx> router{communicator->getDefaultRouter()};
+    if (!router)
+    {
+        cerr << "No router configured" << endl;
+        exit(1);
+    }
+
+    // Create a session with the Glacier2 router
+    Chat::ChatSessionPrx session = createSession(*router);
+
+    auto adapter = communicator->createObjectAdapterWithRouter("", *router);
+    adapter->activate();
+
+    // Create a callback object and add it to the adapter using the client's category
+    // provided by the router
+    Ice::Identity id{Ice::generateUUID(), router->getCategoryForClient()};
+
+    auto callbackPrx = adapter->add(make_shared<ChatRoomCallbackI>(), id);
+
+    // Set the callback proxy on the session
+    session->setCallback(Chat::ChatRoomCallbackPrx{callbackPrx});
+
+    menu();
+
+    do
+    {
+        string s;
+        cout << "";
+        getline(cin, s);
+        s = ChatUtils::trim(s);
+
+        if (!s.empty())
+        {
+            if (s[0] == '/')
+            {
+                if (s == "/quit")
+                {
+                    break;
+                }
+                menu();
+            }
+            else
+            {
+                if (s.size() > maxMessageSize)
+                {
+                    const lock_guard<mutex> lock(coutMutex);
+                    cout << "Message length exceeded, maximum length is " << maxMessageSize << " characters.";
                 }
                 else
                 {
-                    if (s.size() > maxMessageSize)
-                    {
-                        const lock_guard<mutex> lock(coutMutex);
-                        cout << "Message length exceeded, maximum length is " << maxMessageSize << " characters.";
-                    }
-                    else
-                    {
-                        sessionPrx->send(s);
-                    }
+                    session->send(s);
                 }
             }
-        } while (cin.good());
-        return 0;
-    }
-
-private:
-    void menu()
-    {
-        const lock_guard<mutex> lock(coutMutex);
-        cout << "enter /quit to exit." << endl;
-    }
-};
+        }
+    } while (cin.good());
+}
 
 int
 main(int argc, char* argv[])
@@ -173,23 +177,44 @@ main(int argc, char* argv[])
     Ice::registerIceSSL();
     Ice::registerIceWS();
 #endif
-    Ice::InitializationData initData;
-    initData.properties = Ice::createProperties(argc, argv);
 
-    //
-    // Set Ice.Default.Router if not set
-    //
-    if (initData.properties->getProperty("Ice.Default.Router").empty())
+    int status = 0;
+
+    try
     {
-        initData.properties->setProperty("Ice.Plugin.IceSSL", "IceSSL:createIceSSL");
-        initData.properties->setProperty("IceSSL.UsePlatformCAs", "1");
-        initData.properties->setProperty("IceSSL.CheckCertName", "2");
-        initData.properties->setProperty("IceSSL.VerifyDepthMax", "5");
-        initData.properties->setProperty(
-            "Ice.Default.Router",
-            "Glacier2/router:wss -p 443 -h zeroc.com -r /demo-proxy/chat/glacier2");
+        // CommunicatorHolder's ctor initializes an Ice communicator,
+        // and its dtor destroys this communicator.
+        //
+        // The communicator initialization removes all Ice-related arguments from argc/argv
+        Ice::InitializationData initData;
+        initData.properties = Ice::createProperties(argc, argv);
+
+        if (argc > 1)
+        {
+            cerr << argv[0] << ": too many arguments" << endl;
+            status = 1;
+        }
+
+        //
+        // Set Ice.Default.Router if not set
+        //
+        if (initData.properties->getProperty("Ice.Default.Router").empty())
+        {
+            initData.properties->setProperty("IceSSL.UsePlatformCAs", "1");
+            // initData.properties->setProperty("IceSSL.CheckCertName", "2");
+            initData.properties->setProperty(
+                "Ice.Default.Router",
+                "Glacier2/router:wss -p 443 -h zeroc.com -r /demo-proxy/chat/glacier2");
+        }
+        const Ice::CommunicatorHolder ich(initData);
+
+        run(ich.communicator());
+    }
+    catch (const std::exception& ex)
+    {
+        cerr << ex.what() << endl;
+        status = 1;
     }
 
-    ChatClient app;
-    return app.main(argc, argv, initData);
+    return status;
 }

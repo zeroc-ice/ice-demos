@@ -2,30 +2,33 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
+#include "Discovery.h"
+#include "Hello.h"
 #include <Ice/Ice.h>
-
-#include <Discovery.h>
-#include <Hello.h>
+#include <iostream>
 
 using namespace std;
 using namespace Demo;
 
-class HelloI : public Hello
+class HelloI final : public Hello
 {
 public:
-    virtual void sayHello(const Ice::Current&) override { cout << "Hello World!" << endl; }
+    void sayHello(const Ice::Current&) final { cout << "Hello World!" << endl; }
 };
 
-class DiscoverI : public Discover
+class DiscoverI final : public Discover
 {
 public:
-    DiscoverI(const shared_ptr<Ice::ObjectPrx>& obj) : _obj(obj) {}
+    DiscoverI(const optional<Ice::ObjectPrx>& obj) : _obj(obj) {}
 
-    virtual void lookup(shared_ptr<DiscoverReplyPrx> reply, const Ice::Current&) override
+    void lookup(optional<DiscoverReplyPrx> reply, const Ice::Current&) final
     {
         try
         {
-            reply->reply(_obj);
+            if (reply)
+            {
+                reply->reply(_obj);
+            }
         }
         catch (const Ice::LocalException&)
         {
@@ -34,7 +37,7 @@ public:
     }
 
 private:
-    const shared_ptr<Ice::ObjectPrx> _obj;
+    const optional<Ice::ObjectPrx> _obj;
 };
 
 int

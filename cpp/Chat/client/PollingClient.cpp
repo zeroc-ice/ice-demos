@@ -2,27 +2,25 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
+#include "ChatUtils.h"
+#include "PollingChat.h"
 #include <Ice/Ice.h>
-
-#include <ChatUtils.h>
-#include <PollingChat.h>
 #include <chrono>
+#include <iostream>
 
 using namespace std;
 static const unsigned int maxMessageSize = 1024;
 
 namespace
 {
-
     // mutex to prevent intertwined cout output
     mutex coutMutex;
-
 }
 
 class GetUpdatesTask
 {
 public:
-    explicit GetUpdatesTask(const shared_ptr<PollingChat::PollingChatSessionPrx>& session) : _session(session) {}
+    explicit GetUpdatesTask(const optional<PollingChat::PollingChatSessionPrx>& session) : _session(session) {}
 
     ~GetUpdatesTask()
     {
@@ -114,7 +112,7 @@ public:
     }
 
 private:
-    const shared_ptr<PollingChat::PollingChatSessionPrx> _session;
+    const optional<PollingChat::PollingChatSessionPrx> _session;
     std::future<void> _asyncResult; // only used by the main thread
 
     bool _done = false;
@@ -144,10 +142,7 @@ main(int argc, char* argv[])
         //
         if (initData.properties->getProperty("PollingChatSessionFactory").empty())
         {
-            initData.properties->setProperty("Ice.Plugin.IceSSL", "IceSSL:createIceSSL");
             initData.properties->setProperty("IceSSL.UsePlatformCAs", "1");
-            initData.properties->setProperty("IceSSL.CheckCertName", "2");
-            initData.properties->setProperty("IceSSL.VerifyDepthMax", "5");
             initData.properties->setProperty(
                 "PollingChatSessionFactory",
                 "PollingChatSessionFactory:wss -h zeroc.com -p 443 -r /demo-proxy/chat/poll");
@@ -189,7 +184,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
         return 1;
     }
 
-    shared_ptr<PollingChat::PollingChatSessionPrx> session;
+    optional<PollingChat::PollingChatSessionPrx> session;
     while (!session)
     {
         cout << "This demo accepts any user ID and password.\n";

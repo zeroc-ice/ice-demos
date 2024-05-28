@@ -9,14 +9,14 @@
 #include <Ice/Ice.h>
 #include <unordered_set>
 
-class InterceptorI : public Ice::DispatchInterceptor
+class InterceptorI : public Ice::Object
 {
 public:
     InterceptorI(std::shared_ptr<Ice::Object>, std::shared_ptr<AuthenticatorI>, std::unordered_set<std::string>);
-    virtual bool dispatch(Ice::Request&) override;
+    void dispatch(Ice::IncomingRequest&, std::function<void(Ice::OutgoingResponse)>) final;
 
 private:
-    std::shared_ptr<Ice::Object> _servant;
+    std::shared_ptr<Ice::Object> _next;
     std::shared_ptr<AuthenticatorI> _authenticator;
     std::unordered_set<std::string> _securedOperations;
 };

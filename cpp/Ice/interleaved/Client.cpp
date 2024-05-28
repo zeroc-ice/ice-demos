@@ -2,11 +2,10 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
+#include "Throughput.h"
 #include <Ice/Ice.h>
-#include <Throughput.h>
-
 #include <iomanip>
-
+#include <iostream>
 #include <list>
 
 using namespace std;

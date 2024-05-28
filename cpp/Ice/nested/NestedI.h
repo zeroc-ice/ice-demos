@@ -5,16 +5,16 @@
 #ifndef NESTED_I_H
 #define NESTED_I_H
 
-#include <Nested.h>
+#include "Nested.h"
 
-class NestedI : public Demo::Nested
+class NestedI final : public Demo::Nested
 {
 public:
-    NestedI(std::shared_ptr<Demo::NestedPrx>);
-    virtual void nestedCall(int, std::shared_ptr<Demo::NestedPrx>, const Ice::Current&) override;
+    NestedI(std::optional<Demo::NestedPrx>);
+    void nestedCall(int, std::optional<Demo::NestedPrx>, const Ice::Current&) final;
 
 private:
-    const std::shared_ptr<Demo::NestedPrx> _self;
+    const std::optional<Demo::NestedPrx> _self;
 };
 
 #endif

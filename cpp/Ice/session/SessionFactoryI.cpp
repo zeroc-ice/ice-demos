@@ -2,13 +2,14 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <SessionFactoryI.h>
-#include <SessionI.h>
+#include "SessionFactoryI.h"
+#include "SessionI.h"
+#include <iostream>
 
 using namespace std;
 using namespace Demo;
 
-shared_ptr<SessionPrx>
+optional<SessionPrx>
 SessionFactoryI::create(string name, const Ice::Current& current)
 {
     auto session = make_shared<SessionI>(name);
@@ -21,10 +22,6 @@ SessionFactoryI::create(string name, const Ice::Current& current)
     //
     auto collocProxy = proxy->ice_endpoints(Ice::EndpointSeq());
 
-    //
-    // Never close this connection from the client and turn on heartbeats with a timeout of 30s
-    //
-    current.con->setACM(30, Ice::ACMClose::CloseOff, Ice::ACMHeartbeat::HeartbeatAlways);
     current.con->setCloseCallback(
         [collocProxy](const shared_ptr<Ice::Connection>&)
         {

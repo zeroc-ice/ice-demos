@@ -80,7 +80,7 @@ ChatRoom::leave(const string& name)
     }
 }
 
-Ice::Long
+int64_t
 ChatRoom::send(const string& name, const string& message)
 {
     const lock_guard<mutex> sync(_mutex);

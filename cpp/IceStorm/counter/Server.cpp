@@ -2,11 +2,10 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
+#include "CounterI.h"
 #include <Ice/Ice.h>
 #include <IceStorm/IceStorm.h>
-
-#include <CounterI.h>
-
+#include <iostream>
 #include <map>
 
 using namespace std;
@@ -53,7 +52,7 @@ main(int argc, char* argv[])
                 return 1;
             }
 
-            shared_ptr<IceStorm::TopicPrx> topic;
+            optional<IceStorm::TopicPrx> topic;
             try
             {
                 topic = manager->retrieve("counter");

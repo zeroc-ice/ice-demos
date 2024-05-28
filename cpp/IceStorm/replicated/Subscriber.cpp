@@ -2,18 +2,18 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
+#include "Clock.h"
 #include <Ice/Ice.h>
 #include <IceStorm/IceStorm.h>
-
-#include <Clock.h>
+#include <iostream>
 
 using namespace std;
 using namespace Demo;
 
-class ClockI : public Clock
+class ClockI final : public Clock
 {
 public:
-    virtual void tick(string time, const Ice::Current&) override { cout << time << endl; }
+    void tick(string time, const Ice::Current&) final { cout << time << endl; }
 };
 
 int run(const shared_ptr<Ice::Communicator>& communicator, int argc, char* argv[]);
@@ -177,7 +177,7 @@ run(const shared_ptr<Ice::Communicator>& communicator, int argc, char* argv[])
         return 1;
     }
 
-    shared_ptr<IceStorm::TopicPrx> topic;
+    optional<IceStorm::TopicPrx> topic;
     try
     {
         topic = manager->retrieve(topicName);

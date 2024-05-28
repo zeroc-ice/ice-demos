@@ -2,24 +2,24 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <InterceptorI.h>
+#include "InterceptorI.h"
 
 using namespace std;
 
 InterceptorI::InterceptorI(
-    shared_ptr<Ice::Object> servant,
+    shared_ptr<Ice::Object> next,
     shared_ptr<AuthenticatorI> authenticator,
     unordered_set<string> securedOperations)
-    : _servant(std::move(servant)),
+    : _next(std::move(next)),
       _authenticator(std::move(authenticator)),
       _securedOperations(std::move(securedOperations))
 {
 }
 
-bool
-InterceptorI::dispatch(Ice::Request& request)
+void
+InterceptorI::dispatch(Ice::IncomingRequest& request, function<void(Ice::OutgoingResponse)> sendResponse)
 {
-    auto current = request.getCurrent();
+    auto current = request.current();
     //
     // Check if the operation requires authorization to invoke.
     //
@@ -42,5 +42,5 @@ InterceptorI::dispatch(Ice::Request& request)
             throw Demo::AuthorizationException();
         }
     }
-    return _servant->ice_dispatch(request);
+    _next->dispatch(request, sendResponse);
 }

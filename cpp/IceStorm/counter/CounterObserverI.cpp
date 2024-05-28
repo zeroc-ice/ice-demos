@@ -2,9 +2,9 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
+#include "CounterObserverI.h"
 #include <Ice/Ice.h>
-
-#include <CounterObserverI.h>
+#include <iostream>
 
 using namespace std;
 

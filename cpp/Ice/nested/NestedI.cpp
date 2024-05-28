@@ -2,16 +2,17 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
+#include "NestedI.h"
 #include <Ice/Ice.h>
-#include <NestedI.h>
+#include <iostream>
 
 using namespace std;
 using namespace Demo;
 
-NestedI::NestedI(shared_ptr<NestedPrx> self) : _self(std::move(self)) {}
+NestedI::NestedI(optional<NestedPrx> self) : _self(std::move(self)) {}
 
 void
-NestedI::nestedCall(int level, shared_ptr<NestedPrx> proxy, const Ice::Current&)
+NestedI::nestedCall(int level, optional<NestedPrx> proxy, const Ice::Current&)
 {
     cout << level << endl;
     if (--level > 0)

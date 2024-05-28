@@ -4,10 +4,10 @@
    <application name="HelloSimpsons">
 
       <properties id="mx">
-        <property name="IceMX.Metrics.Debug.GroupBy" value="id"/>
-        <property name="IceMX.Metrics.Debug.Disabled" value="1"/>
-        <property name="IceMX.Metrics.ByParent.GroupBy" value="parent"/>
-        <property name="IceMX.Metrics.ByParent.Disabled" value="1"/>
+         <property name="IceMX.Metrics.Debug.GroupBy" value="id"/>
+         <property name="IceMX.Metrics.Debug.Disabled" value="1"/>
+         <property name="IceMX.Metrics.ByParent.GroupBy" value="parent"/>
+         <property name="IceMX.Metrics.ByParent.Disabled" value="1"/>
       </properties>
 
       <service-template id="HelloService">
@@ -18,8 +18,7 @@
                <properties refid="mx"/>
                <property name="Hello.Identity" value="hello"/>
             </properties>
-            <adapter name="Hello-${name}" endpoints="default -h localhost" id="Hello-${name}"
-                     replica-group="HelloGroup" server-lifetime="false"/>
+            <adapter name="Hello-${name}" endpoints="default -h localhost" id="Hello-${name}" replica-group="HelloGroup" server-lifetime="false"/>
          </service>
       </service-template>
 
@@ -34,7 +33,6 @@
                <property name="Glacier2.Client.Endpoints" value="${client-endpoints}"/>
                <property name="Glacier2.Server.Endpoints" value="${server-endpoints}"/>
                <property name="Glacier2.InstanceName" value="${instance-name}"/>
-               <property name="Glacier2.SessionTimeout" value="${session-timeout}"/>
             </properties>
          </server>
       </server-template>
@@ -46,10 +44,7 @@
 
       <node name="node1">
 
-         <server-instance template="Glacier2"
-                          instance-name="DemoGlacier2"
-                          client-endpoints="tcp -h localhost -p 4063"
-                          server-endpoints="tcp -h localhost">
+         <server-instance template="Glacier2" instance-name="DemoGlacier2" client-endpoints="tcp -h localhost -p 4063" server-endpoints="tcp -h localhost">
             <properties>
                <property name="Glacier2.SessionManager" value="DemoIceGrid/AdminSessionManager"/>
                <property name="Glacier2.PermissionsVerifier" value="DemoGlacier2/NullPermissionsVerifier"/>

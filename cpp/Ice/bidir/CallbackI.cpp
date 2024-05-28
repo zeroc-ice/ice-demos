@@ -2,14 +2,15 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <CallbackI.h>
+#include "CallbackI.h"
 #include <Ice/Ice.h>
+#include <iostream>
 
 using namespace std;
 using namespace Demo;
 
 void
-CallbackSenderI::addClient(std::shared_ptr<CallbackReceiverPrx> client, const Ice::Current& current)
+CallbackSenderI::addClient(optional<CallbackReceiverPrx> client, const Ice::Current& current)
 {
     const lock_guard<mutex> lock(_mutex);
     cout << "adding client `" << Ice::identityToString(client->ice_getIdentity()) << "'" << endl;
@@ -80,7 +81,7 @@ CallbackSenderI::invokeCallback()
 }
 
 void
-CallbackSenderI::removeClient(const shared_ptr<CallbackReceiverPrx>& client, exception_ptr eptr)
+CallbackSenderI::removeClient(const optional<CallbackReceiverPrx>& client, exception_ptr eptr)
 {
     const lock_guard<mutex> lock(_mutex);
     auto p = find(_clients.begin(), _clients.end(), client);

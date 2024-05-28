@@ -9,26 +9,26 @@
 #include <Glacier2/Glacier2.h>
 #include <mutex>
 
-class ChatSessionI : public Demo::ChatSession
+class ChatSessionI final : public Demo::ChatSession
 {
 public:
     ChatSessionI(std::string);
 
-    virtual void setCallback(std::shared_ptr<Demo::ChatCallbackPrx>, const Ice::Current&) override;
-    virtual void say(std::string, const Ice::Current&) override;
-    virtual void destroy(const Ice::Current&) override;
+    void setCallback(std::optional<Demo::ChatCallbackPrx>, const Ice::Current&) final;
+    void say(std::string, const Ice::Current&) final;
+    void destroy(const Ice::Current&) final;
 
 private:
     std::mutex _mutex;
     const std::string _userId;
-    std::shared_ptr<Demo::ChatCallbackPrx> _callback;
+    std::optional<Demo::ChatCallbackPrx> _callback;
 };
 
-class ChatSessionManagerI : public Glacier2::SessionManager
+class ChatSessionManagerI final : public Glacier2::SessionManager
 {
 public:
-    virtual std::shared_ptr<Glacier2::SessionPrx>
-    create(std::string, std::shared_ptr<Glacier2::SessionControlPrx>, const Ice::Current&) override;
+    std::optional<Glacier2::SessionPrx>
+    create(std::string, std::optional<Glacier2::SessionControlPrx>, const Ice::Current&) final;
 
     void destroy();
 };

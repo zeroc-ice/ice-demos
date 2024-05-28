@@ -3,57 +3,58 @@
 //
 
 #include <Ice/Ice.h>
+#include <iostream>
 
 using namespace std;
 
 namespace
 {
 
-    class LocatorRegistryI : public Ice::LocatorRegistry
+    class LocatorRegistryI final : public Ice::LocatorRegistry
     {
     public:
-        virtual void setAdapterDirectProxyAsync(
+        void setAdapterDirectProxyAsync(
             string id,
-            shared_ptr<Ice::ObjectPrx> proxy,
+            optional<Ice::ObjectPrx> proxy,
             function<void()> response,
             function<void(exception_ptr)>,
-            const Ice::Current&) override
+            const Ice::Current&) final
         {
-            if (!proxy)
+            if (proxy)
             {
-                _adapters.erase(id);
+                _adapters.insert({id, std::move(*proxy)});
             }
             else
             {
-                _adapters[id] = proxy;
+                _adapters.erase(id);
             }
             response();
         }
 
-        virtual void setReplicatedAdapterDirectProxyAsync(
+        void setReplicatedAdapterDirectProxyAsync(
             string,
             string,
-            shared_ptr<Ice::ObjectPrx>,
+            optional<Ice::ObjectPrx>,
             function<void()> response,
             function<void(exception_ptr)>,
-            const Ice::Current&) override
+            const Ice::Current&) final
         {
             assert(false); // Not used by this demo
             response();
         }
 
-        virtual void setServerProcessProxyAsync(
+        void setServerProcessProxyAsync(
             string,
-            shared_ptr<Ice::ProcessPrx>,
+            optional<Ice::ProcessPrx>,
             function<void()> response,
             function<void(exception_ptr)>,
-            const Ice::Current&) override
+            const Ice::Current&) final
         {
             assert(false); // Not used by this demo
             response();
         }
 
-        shared_ptr<Ice::ObjectPrx> getAdapter(const string& id)
+        optional<Ice::ObjectPrx> getAdapter(const string& id)
         {
             auto p = _adapters.find(id);
             if (p == _adapters.end())
@@ -64,44 +65,41 @@ namespace
         }
 
     private:
-        map<string, shared_ptr<Ice::ObjectPrx>> _adapters;
+        map<string, Ice::ObjectPrx> _adapters;
     };
 
-    class LocatorI : public Ice::Locator
+    class LocatorI final : public Ice::Locator
     {
     public:
-        LocatorI(shared_ptr<LocatorRegistryI> registry, shared_ptr<Ice::LocatorRegistryPrx> registryPrx)
+        LocatorI(shared_ptr<LocatorRegistryI> registry, optional<Ice::LocatorRegistryPrx> registryPrx)
             : _registry(std::move(registry)),
               _registryPrx(std::move(registryPrx))
         {
         }
 
-        virtual void findObjectByIdAsync(
+        void findObjectByIdAsync(
             Ice::Identity,
-            function<void(const shared_ptr<Ice::ObjectPrx>&)> response,
+            function<void(const optional<Ice::ObjectPrx>&)> response,
             function<void(exception_ptr)>,
-            const Ice::Current&) const override
+            const Ice::Current&) const final
         {
-            response(nullptr);
+            response(nullopt);
         }
 
-        virtual void findAdapterByIdAsync(
+        void findAdapterByIdAsync(
             string id,
-            function<void(const shared_ptr<Ice::ObjectPrx>&)> response,
+            function<void(const optional<Ice::ObjectPrx>&)> response,
             function<void(exception_ptr)>,
-            const Ice::Current&) const override
+            const Ice::Current&) const final
         {
             response(_registry->getAdapter(id));
         }
 
-        virtual shared_ptr<Ice::LocatorRegistryPrx> getRegistry(const Ice::Current&) const override
-        {
-            return _registryPrx;
-        }
+        optional<Ice::LocatorRegistryPrx> getRegistry(const Ice::Current&) const final { return _registryPrx; }
 
     private:
         const shared_ptr<LocatorRegistryI> _registry;
-        const shared_ptr<Ice::LocatorRegistryPrx> _registryPrx;
+        const optional<Ice::LocatorRegistryPrx> _registryPrx;
     };
 
 }

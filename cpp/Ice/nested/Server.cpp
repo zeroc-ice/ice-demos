@@ -2,8 +2,9 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
+#include "NestedI.h"
 #include <Ice/Ice.h>
-#include <NestedI.h>
+#include <iostream>
 
 using namespace std;
 using namespace Demo;

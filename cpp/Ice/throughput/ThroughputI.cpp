@@ -8,7 +8,6 @@
 ThroughputI::ThroughputI()
     : _byteSeq(Demo::ByteSeqSize),
       _stringSeq(Demo::StringSeqSize, "hello"),
-      _stringViewSeq(Demo::StringSeqSize, "hello"),
       _structSeq(Demo::StringDoubleSeqSize, {"hello", 3.14}),
       _fixedSeq(Demo::FixedSeqSize, {0, 0, 0.0}),
       _warmup(false)
@@ -35,7 +34,7 @@ ThroughputI::endWarmup(const Ice::Current&)
 }
 
 void
-ThroughputI::sendByteSeq(std::pair<const Ice::Byte*, const Ice::Byte*>, const Ice::Current&)
+ThroughputI::sendByteSeq(std::pair<const std::byte*, const std::byte*>, const Ice::Current&)
 {
 }
 
@@ -45,26 +44,26 @@ ThroughputI::recvByteSeq(const Ice::Current& current)
     if (_warmup)
     {
         Demo::ByteSeq warmupBytesBuf(1);
-        const std::pair<const Ice::Byte*, const Ice::Byte*> ret =
+        const std::pair<const std::byte*, const std::byte*> ret =
             std::make_pair(warmupBytesBuf.data(), warmupBytesBuf.data() + warmupBytesBuf.size());
         return RecvByteSeqMarshaledResult(ret, current);
     }
     else
     {
-        const std::pair<const Ice::Byte*, const Ice::Byte*> ret =
+        const std::pair<const std::byte*, const std::byte*> ret =
             std::make_pair(_byteSeq.data(), _byteSeq.data() + _byteSeq.size());
         return RecvByteSeqMarshaledResult(ret, current);
     }
 }
 
 Demo::Throughput::EchoByteSeqMarshaledResult
-ThroughputI::echoByteSeq(std::pair<const Ice::Byte*, const Ice::Byte*> seq, const Ice::Current& current)
+ThroughputI::echoByteSeq(std::pair<const std::byte*, const std::byte*> seq, const Ice::Current& current)
 {
     return EchoByteSeqMarshaledResult(seq, current);
 }
 
 void
-ThroughputI::sendStringSeq(std::vector<Util::string_view>, const Ice::Current&)
+ThroughputI::sendStringSeq(std::vector<std::string>, const Ice::Current&)
 {
 }
 
@@ -73,16 +72,16 @@ ThroughputI::recvStringSeq(const Ice::Current& current)
 {
     if (_warmup)
     {
-        return RecvStringSeqMarshaledResult(std::vector<Util::string_view>(1), current);
+        return RecvStringSeqMarshaledResult(std::vector<std::string>(1), current);
     }
     else
     {
-        return RecvStringSeqMarshaledResult(_stringViewSeq, current);
+        return RecvStringSeqMarshaledResult(_stringSeq, current);
     }
 }
 
 Demo::Throughput::EchoStringSeqMarshaledResult
-ThroughputI::echoStringSeq(std::vector<Util::string_view> seq, const Ice::Current& current)
+ThroughputI::echoStringSeq(std::vector<std::string> seq, const Ice::Current& current)
 {
     return EchoStringSeqMarshaledResult(seq, current);
 }

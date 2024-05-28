@@ -2,8 +2,11 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
+#include "PrinterI.h"
+
 #include <Ice/Ice.h>
-#include <PrinterI.h>
+
+#include <iostream>
 
 using namespace std;
 

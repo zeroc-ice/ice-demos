@@ -2,11 +2,11 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
+#include "ThroughputI.h"
 #include <Ice/Ice.h>
-#include <ThroughputI.h>
 
 Demo::Throughput::EchoByteSeqMarshaledResult
-ThroughputI::echoByteSeq(std::pair<const Ice::Byte*, const Ice::Byte*> seq, const Ice::Current& current)
+ThroughputI::echoByteSeq(std::pair<const std::byte*, const std::byte*> seq, const Ice::Current& current)
 {
     return EchoByteSeqMarshaledResult(seq, current);
 }

@@ -2,8 +2,9 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
+#include "Printer.h"
 #include <Ice/Ice.h>
-#include <Printer.h>
+#include <iostream>
 
 using namespace std;
 using namespace Demo;

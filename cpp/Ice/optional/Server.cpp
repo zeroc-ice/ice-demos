@@ -2,8 +2,9 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <ContactDBI.h>
+#include "ContactDBI.h"
 #include <Ice/Ice.h>
+#include <iostream>
 
 using namespace std;
 

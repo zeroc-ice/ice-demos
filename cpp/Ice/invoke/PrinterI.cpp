@@ -2,8 +2,11 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
+#include "PrinterI.h"
+
 #include <Ice/Ice.h>
-#include <PrinterI.h>
+
+#include <iostream>
 
 using namespace std;
 using namespace Demo;
@@ -27,7 +30,7 @@ operator<<(ostream& out, Color c)
 }
 
 bool
-PrinterI::ice_invoke(vector<Ice::Byte> inParams, vector<Ice::Byte>& outParams, const Ice::Current& current)
+PrinterI::ice_invoke(vector<byte> inParams, vector<byte>& outParams, const Ice::Current& current)
 {
     auto communicator = current.adapter->getCommunicator();
 

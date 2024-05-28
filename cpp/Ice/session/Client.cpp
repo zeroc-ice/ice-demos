@@ -2,8 +2,9 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
+#include "Session.h"
 #include <Ice/Ice.h>
-#include <Session.h>
+#include <iostream>
 
 using namespace std;
 using namespace Demo;
@@ -72,7 +73,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
 
     auto session = factory->create(name);
 
-    vector<shared_ptr<HelloPrx>> hellos;
+    vector<optional<HelloPrx>> hellos;
 
     menu();
 

@@ -30,13 +30,6 @@ Glacier2.SessionManager=LibrarySessionManager:tcp -h localhost -p 10000
 Glacier2.PermissionsVerifier=DemoGlacier2/NullPermissionsVerifier
 
 #
-# The timeout for inactive sessions. If any client session is inactive
-# for longer than this value, the session expires and is removed. The
-# unit is seconds.
-#
-Glacier2.SessionTimeout=30
-
-#
 # Security Tracing
 #
 # 0 = no security tracing

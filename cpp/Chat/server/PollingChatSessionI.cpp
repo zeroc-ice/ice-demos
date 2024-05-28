@@ -102,7 +102,7 @@ PollingChatSessionI::getUpdates(const Ice::Current&)
     return _callback->getUpdates();
 }
 
-Ice::Long
+int64_t
 PollingChatSessionI::send(string message, const Ice::Current&)
 {
     const lock_guard<mutex> sync(_mutex);

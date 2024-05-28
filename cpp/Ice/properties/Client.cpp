@@ -2,8 +2,9 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
+#include "Props.h"
 #include <Ice/Ice.h>
-#include <Props.h>
+#include <iostream>
 
 using namespace std;
 using namespace Demo;
@@ -50,7 +51,7 @@ main(int argc, char* argv[])
 }
 
 void menu();
-void show(const shared_ptr<Ice::PropertiesAdminPrx>&);
+void show(const optional<Ice::PropertiesAdminPrx>&);
 
 int
 run(const shared_ptr<Ice::Communicator>& communicator)
@@ -166,7 +167,7 @@ menu()
 }
 
 void
-show(const shared_ptr<Ice::PropertiesAdminPrx>& admin)
+show(const optional<Ice::PropertiesAdminPrx>& admin)
 {
     auto props = admin->getPropertiesForPrefix("Demo");
     cout << "Server's current settings:" << endl;
