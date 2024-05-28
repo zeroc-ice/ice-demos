@@ -6,9 +6,11 @@ publisher
 subscriber
 talk
 chatserver
+chatgl2client
+chatpollclient
 
-!Chat/client/
-!Chat/server/
+!**/Chat/client/
+!**/Chat/server/
 
 !**/msbuild/client
 !**/msbuild/server

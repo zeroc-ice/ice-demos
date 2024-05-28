@@ -131,8 +131,6 @@ ChatSessionI::setCallback(optional<Chat::ChatRoomCallbackPrx> callback, const Ic
         return;
     }
 
-    callback->ice_ping();
-
     Ice::Context ctx;
     ctx["_fwd"] = "o";
     _callback = make_shared<SessionCallbackAdapter>(

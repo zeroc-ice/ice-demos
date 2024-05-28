@@ -65,7 +65,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
     if (!defaultRouter)
     {
         cerr << "no router configured" << endl;
-        return;
+        exit(1);
     }
     const Glacier2::RouterPrx router = Glacier2::RouterPrx(*communicator->getDefaultRouter());
 
