@@ -41,7 +41,6 @@ jobs:
         timeout-minutes: 90
         with:
           working_directory: ice
-          build_flags: srcs
 
       - name: Checkout repository
         uses: actions/checkout@v4
