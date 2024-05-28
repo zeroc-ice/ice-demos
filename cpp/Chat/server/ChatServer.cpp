@@ -78,10 +78,6 @@ ChatServer::stop()
 int
 main(int argc, char* argv[])
 {
-#ifdef ICE_STATIC_LIBS
-    Ice::registerIceSSL();
-    Ice::registerIceWS();
-#endif
     ChatServer app;
     return app.main(argc, argv);
 }

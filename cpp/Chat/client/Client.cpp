@@ -171,11 +171,6 @@ run(shared_ptr<Ice::Communicator> communicator)
 int
 main(int argc, char* argv[])
 {
-#ifdef ICE_STATIC_LIBS
-    Ice::registerIceSSL();
-    Ice::registerIceWS();
-#endif
-
     int status = 0;
 
     try
