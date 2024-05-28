@@ -28,7 +28,7 @@ public:
     void unreserve(const std::string&);
     void join(const std::string&, const std::shared_ptr<ChatRoomCallbackAdapter>&);
     void leave(const std::string&);
-    long long send(const std::string&, const std::string&);
+    int64_t send(const std::string&, const std::string&);
 
 private:
     using ChatRoomCallbackMap = std::map<std::string, std::shared_ptr<ChatRoomCallbackAdapter>>;

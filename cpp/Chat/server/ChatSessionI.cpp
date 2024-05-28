@@ -142,7 +142,7 @@ ChatSessionI::setCallback(optional<Chat::ChatRoomCallbackPrx> callback, const Ic
     _chatRoom->join(_name, _callback);
 }
 
-long long
+int64_t
 ChatSessionI::send(string message, const Ice::Current&)
 {
     const lock_guard<mutex> sync(_mutex);

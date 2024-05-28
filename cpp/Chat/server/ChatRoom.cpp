@@ -30,7 +30,7 @@ void
 ChatRoom::join(const string& name, const shared_ptr<ChatRoomCallbackAdapter>& callback)
 {
     const lock_guard<mutex> sync(_mutex);
-    const long long timestamp =
+    const auto timestamp =
         chrono::duration_cast<chrono::milliseconds>(chrono::system_clock::now().time_since_epoch()).count();
 
     _reserved.erase(name);

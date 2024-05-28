@@ -14,7 +14,7 @@ public:
     ChatSessionI(const std::shared_ptr<ChatRoom>&, std::string, bool trace, const std::shared_ptr<Ice::Logger>& logger);
 
     void setCallback(std::optional<Chat::ChatRoomCallbackPrx>, const Ice::Current&) final;
-    long long send(std::string, const Ice::Current&) final;
+    std::int64_t send(std::string, const Ice::Current&) final;
     void destroy(const Ice::Current&) final;
 
 private:

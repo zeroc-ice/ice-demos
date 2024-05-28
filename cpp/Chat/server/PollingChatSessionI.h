@@ -11,7 +11,7 @@
 
 class PollCallbackAdapter;
 
-class PollingChatSessionI : public PollingChat::PollingChatSession
+class PollingChatSessionI final : public PollingChat::PollingChatSession
 {
 public:
     PollingChatSessionI(
@@ -20,10 +20,10 @@ public:
         bool trace,
         const std::shared_ptr<Ice::Logger>& logger);
 
-    virtual void destroy(const Ice::Current&) override;
-    virtual Ice::StringSeq getInitialUsers(const Ice::Current&) override;
-    virtual PollingChat::ChatRoomEventSeq getUpdates(const Ice::Current&) override;
-    virtual long long send(std::string, const Ice::Current&) override;
+    void destroy(const Ice::Current&) final;
+    Ice::StringSeq getInitialUsers(const Ice::Current&) final;
+    PollingChat::ChatRoomEventSeq getUpdates(const Ice::Current&) final;
+    int64_t send(std::string, const Ice::Current&) final;
 
 private:
     const std::shared_ptr<ChatRoom> _chatRoom;

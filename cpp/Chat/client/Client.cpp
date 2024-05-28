@@ -43,19 +43,19 @@ public:
         cout << endl;
     }
 
-    void join(long long, string name, const Ice::Current&) final
+    void join(int64_t, string name, const Ice::Current&) final
     {
         const lock_guard<mutex> lock(coutMutex);
         cout << ">>>> " << name << " joined." << endl;
     }
 
-    void leave(long long, string name, const Ice::Current&) final
+    void leave(int64_t, string name, const Ice::Current&) final
     {
         const lock_guard<mutex> lock(coutMutex);
         cout << "<<<< " << name << " left." << endl;
     }
 
-    void send(long long, string name, string message, const Ice::Current&) final
+    void send(int64_t, string name, string message, const Ice::Current&) final
     {
         const lock_guard<mutex> lock(coutMutex);
         cout << name << " > " << ChatUtils::unstripHtml(message) << endl;
