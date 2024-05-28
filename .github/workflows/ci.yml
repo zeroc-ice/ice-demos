@@ -51,5 +51,5 @@ jobs:
         uses: ./ice/.github/actions/build
         timeout-minutes: 30
         with:
-          working_directory: ice/cpp
+          working_directory: ice-demos/cpp
           msbuild_project: C++ demos.sln
