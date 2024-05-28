@@ -52,4 +52,4 @@ jobs:
         timeout-minutes: 30
         with:
           working_directory: ice/cpp
-          msbuild_project: C++11 demos.sln
+          msbuild_project: C++ demos.sln

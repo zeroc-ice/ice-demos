@@ -84,8 +84,7 @@ createSession(Glacier2::RouterPrx router)
             optional<Chat::ChatSessionPrx> session{router->createSession(id, pw)};
             if (!session)
             {
-                cerr << "Glaicer2::createSession return null. Is the SessionManager configured?" << endl;
-                exit(1);
+                throw runtime_error("Glaicer2::createSession return null. Is the SessionManager configured?");
             }
             router->ice_getCachedConnection()->setCloseCallback(
                 [](Ice::ConnectionPtr)
@@ -116,8 +115,7 @@ run(shared_ptr<Ice::Communicator> communicator)
     optional<Glacier2::RouterPrx> router{communicator->getDefaultRouter()};
     if (!router)
     {
-        cerr << "No router configured" << endl;
-        exit(1);
+        throw runtime_error("Glaicer2::createSession return null. Is the SessionManager configured?");
     }
 
     // Create a session with the Glacier2 router

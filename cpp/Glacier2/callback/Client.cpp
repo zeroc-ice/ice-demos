@@ -64,10 +64,9 @@ run(const shared_ptr<Ice::Communicator>& communicator)
     optional<Ice::RouterPrx> defaultRouter = communicator->getDefaultRouter();
     if (!defaultRouter)
     {
-        cerr << "no router configured" << endl;
-        exit(1);
+        throw runtime_error("Glaicer2::createSession return null. Is the SessionManager configured?");
     }
-    const Glacier2::RouterPrx router = Glacier2::RouterPrx(*communicator->getDefaultRouter());
+    const Glacier2::RouterPrx router = Glacier2::RouterPrx(*defaultRouter);
 
     optional<Glacier2::SessionPrx> session;
     //
