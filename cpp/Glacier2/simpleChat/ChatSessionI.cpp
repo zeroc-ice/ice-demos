@@ -19,8 +19,8 @@ class ChatRoom
 public:
     static ChatRoom* instance();
 
-    void enter(const ChatSessionPrx&, const ChatCallbackPrx&, const Ice::Current&);
-    void leave(const ChatCallbackPrx&, const Ice::Current&);
+    void enter(ChatSessionPrx, ChatCallbackPrx, const Ice::Current&);
+    void leave(ChatCallbackPrx, const Ice::Current&);
     void message(const string&) const;
     void deadRouter(const shared_ptr<Ice::Connection>&);
     void destroy();
@@ -43,7 +43,7 @@ ChatRoom::instance()
 }
 
 void
-ChatRoom::enter(const ChatSessionPrx& session, const ChatCallbackPrx& callback, const Ice::Current& current)
+ChatRoom::enter(ChatSessionPrx session, ChatCallbackPrx callback, const Ice::Current& current)
 {
     const lock_guard<mutex> sync(_mutex);
     _callbacks.push_back(callback);
@@ -73,11 +73,12 @@ ChatRoom::enter(const ChatSessionPrx& session, const ChatCallbackPrx& callback, 
 }
 
 void
-ChatRoom::leave(const ChatCallbackPrx& callback, const Ice::Current& current)
+ChatRoom::leave(ChatCallbackPrx callback, const Ice::Current& current)
 {
     const lock_guard<mutex> sync(_mutex);
 
-    _callbacks.remove_if([&callback](const ChatCallbackPrx& cb) { return Ice::proxyIdentityEqual(callback, cb); });
+    _callbacks.remove_if([callback = std::move(callback)](const ChatCallbackPrx& cb)
+                         { return Ice::proxyIdentityEqual(callback, cb); });
     _connectionMap[current.con].remove_if([&current](const ChatSessionPrx& s)
                                           { return current.id == s->ice_getIdentity(); });
 }
