@@ -154,7 +154,7 @@ ChatSessionI::setCallback(optional<ChatCallbackPrx> callback, const Ice::Current
         _callback = callback;
         auto chatRoom = ChatRoom::instance();
         chatRoom->message(_userId + " has entered the chat room.");
-        chatRoom->enter(ChatSessionPrx(current.adapter->createProxy(current.id)), *callback, current);
+        chatRoom->enter(ChatSessionPrx(current.adapter->createProxy(current.id)), std::move(*callback), current);
     }
 }
 

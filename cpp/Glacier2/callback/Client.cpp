@@ -60,7 +60,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
     optional<Ice::RouterPrx> defaultRouter = communicator->getDefaultRouter();
     if (!defaultRouter)
     {
-        throw runtime_error("Glaicer2::createSession return null. Is the SessionManager configured?");
+        throw runtime_error("Ice.Default.Router property is not set.");
     }
     const Glacier2::RouterPrx router = Glacier2::RouterPrx(*defaultRouter);
 
