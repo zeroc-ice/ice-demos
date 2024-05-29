@@ -128,7 +128,7 @@ run(shared_ptr<Ice::Communicator> communicator)
     // provided by the router
     Ice::Identity id{Ice::generateUUID(), router->getCategoryForClient()};
 
-    auto callbackPrx = Chat::ChatRoomCallbackPrx{adapter->add(make_shared<ChatRoomCallbackI>(), id)};
+    Chat::ChatRoomCallbackPrx callbackPrx{adapter->add(make_shared<ChatRoomCallbackI>(), id)};
 
     // Set the callback proxy on the session
     session->setCallback(callbackPrx);
