@@ -2,8 +2,9 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <HelloI.h>
+#include "HelloI.h"
 #include <Ice/Ice.h>
+#include <iostream>
 
 using namespace std;
 
@@ -22,6 +23,6 @@ HelloI::shutdown(const Ice::Current& c)
     // Unregister from the Locator registry
     //
     auto communicator = c.adapter->getCommunicator();
-    communicator->getDefaultLocator()->getRegistry()->setAdapterDirectProxy("Hello", nullptr);
+    communicator->getDefaultLocator()->getRegistry()->setAdapterDirectProxy("Hello", nullopt);
     communicator->shutdown();
 }

@@ -2,10 +2,10 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
+#include "Clock.h"
 #include <Ice/Ice.h>
 #include <IceStorm/IceStorm.h>
-
-#include <Clock.h>
+#include <iostream>
 
 using namespace std;
 using namespace Demo;
@@ -164,7 +164,7 @@ run(const shared_ptr<Ice::Communicator>& communicator, int argc, char* argv[])
         return 1;
     }
 
-    shared_ptr<IceStorm::TopicPrx> topic;
+    optional<IceStorm::TopicPrx> topic;
     try
     {
         topic = manager->retrieve(topicName);

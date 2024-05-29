@@ -2,11 +2,10 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
+#include "Throughput.h"
 #include <Ice/Ice.h>
-#include <Throughput.h>
-
 #include <iomanip>
-
+#include <iostream>
 #include <list>
 
 using namespace std;
@@ -17,10 +16,6 @@ int run(const shared_ptr<Ice::Communicator>&, const string&);
 int
 main(int argc, char* argv[])
 {
-#ifdef ICE_STATIC_LIBS
-    Ice::registerIceSSL();
-#endif
-
     int status = 0;
 
     try

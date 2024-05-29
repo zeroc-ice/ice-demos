@@ -1,4 +1,4 @@
-# C++11 Demos
+# C++ Demos
 
 - [Overview](#overview)
 - [Building and Running the Demos on Linux and macOS](#building-and-running-the-demos-on-linux-and-macos)
@@ -6,8 +6,7 @@
 
 ## Overview
 
-This directory contains C++ sample programs for various Ice components; they all
-use the Ice C++11 mapping. These examples are provided to get you started on
+This directory contains C++ sample programs for various Ice components. These examples are provided to get you started on
 using a particular Ice feature or coding technique.
 
 Most of the subdirectories here correspond directly to Ice components, such as
@@ -24,7 +23,7 @@ for the ZeroC [Chat Demo][2].
 
 ### Prerequisites
 
-The makefiles require GNU make.
+The Makefiles require GNU make.
 
 On macOS, the command-line demos require the Xcode Command Line Tools (use
 `xcode-select --install` to install them).
@@ -90,7 +89,7 @@ or change the SDK version in the project property pages or by right-clicking the
 
 #### Building the demos using NuGet packages:
 
-Open the solution file `C++11 demos.sln` to build the sample programs.
+Open the solution file `C++ demos.sln` to build the sample programs.
 
 The demos are configured to use Ice C++ binary distribution, packaged with
 NuGet. The build downloads automatically the Ice NuGet package.

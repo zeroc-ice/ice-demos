@@ -2,8 +2,9 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <HelloI.h>
+#include "HelloI.h"
 #include <Ice/Ice.h>
+#include <iostream>
 #include <thread>
 
 using namespace std;

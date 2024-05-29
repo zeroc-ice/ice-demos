@@ -2,14 +2,15 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <CallbackSenderI.h>
+#include "CallbackSenderI.h"
 #include <Ice/Ice.h>
+#include <iostream>
 
 using namespace std;
 using namespace Demo;
 
 void
-CallbackSenderI::initiateCallback(shared_ptr<CallbackReceiverPrx> proxy, const Ice::Current&)
+CallbackSenderI::initiateCallback(optional<CallbackReceiverPrx> proxy, const Ice::Current&)
 {
     cout << "initiating callback" << endl;
     try

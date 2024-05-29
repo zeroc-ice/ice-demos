@@ -11,17 +11,15 @@ using namespace std;
 
 PollingChatSessionFactoryI::PollingChatSessionFactoryI(
     const shared_ptr<ChatRoom>& chatRoom,
-    int timeout,
     bool trace,
     const shared_ptr<Ice::Logger>& logger)
     : _chatRoom(chatRoom),
-      _timeout(timeout),
       _trace(trace),
       _logger(logger)
 {
 }
 
-shared_ptr<PollingChat::PollingChatSessionPrx>
+optional<PollingChat::PollingChatSessionPrx>
 PollingChatSessionFactoryI::create(string name, string, const Ice::Current& current)
 {
     string vname;
@@ -40,17 +38,12 @@ PollingChatSessionFactoryI::create(string name, string, const Ice::Current& curr
         throw PollingChat::CannotCreateSessionException(ex.what());
     }
 
-    shared_ptr<PollingChat::PollingChatSessionPrx> proxy;
+    optional<PollingChat::PollingChatSessionPrx> proxy;
 
     auto session = make_shared<PollingChatSessionI>(_chatRoom, vname, _trace, _logger);
     proxy = Ice::uncheckedCast<PollingChat::PollingChatSessionPrx>(current.adapter->addWithUUID(session));
 
     auto collocProxy = proxy->ice_endpoints(Ice::EndpointSeq());
-
-    //
-    // Close connection if the connection is idle for _timeout seconds
-    //
-    current.con->setACM(_timeout, Ice::ACMClose::CloseOnInvocationAndIdle, Ice::ACMHeartbeat::HeartbeatOnDispatch);
 
     auto trace = _trace;
     auto logger = _logger;

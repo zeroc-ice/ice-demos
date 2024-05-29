@@ -1,0 +1,60 @@
+name: Build and test
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: ["main"]
+
+# See https://docs.github.com/en/actions/using-jobs/using-concurrency#example-using-a-fallback-value
+concurrency:
+  group: ${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+env:
+  ICE_HOME: ${{ github.workspace }}/ice
+  PLATFORM: x64
+
+jobs:
+  ci:
+    name: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [
+            ubuntu-22.04,
+            macos-14,
+            # windows-2022
+          ]
+
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout Ice
+        uses: actions/checkout@v4
+        with:
+          repository: zeroc-ice/ice
+          ref: main
+          path: ice
+
+      - name: Setup Ice Build Dependencies
+        uses: ./ice/.github/actions/setup-dependencies
+
+      - name: Build Ice on ${{ matrix.os }}
+        uses: ./ice/.github/actions/build
+        timeout-minutes: 90
+        with:
+          working_directory: ice
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          path: ice-demos
+
+      - name: Build C++ Demos on ${{ matrix.os }}
+        uses: ./ice/.github/actions/build
+        timeout-minutes: 30
+        with:
+          working_directory: ice-demos/cpp
+          msbuild_project: \"C++ demos.sln\"

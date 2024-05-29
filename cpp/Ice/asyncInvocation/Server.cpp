@@ -2,8 +2,9 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <CalculatorI.h>
+#include "CalculatorI.h"
 #include <Ice/Ice.h>
+#include <iostream>
 #include <memory>
 
 using namespace std;

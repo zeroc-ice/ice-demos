@@ -2,9 +2,10 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <Hello.h>
+#include "Hello.h"
 #include <Ice/Ice.h>
 #include <IceGrid/IceGrid.h>
+#include <iostream>
 
 using namespace std;
 using namespace Demo;
@@ -60,7 +61,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
     // identity. If it's not registered with the registry, we
     // search for an object with the ::Demo::Hello type.
     //
-    shared_ptr<HelloPrx> hello;
+    optional<HelloPrx> hello;
     try
     {
         hello = Ice::checkedCast<HelloPrx>(communicator->stringToProxy("hello"));

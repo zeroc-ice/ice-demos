@@ -2,8 +2,9 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <ContactDBI.h>
+#include "ContactDBI.h"
 #include <Ice/Ice.h>
+#include <iostream>
 
 using namespace std;
 using namespace Demo;
@@ -11,9 +12,9 @@ using namespace Demo;
 void
 ContactDBI::addContact(
     string name,
-    Ice::optional<NumberType> type,
-    Ice::optional<string> number,
-    Ice::optional<int> dialGroup,
+    optional<NumberType> type,
+    optional<string> number,
+    optional<int> dialGroup,
     const Ice::Current&)
 {
     auto contact = make_shared<Contact>();
@@ -40,9 +41,9 @@ ContactDBI::addContact(
 void
 ContactDBI::updateContact(
     string name,
-    Ice::optional<NumberType> type,
-    Ice::optional<string> number,
-    Ice::optional<int> dialGroup,
+    optional<NumberType> type,
+    optional<string> number,
+    optional<int> dialGroup,
     const Ice::Current&)
 {
     auto p = _contacts.find(name);
@@ -74,7 +75,7 @@ ContactDBI::query(string name, const Ice::Current&)
     return 0;
 }
 
-Ice::optional<string>
+optional<string>
 ContactDBI::queryNumber(string name, const Ice::Current&)
 {
     auto p = _contacts.find(name);
@@ -82,11 +83,11 @@ ContactDBI::queryNumber(string name, const Ice::Current&)
     {
         return p->second->number;
     }
-    return Ice::nullopt;
+    return nullopt;
 }
 
 void
-ContactDBI::queryDialgroup(string name, Ice::optional<int>& dialGroup, const Ice::Current&)
+ContactDBI::queryDialgroup(string name, optional<int>& dialGroup, const Ice::Current&)
 {
     auto p = _contacts.find(name);
     if (p != _contacts.end())

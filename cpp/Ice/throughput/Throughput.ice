@@ -41,10 +41,9 @@ module Demo
         ["marshaled-result", "cpp:array"] ByteSeq recvByteSeq();
         ["marshaled-result", "cpp:array"] ByteSeq echoByteSeq(["cpp:array"] ByteSeq seq);
 
-        void sendStringSeq(["cpp:view-type:std::vector<Util::string_view>"] StringSeq seq);
-        ["marshaled-result", "cpp:view-type:std::vector<Util::string_view>"] StringSeq recvStringSeq();
-        ["marshaled-result", "cpp:view-type:std::vector<Util::string_view>"] StringSeq echoStringSeq(
-            ["cpp:view-type:std::vector<Util::string_view>"] StringSeq seq);
+        void sendStringSeq(StringSeq seq);
+        ["marshaled-result"] StringSeq recvStringSeq();
+        ["marshaled-result"] StringSeq echoStringSeq(StringSeq seq);
 
         void sendStructSeq(StringDoubleSeq seq);
         StringDoubleSeq recvStructSeq();

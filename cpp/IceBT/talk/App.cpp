@@ -2,9 +2,10 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
+#include "Talk.h"
 #include <Ice/Ice.h>
 #include <IceBT/IceBT.h>
-#include <Talk.h>
+#include <iostream>
 #include <mutex>
 
 using namespace std;
@@ -14,7 +15,7 @@ class TalkApp
 public:
     int run(const shared_ptr<Ice::Communicator>& communicator);
 
-    void connect(const shared_ptr<Talk::PeerPrx>&);
+    void connect(const optional<Talk::PeerPrx>&);
     void message(const string&);
     void disconnect(const Ice::Identity&, const shared_ptr<Ice::Connection>&, bool);
     void closed();
@@ -29,27 +30,27 @@ private:
 
     shared_ptr<Ice::Communicator> _communicator;
     shared_ptr<Ice::ObjectAdapter> _adapter;
-    shared_ptr<Talk::PeerPrx> _local;
-    shared_ptr<Talk::PeerPrx> _remote;
+    optional<Talk::PeerPrx> _local;
+    optional<Talk::PeerPrx> _remote;
     mutex _mutex;
 };
 
 //
 // This servant listens for incoming connections from peers.
 //
-class IncomingPeerI : public Talk::Peer
+class IncomingPeerI final : public Talk::Peer
 {
 public:
     IncomingPeerI(TalkApp* app) : _app(app) {}
 
-    virtual void connect(shared_ptr<Talk::PeerPrx> peer, const Ice::Current& current) override
+    void connect(optional<Talk::PeerPrx> peer, const Ice::Current& current) final
     {
         _app->connect(peer->ice_fixed(current.con));
     }
 
-    virtual void send(string text, const Ice::Current&) override { _app->message(text); }
+    void send(string text, const Ice::Current&) final { _app->message(text); }
 
-    virtual void disconnect(const Ice::Current& current) override { _app->disconnect(current.id, current.con, true); }
+    void disconnect(const Ice::Current& current) final { _app->disconnect(current.id, current.con, true); }
 
 private:
     TalkApp* _app;
@@ -58,19 +59,19 @@ private:
 //
 // This servant handles an outgoing session with a peer.
 //
-class OutgoingPeerI : public Talk::Peer
+class OutgoingPeerI final : public Talk::Peer
 {
 public:
     OutgoingPeerI(TalkApp* app) : _app(app) {}
 
-    virtual void connect(shared_ptr<Talk::PeerPrx>, const Ice::Current&) override
+    void connect(optional<Talk::PeerPrx>, const Ice::Current&) final
     {
         throw Talk::ConnectionException("already connected");
     }
 
-    virtual void send(string text, const Ice::Current&) override { _app->message(text); }
+    void send(string text, const Ice::Current&) final { _app->message(text); }
 
-    virtual void disconnect(const Ice::Current& current) override { _app->disconnect(current.id, current.con, false); }
+    void disconnect(const Ice::Current& current) final { _app->disconnect(current.id, current.con, false); }
 
 private:
     TalkApp* _app;
@@ -83,7 +84,6 @@ int
 main(int argc, char* argv[])
 {
 #ifdef ICE_STATIC_LIBS
-    Ice::registerIceSSL();
     Ice::registerIceBT();
 #endif
 
@@ -191,7 +191,7 @@ TalkApp::run(const shared_ptr<Ice::Communicator>& communicator)
 }
 
 void
-TalkApp::connect(const shared_ptr<Talk::PeerPrx>& peer)
+TalkApp::connect(const optional<Talk::PeerPrx>& peer)
 {
     //
     // Called for a new incoming connection request.
@@ -209,7 +209,6 @@ TalkApp::connect(const shared_ptr<Talk::PeerPrx>& peer)
     //
     auto con = peer->ice_getConnection();
     con->setCloseCallback([this](const shared_ptr<Ice::Connection>&) { this->closed(); });
-    con->setACM(30, Ice::ACMClose::CloseOff, Ice::ACMHeartbeat::HeartbeatAlways);
 
     _remote = peer->ice_invocationTimeout(10000);
 
@@ -242,7 +241,7 @@ TalkApp::disconnect(const Ice::Identity& id, const shared_ptr<Ice::Connection>& 
     if (_remote)
     {
         cout << ">>>> Peer disconnected" << endl;
-        _remote = nullptr;
+        _remote = nullopt;
     }
 
     if (!incoming)
@@ -258,7 +257,7 @@ TalkApp::closed()
 {
     lock_guard<mutex> lock(_mutex);
 
-    _remote = nullptr;
+    _remote = nullopt;
 
     cout << ">>>> Connection to peer closed" << endl;
 }
@@ -282,8 +281,8 @@ TalkApp::doConnect(const string& cmd)
     }
     string addr = cmd.substr(sp);
 
-    shared_ptr<Talk::PeerPrx> remote;
-    shared_ptr<Talk::PeerPrx> local;
+    optional<Talk::PeerPrx> remote;
+    optional<Talk::PeerPrx> local;
     try
     {
         {
@@ -327,7 +326,6 @@ TalkApp::doConnect(const string& cmd)
         // Install a connection callback and enable ACM heartbeats.
         //
         con->setCloseCallback([this](const shared_ptr<Ice::Connection>&) { this->closed(); });
-        con->setACM(30, Ice::ACMClose::CloseOff, Ice::ACMHeartbeat::HeartbeatAlways);
 
         //
         // Now we're ready to notify the peer that we'd like to connect.
@@ -347,7 +345,7 @@ TalkApp::doConnect(const string& cmd)
 
         if (_remote == remote)
         {
-            _remote = nullptr;
+            _remote = nullopt;
         }
     }
     catch (const Ice::Exception& ex)
@@ -362,7 +360,7 @@ TalkApp::doConnect(const string& cmd)
 
         if (_remote == remote)
         {
-            _remote = nullptr;
+            _remote = nullopt;
         }
     }
 }
@@ -407,7 +405,7 @@ TalkApp::doList()
 void
 TalkApp::doDisconnect()
 {
-    shared_ptr<Talk::PeerPrx> peer;
+    optional<Talk::PeerPrx> peer;
 
     {
         lock_guard<mutex> lock(_mutex);
@@ -419,7 +417,7 @@ TalkApp::doDisconnect()
         }
 
         peer = _remote;
-        _remote = nullptr;
+        _remote = nullopt;
     }
 
     auto con = peer->ice_getCachedConnection();
@@ -442,7 +440,7 @@ TalkApp::doDisconnect()
 void
 TalkApp::doMessage(const string& text)
 {
-    shared_ptr<Talk::PeerPrx> peer;
+    optional<Talk::PeerPrx> peer;
 
     {
         lock_guard<mutex> lock(_mutex);
@@ -469,12 +467,12 @@ TalkApp::doMessage(const string& text)
 void
 TalkApp::failed(const Ice::LocalException& ex)
 {
-    shared_ptr<Talk::PeerPrx> peer;
+    optional<Talk::PeerPrx> peer;
 
     {
         lock_guard<mutex> lock(_mutex);
         peer = _remote;
-        _remote = nullptr;
+        _remote = nullopt;
     }
 
     cout << ">>>> Action failed:" << endl << ex << endl;

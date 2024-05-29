@@ -5,23 +5,20 @@
 #ifndef POLLING_CHAT_SESSION_FACTORY_I_H
 #define POLLING_CHAT_SESSION_FACTORY_I_H
 
+#include "ChatRoom.h"
+#include "PollingChat.h"
+#include "PollingChatSessionI.h"
 #include <Ice/Ice.h>
 
-#include <ChatRoom.h>
-#include <PollingChat.h>
-#include <PollingChatSessionI.h>
-
-class PollingChatSessionFactoryI : public PollingChat::PollingChatSessionFactory
+class PollingChatSessionFactoryI final : public PollingChat::PollingChatSessionFactory
 {
 public:
-    PollingChatSessionFactoryI(const std::shared_ptr<ChatRoom>&, int, bool, const std::shared_ptr<Ice::Logger>&);
+    PollingChatSessionFactoryI(const std::shared_ptr<ChatRoom>&, bool, const std::shared_ptr<Ice::Logger>&);
 
-    virtual std::shared_ptr<PollingChat::PollingChatSessionPrx>
-    create(std::string, std::string, const Ice::Current&) override;
+    std::optional<PollingChat::PollingChatSessionPrx> create(std::string, std::string, const Ice::Current&) final;
 
 private:
     const std::shared_ptr<ChatRoom> _chatRoom;
-    const int _timeout;
     const bool _trace;
     const std::shared_ptr<Ice::Logger> _logger;
 };

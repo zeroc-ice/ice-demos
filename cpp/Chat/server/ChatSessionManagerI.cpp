@@ -2,9 +2,9 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <ChatSessionI.h>
-#include <ChatSessionManagerI.h>
-#include <ChatUtils.h>
+#include "ChatSessionManagerI.h"
+#include "ChatSessionI.h"
+#include "ChatUtils.h"
 
 using namespace std;
 
@@ -18,10 +18,10 @@ ChatSessionManagerI::ChatSessionManagerI(
 {
 }
 
-shared_ptr<Glacier2::SessionPrx>
+optional<Glacier2::SessionPrx>
 ChatSessionManagerI::create(
     string name,
-    shared_ptr<Glacier2::SessionControlPrx> sessionControl,
+    optional<Glacier2::SessionControlPrx> sessionControl,
     const Ice::Current& current)
 {
     string vname;
@@ -40,7 +40,7 @@ ChatSessionManagerI::create(
         throw Glacier2::CannotCreateSessionException(ex.what());
     }
 
-    shared_ptr<Glacier2::SessionPrx> proxy;
+    optional<Glacier2::SessionPrx> proxy;
     try
     {
         auto session = make_shared<ChatSessionI>(_chatRoom, vname, _trace, _logger);

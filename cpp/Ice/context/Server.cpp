@@ -2,18 +2,15 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <ContextI.h>
+#include "ContextI.h"
 #include <Ice/Ice.h>
+#include <iostream>
 
 using namespace std;
 
 int
 main(int argc, char* argv[])
 {
-#ifdef ICE_STATIC_LIBS
-    Ice::registerIceSSL();
-#endif
-
     int status = 0;
 
     try

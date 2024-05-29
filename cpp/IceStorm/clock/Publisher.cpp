@@ -3,15 +3,16 @@
 //
 
 #ifdef _MSC_VER
-// For localtime warning
+// For getenv
 #    define _CRT_SECURE_NO_WARNINGS
 #endif
 
-#include <Clock.h>
+#include "Clock.h"
 #include <Ice/Ice.h>
 #include <IceStorm/IceStorm.h>
 #include <chrono>
 #include <ctime>
+#include <iostream>
 #include <thread>
 
 using namespace std;
@@ -125,7 +126,7 @@ run(const shared_ptr<Ice::Communicator>& communicator, int argc, char* argv[])
     //
     // Retrieve the topic.
     //
-    shared_ptr<IceStorm::TopicPrx> topic;
+    optional<IceStorm::TopicPrx> topic;
     try
     {
         topic = manager->retrieve(topicName);

@@ -2,8 +2,8 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <ChatSessionI.h>
-#include <ChatUtils.h>
+#include "ChatSessionI.h"
+#include "ChatUtils.h"
 
 using namespace std;
 
@@ -11,8 +11,8 @@ class SessionCallbackAdapter : public ChatRoomCallbackAdapter, public enable_sha
 {
 public:
     SessionCallbackAdapter(
-        const shared_ptr<Chat::ChatRoomCallbackPrx>& callback,
-        const shared_ptr<Chat::ChatSessionPrx>& session,
+        const optional<Chat::ChatRoomCallbackPrx>& callback,
+        const optional<Chat::ChatSessionPrx>& session,
         bool trace,
         const shared_ptr<Ice::Logger>& logger,
         std::string name)
@@ -93,8 +93,8 @@ public:
     }
 
 private:
-    const shared_ptr<Chat::ChatRoomCallbackPrx> _callback;
-    const shared_ptr<Chat::ChatSessionPrx> _session;
+    const optional<Chat::ChatRoomCallbackPrx> _callback;
+    const optional<Chat::ChatSessionPrx> _session;
     const bool _trace;
     const shared_ptr<Ice::Logger> _logger;
     const string _name;
@@ -113,7 +113,7 @@ ChatSessionI::ChatSessionI(
 }
 
 void
-ChatSessionI::setCallback(shared_ptr<Chat::ChatRoomCallbackPrx> callback, const Ice::Current& current)
+ChatSessionI::setCallback(optional<Chat::ChatRoomCallbackPrx> callback, const Ice::Current& current)
 {
     const lock_guard<mutex> sync(_mutex);
     if (_destroy)
@@ -142,7 +142,7 @@ ChatSessionI::setCallback(shared_ptr<Chat::ChatRoomCallbackPrx> callback, const 
     _chatRoom->join(_name, _callback);
 }
 
-long long
+int64_t
 ChatSessionI::send(string message, const Ice::Current&)
 {
     const lock_guard<mutex> sync(_mutex);

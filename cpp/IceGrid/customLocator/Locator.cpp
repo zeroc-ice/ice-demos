@@ -3,6 +3,7 @@
 //
 
 #include <Ice/Ice.h>
+#include <iostream>
 
 using namespace std;
 
@@ -16,42 +17,42 @@ namespace
     class LocatorRegistryI : public Ice::LocatorRegistry
     {
     public:
-        explicit LocatorRegistryI(const shared_ptr<Ice::LocatorRegistryPrx>& registry) : _registry(registry) {}
+        explicit LocatorRegistryI(const optional<Ice::LocatorRegistryPrx>& registry) : _registry(registry) {}
 
-        virtual void setAdapterDirectProxyAsync(
+        void setAdapterDirectProxyAsync(
             string id,
-            shared_ptr<Ice::ObjectPrx> proxy,
+            optional<Ice::ObjectPrx> proxy,
             function<void()> response,
             function<void(exception_ptr)> exception,
-            const Ice::Current&) override
+            const Ice::Current&) final
         {
             // AMI call using the AMD callbacks
             _registry->setAdapterDirectProxyAsync(id, proxy, response, exception);
         }
 
-        virtual void setReplicatedAdapterDirectProxyAsync(
+        void setReplicatedAdapterDirectProxyAsync(
             string id,
             string group,
-            shared_ptr<Ice::ObjectPrx> proxy,
+            optional<Ice::ObjectPrx> proxy,
             function<void()> response,
             function<void(exception_ptr)> exception,
-            const Ice::Current&) override
+            const Ice::Current&) final
         {
             _registry->setReplicatedAdapterDirectProxyAsync(id, group, proxy, response, exception);
         }
 
-        virtual void setServerProcessProxyAsync(
+        void setServerProcessProxyAsync(
             string id,
-            shared_ptr<Ice::ProcessPrx> proxy,
+            optional<Ice::ProcessPrx> proxy,
             function<void()> response,
             function<void(exception_ptr)> exception,
-            const Ice::Current&) override
+            const Ice::Current&) final
         {
             _registry->setServerProcessProxyAsync(id, proxy, response, exception);
         }
 
     private:
-        const shared_ptr<Ice::LocatorRegistryPrx> _registry;
+        const optional<Ice::LocatorRegistryPrx> _registry;
     };
 
     //
@@ -61,17 +62,17 @@ namespace
     class LocatorI : public Ice::Locator
     {
     public:
-        LocatorI(const shared_ptr<Ice::LocatorPrx>& locator, const shared_ptr<Ice::LocatorRegistryPrx>& registry)
+        LocatorI(const optional<Ice::LocatorPrx>& locator, const optional<Ice::LocatorRegistryPrx>& registry)
             : _locator(locator),
               _registry(registry)
         {
         }
 
-        virtual void findObjectByIdAsync(
+        void findObjectByIdAsync(
             Ice::Identity id,
-            function<void(const shared_ptr<Ice::ObjectPrx>&)> response,
+            function<void(const optional<Ice::ObjectPrx>&)> response,
             function<void(exception_ptr)> exception,
-            const Ice::Current& current) const override
+            const Ice::Current& current) const final
         {
             auto p = current.ctx.find("SECRET");
             if (p != current.ctx.end() && p->second == "LetMeIn")
@@ -80,15 +81,15 @@ namespace
             }
             else
             {
-                response(nullptr);
+                response(nullopt);
             }
         }
 
-        virtual void findAdapterByIdAsync(
+        void findAdapterByIdAsync(
             string id,
-            function<void(const shared_ptr<Ice::ObjectPrx>&)> response,
+            function<void(const optional<Ice::ObjectPrx>&)> response,
             function<void(exception_ptr)> exception,
-            const Ice::Current& current) const override
+            const Ice::Current& current) const final
         {
             auto p = current.ctx.find("SECRET");
             if (p != current.ctx.end() && p->second == "LetMeIn")
@@ -97,18 +98,15 @@ namespace
             }
             else
             {
-                response(nullptr);
+                response(nullopt);
             }
         }
 
-        virtual shared_ptr<Ice::LocatorRegistryPrx> getRegistry(const Ice::Current&) const override
-        {
-            return _registry;
-        }
+        optional<Ice::LocatorRegistryPrx> getRegistry(const Ice::Current&) const final { return _registry; }
 
     private:
-        const shared_ptr<Ice::LocatorPrx> _locator;
-        const shared_ptr<Ice::LocatorRegistryPrx> _registry;
+        const optional<Ice::LocatorPrx> _locator;
+        const optional<Ice::LocatorRegistryPrx> _registry;
     };
 
 }

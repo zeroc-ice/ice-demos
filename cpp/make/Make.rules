@@ -36,10 +36,6 @@ cpp-dependencies                += IceBT
 IceBT_dependencies              := Ice
 endif
 
-# Append ++11 suffix to libraries
-shared_targetname               = $(if $(filter-out $($1_target),program),++11)
-static_targetname               = $(if $(filter-out $($1_target),program),++11)
-
 # Create component dependency variables
 $(eval $(call create-project-dependencies,ice,$(ICE_HOME),cpp,cpp,$(cpp-dependencies)))
 
@@ -51,14 +47,6 @@ $(foreach v,$(supported-platforms) platform config,$(eval $v_targetdir := ) $(ev
 
 slice2cpp_targetext             = cpp
 slice2cpp_path                  = $(or $(ice_bindir[$(build-platform)]),$(ice_bindir))/slice2cpp
-
-# With Xcode 14.3 C++17 deprecations apply when building with -std=c++11, we pass -std=c++17
-# to enable C++17 mode conditional code.
-ifeq ($(os),Darwin)
-ice_cpp_mode                    = c++17
-else
-ice_cpp_mode                    = c++11
-endif
 
 ifeq ($(wildcard $(slice2cpp_path)),)
 $(error Can't find Ice distribution, please set ICE_HOME to the Ice installation directory)
@@ -73,7 +61,7 @@ $1_srcext               := cpp
 $1_dependencies         := $$(or $$($1_dependencies),Ice)
 $1_slicecompiler        := slice2cpp
 $1_sliceflags           := -I$(ice_slicedir) -I$1 $$($1_sliceflags)
-$1_cppflags             := -DICE_CPP11_MAPPING -std=$(ice_cpp_mode) -I$1 -I$1/generated $(ice_cppflags) $$($1_cppflags)
+$1_cppflags             := -DICE_CPP11_MAPPING -std=c++17 -I$1 -I$1/generated $(ice_cppflags) $$($1_cppflags)
 $1_caninstall           := no
 
 # Also link with IceSSL, IceDiscovery and IceLocatorDiscovery when compiling the project with the static configuration

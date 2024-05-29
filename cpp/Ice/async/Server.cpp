@@ -2,9 +2,10 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <HelloI.h>
+#include "HelloI.h"
+#include "WorkQueue.h"
 #include <Ice/Ice.h>
-#include <WorkQueue.h>
+#include <iostream>
 
 using namespace std;
 

@@ -3,7 +3,7 @@
 #
 
 top_srcdir      := ..
-lang_srcdir     := $(top_srcdir)/cpp11
+lang_srcdir     := $(top_srcdir)/cpp
 
 include $(top_srcdir)/make/Make.rules
 include $(lang_srcdir)/make/Make.rules

@@ -2,8 +2,9 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <ContextI.h>
+#include "ContextI.h"
 #include <Ice/Ice.h>
+#include <iostream>
 
 using namespace std;
 

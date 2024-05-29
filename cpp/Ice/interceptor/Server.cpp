@@ -2,10 +2,11 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <AuthenticatorI.h>
+#include "AuthenticatorI.h"
+#include "InterceptorI.h"
+#include "ThermostatI.h"
 #include <Ice/Ice.h>
-#include <InterceptorI.h>
-#include <ThermostatI.h>
+#include <iostream>
 #include <unordered_set>
 
 using namespace std;

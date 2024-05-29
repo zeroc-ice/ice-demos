@@ -2,8 +2,9 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <Hello.h>
+#include "Hello.h"
 #include <Ice/Ice.h>
+#include <iostream>
 
 using namespace std;
 using namespace Demo;
@@ -14,7 +15,6 @@ int
 main(int argc, char* argv[])
 {
 #ifdef ICE_STATIC_LIBS
-    Ice::registerIceSSL();
     Ice::registerIceUDP();
     Ice::registerIceWS();
 #endif

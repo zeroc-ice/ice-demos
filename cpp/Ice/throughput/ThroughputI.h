@@ -5,40 +5,38 @@
 #ifndef THROUGHPUT_I_H
 #define THROUGHPUT_I_H
 
-#include <Throughput.h>
+#include "Throughput.h"
 
-class ThroughputI : public Demo::Throughput
+class ThroughputI final : public Demo::Throughput
 {
 public:
     ThroughputI();
 
-    virtual bool needsWarmup(const Ice::Current&) override;
-    virtual void startWarmup(const Ice::Current&) override;
-    virtual void endWarmup(const Ice::Current&) override;
+    bool needsWarmup(const Ice::Current&) final;
+    void startWarmup(const Ice::Current&) final;
+    void endWarmup(const Ice::Current&) final;
 
-    virtual void sendByteSeq(std::pair<const Ice::Byte*, const Ice::Byte*>, const Ice::Current&) override;
-    virtual RecvByteSeqMarshaledResult recvByteSeq(const Ice::Current&) override;
-    virtual EchoByteSeqMarshaledResult
-    echoByteSeq(std::pair<const Ice::Byte*, const Ice::Byte*>, const Ice::Current&) override;
+    void sendByteSeq(std::pair<const std::byte*, const std::byte*>, const Ice::Current&) final;
+    RecvByteSeqMarshaledResult recvByteSeq(const Ice::Current&) final;
+    EchoByteSeqMarshaledResult echoByteSeq(std::pair<const std::byte*, const std::byte*>, const Ice::Current&) final;
 
-    virtual void sendStringSeq(std::vector<Util::string_view>, const Ice::Current&) override;
-    virtual RecvStringSeqMarshaledResult recvStringSeq(const Ice::Current&) override;
-    virtual EchoStringSeqMarshaledResult echoStringSeq(std::vector<Util::string_view>, const Ice::Current&) override;
+    void sendStringSeq(std::vector<std::string>, const Ice::Current&) final;
+    RecvStringSeqMarshaledResult recvStringSeq(const Ice::Current&) final;
+    EchoStringSeqMarshaledResult echoStringSeq(std::vector<std::string>, const Ice::Current&) final;
 
-    virtual void sendStructSeq(Demo::StringDoubleSeq, const Ice::Current&) override;
-    virtual Demo::StringDoubleSeq recvStructSeq(const Ice::Current&) override;
-    virtual Demo::StringDoubleSeq echoStructSeq(Demo::StringDoubleSeq, const Ice::Current&) override;
+    void sendStructSeq(Demo::StringDoubleSeq, const Ice::Current&) final;
+    Demo::StringDoubleSeq recvStructSeq(const Ice::Current&) final;
+    Demo::StringDoubleSeq echoStructSeq(Demo::StringDoubleSeq, const Ice::Current&) final;
 
-    virtual void sendFixedSeq(Demo::FixedSeq, const Ice::Current&) override;
-    virtual Demo::FixedSeq recvFixedSeq(const Ice::Current&) override;
-    virtual Demo::FixedSeq echoFixedSeq(Demo::FixedSeq, const Ice::Current&) override;
+    void sendFixedSeq(Demo::FixedSeq, const Ice::Current&) final;
+    Demo::FixedSeq recvFixedSeq(const Ice::Current&) final;
+    Demo::FixedSeq echoFixedSeq(Demo::FixedSeq, const Ice::Current&) final;
 
-    virtual void shutdown(const Ice::Current&) override;
+    void shutdown(const Ice::Current&) final;
 
 private:
     Demo::ByteSeq _byteSeq;
     Demo::StringSeq _stringSeq;
-    std::vector<Util::string_view> _stringViewSeq;
     Demo::StringDoubleSeq _structSeq;
     Demo::FixedSeq _fixedSeq;
 

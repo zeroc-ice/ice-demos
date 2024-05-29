@@ -2,13 +2,9 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-// TODO: remove when no longer needed
-#ifdef _MSC_VER
-#    pragma warning(disable : 4702) // unreachable code in optional
-#endif
-
-#include <Contact.h>
+#include "Contact.h"
 #include <Ice/Ice.h>
+#include <iostream>
 
 using namespace std;
 using namespace Demo;
@@ -18,10 +14,6 @@ int run(const shared_ptr<Ice::Communicator>&, const string&);
 int
 main(int argc, char* argv[])
 {
-#ifdef ICE_STATIC_LIBS
-    Ice::registerIceSSL();
-#endif
-
     int status = 0;
 
     try
@@ -65,8 +57,8 @@ main(int argc, char* argv[])
 int
 run(const shared_ptr<Ice::Communicator>& communicator, const string& appName)
 {
-    auto contactdb = Ice::checkedCast<ContactDBPrx>(communicator->propertyToProxy("ContactDB.Proxy"));
-    if (!contactdb)
+    auto contactDb = Ice::checkedCast<ContactDBPrx>(communicator->propertyToProxy("ContactDB.Proxy"));
+    if (!contactDb)
     {
         cerr << appName << ": invalid proxy" << endl;
         return 1;
@@ -76,7 +68,7 @@ run(const shared_ptr<Ice::Communicator>& communicator, const string& appName)
     // Add a contact for "john". All parameters are provided.
     //
     const string johnNumber = "123-456-7890";
-    contactdb->addContact("john", NumberType::HOME, johnNumber, 0);
+    contactDb->addContact("john", NumberType::HOME, johnNumber, 0);
 
     cout << "Checking john... " << flush;
 
@@ -86,7 +78,7 @@ run(const shared_ptr<Ice::Communicator>& communicator, const string& appName)
     //
     // number is an Ice::optional<std::string>
     //
-    auto number = contactdb->queryNumber("john");
+    auto number = contactDb->queryNumber("john");
     //
     // tests if an optional value is set.
     //
@@ -121,14 +113,14 @@ run(const shared_ptr<Ice::Communicator>& communicator, const string& appName)
     }
 
     // Optional can also be used in an out parameter.
-    Ice::optional<int> dialgroup;
-    contactdb->queryDialgroup("john", dialgroup);
-    if (!dialgroup || dialgroup != 0)
+    optional<int> dialGroup;
+    contactDb->queryDialgroup("john", dialGroup);
+    if (!dialGroup || dialGroup != 0)
     {
-        cout << "dialgroup is incorrect " << flush;
+        cout << "dialGroup is incorrect " << flush;
     }
 
-    auto info = contactdb->query("john");
+    auto info = contactDb->query("john");
     //
     // All of the info parameters should be set.
     //
@@ -150,16 +142,16 @@ run(const shared_ptr<Ice::Communicator>& communicator, const string& appName)
     // the default value.
     //
     const string steveNumber = "234-567-8901";
-    contactdb->addContact("steve", Ice::nullopt, steveNumber, 1);
+    contactDb->addContact("steve", nullopt, steveNumber, 1);
 
     cout << "Checking steve... " << flush;
-    number = contactdb->queryNumber("steve");
+    number = contactDb->queryNumber("steve");
     if (number != steveNumber)
     {
         cout << "number is incorrect " << flush;
     }
 
-    info = contactdb->query("steve");
+    info = contactDb->query("steve");
     //
     // Check the value for the NumberType.
     //
@@ -173,10 +165,10 @@ run(const shared_ptr<Ice::Communicator>& communicator, const string& appName)
         cout << "info is incorrect " << flush;
     }
 
-    contactdb->queryDialgroup("steve", dialgroup);
-    if (!dialgroup || dialgroup != 1)
+    contactDb->queryDialgroup("steve", dialGroup);
+    if (!dialGroup || dialGroup != 1)
     {
-        cout << "dialgroup is incorrect " << flush;
+        cout << "dialGroup is incorrect " << flush;
     }
 
     cout << "ok" << endl;
@@ -185,17 +177,17 @@ run(const shared_ptr<Ice::Communicator>& communicator, const string& appName)
     // Add a contact from "frank". Here the dialGroup field isn't set.
     //
     const string frankNumber = "345-678-9012";
-    contactdb->addContact("frank", NumberType::CELL, frankNumber, Ice::nullopt);
+    contactDb->addContact("frank", NumberType::CELL, frankNumber, nullopt);
 
     cout << "Checking frank... " << flush;
 
-    number = contactdb->queryNumber("frank");
+    number = contactDb->queryNumber("frank");
     if (number != frankNumber)
     {
         cout << "number is incorrect " << flush;
     }
 
-    info = contactdb->query("frank");
+    info = contactDb->query("frank");
     //
     // The dial group field should be unset.
     //
@@ -208,26 +200,26 @@ run(const shared_ptr<Ice::Communicator>& communicator, const string& appName)
         cout << "info is incorrect " << flush;
     }
 
-    contactdb->queryDialgroup("frank", dialgroup);
-    if (dialgroup)
+    contactDb->queryDialgroup("frank", dialGroup);
+    if (dialGroup)
     {
-        cout << "dialgroup is incorrect " << flush;
+        cout << "dialGroup is incorrect " << flush;
     }
     cout << "ok" << endl;
 
     //
     // Add a contact from "anne". The number field isn't set.
     //
-    contactdb->addContact("anne", NumberType::OFFICE, Ice::nullopt, 2);
+    contactDb->addContact("anne", NumberType::OFFICE, nullopt, 2);
 
     cout << "Checking anne... " << flush;
-    number = contactdb->queryNumber("anne");
+    number = contactDb->queryNumber("anne");
     if (number)
     {
         cout << "number is incorrect " << flush;
     }
 
-    info = contactdb->query("anne");
+    info = contactDb->query("anne");
     //
     // The number field should be unset.
     //
@@ -240,10 +232,10 @@ run(const shared_ptr<Ice::Communicator>& communicator, const string& appName)
         cout << "info is incorrect " << flush;
     }
 
-    contactdb->queryDialgroup("anne", dialgroup);
-    if (!dialgroup || dialgroup != 2)
+    contactDb->queryDialgroup("anne", dialGroup);
+    if (!dialGroup || dialGroup != 2)
     {
-        cout << "dialgroup is incorrect " << flush;
+        cout << "dialGroup is incorrect " << flush;
     }
 
     //
@@ -252,20 +244,20 @@ run(const shared_ptr<Ice::Communicator>& communicator, const string& appName)
     // the remainder of the fields are unchanged.
     //
     const string anneNumber = "456-789-0123";
-    contactdb->updateContact("anne", Ice::nullopt, anneNumber, Ice::nullopt);
-    number = contactdb->queryNumber("anne");
+    contactDb->updateContact("anne", nullopt, anneNumber, nullopt);
+    number = contactDb->queryNumber("anne");
     if (number != anneNumber)
     {
         cout << "number is incorrect " << flush;
     }
-    info = contactdb->query("anne");
+    info = contactDb->query("anne");
     if (info->number != anneNumber || info->type != NumberType::OFFICE || info->dialGroup != 2)
     {
         cout << "info is incorrect " << flush;
     }
     cout << "ok" << endl;
 
-    contactdb->shutdown();
+    contactDb->shutdown();
 
     return 0;
 }

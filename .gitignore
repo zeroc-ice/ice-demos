@@ -5,6 +5,12 @@ locator
 publisher
 subscriber
 talk
+chatserver
+chatgl2client
+chatpollclient
+
+!**/Chat/client/
+!**/Chat/server/
 
 !**/msbuild/client
 !**/msbuild/server
@@ -185,8 +191,7 @@ es5
 #
 # Nuget packages
 #
-cpp11/packages
-cpp98/packages
+cpp/packages
 csharp/packages
 
 #
@@ -214,3 +219,6 @@ swift/Carthage
 .build
 Package.resolved
 *.bcsymbolmap
+
+compile_commands.json
+.envrc

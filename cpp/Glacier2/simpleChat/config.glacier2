@@ -48,13 +48,6 @@ Glacier2.SessionManager=ChatSessionManager:tcp -h localhost -p 10001
 Glacier2.PermissionsVerifier=ChatSessionVerifier:tcp -h localhost -p 10001
 
 #
-# The timeout for inactive sessions. If any client session is inactive
-# for longer than this value, the session expires and is removed. The
-# unit is seconds.
-#
-Glacier2.SessionTimeout=30
-
-#
 # Only allow access to back end "sesion" objects.
 #
 Glacier2.Filter.Category.Accept=session

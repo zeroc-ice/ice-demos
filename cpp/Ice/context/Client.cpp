@@ -2,8 +2,9 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <Context.h>
+#include "Context.h"
 #include <Ice/Ice.h>
+#include <iostream>
 
 using namespace std;
 using namespace Demo;
@@ -13,10 +14,6 @@ int run(const shared_ptr<Ice::Communicator>&);
 int
 main(int argc, char* argv[])
 {
-#ifdef ICE_STATIC_LIBS
-    Ice::registerIceSSL();
-#endif
-
     int status = 0;
 
     try

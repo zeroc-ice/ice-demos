@@ -31,11 +31,11 @@ namespace Filesystem
         std::shared_ptr<DirectoryI> _parent;
     };
 
-    class FileI : public File, public NodeI
+    class FileI final : public File, public NodeI
     {
     public:
-        virtual Lines read(const Ice::Current&) override;
-        virtual void write(Lines, const Ice::Current&) override;
+        Lines read(const Ice::Current&) final;
+        void write(Lines, const Ice::Current&) final;
 
         FileI(std::string, const std::shared_ptr<DirectoryI>&);
 
@@ -46,9 +46,9 @@ namespace Filesystem
     class DirectoryI : public Directory, public NodeI
     {
     public:
-        virtual NodeSeq list(const Ice::Current&) override;
+        NodeSeq list(const Ice::Current&) final;
         DirectoryI(std::string, const std::shared_ptr<DirectoryI>&);
-        void addChild(const std::shared_ptr<NodePrx>&);
+        void addChild(const std::optional<NodePrx>&);
 
     private:
         NodeSeq _contents;

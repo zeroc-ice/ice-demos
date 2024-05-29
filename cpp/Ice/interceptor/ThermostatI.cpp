@@ -2,8 +2,9 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
+#include "ThermostatI.h"
 #include <Ice/Ice.h>
-#include <ThermostatI.h>
+#include <iostream>
 
 using namespace std;
 

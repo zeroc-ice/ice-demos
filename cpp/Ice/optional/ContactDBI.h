@@ -5,32 +5,32 @@
 #ifndef CONTACT_I_H
 #define CONTACT_I_H
 
-#include <Contact.h>
+#include "Contact.h"
 
-class ContactDBI : public Demo::ContactDB
+class ContactDBI final : public Demo::ContactDB
 {
 public:
-    virtual void addContact(
+    void addContact(
         std::string,
-        Ice::optional<Demo::NumberType>,
-        Ice::optional<std::string>,
-        Ice::optional<int>,
-        const Ice::Current&) override;
+        std::optional<Demo::NumberType>,
+        std::optional<std::string>,
+        std::optional<int>,
+        const Ice::Current&) final;
 
-    virtual void updateContact(
+    void updateContact(
         std::string,
-        Ice::optional<Demo::NumberType>,
-        Ice::optional<std::string>,
-        Ice::optional<int>,
-        const Ice::Current&) override;
+        std::optional<Demo::NumberType>,
+        std::optional<std::string>,
+        std::optional<int>,
+        const Ice::Current&) final;
 
-    virtual Demo::ContactPtr query(std::string, const Ice::Current&) override;
+    Demo::ContactPtr query(std::string name, const Ice::Current& current) final;
 
-    virtual Ice::optional<std::string> queryNumber(std::string, const Ice::Current&) override;
+    std::optional<std::string> queryNumber(std::string, const Ice::Current&) final;
 
-    virtual void queryDialgroup(std::string, Ice::optional<int>&, const Ice::Current&) override;
+    void queryDialgroup(std::string, std::optional<int>&, const Ice::Current&) final;
 
-    virtual void shutdown(const Ice::Current&) override;
+    void shutdown(const Ice::Current&) final;
 
 private:
     std::map<std::string, std::shared_ptr<Demo::Contact>> _contacts;

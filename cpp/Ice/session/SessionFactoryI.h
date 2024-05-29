@@ -5,14 +5,14 @@
 #ifndef SESSION_FACTORY_I_H
 #define SESSION_FACTORY_I_H
 
+#include "Session.h"
 #include <Ice/Ice.h>
-#include <Session.h>
 
-class SessionFactoryI : public Demo::SessionFactory
+class SessionFactoryI final : public Demo::SessionFactory
 {
 public:
-    virtual std::shared_ptr<Demo::SessionPrx> create(std::string, const Ice::Current&) override;
-    virtual void shutdown(const Ice::Current&) override;
+    std::optional<Demo::SessionPrx> create(std::string, const Ice::Current&) final;
+    void shutdown(const Ice::Current&) final;
 };
 
 #endif

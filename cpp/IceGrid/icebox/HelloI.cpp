@@ -7,8 +7,9 @@
 #    define _CRT_SECURE_NO_WARNINGS
 #endif
 
-#include <HelloI.h>
+#include "HelloI.h"
 #include <Ice/Ice.h>
+#include <iostream>
 
 using namespace std;
 

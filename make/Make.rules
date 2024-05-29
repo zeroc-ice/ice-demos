@@ -49,8 +49,8 @@ include $(top_srcdir)/make/Make.demos.rules
 #
 # The version/soversion variables are used for versionning plugins built with the demos.
 #
-version                 = 3.7.10
-soversion               = 37
+version                 = 3.8.0
+soversion               = 38a0
 compatversion           = $(version)
 
 static_projects         = %

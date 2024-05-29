@@ -2,16 +2,17 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <Callback.h>
+#include "Callback.h"
 #include <Ice/Ice.h>
+#include <iostream>
 
 using namespace std;
 using namespace Demo;
 
-class CallbackReceiverI : public CallbackReceiver
+class CallbackReceiverI final : public CallbackReceiver
 {
 public:
-    virtual void callback(const Ice::Current&) override { cout << "received callback" << endl; }
+    void callback(const Ice::Current&) final { cout << "received callback" << endl; }
 };
 
 int run(const shared_ptr<Ice::Communicator>&);
@@ -19,10 +20,6 @@ int run(const shared_ptr<Ice::Communicator>&);
 int
 main(int argc, char* argv[])
 {
-#ifdef ICE_STATIC_LIBS
-    Ice::registerIceSSL();
-#endif
-
     int status = 0;
 
     try

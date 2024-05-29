@@ -5,17 +5,17 @@
 #ifndef CHAT_SESSION_I_H
 #define CHAT_SESSION_I_H
 
-#include <ChatRoom.h>
-#include <ChatSession.h>
+#include "ChatRoom.h"
+#include "ChatSession.h"
 
-class ChatSessionI : public Chat::ChatSession
+class ChatSessionI final : public Chat::ChatSession
 {
 public:
     ChatSessionI(const std::shared_ptr<ChatRoom>&, std::string, bool trace, const std::shared_ptr<Ice::Logger>& logger);
 
-    virtual void setCallback(std::shared_ptr<Chat::ChatRoomCallbackPrx>, const Ice::Current&) override;
-    virtual long long send(std::string, const Ice::Current&) override;
-    virtual void destroy(const Ice::Current&) override;
+    void setCallback(std::optional<Chat::ChatRoomCallbackPrx>, const Ice::Current&) final;
+    std::int64_t send(std::string, const Ice::Current&) final;
+    void destroy(const Ice::Current&) final;
 
 private:
     const std::shared_ptr<ChatRoom> _chatRoom;

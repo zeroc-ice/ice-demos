@@ -30,7 +30,7 @@ void
 ChatRoom::join(const string& name, const shared_ptr<ChatRoomCallbackAdapter>& callback)
 {
     const lock_guard<mutex> sync(_mutex);
-    const long long timestamp =
+    const auto timestamp =
         chrono::duration_cast<chrono::milliseconds>(chrono::system_clock::now().time_since_epoch()).count();
 
     _reserved.erase(name);
@@ -62,7 +62,7 @@ void
 ChatRoom::leave(const string& name)
 {
     const lock_guard<mutex> sync(_mutex);
-    const long long timestamp =
+    const auto timestamp =
         chrono::duration_cast<chrono::milliseconds>(chrono::system_clock::now().time_since_epoch()).count();
 
     _members.erase(name);
@@ -80,11 +80,11 @@ ChatRoom::leave(const string& name)
     }
 }
 
-Ice::Long
+int64_t
 ChatRoom::send(const string& name, const string& message)
 {
     const lock_guard<mutex> sync(_mutex);
-    const long long timestamp =
+    const auto timestamp =
         chrono::duration_cast<chrono::milliseconds>(chrono::system_clock::now().time_since_epoch()).count();
 
     auto e = make_shared<PollingChat::MessageEvent>(timestamp, name, message);

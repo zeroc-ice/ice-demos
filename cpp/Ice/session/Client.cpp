@@ -2,8 +2,9 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
+#include "Session.h"
 #include <Ice/Ice.h>
-#include <Session.h>
+#include <iostream>
 
 using namespace std;
 using namespace Demo;
@@ -13,10 +14,6 @@ int run(const shared_ptr<Ice::Communicator>&);
 int
 main(int argc, char* argv[])
 {
-#ifdef ICE_STATIC_LIBS
-    Ice::registerIceSSL();
-#endif
-
     int status = 0;
 
     try
@@ -72,7 +69,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
 
     auto session = factory->create(name);
 
-    vector<shared_ptr<HelloPrx>> hellos;
+    vector<optional<HelloPrx>> hellos;
 
     menu();
 

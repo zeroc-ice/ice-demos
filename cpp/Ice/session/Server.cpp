@@ -2,7 +2,8 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#include <SessionFactoryI.h>
+#include "SessionFactoryI.h"
+#include <iostream>
 
 using namespace std;
 using namespace Demo;
@@ -10,10 +11,6 @@ using namespace Demo;
 int
 main(int argc, char* argv[])
 {
-#ifdef ICE_STATIC_LIBS
-    Ice::registerIceSSL();
-#endif
-
     int status = 0;
 
     try

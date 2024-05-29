@@ -9,13 +9,13 @@
 #include <Glacier2/Glacier2.h>
 #include <string>
 
-class ChatSessionManagerI : public Glacier2::SessionManager
+class ChatSessionManagerI final : public Glacier2::SessionManager
 {
 public:
     ChatSessionManagerI(const std::shared_ptr<ChatRoom>&, bool trace, const std::shared_ptr<Ice::Logger>& logger);
 
-    virtual std::shared_ptr<Glacier2::SessionPrx>
-    create(std::string, std::shared_ptr<Glacier2::SessionControlPrx>, const Ice::Current&) override;
+    std::optional<Glacier2::SessionPrx>
+    create(std::string, std::optional<Glacier2::SessionControlPrx>, const Ice::Current&) final;
 
 private:
     const std::shared_ptr<ChatRoom> _chatRoom;
