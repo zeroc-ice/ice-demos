@@ -79,10 +79,10 @@
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\..\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">helloplugin37++11d</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">helloplugin37++11d</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">helloplugin37++11</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">helloplugin37++11</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">helloplugin38d</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">helloplugin38d</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">helloplugin38</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">helloplugin38</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Midl>
@@ -107,7 +107,7 @@
       <AdditionalDependencies>setargv.obj;%(AdditionalDependencies)</AdditionalDependencies>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
-      <ImportLibrary>helloplugin37d.lib</ImportLibrary>
+      <ImportLibrary>helloplugin38d.lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
@@ -134,7 +134,7 @@
       <AdditionalDependencies>setargv.obj;%(AdditionalDependencies)</AdditionalDependencies>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
-      <ImportLibrary>helloplugin37d.lib</ImportLibrary>
+      <ImportLibrary>helloplugin38d.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
@@ -163,7 +163,7 @@
       <AdditionalDependencies>setargv.obj;%(AdditionalDependencies)</AdditionalDependencies>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
-      <ImportLibrary>helloplugin37.lib</ImportLibrary>
+      <ImportLibrary>helloplugin38.lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
@@ -192,7 +192,7 @@
       <AdditionalDependencies>setargv.obj;%(AdditionalDependencies)</AdditionalDependencies>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
-      <ImportLibrary>helloplugin37.lib</ImportLibrary>
+      <ImportLibrary>helloplugin38.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
   </ItemDefinitionGroup>

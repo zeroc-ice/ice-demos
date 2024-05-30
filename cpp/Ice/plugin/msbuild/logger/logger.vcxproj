@@ -79,10 +79,10 @@
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\..\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">loggerplugin37++11d</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">loggerplugin37++11d</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">loggerplugin37++11</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">loggerplugin37++11</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">loggerplugin38d</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">loggerplugin38d</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">loggerplugin38</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">loggerplugin38</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Midl>
@@ -107,7 +107,7 @@
       <AdditionalDependencies>setargv.obj;%(AdditionalDependencies)</AdditionalDependencies>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
-      <ImportLibrary>loggerplugin37d.lib</ImportLibrary>
+      <ImportLibrary>loggerplugin38d.lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
@@ -134,7 +134,7 @@
       <AdditionalDependencies>setargv.obj;%(AdditionalDependencies)</AdditionalDependencies>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
-      <ImportLibrary>loggerplugin37d.lib</ImportLibrary>
+      <ImportLibrary>loggerplugin38d.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
@@ -163,7 +163,7 @@
       <AdditionalDependencies>setargv.obj;%(AdditionalDependencies)</AdditionalDependencies>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
-      <ImportLibrary>loggerplugin37.lib</ImportLibrary>
+      <ImportLibrary>loggerplugin38.lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
@@ -192,7 +192,7 @@
       <AdditionalDependencies>setargv.obj;%(AdditionalDependencies)</AdditionalDependencies>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
-      <ImportLibrary>loggerplugin37.lib</ImportLibrary>
+      <ImportLibrary>loggerplugin38.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
