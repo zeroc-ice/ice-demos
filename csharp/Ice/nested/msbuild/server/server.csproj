@@ -3,7 +3,7 @@
     <PropertyGroup>
         <AssemblyName>server</AssemblyName>
         <OutputType>Exe</OutputType>
-        <TargetFramework>$(AppTargetFramework)</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <OutputPath>../../</OutputPath>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     </PropertyGroup>
@@ -11,7 +11,7 @@
         <Compile Include="../../NestedI.cs" />
         <Compile Include="../../Server.cs" />
         <SliceCompile Include="../../Nested.ice" />
-        <PackageReference Include="zeroc.ice.net" Version="3.7.10" />
+        <PackageReference Include="zeroc.ice.net" Version="3.8.0-alpha0" />
         <PackageReference Include="zeroc.icebuilder.msbuild" Version="5.0.9" />
     </ItemGroup>
 </Project>

@@ -3,10 +3,11 @@
 //
 
 using Demo;
+using Ice;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-class InterceptorI : Ice.DispatchInterceptor
+class InterceptorI : Ice.Object
 {
     internal InterceptorI(Ice.Object servant, AuthenticatorI authenticator, HashSet<string> securedOperations)
     {
@@ -15,9 +16,9 @@ class InterceptorI : Ice.DispatchInterceptor
         _securedOperations = securedOperations;
     }
 
-    public override Task<Ice.OutputStream> dispatch(Ice.Request request)
+    public ValueTask<OutgoingResponse> dispatchAsync(IncomingRequest request)
     {
-        var current = request.getCurrent();
+        var current = request.current;
         //
         // Check if the operation requires authorization to invoke.
         //
@@ -40,7 +41,7 @@ class InterceptorI : Ice.DispatchInterceptor
                 throw new AuthorizationException();
             }
         }
-        return _servant.ice_dispatch(request);
+        return _servant.dispatchAsync(request);
     }
 
     private readonly Ice.Object _servant;
