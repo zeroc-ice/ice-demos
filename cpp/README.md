@@ -149,7 +149,7 @@ If you are building Release, you should add only the Release `bin` directory to
 your PATH with a command similar to:
 
 ```shell
-set PATH=%USERPROFILE%\ice-demos\cpp11\packages\zeroc.ice.v143.3.8.0\build\native\bin\x64\Release;%PATH%
+set PATH=%USERPROFILE%\ice-demos\cpp\packages\zeroc.ice.v143.3.8.0-alpha0\build\native\bin\x64\Release;%PATH%
 ```
 
 Then refer to the README.md file in each demo directory for usage instructions.
