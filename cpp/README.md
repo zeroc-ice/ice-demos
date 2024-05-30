@@ -139,7 +139,7 @@ If you are building Debug, add both the Debug and Release `bin` directories with
 command similar to:
 
 ```shell
-set PATH=%USERPROFILE%\ice-demos\cpp\packages\zeroc.ice.v148.3.8.0\build\native\bin\x64\Debug;%USERPROFILE%\ice-demos\cpp\packages\zeroc.ice.v143.3.8.0\build\native\bin\x64\Release;%PATH%
+set PATH=%USERPROFILE%\ice-demos\cpp\packages\zeroc.ice.v148.3.8.0-alpha0\build\native\bin\x64\Debug;%USERPROFILE%\ice-demos\cpp\packages\zeroc.ice.v143.3.8.0-alpha0\build\native\bin\x64\Release;%PATH%
 ```
 
 This is required because the Debug `bin` directories provide only a subset of all
