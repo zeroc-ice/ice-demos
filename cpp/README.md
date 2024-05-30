@@ -6,7 +6,8 @@
 
 ## Overview
 
-This directory contains C++ sample programs for various Ice components. These examples are provided to get you started on
+This directory contains C++ sample programs for various Ice components. These examples
+are provided to get you started on
 using a particular Ice feature or coding technique.
 
 Most of the subdirectories here correspond directly to Ice components, such as
@@ -108,7 +109,7 @@ select `Build`.
   - Open a Visual Studio command prompt:
 
     ```shell
-    cd ice-demos\cpp11
+    cd ice-demos\cpp
     MSBuild /p:IceHome=<Ice dist path> /p:Configuration=<Release or Debug> msbuild\ice.proj
     ```
 
@@ -118,15 +119,15 @@ select `Build`.
   - Open a Visual Studio command prompt:
 
     ```shell
-    cd ice-demos\cpp11
-    MSBuild /p:IceHome=<Ice dist path> /p:Configuration=<Release or Debug> /t:InstallLocalPackages msbuild\ice.proj
+    cd ice-demos\cpp
+    MSBuild /p:IceHome=<Ice dist path> /p:Configuration=<Release or Debug> msbuild\ice.proj
     ```
 
     The command above creates NuGet packages for the source tree designated by
     `Ice dist path` (and first builds this source tree if needed), and then installs these
-    NuGet packages in the `ice-demos\cpp11\packages` folder.
+    NuGet packages in the `ice-demos\cpp\packages` folder.
 
-  - Start Visual Studio, open the `C++11 demos.sln` solution, and select your target
+  - Start Visual Studio, open the `C++ demos.sln` solution, and select your target
     configuration (Debug or Release) and platform (Win32 or x64). Right click on the
     desired demo in the Solution Explorer window and select `Build`.
 
@@ -138,7 +139,7 @@ If you are building Debug, add both the Debug and Release `bin` directories with
 command similar to:
 
 ```shell
-set PATH=%USERPROFILE%\ice-demos\cpp11\packages\zeroc.ice.v140.3.7.10\build\native\bin\x64\Debug;%USERPROFILE%\ice-demos\cpp11\packages\zeroc.ice.v140.3.7.10\build\native\bin\x64\Release;%PATH%
+set PATH=%USERPROFILE%\ice-demos\cpp\packages\zeroc.ice.v148.3.8.0\build\native\bin\x64\Debug;%USERPROFILE%\ice-demos\cpp\packages\zeroc.ice.v143.3.8.0\build\native\bin\x64\Release;%PATH%
 ```
 
 This is required because the Debug `bin` directories provide only a subset of all
@@ -148,10 +149,10 @@ If you are building Release, you should add only the Release `bin` directory to
 your PATH with a command similar to:
 
 ```shell
-set PATH=%USERPROFILE%\ice-demos\cpp11\packages\zeroc.ice.v140.3.7.10\build\native\bin\x64\Release;%PATH%
+set PATH=%USERPROFILE%\ice-demos\cpp11\packages\zeroc.ice.v143.3.8.0\build\native\bin\x64\Release;%PATH%
 ```
 
 Then refer to the README.md file in each demo directory for usage instructions.
 
-[1]: https://doc.zeroc.com/ice/3.7/introduction
+[1]: https://doc.zeroc.com/ice/3.8/introduction
 [2]: https://doc.zeroc.com/technical-articles/general-topics/chat-demo

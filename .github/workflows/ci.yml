@@ -16,7 +16,8 @@ concurrency:
 env:
   ICE_HOME: ${{ github.workspace }}/ice # Makefile
   IceHome: ${{ github.workspace }}/ice # MSBuild
-  PLATFORM: x64
+  Platform: x64 # For Msbuild
+  Configuration: Release # For Msbuild
 
 jobs:
   ci:
