@@ -14,7 +14,8 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  ICE_HOME: ${{ github.workspace }}/ice
+  ICE_HOME: ${{ github.workspace }}/ice # Makefile
+  IceHome: ${{ github.workspace }}/ice # MSBuild
   PLATFORM: x64
 
 jobs:
@@ -23,11 +24,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [
-            ubuntu-22.04,
-            macos-14,
-            # windows-2022
-          ]
+        os: [ubuntu-22.04, macos-14, windows-2022]
 
     runs-on: ${{ matrix.os }}
     steps:
@@ -57,4 +54,4 @@ jobs:
         timeout-minutes: 30
         with:
           working_directory: ice-demos/cpp
-          msbuild_project: \"C++ demos.sln\"
+          msbuild_project: msbuild/ice.proj
