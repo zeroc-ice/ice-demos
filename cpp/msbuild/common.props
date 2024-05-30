@@ -3,6 +3,8 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <ProgramDataBaseFileName>$(IntDir)$(TargetName)-objs.pdb</ProgramDataBaseFileName>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <DisableSpecificWarnings>4250;4251;4275</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
 
