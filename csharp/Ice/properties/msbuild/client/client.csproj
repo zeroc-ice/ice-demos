@@ -3,14 +3,14 @@
     <PropertyGroup>
         <AssemblyName>client</AssemblyName>
         <OutputType>Exe</OutputType>
-        <TargetFramework>$(AppTargetFramework)</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <OutputPath>../../</OutputPath>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     </PropertyGroup>
     <ItemGroup>
         <Compile Include="../../Client.cs" />
         <SliceCompile Include="../../Props.ice" />
-        <PackageReference Include="zeroc.ice.net" Version="3.7.10" />
+        <PackageReference Include="zeroc.ice.net" Version="3.8.0-alpha0" />
         <PackageReference Include="zeroc.icebuilder.msbuild" Version="5.0.9" />
         <Compile Update="generated\Props.cs">
           <SliceCompileSource>../../Props.ice</SliceCompileSource>

@@ -108,7 +108,6 @@ public class Client
         int acmTimeout = router.getACMTimeout();
         Ice.Connection connection = router.ice_getCachedConnection();
         Debug.Assert(connection != null);
-        connection.setACM(acmTimeout, Ice.Util.None, Ice.ACMHeartbeat.HeartbeatAlways);
         connection.setCloseCallback(_ => Console.WriteLine("The Glacier2 session has been destroyed."));
 
         //

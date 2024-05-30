@@ -19,10 +19,6 @@ public class SessionFactoryI : SessionFactoryDisp_
         //
         var collocProxy = SessionPrxHelper.uncheckedCast(proxy.ice_endpoints(new Ice.Endpoint[0]));
 
-        //
-        // Never close this connection from the client and turn on heartbeats with a timeout of 30s
-        //
-        current.con.setACM(30, Ice.ACMClose.CloseOff, Ice.ACMHeartbeat.HeartbeatAlways);
         current.con.setCloseCallback(_ =>
             {
                 try
