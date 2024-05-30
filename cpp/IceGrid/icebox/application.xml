@@ -51,7 +51,7 @@
             </properties>
          </server-instance>
 
-         <icebox id="IceBox" activation="on-demand" exe="icebox++11">
+         <icebox id="IceBox" activation="on-demand" exe="icebox">
             <description>A sample IceBox server</description>
             <properties>
                <properties refid="mx"/>

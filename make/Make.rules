@@ -13,7 +13,7 @@
 # The default for the demos is to build with debug information and no
 # optimization.
 #
-#OPTIMIZE               = yes
+OPTIMIZE                ?= yes
 
 #
 # Define PLATFORMS to the list of platforms to build. This defaults

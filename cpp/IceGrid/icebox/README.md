@@ -24,7 +24,7 @@ icegridadmin --Ice.Config=config.grid -e "application add application.xml"
 ```
 
 If you are using 32-bit binaries on a Linux 64-bit host, first edit
-`application.xml` and replace `exe="icebox++11"` by `exe="icebox32++11"`.
+`application.xml` and replace `exe="icebox"` by `exe="icebox32"`.
 
 Using the IceGrid GUI
 ---------------------

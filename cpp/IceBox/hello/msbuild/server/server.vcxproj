@@ -79,10 +79,10 @@
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\..\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">helloservice++11d</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">helloservice++11d</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">helloservice++11</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">helloservice++11</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">helloserviced</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">helloserviced</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">helloservice</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">helloservice</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Midl>
