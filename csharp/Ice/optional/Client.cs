@@ -5,6 +5,8 @@
 using Demo;
 using System;
 
+#nullable enable
+
 public class Client
 {
     public static int Main(string[] args)
@@ -46,7 +48,7 @@ public class Client
 
     private static int run(Ice.Communicator communicator)
     {
-        var contactdb = ContactDBPrxHelper.checkedCast(communicator.propertyToProxy("ContactDB.Proxy"));
+        var contactdb = ContactDBPrxHelper.uncheckedCast(communicator.propertyToProxy("ContactDB.Proxy"));
         if(contactdb == null)
         {
             Console.Error.WriteLine("invalid proxy");
@@ -69,7 +71,7 @@ public class Client
         //
         // HasValue tests if an optional value is set.
         //
-        if(!number.HasValue)
+        if(number is null)
         {
             Console.Write("number is incorrect ");
         }
@@ -77,30 +79,26 @@ public class Client
         //
         // Call Value to retrieve the optional value.
         //
-        if(!number.Value.Equals(johnNumber))
+        if(number != johnNumber)
         {
             Console.Write("number is incorrect ");
         }
 
         // Optional can also be used in an out parameter.
-        Ice.Optional<int> dialgroup;
+        int? dialgroup;
         contactdb.queryDialgroup("john", out dialgroup);
-        if(!dialgroup.HasValue || dialgroup.Value != 0)
+        if(dialgroup != 0)
         {
             Console.Write("dialgroup is incorrect ");
         }
 
-        Contact info = contactdb.query("john");
+        Contact? info = contactdb.query("john");
 
         //
         // All of the info parameters should be set. Each of the optional members
-        // of the class map to Ice.Optional<T> member.
+        // of the class map to C# nullable type.
         //
-        if(!info.type.HasValue || !info.number.HasValue || !info.dialGroup.HasValue)
-        {
-            Console.Write("info is incorrect ");
-        }
-        if(info.type.Value != NumberType.HOME || !info.number.Value.Equals(johnNumber) || info.dialGroup.Value != 0)
+        if(info?.type != NumberType.HOME || info.number != johnNumber || info.dialGroup != 0)
         {
             Console.Write("info is incorrect ");
         }
@@ -113,14 +111,12 @@ public class Client
         // is NumberType.HOME and in this case the NumberType is unset it will take
         // the default value.
         //
-        // The C# mapping permits Ice.Util.None to be passed to unset optional values.
-        //
         var steveNumber = "234-567-8901";
-        contactdb.addContact("steve", Ice.Util.None, steveNumber, 1);
+        contactdb.addContact("steve", null, steveNumber, 1);
 
         Console.Write("Checking steve... ");
         number = contactdb.queryNumber("steve");
-        if(!number.Value.Equals(steveNumber))
+        if(number != steveNumber)
         {
             Console.Write("number is incorrect ");
         }
@@ -129,18 +125,18 @@ public class Client
         //
         // Check the value for the NumberType.
         //
-        if(!info.type.HasValue || info.type.Value != NumberType.HOME)
+        if(info?.type != NumberType.HOME)
         {
             Console.Write("info is incorrect ");
         }
 
-        if(!info.number.Value.Equals(steveNumber) || info.dialGroup.Value != 1)
+        if(info?.number != steveNumber || info.dialGroup != 1)
         {
             Console.Write("info is incorrect ");
         }
 
         contactdb.queryDialgroup("steve", out dialgroup);
-        if(!dialgroup.HasValue || dialgroup.Value != 1)
+        if(dialgroup != 1)
         {
             Console.Write("dialgroup is incorrect ");
         }
@@ -151,12 +147,12 @@ public class Client
         // Add a contact from "frank". Here the dialGroup field isn't set.
         //
         var frankNumber = "345-678-9012";
-        contactdb.addContact("frank", NumberType.CELL, frankNumber, Ice.Util.None);
+        contactdb.addContact("frank", NumberType.CELL, frankNumber, null);
 
         Console.Write("Checking frank... ");
 
         number = contactdb.queryNumber("frank");
-        if(!number.Value.Equals(frankNumber))
+        if(number != frankNumber)
         {
             Console.Write("number is incorrect ");
         }
@@ -165,17 +161,17 @@ public class Client
         //
         // The dial group field should be unset.
         //
-        if(info.dialGroup.HasValue)
+        if(info?.dialGroup is not null)
         {
             Console.Write("info is incorrect ");
         }
-        if(info.type.Value != NumberType.CELL || !info.number.Value.Equals(frankNumber))
+        if(info?.type != NumberType.CELL || info.number != frankNumber)
         {
             Console.Write("info is incorrect ");
         }
 
         contactdb.queryDialgroup("frank", out dialgroup);
-        if(dialgroup.HasValue)
+        if(dialgroup is not null)
         {
             Console.Write("dialgroup is incorrect ");
         }
@@ -184,11 +180,11 @@ public class Client
         //
         // Add a contact from "anne". The number field isn't set.
         //
-        contactdb.addContact("anne", NumberType.OFFICE, Ice.Util.None, 2);
+        contactdb.addContact("anne", NumberType.OFFICE, null, 2);
 
         Console.Write("Checking anne... ");
         number = contactdb.queryNumber("anne");
-        if(number.HasValue)
+        if(number is not null)
         {
             Console.Write("number is incorrect ");
         }
@@ -197,17 +193,17 @@ public class Client
         //
         // The number field should be unset.
         //
-        if(info.number.HasValue)
+        if(info?.number is not null)
         {
             Console.Write("info is incorrect ");
         }
-        if(info.type.Value != NumberType.OFFICE || info.dialGroup.Value != 2)
+        if(info?.type != NumberType.OFFICE || info.dialGroup != 2)
         {
             Console.Write("info is incorrect ");
         }
 
         contactdb.queryDialgroup("anne", out dialgroup);
-        if(!dialgroup.HasValue || dialgroup.Value != 2)
+        if(dialgroup != 2)
         {
             Console.Write("dialgroup is incorrect ");
         }
@@ -218,14 +214,14 @@ public class Client
         // the remainder of the fields are unchanged.
         //
         var anneNumber = "456-789-0123";
-        contactdb.updateContact("anne", Ice.Util.None, new Ice.Optional<String>(anneNumber), Ice.Util.None);
+        contactdb.updateContact("anne", null, anneNumber, null);
         number = contactdb.queryNumber("anne");
-        if(!number.Value.Equals(anneNumber))
+        if(number != anneNumber)
         {
             Console.Write("number is incorrect ");
         }
         info = contactdb.query("anne");
-        if(!info.number.Value.Equals(anneNumber) || info.type.Value != NumberType.OFFICE || info.dialGroup.Value != 2)
+        if(info?.number != anneNumber || info.type != NumberType.OFFICE || info.dialGroup != 2)
         {
             Console.Write("info is incorrect ");
         }

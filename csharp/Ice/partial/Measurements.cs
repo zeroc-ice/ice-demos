@@ -6,10 +6,10 @@ namespace Demo
 {
     //
     // Because the Distance generated struct is defined as a partial type,
-    // we can manually add some extra methods that are covenient for our
+    // we can manually add some extra methods that are convenient for our
     // application.
     //
-    partial struct Distance
+    partial record struct Distance
     {
         public double Yards
         {
@@ -39,7 +39,7 @@ namespace Demo
     }
     //
     // Because the Speed generated class is defined as a partial type,
-    // we can manually add some extra methods that are covenient for our
+    // we can manually add some extra methods that are convenient for our
     // application.
     //
     partial class Speed

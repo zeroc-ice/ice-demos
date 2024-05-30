@@ -1,0 +1,55 @@
+<Project DefaultTargets="Build"
+  xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- Nuget executable -->
+  <PropertyGroup>
+    <NugetExe>$(MSBuildThisFileDirectory)NuGet-4.9.2.exe</NugetExe>
+    <NugetURL>https://dist.nuget.org/win-x86-commandline/v4.9.2/nuget.exe</NugetURL>
+    <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
+  </PropertyGroup>
+
+  <Choose>
+    <When Condition="'$(OS)' == 'Windows_NT'">
+      <PropertyGroup>
+        <PackagePath>$(IceHome)\csharp\msbuild\zeroc.ice.net\zeroc.ice.net.3.8.0-alpha0.nupkg</PackagePath>
+        <BuildProperties>Configuration=$(Configuration); Platform=Any CPU</BuildProperties>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <PackagePath>$(IceHome)/csharp/msbuild/zeroc.ice.net/zeroc.ice.net.3.8.0-alpha0.nupkg</PackagePath>
+        <BuildProperties>Configuration=$(Configuration); Platform=Any CPU; IceToolsPath=$(IceHome)/cpp/bin</BuildProperties>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
+
+  <Target Name="InstallLocalPackages" Condition="Exists('$(IceHome)\csharp')">
+    <Exec Command="dotnet nuget locals --list global-packages" ConsoleToMSBuild="true" EchoOff="yes">
+      <Output TaskParameter="ConsoleOutput" PropertyName="NuGetGlobalPackages" />
+    </Exec>
+    <PropertyGroup>
+      <NuGetGlobalPackages>$(NuGetGlobalPackages.TrimStart('info : '))</NuGetGlobalPackages>
+      <NuGetGlobalPackages>$(NuGetGlobalPackages.TrimStart('global-packages: '))</NuGetGlobalPackages>
+    </PropertyGroup>
+    <!-- Run the distribution NuGetPack target to ensure packages are up to date -->
+    <MSBuild
+      Projects="$(IceHome)\csharp\msbuild\ice.proj" 
+      Properties="Platform=$(Platform);Configuration=$(Configuration)"
+      RemoveProperties="IceHome"
+      Targets="NuGetPack"/>
+    <RemoveDir Directories="$(NuGetGlobalPackages)\zeroc.ice.net" Condition="Exists('$(NuGetGlobalPackages)\zeroc.ice.net')"/>
+    <Exec Command="dotnet nuget push $(PackagePath) --source $(NuGetGlobalPackages)" />
+    <MSBuild
+      Projects="$(MSBuildThisFileDirectory)..\C# NET demos.sln"
+      Targets="Restore"
+      RemoveProperties="IceHome"
+      Properties="Configuration=$(Configuration);Platform=Any CPU"/>
+  </Target>
+
+  <Target Name="Build" DependsOnTargets="InstallLocalPackages">
+    <MSbuild
+      Projects="$(MSBuildThisFileDirectory)..\C# NET demos.sln"
+      Targets="Build"
+      RemoveProperties="IceHome"
+      Properties="$(BuildProperties)"/>
+    </Target>
+</Project>
