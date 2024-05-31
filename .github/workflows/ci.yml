@@ -62,17 +62,17 @@ jobs:
 
       - name: Build C++ Demos on ${{ matrix.os }}
         uses: ./ice/.github/actions/build
-        timeout-minutes: 5
+        timeout-minutes: 20
         with:
           working_directory: ice-demos/cpp
           msbuild_project: msbuild/ice.proj
 
       - name: Build C# Demos on ${{ matrix.os }}
-        timeout-minutes: 5
+        timeout-minutes: 20
         working-directory: ice-demos/csharp
         run: ${{ matrix.csharp_build_command }} /m msbuild/ice.proj
 
       - name: Run Java Demos on ${{ matrix.os }}
-        timeout-minutes: 5
+        timeout-minutes: 20
         working-directory: ice-demos/java
         run: ./gradlew build
