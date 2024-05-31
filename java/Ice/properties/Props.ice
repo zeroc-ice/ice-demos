@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <Ice/Properties.ice>
+#include <Ice/PropertyDict.ice>
 
 ["java:package:com.zeroc.demos.Ice.properties"]
 module Demo
