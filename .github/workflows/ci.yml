@@ -25,7 +25,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-22.04, macos-14, windows-2022]
+        include:
+          - os: ubuntu-22.04
+            ice_build_flags: srcs
+          - os: macos-14
+            ice_build_flags: srcs
+          - os: windows-2022
+            ice_build_flags: /t:BuildDist
 
     runs-on: ${{ matrix.os }}
     steps:
@@ -44,6 +50,7 @@ jobs:
         timeout-minutes: 90
         with:
           working_directory: ice
+          build_flags: ${{ matrix.ice_build_flags || '' }}
 
       - name: Checkout repository
         uses: actions/checkout@v4
