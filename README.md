@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/zeroc-ice/ice-demos/3.7/.github/assets/ice-banner.svg" height="150" width="150" />
+  <img src="https://raw.githubusercontent.com/zeroc-ice/ice-demos/main/.github/assets/ice-banner.svg" height="150" width="150" />
 </p>
 
 [![Join the chat at https://gitter.im/zeroc-ice/ice](https://badges.gitter.im/zeroc-ice/ice.svg)][gitter]
@@ -13,22 +13,19 @@ The ice-demos repository provides sample programs for [Ice](https://github.com/z
 
 The sample programs are grouped by Slice language mapping:
 
-- [C++11](./cpp11)
-- [C++98](./cpp98)
+- [C++](./cpp)
 - [C#](./csharp)
 - [Java](./java)
-- [Java-Compat](./java-compat)
 - [JavaScript](./js)
 - [MATLAB](./matlab)
-- [Objective-C](./objective-c)
 - [PHP](./php)
 - [Python](./python)
 - [Ruby](./ruby)
 - [Swift](./swift)
 - [TypeScript](./typescript)
 
-For example, the [cpp11](./cpp11) folder contains all the sample programs written
-in C++ that demonstrate the Slice to C++11 language mapping.
+For example, the [cpp](./cpp) folder contains all the sample programs written
+in C++ that demonstrate the Slice to C++ language mapping.
 
 The [certs](./certs) folder contains X.509 certificates shared by some of these
 sample programs.
