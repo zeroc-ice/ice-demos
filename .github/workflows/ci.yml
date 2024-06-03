@@ -14,8 +14,6 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  ICE_HOME: ${{ github.workspace }}/ice # Makefile
-  IceHome: ${{ github.workspace }}\ice # MSBuild
   Platform: x64 # For Msbuild
   Configuration: Release # For Msbuild
 
@@ -28,13 +26,19 @@ jobs:
         include:
           - os: ubuntu-22.04
             ice_build_flags: srcs
+            cpp_build_flags: ICE_HOME=${{github.workspace}}/ice
             csharp_build_command: dotnet build
+            java_buid_flags: -PiceHome=${{github.workspace}}/ice
           - os: macos-14
             ice_build_flags: srcs
+            cpp_build_flags: ICE_HOME=${{github.workspace}}/ice
             csharp_build_command: dotnet build
+            java_buid_flags: -PiceHome=${{github.workspace}}/ice
           - os: windows-2022
             ice_build_flags: /t:BuildDist
+            cpp_build_flags: /p:IceHome=${{github.workspace}}\ice
             csharp_build_command: MSBuild
+            java_buid_flags: -PiceHome=${{github.workspace}}\ice
 
     runs-on: ${{ matrix.os }}
     steps:
@@ -53,7 +57,7 @@ jobs:
         timeout-minutes: 60
         with:
           working_directory: ice
-          build_flags: ${{ matrix.ice_build_flags || '' }}
+          build_flags: ${{ matrix.ice_build_flags }}
 
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -66,6 +70,7 @@ jobs:
         with:
           working_directory: ice-demos/cpp
           msbuild_project: msbuild/ice.proj
+          build_flags: ${{ matrix.cpp_build_flags }}
 
       - name: Build C# Demos on ${{ matrix.os }}
         timeout-minutes: 20
@@ -75,4 +80,4 @@ jobs:
       - name: Build Java Demos on ${{ matrix.os }}
         timeout-minutes: 20
         working-directory: ice-demos/java
-        run: ./gradlew build
+        run: ./gradlew ${{ matrix.java_buid_flags }} build
