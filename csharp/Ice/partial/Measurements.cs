@@ -2,11 +2,14 @@
 
 namespace Demo
 {
-    // Because the Distance generated struct is defined as a partial type,
-    // we can manually add some extra methods that are convenient for our
-    // application.
-    internal partial record struct Distance
+    /// <summary> Because the Distance generated struct is defined as a partial type,
+    /// we can manually add some extra methods that are convenient for our
+    /// application.
+    /// </summary>
+    public partial record struct Distance
     {
+        /// <summary> Gets or sets the distance in yards.
+        /// </summary>
         public double Yards
         {
             readonly get
@@ -20,6 +23,8 @@ namespace Demo
             }
         }
 
+        /// <summary> Gets or sets the distance in meters.
+        /// </summary>
         public double Meters
         {
             readonly get
@@ -36,11 +41,14 @@ namespace Demo
         private const double YardConversionFactor = 1.0936;
     }
 
-    // Because the Speed generated class is defined as a partial type,
-    // we can manually add some extra methods that are convenient for our
-    // application.
-    internal partial class Speed
+    /// <summary> Because the Temperature generated class is defined as a partial type,
+    /// we can manually add some extra methods that are convenient for our
+    /// application.
+    /// </summary>
+    public partial class Speed
     {
+        /// <summary> Gets or sets the speed in miles per hour.
+        /// </summary>
         public double MilesPerHour
         {
             get
@@ -54,6 +62,8 @@ namespace Demo
             }
         }
 
+        /// <summary> Gets or sets the speed in kilometers per hour.
+        /// </summary>
         public double KilometersPerHour
         {
             get
@@ -67,6 +77,8 @@ namespace Demo
             }
         }
 
+        /// <summary> Gets or sets the speed in meters per second.
+        /// </summary>
         public double MetersPerSecond
         {
             get
