@@ -15,7 +15,7 @@ concurrency:
 
 env:
   ICE_HOME: ${{ github.workspace }}/ice # Makefile
-  IceHome: ${{ github.workspace }}/ice # MSBuild
+  IceHome: ${{ github.workspace }}\ice # MSBuild
   Platform: x64 # For Msbuild
   Configuration: Release # For Msbuild
 
@@ -72,7 +72,7 @@ jobs:
         working-directory: ice-demos/csharp
         run: ${{ matrix.csharp_build_command }} /m msbuild/ice.proj
 
-      - name: Run Java Demos on ${{ matrix.os }}
+      - name: Build Java Demos on ${{ matrix.os }}
         timeout-minutes: 20
         working-directory: ice-demos/java
-        run: ./gradlew -PiceHome=${{ env.IceHome }} build
+        run: ./gradlew build
