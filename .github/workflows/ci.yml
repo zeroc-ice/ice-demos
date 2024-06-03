@@ -88,4 +88,8 @@ jobs:
       - name: Build Java Demos on ${{ matrix.os }}
         timeout-minutes: 20
         working-directory: ice-demos/java
-        run: ./gradlew build
+        env:
+          # For Ice Builder for Gradle
+          CPP_PLATFORM: x64
+          CPP_CONFIGURATION: Release
+        run: ./gradlew build ${{ runner.os == 'Windows' && '' || '' }}
