@@ -1,0 +1,52 @@
+name: Clang Format
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: ["main"]
+
+jobs:
+  clang-format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install bear and clang-tidy
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y bear clang-tidy
+          bear --version
+          clang-tidy --version
+
+      - name: Checkout Ice
+        uses: actions/checkout@v4
+        with:
+          repository: zeroc-ice/ice
+          ref: main
+          path: ice
+
+      - name: Setup Ice Build Dependencies
+        uses: ./ice/.github/actions/setup-dependencies
+
+      - name: Build Ice
+        uses: ./ice/.github/actions/build
+        timeout-minutes: 90
+        with:
+          working_directory: ice
+          build_flags: srcs
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          path: ice-demos
+
+      - name: Build C++ Demos
+        timeout-minutes: 30
+        working-directory: ice-demos/cpp
+        run: bear -- make
+
+      - name: Run Clang Tidy
+        working-directory: ice-demos/cpp
+        run: |
+          find . -name "*.h" -o -name "*.cpp" | xargs run-clang-tidy -j$(nproc) -quiet

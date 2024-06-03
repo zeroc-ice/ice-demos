@@ -1,4 +1,4 @@
-name: Clang Format and Tidy
+name: Clang Format
 
 on:
   workflow_dispatch:
