@@ -31,4 +31,4 @@ jobs:
 
       - name: Run Clang Tidy
         run: |
-          find . -name "*.h" -o -name "*.cpp" | xargs clang-tidy-18 -j$(nproc) -quiet
+          find . -name "*.h" -o -name "*.cpp" | xargs run-clang-tidy -j$(nproc) -quiet
