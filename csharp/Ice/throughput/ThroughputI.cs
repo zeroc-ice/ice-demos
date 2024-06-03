@@ -141,7 +141,7 @@ public sealed class ThroughputI : ThroughputDisp_
 
     private byte[] _warmupByteSeq = new byte[1];
     private string[] _warmupStringSeq = new string[1];
-    private StringDouble[] _warmupStructSeq = new StringDouble[] { new StringDouble() };
+    private StringDouble[] _warmupStructSeq = new StringDouble[] { new() };
     private Fixed[] _warmupFixedSeq = new Fixed[1];
 
     private bool _needsWarmup = true;

@@ -12,12 +12,7 @@ namespace Client
             {
                 using Ice.Communicator communicator = Ice.Util.initialize(ref args);
                 var obj = communicator.stringToProxy("SimplePrinter:default -h localhost -p 10000");
-                var printer = PrinterPrxHelper.checkedCast(obj);
-                if (printer == null)
-                {
-                    throw new ApplicationException("Invalid proxy");
-                }
-
+                var printer = PrinterPrxHelper.checkedCast(obj) ?? throw new ApplicationException("Invalid proxy");
                 printer.printString("Hello World!");
             }
             catch (Exception e)
