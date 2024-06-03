@@ -47,7 +47,7 @@ public class Client extends JFrame
         // Initialize an Ice communicator.
         //
         com.zeroc.Ice.InitializationData initData = new com.zeroc.Ice.InitializationData();
-        initData.properties = com.zeroc.Ice.Util.createProperties();
+        initData.properties = new com.zeroc.Ice.Properties();
         initData.properties.load("config.client");
         initData.properties.setProperty("Ice.Default.Package", "com.zeroc.demos.Ice.swing");
         initData.dispatcher = (runnable, connection) -> SwingUtilities.invokeLater(runnable);

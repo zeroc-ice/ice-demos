@@ -13,7 +13,7 @@ public class Server
         java.util.List<String> extraArgs = new java.util.ArrayList<String>();
 
         com.zeroc.Ice.InitializationData initData = new com.zeroc.Ice.InitializationData();
-        initData.properties = com.zeroc.Ice.Util.createProperties();
+        initData.properties = new com.zeroc.Ice.Properties();
         initData.properties.load("config.server");
 
         //
