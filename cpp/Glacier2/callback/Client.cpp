@@ -104,7 +104,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
 
     const Ice::ConnectionPtr connection = router->ice_getCachedConnection();
     assert(connection);
-    connection->setCloseCallback([](Ice::ConnectionPtr)
+    connection->setCloseCallback([](const Ice::ConnectionPtr&)
                                  { cout << "The Glacier2 session has been destroyed." << endl; });
 
     //

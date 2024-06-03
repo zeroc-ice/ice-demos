@@ -63,7 +63,7 @@ public:
 };
 
 Chat::ChatSessionPrx
-createSession(Glacier2::RouterPrx router)
+createSession(const Glacier2::RouterPrx& router)
 {
     while (true)
     {
@@ -87,7 +87,7 @@ createSession(Glacier2::RouterPrx router)
                 throw runtime_error("Glaicer2::createSession return null. Is the SessionManager configured?");
             }
             router->ice_getCachedConnection()->setCloseCallback(
-                [](Ice::ConnectionPtr)
+                [](const Ice::ConnectionPtr&)
                 {
                     const lock_guard<mutex> lock(coutMutex);
                     cout << "The Glacier2 session has been destroyed." << endl;
@@ -110,7 +110,7 @@ createSession(Glacier2::RouterPrx router)
 }
 
 void
-run(shared_ptr<Ice::Communicator> communicator)
+run(const shared_ptr<Ice::Communicator>& communicator)
 {
     optional<Glacier2::RouterPrx> router{communicator->getDefaultRouter()};
     if (!router)

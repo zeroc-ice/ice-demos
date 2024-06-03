@@ -21,15 +21,15 @@ ContactDBI::addContact(
     contact->name = name;
     if (type)
     {
-        contact->type = std::move(type);
+        contact->type = type;
     }
     if (number)
     {
-        contact->number = std::move(number);
+        contact->number = number;
     }
     if (dialGroup)
     {
-        contact->dialGroup = std::move(dialGroup);
+        contact->dialGroup = dialGroup;
     }
     auto p = _contacts.insert(make_pair(name, contact));
     if (!p.second)

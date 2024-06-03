@@ -102,7 +102,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
     const Ice::ConnectionPtr connection = router->ice_getCachedConnection();
     assert(connection);
     connection->setCloseCallback(
-        [](Ice::ConnectionPtr)
+        [](const Ice::ConnectionPtr&)
         {
             const lock_guard<mutex> lock(coutMutex);
             cout << "The Glacier2 session has been destroyed." << endl;

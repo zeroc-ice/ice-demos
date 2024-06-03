@@ -46,14 +46,14 @@ void
 ChatRoom::enter(ChatSessionPrx session, ChatCallbackPrx callback, const Ice::Current& current)
 {
     const lock_guard<mutex> sync(_mutex);
-    _callbacks.push_back(callback);
+    _callbacks.emplace_back(std::move(callback));
 
     auto p = _connectionMap.find(current.con);
     if (p == _connectionMap.end())
     {
         cout << "enter: create new entry in connection map" << endl;
 
-        _connectionMap[current.con].push_back(session);
+        _connectionMap[current.con].emplace_back(std::move(session));
 
         current.con->setCloseCallback(
             [this](const shared_ptr<Ice::Connection>& con)
@@ -68,7 +68,7 @@ ChatRoom::enter(ChatSessionPrx session, ChatCallbackPrx callback, const Ice::Cur
     else
     {
         cout << "enter: add session to existing connection map entry" << endl;
-        p->second.push_back(session);
+        p->second.emplace_back(std::move(session));
     }
 }
 
