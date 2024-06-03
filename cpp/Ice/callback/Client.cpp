@@ -58,7 +58,7 @@ int
 run(const shared_ptr<Ice::Communicator>& communicator)
 {
     auto sender = Ice::checkedCast<CallbackSenderPrx>(
-        communicator->propertyToProxy("CallbackSender.Proxy")->ice_twoway()->ice_timeout(-1)->ice_secure(false));
+        communicator->propertyToProxy("CallbackSender.Proxy")->ice_twoway()->ice_secure(false));
     if (!sender)
     {
         cerr << "invalid proxy" << endl;

@@ -36,7 +36,7 @@ public class Client
     private static int run(com.zeroc.Ice.Communicator communicator)
     {
         CallbackSenderPrx sender = CallbackSenderPrx.checkedCast(
-            communicator.propertyToProxy("CallbackSender.Proxy")).ice_twoway().ice_timeout(-1).ice_secure(false);
+            communicator.propertyToProxy("CallbackSender.Proxy")).ice_twoway().ice_secure(false);
         if(sender == null)
         {
             System.err.println("invalid proxy");

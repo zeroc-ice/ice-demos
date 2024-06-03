@@ -36,7 +36,7 @@ public class Client
     {
 
         HelloPrx twoway = HelloPrx.checkedCast(
-            communicator.propertyToProxy("Hello.Proxy")).ice_twoway().ice_timeout(-1).ice_secure(false);
+            communicator.propertyToProxy("Hello.Proxy")).ice_twoway().ice_secure(false);
         if(twoway == null)
         {
             System.err.println("invalid object reference");
