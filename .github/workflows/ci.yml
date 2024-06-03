@@ -73,5 +73,5 @@ jobs:
         run: ${{ matrix.csharp_build_command }} /m msbuild/ice.proj
 
       - name: Run .NET format
-        run: dotnet format --verify-no-changes "csharp/C# NET demos.sln"
+        run: dotnet format --verify-no-changes "./ice-demos/csharp/C# NET demos.sln"
         if: runner.os == 'Linux'
