@@ -18,7 +18,7 @@ class CallbackReceiverI(Demo.CallbackReceiver):
 def run(communicator):
     sender = Demo.CallbackSenderPrx.checkedCast(
         communicator.propertyToProxy('CallbackSender.Proxy').
-        ice_twoway().ice_timeout(-1).ice_secure(False))
+        ice_twoway().ice_secure(False))
     if not sender:
         print("invalid proxy")
         sys.exit(1)

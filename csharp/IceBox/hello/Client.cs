@@ -17,12 +17,12 @@ public class Client
             // The new communicator is automatically destroyed (disposed) at the end of the
             // using statement
             //
-            using(var communicator = Ice.Util.initialize(ref args, "config.client"))
+            using (var communicator = Ice.Util.initialize(ref args, "config.client"))
             {
                 //
                 // The communicator initialization removes all Ice-related arguments from args
                 //
-                if(args.Length > 0)
+                if (args.Length > 0)
                 {
                     Console.Error.WriteLine("too many arguments");
                     status = 1;
@@ -33,7 +33,7 @@ public class Client
                 }
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Console.Error.WriteLine(ex);
             status = 1;
@@ -45,8 +45,8 @@ public class Client
     private static int run(Ice.Communicator communicator)
     {
         var twoway = HelloPrxHelper.checkedCast(
-            communicator.propertyToProxy("Hello.Proxy").ice_twoway().ice_timeout(-1).ice_secure(false));
-        if(twoway == null)
+            communicator.propertyToProxy("Hello.Proxy").ice_twoway().ice_secure(false));
+        if (twoway == null)
         {
             Console.Error.WriteLine("invalid proxy");
             return 1;
@@ -68,25 +68,25 @@ public class Client
                 Console.Out.Write("==> ");
                 Console.Out.Flush();
                 line = Console.In.ReadLine();
-                if(line == null)
+                if (line == null)
                 {
                     break;
                 }
-                if(line.Equals("t"))
+                if (line.Equals("t"))
                 {
                     twoway.sayHello();
                 }
-                else if(line.Equals("o"))
+                else if (line.Equals("o"))
                 {
                     oneway.sayHello();
                 }
-                else if(line.Equals("O"))
+                else if (line.Equals("O"))
                 {
                     batchOneway.sayHello();
                 }
-                else if(line.Equals("d"))
+                else if (line.Equals("d"))
                 {
-                    if(secure)
+                    if (secure)
                     {
                         Console.WriteLine("secure datagrams are not supported");
                     }
@@ -95,9 +95,9 @@ public class Client
                         datagram.sayHello();
                     }
                 }
-                else if(line.Equals("D"))
+                else if (line.Equals("D"))
                 {
-                    if(secure)
+                    if (secure)
                     {
                         Console.WriteLine("secure datagrams are not supported");
                     }
@@ -106,15 +106,15 @@ public class Client
                         batchDatagram.sayHello();
                     }
                 }
-                else if(line.Equals("f"))
+                else if (line.Equals("f"))
                 {
                     batchOneway.ice_flushBatchRequests();
-                    if(!secure)
+                    if (!secure)
                     {
                         batchDatagram.ice_flushBatchRequests();
                     }
                 }
-                else if(line.Equals("S"))
+                else if (line.Equals("S"))
                 {
                     secure = !secure;
 
@@ -124,7 +124,7 @@ public class Client
                     datagram = HelloPrxHelper.uncheckedCast(datagram.ice_secure(secure));
                     batchDatagram = HelloPrxHelper.uncheckedCast(batchDatagram.ice_secure(secure));
 
-                    if(secure)
+                    if (secure)
                     {
                         Console.WriteLine("secure mode is now on");
                     }
@@ -133,11 +133,11 @@ public class Client
                         Console.WriteLine("secure mode is now off");
                     }
                 }
-                else if(line.Equals("x"))
+                else if (line.Equals("x"))
                 {
                     // Nothing to do
                 }
-                else if(line.Equals("?"))
+                else if (line.Equals("?"))
                 {
                     menu();
                 }
@@ -147,7 +147,7 @@ public class Client
                     menu();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
             }
