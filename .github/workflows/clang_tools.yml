@@ -1,4 +1,4 @@
-name: Clang Format
+name: Clang Format and Tidy
 
 on:
   workflow_dispatch:
@@ -28,3 +28,7 @@ jobs:
       - name: Run Clang Format
         run: |
           find . -name "*.h" -o -name "*.cpp" | xargs clang-format-18 --style=file --fallback-style=none --Werror --dry-run
+
+      - name: Run Clang Tidy
+        run: |
+          find . -name "*.h" -o -name "*.cpp" | xargs clang-tidy-18 -j$(nproc) -quiet
