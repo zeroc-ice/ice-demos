@@ -92,4 +92,4 @@ jobs:
           # For Ice Builder for Gradle
           CPP_PLATFORM: x64
           CPP_CONFIGURATION: Release
-        run: ./gradlew build ${{ runner.os == 'Windows' && '' || '' }}
+        run: ./gradlew build
