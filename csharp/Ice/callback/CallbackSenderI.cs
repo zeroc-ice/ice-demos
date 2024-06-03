@@ -1,11 +1,8 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 using Demo;
-using System;
 
-public sealed class CallbackSenderI : CallbackSenderDisp_
+internal sealed class CallbackSenderI : CallbackSenderDisp_
 {
     public override void initiateCallback(CallbackReceiverPrx proxy, Ice.Current current)
     {
@@ -14,7 +11,7 @@ public sealed class CallbackSenderI : CallbackSenderDisp_
         {
             proxy.callback();
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Console.Error.WriteLine(ex);
         }
@@ -27,7 +24,7 @@ public sealed class CallbackSenderI : CallbackSenderDisp_
         {
             current.adapter.getCommunicator().shutdown();
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Console.Error.WriteLine(ex);
         }

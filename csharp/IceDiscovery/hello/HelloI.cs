@@ -1,14 +1,12 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 using Demo;
 
-public class HelloI : HelloDisp_
+internal class HelloI : HelloDisp_
 {
     public override void sayHello(int delay, Ice.Current current)
     {
-        if(delay > 0)
+        if (delay > 0)
         {
             System.Threading.Thread.Sleep(delay);
         }

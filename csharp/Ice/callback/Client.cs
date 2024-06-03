@@ -1,11 +1,8 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 using Demo;
-using System;
 
-public class Client
+internal class Client
 {
     public static int Main(string[] args)
     {
@@ -13,24 +10,18 @@ public class Client
 
         try
         {
-            //
             // The new communicator is automatically destroyed (disposed) at the end of the
             // using statement
-            //
-            using (var communicator = Ice.Util.initialize(ref args, "config.client"))
+            using var communicator = Ice.Util.initialize(ref args, "config.client");
+            // The communicator initialization removes all Ice-related arguments from args
+            if (args.Length > 0)
             {
-                //
-                // The communicator initialization removes all Ice-related arguments from args
-                //
-                if (args.Length > 0)
-                {
-                    Console.Error.WriteLine("too many arguments");
-                    status = 1;
-                }
-                else
-                {
-                    status = run(communicator);
-                }
+                Console.Error.WriteLine("too many arguments");
+                status = 1;
+            }
+            else
+            {
+                status = Run(communicator);
             }
         }
         catch (Exception ex)
@@ -42,7 +33,7 @@ public class Client
         return status;
     }
 
-    private static int run(Ice.Communicator communicator)
+    private static int Run(Ice.Communicator communicator)
     {
         var sender = CallbackSenderPrxHelper.checkedCast(communicator.propertyToProxy("CallbackSender.Proxy").
                                                          ice_twoway().ice_secure(false));
@@ -59,7 +50,7 @@ public class Client
         var receiver = CallbackReceiverPrxHelper.uncheckedCast(
             adapter.createProxy(Ice.Util.stringToIdentity("callbackReceiver")));
 
-        menu();
+        Menu();
 
         string line = null;
         do
@@ -87,12 +78,12 @@ public class Client
                 }
                 else if (line.Equals("?"))
                 {
-                    menu();
+                    Menu();
                 }
                 else
                 {
                     Console.Out.WriteLine("unknown command `" + line + "'");
-                    menu();
+                    Menu();
                 }
             }
             catch (Exception ex)
@@ -105,7 +96,7 @@ public class Client
         return 0;
     }
 
-    private static void menu()
+    private static void Menu()
     {
         Console.Out.Write("usage:\n"
                           + "t: send callback\n"

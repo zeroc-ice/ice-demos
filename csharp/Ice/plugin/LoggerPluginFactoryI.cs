@@ -1,8 +1,6 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
-public class LoggerPluginFactoryI : Ice.PluginFactory
+internal class LoggerPluginFactoryI : Ice.PluginFactory
 {
     public Ice.Plugin create(Ice.Communicator communicator, string name, string[] args)
     {

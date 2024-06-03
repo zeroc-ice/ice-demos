@@ -1,11 +1,8 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 using Demo;
-using System;
 
-public class Client
+internal class Client
 {
     public static int Main(string[] args)
     {
@@ -13,29 +10,23 @@ public class Client
 
         try
         {
-            //
             // using statement - communicator is automatically destroyed
             // at the end of this statement
-            //
-            using(var communicator = Ice.Util.initialize(ref args, "config.client"))
-            {
-                //
-                // Destroy the communicator on Ctrl+C or Ctrl+Break
-                //
-                Console.CancelKeyPress += (sender, eventArgs) => communicator.destroy();
+            using var communicator = Ice.Util.initialize(ref args, "config.client");
+            // Destroy the communicator on Ctrl+C or Ctrl+Break
+            Console.CancelKeyPress += (sender, eventArgs) => communicator.destroy();
 
-                if(args.Length > 0)
-                {
-                    Console.Error.WriteLine("too many arguments");
-                    status = 1;
-                }
-                else
-                {
-                    status = run(communicator);
-                }
+            if (args.Length > 0)
+            {
+                Console.Error.WriteLine("too many arguments");
+                status = 1;
+            }
+            else
+            {
+                status = Run(communicator);
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Console.Error.WriteLine(ex);
             status = 1;
@@ -44,7 +35,7 @@ public class Client
         return status;
     }
 
-    private static int run(Ice.Communicator communicator)
+    private static int Run(Ice.Communicator communicator)
     {
         var adapter = communicator.createObjectAdapter("DiscoverReply");
         var replyI = new DiscoverReplyI();
@@ -54,14 +45,14 @@ public class Client
         var discover = DiscoverPrxHelper.uncheckedCast(
             communicator.propertyToProxy("Discover.Proxy").ice_datagram());
         discover.lookup(reply);
-        var obj = replyI.waitReply(2000);
-        if(obj == null)
+        var obj = replyI.WaitReply(2000);
+        if (obj == null)
         {
             Console.Error.WriteLine("no replies");
             return 1;
         }
         var hello = HelloPrxHelper.checkedCast(obj);
-        if(hello == null)
+        if (hello == null)
         {
             Console.Error.WriteLine("invalid reply");
             return 1;

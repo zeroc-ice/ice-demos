@@ -1,11 +1,8 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 using Demo;
-using System;
 
-public class Client
+internal class Client
 {
     public static int Main(string[] args)
     {
@@ -13,29 +10,23 @@ public class Client
 
         try
         {
-            //
             // using statement - communicator is automatically destroyed
             // at the end of this statement
-            //
-            using(var communicator = Ice.Util.initialize(ref args, "config.client"))
-            {
-                //
-                // Destroy the communicator on Ctrl+C or Ctrl+Break
-                //
-                Console.CancelKeyPress += (sender, eventArgs) => communicator.destroy();
+            using var communicator = Ice.Util.initialize(ref args, "config.client");
+            // Destroy the communicator on Ctrl+C or Ctrl+Break
+            Console.CancelKeyPress += (sender, eventArgs) => communicator.destroy();
 
-                if(args.Length > 0)
-                {
-                    Console.Error.WriteLine("too many arguments");
-                    status = 1;
-                }
-                else
-                {
-                    status = run(communicator);
-                }
+            if (args.Length > 0)
+            {
+                Console.Error.WriteLine("too many arguments");
+                status = 1;
+            }
+            else
+            {
+                status = Run(communicator);
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Console.Error.WriteLine(ex);
             status = 1;
@@ -44,35 +35,27 @@ public class Client
         return status;
     }
 
-    private static int run(Ice.Communicator communicator)
+    private static int Run(Ice.Communicator communicator)
     {
         var server = CallbackSenderPrxHelper.checkedCast(communicator.propertyToProxy("CallbackSender.Proxy"));
-        if(server == null)
+        if (server == null)
         {
             Console.Error.WriteLine("invalid proxy");
             return 1;
         }
 
-        //
         // Create an object adapter with no name and no endpoints for receiving callbacks
         // over bidirectional connections.
-        //
         var adapter = communicator.createObjectAdapter("");
 
-        //
         // Register the callback receiver servant with the object adapter
-        //
         var proxy = CallbackReceiverPrxHelper.uncheckedCast(adapter.addWithUUID(new CallbackReceiverI()));
 
-        //
         // Associate the object adapter with the bidirectional connection.
-        //
         server.ice_getConnection().setAdapter(adapter);
 
-        //
         // Provide the proxy of the callback receiver object to the server and wait for
         // shutdown.
-        //
         server.addClient(proxy);
         communicator.waitForShutdown();
         return 0;

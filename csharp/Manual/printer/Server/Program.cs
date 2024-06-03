@@ -1,12 +1,8 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
-
-using System;
+// Copyright (c) ZeroC, Inc.
 
 namespace Server
 {
-    public class PrinterI : Demo.PrinterDisp_
+    internal class PrinterI : Demo.PrinterDisp_
     {
         public override void printString(string s, Ice.Current current)
         {
@@ -14,22 +10,20 @@ namespace Server
         }
     }
 
-    public class Program
+    internal class Program
     {
         public static int Main(string[] args)
         {
             try
             {
-                using(Ice.Communicator communicator = Ice.Util.initialize(ref args))
-                {
-                    var adapter =
-                        communicator.createObjectAdapterWithEndpoints("SimplePrinterAdapter", "default -h localhost -p 10000");
-                    adapter.add(new PrinterI(), Ice.Util.stringToIdentity("SimplePrinter"));
-                    adapter.activate();
-                    communicator.waitForShutdown();
-                }
+                using Ice.Communicator communicator = Ice.Util.initialize(ref args);
+                var adapter =
+                    communicator.createObjectAdapterWithEndpoints("SimplePrinterAdapter", "default -h localhost -p 10000");
+                adapter.add(new PrinterI(), Ice.Util.stringToIdentity("SimplePrinter"));
+                adapter.activate();
+                communicator.waitForShutdown();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.Error.WriteLine(e);
                 return 1;

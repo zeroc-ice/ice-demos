@@ -1,11 +1,8 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 using Demo;
-using System;
 
-public class Server
+internal class Server
 {
     public static int Main(string[] args)
     {
@@ -13,35 +10,29 @@ public class Server
 
         try
         {
-            //
             // using statement - communicator is automatically destroyed
             // at the end of this statement
-            //
-            using(var communicator = Ice.Util.initialize(ref args, "config.server"))
+            using var communicator = Ice.Util.initialize(ref args, "config.server");
+            // Destroy the communicator on Ctrl+C or Ctrl+Break
+            Console.CancelKeyPress += (sender, eventArgs) => communicator.destroy();
+
+            if (args.Length > 0)
             {
-                //
-                // Destroy the communicator on Ctrl+C or Ctrl+Break
-                //
-                Console.CancelKeyPress += (sender, eventArgs) => communicator.destroy();
+                Console.Error.WriteLine("too many arguments");
+                status = 1;
+            }
+            else
+            {
+                var adapter = communicator.createObjectAdapter("Nested.Server");
+                var self =
+                    NestedPrxHelper.uncheckedCast(adapter.createProxy(Ice.Util.stringToIdentity("nestedServer")));
+                adapter.add(new NestedI(self), Ice.Util.stringToIdentity("nestedServer"));
+                adapter.activate();
 
-                if(args.Length > 0)
-                {
-                    Console.Error.WriteLine("too many arguments");
-                    status = 1;
-                }
-                else
-                {
-                    var adapter = communicator.createObjectAdapter("Nested.Server");
-                    var self =
-                        NestedPrxHelper.uncheckedCast(adapter.createProxy(Ice.Util.stringToIdentity("nestedServer")));
-                    adapter.add(new NestedI(self), Ice.Util.stringToIdentity("nestedServer"));
-                    adapter.activate();
-
-                    communicator.waitForShutdown();
-                }
+                communicator.waitForShutdown();
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Console.Error.WriteLine(ex);
             status = 1;

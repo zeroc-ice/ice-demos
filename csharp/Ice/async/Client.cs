@@ -1,12 +1,8 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 using Demo;
-using System;
-using System.Threading.Tasks;
 
-public class Client
+internal class Client
 {
     public static int Main(string[] args)
     {
@@ -14,17 +10,15 @@ public class Client
 
         try
         {
-            using (Ice.Communicator communicator = Ice.Util.initialize(ref args, "config.client"))
+            using Ice.Communicator communicator = Ice.Util.initialize(ref args, "config.client");
+            if (args.Length > 0)
             {
-                if (args.Length > 0)
-                {
-                    Console.WriteLine("too many arguments");
-                    status = 1;
-                }
-                else
-                {
-                    status = Run(communicator);
-                }
+                Console.WriteLine("too many arguments");
+                status = 1;
+            }
+            else
+            {
+                status = Run(communicator);
             }
         }
         catch (Exception exception)

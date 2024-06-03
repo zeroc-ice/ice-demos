@@ -1,13 +1,8 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 using Demo;
 
-using System;
-using System.Collections.Generic;
-
-public class Client
+internal class Client
 {
     public static int Main(string[] args)
     {
@@ -15,27 +10,21 @@ public class Client
 
         try
         {
-            //
             // The new communicator is automatically destroyed (disposed) at the end of the
             // using statement
-            //
-            using(var communicator = Ice.Util.initialize(ref args, "config.client"))
+            using var communicator = Ice.Util.initialize(ref args, "config.client");
+            // The communicator initialization removes all Ice-related arguments from args
+            if (args.Length > 0)
             {
-                //
-                // The communicator initialization removes all Ice-related arguments from args
-                //
-                if(args.Length > 0)
-                {
-                    Console.Error.WriteLine("too many arguments");
-                    status = 1;
-                }
-                else
-                {
-                    status = run(communicator);
-                }
+                Console.Error.WriteLine("too many arguments");
+                status = 1;
+            }
+            else
+            {
+                status = Run(communicator);
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Console.Error.WriteLine(ex);
             status = 1;
@@ -44,10 +33,10 @@ public class Client
         return status;
     }
 
-    private static int run(Ice.Communicator communicator)
+    private static int Run(Ice.Communicator communicator)
     {
         var props = PropsPrxHelper.checkedCast(communicator.propertyToProxy("Props.Proxy"));
-        if(props == null)
+        if (props == null)
         {
             Console.Error.WriteLine("invalid proxy");
             return 1;
@@ -69,8 +58,8 @@ public class Client
             { "Demo.Prop3", "30" }
         };
 
-        show(admin);
-        menu();
+        Show(admin);
+        Menu();
 
         string line = null;
         do
@@ -80,17 +69,17 @@ public class Client
                 Console.Out.Write("==> ");
                 Console.Out.Flush();
                 line = Console.In.ReadLine();
-                if(line == null)
+                if (line == null)
                 {
                     break;
                 }
-                if(line.Equals("1") || line.Equals("2"))
+                if (line.Equals("1") || line.Equals("2"))
                 {
                     var dict = line.Equals("1") ? batch1 : batch2;
                     Console.Out.WriteLine("Sending:");
-                    foreach(var e in dict)
+                    foreach (var e in dict)
                     {
-                        if(e.Key.StartsWith("Demo"))
+                        if (e.Key.StartsWith("Demo"))
                         {
                             Console.Out.WriteLine("  " + e.Key + "=" + e.Value);
                         }
@@ -101,16 +90,16 @@ public class Client
 
                     Console.Out.WriteLine("Changes:");
                     var changes = props.getChanges();
-                    if(changes.Count == 0)
+                    if (changes.Count == 0)
                     {
                         Console.Out.WriteLine("  None.");
                     }
                     else
                     {
-                        foreach(var e in changes)
+                        foreach (var e in changes)
                         {
                             Console.Out.Write("  " + e.Key);
-                            if(e.Value.Length == 0)
+                            if (e.Value.Length == 0)
                             {
                                 Console.Out.WriteLine(" was removed");
                             }
@@ -121,39 +110,39 @@ public class Client
                         }
                     }
                 }
-                else if(line.Equals("c"))
+                else if (line.Equals("c"))
                 {
-                    show(admin);
+                    Show(admin);
                 }
-                else if(line.Equals("s"))
+                else if (line.Equals("s"))
                 {
                     props.shutdown();
                 }
-                else if(line.Equals("x"))
+                else if (line.Equals("x"))
                 {
                     // Nothing to do
                 }
-                else if(line.Equals("?"))
+                else if (line.Equals("?"))
                 {
-                    menu();
+                    Menu();
                 }
                 else
                 {
                     Console.Out.WriteLine("unknown command `" + line + "'");
-                    menu();
+                    Menu();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
             }
         }
-        while(!line.Equals("x"));
+        while (!line.Equals("x"));
 
         return 0;
     }
 
-    private static void menu()
+    private static void Menu()
     {
         Console.Out.WriteLine(
             "\n" +
@@ -166,11 +155,11 @@ public class Client
             "?: help\n");
     }
 
-    private static void show(Ice.PropertiesAdminPrx admin)
+    private static void Show(Ice.PropertiesAdminPrx admin)
     {
         var props = admin.getPropertiesForPrefix("Demo");
         Console.Out.WriteLine("Server's current settings:");
-        foreach(KeyValuePair<string, string> e in props)
+        foreach (KeyValuePair<string, string> e in props)
         {
             Console.Out.WriteLine("  " + e.Key + "=" + e.Value);
         }

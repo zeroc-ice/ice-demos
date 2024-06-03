@@ -1,11 +1,8 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 using Demo;
-using System;
 
-public class Client
+internal class Client
 {
     public static int Main(string[] args)
     {
@@ -13,29 +10,23 @@ public class Client
 
         try
         {
-            //
             // using statement - communicator is automatically destroyed
             // at the end of this statement
-            //
-            using(var communicator = Ice.Util.initialize(ref args, "config.client"))
-            {
-                //
-                // Destroy the communicator on Ctrl+C or Ctrl+Break
-                //
-                Console.CancelKeyPress += (sender, eventArgs) => communicator.destroy();
+            using var communicator = Ice.Util.initialize(ref args, "config.client");
+            // Destroy the communicator on Ctrl+C or Ctrl+Break
+            Console.CancelKeyPress += (sender, eventArgs) => communicator.destroy();
 
-                if(args.Length > 0)
-                {
-                    Console.Error.WriteLine("too many arguments");
-                    status = 1;
-                }
-                else
-                {
-                    status = run(communicator);
-                }
+            if (args.Length > 0)
+            {
+                Console.Error.WriteLine("too many arguments");
+                status = 1;
+            }
+            else
+            {
+                status = Run(communicator);
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Console.Error.WriteLine(ex);
             status = 1;
@@ -44,25 +35,23 @@ public class Client
         return status;
     }
 
-    private static int run(Ice.Communicator communicator)
+    private static int Run(Ice.Communicator communicator)
     {
         PingPrx ping = PingPrxHelper.checkedCast(communicator.propertyToProxy("Ping.Proxy"));
-        if(ping == null)
+        if (ping == null)
         {
             Console.Error.WriteLine("invalid proxy");
             return 1;
         }
 
-        //
         // A method needs to be invoked thousands of times before the JIT compiler
         // will convert it to native code. To ensure an accurate latency measurement,
         // we need to "warm up" the JIT compiler.
-        //
         {
             int reps = 20000;
             Console.Error.Write("warming up the JIT compiler...");
             Console.Error.Flush();
-            for(int i = 0; i < reps; i++)
+            for (int i = 0; i < reps; i++)
             {
                 ping.ice_ping();
             }

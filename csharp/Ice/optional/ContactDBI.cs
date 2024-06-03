@@ -1,51 +1,52 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 using Demo;
-using System.Collections.Generic;
 
 #nullable enable
 
-public class ContactDBI : ContactDBDisp_
+internal class ContactDBI : ContactDBDisp_
 {
-    Dictionary<string, Contact> _contacts = new Dictionary<string, Contact>();
+    private Dictionary<string, Contact> _contacts = new Dictionary<string, Contact>();
 
-    public override void addContact(string name, NumberType? type, string? number,
-                                    int? dialGroup, Ice.Current current)
+    public override void addContact(string name, NumberType? type, string? number, int? dialGroup, Ice.Current current)
     {
-        var contact = new Contact();
-        contact.name = name;
-        if(type is not null)
+        var contact = new Contact
+        {
+            name = name
+        };
+        if (type is not null)
         {
             contact.type = type;
         }
-        if(number is not null)
+        if (number is not null)
         {
             contact.number = number;
         }
-        if(dialGroup is not null)
+        if (dialGroup is not null)
         {
             contact.dialGroup = dialGroup;
         }
         _contacts[name] = contact;
     }
 
-    public override void updateContact(string name, NumberType? type, string? number,
-                                       int? dialGroup, Ice.Current current)
+    public override void updateContact(
+        string name,
+        NumberType? type,
+        string? number,
+        int? dialGroup,
+        Ice.Current current)
     {
-        Contact? c;
-        if(_contacts.TryGetValue(name, out c))
+        if (_contacts.TryGetValue(name, out Contact? c))
         {
-            if(type is not null)
+            if (type is not null)
             {
                 c.type = type;
             }
-            if(number is not null)
+            if (number is not null)
             {
                 c.number = number;
             }
-            if(dialGroup is not null)
+            if (dialGroup is not null)
             {
                 c.dialGroup = dialGroup;
             }
@@ -54,7 +55,7 @@ public class ContactDBI : ContactDBDisp_
 
     public override Contact? query(string name, Ice.Current current)
     {
-        if(_contacts.TryGetValue(name, out Contact? c))
+        if (_contacts.TryGetValue(name, out Contact? c))
         {
             return c;
         }
@@ -63,7 +64,7 @@ public class ContactDBI : ContactDBDisp_
 
     public override string? queryNumber(string name, Ice.Current current)
     {
-        if(_contacts.TryGetValue(name, out Contact? c))
+        if (_contacts.TryGetValue(name, out Contact? c))
         {
             return c.number;
         }
@@ -72,7 +73,7 @@ public class ContactDBI : ContactDBDisp_
 
     public override void queryDialgroup(string name, out int? dialGroup, Ice.Current current)
     {
-        if(_contacts.TryGetValue(name, out Contact? c))
+        if (_contacts.TryGetValue(name, out Contact? c))
         {
             dialGroup = c.dialGroup;
         }

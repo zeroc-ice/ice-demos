@@ -85,6 +85,10 @@ jobs:
         working-directory: ice-demos/csharp
         run: ${{ runner.os == 'Windows' && 'MSBuild' || 'dotnet msbuild' }} /m msbuild/ice.proj
 
+      - name: Run .NET format
+        run: dotnet format --verify-no-changes "./ice-demos/csharp/C# NET demos.sln"
+        if: runner.os == 'Linux'
+
       - name: Build Java Demos on ${{ matrix.os }}
         timeout-minutes: 20
         working-directory: ice-demos/java

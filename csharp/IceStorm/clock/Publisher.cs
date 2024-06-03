@@ -1,13 +1,9 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 using Demo;
-using System;
-using System.Diagnostics;
 using System.Globalization;
 
-public class Publisher
+internal class Publisher
 {
     public static int Main(string[] args)
     {
@@ -15,21 +11,15 @@ public class Publisher
 
         try
         {
-            //
             // using statement - communicator is automatically destroyed
             // at the end of this statement
-            //
-            using(var communicator = Ice.Util.initialize(ref args, "config.pub"))
-            {
-                //
-                // Destroy the communicator on Ctrl+C or Ctrl+Break
-                //
-                Console.CancelKeyPress += (sender, eventArgs) => communicator.destroy();
+            using var communicator = Ice.Util.initialize(ref args, "config.pub");
+            // Destroy the communicator on Ctrl+C or Ctrl+Break
+            Console.CancelKeyPress += (sender, eventArgs) => communicator.destroy();
 
-                status = run(communicator, args);
-            }
+            status = Run(communicator, args);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Console.Error.WriteLine(ex);
             status = 1;
@@ -38,30 +28,30 @@ public class Publisher
         return status;
     }
 
-    private static int run(Ice.Communicator communicator, string[] args)
+    private static int Run(Ice.Communicator communicator, string[] args)
     {
         string option = "None";
         string topicName = "time";
         int i;
 
-        for(i = 0; i < args.Length; ++i)
+        for (i = 0; i < args.Length; ++i)
         {
-            String oldoption = option;
-            if(args[i].Equals("--datagram"))
+            string oldoption = option;
+            if (args[i].Equals("--datagram"))
             {
                 option = "Datagram";
             }
-            else if(args[i].Equals("--twoway"))
+            else if (args[i].Equals("--twoway"))
             {
                 option = "Twoway";
             }
-            else if(args[i].Equals("--oneway"))
+            else if (args[i].Equals("--oneway"))
             {
                 option = "Oneway";
             }
-            else if(args[i].StartsWith("--"))
+            else if (args[i].StartsWith("--"))
             {
-                usage();
+                Usage();
                 return 1;
             }
             else
@@ -70,63 +60,60 @@ public class Publisher
                 break;
             }
 
-            if(!oldoption.Equals(option) && !oldoption.Equals("None"))
+            if (!oldoption.Equals(option) && !oldoption.Equals("None"))
             {
-                usage();
+                Usage();
                 return 1;
             }
         }
 
-        if(i != args.Length)
+        if (i != args.Length)
         {
-            usage();
+            Usage();
             return 1;
         }
 
         IceStorm.TopicManagerPrx manager = IceStorm.TopicManagerPrxHelper.checkedCast(
             communicator.propertyToProxy("TopicManager.Proxy"));
-        if(manager == null)
+        if (manager == null)
         {
             Console.WriteLine("invalid proxy");
             return 1;
         }
 
-        //
         // Retrieve the topic.
-        //
         IceStorm.TopicPrx topic;
         try
         {
             topic = manager.retrieve(topicName);
         }
-        catch(IceStorm.NoSuchTopic)
+        catch (IceStorm.NoSuchTopic)
         {
             try
             {
                 topic = manager.create(topicName);
             }
-            catch(IceStorm.TopicExists)
+            catch (IceStorm.TopicExists)
             {
                 Console.WriteLine("temporary error. try again.");
                 return 1;
             }
         }
 
-        //
         // Get the topic's publisher object, and create a Clock proxy with
         // the mode specified as an argument of this application.
-        //
         Ice.ObjectPrx publisher = topic.getPublisher();
-        if(option.Equals("Datagram"))
+        if (option.Equals("Datagram"))
         {
             publisher = publisher.ice_datagram();
         }
-        else if(option.Equals("Twoway"))
+        else if (option.Equals("Twoway"))
         {
             // Do nothing.
         }
-        else // if(oneway)
+        else
         {
+            // if(oneway)
             publisher = publisher.ice_oneway();
         }
         ClockPrx clock = ClockPrxHelper.uncheckedCast(publisher);
@@ -134,13 +121,13 @@ public class Publisher
         Console.WriteLine("publishing tick events. Press ^C to terminate the application.");
         try
         {
-            while(true)
+            while (true)
             {
                 clock.tick(System.DateTime.Now.ToString("G", DateTimeFormatInfo.InvariantInfo));
                 System.Threading.Thread.Sleep(1000);
             }
         }
-        catch(Ice.CommunicatorDestroyedException)
+        catch (Ice.CommunicatorDestroyedException)
         {
             // Ignore
         }
@@ -148,7 +135,7 @@ public class Publisher
         return 0;
     }
 
-    private static void usage()
+    private static void Usage()
     {
         Console.WriteLine("Usage: [--datagram|--twoway|--oneway] [topic]");
     }

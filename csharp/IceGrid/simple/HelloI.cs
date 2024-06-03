@@ -1,17 +1,9 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
-using System;
 using Demo;
 
-public class HelloI : HelloDisp_
+internal class HelloI(string name) : HelloDisp_
 {
-    public HelloI(string name)
-    {
-        _name = name;
-    }
-
     public override void sayHello(Ice.Current current)
     {
         Console.WriteLine(_name + " says Hello World!");
@@ -23,5 +15,5 @@ public class HelloI : HelloDisp_
         current.adapter.getCommunicator().shutdown();
     }
 
-    private string _name;
+    private string _name = name;
 }

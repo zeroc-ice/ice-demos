@@ -1,25 +1,20 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
-using System;
 using Demo;
 
-public class Client
+internal class Client
 {
     public static int Main(string[] args)
     {
         try
         {
-            using(var communicator = Ice.Util.initialize(ref args))
-            {
-                var hello = HelloPrxHelper.checkedCast(
-                    communicator.stringToProxy("hello:default -h localhost -p 10000"));
-                hello.sayHello();
-            }
+            using var communicator = Ice.Util.initialize(ref args);
+            var hello = HelloPrxHelper.checkedCast(
+                communicator.stringToProxy("hello:default -h localhost -p 10000"));
+            hello.sayHello();
             return 0;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Console.Error.WriteLine(ex);
             return 1;

@@ -1,10 +1,6 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
-using IceBox;
-
-class HelloServiceI : Service
+internal class HelloServiceI : IceBox.Service
 {
     public void start(string name, Ice.Communicator communicator, string[] args)
     {

@@ -1,31 +1,25 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
-using System;
-
-public class Server
+internal class Server
 {
     public static int Main(string[] args)
     {
         try
         {
-            using(var communicator = Ice.Util.initialize(ref args))
+            using var communicator = Ice.Util.initialize(ref args);
+            // Shut down the communicator on Ctrl+C or Ctrl+Break.
+            Console.CancelKeyPress += (sender, eventArgs) =>
             {
-                // Shut down the communicator on Ctrl+C or Ctrl+Break.
-                Console.CancelKeyPress += (sender, eventArgs) =>
-                {
-                    eventArgs.Cancel = true;
-                    communicator.shutdown();
-                };
+                eventArgs.Cancel = true;
+                communicator.shutdown();
+            };
 
-                var adapter = communicator.createObjectAdapterWithEndpoints("Hello", "default -h localhost -p 10000");
-                adapter.add(new Printer(), Ice.Util.stringToIdentity("hello"));
-                adapter.activate();
-                communicator.waitForShutdown();
-            }
+            var adapter = communicator.createObjectAdapterWithEndpoints("Hello", "default -h localhost -p 10000");
+            adapter.add(new Printer(), Ice.Util.stringToIdentity("hello"));
+            adapter.activate();
+            communicator.waitForShutdown();
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Console.Error.WriteLine(ex);
             return 1;
