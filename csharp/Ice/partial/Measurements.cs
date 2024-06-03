@@ -9,7 +9,7 @@ namespace Demo
     {
         public double Yards
         {
-            get
+            readonly get
             {
                 return value * YardConversionFactor;
             }
@@ -22,7 +22,7 @@ namespace Demo
 
         public double Meters
         {
-            get
+            readonly get
             {
                 return value;
             }
