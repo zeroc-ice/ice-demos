@@ -1,11 +1,7 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 using Demo;
-using System;
 using System.Diagnostics;
-using System.Collections.Generic;
 
 public class Subscriber
 {
@@ -23,26 +19,20 @@ public class Subscriber
 
         try
         {
-            //
             // using statement - communicator is automatically destroyed
             // at the end of this statement
-            //
-            using(var communicator = Ice.Util.initialize(ref args, "config.sub"))
+            using var communicator = Ice.Util.initialize(ref args, "config.sub");
+            // Shutdown the communicator on Ctrl+C or Ctrl+Break
+            // (always use Cancel = true with shutdown)
+            Console.CancelKeyPress += (sender, eventArgs) =>
             {
-                //
-                // Shutdown the communicator on Ctrl+C or Ctrl+Break
-                // (always use Cancel = true with shutdown)
-                //
-                Console.CancelKeyPress += (sender, eventArgs) =>
-                {
-                    eventArgs.Cancel = true;
-                    communicator.shutdown();
-                };
+                eventArgs.Cancel = true;
+                communicator.shutdown();
+            };
 
-                status = run(communicator, args);
-            }
+            status = Run(communicator, args);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Console.Error.WriteLine(ex);
             status = 1;
@@ -51,7 +41,7 @@ public class Subscriber
         return status;
     }
 
-    private static int run(Ice.Communicator communicator, string[] args)
+    private static int Run(Ice.Communicator communicator, string[] args)
     {
         args = communicator.getProperties().parseCommandLineOptions("Clock", args);
 
@@ -61,52 +51,52 @@ public class Subscriber
         string id = null;
         string retryCount = null;
         int i;
-        for(i = 0; i < args.Length; ++i)
+        for (i = 0; i < args.Length; ++i)
         {
-            String oldoption = option;
-            if(args[i].Equals("--datagram"))
+            string oldoption = option;
+            if (args[i].Equals("--datagram"))
             {
                 option = "Datagram";
             }
-            else if(args[i].Equals("--twoway"))
+            else if (args[i].Equals("--twoway"))
             {
                 option = "Twoway";
             }
-            else if(args[i].Equals("--ordered"))
+            else if (args[i].Equals("--ordered"))
             {
                 option = "Ordered";
             }
-            else if(args[i].Equals("--oneway"))
+            else if (args[i].Equals("--oneway"))
             {
                 option = "Oneway";
             }
-            else if(args[i].Equals("--batch"))
+            else if (args[i].Equals("--batch"))
             {
                 batch = true;
             }
-            else if(args[i].Equals("--id"))
+            else if (args[i].Equals("--id"))
             {
                 ++i;
-                if(i >= args.Length)
+                if (i >= args.Length)
                 {
-                    usage();
+                    Usage();
                     return 1;
                 }
                 id = args[i];
             }
-            else if(args[i].Equals("--retryCount"))
+            else if (args[i].Equals("--retryCount"))
             {
                 ++i;
-                if(i >= args.Length)
+                if (i >= args.Length)
                 {
-                    usage();
+                    Usage();
                     return 1;
                 }
                 retryCount = args[i];
             }
-            else if(args[i].StartsWith("--"))
+            else if (args[i].StartsWith("--"))
             {
-                usage();
+                Usage();
                 return 1;
             }
             else
@@ -115,20 +105,20 @@ public class Subscriber
                 break;
             }
 
-            if(!oldoption.Equals(option) && !oldoption.Equals("None"))
+            if (!oldoption.Equals(option) && !oldoption.Equals("None"))
             {
-                usage();
+                Usage();
                 return 1;
             }
         }
 
-        if(i != args.Length)
+        if (i != args.Length)
         {
-            usage();
+            Usage();
             return 1;
         }
 
-        if(batch && (option.Equals("Twoway") || option.Equals("Ordered")))
+        if (batch && (option.Equals("Twoway") || option.Equals("Ordered")))
         {
             Console.WriteLine("batch can only be set with oneway or datagram");
             return 1;
@@ -136,27 +126,25 @@ public class Subscriber
 
         IceStorm.TopicManagerPrx manager = IceStorm.TopicManagerPrxHelper.checkedCast(
             communicator.propertyToProxy("TopicManager.Proxy"));
-        if(manager == null)
+        if (manager == null)
         {
             Console.WriteLine("invalid proxy");
             return 1;
         }
 
-        //
         // Retrieve the topic.
-        //
         IceStorm.TopicPrx topic;
         try
         {
             topic = manager.retrieve(topicName);
         }
-        catch(IceStorm.NoSuchTopic)
+        catch (IceStorm.NoSuchTopic)
         {
             try
             {
                 topic = manager.create(topicName);
             }
-            catch(IceStorm.TopicExists)
+            catch (IceStorm.TopicExists)
             {
                 Console.WriteLine("temporary error. try again.");
                 return 1;
@@ -164,7 +152,6 @@ public class Subscriber
         }
 
         Ice.ObjectAdapter adapter = communicator.createObjectAdapter("Clock.Subscriber");
-        //
         // Add a servant for the Ice object. If --id is used the
         // identity comes from the command line, otherwise a UUID is
         // used.
@@ -172,30 +159,25 @@ public class Subscriber
         // id is not directly altered since it is used below to
         // detect whether subscribeAndGetPublisher can raise
         // AlreadySubscribed.
-        //
         Ice.Identity subId = new Ice.Identity(id, "");
-        if(subId.name == null)
+        if (subId.name == null)
         {
             subId.name = Guid.NewGuid().ToString();
         }
         Ice.ObjectPrx subscriber = adapter.add(new ClockI(), subId);
 
-        //
         // Activate the object adapter before subscribing.
-        //
         adapter.activate();
 
         Dictionary<string, string> qos = new Dictionary<string, string>();
-        if(retryCount != null)
+        if (retryCount != null)
         {
             qos["retryCount"] = retryCount;
         }
-        //
         // Set up the proxy.
-        //
-        if(option.Equals("Datagram"))
+        if (option.Equals("Datagram"))
         {
-            if(batch)
+            if (batch)
             {
                 subscriber = subscriber.ice_batchDatagram();
             }
@@ -204,18 +186,18 @@ public class Subscriber
                 subscriber = subscriber.ice_datagram();
             }
         }
-        else if(option.Equals("Twoway"))
+        else if (option.Equals("Twoway"))
         {
             // Do nothing to the subscriber proxy. Its already twoway.
         }
-        else if(option.Equals("Ordered"))
+        else if (option.Equals("Ordered"))
         {
             // Do nothing to the subscriber proxy. Its already twoway.
             qos["reliability"] = "ordered";
         }
-        else if(option.Equals("Oneway") || option.Equals("None"))
+        else if (option.Equals("Oneway") || option.Equals("None"))
         {
-            if(batch)
+            if (batch)
             {
                 subscriber = subscriber.ice_batchOneway();
             }
@@ -229,7 +211,7 @@ public class Subscriber
         {
             topic.subscribeAndGetPublisher(qos, subscriber);
         }
-        catch(IceStorm.AlreadySubscribed)
+        catch (IceStorm.AlreadySubscribed)
         {
             // This should never occur when subscribing with an UUID
             Debug.Assert(id != null);
@@ -242,7 +224,7 @@ public class Subscriber
         return 0;
     }
 
-    private static void usage()
+    private static void Usage()
     {
         Console.WriteLine("Usage: [--batch] [--datagram|--twoway|--ordered|--oneway] " +
                           "[--retryCount count] [--id id] [topic]");

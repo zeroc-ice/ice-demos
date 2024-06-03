@@ -1,6 +1,4 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 using Demo;
 
@@ -16,19 +14,19 @@ public class HelloI : HelloDisp_
         var lang = System.Environment.GetEnvironmentVariable("LANG") != null ?
                                                              System.Environment.GetEnvironmentVariable("LANG") : "en";
         var greeting = "Hello, ";
-        if(lang.Equals("fr"))
+        if (lang.Equals("fr"))
         {
             greeting = "Bonjour, ";
         }
-        else if(lang.Equals("de"))
+        else if (lang.Equals("de"))
         {
             greeting = "Hallo, ";
         }
-        else if(lang.Equals("es"))
+        else if (lang.Equals("es"))
         {
             greeting = "Hola, ";
         }
-        else if(lang.Equals("it"))
+        else if (lang.Equals("it"))
         {
             greeting = "Ciao, ";
         }

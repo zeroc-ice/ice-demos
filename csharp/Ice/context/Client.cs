@@ -1,11 +1,6 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 using Demo;
-
-using System;
-using System.Collections.Generic;
 
 public class Client
 {
@@ -15,27 +10,21 @@ public class Client
 
         try
         {
-            //
             // The new communicator is automatically destroyed (disposed) at the end of the
             // using statement
-            //
-            using(var communicator = Ice.Util.initialize(ref args, "config.client"))
+            using var communicator = Ice.Util.initialize(ref args, "config.client");
+            // The communicator initialization removes all Ice-related arguments from args
+            if (args.Length > 0)
             {
-                //
-                // The communicator initialization removes all Ice-related arguments from args
-                //
-                if(args.Length > 0)
-                {
-                    Console.Error.WriteLine("too many arguments");
-                    status = 1;
-                }
-                else
-                {
-                    status = run(communicator);
-                }
+                Console.Error.WriteLine("too many arguments");
+                status = 1;
+            }
+            else
+            {
+                status = Run(communicator);
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Console.Error.WriteLine(ex);
             status = 1;
@@ -44,16 +33,16 @@ public class Client
         return status;
     }
 
-    private static int run(Ice.Communicator communicator)
+    private static int Run(Ice.Communicator communicator)
     {
         var proxy = ContextPrxHelper.checkedCast(communicator.propertyToProxy("Context.Proxy"));
-        if(proxy == null)
+        if (proxy == null)
         {
             Console.Error.WriteLine("invalid proxy");
             return 1;
         }
 
-        menu();
+        Menu();
 
         string line = null;
         do
@@ -63,25 +52,25 @@ public class Client
                 Console.Out.Write("==> ");
                 Console.Out.Flush();
                 line = Console.In.ReadLine();
-                if(line == null)
+                if (line == null)
                 {
                     break;
                 }
-                if(line.Equals("1"))
+                if (line.Equals("1"))
                 {
                     proxy.call();
                 }
-                else if(line.Equals("2"))
+                else if (line.Equals("2"))
                 {
                     var ctx = new Dictionary<string, string>() { { "type", "Explicit" } };
                     proxy.call(ctx);
                 }
-                else if(line.Equals("3"))
+                else if (line.Equals("3"))
                 {
                     var ctx = new Dictionary<string, string>() { { "type", "Per-Proxy" } };
                     ContextPrxHelper.uncheckedCast(proxy.ice_context(ctx)).call();
                 }
-                else if(line.Equals("4"))
+                else if (line.Equals("4"))
                 {
                     var ic = communicator.getImplicitContext();
                     var ctx = new Dictionary<string, string>() { { "type", "Implicit" } };
@@ -90,25 +79,25 @@ public class Client
                     ctx = new Dictionary<string, string>();
                     ic.setContext(ctx);
                 }
-                else if(line.Equals("s"))
+                else if (line.Equals("s"))
                 {
                     proxy.shutdown();
                 }
-                else if(line.Equals("x"))
+                else if (line.Equals("x"))
                 {
                     // Nothing to do
                 }
-                else if(line.Equals("?"))
+                else if (line.Equals("?"))
                 {
-                    menu();
+                    Menu();
                 }
                 else
                 {
                     Console.WriteLine("unknown command `" + line + "'");
-                    menu();
+                    Menu();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
             }
@@ -118,7 +107,7 @@ public class Client
         return 0;
     }
 
-    private static void menu()
+    private static void Menu()
     {
         Console.Write(
             "usage:\n" +

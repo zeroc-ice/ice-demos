@@ -1,6 +1,4 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 using Demo;
 
@@ -10,19 +8,19 @@ public sealed class ThroughputI : ThroughputDisp_
     {
         _byteSeq = new byte[ByteSeqSize.value];
         _stringSeq = new string[StringSeqSize.value];
-        for(int i = 0; i < StringSeqSize.value; ++i)
+        for (int i = 0; i < StringSeqSize.value; ++i)
         {
             _stringSeq[i] = "hello";
         }
         _structSeq = new StringDouble[StringDoubleSeqSize.value];
-        for(int i = 0; i < StringDoubleSeqSize.value; ++i)
+        for (int i = 0; i < StringDoubleSeqSize.value; ++i)
         {
             _structSeq[i] = new StringDouble();
             _structSeq[i].s = "hello";
             _structSeq[i].d = 3.14;
         }
         _fixedSeq = new Fixed[FixedSeqSize.value];
-        for(int i = 0; i < FixedSeqSize.value; ++i)
+        for (int i = 0; i < FixedSeqSize.value; ++i)
         {
             _fixedSeq[i].i = 0;
             _fixedSeq[i].j = 0;
@@ -53,7 +51,7 @@ public sealed class ThroughputI : ThroughputDisp_
 
     public override byte[] recvByteSeq(Ice.Current current)
     {
-        if(_warmup)
+        if (_warmup)
         {
             return _warmupByteSeq;
         }
@@ -74,7 +72,7 @@ public sealed class ThroughputI : ThroughputDisp_
 
     public override string[] recvStringSeq(Ice.Current current)
     {
-        if(_warmup)
+        if (_warmup)
         {
             return _warmupStringSeq;
         }
@@ -95,7 +93,7 @@ public sealed class ThroughputI : ThroughputDisp_
 
     public override StringDouble[] recvStructSeq(Ice.Current current)
     {
-        if(_warmup)
+        if (_warmup)
         {
             return _warmupStructSeq;
         }
@@ -116,7 +114,7 @@ public sealed class ThroughputI : ThroughputDisp_
 
     public override Fixed[] recvFixedSeq(Ice.Current current)
     {
-        if(_warmup)
+        if (_warmup)
         {
             return _warmupFixedSeq;
         }

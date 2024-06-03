@@ -1,9 +1,6 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 using Demo;
-using System;
 
 public class Client
 {
@@ -13,27 +10,21 @@ public class Client
 
         try
         {
-            //
             // The new communicator is automatically destroyed (disposed) at the end of the
             // using statement
-            //
-            using(var communicator = Ice.Util.initialize(ref args, "config.client"))
+            using var communicator = Ice.Util.initialize(ref args, "config.client");
+            // The communicator initialization removes all Ice-related arguments from args
+            if (args.Length > 0)
             {
-                //
-                // The communicator initialization removes all Ice-related arguments from args
-                //
-                if(args.Length > 0)
-                {
-                    Console.Error.WriteLine("too many arguments");
-                    status = 1;
-                }
-                else
-                {
-                    status = run(communicator);
-                }
+                Console.Error.WriteLine("too many arguments");
+                status = 1;
+            }
+            else
+            {
+                status = Run(communicator);
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Console.Error.WriteLine(ex);
             status = 1;
@@ -42,11 +33,11 @@ public class Client
         return status;
     }
 
-    private static int run(Ice.Communicator communicator)
+    private static int Run(Ice.Communicator communicator)
     {
         HelloPrx twoway = HelloPrxHelper.checkedCast(
             communicator.propertyToProxy("Hello.Proxy").ice_twoway().ice_secure(false));
-        if(twoway == null)
+        if (twoway == null)
         {
             Console.Error.WriteLine("invalid proxy");
             return 1;
@@ -54,13 +45,13 @@ public class Client
         HelloPrx oneway = (HelloPrx)twoway.ice_oneway();
         HelloPrx batchOneway = (HelloPrx)twoway.ice_batchOneway();
         HelloPrx datagram = (HelloPrx)twoway.ice_datagram();
-        HelloPrx batchDatagram =(HelloPrx)twoway.ice_batchDatagram();
+        HelloPrx batchDatagram = (HelloPrx)twoway.ice_batchDatagram();
 
         bool secure = false;
         int timeout = -1;
         int delay = 0;
 
-        menu();
+        Menu();
 
         string line = null;
         do
@@ -70,25 +61,25 @@ public class Client
                 Console.Out.Write("==> ");
                 Console.Out.Flush();
                 line = Console.In.ReadLine();
-                if(line == null)
+                if (line == null)
                 {
                     break;
                 }
-                if(line.Equals("t"))
+                if (line.Equals("t"))
                 {
                     twoway.sayHello(delay);
                 }
-                else if(line.Equals("o"))
+                else if (line.Equals("o"))
                 {
                     oneway.sayHello(delay);
                 }
-                else if(line.Equals("O"))
+                else if (line.Equals("O"))
                 {
                     batchOneway.sayHello(delay);
                 }
-                else if(line.Equals("d"))
+                else if (line.Equals("d"))
                 {
-                    if(secure)
+                    if (secure)
                     {
                         Console.WriteLine("secure datagrams are not supported");
                     }
@@ -97,9 +88,9 @@ public class Client
                         datagram.sayHello(delay);
                     }
                 }
-                else if(line.Equals("D"))
+                else if (line.Equals("D"))
                 {
-                    if(secure)
+                    if (secure)
                     {
                         Console.WriteLine("secure datagrams are not supported");
                     }
@@ -108,17 +99,17 @@ public class Client
                         batchDatagram.sayHello(delay);
                     }
                 }
-                else if(line.Equals("f"))
+                else if (line.Equals("f"))
                 {
                     batchOneway.ice_flushBatchRequests();
-                    if(!secure)
+                    if (!secure)
                     {
                         batchDatagram.ice_flushBatchRequests();
                     }
                 }
-                else if(line.Equals("T"))
+                else if (line.Equals("T"))
                 {
-                    if(timeout == -1)
+                    if (timeout == -1)
                     {
                         timeout = 2000;
                     }
@@ -131,7 +122,7 @@ public class Client
                     oneway = (HelloPrx)oneway.ice_invocationTimeout(timeout);
                     batchOneway = (HelloPrx)batchOneway.ice_invocationTimeout(timeout);
 
-                    if(timeout == -1)
+                    if (timeout == -1)
                     {
                         Console.WriteLine("timeout is now switched off");
                     }
@@ -140,9 +131,9 @@ public class Client
                         Console.WriteLine("timeout is now set to 2000ms");
                     }
                 }
-                else if(line.Equals("P"))
+                else if (line.Equals("P"))
                 {
-                    if(delay == 0)
+                    if (delay == 0)
                     {
                         delay = 2500;
                     }
@@ -151,7 +142,7 @@ public class Client
                         delay = 0;
                     }
 
-                    if(delay == 0)
+                    if (delay == 0)
                     {
                         Console.WriteLine("server delay is now deactivated");
                     }
@@ -160,7 +151,7 @@ public class Client
                         Console.WriteLine("server delay is now set to 2500ms");
                     }
                 }
-                else if(line.Equals("S"))
+                else if (line.Equals("S"))
                 {
                     secure = !secure;
 
@@ -170,7 +161,7 @@ public class Client
                     datagram = (HelloPrx)datagram.ice_secure(secure);
                     batchDatagram = (HelloPrx)batchDatagram.ice_secure(secure);
 
-                    if(secure)
+                    if (secure)
                     {
                         Console.WriteLine("secure mode is now on");
                     }
@@ -179,25 +170,25 @@ public class Client
                         Console.WriteLine("secure mode is now off");
                     }
                 }
-                else if(line.Equals("s"))
+                else if (line.Equals("s"))
                 {
                     twoway.shutdown();
                 }
-                else if(line.Equals("x"))
+                else if (line.Equals("x"))
                 {
                     // Nothing to do
                 }
-                else if(line.Equals("?"))
+                else if (line.Equals("?"))
                 {
-                    menu();
+                    Menu();
                 }
                 else
                 {
                     Console.WriteLine("unknown command `" + line + "'");
-                    menu();
+                    Menu();
                 }
             }
-            catch(System.Exception ex)
+            catch (System.Exception ex)
             {
                 Console.Error.WriteLine(ex);
             }
@@ -207,7 +198,7 @@ public class Client
         return 0;
     }
 
-    private static void menu()
+    private static void Menu()
     {
         Console.Write(
             "usage:\n" +

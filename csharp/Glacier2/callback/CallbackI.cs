@@ -1,9 +1,6 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 using Demo;
-using System;
 
 public sealed class CallbackI : CallbackDisp_
 {
@@ -14,7 +11,7 @@ public sealed class CallbackI : CallbackDisp_
         {
             proxy.callback();
         }
-        catch(System.Exception ex)
+        catch (System.Exception ex)
         {
             Console.Error.WriteLine(ex);
         }

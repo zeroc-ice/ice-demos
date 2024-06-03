@@ -1,15 +1,11 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 namespace Demo
 {
-    //
     // Because the Distance generated struct is defined as a partial type,
     // we can manually add some extra methods that are convenient for our
     // application.
-    //
-    partial record struct Distance
+    public partial record struct Distance
     {
         public double Yards
         {
@@ -17,6 +13,7 @@ namespace Demo
             {
                 return value * YardConversionFactor;
             }
+
             set
             {
                 this.value = value / YardConversionFactor;
@@ -29,6 +26,7 @@ namespace Demo
             {
                 return value;
             }
+
             set
             {
                 this.value = value;
@@ -37,12 +35,11 @@ namespace Demo
 
         private const double YardConversionFactor = 1.0936;
     }
-    //
+
     // Because the Speed generated class is defined as a partial type,
     // we can manually add some extra methods that are convenient for our
     // application.
-    //
-    partial class Speed
+    public partial class Speed
     {
         public double MilesPerHour
         {
@@ -50,6 +47,7 @@ namespace Demo
             {
                 return value * MilesPerHourConversionFactor;
             }
+
             set
             {
                 this.value = value / MilesPerHourConversionFactor;
@@ -62,6 +60,7 @@ namespace Demo
             {
                 return value * KilometersPerHourConversionFactor;
             }
+
             set
             {
                 this.value = value / KilometersPerHourConversionFactor;
@@ -74,6 +73,7 @@ namespace Demo
             {
                 return value;
             }
+
             set
             {
                 this.value = value;

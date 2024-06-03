@@ -1,11 +1,7 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 using Demo;
-using System;
 using System.Diagnostics;
-using System.Collections.Generic;
 
 public class Client
 {
@@ -15,24 +11,18 @@ public class Client
 
         try
         {
-            //
             // The new communicator is automatically destroyed (disposed) at the end of the
             // using statement
-            //
-            using(var communicator = Ice.Util.initialize(ref args, "config.client"))
+            using var communicator = Ice.Util.initialize(ref args, "config.client");
+            // The communicator initialization removes all Ice-related arguments from args
+            if (args.Length > 0)
             {
-                //
-                // The communicator initialization removes all Ice-related arguments from args
-                //
-                if (args.Length > 0)
-                {
-                    Console.Error.WriteLine("too many arguments");
-                    status = 1;
-                }
-                else
-                {
-                    status = run(communicator);
-                }
+                Console.Error.WriteLine("too many arguments");
+                status = 1;
+            }
+            else
+            {
+                status = Run(communicator);
             }
         }
         catch (Exception ex)
@@ -44,18 +34,14 @@ public class Client
         return status;
     }
 
-    private static int run(Ice.Communicator communicator)
+    private static int Run(Ice.Communicator communicator)
     {
         var router = Glacier2.RouterPrxHelper.checkedCast(communicator.getDefaultRouter());
         Glacier2.SessionPrx session;
-        //
         // Loop until we have successfully create a session.
-        //
-        while(true)
+        while (true)
         {
-            //
             // Prompt the user for the credentials to create the session.
-            //
             Console.WriteLine("This demo accepts any user-id / password combination.");
 
             string id;
@@ -65,7 +51,7 @@ public class Client
                 Console.Write("user id: ");
                 Console.Out.Flush();
                 id = Console.In.ReadLine();
-                if(id == null)
+                if (id == null)
                 {
                     throw new Ice.CommunicatorDestroyedException();
                 }
@@ -74,32 +60,30 @@ public class Client
                 Console.Write("password: ");
                 Console.Out.Flush();
                 pw = Console.In.ReadLine();
-                if(pw == null)
+                if (pw == null)
                 {
                     throw new Ice.CommunicatorDestroyedException();
                 }
                 pw = pw.Trim();
             }
-            catch(System.IO.IOException ex)
+            catch (System.IO.IOException ex)
             {
                 Console.WriteLine(ex.StackTrace.ToString());
                 continue;
             }
 
-            //
             // Try to create a session and break the loop if succeed,
             // otherwise try again after printing the error message.
-            //
             try
             {
                 session = router.createSession(id, pw);
                 break;
             }
-            catch(Glacier2.PermissionDeniedException ex)
+            catch (Glacier2.PermissionDeniedException ex)
             {
                 Console.WriteLine("permission denied:\n" + ex.reason);
             }
-            catch(Glacier2.CannotCreateSessionException ex)
+            catch (Glacier2.CannotCreateSessionException ex)
             {
                 Console.WriteLine("cannot create session:\n" + ex.reason);
             }
@@ -110,13 +94,11 @@ public class Client
         Debug.Assert(connection != null);
         connection.setCloseCallback(_ => Console.WriteLine("The Glacier2 session has been destroyed."));
 
-        //
         // The Glacier2 router routes bidirectional calls to objects in the client only
         // when these objects have the correct Glacier2-issued category. The purpose of
         // the callbackReceiverFakeIdent is to demonstrate this.
         //
         // The Identity name is not checked by the server any value can be used.
-        //
         Ice.Identity callbackReceiverIdent =
             new Ice.Identity(System.Guid.NewGuid().ToString(), router.getCategoryForClient());
         Ice.Identity callbackReceiverFakeIdent =
@@ -128,9 +110,7 @@ public class Client
         CallbackPrx batchOneway = CallbackPrxHelper.uncheckedCast(twoway.ice_batchOneway());
 
         var adapter = communicator.createObjectAdapterWithRouter("", router);
-        //
         // Callback will never be called for a fake identity.
-        //
         adapter.add(new CallbackReceiverI(), callbackReceiverFakeIdent);
 
         CallbackReceiverPrx twowayR = CallbackReceiverPrxHelper.uncheckedCast(
@@ -139,11 +119,9 @@ public class Client
         adapter.activate();
         CallbackReceiverPrx onewayR = CallbackReceiverPrxHelper.uncheckedCast(twowayR.ice_oneway());
 
-        menu();
+        Menu();
 
-        //
         // Client REPL
-        //
         string line = null;
         string @override = null;
         bool fake = false;
@@ -152,40 +130,40 @@ public class Client
             Console.Write("==> ");
             Console.Out.Flush();
             line = Console.In.ReadLine();
-            if(line == null)
+            if (line == null)
             {
                 break;
             }
-            if(line.Equals("t"))
+            if (line.Equals("t"))
             {
                 twoway.initiateCallback(twowayR);
             }
-            else if(line.Equals("o"))
+            else if (line.Equals("o"))
             {
                 Dictionary<string, string> context = new Dictionary<string, string>();
-                if(@override != null)
+                if (@override != null)
                 {
                     context["_ovrd"] = @override;
                 }
                 oneway.initiateCallback(onewayR, context);
             }
-            else if(line.Equals("O"))
+            else if (line.Equals("O"))
             {
                 Dictionary<string, string> context = new Dictionary<string, string>();
                 context["_fwd"] = "O";
-                if(@override != null)
+                if (@override != null)
                 {
                     context["_ovrd"] = @override;
                 }
                 batchOneway.initiateCallback(onewayR, context);
             }
-            else if(line.Equals("f"))
+            else if (line.Equals("f"))
             {
                 batchOneway.ice_flushBatchRequests();
             }
-            else if(line.Equals("v"))
+            else if (line.Equals("v"))
             {
-                if(@override == null)
+                if (@override == null)
                 {
                     @override = "some_value";
                     Console.WriteLine("override context field is now `" + @override + "'");
@@ -196,11 +174,11 @@ public class Client
                     Console.WriteLine("override context field is empty");
                 }
             }
-            else if(line.Equals("F"))
+            else if (line.Equals("F"))
             {
                 fake = !fake;
 
-                if(fake)
+                if (fake)
                 {
                     twowayR = CallbackReceiverPrxHelper.uncheckedCast(
                         twowayR.ice_identity(callbackReceiverFakeIdent));
@@ -218,30 +196,30 @@ public class Client
                 Console.WriteLine("callback receiver identity: " +
                                     Ice.Util.identityToString(twowayR.ice_getIdentity()));
             }
-            else if(line.Equals("s"))
+            else if (line.Equals("s"))
             {
                 twoway.shutdown();
             }
-            else if(line.Equals("x"))
+            else if (line.Equals("x"))
             {
                 // Nothing to do
             }
-            else if(line.Equals("?"))
+            else if (line.Equals("?"))
             {
-                menu();
+                Menu();
             }
             else
             {
                 Console.WriteLine("unknown command `" + line + "'");
-                menu();
+                Menu();
             }
         }
-        while(!line.Equals("x"));
+        while (!line.Equals("x"));
 
         return 0;
     }
 
-    private static void menu()
+    private static void Menu()
     {
         Console.WriteLine(
             "usage:\n" +

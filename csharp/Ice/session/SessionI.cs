@@ -1,10 +1,6 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 using Demo;
-using System;
-using System.Collections.Generic;
 
 public class SessionI : SessionDisp_
 {
@@ -20,9 +16,9 @@ public class SessionI : SessionDisp_
 
     public override HelloPrx createHello(Ice.Current current)
     {
-        lock(this)
+        lock (this)
         {
-            if(_destroy)
+            if (_destroy)
             {
                 throw new Ice.ObjectNotExistException();
             }
@@ -35,9 +31,9 @@ public class SessionI : SessionDisp_
 
     public override string getName(Ice.Current c)
     {
-        lock(this)
+        lock (this)
         {
-            if(_destroy)
+            if (_destroy)
             {
                 throw new Ice.ObjectNotExistException();
             }
@@ -48,25 +44,25 @@ public class SessionI : SessionDisp_
 
     public override void destroy(Ice.Current current)
     {
-        lock(this)
+        lock (this)
         {
-            if(_destroy)
+            if (_destroy)
             {
                 throw new Ice.ObjectNotExistException();
             }
 
             _destroy = true;
 
-            Console.Out.WriteLine("The session " + _name +  " is now destroyed.");
+            Console.Out.WriteLine("The session " + _name + " is now destroyed.");
             try
             {
                 current.adapter.remove(current.id);
-                foreach(HelloPrx p in _objs)
+                foreach (HelloPrx p in _objs)
                 {
                     current.adapter.remove(p.ice_getIdentity());
                 }
             }
-            catch(Ice.ObjectAdapterDeactivatedException)
+            catch (Ice.ObjectAdapterDeactivatedException)
             {
                 // This method is called on shutdown of the server, in which
                 // case this exception is expected.

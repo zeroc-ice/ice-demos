@@ -1,8 +1,4 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
-
-using System;
+// Copyright (c) ZeroC, Inc.
 
 public class Server
 {
@@ -12,27 +8,25 @@ public class Server
 
         try
         {
-            using (Ice.Communicator communicator = Ice.Util.initialize(ref args, "config.server"))
+            using Ice.Communicator communicator = Ice.Util.initialize(ref args, "config.server");
+            if (args.Length > 0)
             {
-                if (args.Length > 0)
+                Console.Error.WriteLine("too many arguments");
+                status = 1;
+            }
+            else
+            {
+                Console.CancelKeyPress += (sender, eventArgs) =>
                 {
-                    Console.Error.WriteLine("too many arguments");
-                    status = 1;
-                }
-                else
-                {
-                    Console.CancelKeyPress += (sender, eventArgs) =>
-                    {
-                        eventArgs.Cancel = true;
-                        communicator.shutdown();
-                    };
+                    eventArgs.Cancel = true;
+                    communicator.shutdown();
+                };
 
-                    Ice.ObjectAdapter adapter = communicator.createObjectAdapter("Calculator");
-                    adapter.add(new CalculatorI(), Ice.Util.stringToIdentity("calculator"));
-                    adapter.activate();
+                Ice.ObjectAdapter adapter = communicator.createObjectAdapter("Calculator");
+                adapter.add(new CalculatorI(), Ice.Util.stringToIdentity("calculator"));
+                adapter.activate();
 
-                    communicator.waitForShutdown();
-                }
+                communicator.waitForShutdown();
             }
         }
         catch (Exception exception)

@@ -1,13 +1,8 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 using Demo;
-using Ice;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
-class InterceptorI : Ice.Object
+internal class InterceptorI : Ice.Object
 {
     internal InterceptorI(Ice.Object servant, AuthenticatorI authenticator, HashSet<string> securedOperations)
     {
@@ -16,28 +11,22 @@ class InterceptorI : Ice.Object
         _securedOperations = securedOperations;
     }
 
-    public ValueTask<OutgoingResponse> dispatchAsync(IncomingRequest request)
+    public ValueTask<Ice.OutgoingResponse> dispatchAsync(Ice.IncomingRequest request)
     {
         var current = request.current;
-        //
         // Check if the operation requires authorization to invoke.
-        //
-        if(_securedOperations.Contains(current.operation))
+        if (_securedOperations.Contains(current.operation))
         {
-            //
             // Validate the client's access token before dispatching to the servant.
             // 'validateToken' throws an exception if the token is invalid or expired.
-            //
             string tokenValue;
-            if(current.ctx.TryGetValue("accessToken", out tokenValue))
+            if (current.ctx.TryGetValue("accessToken", out tokenValue))
             {
-                _authenticator.validateToken(tokenValue);
+                _authenticator.ValidateToken(tokenValue);
             }
             else
             {
-                //
                 // If the client didn't include an accessToken, throw an exception.
-                //
                 throw new AuthorizationException();
             }
         }

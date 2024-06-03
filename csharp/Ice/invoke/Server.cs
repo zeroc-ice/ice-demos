@@ -1,8 +1,4 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
-
-using System;
+// Copyright (c) ZeroC, Inc.
 
 public class Server
 {
@@ -12,32 +8,26 @@ public class Server
 
         try
         {
-            //
             // using statement - communicator is automatically destroyed
             // at the end of this statement
-            //
-            using(var communicator = Ice.Util.initialize(ref args, "config.server"))
-            {
-                //
-                // Destroy the communicator on Ctrl+C or Ctrl+Break
-                //
-                Console.CancelKeyPress += (sender, eventArgs) => communicator.destroy();
+            using var communicator = Ice.Util.initialize(ref args, "config.server");
+            // Destroy the communicator on Ctrl+C or Ctrl+Break
+            Console.CancelKeyPress += (sender, eventArgs) => communicator.destroy();
 
-                if(args.Length > 0)
-                {
-                    Console.Error.WriteLine("too many arguments");
-                    status = 1;
-                }
-                else
-                {
-                    var adapter = communicator.createObjectAdapter("Printer");
-                    adapter.add(new PrinterI(), Ice.Util.stringToIdentity("printer"));
-                    adapter.activate();
-                    communicator.waitForShutdown();
-                }
+            if (args.Length > 0)
+            {
+                Console.Error.WriteLine("too many arguments");
+                status = 1;
+            }
+            else
+            {
+                var adapter = communicator.createObjectAdapter("Printer");
+                adapter.add(new PrinterI(), Ice.Util.stringToIdentity("printer"));
+                adapter.activate();
+                communicator.waitForShutdown();
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Console.Error.WriteLine(ex);
             status = 1;

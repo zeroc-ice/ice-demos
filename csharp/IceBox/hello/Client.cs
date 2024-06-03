@@ -1,9 +1,6 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 using Demo;
-using System;
 
 public class Client
 {
@@ -13,24 +10,18 @@ public class Client
 
         try
         {
-            //
             // The new communicator is automatically destroyed (disposed) at the end of the
             // using statement
-            //
-            using (var communicator = Ice.Util.initialize(ref args, "config.client"))
+            using var communicator = Ice.Util.initialize(ref args, "config.client");
+            // The communicator initialization removes all Ice-related arguments from args
+            if (args.Length > 0)
             {
-                //
-                // The communicator initialization removes all Ice-related arguments from args
-                //
-                if (args.Length > 0)
-                {
-                    Console.Error.WriteLine("too many arguments");
-                    status = 1;
-                }
-                else
-                {
-                    status = run(communicator);
-                }
+                Console.Error.WriteLine("too many arguments");
+                status = 1;
+            }
+            else
+            {
+                status = Run(communicator);
             }
         }
         catch (Exception ex)
@@ -42,7 +33,7 @@ public class Client
         return status;
     }
 
-    private static int run(Ice.Communicator communicator)
+    private static int Run(Ice.Communicator communicator)
     {
         var twoway = HelloPrxHelper.checkedCast(
             communicator.propertyToProxy("Hello.Proxy").ice_twoway().ice_secure(false));
@@ -58,7 +49,7 @@ public class Client
 
         bool secure = false;
 
-        menu();
+        Menu();
 
         string line = null;
         do
@@ -139,12 +130,12 @@ public class Client
                 }
                 else if (line.Equals("?"))
                 {
-                    menu();
+                    Menu();
                 }
                 else
                 {
                     Console.WriteLine("unknown command `" + line + "'");
-                    menu();
+                    Menu();
                 }
             }
             catch (Exception ex)
@@ -157,7 +148,7 @@ public class Client
         return 0;
     }
 
-    private static void menu()
+    private static void Menu()
     {
         Console.Write(
             "usage:\n" +

@@ -1,6 +1,4 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 using Demo;
 
@@ -19,7 +17,7 @@ public class DiscoverI : DiscoverDisp_
         {
             reply.reply(_obj);
         }
-        catch(Ice.LocalException)
+        catch (Ice.LocalException)
         {
             // Ignore
         }

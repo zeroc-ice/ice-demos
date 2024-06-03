@@ -1,9 +1,6 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 using Demo;
-using System;
 
 public class Client
 {
@@ -13,41 +10,33 @@ public class Client
 
         try
         {
-            //
             // The new communicator is automatically destroyed (disposed) at the end of the
             // using statement
-            //
-            using(var communicator = Ice.Util.initialize(ref args, "config.client"))
-            {
-                //
-                // Destroy the communicator on Ctrl+C or Ctrl+Break
-                //
-                Console.CancelKeyPress += (sender, eventArgs) => communicator.destroy();
+            using var communicator = Ice.Util.initialize(ref args, "config.client");
+            // Destroy the communicator on Ctrl+C or Ctrl+Break
+            Console.CancelKeyPress += (sender, eventArgs) => communicator.destroy();
 
-                //
-                // The communicator initialization removes all Ice-related arguments from args
-                //
-                if(args.Length > 0)
+            // The communicator initialization removes all Ice-related arguments from args
+            if (args.Length > 0)
+            {
+                Console.Error.WriteLine("too many arguments");
+                status = 1;
+            }
+            else
+            {
+                var hello = HelloPrxHelper.uncheckedCast(communicator.propertyToProxy("Hello.Proxy"));
+                if (hello == null)
                 {
-                    Console.Error.WriteLine("too many arguments");
+                    Console.Error.WriteLine("Hello.Proxy not found");
                     status = 1;
                 }
                 else
                 {
-                    var hello = HelloPrxHelper.uncheckedCast(communicator.propertyToProxy("Hello.Proxy"));
-                    if(hello == null)
-                    {
-                        Console.Error.WriteLine("Hello.Proxy not found");
-                        status = 1;
-                    }
-                    else
-                    {
-                        hello.sayHello();
-                    }
+                    hello.sayHello();
                 }
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Console.Error.WriteLine(ex);
             status = 1;

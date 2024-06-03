@@ -1,9 +1,6 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 using Demo;
-using System;
 
 public class SessionFactoryI : SessionFactoryDisp_
 {
@@ -12,11 +9,9 @@ public class SessionFactoryI : SessionFactoryDisp_
         var session = new SessionI(name);
         var proxy = SessionPrxHelper.uncheckedCast(current.adapter.addWithUUID(session));
 
-        //
         // Remove endpoints to ensure that calls are collocated-only
         // This way, if we invoke on the proxy during shutdown, the invocation fails immediately
         // without attempting to establish any connection
-        //
         var collocProxy = SessionPrxHelper.uncheckedCast(proxy.ice_endpoints(new Ice.Endpoint[0]));
 
         current.con.setCloseCallback(_ =>

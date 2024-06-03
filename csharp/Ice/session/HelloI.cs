@@ -1,15 +1,12 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 using Demo;
-using System;
 
 public class HelloI : HelloDisp_
 {
     public HelloI(string name, int id)
     {
-        _name =  name;
+        _name = name;
         _id = id;
     }
 

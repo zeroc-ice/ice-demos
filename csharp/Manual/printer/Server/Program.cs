@@ -1,8 +1,4 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
-
-using System;
+// Copyright (c) ZeroC, Inc.
 
 namespace Server
 {
@@ -20,16 +16,14 @@ namespace Server
         {
             try
             {
-                using(Ice.Communicator communicator = Ice.Util.initialize(ref args))
-                {
-                    var adapter =
-                        communicator.createObjectAdapterWithEndpoints("SimplePrinterAdapter", "default -h localhost -p 10000");
-                    adapter.add(new PrinterI(), Ice.Util.stringToIdentity("SimplePrinter"));
-                    adapter.activate();
-                    communicator.waitForShutdown();
-                }
+                using Ice.Communicator communicator = Ice.Util.initialize(ref args);
+                var adapter =
+                    communicator.createObjectAdapterWithEndpoints("SimplePrinterAdapter", "default -h localhost -p 10000");
+                adapter.add(new PrinterI(), Ice.Util.stringToIdentity("SimplePrinter"));
+                adapter.activate();
+                communicator.waitForShutdown();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.Error.WriteLine(e);
                 return 1;

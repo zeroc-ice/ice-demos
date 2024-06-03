@@ -1,10 +1,8 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 using Demo;
 
-class NestedI : NestedDisp_
+internal class NestedI : NestedDisp_
 {
     internal NestedI(NestedPrx self)
     {
@@ -14,13 +12,11 @@ class NestedI : NestedDisp_
     public override void nestedCall(int level, NestedPrx proxy, Ice.Current current)
     {
         System.Console.Out.WriteLine("" + level);
-        if(--level > 0)
+        if (--level > 0)
         {
-            //
             // Ensure the invocation times out if the nesting level is too
             // high and there are no more threads in the thread pool to
             // dispatch the call.
-            //
             ((NestedPrx)proxy.ice_invocationTimeout(5000)).nestedCall(level, _self);
         }
     }

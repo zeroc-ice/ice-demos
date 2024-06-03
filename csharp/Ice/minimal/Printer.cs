@@ -1,8 +1,5 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
-using System;
 using Demo;
 
 /// <summary>Implements Slice interface `Hello` by printing messages.</summary>

@@ -1,20 +1,17 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 using Demo;
-using System;
 
 public class PrinterI : Ice.Blobject
 {
     private class ReadValueCallback
     {
-        public void invoke(Ice.Value obj)
+        public void Invoke(Ice.Value obj)
         {
-            this.obj = obj;
+            this.Obj = obj;
         }
 
-        internal Ice.Value obj;
+        internal Ice.Value Obj;
     }
 
     public override bool ice_invoke(byte[] inParams, out byte[] outParams, Ice.Current current)
@@ -25,24 +22,24 @@ public class PrinterI : Ice.Blobject
         var communicator = current.adapter.getCommunicator();
 
         Ice.InputStream inStream = null;
-        if(inParams.Length > 0)
+        if (inParams.Length > 0)
         {
             inStream = new Ice.InputStream(communicator, inParams);
             inStream.startEncapsulation();
         }
 
-        if(current.operation.Equals("printString"))
+        if (current.operation.Equals("printString"))
         {
             var message = inStream.readString();
             Console.WriteLine("Printing string `" + message + "'");
         }
-        else if(current.operation.Equals("printStringSequence"))
+        else if (current.operation.Equals("printStringSequence"))
         {
             var seq = StringSeqHelper.read(inStream);
             Console.Write("Printing string sequence {");
-            for(int i = 0; i < seq.Length; ++i)
+            for (int i = 0; i < seq.Length; ++i)
             {
-                if(i > 0)
+                if (i > 0)
                 {
                     Console.Write(", ");
                 }
@@ -50,14 +47,14 @@ public class PrinterI : Ice.Blobject
             }
             Console.WriteLine("}");
         }
-        else if(current.operation.Equals("printDictionary"))
+        else if (current.operation.Equals("printDictionary"))
         {
             var dict = StringDictHelper.read(inStream);
             Console.Write("Printing dictionary {");
             bool first = true;
-            foreach(var e in dict)
+            foreach (var e in dict)
             {
-                if(!first)
+                if (!first)
                 {
                     Console.Write(", ");
                 }
@@ -66,23 +63,23 @@ public class PrinterI : Ice.Blobject
             }
             Console.WriteLine("}");
         }
-        else if(current.operation.Equals("printEnum"))
+        else if (current.operation.Equals("printEnum"))
         {
             var c = ColorHelper.read(inStream);
             Console.WriteLine("Printing enum " + c);
         }
-        else if(current.operation.Equals("printStruct"))
+        else if (current.operation.Equals("printStruct"))
         {
             var s = Structure.ice_read(inStream);
             Console.WriteLine("Printing struct: name=" + s.name + ", value=" + s.value);
         }
-        else if(current.operation.Equals("printStructSequence"))
+        else if (current.operation.Equals("printStructSequence"))
         {
             var seq = StructureSeqHelper.read(inStream);
             Console.Write("Printing struct sequence: {");
-            for(int i = 0; i < seq.Length; ++i)
+            for (int i = 0; i < seq.Length; ++i)
             {
-                if(i > 0)
+                if (i > 0)
                 {
                     Console.Write(", ");
                 }
@@ -90,15 +87,15 @@ public class PrinterI : Ice.Blobject
             }
             Console.WriteLine("}");
         }
-        else if(current.operation.Equals("printClass"))
+        else if (current.operation.Equals("printClass"))
         {
             var cb = new ReadValueCallback();
-            inStream.readValue(cb.invoke);
+            inStream.readValue(cb.Invoke);
             inStream.readPendingValues();
-            var c = cb.obj as C;
+            var c = cb.Obj as C;
             Console.WriteLine("Printing class: s.name=" + c.s.name + ", s.value=" + c.s.value);
         }
-        else if(current.operation.Equals("getValues"))
+        else if (current.operation.Equals("getValues"))
         {
             var c = new C(new Structure("green", Color.green));
             var outStream = new Ice.OutputStream(communicator);
@@ -109,7 +106,7 @@ public class PrinterI : Ice.Blobject
             outStream.endEncapsulation();
             outParams = outStream.finished();
         }
-        else if(current.operation.Equals("throwPrintFailure"))
+        else if (current.operation.Equals("throwPrintFailure"))
         {
             Console.WriteLine("Throwing PrintFailure");
             var ex = new PrintFailure("paper tray empty");
@@ -120,7 +117,7 @@ public class PrinterI : Ice.Blobject
             outParams = outStream.finished();
             result = false;
         }
-        else if(current.operation.Equals("shutdown"))
+        else if (current.operation.Equals("shutdown"))
         {
             current.adapter.getCommunicator().shutdown();
         }
@@ -129,9 +126,7 @@ public class PrinterI : Ice.Blobject
             throw new Ice.OperationNotExistException(current.id, current.facet, current.operation);
         }
 
-        //
         // Make sure we read all in parameters
-        //
         inStream.endEncapsulation();
         return result;
     }

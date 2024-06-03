@@ -1,9 +1,6 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 using Demo;
-using System;
 
 namespace Client
 {
@@ -13,19 +10,17 @@ namespace Client
         {
             try
             {
-                using(Ice.Communicator communicator = Ice.Util.initialize(ref args))
+                using Ice.Communicator communicator = Ice.Util.initialize(ref args);
+                var obj = communicator.stringToProxy("SimplePrinter:default -h localhost -p 10000");
+                var printer = PrinterPrxHelper.checkedCast(obj);
+                if (printer == null)
                 {
-                    var obj = communicator.stringToProxy("SimplePrinter:default -h localhost -p 10000");
-                    var printer = PrinterPrxHelper.checkedCast(obj);
-                    if(printer == null)
-                    {
-                        throw new ApplicationException("Invalid proxy");
-                    }
-
-                    printer.printString("Hello World!");
+                    throw new ApplicationException("Invalid proxy");
                 }
+
+                printer.printString("Hello World!");
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.Error.WriteLine(e);
                 return 1;
