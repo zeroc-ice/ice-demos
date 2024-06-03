@@ -59,10 +59,6 @@ if(isset($_POST["submitted"]))
         {
             $p = $p->ice_secure(true);
         }
-        if(isset($_POST["timeout"]) and $_POST["timeout"] == "yes")
-        {
-            $p = $p->ice_timeout(2000);
-        }
         if(isset($_POST["delay"]) and $_POST["delay"] == "yes")
         {
             $delay = 2500;

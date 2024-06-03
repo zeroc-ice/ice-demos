@@ -43,7 +43,6 @@ clean {
 
 dependencies {
     implementation localDependency("ice")
-    implementation localDependency("icessl")
     runtimeOnly localDependency("icediscovery")
     implementation "androidx.fragment:fragment:1.5.5"
     implementation "androidx.appcompat:appcompat:1.6.1"
