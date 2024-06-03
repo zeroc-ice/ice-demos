@@ -45,7 +45,7 @@ public class DirectoryI : DirectoryDisp_
     }
 
     private string _name;
-    private DirectoryI _parent;
+    private readonly DirectoryI _parent;
     private Ice.Identity _id;
     private List<NodePrx> _contents = new List<NodePrx>();
 }

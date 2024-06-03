@@ -2,13 +2,8 @@
 
 using Demo;
 
-public class HelloI : HelloDisp_
+public class HelloI(string serviceName) : HelloDisp_
 {
-    public HelloI(string serviceName)
-    {
-        _serviceName = serviceName;
-    }
-
     public override void sayHello(Ice.Current current)
     {
         var lang = System.Environment.GetEnvironmentVariable("LANG") != null ?
@@ -33,5 +28,5 @@ public class HelloI : HelloDisp_
         System.Console.Out.WriteLine(greeting + _serviceName);
     }
 
-    private string _serviceName;
+    private string _serviceName = serviceName;
 }

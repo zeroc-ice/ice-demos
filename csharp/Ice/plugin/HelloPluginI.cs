@@ -1,12 +1,7 @@
 // Copyright (c) ZeroC, Inc.
 
-public class HelloPluginI : Ice.Plugin
+public class HelloPluginI(Ice.Communicator communicator) : Ice.Plugin
 {
-    public HelloPluginI(Ice.Communicator communicator)
-    {
-        _communicator = communicator;
-    }
-
     public void initialize()
     {
         var adapter = _communicator.createObjectAdapter("Hello");
@@ -18,5 +13,5 @@ public class HelloPluginI : Ice.Plugin
     {
     }
 
-    private Ice.Communicator _communicator;
+    private Ice.Communicator _communicator = communicator;
 }

@@ -134,15 +134,15 @@ public sealed class ThroughputI : ThroughputDisp_
         current.adapter.getCommunicator().shutdown();
     }
 
-    private byte[] _byteSeq;
-    private string[] _stringSeq;
-    private StringDouble[] _structSeq;
-    private Fixed[] _fixedSeq;
+    private readonly byte[] _byteSeq;
+    private readonly string[] _stringSeq;
+    private readonly StringDouble[] _structSeq;
+    private readonly Fixed[] _fixedSeq;
 
-    private byte[] _warmupByteSeq = new byte[1];
-    private string[] _warmupStringSeq = new string[1];
-    private StringDouble[] _warmupStructSeq = new StringDouble[] { new() };
-    private Fixed[] _warmupFixedSeq = new Fixed[1];
+    private readonly byte[] _warmupByteSeq = new byte[1];
+    private readonly string[] _warmupStringSeq = new string[1];
+    private readonly StringDouble[] _warmupStructSeq = new StringDouble[] { new() };
+    private readonly Fixed[] _warmupFixedSeq = new Fixed[1];
 
     private bool _needsWarmup = true;
     private bool _warmup = false;

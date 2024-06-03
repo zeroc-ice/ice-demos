@@ -2,15 +2,8 @@
 
 using Demo;
 
-internal class CallbackSenderI : CallbackSenderDisp_
+internal class CallbackSenderI(Ice.Communicator communicator) : CallbackSenderDisp_
 {
-    public CallbackSenderI(Ice.Communicator communicator)
-    {
-        _communicator = communicator;
-        _destroy = false;
-        _clients = new List<CallbackReceiverPrx>();
-    }
-
     public void Destroy()
     {
         lock (this)
@@ -75,7 +68,7 @@ internal class CallbackSenderI : CallbackSenderDisp_
         }
     }
 
-    private Ice.Communicator _communicator;
-    private bool _destroy;
-    private List<CallbackReceiverPrx> _clients;
+    private Ice.Communicator _communicator = communicator;
+    private bool _destroy = false;
+    private List<CallbackReceiverPrx> _clients = new List<CallbackReceiverPrx>();
 }

@@ -21,5 +21,5 @@ internal class NestedI : NestedDisp_
         }
     }
 
-    private NestedPrx _self;
+    private readonly NestedPrx _self;
 }

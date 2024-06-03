@@ -2,14 +2,8 @@
 
 using Demo;
 
-public class DiscoverI : DiscoverDisp_
+public class DiscoverI(Ice.ObjectPrx obj) : DiscoverDisp_
 {
-    public
-    DiscoverI(Ice.ObjectPrx obj)
-    {
-        _obj = obj;
-    }
-
     public override void
     lookup(DiscoverReplyPrx reply, Ice.Current current)
     {
@@ -23,5 +17,5 @@ public class DiscoverI : DiscoverDisp_
         }
     }
 
-    private Ice.ObjectPrx _obj;
+    private Ice.ObjectPrx _obj = obj;
 }
