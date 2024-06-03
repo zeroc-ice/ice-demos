@@ -84,11 +84,8 @@ public class Client
             }
         }
 
-        int acmTimeout = router.getACMTimeout();
         com.zeroc.Ice.Connection connection = router.ice_getCachedConnection();
         assert(connection != null);
-        connection.setACM(java.util.OptionalInt.of(acmTimeout), null,
-                          java.util.Optional.of(com.zeroc.Ice.ACMHeartbeat.HeartbeatAlways));
         connection.setCloseCallback(con -> System.out.println("The Glacier2 session has been destroyed."));
 
         //

@@ -19,13 +19,6 @@ class SessionFactoryI implements SessionFactory
         //
         SessionPrx collocProxy = proxy.ice_endpoints(new com.zeroc.Ice.Endpoint[0]);
 
-        //
-        // Never close this connection from the client and turn on heartbeats with a timeout of 30s
-        //
-        current.con.setACM(java.util.OptionalInt.of(30),
-                           java.util.Optional.of(com.zeroc.Ice.ACMClose.CloseOff),
-                           java.util.Optional.of(com.zeroc.Ice.ACMHeartbeat.HeartbeatAlways));
-
         current.con.setCloseCallback(con ->
                  {
                      try
