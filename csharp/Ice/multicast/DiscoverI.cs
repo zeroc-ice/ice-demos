@@ -2,7 +2,7 @@
 
 using Demo;
 
-public class DiscoverI(Ice.ObjectPrx obj) : DiscoverDisp_
+internal class DiscoverI(Ice.ObjectPrx obj) : DiscoverDisp_
 {
     public override void
     lookup(DiscoverReplyPrx reply, Ice.Current current)

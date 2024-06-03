@@ -2,7 +2,7 @@
 
 using Demo;
 
-public class MeasurementStationI : MeasurementStationDisp_
+internal class MeasurementStationI : MeasurementStationDisp_
 {
     public override Distance getDistance(Ice.Current current = null)
     {

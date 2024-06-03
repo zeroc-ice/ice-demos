@@ -1,6 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
-public class HelloPluginI(Ice.Communicator communicator) : Ice.Plugin
+internal class HelloPluginI(Ice.Communicator communicator) : Ice.Plugin
 {
     public void initialize()
     {

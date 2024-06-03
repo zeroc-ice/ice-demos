@@ -2,7 +2,7 @@
 
 using Filesystem;
 
-public class DirectoryI : DirectoryDisp_
+internal class DirectoryI : DirectoryDisp_
 {
     // DirectoryI constructor
     public DirectoryI(string name, DirectoryI parent)

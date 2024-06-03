@@ -4,7 +4,7 @@ using Demo;
 
 #nullable enable
 
-public class Client
+internal class Client
 {
     public static int Main(string[] args)
     {

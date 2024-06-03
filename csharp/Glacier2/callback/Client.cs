@@ -3,7 +3,7 @@
 using Demo;
 using System.Diagnostics;
 
-public class Client
+internal class Client
 {
     public static int Main(string[] args)
     {

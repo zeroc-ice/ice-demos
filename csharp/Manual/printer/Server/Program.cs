@@ -2,7 +2,7 @@
 
 namespace Server
 {
-    public class PrinterI : Demo.PrinterDisp_
+    internal class PrinterI : Demo.PrinterDisp_
     {
         public override void printString(string s, Ice.Current current)
         {
@@ -10,7 +10,7 @@ namespace Server
         }
     }
 
-    public class Program
+    internal class Program
     {
         public static int Main(string[] args)
         {

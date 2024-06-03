@@ -2,7 +2,7 @@
 
 using Demo;
 
-public class HelloI(string name) : HelloDisp_
+internal class HelloI(string name) : HelloDisp_
 {
     public override string getGreeting(Ice.Current current)
     {

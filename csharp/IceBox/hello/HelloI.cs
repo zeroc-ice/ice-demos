@@ -2,7 +2,7 @@
 
 using Demo;
 
-public class HelloI : HelloDisp_
+internal class HelloI : HelloDisp_
 {
     public override void sayHello(Ice.Current current)
     {

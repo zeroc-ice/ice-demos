@@ -1,6 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
-public class Server
+internal class Server
 {
     private class PingI : Demo.PingDisp_
     {

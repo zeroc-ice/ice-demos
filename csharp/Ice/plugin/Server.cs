@@ -2,7 +2,7 @@
 
 using System;
 
-public class Server
+internal class Server
 {
     public static int Main(string[] args)
     {

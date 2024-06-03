@@ -2,7 +2,7 @@
 
 using Demo;
 
-public class PrinterI : Ice.Blobject
+internal class PrinterI : Ice.Blobject
 {
     private class ReadValueCallback
     {

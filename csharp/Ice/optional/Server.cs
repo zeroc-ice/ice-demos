@@ -1,6 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
-public class Server
+internal class Server
 {
     public static int Main(string[] args)
     {

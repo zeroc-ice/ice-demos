@@ -2,7 +2,7 @@
 
 using Filesystem;
 
-public class Program
+internal class Program
 {
     public static int Main(string[] args)
     {

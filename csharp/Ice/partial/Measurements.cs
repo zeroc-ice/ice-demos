@@ -5,7 +5,7 @@ namespace Demo
     // Because the Distance generated struct is defined as a partial type,
     // we can manually add some extra methods that are convenient for our
     // application.
-    public partial record struct Distance
+    internal partial record struct Distance
     {
         public double Yards
         {
@@ -39,7 +39,7 @@ namespace Demo
     // Because the Speed generated class is defined as a partial type,
     // we can manually add some extra methods that are convenient for our
     // application.
-    public partial class Speed
+    internal partial class Speed
     {
         public double MilesPerHour
         {

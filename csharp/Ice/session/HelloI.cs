@@ -2,7 +2,7 @@
 
 using Demo;
 
-public class HelloI(string name, int id) : HelloDisp_
+internal class HelloI(string name, int id) : HelloDisp_
 {
     public override void sayHello(Ice.Current c)
     {

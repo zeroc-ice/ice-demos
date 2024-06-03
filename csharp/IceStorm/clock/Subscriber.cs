@@ -3,9 +3,9 @@
 using Demo;
 using System.Diagnostics;
 
-public class Subscriber
+internal class Subscriber
 {
-    public class ClockI : ClockDisp_
+    internal class ClockI : ClockDisp_
     {
         public override void tick(string date, Ice.Current current)
         {

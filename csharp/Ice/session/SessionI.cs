@@ -2,7 +2,7 @@
 
 using Demo;
 
-public class SessionI : SessionDisp_
+internal class SessionI : SessionDisp_
 {
     public SessionI(string name)
     {

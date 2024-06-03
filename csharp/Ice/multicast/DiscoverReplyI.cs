@@ -2,7 +2,7 @@
 
 using Demo;
 
-public class DiscoverReplyI : DiscoverReplyDisp_
+internal class DiscoverReplyI : DiscoverReplyDisp_
 {
     public override void
     reply(Ice.ObjectPrx obj, Ice.Current current)

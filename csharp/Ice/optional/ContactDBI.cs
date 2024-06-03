@@ -4,7 +4,7 @@ using Demo;
 
 #nullable enable
 
-public class ContactDBI : ContactDBDisp_
+internal class ContactDBI : ContactDBDisp_
 {
     private Dictionary<string, Contact> _contacts = new Dictionary<string, Contact>();
 

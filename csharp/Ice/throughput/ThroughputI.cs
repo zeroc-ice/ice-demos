@@ -2,7 +2,7 @@
 
 using Demo;
 
-public sealed class ThroughputI : ThroughputDisp_
+internal sealed class ThroughputI : ThroughputDisp_
 {
     public ThroughputI()
     {

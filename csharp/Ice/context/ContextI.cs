@@ -2,7 +2,7 @@
 
 using Demo;
 
-public class ContextI : ContextDisp_
+internal class ContextI : ContextDisp_
 {
     public override void call(Ice.Current current)
     {

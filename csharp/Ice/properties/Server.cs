@@ -2,7 +2,7 @@
 
 using Demo;
 
-public class Server
+internal class Server
 {
     // The servant implements the Slice interface Demo::Props as well as the
     // native callback interface Ice.PropertiesAdminUpdateCallback.

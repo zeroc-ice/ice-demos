@@ -3,7 +3,7 @@
 using Filesystem;
 using System.Diagnostics;
 
-public class FileI : FileDisp_
+internal class FileI : FileDisp_
 {
     // FileI constructor
     public FileI(string name, DirectoryI parent)

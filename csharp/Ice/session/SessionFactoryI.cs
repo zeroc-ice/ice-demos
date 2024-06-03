@@ -2,7 +2,7 @@
 
 using Demo;
 
-public class SessionFactoryI : SessionFactoryDisp_
+internal class SessionFactoryI : SessionFactoryDisp_
 {
     public override SessionPrx create(string name, Ice.Current current)
     {

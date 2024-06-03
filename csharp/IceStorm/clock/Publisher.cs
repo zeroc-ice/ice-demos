@@ -3,7 +3,7 @@
 using Demo;
 using System.Globalization;
 
-public class Publisher
+internal class Publisher
 {
     public static int Main(string[] args)
     {

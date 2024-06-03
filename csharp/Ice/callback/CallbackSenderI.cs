@@ -2,7 +2,7 @@
 
 using Demo;
 
-public sealed class CallbackSenderI : CallbackSenderDisp_
+internal sealed class CallbackSenderI : CallbackSenderDisp_
 {
     public override void initiateCallback(CallbackReceiverPrx proxy, Ice.Current current)
     {
