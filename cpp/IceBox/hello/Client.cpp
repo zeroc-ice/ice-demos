@@ -55,8 +55,8 @@ void menu();
 int
 run(const shared_ptr<Ice::Communicator>& communicator)
 {
-    auto twoway = Ice::checkedCast<HelloPrx>(
-        communicator->propertyToProxy("Hello.Proxy")->ice_twoway()->ice_timeout(-1)->ice_secure(false));
+    auto twoway =
+        Ice::checkedCast<HelloPrx>(communicator->propertyToProxy("Hello.Proxy")->ice_twoway()->ice_secure(false));
     if (!twoway)
     {
         cerr << "invalid proxy" << endl;
