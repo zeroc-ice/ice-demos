@@ -1,4 +1,4 @@
-name: Clang Format
+name: Clang Tidy
 
 on:
   workflow_dispatch:
@@ -9,7 +9,7 @@ on:
     branches: ["main"]
 
 jobs:
-  clang-format:
+  clang-tidy:
     runs-on: ubuntu-latest
     steps:
       - name: Install bear and clang-tidy
