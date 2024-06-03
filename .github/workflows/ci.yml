@@ -41,7 +41,7 @@ jobs:
           echo "IceHome=${{ github.workspace }}\ice" >> $env:GITHUB_ENV
 
           # We need to replace \ with / in the path, specifically for Gradle
-          $iceHome = ${{ github.workspace }}/ice
+          $iceHome = "${{ github.workspace }}/ice"
           $iceHome = $iceHome.Repalce("\", "/")
           echo "ICE_HOME=$iceHome" >> $env:GITHUB_ENV
 
