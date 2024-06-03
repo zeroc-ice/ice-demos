@@ -12,12 +12,21 @@ jobs:
   clang-tidy:
     runs-on: ubuntu-latest
     steps:
-      - name: Install bear and clang-tidy
+      - name: Install clang-tidy
+        run: |
+          # This LLVM script will add the relevant LLVM PPA: https://apt.llvm.org/
+          wget https://apt.llvm.org/llvm.sh -O /tmp/llvm.sh
+          chmod +x /tmp/llvm.sh
+          sudo /tmp/llvm.sh 18
+          sudo apt-get install -y clang-tidy-18
+          rm /tmp/llvm.sh
+          clang-tidy-18 --version
+
+      - name: Install bear
         run: |
           sudo apt-get update
-          sudo apt-get install -y bear clang-tidy
+          sudo apt-get install -y bear
           bear --version
-          clang-tidy --version
 
       - name: Checkout Ice
         uses: actions/checkout@v4
