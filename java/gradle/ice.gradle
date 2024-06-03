@@ -138,7 +138,6 @@ def demoIceBoxServer() {
 
     dependencies {
         iceboxserver localDependency("ice")
-        iceboxserver localDependency("icessl")
         iceboxserver localDependency("icebox")
         iceboxserver "org.apache.commons:commons-compress:1.14"
     }

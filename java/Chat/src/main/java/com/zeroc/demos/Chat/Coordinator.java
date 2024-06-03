@@ -37,7 +37,6 @@ import com.zeroc.Glacier2.SessionFactoryHelper;
 import com.zeroc.Glacier2.SessionHelper;
 import com.zeroc.Glacier2.SessionCallback;
 import com.zeroc.Glacier2.SessionNotExistException;
-import com.zeroc.Ice.Util;
 
 class Coordinator
 {
@@ -55,14 +54,14 @@ class Coordinator
         com.zeroc.Ice.InitializationData initData = new com.zeroc.Ice.InitializationData();
 
         java.util.List<String> rArgs = new java.util.ArrayList<>();
-        initData.properties = com.zeroc.Ice.Util.createProperties(_args, rArgs);
+        initData.properties = new com.zeroc.Ice.Properties(_args, rArgs);
         _args = rArgs.toArray(new String[rArgs.size()]);
 
         initData.properties.setProperty("Ice.Plugin.IceSSL", "com.zeroc.IceSSL.PluginFactory");
 
         // Load the configuration file.
         initData.properties.setProperty("Ice.Default.Package", "com.zeroc.demos");
-        initData.properties = Util.createProperties(args, initData.properties);
+        initData.properties = new com.zeroc.Ice.Properties(args, initData.properties);
 
         //
         // Set Ice.Default.Router if not set.

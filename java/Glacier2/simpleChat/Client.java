@@ -290,10 +290,10 @@ public class Client extends JFrame
         com.zeroc.Ice.InitializationData initData = new com.zeroc.Ice.InitializationData();
 
         // Load the configuration file.
-        initData.properties = com.zeroc.Ice.Util.createProperties();
+        initData.properties = new com.zeroc.Ice.Properties();
         initData.properties.load("config.client");
         initData.properties.setProperty("Ice.Default.Package", "com.zeroc.demos.Glacier2.simpleChat");
-        initData.properties = Util.createProperties(args, initData.properties);
+        initData.properties = new com.zeroc.Ice.Properties(args, initData.properties);
 
         // Setup a dispatcher to dispath Ice and Glacier2 helper callbacks to the GUI thread.
         initData.dispatcher = (runnable, connection) ->

@@ -25,7 +25,6 @@
 
         dependencies {
             implementation localDependency("ice")
-            runtimeOnly localDependency("icessl")
             runtimeOnly "org.apache.commons:commons-compress:1.14"
         }
 

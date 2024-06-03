@@ -21,7 +21,7 @@ def demoIceGridProject(name) {
 
         dependencies {
             implementation localDependency("ice")
-            runtimeOnly localDependency("icessl")
+
             implementation localDependency("icegrid")
             runtimeOnly localDependency("icelocatordiscovery")
             runtimeOnly "org.apache.commons:commons-compress:1.14"
@@ -54,7 +54,6 @@ project(":demoIceGridSimple") {
 
 project(":demoIceGridIcebox") {
     dependencies {
-        runtimeOnly localDependency("icessl")
         implementation localDependency("icebox")
     }
     demoJar("client")

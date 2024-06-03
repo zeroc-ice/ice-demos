@@ -91,6 +91,7 @@ task :iceproj do
     end
     project.root_object.development_region = "en"
     project.root_object.known_regions = ["Base", "en"]
+    project.build_independent_targets_in_parallel = true
 
     #
     # Sort the project and save it
