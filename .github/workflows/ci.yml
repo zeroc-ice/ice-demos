@@ -1,4 +1,4 @@
-name: Build and test
+name: Build
 
 on:
   workflow_dispatch:
@@ -13,11 +13,9 @@ concurrency:
   group: ${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
 
-env:
-  ICE_HOME: ${{ github.workspace }}/ice # Makefile
-  IceHome: ${{ github.workspace }}/ice # MSBuild
-  Platform: x64 # For Msbuild
-  Configuration: Release # For Msbuild
+# env:
+#   Platform: x64 # For Msbuild
+#   Configuration: Release # For Msbuild
 
 jobs:
   ci:
@@ -28,16 +26,31 @@ jobs:
         include:
           - os: ubuntu-22.04
             ice_build_flags: srcs
-            csharp_build_command: dotnet build
           - os: macos-14
             ice_build_flags: srcs
-            csharp_build_command: dotnet build
           - os: windows-2022
             ice_build_flags: /t:BuildDist
-            csharp_build_command: MSBuild
 
     runs-on: ${{ matrix.os }}
     steps:
+      - name: Windows Environment
+        if: runner.os == 'Windows'
+        run: |
+          echo "Platform=x64" >> $env:GITHUB_ENV
+          echo "Configuration=Release" >> $env:GITHUB_ENV
+          echo "IceHome=${{ github.workspace }}\ice" >> $env:GITHUB_ENV
+
+          # We need to replace \ with / in the path, specifically for Gradle
+          $iceHome = "${{ github.workspace }}/ice"
+          $iceHome = $iceHome.Replace("\", "/")
+          echo "ICE_HOME=$iceHome" >> $env:GITHUB_ENV
+
+      - name: Linux/MacOS Environment
+        if: runner.os != 'Windows'
+        run: |
+          echo "ICE_HOME=${{ github.workspace }}/ice" >> $GITHUB_ENV
+          echo "IceHome=${{ github.workspace }}/ice" >> $GITHUB_ENV
+
       - name: Checkout Ice
         uses: actions/checkout@v4
         with:
@@ -50,10 +63,10 @@ jobs:
 
       - name: Build Ice on ${{ matrix.os }}
         uses: ./ice/.github/actions/build
-        timeout-minutes: 90
+        timeout-minutes: 60
         with:
           working_directory: ice
-          build_flags: ${{ matrix.ice_build_flags || '' }}
+          build_flags: ${{ runner.os == 'Windows' && '/t:BuildDist' || 'srcs' }}
 
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -62,16 +75,25 @@ jobs:
 
       - name: Build C++ Demos on ${{ matrix.os }}
         uses: ./ice/.github/actions/build
-        timeout-minutes: 30
+        timeout-minutes: 20
         with:
           working_directory: ice-demos/cpp
           msbuild_project: msbuild/ice.proj
 
       - name: Build C# Demos on ${{ matrix.os }}
-        timeout-minutes: 30
+        timeout-minutes: 20
         working-directory: ice-demos/csharp
-        run: ${{ matrix.csharp_build_command }} /m msbuild/ice.proj
+        run: ${{ runner.os == 'Windows' && 'MSBuild' || 'dotnet msbuild' }} /m msbuild/ice.proj
 
       - name: Run .NET format
         run: dotnet format --verify-no-changes "./ice-demos/csharp/C# NET demos.sln"
         if: runner.os == 'Linux'
+
+      - name: Build Java Demos on ${{ matrix.os }}
+        timeout-minutes: 20
+        working-directory: ice-demos/java
+        env:
+          # For Ice Builder for Gradle
+          CPP_PLATFORM: x64
+          CPP_CONFIGURATION: Release
+        run: ./gradlew build
