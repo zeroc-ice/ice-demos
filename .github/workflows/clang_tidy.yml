@@ -42,8 +42,12 @@ jobs:
         uses: ./ice/.github/actions/build
         timeout-minutes: 90
         with:
-          working_directory: ice
+          working_directory: ice/cpp
           build_flags: srcs
+
+      - name: Set ICE_HOME
+        run: |
+          echo "ICE_HOME=${{ github.workspace }}/ice" >> $GITHUB_ENV
 
       - name: Checkout repository
         uses: actions/checkout@v4
