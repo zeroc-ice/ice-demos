@@ -12,9 +12,8 @@ using namespace std;
 
 static const unsigned int maxNameSize = 12;
 static const unsigned int minNameSize = 3;
-static const string nameRange = "abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-static const string isEmptyTokens = "\t\r\n\f\v ";
-
+constexpr string_view nameRange = "abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+constexpr string_view isEmptyTokens = "\t\r\n\f\v ";
 static const unsigned int maxMessageSize = 1024;
 
 string

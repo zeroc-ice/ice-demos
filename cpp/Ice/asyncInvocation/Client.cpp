@@ -125,7 +125,7 @@ run(const shared_ptr<Ice::Communicator>& communicator, const string& appName)
                 assert(false);
                 p.set_value(make_tuple(answer, remainder));
             },
-            [&p](exception_ptr ex) { p.set_exception(ex); });
+            [&p](const exception_ptr& ex) { p.set_exception(ex); });
         try
         {
             auto result = p.get_future().get();

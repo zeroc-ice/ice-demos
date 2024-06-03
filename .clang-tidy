@@ -1,0 +1,17 @@
+Checks:
+'-*,
+  clang-analyzer-*,
+  -clang-diagnostic-shadow-uncaptured-local,
+  cert-*,
+  modernize-*,
+  -modernize-avoid-c-arrays,
+  -modernize-use-trailing-return-type,
+  performance-*,
+  -performance-avoid-endl
+'
+WarningsAsErrors:  ''
+HeaderFilterRegex: ''
+UseColor: true
+FormatStyle: 'file'
+CheckOptions:
+  - { key: modernize-use-nullptr.NullMacros, value: 'NULL' }

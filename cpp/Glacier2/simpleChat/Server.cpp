@@ -10,10 +10,10 @@
 using namespace std;
 using namespace Demo;
 
-class DummyPermissionsVerifierI : public Glacier2::PermissionsVerifier
+class DummyPermissionsVerifierI final : public Glacier2::PermissionsVerifier
 {
 public:
-    virtual bool checkPermissions(string userId, string password, string&, const Ice::Current&) const override
+    bool checkPermissions(string userId, string password, string&, const Ice::Current&) const final
     {
         cout << "verified user `" << userId << "' with password `" << password << "'" << endl;
         return true;

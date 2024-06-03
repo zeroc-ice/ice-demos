@@ -11,10 +11,10 @@ using namespace std;
 //
 // The servant implements the Slice interface Demo::Props
 //
-class PropsI : public Demo::Props
+class PropsI final : public Demo::Props
 {
 public:
-    virtual Ice::PropertyDict getChanges(const Ice::Current&) override
+    Ice::PropertyDict getChanges(const Ice::Current&) final
     {
         unique_lock<mutex> lock(_mutex);
 
@@ -31,7 +31,7 @@ public:
         return _changes;
     }
 
-    virtual void shutdown(const Ice::Current& current) override { current.adapter->getCommunicator()->shutdown(); }
+    void shutdown(const Ice::Current& current) final { current.adapter->getCommunicator()->shutdown(); }
 
     void updated(const Ice::PropertyDict& changes)
     {

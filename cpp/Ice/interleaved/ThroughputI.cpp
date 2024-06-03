@@ -8,7 +8,7 @@
 Demo::Throughput::EchoByteSeqMarshaledResult
 ThroughputI::echoByteSeq(std::pair<const std::byte*, const std::byte*> seq, const Ice::Current& current)
 {
-    return EchoByteSeqMarshaledResult(seq, current);
+    return {seq, current};
 }
 
 void

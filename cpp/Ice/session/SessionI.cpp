@@ -8,14 +8,14 @@
 using namespace std;
 using namespace Demo;
 
-class HelloI : public Hello
+class HelloI final : public Hello
 {
 public:
     HelloI(string name, int id) : _name(std::move(name)), _id(id) {}
 
-    virtual ~HelloI() { cout << "Hello object #" << _id << " for session `" << _name << "' destroyed" << endl; }
+    ~HelloI() final { cout << "Hello object #" << _id << " for session `" << _name << "' destroyed" << endl; }
 
-    void sayHello(const Ice::Current&) override
+    void sayHello(const Ice::Current&) final
     {
         cout << "Hello object #" << _id << " for session `" << _name << "' says:\n"
              << "Hello " << _name << "!" << endl;
@@ -41,7 +41,7 @@ SessionI::createHello(const Ice::Current& current)
     }
 
     auto hello = Ice::uncheckedCast<HelloPrx>(current.adapter->addWithUUID(make_shared<HelloI>(_name, _nextId++)));
-    _objs.push_back(hello);
+    _objs.emplace_back(hello);
     return hello;
 }
 

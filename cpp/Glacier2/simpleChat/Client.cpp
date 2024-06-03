@@ -13,10 +13,10 @@ using namespace Demo;
 // mutex to prevent intertwined cout output
 mutex coutMutex;
 
-class ChatCallbackI : public ChatCallback
+class ChatCallbackI final : public ChatCallback
 {
 public:
-    virtual void message(string data, const Ice::Current&) override
+    void message(string data, const Ice::Current&) final
     {
         const lock_guard<mutex> lock(coutMutex);
         cout << data << endl;

@@ -106,9 +106,9 @@ class DiscoverTask
 {
 public:
     DiscoverTask(optional<MTalk::DiscoveryPrx> d, string n, optional<MTalk::PeerPrx> p)
-        : _discovery(d),
-          _name(n),
-          _proxy(p)
+        : _discovery(std::move(d)),
+          _name(std::move(n)),
+          _proxy(std::move(p))
     {
     }
 

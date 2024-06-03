@@ -14,7 +14,7 @@ CallbackSenderI::addClient(optional<CallbackReceiverPrx> client, const Ice::Curr
 {
     const lock_guard<mutex> lock(_mutex);
     cout << "adding client `" << Ice::identityToString(client->ice_getIdentity()) << "'" << endl;
-    _clients.push_back(client->ice_fixed(current.con));
+    _clients.emplace_back(client->ice_fixed(current.con));
 }
 
 void

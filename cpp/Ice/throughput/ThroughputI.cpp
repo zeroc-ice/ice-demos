@@ -46,20 +46,20 @@ ThroughputI::recvByteSeq(const Ice::Current& current)
         Demo::ByteSeq warmupBytesBuf(1);
         const std::pair<const std::byte*, const std::byte*> ret =
             std::make_pair(warmupBytesBuf.data(), warmupBytesBuf.data() + warmupBytesBuf.size());
-        return RecvByteSeqMarshaledResult(ret, current);
+        return {ret, current};
     }
     else
     {
         const std::pair<const std::byte*, const std::byte*> ret =
             std::make_pair(_byteSeq.data(), _byteSeq.data() + _byteSeq.size());
-        return RecvByteSeqMarshaledResult(ret, current);
+        return {ret, current};
     }
 }
 
 Demo::Throughput::EchoByteSeqMarshaledResult
 ThroughputI::echoByteSeq(std::pair<const std::byte*, const std::byte*> seq, const Ice::Current& current)
 {
-    return EchoByteSeqMarshaledResult(seq, current);
+    return {seq, current};
 }
 
 void
@@ -72,18 +72,18 @@ ThroughputI::recvStringSeq(const Ice::Current& current)
 {
     if (_warmup)
     {
-        return RecvStringSeqMarshaledResult(std::vector<std::string>(1), current);
+        return {std::vector<std::string>(1), current};
     }
     else
     {
-        return RecvStringSeqMarshaledResult(_stringSeq, current);
+        return {_stringSeq, current};
     }
 }
 
 Demo::Throughput::EchoStringSeqMarshaledResult
 ThroughputI::echoStringSeq(std::vector<std::string> seq, const Ice::Current& current)
 {
-    return EchoStringSeqMarshaledResult(seq, current);
+    return {seq, current};
 }
 
 void

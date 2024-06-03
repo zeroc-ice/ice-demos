@@ -51,15 +51,15 @@ ContactDBI::updateContact(
     {
         if (type)
         {
-            p->second->type = std::move(type);
+            p->second->type = type;
         }
         if (number)
         {
-            p->second->number = std::move(number);
+            p->second->number = number;
         }
         if (dialGroup)
         {
-            p->second->dialGroup = std::move(dialGroup);
+            p->second->dialGroup = dialGroup;
         }
     }
 }
@@ -72,7 +72,7 @@ ContactDBI::query(string name, const Ice::Current&)
     {
         return p->second;
     }
-    return 0;
+    return nullptr;
 }
 
 optional<string>

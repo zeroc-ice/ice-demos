@@ -5,14 +5,14 @@
 #ifndef HELLO_I_H
 #define HELLO_I_H
 
-#include <Hello.h>
+#include "Hello.h"
 
-class HelloI : public Demo::Hello
+class HelloI final : public Demo::Hello
 {
 public:
-    HelloI(const std::string&);
+    HelloI(std::string_view);
 
-    virtual void sayHello(const Ice::Current&) override;
+    void sayHello(const Ice::Current&) final;
 
 private:
     const std::string _name;

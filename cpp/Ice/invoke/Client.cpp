@@ -194,13 +194,13 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 Ice::OutputStream out(communicator);
                 out.startEncapsulation();
                 Demo::StructureSeq arr;
-                arr.push_back(Demo::Structure());
+                arr.emplace_back();
                 arr.back().name = "red";
                 arr.back().value = Color::red;
-                arr.push_back(Demo::Structure());
+                arr.emplace_back();
                 arr.back().name = "green";
                 arr.back().value = Color::green;
-                arr.push_back(Demo::Structure());
+                arr.emplace_back();
                 arr.back().name = "blue";
                 arr.back().value = Color::blue;
                 out.write(arr);

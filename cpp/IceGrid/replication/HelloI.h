@@ -7,13 +7,13 @@
 
 #include <Hello.h>
 
-class HelloI : public Demo::Hello
+class HelloI final : public Demo::Hello
 {
 public:
-    HelloI(const std::string&);
+    HelloI(std::string_view);
 
-    virtual std::string getGreeting(const Ice::Current&) override;
-    virtual void shutdown(const Ice::Current&) override;
+    std::string getGreeting(const Ice::Current&) final;
+    void shutdown(const Ice::Current&) final;
 
 private:
     const std::string _name;
