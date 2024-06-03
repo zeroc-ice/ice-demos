@@ -62,87 +62,87 @@ internal class Client
                 switch (line)
                 {
                     case "1":
-                        {
-                            Console.Out.WriteLine("Current temperature is " + thermostat.getTemp());
-                            break;
-                        }
+                    {
+                        Console.Out.WriteLine("Current temperature is " + thermostat.getTemp());
+                        break;
+                    }
                     case "2":
+                    {
+                        try
                         {
-                            try
-                            {
-                                Console.Out.WriteLine("Enter desired temperature: ");
-                                thermostat.setTemp(float.Parse(Console.ReadLine()));
-                                Console.Out.WriteLine("New temperature is " + thermostat.getTemp());
-                            }
-                            catch (FormatException)
-                            {
-                                Console.Error.WriteLine("Provided temperature is not a parsable float.");
-                            }
-                            catch (TokenExpiredException)
-                            {
-                                Console.Error.WriteLine("Failed to set temperature. Token expired!");
-                            }
-                            catch (AuthorizationException)
-                            {
-                                Console.Error.WriteLine("Failed to set temperature. Access denied!");
-                            }
-                            break;
+                            Console.Out.WriteLine("Enter desired temperature: ");
+                            thermostat.setTemp(float.Parse(Console.ReadLine()));
+                            Console.Out.WriteLine("New temperature is " + thermostat.getTemp());
                         }
+                        catch (FormatException)
+                        {
+                            Console.Error.WriteLine("Provided temperature is not a parsable float.");
+                        }
+                        catch (TokenExpiredException)
+                        {
+                            Console.Error.WriteLine("Failed to set temperature. Token expired!");
+                        }
+                        catch (AuthorizationException)
+                        {
+                            Console.Error.WriteLine("Failed to set temperature. Access denied!");
+                        }
+                        break;
+                    }
                     case "3":
-                        {
-                            // Request an access token from the server's authentication object.
-                            string token = authenticator.getToken();
-                            Console.Out.WriteLine("Successfully retrieved access token: \"" + token + "\"");
-                            // Add the access token to the communicator's context, so it will be
-                            // sent along with every request made through it.
-                            communicator.getImplicitContext().put("accessToken", token);
-                            break;
-                        }
+                    {
+                        // Request an access token from the server's authentication object.
+                        string token = authenticator.getToken();
+                        Console.Out.WriteLine("Successfully retrieved access token: \"" + token + "\"");
+                        // Add the access token to the communicator's context, so it will be
+                        // sent along with every request made through it.
+                        communicator.getImplicitContext().put("accessToken", token);
+                        break;
+                    }
                     case "4":
+                    {
+                        var context = communicator.getImplicitContext();
+                        if (context.containsKey("accessToken"))
                         {
-                            var context = communicator.getImplicitContext();
-                            if (context.containsKey("accessToken"))
-                            {
-                                context.remove("accessToken");
-                            }
-                            else
-                            {
-                                Console.Out.WriteLine("There is no access token to release.");
-                            }
-                            break;
+                            context.remove("accessToken");
                         }
+                        else
+                        {
+                            Console.Out.WriteLine("There is no access token to release.");
+                        }
+                        break;
+                    }
                     case "s":
+                    {
+                        try
                         {
-                            try
-                            {
-                                thermostat.shutdown();
-                            }
-                            catch (TokenExpiredException)
-                            {
-                                Console.Error.WriteLine("Failed to shutdown thermostat. Token expired!");
-                            }
-                            catch (AuthorizationException)
-                            {
-                                Console.Error.WriteLine("Failed to shutdown thermostat. Access denied!");
-                            }
-                            break;
+                            thermostat.shutdown();
                         }
+                        catch (TokenExpiredException)
+                        {
+                            Console.Error.WriteLine("Failed to shutdown thermostat. Token expired!");
+                        }
+                        catch (AuthorizationException)
+                        {
+                            Console.Error.WriteLine("Failed to shutdown thermostat. Access denied!");
+                        }
+                        break;
+                    }
                     case "x":
-                        {
-                            // Nothing to do, the loop will exit on its own.
-                            break;
-                        }
+                    {
+                        // Nothing to do, the loop will exit on its own.
+                        break;
+                    }
                     case "?":
-                        {
-                            Menu();
-                            break;
-                        }
+                    {
+                        Menu();
+                        break;
+                    }
                     default:
-                        {
-                            Console.Out.WriteLine("Unknown command `" + line + "'");
-                            Menu();
-                            break;
-                        }
+                    {
+                        Console.Out.WriteLine("Unknown command `" + line + "'");
+                        Menu();
+                        break;
+                    }
                 }
             }
             while (!line.Equals("x"));
