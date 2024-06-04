@@ -25,7 +25,7 @@ ContactDBI::addContact(
     }
     if (number)
     {
-        contact->number = number;
+        contact->number = std::move(number);
     }
     if (dialGroup)
     {
