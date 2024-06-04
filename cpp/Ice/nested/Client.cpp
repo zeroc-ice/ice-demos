@@ -82,7 +82,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
         {
             cout << "enter nesting level or 'x' for exit: ";
             cin >> s;
-            int level = atoi(s.c_str());
+            int level = stoi(s.c_str());
             if (level > 0)
             {
                 nested->nestedCall(level, self);

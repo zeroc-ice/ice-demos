@@ -1,0 +1,65 @@
+name: Clang Tidy
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: ["main"]
+
+jobs:
+  clang-tidy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install clang-tidy
+        run: |
+          # This LLVM script will add the relevant LLVM PPA: https://apt.llvm.org/
+          wget https://apt.llvm.org/llvm.sh -O /tmp/llvm.sh
+          chmod +x /tmp/llvm.sh
+          sudo /tmp/llvm.sh 18
+          sudo apt-get install -y clang-tidy-18
+          rm /tmp/llvm.sh
+          clang-tidy-18 --version
+
+      - name: Install bear
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y bear
+          bear --version
+
+      - name: Checkout Ice
+        uses: actions/checkout@v4
+        with:
+          repository: zeroc-ice/ice
+          ref: main
+          path: ice
+
+      - name: Setup Ice Build Dependencies
+        uses: ./ice/.github/actions/setup-dependencies
+
+      - name: Build Ice
+        uses: ./ice/.github/actions/build
+        timeout-minutes: 90
+        with:
+          working_directory: ice/cpp
+          build_flags: srcs
+
+      - name: Set ICE_HOME
+        run: |
+          echo "ICE_HOME=${{ github.workspace }}/ice" >> $GITHUB_ENV
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          path: ice-demos
+
+      - name: Build C++ Demos
+        timeout-minutes: 30
+        working-directory: ice-demos/cpp
+        run: bear -- make
+
+      - name: Run Clang Tidy
+        working-directory: ice-demos/cpp
+        run: |
+          find . -name "*.h" -o -name "*.cpp" | xargs run-clang-tidy-18 -j$(nproc) -quiet

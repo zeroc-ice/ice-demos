@@ -17,7 +17,7 @@ public:
 
 private:
     void invokeCallback();
-    void removeClient(const std::optional<Demo::CallbackReceiverPrx>&, std::exception_ptr);
+    void removeClient(const std::optional<Demo::CallbackReceiverPrx>&, const std::exception_ptr&);
 
     bool _destroy = false;
     std::vector<std::optional<Demo::CallbackReceiverPrx>> _clients;

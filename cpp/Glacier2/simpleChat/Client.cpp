@@ -13,10 +13,10 @@ using namespace Demo;
 // mutex to prevent intertwined cout output
 mutex coutMutex;
 
-class ChatCallbackI : public ChatCallback
+class ChatCallbackI final : public ChatCallback
 {
 public:
-    virtual void message(string data, const Ice::Current&) override
+    void message(string data, const Ice::Current&) final
     {
         const lock_guard<mutex> lock(coutMutex);
         cout << data << endl;
@@ -102,7 +102,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
     const Ice::ConnectionPtr connection = router->ice_getCachedConnection();
     assert(connection);
     connection->setCloseCallback(
-        [](Ice::ConnectionPtr)
+        [](const Ice::ConnectionPtr&)
         {
             const lock_guard<mutex> lock(coutMutex);
             cout << "The Glacier2 session has been destroyed." << endl;

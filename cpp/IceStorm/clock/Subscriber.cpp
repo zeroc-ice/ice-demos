@@ -10,10 +10,10 @@
 using namespace std;
 using namespace Demo;
 
-class ClockI : public Clock
+class ClockI final : public Clock
 {
 public:
-    virtual void tick(string time, const Ice::Current&) override { cout << time << endl; }
+    void tick(string time, const Ice::Current&) final { cout << time << endl; }
 };
 
 int run(const shared_ptr<Ice::Communicator>& communicator, int argc, char* argv[]);
@@ -69,7 +69,7 @@ run(const shared_ptr<Ice::Communicator>& communicator, int argc, char* argv[])
     Ice::stringSeqToArgs(args, argc, argv);
 
     bool batch = false;
-    enum class Option
+    enum class Option : uint8_t
     {
         None,
         Datagram,

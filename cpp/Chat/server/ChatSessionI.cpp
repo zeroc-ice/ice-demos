@@ -29,7 +29,7 @@ public:
         auto self = shared_from_this();
         try
         {
-            _callback->initAsync(users, nullptr, [self](exception_ptr) { self->failed(); });
+            _callback->initAsync(users, nullptr, [self](const exception_ptr&) { self->failed(); });
         }
         catch (const Ice::CommunicatorDestroyedException&)
         {
@@ -42,7 +42,7 @@ public:
         auto self = shared_from_this();
         try
         {
-            _callback->joinAsync(e->timestamp, e->name, nullptr, [self](exception_ptr) { self->failed(); });
+            _callback->joinAsync(e->timestamp, e->name, nullptr, [self](const exception_ptr&) { self->failed(); });
         }
         catch (const Ice::CommunicatorDestroyedException&)
         {
@@ -55,7 +55,7 @@ public:
         auto self = shared_from_this();
         try
         {
-            _callback->leaveAsync(e->timestamp, e->name, nullptr, [self](exception_ptr) { self->failed(); });
+            _callback->leaveAsync(e->timestamp, e->name, nullptr, [self](const exception_ptr&) { self->failed(); });
         }
         catch (const Ice::CommunicatorDestroyedException&)
         {
@@ -68,7 +68,12 @@ public:
         auto self = shared_from_this();
         try
         {
-            _callback->sendAsync(e->timestamp, e->name, e->message, nullptr, [self](exception_ptr) { self->failed(); });
+            _callback->sendAsync(
+                e->timestamp,
+                e->name,
+                e->message,
+                nullptr,
+                [self](const exception_ptr&) { self->failed(); });
         }
         catch (const Ice::CommunicatorDestroyedException&)
         {

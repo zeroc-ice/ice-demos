@@ -9,10 +9,10 @@
 using namespace std;
 using namespace Demo;
 
-class PrinterI : public Printer
+class PrinterI final : public Printer
 {
 public:
-    virtual void printString(string s, const Ice::Current&) override;
+    void printString(string s, const Ice::Current&) final;
 };
 
 void

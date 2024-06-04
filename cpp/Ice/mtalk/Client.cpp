@@ -106,9 +106,9 @@ class DiscoverTask
 {
 public:
     DiscoverTask(optional<MTalk::DiscoveryPrx> d, string n, optional<MTalk::PeerPrx> p)
-        : _discovery(d),
-          _name(n),
-          _proxy(p)
+        : _discovery(std::move(d)),
+          _name(std::move(n)),
+          _proxy(std::move(p))
     {
     }
 
@@ -179,7 +179,7 @@ main(int argc, char* argv[])
         // and its dtor destroys this communicator.
         //
         Ice::CommunicatorHolder ich(argc, argv, "config");
-        auto communicator = ich.communicator();
+        const auto& communicator = ich.communicator();
 
         //
         // The communicator initialization removes all Ice-related arguments from argc/argv

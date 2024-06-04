@@ -95,7 +95,11 @@ namespace
             response(_registry->getAdapter(id));
         }
 
-        optional<Ice::LocatorRegistryPrx> getRegistry(const Ice::Current&) const final { return _registryPrx; }
+        [[nodiscard]]
+        optional<Ice::LocatorRegistryPrx> getRegistry(const Ice::Current&) const final
+        {
+            return _registryPrx;
+        }
 
     private:
         const shared_ptr<LocatorRegistryI> _registry;

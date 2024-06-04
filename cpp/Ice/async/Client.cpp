@@ -75,7 +75,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
                 hello->sayHelloAsync(
                     5000,
                     nullptr,
-                    [](exception_ptr e)
+                    [](const exception_ptr& e)
                     {
                         try
                         {

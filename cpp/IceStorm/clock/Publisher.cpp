@@ -65,7 +65,7 @@ usage(const string& n)
 int
 run(const shared_ptr<Ice::Communicator>& communicator, int argc, char* argv[])
 {
-    enum class Option
+    enum class Option : uint8_t
     {
         None,
         Datagram,

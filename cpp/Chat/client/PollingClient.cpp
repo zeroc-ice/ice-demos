@@ -105,6 +105,7 @@ public:
         }
     }
 
+    [[nodiscard]]
     bool isDone() const
     {
         const lock_guard<mutex> lock(const_cast<mutex&>(_mutex));

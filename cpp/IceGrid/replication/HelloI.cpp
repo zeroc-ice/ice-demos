@@ -8,7 +8,7 @@
 
 using namespace std;
 
-HelloI::HelloI(const string& name) : _name(name) {}
+HelloI::HelloI(string_view name) : _name(name) {}
 
 string
 HelloI::getGreeting(const Ice::Current&)

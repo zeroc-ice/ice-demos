@@ -102,7 +102,11 @@ namespace
             }
         }
 
-        optional<Ice::LocatorRegistryPrx> getRegistry(const Ice::Current&) const final { return _registry; }
+        [[nodiscard]]
+        optional<Ice::LocatorRegistryPrx> getRegistry(const Ice::Current&) const final
+        {
+            return _registry;
+        }
 
     private:
         const optional<Ice::LocatorPrx> _locator;

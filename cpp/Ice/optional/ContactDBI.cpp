@@ -21,7 +21,7 @@ ContactDBI::addContact(
     contact->name = name;
     if (type)
     {
-        contact->type = std::move(type);
+        contact->type = type;
     }
     if (number)
     {
@@ -29,7 +29,7 @@ ContactDBI::addContact(
     }
     if (dialGroup)
     {
-        contact->dialGroup = std::move(dialGroup);
+        contact->dialGroup = dialGroup;
     }
     auto p = _contacts.insert(make_pair(name, contact));
     if (!p.second)
@@ -51,15 +51,15 @@ ContactDBI::updateContact(
     {
         if (type)
         {
-            p->second->type = std::move(type);
+            p->second->type = type;
         }
         if (number)
         {
-            p->second->number = std::move(number);
+            p->second->number = number;
         }
         if (dialGroup)
         {
-            p->second->dialGroup = std::move(dialGroup);
+            p->second->dialGroup = dialGroup;
         }
     }
 }
@@ -72,7 +72,7 @@ ContactDBI::query(string name, const Ice::Current&)
     {
         return p->second;
     }
-    return 0;
+    return nullptr;
 }
 
 optional<string>

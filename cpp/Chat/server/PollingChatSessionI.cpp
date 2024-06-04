@@ -7,28 +7,28 @@
 
 using namespace std;
 
-class PollCallbackAdapter : public ChatRoomCallbackAdapter
+class PollCallbackAdapter final : public ChatRoomCallbackAdapter
 {
 public:
-    virtual void init(Ice::StringSeq users) override
+    void init(Ice::StringSeq users) final
     {
         const lock_guard<mutex> sync(_mutex);
         _users = std::move(users);
     }
 
-    virtual void send(const shared_ptr<PollingChat::MessageEvent>& e) override
+    void send(const shared_ptr<PollingChat::MessageEvent>& e) final
     {
         const lock_guard<mutex> sync(_mutex);
         _updates.push_back(e);
     }
 
-    virtual void join(const shared_ptr<PollingChat::UserJoinedEvent>& e) override
+    void join(const shared_ptr<PollingChat::UserJoinedEvent>& e) final
     {
         const lock_guard<mutex> sync(_mutex);
         _updates.push_back(e);
     }
 
-    virtual void leave(const shared_ptr<PollingChat::UserLeftEvent>& e) override
+    void leave(const shared_ptr<PollingChat::UserLeftEvent>& e) final
     {
         const lock_guard<mutex> sync(_mutex);
         _updates.push_back(e);
@@ -129,7 +129,7 @@ PollingChatSessionI::send(string message, const Ice::Current&)
         }
         throw Chat::InvalidMessageException(ex.what());
     }
-    return _chatRoom->send(_name, std::move(msg));
+    return _chatRoom->send(_name, msg);
 }
 
 void

@@ -10,34 +10,34 @@ using namespace std;
 namespace
 {
 
-    class HelloI : public Demo::Hello
+    class HelloI final : public Demo::Hello
     {
     public:
-        virtual void sayHello(const Ice::Current& current) override
+        void sayHello(const Ice::Current& current) final
         {
             current.adapter->getCommunicator()->getLogger()->print("Hello World!");
         }
 
-        virtual void shutdown(const Ice::Current& current) override
+        void shutdown(const Ice::Current& current) final
         {
             current.adapter->getCommunicator()->getLogger()->print("Shutting down...");
             current.adapter->getCommunicator()->shutdown();
         }
     };
 
-    class HelloPluginI : public Ice::Plugin
+    class HelloPluginI final : public Ice::Plugin
     {
     public:
         HelloPluginI(const shared_ptr<Ice::Communicator>& communicator) : _communicator(communicator) {}
 
-        void initialize() override
+        void initialize() final
         {
             auto adapter = _communicator->createObjectAdapter("Hello");
             adapter->add(make_shared<HelloI>(), Ice::stringToIdentity("hello"));
             adapter->activate();
         }
 
-        void destroy() override {}
+        void destroy() final {}
 
     private:
         shared_ptr<Ice::Communicator> _communicator;

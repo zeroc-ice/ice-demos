@@ -4,12 +4,13 @@
 
 #include <Chat.h>
 #include <ChatUtils.h>
+#include <array>
 
 using namespace std;
 
-using HtmlEntity = pair<const string, const string>;
+using HtmlEntity = pair<string_view, string_view>;
 
-static const HtmlEntity htmlEntities[] = {
+constexpr std::array<HtmlEntity, 5> htmlEntities = {
     HtmlEntity("&quot;", "\""),
     HtmlEntity("&#39;", "'"),
     HtmlEntity("&lt;", "<"),

@@ -14,7 +14,7 @@ CallbackSenderI::addClient(optional<CallbackReceiverPrx> client, const Ice::Curr
 {
     const lock_guard<mutex> lock(_mutex);
     cout << "adding client `" << Ice::identityToString(client->ice_getIdentity()) << "'" << endl;
-    _clients.push_back(client->ice_fixed(current.con));
+    _clients.emplace_back(client->ice_fixed(current.con));
 }
 
 void
@@ -74,14 +74,14 @@ CallbackSenderI::invokeCallback()
             for (const auto& p : _clients)
             {
                 auto self = shared_from_this();
-                p->callbackAsync(num, nullptr, [self, p](exception_ptr eptr) { self->removeClient(p, eptr); });
+                p->callbackAsync(num, nullptr, [self, p](const exception_ptr& eptr) { self->removeClient(p, eptr); });
             }
         }
     }
 }
 
 void
-CallbackSenderI::removeClient(const optional<CallbackReceiverPrx>& client, exception_ptr eptr)
+CallbackSenderI::removeClient(const optional<CallbackReceiverPrx>& client, const exception_ptr& eptr)
 {
     const lock_guard<mutex> lock(_mutex);
     auto p = find(_clients.begin(), _clients.end(), client);
