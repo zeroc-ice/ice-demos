@@ -4,6 +4,7 @@
 
 #include <Chat.h>
 #include <ChatUtils.h>
+#include <array>
 
 using namespace std;
 
