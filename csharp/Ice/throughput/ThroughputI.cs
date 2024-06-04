@@ -1,28 +1,26 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 using Demo;
 
-public sealed class ThroughputI : ThroughputDisp_
+internal sealed class ThroughputI : ThroughputDisp_
 {
     public ThroughputI()
     {
         _byteSeq = new byte[ByteSeqSize.value];
         _stringSeq = new string[StringSeqSize.value];
-        for(int i = 0; i < StringSeqSize.value; ++i)
+        for (int i = 0; i < StringSeqSize.value; ++i)
         {
             _stringSeq[i] = "hello";
         }
         _structSeq = new StringDouble[StringDoubleSeqSize.value];
-        for(int i = 0; i < StringDoubleSeqSize.value; ++i)
+        for (int i = 0; i < StringDoubleSeqSize.value; ++i)
         {
             _structSeq[i] = new StringDouble();
             _structSeq[i].s = "hello";
             _structSeq[i].d = 3.14;
         }
         _fixedSeq = new Fixed[FixedSeqSize.value];
-        for(int i = 0; i < FixedSeqSize.value; ++i)
+        for (int i = 0; i < FixedSeqSize.value; ++i)
         {
             _fixedSeq[i].i = 0;
             _fixedSeq[i].j = 0;
@@ -53,7 +51,7 @@ public sealed class ThroughputI : ThroughputDisp_
 
     public override byte[] recvByteSeq(Ice.Current current)
     {
-        if(_warmup)
+        if (_warmup)
         {
             return _warmupByteSeq;
         }
@@ -74,7 +72,7 @@ public sealed class ThroughputI : ThroughputDisp_
 
     public override string[] recvStringSeq(Ice.Current current)
     {
-        if(_warmup)
+        if (_warmup)
         {
             return _warmupStringSeq;
         }
@@ -95,7 +93,7 @@ public sealed class ThroughputI : ThroughputDisp_
 
     public override StringDouble[] recvStructSeq(Ice.Current current)
     {
-        if(_warmup)
+        if (_warmup)
         {
             return _warmupStructSeq;
         }
@@ -116,7 +114,7 @@ public sealed class ThroughputI : ThroughputDisp_
 
     public override Fixed[] recvFixedSeq(Ice.Current current)
     {
-        if(_warmup)
+        if (_warmup)
         {
             return _warmupFixedSeq;
         }
@@ -136,15 +134,15 @@ public sealed class ThroughputI : ThroughputDisp_
         current.adapter.getCommunicator().shutdown();
     }
 
-    private byte[] _byteSeq;
-    private string[] _stringSeq;
-    private StringDouble[] _structSeq;
-    private Fixed[] _fixedSeq;
+    private readonly byte[] _byteSeq;
+    private readonly string[] _stringSeq;
+    private readonly StringDouble[] _structSeq;
+    private readonly Fixed[] _fixedSeq;
 
-    private byte[] _warmupByteSeq = new byte[1];
-    private string[] _warmupStringSeq = new string[1];
-    private StringDouble[] _warmupStructSeq = new StringDouble[] { new StringDouble() };
-    private Fixed[] _warmupFixedSeq = new Fixed[1];
+    private readonly byte[] _warmupByteSeq = new byte[1];
+    private readonly string[] _warmupStringSeq = new string[1];
+    private readonly StringDouble[] _warmupStructSeq = new StringDouble[] { new() };
+    private readonly Fixed[] _warmupFixedSeq = new Fixed[1];
 
     private bool _needsWarmup = true;
     private bool _warmup = false;

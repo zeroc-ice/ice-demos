@@ -1,35 +1,25 @@
-
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 using Demo;
-using System;
-using System.Threading;
-using System.Collections.Generic;
 
-public class Server
+internal class Server
 {
-    //
     // The servant implements the Slice interface Demo::Props as well as the
     // native callback interface Ice.PropertiesAdminUpdateCallback.
-    //
-    class PropsI : PropsDisp_
+    private class PropsI : PropsDisp_
     {
         public PropsI()
         {
             _called = false;
         }
 
-        override public Dictionary<string, string> getChanges(Ice.Current current)
+        public override Dictionary<string, string> getChanges(Ice.Current current)
         {
-            lock(this)
+            lock (this)
             {
-                //
                 // Make sure that we have received the property updates before we
                 // return the results.
-                //
-                while(!_called)
+                while (!_called)
                 {
                     Monitor.Wait(this);
                 }
@@ -39,14 +29,14 @@ public class Server
             }
         }
 
-        override public void shutdown(Ice.Current current)
+        public override void shutdown(Ice.Current current)
         {
             current.adapter.getCommunicator().shutdown();
         }
 
-        public void updated(Dictionary<string, string> changes)
+        public void Updated(Dictionary<string, string> changes)
         {
-            lock(this)
+            lock (this)
             {
                 _changes = changes;
                 _called = true;
@@ -54,7 +44,7 @@ public class Server
             }
         }
 
-        Dictionary<string, string> _changes;
+        private Dictionary<string, string> _changes;
         private bool _called;
     }
 
@@ -64,41 +54,33 @@ public class Server
 
         try
         {
-            //
             // using statement - communicator is automatically destroyed
             // at the end of this statement
-            //
-            using(var communicator = Ice.Util.initialize(ref args, "config.server"))
+            using var communicator = Ice.Util.initialize(ref args, "config.server");
+            // Destroy the communicator on Ctrl+C or Ctrl+Break
+            Console.CancelKeyPress += (sender, eventArgs) => communicator.destroy();
+
+            if (args.Length > 0)
             {
-                //
-                // Destroy the communicator on Ctrl+C or Ctrl+Break
-                //
-                Console.CancelKeyPress += (sender, eventArgs) => communicator.destroy();
+                Console.Error.WriteLine("too many arguments");
+                status = 1;
+            }
+            else
+            {
+                var props = new PropsI();
 
-                if(args.Length > 0)
-                {
-                    Console.Error.WriteLine("too many arguments");
-                    status = 1;
-                }
-                else
-                {
-                    var props = new PropsI();
+                // Retrieve the PropertiesAdmin facet and use props.updated as the update callback.
+                var obj = communicator.findAdminFacet("Properties");
+                var admin = (Ice.NativePropertiesAdmin)obj;
+                admin.addUpdateCallback(props.Updated);
 
-                    //
-                    // Retrieve the PropertiesAdmin facet and use props.updated as the update callback.
-                    //
-                    var obj = communicator.findAdminFacet("Properties");
-                    var admin = (Ice.NativePropertiesAdmin)obj;
-                    admin.addUpdateCallback(props.updated);
-
-                    var adapter = communicator.createObjectAdapter("Props");
-                    adapter.add(props, Ice.Util.stringToIdentity("props"));
-                    adapter.activate();
-                    communicator.waitForShutdown();
-                }
+                var adapter = communicator.createObjectAdapter("Props");
+                adapter.add(props, Ice.Util.stringToIdentity("props"));
+                adapter.activate();
+                communicator.waitForShutdown();
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Console.Error.WriteLine(ex);
             status = 1;

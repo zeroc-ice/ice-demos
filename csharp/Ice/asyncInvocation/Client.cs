@@ -1,12 +1,8 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 using Demo;
-using System;
-using System.Threading.Tasks;
 
-public class Client
+internal class Client
 {
     public static int Main(string[] args)
     {
@@ -14,18 +10,16 @@ public class Client
 
         try
         {
-            using (Ice.Communicator communicator = Ice.Util.initialize(ref args, "config.client"))
+            using Ice.Communicator communicator = Ice.Util.initialize(ref args, "config.client");
+            if (args.Length > 0)
             {
-                if (args.Length > 0)
-                {
-                    Console.WriteLine("too many arguments");
-                    status = 1;
-                }
-                else
-                {
-                    // await in modern C#
-                    status = RunAsync(communicator).GetAwaiter().GetResult();
-                }
+                Console.WriteLine("too many arguments");
+                status = 1;
+            }
+            else
+            {
+                // await in modern C#
+                status = RunAsync(communicator).GetAwaiter().GetResult();
             }
         }
         catch (Exception exception)
@@ -60,10 +54,8 @@ public class Client
             Console.WriteLine("You cannot divide by 0");
         }
 
-        //
         // Have the calculator find the hypotenuse of a triangle with side lengths of 6 and 8
         // using the Pythagorean theorem.
-        //
 
         int[] squares = await Task.WhenAll(calculator.squareAsync(6), calculator.squareAsync(8));
         double hypotenuse = await calculator.squareRootAsync(await calculator.addAsync(squares[0], squares[1]));

@@ -1,10 +1,5 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Demo;
 
 internal class HelloI : HelloDisp_

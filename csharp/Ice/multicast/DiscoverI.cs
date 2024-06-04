@@ -1,17 +1,9 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 using Demo;
 
-public class DiscoverI : DiscoverDisp_
+internal class DiscoverI(Ice.ObjectPrx obj) : DiscoverDisp_
 {
-    public
-    DiscoverI(Ice.ObjectPrx obj)
-    {
-        _obj = obj;
-    }
-
     public override void
     lookup(DiscoverReplyPrx reply, Ice.Current current)
     {
@@ -19,11 +11,11 @@ public class DiscoverI : DiscoverDisp_
         {
             reply.reply(_obj);
         }
-        catch(Ice.LocalException)
+        catch (Ice.LocalException)
         {
             // Ignore
         }
     }
 
-    private Ice.ObjectPrx _obj;
+    private Ice.ObjectPrx _obj = obj;
 }

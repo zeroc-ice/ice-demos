@@ -12,5 +12,13 @@
         <SliceCompile Include="../../Session.ice" />
         <PackageReference Include="zeroc.ice.net" Version="3.8.0-alpha0" />
         <PackageReference Include="zeroc.icebuilder.msbuild" Version="5.0.9" />
+
+        <!-- The 1.2 beta version is required for supporting the latest language features.
+             See: https://github.com/DotNetAnalyzers/StyleCopAnalyzers/pull/3187 -->
+        <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.556">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <AdditionalFiles Include="$(MSBuildThisFileDirectory)/../../../../../stylecop.json" />
     </ItemGroup>
 </Project>

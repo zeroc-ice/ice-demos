@@ -1,11 +1,9 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 using Filesystem;
 using System.Diagnostics;
 
-public class FileI : FileDisp_
+internal class FileI : FileDisp_
 {
     // FileI constructor
     public FileI(string name, DirectoryI parent)
@@ -15,9 +13,7 @@ public class FileI : FileDisp_
 
         Debug.Assert(_parent != null);
 
-        //
         // Create an identity
-        //
         _id = new Ice.Identity();
         _id.name = System.Guid.NewGuid().ToString();
     }
@@ -41,14 +37,14 @@ public class FileI : FileDisp_
     }
 
     // Add servant to ASM and parent's _contents map.
-    public void activate(Ice.ObjectAdapter a)
+    public void Activate(Ice.ObjectAdapter a)
     {
         var thisNode = NodePrxHelper.uncheckedCast(a.add(this, _id));
-        _parent.addChild(thisNode);
+        _parent.AddChild(thisNode);
     }
 
     private string _name;
-    private DirectoryI _parent;
+    private readonly DirectoryI _parent;
     private Ice.Identity _id;
     private string[] _lines;
 }

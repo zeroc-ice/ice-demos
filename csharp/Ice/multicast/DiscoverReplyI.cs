@@ -1,18 +1,15 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 using Demo;
-using System.Threading;
 
-public class DiscoverReplyI : DiscoverReplyDisp_
+internal class DiscoverReplyI : DiscoverReplyDisp_
 {
     public override void
     reply(Ice.ObjectPrx obj, Ice.Current current)
     {
-        lock(this)
+        lock (this)
         {
-            if(_obj == null)
+            if (_obj == null)
             {
                 _obj = obj;
             }
@@ -21,15 +18,15 @@ public class DiscoverReplyI : DiscoverReplyDisp_
     }
 
     public Ice.ObjectPrx
-    waitReply(long timeout)
+    WaitReply(long timeout)
     {
-        lock(this)
+        lock (this)
         {
-            long end = System.DateTime.Now.Ticks / 1000 + timeout;
-            while(_obj == null)
+            long end = (System.DateTime.Now.Ticks / 1000) + timeout;
+            while (_obj == null)
             {
-                int delay = (int)(end - System.DateTime.Now.Ticks / 1000);
-                if(delay > 0)
+                int delay = (int)(end - (System.DateTime.Now.Ticks / 1000));
+                if (delay > 0)
                 {
                     Monitor.Wait(this, delay);
                 }

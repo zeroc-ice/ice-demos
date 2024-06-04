@@ -1,10 +1,8 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 using Demo;
 
-public class HelloI : HelloDisp_
+internal class HelloI : HelloDisp_
 {
     public override void sayHello(Ice.Current current)
     {

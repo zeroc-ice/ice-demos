@@ -1,15 +1,12 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 using Demo;
-using System;
 
-class ThermostatI : ThermostatDisp_
+internal class ThermostatI : ThermostatDisp_
 {
     public override float getTemp(Ice.Current current)
     {
-        lock(this)
+        lock (this)
         {
             return _temperature;
         }
@@ -17,7 +14,7 @@ class ThermostatI : ThermostatDisp_
 
     public override void setTemp(float temp, Ice.Current current)
     {
-        lock(this)
+        lock (this)
         {
             _temperature = temp;
         }

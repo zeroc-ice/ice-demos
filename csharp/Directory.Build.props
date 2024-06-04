@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build"
+    xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
-        <AppTargetFramework Condition="'$(AppTargetFramework)' == ''">net6.0</AppTargetFramework>
+        <AppTargetFramework Condition="'$(AppTargetFramework)' == ''">net8.0</AppTargetFramework>
+        <ImplicitUsings>true</ImplicitUsings>
+        <!-- <TreatWarningsAsErrors>true</TreatWarningsAsErrors> -->
+        <!-- <AnalysisMode>All</AnalysisMode> -->
+        <ImplicitUsings>enable</ImplicitUsings>
+        <!-- Copy the PDBs from the NuGet packages to get file names and line numbers in stack traces. -->
+        <CopyDebugSymbolFilesFromPackages>true</CopyDebugSymbolFilesFromPackages>
     </PropertyGroup>
 </Project>

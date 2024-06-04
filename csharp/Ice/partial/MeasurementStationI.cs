@@ -1,30 +1,28 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 using Demo;
-using Ice;
-using System;
-using System.Linq;
-using System.Collections.Generic;
 
-public class MeasurementStationI : MeasurementStationDisp_
+internal class MeasurementStationI : MeasurementStationDisp_
 {
-    public override Distance getDistance(Current current = null)
+    public override Distance getDistance(Ice.Current current = null)
     {
-        var distance = new Distance();
-        distance.Yards = random.NextDouble() * 1200;
+        var distance = new Distance
+        {
+            Yards = random.NextDouble() * 1200
+        };
         return distance;
     }
 
-    public override Speed getSpeed(Current current = null)
+    public override Speed getSpeed(Ice.Current current = null)
     {
-        var speed = new Speed();
-        speed.MilesPerHour = random.NextDouble() * 120;
+        var speed = new Speed
+        {
+            MilesPerHour = random.NextDouble() * 120
+        };
         return speed;
     }
 
-    public override void shutdown(Current current)
+    public override void shutdown(Ice.Current current)
     {
         current.adapter.getCommunicator().shutdown();
     }

@@ -1,11 +1,8 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 using Demo;
-using System;
 
-public class Client
+internal class Client
 {
     public static int Main(string[] args)
     {
@@ -13,27 +10,21 @@ public class Client
 
         try
         {
-            //
             // The new communicator is automatically destroyed (disposed) at the end of the
             // using statement
-            //
-            using(var communicator = Ice.Util.initialize(ref args, "config.client"))
+            using var communicator = Ice.Util.initialize(ref args, "config.client");
+            // The communicator initialization removes all Ice-related arguments from args
+            if (args.Length > 0)
             {
-                //
-                // The communicator initialization removes all Ice-related arguments from args
-                //
-                if(args.Length > 0)
-                {
-                    Console.Error.WriteLine("too many arguments");
-                    status = 1;
-                }
-                else
-                {
-                    status = run(communicator);
-                }
+                Console.Error.WriteLine("too many arguments");
+                status = 1;
+            }
+            else
+            {
+                status = Run(communicator);
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Console.Error.WriteLine(ex);
             status = 1;
@@ -42,10 +33,10 @@ public class Client
         return status;
     }
 
-    private static int run(Ice.Communicator communicator)
+    private static int Run(Ice.Communicator communicator)
     {
         var throughput = ThroughputPrxHelper.checkedCast(communicator.propertyToProxy("Throughput.Proxy"));
-        if(throughput == null)
+        if (throughput == null)
         {
             Console.Error.WriteLine("invalid proxy");
             return 1;
@@ -55,13 +46,13 @@ public class Client
         var byteSeq = new byte[ByteSeqSize.value];
 
         var stringSeq = new string[StringSeqSize.value];
-        for(int i = 0; i < StringSeqSize.value; ++i)
+        for (int i = 0; i < StringSeqSize.value; ++i)
         {
             stringSeq[i] = "hello";
         }
 
         var structSeq = new StringDouble[StringDoubleSeqSize.value];
-        for(int i = 0; i < StringDoubleSeqSize.value; ++i)
+        for (int i = 0; i < StringDoubleSeqSize.value; ++i)
         {
             structSeq[i] = new StringDouble();
             structSeq[i].s = "hello";
@@ -69,19 +60,17 @@ public class Client
         }
 
         var fixedSeq = new Fixed[FixedSeqSize.value];
-        for(int i = 0; i < FixedSeqSize.value; ++i)
+        for (int i = 0; i < FixedSeqSize.value; ++i)
         {
             fixedSeq[i].i = 0;
             fixedSeq[i].j = 0;
             fixedSeq[i].d = 0;
         }
 
-        //
         // A method needs to be invoked thousands of times before the
         // JIT compiler will convert it to native code. To ensure an
         // accurate throughput measurement, we need to "warm up" the
         // JIT compiler.
-        //
         {
             var warmupBytes = new byte[1];
             var warmupStrings = new string[1];
@@ -93,7 +82,7 @@ public class Client
 
             Console.Error.Write("warming up the client/server...");
             Console.Error.Flush();
-            for(int i = 0; i < 10000; i++)
+            for (int i = 0; i < 10000; i++)
             {
                 throughput.sendByteSeq(warmupBytes);
                 throughput.sendStringSeq(warmupStrings);
@@ -115,11 +104,9 @@ public class Client
             Console.Error.WriteLine("ok");
         }
 
-        menu();
+        Menu();
 
-        //
         // By default use byte sequence.
-        //
         char currentType = '1';
         int seqSize = ByteSeqSize.value;
 
@@ -131,7 +118,7 @@ public class Client
                 Console.Write("==> ");
                 Console.Out.Flush();
                 line = Console.In.ReadLine();
-                if(line == null)
+                if (line == null)
                 {
                     break;
                 }
@@ -139,10 +126,10 @@ public class Client
                 long tmsec = DateTime.Now.Ticks / 10000;
                 int repetitions = 100;
 
-                if(line.Equals("1") || line.Equals("2") || line.Equals("3") || line.Equals("4"))
+                if (line.Equals("1") || line.Equals("2") || line.Equals("3") || line.Equals("4"))
                 {
                     currentType = line[0];
-                    switch(currentType)
+                    switch (currentType)
                     {
                         case '1':
                         {
@@ -170,9 +157,9 @@ public class Client
                         }
                     }
                 }
-                else if(line.Equals("t") || line.Equals("o") || line.Equals("r") || line.Equals("e"))
+                else if (line.Equals("t") || line.Equals("o") || line.Equals("r") || line.Equals("e"))
                 {
-                    if(currentType == '1')
+                    if (currentType == '1')
                     {
                         repetitions = 1000; // Use more iterations for byte sequences as it's a lot faster
                     }
@@ -203,7 +190,7 @@ public class Client
                     }
 
                     Console.Write(" " + repetitions);
-                    switch(currentType)
+                    switch (currentType)
                     {
                         case '1':
                         {
@@ -228,7 +215,7 @@ public class Client
                     }
                     Console.Write(" sequences of size " + seqSize);
 
-                    if(c == 'o')
+                    if (c == 'o')
                     {
                         Console.Write(" as oneway");
                     }
@@ -237,11 +224,11 @@ public class Client
 
                     for (int i = 0; i < repetitions; ++i)
                     {
-                        switch(currentType)
+                        switch (currentType)
                         {
                             case '1':
                             {
-                                switch(c)
+                                switch (c)
                                 {
                                     case 't':
                                     {
@@ -272,7 +259,7 @@ public class Client
 
                             case '2':
                             {
-                                switch(c)
+                                switch (c)
                                 {
                                     case 't':
                                     {
@@ -303,7 +290,7 @@ public class Client
 
                             case '3':
                             {
-                                switch(c)
+                                switch (c)
                                 {
                                     case 't':
                                     {
@@ -334,7 +321,7 @@ public class Client
 
                             case '4':
                             {
-                                switch(c)
+                                switch (c)
                                 {
                                     case 't':
                                     {
@@ -365,11 +352,11 @@ public class Client
                         }
                     }
 
-                    double dmsec = DateTime.Now.Ticks / 10000 - tmsec;
+                    double dmsec = (DateTime.Now.Ticks / 10000) - tmsec;
                     Console.WriteLine("time for " + repetitions + " sequences: " + dmsec.ToString("F") + "ms");
                     Console.WriteLine("time per sequence: " + ((double)(dmsec / repetitions)).ToString("F") + "ms");
                     int wireSize = 0;
-                    switch(currentType)
+                    switch (currentType)
                     {
                         case '1':
                         {
@@ -394,41 +381,41 @@ public class Client
                         }
                     }
                     double mbit = repetitions * seqSize * wireSize * 8.0 / dmsec / 1000.0;
-                    if(c == 'e')
+                    if (c == 'e')
                     {
                         mbit *= 2;
                     }
                     Console.WriteLine("throughput: " + mbit.ToString("#.##") + "Mbps");
                 }
-                else if(line.Equals("s"))
+                else if (line.Equals("s"))
                 {
                     throughput.shutdown();
                 }
-                else if(line.Equals("x"))
+                else if (line.Equals("x"))
                 {
                     // Nothing to do
                 }
-                else if(line.Equals("?"))
+                else if (line.Equals("?"))
                 {
-                    menu();
+                    Menu();
                 }
                 else
                 {
                     Console.WriteLine("unknown command `" + line + "'");
-                    menu();
+                    Menu();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
             }
         }
-        while(!line.Equals("x"));
+        while (!line.Equals("x"));
 
         return 0;
     }
 
-    private static void menu()
+    private static void Menu()
     {
         Console.WriteLine("usage:\n"
                           + "\n"

@@ -1,16 +1,13 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 using Demo;
-using System;
 
-public class ContextI : ContextDisp_
+internal class ContextI : ContextDisp_
 {
     public override void call(Ice.Current current)
     {
         Console.Out.Write("Type = ");
-        if(current.ctx.ContainsKey("type"))
+        if (current.ctx.ContainsKey("type"))
         {
             Console.Out.Write(current.ctx["type"]);
         }

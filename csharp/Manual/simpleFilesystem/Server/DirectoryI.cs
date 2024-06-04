@@ -1,11 +1,8 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 using Filesystem;
-using System.Collections.Generic;
 
-public class DirectoryI : DirectoryDisp_
+internal class DirectoryI : DirectoryDisp_
 {
     // DirectoryI constructor
     public DirectoryI(string name, DirectoryI parent)
@@ -13,9 +10,7 @@ public class DirectoryI : DirectoryDisp_
         _name = name;
         _parent = parent;
 
-        //
         // Create an identity. The root directory has the fixed identity "RootDir"
-        //
         _id = new Ice.Identity();
         _id.name = _parent != null ? System.Guid.NewGuid().ToString() : "RootDir";
     }
@@ -34,23 +29,23 @@ public class DirectoryI : DirectoryDisp_
 
     // addChild is called by the child in order to add
     // itself to the _contents member of the parent
-    public void addChild(NodePrx child)
+    public void AddChild(NodePrx child)
     {
         _contents.Add(child);
     }
 
     // Add servant to ASM and parent's _contents map.
-    public void activate(Ice.ObjectAdapter a)
+    public void Activate(Ice.ObjectAdapter a)
     {
         var thisNode = NodePrxHelper.uncheckedCast(a.add(this, _id));
-        if(_parent != null)
+        if (_parent != null)
         {
-            _parent.addChild(thisNode);
+            _parent.AddChild(thisNode);
         }
     }
 
     private string _name;
-    private DirectoryI _parent;
+    private readonly DirectoryI _parent;
     private Ice.Identity _id;
     private List<NodePrx> _contents = new List<NodePrx>();
 }

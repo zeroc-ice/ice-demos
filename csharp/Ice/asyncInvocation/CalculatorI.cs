@@ -1,9 +1,6 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 using Demo;
-using System;
 
 internal class CalculatorI : CalculatorDisp_
 {
@@ -43,6 +40,6 @@ internal class CalculatorI : CalculatorDisp_
 
     public override void shutdown(Ice.Current current)
     {
-       current.adapter.getCommunicator().shutdown();
+        current.adapter.getCommunicator().shutdown();
     }
 }

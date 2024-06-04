@@ -1,10 +1,8 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 using Demo;
 
-public sealed class CallbackReceiverI : CallbackReceiverDisp_
+internal sealed class CallbackReceiverI : CallbackReceiverDisp_
 {
     public override void callback(Ice.Current current)
     {

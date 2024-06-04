@@ -1,12 +1,8 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 using Demo;
-using System;
-using System.Collections.Generic;
 
-public class Client
+internal class Client
 {
     public static int Main(string[] args)
     {
@@ -14,27 +10,21 @@ public class Client
 
         try
         {
-            //
             // The new communicator is automatically destroyed (disposed) at the end of the
             // using statement
-            //
-            using(var communicator = Ice.Util.initialize(ref args, "config.client"))
+            using var communicator = Ice.Util.initialize(ref args, "config.client");
+            // The communicator initialization removes all Ice-related arguments from args
+            if (args.Length > 0)
             {
-                //
-                // The communicator initialization removes all Ice-related arguments from args
-                //
-                if(args.Length > 0)
-                {
-                    Console.Error.WriteLine("too many arguments");
-                    status = 1;
-                }
-                else
-                {
-                    status = run(communicator);
-                }
+                Console.Error.WriteLine("too many arguments");
+                status = 1;
+            }
+            else
+            {
+                status = Run(communicator);
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Console.Error.WriteLine(ex);
             status = 1;
@@ -43,7 +33,7 @@ public class Client
         return status;
     }
 
-    private static int run(Ice.Communicator communicator)
+    private static int Run(Ice.Communicator communicator)
     {
         string name;
         do
@@ -52,17 +42,17 @@ public class Client
             Console.Out.Flush();
 
             name = Console.In.ReadLine();
-            if(name == null)
+            if (name == null)
             {
                 return 1;
             }
             name = name.Trim();
         }
-        while(name.Length == 0);
+        while (name.Length == 0);
 
         var basePrx = communicator.propertyToProxy("SessionFactory.Proxy");
         var factory = SessionFactoryPrxHelper.checkedCast(basePrx);
-        if(factory == null)
+        if (factory == null)
         {
             Console.Error.WriteLine("invalid proxy");
             return 1;
@@ -72,23 +62,23 @@ public class Client
 
         var hellos = new List<HelloPrx>();
 
-        menu();
+        Menu();
 
         bool destroy = true;
         bool shutdown = false;
-        while(true)
+        while (true)
         {
             Console.Out.Write("==> ");
             Console.Out.Flush();
             string line = Console.In.ReadLine();
-            if(line == null)
+            if (line == null)
             {
                 break;
             }
-            if(line.Length > 0 && Char.IsDigit(line[0]))
+            if (line.Length > 0 && char.IsDigit(line[0]))
             {
-                int index = Int32.Parse(line);
-                if(index < hellos.Count)
+                int index = int.Parse(line);
+                if (index < hellos.Count)
                 {
                     var hello = hellos[index];
                     hello.sayHello();
@@ -100,49 +90,49 @@ public class Client
                                           "Use `c' to create a new hello object.");
                 }
             }
-            else if(line.Equals("c"))
+            else if (line.Equals("c"))
             {
                 hellos.Add(session.createHello());
                 Console.Out.WriteLine("Created hello object " + (hellos.Count - 1));
             }
-            else if(line.Equals("s"))
+            else if (line.Equals("s"))
             {
                 destroy = false;
                 shutdown = true;
                 break;
             }
-            else if(line.Equals("x"))
+            else if (line.Equals("x"))
             {
                 break;
             }
-            else if(line.Equals("t"))
+            else if (line.Equals("t"))
             {
                 destroy = false;
                 break;
             }
-            else if(line.Equals("?"))
+            else if (line.Equals("?"))
             {
-                menu();
+                Menu();
             }
             else
             {
                 Console.Out.WriteLine("Unknown command `" + line + "'.");
-                menu();
+                Menu();
             }
         }
 
-        if(destroy)
+        if (destroy)
         {
             session.destroy();
         }
-        if(shutdown)
+        if (shutdown)
         {
             factory.shutdown();
         }
         return 0;
     }
 
-    private static void menu()
+    private static void Menu()
     {
         Console.Out.WriteLine(
             "usage:\n" +

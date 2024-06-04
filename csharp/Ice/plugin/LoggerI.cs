@@ -1,10 +1,8 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 using System;
 
-public class LoggerI : Ice.Logger
+internal class LoggerI : Ice.Logger
 {
     public void print(string message)
     {
