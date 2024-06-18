@@ -1,0 +1,4 @@
+*.d.ts
+Glacier2/**/*.js
+Ice/**/*.js
+Manual/**/*.js

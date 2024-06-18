@@ -97,3 +97,14 @@ jobs:
           CPP_PLATFORM: x64
           CPP_CONFIGURATION: Release
         run: ./gradlew build
+
+      - name: Build JavaScript Demos on ${{ matrix.os }}
+        timeout-minutes: 20
+        working-directory: ice-demos/js
+        env:
+          # For Ice Builder for Gulp
+          CPP_PLATFORM: x64
+          CPP_CONFIGURATION: Release
+        run: |
+          npm install
+          npx gulp build
