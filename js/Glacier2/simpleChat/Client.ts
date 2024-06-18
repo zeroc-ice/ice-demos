@@ -115,7 +115,7 @@ try {
 }
 
 //
-// Asynchonously process stdin lines using a promise
+// Asynchronously process stdin lines using a promise
 //
 function getline(): PromiseLike<string> {
     return new Promise((resolve) => {
