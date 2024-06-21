@@ -7,6 +7,7 @@ get started quickly, we recommend using the Python server.
 
 After starting the server, open a separate window and start the
 client:
+
 ```
 node Client.js
 ```

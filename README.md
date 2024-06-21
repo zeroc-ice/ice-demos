@@ -22,7 +22,6 @@ The sample programs are grouped by Slice language mapping:
 - [Python](./python)
 - [Ruby](./ruby)
 - [Swift](./swift)
-- [TypeScript](./typescript)
 
 For example, the [cpp](./cpp) folder contains all the sample programs written
 in C++ that demonstrate the Slice to C++ language mapping.

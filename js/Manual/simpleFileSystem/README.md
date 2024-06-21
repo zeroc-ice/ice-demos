@@ -1,5 +1,5 @@
 This demo implements the simple [filesystem application][1] shown at the
-end of the Javascript client-side mapping chapter.
+end of the JavaScript client-side mapping chapter.
 
 To run the demo, first you need to start a Manual printer server from
 another language mapping (Java, C++, C#, or Python). If you want to get
