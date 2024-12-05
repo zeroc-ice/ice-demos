@@ -70,7 +70,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
     {
         throw runtime_error("Ice.Default.Router property is not set.");
     }
-    const Glacier2::RouterPrx router = Glacier2::RouterPrx(*defaultRouter);
+    auto router = Ice::uncheckedCast<Glacier2::RouterPrx>(*defaultRouter);
     optional<ChatSessionPrx> session;
     while (!session)
     {

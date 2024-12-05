@@ -81,10 +81,10 @@ createSession(const Glacier2::RouterPrx& router)
 
         try
         {
-            optional<Chat::ChatSessionPrx> session{router->createSession(id, pw)};
+            auto session = Ice::uncheckedCast<Chat::ChatSessionPrx>(router->createSession(id, pw));
             if (!session)
             {
-                throw runtime_error("Glaicer2::createSession return null. Is the SessionManager configured?");
+                throw runtime_error("Glacier2::createSession return null. Is the SessionManager configured?");
             }
             router->ice_getCachedConnection()->setCloseCallback(
                 [](const Ice::ConnectionPtr&)
@@ -112,7 +112,7 @@ createSession(const Glacier2::RouterPrx& router)
 void
 run(const shared_ptr<Ice::Communicator>& communicator)
 {
-    optional<Glacier2::RouterPrx> router{communicator->getDefaultRouter()};
+    auto router = Ice::uncheckedCast<Glacier2::RouterPrx>(communicator->getDefaultRouter());
     if (!router)
     {
         throw runtime_error("Ice.Default.Router property not set.");
@@ -128,7 +128,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
     // provided by the router
     Ice::Identity id{Ice::generateUUID(), router->getCategoryForClient()};
 
-    Chat::ChatRoomCallbackPrx callbackPrx{adapter->add(make_shared<ChatRoomCallbackI>(), id)};
+    auto callbackPrx = adapter->add<Chat::ChatRoomCallbackPrx>(make_shared<ChatRoomCallbackI>(), id);
 
     // Set the callback proxy on the session
     session->setCallback(callbackPrx);
