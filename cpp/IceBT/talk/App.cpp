@@ -249,7 +249,7 @@ TalkApp::disconnect(const Ice::Identity& id, const shared_ptr<Ice::Connection>& 
         _adapter->remove(id);
     }
 
-    con->close(Ice::ConnectionClose::Gracefully);
+    con->close().get();
 }
 
 void
@@ -433,7 +433,7 @@ TalkApp::doDisconnect()
 
     if (con)
     {
-        con->close(Ice::ConnectionClose::Gracefully);
+        con->close().get();
     }
 }
 
@@ -482,7 +482,7 @@ TalkApp::failed(const Ice::LocalException& ex)
         auto con = peer->ice_getCachedConnection();
         if (con)
         {
-            con->close(Ice::ConnectionClose::Forcefully);
+            con->abort();
         }
     }
 }
