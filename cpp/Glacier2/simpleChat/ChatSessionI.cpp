@@ -89,7 +89,7 @@ ChatRoom::message(const string& data) const
     const lock_guard<mutex> sync(const_cast<mutex&>(_mutex));
     for (const auto& cb : _callbacks)
     {
-        cb->messageAsync(data);
+        cb->messageAsync(data, nullptr); // don't wait
     }
 }
 
@@ -154,7 +154,7 @@ ChatSessionI::setCallback(optional<ChatCallbackPrx> callback, const Ice::Current
         _callback = callback;
         auto chatRoom = ChatRoom::instance();
         chatRoom->message(_userId + " has entered the chat room.");
-        chatRoom->enter(ChatSessionPrx(current.adapter->createProxy(current.id)), std::move(*callback), current);
+        chatRoom->enter(current.adapter->createProxy<ChatSessionPrx>(current.id), std::move(*callback), current);
     }
 }
 

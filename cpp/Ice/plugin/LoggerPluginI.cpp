@@ -27,7 +27,7 @@ namespace
 
         string getPrefix() final { return ""; }
 
-        shared_ptr<Ice::Logger> cloneWithPrefix(const std::string&) final { return make_shared<LoggerI>(); }
+        shared_ptr<Ice::Logger> cloneWithPrefix(std::string) final { return make_shared<LoggerI>(); }
     };
 
 }
