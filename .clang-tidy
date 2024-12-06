@@ -9,7 +9,7 @@ Checks:
   performance-*,
   -performance-avoid-endl
 '
-WarningsAsErrors:  ''
+WarningsAsErrors:  '*'
 HeaderFilterRegex: ''
 UseColor: true
 FormatStyle: 'file'
