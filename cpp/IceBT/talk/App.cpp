@@ -77,8 +77,8 @@ private:
     TalkApp* _app;
 };
 
-static string btUUID = "6a193943-1754-4869-8d0a-ddc5f9a2b294";
-static string btsUUID = "043257a6-d67c-4000-aa62-2ffe4583d324";
+static const char* btUUID = "6a193943-1754-4869-8d0a-ddc5f9a2b294";
+static const char* btsUUID = "043257a6-d67c-4000-aa62-2ffe4583d324";
 
 int
 main(int argc, char* argv[])
@@ -301,11 +301,11 @@ TalkApp::doConnect(const string& cmd)
             string proxy = "peer:";
             if (secure)
             {
-                proxy += "bts -a \"" + addr + "\" -u " + btsUUID;
+                proxy += "bts -a \"" + addr + "\" -u " + string{btsUUID};
             }
             else
             {
-                proxy += "bt -a \"" + addr + "\" -u " + btUUID;
+                proxy += "bt -a \"" + addr + "\" -u " + string{btUUID};
             }
             remote = Ice::uncheckedCast<Talk::PeerPrx>(_communicator->stringToProxy(proxy));
             _remote = remote;
