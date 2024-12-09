@@ -81,7 +81,6 @@ public class HelloApp extends Application
         WifiManager.MulticastLock lock = wifiManager.createMulticastLock("com.zeroc.hello");
         lock.acquire();
 
-
         // SSL initialization can take some time. To avoid blocking the
         // calling thread, we perform the initialization in a separate thread.
         new Thread(() -> {
@@ -89,8 +88,7 @@ public class HelloApp extends Application
             {
                 InitializationData initData = new InitializationData();
 
-                initData.dispatcher = (Runnable runnable, Connection connection) ->
-                        _uiHandler.post(runnable);
+                initData.executor = (Runnable runnable, Connection connection) -> _uiHandler.post(runnable);
 
                 initData.properties = Util.createProperties();
                 initData.properties.setProperty("Ice.Trace.Network", "3");

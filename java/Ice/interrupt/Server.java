@@ -21,11 +21,8 @@ public class Server
         // By using an executor it is straightforward to interrupt any servant
         // dispatch threads by using ExecutorService.shutdownNow.
         //
-        final ExecutorService executor = Executors.newFixedThreadPool(5);
-        initData.dispatcher = (runnable, con) ->
-        {
-            executor.submit(runnable);
-        };
+        final ExecutorService executorService = Executors.newFixedThreadPool(5);
+        initData.executor = (runnable, con) -> executorService.submit(runnable);
 
         //
         // Try with resources block - communicator is automatically destroyed
@@ -41,7 +38,7 @@ public class Server
             //
             Runtime.getRuntime().addShutdownHook(new Thread(() ->
             {
-                executor.shutdownNow();
+                executorService.shutdownNow();
                 communicator.destroy();
             }));
 
@@ -53,7 +50,7 @@ public class Server
             else
             {
                 com.zeroc.Ice.ObjectAdapter adapter = communicator.createObjectAdapter("TaskManager");
-                adapter.add(new TaskManagerI(executor), com.zeroc.Ice.Util.stringToIdentity("manager"));
+                adapter.add(new TaskManagerI(executorService), com.zeroc.Ice.Util.stringToIdentity("manager"));
                 adapter.activate();
 
                 communicator.waitForShutdown();

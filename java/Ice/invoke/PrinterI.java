@@ -119,11 +119,9 @@ public class PrinterI implements com.zeroc.Ice.Blobject
         }
         else
         {
-            com.zeroc.Ice.OperationNotExistException ex = new com.zeroc.Ice.OperationNotExistException();
-            ex.id = current.id;
-            ex.facet = current.facet;
-            ex.operation = current.operation;
-            throw ex;
+            // No need to specify the identity/facet/operation: Ice fills them in automatically
+            // using 'current'.
+            throw new com.zeroc.Ice.OperationNotExistException();
         }
 
         //
