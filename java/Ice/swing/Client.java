@@ -50,7 +50,7 @@ public class Client extends JFrame
         initData.properties = new com.zeroc.Ice.Properties();
         initData.properties.load("config.client");
         initData.properties.setProperty("Ice.Default.Package", "com.zeroc.demos.Ice.swing");
-        initData.dispatcher = (runnable, connection) -> SwingUtilities.invokeLater(runnable);
+        initData.executor = (runnable, connection) -> SwingUtilities.invokeLater(runnable);
 
         _communicator = com.zeroc.Ice.Util.initialize(args, initData);
         Runtime.getRuntime().addShutdownHook(new Thread(() -> _communicator.destroy()));

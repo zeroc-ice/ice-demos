@@ -113,7 +113,7 @@ public class Client
                         {
                             System.out.println("blocking task " + id + " interrupted");
                         }
-                        catch(com.zeroc.Ice.Exception e)
+                        catch(com.zeroc.Ice.LocalException e)
                         {
                             System.out.println("blocking task " + id + " failed");
                             e.printStackTrace();
