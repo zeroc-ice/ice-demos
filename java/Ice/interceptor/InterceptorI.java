@@ -4,11 +4,12 @@
 
 import com.zeroc.demos.Ice.interceptor.Demo.*;
 import com.zeroc.Ice.Current;
-import com.zeroc.Ice.Request;
+import com.zeroc.Ice.IncomingRequest;
+import com.zeroc.Ice.OutgoingResponse;
 import java.util.concurrent.CompletionStage;
 import java.util.Set;
 
-class InterceptorI extends com.zeroc.Ice.DispatchInterceptor
+class InterceptorI implements com.zeroc.Ice.Object
 {
     InterceptorI(com.zeroc.Ice.Object servant, AuthenticatorI authenticator, Set<String> securedOperations)
     {
@@ -18,20 +19,19 @@ class InterceptorI extends com.zeroc.Ice.DispatchInterceptor
     }
 
     @Override
-    public CompletionStage<com.zeroc.Ice.OutputStream> dispatch(Request request)
+    public CompletionStage<OutgoingResponse> dispatch(IncomingRequest request)
         throws com.zeroc.Ice.UserException
     {
-        Current current = request.getCurrent();
         //
         // Check if the operation requires authorization to invoke.
         //
-        if(_securedOperations.contains(current.operation))
+        if(_securedOperations.contains(request.current.operation))
         {
             //
             // Validate the client's access token before dispatching to the servant.
             // 'validateToken' throws an exception if the token is invalid or expired.
             //
-            String tokenValue = current.ctx.get("accessToken");
+            String tokenValue = request.current.ctx.get("accessToken");
             if(tokenValue != null)
             {
                 _authenticator.validateToken(tokenValue);
@@ -44,7 +44,7 @@ class InterceptorI extends com.zeroc.Ice.DispatchInterceptor
                 throw new AuthorizationException();
             }
         }
-        return _servant.ice_dispatch(request);
+        return _servant.dispatch(request);
     }
 
     private final com.zeroc.Ice.Object _servant;
