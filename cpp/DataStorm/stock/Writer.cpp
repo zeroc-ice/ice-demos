@@ -5,6 +5,7 @@
 
 #include "Stock.h"
 
+#include <iostream>
 #include <random>
 #include <thread>
 
@@ -20,8 +21,8 @@ namespace
     makeStock(DataStorm::Topic<string, Stock>& topic, string ticker, Stock stock)
     {
         // Create a stock writer for the given ticker and add the initial stock value.
-        auto writer = DataStorm::makeSingleKeyWriter(topic, move(ticker));
-        writer.add(move(stock));
+        auto writer = DataStorm::makeSingleKeyWriter(topic, std::move(ticker));
+        writer.add(std::move(stock));
         return writer;
     }
 
@@ -68,24 +69,64 @@ main(int argc, char* argv[])
         // Setup a few stocks
         cout << "Available stocks: " << endl;
         map<string, Stock> stocks{
-            {"GOOG", Stock("Google", 1040.61, 1035, 1043.178, 723018024728, 1035.96, 536996)},
-            {"AAPL", Stock("Apple", 174.74, 174.44, 175.50, 898350570640, 174.96, 14026673)},
-            {"FB", Stock("Facebook", 182.78, 180.29, 183.15, 531123722959, 180.87, 9426283)},
-            {"AMZN", Stock("Amazon", 1186.41, 1160.70, 1186.84, 571697967142, 1156.16, 3442959)},
-            {"MSFT", Stock("Microsoft", 83.27, 82.78, 83.43, 642393925538, 83.11, 6056186)}};
+            {"GOOG",
+             Stock{
+                 .name = "Google",
+                 .price = 1040.61f,
+                 .bestBid = 1035.0f,
+                 .bestAsk = 1043.178f,
+                 .marketCap = 723018024728,
+                 .previousClose = 1035.96f,
+                 .volume = 536996}},
+            {"AAPL",
+             Stock{
+                 .name = "Apple",
+                 .price = 174.74f,
+                 .bestBid = 174.44f,
+                 .bestAsk = 175.50f,
+                 .marketCap = 898350570640,
+                 .previousClose = 174.96f,
+                 .volume = 14026673}},
+            {"FB",
+             Stock{
+                 .name = "Facebook",
+                 .price = 182.78f,
+                 .bestBid = 180.29f,
+                 .bestAsk = 183.15f,
+                 .marketCap = 531123722959,
+                 .previousClose = 180.87f,
+                 .volume = 9426283}},
+            {"AMZN",
+             Stock{
+                 .name = "Amazon",
+                 .price = 1186.41f,
+                 .bestBid = 1160.70f,
+                 .bestAsk = 1186.84f,
+                 .marketCap = 571697967142,
+                 .previousClose = 1156.16f,
+                 .volume = 3442959}},
+            {"MSFT",
+             Stock{
+                 .name = "Microsoft",
+                 .price = 83.27f,
+                 .bestBid = 82.78f,
+                 .bestAsk = 83.43f,
+                 .marketCap = 642393925538,
+                 .previousClose = 83.11f,
+                 .volume = 6056186}}};
 
         for (const auto& stock : stocks)
         {
             cout << stock.first << endl;
         }
 
-        string stock;
+        string stockName;
         cout << "Please enter the stock to publish (default = all):\n";
-        getline(cin, stock);
+        getline(cin, stockName);
 
         // Instantiate writers for the choosen stocks.
         vector<DataStorm::SingleKeyWriter<string, Stock>> writers;
-        if (stock.empty() || stock == "all")
+        if (stockName.empty() || stockName == "all")
         {
             for (const auto& stock : stocks)
             {
@@ -94,12 +135,12 @@ main(int argc, char* argv[])
         }
         else
         {
-            if (stocks.find(stock) == stocks.end())
+            if (stocks.find(stockName) == stocks.end())
             {
-                cout << "unknown stock `" << stock << "'" << endl;
+                cout << "unknown stock `" << stockName << "'" << endl;
                 return 1;
             }
-            writers.push_back(makeStock(topic, stock, stocks[stock]));
+            writers.push_back(makeStock(topic, std::move(stockName), stocks[stockName]));
         }
 
         // Update the stock value or volume attributes.

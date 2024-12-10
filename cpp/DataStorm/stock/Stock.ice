@@ -1,9 +1,10 @@
 //
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
+
 module Demo
 {
-    class Stock
+    struct Stock
     {
         string name;
         float price;

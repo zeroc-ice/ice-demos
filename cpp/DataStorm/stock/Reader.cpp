@@ -120,7 +120,7 @@ main(int argc, char* argv[])
         reader->onSamples(
             [displaySample](const vector<DataStorm::Sample<string, Stock>>& samples)
             {
-                for (auto& s : samples)
+                for (const auto& s : samples)
                 {
                     displaySample(s);
                 }
