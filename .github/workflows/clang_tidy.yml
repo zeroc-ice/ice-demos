@@ -62,4 +62,4 @@ jobs:
       - name: Run Clang Tidy
         working-directory: ice-demos/cpp
         run: |
-          run-clang-tidy-19 -j$(nproc) -quiet -enable-check-profile
+          run-clang-tidy-19 -j$(nproc) -quiet
