@@ -19,7 +19,7 @@ $(eval $(call validate-config))
 #
 # Support for Ice libraries
 #
-cpp-dependencies                = Ice Glacier2 IceGrid IcePatch2 IceSSL IceDiscovery IceLocatorDiscovery IceStorm IceBox
+cpp-dependencies                = Ice Glacier2 IceGrid DataStorm IceDiscovery IceLocatorDiscovery IceStorm IceBox
 Ice_libs                        = bz2
 Glacier2_dependencies           = Ice
 IceGrid_dependencies            = Glacier2 Ice
