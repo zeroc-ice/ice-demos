@@ -61,7 +61,7 @@ $1_srcext               := cpp
 $1_dependencies         := $$(or $$($1_dependencies),Ice)
 $1_slicecompiler        := slice2cpp
 $1_sliceflags           := -I$(ice_slicedir) -I$1 $$($1_sliceflags)
-$1_cppflags             := -DICE_CPP11_MAPPING -std=c++17 -I$1 -I$1/generated $(ice_cppflags) $$($1_cppflags)
+$1_cppflags             := -std=c++17 -I$1 -I$1/generated $(ice_cppflags) $$($1_cppflags)
 $1_caninstall           := no
 
 # Also link with IceSSL, IceDiscovery and IceLocatorDiscovery when compiling the project with the static configuration
