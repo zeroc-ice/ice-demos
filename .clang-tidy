@@ -14,6 +14,5 @@ HeaderFilterRegex: ''
 UseColor: true
 FormatStyle: 'file'
 CheckOptions:
-  - { key: modernize-use-nullptr.NullMacros, value: 'NULL' }
-  # std::exception_ptr is a cheap to copy, pointer-like type; we pass it by value all the time.
-  - { key: performance-unnecessary-value-param.AllowedTypes, value: 'std::exception_ptr' }
+  modernize-use-nullptr.NullMacros: 'NULL'
+  performance-unnecessary-value-param.AllowedTypes: 'std::exception_ptr'
