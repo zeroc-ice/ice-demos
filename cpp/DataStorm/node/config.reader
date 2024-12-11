@@ -1,0 +1,38 @@
+#
+# Use the localhost interface by default for DataStorm endpoints
+#
+Ice.Default.Host=localhost
+
+#
+# Connect to the DataStorm node running on port 10000
+#
+DataStorm.Node.ConnectTo=tcp -p 10000
+
+#
+# Disable the multicast endpoint
+#
+DataStorm.Node.Multicast.Enabled=0
+
+#
+# Disable the server endpoints. The reader won't accept any connections
+# from writers. If the writer accepts connections, the reader will
+# establish a connection to the writer to exchange data. Otherwise,
+# it will exchange data through the connection established with the
+# DataStorm node.
+#
+# You can comment out this property to allow readers to connect to the
+# writer directly.
+#
+DataStorm.Node.Server.Enabled=0
+
+#
+# DataStorm Tracing
+#
+#DataStorm.Trace.Topic=1
+#DataStorm.Trace.Data=1
+#DataStorm.Trace.Session=1
+
+#
+# Ice tracing
+#
+#Ice.Trace.Network=1

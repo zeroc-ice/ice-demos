@@ -21,7 +21,7 @@ demo-sources = $(call unique,$(if $1,$(foreach f,$1,$(notdir $(wildcard $2/$f)))
 #
 # The demo executables to try to build in each demo directory
 #
-demo-programs           = client server publisher subscriber
+demo-programs           = client server publisher subscriber reader writer
 
 #
 # The default demo sources for each demo executable.
@@ -30,6 +30,8 @@ demo-client-sources     = Client.$1 *.ice
 demo-server-sources     = Server.$1 *.ice *I.$1
 demo-publisher-sources  = Publisher.$1 *.ice
 demo-subscriber-sources = Subscriber.$1 *.ice
+demo-writer-sources = Writer.$1 *.ice
+demo-reader-sources = Reader.$1 *.ice
 
 #
 # $(call create-demo-project,demo)
@@ -70,6 +72,12 @@ $1_publisher_sources    := $$(call demo-sources,$$(call $1_publisher_sources,$$(
 
 $1_subscriber_sources   := $$(call demo-sources,$$(call $1_subscriber_sources,$$($1_srcext)),$$($1_srcdir),\
                                 $$(call demo-subscriber-sources,$$($1_srcext)))
+
+$1_writer_sources       := $$(call demo-sources,$$(call $1_writer_sources,$$($1_srcext)),$$($1_srcdir),\
+                                $$(call demo-writer-sources,$$($1_srcext)))
+
+$1_reader_sources   := $$(call demo-sources,$$(call $1_reader_sources,$$($1_srcext)),$$($1_srcdir),\
+                                $$(call demo-reader-sources,$$($1_srcext)))
 
 $1_programs             := $$(foreach p,$$($1_programs),$$(if $$($1_$$(p)_sources),$1_$$(p)))
 $1_libraries            := $$(foreach p,$$($1_libraries),$1_$$(p))
