@@ -2,8 +2,8 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-#ifndef __FilesystemI_h__
-#define __FilesystemI_h__
+#ifndef FilesystemI_h
+#define FilesystemI_h
 
 #include <Filesystem.h>
 #include <Ice/Ice.h>
@@ -21,7 +21,7 @@ namespace Filesystem
     class NodeI : public virtual Node, public std::enable_shared_from_this<NodeI>
     {
     public:
-        virtual std::string name(const Ice::Current&) override;
+        std::string name(const Ice::Current&) override;
         NodeI(std::string, const std::shared_ptr<DirectoryI>&);
         void activate(const std::shared_ptr<Ice::ObjectAdapter>&);
 
