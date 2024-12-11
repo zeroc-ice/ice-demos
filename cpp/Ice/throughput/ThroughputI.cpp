@@ -9,8 +9,7 @@ ThroughputI::ThroughputI()
     : _byteSeq(Demo::ByteSeqSize),
       _stringSeq(Demo::StringSeqSize, "hello"),
       _structSeq(Demo::StringDoubleSeqSize, {"hello", 3.14}),
-      _fixedSeq(Demo::FixedSeqSize, {0, 0, 0.0}),
-      _warmup(false)
+      _fixedSeq(Demo::FixedSeqSize, {0, 0, 0.0})
 {
 }
 

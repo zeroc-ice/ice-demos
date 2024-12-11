@@ -15,7 +15,7 @@ class AuthenticatorI : public Demo::Authenticator
 {
 public:
     AuthenticatorI();
-    virtual std::string getToken(const Ice::Current&) override;
+    std::string getToken(const Ice::Current&) override;
     void validateToken(const std::string&);
 
 private:

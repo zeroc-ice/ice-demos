@@ -40,7 +40,7 @@ private:
     Demo::StringDoubleSeq _structSeq;
     Demo::FixedSeq _fixedSeq;
 
-    bool _warmup;
+    bool _warmup{false};
 };
 
 #endif

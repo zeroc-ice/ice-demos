@@ -15,8 +15,6 @@
 class WorkQueue
 {
 public:
-    WorkQueue();
-
     void run();
 
     void add(int, std::function<void()>, std::function<void(std::exception_ptr)>);
@@ -31,7 +29,7 @@ private:
     std::condition_variable _condition;
 
     std::list<CallbackEntry> _callbacks;
-    bool _done;
+    bool _done{false};
     std::thread _thread;
 };
 

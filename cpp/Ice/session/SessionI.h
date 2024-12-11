@@ -22,8 +22,8 @@ public:
 private:
     std::mutex _mutex;
     const std::string _name;
-    int _nextId; // The per-session id of the next hello object. This is used for tracing purposes.
+    int _nextId{0}; // The per-session id of the next hello object. This is used for tracing purposes.
     std::list<std::optional<Demo::HelloPrx>> _objs; // List of per-session allocated hello objects.
-    bool _destroy;
+    bool _destroy{false};
 };
 #endif

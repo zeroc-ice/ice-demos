@@ -10,8 +10,8 @@
 class HelloI : public Demo::Hello
 {
 public:
-    virtual void sayHello(const Ice::Current&) override;
-    virtual void shutdown(const Ice::Current&) override;
+    void sayHello(const Ice::Current&) override;
+    void shutdown(const Ice::Current&) override;
 };
 
 #endif
