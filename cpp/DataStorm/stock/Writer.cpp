@@ -14,20 +14,19 @@ using namespace Demo;
 
 namespace
 {
-
-    std::random_device random;
-
     DataStorm::SingleKeyWriter<string, Stock>
-    makeStock(DataStorm::Topic<string, Stock>& topic, string ticker, Stock stock)
+    makeStock(DataStorm::Topic<string, Stock>& topic, const string& ticker, const Stock& stock)
     {
         // Create a stock writer for the given ticker and add the initial stock value.
-        auto writer = DataStorm::makeSingleKeyWriter(topic, std::move(ticker));
-        writer.add(std::move(stock));
+        auto writer = DataStorm::makeSingleKeyWriter(topic, ticker);
+        writer.add(stock);
         return writer;
     }
 
     void updateStock(DataStorm::SingleKeyWriter<string, Stock>& stock)
     {
+        static std::random_device random;
+
         // Send a partial update to either update the price or the volume with the given writer.
         if (uniform_int_distribution<int>(1, 10)(random) < 8)
         {
@@ -41,7 +40,6 @@ namespace
                 uniform_int_distribution<int>(volume * 95 / 100, volume * 105 / 100)(random));
         }
     }
-
 }
 
 int
@@ -140,7 +138,7 @@ main(int argc, char* argv[])
                 cout << "unknown stock `" << stockName << "'" << endl;
                 return 1;
             }
-            writers.push_back(makeStock(topic, std::move(stockName), stocks[stockName]));
+            writers.push_back(makeStock(topic, stockName, stocks[stockName]));
         }
 
         // Update the stock value or volume attributes.

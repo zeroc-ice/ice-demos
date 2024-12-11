@@ -44,16 +44,16 @@ main(int argc, char* argv[])
             // Get the set of stocks connected with the any reader and display their ticker.
             std::promise<void> p;
             stocks.onConnectedKeys(
-                [&p](vector<string> tickers)
+                [&p](const vector<string>& tickers)
                 {
                     cout << "Available stock(s): " << endl;
-                    for (auto ticker : tickers)
+                    for (const auto& ticker : tickers)
                     {
                         cout << ticker << endl;
                     }
                     p.set_value();
                 },
-                [](DataStorm::CallbackReason action, string ticker)
+                [](DataStorm::CallbackReason action, const string& ticker)
                 {
                     if (action == DataStorm::CallbackReason::Connect)
                     {
@@ -90,11 +90,11 @@ main(int argc, char* argv[])
         // Wait for the writer to be connected.
         reader->waitForWriters();
 
-        auto displaySample = [](DataStorm::Sample<string, Stock> s)
+        auto displaySample = [](const DataStorm::Sample<string, Stock>& s)
         {
             if (s.getEvent() == DataStorm::SampleEvent::Add || s.getEvent() == DataStorm::SampleEvent::Update)
             {
-                auto value = s.getValue();
+                const auto& value = s.getValue();
                 cout << "Stock: " << value.name << " (" << s.getKey() << ")" << endl;
                 cout << "Price: " << value.price << endl;
                 cout << "Best bid/ask: " << value.bestBid << '/' << value.bestAsk << endl;

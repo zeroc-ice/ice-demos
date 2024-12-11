@@ -33,7 +33,7 @@ namespace DataStorm
         static chrono::system_clock::time_point decode(const Ice::ByteSeq&)
         {
             assert(false); // Not used by the reader but it still needs to be declared.
-            return chrono::system_clock::time_point();
+            return {};
         }
     };
 };
