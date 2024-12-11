@@ -17,10 +17,10 @@ jobs:
           # This LLVM script will add the relevant LLVM PPA: https://apt.llvm.org/
           wget https://apt.llvm.org/llvm.sh -O /tmp/llvm.sh
           chmod +x /tmp/llvm.sh
-          sudo /tmp/llvm.sh 18
-          sudo apt-get install -y clang-tidy-18
+          sudo /tmp/llvm.sh 19
+          sudo apt-get install -y clang-tidy-19
           rm /tmp/llvm.sh
-          clang-tidy-18 --version
+          clang-tidy-19 --version
 
       - name: Install bear
         run: |
@@ -62,4 +62,4 @@ jobs:
       - name: Run Clang Tidy
         working-directory: ice-demos/cpp
         run: |
-          find . -name "*.h" -o -name "*.cpp" | xargs run-clang-tidy-18 -j$(nproc) -quiet
+          run-clang-tidy-19 -j$(nproc) -quiet
