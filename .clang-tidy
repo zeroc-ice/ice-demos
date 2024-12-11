@@ -5,12 +5,14 @@ Checks:
   cert-*,
   modernize-*,
   -modernize-avoid-c-arrays,
+  -modernize-use-nodiscard,
   -modernize-use-trailing-return-type,
   performance-*,
   -performance-avoid-endl
 '
 WarningsAsErrors:  '*'
-HeaderFilterRegex: ''
+HeaderFilterRegex: '.*'
+ExcludeHeaderFilterRegex: 'include/.*'
 UseColor: true
 FormatStyle: 'file'
 ExtraArgs: ['-std=c++17']
