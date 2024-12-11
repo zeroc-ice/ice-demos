@@ -10,8 +10,8 @@
 class ContextI : public Demo::Context
 {
 public:
-    virtual void call(const Ice::Current&) override;
-    virtual void shutdown(const Ice::Current&) override;
+    void call(const Ice::Current&) override;
+    void shutdown(const Ice::Current&) override;
 };
 
 #endif

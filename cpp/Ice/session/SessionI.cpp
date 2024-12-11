@@ -26,7 +26,7 @@ private:
     const int _id;
 };
 
-SessionI::SessionI(string name) : _name(std::move(name)), _nextId(0), _destroy(false)
+SessionI::SessionI(string name) : _name(std::move(name))
 {
     cout << "The session " << _name << " is now created." << endl;
 }

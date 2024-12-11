@@ -8,7 +8,7 @@
 
 using namespace std;
 
-WorkQueue::WorkQueue() : _done(false) {}
+WorkQueue::WorkQueue()  {}
 
 void
 WorkQueue::start()

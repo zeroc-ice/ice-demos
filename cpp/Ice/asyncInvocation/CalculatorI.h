@@ -10,12 +10,12 @@
 class CalculatorI : public Demo::Calculator
 {
 public:
-    virtual int add(int, int, const Ice::Current&) override;
-    virtual int subtract(int, int, const Ice::Current&) override;
-    virtual int divide(int, int, int&, const Ice::Current&) override;
-    virtual int square(int, const Ice::Current&) override;
-    virtual double squareRoot(int, const Ice::Current&) override;
-    virtual void shutdown(const Ice::Current&) override;
+    int add(int, int, const Ice::Current&) override;
+    int subtract(int, int, const Ice::Current&) override;
+    int divide(int, int, int&, const Ice::Current&) override;
+    int square(int, const Ice::Current&) override;
+    double squareRoot(int, const Ice::Current&) override;
+    void shutdown(const Ice::Current&) override;
 };
 
 #endif
