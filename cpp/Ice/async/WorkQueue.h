@@ -15,8 +15,6 @@
 class WorkQueue
 {
 public:
-    WorkQueue();
-
     void run();
 
     void add(int, std::function<void()>, std::function<void(std::exception_ptr)>);

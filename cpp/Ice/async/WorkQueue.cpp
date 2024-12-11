@@ -8,8 +8,6 @@
 
 using namespace std;
 
-WorkQueue::WorkQueue()  {}
-
 void
 WorkQueue::start()
 {
