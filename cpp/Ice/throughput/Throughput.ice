@@ -1,10 +1,6 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 #pragma once
-
-[["cpp:include:StringView.h"]]
 
 module Demo
 {

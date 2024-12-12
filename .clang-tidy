@@ -5,7 +5,6 @@ Checks:
   cert-*,
   modernize-*,
   -modernize-avoid-c-arrays,
-  -modernize-use-nodiscard,
   -modernize-use-trailing-return-type,
   performance-*,
   -performance-avoid-endl
