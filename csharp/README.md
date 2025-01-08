@@ -23,7 +23,7 @@ in the [Ice manual][1].
 
 - [Chat](./Chat) contains a .NET GUI client for the ZeroC [Chat Demo][2].
 
-Refer to the [C++11 demos](../cpp11) for more examples that use the Ice services
+Refer to the [C++ demos)(../cpp) for more examples that use the Ice services
 (Glacier2, IceGrid, IceStorm).
 
 ## Building and running the Demos with .NET on Windows, Linux, and macOS

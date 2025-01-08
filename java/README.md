@@ -15,7 +15,7 @@ following additional subdirectories:
 - [Manual](./Manual) contains complete examples for some of the code snippets
 in the [Ice manual][1].
 
-Refer to the [C++11 demos](../cpp11) for more examples that use the Ice services
+Refer to the [C++ demos)(../cpp) for more examples that use the Ice services
 (Glacier2, IceGrid, IceStorm).
 
 ## Build Instructions

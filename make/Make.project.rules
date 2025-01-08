@@ -127,26 +127,6 @@ $3/%.o: $1/%.cpp
 	$(Q)$(MV) $3/$$*.Td $3/$$*.cpp.d
 endif
 
-ifneq ($(filter %.mm,$4),)
-# Rules to build Objective-C++ sources from <srcdir>
-$3/%.o: $1/%.mm
-$3/%.o: $1/%.mm
-	$(E) "Compiling [$8-$9] $$<"
-	$(Q)$(or $($8_cxx),$(platform_cxx)) $(CXXFLAGS) $(call depend-cppflags,$3/$$*.Td,$$@)\
-	$(strip $6) $(CPPFLAGS) -c $$< -o $$@
-	$(Q)$(MV) $3/$$*.Td $3/$$*.mm.d
-endif
-
-ifneq ($(filter %.m,$4),)
-# Rules to build Objective-C sources from <srcdir>
-$3/%.o: $1/%.m
-$3/%.o: $1/%.m
-	$(E) "Compiling [$8-$9] $$<"
-	$(Q)$(or $($8_cxx),$(platform_cxx)) $(CXXFLAGS) $(call depend-cppflags,$3/$$*.Td,$$@)\
-	$(strip $6) $(CPPFLAGS) -c $$< -o $$@
-	$(Q)$(MV) $3/$$*.Td $3/$$*.m.d
-endif
-
 endef
 
 #
@@ -944,7 +924,7 @@ comma           := ,
 escape-ldflags   ?= $1
 unescape-ldflags ?= $1
 
-mappings        = cpp objective-c python ruby php
+mappings        = cpp python ruby php
 mappingdir3     = $(if $(filter $(mappings),$(notdir $1)),$1,$(if $1,$(call mappingdir3,$(call dirname,$1))))
 mappingdir2     = $(if $(filter ../%,$1),$(call mappingdir2,$(patsubst ../%,%,$1)),$(call mappingdir3,$1))
 mappingdir      = $(patsubst $(lang_srcdir)/%,%,$(if $(filter-out ../%,$1),$2,$(top_srcdir)/$(call mappingdir2,$1)/$2))
@@ -1064,8 +1044,8 @@ relpathfromdir  = $(if $(findstring /,$1),$(call relpathfromdir,$(call dirname,$
 # $(call platform-and-config-var,$1=varname,$2=component,$3=platform,$4=config,$5=comp[platform-config],$6=value)
 #
 # Check for platform and configuration specific variable. For example, if variable
-# is `objdir', for the configuration `cpp11-static' and the `osx' platform, the
-# resulting value will be: $(osx_objdir) $(cpp11_objdir) $(static_objdir).
+# is `objdir', for the configuration `cpp-static' and the `osx' platform, the
+# resulting value will be: $(osx_objdir) $(cpp_objdir) $(static_objdir).
 #
 # The configuration value is decomposed based on the dash character and the value
 # of each individual configurations is recomposed with a dash (so for the config
