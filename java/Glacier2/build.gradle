@@ -2,7 +2,7 @@
 // Copyright (c) ZeroC, Inc. All rights reserved.
 //
 
-['callback', 'simpleChat'].each {
+['callback'].each {
     def name = it
     project(":demoGlacier2${it.capitalize()}") {
         slice {
@@ -30,10 +30,6 @@
         jar.enabled = false
 
         demoJar("client")
-
-        // The simpleChat demo has no serverJar.
-        if(name != "simpleChat") {
-            demoJar("server")
-        }
+        demoJar("server")
     }
 }

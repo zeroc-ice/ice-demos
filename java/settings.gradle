@@ -10,7 +10,7 @@ def demos = [
              'session', 'swing', 'throughput', 'optional', 'context'],
     'IceDiscovery' : ['hello', 'replication'],
     'IceBox' : ['hello'],
-    'Glacier2' : ['callback', 'simpleChat'],
+    'Glacier2' : ['callback'],
     'IceStorm' : ['clock'],
     'IceGrid' : ['icebox', 'simple'],
     'Manual' : ['printer', 'simpleFilesystem']
@@ -32,6 +32,3 @@ demos.each {
         project("${projectName}").projectDir = new File("${dir}/${it}")
     }
 }
-
-include ":demoChat"
-project(":demoChat").projectDir = new File("Chat")
