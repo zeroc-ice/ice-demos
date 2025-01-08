@@ -15,8 +15,6 @@ following additional subdirectories:
 - [Manual](./Manual) contains complete examples for some of the code snippets
 in the [Ice manual][1].
 
-- [Chat](./Chat) contains a GUI client for the ZeroC [Chat Demo][2].
-
 Refer to the [C++11 demos](../cpp11) for more examples that use the Ice services
 (Glacier2, IceGrid, IceStorm).
 
@@ -113,4 +111,3 @@ Follow these steps to open the project in Android Studio:
 Refer to the README.md file in each demo directory for usage instructions.
 
 [1]: https://doc.zeroc.com/ice/3.7/introduction
-[2]: https://doc.zeroc.com/technical-articles/general-topics/chat-demo
