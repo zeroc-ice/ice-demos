@@ -50,14 +50,7 @@ async function runWithSession(router: Glacier2.RouterPrx, session: Demo.ChatSess
         router.ice_getCommunicator().createObjectAdapterWithRouter("", router),
     ]);
 
-    //
-    // Use ACM heartbeat to keep session alive.
-    //
     const connection = router.ice_getCachedConnection();
-    if (timeout > 0) {
-        connection.setACM(timeout, undefined, Ice.ACMHeartbeat.HeartbeatAlways);
-    }
-
     connection.setCloseCallback(() => console.log("Connection lost"));
 
     //

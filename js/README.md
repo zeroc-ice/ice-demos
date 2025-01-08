@@ -8,7 +8,7 @@ or coding technique.
 
 The following subdirectories contain sample programs:
 
-- [Glacier2](./Glacier2) is a simpler chat client that uses the Glacier2 service.
+- [Glacier2](./Glacier2) is a simple chat client that uses the Glacier2 service.
 
 - [Ice](./Ice) has several examples that illustrate fundamental Ice concepts.
 
