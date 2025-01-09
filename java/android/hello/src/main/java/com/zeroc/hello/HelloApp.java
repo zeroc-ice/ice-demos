@@ -14,15 +14,21 @@ import android.os.Message;
 import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.Connection;
 import com.zeroc.Ice.InitializationData;
+import com.zeroc.Ice.InitializationException;
 import com.zeroc.Ice.InvocationFuture;
 import com.zeroc.Ice.LocalException;
 import com.zeroc.Ice.ObjectPrx;
+import com.zeroc.Ice.Properties;
 import com.zeroc.Ice.Util;
 import com.zeroc.demos.android.hello.Demo.HelloPrx;
 
+import java.security.KeyStore;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManagerFactory;
 
 public class HelloApp extends Application
 {
@@ -74,10 +80,7 @@ public class HelloApp extends Application
 
         WifiManager wifiManager = (WifiManager)getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 
-        //
         // On some devices, a multicast lock must be acquired otherwise multicast packets are discarded.
-        // The lock is initially unacquired.
-        //
         WifiManager.MulticastLock lock = wifiManager.createMulticastLock("com.zeroc.hello");
         lock.acquire();
 
@@ -90,45 +93,43 @@ public class HelloApp extends Application
 
                 initData.executor = (Runnable runnable, Connection connection) -> _uiHandler.post(runnable);
 
-                initData.properties = Util.createProperties();
+                initData.properties = new Properties();
                 initData.properties.setProperty("Ice.Trace.Network", "3");
 
                 initData.properties.setProperty("IceSSL.Trace.Security", "3");
-                initData.properties.setProperty("IceSSL.KeystoreType", "BKS");
-                initData.properties.setProperty("IceSSL.TruststoreType", "BKS");
-                initData.properties.setProperty("IceSSL.Password", "password");
-                initData.properties.setProperty("Ice.Plugin.IceSSL", "com.zeroc.IceSSL.PluginFactory");
                 initData.properties.setProperty("Ice.Plugin.IceDiscovery", "com.zeroc.IceDiscovery.PluginFactory");
                 initData.properties.setProperty("Ice.Default.Package", "com.zeroc.demos.android.hello");
 
-                //
-                // We need to postpone plug-in initialization so that we can configure IceSSL
-                // with a resource stream for the certificate information.
-                //
-                initData.properties.setProperty("Ice.InitPlugins", "0");
+                // Load the user KeyStore from client.bks application resource
+                KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
+                keyStore.load(getResources().openRawResource(R.raw.client), "password".toCharArray());
+
+                // Create a trust manager factory that uses the certificates from our KeyStore.
+                TrustManagerFactory trustManagerFactory =
+                        TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+                trustManagerFactory.init(keyStore);
+
+                // Create a SSLContext for TLS and initialize it with our custom trust manager factory.
+                var sslContext = SSLContext.getInstance("TLS");
+                sslContext.init(null, trustManagerFactory.getTrustManagers(), null);
+
+                // Setup the SSLEngine factory used by secure (TLS) client connections.
+                initData.clientSSLEngineFactory =
+                        (String peerHost, int peerPort) -> sslContext.createSSLEngine(peerHost, peerPort);
 
                 Communicator c = Util.initialize(initData);
-
-                //
-                // Now we complete the plug-in initialization.
-                //
-                com.zeroc.IceSSL.Plugin plugin = (com.zeroc.IceSSL.Plugin)c.getPluginManager().getPlugin("IceSSL");
-                //
-                // Be sure to pass the same input stream to the SSL plug-in for
-                // both the keystore and the truststore. This makes startup a
-                // little faster since the plug-in will not initialize
-                // two keystores.
-                //
-                java.io.InputStream certs = getResources().openRawResource(R.raw.client);
-                plugin.setKeystoreStream(certs);
-                plugin.setTruststoreStream(certs);
-                c.getPluginManager().initializePlugins();
-
                 _uiHandler.sendMessage(Message.obtain(_uiHandler, MSG_READY, new MessageReady(c, null)));
             }
             catch(LocalException e)
             {
                 _uiHandler.sendMessage(Message.obtain(_uiHandler, MSG_READY, new MessageReady(null, e)));
+            }
+            catch (Exception e)
+            {
+                _uiHandler.sendMessage(Message.obtain(
+                        _uiHandler,
+                        MSG_READY,
+                        new MessageReady(null, new InitializationException("Communicator initialization failed", e))));
             }
         }).start();
     }
