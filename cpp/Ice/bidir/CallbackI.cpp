@@ -4,6 +4,7 @@
 
 #include "CallbackI.h"
 #include <Ice/Ice.h>
+#include <algorithm>
 #include <iostream>
 
 using namespace std;
