@@ -32,6 +32,8 @@ import androidx.fragment.app.DialogFragment;
 
 import com.zeroc.Ice.LocalException;
 
+import java.util.concurrent.ExecutorService;
+
 public class HelloWorld extends AppCompatActivity
 {
     public static class ErrorDialogFragment extends DialogFragment
@@ -109,6 +111,7 @@ public class HelloWorld extends AppCompatActivity
         final SharedPreferences prefs = getPreferences(MODE_PRIVATE);
 
         _app = (HelloApp)getApplication();
+        _executor = java.util.concurrent.Executors.newSingleThreadExecutor();
 
         useDiscoveryCheckBox.setOnClickListener(v -> {
             final boolean checked = ((CheckBox)v).isChecked();
@@ -139,7 +142,11 @@ public class HelloWorld extends AppCompatActivity
             }
             else
             {
-                _app.sayHelloAsync(delaySeekBar.getProgress());
+                int delay = delaySeekBar.getProgress();
+                // sayHelloAsync is called on the executor to avoid IO operations on the main thread.
+                _executor.execute(() -> {
+                    _app.sayHelloAsync(delay);
+                });
             }
         });
 
@@ -152,7 +159,10 @@ public class HelloWorld extends AppCompatActivity
             }
             else
             {
-                _app.shutdownAsync();
+                // shutdownAsync is called on the executor to avoid IO operations on the main thread.
+                _executor.execute(() -> {
+                    _app.shutdownAsync();
+                });
             }
         });
 
@@ -199,7 +209,8 @@ public class HelloWorld extends AppCompatActivity
         });
 
         flushButton.setOnClickListener(v -> {
-            _app.flush();
+            // flush is called on the executor to avoid IO operations on the main thread.
+            _executor.execute(() -> _app.flush());
             flushButton.setEnabled(false);
             statusTextView.setText(R.string.flushed_batch_requests);
         });
@@ -413,5 +424,6 @@ public class HelloWorld extends AppCompatActivity
     private static final String BUNDLE_KEY_FLUSH_ENABLED = "zeroc:flush";
 
     private HelloApp _app;
+    private ExecutorService _executor;
     private Handler _handler;
 }

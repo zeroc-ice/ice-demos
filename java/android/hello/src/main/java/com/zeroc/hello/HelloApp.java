@@ -27,6 +27,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManagerFactory;
 
@@ -91,8 +92,6 @@ public class HelloApp extends Application
             {
                 InitializationData initData = new InitializationData();
 
-                initData.executor = (Runnable runnable, Connection connection) -> _uiHandler.post(runnable);
-
                 initData.properties = new Properties();
                 initData.properties.setProperty("Ice.Trace.Network", "3");
 
@@ -104,18 +103,23 @@ public class HelloApp extends Application
                 KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
                 keyStore.load(getResources().openRawResource(R.raw.client), "password".toCharArray());
 
+                // Create a key manager manager factory that uses the certificates from our KeyStore.
+                KeyManagerFactory keyManagerFactory =
+                    KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+                keyManagerFactory.init(keyStore, "password".toCharArray());
+
                 // Create a trust manager factory that uses the certificates from our KeyStore.
                 TrustManagerFactory trustManagerFactory =
-                        TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+                    TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
                 trustManagerFactory.init(keyStore);
 
                 // Create a SSLContext for TLS and initialize it with our custom trust manager factory.
                 var sslContext = SSLContext.getInstance("TLS");
-                sslContext.init(null, trustManagerFactory.getTrustManagers(), null);
+                sslContext.init(keyManagerFactory.getKeyManagers(), trustManagerFactory.getTrustManagers(), null);
 
                 // Setup the SSLEngine factory used by secure (TLS) client connections.
                 initData.clientSSLEngineFactory =
-                        (String peerHost, int peerPort) -> sslContext.createSSLEngine(peerHost, peerPort);
+                    (String peerHost, int peerPort) -> sslContext.createSSLEngine(peerHost, peerPort);
 
                 Communicator c = Util.initialize(initData);
                 _uiHandler.sendMessage(Message.obtain(_uiHandler, MSG_READY, new MessageReady(c, null)));
@@ -127,9 +131,9 @@ public class HelloApp extends Application
             catch (Exception e)
             {
                 _uiHandler.sendMessage(Message.obtain(
-                        _uiHandler,
-                        MSG_READY,
-                        new MessageReady(null, new InitializationException("Communicator initialization failed", e))));
+                    _uiHandler,
+                    MSG_READY,
+                    new MessageReady(null, new InitializationException("Communicator initialization failed", e))));
             }
         }).start();
     }
@@ -216,10 +220,8 @@ public class HelloApp extends Application
         try
         {
             updateProxy();
-            if(_proxy == null)
-            {
-                return;
-            }
+            assert(_proxy != null);
+
             _proxy.shutdownAsync().whenComplete((result, ex) ->
                 {
                     if(ex != null)
@@ -245,7 +247,9 @@ public class HelloApp extends Application
         try
         {
             updateProxy();
-            if(_proxy == null || _result != null)
+            assert (_proxy != null);
+
+            if(_result != null)
             {
                 return;
             }
@@ -322,7 +326,9 @@ public class HelloApp extends Application
         try
         {
             updateProxy();
-            if(_proxy == null || _result != null)
+            assert(_proxy != null);
+
+            if(_result != null)
             {
                 return;
             }
@@ -374,23 +380,26 @@ public class HelloApp extends Application
             return;
         }
 
-        String s;
-        if(_useDiscovery)
-        {
-            s = "hello";
-        }
-        else
-        {
-            s = "hello:tcp -h " + _host + " -p 10000:ssl -h " + _host + " -p 10001:udp -h " + _host  + " -p 10000";
-        }
-        ObjectPrx prx = _communicator.stringToProxy(s);
-        prx = _mode.apply(prx);
+        var prx = HelloPrx.createProxy(
+            _communicator,
+            _useDiscovery ? "hello" : "hello:tcp -h " + _host + " -p 10000:ssl -h " + _host + " -p 10001:udp -h " + _host  + " -p 10000");
+
+        prx = switch (_mode) {
+            case TWOWAY -> prx.ice_twoway();
+            case TWOWAY_SECURE -> prx.ice_twoway().ice_secure(true);
+            case ONEWAY -> prx.ice_oneway();
+            case ONEWAY_BATCH -> prx.ice_batchOneway();
+            case ONEWAY_SECURE -> prx.ice_oneway().ice_secure(true);
+            case ONEWAY_SECURE_BATCH -> prx.ice_batchOneway().ice_secure(true);
+            case DATAGRAM -> prx.ice_datagram();
+            case DATAGRAM_BATCH -> prx.ice_batchDatagram();
+        };
+
         if(_timeout != 0)
         {
             prx = prx.ice_invocationTimeout(_timeout);
         }
-
-        _proxy = HelloPrx.uncheckedCast(prx);
+        _proxy = prx;
     }
 
     DeliveryMode getDeliveryMode()
