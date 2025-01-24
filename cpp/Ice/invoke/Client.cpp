@@ -9,24 +9,6 @@
 using namespace std;
 using namespace Demo;
 
-static ostream&
-operator<<(ostream& out, Color c)
-{
-    switch (c)
-    {
-        case Color::red:
-            out << "red";
-            break;
-        case Color::green:
-            out << "green";
-            break;
-        case Color::blue:
-            out << "blue";
-            break;
-    }
-    return out;
-}
-
 int run(const shared_ptr<Ice::Communicator>&);
 
 int
