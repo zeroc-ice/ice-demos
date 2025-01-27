@@ -42,18 +42,7 @@ main(int argc, char* argv[])
             cout << greeting << endl;
             promise.set_value();
         },
-        [&promise](std::exception_ptr exceptionPtr)
-        {
-            try
-            {
-                rethrow_exception(exceptionPtr);
-            }
-            catch (const std::exception& e)
-            {
-                cerr << "Error: " << e.what() << endl;
-            }
-            promise.set_value();
-        });
+        [&promise](std::exception_ptr exceptionPtr) { promise.set_exception(exceptionPtr); });
 
     // Wait for the response/exception callback to be called.
     promise.get_future().get();
