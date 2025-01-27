@@ -80,6 +80,9 @@ jobs:
           working_directory: ice-demos/cpp
           msbuild_project: msbuild/ice.proj
 
+      - name: Run dotnet format
+        run: dotnet format --verify-no-changes "ice-demos/csharp/C# NET demos.sln"
+
       - name: Build C# Demos on ${{ matrix.os }}
         timeout-minutes: 20
         working-directory: ice-demos/csharp
