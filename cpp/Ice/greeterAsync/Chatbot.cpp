@@ -25,15 +25,15 @@ GreeterServer::Chatbot::greetAsync(
     [[maybe_unused]] function<void(std::exception_ptr)> exception,
     const Ice::Current&)
 {
-    cout << "Dispatching greet request { name = " << name << " } asynchronously" << endl;
+    cout << "Dispatching greet request { name = " << name << " }" << endl;
 
-    // Simulate a long-running operation by using std::async.
+    // Simulate a long-running background operation by using std::async.
     // Note that we're moving all arguments except current into the lambda expression.
     _tasks.push_back(std::async(
         std::launch::async,
         [name = std::move(name), response = std::move(response), exception = std::move(exception)]()
         {
-            std::this_thread::sleep_for(std::chrono::seconds(3));
+            std::this_thread::sleep_for(std::chrono::seconds(2));
             ostringstream os;
             os << "Hello, " << name << "!";
             response(os.str());
