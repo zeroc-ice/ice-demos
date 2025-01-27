@@ -27,7 +27,7 @@ demo-programs           = client server publisher subscriber reader writer
 # The default demo sources for each demo executable.
 #
 demo-client-sources     = Client.$1 *.ice
-demo-server-sources     = Server.$1 *.ice *I.$1
+demo-server-sources     = Server.$1 *.ice *I.$1 Chatbot.$1
 demo-publisher-sources  = Publisher.$1 *.ice
 demo-subscriber-sources = Subscriber.$1 *.ice
 demo-writer-sources = Writer.$1 *.ice
