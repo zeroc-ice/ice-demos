@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
-#
-# Copyright (c) ZeroC, Inc. All rights reserved.
-#
+# Copyright (c) ZeroC, Inc.
 
 import os, sys, socket, getopt
 

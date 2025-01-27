@@ -1,6 +1,4 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 #ifndef CHAT_SESSION_MANAGER_I_H
 #define CHAT_SESSION_MANAGER_I_H

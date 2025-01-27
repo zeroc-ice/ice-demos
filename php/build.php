@@ -1,8 +1,6 @@
 <?php
 
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 $iceHome = getenv("ICE_HOME");
 if($iceHome == NULL)

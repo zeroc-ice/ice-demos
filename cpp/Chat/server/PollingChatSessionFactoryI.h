@@ -1,6 +1,4 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 #ifndef POLLING_CHAT_SESSION_FACTORY_I_H
 #define POLLING_CHAT_SESSION_FACTORY_I_H
