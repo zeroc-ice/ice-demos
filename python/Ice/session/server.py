@@ -58,7 +58,7 @@ class SessionI(Demo.Session):
                 current.adapter.remove(current.id)
                 for p in self._objs:
                     current.adapter.remove(p.ice_getIdentity())
-            except Ice.ObjectAdapterDeactivatedException as ex:
+            except Ice.ObjectAdapterDeactivatedException:
                 # This method is called on shutdown of the server, in
                 # which case this exception is expected.
                 pass
@@ -72,7 +72,7 @@ class SessionFactoryI(Demo.SessionFactory):
             try:
                 session.destroy()
                 print("Cleaned up dead client.")
-            except Ice.LocalException as ex:
+            except Ice.LocalException:
                 # The client already destroyed this session, or the server is shutting down
                 pass
 
