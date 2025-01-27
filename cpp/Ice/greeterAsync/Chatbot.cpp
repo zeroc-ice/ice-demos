@@ -29,7 +29,7 @@ GreeterServer::Chatbot::greetAsync(
     // thread pool is configured with a single thread in this demo (the default configuration); as a result, we don't
     // need to serialize access to the _tasks field.
 
-    cout << "Dispatching greet request { name = " << name << " }" << endl;
+    cout << "Dispatching greet request { name = '" << name << "' }" << endl;
 
     // Simulate a long-running background operation by using std::async.
     // Note that we're moving all arguments except current into the lambda expression.

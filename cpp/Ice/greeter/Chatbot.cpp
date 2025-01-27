@@ -10,7 +10,7 @@ using namespace std;
 string
 GreeterServer::Chatbot::greet(string name, const Ice::Current&)
 {
-    cout << "Dispatching greet request { name = " << name << " }" << endl;
+    cout << "Dispatching greet request { name = '" << name << "' }" << endl;
 
     ostringstream os;
     os << "Hello, " << name << "!";
