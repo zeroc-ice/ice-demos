@@ -1,5 +1,7 @@
 // Copyright (c) ZeroC, Inc.
 
+#pragma once
+
 module VisitorCenter
 {
     /// Represents a simple greeter.
