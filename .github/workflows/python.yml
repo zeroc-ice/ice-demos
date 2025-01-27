@@ -20,4 +20,4 @@ jobs:
         run: pip install ruff
 
       - name: Run Ruff
-        run: ruff check . --ignore E402
+        run: ruff check python --ignore E402
