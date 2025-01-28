@@ -22,7 +22,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectName>server</ProjectName>
-    <ProjectGuid>{E4B54261-3921-40D9-AA09-C3C89D096350}</ProjectGuid>
+    <ProjectGuid>{9D71F7CB-6F15-41DC-B6D7-69A144513FC3}</ProjectGuid>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

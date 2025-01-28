@@ -22,7 +22,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectName>server</ProjectName>
-    <ProjectGuid>{E4B54261-3921-40D9-AA09-C3C89D096350}</ProjectGuid>
+    <ProjectGuid>{A80500EC-13A8-4E5C-AE4D-5168572B9D11}</ProjectGuid>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -229,6 +229,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <SliceCompileSource>..\..\Greeter.ice</SliceCompileSource>
     </ClInclude>
+    <None Include="..\..\config.server" />
     <SliceCompile Include="..\..\Greeter.ice" />
     <None Include="packages.config" />
   </ItemGroup>

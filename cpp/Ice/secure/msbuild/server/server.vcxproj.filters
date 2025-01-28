@@ -39,6 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="..\..\config.server" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Slice Files">

@@ -11,10 +11,10 @@ int
 main(int argc, char* argv[])
 {
     // Figure out my name.
-    const char* name = std::getenv("USER");
+    const char* name = getenv("USER");
     if (name == nullptr)
     {
-        name = std::getenv("USERNAME");
+        name = getenv("USERNAME");
     }
     if (name == nullptr)
     {
