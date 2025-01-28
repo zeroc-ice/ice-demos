@@ -10,18 +10,7 @@ guard let iceHome = ProcessInfo.processInfo.environment["ICE_HOME"] else {
 let package = Package(
     name: "greeter",
     platforms: [
-        .macOS(.v14),
-        .iOS(.v17),
-    ],
-    products: [
-        .executable(
-            name: "GreeterClient",
-            targets: ["GreeterClient"]
-        ),
-        .executable(
-            name: "GreeterServer",
-            targets: ["GreeterServer"]
-        ),
+        .macOS(.v14)
     ],
     dependencies: [.package(name: "ice", path: iceHome)],
     targets: [
