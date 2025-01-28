@@ -15,13 +15,13 @@ let package = Package(
     dependencies: [.package(name: "ice", path: iceHome)],
     targets: [
         .executableTarget(
-            name: "GreeterClient",
+            name: "Client",
             dependencies: [.product(name: "Ice", package: "ice")],
             exclude: ["slice-plugin.json"],
             plugins: [.plugin(name: "CompileSlice", package: "ice")]
         ),
         .executableTarget(
-            name: "GreeterServer",
+            name: "Server",
             dependencies: [.product(name: "Ice", package: "ice")],
             exclude: ["slice-plugin.json"],
             plugins: [.plugin(name: "CompileSlice", package: "ice")]

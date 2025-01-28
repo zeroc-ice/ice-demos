@@ -2,14 +2,14 @@
 
 This demo shows how to call and implement a canonical Greeter application using Ice.
 
-First start the GreeterServer program:
+First start the Server program:
 
 ```shell
-swift run GreeterServer
+swift run Server
 ```
 
-In a separate terminal, start the GreeterClient program:
+In a separate terminal, start the Client program:
 
 ```shell
-swift run GreeterClient
+swift run Client
 ```
