@@ -78,10 +78,10 @@ def run(communicator):
     #
     try:
         topic = manager.retrieve(topicName)
-    except IceStorm.NoSuchTopic as e:
+    except IceStorm.NoSuchTopic:
         try:
             topic = manager.create(topicName)
-        except IceStorm.TopicExists as ex:
+        except IceStorm.TopicExists:
             print(sys.argv[0] + ": temporary error. try again")
             sys.exit(1)
 

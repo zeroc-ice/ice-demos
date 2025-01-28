@@ -312,7 +312,7 @@ def run(communicator):
             print("unknown command `" + command + "'")
             usage()
             sys.exit(2)
-    except Ice.ObjectNotExistException as ex:
+    except Ice.ObjectNotExistException:
         print("failed to get metrics from `%s':\n(the admin object doesn't exist, "
               "are you sure you used the correct instance name?)" % (proxyStr))
         sys.exit(1)
