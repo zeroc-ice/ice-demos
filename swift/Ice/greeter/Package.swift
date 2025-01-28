@@ -1,0 +1,41 @@
+// swift-tools-version: 5.9
+
+import Foundation
+import PackageDescription
+
+guard let iceHome = ProcessInfo.processInfo.environment["ICE_HOME"] else {
+    fatalError("ICE_HOME environment variable not set")
+}
+
+let package = Package(
+    name: "greeter",
+    platforms: [
+        .macOS(.v14),
+        .iOS(.v17),
+    ],
+    products: [
+        .executable(
+            name: "GreeterClient",
+            targets: ["GreeterClient"]
+        ),
+        .executable(
+            name: "GreeterServer",
+            targets: ["GreeterServer"]
+        ),
+    ],
+    dependencies: [.package(name: "ice", path: iceHome)],
+    targets: [
+        .executableTarget(
+            name: "GreeterClient",
+            dependencies: [.product(name: "Ice", package: "ice")],
+            exclude: ["slice-plugin.json"],
+            plugins: [.plugin(name: "CompileSlice", package: "ice")]
+        ),
+        .executableTarget(
+            name: "GreeterServer",
+            dependencies: [.product(name: "Ice", package: "ice")],
+            exclude: ["slice-plugin.json"],
+            plugins: [.plugin(name: "CompileSlice", package: "ice")]
+        ),
+    ]
+)

@@ -108,3 +108,9 @@ jobs:
         run: |
           npm install
           npx gulp build
+
+      - name: Build Swift Demos on ${{ matrix.os }}
+        timeout-minutes: 20
+        working-directory: ice-demos/swift
+        run: find . -name Package.swift -execdir swift build \;
+        if: runner.os == 'macOS'
