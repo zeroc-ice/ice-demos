@@ -1,6 +1,4 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 #ifndef COUNTER_OBSERVER_I
 #define COUNTER_OBSERVER_I

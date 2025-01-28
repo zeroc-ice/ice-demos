@@ -1,6 +1,4 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 #ifndef INTERCEPTOR_I_H
 #define INTERCEPTOR_I_H

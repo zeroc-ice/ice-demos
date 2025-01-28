@@ -1,6 +1,4 @@
-#
-# Copyright (c) ZeroC, Inc. All rights reserved.
-#
+# Copyright (c) ZeroC, Inc.
 
 top_srcdir      := ..
 lang_srcdir     := $(top_srcdir)/cpp

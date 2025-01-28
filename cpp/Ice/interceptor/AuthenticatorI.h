@@ -1,6 +1,4 @@
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 #ifndef AUTHENTICATOR_I_H
 #define AUTHENTICATOR_I_H

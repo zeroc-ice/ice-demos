@@ -1,7 +1,5 @@
 #!/usr/bin/env python
-#
-# Copyright (c) ZeroC, Inc. All rights reserved.
-#
+# Copyright (c) ZeroC, Inc.
 
 import asyncio
 import functools

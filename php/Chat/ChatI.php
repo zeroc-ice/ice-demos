@@ -5,9 +5,7 @@
 //
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
-//
-// Copyright (c) ZeroC, Inc. All rights reserved.
-//
+// Copyright (c) ZeroC, Inc.
 
 //
 // Encode the param $data as Json and send it to the client browser.

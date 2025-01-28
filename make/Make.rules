@@ -1,6 +1,4 @@
-#
-# Copyright (c) ZeroC, Inc. All rights reserved.
-#
+# Copyright (c) ZeroC, Inc.
 
 #
 # Define ICE_HOME if Ice is not installed in /usr (Linux) or
