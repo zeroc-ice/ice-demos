@@ -1,6 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
-// Extends Program to provide the CancelKeyPressed property.
+/// <summary>Provides the CancelKeyPressed property.</summary>
 public static partial class Program
 {
     /// <summary>Gets a task that completes when the console receives a Ctrl+C.</summary>
