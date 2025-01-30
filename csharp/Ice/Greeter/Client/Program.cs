@@ -13,7 +13,6 @@ using Ice.Communicator communicator = Ice.Util.initialize(ref args);
 GreeterPrx greeter = GreeterPrxHelper.createProxy(communicator, "greeter:tcp -h localhost -p 4061");
 
 // Send a request to the remote object and get the response.
-// TODO: remap to GreetAsync with cs:identifier
-string greeting = await greeter.greetAsync(Environment.UserName);
+string greeting = await greeter.GreetAsync(Environment.UserName);
 
 Console.WriteLine(greeting);

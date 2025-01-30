@@ -249,6 +249,9 @@ dotnet_diagnostic.SA1515.severity = none
 # SA1625: Element documentation should not be copied and pasted
 dotnet_diagnostic.SA1625.severity = none
 
+# SA1633: A C# code file is missing a standard file header.
+dotnet_diagnostic.SA1633.severity = none
+
 # SA1642: Element should be documented
 dotnet_diagnostic.SA1642.severity = none
 
