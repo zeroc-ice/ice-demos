@@ -1,22 +1,36 @@
 set(Ice_VERSION 3.8.0)
 
-set(Ice_HOME $ENV{ICE_HOME})
+set(Ice_HOME C:/Users/joe/Developer/zeroc-ice/ice)
+
+if (NOT Ice_HOME)
+    set(Ice_HOME $ENV{ICE_HOME})
+endif()
+
 if (NOT Ice_HOME)
     message(FATAL_ERROR "ICE_HOME environment variable missing")
 endif()
 
-find_program(Ice_SLICE2CPP_EXECUTABLE slice2cpp HINTS ${Ice_HOME}/cpp/bin)
+find_program(Ice_SLICE2CPP_EXECUTABLE slice2cpp HINTS ${Ice_HOME}/cpp/bin PATH_SUFFIXES x64/Release)
+
+if (NOT Ice_SLICE2CPP_EXECUTABLE)
+    message(FATAL_ERROR "slice2cpp executable not found")
+endif()
 
 set(Ice_SLICE_DIR $(Ice_HOME)/slice)
 
-set(Ice_INCLUDE_DIRS ${Ice_HOME}/cpp/include ${Ice_HOME}/cpp/include/generated)
+set(Ice_INCLUDE_DIRS ${Ice_HOME}/cpp/include ${Ice_HOME}/cpp/include/generated ${Ice_HOME}/cpp/include/generated/x64/Release)
 # find_path(Ice_INCLUDE_DIR NAMES Ice/Ice.h HINTS ${Ice_HOME}/cpp/include)
+# set(Ice_INCLUDE_DIRS ${Ice_INCLUDE_DIR} PARENT_SCOPE)
 
-find_library(Ice_LIBRARIES NAMES Ice HINTS ${Ice_HOME}/cpp/lib)
+find_library(Ice_LIBRARY NAMES Ice ice38a0 HINTS ${Ice_HOME}/cpp/lib PATH_SUFFIXES x64/Release)
+set(Ice_LIBRARY ${ICE_LIBRARY} PARENT_SCOPE)
+
+message(STATUS "Ice_LIBRARY: ${Ice_LIBRARY}")
 
 add_library(Ice::Ice SHARED IMPORTED)
+set_target_properties(Ice::Ice PROPERTIES IMPORTED_IMPLIB ${Ice_LIBRARY})
 set_target_properties(Ice::Ice PROPERTIES
-    IMPORTED_LOCATION ${Ice_HOME}/cpp/lib/libIce.dylib
+    IMPORTED_LOCATION ${Ice_LIBRARY}
     INTERFACE_INCLUDE_DIRECTORIES "${Ice_INCLUDE_DIRS}"
 )
 
