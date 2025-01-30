@@ -50,6 +50,9 @@ To build the sample programs run:
 dotnet build "C# NET demos.sln"
 ```
 
+For building the  demos from the `main` branch you need to first install the .NET Ice NuGet packages, see the next
+section for details.
+
 ### Building the demos using a source build
 
 Refer to the C# build instructions for creating and publishing the NuGet packages from a source build:
@@ -58,13 +61,12 @@ https://github.com/zeroc-ice/ice/blob/main/csharp/BUILDING.md#nuget-package
 
 ### Running the Demos
 
-For most demos, you can simply run `server` and `client` in separate Command Prompt windows.  Refer to the README.md
+For most demos, you can simply run `server` and `client` in separate Command Prompt windows. Refer to the README.md
 file in each demo directory for the exact usage instructions.
 
-Some demos require Ice services such as IceGrid and IceStorm that are not
-included in the `zeroc.ice.net` NuGet package. To run these demos, the simplest
-is to first install the Ice binary distribution for your platform  and add its bin
-directory to your PATH. Please refer to the [Release Notes][4] for additional information.
+Some demos require Ice services such as IceGrid and IceStorm that are not included in the `zeroc.ice.net` NuGet
+package. To run these demos, the simplest is to first install the Ice binary distribution for your platform and add its
+bin directory to your PATH. Please refer to the [Release Notes][4] for additional information.
 
 [1]: https://doc.zeroc.com/ice/3.7/introduction
 [2]: https://doc.zeroc.com/technical-articles/general-topics/chat-demo
