@@ -47,17 +47,8 @@ cd csharp
 To build the sample programs run:
 
 ```shell
-dotnet build "C# NET demos.sln"
+dotnet build
 ```
-
-For building the  demos from the `main` branch you need to first install the .NET Ice NuGet packages, see the next
-section for details.
-
-### Building the demos using a source build
-
-Refer to the C# build instructions for creating and publishing the NuGet packages from a source build:
-
-https://github.com/zeroc-ice/ice/blob/main/csharp/BUILDING.md#nuget-package
 
 ### Running the Demos
 
