@@ -26,5 +26,5 @@ try adapter.add(servant: GreeterDisp(ChatBot()), id: Ice.stringToIdentity("greet
 try adapter.activate()
 
 // Wait until the user presses Ctrl+C.
-let signal = await ctrlCHandler.receiveSignal()
+let signal = await ctrlCHandler.catchSignal()
 print("Caught signal \(signal), exiting...")
