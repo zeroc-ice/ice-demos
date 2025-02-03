@@ -1,6 +1,12 @@
 cmake_minimum_required(VERSION 3.16)
 
+if (WIN32)
+# Temporary see https://github.com/zeroc-ice/ice/issues/3476
+set(CMAKE_CXX_STANDARD 20)
+else()
 set(CMAKE_CXX_STANDARD 17)
+endif()
+
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Threads REQUIRED)
@@ -30,7 +36,7 @@ endif()
 # TODO Use a variable
 if (WIN32)
 set(Ice_INCLUDE_DIRS ${Ice_HOME}/cpp/include ${Ice_HOME}/cpp/include/generated ${Ice_HOME}/cpp/include/generated/x64/Release)
-find_library(Ice_LIBRARY NAMES ice38a0 HINTS ${Ice_HOME}/cpp/lib PATH_SUFFIXES x64/Release)
+find_library(Ice_LIBRARY NAMES ice38a0 HINTS ${Ice_HOME}/cpp/lib PATH_SUFFIXES x64/Release) #TODO: should this be bin?
 set(Ice_LIBRARY ${ICE_LIBRARY} PARENT_SCOPE)
 else()
 set(Ice_INCLUDE_DIRS ${Ice_HOME}/cpp/include ${Ice_HOME}/cpp/include/generated)
