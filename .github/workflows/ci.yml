@@ -70,7 +70,7 @@ jobs:
 
       - name: Publish C++ NuGet Packages on ${{ matrix.os }}
         timeout-minutes: 5
-        working-directory: ice/cp/msbuild
+        working-directory: ice/cpp/msbuild
         run: msbuild ice.proj /t:Publish
         if: runner.os == 'Windows'
 
