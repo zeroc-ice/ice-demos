@@ -29,7 +29,15 @@ function client(args)
 
     % Send a request to the remote object and get the response.
     greeting = greeter.greet(char(java.lang.System.getProperty('user.name')));
+    fprintf('%s\n', greeting);
 
+    fprintf('Do it again, just asynchronously this time:\n')
+
+    % Send a request to the remote object and get a future immediately.
+    futureGreeting = greeter.greetAsync(char(java.lang.System.getProperty('user.name')));
+
+    % Wait for the response, then print the greeting.
+    greeting = futureGreeting.fetchOutputs();
     fprintf('%s\n', greeting);
 
     rmpath('generated');
