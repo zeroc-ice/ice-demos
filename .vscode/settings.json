@@ -5,5 +5,5 @@
     },
     "C_Cpp.default.cppStandard": "c++17",
     "gradle.nestedProjects": true,
-    "cmake.sourceDirectory": "${workspaceFolder}/cpp"
+    "cmake.sourceDirectory": "/Users/joe/Developer/zeroc-ice/ice-demos/cpp/Ice/greeter"
 }

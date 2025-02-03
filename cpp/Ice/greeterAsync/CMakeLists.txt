@@ -1,25 +1,31 @@
-cmake_minimum_required(VERSION 3.15)
-project(IceGreeter LANGUAGES CXX)
+cmake_minimum_required(VERSION 3.16)
 
-if (WIN32 OR APPLE)
-    set(CMAKE_CXX_STANDARD 20)
-else()
-    set(CMAKE_CXX_STANDARD 17)
-endif()
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+project(IceGreeterAsync CXX)
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+include(../../cmake/common.cmake)
 
-include(../../cmake/Ice.cmake)
+get_filename_component(greeter_slice "Greeter.ice" ABSOLUTE)
 
-add_executable(ice_greeter_async_client Client.cpp)
-set_property(TARGET ice_greeter_async_client PROPERTY OUTPUT_NAME client)
-slice2cpp(ice_greeter_async_client Greeter.ice)
-target_include_directories(ice_greeter_async_client PRIVATE Ice::Ice)
+set(slice_output_dir "${CMAKE_CURRENT_BINARY_DIR}/generated/ice_greeter_async")
+set(greeter_slice_source "${slice_output_dir}/Greeter.cpp")
+set(greeter_slice_header "${slice_output_dir}/Greeter.h")
+
+add_custom_command(
+    OUTPUT "${greeter_slice_source}" "${greeter_slice_header}"
+    COMMAND ${Ice_SLICE2CPP_EXECUTABLE} --output-dir "${slice_output_dir}" "${greeter_slice}"
+    DEPENDS "${greeter_slice}"
+    COMMENT "Compiling ${greeter_slice}"
+)
+
+add_executable(ice_greeter_async_client Client.cpp ${greeter_slice_source} ${greeter_slice_header})
 target_link_libraries(ice_greeter_async_client Ice::Ice)
+target_include_directories(ice_greeter_async_client PRIVATE ${slice_output_dir})
+set_target_properties(ice_greeter_async_client PROPERTIES OUTPUT_NAME client)
 
-add_executable(ice_greeter_async_server Server.cpp Chatbot.cpp Chatbot.h)
-set_property(TARGET ice_greeter_async_server PROPERTY OUTPUT_NAME server)
-slice2cpp(ice_greeter_async_server Greeter.ice)
-target_include_directories(ice_greeter_async_server PRIVATE Ice::Ice)
+add_executable(ice_greeter_async_server Server.cpp ChatBot.cpp ChatBot.h ${greeter_slice_source} ${greeter_slice_header})
 target_link_libraries(ice_greeter_async_server Ice::Ice)
+target_include_directories(ice_greeter_async_server PRIVATE ${slice_output_dir})
+set_target_properties(ice_greeter_async_server PROPERTIES OUTPUT_NAME server)
+
+# set_target_properties(ice_greeter_client PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
+# set_target_properties(ice_greeter_server PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
