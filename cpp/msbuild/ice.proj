@@ -17,62 +17,11 @@
         <Exec Command="powershell -ExecutionPolicy ByPass -Command &quot;[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;(New-Object Net.WebClient).DownloadFile('$(NugetURL)', '$(NugetExe)')&quot;"/>
     </Target>
 
-    <Target Name="RemovePackages">
-      <Exec Command="rmdir /s /q $(MSBuildThisFileDirectory)..\packages" Condition="Exists('$(MSBuildThisFileDirectory)..\packages')" />
-    </Target>
-
     <Target Name="NuGetRestore" DependsOnTargets="GetNuGet" Condition="!Exists('$(IceHome)\cpp')">
       <Exec Command="$(NuGetExe) restore &quot;$(MSBuildThisFileDirectory)..\C++ demos.sln&quot;"/>
     </Target>
 
-    <PropertyGroup>
-      <SymbolServer Condition="'$(SymbolServer)' == ''">$(SYMBOL_SERVER)</SymbolServer>
-      <SymbolServer Condition="'$(SymbolServer)' == ''">SRV*%TEMP%\SymbolCache*http://symbols.zeroc.com</SymbolServer>
-    </PropertyGroup>
-
-    <Target Name="DownloadSymbols" DependsOnTargets="NuGetRestore">
-        <Exec IgnoreExitCode="True"
-              Command="symchk /r $(MSBuildThisFileDirectory)..\packages\zeroc.ice.$(DefaultPlatformToolset).3.8.0\build\native\bin\$(Platform)\$(Configuration)\* /s $(SymbolServer)">
-              <Output TaskParameter="ExitCode" PropertyName="ErrorCode"/>
-        </Exec>
-        <Warning Text="PDBs download failed, stack traces might be missing or incomplete" Condition="'$(ErrorCode)' != '0'" />
-    </Target>
-
-    <ItemGroup>
-        <CppPlatformToolset Include="v143"/>
-    </ItemGroup>
-
-    <!--
-        When IceHome is set to a source distribution we install the NuGet packages
-        from IceHome build, for the platform we are building, we also need to copy
-        the props and targets files for the rest of platforms supported by the demos
-        to get away with NuGet install checks
-    -->
-    <Target Name="InstallLocalPackages"
-            DependsOnTargets="RemovePackages;GetNuGet"
-            Condition="Exists('$(IceHome)\cpp')">
-        <Copy SourceFiles="$(IceHome)\cpp\msbuild\zeroc.ice.%(CppPlatformToolset.Identity).props"
-              DestinationFolder="$(MSBuildThisFileDirectory)..\packages\zeroc.ice.%(CppPlatformToolset.Identity).$(IceVersion)\build\native\" />
-        <Copy SourceFiles="$(IceHome)\cpp\msbuild\zeroc.ice.%(CppPlatformToolset.Identity).targets"
-              DestinationFolder="$(MSBuildThisFileDirectory)..\packages\zeroc.ice.%(CppPlatformToolset.Identity).$(IceVersion)\build\native\" />
-        <Exec Command="rmdir /s /q $(MSBuildThisFileDirectory)..\packages\zeroc.ice.$(DefaultPlatformToolset).$(IceVersion)"
-              Condition="Exists('$(MSBuildThisFileDirectory)..\packages\zeroc.ice.$(DefaultPlatformToolset).$(IceVersion)')"/>
-
-        <!-- Run the distribution NuGetPack target to ensure packages are up to date -->
-        <MSBuild Projects="$(IceHome)\cpp\msbuild\ice.proj"
-                 Properties="Platform=$(Platform);Configuration=$(Configuration)"
-                 RemoveProperties="IceHome"
-                 Targets="NuGetPack"/>
-        <!-- Add the package to a local source and install it from it -->
-        <Exec Command="$(NuGetExe) init $(IceHome)\cpp\msbuild\zeroc.ice.$(DefaultPlatformToolset) local" />
-        <Exec Command="$(NuGetExe) install zeroc.ice.$(DefaultPlatformToolset) -Prerelease -Source $(MSBuildThisFileDirectory)local -NoCache -SolutionDirectory $(MSBuildThisFileDirectory).."/>
-        <!-- Remove the local source that is no longer needed -->
-        <Exec Command="rmdir /s /q local" />
-        <Exec Command="$(NuGetExe) install zeroc.icebuilder.msbuild -SolutionDirectory $(MSBuildThisFileDirectory).."/>
-    </Target>
-
-    <Target Name="Build"
-            DependsOnTargets="InstallLocalPackages;NuGetRestore">
+    <Target Name="Build" DependsOnTargets="NuGetRestore">
         <MSBuild Projects="$(MSBuildThisFileDirectory)..\C++ demos.sln" RemoveProperties="IceHome"/>
     </Target>
 </Project>
