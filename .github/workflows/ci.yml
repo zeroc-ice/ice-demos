@@ -68,10 +68,16 @@ jobs:
           working_directory: ice
           build_flags: ${{ runner.os == 'Windows' && '/t:BuildDist' || 'srcs' }}
 
+      - name: Publish C++ NuGet Packages on ${{ matrix.os }}
+        timeout-minutes: 5
+        working-directory: ice/cp/msbuild
+        run: msbuild ice.proj /t:Publish
+        if: runner.os == 'Windows'
+
       - name: Publish C# NuGet Packages on ${{ matrix.os }}
         timeout-minutes: 5
         working-directory: ice/csharp/msbuild
-        run: ${{ runner.os == 'Windows' && 'msbuild' || 'dotnet msbuild' }} ice.proj /t:Publish
+        run: dotnet msbuild ice.proj /t:Publish
 
       - name: Checkout repository
         uses: actions/checkout@v4
