@@ -1,12 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-if (WIN32)
-# Temporary see https://github.com/zeroc-ice/ice/issues/3476
-set(CMAKE_CXX_STANDARD 20)
-else()
 set(CMAKE_CXX_STANDARD 17)
-endif()
-
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Threads REQUIRED)
@@ -76,11 +70,11 @@ function(slice2cpp_generate TARGET)
     # Process each Slice (.ice) file in the source list
     # 1. Run the slice2cpp command to generate the header and source files
     # 2. Add the generated files to the target sources
-    foreach(SLICE_FILE IN LISTS SOURCES)
-        if(SLICE_FILE MATCHES "\\.ice$")
+    foreach(FILE IN LISTS SOURCES)
+        if(FILE MATCHES "\\.ice$")
 
-            get_filename_component(SLICE_NAME ${SLICE_FILE} NAME_WE)
-            get_filename_component(SLICE_FILE_ABS ${SLICE_FILE} ABSOLUTE)
+            get_filename_component(SLICE_NAME ${FILE} NAME_WE)
+            get_filename_component(SLICE_FILE_ABS ${FILE} ABSOLUTE)
             set(output_files ${output_dir}/${SLICE_NAME}.h ${output_dir}/${SLICE_NAME}.cpp)
 
             add_custom_command(
