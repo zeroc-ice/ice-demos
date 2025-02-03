@@ -5,7 +5,7 @@
     },
     "C_Cpp.default.cppStandard": "c++17",
     "gradle.nestedProjects": true,
-    "cmake.sourceDirectory": "/Users/joe/Developer/zeroc-ice/ice-demos/cpp",
+    "cmake.sourceDirectory": "${workspaceFolder}/cpp",
     "cmake.configureSettings": {
         "Ice_HOME": "${workspaceFolder}/../ice",
     }
