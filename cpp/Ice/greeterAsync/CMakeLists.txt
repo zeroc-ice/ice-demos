@@ -7,6 +7,8 @@ include(../../cmake/common.cmake)
 get_filename_component(greeter_slice "Greeter.ice" ABSOLUTE)
 
 set(slice_output_dir "${CMAKE_CURRENT_BINARY_DIR}/generated/ice_greeter_async")
+make_directory(${slice_output_dir})
+
 set(greeter_slice_source "${slice_output_dir}/Greeter.cpp")
 set(greeter_slice_header "${slice_output_dir}/Greeter.h")
 
