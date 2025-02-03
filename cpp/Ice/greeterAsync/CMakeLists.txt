@@ -6,7 +6,7 @@ include(../../cmake/common.cmake)
 
 get_filename_component(greeter_slice "Greeter.ice" ABSOLUTE)
 
-set(slice_output_dir "${CMAKE_CURRENT_BINARY_DIR}/generated/ice_greeter_async")
+set(slice_output_dir "${CMAKE_CURRENT_BINARY_DIR}/generated")
 make_directory(${slice_output_dir})
 
 set(greeter_slice_source "${slice_output_dir}/Greeter.cpp")
@@ -28,6 +28,3 @@ add_executable(ice_greeter_async_server Server.cpp ChatBot.cpp ChatBot.h ${greet
 target_link_libraries(ice_greeter_async_server Ice::Ice)
 target_include_directories(ice_greeter_async_server PRIVATE ${slice_output_dir})
 set_target_properties(ice_greeter_async_server PROPERTIES OUTPUT_NAME server)
-
-# set_target_properties(ice_greeter_client PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
-# set_target_properties(ice_greeter_server PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})

@@ -80,6 +80,11 @@ jobs:
           working_directory: ice-demos/cpp
           msbuild_project: msbuild/ice.proj
 
+      - name: Build C++ Demos on ${{ matrix.os }} with CMake
+        timeout-minutes: 5
+        working-directory: ice-demos/cpp
+        run: cmake -B build -S . && cmake --build build --config Release
+
       - name: Build C# Demos on ${{ matrix.os }}
         timeout-minutes: 20
         working-directory: ice-demos/csharp
