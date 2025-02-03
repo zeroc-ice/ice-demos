@@ -28,7 +28,7 @@ function client(args)
     greeter = VisitorCenter.GreeterPrx(communicator, 'greeter:tcp -h localhost -p 4061');
 
     % Send a request to the remote object and get the response.
-    greeting = greeter.greet('alice');
+    greeting = greeter.greet(char(java.lang.System.getProperty('user.name')));
 
     fprintf('%s\n', greeting);
 
