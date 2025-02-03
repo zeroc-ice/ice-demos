@@ -36,7 +36,7 @@ endif()
 # TODO Use a variable
 if (WIN32)
 set(Ice_INCLUDE_DIRS ${Ice_HOME}/cpp/include ${Ice_HOME}/cpp/include/generated ${Ice_HOME}/cpp/include/generated/x64/Release)
-find_library(Ice_LIBRARY NAMES ice38a0 HINTS ${Ice_HOME}/cpp/lib PATH_SUFFIXES x64/Release) #TODO: should this be bin?
+find_library(Ice_LIBRARY NAMES ice38a0 HINTS ${Ice_HOME}/cpp/lib PATH_SUFFIXES x64/Release)
 set(Ice_LIBRARY ${ICE_LIBRARY} PARENT_SCOPE)
 else()
 set(Ice_INCLUDE_DIRS ${Ice_HOME}/cpp/include ${Ice_HOME}/cpp/include/generated)
