@@ -7,7 +7,7 @@ find_package(Threads REQUIRED)
 
 if (NOT Ice_HOME)
     if (DEFINED ENV{ICE_HOME})
-        set(Ice_HOME $ENV{ICE_HOME} )
+        set(Ice_HOME $ENV{ICE_HOME})
     else()
         message(FATAL_ERROR "Ice_HOME not set")
     endif()

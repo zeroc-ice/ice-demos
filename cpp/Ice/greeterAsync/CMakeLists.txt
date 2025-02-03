@@ -24,7 +24,7 @@ target_link_libraries(ice_greeter_async_client Ice::Ice)
 target_include_directories(ice_greeter_async_client PRIVATE ${slice_output_dir})
 set_target_properties(ice_greeter_async_client PROPERTIES OUTPUT_NAME client)
 
-add_executable(ice_greeter_async_server Server.cpp ChatBot.cpp ChatBot.h ${greeter_slice_source} ${greeter_slice_header})
+add_executable(ice_greeter_async_server Server.cpp Chatbot.cpp Chatbot.h ${greeter_slice_source} ${greeter_slice_header})
 target_link_libraries(ice_greeter_async_server Ice::Ice)
 target_include_directories(ice_greeter_async_server PRIVATE ${slice_output_dir})
 set_target_properties(ice_greeter_async_server PROPERTIES OUTPUT_NAME server)
