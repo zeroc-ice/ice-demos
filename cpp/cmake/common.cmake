@@ -61,7 +61,7 @@ function(slice2cpp_generate TARGET)
     get_target_property(SOURCES ${TARGET} SOURCES)
 
     # Create a directory to store the generated files
-    set(output_dir ${CMAKE_CURRENT_BINARY_DIR}/generated)
+    set(output_dir ${CMAKE_CURRENT_BINARY_DIR}/generated/${TARGET})
     make_directory(${output_dir})
 
     # Add the generated headers files to the target include directories
