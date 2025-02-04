@@ -13,7 +13,7 @@ Then, in the MATLAB console:
 cd matlab/Ice/greeter
 ```
 
-- Compile the Greeter.ice file with Slice compiler for MATLAB
+- Compile the Greeter.ice file with the Slice compiler for MATLAB
 
 ```shell
 mkdir generated
