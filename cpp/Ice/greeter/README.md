@@ -34,5 +34,5 @@ In a separate window, start the client:
 **Windows:**
 
 ```shell
-./build/Release/client
+.\build\Release\client
 ```
