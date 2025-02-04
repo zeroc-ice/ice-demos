@@ -94,12 +94,12 @@ jobs:
       - name: Generate C++ Build Systems on ${{ matrix.os }}
         timeout-minutes: 5
         working-directory: ice-demos/cpp
-        run: find . -name CMakeLists.txt -execdir cmake -B build -S . \;
+        run: find . -name CMakeLists.txt -execdir cmake -B build -S . ';'
 
       - name: Build C++ Demos on ${{ matrix.os }}
         timeout-minutes: 20
         working-directory: ice-demos/cpp
-        run: find . -name CMakeLists.txt -type d -execdir cmake --build build -- \;
+        run: find . -name CMakeLists.txt -type d -execdir cmake --build build ';'
 
       - name: Build C# Demos on ${{ matrix.os }}
         timeout-minutes: 20
