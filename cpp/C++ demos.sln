@@ -458,19 +458,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\greeter\msbui
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\greeter\msbuild\server\server.vcxproj", "{E4B54261-3921-40D9-AA09-C3C89D096350}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "greeterAsync", "greeterAsync", "{2E31C2CA-8493-4957-9E89-FC9546C2F70B}"
-	ProjectSection(SolutionItems) = preProject
-		Ice\greeterAsync\README.md = Ice\greeterAsync\README.md
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "secure", "secure", "{DD1B1121-F502-4AB7-8012-633DDC3DD610}"
 	ProjectSection(SolutionItems) = preProject
 		Ice\secure\README.md = Ice\secure\README.md
 	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\greeterAsync\msbuild\client\client.vcxproj", "{BEB2285A-1D68-4B0B-BFDC-4DC9AFE43A75}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "Ice\greeterAsync\msbuild\server\server.vcxproj", "{9D71F7CB-6F15-41DC-B6D7-69A144513FC3}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "Ice\secure\msbuild\client\client.vcxproj", "{651398C4-452B-4E64-8536-4DD9FA88AE1A}"
 EndProject
