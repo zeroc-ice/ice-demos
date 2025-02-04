@@ -27,17 +27,17 @@ function client(args)
     % or IP address.
     greeter = VisitorCenter.GreeterPrx(communicator, 'greeter:tcp -h localhost -p 4061');
 
-    % Send a request to the remote object and get the response.
+    % Send a request to the remote object and wait synchronously for the response.
     greeting = greeter.greet(char(java.lang.System.getProperty('user.name')));
+
     fprintf('%s\n', greeting);
 
-    fprintf('Do it again, just asynchronously this time:\n')
+    % Send another request to the remote object, this time with greetAsync. greetAsync returns a future immediately.
+    futureGreeting = greeter.greetAsync('alice');
 
-    % Send a request to the remote object and get a future immediately.
-    futureGreeting = greeter.greetAsync(char(java.lang.System.getProperty('user.name')));
-
-    % Wait for the response, then print the greeting.
+    % Wait for the response.
     greeting = futureGreeting.fetchOutputs();
+
     fprintf('%s\n', greeting);
 
     rmpath('generated');
