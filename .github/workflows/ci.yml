@@ -91,23 +91,15 @@ jobs:
           working_directory: ice-demos/cpp
           msbuild_project: msbuild/ice.proj
 
-      - name: Build C++ Demos on ${{ matrix.os }} with CMake (Linux/MacOS)
-        if: runner.os != 'Windows'
+      - name: Generate C++ Build Systems on ${{ matrix.os }}
         timeout-minutes: 5
         working-directory: ice-demos/cpp
-        run:
-          find . -name CMakeLists.txt -execdir cmake -B build -S . ';'
-          find . -name CMakeLists.txt -execdir cmake --build build --config Release ';'
+        run: find . -name CMakeLists.txt -execdir cmake -B build -S . \;
 
-      - name: Build C++ Demos on ${{ matrix.os }} with CMake (Windows)
-        if: runner.os == 'Windows'
-        timeout-minutes: 5
+      - name: Build C++ Demos on ${{ matrix.os }}
+        timeout-minutes: 20
         working-directory: ice-demos/cpp
-        run: |
-          Get-ChildItem -Recurse -Filter CMakeLists.txt | ForEach-Object {
-            cmake -B build -S $_.DirectoryName
-            cmake --build build --config Release
-          }
+        run: find . -name CMakeLists.txt -type d -execdir cmake --build build -- \;
 
       - name: Build C# Demos on ${{ matrix.os }}
         timeout-minutes: 20
