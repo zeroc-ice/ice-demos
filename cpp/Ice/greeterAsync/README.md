@@ -1,4 +1,6 @@
-This demo reimplements the greeter demo using asynchronous APIs.
+# Greeter
+
+The Greeter demo illustrates how to send a request and wait for the response.
 
 To run the demo, first start the server:
 ```

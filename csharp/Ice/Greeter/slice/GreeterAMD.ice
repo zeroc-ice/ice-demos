@@ -8,9 +8,10 @@ module VisitorCenter
     interface Greeter
     {
         /// Creates a personalized greeting.
-        /// @param name: The name of the person to greet.
-        /// @returns: The greeting.
-        ["amd", "cs:identifier:Greet"] // Asynchronous Method Dispatch and remapped method name
+        /// @param name The name of the person to greet.
+        /// @return The greeting.
+        ["amd"] // Asynchronous Method Dispatch.
+        ["cs:identifier:Greet"] // We prefer PascalCase for C# methods.
         string greet(string name);
     }
 }
