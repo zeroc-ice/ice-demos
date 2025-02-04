@@ -17,7 +17,7 @@
         <Exec Command="powershell -ExecutionPolicy ByPass -Command &quot;[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;(New-Object Net.WebClient).DownloadFile('$(NugetURL)', '$(NugetExe)')&quot;"/>
     </Target>
 
-    <Target Name="NuGetRestore" DependsOnTargets="GetNuGet" Condition="!Exists('$(IceHome)\cpp')">
+    <Target Name="NuGetRestore" DependsOnTargets="GetNuGet">
       <Exec Command="$(NuGetExe) restore &quot;$(MSBuildThisFileDirectory)..\C++ demos.sln&quot;"/>
     </Target>
 
