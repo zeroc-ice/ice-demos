@@ -45,7 +45,7 @@ main(int argc, char* argv[])
     greeting = futureGreeting.get();
     cout << greeting << endl;
 
-    // Send a third request to the remote object, this time with the greetAsync overloads that accepts callbacks.
+    // Send a third request to the remote object, this time with the greetAsync overload that accepts callbacks.
     promise<void> promise;
     greeter->greetAsync(
         "bob",
