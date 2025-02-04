@@ -8,8 +8,8 @@ module VisitorCenter
     interface Greeter
     {
         /// Creates a personalized greeting.
-        /// @param name: The name of the person to greet.
-        /// @returns: The greeting.
+        /// @param name The name of the person to greet.
+        /// @return The greeting.
         ["cs:identifier:Greet"] // We prefer PascalCase for C# methods.
         string greet(string name);
     }

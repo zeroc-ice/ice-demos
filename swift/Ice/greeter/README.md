@@ -1,6 +1,6 @@
 # Greeter
 
-This demo shows how to call and implement a canonical Greeter application using Ice.
+The Greeter demo illustrates how to send a request and wait for the response.
 
 First start the Server program:
 
