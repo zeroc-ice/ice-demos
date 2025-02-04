@@ -18,7 +18,7 @@ cmake -B build
 cmake --build build --config Release
 ```
 
-The build produces 3 executables: client, server and serveramd.
+The build produces 3 executables: client, server, and serveramd.
 
 To run the demo, first start the server:
 
