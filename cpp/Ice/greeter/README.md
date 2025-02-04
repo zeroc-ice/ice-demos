@@ -20,7 +20,7 @@ To run the demo, first start the server:
 **Windows:**
 
 ```shell
-.\build\Release\server
+build\Release\server
 ```
 
 In a separate window, start the client:
@@ -34,5 +34,5 @@ In a separate window, start the client:
 **Windows:**
 
 ```shell
-.\build\Release\client
+build\Release\client
 ```
