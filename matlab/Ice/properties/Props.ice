@@ -2,13 +2,13 @@
 
 #pragma once
 
-#include <Ice/Properties.ice>
-
 module Demo
 {
+    dictionary<string, string> PropertyDict;
+
     interface Props
     {
-        idempotent Ice::PropertyDict getChanges();
+        idempotent PropertyDict getChanges();
         void shutdown();
     }
 }

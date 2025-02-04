@@ -68,6 +68,17 @@ jobs:
           working_directory: ice
           build_flags: ${{ runner.os == 'Windows' && '/t:BuildDist' || 'srcs' }}
 
+      - name: Publish C++ NuGet Packages on ${{ matrix.os }}
+        timeout-minutes: 5
+        working-directory: ice/cpp/msbuild
+        run: msbuild ice.proj /t:Publish
+        if: runner.os == 'Windows'
+
+      - name: Publish C# NuGet Packages on ${{ matrix.os }}
+        timeout-minutes: 5
+        working-directory: ice/csharp/msbuild
+        run: dotnet msbuild ice.proj /t:Publish
+
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
@@ -89,7 +100,7 @@ jobs:
       - name: Build C# Demos on ${{ matrix.os }}
         timeout-minutes: 20
         working-directory: ice-demos/csharp
-        run: ${{ runner.os == 'Windows' && 'MSBuild' || 'dotnet msbuild' }} /m msbuild/ice.proj
+        run: dotnet build
 
       - name: Run .NET format
         run: dotnet format --verify-no-changes "./ice-demos/csharp/C# NET demos.sln"

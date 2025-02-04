@@ -19,7 +19,7 @@ function build()
             slices = dir(fullfile(demoDir, '*.ice'));
             outputDir = fullfile(demoDir, 'generated');
             fprintf('Building %s... ', demoDir);
-            if ~exist(outputDir, 'file')
+            if not(isfolder(outputDir))
                 mkdir(outputDir);
             end
             slice2matlab(sprintf('-I%s --output-dir %s %s\n', demoDir, outputDir,...
