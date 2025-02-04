@@ -5,7 +5,7 @@ The Greeter demo illustrates how to build a simple application with Ice.
 It features a client which demonstrates the 3 APIs you can use to make remote invocations using generated Ice proxies:
 
 - synchronous (`greet`),
-- asynchronous with future (`greetAsync`); and
+- asynchronous with futures (`greetAsync`); and
 - asynchronous with callbacks (another `greetAsync`)
 
 This demo alo provides two implementations for the server: a synchronous dispatch implementation (`server`), and an
