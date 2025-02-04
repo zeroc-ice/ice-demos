@@ -58,7 +58,7 @@ set_target_properties(Ice::Ice PROPERTIES
 function(slice2cpp_generate TARGET)
 
     # Get the list of source files for the target
-    get_target_property(SOURCES ${TARGET} SOURCES)
+    get_target_property(sources ${TARGET} SOURCES)
 
     # Create a directory to store the generated files
     set(output_dir ${CMAKE_CURRENT_BINARY_DIR}/generated/${TARGET})
@@ -70,18 +70,18 @@ function(slice2cpp_generate TARGET)
     # Process each Slice (.ice) file in the source list
     # 1. Run the slice2cpp command to generate the header and source files
     # 2. Add the generated files to the target sources
-    foreach(FILE IN LISTS SOURCES)
-        if(FILE MATCHES "\\.ice$")
+    foreach(file IN LISTS SOURCES)
+        if(file MATCHES "\\.ice$")
 
-            get_filename_component(SLICE_NAME ${FILE} NAME_WE)
-            get_filename_component(SLICE_FILE_ABS ${FILE} ABSOLUTE)
-            set(output_files ${output_dir}/${SLICE_NAME}.h ${output_dir}/${SLICE_NAME}.cpp)
+            get_filename_component(slice_file_name ${file} NAME_WE)
+            get_filename_component(slice_file_path ${file} ABSOLUTE)
+            set(output_files ${output_dir}/${slice_file_name}.h ${output_dir}/${slice_file_name}.cpp)
 
             add_custom_command(
                 OUTPUT ${output_files}
-                COMMAND ${Ice_SLICE2CPP_EXECUTABLE} -I${Ice_SLICE_DIR} ${SLICE_FILE_ABS} --output-dir ${output_dir}
-                DEPENDS ${SLICE_FILE_ABS}
-                COMMENT "${Ice_SLICE2CPP_EXECUTABLE} ${SLICE_FILE_ABS} -> ${SLICE_NAME}.h ${SLICE_NAME}.cpp"
+                COMMAND ${Ice_SLICE2CPP_EXECUTABLE} -I${Ice_SLICE_DIR} ${slice_file_path} --output-dir ${output_dir}
+                DEPENDS ${slice_file_path}
+                COMMENT "${Ice_SLICE2CPP_EXECUTABLE} ${file} -> ${slice_file_name}.h ${slice_file_name}.cpp"
             )
 
             target_sources(${TARGET} PRIVATE ${output_files})
