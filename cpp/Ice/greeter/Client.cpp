@@ -55,9 +55,7 @@ main(int argc, char* argv[])
             promise.set_value();
         },
         [&promise](std::exception_ptr exceptionPtr) // exception callback
-        {
-            promise.set_exception(exceptionPtr);
-        });
+        { promise.set_exception(exceptionPtr); });
 
     // Wait for the response/exception callback to be called.
     promise.get_future().get();
