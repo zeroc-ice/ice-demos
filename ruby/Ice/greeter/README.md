@@ -7,13 +7,13 @@ in a language with server-side support, such as Python, Java, or C#.
 
 Then, in a separate window:
 
-- compile Greeter.ice with the Slice to Ruby compiler into Greeter.rb
+- Compile Greeter.ice with the Slice to Ruby compiler into Greeter.rb
 
 ```shell
 slice2rb Greeter.ice
 ```
 
-- run the client application
+- Run the client application
 
 ```shell
 ruby client.rb
