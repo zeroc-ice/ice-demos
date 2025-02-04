@@ -8,7 +8,7 @@ It features a client which demonstrates the 3 APIs you can use to make remote in
 - asynchronous with futures (`greetAsync`); and
 - asynchronous with callbacks (another `greetAsync`)
 
-This demo alo provides two implementations for the server: a synchronous dispatch implementation (`server`), and an
+This demo also provides two implementations for the server: a synchronous dispatch implementation (`server`), and an
 asynchronous dispatch implementation (`serveramd`). The same client works with both.
 
 To build the demo, run:
