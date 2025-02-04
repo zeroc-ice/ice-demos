@@ -2,7 +2,7 @@
 
 The Greeter demo illustrates how to build a simple application with Ice.
 
-The client demonstrates the 3 APIs you can use to make remove invocations using generated Ice proxies:
+It features a client which demonstrates the 3 APIs you can use to make remote invocations using generated Ice proxies:
 
 - synchronous (`greet`),
 - asynchronous with future (`greetAsync`); and
