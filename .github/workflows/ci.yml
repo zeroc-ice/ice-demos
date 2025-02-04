@@ -95,7 +95,8 @@ jobs:
         timeout-minutes: 5
         working-directory: ice-demos/cpp
         run:
-          find . -name CMakeLists.txt -execdir cmake -B build -S . \; -execdir cmake --build build --config Release \;
+          find . -name CMakeLists.txt -execdir cmake -B build -S . \;
+          find . -name CMakeLists.txt -execdir cmake --build build --config Release \;
 
       - name: Build C# Demos on ${{ matrix.os }}
         timeout-minutes: 20
