@@ -70,7 +70,7 @@ function(slice2cpp_generate TARGET)
     # Process each Slice (.ice) file in the source list
     # 1. Run the slice2cpp command to generate the header and source files
     # 2. Add the generated files to the target sources
-    foreach(file IN LISTS SOURCES)
+    foreach(file IN LISTS sources)
         if(file MATCHES "\\.ice$")
 
             get_filename_component(slice_file_name ${file} NAME_WE)

@@ -5,7 +5,11 @@
     },
     "C_Cpp.default.cppStandard": "c++17",
     "gradle.nestedProjects": true,
-    "cmake.sourceDirectory": "${workspaceFolder}/cpp",
+    "cmake.sourceDirectory":[
+        "${workspaceFolder}/cpp/Ice/greeter",
+        "${workspaceFolder}/cpp/Ice/greeterAsync",
+        "${workspaceFolder}/cpp/Ice/secure",
+    ],
     "cmake.configureSettings": {
         "Ice_HOME": "${workspaceFolder}/../ice",
     }

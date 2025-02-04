@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(greeter CXX)
+project(secure CXX)
 
 include(../../cmake/common.cmake)
 
