@@ -3,14 +3,36 @@
 This demo shows how to configure client and server applications to communicate over
 secure connections.
 
-To run the demo, first start the server:
+To build the demo run:
 
 ```shell
-server
+cmake -B build
+cmake --build build --config Release
+```
+
+To run the demo, first start the server:
+
+**Linux/macOS:**
+
+```shell
+./build/server
+```
+
+**Windows:**
+
+```shell
+.\build\Release\server
 ```
 
 In a separate window, start the client:
 
+**Linux/macOS:**
+
 ```shell
-client
+./build/client
 ```
+
+**Windows:**
+
+```shell
+./build/Release/client
