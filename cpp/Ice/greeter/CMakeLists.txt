@@ -11,3 +11,7 @@ target_link_libraries(client Ice::Ice)
 add_executable(server Server.cpp Chatbot.cpp Chatbot.h Greeter.ice)
 slice2cpp_generate(server)
 target_link_libraries(server Ice::Ice)
+
+add_executable(serveramd ServerAMD.cpp ChatbotAMD.cpp ChatbotAMD.h GreeterAMD.ice)
+slice2cpp_generate(serveramd)
+target_link_libraries(serveramd Ice::Ice)

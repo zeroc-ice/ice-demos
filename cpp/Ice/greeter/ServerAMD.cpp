@@ -1,6 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
-#include "Chatbot.h"
+#include "ChatbotAMD.h"
 
 #include <iostream>
 
@@ -26,6 +26,7 @@ main(int argc, char* argv[])
 
     // Start dispatching requests.
     adapter->activate();
+    cout << "Listening on port 4061..." << endl;
 
     // Wait until the user presses Ctrl+C.
     int signal = ctrlCHandler.wait();

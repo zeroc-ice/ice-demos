@@ -3,6 +3,7 @@
 #include "Greeter.h"
 
 #include <cstdlib>
+#include <future>
 #include <iostream>
 
 using namespace std;
@@ -18,7 +19,7 @@ main(int argc, char* argv[])
     }
     if (name == nullptr)
     {
-        name = "alice";
+        name = "masked user";
     }
 
     // Create an Ice communicator to initialize the Ice runtime. The CommunicatorHolder is a RAII helper that creates
@@ -32,10 +33,34 @@ main(int argc, char* argv[])
     // or IP address.
     VisitorCenter::GreeterPrx greeter{communicator, "greeter:tcp -h localhost -p 4061"};
 
-    // Send a request to the remote object and get the response. Both the -> and . syntax can be used to make
-    // invocations with the proxy.
+    // Send a request to the remote object and wait synchronously for the response.
+    // Both the -> and . syntax can be used to make invocations with the proxy.
     string greeting = greeter->greet(name);
-
     cout << greeting << endl;
+
+    // Send another request to the remote object, this time with greetAsync. greetAsync returns a future immediately.
+    future<string> futureGreeting = greeter->greetAsync("alice");
+
+    // Wait for the response.
+    greeting = futureGreeting.get();
+    cout << greeting << endl;
+
+    // Send a third request to the remote object, this time with the greetAsync overloads that accepts callbacks.
+    promise<void> promise;
+    greeter->greetAsync(
+        "bob",
+        [&promise](string_view greeting) // response callback
+        {
+            cout << greeting << endl;
+            promise.set_value();
+        },
+        [&promise](std::exception_ptr exceptionPtr) // exception callback
+        {
+            promise.set_exception(exceptionPtr);
+        });
+
+    // Wait for the response/exception callback to be called.
+    promise.get_future().get();
+
     return 0;
 }
