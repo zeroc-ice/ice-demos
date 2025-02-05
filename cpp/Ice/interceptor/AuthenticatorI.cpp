@@ -1,6 +1,7 @@
 // Copyright (c) ZeroC, Inc.
 
-#include <AuthenticatorI.h>
+#include "AuthenticatorI.h"
+
 #include <Ice/Ice.h>
 #include <iostream>
 

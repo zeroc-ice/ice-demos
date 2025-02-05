@@ -1,6 +1,7 @@
 // Copyright (c) ZeroC, Inc.
 
-#include <Hello.h>
+#include "Hello.h"
+
 #include <Ice/Ice.h>
 
 using namespace std;
