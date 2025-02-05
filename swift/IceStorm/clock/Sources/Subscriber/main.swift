@@ -98,7 +98,7 @@ let manager = try uncheckedCast(
     prx: communicator.propertyToProxy("TopicManager.Proxy")!,
     type: IceStorm.TopicManagerPrx.self)
 
-// Retrieve the topic.
+// Retrieve the topic from IceStorm.
 let topic: IceStorm.TopicPrx!
 do {
     topic = try await manager.retrieve(topicName)
@@ -147,11 +147,12 @@ do {
     // Register the subscriber with the IceStorm topic.
     _ = try await topic.subscribeAndGetPublisher(theQoS: qos, subscriber: subscriber)
 } catch is IceStorm.AlreadySubscribed {
-    // Must never happen when subscribing with an UUID
+    // This should never occur when subscribing with a UUID.
     precondition(id != nil)
     print("reactivating persistent subscriber")
 }
 
+// Wait until the user presses Ctrl+C.
 let signal = await ctrlCHandler.catchSignal()
 print("Caught signal \(signal), exiting...")
 

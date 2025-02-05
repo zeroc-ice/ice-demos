@@ -1,20 +1,28 @@
 // Copyright (c) ZeroC, Inc.
 
 #include "Clock.h"
+
 #include <Ice/Ice.h>
 #include <IceStorm/IceStorm.h>
+
 #include <iostream>
 
 using namespace std;
 using namespace Demo;
 
+/// ClockI is an Ice servant that implements Slice interface Clock.
 class ClockI final : public Clock
 {
 public:
     void tick(string time, const Ice::Current&) final { cout << time << endl; }
 };
 
-int run(const shared_ptr<Ice::Communicator>& communicator, int argc, char* argv[]);
+void
+usage(const char* name)
+{
+    cerr << "Usage: " << name
+         << " [--batch] [--datagram|--twoway|--ordered|--oneway] [--retryCount count] [--id id] [topic]" << endl;
+}
 
 int
 main(int argc, char* argv[])
@@ -23,45 +31,16 @@ main(int argc, char* argv[])
     Ice::registerIceUDP();
 #endif
 
-    int status = 0;
+    // CtrlCHandler is a helper class that handles Ctrl+C and similar signals. It must be constructed at the beginning
+    // of the program, before creating an Ice communicator or starting any thread.
+    Ice::CtrlCHandler ctrlCHandler;
 
-    try
-    {
-        //
-        // CtrlCHandler must be created before the communicator or any other threads are started
-        //
-        Ice::CtrlCHandler ctrlCHandler;
+    // Create an Ice communicator to initialize the Ice runtime.
+    const Ice::CommunicatorHolder communicatorHolder{argc, argv, "config.sub"};
+    const Ice::CommunicatorPtr& communicator = communicatorHolder.communicator();
 
-        //
-        // CommunicatorHolder's ctor initializes an Ice communicator,
-        // and its dtor destroys this communicator.
-        //
-        const Ice::CommunicatorHolder ich(argc, argv, "config.sub");
-        const auto& communicator = ich.communicator();
+    // Parse command-line options.
 
-        ctrlCHandler.setCallback([communicator](int) { communicator->shutdown(); });
-
-        status = run(communicator, argc, argv);
-    }
-    catch (const std::exception& ex)
-    {
-        cerr << ex.what() << endl;
-        status = 1;
-    }
-
-    return status;
-}
-
-void
-usage(const string& n)
-{
-    cerr << "Usage: " << n
-         << " [--batch] [--datagram|--twoway|--ordered|--oneway] [--retryCount count] [--id id] [topic]" << endl;
-}
-
-int
-run(const shared_ptr<Ice::Communicator>& communicator, int argc, char* argv[])
-{
     auto args = Ice::argsToStringSeq(argc, argv);
     args = communicator->getProperties()->parseCommandLineOptions("Clock", args);
     Ice::stringSeqToArgs(args, argc, argv);
@@ -75,6 +54,7 @@ run(const shared_ptr<Ice::Communicator>& communicator, int argc, char* argv[])
         Oneway,
         Ordered
     };
+
     Option option = Option::None;
     string topicName = "time";
     string id;
@@ -155,13 +135,15 @@ run(const shared_ptr<Ice::Communicator>& communicator, int argc, char* argv[])
         return 1;
     }
 
-    auto manager = Ice::checkedCast<IceStorm::TopicManagerPrx>(communicator->propertyToProxy("TopicManager.Proxy"));
+    // Create the topic manager proxy.
+    auto manager = communicator->propertyToProxy<IceStorm::TopicManagerPrx>("TopicManager.Proxy");
     if (!manager)
     {
         cerr << argv[0] << ": invalid proxy" << endl;
         return 1;
     }
 
+    // Retrieve the topic from IceStorm.
     optional<IceStorm::TopicPrx> topic;
     try
     {
@@ -180,26 +162,20 @@ run(const shared_ptr<Ice::Communicator>& communicator, int argc, char* argv[])
         }
     }
 
+    // Create the object adapter that hosts the subscriber servant.
     auto adapter = communicator->createObjectAdapter("Clock.Subscriber");
 
-    //
-    // Add a servant for the Ice object. If --id is used the identity
-    // comes from the command line, otherwise a UUID is used.
-    //
-    // id is not directly altered since it is used below to detect
-    // whether subscribeAndGetPublisher can raise AlreadySubscribed.
-    //
-    Ice::Identity subId;
-    subId.name = id;
+    // Add a servant to the object adapter. If --id is used the identity comes from the command line, otherwise a UUID
+    // is used. id is not directly altered since it is used below to detect whether subscribeAndGetPublisher can throw
+    // AlreadySubscribed.
+    Ice::Identity subId{.name = id};
     if (subId.name.empty())
     {
         subId.name = Ice::generateUUID();
     }
-    auto subscriber = adapter->add(make_shared<ClockI>(), subId);
+    Ice::ObjectPrx subscriber = adapter->add(make_shared<ClockI>(), subId);
 
-    //
     // Activate the object adapter before subscribing.
-    //
     adapter->activate();
 
     IceStorm::QoS qos;
@@ -208,9 +184,7 @@ run(const shared_ptr<Ice::Communicator>& communicator, int argc, char* argv[])
         qos["retryCount"] = retryCount;
     }
 
-    //
-    // Set up the proxy.
-    //
+    // Set up the subscriber proxy.
     if (option == Option::Datagram)
     {
         if (batch)
@@ -245,18 +219,25 @@ run(const shared_ptr<Ice::Communicator>& communicator, int argc, char* argv[])
 
     try
     {
+        // Register the subscriber with the IceStorm topic.
         topic->subscribeAndGetPublisher(qos, subscriber);
     }
     catch (const IceStorm::AlreadySubscribed&)
     {
-        // This should never occur when subscribing with an UUID
+        // This should never occur when subscribing with a UUID.
         assert(!id.empty());
         cout << "reactivating persistent subscriber" << endl;
     }
 
+    // Wait until the user presses Ctrl+C.
+    int signal = ctrlCHandler.wait();
+    cout << "Caught signal " << signal << ", exiting..." << endl;
+
+    // Initiate shutdown and wait for all dispatches to complete.
+    communicator->shutdown();
     communicator->waitForShutdown();
 
+    // Unsubscribe from the topic in IceStorm.
     topic->unsubscribe(subscriber);
-
     return 0;
 }

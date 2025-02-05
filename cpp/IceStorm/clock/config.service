@@ -7,7 +7,7 @@ IceStorm.InstanceName=DemoIceStorm
 # This property defines the endpoints on which the IceStorm
 # TopicManager listens.
 #
-IceStorm.TopicManager.Endpoints=default -h localhost -p 10000
+IceStorm.TopicManager.Endpoints=tcp -p 10000
 
 #
 # This property defines the endpoints on which the topic
@@ -15,7 +15,7 @@ IceStorm.TopicManager.Endpoints=default -h localhost -p 10000
 # IceStorm instances this must run on a fixed port (or use
 # IceGrid).
 #
-IceStorm.Publish.Endpoints=tcp -h localhost -p 10001:udp -h localhost -p 10001
+IceStorm.Publish.Endpoints=tcp -p 10001:udp -p 10001
 
 #
 # TopicManager Tracing
@@ -70,7 +70,7 @@ IceStorm.LMDB.Path=db
 #
 # IceMX configuration.
 #
-#Ice.Admin.Endpoints=tcp -h localhost -p 10004
+#Ice.Admin.Endpoints=tcp -h 127.0.0.1 -p 10004
 Ice.Admin.InstanceName=icestorm
 IceMX.Metrics.Debug.GroupBy=id
 IceMX.Metrics.ByParent.GroupBy=parent

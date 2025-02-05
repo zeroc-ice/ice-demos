@@ -3,7 +3,7 @@
 # Enable Ice.Admin object
 # The IceStorm service has its own endpoints (see config.service).
 #
-Ice.Admin.Endpoints=tcp -h localhost -p 9996
+Ice.Admin.Endpoints=tcp -h 127.0.0.1 -p 9996
 Ice.Admin.InstanceName=icebox
 
 #

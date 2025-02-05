@@ -115,13 +115,13 @@ IP address in the steps below:
 1. Edit the subscriber's configuration file, `config.sub`, and change the `TopicManager.Proxy` property to
 
    ```text
-   TopicManager.Proxy=DemoIceStorm/TopicManager:default -h <I> -p 10000
+   TopicManager.Proxy=DemoIceStorm/TopicManager:tcp -h <I> -p 10000
    ```
 
 2. Edit the publisher's configuration file, `config.pub`, and change the `TopicManager.Proxy` property to
 
    ```text
-   TopicManager.Proxy=DemoIceStorm/TopicManager:default -h <I> -p 10000
+   TopicManager.Proxy=DemoIceStorm/TopicManager:tcp -h <I> -p 10000
    ```
 
 If you experience any network delays or errors, edit all of the configuration files and enable the `Ice.Trace.Network`
