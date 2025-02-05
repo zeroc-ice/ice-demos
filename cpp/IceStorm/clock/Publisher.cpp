@@ -159,8 +159,7 @@ main(int argc, char* argv[])
                     break; // done
                 }
             }
-        }
-    );
+        });
 
     // Wait until the user presses Ctrl+C.
     ctrlCHandler.wait();
