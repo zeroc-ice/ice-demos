@@ -1,9 +1,10 @@
 // Copyright (c) ZeroC, Inc.
 
-#include <ChatUtils.h>
+#include "ChatUtils.h"
+#include "PollingChatSessionFactoryI.h"
+#include "PollingChatSessionI.h"
+
 #include <Ice/Ice.h>
-#include <PollingChatSessionFactoryI.h>
-#include <PollingChatSessionI.h>
 
 using namespace std;
 

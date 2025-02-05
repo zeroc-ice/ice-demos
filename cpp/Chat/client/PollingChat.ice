@@ -2,8 +2,9 @@
 
 #pragma once
 
+#include "Chat.ice"
+
 #include <Ice/BuiltinSequences.ice>
-#include <Chat.ice>
 
 /**
  *

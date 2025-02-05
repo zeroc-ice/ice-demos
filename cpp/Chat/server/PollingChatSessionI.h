@@ -3,9 +3,11 @@
 #ifndef POLLING_CHAT_SESSION_I_H
 #define POLLING_CHAT_SESSION_I_H
 
-#include <ChatRoom.h>
+#include "ChatRoom.h"
+#include "PollingChat.h"
+
 #include <Ice/Ice.h>
-#include <PollingChat.h>
+
 
 class PollCallbackAdapter;
 

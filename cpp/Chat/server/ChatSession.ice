@@ -2,9 +2,10 @@
 
 #pragma once
 
+#include "Chat.ice"
+
 #include <Ice/BuiltinSequences.ice>
 #include <Glacier2/Session.ice>
-#include <Chat.ice>
 
 module Chat
 {
