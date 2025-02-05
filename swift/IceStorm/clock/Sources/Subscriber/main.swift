@@ -25,25 +25,13 @@ enum Option: String {
     case oneway = "--oneway"
 }
 
-func run() -> Int32 {
+func run(ctrlCHandler: CtrlCHandler) async -> Int32 {
     do {
         var args = [String](CommandLine.arguments.dropFirst())
-        signal(SIGTERM, SIG_IGN)
-        signal(SIGINT, SIG_IGN)
-
         let communicator = try Ice.initialize(args: &args, configFile: "config.sub")
         defer {
             communicator.destroy()
         }
-
-        let sigintSource = DispatchSource.makeSignalSource(signal: SIGINT,
-                                                           queue: DispatchQueue.global())
-        let sigtermSource = DispatchSource.makeSignalSource(signal: SIGTERM,
-                                                            queue: DispatchQueue.global())
-        sigintSource.setEventHandler { communicator.shutdown() }
-        sigtermSource.setEventHandler { communicator.shutdown() }
-        sigintSource.resume()
-        sigtermSource.resume()
 
         args = try communicator.getProperties().parseCommandLineOptions(prefix: "Clock", options: args)
 
@@ -98,7 +86,7 @@ func run() -> Int32 {
         }
 
         guard let base = try communicator.propertyToProxy("TopicManager.Proxy"),
-            let manager = try checkedCast(prx: base, type: IceStorm.TopicManagerPrx.self) else {
+            let manager = try await checkedCast(prx: base, type: IceStorm.TopicManagerPrx.self) else {
             print("invalid proxy")
             return 1
         }
@@ -108,10 +96,10 @@ func run() -> Int32 {
         //
         let topic: IceStorm.TopicPrx!
         do {
-            topic = try manager.retrieve(topicName)
+            topic = try await manager.retrieve(topicName)
         } catch is IceStorm.NoSuchTopic {
             do {
-                topic = try manager.create(topicName)
+                topic = try await manager.create(topicName)
             } catch is IceStorm.TopicExists {
                 print("temporary error. try again.")
                 return 1
@@ -161,15 +149,20 @@ func run() -> Int32 {
         }
 
         do {
-            _ = try topic.subscribeAndGetPublisher(theQoS: qos, subscriber: subscriber)
+            _ = try await topic.subscribeAndGetPublisher(theQoS: qos, subscriber: subscriber)
         } catch is IceStorm.AlreadySubscribed {
             // Must never happen when subscribing with an UUID
             precondition(id != nil)
             print("reactivating persistent subscriber")
         }
-        communicator.waitForShutdown()
-        try topic.unsubscribe(subscriber)
 
+        let signal = await ctrlCHandler.catchSignal()
+        print("Caught signal \(signal), exiting...")
+
+        communicator.shutdown()
+        communicator.waitForShutdown()
+
+        try await topic.unsubscribe(subscriber)
         return 0
     } catch {
         print("Error: \(error)\n")
@@ -177,4 +170,5 @@ func run() -> Int32 {
     }
 }
 
-exit(run())
+let ctrlCHandler = CtrlCHandler()
+exit(await run(ctrlCHandler: ctrlCHandler))
