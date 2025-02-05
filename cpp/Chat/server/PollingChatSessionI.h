@@ -8,7 +8,6 @@
 
 #include <Ice/Ice.h>
 
-
 class PollCallbackAdapter;
 
 class PollingChatSessionI final : public PollingChat::PollingChatSession

@@ -1,7 +1,7 @@
 // Copyright (c) ZeroC, Inc.
 
-#include "ChatUtils.h"
 #include "PollingChatSessionFactoryI.h"
+#include "ChatUtils.h"
 #include "PollingChatSessionI.h"
 
 #include <Ice/Ice.h>
