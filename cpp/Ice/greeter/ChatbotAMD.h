@@ -1,9 +1,9 @@
 // Copyright (c) ZeroC, Inc.
 
-#ifndef CHATBOT_H
-#define CHATBOT_H
+#ifndef CHATBOT_AMD_H
+#define CHATBOT_AMD_H
 
-#include "Greeter.h"
+#include "GreeterAMD.h"
 
 namespace GreeterServer
 {

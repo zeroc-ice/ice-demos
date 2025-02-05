@@ -1,16 +1,41 @@
+# Interceptor
+
 This demo shows how to use [Dispatch Interceptors][1] to implement a token based
 authentication system for securing operations on a remote object.
 
+To build the demo run:
+
+```shell
+cmake -B build
+cmake --build build --config Release
+```
+
 To run the demo, first start the server:
 
+**Linux/macOS:**
+
+```shell
+./build/server
 ```
-server
+
+**Windows:**
+
+```shell
+build\Release\server
 ```
 
 In a separate window, start the client:
 
+**Linux/macOS:**
+
+```shell
+./build/client
 ```
-client
+
+**Windows:**
+
+```shell
+build\Release\client
 ```
 
 The demo models a remote controlled thermostat with operations for getting and setting

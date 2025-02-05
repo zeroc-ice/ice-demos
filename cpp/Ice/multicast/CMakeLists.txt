@@ -1,13 +1,13 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(greeter_async CXX)
+project(multicast CXX)
 
 include(../../cmake/common.cmake)
 
-add_executable(client Client.cpp Greeter.ice)
+add_executable(client Client.cpp Hello.ice Discovery.ice)
 slice2cpp_generate(client)
 target_link_libraries(client Ice::Ice)
 
-add_executable(server Server.cpp Chatbot.cpp Chatbot.h Greeter.ice)
+add_executable(server Server.cpp Hello.ice Discovery.ice)
 slice2cpp_generate(server)
 target_link_libraries(server Ice::Ice)
