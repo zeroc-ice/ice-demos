@@ -21,7 +21,7 @@ To run the demo, first start the server:
 **Windows:**
 
 ```shell
-.\build\Release\server
+build\Release\server
 ```
 
 In a separate window, start the client:

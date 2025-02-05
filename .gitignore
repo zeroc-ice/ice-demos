@@ -1,68 +1,11 @@
-# Ignore executables
-client
-server
-locator
-publisher
-subscriber
-reader
-writer
-talk
-chatserver
-chatgl2client
-chatpollclient
-
-!**/Chat/client/
-!**/Chat/server/
-
-!**/msbuild/client
-!**/msbuild/server
-!**/msbuild/locator
-!**/msbuild/publisher
-!**/msbuild/subscriber
-!**/msbuild/reader
-!**/msbuild/writer
-
-!**/Sources/client
-!**/Sources/server
-!**/Sources/locator
-!**/Sources/publisher
-!**/Sources/subscriber
+# Cmake generated files
+build
 
 .gradle
 *.jar
 
-# Ignore objects and archives.
-*.[oa]
-*.obj
-*.dll
-*.ilk
-*.so
-*.so.*
-*.sl
-*.dylib
-*.pyc
-*.class
-*.exe
-*.mdb
-*.pdb
-*.tds
-*.bak
-*.ncb
-# .sdf is the Visual Studio 2010 equivalent to .ncb
-*.sdf
-*.opt
-*.opendb
-*.res
-*.exp
-.gdb_history
+# macOS Finder
 .DS_Store
-core
-/*/dist
-generated
-build
-generated.test
-cgenerated
-sgenerated
 
 # Eclipse
 .externalToolBuilders

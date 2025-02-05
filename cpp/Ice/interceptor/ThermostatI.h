@@ -3,7 +3,8 @@
 #ifndef THERMOSTAT_I_H
 #define THERMOSTAT_I_H
 
-#include <Interceptor.h>
+#include "Interceptor.h"
+
 #include <mutex>
 
 class ThermostatI : public Demo::Thermostat
