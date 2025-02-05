@@ -21,12 +21,13 @@ set(Ice_VERSION "3.8.0-alpha.0" CACHE STRING "Ice version")
 set(Ice_DLL_VERSION "38a0" CACHE STRING "Ice DLL version")
 
 find_path(Ice_INCLUDE_DIR NAMES Ice/Ice.h HINTS ${Ice_HOME}/cpp/include)
-find_library(Ice_LIBRARY NAMES Ice Ice${Ice_DLL_VERSION} HINTS ${Ice_HOME}/cpp/lib/)
+
+find_library(Ice_LIBRARY NAMES Ice Ice${Ice_DLL_VERSION} HINTS ${Ice_HOME}/cpp/lib/ PATH_SUFFIXES x64/Release)
 
 if (Ice_FIND_COMPONENTS)
   foreach(component IN LISTS Ice_FIND_COMPONENTS)
     string(TOUPPER "${component}" component_upcase)
-    find_library(Ice_${component_upcase}_LIBRARY NAMES ${component} ${component}${Ice_DLL_VERSION} HINTS ${Ice_HOME}/cpp/lib/)
+    find_library(Ice_${component_upcase}_LIBRARY NAMES ${component} ${component}${Ice_DLL_VERSION} HINTS ${Ice_HOME}/cpp/lib/ PATH_SUFFIXES x64/Release )
   endforeach()
 endif()
 
@@ -45,8 +46,8 @@ if(Ice_FOUND)
     set(Ice_INCLUDE_DIRS ${Ice_INCLUDE_DIR} ${Ice_HOME}/cpp/include/generated)
   endif()
 
-  add_library(Ice::Ice SHARED IMPORTED)
-  set_target_properties(Ice::Ice PROPERTIES IMPORTED_IMPLIB ${Ice_LIBRARY})
+  add_library(Ice::Ice UNKNOWN IMPORTED)
+  # set_target_properties(Ice::Ice PROPERTIES IMPORTED_IMPLIB ${Ice_LIBRARY})
   set_target_properties(Ice::Ice PROPERTIES
     IMPORTED_LOCATION ${Ice_LIBRARY}
     INTERFACE_INCLUDE_DIRECTORIES "${Ice_INCLUDE_DIRS}"
@@ -55,7 +56,7 @@ if(Ice_FOUND)
   if (Ice_FIND_COMPONENTS)
     foreach(component IN LISTS Ice_FIND_COMPONENTS)
       string(TOUPPER "${component}" component_upcase)
-      add_library(Ice::${component} SHARED IMPORTED)
+      add_library(Ice::${component} UNKNOWN IMPORTED)
       set_target_properties(Ice::${component} PROPERTIES
         IMPORTED_LOCATION ${Ice_${component_upcase}_LIBRARY}
         INTERFACE_INCLUDE_DIRECTORIES "${Ice_INCLUDE_DIRS}"
