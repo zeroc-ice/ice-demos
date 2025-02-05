@@ -1,3 +1,5 @@
+# Chat Client
+
 This demo is a C++ command-line client for the [ZeroC Chat Demo][1].
 It connects to a single chat room, allowing you to chat with other chat
 room participants.
@@ -9,11 +11,41 @@ You may run either the Glacier2 client (`chatgl2client`) or the polling client
 (`chatpollclient`), as well as any username or password to connect.
 
 If you wish to use your own server from the `server` direcory you should specify
-the appropriate custom configuration file when launching the client:
+the appropriate custom configuration file when launching the client.
 
+To build the demo run:
+
+```shell
+cmake -B build -S .
+cmake --build build --config Release
 ```
-chatgl2client --Ice.Config=config.gl2client
-chatpollclient --Ice.Config=config.pollclient
+
+To run the the Glacier2 client:
+
+**Linux/macOS:**
+
+```shell
+./build/chatgl2client --Ice.Config=config.gl2client
+```
+
+**Windows:**
+
+```shell
+build\Release\chatgl2client --Ice.Config=config.gl2client
+```
+
+To run the the Polling client:
+
+**Linux/macOS:**
+
+```shell
+./build/chatpollclient --Ice.Config=config.pollclient
+```
+
+**Windows:**
+
+```shell
+build\Release\chatpollclient --Ice.Config=config.pollclient
 ```
 
 [1]: https://doc.zeroc.com/display/Doc/Chat+Demo
