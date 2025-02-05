@@ -25,7 +25,7 @@ enum Option: String {
     case oneway = "--oneway"
 }
 
-func run() -> Int32 {
+func run() async -> Int32 {
     do {
         var args = [String](CommandLine.arguments.dropFirst())
         signal(SIGTERM, SIG_IGN)
@@ -98,7 +98,7 @@ func run() -> Int32 {
         }
 
         guard let base = try communicator.propertyToProxy("TopicManager.Proxy"),
-            let manager = try checkedCast(prx: base, type: IceStorm.TopicManagerPrx.self) else {
+            let manager = try await checkedCast(prx: base, type: IceStorm.TopicManagerPrx.self) else {
             print("invalid proxy")
             return 1
         }
@@ -108,10 +108,10 @@ func run() -> Int32 {
         //
         let topic: IceStorm.TopicPrx!
         do {
-            topic = try manager.retrieve(topicName)
+            topic = try await manager.retrieve(topicName)
         } catch is IceStorm.NoSuchTopic {
             do {
-                topic = try manager.create(topicName)
+                topic = try await manager.create(topicName)
             } catch is IceStorm.TopicExists {
                 print("temporary error. try again.")
                 return 1
@@ -161,14 +161,14 @@ func run() -> Int32 {
         }
 
         do {
-            _ = try topic.subscribeAndGetPublisher(theQoS: qos, subscriber: subscriber)
+            _ = try await topic.subscribeAndGetPublisher(theQoS: qos, subscriber: subscriber)
         } catch is IceStorm.AlreadySubscribed {
             // Must never happen when subscribing with an UUID
             precondition(id != nil)
             print("reactivating persistent subscriber")
         }
         communicator.waitForShutdown()
-        try topic.unsubscribe(subscriber)
+        try await topic.unsubscribe(subscriber)
 
         return 0
     } catch {
@@ -177,4 +177,4 @@ func run() -> Int32 {
     }
 }
 
-exit(run())
+exit(await run())
