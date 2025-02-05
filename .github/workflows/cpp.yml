@@ -77,9 +77,11 @@ jobs:
       - name: Build C++ Demos
         timeout-minutes: 30
         working-directory: ice-demos/cpp
-        run: bear -- make
+        env:
+          CMAKE_EXPORT_COMPILE_COMMANDS: 1
+        run: find . -name CMakeLists.txt -execdir cmake -B build -S . \; -execdir cmake --build build --config Release \;
 
       - name: Run Clang Tidy
         working-directory: ice-demos/cpp
         run: |
-          run-clang-tidy-19 -j$(nproc) -quiet
+          find . -name compile_commands.json -execdir run-clang-tidy-19 -j$(nproc) -quiet \;

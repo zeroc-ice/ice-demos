@@ -2,16 +2,39 @@ A simple throughput demo that allows you to send sequences of various
 types between client and server and to measure the maximum bandwidth
 that can be achieved using serialized synchronous requests.
 
+To build the demo run:
+
+```shell
+cmake -B build
+cmake --build build --config Release
+```
+
 To run the demo, first start the server:
 
+**Linux/macOS:**
+
+```shell
+./build/server
 ```
-server
+
+**Windows:**
+
+```shell
+build\Release\server
 ```
 
 In a separate window, start the client:
 
+**Linux/macOS:**
+
+```shell
+./build/client
 ```
-client
+
+**Windows:**
+
+```shell
+build\Release\client
 ```
 
 We provide a number of optimizations through metadata in this demo.

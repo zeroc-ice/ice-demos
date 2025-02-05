@@ -1,6 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
-#include "Chatbot.h"
+#include "ChatbotAMD.h"
 
 #include <iostream>
 

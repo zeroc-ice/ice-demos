@@ -3,7 +3,8 @@
 #ifndef INTERCEPTOR_I_H
 #define INTERCEPTOR_I_H
 
-#include <AuthenticatorI.h>
+#include "AuthenticatorI.h"
+
 #include <Ice/Ice.h>
 #include <unordered_set>
 
