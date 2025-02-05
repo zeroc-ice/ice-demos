@@ -68,12 +68,6 @@ jobs:
           working_directory: ice
           build_flags: ${{ runner.os == 'Windows' && '/t:BuildDist' || 'srcs' }}
 
-      - name: Publish C++ NuGet Packages on ${{ matrix.os }}
-        timeout-minutes: 5
-        working-directory: ice/cpp/msbuild
-        run: msbuild ice.proj /t:Publish
-        if: runner.os == 'Windows'
-
       - name: Publish C# NuGet Packages on ${{ matrix.os }}
         timeout-minutes: 5
         working-directory: ice/csharp/msbuild
