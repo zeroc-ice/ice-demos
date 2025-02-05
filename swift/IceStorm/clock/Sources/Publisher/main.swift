@@ -1,7 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
 import Foundation
-import PromiseKit
 import Ice
 import IceStorm
 
@@ -19,28 +18,14 @@ enum Option: String {
     case oneway = "--oneway"
 }
 
-func run() -> Int32 {
+func run(ctrlCHandler: Ice.CtrlCHandler) async -> Int32 {
     do {
         var args = [String](CommandLine.arguments.dropFirst())
-        signal(SIGTERM, SIG_IGN)
-        signal(SIGINT, SIG_IGN)
 
         let communicator = try Ice.initialize(args: &args, configFile: "config.pub")
         defer {
             communicator.destroy()
         }
-
-        let sigintSource = DispatchSource.makeSignalSource(signal: SIGINT, queue: DispatchQueue.main)
-        sigintSource.setEventHandler {
-            communicator.destroy()
-        }
-        sigintSource.resume()
-
-        let sigtermSource = DispatchSource.makeSignalSource(signal: SIGTERM, queue: DispatchQueue.main)
-        sigtermSource.setEventHandler {
-            communicator.destroy()
-        }
-        sigtermSource.resume()
 
         var option: Option = .none
         var topicName = "time"
@@ -67,7 +52,7 @@ func run() -> Int32 {
         }
 
         guard let base = try communicator.propertyToProxy("TopicManager.Proxy"),
-            let manager = try checkedCast(prx: base, type: IceStorm.TopicManagerPrx.self) else {
+            let manager = try await checkedCast(prx: base, type: IceStorm.TopicManagerPrx.self) else {
             print("invalid proxy")
             return 1
         }
@@ -77,10 +62,10 @@ func run() -> Int32 {
         //
         var topic: IceStorm.TopicPrx!
         do {
-            topic = try manager.retrieve(topicName)
+            topic = try await manager.retrieve(topicName)
         } catch is IceStorm.NoSuchTopic {
             do {
-                topic = try manager.create(topicName)
+                topic = try await manager.create(topicName)
             } catch is IceStorm.TopicExists {
                 print("temporary error. try again.")
                 return 1
@@ -91,7 +76,7 @@ func run() -> Int32 {
         // Get the topic's publisher object, and create a Clock proxy with
         // the mode specified as an argument of this application.
         //
-        guard var publisher = try topic.getPublisher() else {
+        guard var publisher = try await topic.getPublisher() else {
             print("Error getting publisher proxy")
             return 1
         }
@@ -113,27 +98,34 @@ func run() -> Int32 {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/YYYY HH:mm:ss"
 
-        let t = DispatchSource.makeTimerSource()
-        t.schedule(deadline: .now(), repeating: .seconds(1))
-        t.setEventHandler {
-            do {
-                try clock.tick(dateFormatter.string(from: Date()))
-            } catch is CommunicatorDestroyedException {
-                t.suspend()
-                exit(0)
-            } catch {
-                t.suspend()
-                print("Error: \(error)\n")
-                communicator.destroy()
-                exit(1)
+        // Send a tick every second until cancelled
+        let task = Task {
+            while true {
+                do {
+                    try await clock.tick(dateFormatter.string(from: Date()))
+                } catch let error as Ice.LocalException {
+                    print("tick invocation failed with: \(error.message)")
+                }
+                try await Task.sleep(for: .seconds(1))
             }
         }
-        t.activate()
-        Dispatch.dispatchMain()
+
+        let signal = await ctrlCHandler.catchSignal()
+        print("Caught signal \(signal), exiting...")
+
+        task.cancel()
+        do {
+            try await task.value
+        } catch is CancellationError {
+            // expected
+        }
+
+        return 0
     } catch {
         print("Error: \(error)\n")
         return 1
     }
 }
 
-exit(run())
+let ctrlCHandler = Ice.CtrlCHandler()
+exit(await run(ctrlCHandler: ctrlCHandler))
