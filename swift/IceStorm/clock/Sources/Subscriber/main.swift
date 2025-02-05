@@ -8,12 +8,15 @@ import IceStorm
 setbuf(__stdoutp, nil)
 
 func usage() {
-    print("Usage: [--batch] [--datagram|--twoway|--ordered|--oneway] [--retryCount count] [--id id] [topic]")
+    print(
+        "Usage: [--batch] [--datagram|--twoway|--ordered|--oneway] [--retryCount count] [--id id] [topic]"
+    )
 }
 
+/// ClockI is an Ice servant that implements Slice interface Clock.
 class ClockI: Clock {
-    func tick(time date: String, current _: Ice.Current) throws {
-        print(date)
+    func tick(time: String, current _: Ice.Current) throws {
+        print(time)
     }
 }
 
@@ -25,150 +28,136 @@ enum Option: String {
     case oneway = "--oneway"
 }
 
-func run(ctrlCHandler: CtrlCHandler) async -> Int32 {
-    do {
-        var args = [String](CommandLine.arguments.dropFirst())
-        let communicator = try Ice.initialize(args: &args, configFile: "config.sub")
-        defer {
-            communicator.destroy()
+// CtrlCHandler is a helper class that handles Ctrl+C and similar signals. It must be constructed at the beginning
+// of the program, before creating an Ice communicator or starting any thread.
+let ctrlCHandler = CtrlCHandler()
+
+// Create an Ice communicator to initialize the Ice runtime.
+var args = [String](CommandLine.arguments.dropFirst())
+let communicator = try Ice.initialize(args: &args, configFile: "config.sub")
+defer {
+    communicator.destroy()
+}
+
+// Parse command-line options.
+
+args = try communicator.getProperties().parseCommandLineOptions(prefix: "Clock", options: args)
+
+var topicName = "time"
+var option: Option = .none
+var batch = false
+var id: String?
+var retryCount: String?
+
+for var i in 0..<args.count {
+    let oldOption = option
+    if let o = Option(rawValue: args[i]) {
+        option = o
+    } else if args[i] == "--batch" {
+        batch = true
+    } else if args[i] == "--id" {
+        i += 1
+        if i >= args.count {
+            usage()
+            exit(1)
         }
-
-        args = try communicator.getProperties().parseCommandLineOptions(prefix: "Clock", options: args)
-
-        var topicName = "time"
-        var option: Option = .none
-        var batch = false
-        var id: String?
-        var retryCount: String?
-
-        for var i in 0 ..< args.count {
-            let oldoption = option
-            if let o = Option(rawValue: args[i]) {
-                option = o
-            } else if args[i] == "--batch" {
-                batch = true
-            } else if args[i] == "--id" {
-                i += 1
-                if i >= args.count {
-                    usage()
-                    return 1
-                }
-                id = args[i]
-            } else if args[i] == "--retryCount" {
-                i += 1
-                if i >= args.count {
-                    usage()
-                    return 1
-                }
-                retryCount = args[i]
-            } else if args[i].starts(with: "--") {
-                usage()
-                return 1
-            } else {
-                topicName = args[i]
-                i += 1
-                break
-            }
-
-            if oldoption != option, oldoption != .none {
-                usage()
-                return 1
-            }
+        id = args[i]
+    } else if args[i] == "--retryCount" {
+        i += 1
+        if i >= args.count {
+            usage()
+            exit(1)
         }
+        retryCount = args[i]
+    } else if args[i].starts(with: "--") {
+        usage()
+        exit(1)
+    } else {
+        topicName = args[i]
+        i += 1
+        break
+    }
 
-        if retryCount != nil {
-            if option == .none {
-                option = .twoway
-            } else if option != .twoway, option != .ordered {
-                usage()
-                return 1
-            }
-        }
-
-        guard let base = try communicator.propertyToProxy("TopicManager.Proxy"),
-            let manager = try await checkedCast(prx: base, type: IceStorm.TopicManagerPrx.self) else {
-            print("invalid proxy")
-            return 1
-        }
-
-        //
-        // Retrieve the topic.
-        //
-        let topic: IceStorm.TopicPrx!
-        do {
-            topic = try await manager.retrieve(topicName)
-        } catch is IceStorm.NoSuchTopic {
-            do {
-                topic = try await manager.create(topicName)
-            } catch is IceStorm.TopicExists {
-                print("temporary error. try again.")
-                return 1
-            }
-        }
-
-        let adapter = try communicator.createObjectAdapter("Clock.Subscriber")
-        //
-        // Add a servant for the Ice object. If --id is used the
-        // identity comes from the command line, otherwise a UUID is
-        // used.
-        //
-        // id is not directly altered since it is used below to
-        // detect whether subscribeAndGetPublisher can raise
-        // AlreadySubscribed.
-        //
-        let subId = Ice.Identity(name: id ?? UUID().uuidString, category: "")
-
-        var subscriber = try adapter.add(servant: ClockDisp(ClockI()), id: subId)
-
-        //
-        // Activate the object adapter before subscribing.
-        //
-        try adapter.activate()
-
-        var qos: [String: String] = [:]
-
-        if let retryCount = retryCount {
-            qos["retryCount"] = retryCount
-        }
-
-        //
-        // Set up the proxy.
-        //
-        switch option {
-        case .datagram:
-            subscriber = batch ? subscriber.ice_batchDatagram() : subscriber.ice_datagram()
-        case .ordered:
-            // Do nothing to the subscriber proxy. Its already twoway.
-            qos["reliability"] = "ordered"
-        case .oneway,
-             .none:
-            subscriber = batch ? subscriber.ice_batchOneway() : subscriber.ice_oneway()
-        case .twoway:
-            // Do nothing to the subscriber proxy. Its already twoway.
-            break
-        }
-
-        do {
-            _ = try await topic.subscribeAndGetPublisher(theQoS: qos, subscriber: subscriber)
-        } catch is IceStorm.AlreadySubscribed {
-            // Must never happen when subscribing with an UUID
-            precondition(id != nil)
-            print("reactivating persistent subscriber")
-        }
-
-        let signal = await ctrlCHandler.catchSignal()
-        print("Caught signal \(signal), exiting...")
-
-        communicator.shutdown()
-        communicator.waitForShutdown()
-
-        try await topic.unsubscribe(subscriber)
-        return 0
-    } catch {
-        print("Error: \(error)\n")
-        return 1
+    if oldOption != option, oldOption != .none {
+        usage()
+        exit(1)
     }
 }
 
-let ctrlCHandler = CtrlCHandler()
-exit(await run(ctrlCHandler: ctrlCHandler))
+if retryCount != nil {
+    if option == .none {
+        option = .twoway
+    } else if option != .twoway, option != .ordered {
+        usage()
+        exit(1)
+    }
+}
+
+// Create the topic manager proxy.
+let manager = try uncheckedCast(
+    prx: communicator.propertyToProxy("TopicManager.Proxy")!,
+    type: IceStorm.TopicManagerPrx.self)
+
+// Retrieve the topic.
+let topic: IceStorm.TopicPrx!
+do {
+    topic = try await manager.retrieve(topicName)
+} catch is IceStorm.NoSuchTopic {
+    do {
+        topic = try await manager.create(topicName)
+    } catch is IceStorm.TopicExists {
+        print("temporary error. try again.")
+        exit(1)
+    }
+}
+
+// Create the object adapter that hosts the subscriber servant.
+let adapter = try communicator.createObjectAdapter("Clock.Subscriber")
+
+// Add a servant to the object adapter. If --id is used the identity comes from the command line, otherwise a UUID is
+// used. id is not directly altered since it is used below to detect whether subscribeAndGetPublisher can throw
+// AlreadySubscribed.
+let subId = Ice.Identity(name: id ?? UUID().uuidString, category: "")
+var subscriber = try adapter.add(servant: ClockDisp(ClockI()), id: subId)
+
+// Activate the object adapter before registering the subscriber with the IceStorm topic.
+try adapter.activate()
+
+var qos: [String: String] = [:]
+if let retryCount = retryCount {
+    qos["retryCount"] = retryCount
+}
+
+// Set up the subscriber proxy.
+switch option {
+case .datagram:
+    subscriber = batch ? subscriber.ice_batchDatagram() : subscriber.ice_datagram()
+case .ordered:
+    // Do nothing to the subscriber proxy. Its already twoway.
+    qos["reliability"] = "ordered"
+case .oneway,
+    .none:
+    subscriber = batch ? subscriber.ice_batchOneway() : subscriber.ice_oneway()
+case .twoway:
+    // Do nothing to the subscriber proxy. Its already twoway.
+    break
+}
+
+do {
+    // Register the subscriber with the IceStorm topic.
+    _ = try await topic.subscribeAndGetPublisher(theQoS: qos, subscriber: subscriber)
+} catch is IceStorm.AlreadySubscribed {
+    // Must never happen when subscribing with an UUID
+    precondition(id != nil)
+    print("reactivating persistent subscriber")
+}
+
+let signal = await ctrlCHandler.catchSignal()
+print("Caught signal \(signal), exiting...")
+
+// Initiate shutdown and wait for all dispatches to complete.
+communicator.shutdown()
+communicator.waitForShutdown()
+
+// Unsubscribe from the topic in IceStorm.
+try await topic.unsubscribe(subscriber)
