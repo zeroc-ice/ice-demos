@@ -12,8 +12,7 @@ namespace GreeterServer
     {
     public:
         // See IceBox::Service::start doc-comment.
-        void start(const std::string& name, const Ice::CommunicatorPtr& communicator, const Ice::StringSeq& args)
-            final;
+        void start(const std::string& name, const Ice::CommunicatorPtr& communicator, const Ice::StringSeq& args) final;
 
         // See IceBox::Service::stop doc-comment.
         void stop() final;
