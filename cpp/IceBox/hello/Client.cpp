@@ -93,7 +93,6 @@ run(const shared_ptr<Ice::Communicator>& communicator)
             {
                 batchOneway->ice_flushBatchRequests();
                 batchDatagram->ice_flushBatchRequests();
-
             }
             else if (c == 'x')
             {
