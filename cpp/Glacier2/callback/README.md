@@ -1,22 +1,47 @@
+# Glacier2 Callback
+
 This example demonstrates the use of several Glacier2 features, including
 [callbacks][1] and [request contexts][2].
 
+To build the demo run:
+
+```shell
+cmake -B build
+cmake --build build --config Release
+```
+
 To run the demo, first start the server:
 
+**Linux/macOS:**
+
+```shell
+./build/server
 ```
-server
+
+**Windows:**
+
+```shell
+build\Release\server
 ```
 
 In a separate window, start the Glacier2 router:
 
-```
+```shell
 glacier2router --Ice.Config=config.glacier2
 ```
 
 In a separate window, start the client:
 
+**Linux/macOS:**
+
+```shell
+./build/client
 ```
-client
+
+**Windows:**
+
+```shell
+build\Release\client
 ```
 
 If you plan to run this demo using clients on different hosts than the
