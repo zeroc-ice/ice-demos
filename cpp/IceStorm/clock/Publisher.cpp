@@ -145,23 +145,24 @@ main(int argc, char* argv[])
         {
             while (true)
             {
+                auto now = chrono::system_clock::to_time_t(chrono::system_clock::now());
+                char timeString[100];
+                if (strftime(timeString, sizeof(timeString), "%x %X", localtime(&now)) == 0)
+                {
+                    timeString[0] = '\0';
+                }
+
                 try
                 {
-                    auto now = chrono::system_clock::to_time_t(chrono::system_clock::now());
-                    char timeString[100];
-                    if (strftime(timeString, sizeof(timeString), "%x %X", localtime(&now)) == 0)
-                    {
-                        timeString[0] = '\0';
-                    }
                     clock->tick(timeString);
-
-                    // Sleep for one second or until canceled.
-                    if (cancelFuture.wait_for(chrono::seconds(1)) == future_status::ready)
-                    {
-                        break; // done
-                    }
                 }
                 catch (const Ice::CommunicatorDestroyedException&)
+                {
+                    break; // done
+                }
+
+                // Sleep for one second or until canceled.
+                if (cancelFuture.wait_for(chrono::seconds(1)) == future_status::ready)
                 {
                     break; // done
                 }
@@ -169,7 +170,8 @@ main(int argc, char* argv[])
         });
 
     // Wait until the user presses Ctrl+C.
-    ctrlCHandler.wait();
+    int signal = ctrlCHandler.wait();
+    cout << "Caught signal " << signal << ", exiting..." << endl;
 
     // Cancel the sleep in the background task.
     cancelPromise.set_value();
