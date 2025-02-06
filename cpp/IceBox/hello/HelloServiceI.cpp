@@ -1,8 +1,10 @@
 // Copyright (c) ZeroC, Inc.
 
-#include <HelloI.h>
-#include <HelloServiceI.h>
+#include "HelloI.h"
+#include "HelloServiceI.h"
+
 #include <Ice/Ice.h>
+#include <iostream>
 
 using namespace std;
 
@@ -20,10 +22,10 @@ HelloServiceI::start(
     const shared_ptr<Ice::Communicator>& communicator,
     const Ice::StringSeq& /*args*/)
 {
-    _adapter = communicator->createObjectAdapter(name);
-    auto hello = make_shared<HelloI>();
-    _adapter->add(hello, Ice::stringToIdentity("hello"));
+    _adapter = communicator->createObjectAdapterWithEndpoints("Hello", "tcp -p 10000:udp -p 10000");
+    _adapter->add(make_shared<HelloI>(), Ice::stringToIdentity("hello"));
     _adapter->activate();
+    cout << "Listening on port 10000..." << endl;
 }
 
 void

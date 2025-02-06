@@ -24,7 +24,7 @@ main(int argc, char* argv[])
         // CommunicatorHolder's ctor initializes an Ice communicator,
         // and its dtor destroys this communicator.
         //
-        const Ice::CommunicatorHolder ich(argc, argv, "config.client");
+        const Ice::CommunicatorHolder ich{argc, argv};
 
         //
         // The communicator initialization removes all Ice-related arguments from argc/argv
@@ -53,19 +53,12 @@ void menu();
 int
 run(const shared_ptr<Ice::Communicator>& communicator)
 {
-    auto twoway =
-        Ice::checkedCast<HelloPrx>(communicator->propertyToProxy("Hello.Proxy")->ice_twoway()->ice_secure(false));
-    if (!twoway)
-    {
-        cerr << "invalid proxy" << endl;
-        return 1;
-    }
+    HelloPrx twoway{communicator, "hello:tcp -h localhost -p 10000:udp -h localhost -p 10000"};
+
     auto oneway = twoway->ice_oneway();
     auto batchOneway = twoway->ice_batchOneway();
     auto datagram = twoway->ice_datagram();
     auto batchDatagram = twoway->ice_batchDatagram();
-
-    bool secure = false;
 
     menu();
 
@@ -90,52 +83,17 @@ run(const shared_ptr<Ice::Communicator>& communicator)
             }
             else if (c == 'd')
             {
-                if (secure)
-                {
-                    cout << "secure datagrams are not supported" << endl;
-                }
-                else
-                {
-                    datagram->sayHello();
-                }
+                datagram->sayHello();
             }
             else if (c == 'D')
             {
-                if (secure)
-                {
-                    cout << "secure datagrams are not supported" << endl;
-                }
-                else
-                {
-                    batchDatagram->sayHello();
-                }
+                batchDatagram->sayHello();
             }
             else if (c == 'f')
             {
                 batchOneway->ice_flushBatchRequests();
-                if (!secure)
-                {
-                    batchDatagram->ice_flushBatchRequests();
-                }
-            }
-            else if (c == 'S')
-            {
-                secure = !secure;
+                batchDatagram->ice_flushBatchRequests();
 
-                twoway = twoway->ice_secure(secure);
-                oneway = oneway->ice_secure(secure);
-                batchOneway = batchOneway->ice_secure(secure);
-                datagram = datagram->ice_secure(secure);
-                batchDatagram = batchDatagram->ice_secure(secure);
-
-                if (secure)
-                {
-                    cout << "secure mode is now on" << endl;
-                }
-                else
-                {
-                    cout << "secure mode is now off" << endl;
-                }
             }
             else if (c == 'x')
             {
@@ -170,7 +128,6 @@ menu()
             "d: send greeting as datagram\n"
             "D: send greeting as batch datagram\n"
             "f: flush all batch requests\n"
-            "S: switch secure mode on/off\n"
             "x: exit\n"
             "?: help\n";
 }
