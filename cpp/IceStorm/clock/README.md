@@ -4,24 +4,44 @@
 
 This demo shows how to use [IceStorm][1].
 
+To build the demo run:
+
+```shell
+cmake -B build -S .
+cmake --build build --config Release
+```
+
 To run the demo, start the IceStorm service:
 
 ```shell
 icebox --Ice.Config=config.icebox
 ```
 
-This configuration assumes there is a subdirectory named db in the current working directory.
+Next run the subscriber in a separate window:
 
-In a separate window:
+**Linux/macOS:**
 
 ```shell
-subscriber
+./build/subscriber
 ```
 
-In another window:
+**Windows:**
 
 ```shell
-publisher
+build\Release\subscriber
+```
+
+In a separate window, start the publisher:
+**Linux/macOS:**
+
+```shell
+./build/publisher
+```
+
+**Windows:**
+
+```shell
+build\Release\publisher
 ```
 
 While the publisher continues to run, "tick" messages should be displayed in the subscriber window.
@@ -37,50 +57,50 @@ receiving messages.
 ## Subscriber Options
 
 ```shell
-subscriber --oneway
+./build/subscriber --oneway
 ```
 
 The subscriber receives events as oneway messages. This is the default.
 
 ```shell
-subscriber --datagram
+./build/subscriber --datagram
 ```
 
 The subscriber receives events as datagrams.
 
 ```shell
-subscriber --twoway
+./build/subscriber --twoway
 ```
 
 The subscriber receives events as twoway messages.
 
 ```shell
-subscriber --ordered
+./build/subscriber --ordered
 ```
 
 The subscriber receives events as twoway messages with guaranteed ordering.
 
 ```shell
-subscriber --batch
+./build/subscriber --batch
 ```
 
 This is an additional flag that forwards datagram and oneway events to the subscriber in batches.
 
 ```shell
-subscriber --id <id>
+./build/subscriber --id <id>
 ```
 
 This option specifies a unique identity for this subscriber. When you use this option, you should also run the
 subscriber on a fixed port by setting the `Clock.Subscriber.Endpoints` property. For example:
 
 ```shell
-subscriber --Clock.Subscriber.Endpoints="tcp -p <port>"
+./build/subscriber --Clock.Subscriber.Endpoints="tcp -p <port>"
 ```
 
 Replace "tcp" with "udp" when using the --datagram option.
 
 ```shell
-subscriber --retryCount <count>
+./build/subscriber --retryCount <count>
 ```
 
 This option sets the retry count for a subscriber. This option should be used in conjunction with the --id option.
@@ -89,19 +109,19 @@ Setting retryCount changes the default subscriber QoS to twoway.
 ## Publisher Options
 
 ```shell
-publisher --oneway
+./build/publisher --oneway
 ```
 
 The publisher sends events as oneway messages. This is the default.
 
 ```shell
-publisher --datagram
+./build/publisher --datagram
 ```
 
 The publisher sends events as datagrams.
 
 ```shell
-publisher --twoway
+./build/publisher --twoway
 ```
 
 The publisher sends events as twoway messages.
