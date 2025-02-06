@@ -2,6 +2,7 @@
 
 #include "ChatUtils.h"
 #include "PollingChat.h"
+
 #include <Ice/Ice.h>
 #include <chrono>
 #include <iostream>

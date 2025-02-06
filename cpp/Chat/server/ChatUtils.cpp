@@ -1,7 +1,7 @@
 // Copyright (c) ZeroC, Inc.
 
-#include <Chat.h>
-#include <ChatUtils.h>
+#include "ChatUtils.h"
+#include "Chat.h"
 
 #include <algorithm>
 #include <sstream>
