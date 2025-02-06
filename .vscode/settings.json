@@ -6,6 +6,13 @@
     "C_Cpp.default.cppStandard": "c++17",
     "gradle.nestedProjects": true,
     "cmake.sourceDirectory":[
+        "${workspaceFolder}/cpp/DataStorm/clock",
+        "${workspaceFolder}/cpp/DataStorm/keyFilter",
+        "${workspaceFolder}/cpp/DataStorm/minimal",
+        "${workspaceFolder}/cpp/DataStorm/node",
+        "${workspaceFolder}/cpp/DataStorm/sampleFilter",
+        "${workspaceFolder}/cpp/DataStorm/stock",
+
         "${workspaceFolder}/cpp/Ice/bidir",
         "${workspaceFolder}/cpp/Ice/callback",
         "${workspaceFolder}/cpp/Ice/context",
@@ -24,6 +31,11 @@
         "${workspaceFolder}/cpp/Ice/secure",
         "${workspaceFolder}/cpp/Ice/session",
         "${workspaceFolder}/cpp/Ice/throughput",
+
+        "${workspaceFolder}/cpp/IceStorm/clock",
+        "${workspaceFolder}/cpp/IceStorm/counter",
+        "${workspaceFolder}/cpp/IceStorm/replicated",
+        "${workspaceFolder}/cpp/IceStorm/replicated2",
     ],
     "cmake.configureSettings": {
         "Ice_HOME": "${workspaceFolder}/../ice",

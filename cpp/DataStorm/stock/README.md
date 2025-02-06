@@ -1,20 +1,44 @@
+# DataStorm Stock
+
 This demo illustrates the use of partial updates. The writer adds stocks to the
 topic and send partial updates to update the stock price or volume. The reader
 prints out the stock information and partial updates.
 
 The demo uses Slice to define the `Demo::Stock` class in the `Stock.ice` file.
 
-To run the demo, start the writer and specify the ticker of the stocks to write:
+To build the demo run:
 
-```
-writer
+```shell
+cmake -B build -S .
+cmake --build build --config Release
 ```
 
-In a separate window, start the reader and specify the stock tickers you wish to
-follow:
+To run the demo, start the writer:
 
+**Linux/macOS:**
+
+```shell
+./build/writer
 ```
-reader
+
+**Windows:**
+
+```shell
+build\Release\writer
+```
+
+In a separate window, start the reader:
+
+**Linux/macOS:**
+
+```shell
+./build/reader
+```
+
+**Windows:**
+
+```shell
+build\Release\reader
 ```
 
 You can start multiple writers and readers to publish or follow different
