@@ -7,4 +7,4 @@ find_package(Threads REQUIRED)
 
 set(Ice_DIR ${CMAKE_CURRENT_LIST_DIR} CACHE PATH "Path to Ice CMake configuration file")
 
-find_package(Ice REQUIRED CONFIG COMPONENTS DataStorm Glacier2 IceStorm)
+find_package(Ice REQUIRED CONFIG COMPONENTS DataStorm Glacier2 IceBox IceStorm)

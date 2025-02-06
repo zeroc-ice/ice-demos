@@ -36,3 +36,4 @@ In a separate window, start the client:
 
 ```shell
 build\Release\client
+```

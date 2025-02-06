@@ -44,7 +44,7 @@ In a separate window, start the client:
 
 ```shell
 build\Release\client
-
+```
 
 Press 'i' and 'd' to increment and decrement the counter. You can also
 start more clients in other windows and observe that each is
