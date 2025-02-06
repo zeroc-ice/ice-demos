@@ -1,22 +1,47 @@
+# Glacier2 Simple Chat
+
 This example presents a very simple chat server to demonstrate the use of a
 [Glacier2 session][1].
 
+To build the demo run:
+
+```shell
+cmake -B build
+cmake --build build --config Release
+```
+
 To run the demo, first start the chat server:
 
+**Linux/macOS:**
+
+```shell
+./build/server
 ```
-server
+
+**Windows:**
+
+```shell
+build\Release\server
 ```
 
 In a separate window, start the Glacier2 router:
 
-```
+```shell
 glacier2router --Ice.Config=config.glacier2
 ```
 
 In a separate window, start the client:
 
+**Linux/macOS:**
+
+```shell
+./build/client
 ```
-client
+
+**Windows:**
+
+```shell
+build\Release\client
 ```
 
 If you plan to run this demo using clients running on different hosts
