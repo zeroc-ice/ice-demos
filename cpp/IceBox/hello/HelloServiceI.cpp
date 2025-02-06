@@ -1,7 +1,7 @@
 // Copyright (c) ZeroC, Inc.
 
-#include "HelloI.h"
 #include "HelloServiceI.h"
+#include "HelloI.h"
 
 #include <Ice/Ice.h>
 #include <iostream>
