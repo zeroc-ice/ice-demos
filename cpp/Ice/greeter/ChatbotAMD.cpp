@@ -9,7 +9,7 @@
 
 using namespace std;
 
-GreeterServer::Chatbot::~Chatbot()
+GreeterServerAMD::Chatbot::~Chatbot()
 {
     // Wait for all tasks to complete.
     for (auto& task : _tasks)
@@ -19,7 +19,7 @@ GreeterServer::Chatbot::~Chatbot()
 }
 
 void
-GreeterServer::Chatbot::greetAsync(
+GreeterServerAMD::Chatbot::greetAsync(
     string name,
     function<void(string_view)> response,
     [[maybe_unused]] function<void(std::exception_ptr)> exception,
