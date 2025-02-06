@@ -1,23 +1,48 @@
-  This demo shows how to create an [IceBox][1] service.
+# IceBox Hello
 
-To run this demo, open two terminal windows. In the first window,
-start the IceBox server:
+This demo shows how to create an [IceBox][1] service.
+
+```shell
+cmake -B build
+cmake --build build --config Release
 ```
-icebox --Ice.Config=config.icebox
+
+To run this demo, open two terminal windows. In the first window:
+
+**Linux:**
+
+```shell
+LD_LIBRARY_PATH=./build icebox --IceBox.Service.Hello="HelloService:create --Ice.Trace.Dispatch"
+```
+
+**macOS:**
+
+```shell
+DYLD_LIBRARY_PATH=./build icebox --IceBox.Service.Hello="HelloService:create --Ice.Trace.Dispatch"
+```
+
+**Windows:**
+
+```shell
+set PATH=%PATH%;./build/Release
+icebox --IceBox.Service.Hello="HelloService:create --Ice.Trace.Dispatch"
 ```
 
 In the second window, run the client:
-```
-client
+
+**Linux/macOS:**
+
+```shell
+./build/client
 ```
 
-To shut down IceBox, use `iceboxadmin`:
-```
-iceboxadmin --Ice.Config=config.admin shutdown
+**Windows:**
+
+```shell
+build\Release\client
 ```
 
-Linux 32-bit
-------------
+## Linux 32-bit
 
 If you are using 32-bit binaries on a Linux 64-bit host, use
 `icebox32` instead of `icebox` to start the IceBox server.

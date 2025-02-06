@@ -1,8 +1,11 @@
 // Copyright (c) ZeroC, Inc.
 
-#include <HelloI.h>
-#include <HelloServiceI.h>
+#include "HelloServiceI.h"
+#include "HelloI.h"
+
 #include <Ice/Ice.h>
+
+#include <iostream>
 
 using namespace std;
 
@@ -11,19 +14,16 @@ extern "C"
     //
     // Factory function
     //
-    ICE_DECLSPEC_EXPORT IceBox::Service* create(const shared_ptr<Ice::Communicator>&) { return new HelloServiceI; }
+    ICE_DECLSPEC_EXPORT IceBox::Service* create(const Ice::CommunicatorPtr&) { return new HelloServiceI; }
 }
 
 void
-HelloServiceI::start(
-    const string& name,
-    const shared_ptr<Ice::Communicator>& communicator,
-    const Ice::StringSeq& /*args*/)
+HelloServiceI::start(const string& name, const Ice::CommunicatorPtr& communicator, const Ice::StringSeq&)
 {
-    _adapter = communicator->createObjectAdapter(name);
-    auto hello = make_shared<HelloI>();
-    _adapter->add(hello, Ice::stringToIdentity("hello"));
+    _adapter = communicator->createObjectAdapterWithEndpoints("Hello", "tcp -p 10000:udp -p 10000");
+    _adapter->add(make_shared<HelloI>(), Ice::stringToIdentity("hello"));
     _adapter->activate();
+    cout << "Listening on port 10000..." << endl;
 }
 
 void
