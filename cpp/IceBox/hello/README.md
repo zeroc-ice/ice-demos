@@ -16,7 +16,7 @@ start the IceBox server from the directory containing the `HelloService` library
 icebox --IceBox.Service.Hello="./build/HelloService:create"
 ```
 
-**Linux/macOS:**
+**Windows:**
 
 ```shell
 icebox --IceBox.Service.Hello="./build/Release/HelloService:create"
