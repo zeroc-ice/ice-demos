@@ -1,23 +1,53 @@
+# Replicated
+
 This demo demonstrates how to configure and deploy [Highly Available
 IceStorm][1] using IceGrid.
 
+To build the demo run:
+
+```shell
+cmake -B build -S .
+cmake --build build --config Release
+```
+
 To run the demo, start the IceGrid service:
 
-```
+```shell
 icegridnode --Ice.Config=config.grid
 ```
 
 In a separate window:
 
-```
+```shell
 icegridadmin --Ice.Config=config.grid -e "application add application.xml"
-subscriber
 ```
 
-In another window:
+Next run the subscriber:
 
+**Linux/macOS:**
+
+```shell
+./build/subscriber
 ```
-publisher
+
+**Windows:**
+
+```shell
+build\Release\subscriber
+```
+
+In a separate window, start the publisher:
+
+**Linux/macOS:**
+
+```shell
+./build/publisher
+```
+
+**Windows:**
+
+```shell
+build\Release\publisher
 ```
 
 While the publisher continues to run, "tick" messages should be

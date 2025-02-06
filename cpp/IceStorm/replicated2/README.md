@@ -1,10 +1,20 @@
+# Replicated 2
+
 This demo demonstrates how to configure and deploy [replicated IceStorm
 instances][1] without using IceGrid.
+
+To build the demo run:
+
+```shell
+cmake -B build -S .
+cmake --build build --config Release
+```
+
 
 To run the demo, start the three IceStorm replicas. In three separate
 windows:
 
-```
+```shell
 icebox --Ice.Config=config.ib1
 icebox --Ice.Config=config.ib2
 icebox --Ice.Config=config.ib3
@@ -12,14 +22,30 @@ icebox --Ice.Config=config.ib3
 
 And then in a separate window:
 
+**Linux/macOS:**
+
+```shell
+./build/subscriber
 ```
-subscriber
+
+**Windows:**
+
+```shell
+build\Release\subscriber
 ```
 
 In another window:
 
+**Linux/macOS:**
+
+```shell
+./build/publisher
 ```
-publisher
+
+**Windows:**
+
+```shell
+build\Release\publisher
 ```
 
 While the publisher continues to run, "tick" messages should be
