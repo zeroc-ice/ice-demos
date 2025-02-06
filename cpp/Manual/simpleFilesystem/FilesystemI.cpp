@@ -1,6 +1,7 @@
 // Copyright (c) ZeroC, Inc.
 
-#include <FilesystemI.h>
+#include "FilesystemI.h"
+
 #include <Ice/Ice.h>
 
 using namespace std;
