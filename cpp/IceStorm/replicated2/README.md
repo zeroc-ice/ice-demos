@@ -10,7 +10,6 @@ cmake -B build -S .
 cmake --build build --config Release
 ```
 
-
 To run the demo, start the three IceStorm replicas. In three separate
 windows:
 
