@@ -1,3 +1,5 @@
 *.deps.json
 *.runtimeconfig.json
 *.runtimeconfig.dev.json
+
+**/generated/**
