@@ -117,7 +117,9 @@ main(int argc, char* argv[])
 
     // Get the topic's publisher object, and create a Clock proxy with the mode specified as an argument of this
     // application.
-    auto publisher = topic->getPublisher();
+    optional<Ice::ObjectPrx> publisher = topic->getPublisher();
+    assert(publisher); // getPublisher never returns nullopt
+
     if (option == Option::Datagram)
     {
         publisher = publisher->ice_datagram();
