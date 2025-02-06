@@ -1,7 +1,8 @@
 // Copyright (c) ZeroC, Inc.
 
-#include <Chat.h>
-#include <ChatUtils.h>
+#include "ChatUtils.h"
+#include "Chat.h"
+
 #include <array>
 
 using namespace std;

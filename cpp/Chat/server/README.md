@@ -1,3 +1,5 @@
+# Chat Server
+
 This demo is the server for the [ZeroC Chat Demo][1].
 
 The chat demo server implements two different session systems, one using
@@ -13,16 +15,31 @@ The Slice definitions for the chat demo are:
 
 You can use this demo if you want to host your own Chat Demo server.
 
-To run the server:
+To build the demo run:
 
+```shell
+cmake -B build -S .
+cmake --build build --config Release
 ```
-chatserver --Ice.Config=config.chatserver
+
+To run the demo, first start the server:
+
+**Linux/macOS:**
+
+```shell
+./build/chatserver --Ice.Config=config.chatserver
+```
+
+**Windows:**
+
+```shell
+build\Release\chatserver --Ice.Config=config.chatserver
 ```
 
 For push clients Glacier2 is also required, to start it run the following in a
 new shell:
 
-```
+```shell
 glacier2router --Ice.Config=config.glacier2router
 ```
 

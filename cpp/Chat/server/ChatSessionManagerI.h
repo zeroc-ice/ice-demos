@@ -3,7 +3,8 @@
 #ifndef CHAT_SESSION_MANAGER_I_H
 #define CHAT_SESSION_MANAGER_I_H
 
-#include <ChatRoom.h>
+#include "ChatRoom.h"
+
 #include <Glacier2/Glacier2.h>
 #include <string>
 
