@@ -15,7 +15,7 @@ To run this demo, open two terminal windows. In the first window:
 LD_LIBRARY_PATH=./build icebox --IceBox.Service.Hello="HelloService:create --Ice.Trace.Dispatch"
 ```
 
-**Linux/macOS:**
+**macOS:**
 
 ```shell
 DYLD_LIBRARY_PATH=./build icebox --IceBox.Service.Hello="HelloService:create --Ice.Trace.Dispatch"
