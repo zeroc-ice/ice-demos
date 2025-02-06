@@ -1,7 +1,16 @@
+# DataStorm Node
+
 This demo illustrates the use of a DataStorm node to discover writers and readers without using UDP multicast.
 
 It also demonstrates how readers and writers can exchange data through the DataStorm node when the server endpoints
 of both the writers and readers are disabled.
+
+To build the demo run:
+
+```shell
+cmake -B build -S .
+cmake --build build --config Release
+```
 
 To run the demo, start a DataStorm node:
 
@@ -11,14 +20,30 @@ dsnode --Ice.Config=config.node
 
 In a separate window, start the writer:
 
+**Linux/macOS:**
+
 ```shell
-writer
+./build/writer
+```
+
+**Windows:**
+
+```shell
+build\Release\writer
 ```
 
 In a separate window, start the reader:
 
+**Linux/macOS:**
+
 ```shell
-reader
+./build/reader
+```
+
+**Windows:**
+
+```shell
+build\Release\reader
 ```
 
 You can start multiple readers and writers. The readers print the time sent by the writers. Stopping the DataStorm node
