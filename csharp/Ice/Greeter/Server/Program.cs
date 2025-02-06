@@ -9,7 +9,7 @@ using Ice.Communicator communicator = Ice.Util.initialize(ref args);
 var adapter = communicator.createObjectAdapterWithEndpoints("GreeterAdapter", "tcp -p 4061");
 
 // Register the Chatbot servant with the adapter.
-adapter.add(new Chatbot(), Ice.Util.stringToIdentity("greeterx"));
+adapter.add(new Chatbot(), Ice.Util.stringToIdentity("greeter"));
 
 // Start dispatching requests.
 adapter.activate();
