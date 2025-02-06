@@ -7,8 +7,7 @@ cmake -B build
 cmake --build build --config Release
 ```
 
-To run this demo, open two terminal windows. In the first window,
-start the IceBox server from the directory containing the `HelloService` library:
+To run this demo, open two terminal windows. In the first window:
 
 **Linux/macOS:**
 
