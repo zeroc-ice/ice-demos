@@ -90,7 +90,7 @@ default:
     publisher = publisher.ice_oneway()
 }
 
-// Downcast the proxy to the Clock type using "uncheckedCast".
+// Downcast the proxy to the Clock type using uncheckedCast.
 let clock = uncheckedCast(prx: publisher, type: ClockPrx.self)
 
 print("publishing tick events. Press ^C to terminate the application.")

@@ -1,22 +1,23 @@
 // Copyright (c) ZeroC, Inc.
 
-#ifdef _MSC_VER
-// For getenv
-#    define _CRT_SECURE_NO_WARNINGS
-#endif
-
 #include "Clock.h"
+
 #include <Ice/Ice.h>
 #include <IceStorm/IceStorm.h>
+
 #include <chrono>
 #include <ctime>
+#include <future>
 #include <iostream>
-#include <thread>
 
 using namespace std;
 using namespace Demo;
 
-int run(const shared_ptr<Ice::Communicator>& communicator, int argc, char* argv[]);
+void
+usage(const char* name)
+{
+    cerr << "Usage: " << name << " [--datagram|--twoway|--oneway] [topic]" << endl;
+}
 
 int
 main(int argc, char* argv[])
@@ -25,44 +26,16 @@ main(int argc, char* argv[])
     Ice::registerIceUDP();
 #endif
 
-    int status = 0;
+    // CtrlCHandler is a helper class that handles Ctrl+C and similar signals. It must be constructed at the beginning
+    // of the program, before creating an Ice communicator or starting any thread.
+    Ice::CtrlCHandler ctrlCHandler;
 
-    try
-    {
-        //
-        // CtrlCHandler must be created before the communicator or any other threads are started
-        //
-        Ice::CtrlCHandler ctrlCHandler;
+    // Create an Ice communicator to initialize the Ice runtime.
+    const Ice::CommunicatorHolder communicatorHolder{argc, argv, "config.pub"};
+    const Ice::CommunicatorPtr& communicator = communicatorHolder.communicator();
 
-        //
-        // CommunicatorHolder's ctor initializes an Ice communicator,
-        // and its dtor destroys this communicator.
-        //
-        const Ice::CommunicatorHolder ich(argc, argv, "config.pub");
-        const auto& communicator = ich.communicator();
+    // Parse command-line options.
 
-        ctrlCHandler.setCallback([communicator](int) { communicator->destroy(); });
-
-        status = run(communicator, argc, argv);
-    }
-    catch (const std::exception& ex)
-    {
-        cerr << ex.what() << endl;
-        status = 1;
-    }
-
-    return status;
-}
-
-void
-usage(const string& n)
-{
-    cerr << "Usage: " << n << " [--datagram|--twoway|--oneway] [topic]" << endl;
-}
-
-int
-run(const shared_ptr<Ice::Communicator>& communicator, int argc, char* argv[])
-{
     enum class Option : uint8_t
     {
         None,
@@ -70,6 +43,7 @@ run(const shared_ptr<Ice::Communicator>& communicator, int argc, char* argv[])
         Twoway,
         Oneway
     };
+
     Option option = Option::None;
     string topicName = "time";
     int i;
@@ -114,16 +88,15 @@ run(const shared_ptr<Ice::Communicator>& communicator, int argc, char* argv[])
         return 1;
     }
 
-    auto manager = Ice::checkedCast<IceStorm::TopicManagerPrx>(communicator->propertyToProxy("TopicManager.Proxy"));
+    // Create the topic manager proxy.
+    auto manager = communicator->propertyToProxy<IceStorm::TopicManagerPrx>("TopicManager.Proxy");
     if (!manager)
     {
         cerr << argv[0] << ": invalid proxy" << endl;
         return 1;
     }
 
-    //
-    // Retrieve the topic.
-    //
+    // Retrieve the topic from IceStorm.
     optional<IceStorm::TopicPrx> topic;
     try
     {
@@ -142,11 +115,11 @@ run(const shared_ptr<Ice::Communicator>& communicator, int argc, char* argv[])
         }
     }
 
-    //
-    // Get the topic's publisher object, and create a Clock proxy with
-    // the mode specified as an argument of this application.
-    //
-    auto publisher = topic->getPublisher();
+    // Get the topic's publisher object, and create a Clock proxy with the mode specified as an argument of this
+    // application.
+    optional<Ice::ObjectPrx> publisher = topic->getPublisher();
+    assert(publisher); // getPublisher never returns nullopt
+
     if (option == Option::Datagram)
     {
         publisher = publisher->ice_datagram();
@@ -160,27 +133,56 @@ run(const shared_ptr<Ice::Communicator>& communicator, int argc, char* argv[])
         publisher = publisher->ice_oneway();
     }
 
+    // Downcast the proxy to the Clock type using uncheckedCast.
     auto clock = Ice::uncheckedCast<ClockPrx>(publisher);
 
     cout << "publishing tick events. Press ^C to terminate the application." << endl;
-    while (true)
-    {
-        try
+
+    promise<void> cancelPromise;
+
+    // Send a tick every second until cancelled in a background task.
+    auto task = std::async(
+        std::launch::async,
+        [cancelFuture = cancelPromise.get_future(), clock = std::move(clock)]()
         {
-            auto now = chrono::system_clock::to_time_t(chrono::system_clock::now());
-            char timeString[100];
-            if (strftime(timeString, sizeof(timeString), "%x %X", localtime(&now)) == 0)
+            while (true)
             {
-                timeString[0] = '\0';
+                auto now = chrono::system_clock::to_time_t(chrono::system_clock::now());
+                char timeString[100];
+                if (strftime(timeString, sizeof(timeString), "%x %X", localtime(&now)) == 0)
+                {
+                    timeString[0] = '\0';
+                }
+
+                try
+                {
+                    clock->tick(timeString);
+                }
+                catch (const Ice::CommunicatorDestroyedException&)
+                {
+                    break; // done
+                }
+
+                // Sleep for one second or until canceled.
+                if (cancelFuture.wait_for(chrono::seconds(1)) == future_status::ready)
+                {
+                    break; // done
+                }
             }
-            clock->tick(timeString);
-            this_thread::sleep_for(chrono::seconds(1));
-        }
-        catch (const Ice::CommunicatorDestroyedException&)
-        {
-            break;
-        }
-    }
+        });
+
+    // Wait until the user presses Ctrl+C.
+    int signal = ctrlCHandler.wait();
+    cout << "Caught signal " << signal << ", exiting..." << endl;
+
+    // Cancel the sleep in the background task.
+    cancelPromise.set_value();
+
+    // Destroy the communicator in case a call to tick is taking a long time.
+    communicator->destroy();
+
+    // Wait for the background task to complete.
+    task.wait();
 
     return 0;
 }
