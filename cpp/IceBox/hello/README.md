@@ -9,16 +9,23 @@ cmake --build build --config Release
 
 To run this demo, open two terminal windows. In the first window:
 
+**Linux:**
+
+```shell
+LD_LIBRARY_PATH=./build icebox --IceBox.Service.Hello="HelloService:create"
+```
+
 **Linux/macOS:**
 
 ```shell
-icebox --IceBox.Service.Hello="./build/HelloService:create"
+DYLD_LIBRARY_PATH=./build icebox --IceBox.Service.Hello="HelloService:create"
 ```
 
 **Windows:**
 
 ```shell
-icebox --IceBox.Service.Hello="./build/Release/HelloService:create"
+set PATH=%PATH%;./build/Release
+icebox --IceBox.Service.Hello="HelloService:create"
 ```
 
 In the second window, run the client:
