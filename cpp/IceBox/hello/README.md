@@ -12,20 +12,20 @@ To run this demo, open two terminal windows. In the first window:
 **Linux:**
 
 ```shell
-LD_LIBRARY_PATH=./build icebox --IceBox.Service.Hello="HelloService:create"
+LD_LIBRARY_PATH=./build icebox --IceBox.Service.Hello="HelloService:create --Ice.Trace.Dispatch"
 ```
 
 **Linux/macOS:**
 
 ```shell
-DYLD_LIBRARY_PATH=./build icebox --IceBox.Service.Hello="HelloService:create"
+DYLD_LIBRARY_PATH=./build icebox --IceBox.Service.Hello="HelloService:create --Ice.Trace.Dispatch"
 ```
 
 **Windows:**
 
 ```shell
 set PATH=%PATH%;./build/Release
-icebox --IceBox.Service.Hello="HelloService:create"
+icebox --IceBox.Service.Hello="HelloService:create --Ice.Trace.Dispatch"
 ```
 
 In the second window, run the client:
