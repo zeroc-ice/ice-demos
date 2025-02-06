@@ -136,10 +136,12 @@ main(int argc, char* argv[])
 
     cout << "publishing tick events. Press ^C to terminate the application." << endl;
 
+    promise<void> cancelPromise;
+
     // Send a tick every second until cancelled in a background task.
-    auto future = std::async(
+    auto task = std::async(
         std::launch::async,
-        [clock = std::move(clock)]()
+        [cancelFuture = cancelPromise.get_future(), clock = std::move(clock)]()
         {
             while (true)
             {
@@ -152,7 +154,12 @@ main(int argc, char* argv[])
                         timeString[0] = '\0';
                     }
                     clock->tick(timeString);
-                    this_thread::sleep_for(chrono::seconds(1));
+
+                    // Sleep for one second or until canceled.
+                    if (cancelFuture.wait_for(chrono::seconds(1)) == future_status::ready)
+                    {
+                        break; // done
+                    }
                 }
                 catch (const Ice::CommunicatorDestroyedException&)
                 {
@@ -164,11 +171,14 @@ main(int argc, char* argv[])
     // Wait until the user presses Ctrl+C.
     ctrlCHandler.wait();
 
-    // Destroy the communicator; the next call to tick will throw CommunicatorDestroyedException.
+    // Cancel the sleep in the background task.
+    cancelPromise.set_value();
+
+    // Destroy the communicator in case a call to tick is taking a long time.
     communicator->destroy();
 
     // Wait for the background task to complete.
-    future.wait();
+    task.wait();
 
     return 0;
 }
