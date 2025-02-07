@@ -1,14 +1,39 @@
+# Manual Simple Filesystem
+
 This demo implements the simple filesystem application shown at the
 end of the client and server C++ mapping chapters.
 
-To run it, start the server in a window:
+To build the demo run:
 
-```
-server
+```shell
+cmake -B build
+cmake --build build --config Release
 ```
 
-Then run the client in a separate window:
+To run the demo, first start the server:
 
+**Linux/macOS:**
+
+```shell
+./build/server
 ```
-client
+
+**Windows:**
+
+```shell
+build\Release\server
+```
+
+In a separate window, start the client:
+
+**Linux/macOS:**
+
+```shell
+./build/client
+```
+
+**Windows:**
+
+```shell
+build\Release\client
 ```
