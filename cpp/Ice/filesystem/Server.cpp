@@ -23,28 +23,31 @@ main(int argc, char* argv[])
     // Create an object adapter that listens for incoming requests and dispatches them to servants.
     auto adapter = communicator->createObjectAdapterWithEndpoints("Filesystem", "tcp -p 4061");
 
-    // Create the root directory servant (with name "/" and no parent), and register it with adapter.
-    auto root = make_shared<MDirectory>("/", nullptr);
-    root->activate(adapter);
+    // Create the root directory servant (with name "/" and no parent), and add this servant to the adapter.
+    auto root = make_shared<MDirectory>("/");
+    adapter->add(root, Ice::stringToIdentity("RootDir"));
 
-    // Create a file called "README" in the root directory.
-    auto file = make_shared<MFile>("README", root);
-    file->writeDirect({{"This file system contains a collection of poetry."}});
-    file->activate(adapter);
+    // Create a file called "README", add this servant to the adapter, and add the corresponding proxy to the root
+    // directory.
+    auto file = make_shared<MFile>("README");
+    file->writeDirect({"This file system contains a collection of poetry."});
+    root->addChild(adapter->addWithUUID<Filesystem::FilePrx>(file));
 
-    // Create a directory called "Coleridge" in the root directory.
-    auto coleridge = make_shared<MDirectory>("Coleridge", root);
-    coleridge->activate(adapter);
+    // Create a directory called "Coleridge", add this servant to the adapter, and add the corresponding proxy to the
+    // root directory.
+    auto coleridge = make_shared<MDirectory>("Coleridge");
+    root->addChild(adapter->addWithUUID<Filesystem::DirectoryPrx>(coleridge));
 
-    // Create a file called "Kubla_Khan" in the Coleridge directory
-    file = make_shared<MFile>("Kubla_Khan", coleridge);
+    // Create a file called "Kubla_Khan", add this servant to the adapter, and add the corresponding proxy to the
+    // Coleridge directory.
+    file = make_shared<MFile>("Kubla_Khan");
     file->writeDirect(
         {"In Xanadu did Kubla Khan",
          "A stately pleasure-dome decree:",
          "Where Alph, the sacred river, ran",
          "Through caverns measureless to man",
          "Down to a sunless sea."});
-    file->activate(adapter);
+    coleridge->addChild(adapter->addWithUUID<Filesystem::FilePrx>(file));
 
     // Start dispatching requests after registering all servants.
     adapter->activate();
