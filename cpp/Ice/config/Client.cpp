@@ -23,7 +23,8 @@ main(int argc, char* argv[])
     }
 
     // Create an Ice communicator to initialize the Ice runtime. The communicator gets its configuration properties from
-    // file "config.server". The communicator initialization also parses argc/argv to set additional properties.
+    // file "config.server". The communicator initialization also parses the command-line options to find and set
+    // additional properties.
     const Ice::CommunicatorHolder communicatorHolder{argc, argv, "config.client"};
     const Ice::CommunicatorPtr& communicator = communicatorHolder.communicator();
 
