@@ -59,11 +59,6 @@ jobs:
           working_directory: ice/cpp
           build_flags: srcs
 
-      - name: DEBUG
-        run: |
-          ls -la ice/cpp/bin
-          ls -la ice/cpp/lib
-
       - name: Set ICE_HOME
         run: |
           echo "ICE_HOME=${{ github.workspace }}/ice" >> $GITHUB_ENV
