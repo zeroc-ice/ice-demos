@@ -39,7 +39,7 @@ at a time. All other clients will hang until the object is released.
 Use the following command to deploy this descriptor:
 
 ```shell
-icegridadmin --Ice.Config=config.icegridadmin -e "application add application-single.xml"
+icegridadmin --Ice.Config=config.admin -e "application add application-single.xml"
 ```
 
 The second descriptor, application-multiple.xml, contains two servers,
@@ -50,7 +50,7 @@ until one of the clients with an allocated object releases it. Use the
 following command to deploy this descriptor:
 
 ```shell
-icegridadmin --Ice.Config=config.icegridadmin -e "application add application-multiple.xml"
+icegridadmin --Ice.Config=config.admin -e "application add application-multiple.xml"
 ```
 
 To run the client type:
@@ -71,7 +71,7 @@ If you have already deployed the application, you can update it to try
 a different set of descriptors, for example:
 
 ```shell
-icegridadmin --Ice.Config=config.icegridadmin -e \ "application update application-multiple.xml"
+icegridadmin --Ice.Config=config.admin -e \ "application update application-multiple.xml"
 ```
 
 Messages will be displayed in the IceGrid service window.
