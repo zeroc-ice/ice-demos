@@ -1,0 +1,3 @@
+# Username and password. They can be anything since we're using IceGrid's NullPermissionsVerifier.
+IceGridAdmin.Username=foo
+IceGridAdmin.Password=bar
