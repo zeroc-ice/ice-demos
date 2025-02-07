@@ -71,10 +71,8 @@ jobs:
       - name: Build C++ Demos
         timeout-minutes: 30
         working-directory: ice-demos/cpp
-        env:
-          CMAKE_EXPORT_COMPILE_COMMANDS: 1
         run: |
-          find . -name CMakeLists.txt -execdir cmake -B build -S . -DIce_HOME=${{ github.workspace}}/ice \;
+          find . -name CMakeLists.txt -execdir cmake -B build -S . -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \;
           find . -name CMakeLists.txt -execdir cmake --build build --config Release \;
 
       - name: Run Clang Tidy
