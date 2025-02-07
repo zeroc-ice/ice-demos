@@ -1,7 +1,7 @@
-# Manual Simple Filesystem
+# Filesystem
 
-This demo implements the simple filesystem application shown at the
-end of the client and server C++ mapping chapters.
+This demo implements the filesystem application shown at the end of the client and server
+C++ mapping chapters.
 
 To build the demo run:
 
