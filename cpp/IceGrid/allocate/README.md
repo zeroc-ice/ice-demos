@@ -71,7 +71,7 @@ If you have already deployed the application, you can update it to try
 a different set of descriptors, for example:
 
 ```shell
-icegridadmin --Ice.Config=config.admin -e \ "application update application-multiple.xml"
+icegridadmin --Ice.Config=config.admin -e "application update application-multiple.xml"
 ```
 
 Messages will be displayed in the IceGrid service window.
