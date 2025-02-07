@@ -1,15 +1,5 @@
 Demos in this directory:
 
-- [async](./async)
-
-  This demo illustrates the use of Asynchronous Method Invocation
-  (AMI) and Asynchronous Method Dispatch (AMD).
-
-- [asyncInvocation](./asyncInvocation)
-
-  This demo illustrates the use of Asynchronous Method Invocation
-  (AMI), with both futures and callbacks.
-
 - [bidir](./bidir)
 
   This demo shows how to use bidirectional connections for callbacks.
@@ -28,11 +18,7 @@ Demos in this directory:
 
   This demo shows how to use Ice request contexts.
 
-- [hello](./hello)
-
-  This demo illustrates how to invoke ordinary (twoway) operations, as
-  well as how to invoke oneway operations, use datagrams, secure
-  invocations, and how to use batched invocations.
+- [greeter](./greeter) TBD
 
 - [interceptor](./interceptor)
 
@@ -57,10 +43,6 @@ Demos in this directory:
 - [locator](./locator)
 
   This demo illustrates how to write a simple custom `Ice::Locator`.
-
-- [minimal](./minimal)
-
-  This demo illustrates a minimal Ice application.
 
 - [mtalk](./mtalk)
 
@@ -90,10 +72,7 @@ Demos in this directory:
   retrieve and modify its configuration properties, and how the server
   can receive notifications whenever its properties are changed.
 
-- [qt](./qt)
-
-  A qt application that shows how to use Asynchronous Method Invocation
-  (AMI) in a graphical client.
+- [secure](./secure) TBD
 
 - [session](./session)
 
