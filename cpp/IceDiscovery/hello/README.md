@@ -1,4 +1,4 @@
-# IceGrid Hello
+# IceDiscovery Hello
 
 This demo is the Ice hello world demo configured to use [IceDiscovery][1].
 
