@@ -27,6 +27,7 @@ jobs:
 
       - name: Run Clang Format
         run: |
+          set -o pipefail
           find . -name "*.h" -o -name "*.cpp" | xargs clang-format-19 --style=file --fallback-style=none --Werror --dry-run
 
   clang-tidy:
@@ -72,10 +73,18 @@ jobs:
         timeout-minutes: 30
         working-directory: ice-demos/cpp
         run: |
-          find . -name CMakeLists.txt -execdir cmake -B build -S . -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DIce_DEBUG=ON \;
-          find . -name CMakeLists.txt -execdir cmake --build build --config Release \;
+          set -o pipefail
+          find . -name CMakeLists.txt -type f | while IFS= read -r file; do
+            dir=$(dirname "$file");
+            cmake -B "$dir/build" -S "$dir" -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DIce_DEBUG=ON
+            cmake --build "$dir/build" --config Release
+          done
 
       - name: Run Clang Tidy
         working-directory: ice-demos/cpp
         run: |
-          find . -name compile_commands.json -execdir run-clang-tidy-19 -j$(nproc) -quiet \;
+          set -o pipefail
+          find . -name compile_commands.json -type f | while IFS= read -r file; do
+            dir=$(dirname "$file");
+            run-clang-tidy-19 -p "$dir" -quiet
+          done
