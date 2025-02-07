@@ -22,12 +22,20 @@ set(Ice_DLL_VERSION "38a0" CACHE STRING "Ice DLL version")
 
 find_path(Ice_INCLUDE_DIR NAMES Ice/Ice.h HINTS ${Ice_HOME}/cpp/include)
 
-find_library(Ice_LIBRARY NAMES Ice Ice${Ice_DLL_VERSION} HINTS ${Ice_HOME}/cpp/lib/ PATH_SUFFIXES x64/Release)
+if (CMAKE_LIBRARY_ARCHITECTURE)
+  list(APPEND lib_path_suffixes ${CMAKE_LIBRARY_ARCHITECTURE})
+endif()
+
+if(WIN32)
+  list(APPEND lib_path_suffixes x64/Release)
+endif()
+
+find_library(Ice_LIBRARY NAMES Ice Ice${Ice_DLL_VERSION} HINTS ${Ice_HOME}/cpp/lib/ PATH_SUFFIXES ${lib_path_suffixes})
 
 if (Ice_FIND_COMPONENTS)
   foreach(component IN LISTS Ice_FIND_COMPONENTS)
     string(TOUPPER "${component}" component_upcase)
-    find_library(Ice_${component_upcase}_LIBRARY NAMES ${component} ${component}${Ice_DLL_VERSION} HINTS ${Ice_HOME}/cpp/lib/ PATH_SUFFIXES x64/Release )
+    find_library(Ice_${component_upcase}_LIBRARY NAMES ${component} ${component}${Ice_DLL_VERSION} HINTS ${Ice_HOME}/cpp/lib/ PATH_SUFFIXES ${lib_path_suffixes})
   endforeach()
 endif()
 
