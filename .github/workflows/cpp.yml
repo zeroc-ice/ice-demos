@@ -59,6 +59,11 @@ jobs:
           working_directory: ice/cpp
           build_flags: srcs
 
+      - name: DEBUG
+        run: |
+          ls -la ice/cpp/bin
+          ls -la ice/cpp/lib
+
       - name: Set ICE_HOME
         run: |
           echo "ICE_HOME=${{ github.workspace }}/ice" >> $GITHUB_ENV
@@ -72,7 +77,7 @@ jobs:
         timeout-minutes: 30
         working-directory: ice-demos/cpp
         run: |
-          find . -name CMakeLists.txt -execdir cmake -B build -S . -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \;
+          find . -name CMakeLists.txt -execdir cmake -B build -S . -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DIce_DEBUG=ON \;
           find . -name CMakeLists.txt -execdir cmake --build build --config Release \;
 
       - name: Run Clang Tidy
