@@ -42,12 +42,6 @@ jobs:
           rm /tmp/llvm.sh
           clang-tidy-19 --version
 
-      - name: Install bear
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y bear
-          bear --version
-
       - name: Checkout Ice
         uses: actions/checkout@v4
         with:
@@ -77,9 +71,9 @@ jobs:
       - name: Build C++ Demos
         timeout-minutes: 30
         working-directory: ice-demos/cpp
-        env:
-          CMAKE_EXPORT_COMPILE_COMMANDS: 1
-        run: find . -name CMakeLists.txt -execdir cmake -B build -S . \; -execdir cmake --build build --config Release \;
+        run: |
+          find . -name CMakeLists.txt -execdir cmake -B build -S . -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DIce_DEBUG=ON \;
+          find . -name CMakeLists.txt -execdir cmake --build build --config Release \;
 
       - name: Run Clang Tidy
         working-directory: ice-demos/cpp
