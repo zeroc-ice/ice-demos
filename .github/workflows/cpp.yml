@@ -86,5 +86,5 @@ jobs:
           set -o pipefail
           find . -name compile_commands.json -type f | while IFS= read -r file; do
             dir=$(dirname "$file");
-            run-clang-tidy-19 -p "$dir" -quiet
+            run-clang-tidy-19 -p "$dir" -j$(nproc) -quiet
           done
