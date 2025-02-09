@@ -1,3 +1,4 @@
+
 if (NOT Ice_HOME)
   if (DEFINED ENV{ICE_HOME})
     set(Ice_HOME $ENV{ICE_HOME} CACHE PATH "Path to the Ice installation directory")
@@ -10,68 +11,172 @@ if (NOT EXISTS ${Ice_HOME})
   message(FATAL_ERROR "The specified Ice_HOME directory does not exist: ${Ice_HOME}")
 endif()
 
-find_program(Ice_SLICE2CPP_EXECUTABLE slice2cpp HINTS ${Ice_HOME}/cpp/bin PATH_SUFFIXES x64/Release x64/Debug)
+# List of all available Ice components
+set(Ice_AVAILABLE_COMPONENTS DataStorm Glacier2 Ice IceBox IceGrid IceStorm)
+
+# IceBT is only available on Linux
+# TODO: Check for required dependency
+if(UNIX AND NOT APPLE)
+  list(APPEND Ice_AVAILABLE_COMPONENTS IceBT)
+endif()
+
+# Ensure Ice is always in the components list
+if(NOT "Ice" IN_LIST Ice_FIND_COMPONENTS)
+    list(APPEND Ice_FIND_COMPONENTS Ice)
+endif()
+
+# Ensure requested components are valid
+foreach(component ${Ice_FIND_COMPONENTS})
+    if(NOT component IN_LIST Ice_AVAILABLE_COMPONENTS)
+        message(FATAL_ERROR "Ice component '${component}' not found. Available: ${Ice_AVAILABLE_COMPONENTS}")
+    endif()
+endforeach()
+
+if(NOT DEFINED Ice_ARCHITECTURE)
+  if (CMAKE_LIBRARY_ARCHITECTURE)
+    set(Ice_ARCHITECTURE ${CMAKE_LIBRARY_ARCHITECTURE} CACHE STRING "Library architecture")
+  elseif(WIN32)
+    if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+      set(Ice_ARCHITECTURE "x64" CACHE STRING "Windows x64")
+    else()
+      set(Ice_ARCHITECTURE "Win32" CACHE STRING "Windows x86")
+    endif()
+  endif()
+endif()
+
+# Ice include directory
+if(NOT DEFINED Ice_INCLUDE_DIR)
+  find_path(Ice_INCLUDE_DIR NAMES Ice/Ice.h HINTS ${Ice_HOME}/cpp/include CACHE PATH "Path to the Ice include directory")
+endif()
+
+# Ice include directories include the generated directory(s)
+if(NOT DEFINED Ice_INCLUDE_DIRS)
+  set(Ice_INCLUDE_DIRS ${Ice_INCLUDE_DIR})
+
+  #  Only the Windows build has separate Debug and Release directories for the generated files
+  if(WIN32)
+    set(Ice_GENERATED_INCLUDE_DIR_RELEASE ${Ice_INCLUDE_DIR}/generated/${Ice_ARCHITECTURE}/Release)
+    if (EXISTS ${Ice_GENERATED_INCLUDE_DIR_RELEASE})
+      list(APPEND Ice_INCLUDE_DIRS $<$<CONFIG:Release>:${Ice_GENERATED_INCLUDE_DIR_RELEASE}>)
+    endif()
+
+    set(Ice_GENERATED_INCLUDE_DIR_DEBUG ${Ice_INCLUDE_DIR}/generated/${Ice_ARCHITECTURE}/Debug)
+    if (EXISTS ${Ice_GENERATED_INCLUDE_DIR_DEBUG})
+      list(APPEND Ice_INCLUDE_DIRS $<$<CONFIG:Debug>:${Ice_GENERATED_INCLUDE_DIR_DEBUG}>)
+    endif()
+  elseif(EXISTS ${Ice_INCLUDE_DIR}/generated)
+      list(APPEND Ice_INCLUDE_DIRS ${Ice_INCLUDE_DIR}/generated)
+  endif()
+
+  set(Ice_INCLUDE_DIRS ${Ice_INCLUDE_DIRS} CACHE STRING "Ice include directories")
+
+endif()
+
+# Read Ice version variables from Ice/Config.h
+if (NOT DEFINED Ice_VERSION)
+
+  file(STRINGS "${Ice_INCLUDE_DIR}/Ice/Config.h" _ice_config_h_content REGEX "#define ICE_([A-Z]+)_VERSION ")
+
+  if("${_ice_config_h_content}" MATCHES "#define ICE_STRING_VERSION \"([^\"]+)\"")
+    set(Ice_VERSION "${CMAKE_MATCH_1}" CACHE STRING "Ice version")
+  endif()
+
+  if("${_ice_config_h_content}" MATCHES "#define ICE_SO_VERSION \"([^\"]+)\"")
+    set(Ice_SO_VERSION "${CMAKE_MATCH_1}" CACHE STRING "Ice so version")
+  endif()
+
+  if("${_ice_config_h_content}" MATCHES "#define ICE_INT_VERSION ([0-9]+)")
+    set(Ice_INT_VERSION "${CMAKE_MATCH_1}" CACHE STRING "Ice int version")
+  endif()
+
+  unset(_ice_config_h_content)
+
+endif()
+
+if(NOT DEFINED Ice_SLICE2CPP_EXECUTABLE)
+  find_program(Ice_SLICE2CPP_EXECUTABLE slice2cpp
+    HINTS ${Ice_HOME}/cpp/bin
+    PATH_SUFFIXES ${Ice_ARCHITECTURE}/Release ${Ice_ARCHITECTURE}/Debug
+    CACHE PATH "Path to the slice2cpp executable")
+endif()
 
 if(NOT DEFINED Ice_SLICE_DIR AND EXISTS ${Ice_HOME}/slice)
   set(Ice_SLICE_DIR ${Ice_HOME}/slice CACHE PATH "Path to the Ice Slice files directory")
 endif()
 
-# This is the only version we support for the demos right now
-set(Ice_VERSION "3.8.0-alpha.0" CACHE STRING "Ice version")
-set(Ice_DLL_VERSION "38a0" CACHE STRING "Ice DLL version")
+foreach(component ${Ice_FIND_COMPONENTS})
+  if(NOT TARGET Ice::${component})
+    # Create an imported target for the component
+    add_library(Ice::${component} UNKNOWN IMPORTED)
 
-find_path(Ice_INCLUDE_DIR NAMES Ice/Ice.h HINTS ${Ice_HOME}/cpp/include)
+    find_library(Ice_${component}_LIBRARY_RELEASE
+      NAMES ${component} ${component}${Ice_SO_VERSION}
+      HINTS ${Ice_HOME}/cpp/lib/
+      PATH_SUFFIXES ${Ice_ARCHITECTURE} ${Ice_ARCHITECTURE}/Release
+    )
 
-if (CMAKE_LIBRARY_ARCHITECTURE)
-  list(APPEND lib_path_suffixes ${CMAKE_LIBRARY_ARCHITECTURE})
-endif()
+    find_library(Ice_${component}_LIBRARY_DEBUG
+      NAMES ${component}d ${component}${Ice_SO_VERSION}d
+      HINTS ${Ice_HOME}/cpp/lib/
+      PATH_SUFFIXES ${Ice_ARCHITECTURE} ${Ice_ARCHITECTURE}/Debug
+    )
 
-if(WIN32)
-  list(APPEND lib_path_suffixes x64/Release)
-endif()
+    if(Ice_${component}_LIBRARY_RELEASE)
+      set_property(TARGET Ice::${component} APPEND PROPERTY
+        IMPORTED_CONFIGURATIONS RELEASE
+      )
+      set_target_properties(Ice::${component} PROPERTIES
+        IMPORTED_LOCATION_RELEASE "${Ice_${component}_LIBRARY_RELEASE}"
+      )
+    endif()
 
-find_library(Ice_LIBRARY NAMES Ice Ice${Ice_DLL_VERSION} HINTS ${Ice_HOME}/cpp/lib/ PATH_SUFFIXES ${lib_path_suffixes})
+    if(Ice_${component}_LIBRARY_DEBUG)
+      set_property(TARGET Ice::${component} APPEND PROPERTY
+        IMPORTED_CONFIGURATIONS DEBUG
+      )
+      set_target_properties(Ice::${component} PROPERTIES
+        IMPORTED_LOCATION_DEBUG "${Ice_${component}_LIBRARY_DEBUG}"
+      )
+    endif()
 
-if (Ice_FIND_COMPONENTS)
-  foreach(component IN LISTS Ice_FIND_COMPONENTS)
-    string(TOUPPER "${component}" component_upcase)
-    find_library(Ice_${component_upcase}_LIBRARY NAMES ${component} ${component}${Ice_DLL_VERSION} HINTS ${Ice_HOME}/cpp/lib/ PATH_SUFFIXES ${lib_path_suffixes})
+    set_target_properties(Ice::${component} PROPERTIES
+      INTERFACE_INCLUDE_DIRECTORIES "${Ice_INCLUDE_DIRS}"
+    )
+
+    # Select the appropriate library configuration based on platform and build type
+    include(SelectLibraryConfigurations)
+    select_library_configurations(Ice_${component})
+
+  endif()
+
+endforeach()
+
+if(Ice_DEBUG)
+  message(STATUS "Ice_VERSION: ${Ice_VERSION}")
+  message(STATUS "Ice_SO_VERSION: ${Ice_SO_VERSION}")
+  message(STATUS "Ice_INT_VERSION: ${Ice_INT_VERSION}")
+  message(STATUS "Ice_HOME: ${Ice_HOME}")
+  message(STATUS "Ice_SLICE2CPP_EXECUTABLE: ${Ice_SLICE2CPP_EXECUTABLE}")
+  message(STATUS "Ice_SLICE_DIR directory: ${Ice_SLICE_DIR}")
+  message(STATUS "Ice_INCLUDE_DIR: ${Ice_INCLUDE_DIR}")
+  message(STATUS "Ice_INCLUDE_DIRS: ${Ice_INCLUDE_DIRS}")
+
+  foreach(component ${Ice_FIND_COMPONENTS})
+    message(STATUS "Ice_${component}_LIBRARY: ${Ice_${component}_LIBRARY}")
+    if(Ice_${component}_LIBRARY_RELEASE)
+      message(STATUS "Ice_${component}_LIBRARY_RELEASE: ${Ice_${component}_LIBRARY_RELEASE}")
+    endif()
+    if(Ice_${component}_LIBRARY_DEBUG)
+      message(STATUS "Ice_${component}_LIBRARY_DEBUG: ${Ice_${component}_LIBRARY_DEBUG}")
+    endif()
   endforeach()
 endif()
 
+# Use `find_package_handle_standard_args` for better error handling
 find_package_handle_standard_args(Ice
-                  REQUIRED_VARS Ice_SLICE2CPP_EXECUTABLE
-                        Ice_INCLUDE_DIR
-                        Ice_LIBRARY
-                        Ice_SLICE_DIR
-                  VERSION_VAR Ice_VERSION)
-
-if(Ice_FOUND)
-  # set(Ice_LIBRARIES ${Ice_LIBRARY})
-  if(WIN32)
-    set(Ice_INCLUDE_DIRS ${Ice_INCLUDE_DIR} ${Ice_HOME}/cpp/include/generated ${Ice_HOME}/cpp/include/generated/x64/Release)
-  else()
-    set(Ice_INCLUDE_DIRS ${Ice_INCLUDE_DIR} ${Ice_HOME}/cpp/include/generated)
-  endif()
-
-  add_library(Ice::Ice UNKNOWN IMPORTED)
-  # set_target_properties(Ice::Ice PROPERTIES IMPORTED_IMPLIB ${Ice_LIBRARY})
-  set_target_properties(Ice::Ice PROPERTIES
-    IMPORTED_LOCATION ${Ice_LIBRARY}
-    INTERFACE_INCLUDE_DIRECTORIES "${Ice_INCLUDE_DIRS}"
-  )
-
-  if (Ice_FIND_COMPONENTS)
-    foreach(component IN LISTS Ice_FIND_COMPONENTS)
-      string(TOUPPER "${component}" component_upcase)
-      add_library(Ice::${component} UNKNOWN IMPORTED)
-      set_target_properties(Ice::${component} PROPERTIES
-        IMPORTED_LOCATION ${Ice_${component_upcase}_LIBRARY}
-        INTERFACE_INCLUDE_DIRECTORIES "${Ice_INCLUDE_DIRS}"
-      )
-    endforeach()
-  endif()
-endif()
+  REQUIRED_VARS Ice_HOME Ice_INCLUDE_DIRS Ice_SLICE2CPP_EXECUTABLE
+  HANDLE_COMPONENTS
+)
 
 # Function to generate C++ source files from Slice (.ice) files for a target using slice2cpp
 # The target must have the Slice files in its sources
@@ -84,8 +189,11 @@ function(slice2cpp_generate target)
   # Get the list of source files for the target
   get_target_property(sources ${target} SOURCES)
 
-  # Create a directory to store the generated files
+  # Get the output directory for the generated files
   set(output_dir ${CMAKE_CURRENT_BINARY_DIR}/generated/${target})
+  file(RELATIVE_PATH output_dir_relative ${CMAKE_CURRENT_LIST_DIR} ${output_dir})
+
+  # Create a directory to store the generated files
   make_directory(${output_dir})
 
   # Add the generated headers files to the target include directories
@@ -99,13 +207,14 @@ function(slice2cpp_generate target)
 
       get_filename_component(slice_file_name ${file} NAME_WE)
       get_filename_component(slice_file_path ${file} ABSOLUTE)
+
       set(output_files ${output_dir}/${slice_file_name}.h ${output_dir}/${slice_file_name}.cpp)
 
       add_custom_command(
         OUTPUT ${output_files}
         COMMAND ${Ice_SLICE2CPP_EXECUTABLE} -I${Ice_SLICE_DIR} ${slice_file_path} --output-dir ${output_dir}
         DEPENDS ${slice_file_path}
-        COMMENT "${Ice_SLICE2CPP_EXECUTABLE} ${file} -> ${slice_file_name}.h ${slice_file_name}.cpp"
+        COMMENT "Compiling Slice ${file} -> ${output_dir_relative}/${slice_file_name}.cpp ${output_dir_relative}/${slice_file_name}.h"
       )
 
       target_sources(${target} PRIVATE ${output_files})
@@ -113,12 +222,3 @@ function(slice2cpp_generate target)
     endif()
   endforeach()
 endfunction()
-
-if(Ice_DEBUG)
-  message(STATUS "Ice_VERSION: ${Ice_VERSION}")
-  message(STATUS "Ice_HOME: ${Ice_HOME}")
-  message(STATUS "Ice_INCLUDE_DIR: ${Ice_INCLUDE_DIR}")
-  message(STATUS "Ice_INCLUDE_DIRS: ${Ice_INCLUDE_DIRS}")
-  message(STATUS "Ice_SLICE_DIR directory: ${Ice_SLICE_DIR}")
-  message(STATUS "Ice_LIBRARY: ${Ice_LIBRARY}")
-endif()
