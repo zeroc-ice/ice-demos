@@ -52,5 +52,5 @@ MDirectory::list(const Ice::Current&)
 void
 MDirectory::addChild(Filesystem::NodePrx child)
 {
-    _contents.push_back(std::move(child));
+    _contents.emplace_back(std::move(child));
 }
