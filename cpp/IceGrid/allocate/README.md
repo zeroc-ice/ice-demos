@@ -9,14 +9,14 @@ cmake -B build
 cmake --build build --config Release
 ```
 
-To run the demo, first open a new terminal window for the IceGrid service:
+To run the demo, first open a new terminal window for the IceGrid service.
 
 Add the server build directory to the PATH environment variable:
 
 **Linux/macOS:**
 
 ```shell
-export PATH=$(pwd)/build:$PATH
+export PATH=$PWD/build:$PATH
 ```
 
 **Windows:**

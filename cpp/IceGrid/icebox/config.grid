@@ -15,11 +15,6 @@ IceGrid.Registry.Client.Endpoints=default -h localhost -p 4061
 IceGrid.Registry.Server.Endpoints=default -h localhost
 IceGrid.Registry.Internal.Endpoints=default -h localhost
 
-#
-# Enable the admin session manager for use with Glacier2.
-#
-IceGrid.Registry.AdminSessionManager.Endpoints=default -h localhost
-
 IceGrid.Registry.LMDB.Path=db/registry
 IceGrid.Registry.PermissionsVerifier=DemoIceGrid/NullPermissionsVerifier
 IceGrid.Registry.AdminPermissionsVerifier=DemoIceGrid/NullPermissionsVerifier
@@ -52,9 +47,3 @@ IceMX.Metrics.ByParent.Disabled=1
 IceGrid.Node.Trace.Activator=1
 #IceGrid.Node.Trace.Adapter=2
 #IceGrid.Node.Trace.Server=3
-
-#
-# Dummy username and password for icegridadmin.
-#
-IceGridAdmin.Username=foo
-IceGridAdmin.Password=bar

@@ -1,26 +1,77 @@
+# IceGrid Registry Replication
+
 This example demonstrates IceGrid's [registry replication][1] feature.
 
-To run the demo, start the IceGrid registries and nodes (you can start
-the registries and nodes in any order, you can also start one or two
-registries and start more later):
+To build the demo run:
 
+```shell
+cmake -B build
+cmake --build build --config Release
 ```
+
+> [!NOTE]
+> The IceGrid registries and nodes can be started in any order.
+
+To run the demo, first start the IceGrid registry:
+
+```shell
 icegridregistry --Ice.Config=config.master
+```
+
+In a separate windows, start the first IceGrid registry replicas:
+
+```shell
 icegridregistry --Ice.Config=config.replica1
+```
+
+```shell
 icegridregistry --Ice.Config=config.replica2
+```
+
+In separate windows, start the IceGrid nodes. Before running `icegridnode` add
+the `server` build directory to the PATH environment variable:
+
+**Linux/macOS:**
+
+```shell
+export PATH=$PWD/build:$PATH
+```
+
+**Windows:**
+
+```shell
+set PATH=%CD%\\build\\Release;%PATH%
+```
+
+Start the IceGrid nodes:
+
+```shell
 icegridnode --Ice.Config=config.node1
+```
+
+```shell
 icegridnode --Ice.Config=config.node2
 ```
 
-In a separate window:
+In a separate window, add the server application to the IceGrid registry:
 
-```
+```shell
 icegridadmin --Ice.Config=config.client -e "application add application.xml"
-client
 ```
 
-This will deploy the application described in the file `application.xml` and
-start the client.
+Next, run the client:
+
+**Linux/macOS:**
+
+```shell
+./build/client
+```
+
+**Windows:**
+
+```shell
+build\Release\client
+```
 
 The client invokes the number of specified iterations with a given
 delay on a well-known proxy configured to use per-request load

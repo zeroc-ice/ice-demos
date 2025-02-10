@@ -5,7 +5,7 @@
   <application name="Session">
 
     <node name="node1">
-      <server id="SessionServer" exe="./server" activation="session">
+      <server id="SessionServer" exe="server" activation="session">
       <adapter name="Hello" endpoints="tcp -h localhost">
         <allocatable identity="hello" property="Identity"/>
       </adapter>

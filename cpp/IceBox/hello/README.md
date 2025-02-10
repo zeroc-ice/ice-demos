@@ -12,19 +12,21 @@ To run this demo, open two terminal windows. In the first window:
 **Linux:**
 
 ```shell
-LD_LIBRARY_PATH=./build icebox --IceBox.Service.Hello="HelloService:create --Ice.Trace.Dispatch"
+export LD_LIBRARY_PATH=$(pwd/)build
+icebox --IceBox.Service.Hello="HelloService:create --Ice.Trace.Dispatch"
 ```
 
 **macOS:**
 
 ```shell
-DYLD_LIBRARY_PATH=./build icebox --IceBox.Service.Hello="HelloService:create --Ice.Trace.Dispatch"
+export DYLD_LIBRARY_PATH=$PWD/build
+icebox --IceBox.Service.Hello="HelloService:create --Ice.Trace.Dispatch"
 ```
 
 **Windows:**
 
 ```shell
-set PATH=%PATH%;./build/Release
+set PATH=%CD%\\build\\Release;%PATH%
 icebox --IceBox.Service.Hello="HelloService:create --Ice.Trace.Dispatch"
 ```
 
