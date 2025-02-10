@@ -15,7 +15,7 @@ internal class Forwarder : Ice.Object
     // Implements abstract method dispatchAsync defined on Ice.Object.
     public async ValueTask<OutgoingResponse> dispatchAsync(IncomingRequest request)
     {
-        // Change the identity and facet of _target to match in incoming request.
+        // Change the identity and facet of _target to match the identity and facet in the incoming request.
         Ice.ObjectPrx target = _target.ice_identity(request.current.id).ice_facet(request.current.facet);
 
         if (request.current.requestId == 0)
