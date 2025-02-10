@@ -12,7 +12,7 @@ To run this demo, open two terminal windows. In the first window:
 **Linux:**
 
 ```shell
-export LD_LIBRARY_PATH=$(pwd/)build
+export LD_LIBRARY_PATH=$PWD/build
 icebox --IceBox.Service.Hello="HelloService:create --Ice.Trace.Dispatch"
 ```
 
