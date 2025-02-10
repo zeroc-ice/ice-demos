@@ -7,4 +7,5 @@ find_package(Threads REQUIRED)
 
 set(Ice_DIR ${CMAKE_CURRENT_LIST_DIR} CACHE PATH "Path to Ice CMake configuration file")
 
-find_package(Ice REQUIRED CONFIG COMPONENTS DataStorm Glacier2 IceGrid IceBox IceStorm)
+# IceBT is an optional component as it is not available in all distributions.
+find_package(Ice REQUIRED CONFIG COMPONENTS Ice DataStorm Glacier2 IceGrid IceBox IceStorm OPTIONAL_COMPONENTS IceBT)
