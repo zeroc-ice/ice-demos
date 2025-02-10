@@ -11,27 +11,6 @@ if (NOT EXISTS ${Ice_HOME})
   message(FATAL_ERROR "The specified Ice_HOME directory does not exist: ${Ice_HOME}")
 endif()
 
-# List of all available Ice components
-set(Ice_AVAILABLE_COMPONENTS DataStorm Glacier2 Ice IceBox IceGrid IceStorm)
-
-# IceBT is only available on Linux
-# TODO: Check for required dependency
-if(UNIX AND NOT APPLE)
-  list(APPEND Ice_AVAILABLE_COMPONENTS IceBT)
-endif()
-
-# Ensure Ice is always in the components list
-if(NOT "Ice" IN_LIST Ice_FIND_COMPONENTS)
-    list(APPEND Ice_FIND_COMPONENTS Ice)
-endif()
-
-# Ensure requested components are valid
-foreach(component ${Ice_FIND_COMPONENTS})
-    if(NOT component IN_LIST Ice_AVAILABLE_COMPONENTS)
-        message(FATAL_ERROR "Ice component '${component}' not found. Available: ${Ice_AVAILABLE_COMPONENTS}")
-    endif()
-endforeach()
-
 if(NOT DEFINED Ice_ARCHITECTURE)
   if (CMAKE_LIBRARY_ARCHITECTURE)
     set(Ice_ARCHITECTURE ${CMAKE_LIBRARY_ARCHITECTURE} CACHE STRING "Library architecture")

@@ -83,6 +83,12 @@ jobs:
         working-directory: ice-demos/cpp
         run: |
           set -o pipefail
+
+          # No IceBT on macOS
+          if [[ "$(uname)" == "Darwin" ]]; then
+            rm -rf IceBT
+          fi
+
           find . -name CMakeLists.txt -type f | while IFS= read -r file; do
             dir=$(dirname "$file");
             cmake -B "$dir/build" -S "$dir" -DIce_DEBUG=ON
@@ -94,6 +100,9 @@ jobs:
         timeout-minutes: 20
         working-directory: ice-demos/cpp
         run: |
+            # No IceBT on Windows
+            Remove-Item -Recurse -Force "IceBT"
+
             Get-ChildItem -Recurse -Filter CMakeLists.txt | ForEach-Object {
               $dir = $_.DirectoryName
               cmake -B "$dir/build" -S "$dir" -DIce_DEBUG=ON
