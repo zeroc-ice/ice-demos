@@ -12,7 +12,7 @@
 
       <service-template id="HelloService">
          <parameter name="name"/>
-         <service name="${name}" entry="./HelloService:create">
+         <service name="${name}" entry="HelloService:create">
             <description>A very simple service named after ${name}</description>
             <properties>
                <properties refid="mx"/>

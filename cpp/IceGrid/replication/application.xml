@@ -5,7 +5,7 @@
 
     <server-template id="SimpleServer">
       <parameter name="index"/>
-      <server id="SimpleServer-${index}" exe="./server" activation="on-demand">
+      <server id="SimpleServer-${index}" exe="server" activation="on-demand">
         <adapter name="Hello" endpoints="tcp -h localhost" replica-group="ReplicatedHelloAdapter"/>
         <property name="Identity" value="hello"/>
         <property name="IceMX.Metrics.Debug.GroupBy" value="id"/>

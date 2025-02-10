@@ -1,3 +1,5 @@
+# IceGrid Secure
+
 This demo shows how to prevent unauthorized access to the [IceGrid registry
 and node][1], to the [Glacier2 administrative router][2], and to the
 [Ice.Admin][3] functionality of IceGrid-managed servers. These components
@@ -7,12 +9,23 @@ endpoints.
 The client and server use a regular TCP endpoint to communicate, but
 they could also use a secure endpoint if necessary.
 
+## Building
+
+To build the demo run:
+
+```shell
+cmake -B build
+cmake --build build --config Release
+```
+
+## Certificate Generation
+
 To run the demo, you first need to generate certificates for the
 IceGrid registry and node, the Glacier2 administrative router, and the
 server. Run the `makedemocerts.py` python script in this directory to
 create these certificates:
 
-```
+```shell
 makedemocerts.py
 ```
 
@@ -21,7 +34,7 @@ script you must install the zeroc-icecertutils >= 1.0.4 package from the
 [Python package repository](https://pypi.python.org/pypi). To install
 this package with [pip](https://pip.pypa.io):
 
-```
+```shell
 pip install "zeroc-icecertutils >= 1.0.4"
 ```
 
@@ -45,18 +58,51 @@ so you might as well use a certificate without a password and rely on
 the filesystem permissions to restrict access to the certificate.
 
 Once the certificates are generated, you can start the IceGrid
-registries, node, and Glacier2 router:
+registries, node, and Glacier2 router.
 
-```
+## Running
+
+First, start the IceGrid registry:
+
+```shell
 icegridregistry --Ice.Config=config.master
+```
+
+In a separate window, start the IceGrid registry replica:
+
+```shell
 icegridregistry --Ice.Config=config.slave
+```
+
+In a separate window, add the server build directory to the PATH environment variable:
+
+ **Linux/macOS:**
+
+```shell
+export PATH=$PWD/build:$PATH
+```
+
+**Windows:**
+
+```shell
+set PATH=%CD%\\build\\Release;%PATH%
+```
+
+Now start the IceGrid node:
+
+```shell
 icegridnode --Ice.Config=config.node
+```
+
+In a separate window, start the Glacier2 router:
+
+```shell
 glacier2router --Ice.Config=config.glacier2
 ```
 
 In a separate window:
 
-```
+```shell
 icegridadmin --Ice.Config=config.admin -e "application add application.xml"
 client
 ```
