@@ -7,7 +7,7 @@
 
 namespace GreeterServer
 {
-    /// A Chatbot is an Ice servant that implements Slice interface Greeter.
+    /// Chatbot is an Ice servant that implements Slice interface Greeter.
     class Chatbot : public VisitorCenter::Greeter
     {
     public:
