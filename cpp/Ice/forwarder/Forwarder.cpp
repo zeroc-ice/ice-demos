@@ -36,7 +36,7 @@ ForwardingServer::Forwarder::dispatch(Ice::IncomingRequest& request, function<vo
         make_pair(inEncapsulationStart, inEncapsulationStart + inEncapsulationSize),
         [sendResponse, current](bool ok, pair<const std::byte*, const std::byte*> outEncapsulation)
         {
-            // The response callback, executed by a thread from the Ice client thread pool when the invocation
+            // The response callback is executed by a thread from the Ice client thread pool when the invocation
             // completes successfully (ok is true) or with a user exception (ok is false).
             // We create an OutgoingResponse object and send it back to the client with sendResponse.
             sendResponse(Ice::makeOutgoingResponse(ok, outEncapsulation, current));

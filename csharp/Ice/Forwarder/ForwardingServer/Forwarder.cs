@@ -14,7 +14,7 @@ internal class Forwarder : Ice.Object
     // Implements abstract method dispatchAsync defined on Ice.Object.
     public async ValueTask<OutgoingResponse> dispatchAsync(IncomingRequest request)
     {
-        // Change the identity and facet of _target to match the identity and facet in the incoming request.
+        // Create a proxy with the the desired identity and facet.
         Ice.ObjectPrx target = _targetTemplate.ice_identity(request.current.id).ice_facet(request.current.facet);
 
         if (request.current.requestId == 0)
@@ -23,8 +23,8 @@ internal class Forwarder : Ice.Object
             target = target.ice_oneway();
         }
 
-        // Make the invocation asynchronously. If `ice_invokeAsync` throws an Ice.LocalException that cannot be
-        // marshaled (such as Ice.ConnectionRefusedException), the object adapter that calls `dispatchAsync` converts it
+        // Make the invocation asynchronously. If ice_invokeAsync throws an Ice.LocalException that cannot be
+        // marshaled (such as Ice.ConnectionRefusedException), the object adapter that calls dispatchAsync converts it
         // into an Ice.UnknownLocalException.
         (bool ok, byte[] encapsulation) = await target.ice_invokeAsync(
             request.current.operation,
