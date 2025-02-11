@@ -41,3 +41,7 @@ In a third terminal, start the Client program:
 cd Client
 dotnet run --Ice.Trace.Network
 ```
+
+> [!NOTE]
+> The `--Ice.Trace` command-line options are optional: they turn-on tracing (logging) for request dispatches
+> (`--Ice.Trace.Dispatch`) and connection establishment/closure (`--Ice.Trace.Network`).
