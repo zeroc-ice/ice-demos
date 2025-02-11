@@ -1,36 +1,21 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-        <AssemblyName>server</AssemblyName>
-        <OutputType>Exe</OutputType>
-        <TargetFramework>net8.0</TargetFramework>
-        <OutputPath>.</OutputPath>
-        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-        <Company>ZeroC, Inc.</Company>
-        <AssemblyTitle>Manual simpleFilesystem demo server</AssemblyTitle>
-        <Description>Manual simpleFilesystem demo server</Description>
-        <Copyright>Copyright (c) ZeroC, Inc.</Copyright>
-        <Product>Ice</Product>
-        <AssemblyVersion>1.0.0.0</AssemblyVersion>
-        <FileVersion>1.0.0.0</FileVersion>
-        <UseAppHost>true</UseAppHost>
-    </PropertyGroup>
-    <ItemGroup>
-        <SliceCompile Include="../Filesystem.ice" />
-        <PackageReference Include="zeroc.ice.net" Version="3.8.0-alpha0" />
-        <PackageReference Include="zeroc.icebuilder.msbuild" Version="5.0.9" />
-
-        <!-- The 1.2 beta version is required for supporting the latest language features.
-             See: https://github.com/DotNetAnalyzers/StyleCopAnalyzers/pull/3187 -->
-        <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.556">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
-        <AdditionalFiles Include="$(MSBuildThisFileDirectory)/../../../../stylecop.json" />
-
-        <Compile Update="generated\Filesystem.cs">
-            <SliceCompileSource>../Filesystem.ice</SliceCompileSource>
-        </Compile>
-    </ItemGroup>
-    <ItemGroup />
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <!-- Copy the PDBs from the NuGet packages to get file names and line numbers in stack traces. -->
+    <CopyDebugSymbolFilesFromPackages>true</CopyDebugSymbolFilesFromPackages>
+  </PropertyGroup>
+  <ItemGroup>
+    <SliceCompile Include="../slice/Filesystem.ice" />
+    <PackageReference Include="zeroc.ice.net" Version="3.8.0-alpha0" />
+    <PackageReference Include="zeroc.icebuilder.msbuild" Version="5.0.9" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.556">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <Compile Include="../../../Common/Program.CancelKeyPressed.cs" Link="Program.CancelKeyPressed.cs" />
+  </ItemGroup>
 </Project>

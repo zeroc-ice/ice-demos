@@ -2,84 +2,42 @@
 
 using Filesystem;
 
-internal class Program
-{
-    public static int Main(string[] args)
-    {
-        int status = 0;
+// Create an Ice communicator to initialize the Ice runtime.
+using Ice.Communicator communicator = Ice.Util.initialize(ref args);
 
-        try
-        {
-            // using statement - communicator is automatically destroyed
-            // at the end of this statement
-            using var communicator = Ice.Util.initialize(ref args);
-            // Destroy the communicator on Ctrl+C or Ctrl+Break
-            Console.CancelKeyPress += (sender, eventArgs) => communicator.destroy();
+// Create an object adapter that listens for incoming requests and dispatches them to servants.
+Ice.ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints("Filesystem", "tcp -p 4061");
 
-            status = Run(communicator);
-        }
-        catch (Exception ex)
-        {
-            Console.Error.WriteLine(ex);
-            status = 1;
-        }
+// Create the root directory servant (with name "/"), and add this servant to the adapter.
+var root = new Server.MDirectory("/");
+adapter.add(root, Ice.Util.stringToIdentity("RootDir"));
 
-        return status;
-    }
+// Create a file called "README", add this servant to the adapter, and add the corresponding proxy to the root
+// directory.
+var file = new Server.MFile("README");
+file.WriteDirect(["This file system contains a collection of poetry."]);
+root.AddChild(FilePrxHelper.uncheckedCast(adapter.addWithUUID(file)));
 
-    private static int Run(Ice.Communicator communicator)
-    {
-        // Create an object adapter.
-        var adapter =
-            communicator.createObjectAdapterWithEndpoints("SimpleFilesystem", "default -h localhost -p 10000");
+// Create a directory called "Coleridge", add this servant to the adapter, and add the corresponding proxy to the
+// root directory.
+var coleridge = new Server.MDirectory("Coleridge");
+root.AddChild(DirectoryPrxHelper.uncheckedCast(adapter.addWithUUID(coleridge)));
 
-        // Create the root directory (with name "/" and no parent)
-        var root = new DirectoryI("/", null);
-        root.Activate(adapter);
+// Create a file called "Kubla_Khan", add this servant to the adapter, and add the corresponding proxy to the
+// Coleridge directory.
+file = new Server.MFile("Kubla_Khan");
+file.WriteDirect(
+        ["In Xanadu did Kubla Khan",
+         "A stately pleasure-dome decree:",
+         "Where Alph, the sacred river, ran",
+         "Through caverns measureless to man",
+         "Down to a sunless sea."]);
+coleridge.AddChild(FilePrxHelper.uncheckedCast(adapter.addWithUUID(file)));
 
-        // Create a file called "README" in the root directory
-        var file = new FileI("README", root);
-        var text = new string[] { "This file system contains a collection of poetry." };
-        try
-        {
-            file.write(text);
-        }
-        catch (GenericError e)
-        {
-            Console.Error.WriteLine(e.reason);
-        }
-        file.Activate(adapter);
+// Start dispatching requests after registering all servants.
+adapter.activate();
+Console.WriteLine("Listening on port 4061...");
 
-        // Create a directory called "Coleridge" in the root directory
-        var coleridge = new DirectoryI("Coleridge", root);
-        coleridge.Activate(adapter);
-
-        // Create a file called "Kubla_Khan" in the Coleridge directory
-        file = new FileI("Kubla_Khan", coleridge);
-        text =
-        [
-            "In Xanadu did Kubla Khan",
-            "A stately pleasure-dome decree:",
-            "Where Alph, the sacred river, ran",
-            "Through caverns measureless to man",
-            "Down to a sunless sea."
-        ];
-        try
-        {
-            file.write(text);
-        }
-        catch (GenericError e)
-        {
-            Console.Error.WriteLine(e.reason);
-        }
-        file.Activate(adapter);
-
-        // All objects are created, allow client requests now
-        adapter.activate();
-
-        // Wait until we are done
-        communicator.waitForShutdown();
-
-        return 0;
-    }
-}
+// Wait until the user presses Ctrl+C.
+await CancelKeyPressed;
+Console.WriteLine("Caught Ctrl+C, exiting...");

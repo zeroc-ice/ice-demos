@@ -1,57 +1,49 @@
 // Copyright (c) ZeroC, Inc.
 
+// Slice module Filesystem in Filesystem.ice maps to C# namespace Filesystem.
 using Filesystem;
+using System.Diagnostics;
 
-internal class Program
+// Create an Ice communicator to initialize the Ice runtime.
+using Ice.Communicator communicator = Ice.Util.initialize(ref args);
+
+// Create a proxy for the root directory.
+DirectoryPrx rootDir = DirectoryPrxHelper.createProxy(communicator, "RootDir:tcp -h localhost -p 4061");
+
+// Recursively list the contents of the root directory.
+Console.WriteLine("Contents of root directory:");
+ListRecursive(rootDir);
+
+/// <summary>Recursively print the contents of a directory in tree fashion. For files, show the contents of each file.
+/// </summary>
+/// <param name="dir">The directory to list./<param>
+/// <param name="depth">The current nesting level (for indentation).</param>
+void ListRecursive(DirectoryPrx dir, int depth = 0)
 {
-    public static int Main(string[] args)
+    var indent = new string('\t', ++depth);
+
+    NodePrx?[] contents = dir.List();
+
+    foreach (NodePrx? node in contents)
     {
-        try
+        Debug.Assert(node is not null); // The node proxies returned by list() are never null.
+
+        DirectoryPrx subdir = DirectoryPrxHelper.checkedCast(node);
+        string kind = subdir is not null ? "directory" : "file";
+
+        Console.WriteLine($"{indent}{node.Name()} {kind}:");
+
+        if (subdir is not null)
         {
-            using Ice.Communicator ic = Ice.Util.initialize(ref args);
-            // Create a proxy for the root directory
-            var obj = ic.stringToProxy("RootDir:default -h localhost -p 10000");
-
-            // Down-cast the proxy to a Directory proxy
-            var rootDir = DirectoryPrxHelper.checkedCast(obj) ?? throw new ApplicationException("Invalid proxy");
-
-            // Recursively list the contents of the root directory
-            Console.WriteLine("Contents of root directory:");
-            ListRecursive(rootDir, 0);
+            ListRecursive(subdir, depth);
         }
-        catch (Exception e)
+        else
         {
-            Console.Error.WriteLine(e);
-            return 1;
-        }
-        return 0;
-    }
-
-    // Recursively print the contents of directory "dir" in tree fashion.
-    // For files, show the contents of each file. The "depth"
-    // parameter is the current nesting level (for indentation).
-    private static void ListRecursive(DirectoryPrx dir, int depth)
-    {
-        var indent = new string('\t', ++depth);
-
-        NodePrx[] contents = dir.list();
-
-        foreach (var node in contents)
-        {
-            var subdir = DirectoryPrxHelper.checkedCast(node);
-            var file = FilePrxHelper.uncheckedCast(node);
-            Console.WriteLine(indent + node.name() + (subdir != null ? " (directory):" : " (file):"));
-            if (subdir != null)
+            FilePrx file = FilePrxHelper.uncheckedCast(node);
+            string[] lines = file.Read();
+            foreach (string line in lines)
             {
-                ListRecursive(subdir, depth);
-            }
-            else
-            {
-                var text = file.read();
-                for (int j = 0; j < text.Length; ++j)
-                {
-                    Console.WriteLine(indent + "\t" + text[j]);
-                }
+                Console.WriteLine($"{indent}\t{line}");
             }
         }
     }
