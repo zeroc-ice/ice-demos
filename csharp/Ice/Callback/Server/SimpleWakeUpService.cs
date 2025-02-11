@@ -35,10 +35,10 @@ internal class SimpleWakeUpService : WakeUpServiceDisp_
             // First ring.
             ButtonPressed buttonPressed = await alarmClock.RingAsync("It's time to wake up!");
 
-            // Keep ringing every 5 seconds until the user presses the stop button.
+            // Keep ringing every 10 seconds until the user presses the stop button.
             while (buttonPressed is ButtonPressed.Snooze)
             {
-                await Task.Delay(TimeSpan.FromSeconds(5));
+                await Task.Delay(TimeSpan.FromSeconds(10));
                 buttonPressed = await alarmClock.RingAsync("No more snoozing!");
             }
         });

@@ -23,7 +23,7 @@ WakeUpServicePrx wakeUpService = WakeUpServicePrxHelper.createProxy(
     communicator,
     "wakeUpService:tcp -h localhost -p 4061");
 
-// Schedule a wake-up call in 5 seconds
+// Schedule a wake-up call in 5 seconds.
 await wakeUpService.WakeMeUpAsync(alarmClock, DateTime.Now.AddSeconds(5).ToUniversalTime().Ticks);
 Console.WriteLine("Wake-up call scheduled, falling asleep...");
 
