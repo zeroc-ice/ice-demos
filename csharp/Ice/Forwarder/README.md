@@ -44,4 +44,5 @@ dotnet run --Ice.Trace.Network
 
 > [!NOTE]
 > The `--Ice.Trace` command-line options are optional: they turn-on tracing (logging) for request dispatches
-> (`--Ice.Trace.Dispatch`) and connection establishment/closure (`--Ice.Trace.Network`).
+> (`--Ice.Trace.Dispatch`) and connection establishment/closure (`--Ice.Trace.Network`) and help you follow the call
+> flow.
