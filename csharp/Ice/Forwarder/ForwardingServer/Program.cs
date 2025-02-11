@@ -1,7 +1,5 @@
 // Copyright (c) ZeroC, Inc.
 
-using ForwardingServer;
-
 // Create an Ice communicator to initialize the Ice runtime. The communicator is disposed before the program exits.
 using Ice.Communicator communicator = Ice.Util.initialize(ref args);
 
@@ -13,7 +11,7 @@ Ice.ObjectPrx targetTemplate = Ice.ObjectPrxHelper.createProxy(communicator, "du
 
 // Register the Forwarder servant as default servant with the object adapter. The empty category means this default
 // servant receives requests to all Ice objects.
-adapter.addDefaultServant(new Forwarder(targetTemplate), category: "");
+adapter.addDefaultServant(new ForwardingServer.Forwarder(targetTemplate), category: "");
 
 // Start dispatching requests.
 adapter.activate();
