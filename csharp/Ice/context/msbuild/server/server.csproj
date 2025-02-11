@@ -21,5 +21,8 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <AdditionalFiles Include="$(MSBuildThisFileDirectory)/../../../../../stylecop.json" />
+        <Compile Update="generated\Context.cs">
+          <SliceCompileSource>../../Context.ice</SliceCompileSource>
+        </Compile>
     </ItemGroup>
 </Project>

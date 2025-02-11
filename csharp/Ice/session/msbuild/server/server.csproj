@@ -23,5 +23,8 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <AdditionalFiles Include="$(MSBuildThisFileDirectory)/../../../../../stylecop.json" />
+        <Compile Update="generated\Session.cs">
+          <SliceCompileSource>../../Session.ice</SliceCompileSource>
+        </Compile>
     </ItemGroup>
 </Project>
