@@ -23,5 +23,11 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <AdditionalFiles Include="$(MSBuildThisFileDirectory)/../../../../../stylecop.json" />
+        <Compile Update="generated\Discovery.cs">
+          <SliceCompileSource>../../Discovery.ice</SliceCompileSource>
+        </Compile>
+        <Compile Update="generated\Hello.cs">
+          <SliceCompileSource>../../Hello.ice</SliceCompileSource>
+        </Compile>
     </ItemGroup>
 </Project>
