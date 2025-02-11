@@ -9,11 +9,11 @@ using Ice.Communicator communicator = Ice.Util.initialize(ref args);
 Ice.ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints("ForwarderAdapter", "tcp -p 10000");
 
 // Create a target proxy template, with a dummy identity.
-Ice.ObjectPrx target = Ice.ObjectPrxHelper.createProxy(communicator, "dummy:tcp -h localhost -p 4061");
+Ice.ObjectPrx targetTemplate = Ice.ObjectPrxHelper.createProxy(communicator, "dummy:tcp -h localhost -p 4061");
 
 // Register the Forwarder servant as default servant with the object adapter. The empty category means this default
 // servant receives requests to all Ice objects.
-adapter.addDefaultServant(new Forwarder(target), category: "");
+adapter.addDefaultServant(new Forwarder(targetTemplate), category: "");
 
 // Start dispatching requests.
 adapter.activate();
