@@ -1,7 +1,5 @@
 // Copyright (c) ZeroC, Inc.
 
-using ConfigServer;
-
 // Create an Ice communicator to initialize the Ice runtime. The communicator gets its configuration properties from
 // file config.server, in the server's current working directory. The communicator initialization also parses the
 // command-line options to find and set additional properties.
@@ -12,7 +10,7 @@ using Ice.Communicator communicator = Ice.Util.initialize(ref args, "config.serv
 Ice.ObjectAdapter adapter = communicator.createObjectAdapter("GreeterAdapter");
 
 // Register the Chatbot servant with the adapter.
-adapter.add(new Chatbot(), Ice.Util.stringToIdentity("greeter"));
+adapter.add(new Server.Chatbot(), Ice.Util.stringToIdentity("greeter"));
 
 // Start dispatching requests.
 adapter.activate();

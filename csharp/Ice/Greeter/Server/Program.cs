@@ -1,7 +1,5 @@
 // Copyright (c) ZeroC, Inc.
 
-using GreeterServer;
-
 // Create an Ice communicator to initialize the Ice runtime. The communicator is disposed before the program exits.
 using Ice.Communicator communicator = Ice.Util.initialize(ref args);
 
@@ -9,7 +7,7 @@ using Ice.Communicator communicator = Ice.Util.initialize(ref args);
 Ice.ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints("GreeterAdapter", "tcp -p 4061");
 
 // Register the Chatbot servant with the adapter.
-adapter.add(new Chatbot(), Ice.Util.stringToIdentity("greeter"));
+adapter.add(new Server.Chatbot(), Ice.Util.stringToIdentity("greeter"));
 
 // Start dispatching requests.
 adapter.activate();

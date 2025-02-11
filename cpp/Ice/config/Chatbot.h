@@ -5,7 +5,7 @@
 
 #include "Greeter.h"
 
-namespace ConfigServer
+namespace Server
 {
     /// A Chatbot is an Ice servant that implements Slice interface Greeter.
     class Chatbot : public VisitorCenter::Greeter
