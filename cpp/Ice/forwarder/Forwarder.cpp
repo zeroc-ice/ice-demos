@@ -4,10 +4,7 @@
 
 using namespace std;
 
-ForwardingServer::Forwarder::Forwarder(Ice::ObjectPrx targetTemplate)
-    : _targetTemplate{std::move(targetTemplate)}
-{
-}
+ForwardingServer::Forwarder::Forwarder(Ice::ObjectPrx targetTemplate) : _targetTemplate{std::move(targetTemplate)} {}
 
 void
 ForwardingServer::Forwarder::dispatch(Ice::IncomingRequest& request, function<void(Ice::OutgoingResponse)> sendResponse)
