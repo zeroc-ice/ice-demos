@@ -22,5 +22,8 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <AdditionalFiles Include="$(MSBuildThisFileDirectory)/../../../../../stylecop.json" />
+        <Compile Update="generated\MeasurementStation.cs">
+          <SliceCompileSource>../../MeasurementStation.ice</SliceCompileSource>
+        </Compile>
     </ItemGroup>
 </Project>

@@ -22,6 +22,10 @@
         <AdditionalFiles Include="$(MSBuildThisFileDirectory)/../../../../../stylecop.json" />
 
         <IceBoxNet Include="$(IceHome)/tools/net8.0/*" />
+
+        <Compile Update="generated\Hello.cs">
+          <SliceCompileSource>../../Hello.ice</SliceCompileSource>
+        </Compile>
     </ItemGroup>
     <Target AfterTargets="Build" Name="iceboxnet">
         <Copy DestinationFolder="$(OutputPath)" SourceFiles="@(IceBoxNet)" />

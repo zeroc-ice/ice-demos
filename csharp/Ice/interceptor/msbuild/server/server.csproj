@@ -23,5 +23,8 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <AdditionalFiles Include="$(MSBuildThisFileDirectory)/../../../../../stylecop.json" />
+        <Compile Update="generated\Interceptor.cs">
+          <SliceCompileSource>../../Interceptor.ice</SliceCompileSource>
+        </Compile>
     </ItemGroup>
 </Project>
