@@ -113,10 +113,19 @@ jobs:
       - name: Build C# Demos
         timeout-minutes: 20
         working-directory: ice-demos/csharp
-        run: dotnet build
+        run: |
+          find . -name '*.sln' -type f | while IFS= read -r file; do
+            dotnet build "$file"
+          done
+        shell: bash
 
       - name: Run .NET format
-        run: dotnet format --verify-no-changes "./ice-demos/csharp/C# NET demos.sln"
+        working-directory: ice-demos/csharp
+        run: |
+          find . -name '*.sln' -type f | while IFS= read -r file; do
+            dotnet format --verify-no-changes "$file"
+          done
+        shell: bash
         if: runner.os == 'Linux'
 
       - name: Build Java Demos
