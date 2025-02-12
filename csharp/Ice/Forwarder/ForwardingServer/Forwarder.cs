@@ -11,6 +11,7 @@ internal class Forwarder : Ice.Object
     // A template for the target proxy.
     private readonly Ice.ObjectPrx _targetTemplate;
 
+    /// <inheritdoc/>
     // Implements abstract method dispatchAsync defined on Ice.Object.
     public async ValueTask<OutgoingResponse> dispatchAsync(IncomingRequest request)
     {
