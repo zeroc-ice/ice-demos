@@ -45,7 +45,7 @@ ServerAMD::Chatbot::greetAsync(
             response(os.str());
         }));
 
-    // We don't want the _tasks vector to grow forever so remove all completed task here, without waiting.
+    // We don't want the _tasks vector to grow forever so remove all completed tasks here, without waiting.
     // TODO: switch to std::erase_if when we can use C++20.
     _tasks.erase(
         std::remove_if(
