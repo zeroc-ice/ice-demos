@@ -20,11 +20,10 @@ module EarlyRiser
     /// Represents the wake up service provided by the server.
     interface WakeUpService
     {
-        /// Schedules a call to {@link AlarmClock::ring} at the specified time.
-        /// @param alarmClock A proxy to the alarm clock to ring.
+        /// Schedules a call to the caller's {@link AlarmClock::ring} at the specified time.
         /// @param timeStamp The time to ring the alarm clock. It's encoded as the number of ticks (100 nanoseconds)
         /// since January 1, 0001 00:00:00 UTC in the Gregorian calendar.
         ["cs:identifier:WakeMeUp"] // We prefer PascalCase for C# methods.
-        void wakeMeUp(AlarmClock* alarmClock, long timeStamp);
+        void wakeMeUp(long timeStamp);
     }
 }
