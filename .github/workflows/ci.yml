@@ -36,10 +36,6 @@ jobs:
       - name: Windows Environment
         if: runner.os == 'Windows'
         run: |
-          echo "Platform=x64" >> $env:GITHUB_ENV
-          echo "Configuration=Release" >> $env:GITHUB_ENV
-          echo "IceHome=${{ github.workspace }}\ice" >> $env:GITHUB_ENV
-
           # We need to replace \ with / in the path, specifically for Gradle
           $iceHome = "${{ github.workspace }}/ice"
           $iceHome = $iceHome.Replace("\", "/")
@@ -49,7 +45,6 @@ jobs:
         if: runner.os != 'Windows'
         run: |
           echo "ICE_HOME=${{ github.workspace }}/ice" >> $GITHUB_ENV
-          echo "IceHome=${{ github.workspace }}/ice" >> $GITHUB_ENV
 
       - name: Checkout Ice
         uses: actions/checkout@v4
