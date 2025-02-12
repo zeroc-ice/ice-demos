@@ -2,6 +2,7 @@
 
 #include "ChatbotAMD.h"
 
+#include <algorithm>
 #include <chrono>
 #include <future>
 #include <iostream>
@@ -33,6 +34,7 @@ ServerAMD::Chatbot::greetAsync(
 
     // Simulate a long-running background operation by using std::async.
     // Note that we're moving all arguments except current into the lambda expression.
+
     _tasks.push_back(std::async(
         std::launch::async,
         [name = std::move(name), response = std::move(response), exception = std::move(exception)]()
@@ -42,6 +44,15 @@ ServerAMD::Chatbot::greetAsync(
             os << "Hello, " << name << "!";
             response(os.str());
         }));
+
+    // We don't want the _tasks vector to grow forever so remove all completed task here, without waiting.
+    // TODO: switch to std::erase_if when we can use C++20.
+    _tasks.erase(
+        std::remove_if(
+            _tasks.begin(),
+            _tasks.end(),
+            [](const auto& task) { return task.wait_for(std::chrono::seconds(0)) == std::future_status::ready; }),
+        _tasks.end());
 
     // greetAsync completes immediately (releasing the Ice server thread pool thread) while the task runs in the
     // background.
