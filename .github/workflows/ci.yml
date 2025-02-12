@@ -117,7 +117,16 @@ jobs:
           find . -name '*.sln' -type f | while IFS= read -r file; do
             dotnet build "$file"
           done
-        shell: bash
+        if: runner.os != 'Windows'
+
+      - name: Build C# Demos
+        timeout-minutes: 20
+        working-directory: ice-demos/csharp
+        run: |
+          Get-ChildItem -Recurse -Filter *.sln | ForEach-Object {
+            dotnet build $_.FullName
+          }
+        if: runner.os == 'Windows'
 
       - name: Run .NET format
         working-directory: ice-demos/csharp
