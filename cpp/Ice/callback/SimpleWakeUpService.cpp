@@ -2,6 +2,7 @@
 
 #include "SimpleWakeUpService.h"
 
+#include <algorithm>
 #include <iostream>
 
 using namespace EarlyRiser;
