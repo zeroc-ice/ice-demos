@@ -35,7 +35,7 @@ ServerAMD::Chatbot::greetAsync(
     // Simulate a long-running background operation by using std::async.
     // Note that we're moving all arguments except current into the lambda expression.
 
-    _tasks.push_back(std::async(
+    _tasks.emplace_back(std::async(
         std::launch::async,
         [name = std::move(name), response = std::move(response), exception = std::move(exception)]()
         {
