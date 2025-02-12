@@ -1,0 +1,43 @@
+// Copyright (c) ZeroC, Inc.
+
+using Filesystem;
+
+// Create an Ice communicator to initialize the Ice runtime.
+using Ice.Communicator communicator = Ice.Util.initialize(ref args);
+
+// Create an object adapter that listens for incoming requests and dispatches them to servants.
+Ice.ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints("Filesystem", "tcp -p 4061");
+
+// Create the root directory servant (with name "/"), and add this servant to the adapter.
+var root = new Server.MDirectory("/");
+adapter.add(root, Ice.Util.stringToIdentity("RootDir"));
+
+// Create a file called "README", add this servant to the adapter, and add the corresponding proxy to the root
+// directory.
+var file = new Server.MFile("README");
+file.WriteDirect(["This file system contains a collection of poetry."]);
+root.AddChild(FilePrxHelper.uncheckedCast(adapter.addWithUUID(file)));
+
+// Create a directory called "Coleridge", add this servant to the adapter, and add the corresponding proxy to the
+// root directory.
+var coleridge = new Server.MDirectory("Coleridge");
+root.AddChild(DirectoryPrxHelper.uncheckedCast(adapter.addWithUUID(coleridge)));
+
+// Create a file called "Kubla_Khan", add this servant to the adapter, and add the corresponding proxy to the
+// Coleridge directory.
+file = new Server.MFile("Kubla_Khan");
+file.WriteDirect(
+        ["In Xanadu did Kubla Khan",
+         "A stately pleasure-dome decree:",
+         "Where Alph, the sacred river, ran",
+         "Through caverns measureless to man",
+         "Down to a sunless sea."]);
+coleridge.AddChild(FilePrxHelper.uncheckedCast(adapter.addWithUUID(file)));
+
+// Start dispatching requests after registering all servants.
+adapter.activate();
+Console.WriteLine("Listening on port 4061...");
+
+// Wait until the user presses Ctrl+C.
+await CancelKeyPressed;
+Console.WriteLine("Caught Ctrl+C, exiting...");

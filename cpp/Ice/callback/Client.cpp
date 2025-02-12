@@ -1,121 +1,57 @@
 // Copyright (c) ZeroC, Inc.
 
-#include "Callback.h"
-#include <Ice/Ice.h>
+#include "MockAlarmClock.h"
+
 #include <iostream>
 
+using namespace EarlyRiser;
 using namespace std;
-using namespace Demo;
 
-class CallbackReceiverI final : public CallbackReceiver
+namespace
 {
-public:
-    void callback(const Ice::Current&) final { cout << "received callback" << endl; }
-};
+    // Converts a time point to a time stamp.
+    int64_t toTimeStamp(const chrono::system_clock::time_point& timePoint)
+    {
+        const int daysBeforeEpoch = 719162;
 
-int run(const shared_ptr<Ice::Communicator>&);
+        int64_t timeStampMicro =
+            chrono::duration_cast<chrono::microseconds>(timePoint.time_since_epoch() + daysBeforeEpoch * 24h).count();
+
+        // The time stamp is in ticks, where each tick is 100 nanoseconds = 0.1 microsecond.
+        return timeStampMicro * 10;
+    }
+}
 
 int
 main(int argc, char* argv[])
 {
-    int status = 0;
+    // Create an Ice communicator to initialize the Ice runtime.
+    const Ice::CommunicatorHolder communicatorHolder{argc, argv};
+    const Ice::CommunicatorPtr& communicator = communicatorHolder.communicator();
 
-    try
-    {
-        //
-        // CommunicatorHolder's ctor initializes an Ice communicator,
-        // and its dtor destroys this communicator.
-        //
-        const Ice::CommunicatorHolder ich(argc, argv, "config.client");
+    // Create an object adapter that listens for incoming requests and dispatches them to servants.
+    // Since we don't specify a port, the OS will choose an ephemeral port. This allows multiple client applications to
+    // run concurrently on the same host.
+    Ice::ObjectAdapterPtr adapter = communicator->createObjectAdapterWithEndpoints("AlarmClockAdapter", "tcp");
 
-        //
-        // The communicator initialization removes all Ice-related arguments from argc/argv
-        //
-        if (argc > 1)
-        {
-            cerr << argv[0] << ": too many arguments" << endl;
-            status = 1;
-        }
-        else
-        {
-            status = run(ich.communicator());
-        }
-    }
-    catch (const std::exception& ex)
-    {
-        cerr << argv[0] << ": " << ex.what() << endl;
-        status = 1;
-    }
+    // Register the MockAlarmClock servant with the adapter, and get an alarm clock proxy.
+    auto mockAlarmClock = make_shared<Client::MockAlarmClock>();
+    auto alarmClock = adapter->add<AlarmClockPrx>(mockAlarmClock, Ice::stringToIdentity("alarmClock"));
 
-    return status;
-}
-
-void menu();
-
-int
-run(const shared_ptr<Ice::Communicator>& communicator)
-{
-    auto sender = Ice::checkedCast<CallbackSenderPrx>(
-        communicator->propertyToProxy("CallbackSender.Proxy")->ice_twoway()->ice_secure(false));
-    if (!sender)
-    {
-        cerr << "invalid proxy" << endl;
-        return 1;
-    }
-
-    auto adapter = communicator->createObjectAdapter("Callback.Client");
-    adapter->add(make_shared<CallbackReceiverI>(), Ice::stringToIdentity("callbackReceiver"));
+    // Start dispatching requests.
     adapter->activate();
+    cout << "Listening on ephemeral port..." << endl;
 
-    auto receiver =
-        Ice::uncheckedCast<CallbackReceiverPrx>(adapter->createProxy(Ice::stringToIdentity("callbackReceiver")));
+    // Create a proxy to the wake-up service.
+    WakeUpServicePrx wakeUpService{communicator, "wakeUpService:tcp -h localhost -p 4061"};
 
-    menu();
+    // Schedule a wake-up call in 5 seconds.
+    wakeUpService->wakeMeUp(alarmClock, toTimeStamp(chrono::system_clock::now() + chrono::seconds{5}));
+    cout << "Wake-up call scheduled, falling asleep..." << endl;
 
-    char c = 'x';
-    do
-    {
-        try
-        {
-            cout << "==> ";
-            cin >> c;
-            if (c == 't')
-            {
-                sender->initiateCallback(receiver);
-            }
-            else if (c == 's')
-            {
-                sender->shutdown();
-            }
-            else if (c == 'x')
-            {
-                // Nothing to do
-            }
-            else if (c == '?')
-            {
-                menu();
-            }
-            else
-            {
-                cout << "unknown command `" << c << "'" << endl;
-                menu();
-            }
-        }
-        catch (const Ice::Exception& ex)
-        {
-            cerr << ex << endl;
-        }
-    } while (cin.good() && c != 'x');
+    // Wait until the "stop" button is pressed on the mock alarm clock.
+    mockAlarmClock->wait();
+    cout << "Stop button pressed, exiting..." << endl;
 
     return 0;
-}
-
-void
-menu()
-{
-    cout << "usage:\n"
-            "t: send callback\n"
-            "s: shutdown server\n"
-            "x: exit\n"
-            "?: help\n";
 }

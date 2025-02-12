@@ -1,10 +1,15 @@
 # Callback
 
-A simple callback demo that illustrates how a client can pass a proxy
-to a server, invoke an operation in the server, and the [server call
-back][1] into an object provided by the client as part of that invocation.
+The Callback demo illustrates how to implement callbacks in a client application.
 
-To run the demo, first start the server:
+In this demo, the client hosts an alarm clock (an Ice object), and asks the server's wake up service to call this
+object at a later time. The server opens a TCP connection to the client when making this call.
+
+```mermaid
+flowchart LR
+    c[Client<br>hosts AlarmClock] --connection1--> s[Server:4061<br>hosts WakeUpService]
+    s --connection2--> c
+```
 
 To build the demo run:
 
@@ -40,5 +45,3 @@ In a separate window, start the client:
 ```shell
 build\Release\client
 ```
-
-[1]: https://doc.zeroc.com/ice/3.7/client-server-features/the-ice-threading-model/nested-invocations
