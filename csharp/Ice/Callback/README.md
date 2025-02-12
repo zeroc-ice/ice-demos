@@ -2,12 +2,13 @@
 
 The Callback demo illustrates how to implement callbacks in a client application.
 
-In this demo, the client hosts an alarm clock (an Ice object), and asks the server to call this object at a later time.
+In this demo, the client hosts an alarm clock (an Ice object), and asks the server's wake up service to call this
+object at a later time. The server opens a TCP connection to the client when making this call.
 
 ```mermaid
 flowchart LR
-    c[Client:10000] --wakeMeUp--> s[Server:4061]
-    s --ring--> c
+    c[Client<br>hosts AlarmClock] --connection1--> s[Server:4061<br>hosts WakeUpService]
+    s --connection2--> c
 ```
 
 You can build the client and server applications with:

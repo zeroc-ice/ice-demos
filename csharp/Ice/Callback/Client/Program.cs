@@ -7,16 +7,18 @@ using EarlyRiser;
 using Ice.Communicator communicator = Ice.Util.initialize(ref args);
 
 // Create an object adapter that listens for incoming requests and dispatches them to servants.
-Ice.ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints("AlarmClockAdapter", "tcp -p 10000");
+// Since we don't specify a port, the OS will choose an ephemeral port. This allows multiple client applications to
+// run concurrently on the same host.
+Ice.ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints("AlarmClockAdapter", "tcp");
 
 // Register the MockAlarmClock servant with the adapter, and get an alarm clock proxy.
-// The identity of this Ice object is a UUID, which is suitable for transient objects.
 var mockAlarmClock = new Client.MockAlarmClock();
-AlarmClockPrx alarmClock = AlarmClockPrxHelper.uncheckedCast(adapter.addWithUUID(mockAlarmClock));
+AlarmClockPrx alarmClock = AlarmClockPrxHelper.uncheckedCast(
+    adapter.add(mockAlarmClock, Ice.Util.stringToIdentity("alarmClock")));
 
 // Start dispatching requests.
 adapter.activate();
-Console.WriteLine("Listening on port 10000...");
+Console.WriteLine("Listening on ephemeral port...");
 
 // Create a proxy to the wake-up service.
 WakeUpServicePrx wakeUpService = WakeUpServicePrxHelper.createProxy(
