@@ -7,7 +7,7 @@ namespace Client;
 /// <summary>MockAlarmClock is an Ice servant that implements Slice interface AlarmClock.</summary>
 internal class MockAlarmClock : AlarmClockDisp_
 {
-    /// <summary>Gets a task that completes when we return <see cref="ButtonPressed.Stop" /> from <see cref="Ring"/>.
+    /// <summary>Gets a task that completes when we return <see cref="ButtonPressed.Stop" /> from <see cref="Ring" />.
     /// </summary>
     public Task StopPressed => _tcs.Task;
 
