@@ -11,7 +11,7 @@ flowchart LR
     s --connection2--> c
 ```
 
-To build the demo run:
+To build the demo, run:
 
 ```shell
 cmake -B build
