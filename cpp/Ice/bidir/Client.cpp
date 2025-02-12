@@ -1,97 +1,54 @@
 // Copyright (c) ZeroC, Inc.
 
-#include "Callback.h"
-#include <Ice/Ice.h>
+#include "MockAlarmClock.h"
+
 #include <iostream>
 
+using namespace EarlyRiser;
 using namespace std;
-using namespace Demo;
 
-class CallbackReceiverI final : public CallbackReceiver
+namespace
 {
-public:
-    void callback(int32_t num, const Ice::Current&) final { cout << "received callback #" << num << endl; }
-};
+    // Converts a time point to a time stamp.
+    int64_t toTimeStamp(const chrono::system_clock::time_point& timePoint)
+    {
+        const int daysBeforeEpoch = 719162;
 
-int run(const shared_ptr<Ice::Communicator>&, const string&);
+        int64_t timeStampMicro =
+            chrono::duration_cast<chrono::microseconds>(timePoint.time_since_epoch() + daysBeforeEpoch * 24h).count();
+
+        // The time stamp is in ticks, where each tick is 100 nanoseconds = 0.1 microsecond.
+        return timeStampMicro * 10;
+    }
+}
 
 int
 main(int argc, char* argv[])
 {
-    int status = 0;
+    // Create an Ice communicator to initialize the Ice runtime.
+    const Ice::CommunicatorHolder communicatorHolder{argc, argv};
+    const Ice::CommunicatorPtr& communicator = communicatorHolder.communicator();
 
-    try
-    {
-        //
-        // CtrlCHandler must be created before the communicator or any other threads are started
-        //
-        Ice::CtrlCHandler ctrlCHandler;
+    // Create an object adapter with no name and no configuration. This object adapter does not need to be activated.
+    Ice::ObjectAdapterPtr adapter = communicator->createObjectAdapter("");
 
-        //
-        // CommunicatorHolder's ctor initializes an Ice communicator,
-        // and its dtor destroys this communicator.
-        //
-        const Ice::CommunicatorHolder ich(argc, argv, "config.client");
-        const auto& communicator = ich.communicator();
+    // Sets this object adapter as the default object adapter on the communicator.
+    communicator->setDefaultObjectAdapter(adapter);
 
-        ctrlCHandler.setCallback([communicator](int) { communicator->destroy(); });
+    // Register the MockAlarmClock servant with the adapter. The wake up service knows we use identity "alarmClock".
+    auto mockAlarmClock = make_shared<Client::MockAlarmClock>();
+    adapter->add(mockAlarmClock, Ice::stringToIdentity("alarmClock"));
 
-        //
-        // The communicator initialization removes all Ice-related arguments from argc/argv
-        //
-        if (argc > 1)
-        {
-            cerr << argv[0] << ": too many arguments" << endl;
-            status = 1;
-        }
-        else
-        {
-            status = run(communicator, argv[0]);
-        }
-    }
-    catch (const std::exception& ex)
-    {
-        cerr << ex.what() << endl;
-        status = 1;
-    }
+    // Create a proxy to the wake-up service.
+    WakeUpServicePrx wakeUpService{communicator, "wakeUpService:tcp -h localhost -p 4061"};
 
-    return status;
-}
+    // Schedule a wake-up call in 5 seconds.
+    wakeUpService->wakeMeUp(toTimeStamp(chrono::system_clock::now() + chrono::seconds{5}));
+    cout << "Wake-up call scheduled, falling asleep..." << endl;
 
-int
-run(const shared_ptr<Ice::Communicator>& communicator, const string& appName)
-{
-    auto server = Ice::checkedCast<CallbackSenderPrx>(communicator->propertyToProxy("CallbackSender.Proxy"));
-    if (!server)
-    {
-        cerr << appName << ": invalid proxy" << endl;
-        return 1;
-    }
-
-    //
-    // Create an object adapter with no name and no endpoints for receiving callbacks
-    // over bidirectional connections.
-    //
-    auto adapter = communicator->createObjectAdapter("");
-
-    //
-    // Register the callback receiver servant with the object adapter and activate
-    // the adapter.
-    //
-    auto proxy = Ice::uncheckedCast<CallbackReceiverPrx>(adapter->addWithUUID(make_shared<CallbackReceiverI>()));
-    adapter->activate();
-
-    //
-    // Associate the object adapter with the bidirectional connection.
-    //
-    server->ice_getConnection()->setAdapter(adapter);
-
-    //
-    // Provide the proxy of the callback receiver object to the server and wait for
-    // shutdown.
-    //
-    server->addClient(proxy);
-    communicator->waitForShutdown();
+    // Wait until the "stop" button is pressed on the mock alarm clock.
+    mockAlarmClock->wait();
+    cout << "Stop button pressed, exiting..." << endl;
 
     return 0;
 }

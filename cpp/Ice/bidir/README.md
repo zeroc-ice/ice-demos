@@ -1,11 +1,19 @@
-# Bidirectional Connections
+# Bidir
 
-This demo shows how to use [bidirectional connections][1] for callbacks.
-This is typically used if the server cannot open a connection to the
-client to send callbacks, for example, because firewalls block
-incoming connections to the client.
+The Bidir demo illustrates how to send requests "the other way around", from a server to a client, by reusing the
+connection established by the client to the server.
 
-To build the demo run:
+This demo is very similar to the [../Callback] demo: with the Callback demo, the server opens a connection to the
+client, while with this demo, there is only one connection, from the client to the server:
+
+```mermaid
+flowchart LR
+    c[Client<br>hosts AlarmClock] --bidir connection--> s[Server:4061<br>hosts WakeUpService]
+```
+
+This is particularly useful when the client application is behind a firewall that does not allow incoming connections.
+
+To build the demo, run:
 
 ```shell
 cmake -B build
@@ -39,5 +47,3 @@ In a separate window, start the client:
 ```shell
 build\Release\client
 ```
-
-[1]: https://doc.zeroc.com/ice/3.7/client-server-features/connection-management/bidirectional-connections
