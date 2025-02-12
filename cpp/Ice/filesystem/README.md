@@ -1,7 +1,6 @@
 # Filesystem
 
-This demo implements the filesystem application shown at the end of the client and server
-C++ mapping chapters.
+This demo implements the filesystem application shown at the end of C++ mapping chapter in the Ice manual.
 
 To build the demo run:
 

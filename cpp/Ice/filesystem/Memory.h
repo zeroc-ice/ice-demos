@@ -6,13 +6,14 @@
 #include "Filesystem.h"
 
 // Provides an in-memory implementation of the Filesystem objects.
-namespace Memory
+namespace Server
 {
     /// Implements Slice interface Node.
     class MNode : public virtual Filesystem::Node
     {
     public:
         /// Constructs a new MNode servant
+        /// @param name The name of the node.
         explicit MNode(std::string name);
 
         // Implements Slice operation name.
@@ -34,7 +35,8 @@ namespace Memory
         // Implements Slice operation write.
         void write(Filesystem::Lines text, const Ice::Current&) final;
 
-        // Write directly to this file, without going through an Ice operation.
+        /// Writes directly to this file, without going through an Ice operation.
+        /// @param text The text to write.
         void writeDirect(Filesystem::Lines text);
 
     private:

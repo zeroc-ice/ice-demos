@@ -3,16 +3,15 @@
 #include "Memory.h"
 
 using namespace std;
-using namespace Memory;
 
 //
 // MNode
 //
 
-MNode::MNode(string name) : _name(std::move(name)) {}
+Server::MNode::MNode(string name) : _name(std::move(name)) {}
 
 string
-MNode::name(const Ice::Current&)
+Server::MNode::name(const Ice::Current&)
 {
     return _name;
 }
@@ -22,19 +21,19 @@ MNode::name(const Ice::Current&)
 //
 
 Filesystem::Lines
-MFile::read(const Ice::Current&)
+Server::MFile::read(const Ice::Current&)
 {
     return _lines;
 }
 
 void
-MFile::write(Filesystem::Lines text, const Ice::Current&)
+Server::MFile::write(Filesystem::Lines text, const Ice::Current&)
 {
     writeDirect(std::move(text));
 }
 
 void
-MFile::writeDirect(Filesystem::Lines text)
+Server::MFile::writeDirect(Filesystem::Lines text)
 {
     _lines = std::move(text);
 }
@@ -44,13 +43,13 @@ MFile::writeDirect(Filesystem::Lines text)
 //
 
 Filesystem::NodeSeq
-MDirectory::list(const Ice::Current&)
+Server::MDirectory::list(const Ice::Current&)
 {
     return _contents;
 }
 
 void
-MDirectory::addChild(Filesystem::NodePrx child)
+Server::MDirectory::addChild(Filesystem::NodePrx child)
 {
     _contents.emplace_back(std::move(child));
 }
