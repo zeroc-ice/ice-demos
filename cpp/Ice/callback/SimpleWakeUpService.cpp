@@ -38,8 +38,8 @@ Server::SimpleWakeUpService::wakeMeUp(optional<AlarmClockPrx> alarmClock, int64_
     }
 
     // With C++20, we'll be able to print the time point easily--but not with C++17.
-    cout << "Dispatching wakeMeUp request { alarmClock = '" << alarmClock
-        << "', timeStamp = " << timeStamp << " ticks }" << endl;
+    cout << "Dispatching wakeMeUp request { alarmClock = '" << alarmClock << "', timeStamp = " << timeStamp
+         << " ticks }" << endl;
 
     chrono::system_clock::time_point timePoint = toTimePoint(timeStamp);
 
@@ -57,7 +57,7 @@ Server::SimpleWakeUpService::wakeMeUp(optional<AlarmClockPrx> alarmClock, int64_
             // Keep ringing every 10 seconds until the user presses the stop button.
             while (buttonPressed == ButtonPressed::Snooze)
             {
-                this_thread::sleep_for(5s);
+                this_thread::sleep_for(10s);
                 buttonPressed = alarmClock->ring("No more snoozing!");
             }
         }));

@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(filesystem CXX)
+project(callback CXX)
 
 include(../../cmake/common.cmake)
 
