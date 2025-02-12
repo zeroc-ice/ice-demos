@@ -19,6 +19,6 @@ internal class MDirectory : Filesystem.DirectoryDisp_
     internal MDirectory(string name) => _name = name;
 
     /// <summary>Adds a node to this directory.</summary>
-    /// <param name="child">The node proxy to add</param>
+    /// <param name="child">The node proxy to add.</param>
     internal void AddChild(Filesystem.NodePrx child) => _contents.Add(child);
 }
