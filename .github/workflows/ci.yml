@@ -61,12 +61,12 @@ jobs:
         timeout-minutes: 60
         with:
           working_directory: ice
-          build_flags: ${{ runner.os == 'Windows' && '/t:BuildDist /p:Platform=x64 /p:Config=Release' || 'srcs' }}
+          build_flags: ${{ runner.os == 'Windows' && '/t:BuildDist /p:Configuration=Release /p:Platform=x64' || 'srcs' }}
 
       - name: Publish C# NuGet Packages
         timeout-minutes: 5
         working-directory: ice/csharp/msbuild
-        run: dotnet msbuild ice.proj /t:Publish
+        run: dotnet msbuild ice.proj /t:Publish /p:Configuration=Release /p:Platform=x64
 
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -86,8 +86,8 @@ jobs:
 
           find . -name CMakeLists.txt -type f | while IFS= read -r file; do
             dir=$(dirname "$file");
-            cmake -B "$dir/build" -S "$dir" -DIce_DEBUG=ON
-            cmake --build "$dir/build" --config Release
+            cmake -B "$dir/build" -S "$dir" -DIce_DEBUG=ON -DCMAKE_BUILD_TYPE=Release
+            cmake --build "$dir/build"
           done
         if: runner.os != 'Windows'
 
