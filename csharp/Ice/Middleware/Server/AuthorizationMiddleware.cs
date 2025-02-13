@@ -17,7 +17,9 @@ internal class AuthorizationMiddleware : Ice.Object
         {
             Console.WriteLine($"Rejecting request with token '{token}'");
 
-            // Ice transmits this ObjectNotExistException to this client.
+            // ObjectNotExistException is one of the 6 Ice local exceptions that Ice transmits "over the wire".
+            // It usually means "no servant was found for this identity". Here, we reuse it to indicate an authorization
+            // failure without leaking information to the client.
             throw new Ice.ObjectNotExistException();
         }
 
