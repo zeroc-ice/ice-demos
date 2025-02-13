@@ -36,10 +36,6 @@ jobs:
       - name: Windows Environment
         if: runner.os == 'Windows'
         run: |
-          echo "Platform=x64" >> $env:GITHUB_ENV
-          echo "Configuration=Release" >> $env:GITHUB_ENV
-          echo "IceHome=${{ github.workspace }}\ice" >> $env:GITHUB_ENV
-
           # We need to replace \ with / in the path, specifically for Gradle
           $iceHome = "${{ github.workspace }}/ice"
           $iceHome = $iceHome.Replace("\", "/")
@@ -49,7 +45,6 @@ jobs:
         if: runner.os != 'Windows'
         run: |
           echo "ICE_HOME=${{ github.workspace }}/ice" >> $GITHUB_ENV
-          echo "IceHome=${{ github.workspace }}/ice" >> $GITHUB_ENV
 
       - name: Checkout Ice
         uses: actions/checkout@v4
@@ -66,12 +61,12 @@ jobs:
         timeout-minutes: 60
         with:
           working_directory: ice
-          build_flags: ${{ runner.os == 'Windows' && '/t:BuildDist' || 'srcs' }}
+          build_flags: ${{ runner.os == 'Windows' && '/t:BuildDist /p:Configuration=Release /p:Platform=x64' || 'srcs' }}
 
       - name: Publish C# NuGet Packages
         timeout-minutes: 5
         working-directory: ice/csharp/msbuild
-        run: dotnet msbuild ice.proj /t:Publish
+        run: dotnet msbuild ice.proj /t:Publish /p:Configuration=Release /p:Platform=x64
 
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -91,8 +86,8 @@ jobs:
 
           find . -name CMakeLists.txt -type f | while IFS= read -r file; do
             dir=$(dirname "$file");
-            cmake -B "$dir/build" -S "$dir" -DIce_DEBUG=ON
-            cmake --build "$dir/build" --config Release
+            cmake -B "$dir/build" -S "$dir" -DIce_DEBUG=ON -DCMAKE_BUILD_TYPE=Release
+            cmake --build "$dir/build"
           done
         if: runner.os != 'Windows'
 
@@ -113,10 +108,28 @@ jobs:
       - name: Build C# Demos
         timeout-minutes: 20
         working-directory: ice-demos/csharp
-        run: dotnet build
+        run: |
+          find . -name '*.sln' -type f | while IFS= read -r file; do
+            dotnet build "$file"
+          done
+        if: runner.os != 'Windows'
+
+      - name: Build C# Demos
+        timeout-minutes: 20
+        working-directory: ice-demos/csharp
+        run: |
+          Get-ChildItem -Recurse -Filter *.sln | ForEach-Object {
+            dotnet build $_.FullName
+          }
+        if: runner.os == 'Windows'
 
       - name: Run .NET format
-        run: dotnet format --verify-no-changes "./ice-demos/csharp/C# NET demos.sln"
+        working-directory: ice-demos/csharp
+        run: |
+          find . -name '*.sln' -type f | while IFS= read -r file; do
+            dotnet format --verify-no-changes "$file"
+          done
+        shell: bash
         if: runner.os == 'Linux'
 
       - name: Build Java Demos
