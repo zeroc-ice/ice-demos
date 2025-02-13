@@ -21,13 +21,6 @@ cd Server
 dotnet run
 ```
 
-or
-
-```shell
-cd ServerAMD
-dotnet run
-```
-
 In a separate terminal, start the Client program:
 
 ```shell
