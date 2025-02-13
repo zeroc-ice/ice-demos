@@ -4,7 +4,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # We use these flags over presets to avoid having to create a CMakePreset.json file in every project.
-# If you want to disable this behavior, set the option to OFF: -DUSE_ICE_CXX_FLAGS=OFF
+# If you want to enable these, set this option to ON: -DUSE_ICE_CXX_FLAGS=ON
 option(USE_ICE_CXX_FLAGS "Common C++ compiler flags" OFF)
 if(USE_ICE_CXX_FLAGS)
     if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
