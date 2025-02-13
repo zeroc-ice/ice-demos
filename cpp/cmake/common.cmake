@@ -4,18 +4,16 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # We use these flags over presets to avoid having to create a CMakePreset.json file in every project.
-# If you want to enable these, set this option to ON: -DUSE_ICE_CXX_FLAGS=ON
-option(USE_ICE_CXX_FLAGS "Common C++ compiler flags" OFF)
-if(USE_ICE_CXX_FLAGS)
+# If you want to enable these, set this option to OFF: -DICE_DEMO_WARNINGS=OFF
+option(ICE_DEMO_WARNINGS "Ice Demo C++ warning flags" ON)
+if(ICE_DEMO_WARNINGS)
     if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-        set(flags -Wall -Wall -Wextra -Wredundant-decls -Wshadow -Wdeprecated)
+        add_compile_options(-Wall -Wall -Wextra -Wredundant-decls -Wshadow -Wdeprecated)
     elseif(flags STREQUAL "Clang")
-        set(ICE_CXX_FLAGS -Wall -Wextra -Wshadow -Wredundant-decls -Wno-shadow-field -Wdeprecated -Wstrict-prototypes -Wconversion -Wdocumentation)
+        add_compile_options(-Wall -Wextra -Wshadow -Wredundant-decls -Wno-shadow-field -Wdeprecated -Wstrict-prototypes -Wconversion -Wdocumentation)
     elseif(flags STREQUAL "MSVC")
-        set(ICE_CXX_FLAGS /W4)
+        add_compile_options(/W4)
     endif()
-    add_compile_options(${flags})
-    unset(flags)
 endif()
 
 find_package(Threads REQUIRED)
