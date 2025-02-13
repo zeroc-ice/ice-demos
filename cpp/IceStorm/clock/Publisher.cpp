@@ -148,10 +148,26 @@ main(int argc, char* argv[])
             while (true)
             {
                 auto now = chrono::system_clock::to_time_t(chrono::system_clock::now());
-                char timeString[100];
-                if (strftime(timeString, sizeof(timeString), "%x %X", localtime(&now)) == 0)
+                std::tm timeInfo;
+
+#ifdef _MSC_VER
+                if (localtime_s(&timeInfo, &now))
                 {
-                    timeString[0] = '\0';
+                    cout << "localtime_s error" << endl;
+                    break;
+                }
+#else
+                if (!localtime_r(&now, &timeInfo))
+                {
+                    cout << "localtime_r error" << endl;
+                    break;
+                }
+#endif
+                char timeString[100];
+                if (!strftime(timeString, sizeof(timeString), "%x %X", &timeInfo))
+                {
+                    cout << "strftime error" << endl;
+                    break;
                 }
 
                 try

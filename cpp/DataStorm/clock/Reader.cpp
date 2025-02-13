@@ -64,11 +64,28 @@ main(int argc, char* argv[])
             [](const DataStorm::Sample<string, chrono::system_clock::time_point>& sample)
             {
                 auto time = chrono::system_clock::to_time_t(sample.getValue());
-                char timeString[100];
-                if (strftime(timeString, sizeof(timeString), "%x %X", localtime(&time)) == 0)
+                std::tm timeInfo;
+
+#ifdef _MSC_VER
+                if (localtime_s(&timeInfo, &time))
                 {
-                    timeString[0] = '\0';
+                    cout << "localtime_s error" << endl;
+                    return;
                 }
+#else
+                if (!localtime_r(&time, &timeInfo))
+                {
+                    cout << "localtime_r error" << endl;
+                    return;
+                }
+#endif
+                char timeString[100];
+                if (!strftime(timeString, sizeof(timeString), "%x %X", &timeInfo))
+                {
+                    cout << "strftime error" << endl;
+                    return;
+                }
+
                 cout << "received time for `" << sample.getKey() << "': " << timeString << endl;
             });
 

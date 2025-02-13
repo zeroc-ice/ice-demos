@@ -11,11 +11,14 @@ int
 main(int argc, char* argv[])
 {
     // Figure out my name.
+#ifdef _MSC_VER
+    size_t requestedSize;
+    char buffer[256];
+    getenv_s(&requestedSize, buffer, sizeof(buffer), "USERNAME");
+    const char* name = requestedSize > 0 ? buffer : nullptr;
+#else
     const char* name = getenv("USER");
-    if (name == nullptr)
-    {
-        name = getenv("USERNAME");
-    }
+#endif
     if (name == nullptr)
     {
         name = "masked user";
@@ -23,7 +26,8 @@ main(int argc, char* argv[])
 
     // Set the Ice.ImplicitContext property to "Shared" before creating the communicator.
     // This is only necessary for the implicit context API (see below).
-    Ice::InitializationData initData{.properties = Ice::createProperties(argc, argv)};
+    Ice::InitializationData initData;
+    initData.properties = Ice::createProperties(argc, argv);
     initData.properties->setProperty("Ice.ImplicitContext", "Shared");
 
     // Create an Ice communicator to initialize the Ice runtime. The CommunicatorHolder is a RAII helper that creates
