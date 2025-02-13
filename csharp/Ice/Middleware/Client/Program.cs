@@ -24,7 +24,7 @@ try
 }
 catch (Ice.ObjectNotExistException)
 {
-    // Expected with an invalid token. See AuthorizationMiddleware.
+    // Expected with an invalid (or missing) token. See AuthorizationMiddleware.
 }
 
 // Send a request with the correct token in the request context.
