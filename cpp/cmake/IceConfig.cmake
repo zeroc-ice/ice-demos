@@ -85,8 +85,6 @@ endif()
 
 foreach(component ${Ice_FIND_COMPONENTS})
   if(NOT TARGET Ice::${component})
-    # Create an imported target for the component
-    add_library(Ice::${component} UNKNOWN IMPORTED)
 
     find_library(Ice_${component}_LIBRARY_RELEASE
       NAMES ${component} ${component}${Ice_SO_VERSION}
@@ -100,32 +98,37 @@ foreach(component ${Ice_FIND_COMPONENTS})
       PATH_SUFFIXES ${Ice_ARCHITECTURE} ${Ice_ARCHITECTURE}/Debug
     )
 
-    if(Ice_${component}_LIBRARY_RELEASE)
-      set_property(TARGET Ice::${component} APPEND PROPERTY
-        IMPORTED_CONFIGURATIONS RELEASE
-      )
-      set_target_properties(Ice::${component} PROPERTIES
-        IMPORTED_LOCATION_RELEASE "${Ice_${component}_LIBRARY_RELEASE}"
-      )
-    endif()
-
-    if(Ice_${component}_LIBRARY_DEBUG)
-      set_property(TARGET Ice::${component} APPEND PROPERTY
-        IMPORTED_CONFIGURATIONS DEBUG
-      )
-      set_target_properties(Ice::${component} PROPERTIES
-        IMPORTED_LOCATION_DEBUG "${Ice_${component}_LIBRARY_DEBUG}"
-      )
-    endif()
-
-    set_target_properties(Ice::${component} PROPERTIES
-      INTERFACE_INCLUDE_DIRECTORIES "${Ice_INCLUDE_DIRS}"
-    )
-
     # Select the appropriate library configuration based on platform and build type
     include(SelectLibraryConfigurations)
     select_library_configurations(Ice_${component})
 
+    if(Ice_${component}_LIBRARY)
+
+      # Create an imported target for the component
+      add_library(Ice::${component} UNKNOWN IMPORTED)
+      set_target_properties(Ice::${component} PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES "${Ice_INCLUDE_DIRS}"
+      )
+
+      if(Ice_${component}_LIBRARY_RELEASE)
+        set_property(TARGET Ice::${component} APPEND PROPERTY
+          IMPORTED_CONFIGURATIONS RELEASE
+        )
+        set_target_properties(Ice::${component} PROPERTIES
+          IMPORTED_LOCATION_RELEASE "${Ice_${component}_LIBRARY_RELEASE}"
+        )
+      endif()
+
+      if(Ice_${component}_LIBRARY_DEBUG)
+        set_property(TARGET Ice::${component} APPEND PROPERTY
+          IMPORTED_CONFIGURATIONS DEBUG
+        )
+        set_target_properties(Ice::${component} PROPERTIES
+          IMPORTED_LOCATION_DEBUG "${Ice_${component}_LIBRARY_DEBUG}"
+        )
+      endif()
+
+    endif()
   endif()
 
 endforeach()
