@@ -86,7 +86,7 @@ jobs:
 
           find . -name CMakeLists.txt -type f | while IFS= read -r file; do
             dir=$(dirname "$file");
-            cmake -B "$dir/build" -S "$dir" -DIce_DEBUG=ON -DCMAKE_BUILD_TYPE=Release
+            cmake -B "$dir/build" -S "$dir" -DIce_DEBUG=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_COMPILE_WARNING_AS_ERROR=ON -DUSE_ICE_CXX_FLAGS=ON
             cmake --build "$dir/build"
           done
         if: runner.os != 'Windows'
@@ -100,7 +100,7 @@ jobs:
 
             Get-ChildItem -Recurse -Filter CMakeLists.txt | ForEach-Object {
               $dir = $_.DirectoryName
-              cmake -B "$dir/build" -S "$dir" -DIce_DEBUG=ON
+              cmake -B "$dir/build" -S "$dir" -DIce_DEBUG=ON -DCMAKE_COMPILE_WARNING_AS_ERROR=ON -DUSE_ICE_CXX_FLAGS=ON
               cmake --build "$dir/build" --config Release
             }
         if: runner.os == 'Windows'
