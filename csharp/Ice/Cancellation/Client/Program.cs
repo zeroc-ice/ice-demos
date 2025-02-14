@@ -12,7 +12,7 @@ using Ice.Communicator communicator = Ice.Util.initialize(ref args);
 // or IP address.
 GreeterPrx greeter = GreeterPrxHelper.createProxy(communicator, "greeter:tcp -h localhost -p 4061");
 
-// Create a proxy to the slow greeter. It uses the same connection is the regular greeter.
+// Create a proxy to the slow greeter. It uses the same connection as the regular greeter.
 GreeterPrx slowGreeter = GreeterPrxHelper.createProxy(communicator, "slowGreeter:tcp -h localhost -p 4061");
 
 // Send a request to the regular greeter and get the response.
