@@ -98,8 +98,7 @@ jobs:
             # No IceBT on Windows
             Remove-Item -Recurse -Force "IceBT"
 
-            $ErrorActionPreference = 'Stop'
-            Get-ChildItem -Recurse -Filter CMakeLists.txt | ForEach-Object {
+            Get-ChildItem -Recurse -Filter CMakeLists.txt | ForEach-Object -ErrorAction Stop {
               $dir = $_.DirectoryName
               cmake -B "$dir/build" -S "$dir" -DIce_DEBUG=ON -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
               cmake --build "$dir/build" --config Release --verbose
@@ -120,7 +119,7 @@ jobs:
         working-directory: ice-demos/csharp
         run: |
           $ErrorActionPreference = 'Stop'
-          Get-ChildItem -Recurse -Filter *.sln | ForEach-Object {
+          Get-ChildItem -Recurse -Filter *.sln | ForEach-Object -ErrorAction Stop {
             dotnet build $_.FullName
           }
         if: runner.os == 'Windows'
