@@ -95,12 +95,11 @@ jobs:
         timeout-minutes: 20
         working-directory: ice-demos/cpp
         run: |
-          # No IceBT on Windows
           Remove-Item -Recurse -Force "IceBT"
 
           Get-ChildItem -Recurse -Filter *.sln | ForEach-Object {
-            $dir = $_.DirectoryName
             try {
+              $dir = $_.DirectoryName
               cmake -B "$dir/build" -S "$dir" -DIce_DEBUG=ON -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
               cmake --build "$dir/build" --config Release --verbose
             } catch {
