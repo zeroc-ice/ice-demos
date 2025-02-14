@@ -9,7 +9,7 @@
 using namespace std;
 
 Server::Chatbot::Chatbot(std::chrono::milliseconds delay, std::shared_future<void> cancelDispatch)
-    : _cancelDispatch{std::move(cancelDispatch)}, _delay{delay}
+    :  _delay{delay}, _cancelDispatch{std::move(cancelDispatch)}
 {
 }
 

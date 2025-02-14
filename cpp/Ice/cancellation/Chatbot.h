@@ -21,8 +21,8 @@ namespace Server
         std::string greet(std::string name, const Ice::Current&) override;
 
     private:
-        std::shared_future<void> _cancelDispatch;
         std::chrono::milliseconds _delay;
+        std::shared_future<void> _cancelDispatch;
     };
 }
 
