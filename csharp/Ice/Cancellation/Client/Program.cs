@@ -47,7 +47,7 @@ catch (Ice.InvocationCanceledException exception)
 }
 
 // Verify the regular greeter still works.
-await greeter.GreetAsync("carol");
+greeting = await greeter.GreetAsync("carol");
 Console.WriteLine(greeting);
 
 // Send a request to the slow greeter, and wait forever the response.
