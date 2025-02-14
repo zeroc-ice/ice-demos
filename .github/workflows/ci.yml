@@ -98,17 +98,17 @@ jobs:
           # No IceBT on Windows
           Remove-Item -Recurse -Force "IceBT"
 
-          $ErrorActionPreference = "Stop"
-          try {
-            Get-ChildItem -Recurse -Filter *.sln | ForEach-Object {
-              $dir = $_.DirectoryName
+          Get-ChildItem -Recurse -Filter *.sln | ForEach-Object {
+            $dir = $_.DirectoryName
+            try {
               cmake -B "$dir/build" -S "$dir" -DIce_DEBUG=ON -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
               cmake --build "$dir/build" --config Release --verbose
+            } catch {
+              Write-Error $_
+              exit 1
             }
-          } catch {
-            Write-Error $_
-            exit 1
           }
+
         if: runner.os == 'Windows'
 
       - name: Build C# Demos
@@ -125,13 +125,13 @@ jobs:
         working-directory: ice-demos/csharp
         run: |
           $ErrorActionPreference = "Stop"
-          try {
-            Get-ChildItem -Recurse -Filter *.sln | ForEach-Object {
+          Get-ChildItem -Recurse -Filter *.sln | ForEach-Object {
+            try {
               dotnet build $_.FullName
+            } catch {
+              Write-Error $_
+              exit 1
             }
-          } catch {
-            Write-Error $_
-            exit 1
           }
         if: runner.os == 'Windows'
 
