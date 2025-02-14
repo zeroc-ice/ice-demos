@@ -12,23 +12,21 @@ using Ice.Communicator communicator = Ice.Util.initialize(ref args);
 // or IP address.
 GreeterPrx greeter = GreeterPrxHelper.createProxy(communicator, "greeter:tcp -h localhost -p 4061");
 
-// Reduce the invocation timeout on this proxy to 4 seconds (the default is 60 seconds).
-greeter = GreeterPrxHelper.uncheckedCast(greeter.ice_invocationTimeout(4_000)); // in milliseconds
+// Create a proxy to the slow greeter. It uses the same connection is the regular greeter.
+GreeterPrx slowGreeter = GreeterPrxHelper.createProxy(communicator, "slowGreeter:tcp -h localhost -p 4061");
 
-// Get a proxy to the admin facet of the Greeter object.
-GreeterAdminPrx greeterAdmin = GreeterAdminPrxHelper.uncheckedCast(greeter.ice_facet("admin"));
-
-// Send a request to the remote object and get the response.
+// Send a request to the regular greeter and get the response.
 string greeting = await greeter.GreetAsync(Environment.UserName);
 Console.WriteLine(greeting);
 
-// Pause the greeter.
-await greeterAdmin.PauseAsync();
+// Create another slow greeter proxy with an invocation timeout of 4 seconds (the default invocation timeout is
+// infinite).
+var slowGreeter4s = GreeterPrxHelper.uncheckedCast(slowGreeter.ice_invocationTimeout(4_000)); // in milliseconds
 
-// Verify that a new request fails with an InvocationTimeoutException.
+// Send a request to the slow greeter with the 4-second invocation timeout.
 try
 {
-    greeting = await greeter.GreetAsync("alice");
+    greeting = await slowGreeter4s.GreetAsync("alice");
     Console.WriteLine($"Received unexpected greeting: {greeting}");
 }
 catch (Ice.InvocationTimeoutException exception)
@@ -36,19 +34,11 @@ catch (Ice.InvocationTimeoutException exception)
     Console.WriteLine($"Caught InvocationTimeoutException, as expected: {exception.Message}");
 }
 
-// Resume the greeter and verify it still works.
-await greeterAdmin.ResumeAsync();
-greeting = await greeter.GreetAsync("bob");
-Console.WriteLine(greeting);
-
-// Pause the greeter again and verify we can cancel the request via its cancellation token.
-await greeterAdmin.PauseAsync();
-
-using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(2));
-
+// Send a request to the slow greeter, and cancel this request after 4 seconds.
+using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(4));
 try
 {
-    greeting = await greeter.GreetAsync("carol", cancel: cts.Token);
+    greeting = await slowGreeter.GreetAsync("bob", cancel: cts.Token);
     Console.WriteLine($"Received unexpected greeting: {greeting}");
 }
 catch (Ice.InvocationCanceledException exception)
@@ -56,7 +46,18 @@ catch (Ice.InvocationCanceledException exception)
     Console.WriteLine($"Caught InvocationCanceledException, as expected: {exception.Message}");
 }
 
-// Resume the greeter and verify it still works.
-await greeterAdmin.ResumeAsync();
-greeting = await greeter.GreetAsync("dave");
+// Verify the regular greeter still works.
+await greeter.GreetAsync("carol");
 Console.WriteLine(greeting);
+
+// Send a request to the slow greeter, and wait forever the response.
+Console.WriteLine("Please press Ctrl+C in the server's terminal to cancel the slow greeter dispatch.");
+try
+{
+    greeting = await slowGreeter.GreetAsync("dave");
+    Console.WriteLine(greeting);
+}
+catch (Ice.UnknownException exception)
+{
+    Console.WriteLine($"UnknownException, as expected: {exception.Message}");
+}

@@ -14,17 +14,4 @@ module VisitorCenter
         ["cs:identifier:Greet"] // We prefer PascalCase for C# methods.
         string greet(string name);
     }
-
-    /// Represents the administrative interface for a Greeter.
-    interface GreeterAdmin
-    {
-        /// Pauses the greeter. While paused, the greet operation blocks and does not return any greeting until after
-        /// {@link resume} is called.
-        ["cs:identifier:Pause"]
-        void pause();
-
-        /// Resumes the greeter.
-         ["cs:identifier:Resume"]
-        void resume();
-    }
 }

@@ -6,10 +6,12 @@ using Ice.Communicator communicator = Ice.Util.initialize(ref args);
 // Create an object adapter that listens for incoming requests and dispatches them to servants.
 Ice.ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints("GreeterAdapter", "tcp -p 4061");
 
-// Register the Chatbot and ChatbotAdmin servants with the adapter.
-using var chatbot = new Server.Chatbot();
-adapter.add(chatbot, Ice.Util.stringToIdentity("greeter"));
-adapter.addFacet(new Server.ChatbotAdmin(chatbot), Ice.Util.stringToIdentity("greeter"), "admin");
+// Create a CancellationTokenSource to cancel outstanding dispatches after the user presses Ctrl+C.
+using var cts = new CancellationTokenSource();
+
+// Register two instances of Chatbot - a regular greater and a slow greeter.
+adapter.add(new Server.Chatbot(TimeSpan.Zero, CancellationToken.None), Ice.Util.stringToIdentity("greeter"));
+adapter.add(new Server.Chatbot(TimeSpan.FromSeconds(60), cts.Token), Ice.Util.stringToIdentity("slowGreeter"));
 
 // Start dispatching requests.
 adapter.activate();
@@ -18,3 +20,6 @@ Console.WriteLine("Listening on port 4061...");
 // Wait until the user presses Ctrl+C.
 await CancelKeyPressed;
 Console.WriteLine("Caught Ctrl+C, exiting...");
+
+// Cancel outstanding dispatches "stuck" in the slow greeter.
+cts.Cancel();
