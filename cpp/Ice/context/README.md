@@ -1,8 +1,11 @@
 # Context
 
-This demo illustrates how to use [request contexts][1].
+The Context demo shows the 3 different ways to set a request context in a client.
 
-To build the demo run:
+A request context is a `dictionary<string, string>` carried by all requests. It is empty by default, and the
+application is free to set any entry in this dictionary.
+
+To build the demo, run:
 
 ```shell
 cmake -B build
@@ -36,5 +39,3 @@ In a separate window, start the client:
 ```shell
 build\Release\client
 ```
-
-[1]: https://doc.zeroc.com/ice/3.7/client-side-features/request-contexts

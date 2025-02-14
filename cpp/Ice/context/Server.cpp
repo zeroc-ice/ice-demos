@@ -1,7 +1,7 @@
 // Copyright (c) ZeroC, Inc.
 
-#include "ContextI.h"
-#include <Ice/Ice.h>
+#include "Chatbot.h"
+
 #include <iostream>
 
 using namespace std;
@@ -9,46 +9,28 @@ using namespace std;
 int
 main(int argc, char* argv[])
 {
-    int status = 0;
+    // CtrlCHandler is a helper class that handles Ctrl+C and similar signals. It must be constructed at the beginning
+    // of the program, before creating an Ice communicator or starting any thread.
+    Ice::CtrlCHandler ctrlCHandler;
 
-    try
-    {
-        //
-        // CtrlCHandler must be created before the communicator or any other threads are started
-        //
-        Ice::CtrlCHandler ctrlCHandler;
+    // Create an Ice communicator to initialize the Ice runtime. The CommunicatorHolder is a RAII helper that creates
+    // the communicator in its constructor and destroys it when it goes out of scope.
+    const Ice::CommunicatorHolder communicatorHolder{argc, argv};
+    const Ice::CommunicatorPtr& communicator = communicatorHolder.communicator();
 
-        //
-        // CommunicatorHolder's ctor initializes an Ice communicator,
-        // and its dtor destroys this communicator.
-        //
-        const Ice::CommunicatorHolder ich(argc, argv, "config.server");
-        const auto& communicator = ich.communicator();
+    // Create an object adapter that listens for incoming requests and dispatches them to servants.
+    auto adapter = communicator->createObjectAdapterWithEndpoints("GreeterAdapter", "tcp -p 4061");
 
-        ctrlCHandler.setCallback([communicator](int) { communicator->shutdown(); });
+    // Register the Chatbot servant with the adapter.
+    adapter->add(make_shared<Server::Chatbot>(), Ice::stringToIdentity("greeter"));
 
-        //
-        // The communicator initialization removes all Ice-related arguments from argc/argv
-        //
-        if (argc > 1)
-        {
-            cerr << argv[0] << ": too many arguments" << endl;
-            status = 1;
-        }
-        else
-        {
-            auto adapter = communicator->createObjectAdapter("Context");
-            adapter->add(make_shared<ContextI>(), Ice::stringToIdentity("context"));
-            adapter->activate();
+    // Start dispatching requests.
+    adapter->activate();
+    cout << "Listening on port 4061..." << endl;
 
-            communicator->waitForShutdown();
-        }
-    }
-    catch (const std::exception& ex)
-    {
-        cerr << ex.what() << endl;
-        status = 1;
-    }
+    // Wait until the user presses Ctrl+C.
+    int signal = ctrlCHandler.wait();
+    cout << "Caught signal " << signal << ", exiting..." << endl;
 
-    return status;
+    return 0;
 }
