@@ -7,11 +7,11 @@ using Ice.Communicator communicator = Ice.Util.initialize(ref args);
 Ice.ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints("GreeterAdapter", "tcp -p 4061");
 
 // Create a CancellationTokenSource to cancel outstanding dispatches after the user presses Ctrl+C.
-using var cts = new CancellationTokenSource();
+using var dispatchCts = new CancellationTokenSource();
 
 // Register two instances of Chatbot - a regular greater and a slow greeter.
 adapter.add(new Server.Chatbot(TimeSpan.Zero, CancellationToken.None), Ice.Util.stringToIdentity("greeter"));
-adapter.add(new Server.Chatbot(TimeSpan.FromSeconds(60), cts.Token), Ice.Util.stringToIdentity("slowGreeter"));
+adapter.add(new Server.Chatbot(TimeSpan.FromSeconds(60), dispatchCts.Token), Ice.Util.stringToIdentity("slowGreeter"));
 
 // Start dispatching requests.
 adapter.activate();
@@ -22,4 +22,4 @@ await CancelKeyPressed;
 Console.WriteLine("Caught Ctrl+C, exiting...");
 
 // Cancel outstanding dispatches "stuck" in the slow greeter.
-cts.Cancel();
+dispatchCts.Cancel();

@@ -21,7 +21,7 @@ internal class Chatbot : GreeterDisp_
         }
         catch (OperationCanceledException)
         {
-            Console.WriteLine($"Dispatch canceled {{ name = '{name}' }}");
+            Console.WriteLine($"greet dispatch canceled {{ name = '{name}' }}");
             throw;
         }
 

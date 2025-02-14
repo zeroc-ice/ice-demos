@@ -21,7 +21,7 @@ Console.WriteLine(greeting);
 
 // Create another slow greeter proxy with an invocation timeout of 4 seconds (the default invocation timeout is
 // infinite).
-var slowGreeter4s = GreeterPrxHelper.uncheckedCast(slowGreeter.ice_invocationTimeout(4_000)); // in milliseconds
+var slowGreeter4s = GreeterPrxHelper.uncheckedCast(slowGreeter.ice_invocationTimeout(TimeSpan.FromSeconds(4)));
 
 // Send a request to the slow greeter with the 4-second invocation timeout.
 try
@@ -50,7 +50,7 @@ catch (Ice.InvocationCanceledException exception)
 greeting = await greeter.GreetAsync("carol");
 Console.WriteLine(greeting);
 
-// Send a request to the slow greeter, and wait forever the response.
+// Send a request to the slow greeter, and wait forever for the response.
 Console.WriteLine("Please press Ctrl+C in the server's terminal to cancel the slow greeter dispatch.");
 try
 {
