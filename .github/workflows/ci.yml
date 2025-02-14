@@ -98,6 +98,7 @@ jobs:
             # No IceBT on Windows
             Remove-Item -Recurse -Force "IceBT"
 
+            $ErrorActionPreference = 'Stop'
             Get-ChildItem -Recurse -Filter CMakeLists.txt | ForEach-Object {
               $dir = $_.DirectoryName
               cmake -B "$dir/build" -S "$dir" -DIce_DEBUG=ON -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
@@ -118,6 +119,7 @@ jobs:
         timeout-minutes: 20
         working-directory: ice-demos/csharp
         run: |
+          $ErrorActionPreference = 'Stop'
           Get-ChildItem -Recurse -Filter *.sln | ForEach-Object {
             dotnet build $_.FullName
           }

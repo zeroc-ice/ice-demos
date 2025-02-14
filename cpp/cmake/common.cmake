@@ -4,7 +4,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # We use these flags over presets to avoid having to create a CMakePreset.json file in every project.
-# If you want to enable these, set this option to OFF: -DICE_DEMO_WARNINGS=OFF
+# If you want to disable, set this option to OFF (`-DICE_DEMO_WARNINGS=OFF`) when configuring CMake.
 option(ICE_DEMO_WARNINGS "Ice Demo C++ warning flags" ON)
 if(ICE_DEMO_WARNINGS)
     if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
