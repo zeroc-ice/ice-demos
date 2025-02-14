@@ -20,10 +20,13 @@ Server::Chatbot::greet(string name, const Ice::Current&)
 
     if (_delay > std::chrono::milliseconds::zero())
     {
+        // Each thread needs its own copy of the shared_future.
+        shared_future<void> cancelDispatch{_cancelDispatch};
+
         // Wait for delay or until _cancelDispatch is completed.
         // This call blocks a dispatch thread from the Ice server thread pool, which means we need to configure the
         // Ice server thread pool to have enough threads.
-        if (_cancelDispatch.wait_for(_delay) == std::future_status::ready)
+        if (cancelDispatch.wait_for(_delay) == std::future_status::ready)
         {
             cout << "greet dispatch canceled { name = '" << name << "' }" << endl;
             throw Ice::UnknownException{__FILE__, __LINE__, "greet dispatch canceled"};
