@@ -95,14 +95,19 @@ jobs:
         timeout-minutes: 20
         working-directory: ice-demos/cpp
         run: |
-            # No IceBT on Windows
-            Remove-Item -Recurse -Force "IceBT"
+          # No IceBT on Windows
+          Remove-Item -Recurse -Force "IceBT"
 
-            Get-ChildItem -Recurse -Filter CMakeLists.txt | ForEach-Object -ErrorAction Stop {
+          try {
+            Get-ChildItem -Recurse -Filter *.sln | ForEach-Object {
               $dir = $_.DirectoryName
               cmake -B "$dir/build" -S "$dir" -DIce_DEBUG=ON -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
               cmake --build "$dir/build" --config Release --verbose
             }
+          } catch {
+            Write-Error $_
+            exit 1
+          }
         if: runner.os == 'Windows'
 
       - name: Build C# Demos
@@ -118,9 +123,13 @@ jobs:
         timeout-minutes: 20
         working-directory: ice-demos/csharp
         run: |
-          $ErrorActionPreference = 'Stop'
-          Get-ChildItem -Recurse -Filter *.sln | ForEach-Object -ErrorAction Stop {
-            dotnet build $_.FullName
+          try {
+            Get-ChildItem -Recurse -Filter *.sln | ForEach-Object {
+              dotnet build $_.FullName
+            }
+          } catch {
+            Write-Error $_
+            exit 1
           }
         if: runner.os == 'Windows'
 
