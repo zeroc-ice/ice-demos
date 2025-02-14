@@ -98,6 +98,7 @@ jobs:
           # No IceBT on Windows
           Remove-Item -Recurse -Force "IceBT"
 
+          $ErrorActionPreference = "Stop"
           try {
             Get-ChildItem -Recurse -Filter *.sln | ForEach-Object {
               $dir = $_.DirectoryName
@@ -123,6 +124,7 @@ jobs:
         timeout-minutes: 20
         working-directory: ice-demos/csharp
         run: |
+          $ErrorActionPreference = "Stop"
           try {
             Get-ChildItem -Recurse -Filter *.sln | ForEach-Object {
               dotnet build $_.FullName
