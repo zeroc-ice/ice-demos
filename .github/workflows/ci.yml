@@ -98,15 +98,19 @@ jobs:
           # No IceBT on Windows
           Remove-Item -Recurse -Force "IceBT"
 
-          try {
-            Get-ChildItem -Recurse -Filter CMakeLists.txt | ForEach-Object {
+          $ErrorActionPreference = "Stop"
+
+          Get-ChildItem -Recurse -Filter CMakeLists.txt | ForEach-Object {
+              Write-Output "Processing: $_"
               $dir = $_.DirectoryName
+
+              # Run cmake configure step
               cmake -B "$dir/build" -S "$dir" -DIce_DEBUG=ON -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
+              if ($LASTEXITCODE -ne 0) { throw "CMake configuration failed" }
+
+              # Run cmake build step
               cmake --build "$dir/build" --config Release --verbose
-            }
-          } catch {
-            Write-Error $_
-            exit 1
+              if ($LASTEXITCODE -ne 0) { throw "CMake build failed" }
           }
 
         if: runner.os == 'Windows'
@@ -124,14 +128,12 @@ jobs:
         timeout-minutes: 20
         working-directory: ice-demos/csharp
         run: |
-          try {
-            Get-ChildItem -Recurse -Filter *.sln | ForEach-Object {
-              dotnet build $_.FullName
-            }
-          } catch {
-            Write-Error $_
-            exit 1
+          $ErrorActionPreference = "Stop"
+          Get-ChildItem -Recurse -Filter *.sln | ForEach-Object {
+            dotnet build $_.FullName
+           if ($LASTEXITCODE -ne 0) { throw "CMake configuration failed" }
           }
+
         if: runner.os == 'Windows'
 
       - name: Run .NET format
