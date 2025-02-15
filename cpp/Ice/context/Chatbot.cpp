@@ -22,7 +22,7 @@ Server::Chatbot::greet(string name, const Ice::Current& current)
     {
         os << "Hallo " << name << ", wie geht's?";
     }
-    else if (language =="es")
+    else if (language == "es")
     {
         os << "¡Hola " << name << "!";
     }

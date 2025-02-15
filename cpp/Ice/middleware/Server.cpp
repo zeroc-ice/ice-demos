@@ -23,7 +23,8 @@ main(int argc, char* argv[])
     auto adapter = communicator->createObjectAdapterWithEndpoints("GreeterAdapter", "tcp -p 4061");
 
     // Install the Authorization middleware in the object adapter.
-    adapter->use([](Ice::ObjectPtr next) { return make_shared<Server::AuthorizationMiddleware>(std::move(next), "iced tea"); });
+    adapter->use([](Ice::ObjectPtr next)
+                 { return make_shared<Server::AuthorizationMiddleware>(std::move(next), "iced tea"); });
 
     // Register the Chatbot servant with the adapter.
     adapter->add(make_shared<Server::Chatbot>(), Ice::stringToIdentity("greeter"));

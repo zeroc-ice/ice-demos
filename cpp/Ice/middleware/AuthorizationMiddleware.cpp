@@ -7,12 +7,15 @@
 using namespace std;
 
 Server::AuthorizationMiddleware::AuthorizationMiddleware(Ice::ObjectPtr next, string validToken)
-    : _next{std::move(next)}, _validToken{std::move(validToken)}
+    : _next{std::move(next)},
+      _validToken{std::move(validToken)}
 {
 }
 
 void
-Server::AuthorizationMiddleware::dispatch(Ice::IncomingRequest& request, function<void(Ice::OutgoingResponse)> sendResponse)
+Server::AuthorizationMiddleware::dispatch(
+    Ice::IncomingRequest& request,
+    function<void(Ice::OutgoingResponse)> sendResponse)
 {
     // Check if the request has a valid token in its context.
     auto p = request.current().ctx.find("token");
