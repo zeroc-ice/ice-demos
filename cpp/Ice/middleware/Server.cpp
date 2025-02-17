@@ -1,5 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
+#include "AuthorizationMiddleware.h"
 #include "Chatbot.h"
 
 #include <iostream>
@@ -20,6 +21,10 @@ main(int argc, char* argv[])
 
     // Create an object adapter that listens for incoming requests and dispatches them to servants.
     auto adapter = communicator->createObjectAdapterWithEndpoints("GreeterAdapter", "tcp -p 4061");
+
+    // Install the Authorization middleware in the object adapter.
+    adapter->use([](Ice::ObjectPtr next)
+                 { return make_shared<Server::AuthorizationMiddleware>(std::move(next), "iced tea"); });
 
     // Register the Chatbot servant with the adapter.
     adapter->add(make_shared<Server::Chatbot>(), Ice::stringToIdentity("greeter"));

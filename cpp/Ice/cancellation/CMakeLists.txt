@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(middleware CXX)
+project(cancellation CXX)
 
 include(../../cmake/common.cmake)
 
