@@ -7,10 +7,7 @@
     "license": "GPL-2.0-only",
     "description": "Ice greeter demo",
     "scripts": {
-        "build:slice": "npx slice2js --typescript --output-dir Greeter.ice",
-        "build:ts": "npx tsc",
-        "build": "npm run build:slice && npm run build:ts",
-        "start": "node dist/index.js"
+        "build": "npx slice2js --typescript --output-dir Greeter.ice && npx tsc",
     },
     "dependencies": {
         "ice": "^3.8.0-nightly.20250216.1"
