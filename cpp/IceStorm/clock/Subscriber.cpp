@@ -168,7 +168,7 @@ main(int argc, char* argv[])
     // Add a servant to the object adapter. If --id is used the identity comes from the command line, otherwise a UUID
     // is used. id is not directly altered since it is used below to detect whether subscribeAndGetPublisher can throw
     // AlreadySubscribed.
-    Ice::Identity subId{.name = id.empty() ? Ice::generateUUID() : id};
+    Ice::Identity subId{id.empty() ? Ice::generateUUID() : id, ""};
 
     Ice::ObjectPrx subscriber = adapter->add(make_shared<ClockI>(), subId);
 
