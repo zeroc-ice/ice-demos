@@ -23,7 +23,8 @@ main(int argc, char* argv[])
 
     // Set the Ice.ImplicitContext property to "Shared" before creating the communicator.
     // This is only necessary for the implicit context API (see below).
-    Ice::InitializationData initData{.properties = Ice::createProperties(argc, argv)};
+    Ice::InitializationData initData;
+    initData.properties = Ice::createProperties(argc, argv);
     initData.properties->setProperty("Ice.ImplicitContext", "Shared");
 
     // Create an Ice communicator to initialize the Ice runtime. The CommunicatorHolder is a RAII helper that creates
