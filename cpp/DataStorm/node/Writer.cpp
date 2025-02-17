@@ -45,13 +45,13 @@ main(int argc, char* argv[])
             if (localtime_s(&timeInfo, &now))
             {
                 cout << "failed to convert time" << endl;
-                return;
+                break;
             }
 #else
             if (!localtime_r(&now, &timeInfo))
             {
                 cout << "failed to convert time" << endl;
-                return;
+                break;
             }
 #endif
 
@@ -59,7 +59,7 @@ main(int argc, char* argv[])
             if (!strftime(timeString, sizeof(timeString), "%x %X", &timeInfo))
             {
                 cout << "failed to convert time: " << endl;
-                return;
+                break;
             }
             writer.update(timeString);
             this_thread::sleep_for(chrono::seconds(1));
