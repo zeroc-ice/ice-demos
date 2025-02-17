@@ -169,7 +169,7 @@ run(const shared_ptr<Ice::Communicator>& communicator, int argc, char* argv[])
         {
             auto now = chrono::system_clock::now();
 
-            clock->tick(std::format("{:%F %T}", sample.getValue()));
+            clock->tick(std::format("{:%F %T}", now));
             this_thread::sleep_for(chrono::seconds(1));
         }
         catch (const Ice::CommunicatorDestroyedException&)
