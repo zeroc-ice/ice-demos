@@ -11,7 +11,13 @@ if(ICE_DEMO_WARNINGS)
         add_compile_options(-Wall -Wextra -Wredundant-decls -Wdeprecated)
     elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
         add_compile_options(
-            -Wall -Wextra -Wredundant-decls -Wdeprecated -Wstrict-prototypes -Wconversion -Wdocumentation
+            -Wall
+            -Wextra
+            -Wredundant-decls
+            -Wdeprecated
+            -Wstrict-prototypes
+            -Wconversion
+            -Wdocumentation
             -Wreorder-init-list
         )
     elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")

@@ -4,7 +4,7 @@ project(datastorm_stock CXX)
 
 include(../../cmake/common.cmake)
 
-# This project requires C++20
+# This demo requires C++20
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
