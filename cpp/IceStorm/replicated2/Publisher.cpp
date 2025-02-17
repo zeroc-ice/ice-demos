@@ -168,10 +168,27 @@ run(const shared_ptr<Ice::Communicator>& communicator, int argc, char* argv[])
         try
         {
             auto now = chrono::system_clock::to_time_t(chrono::system_clock::now());
-            char timeString[100];
-            if (strftime(timeString, sizeof(timeString), "%x %X", localtime(&now)) == 0)
+
+            struct std::tm timeInfo;
+#if defined(_MSC_VER)
+            if (localtime_s(&timeInfo, &now))
             {
-                timeString[0] = '\0';
+                cout << "failed to convert time" << endl;
+                break;
+            }
+#else
+            if (!localtime_r(&now, &timeInfo))
+            {
+                cout << "failed to convert time" << endl;
+                break;
+            }
+#endif
+
+            char timeString[100];
+            if (!strftime(timeString, sizeof(timeString), "%x %X", &timeInfo))
+            {
+                cout << "failed to convert time" << endl;
+                break;
             }
             clock->tick(timeString);
             this_thread::sleep_for(chrono::seconds(1));
