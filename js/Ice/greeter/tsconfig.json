@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+     "lib": ["dom", "es2022"],
+     "target": "es2022",
+     "module": "es2022",
+     "noImplicitAny": true,
+     "moduleResolution": "node",
+     "preserveConstEnums": true,
+     "sourceMap": true
+    },
+    "files": [
+      "client.ts",
+    ]
+}
