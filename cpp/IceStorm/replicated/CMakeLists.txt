@@ -4,6 +4,8 @@ project(icestorm_replicated CXX)
 
 include(../../cmake/common.cmake)
 
+set(CMAKE_CXX_STANDARD 20)
+
 add_executable(subscriber Subscriber.cpp Clock.ice)
 slice2cpp_generate(subscriber)
 target_link_libraries(subscriber Ice::Ice Ice::IceStorm)

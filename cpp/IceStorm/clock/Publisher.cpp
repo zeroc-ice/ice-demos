@@ -147,33 +147,11 @@ main(int argc, char* argv[])
         {
             while (true)
             {
-                auto now = chrono::system_clock::to_time_t(chrono::system_clock::now());
-
-                struct std::tm timeInfo;
-#if defined(_MSC_VER)
-                if (localtime_s(&timeInfo, &now))
-                {
-                    cout << "failed to convert time" << endl;
-                    return;
-                }
-#else
-                if (!localtime_r(&now, &timeInfo))
-                {
-                    cout << "failed to convert time" << endl;
-                    return;
-                }
-#endif
-
-                char timeString[100];
-                if (!strftime(timeString, sizeof(timeString), "%x %X", &timeInfo))
-                {
-                    cout << "failed to convert time" << endl;
-                    return;
-                }
+                auto now = chrono::system_clock::now();
 
                 try
                 {
-                    clock->tick(timeString);
+                    clock->tick(std::format("{:%F %T}", now));
                 }
                 catch (const Ice::CommunicatorDestroyedException&)
                 {

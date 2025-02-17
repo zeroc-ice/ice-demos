@@ -38,30 +38,9 @@ main(int argc, char* argv[])
 
         while (!node.isShutdown())
         {
-            auto now = chrono::system_clock::to_time_t(chrono::system_clock::now());
+            auto now = chrono::system_clock::now();
 
-            struct std::tm timeInfo;
-#if defined(_MSC_VER)
-            if (localtime_s(&timeInfo, &now))
-            {
-                cout << "failed to convert time" << endl;
-                break;
-            }
-#else
-            if (!localtime_r(&now, &timeInfo))
-            {
-                cout << "failed to convert time" << endl;
-                break;
-            }
-#endif
-
-            char timeString[100];
-            if (!strftime(timeString, sizeof(timeString), "%x %X", &timeInfo))
-            {
-                cout << "failed to convert time: " << endl;
-                break;
-            }
-            writer.update(timeString);
+            writer.update(std::format("{:%F %T}", now));
             this_thread::sleep_for(chrono::seconds(1));
         }
     }
