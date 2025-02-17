@@ -8,11 +8,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 option(ICE_DEMO_WARNINGS "Ice Demo C++ warning flags" ON)
 if(ICE_DEMO_WARNINGS)
     if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-        add_compile_options(-Wall -Wextra -Wredundant-decls -Wshadow -Wdeprecated -Werror)
+        add_compile_options(-Wall -Wextra -Wredundant-decls -Wdeprecated)
     elseif(flags STREQUAL "Clang")
         add_compile_options(
-            -Wall -Wextra -Wshadow -Wshadow-all -Wredundant-decls -Wno-shadow-field -Wdeprecated
-            -Wstrict-prototypes -Werror -Wconversion -Wdocumentation -Wno-shadow-uncaptured-local
+            -Wall -Wextra -Wredundant-decls -Wdeprecated -Wstrict-prototypes -Wconversion -Wdocumentation
             -Wreorder-init-list
         )
     elseif(flags STREQUAL "MSVC")

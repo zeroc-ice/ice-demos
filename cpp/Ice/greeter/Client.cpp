@@ -49,9 +49,9 @@ main(int argc, char* argv[])
     promise<void> promise;
     greeter->greetAsync(
         "bob",
-        [&promise](string_view greetingResponse) // response callback
+        [&promise](string_view greeting) // response callback
         {
-            cout << greetingResponse << endl;
+            cout << greeting << endl;
             promise.set_value();
         },
         [&promise](std::exception_ptr exceptionPtr) // exception callback
