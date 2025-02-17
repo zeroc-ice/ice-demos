@@ -147,16 +147,11 @@ main(int argc, char* argv[])
         {
             while (true)
             {
-                auto now = chrono::system_clock::to_time_t(chrono::system_clock::now());
-                char timeString[100];
-                if (strftime(timeString, sizeof(timeString), "%x %X", localtime(&now)) == 0)
-                {
-                    timeString[0] = '\0';
-                }
+                auto now = chrono::system_clock::now();
 
                 try
                 {
-                    clock->tick(timeString);
+                    clock->tick(std::format("{:%F %T}", now));
                 }
                 catch (const Ice::CommunicatorDestroyedException&)
                 {

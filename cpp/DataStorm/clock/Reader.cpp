@@ -63,13 +63,8 @@ main(int argc, char* argv[])
             nullptr,
             [](const DataStorm::Sample<string, chrono::system_clock::time_point>& sample)
             {
-                auto time = chrono::system_clock::to_time_t(sample.getValue());
-                char timeString[100];
-                if (strftime(timeString, sizeof(timeString), "%x %X", localtime(&time)) == 0)
-                {
-                    timeString[0] = '\0';
-                }
-                cout << "received time for `" << sample.getKey() << "': " << timeString << endl;
+                cout << "received time for `" << sample.getKey() << "': " << std::format("{:%F %T}", sample.getValue())
+                     << endl;
             });
 
         // Exit once the user hits Ctrl-C to shutdown the node.

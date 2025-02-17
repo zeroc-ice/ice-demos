@@ -18,7 +18,7 @@ extern "C"
 }
 
 void
-HelloServiceI::start(const string& name, const Ice::CommunicatorPtr& communicator, const Ice::StringSeq&)
+HelloServiceI::start(const string&, const Ice::CommunicatorPtr& communicator, const Ice::StringSeq&)
 {
     _adapter = communicator->createObjectAdapterWithEndpoints("Hello", "tcp -p 10000:udp -p 10000");
     _adapter->add(make_shared<HelloI>(), Ice::stringToIdentity("hello"));

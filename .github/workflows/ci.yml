@@ -86,8 +86,8 @@ jobs:
 
           find . -name CMakeLists.txt -type f | while IFS= read -r file; do
             dir=$(dirname "$file");
-            cmake -B "$dir/build" -S "$dir" -DIce_DEBUG=ON -DCMAKE_BUILD_TYPE=Release
-            cmake --build "$dir/build"
+            cmake -B "$dir/build" -S "$dir" -DIce_DEBUG=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
+            cmake --build "$dir/build" --verbose
           done
         if: runner.os != 'Windows'
 
@@ -95,14 +95,24 @@ jobs:
         timeout-minutes: 20
         working-directory: ice-demos/cpp
         run: |
-            # No IceBT on Windows
-            Remove-Item -Recurse -Force "IceBT"
+          # No IceBT on Windows
+          Remove-Item -Recurse -Force "IceBT"
 
-            Get-ChildItem -Recurse -Filter CMakeLists.txt | ForEach-Object {
+          $ErrorActionPreference = "Stop"
+
+          Get-ChildItem -Recurse -Filter CMakeLists.txt | ForEach-Object {
+              Write-Output "Processing: $_"
               $dir = $_.DirectoryName
-              cmake -B "$dir/build" -S "$dir" -DIce_DEBUG=ON
-              cmake --build "$dir/build" --config Release
-            }
+
+              # Run cmake configure step
+              cmake -B "$dir/build" -S "$dir" -DIce_DEBUG=ON -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
+              if ($LASTEXITCODE -ne 0) { throw "CMake configuration failed" }
+
+              # Run cmake build step
+              cmake --build "$dir/build" --config Release --verbose
+              if ($LASTEXITCODE -ne 0) { throw "CMake build failed" }
+          }
+
         if: runner.os == 'Windows'
 
       - name: Build C# Demos
@@ -118,9 +128,12 @@ jobs:
         timeout-minutes: 20
         working-directory: ice-demos/csharp
         run: |
+          $ErrorActionPreference = "Stop"
           Get-ChildItem -Recurse -Filter *.sln | ForEach-Object {
             dotnet build $_.FullName
+           if ($LASTEXITCODE -ne 0) { throw "CMake configuration failed" }
           }
+
         if: runner.os == 'Windows'
 
       - name: Run .NET format

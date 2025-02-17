@@ -4,6 +4,8 @@ project(datastorm_clock CXX)
 
 include(../../cmake/common.cmake)
 
+set(CMAKE_CXX_STANDARD 20)
+
 add_executable(reader Reader.cpp)
 target_link_libraries(reader Ice::Ice Ice::DataStorm)
 
