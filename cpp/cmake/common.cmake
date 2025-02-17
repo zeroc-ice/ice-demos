@@ -9,12 +9,12 @@ option(ICE_DEMO_WARNINGS "Ice Demo C++ warning flags" ON)
 if(ICE_DEMO_WARNINGS)
     if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
         add_compile_options(-Wall -Wextra -Wredundant-decls -Wdeprecated)
-    elseif(flags STREQUAL "Clang")
+    elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
         add_compile_options(
             -Wall -Wextra -Wredundant-decls -Wdeprecated -Wstrict-prototypes -Wconversion -Wdocumentation
             -Wreorder-init-list
         )
-    elseif(flags STREQUAL "MSVC")
+    elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
         add_compile_options(/W4)
     endif()
 endif()
