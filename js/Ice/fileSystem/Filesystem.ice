@@ -8,7 +8,6 @@ module Filesystem
     exception WriteException
     {
         /// The reason for the write failure.
-        ["cs:identifier:Reason"]
         string reason;
     }
 
@@ -17,7 +16,6 @@ module Filesystem
     {
         /// Gets the name of this node.
         /// @return The name of the node.
-        ["cs:identifier:Name"] // remap the C# identifier to Name instead of the default (name).
         idempotent string name();
     }
 
@@ -29,13 +27,11 @@ module Filesystem
     {
         /// Reads the file and returns its contents.
         /// @return The contents of the file.
-        ["cs:identifier:Read"]
         idempotent Lines read();
 
         /// Overwrites the file with new contents.
         /// @param text The new contents of the file.
         /// @throws WriteException Thrown if the file cannot be written to.
-        ["cs:identifier:Write"]
         idempotent void write(Lines text) throws WriteException;
     }
 
@@ -47,7 +43,6 @@ module Filesystem
     {
         /// Gets the contents of the directory.
         /// @return The contents of the directory, as a list of non-null node proxies.
-        ["cs:identifier:List"]
         idempotent NodeSeq list();
     }
 }

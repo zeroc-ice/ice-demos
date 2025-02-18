@@ -7,7 +7,7 @@
     "license": "GPL-2.0-only",
     "description": "Ice file system demo",
     "scripts": {
-        "build": "npx slice2js --typescript Greeter.ice && npx tsc"
+        "build": "npx slice2js --typescript Filesystem.ice && npx tsc"
     },
     "dependencies": {
         "@zeroc/ice": "^3.8.0-nightly.0.0"
