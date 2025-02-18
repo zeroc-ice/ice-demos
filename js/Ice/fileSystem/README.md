@@ -1,6 +1,6 @@
-# Greeter
+# Filesystem
 
-The Greeter demo illustrates how to write a TypeScript client application using Ice for JavaScript.
+This demo implements the filesystem application shown at the end of JavaScript mapping chapter in the Ice manual.
 
 Ice for JavaScript has limited server-side support ([see documentation][1]). As a result, you need to start a Greeter
 server implemented in a language that fully supports server-side functionality, such as Python, Java, or C#.

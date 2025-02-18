@@ -1,6 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
-import { Ice } from "ice";
+import { Ice } from "@zeroc/ice";
 import { VisitorCenter } from "./Greeter.js";
 
 // Create an Ice communicator to initialize the Ice runtime. The communicator is disposed before the program exits.
