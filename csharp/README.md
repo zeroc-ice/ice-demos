@@ -2,64 +2,34 @@
 
 - [C# Demos](#c-demos)
   - [Overview](#overview)
-  - [Building and running the Demos](#building-and-running-the-demos)
-    - [Build Requirements](#build-requirements)
-    - [Building the demos](#building-the-demos)
-    - [Building the demos using a source build](#building-the-demos-using-a-source-build)
-    - [Running the Demos](#running-the-demos)
+  - [Building Requirements](#building-requirements)
+  - [Building the Demos](#building-the-demos)
 
 ## Overview
 
-This directory contains C# sample programs for various Ice components. These
-examples are provided to get you started on using a particular Ice feature or
-coding technique.
+This directory contains C# sample programs demonstrating how to use various features of
+[Ice](https://zeroc.com/products/ice) framework.
 
-Most of the subdirectories here correspond directly to Ice components, such as
-[Glacier2](./Glacier2), [IceBox](./IceBox), and so on. We've also included the
-following additional subdirectories:
+Each subdirectory includes a small demo focusing on a specific Ice component or coding technique.
 
-- [Manual](./Manual) contains complete examples for some of the code snippets
-in the [Ice manual][1].
+## Building Requirements
 
-- [Chat](./Chat) contains a .NET GUI client for the ZeroC [Chat Demo][2].
+1. **.NET SDK 8.0**
+   Download and install the .NET 8.0 SDK from
+   [dotnet.microsoft.com](https://dotnet.microsoft.com/en-us/download/dotnet).
 
-Refer to the [C++ demos)(../cpp) for more examples that use the Ice services
-(Glacier2, IceGrid, IceStorm).
+2. **ZeroC NuGet Feed**
+   The included [nuget.config](./nuget.config) file already adds the ZeroC NuGet feed to make
+   the ZeroC nightly builds available.
 
-## Building and running the Demos
+## Building the Demos
 
-### Build Requirements
-
-In order to build Ice for .NET sample programs, you need all of the following:
-
-- the [.NET SDK][3] version 8.0 or later
-
-You can build from the command-line or with Visual Studio 2022 for Windows.
-
-### Building the demos
-
-Open a command prompt and change to the `csharp` subdirectory:
+The top-level [Directory.Build.props](./Directory.Build.props) file sets `IceVersion` to
+`3.8.0-nightly.*` by default to pull the latest nightly build of Ice.
+You can override this on the command line:
 
 ```shell
-cd csharp
+dotnet build -p:IceVersion="3.8.0~alpha0"
 ```
 
-To build the sample programs run:
-
-```shell
-dotnet build
-```
-
-### Running the Demos
-
-For most demos, you can simply run `server` and `client` in separate Command Prompt windows. Refer to the README.md
-file in each demo directory for the exact usage instructions.
-
-Some demos require Ice services such as IceGrid and IceStorm that are not included in the `zeroc.ice.net` NuGet
-package. To run these demos, the simplest is to first install the Ice binary distribution for your platform and add its
-bin directory to your PATH. Please refer to the [Release Notes][4] for additional information.
-
-[1]: https://doc.zeroc.com/ice/3.7/introduction
-[2]: https://doc.zeroc.com/technical-articles/general-topics/chat-demo
-[3]: https://download/dotnet/8.0
-[4]: https://doc.zeroc.com/rel/ice-releases/ice-3-7/ice-3-7-10-release-notes
+Check each demo’s README for detailed instructions on building and running that specific example.
