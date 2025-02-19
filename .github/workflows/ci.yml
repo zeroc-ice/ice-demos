@@ -131,7 +131,7 @@ jobs:
           $ErrorActionPreference = "Stop"
           Get-ChildItem -Recurse -Filter *.sln | ForEach-Object {
             dotnet build $_.FullName
-           if ($LASTEXITCODE -ne 0) { throw "CMake configuration failed" }
+           if ($LASTEXITCODE -ne 0) { throw "dotnet build failed" }
           }
 
         if: runner.os == 'Windows'
