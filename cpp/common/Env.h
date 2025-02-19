@@ -28,7 +28,7 @@ namespace Env
         return value ? std::optional<std::string>(value) : std::nullopt;
     }
 
-    /// Get the username of the current user.
+    /// Gets the username of the current user.
     /// @return The username of the current user.
     inline std::string getUsername()
     {

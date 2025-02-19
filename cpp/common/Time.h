@@ -4,12 +4,12 @@
 #define TIME_H
 
 #include <chrono>
-#include <iostream>
+#include <ctime>
 #include <string>
 
 namespace Time
 {
-    /// Format a time point as a string.
+    /// Formats a time point as a string.
     /// @return The formatted time point.
     inline std::string formatTime(std::chrono::system_clock::time_point timePoint)
     {
@@ -28,7 +28,7 @@ namespace Time
         }
 #endif
         char timeString[100];
-        if (!strftime(timeString, sizeof(timeString), "%x %X", &timeInfo))
+        if (!std::strftime(timeString, sizeof(timeString), "%x %X", &timeInfo))
         {
             throw std::runtime_error("strftime error");
         }
