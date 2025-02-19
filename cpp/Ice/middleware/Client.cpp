@@ -1,5 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
+#include "../../common/Env.h"
 #include "Greeter.h"
 
 #include <cstdlib>
@@ -10,17 +11,6 @@ using namespace std;
 int
 main(int argc, char* argv[])
 {
-    // Figure out my name.
-    const char* name = getenv("USER");
-    if (name == nullptr)
-    {
-        name = getenv("USERNAME");
-    }
-    if (name == nullptr)
-    {
-        name = "masked user";
-    }
-
     // Create an Ice communicator to initialize the Ice runtime. The CommunicatorHolder is a RAII helper that creates
     // the communicator in its constructor and destroys it when it goes out of scope.
     const Ice::CommunicatorHolder communicatorHolder{argc, argv};
@@ -37,7 +27,7 @@ main(int argc, char* argv[])
     // Send a request to the remote object with an invalid token in the request context.
     try
     {
-        string unexpected = greeter.greet(name, {{"token", "pineapple"}});
+        string unexpected = greeter.greet(Env::getUsername(), {{"token", "pineapple"}});
         cout << "Received unexpected greeting: " << unexpected << endl;
     }
     catch (const Ice::ObjectNotExistException&)
@@ -46,7 +36,7 @@ main(int argc, char* argv[])
     }
 
     // Send a request with the correct token in the request context.
-    string greeting = greeter.greet(name, {{"token", validToken}});
+    string greeting = greeter.greet(Env::getUsername(), {{"token", validToken}});
     cout << greeting << endl;
 
     return 0;

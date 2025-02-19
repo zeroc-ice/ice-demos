@@ -1,8 +1,8 @@
 // Copyright (c) ZeroC, Inc.
 
+#include "../../common/Time.h"
 #include <DataStorm/DataStorm.h>
 #include <Ice/Ice.h>
-
 #include <iostream>
 #include <random>
 #include <string>
@@ -38,12 +38,7 @@ main(int argc, char* argv[])
 
         while (!node.isShutdown())
         {
-            auto now = chrono::system_clock::to_time_t(chrono::system_clock::now());
-            char timeString[100];
-            if (strftime(timeString, sizeof(timeString), "%x %X", localtime(&now)) == 0)
-            {
-                timeString[0] = '\0';
-            }
+            auto timeString = Time::formatTime(chrono::system_clock::now());
             writer.update(timeString);
             this_thread::sleep_for(chrono::seconds(1));
         }

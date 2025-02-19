@@ -1,10 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
-#ifdef _MSC_VER
-// For localtime warning
-#    define _CRT_SECURE_NO_WARNINGS
-#endif
-
+#include "../../common/Time.h"
 #include "Clock.h"
 #include <Ice/Ice.h>
 #include <IceStorm/IceStorm.h>
@@ -167,12 +163,7 @@ run(const shared_ptr<Ice::Communicator>& communicator, int argc, char* argv[])
     {
         try
         {
-            auto now = chrono::system_clock::to_time_t(chrono::system_clock::now());
-            char timeString[100];
-            if (strftime(timeString, sizeof(timeString), "%x %X", localtime(&now)) == 0)
-            {
-                timeString[0] = '\0';
-            }
+            auto timeString = Time::formatTime(chrono::system_clock::now());
             clock->tick(timeString);
             this_thread::sleep_for(chrono::seconds(1));
         }
