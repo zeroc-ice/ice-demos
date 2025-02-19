@@ -2,6 +2,7 @@
 
 import { Ice } from "@zeroc/ice";
 import { VisitorCenter } from "./Greeter.js";
+import process from "node:process";
 
 // Create an Ice communicator to initialize the Ice runtime. The communicator is disposed before the program exits.
 await using communicator = Ice.initialize(process.argv);
@@ -12,7 +13,10 @@ await using communicator = Ice.initialize(process.argv);
 // or IP address.
 const greeter = new VisitorCenter.GreeterPrx(communicator, "greeter:tcp -h localhost -p 4061");
 
+// Retrieve my name
+const name = process.env.USER || process.env.USERNAME || "masked user";
+
 // Send a request to the remote object and get the response.
-const greeting = await greeter.greet(process.env.USER || process.env.USERNAME || "masked user");
+const greeting = await greeter.greet(name);
 
 console.log(greeting);

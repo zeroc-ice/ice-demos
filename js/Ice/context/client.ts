@@ -2,6 +2,7 @@
 
 import { Ice } from "@zeroc/ice";
 import { VisitorCenter } from "./Greeter.js";
+import process from "node:process";
 
 // Set the Ice.ImplicitContext property to "Shared" before calling Ice.initialize.
 // This is only necessary for the implicit context API (see below).
@@ -16,12 +17,12 @@ await using communicator = Ice.initialize(initData);
 // the server's hostname or IP address.
 const greeter = new VisitorCenter.GreeterPrx(communicator, "greeter:tcp -h localhost -p 4061");
 
+// Retrieve my name
+const name = process.env.USER || process.env.USERNAME || "masked user";
+
 // Send a request to the remote object and get the response. We request a French greeting by setting the context
 // parameter.
-let greeting = await greeter.greet(
-    process.env.USER || process.env.USERNAME || "masked user",
-    new Map([["language", "fr"]]),
-);
+let greeting = await greeter.greet(name, new Map([["language", "fr"]]));
 
 console.log(greeting);
 

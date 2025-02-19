@@ -2,6 +2,7 @@
 
 import { Ice } from "@zeroc/ice";
 import { Filesystem } from "./Filesystem.js";
+import process from "node:process";
 
 // Create an Ice communicator to initialize the Ice runtime. The communicator is disposed before the program exits.
 await using communicator = Ice.initialize(process.argv);

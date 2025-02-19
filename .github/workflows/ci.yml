@@ -146,7 +146,7 @@ jobs:
         working-directory: ice-demos/js
         run: |
           set -euxo pipefail
-          find . -name package.json -type f | while IFS= read -r file; do
+          find . -maxdepth 2 -name package.json -type f | while IFS= read -r file; do
               dir=$(dirname "$file");
               npm install --prefix "$dir"
               npm run --prefix "$dir" build
@@ -157,8 +157,8 @@ jobs:
         timeout-minutes: 20
         working-directory: ice-demos/js
         run: |
-          Get-ChildItem -Recurse -Filter package.json | ForEach-Object {
-            $dir = $_.DirectoryName
+          Get-ChildItem -Recurse -Depth 2 -Filter package.json | ForEach-Object {
+            cd $_.DirectoryName
             npm install --prefix "$dir"
             if ($LASTEXITCODE -ne 0) { throw "npm install failed" }
 

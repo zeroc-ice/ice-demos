@@ -6,7 +6,8 @@
         "noImplicitAny": true,
         "moduleResolution": "bundler",
         "preserveConstEnums": true,
-        "sourceMap": true
+        "sourceMap": true,
+        "esModuleInterop": true,
     },
     "files": ["client.ts"]
 }
