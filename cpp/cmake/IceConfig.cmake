@@ -32,6 +32,10 @@ if(Ice_SOURCE_BUILD)
   list(APPEND ice_bin_path_suffixes "cpp/bin")
   list(APPEND ice_lib_path_suffixes "cpp/lib")
 
+  if (Ice_ARCHITECTURE)
+    list(APPEND ice_lib_path_suffixes "cpp/lib/${Ice_ARCHITECTURE}")
+  endif()
+
   if(WIN32)
     list(APPEND ice_bin_path_suffixes "cpp/bin/${Ice_ARCHITECTURE}/Release" "cpp/bin/${Ice_ARCHITECTURE}/Debug")
     list(APPEND ice_lib_path_suffixes_release "cpp/lib/${Ice_ARCHITECTURE}/Release")
