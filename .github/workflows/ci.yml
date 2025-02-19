@@ -159,10 +159,10 @@ jobs:
         run: |
           Get-ChildItem -Recurse -Depth 2 -Filter package.json | ForEach-Object {
             cd $_.DirectoryName
-            npm install --prefix "$dir"
+            npm install
             if ($LASTEXITCODE -ne 0) { throw "npm install failed" }
 
-            npm run --prefix "$dir" build
+            npm run build
             if ($LASTEXITCODE -ne 0) { throw "npm build failed" }
           }
         if: runner.os == 'Windows'
