@@ -61,8 +61,7 @@ jobs:
         timeout-minutes: 60
         with:
           working_directory: ice
-          build_flags: ${{ 'srcs' }}
-        if: runner.os != 'Windows'
+          build_flags: ${{ runner.os == 'Windows' && '/t:BuildDist /p:Configuration=Release /p:Platform=x64' || 'srcs' }}
 
       - name: Publish C# NuGet Packages
         timeout-minutes: 5
