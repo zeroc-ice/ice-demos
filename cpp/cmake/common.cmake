@@ -9,7 +9,7 @@ if (WIN32 AND NOT EXISTS ${CMAKE_CURRENT_BINARY_DIR}/packages)
     set(ICE_NUGET_SOURCE "https://download.zeroc.com/nexus/repository/nuget-nightly/" CACHE STRING "Ice NuGet package source")
     # if (ICE_NUGET_INSTALL)
     execute_process(
-        COMMAND nuget install -Source ${ICE_NUGET_SOURCE} -OutputDirectory ${CMAKE_CURRENT_BINARY_DIR}/packages zeroc.ice.v143 -Prerelease
+        COMMAND nuget install -Source ${ICE_NUGET_SOURCE} -OutputDirectory ${CMAKE_CURRENT_BINARY_DIR}/packages zeroc.ice.v143 -Prerelease -ExcludeVersion
         RESULT_VARIABLE nuget_result
         OUTPUT_VARIABLE nuget_output
         ERROR_VARIABLE nuget_error)
@@ -18,8 +18,7 @@ if (WIN32 AND NOT EXISTS ${CMAKE_CURRENT_BINARY_DIR}/packages)
     endif()
     # endif()
 
-    file(GLOB Ice_HOME "${CMAKE_CURRENT_BINARY_DIR}/packages/zeroc.ice.v143*")
-    set(Ice_HOME ${Ice_HOME} CACHE PATH "Path to Ice installation directory")
+    set(Ice_HOME "${CMAKE_CURRENT_BINARY_DIR}/packages/zeroc.ice.v143" CACHE PATH "Path to Ice installation directory")
 endif()
 
 find_package(Threads REQUIRED)
