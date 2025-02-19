@@ -11,9 +11,6 @@ using namespace std;
 int
 main(int argc, char* argv[])
 {
-    // Helper function to get the username of the current user.
-    const string name = common::getUsername();
-
     // Set the Ice.ImplicitContext property to "Shared" before creating the communicator.
     // This is only necessary for the implicit context API (see below).
     Ice::InitializationData initData;
@@ -33,7 +30,7 @@ main(int argc, char* argv[])
 
     // Send a request to the remote object and get the response. We request a French greeting by setting the context
     // parameter.
-    string greeting = greeter->greet(name, {{"language", "fr"}});
+    string greeting = greeter->greet(Env::getUsername(), {{"language", "fr"}});
     cout << greeting << endl;
 
     // Do it again, this time by setting the context on the proxy.

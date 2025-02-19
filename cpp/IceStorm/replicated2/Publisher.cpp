@@ -163,7 +163,7 @@ run(const shared_ptr<Ice::Communicator>& communicator, int argc, char* argv[])
     {
         try
         {
-            auto timeString = common::formatTime(chrono::system_clock::now());
+            auto timeString = Time::formatTime(chrono::system_clock::now());
             clock->tick(timeString);
             this_thread::sleep_for(chrono::seconds(1));
         }

@@ -148,7 +148,7 @@ main(int argc, char* argv[])
         {
             while (true)
             {
-                auto timeString = common::formatTime(chrono::system_clock::now());
+                auto timeString = Time::formatTime(chrono::system_clock::now());
                 try
                 {
                     clock->tick(timeString);

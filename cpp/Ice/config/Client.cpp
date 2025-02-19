@@ -12,9 +12,6 @@ using namespace std;
 int
 main(int argc, char* argv[])
 {
-    // Helper function to get the username of the current user.
-    const string name = common::getUsername();
-
     // Create an Ice communicator to initialize the Ice runtime. The communicator gets its configuration properties from
     // file config.client in the client's current working directory. The communicator initialization also parses the
     // command-line options to find and set additional properties.
@@ -27,7 +24,7 @@ main(int argc, char* argv[])
         communicator->propertyToProxy<VisitorCenter::GreeterPrx>("Greeter.Proxy");
 
     // Send a request to the remote object and get the response.
-    string greeting = greeter->greet(name);
+    string greeting = greeter->greet(Env::getUsername());
 
     cout << greeting << endl;
     return 0;

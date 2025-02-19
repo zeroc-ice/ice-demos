@@ -38,7 +38,7 @@ main(int argc, char* argv[])
 
         while (!node.isShutdown())
         {
-            auto timeString = common::formatTime(chrono::system_clock::now());
+            auto timeString = Time::formatTime(chrono::system_clock::now());
             writer.update(timeString);
             this_thread::sleep_for(chrono::seconds(1));
         }

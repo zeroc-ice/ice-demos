@@ -65,7 +65,7 @@ main(int argc, char* argv[])
             nullptr,
             [](const DataStorm::Sample<string, chrono::system_clock::time_point>& sample)
             {
-                auto timeString = common::formatTime(sample.getValue());
+                auto timeString = Time::formatTime(sample.getValue());
                 cout << "received time for `" << sample.getKey() << "': " << timeString << endl;
             });
 

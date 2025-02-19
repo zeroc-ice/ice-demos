@@ -11,9 +11,6 @@ using namespace std;
 int
 main(int argc, char* argv[])
 {
-    // Helper function to get the username of the current user.
-    const string name = common::getUsername();
-
     // Create an Ice communicator to initialize the Ice runtime.
     const Ice::CommunicatorHolder communicatorHolder{argc, argv};
     const Ice::CommunicatorPtr& communicator = communicatorHolder.communicator();
@@ -22,7 +19,7 @@ main(int argc, char* argv[])
     VisitorCenter::GreeterPrx greeter{communicator, "greeter:tcp -h localhost -p 10000"};
 
     // Send a request to the remote object and wait for the response.
-    string greeting = greeter->greet(name);
+    string greeting = greeter->greet(Env::getUsername());
     cout << greeting << endl;
 
     return 0;

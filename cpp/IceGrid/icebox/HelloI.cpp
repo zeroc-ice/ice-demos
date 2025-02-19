@@ -12,7 +12,7 @@ HelloI::HelloI(string serviceName) : _serviceName(std::move(serviceName)) {}
 void
 HelloI::sayHello(const Ice::Current&)
 {
-    const string lang = common::getEnvironmentVariable("LANG").value_or("en");
+    const string lang = Env::getEnvironmentVariable("LANG").value_or("en");
 
     string greeting = "Hello, ";
     if (lang == "fr")
