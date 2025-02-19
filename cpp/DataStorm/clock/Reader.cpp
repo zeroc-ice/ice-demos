@@ -1,6 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
-#include "../../common/time.h"
+#include "../../common/Time.h"
 
 #include <DataStorm/DataStorm.h>
 #include <Ice/Ice.h>

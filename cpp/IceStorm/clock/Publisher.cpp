@@ -1,6 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
-#include "../../common/time.h"
+#include "../../common/Time.h"
 #include "Clock.h"
 
 #include <Ice/Ice.h>

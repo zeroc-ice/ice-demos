@@ -1,7 +1,7 @@
 // Copyright (c) ZeroC, Inc.
 
 #include "HelloI.h"
-#include "../../common/env.h"
+#include "../../common/Env.h"
 #include <Ice/Ice.h>
 #include <iostream>
 
