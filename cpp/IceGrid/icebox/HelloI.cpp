@@ -1,11 +1,7 @@
 // Copyright (c) ZeroC, Inc.
 
-#ifdef _MSC_VER
-// For getenv
-#    define _CRT_SECURE_NO_WARNINGS
-#endif
-
 #include "HelloI.h"
+#include "../../common/env.h"
 #include <Ice/Ice.h>
 #include <iostream>
 
@@ -16,8 +12,7 @@ HelloI::HelloI(string serviceName) : _serviceName(std::move(serviceName)) {}
 void
 HelloI::sayHello(const Ice::Current&)
 {
-    char* val = getenv("LANG");
-    const string lang = val ? string(val) : "en";
+    const string lang = common::getEnvironmentVariable("LANG").value_or("en");
 
     string greeting = "Hello, ";
     if (lang == "fr")

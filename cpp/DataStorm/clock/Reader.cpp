@@ -1,5 +1,7 @@
 // Copyright (c) ZeroC, Inc.
 
+#include "../../common/time.h"
+
 #include <DataStorm/DataStorm.h>
 #include <Ice/Ice.h>
 
@@ -63,29 +65,7 @@ main(int argc, char* argv[])
             nullptr,
             [](const DataStorm::Sample<string, chrono::system_clock::time_point>& sample)
             {
-                auto time = chrono::system_clock::to_time_t(sample.getValue());
-                std::tm timeInfo;
-
-#ifdef _MSC_VER
-                if (localtime_s(&timeInfo, &time))
-                {
-                    cout << "localtime_s error" << endl;
-                    return;
-                }
-#else
-                if (!localtime_r(&time, &timeInfo))
-                {
-                    cout << "localtime_r error" << endl;
-                    return;
-                }
-#endif
-                char timeString[100];
-                if (!strftime(timeString, sizeof(timeString), "%x %X", &timeInfo))
-                {
-                    cout << "strftime error" << endl;
-                    return;
-                }
-
+                auto timeString = common::formatTime(sample.getValue());
                 cout << "received time for `" << sample.getKey() << "': " << timeString << endl;
             });
 

@@ -1,5 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
+#include "../../common/env.h"
 #include "Greeter.h"
 
 #include <Ice/Ice.h>
@@ -11,19 +12,8 @@ using namespace std;
 int
 main(int argc, char* argv[])
 {
-    // Figure out my name.
-#ifdef _MSC_VER
-    size_t requestedSize;
-    char buffer[256];
-    getenv_s(&requestedSize, buffer, sizeof(buffer), "USERNAME");
-    const char* name = requestedSize > 0 ? buffer : nullptr;
-#else
-    const char* name = getenv("USER");
-#endif
-    if (name == nullptr)
-    {
-        name = "masked user";
-    }
+    // Helper function to get the username of the current user.
+    const string name = common::getUsername();
 
     // Create an Ice communicator to initialize the Ice runtime. The communicator gets its configuration properties from
     // file config.client in the client's current working directory. The communicator initialization also parses the

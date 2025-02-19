@@ -1,5 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
+#include "../../common/time.h"
 #include "Clock.h"
 #include <Ice/Ice.h>
 #include <IceStorm/IceStorm.h>
@@ -162,28 +163,7 @@ run(const shared_ptr<Ice::Communicator>& communicator, int argc, char* argv[])
     {
         try
         {
-            auto now = chrono::system_clock::to_time_t(chrono::system_clock::now());
-            std::tm timeInfo;
-#ifdef _MSC_VER
-            if (localtime_s(&timeInfo, &now))
-            {
-                cout << "localtime_s error" << endl;
-                break;
-            }
-#else
-            if (!localtime_r(&now, &timeInfo))
-            {
-                cout << "localtime_r error" << endl;
-                break;
-            }
-#endif
-            char timeString[100];
-            if (!strftime(timeString, sizeof(timeString), "%x %X", &timeInfo))
-            {
-                cout << "strftime error" << endl;
-                break;
-            }
-
+            auto timeString = common::formatTime(chrono::system_clock::now());
             clock->tick(timeString);
             this_thread::sleep_for(chrono::seconds(1));
         }
