@@ -30,10 +30,10 @@ endif()
 if(Ice_SOURCE_BUILD)
   list(APPEND ice_include_path_suffixes "cpp/include")
   list(APPEND ice_bin_path_suffixes "cpp/bin")
-  list(APPEND ice_lib_path_suffixes "cpp/lib")
+  list(APPEND ice_lib_path_suffixes_release "cpp/lib")
 
   if (Ice_ARCHITECTURE)
-    list(APPEND ice_lib_path_suffixes "cpp/lib/${Ice_ARCHITECTURE}")
+    list(APPEND ice_lib_path_suffixes_release "cpp/lib/${Ice_ARCHITECTURE}")
   endif()
 
   if(WIN32)
