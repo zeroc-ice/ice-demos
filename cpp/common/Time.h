@@ -16,18 +16,18 @@ namespace Time
 #ifdef _WIN32
         if (localtime_s(&timeInfo, &time))
         {
-            throw runtime_error("localtime_s error");
+            throw std::runtime_error("localtime_s error");
         }
 #else
         if (!localtime_r(&time, &timeInfo))
         {
-            throw runtime_error("localtime_r error");
+            throw std::runtime_error("localtime_r error");
         }
 #endif
         char timeString[100];
         if (!strftime(timeString, sizeof(timeString), "%x %X", &timeInfo))
         {
-            throw runtime_error("strftime error");
+            throw std::runtime_error("strftime error");
         }
 
         return timeString;
