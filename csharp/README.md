@@ -26,7 +26,7 @@ Each subdirectory includes a small demo focusing on a specific Ice component or 
 
 The top-level [Directory.Build.props](./Directory.Build.props) file sets `IceVersion` to
 `3.8.0-nightly.*` by default to pull the latest nightly build of Ice.
-You can override this on the command line or in your environment:
+You can override this on the command line:
 
 ```shell
 dotnet build -p:IceVersion="3.8.0~alpha0"
