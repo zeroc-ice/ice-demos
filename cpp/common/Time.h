@@ -5,6 +5,7 @@
 
 #include <chrono>
 #include <ctime>
+#include <stdexcept>
 #include <string>
 
 namespace Time
