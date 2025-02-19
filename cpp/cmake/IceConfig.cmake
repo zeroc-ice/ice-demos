@@ -23,28 +23,61 @@ if(NOT DEFINED Ice_ARCHITECTURE)
   endif()
 endif()
 
+if(EXISTS ${Ice_HOME}/cpp)
+  set(Ice_SOURCE_BUILD ON)
+endif()
+
+if(Ice_SOURCE_BUILD)
+  list(APPEND ice_include_path_suffixes "cpp/include")
+  list(APPEND ice_bin_path_suffixes "cpp/bin")
+  list(APPEND ice_lib_path_suffixes "cpp/lib")
+
+  if(WIN32)
+    list(APPEND ice_bin_path_suffixes "cpp/bin/${Ice_ARCHITECTURE}/Release" "cpp/bin/${Ice_ARCHITECTURE}/Debug")
+    list(APPEND ice_lib_path_suffixes_release "cpp/lib/${Ice_ARCHITECTURE}/Release")
+    list(APPEND ice_lib_path_suffixes_debug "cpp/lib/${Ice_ARCHITECTURE}/Debug")
+  endif()
+
+else()
+
+  list(APPEND ice_include_path_suffixes "include")
+  list(APPEND ice_bin_path_suffixes "bin")
+  list(APPEND ice_lib_path_suffixes_release "lib")
+
+  if(WIN32)
+    # NuGet packages
+    list(APPEND ice_include_path_suffixes "build/native/include")
+    list(APPEND ice_bin_path_suffixes "tools")
+    list(APPEND ice_lib_path_suffixes_release "build/native/lib/${Ice_ARCHITECTURE}/Release")
+    list(APPEND ice_lib_path_suffixes_debug "build/native/lib/${Ice_ARCHITECTURE}/Debug")
+  endif()
+
+endif()
+
 # Ice include directory
 if(NOT DEFINED Ice_INCLUDE_DIR)
-  find_path(Ice_INCLUDE_DIR NAMES Ice/Ice.h HINTS ${Ice_HOME}/cpp/include CACHE PATH "Path to the Ice include directory")
+  find_path(Ice_INCLUDE_DIR NAMES Ice/Ice.h HINTS ${Ice_HOME} PATH_SUFFIXES ${ice_include_path_suffixes} CACHE PATH "Path to the Ice include directory")
 endif()
 
 # Ice include directories include the generated directory(s)
 if(NOT DEFINED Ice_INCLUDE_DIRS)
   set(Ice_INCLUDE_DIRS ${Ice_INCLUDE_DIR})
 
-  #  Only the Windows build has separate Debug and Release directories for the generated files
-  if(WIN32)
-    set(Ice_GENERATED_INCLUDE_DIR_RELEASE ${Ice_INCLUDE_DIR}/generated/${Ice_ARCHITECTURE}/Release)
-    if (EXISTS ${Ice_GENERATED_INCLUDE_DIR_RELEASE})
-      list(APPEND Ice_INCLUDE_DIRS $<$<CONFIG:Release>:${Ice_GENERATED_INCLUDE_DIR_RELEASE}>)
-    endif()
+  if(Ice_SOURCE_BUILD)
+    #  Only the Windows build has separate Debug and Release directories for the generated files
+    if(WIN32)
+      set(Ice_GENERATED_INCLUDE_DIR_RELEASE ${Ice_INCLUDE_DIR}/generated/${Ice_ARCHITECTURE}/Release)
+      if (EXISTS ${Ice_GENERATED_INCLUDE_DIR_RELEASE})
+        list(APPEND Ice_INCLUDE_DIRS $<$<CONFIG:Release>:${Ice_GENERATED_INCLUDE_DIR_RELEASE}>)
+      endif()
 
-    set(Ice_GENERATED_INCLUDE_DIR_DEBUG ${Ice_INCLUDE_DIR}/generated/${Ice_ARCHITECTURE}/Debug)
-    if (EXISTS ${Ice_GENERATED_INCLUDE_DIR_DEBUG})
-      list(APPEND Ice_INCLUDE_DIRS $<$<CONFIG:Debug>:${Ice_GENERATED_INCLUDE_DIR_DEBUG}>)
+      set(Ice_GENERATED_INCLUDE_DIR_DEBUG ${Ice_INCLUDE_DIR}/generated/${Ice_ARCHITECTURE}/Debug)
+      if (EXISTS ${Ice_GENERATED_INCLUDE_DIR_DEBUG})
+        list(APPEND Ice_INCLUDE_DIRS $<$<CONFIG:Debug>:${Ice_GENERATED_INCLUDE_DIR_DEBUG}>)
+      endif()
+    else()
+        list(APPEND Ice_INCLUDE_DIRS ${Ice_INCLUDE_DIR}/generated)
     endif()
-  elseif(EXISTS ${Ice_INCLUDE_DIR}/generated)
-      list(APPEND Ice_INCLUDE_DIRS ${Ice_INCLUDE_DIR}/generated)
   endif()
 
   set(Ice_INCLUDE_DIRS ${Ice_INCLUDE_DIRS} CACHE STRING "Ice include directories")
@@ -53,7 +86,6 @@ endif()
 
 # Read Ice version variables from Ice/Config.h
 if (NOT DEFINED Ice_VERSION)
-
   file(STRINGS "${Ice_INCLUDE_DIR}/Ice/Config.h" _ice_config_h_content REGEX "#define ICE_([A-Z]+)_VERSION ")
 
   if("${_ice_config_h_content}" MATCHES "#define ICE_STRING_VERSION \"([^\"]+)\"")
@@ -69,13 +101,12 @@ if (NOT DEFINED Ice_VERSION)
   endif()
 
   unset(_ice_config_h_content)
-
 endif()
 
 if(NOT DEFINED Ice_SLICE2CPP_EXECUTABLE)
   find_program(Ice_SLICE2CPP_EXECUTABLE slice2cpp
-    HINTS ${Ice_HOME}/cpp/bin
-    PATH_SUFFIXES ${Ice_ARCHITECTURE}/Release ${Ice_ARCHITECTURE}/Debug
+    HINTS ${Ice_HOME}
+    PATH_SUFFIXES ${ice_bin_path_suffixes}
     CACHE PATH "Path to the slice2cpp executable")
 endif()
 
@@ -88,14 +119,14 @@ foreach(component ${Ice_FIND_COMPONENTS})
 
     find_library(Ice_${component}_LIBRARY_RELEASE
       NAMES ${component} ${component}${Ice_SO_VERSION}
-      HINTS ${Ice_HOME}/cpp/lib/
-      PATH_SUFFIXES ${Ice_ARCHITECTURE} ${Ice_ARCHITECTURE}/Release
+      HINTS ${Ice_HOME}
+      PATH_SUFFIXES ${ice_lib_path_suffixes_release}
     )
 
     find_library(Ice_${component}_LIBRARY_DEBUG
       NAMES ${component}d ${component}${Ice_SO_VERSION}d
-      HINTS ${Ice_HOME}/cpp/lib/
-      PATH_SUFFIXES ${Ice_ARCHITECTURE} ${Ice_ARCHITECTURE}/Debug
+      HINTS ${Ice_HOME}
+      PATH_SUFFIXES lib ${ice_lib_path_suffixes_debug}
     )
 
     # Select the appropriate library configuration based on platform and build type
@@ -153,6 +184,11 @@ if(Ice_DEBUG)
     endif()
   endforeach()
 endif()
+
+unset(ice_include_path_suffixes)
+unset(ice_bin_path_suffixes)
+unset(ice_lib_path_suffixes_release)
+unset(ice_lib_path_suffixes_debug)
 
 # Use `find_package_handle_standard_args` for better error handling
 find_package_handle_standard_args(Ice
