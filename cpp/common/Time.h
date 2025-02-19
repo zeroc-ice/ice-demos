@@ -1,5 +1,8 @@
 // Copyright (c) ZeroC, Inc.
 
+#ifndef TIME_H
+#define TIME_H
+
 #include <chrono>
 #include <iostream>
 #include <string>
@@ -8,7 +11,7 @@ namespace Time
 {
     /// Format a time point as a string.
     /// @return The formatted time point.
-    std::string formatTime(std::chrono::system_clock::time_point timePoint)
+    inline std::string formatTime(std::chrono::system_clock::time_point timePoint)
     {
         std::time_t time = std::chrono::system_clock::to_time_t(timePoint);
         std::tm timeInfo;
@@ -33,3 +36,5 @@ namespace Time
         return timeString;
     }
 }
+
+#endif

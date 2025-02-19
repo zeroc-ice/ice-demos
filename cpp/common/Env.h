@@ -1,5 +1,8 @@
 // Copyright (c) ZeroC, Inc.
 
+#ifndef ENV_H
+#define ENV_H
+
 #include <cstdlib>
 #include <optional>
 #include <string>
@@ -9,7 +12,7 @@ namespace Env
     /// Gets the value of an environment variable.
     /// @param variableName The name of the environment variable.
     /// @return The value of the environment variable, or nullopt if the variable is not set.
-    std::optional<std::string> getEnvironmentVariable(const char* variableName)
+    inline std::optional<std::string> getEnvironmentVariable(const char* variableName)
     {
 #ifdef _WIN32
         size_t requiredSize;
@@ -27,7 +30,7 @@ namespace Env
 
     /// Get the username of the current user.
     /// @return The username of the current user.
-    std::string getUsername()
+    inline std::string getUsername()
     {
 #ifdef _WIN32
         const std::optional<std::string> name = Env::getEnvironmentVariable("USERNAME");
@@ -37,3 +40,5 @@ namespace Env
         return name ? *name : "masked user";
     }
 }
+
+#endif
