@@ -12,15 +12,15 @@ namespace Env
     std::optional<std::string> getEnvironmentVariable(const char* variableName)
     {
 #ifdef _WIN32
-        size_t requestedSize;
+        size_t requiredSize;
         char buffer[256];
-        if (getenv_s(&requestedSize, buffer, sizeof(buffer), variableName))
+        if (getenv_s(&requiredSize, buffer, sizeof(buffer), variableName))
         {
             return std::nullopt;
         }
-        const char* value = requestedSize > 0 ? buffer : nullptr;
+        const char* value = requiredSize > 0 ? buffer : nullptr;
 #else
-        const char* value = getenv(variableName);
+        const char* value = std::getenv(variableName);
 #endif
         return value ? std::optional<std::string>(value) : std::nullopt;
     }
