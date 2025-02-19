@@ -1,5 +1,5 @@
 {
-    "name": "context",
+    "name": "bidir",
     "version": "1.0.0",
     "main": "client.js",
     "type": "module",

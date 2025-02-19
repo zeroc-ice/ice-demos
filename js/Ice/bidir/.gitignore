@@ -6,3 +6,5 @@ AlarmClock.d.ts
 MockAlarmClock.js
 MockAlarmClock.js.map
 package-lock.json
+timeUtil.js
+timeUtil.js.map

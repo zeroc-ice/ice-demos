@@ -7,7 +7,7 @@
         "moduleResolution": "bundler",
         "preserveConstEnums": true,
         "sourceMap": true,
-        "esModuleInterop": true,
+        "esModuleInterop": true
     },
     "files": ["client.ts"]
 }
