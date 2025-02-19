@@ -1,5 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
+#include <optional>
 #include <string>
 
 namespace common
@@ -12,7 +13,7 @@ namespace common
 #ifdef _MSC_VER
         size_t requestedSize;
         char buffer[256];
-        if(getenv_s(&requestedSize, buffer, sizeof(buffer), variableName))
+        if (getenv_s(&requestedSize, buffer, sizeof(buffer), variableName))
         {
             // getenv_s failed, set requestedSize to 0 to indicate that the buffer is not valid.
             requestedSize = 0;
