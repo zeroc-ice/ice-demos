@@ -30,9 +30,9 @@ namespace common
     std::string getUsername()
     {
 #ifdef _MSC_VER
-        const auto name = getEnvironmentVariable("USERNAME");
+        const auto name = common::getEnvironmentVariable("USERNAME");
 #else
-        const auto name = getEnvironmentVariable("USER");
+        const auto name = common::getEnvironmentVariable("USER");
 #endif
         return name ? *name : "masked user";
     }
