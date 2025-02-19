@@ -63,11 +63,6 @@ jobs:
           working_directory: ice
           build_flags: ${{ runner.os == 'Windows' && '/t:BuildDist /p:Configuration=Release /p:Platform=x64' || 'srcs' }}
 
-      - name: Publish C# NuGet Packages
-        timeout-minutes: 5
-        working-directory: ice/csharp/msbuild
-        run: dotnet msbuild ice.proj /t:Publish /p:Configuration=Release /p:Platform=x64
-
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
