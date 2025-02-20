@@ -169,3 +169,4 @@ Package.resolved
 
 compile_commands.json
 .envrc
+*.pyc
