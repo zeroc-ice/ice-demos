@@ -22,7 +22,7 @@ try
 
     Console.WriteLine($"Received unexpected greeting: {unexpected}");
 }
-catch (Ice.ObjectNotExistException)
+catch (Ice.DispatchException dispatchException) when (dispatchException.replyStatus is Ice.ReplyStatus.Unauthorized)
 {
     // Expected with an invalid (or missing) token. See AuthorizationMiddleware.
 }

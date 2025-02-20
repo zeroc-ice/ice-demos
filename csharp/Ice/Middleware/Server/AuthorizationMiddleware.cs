@@ -15,12 +15,8 @@ internal class AuthorizationMiddleware : Ice.Object
         // Check if the request has a valid token in its context.
         if (!request.current.ctx.TryGetValue("token", out string? token) || token != _validToken)
         {
-            Console.WriteLine($"Rejecting request with token '{token}'");
-
-            // ObjectNotExistException is one of the 6 Ice local exceptions that Ice transmits "over the wire".
-            // It usually means "no servant was found for this identity". Here, we reuse it to indicate an authorization
-            // failure without leaking information to the client.
-            throw new Ice.ObjectNotExistException();
+            Console.WriteLine($"Rejecting request with invalid token '{token}'");
+            throw new Ice.DispatchException(Ice.ReplyStatus.Unauthorized, $"Invalid token '{token}'");
         }
 
         Console.WriteLine($"Accepting request with token '{token}'");
