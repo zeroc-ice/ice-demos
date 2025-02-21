@@ -85,7 +85,7 @@ jobs:
 
           find . -name CMakeLists.txt -type f | while IFS= read -r file; do
             dir=$(dirname "$file");
-            cmake -B "$dir/build" -S "$dir" -DIce_DEBUG=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
+            cmake -B "$dir/build" -S "$dir" -DIce_DEBUG=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_COMPILE_WARNING_AS_ERROR=ON -G Ninja
             cmake --build "$dir/build" --verbose
           done
         if: runner.os != 'Windows'
@@ -104,11 +104,11 @@ jobs:
               $dir = $_.DirectoryName
 
               # Run cmake configure step
-              cmake -B "$dir/build" -S "$dir" -DIce_DEBUG=ON -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
+              cmake -B "$dir/build" -S "$dir" -DIce_DEBUG=ON -DCMAKE_COMPILE_WARNING_AS_ERROR=ON -G Ninja
               if ($LASTEXITCODE -ne 0) { throw "CMake configuration failed" }
 
               # Run cmake build step
-              cmake --build "$dir/build" --config Release --verbose
+              cmake --build "$dir/build" --verbose
               if ($LASTEXITCODE -ne 0) { throw "CMake build failed" }
           }
 
