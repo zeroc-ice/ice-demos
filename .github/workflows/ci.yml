@@ -154,7 +154,7 @@ jobs:
         working-directory: ice-demos/js
         run: |
           set -euxo pipefail
-          find . -maxdepth 2 -name package.json -type f | while IFS= read -r file; do
+          find . -maxdepth 3 -name package.json -type f | while IFS= read -r file; do
               dir=$(dirname "$file");
               npm install --prefix "$dir"
               npm run --prefix "$dir" build
