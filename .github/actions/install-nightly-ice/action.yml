@@ -3,14 +3,14 @@ name: Instal Nightly Ice
 runs:
   using: "composite"
   steps:
-    - name: Install Ice
+    - name: Install Ice Brew Formula
       if: runner.os == 'macOS'
       shell: bash
       run: |
         brew tap zeroc-ice/nightly  https://download.zeroc.com/nexus/repository/nightly/homebrew-nightly.git
         brew install zeroc-ice/nightly/ice
 
-    - name: Install Ice
+    - name: Install Ice APT Repository
       if: runner.os == 'Linux'
       shell: bash
       run: |
@@ -20,3 +20,9 @@ runs:
 
         sudo apt-get update
         sudo apt-get install zeroc-ice-all-dev
+
+
+    - name: Add NuGet Source
+      shell: bash
+      run: |
+        nuget sources add -Name "zeroc-nightly" -Source "https://download.zeroc.com/nexus/repository/nuget-nightly/"
