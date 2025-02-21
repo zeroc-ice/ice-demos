@@ -24,7 +24,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-22.04
+          - os: ubuntu-24.04
             ice_build_flags: srcs
           - os: macos-14
             ice_build_flags: srcs
