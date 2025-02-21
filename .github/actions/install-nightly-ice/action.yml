@@ -21,8 +21,7 @@ runs:
         sudo apt-get update
         sudo apt-get install zeroc-ice-all-dev
 
-
     - name: Add NuGet Source
       shell: bash
       run: |
-        nuget sources add -Name "zeroc-nightly" -Source "https://download.zeroc.com/nexus/repository/nuget-nightly/"
+        dotnet nuget sources add -Name "zeroc-nightly" -Source "https://download.zeroc.com/nexus/repository/nuget-nightly/"
