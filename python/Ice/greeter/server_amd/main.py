@@ -8,7 +8,7 @@ import signal
 import sys
 
 async def main():
-    # Create an event to wait for shutdown signal
+    # Create an event to wait for Ctrl+C signal
     exit_event = asyncio.Event()
 
     loop = asyncio.get_running_loop()

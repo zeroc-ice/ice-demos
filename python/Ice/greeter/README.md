@@ -10,22 +10,48 @@ We recommend running each application in a separate Python virtual environment. 
 
 Create and activate a Python virtual environment in the `server` or `server_amd` directory to run the synchronous or asynchronous version of the server application, respectively.
 
-From the activated virtual environment in the `server` or `server_amd` directory, install the program dependencies and run the application using the following command:
+From the activated virtual environment in the `server` or `server_amd` directory:
+
+- Install the program dependencies:
 
 ```shell
 pip install -r requirements.txt
-python3 main.py
+```
+
+- Compile the Greeter.ice file with the Slice compiler for Python
+
+```shell
+slice2py --output-dir generated ../slice/Greeter.ice
+```
+
+- Run the server program
+
+```shell
+python main.py
 ```
 
 ## Running the client
 
 In a separate terminal, create a Python virtual environment in the `client` directory to run the client application.
 
-From the activated virtual environment in the `client` directory, install the program dependencies and run the application using the following command:
+From the activated virtual environment in the `client` directory:
+
+- Install the program dependencies:
 
 ```shell
 pip install -r requirements.txt
-python3 main.py
+```
+
+- Compile the Greeter.ice file with the Slice compiler for Python
+
+```shell
+slice2py --output-dir generated ../slice/Greeter.ice
+```
+
+- Run the client program
+
+```shell
+python main.py
 ```
 
 [Python Virtual Environments]: https://docs.python.org/3/tutorial/venv.html

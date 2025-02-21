@@ -7,8 +7,13 @@ import signal
 import sys
 import threading
 
+# Create a threading event to wait until the user presses Ctrl+C.
 exit_event = threading.Event()
-signal.signal(signal.SIGINT, lambda sig, frame: exit_event.set())
+
+def handle_signal(signum, frame):
+    exit_event.set()
+
+signal.signal(signal.SIGINT, handle_signal)
 
 # Create an Ice communicator to initialize the Ice runtime. The communicator is disposed before the program exits.
 with Ice.initialize(sys.argv) as communicator:

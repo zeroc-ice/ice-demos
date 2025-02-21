@@ -2,12 +2,8 @@
 # Copyright (c) ZeroC, Inc.
 
 import Ice
+import getpass
 import sys
-
-from getpass import getuser
-
-# Load the Slice file that defines the Greeter interface.
-Ice.loadSlice('../slice/Greeter.ice')
 
 # Slice module VisitorCenter in Greeter.ice maps to Python module VisitorCenter.
 import VisitorCenter
@@ -22,5 +18,10 @@ with Ice.initialize(sys.argv) as communicator:
     greeter = VisitorCenter.GreeterPrx(communicator, "greeter:tcp -h localhost -p 4061")
 
     # Send a request to the remote object and get the response.
-    greeting = greeter.greet(getuser())
+    greeting = greeter.greet(getpass.getuser())
+    print(greeting)
+
+    # Send another request to the remote object, this time with greetAsync. greetAsync returns a future immediately.
+    f = greeter.greetAsync("alice")
+    greeting = f.result()
     print(greeting)
