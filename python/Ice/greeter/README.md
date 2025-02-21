@@ -38,7 +38,7 @@ python main.py
 
 ## Running the client
 
-In a separate terminal navigate to the `client` directory to run the client program.
+In a separate terminal, navigate to the `client` directory to run the client program.
 
 - Create and activate a Python virtual environment:
 
