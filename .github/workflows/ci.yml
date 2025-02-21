@@ -155,7 +155,7 @@ jobs:
 
       - name: Build JavaScript Demos
         timeout-minutes: 20
-        working-directory: ice-demos/js\
+        working-directory: ice-demos/js
         run: |
           set -euxo pipefail
           find . -maxdepth 3 -name package.json -type f | while IFS= read -r file; do
