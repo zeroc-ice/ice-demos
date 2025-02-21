@@ -85,7 +85,7 @@ jobs:
 
           find . -name CMakeLists.txt -type f | while IFS= read -r file; do
             dir=$(dirname "$file");
-            cmake -B "$dir/build" -S "$dir" -DIce_DEBUG=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_COMPILE_WARNING_AS_ERROR=ON -G Ninja
+            cmake -B "$dir/build" -S "$dir" -DIce_DEBUG=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
             cmake --build "$dir/build" --verbose
           done
         if: runner.os != 'Windows'
