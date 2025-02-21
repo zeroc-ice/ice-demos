@@ -104,11 +104,11 @@ jobs:
               $dir = $_.DirectoryName
 
               # Run cmake configure step
-              cmake -B "$dir/build" -S "$dir" -DIce_DEBUG=ON -DCMAKE_COMPILE_WARNING_AS_ERROR=ON -G Ninja
+              cmake -B "$dir/build" -S "$dir" -DIce_DEBUG=ON -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
               if ($LASTEXITCODE -ne 0) { throw "CMake configuration failed" }
 
               # Run cmake build step
-              cmake --build "$dir/build" --verbose
+              cmake --build "$dir/build" --verbose --config Release
               if ($LASTEXITCODE -ne 0) { throw "CMake build failed" }
           }
 
