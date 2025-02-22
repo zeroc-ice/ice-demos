@@ -1,5 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
+#include "../../common/Env.h"
 #include "Greeter.h"
 
 #include <chrono>
@@ -11,17 +12,6 @@ using namespace std;
 int
 main(int argc, char* argv[])
 {
-    // Figure out my name.
-    const char* name = getenv("USER");
-    if (name == nullptr)
-    {
-        name = getenv("USERNAME");
-    }
-    if (name == nullptr)
-    {
-        name = "masked user";
-    }
-
     // Create an Ice communicator to initialize the Ice runtime. The CommunicatorHolder is a RAII helper that creates
     // the communicator in its constructor and destroys it when it goes out of scope.
     const Ice::CommunicatorHolder communicatorHolder{argc, argv};
@@ -37,7 +27,7 @@ main(int argc, char* argv[])
     VisitorCenter::GreeterPrx slowGreeter{communicator, "slowGreeter:tcp -h localhost -p 4061"};
 
     // Send a request to the regular greeter and get the response.
-    string greeting = greeter->greet(name);
+    string greeting = greeter->greet(Env::getUsername());
     cout << greeting << endl;
 
     // Create another slow greeter proxy with an invocation timeout of 4 seconds (the default invocation timeout is
@@ -57,7 +47,7 @@ main(int argc, char* argv[])
 
     // Send a request to the slow greeter, and cancel this request after 4 seconds.
     function<void()> cancel = slowGreeter->greetAsync(
-        name,
+        Env::getUsername(),
         [](const string& greeting) { cout << "Received unexpected greeting: " << greeting << endl; },
         [](exception_ptr exceptionPtr)
         {

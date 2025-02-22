@@ -1,0 +1,19 @@
+{
+    "name": "bidir",
+    "version": "1.0.0",
+    "main": "client.js",
+    "type": "module",
+    "author": "ZeroC, Inc.",
+    "license": "GPL-2.0-only",
+    "description": "Ice context demo",
+    "scripts": {
+        "build": "npx slice2js --typescript AlarmClock.ice && npx tsc"
+    },
+    "dependencies": {
+        "@zeroc/ice": "^3.8.0-nightly.0.0"
+    },
+    "devDependencies": {
+        "@types/node": "^20.14.5",
+        "typescript": "^5.4.5"
+    }
+}

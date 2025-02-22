@@ -16,7 +16,8 @@ main(int argc, char* argv[])
     Ice::CtrlCHandler ctrlCHandler;
 
     // Set the maximum number of threads in the server thread pool to 10, since Chatbot::greet waits synchronously.
-    Ice::InitializationData initData{.properties = Ice::createProperties(argc, argv)};
+    Ice::InitializationData initData;
+    initData.properties = Ice::createProperties(argc, argv);
     initData.properties->setProperty("Ice.ThreadPool.Server.SizeMax", "10");
 
     // Create an Ice communicator to initialize the Ice runtime. The CommunicatorHolder is a RAII helper that creates

@@ -78,7 +78,7 @@ main(int argc, char* argv[])
             else
             {
                 auto tickers = stocks.getConnectedKeys();
-                if (find(tickers.begin(), tickers.end(), stock) == tickers.end())
+                if (ranges::find(tickers, stock) == tickers.end())
                 {
                     cout << "unknown stock `" << stock << "'" << endl;
                     return 1;

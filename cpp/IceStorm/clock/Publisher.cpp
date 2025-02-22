@@ -1,5 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
+#include "../../common/Time.h"
 #include "Clock.h"
 
 #include <Ice/Ice.h>
@@ -147,13 +148,7 @@ main(int argc, char* argv[])
         {
             while (true)
             {
-                auto now = chrono::system_clock::to_time_t(chrono::system_clock::now());
-                char timeString[100];
-                if (strftime(timeString, sizeof(timeString), "%x %X", localtime(&now)) == 0)
-                {
-                    timeString[0] = '\0';
-                }
-
+                auto timeString = Time::formatTime(chrono::system_clock::now());
                 try
                 {
                     clock->tick(timeString);

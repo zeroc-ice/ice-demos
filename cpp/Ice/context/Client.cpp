@@ -1,5 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
+#include "../../common/Env.h"
 #include "Greeter.h"
 
 #include <cstdlib>
@@ -10,20 +11,10 @@ using namespace std;
 int
 main(int argc, char* argv[])
 {
-    // Figure out my name.
-    const char* name = getenv("USER");
-    if (name == nullptr)
-    {
-        name = getenv("USERNAME");
-    }
-    if (name == nullptr)
-    {
-        name = "masked user";
-    }
-
     // Set the Ice.ImplicitContext property to "Shared" before creating the communicator.
     // This is only necessary for the implicit context API (see below).
-    Ice::InitializationData initData{.properties = Ice::createProperties(argc, argv)};
+    Ice::InitializationData initData;
+    initData.properties = Ice::createProperties(argc, argv);
     initData.properties->setProperty("Ice.ImplicitContext", "Shared");
 
     // Create an Ice communicator to initialize the Ice runtime. The CommunicatorHolder is a RAII helper that creates
@@ -39,7 +30,7 @@ main(int argc, char* argv[])
 
     // Send a request to the remote object and get the response. We request a French greeting by setting the context
     // parameter.
-    string greeting = greeter->greet(name, {{"language", "fr"}});
+    string greeting = greeter->greet(Env::getUsername(), {{"language", "fr"}});
     cout << greeting << endl;
 
     // Do it again, this time by setting the context on the proxy.

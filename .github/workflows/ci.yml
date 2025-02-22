@@ -63,11 +63,6 @@ jobs:
           working_directory: ice
           build_flags: ${{ runner.os == 'Windows' && '/t:BuildDist /p:Configuration=Release /p:Platform=x64' || 'srcs' }}
 
-      - name: Publish C# NuGet Packages
-        timeout-minutes: 5
-        working-directory: ice/csharp/msbuild
-        run: dotnet msbuild ice.proj /t:Publish /p:Configuration=Release /p:Platform=x64
-
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
@@ -86,8 +81,8 @@ jobs:
 
           find . -name CMakeLists.txt -type f | while IFS= read -r file; do
             dir=$(dirname "$file");
-            cmake -B "$dir/build" -S "$dir" -DIce_DEBUG=ON -DCMAKE_BUILD_TYPE=Release
-            cmake --build "$dir/build"
+            cmake -B "$dir/build" -S "$dir" -DIce_DEBUG=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
+            cmake --build "$dir/build" --verbose
           done
         if: runner.os != 'Windows'
 
@@ -95,14 +90,24 @@ jobs:
         timeout-minutes: 20
         working-directory: ice-demos/cpp
         run: |
-            # No IceBT on Windows
-            Remove-Item -Recurse -Force "IceBT"
+          # No IceBT on Windows
+          Remove-Item -Recurse -Force "IceBT"
 
-            Get-ChildItem -Recurse -Filter CMakeLists.txt | ForEach-Object {
+          $ErrorActionPreference = "Stop"
+
+          Get-ChildItem -Recurse -Filter CMakeLists.txt | ForEach-Object {
+              Write-Output "Processing: $_"
               $dir = $_.DirectoryName
-              cmake -B "$dir/build" -S "$dir" -DIce_DEBUG=ON
-              cmake --build "$dir/build" --config Release
-            }
+
+              # Run cmake configure step
+              cmake -B "$dir/build" -S "$dir" -DIce_DEBUG=ON -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
+              if ($LASTEXITCODE -ne 0) { throw "CMake configuration failed" }
+
+              # Run cmake build step
+              cmake --build "$dir/build" --config Release --verbose
+              if ($LASTEXITCODE -ne 0) { throw "CMake build failed" }
+          }
+
         if: runner.os == 'Windows'
 
       - name: Build C# Demos
@@ -118,9 +123,12 @@ jobs:
         timeout-minutes: 20
         working-directory: ice-demos/csharp
         run: |
+          $ErrorActionPreference = "Stop"
           Get-ChildItem -Recurse -Filter *.sln | ForEach-Object {
             dotnet build $_.FullName
+           if ($LASTEXITCODE -ne 0) { throw "dotnet build failed" }
           }
+
         if: runner.os == 'Windows'
 
       - name: Run .NET format
@@ -144,13 +152,28 @@ jobs:
       - name: Build JavaScript Demos
         timeout-minutes: 20
         working-directory: ice-demos/js
-        env:
-          # For Ice Builder for Gulp
-          CPP_PLATFORM: x64
-          CPP_CONFIGURATION: Release
         run: |
-          npm install
-          npx gulp build
+          set -euxo pipefail
+          find . -maxdepth 3 -name package.json -type f | while IFS= read -r file; do
+              dir=$(dirname "$file");
+              npm install --prefix "$dir"
+              npm run --prefix "$dir" build
+          done
+        if: runner.os != 'Windows'
+
+      - name: Build JavaScript Demos
+        timeout-minutes: 20
+        working-directory: ice-demos/js
+        run: |
+          Get-ChildItem -Recurse -Depth 2 -Filter package.json | ForEach-Object {
+            cd $_.DirectoryName
+            npm install
+            if ($LASTEXITCODE -ne 0) { throw "npm install failed" }
+
+            npm run build
+            if ($LASTEXITCODE -ne 0) { throw "npm build failed" }
+          }
+        if: runner.os == 'Windows'
 
       - name: Build Swift Demos
         timeout-minutes: 20

@@ -2,7 +2,6 @@
 
 #include "Hello.h"
 #include <Ice/Ice.h>
-#include <IceGrid/IceGrid.h>
 #include <iostream>
 
 using namespace std;

@@ -20,7 +20,7 @@ extern "C"
 
 void
 GreeterServer::GreeterService::start(
-    const string& name,
+    [[maybe_unused]] const string& name,
     const Ice::CommunicatorPtr& communicator,
     [[maybe_unused]] const Ice::StringSeq& args)
 {
