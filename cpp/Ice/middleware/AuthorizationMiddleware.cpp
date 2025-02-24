@@ -23,7 +23,11 @@ Server::AuthorizationMiddleware::dispatch(
     if (token != _validToken)
     {
         cout << "Rejecting request with invalid token '" << token << "'" << endl;
-        throw Ice::DispatchException{__FILE__, __LINE__, Ice::ReplyStatus::Unauthorized, "Invalid token '" + token + "'"};
+        throw Ice::DispatchException{
+            __FILE__,
+            __LINE__,
+            Ice::ReplyStatus::Unauthorized,
+            "Invalid token '" + token + "'"};
     }
 
     cout << "Accepting request with token '" << token << "'" << endl;
