@@ -7,8 +7,7 @@ import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.ObjectAdapter;
 
 class Server {
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         // Create an Ice communicator to initialize the Ice runtime. The communicator is disposed before the program exits.
         try (Communicator communicator = com.zeroc.Ice.Util.initialize(args)) {
             Runtime.getRuntime().addShutdownHook(new Thread(() -> {
