@@ -3,21 +3,24 @@
 package com.zeroc.demos.greeter;
 
 import com.zeroc.demos.greeter.Chatbot;
+import com.zeroc.Ice.Communicator;
+import com.zeroc.Ice.ObjectAdapter;
+import com.zeroc.Ice.Util;
 
 class Server {
     public static void main(String[] args)
     {
         // Create an Ice communicator to initialize the Ice runtime. The communicator is disposed before the program exits.
-        try (com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args)) {
+        try (Communicator communicator = Util.initialize(args)) {
             Runtime.getRuntime().addShutdownHook(new Thread(() -> {
                 communicator.shutdown();
             }));
 
             // Create an object adapter that listens for incoming requests and dispatches them to servants.
-            com.zeroc.Ice.ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints("GreeterAdapter", "tcp -p 4061");
+            ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints("GreeterAdapter", "tcp -p 4061");
 
             // Register the Chatbot servant with the adapter.
-            adapter.add(new Chatbot(), com.zeroc.Ice.Util.stringToIdentity("greeter"));
+            adapter.add(new Chatbot(), Util.stringToIdentity("greeter"));
 
             // Start dispatching requests.
             adapter.activate();
