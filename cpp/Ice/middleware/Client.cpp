@@ -3,7 +3,6 @@
 #include "../../common/Env.h"
 #include "Greeter.h"
 
-#include <cstdlib>
 #include <iostream>
 
 using namespace std;
@@ -11,10 +10,11 @@ using namespace std;
 int
 main(int argc, char* argv[])
 {
-    // Create an Ice communicator to initialize the Ice runtime. The CommunicatorHolder is a RAII helper that creates
-    // the communicator in its constructor and destroys it when it goes out of scope.
-    const Ice::CommunicatorHolder communicatorHolder{argc, argv};
-    const Ice::CommunicatorPtr& communicator = communicatorHolder.communicator();
+    // Create an Ice communicator to initialize the Ice runtime.
+    Ice::CommunicatorPtr communicator = Ice::initialize(argc, argv);
+
+    // Make sure the communicator is destroyed at the end of this scope.
+    Ice::CommunicatorHolder communicatorHolder{communicator};
 
     // Create a Greeter proxy. If you run the server on a different computer, replace localhost in the string below with
     // the server's hostname or IP address.
