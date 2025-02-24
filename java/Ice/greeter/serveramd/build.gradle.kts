@@ -17,5 +17,5 @@ slice {
 }
 
 application {
-    mainClass.set("com.zeroc.greeter.Server")
+    mainClass.set("com.zeroc.demos.greeter.Server")
 }

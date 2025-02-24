@@ -1,18 +1,14 @@
 // Copyright (c) ZeroC, Inc.
 
-package com.zeroc.greeter;
+package com.zeroc.demos.greeter;
 
-import com.zeroc.Ice.Communicator;
-import com.zeroc.Ice.Util;
-import com.zeroc.greeter.VisitorCenter.GreeterPrx;
-import com.zeroc.greeter.Chatbot;
+import com.zeroc.demos.greeter.Chatbot;
 
 class Server {
     public static void main(String[] args)
     {
         // Create an Ice communicator to initialize the Ice runtime. The communicator is disposed before the program exits.
-        try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args))
-        {
+        try (com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args)) {
             Runtime.getRuntime().addShutdownHook(new Thread(() -> {
                 communicator.shutdown();
             }));

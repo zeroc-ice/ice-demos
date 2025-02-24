@@ -1,3 +1,5 @@
+// Copyright (c) ZeroC, Inc.
+
 plugins {
     java
     application
@@ -15,5 +17,5 @@ slice {
 }
 
 application {
-    mainClass.set("com.zeroc.greeter.Client")
+    mainClass.set("com.zeroc.demos.greeter.Client")
 }
