@@ -2,6 +2,7 @@
 
 #include "SimpleWakeUpService.h"
 
+#include <Ice/Ice.h>
 #include <iostream>
 
 using namespace std;
@@ -13,8 +14,10 @@ main(int argc, char* argv[])
     Ice::CtrlCHandler ctrlCHandler;
 
     // Create an Ice communicator to initialize the Ice runtime.
-    const Ice::CommunicatorHolder communicatorHolder{argc, argv};
-    const Ice::CommunicatorPtr& communicator = communicatorHolder.communicator();
+    Ice::CommunicatorPtr communicator = Ice::initialize(argc, argv);
+
+    // Make sure the communicator is destroyed at the end of this scope.
+    Ice::CommunicatorHolder communicatorHolder{communicator};
 
     // Create an object adapter that listens for incoming requests and dispatches them to servants.
     auto adapter = communicator->createObjectAdapterWithEndpoints("WakeUpAdapter", "tcp -p 4061");
@@ -26,9 +29,16 @@ main(int argc, char* argv[])
     adapter->activate();
     cout << "Listening on port 4061..." << endl;
 
-    // Wait until the user presses Ctrl+C.
-    int signal = ctrlCHandler.wait();
-    cout << "Caught signal " << signal << ", exiting..." << endl;
+    // Shut down the communicator when the user presses Ctrl+C.
+    ctrlCHandler.setCallback(
+        [communicator](int signal)
+        {
+            cout << "Caught signal " << signal << ", shutting down..." << endl;
+            communicator->shutdown();
+        });
+
+    // Wait until the communicator is shut down. Here, this occurs when the user presses Ctrl+C.
+    communicator->waitForShutdown();
 
     return 0;
 }
