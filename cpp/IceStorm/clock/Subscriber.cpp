@@ -36,7 +36,7 @@ main(int argc, char* argv[])
     Ice::CtrlCHandler ctrlCHandler;
 
     // Create an Ice communicator to initialize the Ice runtime.
-    Ice::CommunicatorPtr communicator = Ice::initial(argc, argv, "config.sub");
+    Ice::CommunicatorPtr communicator = Ice::initialize(argc, argv, "config.sub");
 
     // Make sure the communicator is destroyed at the end of this scope.
     Ice::CommunicatorHolder communicatorHolder{communicator};
