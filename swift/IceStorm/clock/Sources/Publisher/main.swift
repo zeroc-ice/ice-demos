@@ -110,12 +110,13 @@ let task = Task {
     }
 }
 
-// Wait until the user presses Ctrl+C.
-let signal = await ctrlCHandler.catchSignal()
-print("Caught signal \(signal), exiting...")
+// Cancel the background task when the user presses Ctrl+C.
+ctrlCHandler.setCallback { signal in
+    print("Caught signal \(signal), exiting...")
+    task.cancel()
+}
 
-// Cancel the background task and wait for its completion.
-task.cancel()
+// Wait until the user presses Ctrl+C.
 do {
     try await task.value
 } catch is CancellationError {

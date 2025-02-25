@@ -152,13 +152,14 @@ do {
     print("reactivating persistent subscriber")
 }
 
-// Wait until the user presses Ctrl+C.
-let signal = await ctrlCHandler.catchSignal()
-print("Caught signal \(signal), exiting...")
+// Shutdown the communicator when the user presses Ctrl+C.
+ctrlCHandler.setCallback { signal in
+    print("Caught signal \(signal), shutting down...")
+    communicator.shutdown()
+}
 
-// Initiate shutdown and wait for all dispatches to complete.
-communicator.shutdown()
-communicator.waitForShutdown()
+// Wait until the communicator is shut down. Here, this occurs when the user presses Ctrl+C.
+await communicator.shutdownCompleted()
 
 // Unsubscribe from the topic in IceStorm.
 try await topic.unsubscribe(subscriber)
