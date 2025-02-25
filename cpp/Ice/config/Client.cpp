@@ -13,7 +13,7 @@ main(int argc, char* argv[])
     // Create an Ice communicator to initialize the Ice runtime. The communicator gets its configuration properties from
     // file config.client in the client's current working directory. The communicator initialization also parses the
     // command-line options to find and set additional properties.
-    Ice::CommunicatorPtr communicator = Ice::initial(argc, argv, "config.client");
+    Ice::CommunicatorPtr communicator = Ice::initialize(argc, argv, "config.client");
 
     // Make sure the communicator is destroyed at the end of this scope.
     Ice::CommunicatorHolder communicatorHolder{communicator};
