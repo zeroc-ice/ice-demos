@@ -1,6 +1,7 @@
 // Copyright (c) ZeroC, Inc.
 
 dependencies {
+    // Add Ice runtime as an implementation dependency of the project.
     implementation("com.zeroc:ice:3.8.0-nightly-+")
 }
 

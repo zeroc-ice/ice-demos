@@ -11,7 +11,7 @@ class Server {
         // Create an Ice communicator to initialize the Ice runtime. The communicator is disposed before the program exits.
         try (Communicator communicator = com.zeroc.Ice.Util.initialize(args)) {
             Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-                communicator.shutdown();
+                communicator.destroy();
             }));
 
             // Create an object adapter that listens for incoming requests and dispatches them to servants.

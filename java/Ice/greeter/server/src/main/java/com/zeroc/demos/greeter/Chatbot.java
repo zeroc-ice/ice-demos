@@ -2,7 +2,7 @@
 
 package com.zeroc.demos.greeter;
 
-import com.zeroc.demos.greeter.VisitorCenter.Greeter;
+import com.zeroc.demos.VisitorCenter.Greeter;
 import com.zeroc.Ice.Current;
 
 /**

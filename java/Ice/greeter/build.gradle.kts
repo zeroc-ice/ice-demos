@@ -5,8 +5,6 @@ plugins {
 }
 
 subprojects {
-    // The Java plugin adds support for compiling and running Java code.
-    apply(plugin = "java")
     // The application plugin adds support for building Java applications.
     apply(plugin = "application")
     // The Gradle Ice Builder plugin adds support for compiling Slice files.
