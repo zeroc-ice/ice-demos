@@ -22,12 +22,12 @@ Server::AuthorizationMiddleware::dispatch(
     string token = p != request.current().ctx.end() ? p->second : "";
     if (token != _validToken)
     {
-        cout << "Rejecting request with token '" << token << "'" << endl;
-
-        // ObjectNotExistException is one of the 6 Ice local exceptions that Ice transmits "over the wire".
-        // It usually means "no servant was found for this identity". Here, we reuse it to indicate an authorization
-        // failure without leaking information to the client.
-        throw Ice::ObjectNotExistException{__FILE__, __LINE__};
+        cout << "Rejecting request with invalid token '" << token << "'" << endl;
+        throw Ice::DispatchException{
+            __FILE__,
+            __LINE__,
+            Ice::ReplyStatus::Unauthorized,
+            "Invalid token '" + token + "'"};
     }
 
     cout << "Accepting request with token '" << token << "'" << endl;

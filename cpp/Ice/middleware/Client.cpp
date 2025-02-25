@@ -30,9 +30,14 @@ main(int argc, char* argv[])
         string unexpected = greeter.greet(Env::getUsername(), {{"token", "pineapple"}});
         cout << "Received unexpected greeting: " << unexpected << endl;
     }
-    catch (const Ice::ObjectNotExistException&)
+    catch (const Ice::DispatchException& dispatchException)
     {
-        // Expected with an invalid (or missing) token. See AuthorizationMiddleware.
+        // We expect a dispatch exception with reply status Unauthorized for an invalid (or missing) token.
+        // See AuthorizationMiddleware.
+        if (dispatchException.replyStatus() != Ice::ReplyStatus::Unauthorized)
+        {
+            cout << "Received unexpected reply status: " << dispatchException.replyStatus() << endl;
+        }
     }
 
     // Send a request with the correct token in the request context.
