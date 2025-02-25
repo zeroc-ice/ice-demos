@@ -39,7 +39,7 @@ First, start one of the server implementations:
 ### Windows
 
 ```shell
-.\server\build\install\server\binserver
+server\build\install\server\binserver
 ```
 
 or
@@ -53,7 +53,7 @@ or
 ### Windows
 
 ```shell
-.\serveramd\build\install\serveramd\bin\serveramd
+serveramd\build\install\serveramd\bin\serveramd
 ```
 
 ## Running the Client
@@ -69,7 +69,7 @@ In a separate terminal, start the client program:
 ### Windows
 
 ```shell
-.\client\build\install\client\bin\client
+client\build\install\client\bin\client
 ```
 
 [Application plugin]: https://docs.gradle.org/current/userguide/application_plugin.html

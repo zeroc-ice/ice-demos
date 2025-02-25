@@ -1,17 +1,20 @@
 // Copyright (c) ZeroC, Inc.
 
 plugins {
+    // Register the Ice Builder plugin without applying it here.
+    // The plugin will be applied to all subprojects in the `subprojects` block below.
     id("com.zeroc.gradle.ice-builder.slice") version "1.5.2" apply false
 }
 
 subprojects {
-    // The application plugin adds support for building Java applications.
+    // Apply the application plugin to enable Java application support in subprojects.
     apply(plugin = "application")
-    // The Gradle Ice Builder plugin adds support for compiling Slice files.
+
+    // Apply the Gradle Ice Builder plugin to enable Slice compilation in all subprojects.
     apply(plugin = "com.zeroc.gradle.ice-builder.slice")
 
     repositories {
-        // Add the ZeroC Nightly repository to download the Ice artifacts.
+        // Add the ZeroC Nightly repository for downloading Ice runtime and development artifacts.
         maven("https://download.zeroc.com/nexus/repository/maven-nightly/")
         mavenCentral()
     }

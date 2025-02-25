@@ -1,13 +1,14 @@
 // Copyright (c) ZeroC, Inc.
 
 dependencies {
-    // Add Ice runtime as an implementation dependency of the project.
+    // Add the Ice library as an implementation dependency.
     implementation("com.zeroc:ice:3.8.0-nightly-+")
 }
 
 slice {
     java {
-        // Create a Slice source set to compile Greeter.ice file from the parent slice directory.
+        // Configure the default Slice source set to compile the Greeter.ice file from the parent slice directory
+        // during the build process.
         create("default") {
             files = listOf(file("../slice/Greeter.ice"))
         }
@@ -15,6 +16,6 @@ slice {
 }
 
 application {
-    // Define the main class for the application.
+    // Specify the main entry point for the application.
     mainClass.set("com.zeroc.demos.greeter.Server")
 }
