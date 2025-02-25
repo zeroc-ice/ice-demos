@@ -2,6 +2,7 @@
 
 #include "Chatbot.h"
 
+#include <Ice/Ice.h>
 #include <iostream>
 
 using namespace std;
