@@ -17,6 +17,13 @@ adapter.activate();
 
 // Ice.Trace.Network=1 or greater shows on which interface(s) and port(s) the server is listening.
 
-// Wait until the user presses Ctrl+C.
-await CancelKeyPressed;
-Console.WriteLine("Caught Ctrl+C, exiting...");
+// Shut down the communicator when the user presses Ctrl+C.
+Console.CancelKeyPress += (sender, eventArgs) =>
+{
+    eventArgs.Cancel = true; // don't terminate the process
+    Console.WriteLine("Caught Ctrl+C, shutting down...");
+    communicator.shutdown(); // starts shutting down
+};
+
+// Wait until the communicator is shut down. Here, this occurs when the user presses Ctrl+C.
+await communicator.shutdownCompleted;
