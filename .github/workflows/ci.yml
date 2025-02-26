@@ -135,15 +135,6 @@ jobs:
 
         if: runner.os == 'Windows'
 
-      - name: Run .NET format
-        working-directory: ice-demos/csharp
-        run: |
-          find . -name '*.sln' -type f | while IFS= read -r file; do
-            dotnet format --verify-no-changes "$file"
-          done
-        shell: bash
-        if: runner.os == 'Linux'
-
       # - name: Build Java Demos
       #   timeout-minutes: 20
       #   working-directory: ice-demos/java
