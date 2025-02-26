@@ -43,8 +43,10 @@ int
 main(int argc, char* argv[])
 {
     // Create an Ice communicator to initialize the Ice runtime.
-    const Ice::CommunicatorHolder communicatorHolder{argc, argv};
-    const Ice::CommunicatorPtr& communicator = communicatorHolder.communicator();
+    Ice::CommunicatorPtr communicator = Ice::initialize(argc, argv);
+
+    // Make sure the communicator is destroyed at the end of this scope.
+    Ice::CommunicatorHolder communicatorHolder{communicator};
 
     // Create a proxy for the root directory.
     DirectoryPrx rootDir{communicator, "RootDir:tcp -h localhost -p 4061"};

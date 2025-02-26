@@ -36,8 +36,10 @@ main(int argc, char* argv[])
     Ice::CtrlCHandler ctrlCHandler;
 
     // Create an Ice communicator to initialize the Ice runtime.
-    const Ice::CommunicatorHolder communicatorHolder{argc, argv, "config.sub"};
-    const Ice::CommunicatorPtr& communicator = communicatorHolder.communicator();
+    Ice::CommunicatorPtr communicator = Ice::initialize(argc, argv, "config.sub");
+
+    // Make sure the communicator is destroyed at the end of this scope.
+    Ice::CommunicatorHolder communicatorHolder{communicator};
 
     // Parse command-line options.
 
@@ -226,9 +228,16 @@ main(int argc, char* argv[])
         cout << "reactivating persistent subscriber" << endl;
     }
 
-    // Wait until the user presses Ctrl+C.
-    int signal = ctrlCHandler.wait();
-    cout << "Caught signal " << signal << ", exiting..." << endl;
+    // Shut down the communicator when the user presses Ctrl+C.
+    ctrlCHandler.setCallback(
+        [communicator](int signal)
+        {
+            cout << "Caught signal " << signal << ", shutting down..." << endl;
+            communicator->shutdown();
+        });
+
+    // Wait until the communicator is shut down. Here, this occurs when the user presses Ctrl+C.
+    communicator->waitForShutdown();
 
     // Initiate shutdown and wait for all dispatches to complete.
     communicator->shutdown();

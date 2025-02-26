@@ -25,6 +25,11 @@ try adapter.add(servant: GreeterDisp(Chatbot()), id: Ice.stringToIdentity("greet
 // Start dispatching requests.
 try adapter.activate()
 
-// Wait until the user presses Ctrl+C.
-let signal = await ctrlCHandler.catchSignal()
-print("Caught signal \(signal), exiting...")
+// Shutdown the communicator when the user presses Ctrl+C.
+ctrlCHandler.setCallback { signal in
+    print("Caught signal \(signal), shutting down...")
+    communicator.shutdown()
+}
+
+// Wait until the communicator is shut down. Here, this occurs when the user presses Ctrl+C.
+await communicator.shutdownCompleted()
