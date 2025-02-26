@@ -20,5 +20,14 @@ adapter.add(new Server.Chatbot(greeterName), greeterIdentity);
 adapter.activate();
 Console.WriteLine($"{greeterName} is listening...");
 
-// Wait until the communicator is shut down. IceGrid shuts down this communicator via its Ice.Admin object.
+// Shut down the communicator the program receives a SIGTERM or SIGINT signal.
+Console.CancelKeyPress += (sender, eventArgs) =>
+{
+    eventArgs.Cancel = true; // don't terminate the process
+    Console.WriteLine("Caught signal, shutting down...");
+    communicator.shutdown(); // starts shutting down
+};
+
+// Wait until the communicator is shut down. IceGrid shuts down this communicator via its Ice.Admin object, and sends
+// SIGTERM as a fallback.
 await communicator.shutdownCompleted;
