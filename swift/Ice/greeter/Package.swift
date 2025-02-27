@@ -8,7 +8,7 @@ let package = Package(
     platforms: [
         .macOS(.v14)
     ],
-    dependencies: [.package(url: "https://download.zeroc.com/nexus/repository/nightly/ice-swift.git", branch: "master")],
+    dependencies: [.package(url: "https://download.zeroc.com/nexus/repository/nightly/ice-swift.git", branch: "main")],
     targets: [
         .executableTarget(
             name: "Client",
