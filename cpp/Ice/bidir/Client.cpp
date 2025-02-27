@@ -2,6 +2,7 @@
 
 #include "MockAlarmClock.h"
 
+#include <Ice/Ice.h>
 #include <iostream>
 
 using namespace EarlyRiser;
@@ -26,8 +27,10 @@ int
 main(int argc, char* argv[])
 {
     // Create an Ice communicator to initialize the Ice runtime.
-    const Ice::CommunicatorHolder communicatorHolder{argc, argv};
-    const Ice::CommunicatorPtr& communicator = communicatorHolder.communicator();
+    Ice::CommunicatorPtr communicator = Ice::initialize(argc, argv);
+
+    // Make sure the communicator is destroyed at the end of this scope.
+    Ice::CommunicatorHolder communicatorHolder{communicator};
 
     // Create an object adapter with no name and no configuration. This object adapter does not need to be activated.
     Ice::ObjectAdapterPtr adapter = communicator->createObjectAdapter("");
