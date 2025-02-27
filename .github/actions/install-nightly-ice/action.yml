@@ -19,4 +19,4 @@ runs:
         echo "deb [signed-by=/etc/apt/keyrings/zeroc-nightly.gpg] https://download.zeroc.com/nexus/repository/ubuntu24.04-nightly nightly main" | sudo tee /etc/apt/sources.list.d/zeroc-nightly.list
 
         sudo apt-get update
-        sudo apt-get install zeroc-ice-all-dev
+        sudo apt-get install -y zeroc-ice-all-dev
