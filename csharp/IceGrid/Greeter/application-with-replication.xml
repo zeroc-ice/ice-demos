@@ -1,5 +1,3 @@
-<!-- Copyright (c) ZeroC, Inc. -->
-
 <icegrid>
   <!-- An application describes nodes and servers deployed on these nodes. An IceGrid deployment (a registry plus one or
   more nodes) can host several applications. -->
