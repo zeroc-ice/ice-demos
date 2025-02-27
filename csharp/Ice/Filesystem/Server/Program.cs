@@ -26,12 +26,13 @@ root.AddChild(DirectoryPrxHelper.uncheckedCast(adapter.addWithUUID(coleridge)));
 // Create a file called "Kubla_Khan", add this servant to the adapter, and add the corresponding proxy to the
 // Coleridge directory.
 file = new Server.MFile("Kubla_Khan");
-file.WriteDirect(
-        ["In Xanadu did Kubla Khan",
-         "A stately pleasure-dome decree:",
-         "Where Alph, the sacred river, ran",
-         "Through caverns measureless to man",
-         "Down to a sunless sea."]);
+file.WriteDirect([
+    "In Xanadu did Kubla Khan",
+    "A stately pleasure-dome decree:",
+    "Where Alph, the sacred river, ran",
+    "Through caverns measureless to man",
+    "Down to a sunless sea."
+]);
 coleridge.AddChild(FilePrxHelper.uncheckedCast(adapter.addWithUUID(file)));
 
 // Start dispatching requests after registering all servants.

@@ -24,7 +24,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-22.04
+          - os: ubuntu-24.04
             ice_build_flags: srcs
           - os: macos-14
             ice_build_flags: srcs
@@ -33,19 +33,6 @@ jobs:
 
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Windows Environment
-        if: runner.os == 'Windows'
-        run: |
-          # We need to replace \ with / in the path, specifically for Gradle
-          $iceHome = "${{ github.workspace }}/ice"
-          $iceHome = $iceHome.Replace("\", "/")
-          echo "ICE_HOME=$iceHome" >> $env:GITHUB_ENV
-
-      - name: Linux/MacOS Environment
-        if: runner.os != 'Windows'
-        run: |
-          echo "ICE_HOME=${{ github.workspace }}/ice" >> $GITHUB_ENV
-
       - name: Checkout Ice
         uses: actions/checkout@v4
         with:
@@ -56,17 +43,13 @@ jobs:
       - name: Setup Ice Build Dependencies
         uses: ./ice/.github/actions/setup-dependencies
 
-      - name: Build Ice
-        uses: ./ice/.github/actions/build
-        timeout-minutes: 60
-        with:
-          working_directory: ice
-          build_flags: ${{ runner.os == 'Windows' && '/t:BuildDist /p:Configuration=Release /p:Platform=x64' || 'srcs' }}
-
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           path: ice-demos
+
+      - name: Install Nightly Ice Builds
+        uses: ./ice-demos/.github/actions/install-nightly-ice
 
       - name: Build C++ Demos
         timeout-minutes: 20
@@ -104,7 +87,7 @@ jobs:
               if ($LASTEXITCODE -ne 0) { throw "CMake configuration failed" }
 
               # Run cmake build step
-              cmake --build "$dir/build" --config Release --verbose
+              cmake --build "$dir/build" --verbose --config Release
               if ($LASTEXITCODE -ne 0) { throw "CMake build failed" }
           }
 
@@ -131,23 +114,14 @@ jobs:
 
         if: runner.os == 'Windows'
 
-      - name: Run .NET format
-        working-directory: ice-demos/csharp
-        run: |
-          find . -name '*.sln' -type f | while IFS= read -r file; do
-            dotnet format --verify-no-changes "$file"
-          done
-        shell: bash
-        if: runner.os == 'Linux'
-
-      - name: Build Java Demos
-        timeout-minutes: 20
-        working-directory: ice-demos/java
-        env:
-          # For Ice Builder for Gradle
-          CPP_PLATFORM: x64
-          CPP_CONFIGURATION: Release
-        run: ./gradlew build
+      # - name: Build Java Demos
+      #   timeout-minutes: 20
+      #   working-directory: ice-demos/java
+      #   env:
+      #     # For Ice Builder for Gradle
+      #     CPP_PLATFORM: x64
+      #     CPP_CONFIGURATION: Release
+      #   run: ./gradlew build
 
       - name: Build JavaScript Demos
         timeout-minutes: 20

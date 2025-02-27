@@ -2,13 +2,7 @@
 if (NOT Ice_HOME)
   if (DEFINED ENV{ICE_HOME})
     set(Ice_HOME $ENV{ICE_HOME} CACHE PATH "Path to the Ice installation directory")
-  else()
-    message(FATAL_ERROR "Ice_HOME not set")
   endif()
-endif()
-
-if (NOT EXISTS ${Ice_HOME})
-  message(FATAL_ERROR "The specified Ice_HOME directory does not exist: ${Ice_HOME}")
 endif()
 
 if(NOT DEFINED Ice_ARCHITECTURE)
@@ -114,8 +108,8 @@ if(NOT DEFINED Ice_SLICE2CPP_EXECUTABLE)
     CACHE PATH "Path to the slice2cpp executable")
 endif()
 
-if(NOT DEFINED Ice_SLICE_DIR AND EXISTS ${Ice_HOME}/slice)
-  set(Ice_SLICE_DIR ${Ice_HOME}/slice CACHE PATH "Path to the Ice Slice files directory")
+if(NOT DEFINED Ice_SLICE_DIR)
+  find_path(Ice_SLICE_DIR NAMES Ice/Identity.ice HINTS ${Ice_HOME} PATH_SUFFIXES slice share/ice/slice CACHE PATH "Path to the Ice Slice files directory")
 endif()
 
 foreach(component ${Ice_FIND_COMPONENTS})
@@ -196,7 +190,7 @@ unset(ice_lib_path_suffixes_debug)
 
 # Use `find_package_handle_standard_args` for better error handling
 find_package_handle_standard_args(Ice
-  REQUIRED_VARS Ice_HOME Ice_INCLUDE_DIRS Ice_SLICE2CPP_EXECUTABLE
+  REQUIRED_VARS Ice_SLICE_DIR Ice_INCLUDE_DIRS Ice_SLICE2CPP_EXECUTABLE
   HANDLE_COMPONENTS
 )
 
