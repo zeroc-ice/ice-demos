@@ -120,9 +120,6 @@ UpgradeLog*.htm
 *.exe.config
 *.exe.manifest
 
-csharp/**/*.xml
-visualBasic/**/*.xml
-
 Thumbs.db
 
 # Js

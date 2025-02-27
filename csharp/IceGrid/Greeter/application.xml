@@ -1,0 +1,19 @@
+<!-- Copyright (c) ZeroC, Inc. -->
+
+<icegrid>
+
+  <application name="VisitorCenter">
+
+    <node name="node1">
+
+      <server id="GreetServer" exe="dotnet" activation="on-demand">
+        <option>Server/bin/Debug/net8.0/Server.dll</option>
+        <adapter name="GreeterAdapter" endpoints="tcp">
+          <object identity="greeter" property="Greeter.Identity"/>
+        </adapter>
+      </server>
+    </node>
+
+  </application>
+
+</icegrid>

@@ -1,0 +1,29 @@
+<!-- Copyright (c) ZeroC, Inc. -->
+
+<icegrid>
+
+  <application name="VisitorCenter">
+
+    <server-template id="GreetServer">
+      <parameter name="index"/>
+      <server id="GreetServer-${index}" exe="dotnet" activation="on-demand">
+        <option>Server/bin/Debug/net8.0/Server.dll</option>
+        <adapter name="GreeterAdapter" endpoints="tcp" replica-group="ReplicatedGreeterAdapter"/>
+        <property name="Greeter.Identity" value="greeter"/>
+      </server>
+    </server-template>
+
+    <replica-group id="ReplicatedGreeterAdapter">
+      <load-balancing type="round-robin"/>
+      <object identity="greeter"/>
+    </replica-group>
+
+    <node name="node1">
+      <server-instance template="GreetServer" index="1"/>
+      <server-instance template="GreetServer" index="2"/>
+      <server-instance template="GreetServer" index="3"/>
+    </node>
+
+  </application>
+
+</icegrid>
