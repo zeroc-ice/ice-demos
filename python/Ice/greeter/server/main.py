@@ -5,7 +5,7 @@ import Ice
 import chatbot
 import sys
 
-# Create an Ice communicator to initialize the Ice runtime. The communicator is disposed before the program exits.
+# Create an Ice communicator to initialize the Ice runtime. The communicator is destroyed at the end of the with block.
 with Ice.initialize(sys.argv) as communicator:
     # Create an object adapter that listens for incoming requests and dispatches them to servants.
     adapter = communicator.createObjectAdapterWithEndpoints("GreeterAdapter", "tcp -p 4061")

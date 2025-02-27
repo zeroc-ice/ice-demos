@@ -18,14 +18,13 @@ async def main():
         # We use run_coroutine_threadsafe because the executor is called by an Ice thread.
         return asyncio.run_coroutine_threadsafe(coroutine, loop)
 
-    # Create an initialization data structure that specifies the coroutine executor.
+    # Create an initialization data structure that sets the coroutine executor. The coroutine executor is used by Ice
+    # to run coroutines returned by servant dispatch methods in the main asyncio event loop.
     initData = Ice.InitializationData()
     initData.coroutineExecutor = coroutineExecutor
 
-    # Create an Ice communicator to initialize the Ice runtime. The communicator is disposed before the program exits.
+    # Create an Ice communicator to initialize the Ice runtime. The communicator is destroyed at the end of the with block.
     with Ice.initialize(initData) as communicator:
-
-        #print("Communicator initialized", communicator.getCoroutineExecutor())
         # Create an object adapter that listens for incoming requests and dispatches them to servants.
         adapter = communicator.createObjectAdapterWithEndpoints("GreeterAdapter", "tcp -p 4061")
 
