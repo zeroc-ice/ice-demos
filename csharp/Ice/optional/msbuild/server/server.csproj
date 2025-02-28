@@ -12,7 +12,6 @@
         <Compile Include="../../Server.cs" />
         <SliceCompile Include="../../Contact.ice" />
         <PackageReference Include="zeroc.ice.net" Version="$(IceVersion)" />
-        <PackageReference Include="zeroc.icebuilder.msbuild" Version="5.0.9" />
 
         <!-- The 1.2 beta version is required for supporting the latest language features.
              See: https://github.com/DotNetAnalyzers/StyleCopAnalyzers/pull/3187 -->

@@ -11,7 +11,6 @@
   <ItemGroup>
     <SliceCompile Include="../slice/GreeterAMD.ice" />
     <PackageReference Include="zeroc.ice.net" Version="$(IceVersion)" />
-    <PackageReference Include="zeroc.icebuilder.msbuild" Version="5.0.9" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.556">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
