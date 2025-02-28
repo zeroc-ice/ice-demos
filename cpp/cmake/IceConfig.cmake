@@ -147,9 +147,10 @@ foreach(component ${Ice_FIND_COMPONENTS})
         HINTS ${Ice_HOME}
         PATH_SUFFIXES ${ice_bin_path_suffixes_debug}
       )
+
     else()
-      # On Linux/macOS, there is only one library for both Debug and Release configurations
-      find_library(Ice_${component}_LIBRARY
+      # On Linux/macOS, there is only one library for both Debug and Release configurations.
+      find_library(Ice_${component}_LIBRARY_RELEASE
         NAMES ${component} ${component}${Ice_SO_VERSION}
         HINTS ${Ice_HOME}
         PATH_SUFFIXES ${ice_lib_path_suffixes}
@@ -161,7 +162,6 @@ foreach(component ${Ice_FIND_COMPONENTS})
     select_library_configurations(Ice_${component})
 
     if(Ice_${component}_LIBRARY)
-
       # Create an imported target for the component
       add_library(Ice::${component} SHARED IMPORTED)
       set_target_properties(Ice::${component} PROPERTIES
