@@ -5,6 +5,9 @@ if (NOT Ice_HOME)
   endif()
 endif()
 
+include(CMakeFindDependencyMacro)
+find_package(Threads REQUIRED)
+
 if(NOT DEFINED Ice_ARCHITECTURE)
   if (CMAKE_LIBRARY_ARCHITECTURE)
     set(Ice_ARCHITECTURE ${CMAKE_LIBRARY_ARCHITECTURE} CACHE STRING "Library architecture")
@@ -24,10 +27,10 @@ endif()
 if(Ice_SOURCE_BUILD)
   list(APPEND ice_include_path_suffixes "cpp/include")
   list(APPEND ice_bin_path_suffixes "cpp/bin")
-  list(APPEND ice_lib_path_suffixes_release "cpp/lib")
+  list(APPEND ice_lib_path_suffixes "cpp/lib")
 
   if (Ice_ARCHITECTURE)
-    list(APPEND ice_lib_path_suffixes_release "cpp/lib/${Ice_ARCHITECTURE}")
+    list(APPEND ice_lib_path_suffixes "cpp/lib/${Ice_ARCHITECTURE}")
   endif()
 
   if(WIN32)
@@ -40,12 +43,14 @@ else()
 
   list(APPEND ice_include_path_suffixes "include")
   list(APPEND ice_bin_path_suffixes "bin")
-  list(APPEND ice_lib_path_suffixes_release "lib")
+  list(APPEND ice_lib_path_suffixes "lib")
 
   if(WIN32)
     # NuGet packages
     list(APPEND ice_include_path_suffixes "build/native/include")
     list(APPEND ice_bin_path_suffixes "tools")
+    list(APPEND ice_bin_path_suffixes_release "build/native/bin/${Ice_ARCHITECTURE}/Release")
+    list(APPEND ice_bin_path_suffixes_debug "build/native/bin/${Ice_ARCHITECTURE}/Debug")
     list(APPEND ice_lib_path_suffixes_release "build/native/lib/${Ice_ARCHITECTURE}/Release")
     list(APPEND ice_lib_path_suffixes_debug "build/native/lib/${Ice_ARCHITECTURE}/Debug")
   endif()
@@ -112,20 +117,44 @@ if(NOT DEFINED Ice_SLICE_DIR)
   find_path(Ice_SLICE_DIR NAMES Ice/Identity.ice HINTS ${Ice_HOME} PATH_SUFFIXES slice share/ice/slice CACHE PATH "Path to the Ice Slice files directory")
 endif()
 
+# Create a target for each requested component
 foreach(component ${Ice_FIND_COMPONENTS})
   if(NOT TARGET Ice::${component})
 
-    find_library(Ice_${component}_LIBRARY_RELEASE
-      NAMES ${component} ${component}${Ice_SO_VERSION}
-      HINTS ${Ice_HOME}
-      PATH_SUFFIXES ${ice_lib_path_suffixes_release}
-    )
+    # Find the dll and import library for the component for both Debug and Release configurations.
+    if (WIN32)
+      # Set the import libraries to the library found above
+      find_library(Ice_${component}_IMPLIB_RELEASE
+        NAMES ${component} ${component}${Ice_SO_VERSION}
+        HINTS ${Ice_HOME}
+        PATH_SUFFIXES ${ice_lib_path_suffixes_release}
+      )
 
-    find_library(Ice_${component}_LIBRARY_DEBUG
-      NAMES ${component}d ${component}${Ice_SO_VERSION}d
-      HINTS ${Ice_HOME}
-      PATH_SUFFIXES lib ${ice_lib_path_suffixes_debug}
-    )
+      find_library(Ice_${component}_IMPLIB_DEBUG
+        NAMES ${component}d ${component}${Ice_SO_VERSION}d
+        HINTS ${Ice_HOME}
+        PATH_SUFFIXES lib ${ice_lib_path_suffixes_debug}
+      )
+
+      find_file(Ice_${component}_LIBRARY_RELEASE
+        NAMES ${component}${Ice_SO_VERSION}.dll
+        HINTS ${Ice_HOME}
+        PATH_SUFFIXES ${ice_bin_path_suffixes_release}
+      )
+
+      find_file(Ice_${component}_LIBRARY_DEBUG
+        NAMES ${component}${Ice_SO_VERSION}d.dll
+        HINTS ${Ice_HOME}
+        PATH_SUFFIXES ${ice_bin_path_suffixes_debug}
+      )
+    else()
+      # On Linux/macOS, there is only one library for both Debug and Release configurations
+      find_library(Ice_${component}_LIBRARY
+        NAMES ${component} ${component}${Ice_SO_VERSION}
+        HINTS ${Ice_HOME}
+        PATH_SUFFIXES ${ice_lib_path_suffixes}
+      )
+    endif()
 
     # Select the appropriate library configuration based on platform and build type
     include(SelectLibraryConfigurations)
@@ -134,32 +163,36 @@ foreach(component ${Ice_FIND_COMPONENTS})
     if(Ice_${component}_LIBRARY)
 
       # Create an imported target for the component
-      add_library(Ice::${component} UNKNOWN IMPORTED)
+      add_library(Ice::${component} SHARED IMPORTED)
       set_target_properties(Ice::${component} PROPERTIES
         INTERFACE_INCLUDE_DIRECTORIES "${Ice_INCLUDE_DIRS}"
       )
 
-      if(Ice_${component}_LIBRARY_RELEASE)
-        set_property(TARGET Ice::${component} APPEND PROPERTY
-          IMPORTED_CONFIGURATIONS RELEASE
-        )
+      # Add the library to the target. On Windows we set both the IMPORTED_LOCATION and IMPORTED_IMPLIB properties.
+      # This necessary to support CMake's TARGET_RUNTIME_DLLS generator expression.
+      # On other platforms, we only set the IMPORTED_LOCATION property.
+      if (WIN32)
+        if(Ice_${component}_LIBRARY_RELEASE)
+          set_target_properties(Ice::${component} PROPERTIES
+            IMPORTED_CONFIGURATIONS RELEASE
+            IMPORTED_IMPLIB_RELEASE "${Ice_${component}_IMPLIB_RELEASE}"
+            IMPORTED_LOCATION_RELEASE "${Ice_${component}_LIBRARY_RELEASE}"
+          )
+        endif()
+        if(Ice_${component}_LIBRARY_DEBUG)
+          set_target_properties(Ice::${component} PROPERTIES
+            IMPORTED_CONFIGURATIONS DEBUG
+            IMPORTED_IMPLIB_DEBUG "${Ice_${component}_IMPLIB_DEBUG}"
+            IMPORTED_LOCATION_DEBUG "${Ice_${component}_LIBRARY_DEBUG}"
+          )
+        endif()
+      else()
         set_target_properties(Ice::${component} PROPERTIES
-          IMPORTED_LOCATION_RELEASE "${Ice_${component}_LIBRARY_RELEASE}"
+          IMPORTED_LOCATION "${Ice_${component}_LIBRARY}"
         )
       endif()
-
-      if(Ice_${component}_LIBRARY_DEBUG)
-        set_property(TARGET Ice::${component} APPEND PROPERTY
-          IMPORTED_CONFIGURATIONS DEBUG
-        )
-        set_target_properties(Ice::${component} PROPERTIES
-          IMPORTED_LOCATION_DEBUG "${Ice_${component}_LIBRARY_DEBUG}"
-        )
-      endif()
-
     endif()
   endif()
-
 endforeach()
 
 if(Ice_DEBUG)
@@ -180,11 +213,19 @@ if(Ice_DEBUG)
     if(Ice_${component}_LIBRARY_DEBUG)
       message(STATUS "Ice_${component}_LIBRARY_DEBUG: ${Ice_${component}_LIBRARY_DEBUG}")
     endif()
+
+    if(Ice_${component}_IMPLIB_RELEASE)
+      message(STATUS "Ice_${component}_IMPLIB_RELEASE: ${Ice_${component}_IMPLIB_RELEASE}")
+    endif()
+    if(Ice_${component}_IMPLIB_DEBUG)
+      message(STATUS "Ice_${component}_IMPLIB_DEBUG: ${Ice_${component}_IMPLIB_DEBUG}")
+    endif()
   endforeach()
 endif()
 
 unset(ice_include_path_suffixes)
 unset(ice_bin_path_suffixes)
+unset(ice_lib_path_suffixes)
 unset(ice_lib_path_suffixes_release)
 unset(ice_lib_path_suffixes_debug)
 
