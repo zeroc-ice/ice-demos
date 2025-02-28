@@ -31,7 +31,7 @@
       <object identity="greeter"/>
     </replica-group>
 
-    <!-- Describes the servers deployed on node1. Here, we deploy 3 separate instances of the GreetServer template. -->
+    <!-- Describes the servers deployed on node1. Here, we deploy 3 separate instances of the GreetServer. -->
     <node name="node1">
       <server-instance template="GreetServer" index="1"/>
       <server-instance template="GreetServer" index="2"/>
