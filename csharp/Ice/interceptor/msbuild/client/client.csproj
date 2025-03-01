@@ -10,8 +10,8 @@
     <ItemGroup>
         <Compile Include="../../Client.cs" />
         <SliceCompile Include="../../Interceptor.ice" />
-        <PackageReference Include="zeroc.ice.net" Version="$(IceVersion)" />
-        <PackageReference Include="zeroc.icebuilder.msbuild" Version="5.0.9" />
+        <PackageReference Include="ZeroC.Ice" Version="$(IceVersion)" />
+        <PackageReference Include="ZeroC.Ice.Slice.Tools.CSharp" Version="$(IceVersion)" />
 
         <!-- The 1.2 beta version is required for supporting the latest language features.
              See: https://github.com/DotNetAnalyzers/StyleCopAnalyzers/pull/3187 -->

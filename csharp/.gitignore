@@ -3,3 +3,8 @@
 *.runtimeconfig.dev.json
 
 **/generated/**
+*.dll
+client
+server
+publisher
+subscriber
