@@ -20,41 +20,18 @@ if(NOT DEFINED Ice_ARCHITECTURE)
   endif()
 endif()
 
-if(EXISTS ${Ice_HOME}/cpp)
-  set(Ice_SOURCE_BUILD ON)
-endif()
+list(APPEND ice_include_path_suffixes "include")
+list(APPEND ice_bin_path_suffixes "bin")
+list(APPEND ice_lib_path_suffixes "lib")
 
-if(Ice_SOURCE_BUILD)
-  list(APPEND ice_include_path_suffixes "cpp/include")
-  list(APPEND ice_bin_path_suffixes "cpp/bin")
-  list(APPEND ice_lib_path_suffixes "cpp/lib")
-
-  if (Ice_ARCHITECTURE)
-    list(APPEND ice_lib_path_suffixes "cpp/lib/${Ice_ARCHITECTURE}")
-  endif()
-
-  if(WIN32)
-    list(APPEND ice_bin_path_suffixes "cpp/bin/${Ice_ARCHITECTURE}/Release" "cpp/bin/${Ice_ARCHITECTURE}/Debug")
-    list(APPEND ice_lib_path_suffixes_release "cpp/lib/${Ice_ARCHITECTURE}/Release")
-    list(APPEND ice_lib_path_suffixes_debug "cpp/lib/${Ice_ARCHITECTURE}/Debug")
-  endif()
-
-else()
-
-  list(APPEND ice_include_path_suffixes "include")
-  list(APPEND ice_bin_path_suffixes "bin")
-  list(APPEND ice_lib_path_suffixes "lib")
-
-  if(WIN32)
-    # NuGet packages
-    list(APPEND ice_include_path_suffixes "build/native/include")
-    list(APPEND ice_bin_path_suffixes "tools")
-    list(APPEND ice_bin_path_suffixes_release "build/native/bin/${Ice_ARCHITECTURE}/Release")
-    list(APPEND ice_bin_path_suffixes_debug "build/native/bin/${Ice_ARCHITECTURE}/Debug")
-    list(APPEND ice_lib_path_suffixes_release "build/native/lib/${Ice_ARCHITECTURE}/Release")
-    list(APPEND ice_lib_path_suffixes_debug "build/native/lib/${Ice_ARCHITECTURE}/Debug")
-  endif()
-
+if(WIN32)
+  # NuGet packages
+  list(APPEND ice_include_path_suffixes "build/native/include")
+  list(APPEND ice_bin_path_suffixes "tools")
+  list(APPEND ice_bin_path_suffixes_release "build/native/bin/${Ice_ARCHITECTURE}/Release")
+  list(APPEND ice_bin_path_suffixes_debug "build/native/bin/${Ice_ARCHITECTURE}/Debug")
+  list(APPEND ice_lib_path_suffixes_release "build/native/lib/${Ice_ARCHITECTURE}/Release")
+  list(APPEND ice_lib_path_suffixes_debug "build/native/lib/${Ice_ARCHITECTURE}/Debug")
 endif()
 
 # Ice include directory
@@ -62,29 +39,10 @@ if(NOT DEFINED Ice_INCLUDE_DIR)
   find_path(Ice_INCLUDE_DIR NAMES Ice/Ice.h HINTS ${Ice_HOME} PATH_SUFFIXES ${ice_include_path_suffixes} CACHE PATH "Path to the Ice include directory")
 endif()
 
-# Ice include directories include the generated directory(s)
+# Ice include directories
 if(NOT DEFINED Ice_INCLUDE_DIRS)
   set(Ice_INCLUDE_DIRS ${Ice_INCLUDE_DIR})
-
-  if(Ice_SOURCE_BUILD)
-    #  Only the Windows build has separate Debug and Release directories for the generated files
-    if(WIN32)
-      set(Ice_GENERATED_INCLUDE_DIR_RELEASE ${Ice_INCLUDE_DIR}/generated/${Ice_ARCHITECTURE}/Release)
-      if (EXISTS ${Ice_GENERATED_INCLUDE_DIR_RELEASE})
-        list(APPEND Ice_INCLUDE_DIRS $<$<CONFIG:Release>:${Ice_GENERATED_INCLUDE_DIR_RELEASE}>)
-      endif()
-
-      set(Ice_GENERATED_INCLUDE_DIR_DEBUG ${Ice_INCLUDE_DIR}/generated/${Ice_ARCHITECTURE}/Debug)
-      if (EXISTS ${Ice_GENERATED_INCLUDE_DIR_DEBUG})
-        list(APPEND Ice_INCLUDE_DIRS $<$<CONFIG:Debug>:${Ice_GENERATED_INCLUDE_DIR_DEBUG}>)
-      endif()
-    else()
-        list(APPEND Ice_INCLUDE_DIRS ${Ice_INCLUDE_DIR}/generated)
-    endif()
-  endif()
-
   set(Ice_INCLUDE_DIRS ${Ice_INCLUDE_DIRS} CACHE STRING "Ice include directories")
-
 endif()
 
 # Read Ice version variables from Ice/Config.h
