@@ -9,6 +9,16 @@
 
 The ice-demos repository provides sample programs for [Ice](https://github.com/zeroc-ice/ice).
 
+> [!IMPORTANT]
+> This branch targets the next major release of Ice.
+>
+> Please use the branch corresponding to the Ice version you are using:
+>
+> - [3.7](https://github.com/zeroc-ice/ice-demos/tree/3.7) (latest release)
+> - [3.6](https://github.com/zeroc-ice/ice-demos/tree/3.6)
+> - [3.5](https://github.com/zeroc-ice/ice-demos/tree/3.5)
+> - [3.4](https://github.com/zeroc-ice/ice-demos/tree/3.4)
+
 ## Layout
 
 The sample programs are grouped by Slice language mapping:
