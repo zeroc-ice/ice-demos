@@ -12,35 +12,36 @@ DirectoryPrx rootDir = DirectoryPrxHelper.createProxy(communicator, "RootDir:tcp
 
 // Recursively list the contents of the root directory.
 Console.WriteLine("Contents of root directory:");
-ListRecursive(rootDir);
+await ListRecursiveAsync(rootDir);
 
 /// <summary>Recursively print the contents of a directory in tree fashion. For files, show the contents of each file.
 /// </summary>
 /// <param name="dir">The directory to list./<param>
 /// <param name="depth">The current nesting level (for indentation).</param>
-void ListRecursive(DirectoryPrx dir, int depth = 0)
+async Task ListRecursiveAsync(DirectoryPrx dir, int depth = 0)
 {
     var indent = new string('\t', ++depth);
 
-    NodePrx?[] contents = dir.List();
+    NodePrx?[] contents = await dir.ListAsync();
 
     foreach (NodePrx? node in contents)
     {
         Debug.Assert(node is not null); // The node proxies returned by list() are never null.
 
-        DirectoryPrx? subdir = DirectoryPrxHelper.checkedCast(node);
+        DirectoryPrx? subdir = await DirectoryPrxHelper.checkedCastAsync(node);
         string kind = subdir is not null ? "directory" : "file";
+        string nodeName = await node.NameAsync();
 
-        Console.WriteLine($"{indent}{node.Name()} {kind}:");
+        Console.WriteLine($"{indent}{nodeName} {kind}:");
 
         if (subdir is not null)
         {
-            ListRecursive(subdir, depth);
+            await ListRecursiveAsync(subdir, depth);
         }
         else
         {
             FilePrx file = FilePrxHelper.uncheckedCast(node);
-            string[] lines = file.Read();
+            string[] lines = await file.ReadAsync();
             foreach (string line in lines)
             {
                 Console.WriteLine($"{indent}\t{line}");
