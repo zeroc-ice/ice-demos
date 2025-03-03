@@ -36,5 +36,8 @@
         "${workspaceFolder}/cpp/IceStorm/counter",
         "${workspaceFolder}/cpp/IceStorm/replicated",
         "${workspaceFolder}/cpp/IceStorm/replicated2",
-    ]
+    ],
+    "cmake.configureSettings": {
+        "Ice_DEBUG": "ON"
+    }
 }
