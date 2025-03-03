@@ -3,7 +3,7 @@
 - [C++ Demos](#c-demos)
   - [Overview](#overview)
   - [macOS Prerequisites](#macos-prerequisites)
-  - [Ubuntu 24.04](#ubuntu-2404)
+  - [Ubuntu Prerequisites](#ubuntu-prerequisites)
   - [Windows Prerequisites](#windows-prerequisites)
 
 ## Overview
@@ -18,6 +18,7 @@ Refer to the README.md file in each demo directory for usage instructions.
 
 ## macOS Prerequisites
 
+- macOS Sequoia
 - Xcode
 - [Homebrew](https://brew.sh)
 - CMake
@@ -30,8 +31,9 @@ brew tap zeroc-ice/nightly  https://download.zeroc.com/nexus/repository/nightly/
 brew install zeroc-ice/nightly/ice
 ```
 
-## Ubuntu 24.04
+## Ubuntu Prerequisites
 
+- Ubuntu 24.04
 - GCC C++ Toolchain
 - CMake
 - Nightly build of Ice
