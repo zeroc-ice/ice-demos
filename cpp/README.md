@@ -4,6 +4,7 @@
   - [Overview](#overview)
   - [macOS Prerequisites](#macos-prerequisites)
   - [Ubuntu Prerequisites](#ubuntu-prerequisites)
+  - [RedHat Prerequisites](#redhat-prerequisites)
   - [Windows Prerequisites](#windows-prerequisites)
 
 ## Overview
@@ -50,6 +51,27 @@ echo "deb [signed-by=/etc/apt/keyrings/zeroc-nightly.gpg] https://download.zeroc
 
 sudo apt-get update
 sudo apt-get install -y zeroc-ice-all-dev
+```
+
+## RedHat Prerequisites
+
+- RedHat 9
+- GCC C++ Toolchain
+- CMake
+- Nightly build of Ice
+
+Install the nightly build of Ice:
+
+```shell
+sudo tee /etc/yum.repos.d/ice-nightly.repo <<EOF
+[ice-nightly]
+name=Ice Nightly Repository
+baseurl=https://download.zeroc.com/nexus/repository/rhel9-nightly
+enabled=1
+gpgcheck=0
+EOF
+
+sudo dnf install -y ice-all-devel
 ```
 
 ## Windows Prerequisites
