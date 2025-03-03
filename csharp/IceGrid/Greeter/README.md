@@ -35,6 +35,9 @@ with:
 icegridadmin --Ice.Config=config.admin -e "application add greeter-hall-with-replication.xml"
 ```
 
+> [!TIP]
+> Use `update` instead of `add` to update an existing application.
+
 5. Run the client application:
 
 ```shell
