@@ -22,7 +22,7 @@ icegridregistry --Ice.Config=config.registry
 icegridnode --Ice.Config=config.node
 ```
 
-4. Deploy the "VisitorCenter" application in this IceGrid deployment:
+4. Deploy the "GreeterHall" application in this IceGrid deployment:
 
 ```shell
 icegridadmin --Ice.Config=config.admin -e "application add application.xml"
@@ -34,6 +34,9 @@ with:
 ```shell
 icegridadmin --Ice.Config=config.admin -e "application add application-with-replication.xml"
 ```
+
+> [!TIP]
+> Use `update` instead of `add` to update an existing application.
 
 5. Run the client application:
 
