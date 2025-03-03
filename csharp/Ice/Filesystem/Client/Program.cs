@@ -28,11 +28,11 @@ async Task ListRecursiveAsync(DirectoryPrx dir, int depth = 0)
     {
         Debug.Assert(node is not null); // The node proxies returned by list() are never null.
 
-        // TODO: should be an async call
-        DirectoryPrx? subdir = DirectoryPrxHelper.checkedCast(node);
+        DirectoryPrx? subdir = await DirectoryPrxHelper.checkedCastAsync(node);
         string kind = subdir is not null ? "directory" : "file";
+        string nodeName = await node.NameAsync();
 
-        Console.WriteLine($"{indent}{await node.NameAsync()} {kind}:");
+        Console.WriteLine($"{indent}{nodeName} {kind}:");
 
         if (subdir is not null)
         {
