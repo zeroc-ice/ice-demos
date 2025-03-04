@@ -34,7 +34,7 @@ or
 
 ## Running the Client
 
-Then, in a separate terminal, start the client program:
+Then, in a separate terminal, start the client application:
 
 ```shell
 ./gradlew :client:run --quiet
