@@ -12,7 +12,7 @@ class Server {
         try (Communicator communicator = com.zeroc.Ice.Util.initialize(args)) {
 
             // Register a shutdown hook that calls communicator.shutdown() when the user shuts down the server with
-            // Ctrl+C or similar. The shutdown hook thread also waits until the current thread completes its cleanup.
+            // Ctrl+C or similar. The shutdown hook thread also waits until the main thread completes its cleanup.
             shutdownCommunicatorOnCtrlC(communicator, Thread.currentThread());
 
             // Create an object adapter that listens for incoming requests and dispatches them to servants.
@@ -30,14 +30,14 @@ class Server {
         }
     }
 
-    private static void shutdownCommunicatorOnCtrlC(Communicator communicator, Thread cleanupThread) {
+    private static void shutdownCommunicatorOnCtrlC(Communicator communicator, Thread mainThread) {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             System.out.println("Caught Ctrl+C, shutting down...");
             communicator.shutdown();
 
-            // Wait until the cleanup thread completes.
+            // Wait until the main thread completes.
             try {
-                cleanupThread.join();
+                mainThread.join();
             } catch (InterruptedException e) {
                 assert false : "Shutdown thread cannot be interrupted";
             }
