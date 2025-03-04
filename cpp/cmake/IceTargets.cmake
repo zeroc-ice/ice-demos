@@ -87,7 +87,7 @@ endfunction()
 function(add_ice_library component link_libraries)
 
   if(WIN32)
-
+    # Find Release and Debug libraries on Windows
     find_library(Ice_${component}_IMPLIB_RELEASE
       NAMES ${component}${Ice_SO_VERSION}
       PATHS "${PACKAGE_PREFIX_DIR}/lib/${CMAKE_GENERATOR_PLATFORM}/Release"
@@ -111,7 +111,6 @@ function(add_ice_library component link_libraries)
       PATHS "${PACKAGE_PREFIX_DIR}/bin/${CMAKE_GENERATOR_PLATFORM}/Debug"
       NO_DEFAULT_PATH
     )
-
   else()
     # Linux and macOS only have one library configuration
     find_library(
@@ -127,6 +126,8 @@ function(add_ice_library component link_libraries)
   select_library_configurations(Ice_${component})
 
   if(Ice_${component}_LIBRARY)
+    # Set the Ice_<component>_FOUND variable to TRUE so that find_package_handle_standard_args
+    # will consider the component found
     set(Ice_${component}_FOUND TRUE PARENT_SCOPE)
     add_ice_target(${component} "${link_libraries}")
   endif()
@@ -146,7 +147,7 @@ add_ice_library(IceLocatorDiscovery Ice::Ice)
 add_ice_library(IceStorm Ice::Ice)
 add_ice_library(IceBT Ice::Ice)
 
+# Use this CMake helper method to handle REQUIRED, QUIET and version related arguments to find_package
 find_package_handle_standard_args(Ice
-  REQUIRED_VARS Ice_INCLUDE_DIR Ice_SLICE_DIR
   VERSION_VAR Ice_VERSION
   HANDLE_COMPONENTS)
