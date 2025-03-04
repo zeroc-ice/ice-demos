@@ -85,23 +85,33 @@ function(add_ice_target component link_libraries)
 endfunction()
 
 function(add_ice_library component link_libraries)
+
   if(WIN32)
-    # Search for both debug and release DLLs on Windows as a NuGet can contain both
-    find_library(
-      Ice_${component}_LIBRARY_RELEASE
+
+    find_library(Ice_${component}_IMPLIB_RELEASE
+      NAMES ${component}${Ice_SO_VERSION}
+      PATHS "${PACKAGE_PREFIX_DIR}/lib/${CMAKE_GENERATOR_PLATFORM}/Release"
+      NO_DEFAULT_PATH
+    )
+
+    find_library(Ice_${component}_IMPLIB_DEBUG
+      NAMES ${component}d ${component}${Ice_SO_VERSION}d
+      PATHS "${PACKAGE_PREFIX_DIR}/lib/${CMAKE_GENERATOR_PLATFORM}/Debug"
+      NO_DEFAULT_PATH
+    )
+
+    find_file(Ice_${component}_LIBRARY_RELEASE
       NAMES ${component}${Ice_SO_VERSION}.dll
       PATHS "${PACKAGE_PREFIX_DIR}/bin/${CMAKE_GENERATOR_PLATFORM}/Release"
       NO_DEFAULT_PATH
     )
-    set(Ice_${component}_IMPLIB_RELEASE "${PACKAGE_PREFIX_DIR}/lib/${CMAKE_GENERATOR_PLATFORM}/Release/${component}${Ice_SO_VERSION}.lib")
 
-    find_library(
-      Ice_${component}_LIBRARY_DEBUG
+    find_file(Ice_${component}_LIBRARY_DEBUG
       NAMES ${component}${Ice_SO_VERSION}d.dll
-      PATHS "${PACKAGE_PREFIX_DIR}/bin/${CMAKE_GENERATOR_PLATFORM}/Release"
+      PATHS "${PACKAGE_PREFIX_DIR}/bin/${CMAKE_GENERATOR_PLATFORM}/Debug"
       NO_DEFAULT_PATH
     )
-    set(Ice_${component}_IMPLIB_DEBUG "${PACKAGE_PREFIX_DIR}/lib/${CMAKE_GENERATOR_PLATFORM}/Debug/${component}${Ice_SO_VERSION}d.lib")
+
   else()
     # Linux and macOS only have one library configuration
     find_library(
