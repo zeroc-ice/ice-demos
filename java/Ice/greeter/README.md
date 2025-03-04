@@ -39,7 +39,7 @@ First, start one of the server implementations:
 ### Windows
 
 ```shell
-server\build\install\server\binserver
+server\build\install\server\bin\server
 ```
 
 or
