@@ -2,7 +2,7 @@
 
 This demo shows how to create an [IceBox][1] service in C++.
 
-You can build the IceBox service and client application with:
+You can build the client application and IceBox service with:
 
 ```shell
 cmake -B build
