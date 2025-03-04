@@ -1,10 +1,3 @@
-*.deps.json
-*.runtimeconfig.json
-*.runtimeconfig.dev.json
-
-**/generated/**
-*.dll
-client
-server
-publisher
-subscriber
+**/bin/**
+**/obj/**
+**/generated/*
