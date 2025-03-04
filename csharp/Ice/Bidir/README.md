@@ -3,7 +3,7 @@
 The Bidir demo illustrates how to send requests "the other way around", from a server to a client, by reusing the
 connection established by the client to the server.
 
-This demo is very similar to the [../Callback] demo: with the Callback demo, the server opens a connection to the
+This demo is very similar to the [Callback][1] demo: with the Callback demo, the server opens a connection to the
 client, while with this demo, there is only one connection, from the client to the server:
 
 ```mermaid
@@ -32,3 +32,5 @@ In a separate terminal, start the Client program:
 cd Client
 dotnet run
 ```
+
+[1]: ../Callback
