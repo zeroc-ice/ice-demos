@@ -12,10 +12,7 @@ using namespace std;
 extern "C"
 {
     // Create an instance of the Greeter service. IceBox is configured to call this extern "C" function at runtime.
-    ICE_DECLSPEC_EXPORT IceBox::Service* create(const Ice::CommunicatorPtr&)
-    {
-        return new Service::GreeterService;
-    }
+    ICE_DECLSPEC_EXPORT IceBox::Service* create(const Ice::CommunicatorPtr&) { return new Service::GreeterService; }
 }
 
 void
