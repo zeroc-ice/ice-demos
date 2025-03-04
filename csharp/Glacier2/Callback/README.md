@@ -45,5 +45,5 @@ cd Client
 dotnet run
 ```
 
-[1]: ../../Ice/Callack
+[1]: ../../Ice/Callback
 [2]: ../../Ice/Bidir
