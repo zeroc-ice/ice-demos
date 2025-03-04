@@ -1,6 +1,7 @@
-# IceGrid/Greeter
+# IceGrid/Query
 
-The IceGrid/Greeter demo illustrates how to create a very simple IceGrid deployment that manages a Greeter server.
+The IceGrid/Query demo shows how to use the Query object provided by the IceGrid registry to look-up a well-known
+object by type.
 
 Follow these steps to build and run the demo:
 
@@ -27,16 +28,6 @@ icegridnode --Ice.Config=config.node
 ```shell
 icegridadmin --Ice.Config=config.admin -e "application add greeter-hall.xml"
 ```
-
-`application.xml` configures a single Greeter server. As an alternative, you can deploy 3 replicated Greeter servers
-with:
-
-```shell
-icegridadmin --Ice.Config=config.admin -e "application add greeter-hall-with-replication.xml"
-```
-
-> [!TIP]
-> Use `update` instead of `add` to update an existing application.
 
 5. Run the client application:
 
