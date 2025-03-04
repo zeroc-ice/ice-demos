@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.21)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-if (WIN32)
+if(WIN32)
   set(Ice_NUGET_NAME "zeroc.ice.v143")
   set(Ice_NUGET_DIR "${CMAKE_CURRENT_LIST_DIR}/packages/${Ice_NUGET_NAME}")
 
@@ -19,7 +19,7 @@ if (WIN32)
       RESULT_VARIABLE nuget_result
       OUTPUT_VARIABLE nuget_output
       ERROR_VARIABLE nuget_error)
-    if (nuget_result)
+    if(nuget_result)
       message(FATAL_ERROR "Failed to download Ice NuGet package: ${nuget_error}")
     endif()
 
@@ -54,4 +54,4 @@ endif()
 
 set(Ice_DIR ${CMAKE_CURRENT_LIST_DIR} CACHE PATH "Path to Ice CMake configuration file")
 
-find_package(Ice REQUIRED Glacier2 CONFIG)
+find_package(Ice REQUIRED CONFIG)

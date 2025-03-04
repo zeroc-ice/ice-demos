@@ -8,7 +8,7 @@ if(NOT EXISTS "${Ice_INCLUDE_DIR}")
 endif()
 
 # Read Ice version variables from Ice/Config.h
-if (NOT DEFINED Ice_VERSION)
+if(NOT DEFINED Ice_VERSION)
   file(STRINGS "${Ice_INCLUDE_DIR}/Ice/Config.h" _ice_config_h_content REGEX "#define ICE_([A-Z]+)_VERSION ")
 
   if("${_ice_config_h_content}" MATCHES "#define ICE_STRING_VERSION \"([^\"]+)\"")
@@ -57,7 +57,7 @@ function(add_ice_target component link_libraries)
     INTERFACE_LINK_LIBRARIES "${link_libraries}"
   )
 
-  if (WIN32)
+  if(WIN32)
     if(Ice_${component}_LIBRARY_RELEASE)
       set_target_properties(Ice::${component} PROPERTIES
         IMPORTED_CONFIGURATIONS RELEASE
@@ -85,7 +85,7 @@ function(add_ice_target component link_libraries)
 endfunction()
 
 function(add_ice_library component link_libraries)
-  if (WIN32)
+  if(WIN32)
     # Search for both debug and release DLLs on Windows as a NuGet can contain both
     find_library(
       Ice_${component}_LIBRARY_RELEASE
