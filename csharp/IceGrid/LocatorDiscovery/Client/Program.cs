@@ -3,14 +3,13 @@
 // Slice module VisitorCenter in Greeter.ice maps to C# namespace VisitorCenter.
 using VisitorCenter;
 
-// Configure the communicator to load the LocatorDiscovery plugin during initialization. This plugin will discover the
-// locator (IceGrid registry) to use using UDP multicast. As a result, we don't need to configure the default locator on
+// Configure the communicator to load the IceLocatorDiscovery plugin during initialization. This plugin will discover
+// the locator (IceGrid registry in this demo) to use. As a result, we don't need to configure the default locator on
 // this communicator.
 var initData = new Ice.InitializationData
 {
     properties = new Ice.Properties(ref args)
 };
-
 initData.properties.setProperty(
     "Ice.Plugin.IceLocatorDiscovery",
     "IceLocatorDiscovery:IceLocatorDiscovery.PluginFactory");
