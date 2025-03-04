@@ -93,12 +93,15 @@ function(add_ice_library component link_libraries)
       PATHS "${PACKAGE_PREFIX_DIR}/bin/${CMAKE_GENERATOR_PLATFORM}/Release"
       NO_DEFAULT_PATH
     )
+    set(Ice_${component}_IMPLIB_RELEASE "${PACKAGE_PREFIX_DIR}/lib/${CMAKE_GENERATOR_PLATFORM}/Release/${component}${Ice_SO_VERSION}.lib")
+
     find_library(
       Ice_${component}_LIBRARY_DEBUG
       NAMES ${component}${Ice_SO_VERSION}d.dll
       PATHS "${PACKAGE_PREFIX_DIR}/bin/${CMAKE_GENERATOR_PLATFORM}/Release"
       NO_DEFAULT_PATH
     )
+    set(Ice_${component}_IMPLIB_DEBUG "${PACKAGE_PREFIX_DIR}/lib/${CMAKE_GENERATOR_PLATFORM}/Debug/${component}${Ice_SO_VERSION}d.lib")
   else()
     # Linux and macOS only have one library configuration
     find_library(
