@@ -18,5 +18,7 @@ internal class Chatbot : GreeterDisp_
         return $"Hello, {name}! My name is {_chatbotName}. How can I assist you today?";
     }
 
+    /// <summary>Creates a new instance of <see cref="Chatbot"/>.</summary>
+    /// <param name="chatbotName">The name of the new chatbot.</param>
     internal Chatbot(string chatbotName) => _chatbotName = chatbotName;
 }
