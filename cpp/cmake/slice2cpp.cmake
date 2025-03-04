@@ -1,19 +1,5 @@
 # Copyright (c) ZeroC, Inc.
 
-find_program(Ice_SLICE2CPP_EXECUTABLE slice2cpp
-  HINTS ${PACKAGE_PREFIX_DIR}
-  PATH_SUFFIXES bin ../../tools
-  CACHE PATH "Path to the slice2cpp executable"
-  NO_DEFAULT_PATH
-  REQUIRED
-)
-
-# Add an imported target for slice2cpp
-add_executable(Ice::slice2cpp IMPORTED)
-set_target_properties(Ice::slice2cpp PROPERTIES
-  IMPORTED_LOCATION "${Ice_SLICE2CPP_EXECUTABLE}"
-)
-
 # Function to generate C++ source files from Slice (.ice) files for a target using slice2cpp
 # The target must have the Slice files in its sources
 # The generated files are added to the target sources

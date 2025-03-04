@@ -3,7 +3,7 @@
 # Ice include directory
 set(Ice_INCLUDE_DIR "${PACKAGE_PREFIX_DIR}/include" CACHE PATH "Path to the Ice include directory")
 
-if(NOT EXISTS "${Ice_INCLUDE_DIR}/Ice/Config.h")
+if(NOT EXISTS "${Ice_INCLUDE_DIR}")
   message(FATAL_ERROR "Ice include directory not found: ${Ice_INCLUDE_DIR}")
 endif()
 
@@ -26,10 +26,24 @@ if (NOT DEFINED Ice_VERSION)
   unset(_ice_config_h_content)
 endif()
 
+find_program(Ice_SLICE2CPP_EXECUTABLE slice2cpp
+  HINTS ${PACKAGE_PREFIX_DIR}
+  PATH_SUFFIXES bin ../../tools
+  CACHE PATH "Path to the slice2cpp executable"
+  NO_DEFAULT_PATH
+  REQUIRED
+)
+
+# Add an imported target for slice2cpp
+add_executable(Ice::slice2cpp IMPORTED)
+set_target_properties(Ice::slice2cpp PROPERTIES
+  IMPORTED_LOCATION "${Ice_SLICE2CPP_EXECUTABLE}"
+)
+
 find_path(Ice_SLICE_DIR
   NAMES Ice/Identity.ice
   HINTS ${PACKAGE_PREFIX_DIR}
-  PATH_SUFFIXES slice share/ice/slice
+  PATH_SUFFIXES slice share/ice/slice ../../slice
   CACHE PATH "Path to the Ice Slice files directory"
   NO_DEFAULT_PATH
   REQUIRED)

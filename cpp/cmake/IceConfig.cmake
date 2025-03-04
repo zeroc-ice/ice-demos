@@ -1,7 +1,7 @@
 # Copyright (c) ZeroC, Inc.
 
 # get_filename_component(PACKAGE_PREFIX_DIR "${CMAKE_CURRENT_LIST_DIR}/../../../" ABSOLUTE)
-
+# TEMPORARY until CMake config is shipped in packaging
 if(NOT DEFINED PACKAGE_PREFIX_DIR)
   if(APPLE)
     set(PACKAGE_PREFIX_DIR "/opt/homebrew" CACHE PATH "Path to Brew prefix directory")
