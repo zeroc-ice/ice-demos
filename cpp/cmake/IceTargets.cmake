@@ -1,5 +1,13 @@
 # Copyright (c) ZeroC, Inc.
 
+if(NOT DEFINED Ice_WIN32_PLATFORM)
+  if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+    set(Ice_WIN32_PLATFORM "x64" CACHE STRING "Ice library platform (x64 or Win32)")
+  else()
+    set(Ice_WIN32_PLATFORM "Win32" CACHE STRING "Ice library platform (x64 or Win32)")
+  endif()
+endif()
+
 # Ice include directory
 set(Ice_INCLUDE_DIR "${PACKAGE_PREFIX_DIR}/include" CACHE PATH "Path to the Ice include directory")
 
@@ -90,25 +98,25 @@ function(add_ice_library component link_libraries)
     # Find Release and Debug libraries on Windows
     find_library(Ice_${component}_IMPLIB_RELEASE
       NAMES ${component}${Ice_SO_VERSION}
-      PATHS "${PACKAGE_PREFIX_DIR}/lib/${CMAKE_GENERATOR_PLATFORM}/Release"
+      PATHS "${PACKAGE_PREFIX_DIR}/lib/${Ice_WIN32_PLATFORM}/Release"
       NO_DEFAULT_PATH
     )
 
     find_library(Ice_${component}_IMPLIB_DEBUG
       NAMES ${component}d ${component}${Ice_SO_VERSION}d
-      PATHS "${PACKAGE_PREFIX_DIR}/lib/${CMAKE_GENERATOR_PLATFORM}/Debug"
+      PATHS "${PACKAGE_PREFIX_DIR}/lib/${Ice_WIN32_PLATFORM}/Debug"
       NO_DEFAULT_PATH
     )
 
     find_file(Ice_${component}_LIBRARY_RELEASE
       NAMES ${component}${Ice_SO_VERSION}.dll
-      PATHS "${PACKAGE_PREFIX_DIR}/bin/${CMAKE_GENERATOR_PLATFORM}/Release"
+      PATHS "${PACKAGE_PREFIX_DIR}/bin/${Ice_WIN32_PLATFORM}/Release"
       NO_DEFAULT_PATH
     )
 
     find_file(Ice_${component}_LIBRARY_DEBUG
       NAMES ${component}${Ice_SO_VERSION}d.dll
-      PATHS "${PACKAGE_PREFIX_DIR}/bin/${CMAKE_GENERATOR_PLATFORM}/Debug"
+      PATHS "${PACKAGE_PREFIX_DIR}/bin/${Ice_WIN32_PLATFORM}/Debug"
       NO_DEFAULT_PATH
     )
   else()
