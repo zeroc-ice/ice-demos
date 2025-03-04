@@ -18,7 +18,7 @@ This project uses Gradle and the [Application plugin]. To build the client and s
 
 This will compile each project and install the distributions in the `build/install` subdirectory of each project.
 
-## Running the Servers
+## Running the Server
 
 First, start one of the server implementations:
 
