@@ -1,6 +1,8 @@
-# IceBox Hello
+# IceBox Greeter
 
-This demo shows how to create an [IceBox][1] service.
+This demo shows how to create an [IceBox][1] service in C++.
+
+You can build the IceBox service and client application with:
 
 ```shell
 cmake -B build
@@ -24,7 +26,7 @@ DYLD_LIBRARY_PATH=./build icebox --IceBox.Service.Greeter="GreeterService:create
 **Windows:**
 
 ```shell
-set PATH=%PATH%;./build/Release
+set PATH=%PATH%;build\Release
 icebox --IceBox.Service.Hello="GreeterService:create --Ice.Trace.Dispatch"
 ```
 
@@ -44,7 +46,6 @@ build\Release\client
 
 ## Linux 32-bit
 
-If you are using 32-bit binaries on a Linux 64-bit host, use
-`icebox32` instead of `icebox` to start the IceBox server.
+If you are using 32-bit binaries on a Linux 64-bit host, use `icebox32` instead of `icebox` to start the IceBox server.
 
 [1]: https://doc.zeroc.com/ice/3.7/icebox

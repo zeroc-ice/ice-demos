@@ -5,9 +5,9 @@
 
 #include <IceBox/IceBox.h>
 
-namespace GreeterServer
+namespace Service
 {
-    /// An IceBox service that implements the Greeter interface.
+    /// An IceBox service that provides an implementation of the Greeter interface.
     class GreeterService final : public IceBox::Service
     {
     public:
