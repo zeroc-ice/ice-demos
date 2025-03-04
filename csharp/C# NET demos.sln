@@ -64,11 +64,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "server", "IceDiscovery\hell
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Glacier2", "Glacier2", "{A2346AB2-A45A-4FD2-B221-CCBC1B38FC1B}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "callback", "callback", "{EDB5C69F-71AA-487F-A2BA-9D25F1C0AC4E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "old-callback", "old-callback", "{EDB5C69F-71AA-487F-A2BA-9D25F1C0AC4E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "client", "Glacier2\callback\msbuild\client\client.csproj", "{863407BA-78C6-416B-8489-CBE2DB994435}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "client", "Glacier2\old-callback\msbuild\client\client.csproj", "{863407BA-78C6-416B-8489-CBE2DB994435}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "server", "Glacier2\callback\msbuild\server\server.csproj", "{B990E3A7-8607-43A7-9255-8005A2C509F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "server", "Glacier2\old-callback\msbuild\server\server.csproj", "{B990E3A7-8607-43A7-9255-8005A2C509F8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IceBox", "IceBox", "{39AD09B2-C8CE-452B-8DA6-0781D4FBC11C}"
 EndProject
