@@ -12,14 +12,11 @@ using namespace std;
 extern "C"
 {
     // Create an instance of the Greeter service. IceBox is configured to call this extern "C" function at runtime.
-    ICE_DECLSPEC_EXPORT IceBox::Service* create(const Ice::CommunicatorPtr&)
-    {
-        return new GreeterServer::GreeterService;
-    }
+    ICE_DECLSPEC_EXPORT IceBox::Service* create(const Ice::CommunicatorPtr&) { return new Service::GreeterService; }
 }
 
 void
-GreeterServer::GreeterService::start(
+Service::GreeterService::start(
     [[maybe_unused]] const string& name,
     const Ice::CommunicatorPtr& communicator,
     [[maybe_unused]] const Ice::StringSeq& args)
@@ -28,7 +25,7 @@ GreeterServer::GreeterService::start(
     auto adapter = communicator->createObjectAdapterWithEndpoints("GreeterAdapter", "tcp -p 4061");
 
     // Register the Chatbot servant with the adapter.
-    adapter->add(make_shared<GreeterServer::Chatbot>(), Ice::stringToIdentity("greeter"));
+    adapter->add(make_shared<GreeterServer::Chatbot>("Hal"), Ice::stringToIdentity("greeter"));
 
     // Start dispatching requests.
     adapter->activate();
@@ -36,7 +33,7 @@ GreeterServer::GreeterService::start(
 }
 
 void
-GreeterServer::GreeterService::stop()
+Service::GreeterService::stop()
 {
-    // Nothing to do here.
+    cout << "Shutting down..." << endl;
 }
