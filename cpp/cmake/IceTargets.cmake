@@ -45,7 +45,7 @@ set_target_properties(Ice::slice2cpp PROPERTIES
 find_path(Ice_SLICE_DIR
   NAMES Ice/Identity.ice
   HINTS ${PACKAGE_PREFIX_DIR}
-  PATH_SUFFIXES slice share/ice/slice slice
+  PATH_SUFFIXES slice share/ice/slice
   DOC "Path to the Ice Slice files directory"
   NO_DEFAULT_PATH
   REQUIRED)

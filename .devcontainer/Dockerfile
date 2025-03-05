@@ -8,7 +8,7 @@ RUN set -eux \
     && sudo dpkg -i packages-microsoft-prod.deb \
     && rm packages-microsoft-prod.deb \
     && sudo apt update \
-    && sudo apt-get install -y php python3 python3-passlib ruby-full gdb \
+    && sudo apt-get install -y php python3 ruby gdb \
     && sudo apt-get install -y openjdk-17-jdk \
     && sudo apt-get install -y cmake \
     && sudo rm -rf /var/lib/apt/lists/* \
