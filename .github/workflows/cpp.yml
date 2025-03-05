@@ -68,7 +68,7 @@ jobs:
           set -o pipefail
           find . -name CMakeLists.txt -type f | while IFS= read -r file; do
             dir=$(dirname "$file");
-            cmake -B "$dir/build" -S "$dir" -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DIce_DEBUG=ON
+            cmake -B "$dir/build" -S "$dir" -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
             cmake --build "$dir/build" --config Release
           done
 
