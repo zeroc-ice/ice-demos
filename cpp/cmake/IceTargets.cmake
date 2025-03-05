@@ -2,15 +2,15 @@
 
 if(WIN32 AND NOT DEFINED Ice_WIN32_PLATFORM)
   if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-    set(Ice_WIN32_PLATFORM "x64" CACHE STRING "Ice library platform (x64 or Win32)")
+    set(Ice_WIN32_PLATFORM "x64" DOC "Use x64 Ice library")
   else()
-    set(Ice_WIN32_PLATFORM "Win32" CACHE STRING "Ice library platform (x64 or Win32)")
+    set(Ice_WIN32_PLATFORM "Win32" DOC "Use Win32 Ice library")
   endif()
 endif()
 
 find_path(Ice_INCLUDE_DIR NAMES Ice/Ice.h
   HINTS ${PACKAGE_PREFIX_DIR} ${PACKAGE_PREFIX_DIR}/build/native
-  PATH_SUFFIXES include  CACHE PATH "Path to the Ice include directory"
+  PATH_SUFFIXES include DOC "Directory containing Ice header files"
   NO_DEFAULT_PATH
   REQUIRED)
 
@@ -19,11 +19,11 @@ if(NOT DEFINED Ice_VERSION)
   file(STRINGS "${Ice_INCLUDE_DIR}/Ice/Config.h" _ice_config_h_content REGEX "#define ICE_([A-Z]+)_VERSION ")
 
   if("${_ice_config_h_content}" MATCHES "#define ICE_STRING_VERSION \"([^\"]+)\"")
-    set(Ice_VERSION "${CMAKE_MATCH_1}" CACHE STRING "Ice version")
+    set(Ice_VERSION "${CMAKE_MATCH_1}" DOC "Ice version")
   endif()
 
   if("${_ice_config_h_content}" MATCHES "#define ICE_SO_VERSION \"([^\"]+)\"")
-    set(Ice_SO_VERSION "${CMAKE_MATCH_1}" CACHE STRING "Ice so version")
+    set(Ice_SO_VERSION "${CMAKE_MATCH_1}" DOC "Ice SO version")
   endif()
 
   unset(_ice_config_h_content)
@@ -32,7 +32,7 @@ endif()
 find_program(Ice_SLICE2CPP_EXECUTABLE slice2cpp
   HINTS ${PACKAGE_PREFIX_DIR}
   PATH_SUFFIXES bin tools
-  CACHE PATH "Path to the slice2cpp executable"
+  DOC "Path to the slice2cpp compiler"
   NO_DEFAULT_PATH
   REQUIRED
 )
@@ -47,7 +47,7 @@ find_path(Ice_SLICE_DIR
   NAMES Ice/Identity.ice
   HINTS ${PACKAGE_PREFIX_DIR}
   PATH_SUFFIXES slice share/ice/slice slice
-  CACHE PATH "Path to the Ice Slice files directory"
+  DOC "Path to the Ice Slice files directory"
   NO_DEFAULT_PATH
   REQUIRED)
 
