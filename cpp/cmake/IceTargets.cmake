@@ -155,7 +155,6 @@ add_ice_library(IceLocatorDiscovery Ice::Ice)
 add_ice_library(IceStorm Ice::Ice)
 add_ice_library(IceBT Ice::Ice)
 
-# Use this CMake helper method to handle REQUIRED, QUIET and version related arguments to find_package
-find_package_handle_standard_args(Ice
-  VERSION_VAR Ice_VERSION
-  HANDLE_COMPONENTS)
+include(FindPackageHandleStandardArgs)
+set(${CMAKE_FIND_PACKAGE_NAME}_CONFIG "${CMAKE_CURRENT_LIST_FILE}")
+find_package_handle_standard_args(Ice HANDLE_COMPONENTS CONFIG_MODE)
