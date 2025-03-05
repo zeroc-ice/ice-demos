@@ -28,10 +28,10 @@ icegridregistry --Ice.Config=config.registry
 icegridnode --Ice.Config=config.node
 ```
 
-5. Deploy the "Simpsons" application in this IceGrid deployment:
+5. Deploy the "GreeterHall" application in this IceGrid deployment:
 
 ```shell
-icegridadmin --Ice.Config=config.admin -e "application add simpsons.xml"
+icegridadmin --Ice.Config=config.admin -e "application add greeter-hall.xml"
 ```
 
 6. Run the client application:
