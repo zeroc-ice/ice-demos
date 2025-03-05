@@ -96,9 +96,6 @@ function(add_ice_library component link_libraries)
       NO_DEFAULT_PATH
     )
 
-    message(STATUS "Ice_${component}_IMPLIB_RELEASE: ${Ice_${component}_IMPLIB_RELEASE}")
-    message(STATUS "${PACKAGE_PREFIX_DIR}/build/native/lib/${Ice_WIN32_PLATFORM}/Release")
-
     find_library(Ice_${component}_IMPLIB_DEBUG
       NAMES ${component}d ${component}${Ice_SO_VERSION}d
       HINTS "${PACKAGE_PREFIX_DIR}/build/native/lib/${Ice_WIN32_PLATFORM}/Debug"
