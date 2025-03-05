@@ -2,9 +2,9 @@
 
 if(WIN32 AND NOT DEFINED Ice_WIN32_PLATFORM)
   if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-    set(Ice_WIN32_PLATFORM "x64" DOC "Use x64 Ice library")
+    set(Ice_WIN32_PLATFORM "x64" CACHE PATH "Use x64 Ice library")
   else()
-    set(Ice_WIN32_PLATFORM "Win32" DOC "Use Win32 Ice library")
+    set(Ice_WIN32_PLATFORM "Win32" CACHE PATH "Use Win32 Ice library")
   endif()
 endif()
 
@@ -15,19 +15,16 @@ find_path(Ice_INCLUDE_DIR NAMES Ice/Ice.h
   REQUIRED)
 
 # Read Ice version variables from Ice/Config.h
-if(NOT DEFINED Ice_VERSION)
-  file(STRINGS "${Ice_INCLUDE_DIR}/Ice/Config.h" _ice_config_h_content REGEX "#define ICE_([A-Z]+)_VERSION ")
+file(STRINGS "${Ice_INCLUDE_DIR}/Ice/Config.h" _ice_config_h_content REGEX "#define ICE_([A-Z]+)_VERSION ")
 
-  if("${_ice_config_h_content}" MATCHES "#define ICE_STRING_VERSION \"([^\"]+)\"")
-    set(Ice_VERSION "${CMAKE_MATCH_1}")
-  endif()
-
-  if("${_ice_config_h_content}" MATCHES "#define ICE_SO_VERSION \"([^\"]+)\"")
-    set(Ice_SO_VERSION "${CMAKE_MATCH_1}")
-  endif()
-
-  unset(_ice_config_h_content)
+if("${_ice_config_h_content}" MATCHES "#define ICE_STRING_VERSION \"([^\"]+)\"")
+  set(Ice_VERSION "${CMAKE_MATCH_1}")
 endif()
+
+if("${_ice_config_h_content}" MATCHES "#define ICE_SO_VERSION \"([^\"]+)\"")
+  set(Ice_SO_VERSION "${CMAKE_MATCH_1}")
+endif()
+unset(_ice_config_h_content)
 
 find_program(Ice_SLICE2CPP_EXECUTABLE slice2cpp
   HINTS ${PACKAGE_PREFIX_DIR}
@@ -96,6 +93,9 @@ function(add_ice_library component link_libraries)
       HINTS "${PACKAGE_PREFIX_DIR}/build/native/lib/${Ice_WIN32_PLATFORM}/Release"
       NO_DEFAULT_PATH
     )
+
+    message(STATUS "Ice_${component}_IMPLIB_RELEASE: ${Ice_${component}_IMPLIB_RELEASE}")
+    message(STATUS "${PACKAGE_PREFIX_DIR}/build/native/lib/${Ice_WIN32_PLATFORM}/Release")
 
     find_library(Ice_${component}_IMPLIB_DEBUG
       NAMES ${component}d ${component}${Ice_SO_VERSION}d
