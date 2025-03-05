@@ -12,64 +12,32 @@ The same client works with both.
 
 This project uses Gradle and the [Application plugin]. To build the client and server applications, run:
 
-### Linux/macOS
-
 ```shell
 ./gradlew installDist
 ```
 
-### Windows
-
-```shell
-gradlew installDist
-```
-
 This will compile each project and install the distributions in the `build/install` subdirectory of each project.
 
-## Running the Servers
+## Running the Server
 
 First, start one of the server implementations:
 
-### Linux/macOS
-
 ```shell
-./server/build/install/server/bin/server
-```
-
-### Windows
-
-```shell
-server\build\install\server\bin\server
+./gradlew :server:run --quiet
 ```
 
 or
 
-### Linux/macOS
-
 ```shell
-./serveramd/build/install/serveramd/bin/serveramd
-```
-
-### Windows
-
-```shell
-serveramd\build\install\serveramd\bin\serveramd
+./gradlew :serveramd:run --quiet
 ```
 
 ## Running the Client
 
-In a separate terminal, start the client program:
-
-### Linux/macOS
+Then, in a separate terminal, start the client application:
 
 ```shell
-./client/build/install/client/bin/client
-```
-
-### Windows
-
-```shell
-client\build\install\client\bin\client
+./gradlew :client:run --quiet
 ```
 
 [Application plugin]: https://docs.gradle.org/current/userguide/application_plugin.html

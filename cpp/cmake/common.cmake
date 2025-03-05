@@ -1,9 +1,11 @@
+# Copyright (c) ZeroC, Inc.
+
 cmake_minimum_required(VERSION 3.21)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-if (WIN32)
+if(WIN32)
   set(Ice_NUGET_NAME "zeroc.ice.v143")
   set(Ice_NUGET_DIR "${CMAKE_CURRENT_LIST_DIR}/packages/${Ice_NUGET_NAME}")
 
@@ -17,17 +19,14 @@ if (WIN32)
       RESULT_VARIABLE nuget_result
       OUTPUT_VARIABLE nuget_output
       ERROR_VARIABLE nuget_error)
-    if (nuget_result)
+    if(nuget_result)
       message(FATAL_ERROR "Failed to download Ice NuGet package: ${nuget_error}")
     endif()
 
   endif()
 
   # Set Ice_HOME to the path where the Ice NuGet package was downloaded
-
-  set(Ice_HOME "${Ice_NUGET_DIR}" CACHE PATH "Path to Ice installation directory")
-
-  message(STATUS "Ice_HOME: ${Ice_HOME}")
+  set(PACKAGE_PREFIX_DIR "${Ice_NUGET_DIR}" CACHE PATH "Path to Ice installation directory")
 endif()
 
 # We use these flags over presets to avoid having to create a CMakePreset.json file in every project.
@@ -54,5 +53,4 @@ endif()
 
 set(Ice_DIR ${CMAKE_CURRENT_LIST_DIR} CACHE PATH "Path to Ice CMake configuration file")
 
-# IceBT is an optional component as it is not available in all distributions.
-find_package(Ice CONFIG REQUIRED COMPONENTS Ice DataStorm Glacier2 IceGrid IceBox IceStorm OPTIONAL_COMPONENTS IceBT)
+find_package(Ice REQUIRED CONFIG)
