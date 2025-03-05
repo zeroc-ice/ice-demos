@@ -50,11 +50,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "server", "IceGrid\simple\ms
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IceDiscovery", "IceDiscovery", "{E3A11CDD-DDA4-4CC9-8E00-2627B62CE6A6}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "replication", "replication", "{813B391B-77C9-469B-9302-B176FF534F1B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "old-replication", "old-replication", "{813B391B-77C9-469B-9302-B176FF534F1B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "client", "IceDiscovery\replication\msbuild\client\client.csproj", "{205EF77C-1650-40F2-829C-EF9833FD63BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "client", "IceDiscovery\old-replication\msbuild\client\client.csproj", "{205EF77C-1650-40F2-829C-EF9833FD63BE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "server", "IceDiscovery\replication\msbuild\server\server.csproj", "{1232404F-4660-4450-9566-8D94088EFBF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "server", "IceDiscovery\old-replication\msbuild\server\server.csproj", "{1232404F-4660-4450-9566-8D94088EFBF1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "hello", "hello", "{9ECA9E96-A3F1-48CF-B171-7BF053C8DC97}"
 EndProject
