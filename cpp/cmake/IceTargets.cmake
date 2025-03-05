@@ -19,11 +19,11 @@ if(NOT DEFINED Ice_VERSION)
   file(STRINGS "${Ice_INCLUDE_DIR}/Ice/Config.h" _ice_config_h_content REGEX "#define ICE_([A-Z]+)_VERSION ")
 
   if("${_ice_config_h_content}" MATCHES "#define ICE_STRING_VERSION \"([^\"]+)\"")
-    set(Ice_VERSION "${CMAKE_MATCH_1}" DOC "Ice version")
+    set(Ice_VERSION "${CMAKE_MATCH_1}")
   endif()
 
   if("${_ice_config_h_content}" MATCHES "#define ICE_SO_VERSION \"([^\"]+)\"")
-    set(Ice_SO_VERSION "${CMAKE_MATCH_1}" DOC "Ice SO version")
+    set(Ice_SO_VERSION "${CMAKE_MATCH_1}")
   endif()
 
   unset(_ice_config_h_content)
