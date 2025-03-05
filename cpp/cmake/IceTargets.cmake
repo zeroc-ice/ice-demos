@@ -26,10 +26,6 @@ if(NOT DEFINED Ice_VERSION)
     set(Ice_SO_VERSION "${CMAKE_MATCH_1}" CACHE STRING "Ice so version")
   endif()
 
-  if("${_ice_config_h_content}" MATCHES "#define ICE_INT_VERSION ([0-9]+)")
-    set(Ice_INT_VERSION "${CMAKE_MATCH_1}" CACHE STRING "Ice int version")
-  endif()
-
   unset(_ice_config_h_content)
 endif()
 
