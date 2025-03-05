@@ -1,6 +1,6 @@
 # Copyright (c) ZeroC, Inc.
 
-if(NOT DEFINED Ice_WIN32_PLATFORM)
+if(WIN32 AND NOT DEFINED Ice_WIN32_PLATFORM)
   if(CMAKE_SIZEOF_VOID_P EQUAL 8)
     set(Ice_WIN32_PLATFORM "x64" CACHE STRING "Ice library platform (x64 or Win32)")
   else()
@@ -8,12 +8,11 @@ if(NOT DEFINED Ice_WIN32_PLATFORM)
   endif()
 endif()
 
-# Ice include directory
-set(Ice_INCLUDE_DIR "${PACKAGE_PREFIX_DIR}/include" CACHE PATH "Path to the Ice include directory")
-
-if(NOT EXISTS "${Ice_INCLUDE_DIR}")
-  message(FATAL_ERROR "Ice include directory not found: ${Ice_INCLUDE_DIR}")
-endif()
+find_path(Ice_INCLUDE_DIR NAMES Ice/Ice.h
+  HINTS ${PACKAGE_PREFIX_DIR} ${PACKAGE_PREFIX_DIR}/build/native
+  PATH_SUFFIXES include  CACHE PATH "Path to the Ice include directory"
+  NO_DEFAULT_PATH
+  REQUIRED)
 
 # Read Ice version variables from Ice/Config.h
 if(NOT DEFINED Ice_VERSION)
@@ -36,7 +35,7 @@ endif()
 
 find_program(Ice_SLICE2CPP_EXECUTABLE slice2cpp
   HINTS ${PACKAGE_PREFIX_DIR}
-  PATH_SUFFIXES bin ../../tools
+  PATH_SUFFIXES bin tools
   CACHE PATH "Path to the slice2cpp executable"
   NO_DEFAULT_PATH
   REQUIRED
@@ -51,7 +50,7 @@ set_target_properties(Ice::slice2cpp PROPERTIES
 find_path(Ice_SLICE_DIR
   NAMES Ice/Identity.ice
   HINTS ${PACKAGE_PREFIX_DIR}
-  PATH_SUFFIXES slice share/ice/slice ../../slice
+  PATH_SUFFIXES slice share/ice/slice slice
   CACHE PATH "Path to the Ice Slice files directory"
   NO_DEFAULT_PATH
   REQUIRED)
@@ -98,25 +97,25 @@ function(add_ice_library component link_libraries)
     # Find Release and Debug libraries on Windows
     find_library(Ice_${component}_IMPLIB_RELEASE
       NAMES ${component}${Ice_SO_VERSION}
-      PATHS "${PACKAGE_PREFIX_DIR}/lib/${Ice_WIN32_PLATFORM}/Release"
+      HINTS "${PACKAGE_PREFIX_DIR}/build/native/lib/${Ice_WIN32_PLATFORM}/Release"
       NO_DEFAULT_PATH
     )
 
     find_library(Ice_${component}_IMPLIB_DEBUG
       NAMES ${component}d ${component}${Ice_SO_VERSION}d
-      PATHS "${PACKAGE_PREFIX_DIR}/lib/${Ice_WIN32_PLATFORM}/Debug"
+      HINTS "${PACKAGE_PREFIX_DIR}/build/native/lib/${Ice_WIN32_PLATFORM}/Debug"
       NO_DEFAULT_PATH
     )
 
     find_file(Ice_${component}_LIBRARY_RELEASE
       NAMES ${component}${Ice_SO_VERSION}.dll
-      PATHS "${PACKAGE_PREFIX_DIR}/bin/${Ice_WIN32_PLATFORM}/Release"
+      HINTS "${PACKAGE_PREFIX_DIR}/build/native/bin/${Ice_WIN32_PLATFORM}/Release"
       NO_DEFAULT_PATH
     )
 
     find_file(Ice_${component}_LIBRARY_DEBUG
       NAMES ${component}${Ice_SO_VERSION}d.dll
-      PATHS "${PACKAGE_PREFIX_DIR}/bin/${Ice_WIN32_PLATFORM}/Debug"
+      HINTS "${PACKAGE_PREFIX_DIR}/build/native/bin/${Ice_WIN32_PLATFORM}/Debug"
       NO_DEFAULT_PATH
     )
   else()
@@ -124,7 +123,8 @@ function(add_ice_library component link_libraries)
     find_library(
       Ice_${component}_LIBRARY_RELEASE
       NAMES ${component}
-      PATHS "${PACKAGE_PREFIX_DIR}/lib" "${PACKAGE_PREFIX_DIR}/lib/${CMAKE_LIBRARY_ARCHITECTURE}"
+      HINTS "${PACKAGE_PREFIX_DIR}/lib"
+      PATH_SUFFIXES "${CMAKE_LIBRARY_ARCHITECTURE}"
       NO_DEFAULT_PATH
     )
   endif()

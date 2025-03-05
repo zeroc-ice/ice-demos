@@ -26,8 +26,7 @@ if(WIN32)
   endif()
 
   # Set Ice_HOME to the path where the Ice NuGet package was downloaded
-
-  set(PACKAGE_PREFIX_DIR "${Ice_NUGET_DIR}/build/native" CACHE PATH "Path to Ice installation directory")
+  set(PACKAGE_PREFIX_DIR "${Ice_NUGET_DIR}" CACHE PATH "Path to Ice installation directory")
 endif()
 
 # We use these flags over presets to avoid having to create a CMakePreset.json file in every project.
