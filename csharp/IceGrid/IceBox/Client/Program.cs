@@ -11,29 +11,17 @@ using Ice.Communicator communicator = Ice.Util.initialize(ref args);
 communicator.setDefaultLocator(
     Ice.LocatorPrxHelper.createProxy(communicator, "IceGrid/Locator:tcp -h localhost -p 4061"));
 
-// Create a proxy to the Query object hosted by the IceGrid registry. "IceGrid/Query" a well-known proxy, without
-// addressing information.
-IceGrid.QueryPrx query = IceGrid.QueryPrxHelper.createProxy(communicator, "IceGrid/Query");
+// Create proxy to the Greeter object hosted by the server. "greeter" is a stringified proxy with no addressing
+// information, also known as a well-known proxy. It's specified by the <object> element in the IceGrid XML file.
+// The IceGrid registry resolves this well-known proxy and returns the actual address (endpoint) of the server to this
+// client.
+GreeterPrx greeter = GreeterPrxHelper.createProxy(communicator, "greeter");
 
-// Look up an object with type ::VisitorCenter::Greeter.
-string greeterTypeId = GreeterPrxHelper.ice_staticId(); // ::VisitorCenter::Greeter
-Ice.ObjectPrx? proxy = await query.findObjectByTypeAsync(greeterTypeId);
+// Send a request to the remote object and get the response.
+string greeting = await greeter.GreetAsync(Environment.UserName);
+Console.WriteLine(greeting);
 
-if (proxy is null)
-{
-    Console.WriteLine($"The IceGrid registry doesn't know any object with type '{greeterTypeId}'.");
-}
-else
-{
-    // Cast the object proxy to a Greeter proxy.
-    GreeterPrx greeter = GreeterPrxHelper.uncheckedCast(proxy);
-
-    // Send a request to the remote object and get the response.
-    string greeting = await greeter.GreetAsync(Environment.UserName);
-    Console.WriteLine(greeting);
-
-    // Send another request to the remote object. With the default configuration we use for this client, this request
-    // reuses the connection and reaches the same server.
-    greeting = await greeter.GreetAsync("alice");
-    Console.WriteLine(greeting);
-}
+// Send another request to the remote object. With the default configuration we use for this client, this request
+// reuses the connection and reaches the same server, even when we have multiple replicated servers.
+greeting = await greeter.GreetAsync("alice");
+Console.WriteLine(greeting);

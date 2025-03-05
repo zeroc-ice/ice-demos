@@ -19,7 +19,7 @@ internal class GreeterService : IceBox.Service
         _adapter = communicator.createObjectAdapterWithEndpoints("GreeterAdapter", "tcp -p 4061");
 
         // Register the Chatbot servant with the adapter.
-        _adapter.add(new Chatbot("Hal"), Ice.Util.stringToIdentity("greeter"));
+        _adapter.add(new Chatbot("Syd"), Ice.Util.stringToIdentity("greeter"));
 
         // Start dispatching requests.
         _adapter.activate();
