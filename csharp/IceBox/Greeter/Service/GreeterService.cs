@@ -24,6 +24,6 @@ internal class GreeterService : IceBox.Service
     /// <inheritdoc/>
     public void stop()
     {
-        // Nothing to do.
+        Console.WriteLine("Shutting down...");
     }
 }

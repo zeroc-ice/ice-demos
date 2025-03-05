@@ -35,5 +35,5 @@ Service::GreeterService::start(
 void
 Service::GreeterService::stop()
 {
-    // Nothing to do here.
+    cout << "Shutting down..." << endl;
 }
