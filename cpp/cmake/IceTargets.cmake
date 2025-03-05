@@ -15,16 +15,18 @@ find_path(Ice_INCLUDE_DIR NAMES Ice/Ice.h
   REQUIRED)
 
 # Read Ice version variables from Ice/Config.h
-file(STRINGS "${Ice_INCLUDE_DIR}/Ice/Config.h" _ice_config_h_content REGEX "#define ICE_([A-Z]+)_VERSION ")
+if(NOT DEFINED Ice_VERSION)
+  file(STRINGS "${Ice_INCLUDE_DIR}/Ice/Config.h" _ice_config_h_content REGEX "#define ICE_([A-Z]+)_VERSION ")
 
-if("${_ice_config_h_content}" MATCHES "#define ICE_STRING_VERSION \"([^\"]+)\"")
-  set(Ice_VERSION "${CMAKE_MATCH_1}")
-endif()
+  if("${_ice_config_h_content}" MATCHES "#define ICE_STRING_VERSION \"([^\"]+)\"")
+    set(Ice_VERSION "${CMAKE_MATCH_1}" CACHE STRING "Ice version")
+  endif()
 
-if("${_ice_config_h_content}" MATCHES "#define ICE_SO_VERSION \"([^\"]+)\"")
-  set(Ice_SO_VERSION "${CMAKE_MATCH_1}")
+  if("${_ice_config_h_content}" MATCHES "#define ICE_SO_VERSION \"([^\"]+)\"")
+    set(Ice_SO_VERSION "${CMAKE_MATCH_1}" CACHE STRING "Ice SO version")
+  endif()
+  unset(_ice_config_h_content)
 endif()
-unset(_ice_config_h_content)
 
 find_program(Ice_SLICE2CPP_EXECUTABLE slice2cpp
   HINTS ${PACKAGE_PREFIX_DIR}
