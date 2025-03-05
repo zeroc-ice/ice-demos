@@ -16,8 +16,8 @@
           <description>Hosts a greeter that produces greetings.</description>
 
           <!-- The object adapter created by this service. It listens on an OS-assigned tcp port, on all interfaces.
-          It also defines a well-known object with identity "greeter". IceGrid also generates property
-          Greeter.Identity in the config file for the service.
+          It also defines a well-known object with identity "greeter". IceGrid generates property Greeter.Identity in
+          the config file for the service.
           server-lifetime="false" tells IceGrid this object adapter has not the same lifetime as the IceBox server;
           this is the recommended setting for object adapters in IceBox services since an IceBox service can be
           started, then stopped, then restarted again while the IceBox server keeps running. -->

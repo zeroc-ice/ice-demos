@@ -12,8 +12,8 @@
         <option>Server/bin/Debug/net8.0/Server.dll</option>
 
         <!-- The object adapter created by this server. It listens on an OS-assigned tcp port, on all interfaces.
-        It also defines a well-known object with identity "greeter". IceGrid also generates property Greeter.Identity
-        with value "greeter" in the config file for server GreeterServer. -->
+        It also defines a well-known object with identity "greeter". IceGrid generates property Greeter.Identity with
+        value "greeter" in the config file for server GreeterServer. -->
         <adapter name="GreeterAdapter" endpoints="tcp">
           <object identity="greeter" property="Greeter.Identity"/>
         </adapter>
