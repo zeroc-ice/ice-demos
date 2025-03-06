@@ -25,7 +25,7 @@ Service::GreeterService::start(
     auto adapter = communicator->createObjectAdapterWithEndpoints("GreeterAdapter", "tcp -p 4061");
 
     // Register the Chatbot servant with the adapter.
-    adapter->add(make_shared<GreeterServer::Chatbot>("Hal"), Ice::stringToIdentity("greeter"));
+    adapter->add(make_shared<GreeterServer::Chatbot>("Syd"), Ice::stringToIdentity("greeter"));
 
     // Start dispatching requests.
     adapter->activate();

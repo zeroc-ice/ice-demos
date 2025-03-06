@@ -28,7 +28,7 @@ icegridnode --Ice.Config=config.node
 icegridadmin --Ice.Config=config.admin -e "application add greeter-hall.xml"
 ```
 
-`application.xml` configures a single Greeter server. As an alternative, you can deploy 3 replicated Greeter servers
+`greeter-hall.xml` configures a single Greeter server. As an alternative, you can deploy 3 replicated Greeter servers
 with:
 
 ```shell

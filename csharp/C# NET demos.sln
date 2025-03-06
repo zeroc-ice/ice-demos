@@ -36,11 +36,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "server", "Ice\properties\ms
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IceGrid", "IceGrid", "{CC58C91C-1DA0-4E26-8745-830E077ABA35}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "icebox", "icebox", "{5E8304AD-9D29-4EAD-80DE-48BCCD2234C8}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "old-icebox", "old-icebox", "{5E8304AD-9D29-4EAD-80DE-48BCCD2234C8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "client", "IceGrid\icebox\msbuild\client\client.csproj", "{BF4F3F91-6083-4B11-BAFE-80303D0BD760}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "client", "IceGrid\old-icebox\msbuild\client\client.csproj", "{BF4F3F91-6083-4B11-BAFE-80303D0BD760}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "helloservice", "IceGrid\icebox\msbuild\helloservice\helloservice.csproj", "{269B9B1E-763B-4E92-A066-65257BBA6217}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "helloservice", "IceGrid\old-icebox\msbuild\helloservice\helloservice.csproj", "{269B9B1E-763B-4E92-A066-65257BBA6217}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "simple", "simple", "{3DC2FE14-9BA3-41B2-8A3B-CC4478E75F1B}"
 EndProject
