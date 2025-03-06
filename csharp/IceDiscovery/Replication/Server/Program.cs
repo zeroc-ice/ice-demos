@@ -28,7 +28,7 @@ using Ice.Communicator communicator = Ice.Util.initialize(initData);
 // key into the configuration properties set above.
 Ice.ObjectAdapter adapter = communicator.createObjectAdapter("GreeterAdapter");
 
-// Register the Chatbot servant with the adapter. Here, well-known object "greeter" is replicated across all serer
+// Register the Chatbot servant with the adapter. Here, well-known object "greeter" is replicated across all server
 // instances.
 adapter.add(new Server.Chatbot(greeterName: uuid[^4..]), Ice.Util.stringToIdentity("greeter"));
 
