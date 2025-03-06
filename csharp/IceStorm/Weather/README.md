@@ -1,4 +1,4 @@
-#  IceStorm Weather
+# IceStorm Weather
 
 This demo shows how to use IceStorm to create a simple pub-sub application. In this demo, one or more weather sensors
 report the local temperature and humidity to one or more weather stations via IceStorm. The sensors are the publishers
