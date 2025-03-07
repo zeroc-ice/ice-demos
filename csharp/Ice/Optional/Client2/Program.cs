@@ -1,6 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
-// Slice module ClearSky in WeatherStation.ice maps to C# namespace ClearSky.
+// Slice module ClearSky in WeatherStation2.ice maps to C# namespace ClearSky.
 using ClearSky;
 
 // Create an Ice communicator to initialize the Ice runtime. The communicator is disposed before the program exits.
