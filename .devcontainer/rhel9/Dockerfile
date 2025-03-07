@@ -1,8 +1,5 @@
 FROM registry.access.redhat.com/ubi9
 
-RUN dnf install -y https://zeroc.com/download/ice/3.7/el9/ice-repo-3.7.el9.noarch.rpm && \
-    dnf clean all
-
 RUN tee /etc/yum.repos.d/ice-nightly.repo <<EOF
 [ice-nightly]
 name=Ice Nightly Repository
