@@ -25,8 +25,8 @@ if(WIN32)
 
   endif()
 
-  # Set Ice_HOME to the path where the Ice NuGet package was downloaded
-  set(PACKAGE_PREFIX_DIR "${Ice_NUGET_DIR}" CACHE PATH "Path to Ice installation directory")
+  # Set CMAKE_PREFIX_PATH to the path where the Ice NuGet package was downloaded
+  set(CMAKE_PREFIX_PATH "${Ice_NUGET_DIR}" CACHE PATH "Path to Ice installation directory")
 endif()
 
 # We use these flags over presets to avoid having to create a CMakePreset.json file in every project.
@@ -50,7 +50,5 @@ if(ICE_DEMO_WARNINGS)
     add_compile_options(/W4)
   endif()
 endif()
-
-set(Ice_DIR ${CMAKE_CURRENT_LIST_DIR} CACHE PATH "Path to Ice CMake configuration file")
 
 find_package(Ice REQUIRED CONFIG)
