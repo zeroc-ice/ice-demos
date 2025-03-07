@@ -13,10 +13,6 @@ concurrency:
   group: ${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
 
-# env:
-#   Platform: x64 # For Msbuild
-#   Configuration: Release # For Msbuild
-
 env:
   CMAKE_BUILD_PARALLEL_LEVEL: 4
 
