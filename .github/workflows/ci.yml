@@ -17,6 +17,9 @@ concurrency:
 #   Platform: x64 # For Msbuild
 #   Configuration: Release # For Msbuild
 
+env:
+  CMAKE_BUILD_PARALLEL_LEVEL: 4
+
 jobs:
   ci:
     name: ${{ matrix.os }}
