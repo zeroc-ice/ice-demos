@@ -1,6 +1,6 @@
-# Config
+# Ice Config
 
-This demo shows how to configure your client and server applications using Ice configuration files.
+This demo shows how to configure client and server applications using Ice configuration files.
 
 To build the demo run:
 

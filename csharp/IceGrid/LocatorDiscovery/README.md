@@ -1,4 +1,4 @@
-# LocatorDiscovery
+# IceGrid LocatorDiscovery
 
 The LocatorDiscovery demo shows how to write a client application that configures its locator using the
 LocatorDiscovery plugin.

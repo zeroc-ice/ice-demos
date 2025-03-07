@@ -1,6 +1,6 @@
-# IceGrid/Greeter
+# IceGrid Greeter
 
-The IceGrid/Greeter demo illustrates how to create a very simple IceGrid deployment that manages a Greeter server.
+The IceGrid Greeter demo illustrates how to create a very simple IceGrid deployment that manages a Greeter server.
 
 Follow these steps to build and run the demo:
 

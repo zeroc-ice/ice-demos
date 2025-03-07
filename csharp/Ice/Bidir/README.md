@@ -1,4 +1,4 @@
-# Bidir
+# Ice Bidir
 
 The Bidir demo illustrates how to send requests "the other way around", from a server to a client, by reusing the
 connection established by the client to the server.
