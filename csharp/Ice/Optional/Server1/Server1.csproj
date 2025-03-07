@@ -11,7 +11,6 @@
   <ItemGroup>
     <SliceCompile Include="../slice/WeatherStation1.ice" />
     <PackageReference Include="ZeroC.Ice" Version="$(IceVersion)" />
-    <PackageReference Include="ZeroC.IceStorm" Version="$(IceVersion)" />
     <PackageReference Include="ZeroC.Ice.Slice.Tools.CSharp" Version="$(IceVersion)" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.556">
       <PrivateAssets>all</PrivateAssets>
