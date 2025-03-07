@@ -4,11 +4,11 @@ VisualStudioVersion = 17.9.34321.82
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ice", "Ice", "{0B69E55F-3828-41DC-B50D-22A9E7BEE80B}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "optional", "optional", "{A60AAB28-F5DB-40A1-AD62-5367D73FB4E2}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "old-optional", "old-optional", "{A60AAB28-F5DB-40A1-AD62-5367D73FB4E2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "client", "Ice\optional\msbuild\client\client.csproj", "{987C1382-06DA-44FC-AA69-BC582E37779E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "client", "Ice\old-optional\msbuild\client\client.csproj", "{987C1382-06DA-44FC-AA69-BC582E37779E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "server", "Ice\optional\msbuild\server\server.csproj", "{AB89C59B-5E9F-42F2-A51A-57135D58AF28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "server", "Ice\old-optional\msbuild\server\server.csproj", "{AB89C59B-5E9F-42F2-A51A-57135D58AF28}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IceStorm", "IceStorm", "{ECE5B57E-34B6-43CE-A5D4-67DBB3FF90DF}"
 EndProject
