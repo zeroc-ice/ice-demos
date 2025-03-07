@@ -17,6 +17,9 @@ concurrency:
 #   Platform: x64 # For Msbuild
 #   Configuration: Release # For Msbuild
 
+env:
+  CMAKE_BUILD_PARALLEL_LEVEL: 4
+
 jobs:
   ci:
     name: ${{ matrix.os }}
@@ -25,35 +28,24 @@ jobs:
       matrix:
         include:
           - os: ubuntu-24.04
-            ice_build_flags: srcs
           - os: macos-14
-            ice_build_flags: srcs
           - os: windows-2022
-            ice_build_flags: /t:BuildDist
 
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Checkout Ice
-        uses: actions/checkout@v4
-        with:
-          repository: zeroc-ice/ice
-          ref: main
-          path: ice
-
+      # We reuse the setup-dependencies action from the Ice repository
       - name: Setup Ice Build Dependencies
-        uses: ./ice/.github/actions/setup-dependencies
+        uses: zeroc-ice/ice/.github/actions/setup-dependencies@main
 
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          path: ice-demos
 
       - name: Install Nightly Ice Builds
-        uses: ./ice-demos/.github/actions/install-nightly-ice
+        uses: ./.github/actions/install-nightly-ice
 
       - name: Build C++ Demos
         timeout-minutes: 20
-        working-directory: ice-demos/cpp
+        working-directory: cpp
         run: |
           set -o pipefail
 
@@ -71,7 +63,7 @@ jobs:
 
       - name: Build C++ Demos
         timeout-minutes: 20
-        working-directory: ice-demos/cpp
+        working-directory: cpp
         run: |
           # No IceBT on Windows
           Remove-Item -Recurse -Force "IceBT"
@@ -95,7 +87,7 @@ jobs:
 
       - name: Build C# Demos
         timeout-minutes: 20
-        working-directory: ice-demos/csharp
+        working-directory: csharp
         run: |
           find . -name '*.sln' -type f | while IFS= read -r file; do
             dotnet build "$file"
@@ -104,7 +96,7 @@ jobs:
 
       - name: Build C# Demos
         timeout-minutes: 20
-        working-directory: ice-demos/csharp
+        working-directory: csharp
         run: |
           $ErrorActionPreference = "Stop"
           Get-ChildItem -Recurse -Filter *.sln | ForEach-Object {
@@ -116,7 +108,7 @@ jobs:
 
       # - name: Build Java Demos
       #   timeout-minutes: 20
-      #   working-directory: ice-demos/java
+      #   working-directory: java
       #   env:
       #     # For Ice Builder for Gradle
       #     CPP_PLATFORM: x64
@@ -125,7 +117,7 @@ jobs:
 
       - name: Build JavaScript Demos
         timeout-minutes: 20
-        working-directory: ice-demos/js
+        working-directory: js
         run: |
           set -euxo pipefail
           find . -maxdepth 3 -name package.json -type f | while IFS= read -r file; do
@@ -137,7 +129,7 @@ jobs:
 
       - name: Build JavaScript Demos
         timeout-minutes: 20
-        working-directory: ice-demos/js
+        working-directory: js
         run: |
           Get-ChildItem -Recurse -Depth 2 -Filter package.json | ForEach-Object {
             cd $_.DirectoryName
@@ -151,7 +143,7 @@ jobs:
 
       - name: Build Swift Demos
         timeout-minutes: 20
-        working-directory: ice-demos/swift
+        working-directory: swift
         run: |
           set -o pipefail
           find . -name Package.swift -type f | while IFS= read -r file; do
