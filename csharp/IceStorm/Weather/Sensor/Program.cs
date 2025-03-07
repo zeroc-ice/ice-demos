@@ -41,7 +41,7 @@ var rand = new Random(); // pseudo-random number generator
 // Generate a sensor ID for this weather sensor.
 string sensorId = $"sensor-{rand.Next(1000)}";
 
-// Send a reading every seconds to the weather station(s) via IceStorm. We keep sending until the user presses Ctrl+C.
+// Send a reading every second to the weather station(s) via IceStorm. We keep sending until the user presses Ctrl+C.
 Console.WriteLine($"{sensorId} reporting. Press Ctrl+C to stop...");
 
 using var cts = new CancellationTokenSource();
