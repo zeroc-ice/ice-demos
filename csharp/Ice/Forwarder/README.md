@@ -1,4 +1,4 @@
-# Forwarder
+# Ice Forwarder
 
 The Forwarder demo shows how to write a servant that forwards all requests it receives to another remote Ice object,
 as-is.

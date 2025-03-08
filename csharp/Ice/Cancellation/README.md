@@ -1,4 +1,4 @@
-# Cancellation
+# Ice Cancellation
 
 The Cancellation demo shows how to cancel an invocation using the C# cancellation token. It also shows a related
 feature: invocation timeouts.

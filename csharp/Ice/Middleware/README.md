@@ -1,4 +1,4 @@
-# Middleware
+# Ice Middleware
 
 The Middleware demo shows how to write a simple middleware and how to add this middleware to an object adapter.
 

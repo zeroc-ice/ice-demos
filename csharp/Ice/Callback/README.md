@@ -1,4 +1,4 @@
-# Callback
+# Ice Callback
 
 The Callback demo illustrates how to implement callbacks in a client application.
 
