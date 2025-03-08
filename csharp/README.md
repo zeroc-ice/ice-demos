@@ -20,7 +20,7 @@ The top-level [Directory.Build.props](./Directory.Build.props) file sets `IceVer
 You can override this on the command line:
 
 ```shell
-dotnet build -p:IceVersion="3.8.0~alpha0"
+dotnet build -p:IceVersion="3.8.0-alpha0"
 ```
 
 ## C# Demos
@@ -36,8 +36,8 @@ dotnet build -p:IceVersion="3.8.0~alpha0"
 | [Ice Filesystem](./Ice/Filesystem/)        | Shows the power of interface inheritance in Slice.                                                                                  |
 | [Ice Forwarder](./Ice/Forwarder/)          | Shows how to write a servant that forwards all requests it receives to another remote Ice object.                                   |
 | [Ice Greeter](./Ice/Greeter/)              | Shows how to call and implement a canonical Greeter application with Ice. **Start with this demo!**                                 |
-| [Ice Middleware](./Ice/Middleware/)        | Shows how to write a simple middleware and how to add this middleware to an◊ object adapter.                                        |
-| [Ice Optional](./Ice/Optional/)            | Shows how to add a field a Slice class without breaking interop with existing clients and servers.                                  |
+| [Ice Middleware](./Ice/Middleware/)        | Shows how to write a simple middleware and how to add this middleware to an object adapter.                                         |
+| [Ice Optional](./Ice/Optional/)            | Shows how to add a field to a Slice class without breaking interop with existing clients and servers.                               |
 | [IceBox Greeter](./IceBox/Greeter/)        | Shows how to create an IceBox service.                                                                                              |
 | [IceDiscovery Greeter](./IceDiscovery/Greeter/) | Shows how to configure the IceDiscovery plugin.                                                                                |
 | [IceDiscovery Replication](./IceDiscovery/Replication/) | Shows how to use the IceDiscovery plugin with replicated servers.                                                      |
