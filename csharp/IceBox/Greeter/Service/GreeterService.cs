@@ -6,7 +6,7 @@ using VisitorCenter;
 namespace Service;
 
 /// <summary>An IceBox service that provides an implementation of the Greeter interface.</summary>
-internal class GreeterService : IceBox.Service
+public class GreeterService : IceBox.Service
 {
     // The object adapter created by this service.
     private Ice.ObjectAdapter? _adapter;
