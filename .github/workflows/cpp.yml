@@ -43,40 +43,22 @@ jobs:
           rm /tmp/llvm.sh
           clang-tidy-19 --version
 
-      - name: Checkout Ice
-        uses: actions/checkout@v4
-        with:
-          repository: zeroc-ice/ice
-          ref: main
-          path: ice
-
       - name: Setup Ice Build Dependencies
-        uses: ./ice/.github/actions/setup-dependencies
+        uses: zeroc-ice/ice/.github/actions/setup-dependencies@main
 
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          path: ice-demos
 
       - name: Install Nightly Ice Builds
-        uses: ./ice-demos/.github/actions/install-nightly-ice
+        uses: ./.github/actions/install-nightly-ice
 
-      - name: Build C++ Demos
+      - name: Run Clang Tidy
         timeout-minutes: 30
-        working-directory: ice-demos/cpp
+        working-directory: cpp
         run: |
           set -o pipefail
           find . -name CMakeLists.txt -type f | while IFS= read -r file; do
             dir=$(dirname "$file");
-            cmake -B "$dir/build" -S "$dir" -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
-            cmake --build "$dir/build" --config Release
-          done
-
-      - name: Run Clang Tidy
-        working-directory: ice-demos/cpp
-        run: |
-          set -o pipefail
-          find . -name compile_commands.json -type f | while IFS= read -r file; do
-            dir=$(dirname "$file");
-            run-clang-tidy-19 -p "$dir" -j$(nproc) -quiet
+            cmake -B "$dir/build" -S "$dir" -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_CLANG_TIDY="clang-tidy-19"
+            cmake --build "$dir/build"
           done
