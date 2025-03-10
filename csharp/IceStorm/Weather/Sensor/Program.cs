@@ -4,6 +4,7 @@
 using ClearSky;
 using System.Diagnostics;
 using System.Globalization;
+using System.Security.Cryptography; // for RandomNumberGenerator
 
 // Create an Ice communicator to initialize the Ice runtime. The communicator is disposed before the program exits.
 using Ice.Communicator communicator = Ice.Util.initialize(ref args);
@@ -37,10 +38,8 @@ WeatherStationPrx weatherStation = WeatherStationPrxHelper.uncheckedCast(topic.g
 // acknowledgments from IceStorm.
 Debug.Assert(weatherStation.ice_isTwoway());
 
-var rand = new Random(); // pseudo-random number generator
-
 // Generate a sensor ID for this weather sensor.
-string sensorId = $"sensor-{rand.Next(1000)}";
+string sensorId = $"sensor-{RandomNumberGenerator.GetHexString(4)}";
 
 // Send a reading every second to the weather station(s) via IceStorm. We keep sending until the user presses Ctrl+C.
 Console.WriteLine($"{sensorId} reporting. Press Ctrl+C to stop...");
@@ -58,8 +57,8 @@ while (!cancellationToken.IsCancellationRequested)
     // Create a new AtmosphericConditions object with random values.
     var reading = new AtmosphericConditions
     {
-        Temperature = rand.Next(190, 230) / 10.0,
-        Humidity = rand.Next(450, 550) / 10.0,
+        Temperature = RandomNumberGenerator.GetInt32(190, 230) / 10.0,
+        Humidity = RandomNumberGenerator.GetInt32(450, 550) / 10.0,
     };
 
     try
