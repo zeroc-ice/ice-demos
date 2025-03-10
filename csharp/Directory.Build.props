@@ -3,11 +3,7 @@
     xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
         <IceVersion Condition="'$(IceVersion)' == ''">3.8.0-nightly.*</IceVersion>
-        <ImplicitUsings>true</ImplicitUsings>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-        <!-- <AnalysisMode>All</AnalysisMode> -->
-        <ImplicitUsings>enable</ImplicitUsings>
-        <!-- Copy the PDBs from the NuGet packages to get file names and line numbers in stack traces. -->
-        <CopyDebugSymbolFilesFromPackages>true</CopyDebugSymbolFilesFromPackages>
+        <AnalysisMode>All</AnalysisMode>
     </PropertyGroup>
 </Project>

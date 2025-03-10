@@ -3,6 +3,7 @@
 // Slice module ClearSky in WeatherStation.ice maps to C# namespace ClearSky.
 using ClearSky;
 using System.Diagnostics;
+using System.Globalization;
 
 // Create an Ice communicator to initialize the Ice runtime. The communicator is disposed before the program exits.
 using Ice.Communicator communicator = Ice.Util.initialize(ref args);
@@ -64,7 +65,7 @@ while (!cancellationToken.IsCancellationRequested)
     try
     {
         // Send the reading to the weather station(s).
-        string timeStamp = DateTime.Now.ToString("T");
+        string timeStamp = DateTime.Now.ToString("T", CultureInfo.CurrentCulture);
         await weatherStation.ReportAsync(sensorId, timeStamp, reading, cancel: cancellationToken);
 
         // Wait for one second before sending the next reading.
