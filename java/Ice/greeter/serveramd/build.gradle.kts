@@ -5,12 +5,14 @@ dependencies {
     implementation("com.zeroc:ice:3.8.0-nightly-+")
 }
 
-slice {
-    java {
-        // Configure the default Slice source set to compile the GreeterAMD.ice file from the parent slice directory
-        // during the build process.
-        create("amd") {
-            files = listOf(file("../slice/GreeterAMD.ice"))
+sourceSets {
+    main {
+        // Add the GreeterAMD.ice file from the parent slice directory the main source set.
+        slice {
+            srcDirs("../slice")
+            // By default a Slice source set includes all Slice files in the srcDirs directories
+            // Here we override the default behavior by specifying the list of Slice files to include.
+            setIncludes(listOf("GreeterAMD.ice"))
         }
     }
 }
