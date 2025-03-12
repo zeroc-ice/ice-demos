@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Ice for C++ on Windows is shipped as a NuGet package.
 if(WIN32)
-  set(Ice_NUGET_NAME "zeroc.ice.v143")
+  set(Ice_NUGET_NAME "ZeroC.Ice.Cpp")
   set(Ice_NUGET_DIR "${CMAKE_CURRENT_LIST_DIR}/packages/${Ice_NUGET_NAME}")
 
   if(NOT EXISTS ${Ice_NUGET_DIR})

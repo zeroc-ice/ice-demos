@@ -5,12 +5,14 @@ dependencies {
     implementation("com.zeroc:ice:3.8.0-nightly-+")
 }
 
-slice {
-    java {
-        // Configure the default Slice source set to compile the Greeter.ice file from the parent slice directory
-        // during the build process.
-        create("default") {
-            files = listOf(file("../slice/Greeter.ice"))
+sourceSets {
+    main {
+        // Add the Greeter.ice file from the parent slice directory the main source set.
+        slice {
+            srcDirs("../slice")
+            // By default a Slice source set includes all Slice files in the srcDirs directories
+            // Here we override the default behavior by specifying the list of Slice files to include.
+            setIncludes(listOf("Greeter.ice"))
         }
     }
 }
