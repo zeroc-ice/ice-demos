@@ -43,9 +43,6 @@ jobs:
           rm /tmp/llvm.sh
           clang-tidy-19 --version
 
-      - name: Setup Ice Build Dependencies
-        uses: zeroc-ice/ice/.github/actions/setup-dependencies@main
-
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -55,6 +52,8 @@ jobs:
       - name: Run Clang Tidy
         timeout-minutes: 30
         working-directory: cpp
+        env:
+          CMAKE_BUILD_PARALLEL_LEVEL: 4
         run: |
           set -o pipefail
           find . -name CMakeLists.txt -type f | while IFS= read -r file; do

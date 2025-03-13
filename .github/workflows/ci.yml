@@ -29,12 +29,24 @@ jobs:
 
     runs-on: ${{ matrix.os }}
     steps:
-      # We reuse the setup-dependencies action from the Ice repository
-      - name: Setup Ice Build Dependencies
-        uses: zeroc-ice/ice/.github/actions/setup-dependencies@main
-
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.x
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "oracle"
+          java-version: "17"
 
       - name: Install Nightly Ice Builds
         uses: ./.github/actions/install-nightly-ice
