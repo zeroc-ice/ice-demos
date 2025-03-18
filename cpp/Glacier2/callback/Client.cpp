@@ -61,7 +61,7 @@ main(int argc, char* argv[])
     // Register the MockAlarmClock servant with the adapter. It uses the category retrieved from the router. You can
     // verify the Ring callback is never delivered if you provide a different category.
     auto mockAlarmClock = make_shared<Client::MockAlarmClock>();
-    auto alarmClock = adapter->add<AlarmClockPrx>(mockAlarmClock, {.name = "alarmClock", .category = clientCategory});
+    auto alarmClock = adapter->add<AlarmClockPrx>(mockAlarmClock, {"alarmClock", clientCategory});
 
     // Create a proxy to the wake-up service.
     WakeUpServicePrx wakeUpService{communicator, "wakeUpService:tcp -h localhost -p 4061"};
