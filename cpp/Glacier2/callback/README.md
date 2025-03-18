@@ -1,55 +1,64 @@
 # Glacier2 Callback
 
-This example demonstrates the use of several Glacier2 features, including
-[callbacks][1] and [request contexts][2].
+This demo shows how to write a client that establishes a session with a Glacier2 router. It also shows how to implement
+callbacks in this client.
 
-To build the demo run:
+This demo is similar to the [Ice callback][1] demo, except all communications go through the Glacier router.
 
-```shell
-cmake -B build
-cmake --build build --config Release
+The connection between the client and the Glacier2 router is a "bidir" connection, like in the [Ice bidir][2] demo:
+
+```mermaid
+flowchart LR
+    c[Client<br>hosts AlarmClock] --bidir connection--> g[Glacier2 router:4063]
+    g --connection1--> s[Server:4061<br>hosts WakeUpService] --connection2--> g
 ```
 
-To run the demo, first start the server:
+Follow these steps to build and run the demo:
 
-**Linux/macOS:**
+1. Build the client and server applications:
 
-```shell
-./build/server
-```
+   ```shell
+   cmake -B build
+   cmake --build build --config Release
+   ```
 
-**Windows:**
+2. Start the Server program in its own terminal:
 
-```shell
-build\Release\server
-```
+   **Linux/macOS:**
 
-In a separate window, start the Glacier2 router:
+   ```shell
+   ./build/server
+   ```
 
-```shell
-glacier2router --Ice.Config=config.glacier2
-```
+   **Windows:**
 
-In a separate window, start the client:
+   ```shell
+   build\Release\server
+   ```
 
-**Linux/macOS:**
+3. Start the Glacier2 router in its own terminal:
 
-```shell
-./build/client
-```
+   ```shell
+   glacier2router --Ice.Config=config.glacier2
+   ```
 
-**Windows:**
+   > [!TIP]
+   > You can also start the Glacier2 router before the server. The order does not matter: the server is identical to the
+   > server provided in the [Ice Callback][1] demo and does not depend on Glacier2.
 
-```shell
-build\Release\client
-```
+4. Run the client application:
 
-If you plan to run this demo using clients on different hosts than the
-router, you must first modify the configuration. You need to change
-the `Glacier2.Client.Endpoints` property in `config.glacier2` and the
-`Ice.Default.Router` property in `config.client`. In all cases you must
-set the host parameter of the `-h host` endpoint option to the actual
-address of the machine on which glacier2router is running.
+   **Linux/macOS:**
 
-[1]: https://doc.zeroc.com/ice/3.7/ice-services/glacier2/callbacks-through-glacier2
-[2]: https://doc.zeroc.com/ice/3.7/ice-services/glacier2/how-glacier2-uses-request-contexts
+   ```shell
+   ./build/client
+   ```
+
+   **Windows:**
+
+   ```shell
+   build\Release\client
+    ```
+
+[1]: ../../Ice/callback
+[2]: ../../Ice/bidir

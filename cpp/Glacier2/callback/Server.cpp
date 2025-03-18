@@ -1,56 +1,44 @@
 // Copyright (c) ZeroC, Inc.
 
-#include "CallbackI.h"
+#include "SimpleWakeUpService.h"
+
 #include <Ice/Ice.h>
 #include <iostream>
 
 using namespace std;
-using namespace Demo;
 
 int
 main(int argc, char* argv[])
 {
-    int status = 0;
+    // CtrlCHandler is a helper class that handles Ctrl+C and similar signals.
+    Ice::CtrlCHandler ctrlCHandler;
 
-    try
-    {
-        //
-        // CtrlCHandler must be created before the communicator or any other threads are started
-        //
-        Ice::CtrlCHandler ctrlCHandler;
+    // Create an Ice communicator to initialize the Ice runtime.
+    Ice::CommunicatorPtr communicator = Ice::initialize(argc, argv);
 
-        //
-        // CommunicatorHolder's ctor initializes an Ice communicator,
-        // and its dtor destroys this communicator.
-        //
-        const Ice::CommunicatorHolder ich(argc, argv, "config.server");
-        const auto& communicator = ich.communicator();
+    // Make sure the communicator is destroyed at the end of this scope.
+    Ice::CommunicatorHolder communicatorHolder{communicator};
 
-        ctrlCHandler.setCallback([communicator](int) { communicator->shutdown(); });
+    // Create an object adapter that listens for incoming requests and dispatches them to servants.
+    auto adapter = communicator->createObjectAdapterWithEndpoints("WakeUpAdapter", "tcp -p 4061");
 
-        //
-        // The communicator initialization removes all Ice-related arguments from argc/argv
-        //
-        if (argc > 1)
+    // Register the SimpleWakeUpService servant with the adapter.
+    adapter->add(make_shared<Server::SimpleWakeUpService>(), Ice::stringToIdentity("wakeUpService"));
+
+    // Start dispatching requests.
+    adapter->activate();
+    cout << "Listening on port 4061..." << endl;
+
+    // Shut down the communicator when the user presses Ctrl+C.
+    ctrlCHandler.setCallback(
+        [communicator](int signal)
         {
-            cerr << argv[0] << ": too many arguments" << endl;
-            status = 1;
-        }
-        else
-        {
-            auto adapter = communicator->createObjectAdapter("Callback.Server");
-            auto cb = make_shared<CallbackI>();
-            adapter->add(cb, Ice::stringToIdentity("callback"));
-            adapter->activate();
+            cout << "Caught signal " << signal << ", shutting down..." << endl;
+            communicator->shutdown();
+        });
 
-            communicator->waitForShutdown();
-        }
-    }
-    catch (const std::exception& ex)
-    {
-        cerr << ex.what() << endl;
-        status = 1;
-    }
+    // Wait until the communicator is shut down. Here, this occurs when the user presses Ctrl+C.
+    communicator->waitForShutdown();
 
-    return status;
+    return 0;
 }
