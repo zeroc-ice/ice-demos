@@ -4,6 +4,7 @@
 import Ice
 import chatbot
 import asyncio
+import signal
 
 async def main():
 
@@ -24,6 +25,10 @@ async def main():
 
     # Create an Ice communicator to initialize the Ice runtime. The communicator is destroyed at the end of the with block.
     with Ice.initialize(initData) as communicator:
+
+        # Shutdown the communicator when the user presses Ctrl+C.
+        loop.add_signal_handler(signal.SIGINT, communicator.shutdown)
+
         # Create an object adapter that listens for incoming requests and dispatches them to servants.
         adapter = communicator.createObjectAdapterWithEndpoints("GreeterAdapter", "tcp -p 4061")
 
@@ -34,11 +39,10 @@ async def main():
         adapter.activate()
         print("Listening on port 4061...")
 
-        try:
-            # Wait until the event completes, which only occurs when it is canceled by Ctrl+C.
-            exit_event = asyncio.Event()
-            await exit_event.wait()
-        except asyncio.exceptions.CancelledError:
-            print("Caught Ctrl+C, exiting...")
+        # Wait until the communicator is shut down. Here, this occurs when the user presses Ctrl+C.
+        #
+        # Ice.wrap_future converts the Ice future returned by communicator.shutdownCompleted()
+        # into an asyncio future, making it awaitable within the asyncio event loop.
+        await Ice.wrap_future(communicator.shutdownCompleted())
 
 asyncio.run(main())
