@@ -1,8 +1,9 @@
 // Copyright (c) ZeroC, Inc.
 
 // Slice module EarlyRiser in AlarmClock.ice maps to C# namespace EarlyRiser.
-using System.Diagnostics;
 using EarlyRiser;
+
+using System.Diagnostics;
 
 // Create an Ice communicator to initialize the Ice runtime.
 using Ice.Communicator communicator = Ice.Util.initialize(ref args);
