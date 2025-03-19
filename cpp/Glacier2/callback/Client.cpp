@@ -34,7 +34,7 @@ main(int argc, char* argv[])
 
     // Obtain a category string from the router. We need to use this category for the identity of server->client
     // callbacks invoked through the Glacier2 router.
-    string clientCategory = router.getCategoryForClient();
+    string clientCategory = router->getCategoryForClient();
 
     // Create an object adapter with no name and no configuration, but with our router proxy. This object adapter is a
     // "bidirectional" object adapter, like the one created by the Ice/bidir client application. It does not listen on
