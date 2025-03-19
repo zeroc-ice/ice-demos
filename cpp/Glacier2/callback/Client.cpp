@@ -52,7 +52,7 @@ main(int argc, char* argv[])
     WakeUpServicePrx wakeUpService{communicator, "wakeUpService:tcp -h localhost -p 4061"};
 
     // Configure the proxy to route requests using the Glacier2 router.
-    wakeUpService = wakeUpService.ice_router(router);
+    wakeUpService = wakeUpService->ice_router(router);
 
     // Schedule a wake-up call in 5 seconds.
     wakeUpService->wakeMeUp(alarmClock, Time::toTimeStamp(chrono::system_clock::now() + 5s));
