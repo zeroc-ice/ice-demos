@@ -13,7 +13,6 @@ module EarlyRiser
         /// Rings the alarm clock.
         /// @param message The message to display.
         /// @return The button pressed by the user.
-        ["cs:identifier:Ring"] // We prefer PascalCase for C# methods.
         ButtonPressed ring(string message);
     }
 
@@ -24,7 +23,6 @@ module EarlyRiser
         /// @param alarmClock A proxy to the alarm clock to ring.
         /// @param timeStamp The time to ring the alarm clock. It's encoded as the number of ticks (100 nanoseconds)
         /// since January 1, 0001 00:00:00 UTC in the Gregorian calendar.
-        ["cs:identifier:WakeMeUp"] // We prefer PascalCase for C# methods.
         void wakeMeUp(AlarmClock* alarmClock, long timeStamp);
     }
 }
