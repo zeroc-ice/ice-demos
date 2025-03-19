@@ -13,7 +13,7 @@ using namespace std;
 ServerAMD::Chatbot::~Chatbot()
 {
     // Wait for all tasks to complete.
-    for (auto& task : _tasks)
+    for (const auto& task : _tasks)
     {
         task.wait();
     }
@@ -46,7 +46,6 @@ ServerAMD::Chatbot::greetAsync(
         }));
 
     // We don't want the _tasks vector to grow forever so remove all completed tasks here, without waiting.
-    // TODO: switch to std::erase_if when we can use C++20.
     _tasks.erase(
         std::remove_if(
             _tasks.begin(),

@@ -1,6 +1,7 @@
 // Copyright (c) ZeroC, Inc.
 
 #include "../../common/Env.h"
+#include "../../common/Time.h"
 #include "MockAlarmClock.h"
 
 #include <Glacier2/Glacier2.h>
@@ -9,21 +10,6 @@
 
 using namespace EarlyRiser;
 using namespace std;
-
-namespace
-{
-    // Converts a time point to a time stamp.
-    int64_t toTimeStamp(const chrono::system_clock::time_point& timePoint)
-    {
-        const int daysBeforeEpoch = 719162;
-
-        int64_t timeStampMicro =
-            chrono::duration_cast<chrono::microseconds>(timePoint.time_since_epoch() + daysBeforeEpoch * 24h).count();
-
-        // The time stamp is in ticks, where each tick is 100 nanoseconds = 0.1 microsecond.
-        return timeStampMicro * 10;
-    }
-}
 
 int
 main(int argc, char* argv[])
@@ -47,8 +33,7 @@ main(int argc, char* argv[])
     assert(!session);
 
     // Obtain a category string from the router. We need to use this category for the identity of server->client
-    // callbacks
-    // invoked through the Glacier2 router.
+    // callbacks invoked through the Glacier2 router.
     string clientCategory = router.getCategoryForClient();
 
     // Create an object adapter with no name and no configuration, but with our router proxy. This object adapter is a
@@ -70,7 +55,7 @@ main(int argc, char* argv[])
     wakeUpService = wakeUpService.ice_router(router);
 
     // Schedule a wake-up call in 5 seconds.
-    wakeUpService->wakeMeUp(alarmClock, toTimeStamp(chrono::system_clock::now() + chrono::seconds{5}));
+    wakeUpService->wakeMeUp(alarmClock, Time::toTimeStamp(chrono::system_clock::now() + 5s));
     cout << "Wake-up call scheduled, falling asleep..." << endl;
 
     // Wait until the "stop" button is pressed on the mock alarm clock.

@@ -1,6 +1,7 @@
 // Copyright (c) ZeroC, Inc.
 
 #include "BidirWakeUpService.h"
+#include "../../common/Time.h"
 
 #include <algorithm>
 #include <iostream>
@@ -8,22 +9,10 @@
 using namespace EarlyRiser;
 using namespace std;
 
-namespace
-{
-    // Converts a time stamp to a time point.
-    chrono::system_clock::time_point toTimePoint(int64_t timeStamp)
-    {
-        const int daysBeforeEpoch = 719162;
-
-        chrono::microseconds timePointMicro{timeStamp / 10}; // timeStamp is in ticks (100 nanoseconds)
-        return chrono::system_clock::time_point{timePointMicro - daysBeforeEpoch * 24h};
-    }
-}
-
 Server::BidirWakeUpService::~BidirWakeUpService()
 {
     // Waits for all outstanding tasks to complete.
-    for (auto& task : _tasks)
+    for (const auto& task : _tasks)
     {
         task.wait();
     }
@@ -32,10 +21,9 @@ Server::BidirWakeUpService::~BidirWakeUpService()
 void
 Server::BidirWakeUpService::wakeMeUp(int64_t timeStamp, const Ice::Current& current)
 {
-    // With C++20, we'll be able to print the time point easily--but not with C++17.
     cout << "Dispatching wakeMeUp request { timeStamp = " << timeStamp << " ticks }" << endl;
 
-    chrono::system_clock::time_point timePoint = toTimePoint(timeStamp);
+    chrono::system_clock::time_point timePoint = Time::toTimePoint(timeStamp);
 
     Ice::ConnectionPtr connection = current.con; // The connection from the client to the server.
     if (!connection)
@@ -67,7 +55,6 @@ Server::BidirWakeUpService::wakeMeUp(int64_t timeStamp, const Ice::Current& curr
         }));
 
     // We don't want the _tasks vector to grow forever so remove all completed tasks here, without waiting.
-    // TODO: switch to std::erase_if when we can use C++20.
     _tasks.erase(
         std::remove_if(
             _tasks.begin(),
