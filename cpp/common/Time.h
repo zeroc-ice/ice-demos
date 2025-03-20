@@ -11,6 +11,7 @@
 namespace Time
 {
     /// Formats a time point as a string.
+    /// @param timePoint The time point.
     /// @return The formatted time point.
     inline std::string formatTime(std::chrono::system_clock::time_point timePoint)
     {
@@ -35,6 +36,32 @@ namespace Time
         }
 
         return timeString;
+    }
+
+    /// Converts a time point to a time stamp.
+    /// @param timePoint The time point.
+    /// @return The time stamp.
+    inline std::int64_t toTimeStamp(const std::chrono::system_clock::time_point& timePoint)
+    {
+        const int daysBeforeEpoch = 719162;
+
+        std::int64_t timeStampMicro = std::chrono::duration_cast<std::chrono::microseconds>(
+                                          timePoint.time_since_epoch() + daysBeforeEpoch * std::chrono::hours{24})
+                                          .count();
+
+        // The time stamp is in ticks, where each tick is 100 nanoseconds = 0.1 microsecond.
+        return timeStampMicro * 10;
+    }
+
+    /// Converts a time stamp to a time point.
+    /// @param timeStamp The time stamp.
+    /// @return The time point.
+    std::chrono::system_clock::time_point toTimePoint(std::int64_t timeStamp)
+    {
+        const int daysBeforeEpoch = 719162;
+
+        std::chrono::microseconds timePointMicro{timeStamp / 10}; // timeStamp is in ticks (100 nanoseconds)
+        return std::chrono::system_clock::time_point{timePointMicro - daysBeforeEpoch * std::chrono::hours{24}};
     }
 }
 

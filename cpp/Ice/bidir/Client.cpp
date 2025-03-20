@@ -1,5 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
+#include "../../common/Time.h"
 #include "MockAlarmClock.h"
 
 #include <Ice/Ice.h>
@@ -7,21 +8,6 @@
 
 using namespace EarlyRiser;
 using namespace std;
-
-namespace
-{
-    // Converts a time point to a time stamp.
-    int64_t toTimeStamp(const chrono::system_clock::time_point& timePoint)
-    {
-        const int daysBeforeEpoch = 719162;
-
-        int64_t timeStampMicro =
-            chrono::duration_cast<chrono::microseconds>(timePoint.time_since_epoch() + daysBeforeEpoch * 24h).count();
-
-        // The time stamp is in ticks, where each tick is 100 nanoseconds = 0.1 microsecond.
-        return timeStampMicro * 10;
-    }
-}
 
 int
 main(int argc, char* argv[])
@@ -46,7 +32,7 @@ main(int argc, char* argv[])
     WakeUpServicePrx wakeUpService{communicator, "wakeUpService:tcp -h localhost -p 4061"};
 
     // Schedule a wake-up call in 5 seconds.
-    wakeUpService->wakeMeUp(toTimeStamp(chrono::system_clock::now() + chrono::seconds{5}));
+    wakeUpService->wakeMeUp(Time::toTimeStamp(chrono::system_clock::now() + 5s));
     cout << "Wake-up call scheduled, falling asleep..." << endl;
 
     // Wait until the "stop" button is pressed on the mock alarm clock.

@@ -4,7 +4,7 @@ project(glacier2_callback CXX)
 
 include(../../cmake/common.cmake)
 
-add_executable(client Client.cpp Callback.ice)
+add_executable(client Client.cpp MockAlarmClock.cpp MockAlarmClock.h AlarmClock.ice)
 slice2cpp_generate(client)
 target_link_libraries(client Ice::Ice Ice::Glacier2)
 add_custom_command(TARGET client POST_BUILD
@@ -12,7 +12,7 @@ add_custom_command(TARGET client POST_BUILD
   COMMAND_EXPAND_LISTS
 )
 
-add_executable(server Server.cpp CallbackI.cpp CallbackI.h Callback.ice)
+add_executable(server Server.cpp SimpleWakeUpService.cpp SimpleWakeUpService.h AlarmClock.ice)
 slice2cpp_generate(server)
 target_link_libraries(server Ice::Ice)
 add_custom_command(TARGET server POST_BUILD

@@ -1,244 +1,66 @@
 // Copyright (c) ZeroC, Inc.
 
-#include "Callback.h"
+#include "../../common/Env.h"
+#include "../../common/Time.h"
+#include "MockAlarmClock.h"
+
 #include <Glacier2/Glacier2.h>
 #include <Ice/Ice.h>
 #include <iostream>
 
+using namespace EarlyRiser;
 using namespace std;
-using namespace Demo;
-
-class CallbackReceiverI final : public Demo::CallbackReceiver
-{
-public:
-    void callback(const Ice::Current&) final { cout << "received callback" << endl; }
-};
-
-void run(const shared_ptr<Ice::Communicator>&);
 
 int
 main(int argc, char* argv[])
 {
-    int status = 0;
+    // Create an Ice communicator to initialize the Ice runtime.
+    Ice::CommunicatorPtr communicator = Ice::initialize(argc, argv);
 
-    try
-    {
-        //
-        // CommunicatorHolder's ctor initializes an Ice communicator,
-        // and its dtor destroys this communicator.
-        //
-        const Ice::CommunicatorHolder ich(argc, argv, "config.client");
+    // Make sure the communicator is destroyed at the end of this scope.
+    Ice::CommunicatorHolder communicatorHolder{communicator};
 
-        //
-        // The communicator initialization removes all Ice-related arguments from argc/argv
-        //
-        if (argc > 1)
-        {
-            cerr << argv[0] << ": too many arguments" << endl;
-            status = 1;
-        }
-        else
-        {
-            run(ich.communicator());
-        }
-    }
-    catch (const std::exception& ex)
-    {
-        cerr << argv[0] << ": " << ex.what() << endl;
-        status = 1;
-    }
-    return status;
-}
+    // Create a proxy to the Glacier2 router. The addressing information (transport, host and port number) is derived
+    // from the value of Glacier2.Client.Endpoints in the glacier2 router configuration file.
+    Glacier2::RouterPrx router{communicator, "Glacier2/router:tcp -h localhost -p 4063"};
 
-void menu();
+    // Create a session with the Glacier2 router. In this demo, the Glacier2 router is configured to accept any
+    // username/password combination. This call establishes a network connection to the Glacier2 router; the lifetime of
+    // the session is the same as the lifetime of the connection.
+    optional<Glacier2::SessionPrx> session = router->createSession(Env::getUsername(), "password");
 
-void
-run(const shared_ptr<Ice::Communicator>& communicator)
-{
-    optional<Ice::RouterPrx> defaultRouter = communicator->getDefaultRouter();
-    if (!defaultRouter)
-    {
-        throw runtime_error("Ice.Default.Router property is not set.");
-    }
-    auto router = Ice::uncheckedCast<Glacier2::RouterPrx>(*defaultRouter);
+    // The proxy returned by createSession is null because we did not configure a SessionManager on the Glacier2 router.
+    assert(!session);
 
-    optional<Glacier2::SessionPrx> session;
-    //
-    // Loop until we have successfully create a session.
-    //
-    while (!session)
-    {
-        //
-        // Prompt the user for the credentials to create the session.
-        //
-        cout << "This demo accepts any user-id / password combination.\n";
+    // Obtain a category string from the router. We need to use this category for the identity of server->client
+    // callbacks invoked through the Glacier2 router.
+    string clientCategory = router->getCategoryForClient();
 
-        string id;
-        cout << "user id: " << flush;
-        getline(cin, id);
+    // Create an object adapter with no name and no configuration, but with our router proxy. This object adapter is a
+    // "bidirectional" object adapter, like the one created by the Ice/bidir client application. It does not listen on
+    // any port and it does not need to be activated.
+    Ice::ObjectAdapterPtr adapter = communicator->createObjectAdapterWithRouter("", router);
 
-        string pw;
-        cout << "password: " << flush;
-        getline(cin, pw);
-
-        //
-        // Try to create a session and break the loop if succeed,
-        // otherwise try again after printing the error message.
-        //
-        try
-        {
-            session = router->createSession(id, pw);
-            break;
-        }
-        catch (const Glacier2::PermissionDeniedException& ex)
-        {
-            cout << "permission denied:\n" << ex.reason << endl;
-        }
-        catch (const Glacier2::CannotCreateSessionException& ex)
-        {
-            cout << "cannot create session:\n" << ex.reason << endl;
-        }
-    }
-
-    const Ice::ConnectionPtr connection = router->ice_getCachedConnection();
-    assert(connection);
-    connection->setCloseCallback([](const Ice::ConnectionPtr&)
-                                 { cout << "The Glacier2 session has been destroyed." << endl; });
-
-    //
-    // The Glacier2 router routes bidirectional calls to objects in the client only
-    // when these objects have the correct Glacier2-issued category. The purpose of
-    // the callbackReceiverFakeIdent is to demonstrate this.
-    //
-    // The Identity name is not checked by the server any value can be used.
-    //
-    Ice::Identity callbackReceiverIdent;
-    callbackReceiverIdent.name = Ice::generateUUID();
-    callbackReceiverIdent.category = router->getCategoryForClient();
-
-    Ice::Identity callbackReceiverFakeIdent;
-    callbackReceiverFakeIdent.name = Ice::generateUUID();
-    callbackReceiverFakeIdent.category = "fake";
-
-    auto base = communicator->propertyToProxy("Callback.Proxy");
-    auto twoway = Ice::checkedCast<CallbackPrx>(base);
-    auto oneway = twoway->ice_oneway();
-    auto batchOneway = twoway->ice_batchOneway();
-
-    auto adapter = communicator->createObjectAdapterWithRouter("", router);
     adapter->activate();
 
-    adapter->add(make_shared<CallbackReceiverI>(), callbackReceiverIdent);
+    // Register the MockAlarmClock servant with the adapter. It uses the category retrieved from the router. You can
+    // verify the Ring callback is never delivered if you provide a different category.
+    auto mockAlarmClock = make_shared<Client::MockAlarmClock>();
+    auto alarmClock = adapter->add<AlarmClockPrx>(mockAlarmClock, {"alarmClock", clientCategory});
 
-    //
-    // Callback will never be called for a fake identity.
-    //
-    adapter->add(make_shared<CallbackReceiverI>(), callbackReceiverFakeIdent);
+    // Create a proxy to the wake-up service.
+    WakeUpServicePrx wakeUpService{communicator, "wakeUpService:tcp -h localhost -p 4061"};
 
-    auto twowayR = Ice::uncheckedCast<CallbackReceiverPrx>(adapter->createProxy(callbackReceiverIdent));
-    auto onewayR = twowayR->ice_oneway();
+    // Configure the proxy to route requests using the Glacier2 router.
+    wakeUpService = wakeUpService->ice_router(router);
 
-    string override;
-    bool fake = false;
+    // Schedule a wake-up call in 5 seconds.
+    wakeUpService->wakeMeUp(alarmClock, Time::toTimeStamp(chrono::system_clock::now() + 5s));
+    cout << "Wake-up call scheduled, falling asleep..." << endl;
 
-    menu();
+    // Wait until the "stop" button is pressed on the mock alarm clock.
+    mockAlarmClock->wait();
+    cout << "Stop button pressed, exiting..." << endl;
 
-    //
-    // Client REPL.
-    //
-    char c = 'x';
-    do
-    {
-        cout << "==> ";
-        cin >> c;
-        if (c == 't')
-        {
-            twoway->initiateCallback(twowayR);
-        }
-        else if (c == 'o')
-        {
-            Ice::Context context;
-            if (!override.empty())
-            {
-                context["_ovrd"] = override;
-            }
-            oneway->initiateCallback(onewayR, context);
-        }
-        else if (c == 'O')
-        {
-            Ice::Context context;
-            context["_fwd"] = "O";
-            if (!override.empty())
-            {
-                context["_ovrd"] = override;
-            }
-            batchOneway->initiateCallback(onewayR, context);
-        }
-        else if (c == 'f')
-        {
-            batchOneway->ice_flushBatchRequests();
-        }
-        else if (c == 'v')
-        {
-            if (override.empty())
-            {
-                override = "some_value";
-                cout << "override context field is now `" << override << "'" << endl;
-            }
-            else
-            {
-                override.clear();
-                cout << "override context field is empty" << endl;
-            }
-        }
-        else if (c == 'F')
-        {
-            fake = !fake;
-
-            if (fake)
-            {
-                twowayR = Ice::uncheckedCast<CallbackReceiverPrx>(twowayR->ice_identity(callbackReceiverFakeIdent));
-                onewayR = Ice::uncheckedCast<CallbackReceiverPrx>(onewayR->ice_identity(callbackReceiverFakeIdent));
-            }
-            else
-            {
-                twowayR = Ice::uncheckedCast<CallbackReceiverPrx>(twowayR->ice_identity(callbackReceiverIdent));
-                onewayR = Ice::uncheckedCast<CallbackReceiverPrx>(onewayR->ice_identity(callbackReceiverIdent));
-            }
-
-            cout << "callback receiver identity: " << Ice::identityToString(twowayR->ice_getIdentity()) << endl;
-        }
-        else if (c == 's')
-        {
-            twoway->shutdown();
-        }
-        else if (c == 'x')
-        {
-            // Nothing to do
-        }
-        else if (c == '?')
-        {
-            menu();
-        }
-        else
-        {
-            cout << "unknown command `" << c << "'" << endl;
-            menu();
-        }
-    } while (cin.good() && c != 'x');
-}
-
-void
-menu()
-{
-    cout << "usage:\n"
-            "t: invoke callback as twoway\n"
-            "o: invoke callback as oneway\n"
-            "O: invoke callback as batch oneway\n"
-            "f: flush all batch requests\n"
-            "v: set/reset override context field\n"
-            "F: set/reset fake category\n"
-            "s: shutdown server\n"
-            "x: exit\n"
-            "?: help\n";
+    return 0;
 }
