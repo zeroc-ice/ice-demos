@@ -8,7 +8,8 @@ RUN set -eux \
     && sudo dpkg -i packages-microsoft-prod.deb \
     && rm packages-microsoft-prod.deb \
     && sudo apt update \
-    && sudo apt-get install -y php python3 ruby gdb \
+    && sudo apt install -y gdb libbz2-dev \
+    && sudo apt-get install -y php python3  \
     && sudo apt-get install -y openjdk-17-jdk \
     && sudo apt-get install -y cmake \
     && sudo rm -rf /var/lib/apt/lists/* \
@@ -27,6 +28,12 @@ RUN set -eux \
     && echo "deb [signed-by=/etc/apt/keyrings/zeroc-nightly.gpg] https://download.zeroc.com/nexus/repository/ubuntu24.04-nightly nightly main" | sudo tee /etc/apt/sources.list.d/zeroc-nightly.list \
     && sudo apt-get update \
     && sudo apt-get install -y zeroc-ice-all-dev
+
+# Install nightly Ice for Ruby
+RUN sudo apt-get install -y ruby ruby-dev \
+    && sudo rm -rf /var/lib/apt/lists/* \
+    && sudo apt-get clean \
+    && sudo gem install zeroc-ice --source https://download.zeroc.com/nexus/repository/rubygems-nightly --pre
 
 # Set environment variables
 ENV DOTNET_ROOT=/home/vscode/.dotnet
