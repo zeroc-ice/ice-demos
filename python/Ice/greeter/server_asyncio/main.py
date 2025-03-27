@@ -14,10 +14,7 @@ async def main():
     # Create an Ice communicator to initialize the Ice runtime. It will be automatically destroyed at the end of the
     # with block.
     #
-    # The event loop is passed to Ice.initialize so that the communicator is configured to use the
-    # Ice.asyncio.EventLoopAdapter, ensuring that:
-    # - Futures returned by the Ice runtime can be awaited within the asyncio event loop.
-    # - Coroutines from asynchronous dispatches run within the same event loop.
+    # We enable asyncio support by passing the current event loop to initialize.
     with Ice.initialize(eventLoop=loop) as communicator:
 
         # Shutdown the communicator when the user presses Ctrl+C.
