@@ -31,4 +31,5 @@ async def main():
         # Wait until the communicator is shut down. Here, this occurs when the user presses Ctrl+C.
         await communicator.shutdownCompleted()
 
-asyncio.run(main())
+if __name__ == "__main__":
+    asyncio.run(main())
