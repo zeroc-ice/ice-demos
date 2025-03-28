@@ -1,3 +1,5 @@
+// Copyright (c) ZeroC, Inc.
+
 import { Ice } from "@zeroc/ice";
 import { EarlyRiser } from "./AlarmClock.js";
 

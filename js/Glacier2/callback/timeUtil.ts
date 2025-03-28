@@ -1,3 +1,5 @@
+// Copyright (c) ZeroC, Inc.
+
 const millisecondsBeforeEpoch = 719162n * 24n * 60n * 60n * 1000n; // daysBeforeEpoch converted to milliseconds
 const ticksPerMillisecond = 10000n; // number of ticks per millisecond
 
