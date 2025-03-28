@@ -34,7 +34,7 @@ const clientCategory = await router.getCategoryForClient();
 const adapter = await communicator.createObjectAdapterWithRouter("", router);
 
 // Register the MockAlarmClock servant with the adapter. It uses the category retrieved from the router. You can verify
-// the Ring callback is never delivered if you provide a different category.
+// the ring callback is never delivered if you provide a different category.
 const mockAlarmClock = new MockAlarmClock();
 const alarmClock = EarlyRiser.AlarmClockPrx.uncheckedCast(
     adapter.add(mockAlarmClock, new Ice.Identity("alarmClock", clientCategory)));
