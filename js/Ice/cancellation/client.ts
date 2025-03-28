@@ -21,20 +21,41 @@ const name = process.env.USER || process.env.USERNAME || "masked user";
 
 // Send a request to the regular greeter and get the response.
 let greeting = await greeter.greet(name);
+console.log(greeting);
 
 // Create another slow greeter proxy with an invocation timeout of 4 seconds (the default invocation timeout is
 // infinite).
 const slowGreeter4s = slowGreeter.ice_invocationTimeout(4000);
-console.log(greeting);
 
 // Send a request to the slow greeter with the 4-second invocation timeout.
-try
-{
-    greeting = await slowGreeter4s.GreetAsync("alice");
+try {
+    greeting = await slowGreeter4s.greet("alice");
     console.log(`Received unexpected greeting: ${greeting}`);
+} catch (exception) {
+    console.assert(exception instanceof Ice.InvocationTimeoutException, exception);
+    console.log(`Caught InvocationTimeoutException, as expected: ${exception.message}`);
 }
-catch (exception)
-{
-    console.assert(exception instanceof Ice.InvocationTimeoutException);
-    console.log(`Caught InvocationTimeoutException, as expected: {exception.message}`);
+
+// Send a request to the slow greeter, and cancel this request after 4 seconds.
+try {
+    const greetingResult = slowGreeter.greet("bob");
+    setTimeout(() => greetingResult.cancel(), 4000);
+    greeting = await greetingResult;
+    console.log(`Received unexpected greeting: ${greeting}`);
+} catch (exception) {
+    console.assert(exception instanceof Ice.InvocationCanceledException, exception);
+    console.log(`Caught InvocationCanceledException, as expected: ${exception.message}`);
+}
+
+// Verify the regular greeter still works.
+greeting = await greeter.greet("carol");
+console.log(greeting);
+
+// Send a request to the slow greeter, and wait forever for the response.
+console.log("Please press Ctrl+C in the server's terminal to cancel the slow greeter dispatch.");
+try {
+    greeting = await slowGreeter.greet("dave");
+    console.log(greeting);
+} catch (exception) {
+    console.log(`UnknownException, as expected: ${exception.message}`);
 }

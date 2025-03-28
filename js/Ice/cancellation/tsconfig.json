@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "lib": ["dom", "es2020"],
+        "target": "es2020",
+        "module": "es2022", // "es2022" required for top-level 'await using' statements
+        "noImplicitAny": true,
+        "moduleResolution": "bundler",
+        "preserveConstEnums": true,
+        "sourceMap": true,
+        "esModuleInterop": true
+    },
+    "files": ["client.ts"]
+}
