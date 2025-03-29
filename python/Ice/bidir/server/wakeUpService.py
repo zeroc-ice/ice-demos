@@ -62,6 +62,6 @@ class BidirWakeUpService(WakeUpService):
                 buttonPressed = await alarmClock.ringAsync("No more snoozing!")
 
         # Schedule the callRing coroutine to run in the event loop.
-        asyncio.run_coroutine_threadsafe(callRing(alarmClock, datetime), self._eventLoop)
+        asyncio.run_coroutine_threadsafe(callRing(alarmClock, wakeUpDatetime), self._eventLoop)
 
 
