@@ -3,7 +3,7 @@
 
 import Ice
 import asyncio
-import server
+from wakeUpService import BidirWakeUpService
 import signal
 import sys
 
@@ -23,7 +23,7 @@ async def main():
         adapter = communicator.createObjectAdapterWithEndpoints("WakeUpAdapter", "tcp -p 4061")
 
         # Register the BidirWakeUpService servant with the adapter.
-        adapter.add(server.BidirWakeUpService(communicator, loop), Ice.stringToIdentity("wakeUpService"))
+        adapter.add(BidirWakeUpService(communicator, loop), Ice.stringToIdentity("wakeUpService"))
 
         # Start dispatching requests.
         adapter.activate()

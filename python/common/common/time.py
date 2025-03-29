@@ -12,7 +12,7 @@ TICKS_PER_SECOND = 10_000_000
 
 def toTimestamp(value: datetime) -> int:
     """
-    Converts a time point to a timestamp.
+    Converts a datetime to a timestamp.
 
     Parameters
     ----------
