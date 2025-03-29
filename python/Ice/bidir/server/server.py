@@ -5,7 +5,7 @@ import asyncio
 import time
 import Ice
 from EarlyRiser import ButtonPressed, WakeUpService, AlarmClockPrx
-from common.time import toTimePoint
+from common.time import toDatetime
 
 
 class BidirWakeUpService(WakeUpService):
@@ -15,8 +15,8 @@ class BidirWakeUpService(WakeUpService):
         self._eventLoop = eventLoop
 
     def wakeMeUp(self, timestamp, current):
-        timePoint = toTimePoint(timestamp)
-        print(f"Dispatching wakeMeUp request {{ timeStamp = '{timePoint.isoformat()}' }}")
+        datetime = toDatetime(timestamp)
+        print(f"Dispatching wakeMeUp request {{ timeStamp = '{datetime.astimezone()}' }}")
 
         connection = current.con # The connection from the client to the server.
         if (connection is None):
@@ -27,10 +27,10 @@ class BidirWakeUpService(WakeUpService):
         # Create a proxy to the client's alarm clock. This connection-bound proxy is called a "fixed proxy".
         alarmClock = AlarmClockPrx.uncheckedCast(connection.createProxy(Ice.stringToIdentity("alarmClock")))
         
-        self._eventLoop.call_soon_threadsafe(lambda: asyncio.create_task(self.callRing(alarmClock, timePoint)))
+        asyncio.run_coroutine_threadsafe(self.callRing(alarmClock, datetime), self._eventLoop)
     
-    async def callRing(self, alarmClock, timePoint):
-        delay = timePoint.timestamp() - time.time()
+    async def callRing(self, alarmClock, datetime):
+        delay = datetime.timestamp() - time.time()
         if delay > 0:
             await asyncio.sleep(delay)
 
