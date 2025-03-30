@@ -6,6 +6,7 @@
 #include <Ice/Ice.h>
 #include <chrono>
 #include <iostream>
+#include <thread>
 
 using namespace std;
 

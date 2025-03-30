@@ -7,6 +7,7 @@
 #include <future>
 #include <iostream>
 #include <sstream>
+#include <thread>
 
 using namespace std;
 
@@ -39,7 +40,7 @@ ServerAMD::Chatbot::greetAsync(
         std::launch::async,
         [name = std::move(name), response = std::move(response), exception = std::move(exception)]()
         {
-            std::this_thread::sleep_for(std::chrono::seconds(2));
+            this_thread::sleep_for(2s);
             ostringstream os;
             os << "Hello, " << name << "!";
             response(os.str());
@@ -50,7 +51,7 @@ ServerAMD::Chatbot::greetAsync(
         std::remove_if(
             _tasks.begin(),
             _tasks.end(),
-            [](const auto& task) { return task.wait_for(std::chrono::seconds(0)) == std::future_status::ready; }),
+            [](const auto& task) { return task.wait_for(0s) == std::future_status::ready; }),
         _tasks.end());
 
     // greetAsync completes immediately (releasing the Ice server thread pool thread) while the task runs in the
