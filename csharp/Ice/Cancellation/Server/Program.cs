@@ -23,10 +23,10 @@ Console.CancelKeyPress += (sender, eventArgs) =>
     eventArgs.Cancel = true; // don't terminate the process
     Console.WriteLine("Caught Ctrl+C, shutting down...");
     communicator.shutdown(); // starts shutting down
+
+    // Cancel outstanding dispatches "stuck" in the slow greeter.
+    dispatchCts.Cancel();
 };
 
 // Wait until the communicator is shut down. Here, this occurs when the user presses Ctrl+C.
 await communicator.shutdownCompleted;
-
-// Cancel outstanding dispatches "stuck" in the slow greeter.
-dispatchCts.Cancel();
