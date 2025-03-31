@@ -3,7 +3,7 @@
 This folder contains example Ice applications written in JavaScript. Each example is a simple client-server application
 that demonstrates a specific feature or programming technique.
 
-Ice for JavaScript has limited server-side support ([see documentation][1]). As a result, you need to the servers
+Ice for JavaScript has limited server-side support ([see documentation][1]). As a result, you need to run the servers
 implemented in a language that fully supports server-side functionality, such as Python, Java, or C#.
 
 ## Building Requirements
