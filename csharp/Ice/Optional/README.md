@@ -31,7 +31,7 @@ You can build all the client and server applications with:
 dotnet build
 ```
 
-Then, start either version 1 or version 2 of the server in in its own terminal:
+Then, start either version 1 or version 2 of the server in its own terminal:
 
 ```shell
 cd Server1
