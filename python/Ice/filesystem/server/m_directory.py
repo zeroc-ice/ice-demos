@@ -25,7 +25,7 @@ class MDirectory(Directory):
         return self._contents
 
     def addChild(self, child: NodePrx) -> None:
-        """"
+        """
         Adds a node to this directory.
 
         Parameters
