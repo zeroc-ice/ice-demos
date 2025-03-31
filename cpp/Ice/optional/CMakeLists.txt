@@ -20,7 +20,7 @@ add_custom_command(TARGET client2 POST_BUILD
   COMMAND_EXPAND_LISTS
 )
 
-add_executable(server1 Server1.cpp ConsolePrinter1.h WeatherStation1.ice)
+add_executable(server1 Server1.cpp ConsolePrinter1.cpp ConsolePrinter1.h WeatherStation1.ice)
 slice2cpp_generate(server1)
 target_link_libraries(server1 Ice::Ice)
 add_custom_command(TARGET server1 POST_BUILD
@@ -28,7 +28,7 @@ add_custom_command(TARGET server1 POST_BUILD
   COMMAND_EXPAND_LISTS
 )
 
-add_executable(server2 Server2.cpp ConsolePrinter2.h WeatherStation2.ice)
+add_executable(server2 Server2.cpp ConsolePrinter2.cpp ConsolePrinter2.h WeatherStation2.ice)
 slice2cpp_generate(server2)
 target_link_libraries(server2 Ice::Ice)
 add_custom_command(TARGET server2 POST_BUILD
