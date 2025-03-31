@@ -1,9 +1,10 @@
 # Copyright (c) ZeroC, Inc.
 
 from Filesystem import File
+from m_node import MNode
 import Ice
 
-class MFile(File):
+class MFile(File, MNode):
     """
     Provides an in-memory implementation of the Slice interface File.
     """
@@ -17,12 +18,8 @@ class MFile(File):
         name : str
             The name of the file.
         """
-        self._name = name
+        super().__init__(name)
         self._lines = []
-
-
-    def name(self, current: Ice.Current) -> str:
-        return self._name
 
     def read(self, current: Ice.Current) -> [str]:
         return self._lines

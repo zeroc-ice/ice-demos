@@ -1,25 +1,22 @@
 # Copyright (c) ZeroC, Inc.
 
 from Filesystem import Directory, NodePrx
+from m_node import MNode
 import Ice
 
-class MDirectory(Directory):
+class MDirectory(Directory, MNode):
 
     def __init__(self, name):
         """
-        Initializes a MDirectory with the given name.
+        Initializes a MFile with the given name.
 
         Parameters
         ----------
         name : str
             The name of the file.
         """
-        self._name = name
+        super().__init__(name)
         self._contents = []
-
-
-    def name(self, current: Ice.Current) -> str:
-        return self._name
 
     def list(self, current: Ice.Current) -> [NodePrx]:
         return self._contents
