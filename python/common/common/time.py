@@ -1,8 +1,7 @@
 # Copyright (c) ZeroC, Inc.
 
 """
-Utility functions to convert between datetime objects and custom timestamps
-based on 100-nanosecond ticks since 0001-01-01T00:00:00 UTC.
+Utility functions to convert between datetime and custom timestamps based on the Proleptic Gregorian calendar.
 """
 
 from datetime import datetime, timezone

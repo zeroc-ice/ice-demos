@@ -30,6 +30,10 @@ class MockAlarmClock(AlarmClock):
         current : Ice.Current
             The Current object for the dispatch.
         """
+
+        # Because `ring` is defined with `async def`, the Ice runtime dispatches the returned coroutine
+        # into the configured event loop (in this case, the asyncio event loop).
+
         print(f"Dispatching ring request {{ message = '{message}' }}")
         if self._needMoreTime:
             print(f"Returning {ButtonPressed.Snooze} to request more time.")

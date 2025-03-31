@@ -5,7 +5,7 @@ import Ice
 import asyncio
 import sys
 import EarlyRiser
-import clock
+from mock_alarm_clock import MockAlarmClock
 from common.time import toTimestamp
 from datetime import datetime, timedelta
 
@@ -22,7 +22,7 @@ async def main():
         communicator.setDefaultObjectAdapter(adapter)
 
         # Register the MockAlarmClock servant with the adapter. The wake up service knows we use identity "alarmClock".
-        mockAlarmClock = clock.MockAlarmClock(loop)
+        mockAlarmClock = MockAlarmClock(loop)
         adapter.add(mockAlarmClock, Ice.stringToIdentity("alarmClock"))
 
         # Create a proxy to the wake-up service.

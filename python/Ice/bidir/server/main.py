@@ -3,7 +3,7 @@
 
 import Ice
 import asyncio
-from wakeUpService import BidirWakeUpService
+from bidir import BidirWakeUpService
 import signal
 import sys
 
