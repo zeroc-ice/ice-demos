@@ -10,7 +10,6 @@ import sys
 import VisitorCenter
 
 async def main():
-
     # Create an Ice communicator to initialize the Ice runtime. It will be automatically destroyed at the end of the
     # with block. The communicator gets its configuration properties from file config.client, in the client's current
     # working directory. The communicator initialization also parses the command-line options to find and set
