@@ -16,16 +16,16 @@ const greeter = new VisitorCenter.GreeterPrx(communicator, "greeter:tcp -h local
 // Create a proxy to the slow greeter. It uses the same connection as the regular greeter.
 const slowGreeter = new VisitorCenter.GreeterPrx(communicator, "slowGreeter:tcp -h localhost -p 4061");
 
+// Create another slow greeter proxy with an invocation timeout of 4 seconds (the default invocation timeout is
+// infinite).
+const slowGreeter4s = slowGreeter.ice_invocationTimeout(4000);
+
 // Retrieve my name
 const name = process.env.USER || process.env.USERNAME || "masked user";
 
 // Send a request to the regular greeter and get the response.
 let greeting = await greeter.greet(name);
 console.log(greeting);
-
-// Create another slow greeter proxy with an invocation timeout of 4 seconds (the default invocation timeout is
-// infinite).
-const slowGreeter4s = slowGreeter.ice_invocationTimeout(4000);
 
 // Send a request to the slow greeter with the 4-second invocation timeout.
 try {
@@ -50,12 +50,3 @@ try {
 // Verify the regular greeter still works.
 greeting = await greeter.greet("carol");
 console.log(greeting);
-
-// Send a request to the slow greeter, and wait forever for the response.
-console.log("Please press Ctrl+C in the server's terminal to cancel the slow greeter dispatch.");
-try {
-    greeting = await slowGreeter.greet("dave");
-    console.log(greeting);
-} catch (exception) {
-    console.log(`UnknownException, as expected: ${exception.message}`);
-}
