@@ -59,4 +59,4 @@ cd Client2
 dotnet run
 ```
 
-Thanks to `optional`, version 1 and version 2 of the clients and servers interoperate seemlessly.
+Thanks to `optional`, version 1 and version 2 of the clients and servers interoperate seamlessly.

@@ -1,42 +1,78 @@
-# Optional
+# Ice Optional
 
-This demo illustrates the use of [optional class members][1] and
-[parameters][2].
+This demo shows how to use the `optional` keyword to change Slice definitions without breaking "on-the-wire"
+interoperability.
 
-To build the demo run:
+The application is a very simple: a weather station (hosted by our server) receives readings from sensors (the clients).
+
+In the first version of this application and its Slice definitions, the atmospheric conditions we report include only
+temperature and humidity. In the second version, we add a third reading, the pressure, as an optional field:
+
+```ice
+class AtmosphericConditions
+{
+    /// The temperature in degrees Celsius.
+    double temperature;
+
+    /// The humidity in percent.
+    double humidity;
+
+    /// The pressure in millibars (new in version 2 of the Slice definitions).
+    optional(1) double pressure;
+}
+```
+
+You can build all the client and server applications with:
 
 ```shell
 cmake -B build
 cmake --build build --config Release
 ```
 
-To run the demo, first start the server:
+Then, start either version 1 or version 2 of the server in in its own terminal:
 
 **Linux/macOS:**
 
 ```shell
-./build/server
+./build/server1
+# or
+./build/server2
 ```
 
 **Windows:**
 
 ```shell
-build\Release\server
+build\Release\server1
+# or
+build\Release\server2
 ```
 
-In a separate window, start the client:
+In a separate terminal, run version 1 and then version 2 of the Client:
 
 **Linux/macOS:**
 
 ```shell
-./build/client
+./build/client1
 ```
 
 **Windows:**
 
 ```shell
-build\Release\client
+build\Release\client1
 ```
 
-[1]: https://doc.zeroc.com/ice/3.7/the-slice-language/optional-data-members
-[2]: https://doc.zeroc.com/ice/3.7/the-slice-language/interfaces-operations-and-exceptions/operations
+and
+
+**Linux/macOS:**
+
+```shell
+./build/client2
+```
+
+**Windows:**
+
+```shell
+build\Release\client2
+```
+
+Thanks to `optional`, version 1 and version 2 of the clients and servers interoperate seamlessly.
