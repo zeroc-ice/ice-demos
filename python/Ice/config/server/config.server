@@ -1,0 +1,35 @@
+#
+# Object adapter configuration
+#
+
+# Configure the GreeterAdapter adapter to listen on port 4061, on all interfaces.
+# `default` is replaced by the value of Ice.Default.Protocol.
+GreeterAdapter.Endpoints=default -p 4061
+
+#
+# Ice configuration
+#
+
+# The transport protocol to use for Ice communications when `default` is specified.
+# You can set it to tcp, ssl, ws, or wss. Leaving it unset is equivalent to setting it to tcp.
+# Make sure you use the same value in config.client and config.server.
+Ice.Default.Protocol=ssl
+
+# Turn on Network and Dispatch logging/tracing.
+Ice.Trace.Network=1
+Ice.Trace.Dispatch=1
+
+# The directory where the application finds certificates and other files.
+IceSSL.DefaultDir=../../../../certs
+
+# The certificate authority file.
+IceSSL.CAs=cacert.pem
+
+# The server's certificate file.
+IceSSL.CertFile=server.p12
+
+# TODO: switch to password-less certificates
+IceSSL.Password=password
+
+# Turn on security logging/tracing.
+IceSSL.Trace.Security=1
