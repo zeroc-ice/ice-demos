@@ -5,6 +5,9 @@ from m_node import MNode
 import Ice
 
 class MDirectory(Directory, MNode):
+    """
+    Provides an in-memory implementation of the Slice interface Directory.
+    """
 
     def __init__(self, name):
         """

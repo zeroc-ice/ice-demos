@@ -5,7 +5,7 @@ import Ice
 
 class MNode(Node):
     """
-    Provides an in-memory implementation of the Slice interface File.
+    Provides an in-memory implementation of the Slice interface Node.
     """
 
     def __init__(self, name):
