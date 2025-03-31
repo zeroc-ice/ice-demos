@@ -5,9 +5,6 @@
 
 #include "WeatherStation1.h"
 
-#include <Ice/Ice.h>
-#include <iostream>
-
 namespace Server
 {
     /// ConsolePrinter is an Ice servant that implements Slice interface ClearSky::WeatherStation. It prints all

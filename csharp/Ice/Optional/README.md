@@ -3,7 +3,7 @@
 This demo shows how to use the `optional` keyword to change Slice definitions without breaking "on-the-wire"
 interoperability.
 
-The application is a very simple: a weather station (hosted by our server) receives readings from sensors (the clients).
+The application is very simple: a weather station (hosted by our server) receives readings from sensors (the clients).
 
 In the first version of this application and its Slice definitions, the atmospheric conditions we report include only
 temperature and humidity. In the second version, we add a third reading, the pressure, as an optional field:

@@ -31,10 +31,10 @@ main(int argc, char* argv[])
     double randomHumidity = humidityDist(gen);
 
     // Create an AtmosphericConditions object with random values.
-    AtmosphericConditions reading{randomTemperature, randomHumidity};
+    auto reading = std::make_shared<AtmosphericConditions>(randomTemperature, randomHumidity);
 
     // Report this reading to the weather station.
-    weatherStation->report("sensor v1", std::make_shared<AtmosphericConditions>(reading));
+    weatherStation->report("sensor v1", reading);
 
     std::cout << "sensor v1: sent reading to weather station" << std::endl;
 
