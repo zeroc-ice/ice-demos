@@ -3,7 +3,8 @@
 // Slice module EarlyRiser in AlarmClock.ice maps to C# namespace EarlyRiser.
 using EarlyRiser;
 
-// Create an Ice communicator to initialize the Ice runtime.
+// Create an Ice communicator. We'll use this communicator to create proxies, manage outgoing connections, and create
+// an object adapter.
 using Ice.Communicator communicator = Ice.Util.initialize(ref args);
 
 // Create an object adapter that listens for incoming requests and dispatches them to servants.
