@@ -5,9 +5,9 @@ using System.Diagnostics;
 // Slice module VisitorCenter in Greeter.ice maps to C# namespace VisitorCenter.
 using VisitorCenter;
 
-// Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections. The communicator gets its configuration properties from
-// file config.client in the client's current working directory. The communicator initialization also parses the
-// command-line options to find and set additional properties.
+// Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections. The
+// communicator gets its configuration properties from file config.client in the client's current working directory.
+// The communicator initialization also parses the command-line options to find and set additional properties.
 using Ice.Communicator communicator = Ice.Util.initialize(ref args, "config.client");
 
 // We create a Greeter proxy using the value of the Greeter.Proxy property in config.client.
