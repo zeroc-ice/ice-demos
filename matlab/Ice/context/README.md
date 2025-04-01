@@ -22,8 +22,7 @@ cd matlab/Ice/context
 - Compile the Greeter.ice file with the Slice compiler for MATLAB:
 
 ```shell
-mkdir generated
-slice2matlab --output-dir generated Greeter.ice
+slice2matlab Greeter.ice
 ```
 
 - Run the client application
