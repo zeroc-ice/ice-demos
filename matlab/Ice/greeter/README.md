@@ -1,4 +1,4 @@
-# Greeter
+# Ice Greeter
 
 The Greeter demo illustrates how to write a client application with Ice for MATLAB.
 
