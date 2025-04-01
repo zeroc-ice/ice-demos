@@ -1,6 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
-// Create an Ice communicator to initialize the Ice runtime.
+// Create an Ice communicator. We'll use this communicator to create an object adapter.
 // This server is completely unaware of Glacier2.
 using Ice.Communicator communicator = Ice.Util.initialize(ref args);
 

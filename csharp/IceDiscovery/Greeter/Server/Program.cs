@@ -16,7 +16,7 @@ initData.properties.setProperty("GreeterAdapter.AdapterId", "greeterAdapterId");
 // discover this object adapter.
 initData.properties.setProperty("GreeterAdapter.Endpoints", "tcp");
 
-// Create an Ice communicator to initialize the Ice runtime. The communicator is disposed before the program exits.
+// Create an Ice communicator. We'll use this communicator to create an object adapter.
 using Ice.Communicator communicator = Ice.Util.initialize(initData);
 
 // Create an object adapter that listens for incoming requests and dispatches them to servants. "GreeterAdapter" is a

@@ -11,7 +11,7 @@ var initData = new Ice.InitializationData
 };
 initData.properties.setProperty("Ice.Plugin.Discovery", "IceDiscovery:IceDiscovery.PluginFactory");
 
-// Create an Ice communicator to initialize the Ice runtime. The communicator is disposed before the program exits.
+// Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
 using Ice.Communicator communicator = Ice.Util.initialize(initData);
 
 // Create proxy to the Greeter object hosted by the server. "greeter" is a stringified proxy with no addressing
