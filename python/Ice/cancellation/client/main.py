@@ -44,7 +44,7 @@ async def main():
             f = slowGreeter.greetAsync("bob")
 
             async def cancel():
-                asyncio.sleep(4)
+                await asyncio.sleep(4)
                 f.cancel()
 
             asyncio.create_task(cancel())
