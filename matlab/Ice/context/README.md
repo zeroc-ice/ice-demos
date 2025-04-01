@@ -13,13 +13,13 @@ in a language with server-side support, such as Python, Java, or C#.
 
 Then, in the MATLAB console:
 
-- Go to the Ice/context directory:
+- Go to the Ice/context directory
 
 ```shell
 cd matlab/Ice/context
 ```
 
-- Compile the Greeter.ice file with the Slice compiler for MATLAB:
+- Compile the Greeter.ice file with the Slice compiler for MATLAB
 
 ```shell
 slice2matlab Greeter.ice
