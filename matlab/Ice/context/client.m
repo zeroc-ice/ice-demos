@@ -20,7 +20,7 @@ function client(args)
     initData.properties_ = props;
     initData.properties_.setProperty('Ice.ImplicitContext', 'Shared');
 
-    % Create an Ice communicator to initialize the Ice runtime.
+    % Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
     communicator = Ice.initialize(initData);
 
     % Destroy the communicator when the function exits.
