@@ -1,0 +1,12 @@
+# Use ZeroC Nightly repository as the main index for pip.
+--index-url https://download.zeroc.com/nexus/repository/pypi-nightly/simple/
+
+# Allow installing additional packages from PyPI main index if not found in the ZeroC repository.
+--extra-index-url https://pypi.org/simple/
+
+# Allow installing pre-release versions (required for zeroc-ice nightly builds).
+--pre
+
+# Add the zeroc-ice package (latest nightly version). This package includes the Slice to Python compiler (slice2py).
+zeroc-ice
+numpy
