@@ -16,8 +16,7 @@ function client(args)
     % Set the Ice.ImplicitContext property to 'Shared' before calling Ice.initialize.
     % This is only necessary for the implicit context API (see below).
     initData = Ice.InitializationData();
-    [props, ~] = Ice.createProperties(args);
-    initData.properties_ = props;
+    initData.properties_ = Ice.createProperties(args);
     initData.properties_.setProperty('Ice.ImplicitContext', 'Shared');
 
     % Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
