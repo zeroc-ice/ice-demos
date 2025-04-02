@@ -11,8 +11,8 @@ from datetime import datetime, timedelta
 
 async def main():
     loop = asyncio.get_running_loop()
-    # Create an Ice communicator to initialize the Ice runtime. It will be automatically destroyed at the end of the
-    # with block. We enable asyncio support by passing the current event loop to initialize.
+    # Create an Ice communicator. We'll use this communicator to create proxies, manage outgoing connections, and create
+    # an object adapter. We enable asyncio support by passing the current event loop to initialize.
     with Ice.initialize(sys.argv, eventLoop=loop) as communicator:
 
         # Create an object adapter that listens for incoming requests and dispatches them to servants.
