@@ -12,14 +12,14 @@ Then, start two or more Server programs, each in its own terminal:
 
 ```shell
 cd Server
-dotnet run --Ice.Trace.Locator
+dotnet run --no-build --Ice.Trace.Locator
 ```
 
 Finally, start the Client program:
 
 ```shell
 cd Client
-dotnet run --Ice.Trace.Locator
+dotnet run --no-build --Ice.Trace.Locator
 ```
 
 >[!NOTE]
