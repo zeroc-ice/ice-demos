@@ -1,24 +1,13 @@
-# Bidir
+# Ice Invocation Timeout
 
-The bidir demo illustrates how to send requests "the other way around", from a server to a client, by reusing the
-connection established by the client to the server.
-
-This demo is very similar to the [callback][1] demo: with the callback demo, the server opens a connection to the
-client, while with this demo, there is only one connection, from the client to the server:
-
-```mermaid
-flowchart LR
-    c[Client<br>hosts AlarmClock] --bidir connection--> s[Server:4061<br>hosts WakeUpService]
-```
-
-This is particularly useful when the client application is behind a firewall that does not allow incoming connections.
+The Invocation Timeout demo shows how to use invocation timeouts.
 
 We recommend running each program in a separate Python virtual environment. If you are new to Python virtual
 environments, see [Python Virtual Environments].
 
 ## Running the server
 
-Navigate to the `server` directory, to run the server program.
+Navigate to the `server` directory to run the server program.
 
 - Create and activate a Python virtual environment:
 
@@ -34,10 +23,10 @@ venv\Scripts\activate     # On Windows
 pip install -r requirements.txt
 ```
 
-- Compile the AlarmClock.ice file with the Slice compiler for Python:
+- Compile the Greeter.ice file with the Slice compiler for Python:
 
 ```shell
-slice2py ../slice/AlarmClock.ice
+slice2py ../slice/Greeter.ice
 ```
 
 - Run the server program:
@@ -64,10 +53,10 @@ venv\Scripts\activate     # On Windows
 pip install -r requirements.txt
 ```
 
-- Compile the AlarmClock.ice file with the Slice compiler for Python:
+- Compile the Greeter.ice file with the Slice compiler for Python:
 
 ```shell
-slice2py ../slice/AlarmClock.ice
+slice2py ../slice/Greeter.ice
 ```
 
 - Run the client program:
@@ -77,4 +66,3 @@ python main.py
 ```
 
 [Python Virtual Environments]: https://docs.python.org/3/tutorial/venv.html
-[1]: ../callback/

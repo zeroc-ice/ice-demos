@@ -11,7 +11,7 @@ using Ice.Communicator communicator = Ice.Util.initialize(ref args);
 communicator.setDefaultLocator(
     Ice.LocatorPrxHelper.createProxy(communicator, "IceGrid/Locator:tcp -h localhost -p 4061"));
 
-// Create proxy to the Greeter object hosted by the server. "greeter" is a stringified proxy with no addressing
+// Create a proxy to the Greeter object hosted by the server. "greeter" is a stringified proxy with no addressing
 // information, also known as a well-known proxy. It's specified by the <object> element in the IceGrid XML file.
 // The IceGrid registry resolves this well-known proxy and returns the actual address (endpoint) of the server to this
 // client.
