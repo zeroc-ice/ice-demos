@@ -1,6 +1,7 @@
 # Copyright (c) ZeroC, Inc.
 
 from EarlyRiser import AlarmClock, ButtonPressed
+import asyncio
 import Ice
 
 class MockAlarmClock(AlarmClock):
@@ -10,7 +11,6 @@ class MockAlarmClock(AlarmClock):
 
     def __init__(self, eventLoop):
         self._needMoreTime = True
-        self._eventLoop = eventLoop
         self._stopPressed = eventLoop.create_future()
 
     async def waitForStopPressed(self) -> None:
@@ -31,9 +31,6 @@ class MockAlarmClock(AlarmClock):
             The Current object for the dispatch.
         """
 
-        # Because `ring` is defined with `async def`, the Ice runtime dispatches the returned coroutine
-        # into the configured event loop (in this case, the asyncio event loop).
-
         print(f"Dispatching ring request {{ message = '{message}' }}")
         if self._needMoreTime:
             print(f"Returning {ButtonPressed.Snooze} to request more time.")
@@ -42,7 +39,9 @@ class MockAlarmClock(AlarmClock):
         else:
             if not self._stopPressed.done():
                 # Schedule set_result() to unblock waitForStopPressed() without causing a deadlock. If the future done
-                # callback runs synchronously, it could block the event loop waiting for this dispatch to complete.
-                self._eventLoop.call_soon(lambda: self._stopPressed.set_result(None))
+                # callback runs synchronously, it could block the event loop waiting for this dispatch to complete. Ice
+                # dispatches async methods in the configured event loop, we can use asyncio.get_running_loop to retrieve
+                # it.
+                asyncio.get_running_loop().call_soon(lambda: self._stopPressed.set_result(None))
             print(f"Returning {ButtonPressed.Stop} to stop the alarm.")
             return ButtonPressed.Stop
