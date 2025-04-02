@@ -10,9 +10,7 @@ var initData = new Ice.InitializationData
 {
     properties = new Ice.Properties(ref args)
 };
-initData.properties.setProperty(
-    "Ice.Plugin.IceLocatorDiscovery",
-    "IceLocatorDiscovery:IceLocatorDiscovery.PluginFactory");
+initData.properties.setProperty("Ice.Plugin.LocatorDiscovery", "IceLocatorDiscovery:IceLocatorDiscovery.PluginFactory");
 
 // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
 using Ice.Communicator communicator = Ice.Util.initialize(initData);
