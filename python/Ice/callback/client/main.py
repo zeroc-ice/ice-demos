@@ -11,13 +11,13 @@ from datetime import datetime, timedelta
 
 async def main():
     loop = asyncio.get_running_loop()
-    # Create an Ice communicator. We'll use this communicator to create proxies, manage outgoing connections, and create
-    # an object adapter. We enable asyncio support by passing the current event loop to initialize.
+    # Create an Ice communicator. We'll use this communicator to create proxies, manage outgoing connections, and
+    # create an object adapter. We enable asyncio support by passing the current event loop to initialize.
     with Ice.initialize(sys.argv, eventLoop=loop) as communicator:
 
         # Create an object adapter that listens for incoming requests and dispatches them to servants.
-        # Since we don't specify a port, the OS will choose an ephemeral port. This allows multiple client applications to
-        # run concurrently on the same host.
+        # Since we don't specify a port, the OS will choose an ephemeral port. This allows multiple client applications
+        # to run concurrently on the same host.
         adapter = communicator.createObjectAdapterWithEndpoints("AlarmClockAdapter", "tcp")
 
         # Register the MockAlarmClock servant with the adapter. The wake up service knows we use identity "alarmClock".

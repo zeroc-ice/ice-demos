@@ -10,8 +10,8 @@ import sys
 async def main():
     loop=asyncio.get_running_loop()
 
-    # Create an Ice communicator. We'll use this communicator to create proxies, manage outgoing connections, and create
-    # an object adapter. We enable asyncio support by passing the current event loop to initialize.
+    # Create an Ice communicator. We'll use this communicator to create proxies, manage outgoing connections, and
+    # create an object adapter. We enable asyncio support by passing the current event loop to initialize.
     with Ice.initialize(sys.argv, eventLoop=loop) as communicator:
 
         # Shutdown the communicator when the user presses Ctrl+C.
