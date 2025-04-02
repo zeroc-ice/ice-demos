@@ -27,7 +27,7 @@ function client(args)
 
     % Create a proxy to the Greeter object hosted by the server(s). 'greeter' is a stringified proxy with no addressing
     % information, also known as a well-known proxy. It's resolved by the default locator installed by the IceDiscovery
-    % plugin
+    % plugin.
     greeter = GreeterPrx(communicator, 'greeter');
 
     % Send a request to the remote object and wait for the response.
