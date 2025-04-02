@@ -3,7 +3,7 @@
 // Slice module VisitorCenter in Greeter.ice maps to C# namespace VisitorCenter.
 using VisitorCenter;
 
-// Create an Ice communicator to initialize the Ice runtime. The communicator is disposed before the program exits.
+// Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
 using Ice.Communicator communicator = Ice.Util.initialize(ref args);
 
 // We create a Greeter proxy for a Greeter object in the Forwarder server (port 10000).

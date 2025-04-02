@@ -14,10 +14,10 @@ initData.properties.setProperty(
     "Ice.Plugin.IceLocatorDiscovery",
     "IceLocatorDiscovery:IceLocatorDiscovery.PluginFactory");
 
-// Create an Ice communicator to initialize the Ice runtime. The communicator is disposed before the program exits.
+// Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
 using Ice.Communicator communicator = Ice.Util.initialize(initData);
 
-// Create proxy to the Greeter object hosted by the server. "greeter" is a stringified proxy with no addressing
+// Create a proxy to the Greeter object hosted by the server. "greeter" is a stringified proxy with no addressing
 // information, also known as a well-known proxy. It's specified by the <object> element in the IceGrid XML file.
 // The IceGrid registry resolves this well-known proxy and returns the actual address (endpoint) of the server to this
 // client.

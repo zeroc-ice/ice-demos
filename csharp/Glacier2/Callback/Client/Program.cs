@@ -5,7 +5,8 @@ using EarlyRiser;
 
 using System.Diagnostics;
 
-// Create an Ice communicator to initialize the Ice runtime.
+// Create an Ice communicator. We'll use this communicator to create proxies, manage outgoing connections, and create
+// an object adapter.
 using Ice.Communicator communicator = Ice.Util.initialize(ref args);
 
 // Create a proxy to the Glacier2 router. The addressing information (transport, host and port number) is derived from

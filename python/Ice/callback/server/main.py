@@ -3,17 +3,15 @@
 
 import Ice
 import asyncio
-from bidir_wake_up_service import BidirWakeUpService
+from simple_wake_up_service import SimpleWakeUpService
 import signal
 import sys
 
 async def main():
-
-    # Get the current event loop.
     loop=asyncio.get_running_loop()
 
-    # Create an Ice communicator. We'll use this communicator to create an object adapter. We enable asyncio
-    # support by passing the current event loop to initialize.
+    # Create an Ice communicator. We'll use this communicator to create proxies, manage outgoing connections, and
+    # create an object adapter. We enable asyncio support by passing the current event loop to initialize.
     with Ice.initialize(sys.argv, eventLoop=loop) as communicator:
 
         # Shutdown the communicator when the user presses Ctrl+C.
@@ -22,8 +20,8 @@ async def main():
         # Create an object adapter that listens for incoming requests and dispatches them to servants.
         adapter = communicator.createObjectAdapterWithEndpoints("WakeUpAdapter", "tcp -p 4061")
 
-        # Register the BidirWakeUpService servant with the adapter.
-        adapter.add(BidirWakeUpService(), Ice.stringToIdentity("wakeUpService"))
+        # Register the SimpleWakeUpService servant with the adapter.
+        adapter.add(SimpleWakeUpService(), Ice.stringToIdentity("wakeUpService"))
 
         # Start dispatching requests.
         adapter.activate()

@@ -1,4 +1,4 @@
-# Greeter
+# Ice Greeter
 
 The Greeter demo illustrates how to write a client application with Ice for MATLAB.
 
@@ -16,8 +16,7 @@ cd matlab/Ice/greeter
 - Compile the Greeter.ice file with the Slice compiler for MATLAB
 
 ```shell
-mkdir generated
-slice2matlab --output-dir generated Greeter.ice
+slice2matlab Greeter.ice
 ```
 
 - Run the client application

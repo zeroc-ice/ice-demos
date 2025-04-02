@@ -1,13 +1,32 @@
-This demo illustrates how to use Ice [request contexts][1].
+# Ice Context
 
-Ice for MATLAB currently supports only client-side functionality, therefore
-you must use a server from any other language mapping. If you want to get
-started quickly, we recommend using the Python server.
+The Context demo shows the 3 different ways to set a request context in a client.
 
-After starting the server, run the MATLAB client:
+A request context is a `dictionary<string, string>` carried by all requests. It is empty by default, and the application
+is free to set any entry in this dictionary.
 
+> [!NOTE]
+> The Ice protocol does not support response contexts, only request contexts.
+
+Ice for MATLAB supports only client-side applications. As a result, you first need to start a Context server implemented
+in a language with server-side support, such as Python, Java, or C#.
+
+Then, in the MATLAB console:
+
+- Go to the Ice/context directory
+
+```shell
+cd matlab/Ice/context
 ```
+
+- Compile the Greeter.ice file with the Slice compiler for MATLAB
+
+```shell
+slice2matlab Greeter.ice
+```
+
+- Run the client application
+
+```shell
 client
 ```
-
-[1]: https://doc.zeroc.com/ice/3.7/client-side-features/request-contexts
