@@ -19,7 +19,7 @@ Finally, start the Client program:
 
 ```shell
 cd Client
-dotnet run --no-build --Ice.Trace.Locator
+dotnet run --Ice.Trace.Locator
 ```
 
 >[!NOTE]
