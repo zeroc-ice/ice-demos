@@ -13,7 +13,7 @@ function client(args)
         loadlibrary('ice', @iceproto);
     end
 
-    % Create an Ice communicator to initialize the Ice runtime.
+    % Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
     communicator = Ice.initialize(args);
 
     % Destroy the communicator when the function exits.
