@@ -2,13 +2,16 @@
 
 The Greeter demo illustrates how to send a request and wait for the response.
 
-This demo provides two implementations for the server: a synchronous dispatch implementation (in `server`), and an asynchronous dispatch implementation (in `server_asyncio`). The same client works with both.
+This demo provides two implementations for the server: a synchronous dispatch implementation (in `server`), and an
+asynchronous dispatch implementation (in `server_asyncio`). The same client works with both.
 
-We recommend running each program in a separate Python virtual environment. If you are new to Python virtual environments, see [Python Virtual Environments].
+We recommend running each program in a separate Python virtual environment. If you are new to Python virtual environments,
+see [Python Virtual Environments].
 
 ## Running the server
 
-Navigate to the `server` or `server_asyncio` directory, depending on whether you want to run the synchronous or asynchronous server.
+Navigate to the `server` or `server_asyncio` directory, depending on whether you want to run the synchronous or
+asynchronous server.
 
 - Create and activate a Python virtual environment:
 
