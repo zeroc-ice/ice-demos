@@ -55,6 +55,7 @@ function listRecursive(dir, depth)
         if(~isempty(subdir))
             listRecursive(subdir, depth);
         else
+            % Read and print the contents of the file.
             file = Filesystem.FilePrx.uncheckedCast(node);
             lines = file.read();
             for j = lines

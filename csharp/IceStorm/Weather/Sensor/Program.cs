@@ -12,7 +12,7 @@ using Ice.Communicator communicator = Ice.Util.initialize(ref args);
 // Create a proxy to the IceStorm topic manager.
 IceStorm.TopicManagerPrx topicManager = IceStorm.TopicManagerPrxHelper.createProxy(
     communicator,
-    "ClearSky/TopicManager:tcp -p 4061");
+    "ClearSky/TopicManager:tcp -p 4061 -h localhost");
 
 // Retrieve a proxy to the "weather" topic: we first create a topic with the given name (in case we are the first),
 // and then retrieve the proxy if the topic was already created.
