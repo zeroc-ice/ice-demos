@@ -42,8 +42,8 @@ async def list_recursive(directory, depth=0):
                 print(f"{indent}\t{line}")
 
 async def main():
-    # Create an Ice communicator to initialize the Ice runtime. It will be automatically destroyed at the end of the
-    # with block. We enable asyncio support by passing the current event loop to initialize.
+    # Create an Ice communicator. We'll use this communicator to create proxies, and manage outgoing connections. We
+    # enable asyncio support by passing the current event loop to initialize.
     with Ice.initialize(sys.argv, eventLoop=asyncio.get_running_loop()) as communicator:
 
         # Create a proxy for the root directory.

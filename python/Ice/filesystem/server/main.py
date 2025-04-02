@@ -8,7 +8,7 @@ from Filesystem import DirectoryPrx, FilePrx
 import sys
 
 def main():
-    # Create an Ice communicator to initialize the Ice runtime. The communicator is destroyed at the end of the with block.
+    # Create an Ice communicator. We'll use this communicator to create an object adapter.
     with Ice.initialize(sys.argv) as communicator:
 
         # Create an object adapter that listens for incoming requests and dispatches them to servants.

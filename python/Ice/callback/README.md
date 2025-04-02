@@ -20,29 +20,29 @@ Navigate to the `server` directory, to run the server program.
 
 - Create and activate a Python virtual environment:
 
-```shell
-python -m venv venv
-source venv/bin/activate  # On macOS/Linux
-venv\Scripts\activate     # On Windows
-```
+    ```shell
+    python -m venv venv
+    source venv/bin/activate  # On macOS/Linux
+    venv\Scripts\activate     # On Windows
+    ```
 
 - Install the program dependencies:
 
-```shell
-pip install -r requirements.txt
-```
+    ```shell
+    pip install -r requirements.txt
+    ```
 
 - Compile the AlarmClock.ice file with the Slice compiler for Python:
 
-```shell
-slice2py ../slice/AlarmClock.ice
-```
+    ```shell
+    slice2py ../slice/AlarmClock.ice
+    ```
 
 - Run the server program:
 
-```shell
-python main.py
-```
+    ```shell
+    python main.py
+    ```
 
 ## Running the client
 
@@ -50,28 +50,28 @@ In a separate terminal, navigate to the `client` directory to run the client pro
 
 - Create and activate a Python virtual environment:
 
-```shell
-python -m venv venv
-source venv/bin/activate  # On macOS/Linux
-venv\Scripts\activate     # On Windows
-```
+    ```shell
+    python -m venv venv
+    source venv/bin/activate  # On macOS/Linux
+    venv\Scripts\activate     # On Windows
+    ```
 
 - Install the program dependencies:
 
-```shell
-pip install -r requirements.txt
-```
+    ```shell
+    pip install -r requirements.txt
+    ```
 
 - Compile the AlarmClock.ice file with the Slice compiler for Python:
 
-```shell
-slice2py ../slice/AlarmClock.ice
-```
+    ```shell
+    slice2py ../slice/AlarmClock.ice
+    ```
 
 - Run the client program:
 
-```shell
-python main.py
-```
+    ```shell
+    python main.py
+    ```
 
 [Python Virtual Environments]: https://docs.python.org/3/tutorial/venv.html

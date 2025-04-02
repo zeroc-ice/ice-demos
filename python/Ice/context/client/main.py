@@ -19,8 +19,7 @@ async def main():
     # Configure the Ice runtime to use asyncio.
     initData.eventLoopAdapter = Ice.asyncio.EventLoopAdapter(asyncio.get_running_loop())
 
-    # Create an Ice communicator to initialize the Ice runtime. It will be automatically destroyed at the end of the
-    # with block.
+    # Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
     with Ice.initialize(initData=initData) as communicator:
 
         # Create a Greeter proxy. If you run the server on a different computer, replace localhost in the string below
