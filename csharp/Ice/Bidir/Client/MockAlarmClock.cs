@@ -11,9 +11,7 @@ internal class MockAlarmClock : AlarmClockDisp_
     /// </summary>
     public Task StopPressed => _tcs.Task;
 
-    // RunContinuationsAsynchronously because we don't want to continue Main in an Ice thread pool thread.
-    private readonly TaskCompletionSource _tcs = new(TaskCreationOptions.RunContinuationsAsynchronously);
-
+    private readonly TaskCompletionSource _tcs = new();
     private bool _needMoreTime = true;
 
     /// <inheritdoc/>

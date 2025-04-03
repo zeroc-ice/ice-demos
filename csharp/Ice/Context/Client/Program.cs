@@ -12,7 +12,7 @@ var initData = new Ice.InitializationData
 initData.properties.setProperty("Ice.ImplicitContext", "Shared");
 
 // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
-using Ice.Communicator communicator = Ice.Util.initialize(initData);
+await using Ice.Communicator communicator = Ice.Util.initialize(initData);
 
 // Create a Greeter proxy. If you run the server on a different computer, replace localhost in the string below with
 // the server's hostname or IP address.

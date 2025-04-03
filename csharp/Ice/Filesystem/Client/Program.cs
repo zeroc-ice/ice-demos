@@ -5,7 +5,7 @@ using Filesystem;
 using System.Diagnostics;
 
 // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
-using Ice.Communicator communicator = Ice.Util.initialize(ref args);
+await using Ice.Communicator communicator = Ice.Util.initialize(ref args);
 
 // Create a proxy for the root directory.
 DirectoryPrx rootDir = DirectoryPrxHelper.createProxy(communicator, "RootDir:tcp -h localhost -p 4061");
