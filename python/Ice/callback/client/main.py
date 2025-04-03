@@ -21,7 +21,8 @@ async def main():
         adapter = communicator.createObjectAdapterWithEndpoints("AlarmClockAdapter", "tcp")
 
         # Register the MockAlarmClock servant with the adapter. The wake up service knows we use identity "alarmClock".
-        mockAlarmClock = MockAlarmClock(loop)
+        stopPressed = loop.create_future()
+        mockAlarmClock = MockAlarmClock(stopPressed)
         alarmClock = AlarmClockPrx.uncheckedCast(adapter.add(mockAlarmClock, Ice.stringToIdentity("alarmClock")))
 
         # Start dispatching requests.
@@ -36,7 +37,7 @@ async def main():
         print("Wake-up call scheduled, falling asleep...")
 
         # Wait until the "stop" button is pressed on the mock alarm clock.
-        await mockAlarmClock.waitForStopPressed()
+        await stopPressed
         print("Stop button pressed, exiting...")
 
 if __name__ == "__main__":

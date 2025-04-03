@@ -1,7 +1,6 @@
 # Copyright (c) ZeroC, Inc.
 
 from EarlyRiser import AlarmClock, ButtonPressed
-import asyncio
 import Ice
 
 class MockAlarmClock(AlarmClock):
@@ -9,15 +8,9 @@ class MockAlarmClock(AlarmClock):
     MockAlarmClock is an Ice servant that implements Slice interface AlarmClock
     """
 
-    def __init__(self, eventLoop):
+    def __init__(self, stopPressed):
         self._needMoreTime = True
-        self._stopPressed = eventLoop.create_future()
-
-    async def waitForStopPressed(self) -> None:
-        """
-        Asynchronously wait for the ring method to return ButtonPressed.Stop.
-        """
-        await self._stopPressed
+        self._stopPressed = stopPressed
 
     async def ring(self, message: str, current: Ice.Current) -> ButtonPressed:
         """
