@@ -1,7 +1,5 @@
 // Copyright (c) ZeroC, Inc.
 
-// This server is unaware of Glacier2, and doesn't call any Glacier2 API.
-
 // Create an Ice communicator. We'll use this communicator to create an object adapter.
 await using Ice.Communicator communicator = Ice.Util.initialize(ref args);
 
