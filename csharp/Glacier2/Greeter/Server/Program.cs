@@ -4,10 +4,10 @@
 await using Ice.Communicator communicator = Ice.Util.initialize(ref args);
 
 // Create an object adapter that listens for incoming requests and dispatches them to servants.
-Ice.ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints("WakeUpAdapter", "tcp -p 4061");
+Ice.ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints("GreeterAdapter", "tcp -p 4061");
 
-// Register the SimpleWakeUpService servant with the adapter.
-adapter.add(new Server.SimpleWakeUpService(), Ice.Util.stringToIdentity("wakeUpService"));
+// Register the Chatbot servant with the adapter.
+adapter.add(new Server.Chatbot(), Ice.Util.stringToIdentity("greeter"));
 
 // Start dispatching requests.
 adapter.activate();
