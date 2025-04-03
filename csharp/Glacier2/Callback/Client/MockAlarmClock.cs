@@ -10,8 +10,8 @@ internal class MockAlarmClock : AlarmClockDisp_
     /// <summary>Gets a task that completes when we return <see cref="ButtonPressed.Stop" /> from <see cref="Ring" />.
     /// </summary>
     public Task StopPressed => _tcs.Task;
-    private readonly TaskCompletionSource _tcs = new();
 
+    private readonly TaskCompletionSource _tcs = new();
     private bool _needMoreTime = true;
 
     /// <inheritdoc/>
