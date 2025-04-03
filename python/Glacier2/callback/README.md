@@ -1,14 +1,16 @@
-# Ice Callback
+# Glacier2 Callback
 
-The Callback demo illustrates how to implement callbacks in a client application.
+This demo shows how to write a client that establishes a session with a Glacier2 router. It also shows how to implement
+callbacks in this client.
 
-In this demo, the client hosts an alarm clock (an Ice object), and asks the server's wake up service to call this
-object at a later time. The server opens a TCP connection to the client when making this call.
+This demo is similar to the [Ice Callback][1] demo, except all communications go through the Glacier router.
+
+The connection between the client and the Glacier2 router is a "bidir" connection, like in the [Ice Bidir][2] demo:
 
 ```mermaid
 flowchart LR
-    c[Client<br>hosts AlarmClock] --connection1--> s[Server:4061<br>hosts WakeUpService]
-    s --connection2--> c
+    c[Client<br>hosts AlarmClock] --bidir connection--> g[Glacier2 router:4063]
+    g --connection1--> s[Server:4061<br>hosts WakeUpService] --connection2--> g
 ```
 
 We recommend running each program in a separate Python virtual environment. If you are new to Python virtual
@@ -75,3 +77,6 @@ In a separate terminal, navigate to the `client` directory to run the client pro
     ```
 
 [Python Virtual Environments]: https://docs.python.org/3/tutorial/venv.html
+
+[1]: ../../Ice/Callback
+[2]: ../../Ice/Bidir

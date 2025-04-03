@@ -61,6 +61,6 @@ class BidirWakeUpService(WakeUpService):
         # Create a proxy to the client's alarm clock. This connection-bound proxy is called a "fixed proxy".
         alarmClock = AlarmClockPrx.uncheckedCast(current.con.createProxy(Ice.stringToIdentity("alarmClock")))
 
-        # Schedule the callRing coroutine to run in the event loop. Ice dispatches async methods in the configured
-        # event loop, we can use asyncio.get_running_loop to retrieve it.
+        # Schedule the callRing coroutine in the current event loop. Ice dispatches async methods using the configured
+        # event loop, which can be accessed via asyncio.get_running_loop().
         asyncio.get_running_loop().create_task(callRing(alarmClock, wakeUpDatetime))
