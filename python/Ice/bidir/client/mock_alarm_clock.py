@@ -38,10 +38,6 @@ class MockAlarmClock(AlarmClock):
             return ButtonPressed.Snooze
         else:
             if not self._stopPressed.done():
-                # Schedule set_result() to unblock waitForStopPressed() without causing a deadlock. If the future done
-                # callback runs synchronously, it could block the event loop waiting for this dispatch to complete. Ice
-                # dispatches async methods in the configured event loop, we can use asyncio.get_running_loop to retrieve
-                # it.
-                asyncio.get_running_loop().call_soon(lambda: self._stopPressed.set_result(None))
+                self._stopPressed.set_result(None)
             print(f"Returning {ButtonPressed.Stop} to stop the alarm.")
             return ButtonPressed.Stop
