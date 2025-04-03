@@ -17,7 +17,7 @@ function client(args)
     % locator on the communicator.
     initData = Ice.InitializationData();
     initData.properties_ = Ice.createProperties(args);
-    initData.properties_.setProperty('Ice.Plugin.Discovery', 'IceDiscovery:createIceDiscovery');
+    initData.properties_.setProperty('Ice.Plugin.IceDiscovery', '1');
 
     % Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
     communicator = Ice.initialize(initData);
