@@ -60,6 +60,7 @@ Console.CancelKeyPress += (sender, eventArgs) =>
 // Wait until the communicator is shut down. Here, this occurs when the user presses Ctrl+C.
 await communicator.shutdownCompleted;
 
-// Remove the subscription to the topic.
+// Unsubscribe from the topic. The shutdown above only shuts down the object adapter. All client-side functionalities
+// remain available until the communicator is disposed.
 await topic.unsubscribeAsync(weatherStation);
 Console.WriteLine($"Unsubscribed weather station from topic '{topicName}', exiting...");
