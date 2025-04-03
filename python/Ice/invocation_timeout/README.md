@@ -62,7 +62,11 @@ slice2py ../slice/Greeter.ice
 - Run the client program:
 
 ```shell
-python main.py
+python main.py --Ice.Trace.Network
 ```
+
+> [!NOTE]
+> The `--Ice.Trace.Network` command-line option turns on Network tracing. For this demo, it shows you that the
+> `InvocationTimeoutException` does not close the connection.
 
 [Python Virtual Environments]: https://docs.python.org/3/tutorial/venv.html
