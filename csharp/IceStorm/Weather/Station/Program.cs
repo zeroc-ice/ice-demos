@@ -11,9 +11,11 @@ await using Ice.Communicator communicator = Ice.Util.initialize(ref args);
 // listens on an OS-assigned TCP port, on all interfaces.
 Ice.ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints("StationAdapter", "tcp");
 
-// Register the ConsolePrinter servant with the adapter, and get a proxy to the new object. We use a UUID for the
-// identity because these subscribers (weather stations) are transient: when a subscriber shuts down, we want IceStorm
-// to remove the subscription.
+// Register the ConsolePrinter servant with the adapter, and get a proxy to the new object.
+// We use a UUID for the identity because these subscribers (weather stations) are transient: if this program exits
+// without unsubscribing its weather station, when it restarts, it logically creates a new weather station as opposed
+// to re-incarnating the old one.
+// See also the Retry Count QoS section in the IceStorm documentation.
 WeatherStationPrx weatherStation = WeatherStationPrxHelper.uncheckedCast(
     adapter.addWithUUID(new Station.ConsolePrinter()));
 
@@ -38,13 +40,14 @@ catch (IceStorm.TopicExists)
 // The proxy returned by createAsync and retrieveAsync is never null.
 Debug.Assert(topic is not null);
 
-// Register our weather station with the topic.
-// subscribeAndGetPublisherAsync returns a publisher proxy that we don't need here.
-_ = await topic.subscribeAndGetPublisherAsync(theQoS: [], weatherStation);
-
 // Start dispatching requests.
 adapter.activate();
 Console.WriteLine("Listening...");
+
+// Register our weather station with the topic.
+// subscribeAndGetPublisherAsync returns a publisher proxy that we don't need here.
+_ = await topic.subscribeAndGetPublisherAsync(theQoS: [], weatherStation);
+Console.WriteLine($"Subscribed weather station to topic '{topicName}'.");
 
 // Shut down the communicator when the user presses Ctrl+C.
 Console.CancelKeyPress += (sender, eventArgs) =>
@@ -56,3 +59,8 @@ Console.CancelKeyPress += (sender, eventArgs) =>
 
 // Wait until the communicator is shut down. Here, this occurs when the user presses Ctrl+C.
 await communicator.shutdownCompleted;
+
+// Unsubscribe from the topic. The shutdown above only shuts down the object adapter. All client-side functionalities
+// remain available until the communicator is disposed.
+await topic.unsubscribeAsync(weatherStation);
+Console.WriteLine($"Unsubscribed weather station from topic '{topicName}', exiting...");
