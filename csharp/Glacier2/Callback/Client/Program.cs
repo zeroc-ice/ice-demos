@@ -2,7 +2,6 @@
 
 // Slice module EarlyRiser in AlarmClock.ice maps to C# namespace EarlyRiser.
 using EarlyRiser;
-
 using System.Diagnostics;
 
 // Create an Ice communicator. We'll use this communicator to create proxies, manage outgoing connections, and create
