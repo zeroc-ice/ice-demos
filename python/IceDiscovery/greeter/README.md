@@ -1,9 +1,7 @@
-# Ice Greeter
+# IceDiscovery Greeter
 
-The Greeter demo illustrates how to send a request and wait for the response.
-
-This demo provides two implementations for the server: a synchronous dispatch implementation (in `server`), and an
-asynchronous dispatch implementation (in `server_asyncio`). The same client works with both.
+This demo illustrates how to configure the IceDiscovery plugin. The IceDiscovery plugin allows a client application
+to discover Ice objects without hardcoding any addressing information.
 
 We recommend running each program in a separate Python virtual environment. If you are new to Python virtual environments,
 see [Python Virtual Environments].
@@ -36,7 +34,7 @@ asynchronous server.
 - Run the server program:
 
     ```shell
-    python main.py
+    python main.py --Ice.Trace.Locator
     ```
 
 ## Running the client
@@ -66,7 +64,11 @@ In a separate terminal, navigate to the `client` directory to run the client pro
 - Run the client program:
 
     ```shell
-    python main.py
+    python main.py --Ice.Trace.Locator
     ```
+
+>[!NOTE]
+> The `--Ice.Trace.Locator` command-line option is optional: it turns on tracing (logging) for locator resolution and
+> helps you understand the locator logic implemented by the IceDiscovery plugin.
 
 [Python Virtual Environments]: https://docs.python.org/3/tutorial/venv.html
