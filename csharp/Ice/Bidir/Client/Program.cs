@@ -5,7 +5,7 @@ using EarlyRiser;
 
 // Create an Ice communicator. We'll use this communicator to create proxies, manage outgoing connections, and create
 // an object adapter.
-using Ice.Communicator communicator = Ice.Util.initialize(ref args);
+await using Ice.Communicator communicator = Ice.Util.initialize(ref args);
 
 // Create an object adapter with no name and no configuration. This object adapter does not need to be activated.
 Ice.ObjectAdapter adapter = communicator.createObjectAdapter("");

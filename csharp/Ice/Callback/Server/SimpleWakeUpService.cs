@@ -38,6 +38,7 @@ internal class SimpleWakeUpService : WakeUpServiceDisp_
                 await Task.Delay(TimeSpan.FromSeconds(10));
                 buttonPressed = await alarmClock.RingAsync("No more snoozing!");
             }
+            Console.WriteLine("Client pressed Stop on alarm clock.");
         });
     }
 }

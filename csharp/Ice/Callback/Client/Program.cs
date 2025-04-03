@@ -5,7 +5,7 @@ using EarlyRiser;
 
 // Create an Ice communicator. We'll use this communicator to create proxies, manage outgoing connections, and create
 // an object adapter.
-using Ice.Communicator communicator = Ice.Util.initialize(ref args);
+await using Ice.Communicator communicator = Ice.Util.initialize(ref args);
 
 // Create an object adapter that listens for incoming requests and dispatches them to servants.
 // Since we don't specify a port, the OS will choose an ephemeral port. This allows multiple client applications to

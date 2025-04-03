@@ -5,7 +5,7 @@ using ClearSky;
 using System.Security.Cryptography; // for RandomNumberGenerator
 
 // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
-using Ice.Communicator communicator = Ice.Util.initialize(ref args);
+await using Ice.Communicator communicator = Ice.Util.initialize(ref args);
 
 // Create a proxy to the weather station.
 WeatherStationPrx weatherStation = WeatherStationPrxHelper.createProxy(
