@@ -10,7 +10,7 @@ def main():
     # locator on the communicator.
     initData = Ice.InitializationData()
     initData.properties = Ice.createProperties(sys.argv)
-    initData.properties.setProperty("Ice.Plugin.IceDiscovery", "IceDiscovery:createIceDiscovery")
+    initData.properties.setProperty("Ice.Plugin.IceDiscovery", "1")
 
     # Configure the object adapter GreeterAdapter. It must be an indirect object adapter (i.e., with an AdapterId
     # property); otherwise, the IceDiscovery plugin can't make it discoverable by IceDiscovery clients.
