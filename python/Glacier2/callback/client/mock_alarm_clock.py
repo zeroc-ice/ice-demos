@@ -9,15 +9,17 @@ class MockAlarmClock(AlarmClock):
     MockAlarmClock is an Ice servant that implements Slice interface AlarmClock.
     """
 
-    def __init__(self, eventLoop):
-        self._needMoreTime = True
-        self._stopPressed = eventLoop.create_future()
+    def __init__(self, stopPressed: asyncio.Future):
+        """
+        Initializes the MockAlarmClock object.
 
-    async def waitForStopPressed(self) -> None:
+        Parameters
+        ----------
+        stopPressed : asyncio.Future
+            A future that is set when the Stop button is pressed on the alarm clock.
         """
-        Asynchronously wait for the ring method to return ButtonPressed.Stop.
-        """
-        await self._stopPressed
+        self._needMoreTime = True
+        self._stopPressed = stopPressed
 
     async def ring(self, message: str, current: Ice.Current) -> ButtonPressed:
         """
@@ -38,10 +40,6 @@ class MockAlarmClock(AlarmClock):
             return ButtonPressed.Snooze
         else:
             if not self._stopPressed.done():
-                # We configured the Ice communicator to dispatch all async methods in the asyncio event loop.
-                # Marking the _stopPressed future as done immediately would create a deadlock, because the caller
-                # would continue and wait for this dispatch to complete. So we mark the future as done soon,
-                # after this dispatch completes.
-                asyncio.get_running_loop().call_soon(lambda: self._stopPressed.set_result(None))
+                self._stopPressed.set_result(None)
             print(f"Returning {ButtonPressed.Stop} to stop the alarm.")
             return ButtonPressed.Stop
