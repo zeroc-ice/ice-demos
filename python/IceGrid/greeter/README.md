@@ -4,7 +4,7 @@ The IceGrid Greeter demo illustrates how to create a very simple IceGrid deploym
 
 Follow these steps to build and run the demo:
 
-1 Navigate to the server directory and create a Python virtual environment for running the server.
+1. Navigate to the server directory and create a Python virtual environment for running the server.
 
     ```shell
     python -m venv venv
