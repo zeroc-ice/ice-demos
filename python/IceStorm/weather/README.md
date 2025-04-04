@@ -55,7 +55,7 @@ Navigate to the `sensor` directory, to run the sensor program.
     ```
 
 >[!NOTE]
-> You can run multiple sensor programs each in its own terminal.
+> You can run multiple sensor programs, each in its own terminal.
 
 ## Running the station
 
@@ -88,6 +88,6 @@ In a separate terminal, navigate to the `station` directory to run the station p
     ```
 
 >[!NOTE]
-> You can run multiple station programs each in its own terminal.
+> You can run multiple station programs, each in its own terminal.
 
 [Python Virtual Environments]: https://docs.python.org/3/tutorial/venv.html

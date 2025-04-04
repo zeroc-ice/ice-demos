@@ -14,7 +14,7 @@ IceStorm.Publish.Endpoints=tcp
 # Configure the home directory of the LMDB database where IceStorm stores topics and their subscribers.
 IceStorm.LMDB.Path=db
 
-# Turn-on tracing.
+# Turn on tracing.
 IceStorm.Trace.Subscriber=1
 IceStorm.Trace.TopicManager=2
 IceStorm.Trace.Topic=1

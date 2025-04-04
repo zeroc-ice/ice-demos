@@ -15,7 +15,7 @@ from ClearSky import AtmosphericConditions, WeatherStationPrx
 async def main():
     # Create an Ice communicator. We'll use this communicator to create proxies, and manage outgoing connections. We
     # enable asyncio support by passing the current event loop to initialize.
-    with Ice.initialize(sys.argv, eventLoop=asyncio.get_running_loop()) as communicator:
+    async with Ice.initialize(sys.argv, eventLoop=asyncio.get_running_loop()) as communicator:
 
         # Create a proxy to the IceStorm topic manager.
         topicManager = IceStorm.TopicManagerPrx(communicator, "ClearSky/TopicManager:tcp -p 4061 -h localhost")
@@ -50,8 +50,7 @@ async def main():
             # Create a new AtmosphericConditions object with random values.
             reading = AtmosphericConditions(
                 temperature = int(random.uniform(190, 230)) / 10.0,
-                humidity = int(random.uniform(450, 550)) / 10.0,)
-
+                humidity = int(random.uniform(450, 550)) / 10.0)
 
             # Send the reading to the weather station(s).
             timeStamp = datetime.now(tz=timezone.utc).strftime("%T")
