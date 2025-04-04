@@ -1,46 +1,21 @@
-# MATLAB Demos
+# Ice for MATLAB Demos
 
-## Overview
+This directory contains example Ice applications written in MATLAB. Each example is a simple client application
+that demonstrates a specific feature or programming technique. The corresponding server is provided by the C++, C#,
+Java, and Python demos.
 
-This directory contains MATLAB sample programs for various Ice components.
-These examples are provided to get you started on using a particular Ice
-feature or coding technique.
+## MATLAB Demos
 
-The following subdirectories contain sample programs:
-
-- [Ice](./Ice) has several examples that illustrate fundamental Ice concepts.
-
-- [IceDiscovery](./IceDiscovery) illustrates how to use the IceDiscovery plug-in.
-
-- [Manual](./Manual) contains complete examples for some of the code snippets in the [Ice Manual][1].
-
-## Build Instructions
-
-Open MATLAB, and change to the [matlab](../matlab) demo directory
-using the MATLAB console:
-
-```shell
-cd matlab
-```
-
-To build the demos run the `build.m` script:
-
-```shell
-build
-```
-
-To clean the demos run the `clean.m` script:
-
-```shell
-clean
-```
-
-### Building the demos with the Ice source distribution
-
-Add the following directories to your MATLAB search path:
-
-- `<IceHome>\matlab\lib`
-- `<IceHome>\matlab\lib\generated`
-- `<IceHome>\matlab\lib\x64\Release`
-
-[1]: https://doc.zeroc.com/ice/3.7/introduction
+|                                            |                                                                                                                                     |
+|--------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------|
+| [Glacier2 Greeter](./Glacier2/greeter/)    | Shows how to write a basic Glacier2 client.                                                                                         |
+| [Ice Config](./Ice/config/)                | Shows how to configure a client application using an Ice configuration file.                                                        |
+| [Ice Context](./Ice/context/)              | Shows different ways to set request contexts.                                                                                       |
+| [Ice Filesystem](./Ice/filesystem/)        | Shows the power of interface inheritance in Slice.                                                                                  |
+| [Ice Greeter](./Ice/greeter/)              | Shows how to call a remote Greeter object with Ice. **Start with this demo!**                                                       |
+| [Ice Invocation Timeout](./Ice/invocationTimeout/) | Shows how to configure invocation timeouts.                                                                                 |
+| [Ice Optional](./Ice/optional/)            | Shows how to add a field to a Slice class without breaking interop with existing clients and servers.                               |
+| [IceDiscovery Greeter](./IceDiscovery/greeter/) | Shows how to configure the IceDiscovery plugin.                                                                                |
+| [IceGrid Greeter](./IceGrid/greeter)       | Shows how to create a simple IceGrid deployment.                                                                                    |
+| [IceGrid LocatorDiscovery](./IceGrid/locatorDiscovery/) | Shows how to write a client application that configures its locator using the IceLocatorDiscovery plugin.              |
+| [IceStorm Weather](./IceStorm/weather/)    | Shows how to use IceStorm to create a simple pub-sub application.                                                                   |
