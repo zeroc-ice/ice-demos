@@ -1,4 +1,0 @@
-// Copyright (c) ZeroC, Inc.
-
-include ':hello'
-project(':hello').projectDir = new File('hello')
