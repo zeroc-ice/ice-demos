@@ -15,7 +15,7 @@ async def main():
     # locator on the communicator.
     initData = Ice.InitializationData()
     initData.properties = Ice.createProperties(sys.argv)
-    initData.properties.setProperty("Ice.Plugin.IceDiscovery", "IceDiscovery:createIceDiscovery")
+    initData.properties.setProperty("Ice.Plugin.IceDiscovery", "1")
 
     # Configure the Ice runtime to use asyncio.
     initData.eventLoopAdapter = Ice.asyncio.EventLoopAdapter(asyncio.get_running_loop())

@@ -12,7 +12,7 @@ var initData = new Ice.InitializationData
 initData.properties.setProperty("Ice.Plugin.Discovery", "IceDiscovery:IceDiscovery.PluginFactory");
 
 // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
-using Ice.Communicator communicator = Ice.Util.initialize(initData);
+await using Ice.Communicator communicator = Ice.Util.initialize(initData);
 
 // Create a proxy to the Greeter object hosted by the server. "greeter" is a stringified proxy with no addressing
 // information, also known as a well-known proxy. It's resolved by the default locator installed by the IceDiscovery

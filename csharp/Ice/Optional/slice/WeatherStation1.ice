@@ -21,7 +21,7 @@ module ClearSky
     /// A weather station collects readings from sensors.
     interface WeatherStation
     {
-        /// Reports a new reading to the weather station
+        /// Reports a new reading to the weather station.
         /// @param sensorId The unique identifier of the sensor that took the reading.
         /// @param reading The atmospheric conditions measured by the sensor.
         ["cs:identifier:Report"] // We prefer PascalCase for C# methods.

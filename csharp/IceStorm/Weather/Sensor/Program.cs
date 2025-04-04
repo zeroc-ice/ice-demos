@@ -7,7 +7,7 @@ using System.Globalization;
 using System.Security.Cryptography; // for RandomNumberGenerator
 
 // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
-using Ice.Communicator communicator = Ice.Util.initialize(ref args);
+await using Ice.Communicator communicator = Ice.Util.initialize(ref args);
 
 // Create a proxy to the IceStorm topic manager.
 IceStorm.TopicManagerPrx topicManager = IceStorm.TopicManagerPrxHelper.createProxy(
@@ -30,9 +30,10 @@ catch (IceStorm.TopicExists)
 // The proxy returned by createAsync and retrieveAsync is never null.
 Debug.Assert(topic is not null);
 
-// Create a Weather station proxy using the publisher proxy of the topic. The proxy returned by getPublisher is
-// never null.
-WeatherStationPrx weatherStation = WeatherStationPrxHelper.uncheckedCast(topic.getPublisher()!);
+// Create a WeatherStation proxy using the publisher proxy of the topic.
+Ice.ObjectPrx? publisher = await topic.getPublisherAsync();
+Debug.Assert(publisher is not null); // The proxy returned by getPublisher is never null.
+WeatherStationPrx weatherStation = WeatherStationPrxHelper.uncheckedCast(publisher);
 
 // The proxy returned by IceStorm is a two-way proxy. We can convert it into a oneway proxy if we don't need
 // acknowledgments from IceStorm.
