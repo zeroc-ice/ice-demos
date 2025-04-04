@@ -7,13 +7,11 @@ import chatbot
 import signal
 
 async def main():
-
-    # Get the current event loop.
     loop=asyncio.get_running_loop()
 
-    # Create an Ice communicator to initialize the Ice runtime. It will be automatically destroyed at the end of the
-    # with block. We enable asyncio support by passing the current event loop to initialize.
-    with Ice.initialize(eventLoop=loop) as communicator:
+    # Create an Ice communicator. We'll use this communicator to create an object adapter. We enable asyncio
+    # support by passing the current event loop to initialize.
+    async with Ice.initialize(eventLoop=loop) as communicator:
 
         # Shutdown the communicator when the user presses Ctrl+C.
         loop.add_signal_handler(signal.SIGINT, communicator.shutdown)

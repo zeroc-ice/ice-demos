@@ -11,7 +11,7 @@ Glacier2.Server.Endpoints=tcp -h 127.0.0.1
 # This Glacier router accepts any username/password combination.
 Glacier2.PermissionsVerifier=Glacier2/NullPermissionsVerifier
 
-# Turn-on tracing.
+# Turn on tracing.
 Glacier2.Client.Trace.Request=1
 Glacier2.Server.Trace.Request=1
 Glacier2.Trace.Session=1

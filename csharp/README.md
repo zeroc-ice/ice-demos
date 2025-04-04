@@ -28,6 +28,7 @@ dotnet build -p:IceVersion="3.8.0-alpha0"
 |                                            |                                                                                                                                     |
 |--------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------|
 | [Glacier2 Callback](./Glacier2/Callback/)  | Shows how to write a Glacier2 client and implement callbacks in this client.                                                        |
+| [Glacier2 Greeter](./Glacier2/Greeter/)    | Shows how to write a basic Glacier2 client.                                                                                         |
 | [Ice Bidir](./Ice/Bidir/)                  | Shows how to send requests "the other way around", from the server to the client.                                                   |
 | [Ice Callback](./Ice/Callback/)            | Shows how to implement callbacks in a client application.                                                                           |
 | [Ice Cancellation](./Ice/Cancellation/)    | Shows how to cancel a request and how to configure invocation timeouts.                                                             |

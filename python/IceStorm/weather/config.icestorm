@@ -1,0 +1,20 @@
+# The configuration for the IceStorm service loaded in IceBox.
+
+# We name our IceStorm instance "ClearSky". This becomes the category of the objects hosted by this IceStorm instance.
+IceStorm.InstanceName=ClearSky
+
+# Configure the TopicManager adapter to listen on TCP port 4061, on all interfaces. This is the object adapter that
+# hosts the TopicManager and all topic objects.
+IceStorm.TopicManager.Endpoints=tcp -p 4061
+
+# Configure the Publish adapter to listen on an OS-assigned TCP port, on all interfaces. This is the object adapter
+# that hosts the publisher objects.
+IceStorm.Publish.Endpoints=tcp
+
+# Configure the home directory of the LMDB database where IceStorm stores topics and their subscribers.
+IceStorm.LMDB.Path=db
+
+# Turn on tracing.
+IceStorm.Trace.Subscriber=1
+IceStorm.Trace.TopicManager=2
+IceStorm.Trace.Topic=1

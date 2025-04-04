@@ -3,7 +3,7 @@
 // Create an Ice communicator. We'll use this communicator to create an object adapter. The communicator gets its
 // configuration properties from file config.server, in the server's current working directory. The communicator
 // initialization also parses the command-line options to find and set additional properties.
-using Ice.Communicator communicator = Ice.Util.initialize(ref args, "config.server");
+await using Ice.Communicator communicator = Ice.Util.initialize(ref args, "config.server");
 
 // Create an object adapter that listens for incoming requests and dispatches them to servants.
 // This adapter is configured through the GreeterAdapter.* properties in config.server.

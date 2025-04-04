@@ -11,9 +11,9 @@ from datetime import datetime, timedelta
 
 async def main():
     loop = asyncio.get_running_loop()
-    # Create an Ice communicator. We'll use this communicator to create proxies, manage outgoing connections, and create
-    # an object adapter. We enable asyncio support by passing the current event loop to initialize.
-    with Ice.initialize(sys.argv, eventLoop=loop) as communicator:
+    # Create an Ice communicator. We'll use this communicator to create proxies, manage outgoing connections, and
+    # create an object adapter. We enable asyncio support by passing the current event loop to initialize.
+    async with Ice.initialize(sys.argv, eventLoop=loop) as communicator:
 
         # Create an object adapter with no name and no configuration. This object adapter does not need to be activated.
         adapter = communicator.createObjectAdapter("")
@@ -22,7 +22,8 @@ async def main():
         communicator.setDefaultObjectAdapter(adapter)
 
         # Register the MockAlarmClock servant with the adapter. The wake up service knows we use identity "alarmClock".
-        mockAlarmClock = MockAlarmClock(loop)
+        stopPressed = loop.create_future()
+        mockAlarmClock = MockAlarmClock(stopPressed)
         adapter.add(mockAlarmClock, Ice.stringToIdentity("alarmClock"))
 
         # Create a proxy to the wake-up service.
@@ -34,7 +35,7 @@ async def main():
         print("Wake-up call scheduled, falling asleep...")
 
         # Wait until the "stop" button is pressed on the mock alarm clock.
-        await mockAlarmClock.waitForStopPressed()
+        await stopPressed
         print("Stop button pressed, exiting...")
 
 if __name__ == "__main__":

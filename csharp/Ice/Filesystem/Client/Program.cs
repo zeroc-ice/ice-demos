@@ -5,7 +5,7 @@ using Filesystem;
 using System.Diagnostics;
 
 // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
-using Ice.Communicator communicator = Ice.Util.initialize(ref args);
+await using Ice.Communicator communicator = Ice.Util.initialize(ref args);
 
 // Create a proxy for the root directory.
 DirectoryPrx rootDir = DirectoryPrxHelper.createProxy(communicator, "RootDir:tcp -h localhost -p 4061");
@@ -14,7 +14,7 @@ DirectoryPrx rootDir = DirectoryPrxHelper.createProxy(communicator, "RootDir:tcp
 Console.WriteLine("Contents of root directory:");
 await ListRecursiveAsync(rootDir);
 
-/// <summary>Recursively print the contents of a directory in tree fashion. For files, show the contents of each file.
+/// <summary>Recursively prints the contents of a directory in tree fashion. For files, show the contents of each file.
 /// </summary>
 /// <param name="dir">The directory to list./<param>
 /// <param name="depth">The current nesting level (for indentation).</param>
@@ -28,8 +28,11 @@ async Task ListRecursiveAsync(DirectoryPrx dir, int depth = 0)
     {
         Debug.Assert(node is not null); // The node proxies returned by list() are never null.
 
+        // Check if this node is a directory by asking the remote object.
         DirectoryPrx? subdir = await DirectoryPrxHelper.checkedCastAsync(node);
-        string kind = subdir is not null ? "directory" : "file";
+
+        // We assume it's a file if it's not a directory.
+        string kind = subdir is not null ? "(directory)" : "(file)";
         string nodeName = await node.NameAsync();
 
         Console.WriteLine($"{indent}{nodeName} {kind}:");
@@ -40,6 +43,7 @@ async Task ListRecursiveAsync(DirectoryPrx dir, int depth = 0)
         }
         else
         {
+            // Read and print the contents of the file.
             FilePrx file = FilePrxHelper.uncheckedCast(node);
             string[] lines = await file.ReadAsync();
             foreach (string line in lines)

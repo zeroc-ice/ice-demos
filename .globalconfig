@@ -11,7 +11,7 @@ dotnet_diagnostic.CA1416.severity = none
 dotnet_diagnostic.CA1848.severity = none
 
 # CA1849: Call async methods when in an async method
-dotnet_diagnostic.CA1849.severity = suggestion
+dotnet_diagnostic.CA1849.severity = warning
 
 # IDE0130: Namespace does not match folder structure
 # We use ExampleName{Client, Server} instead of {Client, Server}.
