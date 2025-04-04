@@ -32,7 +32,7 @@ async def main():
 
         # Obtain a category string from the router. We need to use this category for the identity of server->client
         # callbacks invoked through the Glacier2 router.
-        clientCategory = await router.getCategoryForClientAsync();
+        clientCategory = await router.getCategoryForClientAsync()
 
         # Create an object adapter with no name and no configuration, but with our router proxy. This object adapter is
         # a "bidirectional" object adapter, like the one created by the Ice/bidir client application. It does not
