@@ -8,14 +8,14 @@ Java, and Python demos.
 
 |                                            |                                                                                                                                     |
 |--------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------|
-| [Glacier2 Greeter](./Glacier2/Greeter/)    | Shows how to write a basic Glacier2 client.                                                                                         |
-| [Ice Config](./Ice/Config/)                | Shows how to configure a client application using an Ice configuration file.                                                        |
-| [Ice Context](./Ice/Context/)              | Shows different ways to set request contexts.                                                                                       |
-| [Ice Filesystem](./Ice/Filesystem/)        | Shows the power of interface inheritance in Slice.                                                                                  |
-| [Ice Greeter](./Ice/Greeter/)              | Shows how to call a remote Greeter object with Ice. **Start with this demo!**                                                       |
+| [Glacier2 Greeter](./Glacier2/greeter/)    | Shows how to write a basic Glacier2 client.                                                                                         |
+| [Ice Config](./Ice/config/)                | Shows how to configure a client application using an Ice configuration file.                                                        |
+| [Ice Context](./Ice/context/)              | Shows different ways to set request contexts.                                                                                       |
+| [Ice Filesystem](./Ice/filesystem/)        | Shows the power of interface inheritance in Slice.                                                                                  |
+| [Ice Greeter](./Ice/greeter/)              | Shows how to call a remote Greeter object with Ice. **Start with this demo!**                                                       |
 | [Ice Invocation Timeout](./Ice/invocationTimeout/) | Shows how to configure invocation timeouts.                                                                                 |
-| [Ice Optional](./Ice/Optional/)            | Shows how to add a field to a Slice class without breaking interop with existing clients and servers.                               |
-| [IceDiscovery Greeter](./IceDiscovery/Greeter/) | Shows how to configure the IceDiscovery plugin.                                                                                |
-| [IceGrid Greeter](./IceGrid/Greeter)       | Shows how to create a simple IceGrid deployment.                                                                                    |
-| [IceGrid LocatorDiscovery](./IceGrid/LocatorDiscovery/) | Shows how to write a client application that configures its locator using the IceLocatorDiscovery plugin.              |
-| [IceStorm Weather](./IceStorm/Weather/)    | Shows how to use IceStorm to create a simple pub-sub application.                                                                   |
+| [Ice Optional](./Ice/optional/)            | Shows how to add a field to a Slice class without breaking interop with existing clients and servers.                               |
+| [IceDiscovery Greeter](./IceDiscovery/greeter/) | Shows how to configure the IceDiscovery plugin.                                                                                |
+| [IceGrid Greeter](./IceGrid/greeter)       | Shows how to create a simple IceGrid deployment.                                                                                    |
+| [IceGrid LocatorDiscovery](./IceGrid/locatorDiscovery/) | Shows how to write a client application that configures its locator using the IceLocatorDiscovery plugin.              |
+| [IceStorm Weather](./IceStorm/weather/)    | Shows how to use IceStorm to create a simple pub-sub application.                                                                   |
