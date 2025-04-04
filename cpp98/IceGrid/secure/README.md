@@ -30,20 +30,6 @@ generate Java KeyStore files so you need to add the JDK bin directory
 to your PATH (if it's not found, `makedemocerts.py` will print
 a warning).
 
-For simplicity, the certificates created by `makedemocerts.py` are not
-protected with a password. In a real world deployment, to ensure that
-only privileged users can create new certificates and start the
-IceGrid components, you would typically use a password for the
-certificate authority, the IceGrid registry and node certificates and
-the Glacier2 certificate.
-
-You could also protect the server certificate with a password and
-specify the password in the server configuration in clear text.
-However, this would not improve security as you would still rely on
-filesystem permissions to restrict access to the configuration file,
-so you might as well use a certificate without a password and rely on
-the filesystem permissions to restrict access to the certificate.
-
 Once the certificates are generated, you can start the IceGrid
 registries, node, and Glacier2 router:
 

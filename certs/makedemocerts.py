@@ -87,28 +87,31 @@ if not dns:
 CertificateFactory = vars(IceCertUtils)[impl + "CertificateFactory"]
 factory = CertificateFactory(debug=debug, cn="Ice Demos CA")
 
+# The password for the private keys, etc.
+password = "password"
+
 #
 # CA certificate
 #
-factory.getCA().save("cacert.pem").save("cacert.der")
+factory.getCA().save("cacert.pem", password=password).save("cacert.der", password=password)
 
 # Client certificate
 client = factory.create("client")
-client.save("client.p12")
+client.save("client.p12", password=password)
 
 # Server certificate
 server = factory.create("server", cn = (dns if usedns else ip), ip=ip, dns=dns, extendedKeyUsage="serverAuth,clientAuth")
-server.save("server.p12")
+server.save("server.p12", password=password)
 
 try:
-    factory.getCA().save("cacert.pem").save("cacert.jks") # Used by the Database/library demo
-    server.save("server.jks", caalias="cacert")
-    client.save("client.jks", caalias="cacert")
+    factory.getCA().save("cacert.pem", password=password).save("cacert.jks", password=password) # Used by the Database/library demo
+    server.save("server.jks", caalias="cacert", password=password)
+    client.save("client.jks", caalias="cacert", password=password)
 
     # Don't try to generate the BKS if the JKS generation fails
     try:
-        server.save("server.bks", caalias="cacert")
-        client.save("client.bks", caalias="cacert")
+        server.save("server.bks", caalias="cacert", password=password)
+        client.save("client.bks", caalias="cacert", password=password)
     except Exception as ex:
         for f in ["server.bks", "client.bks"]:
             if os.path.exists(f): os.remove(f)

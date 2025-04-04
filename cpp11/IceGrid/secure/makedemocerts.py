@@ -46,11 +46,14 @@ while True:
 #
 factory = IceCertUtils.CertificateFactory(dn=dn)
 
+# The password for the private keys, etc.
+password = "password"
+
 # Save the CA certificate
-factory.getCA().save(os.path.join("certs", "ca.pem"))
+factory.getCA().save(os.path.join("certs", "ca.pem"), password=password)
 
 try:
-    factory.getCA().save(os.path.join("certs", "ca.jks"))
+    factory.getCA().save(os.path.join("certs", "ca.jks"), password=password)
 except Exception as ex:
     print("warning: couldn't generate JKS certificate `ca.jks':\n" + str(ex))
 
@@ -63,10 +66,10 @@ except Exception as ex:
 eku = "serverAuth,clientAuth"
 
 # Create and the certificates for the different components
-factory.create("Master", dns="localhost", extendedKeyUsage=eku).save(os.path.join("certs", "master.p12"))
-factory.create("Slave", dns="localhost", extendedKeyUsage=eku).save(os.path.join("certs", "slave.p12"))
-factory.create("Node", dns="localhost", extendedKeyUsage=eku).save(os.path.join("certs", "node.p12"))
-factory.create("Glacier2", dns="localhost", extendedKeyUsage=eku).save(os.path.join("certs", "glacier2.p12"))
-factory.create("Server", dns="localhost", extendedKeyUsage=eku).save(os.path.join("certs", "server.p12"))
+factory.create("Master", dns="localhost", extendedKeyUsage=eku).save(os.path.join("certs", "master.p12"), password=password)
+factory.create("Slave", dns="localhost", extendedKeyUsage=eku).save(os.path.join("certs", "slave.p12"), password=password)
+factory.create("Node", dns="localhost", extendedKeyUsage=eku).save(os.path.join("certs", "node.p12"), password=password)
+factory.create("Glacier2", dns="localhost", extendedKeyUsage=eku).save(os.path.join("certs", "glacier2.p12"), password=password)
+factory.create("Server", dns="localhost", extendedKeyUsage=eku).save(os.path.join("certs", "server.p12"), password=password)
 
 factory.destroy()
