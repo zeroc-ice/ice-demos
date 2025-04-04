@@ -51,8 +51,8 @@ async function delay(ms: number): Promise<void> {
 while (true) {
     // Create a new AtmosphericConditions object with random values.
     var reading = new ClearSky.AtmosphericConditions(
-        Math.trunc(Math.random() * (230 - 190) + 190) / 10.0,
-        Math.trunc(Math.random() * (550 - 450) + 450) / 10.0);
+        Math.trunc(190 + Math.random() * (230 - 190)) / 10.0,
+        Math.trunc(450 + Math.random() * (550 - 450)) / 10.0);
 
     // Send the reading to the weather station(s).
     const timeStamp = new Date().toTimeString();
