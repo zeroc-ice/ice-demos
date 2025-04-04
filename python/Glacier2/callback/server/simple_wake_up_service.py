@@ -56,6 +56,6 @@ class SimpleWakeUpService(WakeUpService):
         wakeUpDatetime = toDatetime(timestamp)
         print(f"Dispatching wakeMeUp request {{ timeStamp = '{wakeUpDatetime.astimezone()}' }}")
 
-        # Schedule the callRing coroutine to run in the asyncio event loop. Since Ice dispatches async methods in the configured
-        # event loop, we can use asyncio.get_running_loop to retrieve it.
+        # Schedule the callRing coroutine to run in the asyncio event loop. Since Ice dispatches async methods in the
+        # configured event loop, we can use asyncio.get_running_loop to retrieve it.
         asyncio.get_running_loop().create_task(callRing(alarmClock, wakeUpDatetime))
