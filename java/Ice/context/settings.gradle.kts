@@ -10,7 +10,6 @@ pluginManagement {
     }
 }
 
-rootProject.name = "greeter"
+rootProject.name = "context"
 include("client")
 include("server")
-include("serveramd")

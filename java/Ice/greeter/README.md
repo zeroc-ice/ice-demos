@@ -13,14 +13,14 @@ The same client works with both.
 This project uses Gradle and the [Application plugin]. To build the client and server applications, run:
 
 ```shell
-./gradlew installDist
+./gradlew build
 ```
 
 This will compile each project and install the distributions in the `build/install` subdirectory of each project.
 
 ## Running the Server
 
-First, start one of the server implementations:
+First, start one of the server applications:
 
 ```shell
 ./gradlew :server:run --quiet
