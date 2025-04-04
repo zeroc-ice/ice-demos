@@ -16,7 +16,6 @@ see [Python Virtual Environments].
 ## Running the server
 
 Navigate to the `server` directory to run the server program.
-asynchronous server.
 
 - Create and activate a Python virtual environment:
 
