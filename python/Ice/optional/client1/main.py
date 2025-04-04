@@ -17,7 +17,7 @@ async def main():
 
         reading = AtmosphericConditions(
             temperature = int(random.uniform(190, 230)) / 10.0,
-            humidity = int(random.uniform(450, 550)) / 10.0,)
+            humidity = int(random.uniform(450, 550)) / 10.0)
         
         # Report this reading to the weather station.
         await weatherStation.reportAsync("sensor v1", reading)
