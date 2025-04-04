@@ -53,8 +53,7 @@ Follow these steps to build and run the demo:
     icegridadmin --Ice.Config=config.admin -e "application add greeter-hall-with-replication.xml"
     ```
 
-7. Using a seprate terminal create a Python virtual environment for running the client.
-
+7. Using a separate terminal create a Python virtual environment for running the client.
     ```shell
     python -m venv venv
     source venv/bin/activate  # On macOS/Linux
