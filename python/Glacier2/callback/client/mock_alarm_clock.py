@@ -1,12 +1,12 @@
 # Copyright (c) ZeroC, Inc.
 
 from EarlyRiser import AlarmClock, ButtonPressed
-import Ice
 import asyncio
+import Ice
 
 class MockAlarmClock(AlarmClock):
     """
-    MockAlarmClock is an Ice servant that implements Slice interface AlarmClock
+    MockAlarmClock is an Ice servant that implements Slice interface AlarmClock.
     """
 
     def __init__(self, stopPressed: asyncio.Future):

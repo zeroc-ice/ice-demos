@@ -10,6 +10,14 @@ class MockAlarmClock(AlarmClock):
     """
 
     def __init__(self, stopPressed: asyncio.Future):
+        """
+        Initializes the MockAlarmClock object.
+
+        Parameters
+        ----------
+        stopPressed : asyncio.Future
+            A future that is set when the Stop button is pressed on the alarm clock.
+        """
         self._needMoreTime = True
         self._stopPressed = stopPressed
 
