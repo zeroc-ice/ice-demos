@@ -59,3 +59,4 @@ class SimpleWakeUpService(WakeUpService):
         # Schedule the callRing coroutine in the current event loop. Ice dispatches async methods using the configured
         # event loop, which can be accessed via asyncio.get_running_loop().
         asyncio.get_running_loop().create_task(callRing(alarmClock, wakeUpDatetime))
+        print("Client pressed Stop on alarm clock.")

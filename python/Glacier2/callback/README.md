@@ -46,6 +46,17 @@ Navigate to the `server` directory, to run the server program.
     python main.py
     ```
 
+- Start the Glacier2 router in its own terminal:
+
+   ```shell
+   glacier2router --Ice.Config=config.glacier2
+   ```
+
+   > [!TIP]
+   > You can also start the Glacier2 router before the server. The order does not matter: the server is identical to the
+   > server provided in the [Ice Callback][1] demo and does not depend on Glacier2.
+
+
 ## Running the client
 
 In a separate terminal, navigate to the `client` directory to run the client program.
