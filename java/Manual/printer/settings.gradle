@@ -1,5 +1,0 @@
-// Copyright (c) ZeroC, Inc.
-
-rootProject.name = 'printer'
-include 'client'
-include 'server'
