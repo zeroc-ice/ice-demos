@@ -1,0 +1,21 @@
+<icegrid>
+  <!-- An application describes nodes and servers deployed on these nodes. An IceGrid deployment (a registry plus one or
+  more nodes) can host several applications. -->
+  <application name="GreeterHall">
+
+    <!-- Describes the servers deployed on the IceGrid node named 'node1'. -->
+    <node name="node1">
+
+      <!-- Describes the server deployed on node1. IceGrid starts this server when a client looks up an object adapter
+      or a well-known object in this server. -->
+      <server id="GreetServer" exe="server/main.py" activation="on-demand">
+        <!-- The object adapter created by this server. It listens on an OS-assigned tcp port, on all interfaces.
+        It also defines a well-known object with identity "greeter". IceGrid generates property Greeter.Identity with
+        value "greeter" in the config file for server GreeterServer. -->
+        <adapter name="GreeterAdapter" endpoints="tcp">
+          <object identity="greeter" property="Greeter.Identity"/>
+        </adapter>
+      </server>
+    </node>
+  </application>
+</icegrid>
