@@ -7,8 +7,7 @@ import com.zeroc.Ice.ObjectAdapter;
 
 class Server {
     public static void main(String[] args) {
-        // Create an Ice communicator to initialize the Ice runtime. The communicator is closed (destroyed) at the end
-        // of the try statement.
+        // Create an Ice communicator. We'll use this communicator to create an object adapter.
         try (Communicator communicator = com.zeroc.Ice.Util.initialize(args)) {
 
             // Register a shutdown hook that calls communicator.shutdown() when the user shuts down the server with
