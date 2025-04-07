@@ -25,12 +25,12 @@ class Client {
             GreeterPrx greeter = GreeterPrx.createProxy(communicator, "greeter:tcp -h localhost -p 4061");
 
             // Send a request to the remote object and get the response. We request a French greeting by setting the
-            //  context parameter.
+            // context parameter.
             String greeting = greeter.greet(System.getProperty("user.name"), Map.of("language", "fr"));
             System.out.println(greeting);
 
             // Do it again, this time by setting the context on the proxy.
-            var greeterEs = GreeterPrx.uncheckedCast(greeter.ice_context(Map.of("language", "es")));
+            var greeterEs = greeter.ice_context(Map.of("language", "es"));
             greeting = greeterEs.greet("alice");
             System.out.println(greeting);
 
