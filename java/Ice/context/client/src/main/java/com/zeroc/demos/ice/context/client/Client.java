@@ -1,8 +1,8 @@
 // Copyright (c) ZeroC, Inc.
 
-package com.zeroc.demos.greeter;
+package com.zeroc.demos.ice.context.client;
 
-import com.zeroc.demos.VisitorCenter.GreeterPrx;
+import com.zeroc.demos.visitor_center.GreeterPrx;
 import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.InitializationData;
 import com.zeroc.Ice.Properties;

@@ -1,8 +1,8 @@
 // Copyright (c) ZeroC, Inc.
 
-package com.zeroc.demos.greeter;
+package com.zeroc.demos.ice.greeter.client;
 
-import com.zeroc.demos.VisitorCenter.GreeterPrx;
+import com.zeroc.demos.visitor_center.GreeterPrx;
 import com.zeroc.Ice.Communicator;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
