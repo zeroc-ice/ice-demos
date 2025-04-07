@@ -11,6 +11,7 @@ Follow these steps to build and run the demo:
     source venv/bin/activate  # On macOS/Linux
     venv\Scripts\activate     # On Windows
     ```
+
 2. Install the server program dependencies:
 
     ```shell
@@ -54,6 +55,7 @@ Follow these steps to build and run the demo:
     ```
 
 7. Using a separate terminal create a Python virtual environment for running the client.
+
     ```shell
     python -m venv venv
     source venv/bin/activate  # On macOS/Linux
