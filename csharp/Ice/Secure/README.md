@@ -24,4 +24,4 @@ dotnet run -- --Ice.Trace.Network
 
 > [!NOTE]
 > The `--Ice.Trace.Network` command-line option turns on Network tracing. For this demo, it shows you that the
-> request are sent using the `ssl` secure transport.
+> requests are sent using the `ssl` secure transport.
