@@ -20,5 +20,5 @@ sourceSets {
 
 application {
     // Specify the main entry point for the application.
-    mainClass.set("com.zeroc.demos.greeter.Client")
+    mainClass.set("com.zeroc.demos.ice.greeter.client.Client")
 }

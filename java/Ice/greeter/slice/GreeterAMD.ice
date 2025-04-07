@@ -2,7 +2,7 @@
 
 #pragma once
 
-[["java:package:com.zeroc.demos"]]
+["java:identifier:com.zeroc.demos.visitor_center"]
 module VisitorCenter
 {
     /// Represents a simple greeter.

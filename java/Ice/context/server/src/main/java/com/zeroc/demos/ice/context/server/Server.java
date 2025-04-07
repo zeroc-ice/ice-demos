@@ -1,15 +1,15 @@
 // Copyright (c) ZeroC, Inc.
 
-package com.zeroc.demos.greeter;
+package com.zeroc.demos.ice.context.server;
 
 import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.ObjectAdapter;
+import com.zeroc.Ice.Util;
 
 class Server {
     public static void main(String[] args) {
-        // Create an Ice communicator to initialize the Ice runtime. The communicator is closed (destroyed) at the end
-        // of the try statement.
-        try (Communicator communicator = com.zeroc.Ice.Util.initialize(args)) {
+        // Create an Ice communicator. We'll use this communicator to create an object adapter.
+        try (Communicator communicator = Util.initialize(args)) {
 
             // Register a shutdown hook that calls communicator.shutdown() when the user shuts down the server with
             // Ctrl+C or similar. The shutdown hook thread also waits until the main thread completes its cleanup.
@@ -19,7 +19,7 @@ class Server {
             ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints("GreeterAdapter", "tcp -p 4061");
 
             // Register the Chatbot servant with the adapter.
-            adapter.add(new Chatbot(), com.zeroc.Ice.Util.stringToIdentity("greeter"));
+            adapter.add(new Chatbot(), Util.stringToIdentity("greeter"));
 
             // Start dispatching requests.
             adapter.activate();
