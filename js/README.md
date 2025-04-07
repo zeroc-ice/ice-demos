@@ -19,7 +19,7 @@ implemented in a language that fully supports server-side functionality, such as
 ## JavaScript Demos
 
 |                                           |                                                                                                     |
-|-------------------------------------------|-----------------------------------------------------------------------------------------------------|
+| ----------------------------------------- | --------------------------------------------------------------------------------------------------- |
 | [Glacier2 Callback](./Glacier2/callback/) | Shows how to write a Glacier2 client and implement callbacks in this client.                        |
 | [Ice Bidir](./Ice/bidir/)                 | Shows how to send requests "the other way around", from the server to the client.                   |
 | [Ice Cancellation](./Ice/cancellation/)   | Shows how to cancel a request and how to configure invocation timeouts.                             |
