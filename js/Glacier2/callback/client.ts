@@ -3,7 +3,7 @@
 import { Ice, Glacier2 } from "@zeroc/ice";
 import { EarlyRiser } from "./AlarmClock.js";
 import { MockAlarmClock } from "./MockAlarmClock.js";
-import { toTicks } from "../../common/timeUtil.js";
+import { toTicks } from "./timeUtil.js";
 import process from "node:process";
 
 // Retrieve my name

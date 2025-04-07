@@ -3,7 +3,7 @@
 import { Ice } from "@zeroc/ice";
 import { EarlyRiser } from "./AlarmClock.js";
 import { MockAlarmClock } from "./MockAlarmClock.js";
-import { toTicks } from "../../common/timeUtil.js";
+import { toTicks } from "./timeUtil.js";
 import process from "node:process";
 
 // Create an Ice communicator. We'll use this communicator to create proxies, manage outgoing connections, and create
