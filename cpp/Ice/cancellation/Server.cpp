@@ -20,7 +20,7 @@ main(int argc, char* argv[])
     initData.properties = Ice::createProperties(argc, argv);
     initData.properties->setProperty("Ice.ThreadPool.Server.SizeMax", "10");
 
-    // Create an Ice communicator to initialize the Ice runtime.
+    // Create an Ice communicator. We'll use this communicator to create an object adapter.
     Ice::CommunicatorPtr communicator = Ice::initialize(initData);
 
     // Make sure the communicator is destroyed at the end of this scope.

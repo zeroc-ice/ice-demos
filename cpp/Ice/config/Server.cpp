@@ -10,8 +10,9 @@ using namespace std;
 int
 main(int argc, char* argv[])
 {
-    // CtrlCHandler is a helper class that handles Ctrl+C and similar signals. It must be constructed at the beginning
-    // of the program, before creating an Ice communicator or starting any thread.
+    // Create an Ice communicator. We'll use this communicator to create an object adapter. The communicator gets its
+    // configuration properties from file config.server, in the server's current working directory. The communicator
+    // initialization also parses the command-line options to find and set additional properties.
     Ice::CtrlCHandler ctrlCHandler;
 
     // Create an Ice communicator to initialize the Ice runtime. The communicator gets its configuration properties from

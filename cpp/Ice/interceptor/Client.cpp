@@ -15,15 +15,10 @@ main(int argc, char* argv[])
 
     try
     {
-        //
-        // CommunicatorHolder's ctor initializes an Ice communicator,
-        // and its dtor destroys this communicator.
-        //
+        // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
         const Ice::CommunicatorHolder ich(argc, argv, "config.client");
 
-        //
-        // The communicator intialization removes all Ice-related arguments from argc/argv.
-        //
+        // The communicator initialization removes all Ice-related arguments from argc/argv.
         if (argc > 1)
         {
             cerr << argv[0] << ": too many arguments" << endl;

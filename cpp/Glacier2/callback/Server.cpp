@@ -13,7 +13,7 @@ main(int argc, char* argv[])
     // CtrlCHandler is a helper class that handles Ctrl+C and similar signals.
     Ice::CtrlCHandler ctrlCHandler;
 
-    // Create an Ice communicator to initialize the Ice runtime.
+    // Create an Ice communicator. We'll use this communicator to create an object adapter.
     Ice::CommunicatorPtr communicator = Ice::initialize(argc, argv);
 
     // Make sure the communicator is destroyed at the end of this scope.

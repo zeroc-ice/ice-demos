@@ -10,7 +10,7 @@ using namespace std;
 int
 main(int argc, char* argv[])
 {
-    // CtrlCHandler is a helper class that handles Ctrl+C and similar signals.
+    // Create an Ice communicator. We'll use this communicator to create an object adapter.
     Ice::CtrlCHandler ctrlCHandler;
 
     // Create an Ice communicator to initialize the Ice runtime.
