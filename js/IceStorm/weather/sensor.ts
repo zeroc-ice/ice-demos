@@ -4,7 +4,7 @@ import { Ice, IceStorm } from "@zeroc/ice";
 import { ClearSky } from "./WeatherStation.js";
 import process from "node:process";
 
-// Create an Ice communicator to initialize the Ice runtime. The communicator is disposed before the program exits.
+// Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
 await using communicator = Ice.initialize(process.argv);
 
 // Create a proxy to the IceStorm topic manager.
@@ -37,9 +37,7 @@ const weatherStation = ClearSky.WeatherStationPrx.uncheckedCast(publisher);
 console.assert(weatherStation.ice_isTwoway());
 
 // Generate a sensor ID for this weather sensor.
-const hexDigits = "0123456789ABCDEF";
-const bytes = crypto.getRandomValues(new Uint8Array(4));
-const sensorId = `sensor-${Array.from(bytes, byte => hexDigits[byte % 16]).join('')}`;
+const sensorId = `sensor-${Math.trunc(Math.random() * 9999).toString().padStart(4, "0")}`;
 
 // Send a reading every second to the weather station(s) via IceStorm. We keep sending until the user presses Ctrl+C.
 console.log(`${sensorId} reporting. Press Ctrl+C to stop...`);

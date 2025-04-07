@@ -13,7 +13,8 @@ flowchart LR
     icestorm --report--> s3[Station #3]
 ```
 
-Ice for JavaScript has limited [server-side support][1], we provide only the sensors implementation in JavaScript.
+Ice for JavaScript has limited [server-side support][1], and as a result, we can only implement the sensors in
+JavaScript.
 
 You first need to start IceStorm and the weather station(s) from a demo written in a language with full server-side
 support, such as C++, Python, Java or C#.
