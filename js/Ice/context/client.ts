@@ -10,7 +10,7 @@ var initData = new Ice.InitializationData();
 initData.properties = Ice.createProperties(process.argv);
 initData.properties.setProperty("Ice.ImplicitContext", "Shared");
 
-// Create an Ice communicator to initialize the Ice runtime. The communicator is disposed before the program exits.
+// Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
 await using communicator = Ice.initialize(initData);
 
 // Create a Greeter proxy. If you run the server on a different computer, replace localhost in the string below with

@@ -3,13 +3,14 @@
 import { Ice, Glacier2 } from "@zeroc/ice";
 import { EarlyRiser } from "./AlarmClock.js";
 import { MockAlarmClock } from "./MockAlarmClock.js";
-import { toTicks } from "./timeUtil.js";
+import { toTicks } from "../../common/timeUtil.js";
 import process from "node:process";
 
 // Retrieve my name
 const name = process.env.USER || process.env.USERNAME || "masked user";
 
-// Create an Ice communicator to initialize the Ice runtime. The communicator is disposed before the program exits.
+// Create an Ice communicator. We'll use this communicator to create proxies, manage outgoing connections, and create
+// an object adapter.
 await using communicator = Ice.initialize(process.argv);
 
 // Create a proxy to the Glacier2 router. The addressing information (transport, host and port number) is derived from
@@ -37,7 +38,8 @@ const adapter = await communicator.createObjectAdapterWithRouter("", router);
 // the ring callback is never delivered if you provide a different category.
 const mockAlarmClock = new MockAlarmClock();
 const alarmClock = EarlyRiser.AlarmClockPrx.uncheckedCast(
-    adapter.add(mockAlarmClock, new Ice.Identity("alarmClock", clientCategory)));
+    adapter.add(mockAlarmClock, new Ice.Identity("alarmClock", clientCategory)),
+);
 
 // Create a proxy to the wake-up service behind the Glacier2 router. Typically, the client cannot connect directly to
 // this server because it's on an unreachable network.

@@ -8,7 +8,7 @@ import process from "node:process";
 await using communicator = Ice.initialize(process.argv);
 
 // Create a proxy to the IceStorm topic manager.
-const topicManager = new IceStorm.TopicManagerPrx(communicator, "ClearSky/TopicManager:tcp -p 4061 -h localhost")
+const topicManager = new IceStorm.TopicManagerPrx(communicator, "ClearSky/TopicManager:tcp -p 4061 -h localhost");
 
 // Retrieve a proxy to the "weather" topic: we first create a topic with the given name (in case we are the first),
 // and then retrieve the proxy if the topic was already created.
@@ -37,20 +37,23 @@ const weatherStation = ClearSky.WeatherStationPrx.uncheckedCast(publisher);
 console.assert(weatherStation.ice_isTwoway());
 
 // Generate a sensor ID for this weather sensor.
-const sensorId = `sensor-${Math.trunc(Math.random() * 9999).toString().padStart(4, "0")}`;
+const sensorId = `sensor-${Math.trunc(Math.random() * 9999)
+    .toString()
+    .padStart(4, "0")}`;
 
 // Send a reading every second to the weather station(s) via IceStorm. We keep sending until the user presses Ctrl+C.
 console.log(`${sensorId} reporting. Press Ctrl+C to stop...`);
 
 async function delay(ms: number): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 while (true) {
     // Create a new AtmosphericConditions object with random values.
     var reading = new ClearSky.AtmosphericConditions(
         Math.trunc(190 + Math.random() * (230 - 190)) / 10.0,
-        Math.trunc(450 + Math.random() * (550 - 450)) / 10.0);
+        Math.trunc(450 + Math.random() * (550 - 450)) / 10.0,
+    );
 
     // Send the reading to the weather station(s).
     const timeStamp = new Date().toTimeString();
