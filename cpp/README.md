@@ -15,7 +15,7 @@ are provided to get you started on using a particular Ice feature or coding tech
 
 The subdirectories here correspond directly to Ice components, such as
 [IceGrid](./IceGrid) and [Glacier2](./Glacier2).
-****
+
 Refer to the README.md file in each demo directory for usage instructions.
 
 ## macOS Prerequisites
