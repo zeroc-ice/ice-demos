@@ -10,7 +10,8 @@ using namespace std;
 int
 main(int argc, char* argv[])
 {
-    // Create an Ice communicator. We'll use this communicator to create an object adapter.
+    // Create an Ice communicator. We'll use this communicator to manage outgoing connections, and create an object
+    // adapter.
     Ice::CtrlCHandler ctrlCHandler;
 
     // Create an Ice communicator to initialize the Ice runtime.
