@@ -17,7 +17,6 @@
         "${workspaceFolder}/cpp/Ice/filesystem",
         "${workspaceFolder}/cpp/Ice/forwarder",
         "${workspaceFolder}/cpp/Ice/greeter",
-        "${workspaceFolder}/cpp/Ice/interceptor",
         "${workspaceFolder}/cpp/Ice/middleware",
         "${workspaceFolder}/cpp/Ice/mtalk",
         "${workspaceFolder}/cpp/Ice/multicast",
