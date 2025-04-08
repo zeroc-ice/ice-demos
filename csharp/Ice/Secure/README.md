@@ -1,4 +1,4 @@
-# Ice Greeter
+# Ice Secure
 
 This demo illustrates how to programmatically configure client and server applications to use SSL secure connections.
 
@@ -12,14 +12,14 @@ First start the Server program:
 
 ```shell
 cd Server
-dotnet run -- --Ice.Trace.Network
+dotnet run --Ice.Trace.Network
 ```
 
 In a separate terminal, start the Client program:
 
 ```shell
 cd Client
-dotnet run -- --Ice.Trace.Network
+dotnet run --Ice.Trace.Network
 ```
 
 > [!NOTE]

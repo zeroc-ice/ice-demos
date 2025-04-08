@@ -1,9 +1,9 @@
 // Copyright (c) ZeroC, Inc.
 
-// Create an Ice communicator. We'll use this communicator to create an object adapter.
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 
+// Create an Ice communicator. We'll use this communicator to create an object adapter.
 await using Ice.Communicator communicator = Ice.Util.initialize(ref args);
 
 // Create the authentication options using the test server certificate included with the demos.
@@ -17,10 +17,11 @@ var sslAuthenticationOptions = new SslServerAuthenticationOptions
         additionalCertificates: null)
 };
 
-// Create an object adapter that listens for incoming requests and dispatches them to servants.
+// Create an object adapter that  listens for incoming requests and dispatches them to servants. We specify a endpoint
+// with the "ssl" protocol to ensure the server uses the SSL transport.
 Ice.ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints(
     "GreeterAdapter",
-    "ssl -p 4063",
+    "ssl -p 4061",
     sslAuthenticationOptions);
 
 // Register the Chatbot servant with the adapter.
