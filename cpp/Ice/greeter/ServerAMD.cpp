@@ -14,7 +14,7 @@ main(int argc, char* argv[])
     // of the program, before creating an Ice communicator or starting any thread.
     Ice::CtrlCHandler ctrlCHandler;
 
-    // Create an Ice communicator to initialize the Ice runtime.
+    // Create an Ice communicator. We'll use this communicator to create an object adapter.
     Ice::CommunicatorPtr communicator = Ice::initialize(argc, argv);
 
     // Call destroy on the communicator the end of this scope.

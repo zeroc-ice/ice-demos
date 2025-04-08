@@ -17,7 +17,7 @@ main(int argc, char* argv[])
     initData.properties = Ice::createProperties(argc, argv);
     initData.properties->setProperty("Ice.ImplicitContext", "Shared");
 
-    // Create an Ice communicator to initialize the Ice runtime.
+    // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
     Ice::CommunicatorPtr communicator = Ice::initialize(initData);
 
     // Make sure the communicator is destroyed at the end of this scope.
