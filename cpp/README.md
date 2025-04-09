@@ -6,6 +6,7 @@
   - [Ubuntu Prerequisites](#ubuntu-prerequisites)
   - [RedHat Prerequisites](#redhat-prerequisites)
   - [Windows Prerequisites](#windows-prerequisites)
+  - [C++ Demos](#c-demos-1)
 
 ## Overview
 
@@ -82,3 +83,28 @@ sudo dnf install -y ice-all-devel
 
 The CMake script will automatically download the required NuGet packages when you
 build the demos. The NuGet packages are cached the [cmake](./cmake) directory.
+
+## C++ Demos
+
+|                                                         |                                                                                                       |
+| ------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| [DataStorm Clock](./DataStorm/clock/)                   | Shows how to implement a custom encoder and decoder.                                                  |
+| [DataStorm KeyFilter](./DataStorm/keyFilter/)           | Shows how to use a key filters.                                                                       |
+| [DataStorm Minimal](./DataStorm/minimal/)               | Shows how to create a minimal DataStorm publisher and subscriber.                                     |
+| [DataStorm Node](./DataStorm/node/)                     | Shows the uses of a DataStorm node.                                                                   |
+| [DataStorm SampleFilter](./DataStorm/sampleFilter/)     | Shows how to use sample filters.                                                                      |
+| [DataStorm Stock](./DataStorm/stock/)                   | Shows how to use partial updates.                                                                     |
+| [Glacier2 Callback](./Glacier2/callback/)               | Shows how to write a Glacier2 client and implement callbacks in this client.                          |
+| [Ice Bidir](./Ice/bidir/)                               | Shows how to send requests "the other way around", from the server to the client.                     |
+| [Ice Callback](./Ice/callback/)                         | Shows how to implement callbacks in a client application.                                             |
+| [Ice Cancellation](./Ice/cancellation/)                 | Shows how to cancel a request and how to configure invocation timeouts.                               |
+| [Ice Config](./Ice/config/)                             | Shows how to configure client and server applications using Ice configuration files.                  |
+| [Ice Context](./Ice/context/)                           | Shows how to set and retrieve request contexts.                                                       |
+| [Ice Filesystem](./Ice/filesystem/)                     | Shows the power of interface inheritance in Slice.                                                    |
+| [Ice Forwarder](./Ice/forwarder/)                       | Shows how to write a servant that forwards all requests it receives to another remote Ice object.     |
+| [Ice Greeter](./Ice/greeter/)                           | Shows how to call and implement a canonical Greeter application with Ice. **Start with this demo!**   |
+| [Ice Middleware](./Ice/middleware/)                     | Shows how to write a simple middleware and how to add this middleware to an object adapter.           |
+| [Ice Multicast](./Ice/multicast/)                       | Shows how to use UDP multicast.                                                                       |
+| [Ice Optional](./Ice/optional/)                         | Shows how to add a field to a Slice class without breaking interop with existing clients and servers. |
+| [IceBox Greeter](./IceBox/Greeter/)                     | Shows how to create an IceBox service.                                                                |
+| [IceDiscovery Replication](./IceDiscovery/Replication/) | Shows how to use the IceDiscovery plugin with replicated servers.                                     |
