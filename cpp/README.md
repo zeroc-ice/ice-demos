@@ -106,5 +106,6 @@ build the demos. The NuGet packages are cached the [cmake](./cmake) directory.
 | [Ice Middleware](./Ice/middleware/)                     | Shows how to write a simple middleware and how to add this middleware to an object adapter.           |
 | [Ice Multicast](./Ice/multicast/)                       | Shows how to use UDP multicast.                                                                       |
 | [Ice Optional](./Ice/optional/)                         | Shows how to add a field to a Slice class without breaking interop with existing clients and servers. |
-| [IceBox Greeter](./IceBox/Greeter/)                     | Shows how to create an IceBox service.                                                                |
-| [IceDiscovery Replication](./IceDiscovery/Replication/) | Shows how to use the IceDiscovery plugin with replicated servers.                                     |
+| [IceBox Greeter](./IceBox/greeter/)                     | Shows how to create an IceBox service.                                                                |
+| [IceDiscovery Greeter](./IceDiscovery/greeter)          | Shows how to configure the IceDiscovery plugin.                                                       |
+| [IceDiscovery Replication](./IceDiscovery/replication/) | Shows how to use the IceDiscovery plugin with replicated servers.                                     |
