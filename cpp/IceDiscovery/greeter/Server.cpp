@@ -23,7 +23,7 @@ main(int argc, char* argv[])
     // Make sure the communicator is destroyed at the end of this scope.
     Ice::CommunicatorHolder communicatorHolder{communicator};
 
-    // Get the communicator's properties. We'll use this to set
+    // Get the communicator's properties. We'll use this to set the properties of the object adapter.
     Ice::PropertiesPtr properties = communicator->getProperties();
 
     // Configure the object adapter GreeterAdapter. It must be an indirect object adapter (i.e., with an AdapterId
