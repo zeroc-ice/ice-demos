@@ -1,8 +1,8 @@
 // Copyright (c) ZeroC, Inc.
 
-package com.zeroc.demos.ice.context.server;
+package com.example.ice.context.server;
 
-import com.zeroc.demos.visitor_center.Greeter;
+import com.example.visitorcenter.Greeter;
 import com.zeroc.Ice.Current;
 
 /**
