@@ -32,27 +32,5 @@ main(int argc, char* argv[])
     string greeting = greeter->greet(Env::getUsername());
     cout << greeting << endl;
 
-    // Send another request to the remote object, this time with greetAsync. greetAsync returns a future immediately.
-    future<string> futureGreeting = greeter->greetAsync("alice");
-
-    // Wait for the response.
-    greeting = futureGreeting.get();
-    cout << greeting << endl;
-
-    // Send a third request to the remote object, this time with the greetAsync overload that accepts callbacks.
-    promise<void> promise;
-    greeter->greetAsync(
-        "bob",
-        [&promise](string_view greeting) // response callback
-        {
-            cout << greeting << endl;
-            promise.set_value();
-        },
-        [&promise](std::exception_ptr exceptionPtr) // exception callback
-        { promise.set_exception(exceptionPtr); });
-
-    // Wait for the response/exception callback to be called.
-    promise.get_future().get();
-
     return 0;
 }
