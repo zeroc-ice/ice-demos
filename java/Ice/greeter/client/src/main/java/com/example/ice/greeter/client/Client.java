@@ -1,8 +1,8 @@
 // Copyright (c) ZeroC, Inc.
 
-package com.zeroc.demos.ice.greeter.client;
+package com.example.ice.greeter.client;
 
-import com.zeroc.demos.visitor_center.GreeterPrx;
+import com.example.visitorcenter.GreeterPrx;
 import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.Util;
 import java.util.concurrent.CompletableFuture;
