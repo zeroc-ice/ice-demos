@@ -12,7 +12,7 @@ add_custom_command(TARGET client POST_BUILD
   COMMAND_EXPAND_LISTS
 )
 
-add_executable(server Server.cpp ChatBot.cpp ChatBot.h Greeter.ice)
+add_executable(server Server.cpp Chatbot.cpp Chatbot.h Greeter.ice)
 slice2cpp_generate(server)
 target_link_libraries(server Ice::Ice Ice::IceDiscovery)
 add_custom_command(TARGET server POST_BUILD
