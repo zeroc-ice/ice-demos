@@ -39,7 +39,8 @@ class Server {
             try {
                 mainThread.join();
             } catch (InterruptedException e) {
-                assert false : "Shutdown thread cannot be interrupted";
+                // No code interrupts the shutdown hook thread in this program.
+                assert false;
             }
         }));
     }
