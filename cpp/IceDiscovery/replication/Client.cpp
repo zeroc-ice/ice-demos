@@ -1,124 +1,36 @@
 // Copyright (c) ZeroC, Inc.
 
-#include "Hello.h"
+#include "../../common/Env.h"
+#include "Greeter.h"
+
 #include <Ice/Ice.h>
+#include <future>
 #include <iostream>
-#include <thread>
 
 using namespace std;
-using namespace Demo;
-
-int run(const shared_ptr<Ice::Communicator>&);
 
 int
 main(int argc, char* argv[])
 {
-#ifdef ICE_STATIC_LIBS
-    Ice::registerIceDiscovery(false);
-#endif
+    // Register the IceDiscovery plugin. The plugin will be loaded during communicator initialization and will
+    // install a default locator on the communicator.
+    Ice::registerIceDiscovery();
 
-    int status = 0;
+    // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
+    Ice::CommunicatorPtr communicator = Ice::initialize(argc, argv);
 
-    try
-    {
-        //
-        // CommunicatorHolder's ctor initializes an Ice communicator,
-        // and its dtor destroys this communicator.
-        //
-        const Ice::CommunicatorHolder ich(argc, argv, "config.client");
+    // Make sure the communicator is destroyed at the end of this scope.
+    Ice::CommunicatorHolder communicatorHolder{communicator};
 
-        //
-        // The communicator initialization removes all Ice-related arguments from argc/argv
-        //
-        if (argc > 1)
-        {
-            cerr << argv[0] << ": too many arguments" << endl;
-            status = 1;
-        }
-        else
-        {
-            status = run(ich.communicator());
-        }
-    }
-    catch (const std::exception& ex)
-    {
-        cerr << argv[0] << ": " << ex.what() << endl;
-        status = 1;
-    }
+    // Create a proxy to the Greeter object hosted by the server. "greeter" is a stringified proxy with no addressing
+    // information, also known as a well-known proxy. It's resolved by the default locator installed by the IceDiscovery
+    // plugin.
+    VisitorCenter::GreeterPrx greeter{communicator, "greeter"};
 
-    return status;
-}
-
-int
-run(const shared_ptr<Ice::Communicator>& communicator)
-{
-    //
-    // Get the hello proxy. We configure the proxy to not cache the
-    // server connection with the proxy and to disable the locator
-    // cache. With this configuration, the IceDiscovery locator will be
-    // queried for each invocation on the proxy.
-    //
-    auto obj = communicator->stringToProxy("hello");
-    obj = obj->ice_connectionCached(false);
-    obj = obj->ice_locatorCacheTimeout(0);
-
-    auto hello = Ice::checkedCast<HelloPrx>(obj);
-    if (!hello)
-    {
-        cerr << "couldn't find object `hello'." << endl;
-        return 1;
-    }
-
-    string s;
-    do
-    {
-        int count;
-        int delay = 500;
-
-        // Read the iterations parameter from stdin.
-        cout << "enter the number of iterations or 'x' to exit: ";
-        cin >> s;
-        if (s == "x")
-        {
-            break;
-        }
-
-        try
-        {
-            count = stoi(s);
-        }
-        catch (const invalid_argument&)
-        {
-            cerr << "'" << s << "'"
-                 << " is not a valid value for the iterations parameter, it has to be a positive integer" << endl;
-            return 1;
-        }
-
-        // Read the delay parameter from stdin.
-        cout << "enter the delay between each greetings (in ms): ";
-        cin >> s;
-        try
-        {
-            delay = stoi(s);
-        }
-        catch (const invalid_argument&)
-        {
-            cerr << "'" << s << "' is not a valid value for the delay parameter, it has to be a positive integer"
-                 << endl;
-            return 1;
-        }
-
-        if (delay < 0)
-        {
-            delay = 500; // 500 milliseconds
-        }
-
-        for (int i = 0; i < count; i++)
-        {
-            cout << hello->getGreeting() << endl;
-            this_thread::sleep_for(chrono::milliseconds(delay));
-        }
-    } while (cin.good());
+    // Send a request to the remote object and wait synchronously for the response.
+    // Both the -> and . syntax can be used to make invocations with the proxy.
+    string greeting = greeter->greet(Env::getUsername());
+    cout << greeting << endl;
 
     return 0;
 }
