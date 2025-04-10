@@ -22,6 +22,10 @@
         "${workspaceFolder}/cpp/Ice/multicast",
         "${workspaceFolder}/cpp/Ice/optional",
 
+        "${workspaceFolder}/cpp/IceBox/greeter",
+
+        "${workspaceFolder}/cpp/IceDiscovery/greeter",
+
         "${workspaceFolder}/cpp/IceStorm/clock",
         "${workspaceFolder}/cpp/IceStorm/counter",
         "${workspaceFolder}/cpp/IceStorm/replicated",
