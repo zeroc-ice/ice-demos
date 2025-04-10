@@ -12,11 +12,12 @@ using namespace std;
 int
 main(int argc, char* argv[])
 {
-    // Register the IceDiscovery plugin. The plugin will be loaded during communicator initialization and will
-    // install a default locator on the communicator.
+    // Register the IceDiscovery plugin. The plugin will be loaded during communicator initialization.
     Ice::registerIceDiscovery();
 
     // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
+    // The IceDiscovery plugin is created and initialized by initialize, and sets the default locator on the new
+    // communicator.
     Ice::CommunicatorPtr communicator = Ice::initialize(argc, argv);
 
     // Make sure the communicator is destroyed at the end of this scope.
