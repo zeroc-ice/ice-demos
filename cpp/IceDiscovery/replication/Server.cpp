@@ -18,6 +18,8 @@ main(int argc, char* argv[])
     Ice::CtrlCHandler ctrlCHandler;
 
     // Create an Ice communicator. We'll use this communicator to create an object adapter.
+    // The IceDiscovery plugin is created and initialized by initialize, and sets the default locator on the new
+    // communicator.
     Ice::CommunicatorPtr communicator = Ice::initialize(argc, argv);
 
     // Make sure the communicator is destroyed at the end of this scope.

@@ -1,12 +1,15 @@
 // Copyright (c) ZeroC, Inc.
 
-// Configure the communicator to load the IceDiscovery plugin during initialization. This plugin installs a default
-// locator on the communicator.
-var initData = new Ice.InitializationData
-{
-    properties = new Ice.Properties(ref args)
-};
-initData.properties.setProperty("Ice.Plugin.Discovery", "IceDiscovery:IceDiscovery.PluginFactory");
+// Register the IceDiscovery plugin. The plugin will be loaded during communicator initialization.
+IceDiscovery.Util.registerIceDiscovery(loadOnInitialize: true);
+
+// Create an Ice communicator. We'll use this communicator to create an object adapter.
+// The IceDiscovery plugin is created and initialized by initialize, and sets the default locator on the new
+// communicator.
+await using Ice.Communicator communicator = Ice.Util.initialize(ref args);
+
+// Get the communicator's properties. We'll use this object to set the properties of our object adapter.
+var properties = communicator.getProperties();
 
 // Generate a unique name for the adapter ID and the greeter name.
 string uuid = Guid.NewGuid().ToString();
@@ -14,15 +17,12 @@ string uuid = Guid.NewGuid().ToString();
 // Configure the object adapter GreeterAdapter. It must be an indirect object adapter (i.e., with an AdapterId
 // property); otherwise, the IceDiscovery plugin can't make it discoverable by IceDiscovery clients.
 // We also set the ReplicaGroupId property to "greeterPool" to enable replication.
-initData.properties.setProperty("GreeterAdapter.AdapterId", $"greeter-{uuid}");
-initData.properties.setProperty("GreeterAdapter.ReplicaGroupId", "greeterPool");
+properties.setProperty("GreeterAdapter.AdapterId", $"greeter-{uuid}");
+properties.setProperty("GreeterAdapter.ReplicaGroupId", "greeterPool");
 
 // Configure the GreeterAdapter to listen on TCP with an OS-assigned port. We don't need a fixed port since the clients
 // discover this object adapter.
-initData.properties.setProperty("GreeterAdapter.Endpoints", "tcp");
-
-// Create an Ice communicator. We'll use this communicator to create an object adapter.
-await using Ice.Communicator communicator = Ice.Util.initialize(initData);
+properties.setProperty("GreeterAdapter.Endpoints", "tcp");
 
 // Create an object adapter that listens for incoming requests and dispatches them to servants. "GreeterAdapter" is a
 // key into the configuration properties set above.
