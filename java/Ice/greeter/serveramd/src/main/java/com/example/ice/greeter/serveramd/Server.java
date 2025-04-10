@@ -1,6 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
-package com.zeroc.demos.ice.context.server;
+package com.example.ice.greeter.serveramd;
 
 import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.ObjectAdapter;

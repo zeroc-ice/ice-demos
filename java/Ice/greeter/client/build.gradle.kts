@@ -5,7 +5,6 @@ dependencies {
     implementation("com.zeroc:ice:3.8.0-+")
 }
 
-
 sourceSets {
     main {
         // Add the Greeter.ice file from the parent slice directory the main source set.
@@ -20,5 +19,5 @@ sourceSets {
 
 application {
     // Specify the main entry point for the application.
-    mainClass.set("com.zeroc.demos.ice.greeter.client.Client")
+    mainClass.set("com.example.ice.greeter.client.Client")
 }
