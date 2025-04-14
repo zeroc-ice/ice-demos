@@ -23,10 +23,6 @@ usage(const char* name)
 int
 main(int argc, char* argv[])
 {
-#ifdef ICE_STATIC_LIBS
-    Ice::registerIceUDP();
-#endif
-
     // CtrlCHandler is a helper class that handles Ctrl+C and similar signals. It must be constructed at the beginning
     // of the program, before creating an Ice communicator or starting any thread.
     Ice::CtrlCHandler ctrlCHandler;

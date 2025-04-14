@@ -19,10 +19,6 @@ int run(const shared_ptr<Ice::Communicator>& communicator, int argc, char* argv[
 int
 main(int argc, char* argv[])
 {
-#ifdef ICE_STATIC_LIBS
-    Ice::registerIceUDP();
-#endif
-
     int status = 0;
 
     try
