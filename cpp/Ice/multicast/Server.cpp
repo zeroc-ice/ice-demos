@@ -41,10 +41,6 @@ private:
 int
 main(int argc, char* argv[])
 {
-#ifdef ICE_STATIC_LIBS
-    Ice::registerIceUDP();
-#endif
-
     int status = 0;
 
     try

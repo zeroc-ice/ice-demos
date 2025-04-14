@@ -11,14 +11,16 @@ int
 main(int argc, char* argv[])
 {
     // Register the IceDiscovery plugin. The plugin will be loaded during communicator initialization.
-    Ice::registerIceDiscovery();
+    Ice::InitializationData initData;
+    initData.properties = Ice::createProperties(argc, argv);
+    initData.pluginFactories = {Ice::discoveryPluginFactory()};
 
     // CtrlCHandler is a helper class that handles Ctrl+C and similar signals. It must be constructed at the beginning
     // of the program, before creating an Ice communicator or starting any thread.
     Ice::CtrlCHandler ctrlCHandler;
 
     // Create an Ice communicator. We'll use this communicator to create an object adapter.
-    Ice::CommunicatorPtr communicator = Ice::initialize(argc, argv);
+    Ice::CommunicatorPtr communicator = Ice::initialize(initData);
 
     // Make sure the communicator is destroyed at the end of this scope.
     Ice::CommunicatorHolder communicatorHolder{communicator};

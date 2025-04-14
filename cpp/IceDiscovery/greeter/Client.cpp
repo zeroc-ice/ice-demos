@@ -14,10 +14,12 @@ main(int argc, char* argv[])
 {
     // Register the IceDiscovery plugin. The plugin will be loaded during communicator initialization and will
     // install a default locator on the communicator.
-    Ice::registerIceDiscovery();
+    Ice::InitializationData initData;
+    initData.properties = Ice::createProperties(argc, argv);
+    initData.pluginFactories = {Ice::discoveryPluginFactory()};
 
     // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
-    Ice::CommunicatorPtr communicator = Ice::initialize(argc, argv);
+    Ice::CommunicatorPtr communicator = Ice::initialize(initData);
 
     // Make sure the communicator is destroyed at the end of this scope.
     Ice::CommunicatorHolder communicatorHolder{communicator};
