@@ -16,7 +16,7 @@ Ice::initialize(ARGV, "config.client") do |communicator|
     # with the "Greeter.Proxy" specification with the address of the target object, and the "config.client" file that
     # we referenced during initialization.
     greeter = VisitorCenter::GreeterPrx.uncheckedCast(communicator.propertyToProxy("Greeter.Proxy"))
-    
+
     # Send a request to the remote object and get the response.
     greeting = greeter.greet(Etc.getlogin)
 
