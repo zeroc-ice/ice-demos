@@ -30,3 +30,9 @@ Demos in this directory:
   various types between client and server and to measure the maximum
   bandwidth that can be achieved using serialized synchronous
   requests.
+
+- [invocationTimeout](./invocationTimeout)
+
+  This demo demonstrates how to set a timeout period for a client
+  as well as how to catch a timeout exception.
+  
