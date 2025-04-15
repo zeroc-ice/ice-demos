@@ -30,3 +30,7 @@ Demos in this directory:
   various types between client and server and to measure the maximum
   bandwidth that can be achieved using serialized synchronous
   requests.
+
+- [filesystem](./filesystem)
+
+  This demo implements the filesystem application shown at the end of Python mapping chapter in the Ice manual.
