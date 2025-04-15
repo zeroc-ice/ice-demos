@@ -7,9 +7,9 @@ using VisitorCenter;
 // locator on the communicator.
 var initData = new Ice.InitializationData
 {
-    properties = new Ice.Properties(ref args)
+    properties = new Ice.Properties(ref args),
+    pluginFactories = [new IceDiscovery.PluginFactory()]
 };
-initData.properties.setProperty("Ice.Plugin.Discovery", "IceDiscovery:IceDiscovery.PluginFactory");
 
 // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
 await using Ice.Communicator communicator = Ice.Util.initialize(initData);
