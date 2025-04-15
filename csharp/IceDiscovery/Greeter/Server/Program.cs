@@ -4,9 +4,9 @@
 // locator on the communicator.
 var initData = new Ice.InitializationData
 {
-    properties = new Ice.Properties(ref args)
+    properties = new Ice.Properties(ref args),
+    pluginFactories = [new IceDiscovery.PluginFactory()]
 };
-initData.properties.setProperty("Ice.Plugin.Discovery", "IceDiscovery:IceDiscovery.PluginFactory");
 
 // Configure the object adapter GreeterAdapter. It must be an indirect object adapter (i.e., with an AdapterId
 // property); otherwise, the IceDiscovery plugin can't make it discoverable by IceDiscovery clients.

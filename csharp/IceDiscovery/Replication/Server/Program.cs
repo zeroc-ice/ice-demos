@@ -4,9 +4,9 @@
 // locator on the communicator.
 var initData = new Ice.InitializationData
 {
-    properties = new Ice.Properties(ref args)
+    properties = new Ice.Properties(ref args),
+    pluginFactories = [new IceDiscovery.PluginFactory()]
 };
-initData.properties.setProperty("Ice.Plugin.Discovery", "IceDiscovery:IceDiscovery.PluginFactory");
 
 // Generate a unique name for the adapter ID and the greeter name.
 string uuid = Guid.NewGuid().ToString();
