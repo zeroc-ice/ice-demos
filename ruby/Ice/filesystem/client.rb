@@ -43,7 +43,7 @@ end
 # It also accepts additional command line arguments.
 Ice::initialize(ARGV) do |communicator|
     # Create a proxy for the root directory.
-    rootDir = Filesystem::DirectoryPrx.new("RootDir:default -h localhost -p 4061")
+    rootDir = Filesystem::DirectoryPrx.new(communicator, "RootDir:default -h localhost -p 4061")
  
     # Recursively list the contents of the root directory.
     puts "Contents of root directory:"
