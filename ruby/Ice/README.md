@@ -33,4 +33,5 @@ Demos in this directory:
 
 - [filesystem](./filesystem)
 
-  This demo implements the filesystem application shown at the end of Python mapping chapter in the Ice manual.
+  This demo implements the filesystem application shown at the end of
+  the Ruby mapping chapter in the Ice manual.
