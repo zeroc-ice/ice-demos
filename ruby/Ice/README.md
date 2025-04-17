@@ -6,6 +6,10 @@ Demos in this directory:
   well as how to invoke oneway operations, use datagrams, secure
   invocations, and how to use batched invocations.
 
+- [config](./config/)
+
+  The Config demo shows off how to use a config file to create a client proxy.
+
 - [latency](./latency)
 
   A simple latency test that measures the basic call dispatch delay of
