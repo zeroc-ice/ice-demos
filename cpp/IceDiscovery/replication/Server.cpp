@@ -3,6 +3,7 @@
 #include "Chatbot.h"
 
 #include <Ice/Ice.h>
+#include <IceDiscovery/IceDiscovery.h>
 #include <iostream>
 
 using namespace std;
@@ -13,7 +14,7 @@ main(int argc, char* argv[])
     // Register the IceDiscovery plugin. The plugin will be loaded during communicator initialization.
     Ice::InitializationData initData;
     initData.properties = Ice::createProperties(argc, argv);
-    initData.pluginFactories = {Ice::discoveryPluginFactory()};
+    initData.pluginFactories = {IceDiscovery::discoveryPluginFactory()};
 
     // CtrlCHandler is a helper class that handles Ctrl+C and similar signals. It must be constructed at the beginning
     // of the program, before creating an Ice communicator or starting any thread.

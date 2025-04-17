@@ -4,6 +4,7 @@
 #include "Greeter.h"
 
 #include <Ice/Ice.h>
+#include <IceDiscovery/IceDiscovery.h>
 #include <future>
 #include <iostream>
 
@@ -16,7 +17,7 @@ main(int argc, char* argv[])
     // install a default locator on the communicator.
     Ice::InitializationData initData;
     initData.properties = Ice::createProperties(argc, argv);
-    initData.pluginFactories = {Ice::discoveryPluginFactory()};
+    initData.pluginFactories = {IceDiscovery::discoveryPluginFactory()};
 
     // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
     Ice::CommunicatorPtr communicator = Ice::initialize(initData);
