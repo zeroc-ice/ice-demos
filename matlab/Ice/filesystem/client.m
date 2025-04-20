@@ -1,7 +1,7 @@
 % Copyright (c) ZeroC, Inc.
 
 function client(args)
-    % The Slice module Filesystem maps to a MATLAB package with the same name.
+    % The Slice module Filesystem maps to a MATLAB namespace with the same name.
     import Filesystem.*
 
     if nargin == 0
