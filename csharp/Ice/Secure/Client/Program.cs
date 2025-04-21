@@ -33,7 +33,7 @@ var clientAuthenticationOptions = new SslClientAuthenticationOptions()
         }
         else
         {
-            // Return false if the certificate is not of the expected type.
+            // Return false if the peer did not provide a certificate.
             return false;
         }
     }

@@ -17,8 +17,8 @@ var sslAuthenticationOptions = new SslServerAuthenticationOptions
         additionalCertificates: null)
 };
 
-// Create an object adapter that  listens for incoming requests and dispatches them to servants. We specify a endpoint
-// with the "ssl" protocol to ensure the server uses the SSL transport.
+// Create an object adapter that listens for incoming requests and dispatches them to servants. We specify an ssl
+// endpoint to use the SSL transport.
 Ice.ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints(
     "GreeterAdapter",
     "ssl -p 4061",
