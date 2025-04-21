@@ -11,6 +11,10 @@ Demos in this directory:
   well as how to invoke oneway operations, use datagrams, secure
   invocations, and how to use batched invocations.
 
+- [config](./config/)
+
+  This demo shows how to configure a client application using an Ice configuration file.
+
 - [latency](./latency)
 
   A simple latency test that measures the basic call dispatch delay of
