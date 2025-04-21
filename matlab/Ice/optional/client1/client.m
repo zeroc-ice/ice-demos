@@ -1,7 +1,7 @@
 % Copyright (c) ZeroC, Inc.
 
 function client(args)
-    % The Slice module ClearSky in WeatherStation.ice maps a MATLAB package with the same name.
+    % The Slice module ClearSky in WeatherStation.ice maps a MATLAB namespace with the same name.
     import ClearSky.*
 
     if nargin == 0
