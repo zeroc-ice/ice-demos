@@ -1,5 +1,10 @@
 Demos in this directory:
 
+- [context](./context)
+
+  The Context demo shows the 3 different ways to set a request context in a
+  client.
+
 - [hello](./hello)
 
   This demo illustrates how to invoke ordinary (twoway) operations, as
