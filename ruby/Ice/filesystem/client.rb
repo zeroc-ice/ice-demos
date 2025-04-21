@@ -8,7 +8,8 @@ require 'Ice'
 require_relative 'Filesystem.rb'
 
 
-# Recursively prints the contents of a directory in tree fashion. For files, show the contents of each file.
+# Recursively prints the contents directory "dir" in tree fashion.
+# For files, show the contents of each file.
 #
 # @param [FileSystem::DirectoryPrx] dir The directory to list.
 # @param [Integer] depth The current depth in the directory hierarchy.
@@ -21,7 +22,7 @@ def listRecursive(dir, depth = 0)
  
     contents = dir.list()
  
-    # Generates proxies for each node. 
+    # Check if this node is a directory by asking the remote object.
     for node in contents
         subdir = Filesystem::DirectoryPrx::checkedCast(node)
         print indent + node.name()
@@ -31,6 +32,7 @@ def listRecursive(dir, depth = 0)
         else # We assume it's a file if it's not a directory.
             file = Filesystem::FilePrx::uncheckedCast(node)
             puts "(file):"
+            # Read and print the contents of the file.
             text = file.read()
             for line in text
                 puts indent + "\t" + line
@@ -40,7 +42,6 @@ def listRecursive(dir, depth = 0)
 end
 
 # Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
-# It also accepts additional command line arguments.
 Ice::initialize(ARGV) do |communicator|
     # Create a proxy for the root directory.
     rootDir = Filesystem::DirectoryPrx.new(communicator, "RootDir:default -h localhost -p 4061")
