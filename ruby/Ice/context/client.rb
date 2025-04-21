@@ -13,7 +13,6 @@ require_relative 'Greeter.rb'
 initData = Ice::InitializationData.new()
 initData.properties = Ice.createProperties(ARGV)
 initData.properties.setProperty('Ice.ImplicitContext', 'Shared')
-initData.properties.getProperty('Ice.ImplicitContext')
 
 # Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
 Ice::initialize(ARGV, initData) do |communicator|
