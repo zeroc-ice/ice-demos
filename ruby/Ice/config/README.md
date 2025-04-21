@@ -1,6 +1,6 @@
 # Config
 
-The Config demo shows off how to use a config file to create a client proxy.
+This demo shows how to configure a client application using an Ice configuration file.
 
 Ice for Ruby supports only client-side applications. As a result, you first need to start a Config server implemented
 in a language with server-side support, such as Python, Java, or C#.
