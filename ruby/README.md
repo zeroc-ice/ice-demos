@@ -1,6 +1,6 @@
 # Ice for Ruby Demos
 
-This folder contains example Ice applications written in C#. Each example is a simple client-server application that
+This folder contains example Ice applications written in Ruby. Each example is a simple client-server application that
 demonstrates a specific feature or programming technique.
 
 ## Building Requirements
