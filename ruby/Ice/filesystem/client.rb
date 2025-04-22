@@ -14,11 +14,8 @@ require_relative 'Filesystem.rb'
 # @param [FileSystem::DirectoryPrx] dir The directory to list.
 # @param [Integer] depth The current depth in the directory hierarchy.
 def listRecursive(dir, depth = 0)
-    indent = ''
     depth = depth + 1
-    for i in (0...depth)
-        indent += "\t"
-    end
+    indent = "\t" * depth
  
     contents = dir.list()
  
