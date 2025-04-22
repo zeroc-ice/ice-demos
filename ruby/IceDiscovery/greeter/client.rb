@@ -14,8 +14,7 @@ initData = Ice::InitializationData.new()
 initData.properties = Ice.createProperties(ARGV)
 initData.properties.setProperty("Ice.Plugin.IceDiscovery", "1")
 
-# Create an Ice communicator to initialize the Ice runtime. The communicator is destroyed at the end of the block
-# returned by Ice::initialize.
+# Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
 Ice::initialize(initData) do |communicator|
     # Create a proxy to the Greeter object hosted by the server(s). 'greeter' is a stringified proxy with no addressing
     # information, also known as a well-known proxy. It's resolved by the default locator installed by the IceDiscovery
