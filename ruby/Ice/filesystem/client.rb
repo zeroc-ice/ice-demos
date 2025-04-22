@@ -13,14 +13,14 @@ require_relative 'Filesystem.rb'
 #
 # @param [FileSystem::DirectoryPrx] dir The directory to list.
 # @param [Integer] depth The current depth in the directory hierarchy.
-def listRecursive(dir, depth = 0)
-    depth = depth + 1
+def listRecursive(dir, depth)
+    depth += 1
     indent = "\t" * depth
  
     contents = dir.list()
- 
-    # Check if this node is a directory by asking the remote object.
+
     for node in contents
+        # Check if this node is a directory by asking the remote object.
         subdir = Filesystem::DirectoryPrx::checkedCast(node)
         print indent + node.name()
         if subdir
@@ -41,7 +41,7 @@ end
 # Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
 Ice::initialize(ARGV) do |communicator|
     # Create a proxy for the root directory.
-    rootDir = Filesystem::DirectoryPrx.new(communicator, "RootDir:default -h localhost -p 4061")
+    rootDir = Filesystem::DirectoryPrx.new(communicator, "RootDir:tcp -h localhost -p 4061")
  
     # Recursively list the contents of the root directory.
     puts "Contents of root directory:"
