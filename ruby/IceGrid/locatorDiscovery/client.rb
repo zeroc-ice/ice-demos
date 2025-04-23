@@ -8,7 +8,7 @@ require 'Ice'
 # name.
 require_relative 'Greeter.rb'
 
-# Configure the communicator to load the IceLocaorDiscovery plugin during initialization. This plugin will discover
+# Configure the communicator to load the IceLocatorDiscovery plugin during initialization. This plugin will discover
 # the locator (IceGrid registry in this demo) to use. As a result, we don't need to configure the default locator on
 # this communicator.
 initData = Ice::InitializationData.new()
