@@ -20,8 +20,5 @@ gem install zeroc-ice --source https://download.zeroc.com/nexus/repository/rubyg
 | [Ice Filesystem](./Ice/filesystem/)        | Shows the power of interface inheritance in Slice.                                                                                  |
 | [Ice Greeter](./Ice/greeter/)              | Shows how to call a remote Greeter object with Ice. **Start with this demo!**                                                       |
 | [Ice Invocation Timeout](./Ice/invocationTimeout/) | Shows how to configure invocation timeouts.                                                                                 |
-| [Ice Latency](./Ice/latency/) | A simple latency test that measures the basic call dispatch delay of Ice.                                                                        |
 | [Ice Optional](./Ice/optional/)            | Shows how to add a field to a Slice class without breaking interop with existing clients and servers.                               |
-| [Ice Session](./Ice/session/)              | This example demonstrates how to clean up per-client objects through the use of sessions.                                           |
-| [Ice Throughput](./Ice/throughput/)        | A simple throughput demo that allows you to send sequences of various types between client and server.                              |
 | [IceDiscovery Greeter](./IceDiscovery/greeter/) | Shows how to configure the IceDiscovery plugin.                                                                                |
