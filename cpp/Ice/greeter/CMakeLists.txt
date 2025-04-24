@@ -6,7 +6,7 @@ include(../../cmake/common.cmake)
 
 add_executable(client Client.cpp Greeter.ice)
 slice2cpp_generate(client)
-target_link_libraries(client Ice::Ice)
+target_link_libraries(client PRIVATE Ice::Ice)
 add_custom_command(TARGET client POST_BUILD
   COMMAND ${CMAKE_COMMAND} -E copy -t $<TARGET_FILE_DIR:client>
     $<TARGET_RUNTIME_DLLS:client>
@@ -16,7 +16,7 @@ add_custom_command(TARGET client POST_BUILD
 
 add_executable(server Server.cpp Chatbot.cpp Chatbot.h Greeter.ice)
 slice2cpp_generate(server)
-target_link_libraries(server Ice::Ice)
+target_link_libraries(server PRIVATE Ice::Ice)
 add_custom_command(TARGET server POST_BUILD
   COMMAND ${CMAKE_COMMAND} -E copy -t $<TARGET_FILE_DIR:server>
     $<TARGET_RUNTIME_DLLS:server>
@@ -26,7 +26,7 @@ add_custom_command(TARGET server POST_BUILD
 
 add_executable(serveramd ServerAMD.cpp ChatbotAMD.cpp ChatbotAMD.h GreeterAMD.ice)
 slice2cpp_generate(serveramd)
-target_link_libraries(serveramd Ice::Ice)
+target_link_libraries(serveramd PRIVATE Ice::Ice)
 add_custom_command(TARGET serveramd POST_BUILD
   COMMAND ${CMAKE_COMMAND} -E copy -t $<TARGET_FILE_DIR:serveramd>
     $<TARGET_RUNTIME_DLLS:serveramd>

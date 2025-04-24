@@ -6,7 +6,7 @@ include(../../cmake/common.cmake)
 
 add_executable(client Client.cpp Hello.ice)
 slice2cpp_generate(client)
-target_link_libraries(client Ice::Ice Ice::IceGrid Ice::Glacier2)
+target_link_libraries(client PRIVATE Ice::Ice Ice::IceGrid Ice::Glacier2)
 add_custom_command(TARGET client POST_BUILD
   COMMAND ${CMAKE_COMMAND} -E copy -t $<TARGET_FILE_DIR:client>
     $<TARGET_RUNTIME_DLLS:client>
