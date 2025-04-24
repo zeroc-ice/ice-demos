@@ -24,9 +24,6 @@ Ice::initialize(ARGV) do |communicator|
     # the session is the same as the lifetime of the connection.
     session = router.createSession(username, "password")
 
-    # The proxy returned by createSession is null because we did not configure a SessionManager on the Glacier2 router.
-    assert(session.empty?)
-
     # Create a proxy to the Greeter object in the server behind the Glacier2 router. Typically, the client cannot
     # connect directly to this server because it's on an unreachable network.
     greeter = VisitorCenter::GreeterPrx.new(communicator, "greeter:tcp -h localhost -p 4061")
@@ -39,6 +36,6 @@ Ice::initialize(ARGV) do |communicator|
     puts greeting
 
     # Send a second request to observe the effect in the Glacier2 router log.
-    gretting = greeter.greet("alice")
+    greeting = greeter.greet("alice")
     puts greeting
 end
