@@ -36,8 +36,8 @@ Ice::initialize(ARGV) do |communicator|
 
     while true
         # Generate a random temperature and humidity reading.
-        temperature = (190 + rand(40)) / 10; # Temperature in degrees Celsius (19.0 to 23.0).
-        humidity = (450 + rand(100)) / 10; # Humidity in percentage (45.0 to 55.0).
+        temperature = (190.0 + rand(40)) / 10.0; # Temperature in degrees Celsius (19.0 to 23.0).
+        humidity = (450.0 + rand(100)) / 10.0; # Humidity in percentage (45.0 to 55.0).
 
         # Create an AtmosphericConditions object with the generated values.
         reading = ClearSky::AtmosphericConditions.new(temperature, humidity)
