@@ -25,7 +25,7 @@ Ice::initialize(ARGV) do |communicator|
     end
 
     # Create a WeatherStation proxy using the publisher proxy of the topic. The proxy returned by getPublisher is
-    # never null.
+    # never nil.
     weatherStation = ClearSky::WeatherStationPrx::uncheckedCast(topic.getPublisher())
 
     # Generate a sensor ID for this weather sensor.
