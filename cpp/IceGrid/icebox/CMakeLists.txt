@@ -14,7 +14,7 @@ add_custom_command(TARGET client POST_BUILD
   COMMAND_EXPAND_LISTS
 )
 
-add_library(HelloService SHARED HelloServiceI.cpp HelloServiceI.h HelloI.cpp HelloI.h Hello.ice)
+add_library(HelloService SHARED GreeterService.cpp GreeterService.h Chatbot.cpp Chatbot.h Hello.ice)
 slice2cpp_generate(HelloService)
 target_link_libraries(HelloService PRIVATE Ice::Ice Ice::IceBox)
 add_custom_command(TARGET HelloService POST_BUILD

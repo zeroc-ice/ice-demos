@@ -1,0 +1,32 @@
+<icegrid>
+  <!-- An application describes nodes and servers deployed on these nodes. An IceGrid deployment (a registry plus one or
+  more nodes) can host several applications. -->
+  <application name="GreeterHall">
+
+    <!-- Describes the servers deployed on the IceGrid node named 'node1'. -->
+    <node name="node1">
+
+      <!-- Describes the servers deployed on node1. IceGrid starts this server when a client looks up an object adapter
+      or a well-known object in this server. Here, we deploy a single IceBox server named "IceBox". -->
+      <icebox id="IceBox" activation="on-demand" exe="icebox">
+        <!-- A service descriptor describes an IceBox service -->
+        <service name="GreeterService" entry="HelloService:create">
+          <description>Hosts a greeter that produces greetings.</description>
+
+          <!-- The object adapter created by this service. It listens on an OS-assigned tcp port, on all interfaces.
+          It also defines a well-known object with identity "greeter". IceGrid generates property Greeter.Identity in
+          the config file for the service.
+          server-lifetime="false" tells IceGrid this object adapter has not the same lifetime as the IceBox server;
+          this is the recommended setting for object adapters in IceBox services since an IceBox service can be
+          started, then stopped, then restarted again while the IceBox server keeps running. -->
+          <adapter name="GreeterAdapter" endpoints="tcp" server-lifetime="false">
+            <object identity="greeter" type="::VisitorCenter::Greeter" property="Greeter.Identity"/>
+          </adapter>
+
+          <!-- Generate the Greeter.Name property. -->
+          <property name="Greeter.Name" value="Syd" />
+         </service>
+      </icebox>
+    </node>
+  </application>
+</icegrid>
