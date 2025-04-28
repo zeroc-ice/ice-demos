@@ -50,5 +50,4 @@ Ice::initialize(ARGV) do |communicator|
         sleep(1)
     end
 
-    
 end
