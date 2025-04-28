@@ -34,7 +34,15 @@ Ice::initialize(ARGV) do |communicator|
     # Send a reading every second to the weather station(s) via IceStorm. We keep sending until the user presses Ctrl+C.
     puts sensorId + " reporting. Press Ctrl+C to stop..."
 
-    while true
+    cancel = false
+
+    Signal.trap("INT") do
+        cancel = true
+        puts ""
+        puts "Stopping..."
+    end
+
+    while !cancel
         # Generate a random temperature and humidity reading.
         temperature = (190.0 + rand(40)) / 10.0; # Temperature in degrees Celsius (19.0 to 23.0).
         humidity = (450.0 + rand(100)) / 10.0; # Humidity in percentage (45.0 to 55.0).
