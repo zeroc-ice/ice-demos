@@ -7,7 +7,7 @@
 
 using namespace std;
 
-Server::Chatbot::Chatbot(string greeterName) : _greeterName(move(greeterName)) {}
+Server::Chatbot::Chatbot(string greeterName) : _greeterName(std::move(greeterName)) {}
 
 string
 Server::Chatbot::greet(string name, const Ice::Current&)
