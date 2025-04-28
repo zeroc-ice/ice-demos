@@ -1,17 +1,24 @@
-# Ruby Demos
+# Ice for Ruby Demos
 
-## Overview
+This folder contains example Ice applications written in Ruby. Each example is a simple client application that
+demonstrates a specific feature or programming technique.
 
-This directory contains Ruby sample programs for various Ice components. These
-examples are provided to get you started on using a particular Ice feature or
-coding technique.
-
-Refer to the README.md file in each demo directory for usage instructions.
-
-## Prerequisites
+## Building Requirements
 
 You'll need to install Ice for Ruby in order to use any of the sample programs.
 
 ```shell
 gem install zeroc-ice --source https://download.zeroc.com/nexus/repository/rubygems-nightly --user --pre
 ```
+
+# Ruby Demos
+
+|                                            |                                                                                                                                     |
+|--------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------|
+| [Ice Config](./Ice/config/)                | Shows how to configure a client application using an Ice configuration file.                                                        |
+| [Ice Context](./Ice/context/)              | Shows different ways to set request contexts.                                                                                       |
+| [Ice Filesystem](./Ice/filesystem/)        | Shows the power of interface inheritance in Slice.                                                                                  |
+| [Ice Greeter](./Ice/greeter/)              | Shows how to call a remote Greeter object with Ice. **Start with this demo!**                                                       |
+| [Ice Invocation Timeout](./Ice/invocationTimeout/) | Shows how to configure invocation timeouts.                                                                                 |
+| [Ice Optional](./Ice/optional/)            | Shows how to add a field to a Slice class without breaking interop with existing clients and servers.                               |
+| [IceDiscovery Greeter](./IceDiscovery/greeter/) | Shows how to configure the IceDiscovery plugin.                                                                                |
