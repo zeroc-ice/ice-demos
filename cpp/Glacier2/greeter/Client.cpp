@@ -5,6 +5,7 @@
 
 #include <Glacier2/Glacier2.h>
 #include <Ice/Ice.h>
+#include <cassert>
 #include <iostream>
 
 using namespace std;
