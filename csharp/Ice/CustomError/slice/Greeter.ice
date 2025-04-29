@@ -9,7 +9,10 @@ module VisitorCenter
 
     /// Represents an exception.
     exception GreeterException {
-        string message;
+        /// The reason for the exception.
+        string reason;
+
+        //The ID for the exception, given as a GreeterError enum.
         GreeterError error;
     }
 

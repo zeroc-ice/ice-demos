@@ -25,6 +25,6 @@ foreach (string name in names)
     }
     catch (GreeterException grExcept)
     {
-        Console.WriteLine($"Exception caught: {grExcept.error}\n {grExcept.message}");
+        Console.WriteLine($"Exception caught: {grExcept.error}\n {grExcept.reason}");
     }
 }

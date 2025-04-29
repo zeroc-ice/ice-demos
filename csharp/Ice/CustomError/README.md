@@ -1,9 +1,10 @@
 # Custom error
 
-The Custom error example shows how to define an operation that returns a `Result<Success, Failure>`; Success is the
-type returned upon success while Failure is the type returned upon failure.
+The Custom error example shows how to define an operation that throws an exception defined as
+`GreeterException` when an issue is present.
 
-In this example, Success holds a string while Failure holds a user-defined type (an enum).
+In this example, `GreeterException` holds `reason` and `error`, values defined as a string and a
+`GreeterError` meant to hold an error message and an error ID.
 
 You can build the client and server applications with:
 
