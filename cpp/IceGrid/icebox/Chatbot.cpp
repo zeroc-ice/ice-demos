@@ -7,7 +7,7 @@
 
 using namespace std;
 
-Server::Chatbot::Chatbot(string greeterName) : _greeterName(std::move(greeterName)) {}
+Server::Chatbot::Chatbot(string chatbotName) : _chatbotName(std::move(chatbotName)) {}
 
 string
 Server::Chatbot::greet(string name, const Ice::Current&)
@@ -15,7 +15,7 @@ Server::Chatbot::greet(string name, const Ice::Current&)
     cout << "Dispatching greet request { name = '" << name << "' }" << endl;
 
     ostringstream os;
-    os << "Hello, " << name << "! My name is " << _greeterName << ". How are you today?";
+    os << "Hello, " << name << "! My name is " << _chatbotName << ". How are you today?";
 
     return os.str();
 }
