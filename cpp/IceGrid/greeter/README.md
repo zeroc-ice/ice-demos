@@ -27,6 +27,22 @@ Follow these steps to build and run the demo:
 
 3. Start the IceGrid node in its own terminal:
 
+   First, add the server build directory to the PATH environment variable:
+
+   **Linux/macOS:**
+
+   ```shell
+   export PATH=$PWD/build:$PATH
+   ```
+
+   **Windows:**
+
+   ```shell
+   set PATH=%CD%\\build\\Release;%PATH%
+   ```
+
+   Then, start the IceGrid node:
+
    ```shell
    icegridnode --Ice.Config=config.node
    ```
