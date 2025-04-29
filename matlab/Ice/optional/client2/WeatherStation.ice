@@ -4,6 +4,7 @@
 
 // Version 2 of the WeatherStation Slice definitions: we added a new optional pressure to AtmosphericConditions.
 
+["matlab:identifier:clearsky"]
 module ClearSky
 {
     /// Represents the atmospheric conditions measured by a sensor.

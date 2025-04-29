@@ -1,9 +1,6 @@
 % Copyright (c) ZeroC, Inc.
 
 function client(args)
-    % The Slice module VisitorCenter maps to a MATLAB namespace with the same name.
-    import VisitorCenter.*
-
     if nargin == 0
         args = {};
     end
@@ -36,7 +33,7 @@ function client(args)
 
     % Create a proxy to the Greeter object in the server behind the Glacier2 router. Typically, the client cannot
     % connect directly to this server because it's on an unreachable network.
-    greeter = VisitorCenter.GreeterPrx(communicator, 'greeter:tcp -h localhost -p 4061');
+    greeter = visitorcenter.GreeterPrx(communicator, 'greeter:tcp -h localhost -p 4061');
 
     % Configure the proxy to route requests using the Glacier2 router.
     greeter = greeter.ice_router(router);

@@ -1,9 +1,6 @@
 % Copyright (c) ZeroC, Inc.
 
 function client(args)
-    % The Slice module VisitorCenter maps to a MATLAB namespace with the same name.
-    import VisitorCenter.*
-
     if nargin == 0
         args = {};
     end
@@ -23,7 +20,7 @@ function client(args)
     % "stringified proxy" with the address of the target object.
     % If you run the server on a different computer, replace localhost in the string below with the server's hostname
     % or IP address.
-    greeter = VisitorCenter.GreeterPrx(communicator, 'greeter:tcp -h localhost -p 4061');
+    greeter = visitorcenter.GreeterPrx(communicator, 'greeter:tcp -h localhost -p 4061');
 
     % Send a request to the remote object and wait synchronously for the response.
     greeting = greeter.greet(char(java.lang.System.getProperty('user.name')));

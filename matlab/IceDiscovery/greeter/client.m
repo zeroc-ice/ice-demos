@@ -1,9 +1,6 @@
 % Copyright (c) ZeroC, Inc.
 
 function client(args)
-    % The Slice module VisitorCenter maps to a MATLAB namespace with the same name.
-    import VisitorCenter.*
-
     if nargin == 0
         args = {};
     end
@@ -28,7 +25,7 @@ function client(args)
     % Create a proxy to the Greeter object hosted by the server(s). 'greeter' is a stringified proxy with no addressing
     % information, also known as a well-known proxy. It's resolved by the default locator installed by the IceDiscovery
     % plugin.
-    greeter = GreeterPrx(communicator, 'greeter');
+    greeter = visitorcenter.GreeterPrx(communicator, 'greeter');
 
     % Send a request to the remote object and wait for the response.
     greeting = greeter.greet(char(java.lang.System.getProperty('user.name')));

@@ -1,9 +1,6 @@
 % Copyright (c) ZeroC, Inc.
 
 function client(args)
-    % The Slice module Filesystem maps to a MATLAB namespace with the same name.
-    import Filesystem.*
-
     if nargin == 0
         args = {};
     end
@@ -20,7 +17,7 @@ function client(args)
     cleanup = onCleanup(@() communicator.destroy());
 
     % Create a proxy for the root directory.
-    rootDir = DirectoryPrx(communicator, 'RootDir:tcp -h localhost -p 4061');
+    rootDir = filesystem.DirectoryPrx(communicator, 'RootDir:tcp -h localhost -p 4061');
 
     % Recursively list the contents of the root directory
     fprintf("Contents of root directory:\n");
@@ -42,7 +39,7 @@ function listRecursive(dir, depth)
         assert(~isempty(node), 'Node is empty!'); % The node proxies returned by list() are never null.
 
         % Check if this node is a directory by asking the remote object.
-        subdir = Filesystem.DirectoryPrx.checkedCast(node);
+        subdir = filesystem.DirectoryPrx.checkedCast(node);
 
         kind = '(directory)';
         if(isempty(subdir))
@@ -56,7 +53,7 @@ function listRecursive(dir, depth)
             listRecursive(subdir, depth);
         else
             % Read and print the contents of the file.
-            file = Filesystem.FilePrx.uncheckedCast(node);
+            file = filesystem.FilePrx.uncheckedCast(node);
             lines = file.read();
             for j = lines
                 fprintf('%s\t%s\n', indent, j{1});

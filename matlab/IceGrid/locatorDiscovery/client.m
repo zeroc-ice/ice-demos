@@ -1,9 +1,6 @@
 % Copyright (c) ZeroC, Inc.
 
 function client(args)
-    % The Slice module VisitorCenter maps to a MATLAB namespace with the same name.
-    import VisitorCenter.*
-
     if nargin == 0
         args = {};
     end
@@ -30,7 +27,7 @@ function client(args)
     % information, also known as a well-known proxy. It's specified by the <object> element in the IceGrid XML file.
     % The IceGrid registry resolves this well-known proxy and returns the actual address (endpoint) of the server to
     % this client.
-    greeter = VisitorCenter.GreeterPrx(communicator, 'greeter');
+    greeter = visitorcenter.GreeterPrx(communicator, 'greeter');
 
     % Send a request to the remote object and get the response.
     greeting = greeter.greet(char(java.lang.System.getProperty('user.name')));
