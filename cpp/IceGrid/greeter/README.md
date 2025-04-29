@@ -1,14 +1,6 @@
 # IceGrid Greeter
 
-This demo shows how to write a client that calls an Ice object hosted in a server "behind" a Glacier 2 router:
-
-```mermaid
-flowchart LR
-    c[Client] --tcp--> g[Glacier2 router:4063] --tcp--> s[Server:4061<br>hosts Greeter]
-```
-
-In a typical Glacier2 deployment, the client can establish a connection to the Glacier2 router but cannot establish
-a connection to the server, because the server is on a separate network.
+The IceGrid Greeter demo illustrates how to create a very simple IceGrid deployment that manages a Greeter server.
 
 Follow these steps to build and run the demo:
 
