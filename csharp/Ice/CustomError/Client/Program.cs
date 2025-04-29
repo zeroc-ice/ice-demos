@@ -12,7 +12,19 @@ await using Ice.Communicator communicator = Ice.Util.initialize(ref args);
 // or IP address.
 GreeterPrx greeter = GreeterPrxHelper.createProxy(communicator, "greeter:tcp -h localhost -p 4061");
 
-// Send a request to the remote object and get the response.
-string greeting = await greeter.GreetAsync(Environment.UserName);
+string[] names = ["", "jimmy", "billy bob", "alice", Environment.UserName];
+string greeting;
 
-Console.WriteLine(greeting);
+foreach (string name in names)
+{
+    // Send a request to the remote object and get the response.
+    try
+    {
+        greeting = await greeter.GreetAsync(name);
+        Console.WriteLine(greeting);
+    }
+    catch (GreeterException grExcept)
+    {
+        Console.WriteLine($"Exception caught: {grExcept.error}\n {grExcept.message}");
+    }
+}
