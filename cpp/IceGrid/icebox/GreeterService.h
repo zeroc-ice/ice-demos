@@ -3,6 +3,7 @@
 #ifndef GREETER_SERVICE_H
 #define GREETER_SERVICE_H
 
+#include <Ice/Ice.h>
 #include <IceBox/IceBox.h>
 
 namespace Service
@@ -16,6 +17,13 @@ namespace Service
 
         // See IceBox::Service::stop doc-comment.
         void stop() final;
+
+    private:
+        // The name of the greeter.
+        std::string _greeterName{"unknown"};
+
+        // The object adapter created by this service.
+        Ice::ObjectAdapterPtr _adapter{nullptr};
     };
 }
 

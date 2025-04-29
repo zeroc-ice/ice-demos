@@ -4,7 +4,7 @@
 #include "Chatbot.h"
 
 #include <Ice/Ice.h>
-
+#include <cassert>
 #include <iostream>
 
 using namespace std;
@@ -22,18 +22,33 @@ Service::GreeterService::start(
     [[maybe_unused]] const Ice::StringSeq& args)
 {
     // Create an object adapter that listens for incoming requests and dispatches them to servants.
-    auto adapter = communicator->createObjectAdapterWithEndpoints("GreeterAdapter", "tcp -p 4061");
+    // "GreeterAdapter" must match the name of the adapter in the IceGrid XML file.
+    assert(!_adapter);
+    _adapter = communicator->createObjectAdapter("GreeterAdapter");
+
+    // Retrieve the greeter name and greeter identity from the IceGrid-generated config file
+    Ice::PropertiesPtr properties = communicator->getProperties();
+    _greeterName = properties->getProperty("Greeter.Name");
+    Ice::Identity greeterIdentity = Ice::stringToIdentity(properties->getProperty("Greeter.Identity"));
 
     // Register the Chatbot servant with the adapter.
-    adapter->add(make_shared<GreeterServer::Chatbot>("Syd"), Ice::stringToIdentity("greeter"));
+    _adapter->add(make_shared<Server::Chatbot>(_greeterName), greeterIdentity);
 
     // Start dispatching requests.
-    adapter->activate();
-    cout << "Listening on port 4061..." << endl;
+    _adapter->activate();
+
+    cout << _greeterName << " is listening..." << endl;
 }
 
 void
 Service::GreeterService::stop()
 {
-    cout << "Shutting down..." << endl;
+    cout << _greeterName << " is shutting down..." << endl;
+
+    // We destroy the object adapter in stop() in case the service is started, stopped and then restarted again
+    // programmatically or using an admin tool.
+    // The general rule is stop should cleanup all resources created by start.
+    assert(_adapter);
+    _adapter->destroy();
+    _adapter = nullptr;
 }
