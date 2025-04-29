@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.21)
 
-project(icebox_greeter CXX)
+project(icegrid_icebox CXX)
 
 include(../../cmake/common.cmake)
 
