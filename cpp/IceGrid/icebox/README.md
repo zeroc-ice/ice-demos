@@ -19,6 +19,28 @@ Follow these steps to build and run the demo:
 
 3. Start the IceGrid node in its own terminal:
 
+   First, add the build directory to the environment:
+
+   **Linux:**
+
+   ```shell
+   export LD_LIBRARY_PATH=$PWD/build:$LD_LIBRARY_PATH
+   ```
+
+   **macOS:**
+
+   ```shell
+   export DYLD_LIBRARY_PATH=$PWD/build:$DYLD_LIBRARY_PATH
+   ```
+
+   **Windows:**
+
+   ```shell
+   set PATH=%CD%\\build\\Release;%PATH%
+   ```
+
+   Then, start the IceGrid node:
+
    ```shell
    icegridnode --Ice.Config=config.node
    ```
