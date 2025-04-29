@@ -25,8 +25,7 @@ internal class Chatbot : GreeterDisp_
             case "":
                 throw new GreeterException("Name is empty!", GreeterError.EmptyName);
             case "jimmy":
-                Thread.Sleep(5000);
-                throw new GreeterException("Delayed response!", GreeterError.Away);
+                throw new GreeterException($"Away until {DateTime.Now + TimeSpan.FromMinutes(5)}", GreeterError.Away);
             default:
                 return $"Hello, {name}!";
         }
