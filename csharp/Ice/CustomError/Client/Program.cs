@@ -23,8 +23,8 @@ foreach (string name in names)
         greeting = await greeter.GreetAsync(name);
         Console.WriteLine(greeting);
     }
-    catch (GreeterException grExcept)
+    catch (GreeterException exception)
     {
-        Console.WriteLine($"Exception caught: {grExcept.error}\n {grExcept.reason}");
+        Console.WriteLine($"Exception caught: {exception.error}\n {exception.reason}");
     }
 }
