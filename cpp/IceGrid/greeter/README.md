@@ -2,6 +2,25 @@
 
 The IceGrid Greeter demo illustrates how to create a very simple IceGrid deployment that manages a Greeter server.
 
+```mermaid
+flowchart LR
+    Client(Client) --> | locate greeter | Locator
+
+    subgraph Registry[IceGrid Registry]
+        direction LR
+        Locator[locator:4061]
+    end
+
+    Node[IceGrid Node]
+    Server(Server<br/>hosts greeter)
+
+    Registry <--> Node --> |start| Server
+
+    Locator -.-> |return greeter proxy | Client
+
+    Client ==> |greet request| Server
+```
+
 Follow these steps to build and run the demo:
 
 1. Build the client and server applications:
