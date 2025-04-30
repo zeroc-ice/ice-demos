@@ -1,9 +1,9 @@
 % Copyright (c) ZeroC, Inc.
 
 function client(args)
-   if nargin == 0
+    if nargin == 0
         args = {};
-   end
+    end
 
     % Load the Ice library if it is not already loaded.
     if ~libisloaded('ice')
