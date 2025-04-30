@@ -27,6 +27,7 @@
         "${workspaceFolder}/cpp/IceDiscovery/greeter",
 
         "${workspaceFolder}/cpp/IceGrid/greeter",
+        "${workspaceFolder}/cpp/IceGrid/icebox",
 
         "${workspaceFolder}/cpp/IceStorm/clock",
         "${workspaceFolder}/cpp/IceStorm/counter",
