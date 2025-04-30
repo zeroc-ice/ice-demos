@@ -1,6 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
-package com.example.ice.greeter.client;
+package com.example.ice.config.client;
 
 import com.example.visitorcenter.GreeterPrx;
 import com.zeroc.Ice.Communicator;
@@ -16,16 +16,9 @@ class Client {
             GreeterPrx greeter = GreeterPrx.uncheckedCast(communicator.propertyToProxy("Greeter.Proxy"));
 
             // Send a request to the remote object and get the response.
-            CompletableFuture<String> futureGreeting = greeter.greetAsync("alice");
+            String greeting = greeter.greet(System.getProperty("user.name"));
+            System.out.println(greeting);
 
-            try {
-                String greeting = futureGreeting.get();
-                System.out.println(greeting);
-            } catch (InterruptedException e) {
-                assert false; // We don't interrupt this thread.
-            } catch (ExecutionException e) {
-                System.out.println("Could not get greeting: " + e.getMessage());
-            }
         }
     }
 }

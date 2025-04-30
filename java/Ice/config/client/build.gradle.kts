@@ -10,14 +10,11 @@ sourceSets {
         // Add the Greeter.ice file from the parent slice directory the main source set.
         slice {
             srcDirs("../slice")
-            // By default a Slice source set includes all Slice files in the srcDirs directories
-            // Here we override the default behavior by specifying the list of Slice files to include.
-            setIncludes(listOf("Greeter.ice"))
         }
     }
 }
 
 application {
     // Specify the main entry point for the application.
-    mainClass.set("com.example.ice.greeter.client.Client")
+    mainClass.set("com.example.ice.config.client.Client")
 }
