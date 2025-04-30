@@ -40,16 +40,7 @@ class Client {
             }
 
             // Send a request to the remote object and get the response with greetAsync.
-            CompletableFuture<String> futureGreeting = greeter.greetAsync(username);
-
-            try {
-                String greeting = futureGreeting.get();
-                System.out.println(greeting);
-            } catch (InterruptedException e) {
-                assert false; // We don't interrupt this thread.
-            } catch (ExecutionException e) {
-                System.out.println("Could not get greeting: " + e.getCause());
-            }
+            String greeting = greeter.greet(username);
         }
     }
 }
