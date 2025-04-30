@@ -9,7 +9,6 @@ import com.zeroc.Glacier2.RouterPrx;
 import com.zeroc.Glacier2.SessionPrx;
 import com.zeroc.Glacier2.PermissionDeniedException;
 import com.zeroc.Glacier2.CannotCreateSessionException;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 class Client {
