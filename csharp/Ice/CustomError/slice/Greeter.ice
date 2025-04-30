@@ -4,18 +4,19 @@
 
 module VisitorCenter
 {
-    /// This enum is used as a field of GreeterException, functionally as an error code.
+    /// This enum is used to specify the underlying cause of a GreeterException.
     enum GreeterError { EmptyName, NameTooLong, Away };
 
     /// Represents an exception.
-    /// It contains a `string` message and `GreeterError` error.
-    /// The message is used by any application attempting to throw an exception to describe the nature of the exception.
-    /// The error is used similarly, but is limited to the enums in GreeterError and is better for internal identifying.
+    /// An exception will be thrown in one of three circumstances depending on the name Greeter is given:
+    /// 1) The name is empty
+    /// 2) The name is longer than a specified maximum length
+    /// 3) The name is associated with an individual who is listed as being "away"
     exception GreeterException {
         /// The reason for the exception.
         string message;
 
-        /// The ID for the exception, given as a GreeterError enum.
+        /// The ID for the exception.
         GreeterError error;
     }
 
@@ -24,8 +25,8 @@ module VisitorCenter
     {
         /// Creates a personalized greeting.
         /// @param name The name of the person to greet.
-        /// @return The greeting or exception.
-        /// @throws GreeterException An exception for one of three errors.
+        /// @return The greeting.
+        /// @throws GreeterException If the name matches an away name, is too long, or is empty.
         ["cs:identifier:Greet"] // We prefer PascalCase for C# methods.
         string greet(string name) throws GreeterException;
     }

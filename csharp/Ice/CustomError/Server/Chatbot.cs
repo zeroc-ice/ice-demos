@@ -2,7 +2,7 @@
 
 using VisitorCenter;
 
-namespace CustomErrorServer;
+namespace Server;
 
 /// <summary>Chatbot is an Ice servant that implements Slice interface Greeter.</summary>
 internal class Chatbot : GreeterDisp_
