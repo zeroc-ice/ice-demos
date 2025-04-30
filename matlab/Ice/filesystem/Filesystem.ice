@@ -2,6 +2,7 @@
 
 #pragma once
 
+["matlab:identifier:filesystem"]
 module Filesystem
 {
     /// Represents a write failure.

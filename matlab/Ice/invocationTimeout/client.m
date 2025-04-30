@@ -1,9 +1,6 @@
 % Copyright (c) ZeroC, Inc.
 
 function client(args)
-    % The Slice module VisitorCenter maps to a MATLAB namespace with the same name.
-    import VisitorCenter.*
-
     if nargin == 0
         args = {};
     end
@@ -23,11 +20,11 @@ function client(args)
     % "stringified proxy" with the address of the target object.
     % If you run the server on a different computer, replace localhost in the string below with the server's hostname
     % or IP address.
-    greeter = VisitorCenter.GreeterPrx(communicator, 'greeter:tcp -h localhost -p 4061');
+    greeter = visitorcenter.GreeterPrx(communicator, 'greeter:tcp -h localhost -p 4061');
 
     % Create a proxy to the slow greeter with an invocation timeout of 4 seconds (the default invocation timeout is
     % infinite).
-    slowGreeter = VisitorCenter.GreeterPrx(communicator, 'slowGreeter:tcp -h localhost -p 4061');
+    slowGreeter = visitorcenter.GreeterPrx(communicator, 'slowGreeter:tcp -h localhost -p 4061');
     slowGreeter = slowGreeter.ice_invocationTimeout(4000);
 
     % Send a request to the regular greeter and get the response.

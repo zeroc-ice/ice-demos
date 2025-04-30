@@ -4,6 +4,7 @@
 
 // Version 1 of the WeatherStation Slice definitions.
 
+["matlab:identifier:clearsky"]
 module ClearSky
 {
     /// Represents the atmospheric conditions measured by a sensor.

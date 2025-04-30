@@ -2,6 +2,7 @@
 
 #pragma once
 
+["matlab:identifier:clearsky"]
 module ClearSky
 {
     /// Represents the atmospheric conditions measured by a sensor.
