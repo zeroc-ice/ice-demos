@@ -1,6 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
-package com.example.ice.greeter.server;
+package com.example.glacier2.greeter.server;
 
 import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.ObjectAdapter;

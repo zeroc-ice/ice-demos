@@ -27,5 +27,5 @@ sourceSets {
 
 application {
     // Specify the main entry point for the application.
-    mainClass.set("com.example.ice.greeter.client.Client")
+    mainClass.set("com.example.glacier2.greeter.client.Client")
 }

@@ -1,6 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
-package com.example.ice.greeter.client;
+package com.example.glacier2.greeter.client;
 
 import com.example.visitorcenter.GreeterPrx;
 import com.zeroc.Ice.Communicator;
@@ -41,6 +41,7 @@ class Client {
 
             // Send a request to the remote object and get the response with greetAsync.
             String greeting = greeter.greet(username);
+            System.out.println(greeting);
         }
     }
 }
