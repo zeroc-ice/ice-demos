@@ -37,7 +37,7 @@ class Client {
             // Configure the proxy to route requests using the Glacier2 router.
             greeter = GreeterPrx.uncheckedCast(greeter.ice_router(router));
 
-            // Send a request to the remote object and get the response with greetAsync.
+            // Send a request to the remote object and get the response with greet.
             String greeting = greeter.greet(System.getProperty("user.name"));
             System.out.println(greeting);
         }
