@@ -3,7 +3,7 @@
 #pragma once
 
 // We use matlab:identifier to get a lowercase namespace in MATLAB; without this metadata directive, the mapped
-// namespace is VisitorCenter.
+// namespace would be VisitorCenter.
 ["matlab:identifier:visitorcenter"]
 module VisitorCenter
 {
