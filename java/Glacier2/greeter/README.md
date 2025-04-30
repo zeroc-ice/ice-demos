@@ -28,12 +28,6 @@ First, start one of the server applications:
 ./gradlew :server:run --quiet
 ```
 
-or
-
-```shell
-./gradlew :serveramd:run --quiet
-```
-
 Next, start the Glacier2 router in its own terminal:
 
 ```shell
