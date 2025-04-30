@@ -5,19 +5,14 @@ The IceGrid Greeter demo illustrates how to create a very simple IceGrid deploym
 ```mermaid
 flowchart LR
     Client(Client) --> | locate greeter | Locator
-
     subgraph Registry[IceGrid Registry]
         direction LR
         Locator[locator:4061]
     end
-
     Node[IceGrid Node]
-    Server(Server<br/>hosts greeter)
-
-    Registry <--> Node --> |start| Server
-
-    Locator -.-> |return greeter proxy | Client
-
+    Server(Server<br/>hosts Chatbot)
+    Registry <--> Node --> | activate | Server
+    Locator -.-> |return greeter endpoints | Client
     Client ==> |greet request| Server
 ```
 

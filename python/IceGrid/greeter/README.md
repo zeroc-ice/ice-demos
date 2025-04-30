@@ -2,6 +2,20 @@
 
 The IceGrid Greeter demo illustrates how to create a very simple IceGrid deployment that manages a Greeter server.
 
+```mermaid
+flowchart LR
+    Client(Client) --> | locate greeter | Locator
+    subgraph Registry[IceGrid Registry]
+        direction LR
+        Locator[locator:4061]
+    end
+    Node[IceGrid Node]
+    Server(Server<br/>hosts Chatbot)
+    Registry <--> Node --> | activate | Server
+    Locator -.-> |return greeter endpoints | Client
+    Client ==> |greet request| Server
+```
+
 Follow these steps to build and run the demo:
 
 1. Navigate to the server directory and create a Python virtual environment for running the server.
