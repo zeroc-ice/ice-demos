@@ -4,7 +4,7 @@
 
 module VisitorCenter
 {
-    /// This enum is used as a field of GreeterException, functionally as an error ID.
+    /// This enum is used as a field of GreeterException, functionally as an error code.
     enum GreeterError { EmptyName, NameTooLong, Away };
 
     /// Represents an exception.
@@ -25,6 +25,7 @@ module VisitorCenter
         /// Creates a personalized greeting.
         /// @param name The name of the person to greet.
         /// @return The greeting or exception.
+        /// @throws GreeterException An exception for one of three errors.
         ["cs:identifier:Greet"] // We prefer PascalCase for C# methods.
         string greet(string name) throws GreeterException;
     }
