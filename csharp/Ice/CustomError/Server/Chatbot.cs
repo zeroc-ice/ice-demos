@@ -16,18 +16,20 @@ internal class Chatbot : GreeterDisp_
     {
         Console.WriteLine($"Dispatching greet request {{ name = '{name}' }}");
 
-        if (name.Length > MaxLength)
+        GreeterException? exception = name switch
         {
-            throw new GreeterException("Name is longer than maximum!", GreeterError.NameTooLong);
-        }
-        switch (name)
+            "" => new GreeterException("Name is empty!", GreeterError.EmptyName),
+            "jimmy" => new GreeterException($"Away until {DateTime.Now + TimeSpan.FromMinutes(5)}", GreeterError.Away),
+            _ when name.Length > MaxLength =>
+                new GreeterException("Name is longer than maximum!", GreeterError.NameTooLong),
+            _ => null
+        };
+
+        if (exception != null)
         {
-            case "":
-                throw new GreeterException("Name is empty!", GreeterError.EmptyName);
-            case "jimmy":
-                throw new GreeterException($"Away until {DateTime.Now + TimeSpan.FromMinutes(5)}", GreeterError.Away);
-            default:
-                return $"Hello, {name}!";
+            throw exception;
         }
+
+        return $"Hello, {name}!";
     }
 }
