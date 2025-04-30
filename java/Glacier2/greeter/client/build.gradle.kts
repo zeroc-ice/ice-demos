@@ -8,7 +8,7 @@ dependencies {
         }
         gradlePluginPortal() // Keep this to allow fetching other plugins
     }
-    // Add the Ice library as an implementation dependency.
+    // Add Ice and Glacier2 as implementation dependencies.
     implementation("com.zeroc:ice:3.8.0-nightly-+")
     implementation("com.zeroc:glacier2:3.8.0-+")
 }
