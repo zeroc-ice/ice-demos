@@ -1,6 +1,6 @@
 # Greeter
 
-This demo shows how to write a client that calls an Ice object hosted in a server "behind" a Glacier 2 router:
+This demo shows how to write a client that calls an Ice object hosted in a server "behind" a Glacier2 router:
 
 ```mermaid
 flowchart LR
