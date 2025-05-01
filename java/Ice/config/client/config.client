@@ -12,5 +12,23 @@ Greeter.Proxy=greeter:default -h localhost -p 4061
 # The transport protocol to use for Ice communications when `default` is specified.
 # You can set it to tcp, ssl, ws, or wss. Leaving it unset is equivalent to setting it to tcp.
 # Make sure you use the same value in config.client and config.server.
-Ice.Default.Protocol=tcp
+Ice.Default.Protocol=ssl
 
+#
+# IceSSL configuration
+#
+
+# The directory where the application finds certificates and other files.
+IceSSL.DefaultDir=../../../../certs
+
+# The keystore identifying this client.
+IceSSL.Keystore=client.jks
+
+# The keystore identifying trusted peers.
+IceSSL.Truststore=cacert.jks
+
+# TODO: switch to password-less certificates
+IceSSL.Password=password
+
+# Turn on security logging/tracing.
+# IceSSL.Trace.Security=1
