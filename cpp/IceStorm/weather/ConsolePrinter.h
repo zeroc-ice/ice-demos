@@ -1,7 +1,7 @@
 // Copyright (c) ZeroC, Inc.
 
-#ifndef CONSOLE_PRINTER1_H
-#define CONSOLE_PRINTER1_H
+#ifndef CONSOLE_PRINTER_H
+#define CONSOLE_PRINTER_H
 
 #include "WeatherStation.h"
 

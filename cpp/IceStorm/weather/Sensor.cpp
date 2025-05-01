@@ -32,13 +32,14 @@ main(int argc, char* argv[])
     // Retrieve a proxy to the "weather" topic: we first create a topic with the given name (in case we are the first),
     // and then retrieve the proxy if the topic was already created.
     std::optional<IceStorm::TopicPrx> topic;
+    const std::string topicName = "weather";
     try
     {
-        topic = topicManager->create("weather");
+        topic = topicManager->create(topicName);
     }
     catch (const IceStorm::TopicExists&)
     {
-        topic = topicManager->retrieve("weather");
+        topic = topicManager->retrieve(topicName);
     }
 
     // The proxy returned by create and retrieve is never null.
