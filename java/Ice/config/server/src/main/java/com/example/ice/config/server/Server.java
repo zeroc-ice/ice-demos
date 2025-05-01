@@ -13,8 +13,6 @@ class Server {
         // initialization also parses the command-line options to find and set additional properties.
         try (Communicator communicator = Util.initialize(args, "config.server")) {
 
-            System.out.println("SSL Keys:" + communicator.getProperties().getProperty("IceSSL.Keystore"));
-
             // Register a shutdown hook that calls communicator.shutdown() when the user shuts down the server with
             // Ctrl+C or similar. The shutdown hook thread also waits until the main thread completes its cleanup.
             shutdownCommunicatorOnCtrlC(communicator, Thread.currentThread());
