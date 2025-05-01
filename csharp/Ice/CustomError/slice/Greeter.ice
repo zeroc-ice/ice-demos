@@ -26,7 +26,7 @@ module VisitorCenter
         /// Creates a personalized greeting.
         /// @param name The name of the person to greet.
         /// @return The greeting.
-        /// @throws GreeterException If the name matches an away name, is too long, or is empty.
+        /// @throws GreeterException Thrown when the name matches an away name, is too long, or is empty.
         ["cs:identifier:Greet"] // We prefer PascalCase for C# methods.
         string greet(string name) throws GreeterException;
     }
