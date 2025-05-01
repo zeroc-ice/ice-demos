@@ -17,7 +17,6 @@ int
 main(int argc, char* argv[])
 {
     // CtrlCHandler must be created before the communicator is created or any other threads are started.
-```?
     Ice::CtrlCHandler ctrlCHandler;
 
     // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections
