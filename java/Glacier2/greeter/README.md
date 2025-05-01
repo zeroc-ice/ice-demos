@@ -1,4 +1,4 @@
-# Greeter
+# Glacier2 Greeter
 
 This demo shows how to write a client that calls an Ice object hosted in a server "behind" a Glacier2 router:
 
@@ -22,7 +22,7 @@ This will compile each project and install the distributions in the `build/insta
 
 ## Running the Server
 
-First, start one of the server applications:
+Start the Server program in its own terminal:
 
 ```shell
 ./gradlew :server:run --quiet

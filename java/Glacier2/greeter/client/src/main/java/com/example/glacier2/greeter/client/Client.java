@@ -35,8 +35,8 @@ class Client {
             // router.
             assert session == null;
 
-            // If you run the server on a different computer, replace localhost in the string below with the server's
-            // hostname or IP address.
+            // Create a proxy to the Greeter object in the server behind the Glacier2 router. Typically, the client
+            // cannot connect directly to this server because it's on an unreachable network.
             GreeterPrx greeter = GreeterPrx.createProxy(communicator, "greeter:tcp -h localhost -p 4061");
 
             // Configure the proxy to route requests using the Glacier2 router.
