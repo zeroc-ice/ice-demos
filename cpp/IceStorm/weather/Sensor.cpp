@@ -8,6 +8,7 @@
 #include <iostream>
 #include <optional>
 #include <random>
+#include <thread>
 
 using namespace ClearSky;
 using namespace std;
