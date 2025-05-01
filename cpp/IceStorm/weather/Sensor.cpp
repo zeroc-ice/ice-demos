@@ -4,12 +4,11 @@
 
 #include <Ice/Ice.h>
 #include <IceStorm/IceStorm.h>
-#include <chrono>
 #include <ctime>
-#include <iomanip>
 #include <iostream>
 #include <random>
 #include <sstream>
+#include <thread>
 
 using namespace ClearSky;
 using namespace std;
