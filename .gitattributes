@@ -4,3 +4,7 @@
 *.iml export-ignore
 .gitignore export-ignore
 .gitattributes export-ignore
+
+# Use CRLF line endings for specific file types
+*.bat text eol=crlf
+**/gradlew eol=lf
