@@ -1,5 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
+#include "../../common/Time.h"
 #include "WeatherStation.h"
 
 #include <Ice/Ice.h>
@@ -84,11 +85,7 @@ main(int argc, char* argv[])
         double randomHumidity = humidityDist(gen);
 
         auto now = std::chrono::system_clock::now();
-        auto time_c = std::chrono::system_clock::to_time_t(now);
-        std::tm time_tm = *std::localtime(&time_c);
-        std::stringstream ss;
-        ss << std::put_time(&time_tm, "%Y-%m-%d %H:%M:%S");
-        string timeStamp = ss.str();
+        const string timeStamp = Time::formatTime(now);
 
         // Create an AtmosphericConditions object with random values.
         auto reading = std::make_shared<AtmosphericConditions>(randomTemperature, randomHumidity);
