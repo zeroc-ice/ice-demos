@@ -5,6 +5,6 @@
 .gitignore export-ignore
 .gitattributes export-ignore
 
-# Use CRLF line endings for specific file types
+# Set line endings: CRLF for Windows scripts, LF for Unix scripts
 *.bat text eol=crlf
 **/gradlew eol=lf
