@@ -48,7 +48,7 @@ main(int argc, char* argv[])
         topic = topicManager->retrieve(topicName);
     }
 
-    // The proxy returned by createAsync and retrieveAsync is never null.
+    // The proxy returned by create and retrieve is never null.
     assert(topic);
 
     // Start dispatching requests.
@@ -56,7 +56,7 @@ main(int argc, char* argv[])
     cout << "Listening..." << endl;
 
     // Register our weather station with the topic.
-    // subscribeAndGetPublisherAsync returns a publisher proxy that we don't need here.
+    // subscribeAndGetPublisher returns a publisher proxy that we don't need here.
     topic->subscribeAndGetPublisher({}, weatherStation);
     std::cout << "Subscribed weather station to topic '" << topicName << "'." << std::endl;
 

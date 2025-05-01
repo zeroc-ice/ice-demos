@@ -39,7 +39,7 @@ main(int argc, char* argv[])
         topic = topicManager->retrieve("weather");
     }
 
-    // The proxy returned by createAsync and retrieveAsync is never null.
+    // The proxy returned by create and retrieve is never null.
     assert(topic);
 
     // Create a WeatherStation proxy using the publisher proxy of the topic.
