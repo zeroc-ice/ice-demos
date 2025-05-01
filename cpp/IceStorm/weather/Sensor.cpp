@@ -5,7 +5,9 @@
 #include <Ice/Ice.h>
 #include <IceStorm/IceStorm.h>
 #include <ctime>
+#include <iomanip>
 #include <iostream>
+#include <optional>
 #include <random>
 #include <sstream>
 #include <thread>
