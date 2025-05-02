@@ -62,21 +62,23 @@ main(int argc, char* argv[])
     cout << sensorId << " reporting. Press Ctrl+C to stop." << endl;
 
     // Shutdown the sensor on Ctrl-C.
-    std::atomic<bool> running{true};
+    auto shutdownPromise = std::promise<void>();
+    auto shutdownFuture = shutdownPromise.get_future();
     ctrlCHandler.setCallback(
-        [&running](int)
+        [&ctrlCHandler, &shutdownPromise](int)
         {
-            running = false;
             std::cout << "Shutting down..." << std::endl;
+            shutdownPromise.set_value();
+            // Reset the callback to nullptr to avoid calling it again.
+            ctrlCHandler.setCallback(nullptr);
         });
 
     // Initialize random number generators.
-    std::random_device rd;
-    std::mt19937 gen{rd()};
+    std::mt19937 gen{std::random_device{}()};
     std::uniform_real_distribution<> tempDist{19.0, 23.0};     // Temperature range: 19.0 to 23.0
     std::uniform_real_distribution<> humidityDist{45.0, 55.0}; // Humidity range: 45.0 to 55.0
 
-    while (running)
+    do
     {
         // Generate random temperature and humidity values.
         double randomTemperature = tempDist(gen);
@@ -90,10 +92,7 @@ main(int argc, char* argv[])
 
         // Report this reading to the weather station.
         weatherStation->report(sensorId, timeStamp, reading);
-
-        // Sleep for a while before sending the next reading.
-        std::this_thread::sleep_for(std::chrono::seconds(1));
-    }
+    } while (shutdownFuture.wait_for(std::chrono::seconds(1)) == std::future_status::timeout);
 
     return 0;
 }
