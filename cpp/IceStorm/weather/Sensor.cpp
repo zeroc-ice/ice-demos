@@ -78,7 +78,7 @@ main(int argc, char* argv[])
     std::uniform_real_distribution<> tempDist{19.0, 23.0};     // Temperature range: 19.0 to 23.0
     std::uniform_real_distribution<> humidityDist{45.0, 55.0}; // Humidity range: 45.0 to 55.0
 
-    do
+    while (true)
     {
         // Generate random temperature and humidity values.
         double randomTemperature = tempDist(gen);
@@ -92,7 +92,13 @@ main(int argc, char* argv[])
 
         // Report this reading to the weather station.
         weatherStation->report(sensorId, timeStamp, reading);
-    } while (shutdownFuture.wait_for(std::chrono::seconds(1)) == std::future_status::timeout);
+
+        // Wait for second or for the shutdown signal.
+        if (shutdownFuture.wait_for(std::chrono::seconds(1)) == std::future_status::timeout)
+        {
+            break;
+        }
+    }
 
     return 0;
 }
