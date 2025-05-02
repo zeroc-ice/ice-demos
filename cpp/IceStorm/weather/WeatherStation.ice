@@ -5,6 +5,7 @@
 module ClearSky
 {
     /// Represents the atmospheric conditions measured by a sensor.
+    ["cpp:custom-print"]
     class AtmosphericConditions
     {
         /// The temperature in degrees Celsius.

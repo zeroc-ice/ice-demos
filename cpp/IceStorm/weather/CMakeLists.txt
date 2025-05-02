@@ -4,7 +4,7 @@ project(icestorm_weather CXX)
 
 include(../../cmake/common.cmake)
 
-add_executable(sensor Sensor.cpp WeatherStation.ice)
+add_executable(sensor Sensor.cpp AtmosphericConditions.cpp WeatherStation.ice)
 slice2cpp_generate(sensor)
 target_link_libraries(sensor PRIVATE Ice::Ice Ice::IceStorm)
 add_custom_command(TARGET sensor POST_BUILD
@@ -14,7 +14,7 @@ add_custom_command(TARGET sensor POST_BUILD
   COMMAND_EXPAND_LISTS
 )
 
-add_executable(station Station.cpp ConsolePrinter.cpp ConsolePrinter.h WeatherStation.ice)
+add_executable(station Station.cpp AtmosphericConditions.cpp ConsolePrinter.cpp ConsolePrinter.h WeatherStation.ice)
 slice2cpp_generate(station)
 target_link_libraries(station PRIVATE Ice::Ice Ice::IceStorm)
 add_custom_command(TARGET station POST_BUILD
