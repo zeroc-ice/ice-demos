@@ -1,7 +1,9 @@
 # Ice Custom Error
 
-The Custom error demo shows how to define an operation that throws a custom exception defined as
-`GreeterException` when an issue is present.
+The Custom error demo shows how to define an exception in Slice, and how to throw and catch this exception.
+
+Such a Slice-defined exception should be seen as custom error carried by the response instead of the expected return
+value--there is naturally no throwing across address spaces.
 
 You can build the client and server applications with:
 
@@ -21,4 +23,4 @@ In a separate terminal, start the Client program:
 ```shell
 cd Client
 dotnet run
-``` 
+```

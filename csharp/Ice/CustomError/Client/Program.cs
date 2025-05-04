@@ -12,19 +12,28 @@ await using Ice.Communicator communicator = Ice.Util.initialize(ref args);
 // or IP address.
 GreeterPrx greeter = GreeterPrxHelper.createProxy(communicator, "greeter:tcp -h localhost -p 4061");
 
-string[] names = ["", "jimmy", "billy bob", "alice", Environment.UserName];
+string[] names = [Environment.UserName, "", "alice", "bob", "carol", "dave", "billy bob"];
 string greeting;
 
 foreach (string name in names)
 {
-    // Send a request to the remote object and get the response.
+    // Send a request to the remote object and get the response. The response from the server can carry:
+    // - a greeting (success)
+    // - a dispatch exception (the base class for transmissible system exceptions), or
+    // - a GreeterException (the custom exception we've defined in the Slice definitions)
     try
     {
         greeting = await greeter.GreetAsync(name);
         Console.WriteLine(greeting);
     }
+    catch (Ice.DispatchException exception)
+    {
+        Console.WriteLine(
+            $"Failed to create a greeting for '{name}': DispatchException {{ Message = '{exception.Message}', replyStatus = {exception.replyStatus} }}");
+    }
     catch (GreeterException exception)
     {
-        Console.WriteLine($"Exception caught: {exception.error}\n {exception.message}");
+        Console.WriteLine(
+            $"Failed to create a greeting for '{name}': GreeterException {{ ErrorMessage = '{exception.ErrorMessage}', Error = {exception.Error} }}");
     }
 }
