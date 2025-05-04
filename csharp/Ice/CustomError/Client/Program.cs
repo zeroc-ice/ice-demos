@@ -18,7 +18,7 @@ foreach (string name in names)
 {
     // Send a request to the remote object and get the response. The response from the server can carry:
     // - a greeting (success)
-    // - a dispatch exception (the base class for transmissible system exceptions), or
+    // - a dispatch exception (the base class for marshallable system exceptions), or
     // - a GreeterException (the custom exception we've defined in the Slice definitions)
     try
     {
