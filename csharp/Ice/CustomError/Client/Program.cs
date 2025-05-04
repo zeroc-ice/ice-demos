@@ -13,7 +13,6 @@ await using Ice.Communicator communicator = Ice.Util.initialize(ref args);
 GreeterPrx greeter = GreeterPrxHelper.createProxy(communicator, "greeter:tcp -h localhost -p 4061");
 
 string[] names = [Environment.UserName, "", "alice", "bob", "carol", "dave", "billy bob"];
-string greeting;
 
 foreach (string name in names)
 {
@@ -23,7 +22,7 @@ foreach (string name in names)
     // - a GreeterException (the custom exception we've defined in the Slice definitions)
     try
     {
-        greeting = await greeter.GreetAsync(name);
+        string greeting = await greeter.GreetAsync(name);
         Console.WriteLine(greeting);
     }
     catch (Ice.DispatchException exception)
