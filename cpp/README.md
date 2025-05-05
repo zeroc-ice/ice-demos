@@ -110,3 +110,4 @@ build the demos. The NuGet packages are cached the [cmake](./cmake) directory.
 | [IceDiscovery Greeter](./IceDiscovery/greeter)          | Shows how to use the IceDiscovery plugin.                                                             |
 | [IceDiscovery Replication](./IceDiscovery/replication/) | Shows how to use the IceDiscovery plugin with replicated servers.                                     |
 | [IceGrid Greeter](./IceGrid/greeter/)                   | Shows how to create a simple IceGrid deployment.                                                      |
+| [IceStorm Weather](./IceStorm/weather/)                 | Shows how to use IceStorm to create a simple pub-sub application.                                     |
