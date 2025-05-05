@@ -29,7 +29,6 @@
         "${workspaceFolder}/cpp/IceGrid/greeter",
         "${workspaceFolder}/cpp/IceGrid/icebox",
 
-        "${workspaceFolder}/cpp/IceStorm/clock",
         "${workspaceFolder}/cpp/IceStorm/counter",
         "${workspaceFolder}/cpp/IceStorm/replicated",
         "${workspaceFolder}/cpp/IceStorm/replicated2",
