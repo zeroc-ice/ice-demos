@@ -19,7 +19,7 @@ internal class Chatbot : GreeterDisp_
         return name switch
         {
             "" =>
-                // ObjectNotExistException is a dispatch exception with reply status ObjectNotExist.
+                // ObjectNotExistException is a dispatch exception with a reply status of 'ObjectNotExist'.
                 throw new Ice.ObjectNotExistException(),
             "alice" =>
                 // This is a bogus error since there is no authentication in this demo.

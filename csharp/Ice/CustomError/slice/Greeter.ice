@@ -7,8 +7,8 @@ module VisitorCenter
     /// Represents the error code carried by GreeterException.
     enum GreeterError { NameTooLong, Away, GreetingOtherVisitor };
 
-    /// Represents the custom error returned by the Greeter when it cannot create a greeting. This exception thrown by
-    /// the implementation of the greet operation and caught by caller.
+    /// Represents the custom error returned by the Greeter when it cannot create a greeting. This exception is thrown
+    /// by the implementation of the greet operation and caught by the caller.
     exception GreeterException {
         /// Describes the exception in a human-readable way.
         ["cs:identifier:ErrorMessage"] // We can't use Message as it conflicts with System.Exception.Message.
@@ -27,7 +27,6 @@ module VisitorCenter
         /// @return The greeting.
         /// @throws GreeterException Thrown when the greeter cannot create a greeting.
         ["cs:identifier:Greet"] // We prefer PascalCase for C# methods.
-        string greet(string name)
-            throws GreeterException;
+        string greet(string name) throws GreeterException;
     }
 }
