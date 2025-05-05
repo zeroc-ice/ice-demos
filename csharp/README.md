@@ -34,6 +34,7 @@ dotnet build -p:IceVersion="3.8.0-alpha0"
 | [Ice Cancellation](./Ice/Cancellation/)                 | Shows how to cancel a request and how to configure invocation timeouts.                                   |
 | [Ice Config](./Ice/Config/)                             | Shows how to configure client and server applications using Ice configuration files.                      |
 | [Ice Context](./Ice/Context/)                           | Shows how to set and retrieve request contexts.                                                           |
+| [Ice Custom Error](./Ice/CustomError/)                  | Shows how to define a new exception in Slice and return this exception from a Slice operation.            |
 | [Ice Filesystem](./Ice/Filesystem/)                     | Shows the power of interface inheritance in Slice.                                                        |
 | [Ice Forwarder](./Ice/Forwarder/)                       | Shows how to write a servant that forwards all requests it receives to another remote Ice object.         |
 | [Ice Greeter](./Ice/Greeter/)                           | Shows how to call and implement a canonical Greeter application with Ice. **Start with this demo!**       |

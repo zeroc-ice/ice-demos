@@ -15,16 +15,24 @@ internal class Chatbot : GreeterDisp_
     {
         Console.WriteLine($"Dispatching greet request {{ name = '{name}' }}");
 
-        string response = name switch
+        // Depending on the name, we return a greeting or throw an exception.
+        return name switch
         {
-            "" => throw new GreeterException("Name is empty!", GreeterError.EmptyName),
-            "jimmy" =>
-                throw new GreeterException($"Away until {DateTime.Now + TimeSpan.FromMinutes(5)}", GreeterError.Away),
+            "" =>
+                // ObjectNotExistException is a dispatch exception with a reply status of 'ObjectNotExist'.
+                throw new Ice.ObjectNotExistException(),
+            "alice" =>
+                // This is a bogus error since there is no authentication in this demo.
+                throw new Ice.DispatchException(
+                    Ice.ReplyStatus.Unauthorized,
+                    "Invalid credentials. The administrator has been notified."),
+            "bob" =>
+                throw new GreeterException($"Away until {DateTime.Now + TimeSpan.FromMinutes(5)}.", GreeterError.Away),
+            "carol" =>
+                throw new GreeterException("I am already greeting someone else.", GreeterError.GreetingOtherVisitor),
             _ when name.Length > MaxLength =>
                 throw new GreeterException("Name is longer than maximum!", GreeterError.NameTooLong),
             _ => $"Hello, {name}!"
         };
-
-        return response;
     }
 }
