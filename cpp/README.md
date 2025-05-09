@@ -100,6 +100,7 @@ build the demos. The NuGet packages are cached the [cmake](./cmake) directory.
 | [Ice Cancellation](./Ice/cancellation/)                 | Shows how to cancel a request and how to configure invocation timeouts.                               |
 | [Ice Config](./Ice/config/)                             | Shows how to configure client and server applications using Ice configuration files.                  |
 | [Ice Context](./Ice/context/)                           | Shows how to set and retrieve request contexts.                                                       |
+| [Ice Custom Error](./Ice/customError/)                  | Shows how to define a new exception in Slice and return this exception from a Slice operation.        |
 | [Ice Filesystem](./Ice/filesystem/)                     | Shows the power of interface inheritance in Slice.                                                    |
 | [Ice Forwarder](./Ice/forwarder/)                       | Shows how to write a servant that forwards all requests it receives to another remote Ice object.     |
 | [Ice Greeter](./Ice/greeter/)                           | Shows how to call and implement a canonical Greeter application with Ice. **Start with this demo!**   |
