@@ -45,6 +45,10 @@ class Client {
             // Send a request to the remote object and get the response with greet.
             String greeting = greeter.greet(System.getProperty("user.name"));
             System.out.println(greeting);
+
+            // Send a second request to observe the effect in the Glacier2 router log.
+            greeting = greeter.greet("alice");
+            System.out.println(greeting);
         }
     }
 }
