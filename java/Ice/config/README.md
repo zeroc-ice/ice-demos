@@ -2,8 +2,6 @@
 
 This demo shows how to configure client and server applications using Ice configuration files.
 
-The same client works with both.
-
 ## Building the Project
 
 This project uses Gradle and the [Application plugin]. To build the client and server applications, run:
@@ -16,7 +14,7 @@ This will compile each project and install the distributions in the `build/insta
 
 ## Running the Server
 
-First, start one of the server applications:
+First, start the server application:
 
 ```shell
 ./gradlew :server:run --quiet

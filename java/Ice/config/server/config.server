@@ -26,13 +26,12 @@ Ice.Trace.Dispatch=1
 # The directory where the application finds certificates and other files.
 IceSSL.DefaultDir=../../../../certs
 
-# The keystore identifying this server.
+# The keystore containing this server's certificate.
 IceSSL.Keystore=server.jks
 
-# The keystore identifying trusted peers.
+# The keystore the server uses to identify trusted peers.
 IceSSL.Truststore=cacert.jks
 
-# TODO: switch to password-less certificates
 IceSSL.Password=password
 
 # Turn on security logging/tracing.
