@@ -21,7 +21,8 @@ Server::Chatbot::greet(string name, const Ice::Current&)
     }
     else if (name == "alice")
     {
-        // This is a bogus error since there is no authentication in this demo.
+        // Simulate an authentication error by throwing a dispatch exception with the Unauthorized error code.
+        // Note: This is a demo; no real authentication logic is implemented.
         throw Ice::DispatchException{
             __FILE__,
             __LINE__,

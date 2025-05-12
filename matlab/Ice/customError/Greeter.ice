@@ -10,7 +10,8 @@ module VisitorCenter
 
     /// Represents the custom error returned by the Greeter when it cannot create a greeting. This exception is thrown
     /// by the implementation of the greet operation and caught by the caller.
-    exception GreeterException {
+    exception GreeterException
+    {
         /// Describes the exception in a human-readable way.
         ["matlab:identifier:errorMessage"] // We can't use message as it conflicts with MException.message.
         string message;
