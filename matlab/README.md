@@ -11,6 +11,7 @@ Java, and Python demos.
 | [Glacier2 Greeter](./Glacier2/greeter/)    | Shows how to write a basic Glacier2 client.                                                                                         |
 | [Ice Config](./Ice/config/)                | Shows how to configure a client application using an Ice configuration file.                                                        |
 | [Ice Context](./Ice/context/)              | Shows different ways to set request contexts.                                                                                       |
+| [Ice Custom Error](./Ice/customError/)     | Shows how to define a new exception in Slice and handle this exception in a client application.                                     |
 | [Ice Filesystem](./Ice/filesystem/)        | Shows the power of interface inheritance in Slice.                                                                                  |
 | [Ice Greeter](./Ice/greeter/)              | Shows how to call a remote Greeter object with Ice. **Start with this demo!**                                                       |
 | [Ice Invocation Timeout](./Ice/invocationTimeout/) | Shows how to configure invocation timeouts.                                                                                 |

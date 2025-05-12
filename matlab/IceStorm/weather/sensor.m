@@ -1,9 +1,6 @@
 % Copyright (c) ZeroC, Inc.
 
 function sensor(args)
-    % The Slice module ClearSky in WeatherStation.ice maps a MATLAB namespace with the same name.
-    import ClearSky.*
-
     if nargin == 0
         args = {};
     end
@@ -41,7 +38,7 @@ function sensor(args)
 
     % Create a WeatherStation proxy using the publisher proxy of the topic. The proxy returned by getPublisher is
     % never null.
-    weatherStation = WeatherStationPrx.uncheckedCast(topic.getPublisher());
+    weatherStation = clearsky.WeatherStationPrx.uncheckedCast(topic.getPublisher());
 
     % The proxy returned by IceStorm is a two-way proxy. We can convert it into a one-way proxy if we don't need
     % acknowledgments from IceStorm.
@@ -59,7 +56,7 @@ function sensor(args)
         humidity = randi([450, 550]) / 10; % Humidity in percentage (45.0 to 55.0).
 
         % Create an AtmosphericConditions object with the generated values.
-        reading = AtmosphericConditions(temperature, humidity);
+        reading = clearsky.AtmosphericConditions(temperature, humidity);
 
         % Send the reading to the weather station(s) via IceStorm.
         timeStamp = datetime('now', 'Format', 'HH:mm:ss');

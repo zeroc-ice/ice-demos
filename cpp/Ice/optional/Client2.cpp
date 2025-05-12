@@ -21,8 +21,7 @@ main(int argc, char* argv[])
     WeatherStationPrx weatherStation{communicator, "weatherStation:tcp -p 4061"};
 
     // Initialize random number generators.
-    std::random_device rd;
-    std::mt19937 gen{rd()};
+    std::mt19937 gen{std::random_device{}()};
     std::uniform_real_distribution<> tempDist{19.0, 23.0};         // Temperature range: 19.0 to 23.0
     std::uniform_real_distribution<> humidityDist{45.0, 55.0};     // Humidity range: 45.0 to 55.0
     std::uniform_real_distribution<> pressureDist{1000.0, 1050.0}; // Pressure range: 1000 to 1050

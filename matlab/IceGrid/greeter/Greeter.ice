@@ -2,6 +2,7 @@
 
 #pragma once
 
+["matlab:identifier:visitorcenter"]
 module VisitorCenter
 {
     /// Represents a simple greeter.

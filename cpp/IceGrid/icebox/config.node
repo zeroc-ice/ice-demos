@@ -1,0 +1,18 @@
+# Config file for icegridnode
+
+# A proxy to the Locator object hosted by the IceGrid registry.
+Ice.Default.Locator=IceGrid/Locator:tcp -h localhost -p 4061
+
+# The name of this IceGrid node.
+IceGrid.Node.Name=node1
+
+# The endpoints of this node's object adapter. This object adapter receives requests from the IceGrid registry.
+# We configure this object adapter to listen on an OS-assigned tcp port on the loopback interface since the IceGrid
+# registry runs on the same host in this deployment.
+IceGrid.Node.Endpoints=tcp -h 127.0.0.1
+
+# The directory where the node stores the config files for the Ice servers it starts.
+IceGrid.Node.Data=db/node
+
+# Trace activation of Ice servers (3 = very verbose).
+IceGrid.Node.Trace.Activator=3

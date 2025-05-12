@@ -1,9 +1,6 @@
 % Copyright (c) ZeroC, Inc.
 
 function client(args)
-    % The Slice module ClearSky in WeatherStation.ice maps a MATLAB namespace with the same name.
-    import ClearSky.*
-
     if nargin == 0
         args = {};
     end
@@ -20,14 +17,14 @@ function client(args)
     cleanup = onCleanup(@() communicator.destroy());
 
     % Create a proxy to the weather station.
-    weatherStation = WeatherStationPrx(communicator, 'weatherStation:tcp -h localhost -p 4061');
+    weatherStation = clearsky.WeatherStationPrx(communicator, 'weatherStation:tcp -h localhost -p 4061');
 
     % Create an AtmosphericConditions object with random values.
     temperature = randi([190, 230]) / 10; % Temperature in degrees Celsius (19.0 to 23.0).
     humidity = randi([450, 550]) / 10; % Humidity in percentage (45.0 to 55.0).
     pressure = randi([10000, 10500]) / 10; % Pressure in millibars (1,000 to 1,050).
 
-    reading = AtmosphericConditions(temperature, humidity, pressure);
+    reading = clearsky.AtmosphericConditions(temperature, humidity, pressure);
 
     % Report this reading to the weather station.
     weatherStation.report('sensor-2', reading);
