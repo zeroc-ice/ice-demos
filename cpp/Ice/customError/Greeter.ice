@@ -2,7 +2,6 @@
 
 #pragma once
 
-["matlab:identifier:visitorcenter"]
 module VisitorCenter
 {
     /// Represents the error code carried by GreeterException.
@@ -13,7 +12,6 @@ module VisitorCenter
     exception GreeterException
     {
         /// Describes the exception in a human-readable way.
-        ["matlab:identifier:errorMessage"] // We can't use message as it conflicts with MException.message.
         string message;
 
         /// Provides an error code that can be used to handle this exception programmatically.
