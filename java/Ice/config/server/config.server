@@ -32,6 +32,7 @@ IceSSL.Keystore=server.jks
 # The keystore the server uses to identify trusted peers.
 IceSSL.Truststore=cacert.jks
 
+# JKS keystores require passwords.
 IceSSL.Password=password
 
 # Turn on security logging/tracing.
