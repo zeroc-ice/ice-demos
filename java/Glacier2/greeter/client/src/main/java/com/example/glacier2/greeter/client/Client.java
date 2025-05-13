@@ -9,7 +9,6 @@ import com.zeroc.Glacier2.RouterPrx;
 import com.zeroc.Glacier2.SessionPrx;
 import com.zeroc.Glacier2.PermissionDeniedException;
 import com.zeroc.Glacier2.CannotCreateSessionException;
-import java.util.concurrent.ExecutionException;
 
 class Client {
     public static void main(String[] args) {
@@ -27,7 +26,7 @@ class Client {
             try {
                 session = router.createSession(System.getProperty("user.name"), "password");
             } catch (PermissionDeniedException | CannotCreateSessionException e) {
-                System.out.println("Could not create session: " + e.getCause());
+                System.out.println("Could not create session: " + e.getMessage());
                 return;
             }
 
