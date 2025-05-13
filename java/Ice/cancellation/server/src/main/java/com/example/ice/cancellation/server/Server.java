@@ -5,7 +5,6 @@ package com.example.ice.cancellation.server;
 import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.ObjectAdapter;
 import com.zeroc.Ice.Util;
-import java.util.concurrent.TimeUnit;
 
 class Server {
     public static void main(String[] args) {
@@ -20,8 +19,8 @@ class Server {
             ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints("GreeterAdapter", "tcp -p 4061");
 
             // Register two instances of Chatbot - a regular greater and a slow greeter.
-            adapter.add(new Chatbot(0L, TimeUnit.SECONDS), Util.stringToIdentity("greeter"));
-            adapter.add(new Chatbot(60L, TimeUnit.SECONDS), Util.stringToIdentity("slowGreeter"));
+            adapter.add(new Chatbot(0), Util.stringToIdentity("greeter"));
+            adapter.add(new Chatbot(600000), Util.stringToIdentity("slowGreeter"));
 
             // Start dispatching requests.
             adapter.activate();

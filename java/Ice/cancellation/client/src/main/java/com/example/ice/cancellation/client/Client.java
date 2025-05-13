@@ -4,14 +4,10 @@ package com.example.ice.cancellation.client;
 
 import com.example.visitorcenter.GreeterPrx;
 import com.zeroc.Ice.Communicator;
-import com.zeroc.Ice.InvocationCanceledException;
 import com.zeroc.Ice.InvocationTimeoutException;
-import com.zeroc.Ice.UnknownException;
+import com.zeroc.Ice.OperationInterruptedException;
 import com.zeroc.Ice.Util;
 
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 class Client {
     public static void main(String[] args) {
         // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
@@ -27,16 +23,8 @@ class Client {
                 GreeterPrx.createProxy(communicator, "slowGreeter:tcp -h localhost -p 4061");
 
             // Send a request to the regular greeter and get the response.
-            CompletableFuture<String> futureGreeting = greeter.greetAsync(System.getProperty("user.name"));
-            String greeting;
-            try {
-                greeting = futureGreeting.get();
-                System.out.println(greeting);
-            } catch (InterruptedException e) {
-                assert false; // We don't interrupt this thread.
-            } catch (ExecutionException exception) {
-                System.out.println("Could not get greeting: " + exception.getMessage());
-            }
+            String greeting = greeter.greet(System.getProperty("user.name"));
+            System.out.println(greeting);
 
             // Create another slow greeter proxy with an invocation timeout of 4 seconds (the default invocation timeout
             // is infinite).
@@ -44,56 +32,37 @@ class Client {
                 GreeterPrx.uncheckedCast(slowgreeter.ice_invocationTimeout(4));
 
             // Send a request to the slow greeter with the 4-second invocation timeout.
-            futureGreeting = slowgreeter4s.greetAsync("alice");
             try {
-                greeting = futureGreeting.get();
+                greeting = slowgreeter4s.greet("alice");
                 System.out.println(greeting);
-            } catch (InterruptedException e) {
-                assert false; // We don't interrupt this thread.
-            }  catch (InvocationTimeoutException exception) {
+            }   catch (InvocationTimeoutException exception) {
                 System.out.println("Caught InvocationTimeoutException, as expected: " + exception.getMessage());
-            } catch (ExecutionException exception) {
-                System.out.println("Could not get greeting: " + exception.getMessage());
             }
 
             // Send a request to the slow greeter, and cancel this request after 4 seconds.
-            futureGreeting = slowgreeter.greetAsync("bob", cancel);
-            try {
-                greeting = futureGreeting.get();
-                System.out.println(greeting);
-            } catch (InterruptedException e) {
-                System.out.println("oops");
-                assert false; // We don't interrupt this thread.
-            } catch (InvocationCanceledException exception) {
-                System.out.println("Caught InvocationCanceledException, as expected: " + exception.getMessage());
-            } catch (ExecutionException exception) {
-                System.out.println("Could not get greeting: " + exception.getMessage());
-            }
+            Runnable greetRunnable  = () -> {
+                try {
+                    String greetingEnclosed = slowgreeter.greet("bob"); 
+                    System.out.println(greetingEnclosed);
+                }
+                catch (OperationInterruptedException exception) {
+                    System.out.println("Caught OperationInteruptedException, as expected.");
+                }
+            };
+            Thread greetThread = new Thread(greetRunnable);
+            greetThread.start();
+            try {Thread.sleep(4000);} catch (InterruptedException exception) {assert false;}
+            greetThread.interrupt();
 
             // Verify the regular greeter still works.
-            futureGreeting = greeter.greetAsync("carol");
-            try {
-                greeting = futureGreeting.get(); 
-                System.out.println(greeting);
-            } catch (InterruptedException e) {
-                assert false; // We don't interrupt this thread.
-            } catch (ExecutionException exception) {
-                System.out.println("Could not get greeting: " + exception.getMessage());
-            }
+            greeting = greeter.greet("carol"); 
+            System.out.println(greeting);
 
             // Send a request to the slow greeter, and wait forever for the response.
             System.out.println("Please press Ctrl+C in the server's terminal to cancel the slow greeter dispatch.");
-            futureGreeting = slowgreeter.greetAsync("dave");
-            try {
-                greeting = futureGreeting.get();
-                System.out.println(greeting);
-            } catch (InterruptedException e) {
-               System.out.println("Interrupted");
-            } catch (UnknownException exception) {
-                System.out.println("UnknownException, as expected: " + exception.getMessage());
-            } catch (ExecutionException exception) {
-                System.out.println("Could not get greeting: " + exception.getMessage());
-            }
+            greeting = slowgreeter.greet("dave");
+            System.out.println(greeting);
+            
         }
     }
 }
