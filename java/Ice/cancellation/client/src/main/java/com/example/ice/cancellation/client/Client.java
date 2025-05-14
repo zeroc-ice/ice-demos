@@ -7,6 +7,10 @@ import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.InvocationTimeoutException;
 import com.zeroc.Ice.OperationInterruptedException;
 import com.zeroc.Ice.Util;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 class Client {
     public static void main(String[] args) {
@@ -34,24 +38,22 @@ class Client {
             try {
                 greeting = slowgreeter4s.greet("alice");
                 System.out.println(greeting);
-            }   catch (InvocationTimeoutException exception) {
+            } catch (InvocationTimeoutException exception) {
                 System.out.println("Caught InvocationTimeoutException, as expected: " + exception.getMessage());
             }
 
             // Send a request to the slow greeter, and cancel this request after 4 seconds.
-            Runnable greetRunnable  = () -> {
+            ScheduledExecutorService greetExecutor = Executors.newScheduledThreadPool(2);
+            Future greetFuture = greetExecutor.submit(() -> {
                 try {
-                    String greetingEnclosed = slowgreeter.greet("bob"); 
+                    String greetingEnclosed = slowgreeter.greet("bob");
                     System.out.println(greetingEnclosed);
-                }
-                catch (OperationInterruptedException exception) {
+                } catch (OperationInterruptedException exception) {
                     System.out.println("Caught OperationInterruptedException, as expected.");
                 }
-            };
-            Thread greetThread = new Thread(greetRunnable);
-            greetThread.start();
-            try {Thread.sleep(4000);} catch (InterruptedException exception) {assert false;}
-            greetThread.interrupt();
+            });
+            greetExecutor.schedule(() -> {greetFuture.cancel(true);}, 4L, TimeUnit.SECONDS);
+            greetExecutor.shutdown();
 
             // Verify the regular greeter still works.
             greeting = greeter.greet("carol"); 
