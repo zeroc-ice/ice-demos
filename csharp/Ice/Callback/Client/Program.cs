@@ -15,7 +15,7 @@ Ice.ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints("Alarm
 // Register the MockAlarmClock servant with the adapter, and get an alarm clock proxy.
 var mockAlarmClock = new Client.MockAlarmClock();
 AlarmClockPrx alarmClock = AlarmClockPrxHelper.uncheckedCast(
-    adapter.add(mockAlarmClock, Ice.Util.stringToIdentity("alarmClock")));
+    adapter.add(mockAlarmClock, new Ice.Identity { name = "alarmClock" }));
 
 // Start dispatching requests.
 adapter.activate();

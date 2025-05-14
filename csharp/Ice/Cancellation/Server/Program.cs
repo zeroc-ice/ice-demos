@@ -10,8 +10,8 @@ Ice.ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints("Greet
 using var dispatchCts = new CancellationTokenSource();
 
 // Register two instances of Chatbot - a regular greater and a slow greeter.
-adapter.add(new Server.Chatbot(TimeSpan.Zero, CancellationToken.None), Ice.Util.stringToIdentity("greeter"));
-adapter.add(new Server.Chatbot(TimeSpan.FromSeconds(60), dispatchCts.Token), Ice.Util.stringToIdentity("slowGreeter"));
+adapter.add(new Server.Chatbot(TimeSpan.Zero, CancellationToken.None), new Ice.Identity { name = "greeter" });
+adapter.add(new Server.Chatbot(TimeSpan.FromSeconds(60), dispatchCts.Token), new Ice.Identity { name = "slowGreeter" });
 
 // Start dispatching requests.
 adapter.activate();

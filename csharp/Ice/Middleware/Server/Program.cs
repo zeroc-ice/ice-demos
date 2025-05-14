@@ -10,7 +10,7 @@ Ice.ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints("Greet
 adapter.use(next => new Server.AuthorizationMiddleware(next, validToken: "iced tea"));
 
 // Register the Chatbot servant with the adapter.
-adapter.add(new Server.Chatbot(), Ice.Util.stringToIdentity("greeter"));
+adapter.add(new Server.Chatbot(), new Ice.Identity { name = "greeter" });
 
 // Start dispatching requests.
 adapter.activate();
