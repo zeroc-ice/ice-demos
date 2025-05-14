@@ -73,7 +73,7 @@ main(int argc, char* argv[])
             //
             auto adapter = communicator->createObjectAdapter("Counter");
             auto counter = make_shared<CounterI>(topic);
-            adapter->add(counter, Ice::stringToIdentity("counter"));
+            adapter->add(counter, Ice::Identity{"counter"});
             adapter->activate();
 
             communicator->waitForShutdown();

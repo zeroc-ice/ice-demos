@@ -24,7 +24,7 @@ main(int argc, char* argv[])
     auto adapter = communicator->createObjectAdapterWithEndpoints("GreeterAdapter", "tcp -p 4061");
 
     // Register the Chatbot servant with the adapter.
-    adapter->add(make_shared<Server::Chatbot>(), Ice::stringToIdentity("greeter"));
+    adapter->add(make_shared<Server::Chatbot>(), Ice::Identity{"greeter"});
 
     // Start dispatching requests.
     adapter->activate();

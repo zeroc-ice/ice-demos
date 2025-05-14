@@ -23,7 +23,7 @@ main(int argc, char* argv[])
     auto adapter = communicator->createObjectAdapterWithEndpoints("WakeUpAdapter", "tcp -p 4061");
 
     // Register the BidirWakeUpService servant with the adapter.
-    adapter->add(make_shared<Server::BidirWakeUpService>(), Ice::stringToIdentity("wakeUpService"));
+    adapter->add(make_shared<Server::BidirWakeUpService>(), Ice::Identity{"wakeUpService"});
 
     // Start dispatching requests.
     adapter->activate();

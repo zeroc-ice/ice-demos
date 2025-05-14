@@ -34,8 +34,8 @@ main(int argc, char* argv[])
     shared_future<void> cancelDispatch{cancelDispatchPromise.get_future()};
 
     // Register two instances of Chatbot - a regular greater and a slow greeter.
-    adapter->add(make_shared<Server::Chatbot>(0s, cancelDispatch), Ice::stringToIdentity("greeter"));
-    adapter->add(make_shared<Server::Chatbot>(60s, cancelDispatch), Ice::stringToIdentity("slowGreeter"));
+    adapter->add(make_shared<Server::Chatbot>(0s, cancelDispatch), Ice::Identity{"greeter"});
+    adapter->add(make_shared<Server::Chatbot>(60s, cancelDispatch), Ice::Identity{"slowGreeter"});
 
     // Start dispatching requests.
     adapter->activate();

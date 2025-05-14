@@ -24,7 +24,7 @@ main(int argc, char* argv[])
     auto adapter = communicator->createObjectAdapterWithEndpoints("WakeUpAdapter", "tcp -p 4061");
 
     // Register the SimpleWakeUpService servant with the adapter.
-    adapter->add(make_shared<Server::SimpleWakeUpService>(), Ice::stringToIdentity("wakeUpService"));
+    adapter->add(make_shared<Server::SimpleWakeUpService>(), Ice::Identity{"wakeUpService"});
 
     // Start dispatching requests.
     adapter->activate();

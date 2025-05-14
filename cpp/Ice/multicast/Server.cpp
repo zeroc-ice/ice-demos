@@ -74,7 +74,7 @@ main(int argc, char* argv[])
 
             auto hello = adapter->addWithUUID(make_shared<HelloI>());
             auto d = make_shared<DiscoverI>(hello);
-            discoverAdapter->add(d, Ice::stringToIdentity("discover"));
+            discoverAdapter->add(d, Ice::Identity{"discover"});
 
             discoverAdapter->activate();
             adapter->activate();
