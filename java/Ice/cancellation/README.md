@@ -15,7 +15,7 @@ This will compile each project and install the distributions in the `build/insta
 
 ## Running the Server
 
-First, start one of the server applications:
+First, start the server application:
 
 ```shell
 ./gradlew :server:run --quiet
