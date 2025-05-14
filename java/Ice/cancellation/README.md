@@ -1,7 +1,7 @@
 # Ice Cancellation
 
-The Cancellation demo shows how to cancel an invocation using the Java CancellationException. It also shows a related
-feature: invocation timeouts.
+The Cancellation demo shows how to cancel an invocation by interrupting the thread waiting for a response. It also shows
+a related feature: invocation timeouts.
 
 ## Building the Project
 

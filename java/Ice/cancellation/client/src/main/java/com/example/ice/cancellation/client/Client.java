@@ -28,8 +28,7 @@ class Client {
 
             // Create another slow greeter proxy with an invocation timeout of 4 seconds (the default invocation timeout
             // is infinite).
-            GreeterPrx slowgreeter4s =
-                GreeterPrx.uncheckedCast(slowgreeter.ice_invocationTimeout(4));
+            GreeterPrx slowgreeter4s = slowgreeter.ice_invocationTimeout(4);
 
             // Send a request to the slow greeter with the 4-second invocation timeout.
             try {
@@ -46,7 +45,7 @@ class Client {
                     System.out.println(greetingEnclosed);
                 }
                 catch (OperationInterruptedException exception) {
-                    System.out.println("Caught OperationInteruptedException, as expected.");
+                    System.out.println("Caught OperationInterruptedException, as expected.");
                 }
             };
             Thread greetThread = new Thread(greetRunnable);
