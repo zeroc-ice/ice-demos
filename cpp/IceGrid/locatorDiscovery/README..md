@@ -3,15 +3,15 @@
 The LocatorDiscovery demo shows how to write a client application that configures its locator using the
 LocatorDiscovery plugin.
 
-This demo provides a new client application for the IceGrid/greeter demo, and relies on IceGrid/greeter for everything
-else.
+This demo provides a client application that works with the IceGrid/greeter demo and reuses its server components and
+IceGrid configuration.
 
 Follow these steps to build and run the demo:
 
 1. Build the [IceGrid/greeter](../greeter) demo.
 
 2. Run `icegridregistry`, `icegridnode`, and configure IceGrid using `icegridadmin` as per the IceGrid greeter demo
-instructions.
+   instructions.
 
 3. Build and run the client application in this directory:
 
