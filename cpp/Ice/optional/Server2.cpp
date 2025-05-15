@@ -25,7 +25,7 @@ main(int argc, char* argv[])
     Ice::ObjectAdapterPtr adapter = communicator->createObjectAdapterWithEndpoints("StationAdapter", "tcp -p 4061");
 
     // Register the ConsolePrinter servant with the adapter.
-    adapter->add(make_shared<Server::ConsolePrinter>(), Ice::stringToIdentity("weatherStation"));
+    adapter->add(make_shared<Server::ConsolePrinter>(), Ice::Identity{"weatherStation"});
 
     // Start dispatching requests.
     adapter->activate();

@@ -35,7 +35,7 @@ Server::BidirWakeUpService::wakeMeUp(int64_t timeStamp, const Ice::Current& curr
     }
 
     // Create a proxy to the client's alarm clock. This connection-bound proxy is called a "fixed proxy".
-    auto alarmClock = connection->createProxy<AlarmClockPrx>(Ice::stringToIdentity("alarmClock"));
+    auto alarmClock = connection->createProxy<AlarmClockPrx>(Ice::Identity{"alarmClock"});
 
     // Schedule a wake-up call in a background task.
     _tasks.emplace_back(std::async(

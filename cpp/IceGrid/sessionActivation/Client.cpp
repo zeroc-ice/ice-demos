@@ -88,7 +88,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
 
     try
     {
-        auto hello = Ice::checkedCast<HelloPrx>(session->allocateObjectById(Ice::stringToIdentity("hello")));
+        auto hello = Ice::checkedCast<HelloPrx>(session->allocateObjectById(Ice::Identity{"hello"}));
 
         menu();
 
