@@ -4,3 +4,7 @@
 *.iml export-ignore
 .gitignore export-ignore
 .gitattributes export-ignore
+
+# Set line endings: CRLF for Windows scripts, LF for Unix scripts
+*.bat text eol=crlf
+**/gradlew eol=lf
