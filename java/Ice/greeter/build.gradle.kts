@@ -18,7 +18,7 @@ subprojects {
     // Apply the application plugin to enable Java application support in subprojects.
     apply(plugin = "application")
 
-    // Apply the Gradle Ice Builder plugin to enable Slice compilation in all subprojects.
+    // Apply the Slice Tools for Ice and Java plugin to enable Slice compilation in all subprojects.
     apply(plugin = "com.zeroc.ice.slice-tools")
 
     apply(plugin = "checkstyle")
