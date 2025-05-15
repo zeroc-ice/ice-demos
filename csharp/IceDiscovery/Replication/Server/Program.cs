@@ -30,7 +30,7 @@ Ice.ObjectAdapter adapter = communicator.createObjectAdapter("GreeterAdapter");
 
 // Register the Chatbot servant with the adapter. Here, well-known object "greeter" is replicated across all server
 // instances.
-adapter.add(new Server.Chatbot(greeterName: uuid[^4..]), Ice.Util.stringToIdentity("greeter"));
+adapter.add(new Server.Chatbot(greeterName: uuid[^4..]), new Ice.Identity { name = "greeter" });
 
 // Start dispatching requests. This method also registers the object adapter with the IceDiscovery plugin.
 adapter.activate();

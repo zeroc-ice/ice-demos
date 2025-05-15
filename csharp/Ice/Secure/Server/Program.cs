@@ -25,7 +25,7 @@ Ice.ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints(
     sslAuthenticationOptions);
 
 // Register the Chatbot servant with the adapter.
-adapter.add(new Server.Chatbot(), Ice.Util.stringToIdentity("greeter"));
+adapter.add(new Server.Chatbot(), new Ice.Identity { name = "greeter" });
 
 // Start dispatching requests.
 adapter.activate();
