@@ -32,8 +32,8 @@ main(int argc, char* argv[])
 
     if (!proxy)
     {
-        cerr << "The IceGrid registry doesn't know any object with type '" << greeterTypeId << "'." << endl;
-        return EXIT_FAILURE;
+        cout << "The IceGrid registry doesn't know any object with type '" << greeterTypeId << "'." << endl;
+        return 0;
     }
 
     // Cast the object proxy to a Greeter proxy.
