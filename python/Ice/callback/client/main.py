@@ -23,7 +23,7 @@ async def main():
         # Register the MockAlarmClock servant with the adapter. The wake up service knows we use identity "alarmClock".
         stopPressed = loop.create_future()
         mockAlarmClock = MockAlarmClock(stopPressed)
-        alarmClock = AlarmClockPrx.uncheckedCast(adapter.add(mockAlarmClock, Ice.stringToIdentity("alarmClock")))
+        alarmClock = AlarmClockPrx.uncheckedCast(adapter.add(mockAlarmClock, Ice.Identity(name="alarmClock")))
 
         # Start dispatching requests.
         adapter.activate()
