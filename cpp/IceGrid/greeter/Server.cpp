@@ -22,7 +22,7 @@ main(int argc, char* argv[])
     // file.
     auto adapter = communicator->createObjectAdapter("GreeterAdapter");
 
-    // Retrieve the greeter name and greeter identity from the IceGrid-generated config file
+    // Retrieve the greeter name and greeter identity from the IceGrid-generated config file.
     Ice::PropertiesPtr properties = communicator->getProperties();
     string greeterName = properties->getIceProperty("Ice.ProgramName");
     Ice::Identity greeterIdentity = Ice::stringToIdentity(properties->getProperty("Greeter.Identity"));
