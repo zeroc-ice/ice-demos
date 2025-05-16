@@ -52,7 +52,7 @@ func run() -> Int32 {
 
         let adapter = try communicator.createObjectAdapter("Callback.Server")
         let sender = CallbackSenderI()
-        try adapter.add(servant: CallbackSenderDisp(sender), id: Ice.stringToIdentity("sender"))
+        try adapter.add(servant: CallbackSenderDisp(sender), id: Ice.Identity(name: "sender"))
         try adapter.activate()
 
         Timer.scheduledTimer(withTimeInterval: TimeInterval(2.0), repeats: true) { _ in

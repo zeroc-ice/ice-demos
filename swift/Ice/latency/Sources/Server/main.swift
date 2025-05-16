@@ -22,7 +22,7 @@ func run() -> Int32 {
         }
 
         let adapter = try communicator.createObjectAdapter("Latency")
-        try adapter.add(servant: PingDisp(PingI()), id: Ice.stringToIdentity("ping"))
+        try adapter.add(servant: PingDisp(PingI()), id: Ice.Identity(name: "ping"))
         try adapter.activate()
         communicator.waitForShutdown()
         return 0

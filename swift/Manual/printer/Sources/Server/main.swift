@@ -22,7 +22,7 @@ func run() -> Int32 {
         let adapter = try communicator.createObjectAdapterWithEndpoints(name: "SimplePrinterAdapter",
                                                                         endpoints: "default -h localhost -p 10000")
         try adapter.add(servant: PrinterDisp(PrinterI()),
-                        id: Ice.stringToIdentity("SimplePrinter"))
+                        id: Ice.Identity(name: "SimplePrinter"))
         try adapter.activate()
 
         communicator.waitForShutdown()
