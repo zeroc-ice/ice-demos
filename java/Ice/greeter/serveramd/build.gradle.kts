@@ -7,7 +7,7 @@ dependencies {
 
 sourceSets {
     main {
-        // Add the GreeterAMD.ice file from the parent slice directory the main source set.
+        // Add the GreeterAMD.ice file from the parent slice directory to the main source set.
         slice {
             srcDirs("../slice")
             // By default a Slice source set includes all Slice files in the srcDirs directories.

@@ -2,21 +2,20 @@
 
 package com.example.ice.secure.client;
 
-import com.example.visitorcenter.GreeterPrx;
-import com.zeroc.Ice.Communicator;
-import com.zeroc.Ice.Util;
-
 import java.io.FileInputStream;
 import java.io.IOException;
-
-import java.security.cert.CertificateException;
 import java.security.KeyManagementException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManagerFactory;
+
+import com.example.visitorcenter.GreeterPrx;
+import com.zeroc.Ice.Communicator;
+import com.zeroc.Ice.Util;
 
 class Client {
     public static void main(String[] args) {
@@ -52,8 +51,7 @@ class Client {
         var initData = new com.zeroc.Ice.InitializationData();
         initData.properties = new com.zeroc.Ice.Properties(args);
         
-        // The clientSSLEngineFactory lambda provides the communicator with an SSLEngine that uses our custom
-        // SSLContext for each outgoing secure connection.
+        // Configure the communicator to use the SSLContext for ssl outgoing connections.
         initData.clientSSLEngineFactory =
             (String peerHost, int peerPort) -> sslContext.createSSLEngine(peerHost, peerPort);
 

@@ -57,8 +57,7 @@ final class Server {
             shutdownCommunicatorOnCtrlC(communicator, Thread.currentThread());
 
             // Create an object adapter that listens for incoming requests and dispatches them to servants.
-            // The adapter is configured to use the "ssl" secure transport. For each incoming connection,
-            // the sslEngineFactory lambda provides an SSLEngine initialized with our custom SSLContext.
+            // We configure the object adapter to use the "ssl" transport and our custom SSLContext.
             ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints(
                 "GreeterAdapter",
                 "ssl -p 4061",
