@@ -16,7 +16,7 @@ def main():
 
         # Create the root directory servant (with name "/"), and add this servant to the adapter.
         root = MDirectory("/")
-        adapter.add(root, Ice.stringToIdentity("RootDir"))
+        adapter.add(root, Ice.Identity(name="RootDir"))
 
         # Create a file called "README", add this servant to the adapter, and add the corresponding proxy to the root
         # directory.

@@ -21,8 +21,8 @@ async def main():
         adapter = communicator.createObjectAdapterWithEndpoints("GreeterAdapter", "tcp -p 4061")
 
         # Register two instances of Chatbot - a regular greater and a slow greeter.
-        adapter.add(chatbot.Chatbot(0.0), Ice.stringToIdentity("greeter"))
-        adapter.add(chatbot.Chatbot(60.0), Ice.stringToIdentity("slowGreeter"))
+        adapter.add(chatbot.Chatbot(0.0), Ice.Identity(name="greeter"))
+        adapter.add(chatbot.Chatbot(60.0), Ice.Identity(name="slowGreeter"))
 
         # Start dispatching requests.
         adapter.activate()
