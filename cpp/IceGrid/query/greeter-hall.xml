@@ -1,0 +1,35 @@
+<icegrid>
+  <!-- An application describes nodes and servers deployed on these nodes. An IceGrid deployment (a
+  registry plus one or
+  more nodes) can host several applications. -->
+  <application name="GreeterHall">
+
+    <!-- A server template allows us to instantiate several similar servers. -->
+    <server-template id="GreetServer">
+      <!-- This template has a single parameter, index. Its value can be any string. -->
+      <parameter name="index" />
+
+      <!-- An instance of this template is a server with ID GreetServer-${index}. IceGrid starts
+      this server when a client looks up an object adapter or a well-known object in this server. -->
+      <server id="GreetServer-${index}" exe="server" activation="on-demand">
+        <!-- The object adapter created by this server. It listens on an OS-assigned tcp port, on
+        all interfaces. -->
+        <adapter name="GreeterAdapter" endpoints="tcp">
+          <!-- Each adapter hosts a well-known object with a unique identity. All these objects
+          nevertheless share
+          the same type, and we use the type ID for interface Greeter for this type string. -->
+          <object identity="greeter-${index}" type="::VisitorCenter::Greeter"
+            property="Greeter.Identity" />
+        </adapter>
+      </server>
+    </server-template>
+
+    <!-- Describes the servers deployed on node1. Here, we deploy 3 separate instances of the
+    GreetServer. -->
+    <node name="node1">
+      <server-instance template="GreetServer" index="1" />
+      <server-instance template="GreetServer" index="2" />
+      <server-instance template="GreetServer" index="3" />
+    </node>
+  </application>
+</icegrid>

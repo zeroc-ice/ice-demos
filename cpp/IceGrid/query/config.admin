@@ -1,0 +1,8 @@
+# Config file for icegridadmin
+
+# A proxy to the Locator object hosted by the IceGrid registry.
+Ice.Default.Locator=IceGrid/Locator:tcp -h localhost -p 4061
+
+# Dummy username and password. They work because IceGrid is configured with the NullPermissionsVerifier.
+IceGridAdmin.Username=foo
+IceGridAdmin.Password=bar
