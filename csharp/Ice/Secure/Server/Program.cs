@@ -29,7 +29,7 @@ adapter.add(new Server.Chatbot(), new Ice.Identity { name = "greeter" });
 
 // Start dispatching requests.
 adapter.activate();
-Console.WriteLine("Listening on port 4063...");
+Console.WriteLine("Listening on port 4061...");
 
 // Shut down the communicator when the user presses Ctrl+C.
 Console.CancelKeyPress += (sender, eventArgs) =>

@@ -7,10 +7,10 @@ dependencies {
 
 sourceSets {
     main {
-        // Add the Greeter.ice file from the parent slice directory the main source set.
+        // Add the Greeter.ice file from the parent slice directory to the main source set.
         slice {
             srcDirs("../slice")
-            // By default a Slice source set includes all Slice files in the srcDirs directories
+            // By default a Slice source set includes all Slice files in the srcDirs directories.
             // Here we override the default behavior by specifying the list of Slice files to include.
             setIncludes(listOf("Greeter.ice"))
         }
