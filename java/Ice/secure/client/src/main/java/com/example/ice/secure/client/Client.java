@@ -5,10 +5,12 @@ package com.example.ice.secure.client;
 import com.example.visitorcenter.GreeterPrx;
 import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.Util;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 import java.io.FileInputStream;
+import java.io.IOException;
+
+import java.security.cert.CertificateException;
+import java.security.KeyManagementException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -23,47 +25,28 @@ class Client {
         // In a production environment, use a secure method to store and retrieve this password.
         char[] password = "password".toCharArray();
 
-        // Create a KeyStore object to load the CA's certificate.
-        // The PKCS12 format is recommended for modern Java applications.
-        KeyStore keyStore;
-        try {
-            keyStore = KeyStore.getInstance("PKCS12");
-        } catch (KeyStoreException ex) {
-            throw new RuntimeException("Error initializing PKCS12 keystore.", ex);
-        }
-
-        // Load the CA certificate from the keystore file into the KeyStore object.
-        String keyStorePath = "../../../../certs/cacert.p12";
-        try (var input = new FileInputStream(keyStorePath)) {
-            keyStore.load(input, password);
-        } catch (Exception ex) {
-            throw new RuntimeException("Error loading keystore.", ex);
-        }
-
-        // Create a TrustManagerFactory to manage the trusted certificates.
-        // This will be used by the SSLContext to verify that the server's certificate was signed by our demo
-        // custom CA.
-        TrustManagerFactory trustManagerFactory;
-        try {
-            trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
-            trustManagerFactory.init(keyStore);
-        } catch (Exception ex) {
-            throw new RuntimeException("Error initializing key manager factory.", ex);
-        }
-
-        // Create an SSLContext using the TLS protocol.
+        // Create and initialize an SSLContext object for the TLS protocol. The SSLContext is configured with the
+        // custom a custom CA certificate, which is loaded from a PKCS12 keystore. This SSLContext will be used
+        // to configure client's communicator.
         SSLContext sslContext;
         try {
             sslContext = SSLContext.getInstance("TLS");
-        } catch (NoSuchAlgorithmException ex) {
-            throw new RuntimeException("Error initializing TLS protocol.", ex);
-        }
-
-        // Initialize the SSLContext with the trust managers from the TrustManagerFactory.
-        try {
+            KeyStore keyStore = keyStore = KeyStore.getInstance("PKCS12");
+            String keyStorePath = "../../../../certs/cacert.p12";
+            try (var input = new FileInputStream(keyStorePath)) {
+                keyStore.load(input, password);
+            }
+            TrustManagerFactory trustManagerFactory =
+                TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+            trustManagerFactory.init(keyStore);
             sslContext.init(null, trustManagerFactory.getTrustManagers(), null);
-        } catch (Exception ex) {
-            throw new RuntimeException("Error initializing SSL context.", ex);
+        } catch (
+            CertificateException|
+            IOException|
+            KeyManagementException|
+            KeyStoreException|
+            NoSuchAlgorithmException ex) {
+            throw new RuntimeException("SSL initialization error.", ex);
         }
 
         var initData = new com.zeroc.Ice.InitializationData();
@@ -85,19 +68,6 @@ class Client {
             // Send a request to the remote object and get the response.
             String greeting = greeter.greet(System.getProperty("user.name"));
             System.out.println(greeting);
-
-            // Send another request to the remote object, this time with greetAsync.
-            // 'greetAsync' returns a future immediately.
-            CompletableFuture<String> futureGreeting = greeter.greetAsync("alice");
-
-            try {
-                greeting = futureGreeting.get();
-                System.out.println(greeting);
-            } catch (InterruptedException e) {
-                assert false; // We don't interrupt this thread.
-            } catch (ExecutionException e) {
-                System.out.println("Could not get greeting: " + e.getMessage());
-            }
         }
     }
 }

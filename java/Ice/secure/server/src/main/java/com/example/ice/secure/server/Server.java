@@ -3,9 +3,13 @@
 package com.example.ice.secure.server;
 
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.security.KeyManagementException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
 
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
@@ -20,45 +24,29 @@ final class Server {
         // In a production environment, use a secure method to store and retrieve this password.
         char[] password = "password".toCharArray();
 
-        // Create a KeyStore to load the server's private key and certificate.
-        // The PKCS12 format is recommended for modern Java applications.
-        KeyStore keyStore;
-        try {
-            keyStore = KeyStore.getInstance("PKCS12");
-        } catch (KeyStoreException ex) {
-            throw new RuntimeException("Error initializing PKCS12 keystore.", ex);
-        }
-
-        // Load the server's private key and certificate into the KeyStore from the keystore file.
-        String keyStorePath = "../../../../certs/server.p12";
-        try (var input = new FileInputStream(keyStorePath)) {
-            keyStore.load(input, password);
-        } catch (Exception ex) {
-            throw new RuntimeException("Error loading keystore.", ex);
-        }
-
-        // Create a KeyManagerFactory to provide access to the server's private key and certificate.
-        KeyManagerFactory keyManagerFactory;
-        try {
-            keyManagerFactory = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
-            keyManagerFactory.init(keyStore, password);
-        } catch (Exception ex) {
-            throw new RuntimeException("Error initializing key manager factory.", ex);
-        }
-
-        // Create an SSLContext configured for the TLS protocol.
+        // Create and initialize an SSLContext object for the TLS protocol. The SSLContext is configured with the
+        // server's private key and certificate, which are loaded from a PKCS12 keystore. This SSLContext will be used
+        // to configure the server's object adapter.
         SSLContext sslContext;
         try {
             sslContext = SSLContext.getInstance("TLS");
-        } catch (NoSuchAlgorithmException ex) {
-            throw new RuntimeException("Error initializing TLS protocol.", ex);
-        }
-
-        // Initialize the SSLContext using the key managers from the KeyManagerFactory.
-        try {
+            KeyStore keyStore = KeyStore.getInstance("PKCS12");
+            String keyStorePath = "../../../../certs/server.p12";
+            try (var input = new FileInputStream(keyStorePath)) {
+                keyStore.load(input, password);
+            }
+            KeyManagerFactory keyManagerFactory =
+                KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+            keyManagerFactory.init(keyStore, password);
             sslContext.init(keyManagerFactory.getKeyManagers(), null, null);
-        } catch (Exception ex) {
-            throw new RuntimeException("Error initializing SSL context.", ex);
+        }  catch (
+            CertificateException|
+            IOException|
+            KeyManagementException|
+            KeyStoreException|
+            NoSuchAlgorithmException|
+            UnrecoverableKeyException ex) {
+            throw new RuntimeException("SSL initialization error.", ex);
         }
 
         // Create an Ice communicator. We'll use this communicator to create an object adapter.
