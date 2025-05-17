@@ -14,7 +14,7 @@ subprojects {
     apply(plugin = "com.zeroc.ice.slice-tools")
 
     repositories {
-        // Add the ZeroC Nightly maven repository, required to use the Ice nightly builds.
+        // This demo uses the latest Ice nightly build published in ZeroC's maven-nightly repository.
         maven("https://download.zeroc.com/nexus/repository/maven-nightly/")
         mavenCentral()
     }

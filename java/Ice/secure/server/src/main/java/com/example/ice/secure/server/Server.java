@@ -16,22 +16,66 @@ import javax.net.ssl.SSLContext;
 
 import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.ObjectAdapter;
+import com.zeroc.Ice.SSL.SSLEngineFactory;
 import com.zeroc.Ice.Util;
 
 final class Server {
     public static void main(String[] args) {
-        // The password for the PKCS12 keystore, hard-coded for simplicity.
-        // In a production environment, use a secure method to store and retrieve this password.
-        char[] password = "password".toCharArray();
+        // Create an Ice communicator. We'll use this communicator to create an object adapter.
+        try (Communicator communicator = Util.initialize(args)) {
 
-        // Create and initialize an SSLContext object for the TLS protocol. The SSLContext is configured with the
-        // server's private key and certificate, which are loaded from a PKCS12 keystore. This SSLContext will be used
-        // to configure the server's object adapter.
+            // Register a shutdown hook that calls communicator.shutdown() when the user shuts down the server with
+            // Ctrl+C or similar. The shutdown hook thread also waits until the main thread completes its cleanup.
+            shutdownCommunicatorOnCtrlC(communicator, Thread.currentThread());
+
+            // Create the SSLContext and use it to configure the object adapter. When the adapter accepts a new
+            // incoming ssl connection, it uses the `sslEngineFactory` to create an SSLEngine for that connection.
+            // Here, we generate these SSLEngine instances using our carefully crafted SSLContext.
+            SSLContext sslContext = createSSLContext();
+            SSLEngineFactory sslEngineFactory = (String peerHost, int peerPort) -> {
+                var engine = sslContext.createSSLEngine(peerHost, peerPort);
+                engine.setNeedClientAuth(false);
+                return engine;
+            };
+
+            // Create an object adapter that listens for incoming requests and dispatches them to servants.
+            ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints(
+                "GreeterAdapter",
+                "ssl -p 4061",
+                sslEngineFactory);
+
+            // Register the Chatbot servant with the adapter.
+            adapter.add(new Chatbot(), Util.stringToIdentity("greeter"));
+
+            // Start dispatching requests.
+            adapter.activate();
+            System.out.println("Listening on port 4061...");
+
+            // Wait until the communicator is shut down. Here, this occurs when the user presses Ctrl+C.
+            communicator.waitForShutdown();
+        }
+    }
+
+    /**
+     * Creates and initializes an SSLContext for use with the SSL transport.
+     *
+     * The SSLContext is configured with the server's certificate and private key, loaded from a PKCS12 keystore
+     * used as the key store to provide the server credentials.
+     *
+     * @return the initialized SSLContext
+     * @throws RuntimeException if an error occurs during SSL initialization
+     */
+    private static SSLContext createSSLContext() {
         SSLContext sslContext;
         try {
             sslContext = SSLContext.getInstance("TLS");
             KeyStore keyStore = KeyStore.getInstance("PKCS12");
             String keyStorePath = "../../../../certs/server.p12";
+
+            // The password for the PKCS12 keystore, hard-coded for simplicity.
+            // In a production environment, use a secure method to store and retrieve this password.
+            char[] password = "password".toCharArray();
+
             try (var input = new FileInputStream(keyStorePath)) {
                 keyStore.load(input, password);
             }
@@ -48,35 +92,7 @@ final class Server {
             UnrecoverableKeyException ex) {
             throw new RuntimeException("SSL initialization error.", ex);
         }
-
-        // Create an Ice communicator. We'll use this communicator to create an object adapter.
-        try (Communicator communicator = Util.initialize(args)) {
-
-            // Register a shutdown hook that calls communicator.shutdown() when the user shuts down the server with
-            // Ctrl+C or similar. The shutdown hook thread also waits until the main thread completes its cleanup.
-            shutdownCommunicatorOnCtrlC(communicator, Thread.currentThread());
-
-            // Create an object adapter that listens for incoming requests and dispatches them to servants.
-            // We configure the object adapter to use the "ssl" transport and our custom SSLContext.
-            ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints(
-                "GreeterAdapter",
-                "ssl -p 4061",
-                (String peerHost, int peerPort) -> {
-                    var engine = sslContext.createSSLEngine(peerHost, peerPort);
-                    engine.setNeedClientAuth(false);
-                    return engine;
-                });
-
-            // Register the Chatbot servant with the adapter.
-            adapter.add(new Chatbot(), Util.stringToIdentity("greeter"));
-
-            // Start dispatching requests.
-            adapter.activate();
-            System.out.println("Listening on port 4061...");
-
-            // Wait until the communicator is shut down. Here, this occurs when the user presses Ctrl+C.
-            communicator.waitForShutdown();
-        }
+        return sslContext;
     }
 
     private static void shutdownCommunicatorOnCtrlC(Communicator communicator, Thread mainThread) {
