@@ -38,7 +38,7 @@ func run() -> Int32 {
 
         let adapter = try communicator.createObjectAdapter("Hello")
         try adapter.add(servant: HelloDisp(HelloI(communicator.getProperties().getProperty("Ice.ProgramName"))),
-                        id: Ice.stringToIdentity("hello"))
+                        id: Ice.Identity(name: "hello"))
         try adapter.activate()
 
         communicator.waitForShutdown()

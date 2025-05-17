@@ -17,7 +17,7 @@ func run() -> Int32 {
         }
 
         let adapter = try communicator.createObjectAdapter("Calculator")
-        try adapter.add(servant: CalculatorDisp(CalculatorI()), id: Ice.stringToIdentity("calculator"))
+        try adapter.add(servant: CalculatorDisp(CalculatorI()), id: Ice.Identity(name: "calculator"))
         try adapter.activate()
 
         communicator.waitForShutdown()

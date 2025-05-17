@@ -22,7 +22,7 @@ func run() -> Int32 {
         let authenticator = AuthenticatorI()
         let authenticatorAdapter = try communicator.createObjectAdapter("Authenticator")
         try authenticatorAdapter.add(servant: AuthenticatorDisp(authenticator),
-                                     id: Ice.stringToIdentity("authenticator"))
+                                     id: Ice.Identity(name: "authenticator"))
         try authenticatorAdapter.activate()
 
         let securedOperations: Set = ["setTemp", "shutdown"]
@@ -30,7 +30,7 @@ func run() -> Int32 {
         let interceptor = InterceptorI(dispatcher: ThermostatDisp(ThermostatI()), authenticator: authenticator,
                                        securedOperations: securedOperations)
         let thermostatAdapter = try communicator.createObjectAdapter("Thermostat")
-        try thermostatAdapter.add(servant: interceptor, id: Ice.stringToIdentity("thermostat"))
+        try thermostatAdapter.add(servant: interceptor, id: Ice.Identity(name: "thermostat"))
         try thermostatAdapter.activate()
 
         communicator.waitForShutdown()
