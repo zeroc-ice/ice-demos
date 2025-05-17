@@ -74,6 +74,7 @@ class Client {
             KeyManagementException|
             KeyStoreException|
             NoSuchAlgorithmException ex) {
+            // Should never happen in this demo.
             throw new RuntimeException("SSL initialization error.", ex);
         }
         return sslContext;

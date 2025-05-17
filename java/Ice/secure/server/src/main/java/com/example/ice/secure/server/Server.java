@@ -90,6 +90,7 @@ final class Server {
             KeyStoreException|
             NoSuchAlgorithmException|
             UnrecoverableKeyException ex) {
+            // Should never happen in this demo.
             throw new RuntimeException("SSL initialization error.", ex);
         }
         return sslContext;
