@@ -18,4 +18,8 @@ subprojects {
         maven("https://download.zeroc.com/nexus/repository/maven-nightly/")
         mavenCentral()
     }
+
+    tasks.withType<JavaCompile>().configureEach {
+        options.compilerArgs.add("-Xlint:all")
+    }
 }
