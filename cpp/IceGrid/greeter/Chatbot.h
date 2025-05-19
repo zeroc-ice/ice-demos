@@ -11,7 +11,7 @@ namespace Server
     class Chatbot : public VisitorCenter::Greeter
     {
     public:
-        /// Constructors a Chatbot servant.
+        /// Constructs a Chatbot servant.
         /// @param greeterName The name of the greeter.
         explicit Chatbot(std::string greeterName);
 
