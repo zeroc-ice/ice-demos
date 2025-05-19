@@ -83,15 +83,15 @@ final class Server {
             keyManagerFactory.init(keyStore, password);
             sslContext.init(keyManagerFactory.getKeyManagers(), null, null);
             return sslContext;
-        }  catch (
-            CertificateException|
-            IOException|
-            KeyManagementException|
-            KeyStoreException|
-            NoSuchAlgorithmException|
-            UnrecoverableKeyException ex) {
-                // Should never happen in this demo.
-                throw new RuntimeException("SSL initialization error.", ex);
+        } catch (
+            CertificateException |
+                IOException |
+                KeyManagementException |
+                KeyStoreException |
+                NoSuchAlgorithmException |
+                UnrecoverableKeyException ex) {
+            // Should never happen in this demo.
+            throw new RuntimeException("SSL initialization error.", ex);
         }
     }
 
