@@ -51,9 +51,8 @@ class Client {
      * @throws RuntimeException if an error occurs during SSL initialization
      */
     private static SSLContext createSSLContext() {
-        SSLContext sslContext;
         try {
-            sslContext = SSLContext.getInstance("TLS");
+            SSLContext sslContext = SSLContext.getInstance("TLS");
             KeyStore keyStore = KeyStore.getInstance("PKCS12");
             String keyStorePath = "../../../../certs/cacert.p12";
 
@@ -68,15 +67,15 @@ class Client {
                 TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
             trustManagerFactory.init(keyStore);
             sslContext.init(null, trustManagerFactory.getTrustManagers(), null);
+            return sslContext;
         } catch (
             CertificateException|
             IOException|
             KeyManagementException|
             KeyStoreException|
             NoSuchAlgorithmException ex) {
-            // Should never happen in this demo.
-            throw new RuntimeException("SSL initialization error.", ex);
+                // Should never happen in this demo.
+                throw new RuntimeException("SSL initialization error.", ex);
         }
-        return sslContext;
     }
 }

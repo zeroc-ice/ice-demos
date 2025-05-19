@@ -66,9 +66,8 @@ final class Server {
      * @throws RuntimeException if an error occurs during SSL initialization
      */
     private static SSLContext createSSLContext() {
-        SSLContext sslContext;
         try {
-            sslContext = SSLContext.getInstance("TLS");
+            SSLContext sslContext = SSLContext.getInstance("TLS");
             KeyStore keyStore = KeyStore.getInstance("PKCS12");
             String keyStorePath = "../../../../certs/server.p12";
 
@@ -83,6 +82,7 @@ final class Server {
                 KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
             keyManagerFactory.init(keyStore, password);
             sslContext.init(keyManagerFactory.getKeyManagers(), null, null);
+            return sslContext;
         }  catch (
             CertificateException|
             IOException|
@@ -90,10 +90,9 @@ final class Server {
             KeyStoreException|
             NoSuchAlgorithmException|
             UnrecoverableKeyException ex) {
-            // Should never happen in this demo.
-            throw new RuntimeException("SSL initialization error.", ex);
+                // Should never happen in this demo.
+                throw new RuntimeException("SSL initialization error.", ex);
         }
-        return sslContext;
     }
 
     private static void shutdownCommunicatorOnCtrlC(Communicator communicator, Thread mainThread) {
