@@ -3,11 +3,12 @@
 package com.example.ice.config.server;
 
 import com.zeroc.Ice.Communicator;
+import com.zeroc.Ice.Identity;
 import com.zeroc.Ice.ObjectAdapter;
 import com.zeroc.Ice.Util;
 
 class Server {
-    public static void main(String[] args) {    
+    public static void main(String[] args) {
         // Create an Ice communicator. We'll use this communicator to create an object adapter. The communicator gets its
         // configuration properties from file config.server, in the server's current working directory. The communicator
         // initialization also parses the command-line options to find and set additional properties.
@@ -21,7 +22,7 @@ class Server {
             ObjectAdapter adapter = communicator.createObjectAdapter("GreeterAdapter");
 
             // Register the Chatbot servant with the adapter.
-            adapter.add(new Chatbot(), Util.stringToIdentity("greeter"));
+            adapter.add(new Chatbot(), new Identity("greeter", ""));
 
             // Start dispatching requests.
             adapter.activate();
