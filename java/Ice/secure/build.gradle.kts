@@ -45,6 +45,7 @@ subprojects {
             rootProject.tasks.named("rewriteRun") { dependsOn(checkstyleTask) }
         }
     }
+    exclude '**/generated/**'
 }
 
 rewrite {
