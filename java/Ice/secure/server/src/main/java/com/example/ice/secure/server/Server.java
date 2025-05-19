@@ -15,6 +15,7 @@ import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 
 import com.zeroc.Ice.Communicator;
+import com.zeroc.Ice.Identity;
 import com.zeroc.Ice.ObjectAdapter;
 import com.zeroc.Ice.SSL.SSLEngineFactory;
 import com.zeroc.Ice.Util;
@@ -45,7 +46,7 @@ final class Server {
                 sslEngineFactory);
 
             // Register the Chatbot servant with the adapter.
-            adapter.add(new Chatbot(), Util.stringToIdentity("greeter"));
+            adapter.add(new Chatbot(), new Identity("greeter", ""));
 
             // Start dispatching requests.
             adapter.activate();
