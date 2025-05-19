@@ -50,10 +50,14 @@
 
   <!-- https://checkstyle.org/filters/suppresswithnearbytextfilter.html -->
   <module name="SuppressWithNearbyTextFilter">
-    <property name="nearbyTextPattern"
-              value="CHECKSTYLE.SUPPRESS\: (\w+) for ([+-]\d+) lines"/>
-    <property name="checkPattern" value="$1"/>
-    <property name="lineRange" value="$2"/>
+    <property name="nearbyTextPattern" value="auto-generated"/>
+    <property name="lineRange" value="9999"/>
+  </module>
+
+  <!-- https://checkstyle.org/filters/suppresswithnearbytextfilter.html -->
+  <module name="SuppressWithNearbyTextFilter">
+    <property name="nearbyTextPattern" value="auto-generated"/>
+    <property name="lineRange" value="-9999"/>
   </module>
 
   <!-- Checks for whitespace                               -->

@@ -43,9 +43,11 @@ subprojects {
             checkstyleTask.configFile = rootProject.file("checkstyle/checkstyle.xml")
             rootProject.tasks.named("rewriteDryRun") { dependsOn(checkstyleTask) }
             rootProject.tasks.named("rewriteRun") { dependsOn(checkstyleTask) }
+            checkstyleTask.exclude("generated/**/*.java")
         }
+        
     }
-    exclude '**/generated/**'
+    
 }
 
 rewrite {

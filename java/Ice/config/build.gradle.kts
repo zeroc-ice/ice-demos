@@ -43,13 +43,11 @@ subprojects {
             checkstyleTask.configFile = rootProject.file("checkstyle/checkstyle.xml")
             rootProject.tasks.named("rewriteDryRun") { dependsOn(checkstyleTask) }
             rootProject.tasks.named("rewriteRun") { dependsOn(checkstyleTask) }
+            checkstyleTask.exclude("generated/**/*.java")
         }
-        exclude '**/generated/**'
+        
     }
-
-    tasks.withType<JavaCompile>().configureEach {
-        options.compilerArgs.add("-Xlint:all")
-    }
+    
 }
 
 rewrite {
