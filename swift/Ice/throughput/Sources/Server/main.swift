@@ -86,7 +86,7 @@ func run() -> Int32 {
         }
 
         let adapter = try communicator.createObjectAdapter("Throughput")
-        try adapter.add(servant: ThroughputDisp(ThroughputI()), id: Ice.stringToIdentity("throughput"))
+        try adapter.add(servant: ThroughputDisp(ThroughputI()), id: Ice.Identity(name: "throughput"))
         try adapter.activate()
 
         communicator.waitForShutdown()

@@ -24,7 +24,7 @@ async def main():
         # Register the MockAlarmClock servant with the adapter. The wake up service knows we use identity "alarmClock".
         stopPressed = loop.create_future()
         mockAlarmClock = MockAlarmClock(stopPressed)
-        adapter.add(mockAlarmClock, Ice.stringToIdentity("alarmClock"))
+        adapter.add(mockAlarmClock, Ice.Identity(name="alarmClock"))
 
         # Create a proxy to the wake-up service.
         wakeUpService = EarlyRiser.WakeUpServicePrx(communicator, "wakeUpService:tcp -h localhost -p 4061")

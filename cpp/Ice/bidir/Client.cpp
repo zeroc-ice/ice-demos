@@ -27,7 +27,7 @@ main(int argc, char* argv[])
 
     // Register the MockAlarmClock servant with the adapter. The wake up service knows we use identity "alarmClock".
     auto mockAlarmClock = make_shared<Client::MockAlarmClock>();
-    adapter->add(mockAlarmClock, Ice::stringToIdentity("alarmClock"));
+    adapter->add(mockAlarmClock, Ice::Identity{"alarmClock"});
 
     // Create a proxy to the wake-up service.
     WakeUpServicePrx wakeUpService{communicator, "wakeUpService:tcp -h localhost -p 4061"};

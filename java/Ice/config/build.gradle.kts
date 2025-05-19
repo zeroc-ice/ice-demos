@@ -1,7 +1,7 @@
 // Copyright (c) ZeroC, Inc.
 
 plugins {
-    // Register the Ice Builder plugin without applying it here.
+    // Register the Slice tools plugin without applying it here.
     // The plugin will be applied to all subprojects in the `subprojects` block below.
     id("com.zeroc.ice.slice-tools") version "3.8.0-+" apply false
     id("checkstyle")
@@ -18,13 +18,13 @@ subprojects {
     // Apply the application plugin to enable Java application support in subprojects.
     apply(plugin = "application")
 
-    // Apply the Slice Tools for Ice and Java plugin to enable Slice compilation in all subprojects.
+    // Apply the Slice tools plugin to enable Slice compilation in all subprojects.
     apply(plugin = "com.zeroc.ice.slice-tools")
 
     apply(plugin = "checkstyle")
 
     repositories {
-        // Add the ZeroC Nightly repository for downloading Ice runtime and development artifacts.
+        // This demo uses the latest Ice nightly build published in ZeroC's maven-nightly repository.
         maven("https://download.zeroc.com/nexus/repository/maven-nightly/")
         mavenCentral()
     } 
@@ -44,6 +44,10 @@ subprojects {
             rootProject.tasks.named("rewriteDryRun") { dependsOn(checkstyleTask) }
             rootProject.tasks.named("rewriteRun") { dependsOn(checkstyleTask) }
         }
+    }
+
+    tasks.withType<JavaCompile>().configureEach {
+        options.compilerArgs.add("-Xlint:all")
     }
 }
 

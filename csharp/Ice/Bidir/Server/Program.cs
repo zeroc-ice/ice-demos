@@ -7,7 +7,7 @@ await using Ice.Communicator communicator = Ice.Util.initialize(ref args);
 Ice.ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints("WakeUpAdapter", "tcp -p 4061");
 
 // Register the BidirWakeUpService servant with the adapter.
-adapter.add(new Server.BidirWakeUpService(), Ice.Util.stringToIdentity("wakeUpService"));
+adapter.add(new Server.BidirWakeUpService(), new Ice.Identity { name = "wakeUpService" });
 
 // Start dispatching requests.
 adapter.activate();

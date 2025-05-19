@@ -97,7 +97,7 @@ run(const shared_ptr<Ice::Communicator>& communicator)
         optional<HelloPrx> hello;
         try
         {
-            hello = Ice::checkedCast<HelloPrx>(session->allocateObjectById(Ice::stringToIdentity("hello")));
+            hello = Ice::checkedCast<HelloPrx>(session->allocateObjectById(Ice::Identity{"hello"}));
         }
         catch (const IceGrid::ObjectNotRegisteredException&)
         {

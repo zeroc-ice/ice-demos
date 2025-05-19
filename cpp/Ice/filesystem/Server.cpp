@@ -25,7 +25,7 @@ main(int argc, char* argv[])
 
     // Create the root directory servant (with name "/"), and add this servant to the adapter.
     auto root = make_shared<Server::MDirectory>("/");
-    adapter->add(root, Ice::stringToIdentity("RootDir"));
+    adapter->add(root, Ice::Identity{"RootDir"});
 
     // Create a file called "README", add this servant to the adapter, and add the corresponding proxy to the root
     // directory.

@@ -12,7 +12,7 @@ def main():
         adapter = communicator.createObjectAdapterWithEndpoints("GreeterAdapter", "tcp -p 4061")
 
         # Register the Chatbot servant with the adapter.
-        adapter.add(ConsolePrinter(), Ice.stringToIdentity("weatherStation"))
+        adapter.add(ConsolePrinter(), Ice.Identity(name="weatherStation"))
 
         # Start dispatching requests.
         adapter.activate()

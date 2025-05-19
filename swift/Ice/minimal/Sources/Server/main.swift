@@ -20,7 +20,7 @@ do {
 
     let adapter = try communicator.createObjectAdapterWithEndpoints(name: "Hello",
                                                                     endpoints: "default -h localhost -p 10000")
-    try adapter.add(servant: HelloDisp(HelloI()), id: Ice.stringToIdentity("hello"))
+    try adapter.add(servant: HelloDisp(HelloI()), id: Ice.Identity(name: "hello"))
     try adapter.activate()
     communicator.waitForShutdown()
 } catch {

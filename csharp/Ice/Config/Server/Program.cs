@@ -10,7 +10,7 @@ await using Ice.Communicator communicator = Ice.Util.initialize(ref args, "confi
 Ice.ObjectAdapter adapter = communicator.createObjectAdapter("GreeterAdapter");
 
 // Register the Chatbot servant with the adapter.
-adapter.add(new Server.Chatbot(), Ice.Util.stringToIdentity("greeter"));
+adapter.add(new Server.Chatbot(), new Ice.Identity { name = "greeter" });
 
 // Start dispatching requests.
 adapter.activate();
