@@ -6,14 +6,14 @@
 module VisitorCenter
 {
     /// Represents the error code carried by GreeterException.
-    enum GreeterError { NameTooLong, Away, GreetingOtherVisitor };
+    enum GreeterError { NameTooLong, Away, GreetingOtherVisitor }
 
     /// Represents the custom error returned by the Greeter when it cannot create a greeting. This exception is thrown
     /// by the implementation of the greet operation and caught by the caller.
     exception GreeterException
     {
         /// Describes the exception in a human-readable way.
-        string message;
+        string errorMessage;
 
         /// Provides an error code that can be used to handle this exception programmatically.
         GreeterError error;
