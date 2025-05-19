@@ -101,7 +101,7 @@ jobs:
 
       - name: Build Java Demos
         timeout-minutes: 20
-        working-directory: js
+        working-directory: java
         shell: pwsh
         run: |
           $ErrorActionPreference = "Stop"

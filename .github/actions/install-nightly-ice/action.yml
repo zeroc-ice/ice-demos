@@ -20,18 +20,3 @@ runs:
 
         sudo apt-get update
         sudo apt-get install -y zeroc-ice-all-dev
-
-    - name: Install Ice MSI
-      if: runner.os == 'Windows'
-      shell: powershell
-      run: |
-        $ErrorActionPreference = "Stop"
-
-        $url = "https://download.zeroc.com/nexus/repository/nightly/Ice-3.8.0-alpha0.msi"
-        $downloadDir = "$env:GITHUB_WORKSPACE\Downloads"
-        $output = Join-Path $downloadDir "Ice.msi"
-
-        New-Item -ItemType Directory -Force -Path $downloadDir
-        Invoke-WebRequest -Uri $url -OutFile $output
-
-        Start-Process msiexec.exe -ArgumentList "/i `"$output`" /qn" -Wait -NoNewWindow
