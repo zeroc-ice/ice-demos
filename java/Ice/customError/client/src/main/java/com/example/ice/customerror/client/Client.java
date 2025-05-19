@@ -39,13 +39,13 @@ class Client {
                     System.out.println(greeting);
                 } catch (DispatchException exception) {
                     System.out.println(
-                        "Failed to create a greeting for '" + name + "': DispatchException {{ Message = '" +
-                        exception.getMessage() + "', replyStatus = " + exception.replyStatus + " }}"
+                        "Failed to create a greeting for '" + name + "': DispatchException {{ Message = '"
+                            + exception.getMessage() + "', replyStatus = " + exception.replyStatus + " }}"
                     );
                 } catch (GreeterException exception) {
                     System.out.println(
-                        "Failed to create a greeting for '" + name + "': GreeterException {{ ErrorMessage = '" +
-                        exception.message + "', Error = " + exception.error + " }}"
+                        "Failed to create a greeting for '" + name + "': GreeterException {{ ErrorMessage = '"
+                            + exception.message + "', Error = " + exception.error + " }}"
                     );
                 }
             }
