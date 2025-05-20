@@ -1,0 +1,90 @@
+plugins {
+    id("org.jetbrains.kotlin:kotlin-stdlib") version "1.2.31"
+    id("org.jetbrains.kotlin:kotlin-reflect") version "1.2.31"
+    id("com.puppycrawl.tools:checkstyle") version "10.21.4"
+    id("org.openrewrite:rewrite-java") version "8.52.1"
+}
+//import com.puppycrawl.tools.checkstyle.Checkstyle
+//import org.openrewrite.rewrite-java.OpenRewrite
+
+repositories {
+    maven {
+        url = uri("https://repo1.maven.org/maven2/") //https://plugins.gradle.org/m2/
+    }
+    mavenCentral()
+}
+
+plugins {
+    id("org.jetbrains.kotlin:kotlin-stdlib:1.2.31")
+    id("org.jetbrains.kotlin:kotlin-reflect:1.2.31")
+    id("com.puppycrawl.tools:checkstyle:10.21.4")
+    id("org.openrewrite:rewrite-java:8.52.1")
+}
+
+/*dependencies {
+    "implementation"("org.jetbrains.kotlin:kotlin-stdlib:1.2.31")
+    "implementation"("org.jetbrains.kotlin:kotlin-reflect:1.2.31")
+    "implementation"("com.puppycrawl.tools:checkstyle:10.21.4")
+    "implementation"("org.openrewrite:rewrite-java:8.52.1")
+}*/
+
+subprojects {
+
+    apply(plugin = "checkstyle")
+
+    checkstyle {
+        setConfig(project.resources.text.fromFile(rootProject.file("${rootDir}/checkstyle/checkstyle.xml")))
+        setToolVersion("10.21.4")
+        setIgnoreFailures(false)
+        setShowViolations(true)
+    }
+
+    // We want Checkstyle to generally run before Rewrite and to exclude files generated from Slice.
+    project.getTasks().withType<Checkstyle>().let {
+        it.forEach() { 
+            var checkstyleTask = it
+            checkstyleTask.configFile = rootProject.file("checkstyle/checkstyle.xml")
+            rootProject.tasks.named("rewriteDryRun") { dependsOn(checkstyleTask) }
+            rootProject.tasks.named("rewriteRun") { dependsOn(checkstyleTask) }
+            checkstyleTask.exclude("generated/**/*.java")
+        }
+    }
+}
+
+
+dependencies {
+    checkstyle("com.puppycrawl.tools:checkstyle:10.21.4")
+    rewrite("org.openrewrite.recipe:rewrite-static-analysis:2.5.1")
+    rewrite("org.openrewrite.recipe:rewrite-java-dependencies:1.31.0")
+}
+
+rewrite {
+    activeRecipe(
+        "org.openrewrite.staticanalysis.RemoveCallsToObjectFinalize",
+        "org.openrewrite.staticanalysis.DefaultComesLast",
+        "org.openrewrite.java.RemoveUnusedImports",
+        "org.openrewrite.java.format.NormalizeFormat",
+        "org.openrewrite.java.format.BlankLines",
+        "org.openrewrite.java.format.Spaces",
+        "org.openrewrite.java.format.NormalizeTabsOrSpaces",
+        "org.openrewrite.java.format.TabsAndIndents",
+        "org.openrewrite.java.format.NormalizeLineBreaks",
+        "org.openrewrite.java.format.RemoveTrailingWhitespace",
+        "org.openrewrite.staticanalysis.CodeCleanup"
+    )
+    checkstyleConfigFile = file("checkstyle/checkstyle.xml")
+    activeStyle("com.zeroc.IceRewriteRules")
+    setExportDatatables(true)
+    exclusion(
+        // OpenRewrite is technically capable of modifying Groovy and Kotlin files, but we are avoiding this for now.
+        "**/*.gradle",
+        "**/*.kts",
+        // These are all generated files, and thus should not be subject to modification from OpenRewrite.
+        "**/generated/**/*",
+    )
+}
+
+// Causes build failure when rewriteDryRun would make changes.
+tasks.named("rewriteDryRun") {
+    rewrite.failOnDryRunResults = true
+}

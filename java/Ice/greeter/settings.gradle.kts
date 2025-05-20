@@ -1,6 +1,7 @@
 // Copyright (c) ZeroC, Inc.
 
 pluginManagement {
+    includeBuild("../../convention")
     repositories {
         mavenLocal()
         maven {
@@ -14,3 +15,4 @@ rootProject.name = "greeter"
 include("client")
 include("server")
 include("serveramd")
+include(":plugin")
