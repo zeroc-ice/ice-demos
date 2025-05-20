@@ -3,6 +3,7 @@
 package com.example.ice.greeter.serveramd;
 
 import com.zeroc.Ice.Communicator;
+import com.zeroc.Ice.Identity;
 import com.zeroc.Ice.ObjectAdapter;
 import com.zeroc.Ice.Util;
 
@@ -19,7 +20,7 @@ class Server {
             ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints("GreeterAdapter", "tcp -p 4061");
 
             // Register the Chatbot servant with the adapter.
-            adapter.add(new Chatbot(), Util.stringToIdentity("greeter"));
+            adapter.add(new Chatbot(), new Identity("greeter", ""));
 
             // Start dispatching requests.
             adapter.activate();

@@ -26,7 +26,7 @@ main(int argc, char* argv[])
 
     // Register the MockAlarmClock servant with the adapter, and get an alarm clock proxy.
     auto mockAlarmClock = make_shared<Client::MockAlarmClock>();
-    auto alarmClock = adapter->add<AlarmClockPrx>(mockAlarmClock, Ice::stringToIdentity("alarmClock"));
+    auto alarmClock = adapter->add<AlarmClockPrx>(mockAlarmClock, Ice::Identity{"alarmClock"});
 
     // Start dispatching requests.
     adapter->activate();

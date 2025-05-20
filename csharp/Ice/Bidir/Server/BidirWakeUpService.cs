@@ -24,7 +24,7 @@ internal class BidirWakeUpService : WakeUpServiceDisp_
 
         // Create a proxy to the client's alarm clock. This connection-bound proxy is called a "fixed proxy".
         AlarmClockPrx alarmClock = AlarmClockPrxHelper.uncheckedCast(
-            connection.createProxy(Ice.Util.stringToIdentity("alarmClock")));
+            connection.createProxy(new Ice.Identity { name = "alarmClock" }));
 
         // Start a background task to ring the alarm clock.
         _ = Task.Run(async () =>

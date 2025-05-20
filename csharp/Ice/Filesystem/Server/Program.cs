@@ -10,7 +10,7 @@ Ice.ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints("Files
 
 // Create the root directory servant (with name "/"), and add this servant to the adapter.
 var root = new Server.MDirectory("/");
-adapter.add(root, Ice.Util.stringToIdentity("RootDir"));
+adapter.add(root, new Ice.Identity { name = "RootDir" });
 
 // Create a file called "README", add this servant to the adapter, and add the corresponding proxy to the root
 // directory.

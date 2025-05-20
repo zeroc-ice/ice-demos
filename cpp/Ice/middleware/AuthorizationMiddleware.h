@@ -16,7 +16,7 @@ namespace Server
         /// @param validToken The value to check against.
         AuthorizationMiddleware(Ice::ObjectPtr next, std::string validToken);
 
-        // Implements the pure virtual function dispatch declared on Ice::Object.
+        // Reimplements the dispatch function provided by Ice::Object.
         void dispatch(Ice::IncomingRequest& request, std::function<void(Ice::OutgoingResponse)> sendResponse) final;
 
     private:

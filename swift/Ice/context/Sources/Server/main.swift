@@ -20,7 +20,7 @@ func run() -> Int32 {
         }
 
         let adapter = try communicator.createObjectAdapter("Context")
-        try adapter.add(servant: ContextDisp(ContextI()), id: Ice.stringToIdentity("context"))
+        try adapter.add(servant: ContextDisp(ContextI()), id: Ice.Identity(name: "context"))
         try adapter.activate()
 
         communicator.waitForShutdown()

@@ -1,6 +1,6 @@
 # IceGrid Query
 
-This demo shows how to use the Query object provided by the IceGrid registry to look-up a well-known object by type.
+This demo shows how to use the Query object provided by the IceGrid registry to lookup a well-known object by type.
 
 Follow these steps to build and run the demo:
 

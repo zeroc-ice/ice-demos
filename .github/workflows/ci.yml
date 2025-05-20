@@ -88,58 +88,52 @@ jobs:
       - name: Build C# Demos
         timeout-minutes: 20
         working-directory: csharp
-        run: |
-          find . -name '*.sln' -type f | while IFS= read -r file; do
-            dotnet build "$file"
-          done
-        if: runner.os != 'Windows'
-
-      - name: Build C# Demos
-        timeout-minutes: 20
-        working-directory: csharp
+        shell: pwsh
         run: |
           $ErrorActionPreference = "Stop"
           Get-ChildItem -Recurse -Filter *.sln | ForEach-Object {
+            Write-Host "Building solution: $($_.FullName)"
             dotnet build $_.FullName
-           if ($LASTEXITCODE -ne 0) { throw "dotnet build failed" }
+            if ($LASTEXITCODE -ne 0) {
+              throw "dotnet build failed for $($_.FullName)"
+            }
           }
 
-        if: runner.os == 'Windows'
-
-      # - name: Build Java Demos
-      #   timeout-minutes: 20
-      #   working-directory: java
-      #   env:
-      #     # For Ice Builder for Gradle
-      #     CPP_PLATFORM: x64
-      #     CPP_CONFIGURATION: Release
-      #   run: ./gradlew build
+      - name: Build Java Demos
+        timeout-minutes: 20
+        working-directory: java
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          Get-ChildItem -Recurse -Depth 2 -Filter gradlew | ForEach-Object {
+            Push-Location $_.DirectoryName
+            Write-Host "Building in $($_.DirectoryName)..."
+            $gradlew = if ($IsWindows) { "./gradlew.bat" } else { "./gradlew" }
+            & $gradlew build
+            if ($LASTEXITCODE -ne 0) {
+              throw "Build failed in $($_.DirectoryName)"
+            }
+            Pop-Location
+          }
 
       - name: Build JavaScript Demos
         timeout-minutes: 20
         working-directory: js
+        shell: pwsh
         run: |
-          set -euxo pipefail
-          find . -maxdepth 3 -name package.json -type f | while IFS= read -r file; do
-              dir=$(dirname "$file");
-              npm install --prefix "$dir"
-              npm run --prefix "$dir" build
-          done
-        if: runner.os != 'Windows'
-
-      - name: Build JavaScript Demos
-        timeout-minutes: 20
-        working-directory: js
-        run: |
+          $ErrorActionPreference = "Stop"
           Get-ChildItem -Recurse -Depth 2 -Filter package.json | ForEach-Object {
-            cd $_.DirectoryName
+            Push-Location $_.DirectoryName
+            Write-Host "Installing and building in $($_.DirectoryName)..."
+
             npm install
-            if ($LASTEXITCODE -ne 0) { throw "npm install failed" }
+            if ($LASTEXITCODE -ne 0) { throw "npm install failed in $($_.DirectoryName)" }
 
             npm run build
-            if ($LASTEXITCODE -ne 0) { throw "npm build failed" }
+            if ($LASTEXITCODE -ne 0) { throw "npm build failed in $($_.DirectoryName)" }
+            
+            Pop-Location
           }
-        if: runner.os == 'Windows'
 
       - name: Build Swift Demos
         timeout-minutes: 20

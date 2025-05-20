@@ -7,7 +7,7 @@ await using Ice.Communicator communicator = Ice.Util.initialize(ref args);
 Ice.ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints("StationAdapter", "tcp -p 4061");
 
 // Register the ConsolePrinter servant with the adapter.
-_ = adapter.add(new Server.ConsolePrinter(), Ice.Util.stringToIdentity("weatherStation"));
+_ = adapter.add(new Server.ConsolePrinter(), new Ice.Identity { name = "weatherStation" });
 
 // Start dispatching requests.
 adapter.activate();

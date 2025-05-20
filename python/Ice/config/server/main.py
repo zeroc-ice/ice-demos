@@ -14,11 +14,11 @@ def main():
         adapter = communicator.createObjectAdapter("GreeterAdapter")
 
         # Register the Chatbot servant with the adapter.
-        adapter.add(chatbot.Chatbot(), Ice.stringToIdentity("greeter"))
+        adapter.add(chatbot.Chatbot(), Ice.Identity(name="greeter"))
 
         # Start dispatching requests.
         adapter.activate()
-        
+
         # Ice.Trace.Network=1 or greater shows on which interface(s) and port(s) the server is listening.
 
         try:

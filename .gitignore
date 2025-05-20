@@ -2,7 +2,10 @@
 build
 
 .gradle
+
+# Ignore all JARs except the Gradle wrapper
 *.jar
+!**/gradle/wrapper/gradle-wrapper.jar
 
 # macOS Finder
 .DS_Store

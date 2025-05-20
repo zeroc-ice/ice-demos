@@ -42,7 +42,7 @@ main(int argc, char* argv[])
 
     // Create an object adapter that listens for incoming requests and dispatches them to servants. "GreeterAdapter" is
     // a key into the configuration properties set above.
-    adapter->add(make_shared<Server::Chatbot>(), Ice::stringToIdentity("greeter"));
+    adapter->add(make_shared<Server::Chatbot>(), Ice::Identity{"greeter"});
 
     // Start dispatching requests.
     adapter->activate();

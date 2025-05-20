@@ -26,7 +26,7 @@ def main():
         adapter = communicator.createObjectAdapter("GreeterAdapter")
 
         # Register the Chatbot servant with the adapter.
-        adapter.add(chatbot.Chatbot(), Ice.stringToIdentity("greeter"))
+        adapter.add(chatbot.Chatbot(), Ice.Identity(name="greeter"))
 
         # Start dispatching requests. This method also registers the object adapter with the IceDiscovery plugin.
         adapter.activate()

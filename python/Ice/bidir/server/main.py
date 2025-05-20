@@ -23,7 +23,7 @@ async def main():
         adapter = communicator.createObjectAdapterWithEndpoints("WakeUpAdapter", "tcp -p 4061")
 
         # Register the BidirWakeUpService servant with the adapter.
-        adapter.add(BidirWakeUpService(), Ice.stringToIdentity("wakeUpService"))
+        adapter.add(BidirWakeUpService(), Ice.Identity(name="wakeUpService"))
 
         # Start dispatching requests.
         adapter.activate()

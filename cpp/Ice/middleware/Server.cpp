@@ -29,7 +29,7 @@ main(int argc, char* argv[])
                  { return make_shared<Server::AuthorizationMiddleware>(std::move(next), "iced tea"); });
 
     // Register the Chatbot servant with the adapter.
-    adapter->add(make_shared<Server::Chatbot>(), Ice::stringToIdentity("greeter"));
+    adapter->add(make_shared<Server::Chatbot>(), Ice::Identity{"greeter"});
 
     // Start dispatching requests.
     adapter->activate();

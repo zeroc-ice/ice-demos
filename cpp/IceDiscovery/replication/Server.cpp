@@ -47,7 +47,7 @@ main(int argc, char* argv[])
 
     // Register the Chatbot servant with the adapter. Here, well-known object "greeter" is replicated across all server
     // instances.
-    adapter->add(make_shared<Server::Chatbot>(uuid.substr(uuid.length() - 4)), Ice::stringToIdentity("greeter"));
+    adapter->add(make_shared<Server::Chatbot>(uuid.substr(uuid.length() - 4)), Ice::Identity{"greeter"});
 
     // Start dispatching requests.
     adapter->activate();

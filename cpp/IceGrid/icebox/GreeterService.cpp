@@ -26,7 +26,7 @@ Service::GreeterService::start(
     assert(!_adapter);
     _adapter = communicator->createObjectAdapter("GreeterAdapter");
 
-    // Retrieve the greeter name and greeter identity from the IceGrid-generated config file
+    // Retrieve the greeter name and greeter identity from the IceGrid-generated config file.
     Ice::PropertiesPtr properties = communicator->getProperties();
     _greeterName = properties->getProperty("Greeter.Name");
     Ice::Identity greeterIdentity = Ice::stringToIdentity(properties->getProperty("Greeter.Identity"));

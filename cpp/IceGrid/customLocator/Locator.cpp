@@ -156,9 +156,9 @@ main(int argc, char* argv[])
             auto adapter = communicator->createObjectAdapter("Locator");
             auto registry = make_shared<LocatorRegistryI>(defaultRegistry);
             auto registryPrx =
-                Ice::uncheckedCast<Ice::LocatorRegistryPrx>(adapter->add(registry, Ice::stringToIdentity("registry")));
+                Ice::uncheckedCast<Ice::LocatorRegistryPrx>(adapter->add(registry, Ice::Identity{"registry"}));
             auto locator = make_shared<LocatorI>(defaultLocator, registryPrx);
-            adapter->add(locator, Ice::stringToIdentity("locator"));
+            adapter->add(locator, Ice::Identity{"locator"});
             adapter->activate();
 
             communicator->waitForShutdown();

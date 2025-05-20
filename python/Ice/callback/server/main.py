@@ -21,7 +21,7 @@ async def main():
         adapter = communicator.createObjectAdapterWithEndpoints("WakeUpAdapter", "tcp -p 4061")
 
         # Register the SimpleWakeUpService servant with the adapter.
-        adapter.add(SimpleWakeUpService(), Ice.stringToIdentity("wakeUpService"))
+        adapter.add(SimpleWakeUpService(), Ice.Identity(name="wakeUpService"))
 
         # Start dispatching requests.
         adapter.activate()
