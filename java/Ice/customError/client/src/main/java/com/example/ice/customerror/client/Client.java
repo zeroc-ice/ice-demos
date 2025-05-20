@@ -13,7 +13,7 @@ import com.zeroc.Ice.Util;
 
 class Client {
     public static void main(String[] args) {
-        // Configures the communicator to use a Slice loader that loads module VisitorCenter. This is necessary in
+        // Configures the communicator to use a Slice loader that loads exception GreeterException. This is necessary in
         // Java applications that unmarshal classes or exceptions, when the classes/exceptions or their enclosing
         // module(s) are remapped using java:identifier, like in this demo.
         var initData = new InitializationData();
@@ -35,15 +35,20 @@ class Client {
                 // - a greeting (success)
                 // - a dispatch exception (the base class for marshallable system exceptions), or
                 // - a GreeterException (the custom exception we've defined in the Slice definitions)
-                try {
+                try 
+                {
                     String greeting = greeter.greet(name);
                     System.out.println(greeting);
-                } catch (DispatchException exception) {
-                    System.out.println(String.format("Failed to crete a greeting for '%s': '%s' '%s'",
+                } 
+                catch (DispatchException exception) 
+                {
+                    System.out.println(String.format("Failed to create a greeting for '%s': '%s' '%s'",
                         name, exception.getMessage(), exception.replyStatus));
-                } catch (GreeterException exception) {
+                } 
+                catch (GreeterException exception) 
+                {
                     System.out.println(String.format(
-                        "Failed to create a greeting for '%s': GreeterException {{ ErrorMessage = '%s', Error = '%s' }}",
+                        "Failed to create a greeting for '%s': GreeterException {{ errorMessage = '%s', error = '%s' }}",
                             name, exception.errorMessage, exception.error
                     ));
                 }
