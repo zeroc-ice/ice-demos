@@ -28,7 +28,7 @@ class Client {
                     System.getProperty("user.name"),
                     Map.of("token", "pineapple"));
 
-                System.out.println("Received unexpected greeting: {unexpected}");
+                System.out.println("Received unexpected greeting:" + unexpected);
             }
             catch (DispatchException dispatchException)
             {
