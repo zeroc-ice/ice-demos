@@ -10,6 +10,6 @@ pluginManagement {
     }
 }
 
-rootProject.name = "greeter"
+rootProject.name = "customError"
 include("client")
 include("server")
