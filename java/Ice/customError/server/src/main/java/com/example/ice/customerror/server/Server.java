@@ -8,9 +8,7 @@ import com.zeroc.Ice.Util;
 
 class Server {
     public static void main(String[] args) {
-        // Create an Ice communicator. We'll use this communicator to create an object adapter. The communicator gets
-        // its configuration properties from file config.server, in the server's current working directory.
-        // The communicator initialization also parses the command-line options to find and set additional properties.
+        // Create an Ice communicator. We'll use this communicator to create an object adapter.
         try (Communicator communicator = Util.initialize(args)) {
 
             // Register a shutdown hook that calls communicator.shutdown() when the user shuts down the server with

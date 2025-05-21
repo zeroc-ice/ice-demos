@@ -10,11 +10,11 @@ subprojects {
     // Apply the application plugin to enable Java application support in subprojects.
     apply(plugin = "application")
 
-    // Apply the Gradle Ice Builder plugin to enable Slice compilation in all subprojects.
+    // Apply the Slice tools plugin to enable Slice compilation in all subprojects.
     apply(plugin = "com.zeroc.ice.slice-tools")
 
     repositories {
-        // Add the ZeroC Nightly repository for downloading Ice runtime and development artifacts.
+        // This demo uses the latest Ice nightly build published in ZeroC's maven-nightly repository.
         maven("https://download.zeroc.com/nexus/repository/maven-nightly/")
         mavenCentral()
     }
