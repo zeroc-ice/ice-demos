@@ -1,6 +1,9 @@
-# Greeter
+# Ice Custom Error
 
-The Greeter demo illustrates how to write a client application with Ice for Ruby.
+The Custom error demo shows how to define an exception in Slice, and how to throw and catch this exception.
+
+A Slice-defined exception should be seen as a custom error carried by the response instead of the expected return
+value--there is naturally no throwing across the network.
 
 Ice for Ruby supports only client-side applications. As a result, you first need to start a Greeter server implemented
 in a language with server-side support, such as Python, Java, or C#.
