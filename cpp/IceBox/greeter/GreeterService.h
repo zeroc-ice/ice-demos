@@ -16,6 +16,10 @@ namespace Service
 
         // See IceBox::Service::stop doc-comment.
         void stop() final;
+
+    private:
+        // The object adapter created by this service.
+        Ice::ObjectAdapterPtr _adapter;
     };
 }
 
