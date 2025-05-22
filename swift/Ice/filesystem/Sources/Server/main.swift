@@ -20,7 +20,7 @@ let adapter = try communicator.createObjectAdapterWithEndpoints(
     name: "Filesystem", endpoints: "tcp -p 4061")
 
 // Create the root directory servant (with name "/"), and add this servant to the adapter.
-let root = MDirectory(name: "/");
+let root = MDirectory(name: "/")
 try adapter.add(servant: DirectoryDisp(root), id: Ice.Identity(name: "RootDir"))
 
 // Create a file called "README", add this servant to the adapter, and add the corresponding proxy to the root
