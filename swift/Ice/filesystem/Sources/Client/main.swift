@@ -29,7 +29,7 @@ func listRecursive(dir: DirectoryPrx, depth: Int = 0) async throws {
     let contents = try await dir.list()
 
     for node in contents {
-        let node = node! // The node proxies returned by list() are never null.
+        let node = node! // The node proxies returned by list() are never nil.
 
         let subdir = try await checkedCast(prx: node, type: DirectoryPrx.self)
         let kind = subdir != nil ? "directory" : "file"
