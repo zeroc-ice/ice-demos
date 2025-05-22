@@ -4,7 +4,7 @@ This demo implements the filesystem application shown in the Ice manual.
 
 You can build the client and server applications with:
 
-``` shell
+```shell
 swift build
 ```
 
