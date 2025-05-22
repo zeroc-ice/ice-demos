@@ -1,14 +1,14 @@
 // Copyright (c) ZeroC, Inc.
 
-import Foundation
 import Ice
 
 // CtrlCHandler is a helper class that handles Ctrl+C and similar signals. It must be constructed at the beginning
 // of the program, before creating an Ice communicator or starting any thread.
 let ctrlCHandler = CtrlCHandler()
 
-// Create an Ice communicator to initialize the Ice runtime.
-let communicator = try Ice.initialize()
+// Create an Ice communicator. We'll use this communicator to create an object adapter.
+var args = CommandLine.arguments
+let communicator = try Ice.initialize(&args)
 
 // Destroy the communicator when the program exits.
 defer {
@@ -24,6 +24,7 @@ try adapter.add(servant: GreeterDisp(Chatbot()), id: Ice.Identity(name: "greeter
 
 // Start dispatching requests.
 try adapter.activate()
+print("Listening on port 4061...")
 
 // Shutdown the communicator when the user presses Ctrl+C.
 ctrlCHandler.setCallback { signal in

@@ -1,6 +1,6 @@
-# Greeter
+# Ice Filesystem
 
-The Greeter demo illustrates how to send a request and wait for the response.
+This demo implements the filesystem application shown in the Ice manual.
 
 You can build the client and server applications with:
 

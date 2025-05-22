@@ -3,8 +3,9 @@
 import Foundation
 import Ice
 
-// Create an Ice communicator to initialize the Ice runtime.
-let communicator = try Ice.initialize()
+// Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
+var args = CommandLine.arguments
+let communicator = try Ice.initialize(&args)
 
 // Destroy the communicator when the program exits.
 defer {
