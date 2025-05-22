@@ -8,10 +8,10 @@
       <!-- This template has a single parameter, index. Its value can be any string. -->
       <parameter name="index"/>
 
-      <!-- An instance of this template is a server with ID GreetServer-${index}. IceGrid starts this server when a
-      client looks up an object adapter or a well-known object in this server or in a replica group it references. -->
-      <server id="GreetServer-${index}" exe="./gradlew" activation="on-demand">
-        <option>:server:run</option>
+      <!-- Describes the server deployed on node1. IceGrid starts this server when a client looks up an object adapter
+      or a well-known object in this server. -->
+      <server id="GreetServer" exe="bash" activation="on-demand">
+        <option>server/build/distributions/server/bin/server</option>
 
         <!-- The object adapter created by this server. It listens on an OS-assigned tcp port, on all interfaces.
         It also belongs to replica group GreeterPool, defined later. -->
