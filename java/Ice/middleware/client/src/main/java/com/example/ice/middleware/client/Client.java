@@ -19,16 +19,16 @@ class Client {
             // hostname or IP address.
             GreeterPrx greeter = GreeterPrx.createProxy(communicator, "greeter:tcp -h localhost -p 4061");
 
-            // We hardcode the tokens in this demo, for simplicity. A real application would obtain the token from a secure source.
+            // We hardcode the tokens in this demo, for simplicity. A real application would obtain the token from a
+            // secure source.
             String validToken = "iced tea";
 
             try
             {
-                String unexpected = greeter.greet(
-                    System.getProperty("user.name"),
-                    Map.of("token", "pineapple"));
+                String unexpected =
+                    greeter.greet(System.getProperty("user.name"), Map.of("token", "pineapple"));
 
-                System.out.println("Received unexpected greeting:" + unexpected);
+                System.out.println("Received unexpected greeting: '" + unexpected + "'");
             }
             catch (DispatchException dispatchException)
             {
@@ -41,9 +41,7 @@ class Client {
             }
 
             // Send a request with the correct token in the request context.
-            String greeting = greeter.greet(
-                System.getProperty("user.name"),
-                Map.of("token", validToken));
+            String greeting = greeter.greet(System.getProperty("user.name"), Map.of("token", validToken));
 
             System.out.println(greeting);
         }
