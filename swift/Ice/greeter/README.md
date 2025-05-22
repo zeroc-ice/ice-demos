@@ -4,7 +4,7 @@ The Greeter demo illustrates how to send a request and wait for the response.
 
 You can build the client and server applications with:
 
-``` shell
+```shell
 swift build
 ```
 
