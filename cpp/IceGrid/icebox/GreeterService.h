@@ -23,7 +23,7 @@ namespace Service
         std::string _greeterName{"unknown"};
 
         // The object adapter created by this service.
-        Ice::ObjectAdapterPtr _adapter{nullptr};
+        Ice::ObjectAdapterPtr _adapter;
     };
 }
 
