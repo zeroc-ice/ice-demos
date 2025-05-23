@@ -4,7 +4,7 @@ import Foundation
 import PackageDescription
 
 let package = Package(
-    name: "greeter",
+    name: "weather",
     platforms: [
         .macOS(.v14)
     ],

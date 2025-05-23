@@ -49,7 +49,7 @@ let sensorId = "sensor-\(UUID().uuidString.prefix(4))"
 print("\(sensorId) reporting. Press Ctrl+C to stop...")
 
 let dateFormatter = DateFormatter()
-dateFormatter.dateFormat = "HH:mm:ss"
+dateFormatter.dateFormat = "H:mm:ss.SSS"
 
 // Send a reading every second until cancelled.
 let task = Task {
