@@ -4,21 +4,25 @@ import Foundation
 import PackageDescription
 
 let package = Package(
-    name: "clock",
+    name: "greeter",
     platforms: [
         .macOS(.v14)
     ],
     dependencies: [.package(url: "https://download.zeroc.com/nexus/repository/nightly/ice-swift.git", branch: "main")],
     targets: [
         .executableTarget(
-            name: "Publisher",
-            dependencies: [.product(name: "Ice", package: "ice-swift"), .product(name: "IceStorm", package: "ice-swift")],
+            name: "Sensor",
+            dependencies: [
+                .product(name: "Ice", package: "ice-swift"), .product(name: "IceStorm", package: "ice-swift"),
+            ],
             exclude: ["slice-plugin.json"],
             plugins: [.plugin(name: "CompileSlice", package: "ice-swift")]
         ),
         .executableTarget(
-            name: "Subscriber",
-            dependencies: [.product(name: "Ice", package: "ice-swift"), .product(name: "IceStorm", package: "ice-swift")],
+            name: "Station",
+            dependencies: [
+                .product(name: "Ice", package: "ice-swift"), .product(name: "IceStorm", package: "ice-swift"),
+            ],
             exclude: ["slice-plugin.json"],
             plugins: [.plugin(name: "CompileSlice", package: "ice-swift")]
         ),
