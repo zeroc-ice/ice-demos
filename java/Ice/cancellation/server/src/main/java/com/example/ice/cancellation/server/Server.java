@@ -7,6 +7,7 @@ import com.zeroc.Ice.InitializationData;
 import com.zeroc.Ice.ObjectAdapter;
 import com.zeroc.Ice.Util;
 import com.zeroc.Ice.Properties;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
 class Server {
@@ -14,34 +15,40 @@ class Server {
         // Set the maximum number of threads in the server thread pool to 3, since Chatbot::greet waits synchronously.
         var initData = new InitializationData();
         initData.properties = new Properties(args);
-        initData.properties.setProperty("Ice.ThreadPool.Server.SizeMax", "2");
+        initData.properties.setProperty("Ice.ThreadPool.Server.SizeMax", "3");
+
         // Create an Ice communicator. We'll use this communicator to create an object adapter.
         try (Communicator communicator = Util.initialize(initData)) {
-
-            // Register a shutdown hook that calls communicator.shutdown() when the user shuts down the server with
-            // Ctrl+C or similar. The shutdown hook thread also waits until the main thread completes its cleanup.
-            shutdownCommunicatorOnCtrlC(communicator, Thread.currentThread());
-
             // Create an object adapter that listens for incoming requests and dispatches them to servants.
             ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints("GreeterAdapter", "tcp -p 4061");
 
+            // Create a CompletableFuture to cancel outstanding dispatches after the user presses Ctrl+C.
+            var cancelDispatch = new CompletableFuture();
+
             // Register two instances of Chatbot - a regular greater and a slow greeter.
-            adapter.add(new Chatbot(0, TimeUnit.SECONDS), Util.stringToIdentity("greeter"));
-            adapter.add(new Chatbot(8, TimeUnit.SECONDS), Util.stringToIdentity("slowGreeter"));
+            adapter.add(new Chatbot(), Util.stringToIdentity("greeter"));
+            adapter.add(new Chatbot(cancelDispatch, 60), Util.stringToIdentity("slowGreeter"));
 
             // Start dispatching requests.
             adapter.activate();
             System.out.println("Listening on port 4061...");
+
+            // Register a shutdown hook that calls communicator.shutdown() when the user shuts down the server with
+            // Ctrl+C or similar. The shutdown hook thread also waits until the main thread completes its cleanup.
+            shutdownCommunicatorOnCtrlC(communicator, cancelDispatch, Thread.currentThread());
 
             // Wait until the communicator is shut down. Here, this occurs when the user presses Ctrl+C.
             communicator.waitForShutdown();
         }
     }
 
-    private static void shutdownCommunicatorOnCtrlC(Communicator communicator, Thread mainThread) {
+    private static void shutdownCommunicatorOnCtrlC(Communicator communicator, CompletableFuture cancelDispatch, Thread mainThread) {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             System.out.println("Caught Ctrl+C, shutting down...");
             communicator.shutdown();
+
+            // Cancel outstanding dispatches "stuck" in the slow greeter.
+            cancelDispatch.complete(null);
 
             // Wait until the main thread completes.
             try {

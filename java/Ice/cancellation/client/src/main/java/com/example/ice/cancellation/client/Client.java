@@ -7,9 +7,8 @@ import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.InvocationTimeoutException;
 import com.zeroc.Ice.OperationInterruptedException;
 import com.zeroc.Ice.Util;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.ScheduledExecutorService;
+import com.zeroc.Ice.UnknownException;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
 class Client {
@@ -23,8 +22,7 @@ class Client {
             GreeterPrx greeter = GreeterPrx.createProxy(communicator, "greeter:tcp -h localhost -p 4061");
 
             // Create a proxy to the slow greeter. It uses the same connection as the regular greeter.
-            GreeterPrx slowgreeter =
-                GreeterPrx.createProxy(communicator, "slowGreeter:tcp -h localhost -p 4061");
+            GreeterPrx slowGreeter = GreeterPrx.createProxy(communicator, "slowGreeter:tcp -h localhost -p 4061");
 
             // Send a request to the regular greeter and get the response.
             String greeting = greeter.greet(System.getProperty("user.name"));
@@ -32,38 +30,40 @@ class Client {
 
             // Create another slow greeter proxy with an invocation timeout of 4 seconds (the default invocation timeout
             // is infinite).
-            GreeterPrx slowgreeter4s = slowgreeter.ice_invocationTimeout(4);
+            GreeterPrx slowGreeter4s = slowGreeter.ice_invocationTimeout(4);
 
             // Send a request to the slow greeter with the 4-second invocation timeout.
             try {
-                greeting = slowgreeter4s.greet("alice");
-                System.out.println(greeting);
+                greeting = slowGreeter4s.greet("alice");
+                System.out.println("Received unexpected greeting: " + greeting);
             } catch (InvocationTimeoutException exception) {
                 System.out.println("Caught InvocationTimeoutException, as expected: " + exception.getMessage());
             }
 
-            // Send a request to the slow greeter, and cancel this request after 4 seconds.
-            ScheduledExecutorService greetExecutor = Executors.newScheduledThreadPool(2);
-            Future greetFuture = greetExecutor.submit(() -> {
-                try {
-                    String greetingEnclosed = slowgreeter.greet("bob");
-                    System.out.println(greetingEnclosed);
-                } catch (OperationInterruptedException exception) {
-                    System.out.println("Caught OperationInterruptedException, as expected.");
-                }
+            // Send a request to the slow greeter, and interrupt this thread after 4 seconds to cancel the request.
+            var mainThread = Thread.currentThread();
+            CompletableFuture.delayedExecutor(4, TimeUnit.SECONDS).execute(() -> {
+                mainThread.interrupt();
             });
-            greetExecutor.schedule(() -> {greetFuture.cancel(true);}, 4L, TimeUnit.SECONDS);
-            greetExecutor.shutdown();
+
+            try {
+                greeting = slowGreeter.greet("bob");
+                System.out.println("Received unexpected greeting: " + greeting);
+            } catch (OperationInterruptedException exception) {
+                System.out.println("Caught OperationInterruptedException, as expected.");
+            }
 
             // Verify the regular greeter still works.
-            greeting = greeter.greet("carol"); 
+            greeting = greeter.greet("carol");
             System.out.println(greeting);
 
             // Send a request to the slow greeter, and wait forever for the response.
             System.out.println("Please press Ctrl+C in the server's terminal to cancel the slow greeter dispatch.");
-            greeting = slowgreeter.greet("dave");
-            System.out.println(greeting);
-            
+            try {
+                greeting = slowGreeter.greet("dave");
+            } catch (UnknownException exception) {
+                System.out.println("Caught UnknownException, as expected: " + exception.getMessage());
+            }
         }
     }
 }
