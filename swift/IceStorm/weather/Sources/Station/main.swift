@@ -25,10 +25,7 @@ let adapter = try communicator.createObjectAdapterWithEndpoints(
 // without unsubscribing its weather station, when it restarts, it logically creates a new weather station as opposed
 // to re-incarnating the old one.
 // See also the Retry Count QoS section in the IceStorm documentation.
-let weatherStation = try uncheckedCast(
-    prx: adapter.addWithUUID(WeatherStationDisp(ConsolePrinter())),
-    type: WeatherStationPrx.self
-)
+let weatherStation = try uncheckedCast(prx: adapter.addWithUUID(ConsolePrinter()), type: WeatherStationPrx.self)
 
 // Create a proxy to the IceStorm topic manager.
 let topicManager = try makeProxy(
