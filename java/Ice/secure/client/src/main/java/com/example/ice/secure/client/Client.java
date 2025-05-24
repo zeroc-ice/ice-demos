@@ -15,12 +15,14 @@ import javax.net.ssl.TrustManagerFactory;
 
 import com.example.visitorcenter.GreeterPrx;
 import com.zeroc.Ice.Communicator;
+import com.zeroc.Ice.InitializationData;
+import com.zeroc.Ice.Properties;
 import com.zeroc.Ice.Util;
 
 class Client {
     public static void main(String[] args) {
-        var initData = new com.zeroc.Ice.InitializationData();
-        initData.properties = new com.zeroc.Ice.Properties(args);
+        var initData = new InitializationData();
+        initData.properties = new Properties(args);
 
         // Create the SSLContext and use it to configure the communicator. When the communicator establishes a new
         // outgoing ssl connection, it uses the `clientSSLEngineFactory` to create a SSLEngine for that connection.
@@ -69,13 +71,13 @@ class Client {
             sslContext.init(null, trustManagerFactory.getTrustManagers(), null);
             return sslContext;
         } catch (
-            CertificateException|
-            IOException|
-            KeyManagementException|
-            KeyStoreException|
-            NoSuchAlgorithmException ex) {
-                // Should never happen in this demo.
-                throw new RuntimeException("SSL initialization error.", ex);
+            CertificateException |
+                IOException |
+                KeyManagementException |
+                KeyStoreException |
+                NoSuchAlgorithmException ex) {
+            // Should never happen in this demo.
+            throw new RuntimeException("SSL initialization error.", ex);
         }
     }
 }
