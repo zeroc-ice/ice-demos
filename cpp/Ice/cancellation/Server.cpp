@@ -30,8 +30,8 @@ main(int argc, char* argv[])
     auto adapter = communicator->createObjectAdapterWithEndpoints("GreeterAdapter", "tcp -p 4061");
 
     // Create a promise to cancel outstanding dispatches after the user presses Ctrl+C.
-    promise<void> cancelDispatchPromise;
-    shared_future<void> cancelDispatch{cancelDispatchPromise.get_future()};
+    auto cancelDispatchPromise = make_shared<promise<void>>();
+    shared_future<void> cancelDispatch{cancelDispatchPromise->get_future()};
 
     // Register two instances of Chatbot - a regular greater and a slow greeter.
     adapter->add(make_shared<Server::Chatbot>(0s, cancelDispatch), Ice::Identity{"greeter"});
@@ -43,9 +43,10 @@ main(int argc, char* argv[])
 
     // Shut down the communicator when the user presses Ctrl+C.
     ctrlCHandler.setCallback(
-        [communicator](int signal)
+        [communicator, cancelDispatchPromise](int signal)
         {
             cout << "Caught signal " << signal << ", shutting down..." << endl;
+            cancelDispatchPromise->set_value();
             communicator->shutdown();
         });
 
