@@ -3,12 +3,12 @@
 package com.example.ice.cancellation.server;
 
 import com.zeroc.Ice.Communicator;
+import com.zeroc.Ice.Identity;
 import com.zeroc.Ice.InitializationData;
 import com.zeroc.Ice.ObjectAdapter;
 import com.zeroc.Ice.Util;
 import com.zeroc.Ice.Properties;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.TimeUnit;
 
 class Server {
     public static void main(String[] args) {
@@ -23,11 +23,11 @@ class Server {
             ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints("GreeterAdapter", "tcp -p 4061");
 
             // Create a CompletableFuture to cancel outstanding dispatches after the user presses Ctrl+C.
-            var cancelDispatch = new CompletableFuture();
+            var cancelDispatch = new CompletableFuture<Void>();
 
             // Register two instances of Chatbot - a regular greater and a slow greeter.
-            adapter.add(new Chatbot(), Util.stringToIdentity("greeter"));
-            adapter.add(new Chatbot(cancelDispatch, 60), Util.stringToIdentity("slowGreeter"));
+            adapter.add(new Chatbot(), new Identity("greeter", ""));
+            adapter.add(new Chatbot(60, cancelDispatch), new Identity("slowGreeter", ""));
 
             // Start dispatching requests.
             adapter.activate();
