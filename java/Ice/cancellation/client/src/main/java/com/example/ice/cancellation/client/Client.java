@@ -51,6 +51,9 @@ class Client {
                 System.out.println("Received unexpected greeting: " + greeting);
             } catch (OperationInterruptedException exception) {
                 System.out.println("Caught OperationInterruptedException, as expected.");
+
+                // Ice resets the interrupted status of the thread when it throws an OperationInterruptedException.
+                assert !mainThread.isInterrupted();
             }
 
             // Verify the regular greeter still works.
