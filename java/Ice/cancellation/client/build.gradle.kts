@@ -20,4 +20,5 @@ sourceSets {
 application {
     // Specify the main entry point for the application.
     mainClass.set("com.example.ice.cancellation.client.Client")
+    applicationDefaultJvmArgs = listOf("-ea") // Enables assertions
 }
