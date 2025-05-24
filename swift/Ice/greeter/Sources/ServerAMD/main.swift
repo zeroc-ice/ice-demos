@@ -20,7 +20,7 @@ let adapter = try communicator.createObjectAdapterWithEndpoints(
     name: "GreeterAdapter", endpoints: "tcp -p 4061")
 
 // Register the Chatbot servant with the adapter.
-try adapter.add(servant: GreeterDisp(Chatbot()), id: Ice.Identity(name: "greeter"))
+try adapter.add(servant: Chatbot(), id: Ice.Identity(name: "greeter"))
 
 // Start dispatching requests.
 try adapter.activate()
