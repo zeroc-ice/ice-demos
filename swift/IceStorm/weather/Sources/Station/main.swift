@@ -7,7 +7,8 @@ import IceStorm
 // of the program, before creating an Ice communicator or starting any thread.
 let ctrlCHandler = CtrlCHandler()
 
-// Create an Ice communicator. We'll use this communicator to create an object adapter.
+// Create an Ice communicator. We'll use this communicator to create proxies, manage outgoing connections, and create
+// an object adapter.
 var args = CommandLine.arguments
 let communicator = try Ice.initialize(&args)
 
@@ -17,8 +18,7 @@ defer {
 }
 
 // Create an object adapter that listens on an OS-assigned TCP port, on all interfaces.
-let adapter = try communicator.createObjectAdapterWithEndpoints(
-    name: "StationAdapter", endpoints: "tcp")
+let adapter = try communicator.createObjectAdapterWithEndpoints(name: "StationAdapter", endpoints: "tcp")
 
 // Register the ConsolePrinter servant with the adapter, and get a proxy to the new object.
 // We use a UUID for the identity because these subscribers (weather stations) are transient: if this program exits
