@@ -25,7 +25,7 @@ class Server {
             // Create a CompletableFuture to cancel outstanding dispatches after the user presses Ctrl+C.
             var cancelDispatch = new CompletableFuture<Void>();
 
-            // Register two instances of Chatbot - a regular greater and a slow greeter.
+            // Register two instances of Chatbot - a regular greeter and a slow greeter.
             adapter.add(new Chatbot(), new Identity("greeter", ""));
             adapter.add(new Chatbot(60, cancelDispatch), new Identity("slowGreeter", ""));
 
