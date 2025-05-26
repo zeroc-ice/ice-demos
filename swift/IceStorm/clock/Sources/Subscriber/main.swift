@@ -118,7 +118,7 @@ let adapter = try communicator.createObjectAdapter("Clock.Subscriber")
 // used. id is not directly altered since it is used below to detect whether subscribeAndGetPublisher can throw
 // AlreadySubscribed.
 let subId = Ice.Identity(name: id ?? UUID().uuidString, category: "")
-var subscriber = try adapter.add(servant: ClockDisp(ClockI()), id: subId)
+var subscriber = try adapter.add(servant: ClockI(), id: subId)
 
 // Activate the object adapter before registering the subscriber with the IceStorm topic.
 try adapter.activate()
