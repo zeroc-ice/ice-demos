@@ -22,5 +22,5 @@ swift run Client --Ice.Trace.Network
 ```
 
 > [!NOTE]
-> The `--Ice.Trace.Network` command-line option turns on Network tracing. For this demo, it shows you that the
+> The `--Ice.Trace.Network` command-line option turns on Network tracing. For this demo, it shows you that
 > `InvocationTimeoutException` does not close the connection.
