@@ -21,18 +21,18 @@ let adapter = try communicator.createObjectAdapterWithEndpoints(
 
 // Create the root directory servant (with name "/"), and add this servant to the adapter.
 let root = MDirectory(name: "/")
-try adapter.add(servant: DirectoryDisp(root), id: Ice.Identity(name: "RootDir"))
+try adapter.add(servant: root, id: Ice.Identity(name: "RootDir"))
 
 // Create a file called "README", add this servant to the adapter, and add the corresponding proxy to the root
 // directory.
 let readme = MFile(name: "README")
 readme.writeDirect(text: ["This file system contains a collection of poetry."])
-try root.addChild(uncheckedCast(prx: adapter.addWithUUID(FileDisp(readme)), type: FilePrx.self))
+try root.addChild(uncheckedCast(prx: adapter.addWithUUID(readme), type: FilePrx.self))
 
 // Create a directory called "Coleridge", add this servant to the adapter, and add the corresponding proxy to the
 // root directory.
 let coleridge = MDirectory(name: "Coleridge")
-try root.addChild(uncheckedCast(prx: adapter.addWithUUID(DirectoryDisp(coleridge)), type: DirectoryPrx.self))
+try root.addChild(uncheckedCast(prx: adapter.addWithUUID(coleridge), type: DirectoryPrx.self))
 
 // Create a file called "Kubla_Khan", add this servant to the adapter, and add the corresponding proxy to the
 // Coleridge directory.
@@ -44,7 +44,7 @@ kublaKhan.writeDirect(text: [
     "Through caverns measureless to man",
     "Down to a sunless sea."
 ])
-try coleridge.addChild(uncheckedCast(prx: adapter.addWithUUID(FileDisp(kublaKhan)), type: FilePrx.self))
+try coleridge.addChild(uncheckedCast(prx: adapter.addWithUUID(kublaKhan), type: FilePrx.self))
 
 // Start dispatching requests after registering all servants.
 try adapter.activate()
