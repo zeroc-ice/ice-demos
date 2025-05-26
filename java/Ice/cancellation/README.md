@@ -26,7 +26,11 @@ First, start the server application:
 Then, in a separate terminal, start the client application:
 
 ```shell
-./gradlew :client:run --quiet
+./gradlew :client:run --quiet --args="--Ice.Trace.Network"
 ```
+
+> [!NOTE]
+> The `--Ice.Trace.Network` command-line option turns on Network tracing. For this demo, it shows you that
+> `InvocationTimeoutException` and `OperationInterruptedException` do not close the connection.
 
 [Application plugin]: https://docs.gradle.org/current/userguide/application_plugin.html
