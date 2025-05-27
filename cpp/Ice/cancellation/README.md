@@ -1,4 +1,4 @@
-# Cancellation
+# Ice Cancellation
 
 The Cancellation demo shows how to cancel an invocation in C++. It also shows a related feature: invocation timeouts.
 
@@ -30,11 +30,15 @@ In a separate window, start the client:
 **Linux/macOS:**
 
 ```shell
-./build/client
+./build/client --Ice.Trace.Network
 ```
 
 **Windows:**
 
 ```shell
-build\Release\client
+build\Release\client --Ice.Trace.Network
 ```
+
+> [!NOTE]
+> The `--Ice.Trace.Network` command-line option turns on Network tracing. For this demo, it shows you that the
+> `InvocationCanceledException` and `InvocationTimeoutException` do not close the connection.
