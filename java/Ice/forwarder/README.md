@@ -32,11 +32,11 @@ This will compile each project.
 First, start the Forwarding server and Greeter server in separate terminals:
 
 ```shell
-./gradlew :server:run --quiet --Ice.Trace.Dispatch
+./gradlew :server:run --quiet --args="--Ice.Trace.Dispatch"
 ```
 
 ```shell
-./gradlew :forwardingserver:run --quiet --Ice.Trace.Dispatch
+./gradlew :forwardingserver:run --quiet --args="--Ice.Trace.Dispatch"
 ```
 
 ## Running the Client
@@ -44,7 +44,12 @@ First, start the Forwarding server and Greeter server in separate terminals:
 Then, in a separate terminal, start the client application:
 
 ```shell
-./gradlew :client:run --quiet --Ice.Trace.Dispatch
+./gradlew :client:run --quiet --args="--Ice.Trace.Network"
 ```
 
 [Application plugin]: https://docs.gradle.org/current/userguide/application_plugin.html
+
+> [!NOTE]
+> The `--Ice.Trace` command-line options are optional: they turn-on tracing (logging) for request dispatches
+> (`--Ice.Trace.Dispatch`) and connection establishment/closure (`--Ice.Trace.Network`) and help you follow the call
+> flow.
