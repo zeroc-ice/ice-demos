@@ -12,10 +12,10 @@ import java.util.concurrent.CompletableFuture;
 
 class Server {
     public static void main(String[] args) {
-        // Set the maximum number of threads in the server thread pool to 3, since Chatbot::greet waits synchronously.
+        // Set the maximum number of threads in the server thread pool to 4, since Chatbot::greet waits synchronously.
         var initData = new InitializationData();
         initData.properties = new Properties(args);
-        initData.properties.setProperty("Ice.ThreadPool.Server.SizeMax", "3");
+        initData.properties.setProperty("Ice.ThreadPool.Server.SizeMax", "4");
 
         // Create an Ice communicator. We'll use this communicator to create an object adapter.
         try (Communicator communicator = Util.initialize(initData)) {

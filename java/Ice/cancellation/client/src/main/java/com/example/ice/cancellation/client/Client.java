@@ -8,7 +8,9 @@ import com.zeroc.Ice.InvocationTimeoutException;
 import com.zeroc.Ice.OperationInterruptedException;
 import com.zeroc.Ice.Util;
 import com.zeroc.Ice.UnknownException;
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 class Client {
@@ -56,14 +58,31 @@ class Client {
                 assert !mainThread.isInterrupted();
             }
 
+            // Send a request to the slow greeter asynchronously, and cancel this request after 4 seconds.
+            CompletableFuture<String> future = slowGreeter.greetAsync("carol");
+            try {
+                Thread.sleep(4000);
+            } catch (InterruptedException exception) {
+                assert false;
+            }
+            future.cancel(false); // the parameter is ignored, as the implementation does not use interrupts.
+            try {
+                greeting = future.get();
+                System.out.println("Received unexpected greeting: " + greeting);
+            } catch (CancellationException exception) {
+                System.out.println("Caught CancellationException, as expected.");
+            } catch (InterruptedException | ExecutionException exception) {
+                System.out.println("Caught unexpected exception: " + exception.getMessage());
+            }
+
             // Verify the regular greeter still works.
-            greeting = greeter.greet("carol");
+            greeting = greeter.greet("dave");
             System.out.println(greeting);
 
             // Send a request to the slow greeter, and wait forever for the response.
             System.out.println("Please press Ctrl+C in the server's terminal to cancel the slow greeter dispatch.");
             try {
-                greeting = slowGreeter.greet("dave");
+                greeting = slowGreeter.greet("eve");
             } catch (UnknownException exception) {
                 System.out.println("Caught UnknownException, as expected: " + exception.getMessage());
             }
