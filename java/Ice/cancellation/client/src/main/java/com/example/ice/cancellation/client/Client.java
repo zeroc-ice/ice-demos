@@ -30,36 +30,8 @@ class Client {
             String greeting = greeter.greet(System.getProperty("user.name"));
             System.out.println(greeting);
 
-            // Create another slow greeter proxy with an invocation timeout of 4 seconds (the default invocation timeout
-            // is infinite).
-            GreeterPrx slowGreeter4s = slowGreeter.ice_invocationTimeout(4);
-
-            // Send a request to the slow greeter with the 4-second invocation timeout.
-            try {
-                greeting = slowGreeter4s.greet("alice");
-                System.out.println("Received unexpected greeting: " + greeting);
-            } catch (InvocationTimeoutException exception) {
-                System.out.println("Caught InvocationTimeoutException, as expected: " + exception.getMessage());
-            }
-
-            // Send a request to the slow greeter, and interrupt this thread after 4 seconds to cancel the request.
-            var mainThread = Thread.currentThread();
-            CompletableFuture.delayedExecutor(4, TimeUnit.SECONDS).execute(() -> {
-                mainThread.interrupt();
-            });
-
-            try {
-                greeting = slowGreeter.greet("bob");
-                System.out.println("Received unexpected greeting: " + greeting);
-            } catch (OperationInterruptedException exception) {
-                System.out.println("Caught OperationInterruptedException, as expected.");
-
-                // Ice resets the interrupted status of the thread when it throws an OperationInterruptedException.
-                assert !mainThread.isInterrupted();
-            }
-
             // Send a request to the slow greeter asynchronously, and cancel this request after 4 seconds.
-            CompletableFuture<String> future = slowGreeter.greetAsync("carol");
+            CompletableFuture<String> future = slowGreeter.greetAsync("alice");
             try {
                 Thread.sleep(4000);
             } catch (InterruptedException exception) {
@@ -75,6 +47,36 @@ class Client {
                 System.out.println("Caught unexpected exception: " + exception.getMessage());
             }
 
+            // Send a request to the slow greeter, and interrupt this thread after 4 seconds to cancel the request.
+            var mainThread = Thread.currentThread();
+            CompletableFuture.delayedExecutor(4, TimeUnit.SECONDS).execute(() -> {
+                // The connection is aborted if the interrupt is delivered to the thread while it performs I/O (not
+                // shown in this demo).
+                mainThread.interrupt();
+            });
+
+            try {
+                greeting = slowGreeter.greet("bob");
+                System.out.println("Received unexpected greeting: " + greeting);
+            } catch (OperationInterruptedException exception) {
+                System.out.println("Caught OperationInterruptedException, as expected.");
+
+                // Ice resets the interrupted status of the thread when it throws an OperationInterruptedException.
+                assert !mainThread.isInterrupted();
+            }
+
+            // Create another slow greeter proxy with an invocation timeout of 4 seconds (the default invocation timeout
+            // is infinite).
+            GreeterPrx slowGreeter4s = slowGreeter.ice_invocationTimeout(4);
+
+            // Send a request to the slow greeter with the 4-second invocation timeout.
+            try {
+                greeting = slowGreeter4s.greet("carol");
+                System.out.println("Received unexpected greeting: " + greeting);
+            } catch (InvocationTimeoutException exception) {
+                System.out.println("Caught InvocationTimeoutException, as expected: " + exception.getMessage());
+            }
+
             // Verify the regular greeter still works.
             greeting = greeter.greet("dave");
             System.out.println(greeting);
@@ -83,6 +85,7 @@ class Client {
             System.out.println("Please press Ctrl+C in the server's terminal to cancel the slow greeter dispatch.");
             try {
                 greeting = slowGreeter.greet("eve");
+                System.out.println(greeting);
             } catch (UnknownException exception) {
                 System.out.println("Caught UnknownException, as expected: " + exception.getMessage());
             }
