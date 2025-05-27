@@ -9,7 +9,7 @@ Java, and Python demos.
 |                                            |                                                                                                                                     |
 |--------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------|
 | [Glacier2 Greeter](./Glacier2/greeter/)    | Shows how to write a basic Glacier2 client.                                                                                         |
-| [Ice Cancellation](./Ice/Cancellation/)    | Shows how to cancel a request and how to configure invocation timeouts.                                                             |
+| [Ice Cancellation](./Ice/cancellation/)    | Shows how to cancel a request and how to configure invocation timeouts.                                                             |
 | [Ice Config](./Ice/config/)                | Shows how to configure a client application using an Ice configuration file.                                                        |
 | [Ice Context](./Ice/context/)              | Shows different ways to set request contexts.                                                                                       |
 | [Ice Custom Error](./Ice/customError/)     | Shows how to define a new exception in Slice and handle this exception in a client application.                                     |
