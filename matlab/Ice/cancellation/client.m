@@ -22,18 +22,20 @@ function client(args)
     % or IP address.
     greeter = visitorcenter.GreeterPrx(communicator, 'greeter:tcp -h localhost -p 4061');
 
-    % Create a proxy to the slow greeter with an invocation timeout of 4 seconds (the default invocation timeout is
-    % infinite).
+    % Create a proxy to the slow greeter. It uses the same connection as the regular greeter.
     slowGreeter = visitorcenter.GreeterPrx(communicator, 'slowGreeter:tcp -h localhost -p 4061');
-    slowGreeter = slowGreeter.ice_invocationTimeout(4000);
 
     % Send a request to the regular greeter and get the response.
     greeting = greeter.greet(char(java.lang.System.getProperty('user.name')));
     fprintf('%s\n', greeting);
 
+    % Create another slow greeter proxy with an invocation timeout of 4 seconds (the default invocation timeout is
+    % infinite).
+    slowGreeter4s = slowGreeter.ice_invocationTimeout(4000);
+
     % Send a request to the slow greeter with the 4-second invocation timeout.
     try
-        greeting = slowGreeter.greet('alice');
+        greeting = slowGreeter4s.greet('alice');
         fprintf('Received unexpected greeting: %s\n', greeting);
     catch ex
         if isa(ex, 'Ice.InvocationTimeoutException')
@@ -43,7 +45,23 @@ function client(args)
         end
     end
 
+    % Send a request to the slow greeter asynchronously, and cancel this request after 4 seconds.
+    futureGreeting = slowGreeter.greetAsync('bob');
+    pause(4);
+    futureGreeting.cancel();
+
+    try
+        greeting = futureGreeting.fetchOutputs();
+        fprintf('Received unexpected greeting: %s\n', greeting);
+    catch ex
+        if isa(ex, 'Ice.InvocationCanceledException')
+            fprintf('Caught InvocationCanceledException, as expected: %s\n', ex.message);
+        else
+            rethrow(ex);
+        end
+    end
+
     % Verify the regular greeter still works.
-    greeting = greeter.greet('bob');
+    greeting = greeter.greet('carol');
     fprintf('%s\n', greeting);
 end
