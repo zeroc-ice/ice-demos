@@ -42,7 +42,8 @@ class Server {
         }
     }
 
-    private static void shutdownCommunicatorOnCtrlC(Communicator communicator, CompletableFuture<Void> cancelDispatch, Thread mainThread) {
+    private static void shutdownCommunicatorOnCtrlC(
+        Communicator communicator, CompletableFuture<Void> cancelDispatch, Thread mainThread) {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             System.out.println("Caught Ctrl+C, shutting down...");
             communicator.shutdown();
