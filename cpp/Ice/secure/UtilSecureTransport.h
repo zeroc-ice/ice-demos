@@ -13,7 +13,7 @@ CFArrayRef loadCertificateFromFile(const std::string& file);
 /// Loads a certificate/key pair (SecIdentityRef) from the keychain using the certificate label.
 /// Returns a CFArrayRef suitable for use with SSLSetCertificate (caller must CFRelease).
 ///
-/// @param label The label of the certificate/key pair in the keychain.
+/// @param query The string that would be match against the certificate subject.
 /// @return A CFArrayRef containing the SecIdentityRef.
 /// @throws std::runtime_error if the identity cannot be found.
-CFArrayRef loadSecIdentityWithLabel(const std::string& label);
+CFArrayRef loadSecIdentityWithMatchingSubject(const std::string& query);

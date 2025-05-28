@@ -50,17 +50,17 @@ loadCertificateFromFile(const string& file)
 }
 
 CFArrayRef
-loadSecIdentityWithLabel(const std::string& label)
+loadSecIdentityWithMatchingSubject(const std::string& subject)
 {
-    // Convert label to CFString
-    CFStringRef labelStr = CFStringCreateWithCString(kCFAllocatorDefault, label.c_str(), kCFStringEncodingUTF8);
+    // Convert subject to CFString
+    CFStringRef subjectCstr = CFStringCreateWithCString(kCFAllocatorDefault, subject.c_str(), kCFStringEncodingUTF8);
 
     // Build query dictionary
     CFMutableDictionaryRef query =
         CFDictionaryCreateMutable(nullptr, 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
 
     CFDictionarySetValue(query, kSecClass, kSecClassIdentity);
-    CFDictionarySetValue(query, kSecMatchSubjectContains, labelStr);
+    CFDictionarySetValue(query, kSecMatchSubjectContains, subjectCstr);
     CFDictionarySetValue(query, kSecMatchLimit, kSecMatchLimitOne);
     CFDictionarySetValue(query, kSecReturnRef, kCFBooleanTrue);
 
@@ -68,25 +68,12 @@ loadSecIdentityWithLabel(const std::string& label)
     OSStatus err = SecItemCopyMatching(query, &identity);
 
     CFRelease(query);
-    CFRelease(labelStr);
+    CFRelease(subjectCstr);
 
     if (err != errSecSuccess || identity == nullptr)
     {
         throw std::runtime_error(
-            "error: cannot load certificate identity with label '" + label + "': " + std::to_string(err));
-    }
-
-    {
-        SecCertificateRef cert = nullptr;
-        SecIdentityCopyCertificate((SecIdentityRef)identity, &cert);
-
-        CFStringRef summary = SecCertificateCopySubjectSummary(cert);
-        char buffer[256];
-        if (CFStringGetCString(summary, buffer, sizeof(buffer), kCFStringEncodingUTF8)) {
-            std::cout << "Matched certificate: " << buffer << std::endl;
-        }
-        CFRelease(cert);
-        CFRelease(summary);
+            "error: cannot load certificate identity matching '" + subject + "': " + std::to_string(err));
     }
 
     // Build chain array with identity (more certs can be added if needed).
