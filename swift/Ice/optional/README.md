@@ -49,7 +49,7 @@ swift run Client1
 and
 
 ```shell
-swift run Server2
+swift run Client2
 ```
 
 Thanks to `optional`, version 1 and version 2 of the clients and servers interoperate seamlessly.
