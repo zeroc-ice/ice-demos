@@ -14,10 +14,10 @@ cmake --build build --config Release
 
 ## macOS
 
-On macOS we have to import the server certificate in a Keychain before it can be used by the server application,
-the next commands can be used to create a keychain and add our certificate and key to the new keychain:
+On macOS, the server certificate and private key must be imported into a keychain before the server application can access them.
+
+We use the `security import` command to import the server’s PKCS#12 file (`.p12`) into the default keychain (typically the login keychain). The `-T` option is used to grant access to the server application binary:
 
 ```shell
-security create-keychain ~/server.keychain
-security import ../../../certs/server.p12 -k ~/server.keychain -T build/server 
+security import ../../../certs/server.p12 -T build/server
 ```

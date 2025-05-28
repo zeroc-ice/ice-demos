@@ -6,6 +6,7 @@
 #include <Security/Security.h>
 
 #include <fstream>
+#include <iostream>
 
 using namespace std;
 
@@ -59,7 +60,7 @@ loadSecIdentityWithLabel(const std::string& label)
         CFDictionaryCreateMutable(nullptr, 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
 
     CFDictionarySetValue(query, kSecClass, kSecClassIdentity);
-    CFDictionarySetValue(query, kSecAttrLabel, labelStr);
+    CFDictionarySetValue(query, kSecMatchSubjectContains, labelStr);
     CFDictionarySetValue(query, kSecMatchLimit, kSecMatchLimitOne);
     CFDictionarySetValue(query, kSecReturnRef, kCFBooleanTrue);
 
@@ -73,6 +74,19 @@ loadSecIdentityWithLabel(const std::string& label)
     {
         throw std::runtime_error(
             "error: cannot load certificate identity with label '" + label + "': " + std::to_string(err));
+    }
+
+    {
+        SecCertificateRef cert = nullptr;
+        SecIdentityCopyCertificate((SecIdentityRef)identity, &cert);
+
+        CFStringRef summary = SecCertificateCopySubjectSummary(cert);
+        char buffer[256];
+        if (CFStringGetCString(summary, buffer, sizeof(buffer), kCFStringEncodingUTF8)) {
+            std::cout << "Matched certificate: " << buffer << std::endl;
+        }
+        CFRelease(cert);
+        CFRelease(summary);
     }
 
     // Build chain array with identity (more certs can be added if needed).
