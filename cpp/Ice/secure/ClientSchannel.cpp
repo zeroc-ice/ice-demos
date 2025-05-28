@@ -1,17 +1,19 @@
 // Copyright (c) ZeroC, Inc.
 
 #include "Client.h"
+#include "UtilSchannel.h"
 #include <Ice/Ice.h>
 
-#ifdef ICE_USE_SCHANNEL
 int
 main(int argc, char* argv[])
 {
-    HCERTSTORE trustedRootCertificates = loadTrustedRootCertificates("ca_cert.der");
-    Ice::SSL::ClientAuthenticationOptions{.trustedRootCertificates = trustedRootCertificates};
+    HCERTSTORE trustedRootCertificates = loadCertificateStore("../../../certs/ca_cert.der");
+    Ice::SSL::ClientAuthenticationOptions clientAuthenticationOptions;
+    clientAuthenticationOptions.trustedRootCertificates = trustedRootCertificates;
+
     try
     {
-        greet(std::move(clientAuthenticationOptions));
+        run(argc, argv, std::move(clientAuthenticationOptions));
     }
     catch (...)
     {
@@ -21,4 +23,3 @@ main(int argc, char* argv[])
     CertCloseStore(trustedRootCertificates, 0);
     return 0;
 }
-#endif
