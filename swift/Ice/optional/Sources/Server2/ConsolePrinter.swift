@@ -9,7 +9,7 @@ class ConsolePrinter: WeatherStation {
     func report(sensorId: String, reading: AtmosphericConditions?, current _: Ice.Current) {
         switch reading {
         case .none:
-            print("\(sensorId) reported no reading tp station v2")
+            print("\(sensorId) reported no reading to station v2")
         case .some(let conditions):
             print("\(sensorId) reported \(conditions) to station v2")
         }
