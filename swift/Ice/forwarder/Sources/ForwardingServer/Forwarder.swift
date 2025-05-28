@@ -21,8 +21,8 @@ class Forwarder: Ice.Dispatcher {
             target = target.ice_oneway()
         }
 
-        // Make the invocation asynchronously. If ice_invokeAsync throws an Ice.LocalException that cannot be marshaled
-        // (such as Ice.ConnectionRefusedException), the object adapter that calls dispatchAsync converts it into an
+        // Make the invocation asynchronously. If ice_invoke throws an Ice.LocalException that cannot be marshaled
+        // (such as Ice.ConnectionRefusedException), the object adapter that calls dispatch converts it into an
         // Ice.UnknownLocalException.
 
         let (ok, encapsulation) = try await target.ice_invoke(

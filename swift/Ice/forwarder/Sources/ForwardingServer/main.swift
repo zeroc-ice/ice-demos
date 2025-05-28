@@ -6,7 +6,8 @@ import Ice
 // of the program, before creating an Ice communicator or starting any thread.
 let ctrlCHandler = CtrlCHandler()
 
-// Create an Ice communicator. We'll use this communicator to create an object adapter.
+// Create an Ice communicator. We'll use this communicator to create an object adapter, and to create proxies and
+// manage outgoing connections.
 var args = CommandLine.arguments
 let communicator = try Ice.initialize(&args)
 
