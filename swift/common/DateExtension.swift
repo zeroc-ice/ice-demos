@@ -1,0 +1,20 @@
+// Copyright (c) ZeroC, Inc.
+
+import Foundation
+
+// Helper methods to convert between Date and time stamps.
+extension Date {
+    // January 1, 0001 00:00:00 UTC as a Date.
+    private static let origin = Date(timeIntervalSince1970: -719162.0 * 24 * 3600)
+
+    /// Returns the number of 100-nanosecond intervals since January 1, 0001 00:00:00 UTC.
+    var timeStamp: Int64 {
+        Int64(self.timeIntervalSince(Self.origin) * 10_000_000)
+    }
+
+    /// Initializes a Date from the number of 100-nanosecond intervals since January 1, 0001 00:00:00 UTC.
+    /// - Parameter timeStamp: The time stamp.
+    init(timeStamp: Int64) {
+        self = Self.origin.addingTimeInterval(TimeInterval(timeStamp) / 10_000_000)
+    }
+}
