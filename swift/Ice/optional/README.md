@@ -38,7 +38,6 @@ or
 
 ```shell
 swift run Server2
-dotnet run
 ```
 
 In a separate terminal, run version 1 and then version 2 of the Client:
