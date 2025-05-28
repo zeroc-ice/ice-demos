@@ -18,8 +18,8 @@ class Server {
             // Create a target proxy template, with a dummy identity.
             ObjectPrx targetTemplate = ObjectPrx.createProxy(communicator, "dummy:tcp -h localhost -p 4061");
 
-            // Register the Forwarder servant as default servant with the object adapter. The empty category means this default
-            // servant receives requests to all Ice objects.
+            // Register the Forwarder servant as a default servant with the object adapter. The empty category means
+            // this default servant receives requests to all Ice objects.
             adapter.addDefaultServant(new Forwarder(targetTemplate), "");
 
             // Start dispatching requests.

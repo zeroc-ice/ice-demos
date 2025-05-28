@@ -2,7 +2,6 @@
 
 package com.example.ice.forwarder.forwardingserver;
 
-import com.zeroc.Ice.EncodingVersion;
 import com.zeroc.Ice.IncomingRequest;
 import com.zeroc.Ice.ObjectPrx;
 import com.zeroc.Ice.OutgoingResponse;
@@ -36,8 +35,9 @@ class Forwarder implements com.zeroc.Ice.Object {
             request.inputStream.readEncapsulation(null), // the in-parameters encapsulation
             request.current.ctx);
 
-        // Create and return the OutgoingResponse. If future completes with an exception, the object adapter that
-        // consumes the returned future converts the exception into an UnknownLocalException or UnknownException.
+        // Convert the future into an OutgoingResponse future upon success. If the invocation fails with an exception,
+        // the object adapter calling this method will convert the exception into an UnknownLocalException or
+        // UnknownException.
         return future.thenApply(
             invokeResult -> request.current.createOutgoingResponse(invokeResult.returnValue, invokeResult.outParams));
     }
