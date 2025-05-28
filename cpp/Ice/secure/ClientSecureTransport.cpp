@@ -1,13 +1,15 @@
 
-#include <Ice/Ice.h>
 #include "Client.h"
 #include "UtilSecureTransport.h"
+#include <Ice/Ice.h>
 
-int main(int argc, char* argv[])
+int
+main(int argc, char* argv[])
 {
     // Configure the the trusted root certificates that will be used to validate the server's certificate.
-    CFArrayRef trustedRootCertificates = loadDerCertificate("../../../certs/ca_cert.der");
-    Ice::SSL::ClientAuthenticationOptions clientAuthenticationOptions{.trustedRootCertificates = trustedRootCertificates};
+    CFArrayRef trustedRootCertificates = loadCertificateFromFile("../../../certs/ca_cert.der");
+    Ice::SSL::ClientAuthenticationOptions clientAuthenticationOptions{
+        .trustedRootCertificates = trustedRootCertificates};
     try
     {
         run(argc, argv, std::move(clientAuthenticationOptions));

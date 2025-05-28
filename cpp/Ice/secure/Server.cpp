@@ -1,5 +1,7 @@
 // Copyright (c) ZeroC, Inc.
 
+#include "Server.h"
+
 #include "Chatbot.h"
 
 #include <Ice/Ice.h>
@@ -7,7 +9,8 @@
 
 using namespace std;
 
-void run(int argc, char* argv[], Ice::SSL::ServerAuthenticationOptions serverAuthenticationOptions)
+void
+run(int argc, char* argv[], Ice::SSL::ServerAuthenticationOptions serverAuthenticationOptions)
 {
     // CtrlCHandler is a helper class that handles Ctrl+C and similar signals. It must be constructed at the beginning
     // of the program, before creating an Ice communicator or starting any thread.

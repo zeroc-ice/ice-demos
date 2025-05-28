@@ -1,11 +1,12 @@
 // Copyright (c) ZeroC, Inc.
 
-#include <Ice/Ice.h>
 #include "Server.h"
+#include <Ice/Ice.h>
 
 using namespace std;
 
-int main(int argc, char* argv[])
+int
+main(int argc, char* argv[])
 {
     SSL_CTX* serverSSLContext = SSL_CTX_new(TLS_method());
     SSL_CTX_use_certificate_chain_file(serverSSLContext, "../../../certs/server_cert.pem");

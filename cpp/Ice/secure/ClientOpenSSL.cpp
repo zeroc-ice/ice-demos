@@ -1,12 +1,13 @@
 // Copyright (c) ZeroC, Inc.
 
-#include <Ice/Ice.h>
 #include "Client.h"
+#include <Ice/Ice.h>
 
 using namespace std;
 
 #if defined(ICE_USE_OPENSSL)
-int main(int argc, char* argv[])
+int
+main(int argc, char* argv[])
 {
     // Create an OpenSSL SSL_CTX object for the client and configure it to use the CA certificate file
     // for verifying the server's certificate.
@@ -28,8 +29,7 @@ int main(int argc, char* argv[])
         {
             SSL_CTX_up_ref(clientSSLContext);
             return clientSSLContext;
-        }
-    };
+        }};
 
     try
     {

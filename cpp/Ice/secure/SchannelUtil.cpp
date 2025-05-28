@@ -1,16 +1,12 @@
 
-#include "UtilSchannel.h"
-#include <vector>
-
-using namespace std;
-
+#if defined(ICE_USE_SCHANNEL)
 HCERTSTORE
-loadCertificateStore(const string& path)
+loadTrustedRootCertificates(const string& path)
 {
     HCERTSTORE store = CertOpenStore(CERT_STORE_PROV_MEMORY, 0, 0, 0, nullptr);
     if (!store)
     {
-        throw runtime_error("Unable create in memory certificate store");
+        throw runtime_error("Unable to open memory store");
     }
 
     vector<unsigned char> buffer = readFile(path);
@@ -33,3 +29,4 @@ loadCertificateStore(const string& path)
     }
     return store;
 }
+#endif

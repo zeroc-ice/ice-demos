@@ -12,30 +12,12 @@ cmake -B build
 cmake --build build --config Release
 ```
 
-To run the demo, first start the server:
+## macOS
 
-**Linux/macOS:**
-
-```shell
-./build/server
-```
-
-**Windows:**
+On macOS we have to import the server certificate in a Keychain before it can be used by the server application,
+the next commands can be used to create a keychain and add our certificate and key to the new keychain:
 
 ```shell
-build\Release\server
-```
-
-In a separate window, start the client:
-
-**Linux/macOS:**
-
-```shell
-./build/client
-```
-
-**Windows:**
-
-```shell
-build\Release\client
+security create-keychain ~/server.keychain
+security import ../../../certs/server.p12 -k ~/server.keychain -T build/server 
 ```

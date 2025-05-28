@@ -1,9 +1,8 @@
 // Copyright (c) ZeroC, Inc.
 
+#include "Client.h"
 #include "../../common/Env.h"
 #include "Greeter.h"
-
-#include <Ice/Ice.h>
 #include <iostream>
 
 using namespace std;
