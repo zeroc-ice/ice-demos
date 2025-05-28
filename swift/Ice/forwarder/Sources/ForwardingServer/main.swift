@@ -30,7 +30,7 @@ try adapter.addDefaultServant(servant: Forwarder(targetTemplate), category: "")
 
 // Start dispatching requests.
 try adapter.activate()
-print("Listening on port 4061...")
+print("Listening on port 10000...")
 
 // Shutdown the communicator when the user presses Ctrl+C.
 ctrlCHandler.setCallback { signal in
