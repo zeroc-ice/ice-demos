@@ -14,7 +14,7 @@ flowchart LR
     c[Greeter Client] --> f[Forwarding Server:10000] --> s[Greeter Server:4061]
 ```
 
-The Forwarding server is generic can be inserted between any client and server. In particular, the Forwarding server
+The Forwarding server is generic and can be inserted between any client and server. In particular, the Forwarding server
 does not use any Slice generated code.
 
 To build the demo, run:
