@@ -1,0 +1,11 @@
+[versions]
+kotlin = "2.1.21"
+checkstyleCore = "10.21.4"
+staticAnalysis = "2.5.1"
+javaDependencies = "1.31.0"
+
+[libraries]
+kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+fixerLibraries-checkstyleLibrary = { group = "com.puppycrawl.tools", name = "checkstyle", version.ref = "checkstyleCore" }
+fixerLibraries-rewriteAnalysisLibrary = { group = "org.openrewrite.recipe", name = "rewrite-static-analysis", version.ref = "staticAnalysis" }
+fixerLibraries-rewriteJavaDependencies = { group = "org.openrewrite.recipe", name = "rewrite-java-dependencies", version.ref = "javaDependencies" }
