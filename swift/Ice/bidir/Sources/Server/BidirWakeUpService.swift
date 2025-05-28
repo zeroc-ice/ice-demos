@@ -9,7 +9,9 @@ class BidirWakeUpService: WakeUpService {
     func wakeMeUp(timeStamp: Int64, current: Ice.Current) throws {
         let wakeUpTime = Date(timeStamp: timeStamp)
 
-        print("Dispatching wakeMeUp request { wake up time = '\(wakeUpTime.formatted(date: .omitted, time: .complete))' }")
+        print(
+            "Dispatching wakeMeUp request { wake up time = '\(wakeUpTime.formatted(date: .omitted, time: .complete))' }"
+        )
 
         guard let connection = current.con else {
             throw Ice.FeatureNotSupportedException("BidirWakeUpService does not support collocated calls")
@@ -29,7 +31,7 @@ class BidirWakeUpService: WakeUpService {
 
             // Keep ringing every 10 seconds until the user presses the stop button.
             while buttonPressed == .snooze {
-                try await Task.sleep(for: .seconds(10)) // Sleep for 10 seconds.
+                try await Task.sleep(for: .seconds(10))  // Sleep for 10 seconds.
                 buttonPressed = try await alarmClock.ring("No more snoozing!")
             }
             print("Client pressed Stop on alarm clock.")

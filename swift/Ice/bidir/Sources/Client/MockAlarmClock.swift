@@ -14,13 +14,13 @@ actor MockAlarmClock: AlarmClock {
 
         if needMoreTime {
             print("Returning \(ButtonPressed.snooze) to request more time.")
-            needMoreTime = false // we only snooze one time
+            needMoreTime = false  // we only snooze one time
             return .snooze
         } else {
             // Press the stop button.
             stopped = true
             stopContinuation?.resume()
-            stopContinuation = nil // ensure the continuation is called only once
+            stopContinuation = nil  // ensure the continuation is called only once
             print("Returning \(ButtonPressed.stop) to stop the alarm.")
             return .stop
         }
