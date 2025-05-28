@@ -35,7 +35,7 @@ class Forwarder implements com.zeroc.Ice.Object {
             request.inputStream.readEncapsulation(null), // the in-parameters encapsulation
             request.current.ctx);
 
-        // Convert the future into an OutgoingResponse future upon success. If the invocation fails with an exception,
+        // Upon success, create an OutgoingResponse from the invokeResult. If the invocation fails with an exception,
         // the object adapter calling this method will convert the exception into an UnknownLocalException or
         // UnknownException.
         return future.thenApply(
