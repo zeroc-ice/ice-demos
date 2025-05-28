@@ -1,8 +1,8 @@
 # Secure
 
-This demo shows how to programmatically configure the ssl transport in Ice C++ client and server applications.
+This demo shows how to programmatically configure the SSL transport in Ice C++ client and server applications.
 
-It demonstrates how the ssl transport can be configured using the platform's native SSL API:
+It demonstrates how the SSL transport can be configured using the platform's native SSL API:
 
 - **OpenSSL** on Linux
 - **Schannel** on Windows
@@ -23,6 +23,14 @@ source file to keep the code organized and modular:
 | `ServerSecureTransport.cpp` | Secure Transport server configuration for macOS.        |
 | `UtilSchannel.cpp`          | Schannel helper functions.                              |
 | `UtilSecureTransport.cpp`   | Secure Transport helper functions.                      |
+
+The types [`ClientAuthenticationOptions`] and [`ServerAuthenticationOptions`] used in this demo are aliases that expand to platform-specific classes:
+
+- On **Linux**, they resolve to [`OpenSSLClientAuthenticationOptions`] and [`OpenSSLServerAuthenticationOptions`].
+- On **Windows**, they resolve to [`SchannelClientAuthenticationOptions`] and [`SchannelServerAuthenticationOptions`].
+- On **macOS**, they resolve to [`SecureTransportClientAuthenticationOptions`] and [`SecureTransportServerAuthenticationOptions`].
+
+This allows you to use a consistent interface across platforms while still taking advantage of native SSL capabilities.
 
 To build the demo, run:
 
@@ -115,4 +123,12 @@ build\Release\client --Ice.Trace.Network --IceSSL.Trace.Security
 > Network tracing shows that the client and server communicate using the SSL transport,
 > while security tracing provides details about the SSL protocol and cipher used for the connection.
 
+---
+
 [Keychain Services]: https://developer.apple.com/documentation/security/keychain-services?language=objc
+[OpenSSLClientAuthenticationOptions]: https://code.zeroc.com/ice/main/api/cpp/structIce_1_1SSL_1_1OpenSSLClientAuthenticationOptions.html
+[OpenSSLServerAuthenticationOptions]: https://code.zeroc.com/ice/main/api/cpp/structIce_1_1SSL_1_1OpenSSLServerAuthenticationOptions.html
+[SchannelClientAuthenticationOptions]: https://code.zeroc.com/ice/main/api/cpp/structIce_1_1SSL_1_1SchannelClientAuthenticationOptions.html
+[SchannelServerAuthenticationOptions]: https://code.zeroc.com/ice/main/api/cpp/structIce_1_1SSL_1_1SchannelServerAuthenticationOptions.html
+[SecureTransportClientAuthenticationOptions]: https://code.zeroc.com/ice/main/api/cpp/structIce_1_1SSL_1_1SecureTransportClientAuthenticationOptions.html
+[SecureTransportServerAuthenticationOptions]: https://code.zeroc.com/ice/main/api/cpp/structIce_1_1SSL_1_1SecureTransportServerAuthenticationOptions.html
