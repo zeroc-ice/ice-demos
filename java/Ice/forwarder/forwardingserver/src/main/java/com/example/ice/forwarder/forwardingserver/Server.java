@@ -1,10 +1,10 @@
 // Copyright (c) ZeroC, Inc.
 
-package com.example.ice.greeter.server;
+package com.example.ice.forwarder.forwardingserver;
 
 import com.zeroc.Ice.Communicator;
-import com.zeroc.Ice.Identity;
 import com.zeroc.Ice.ObjectAdapter;
+import com.zeroc.Ice.ObjectPrx;
 import com.zeroc.Ice.Util;
 
 class Server {
@@ -13,14 +13,18 @@ class Server {
         try (Communicator communicator = Util.initialize(args)) {
 
             // Create an object adapter that listens for incoming requests and dispatches them to servants.
-            ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints("GreeterAdapter", "tcp -p 4061");
+            ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints("ForwarderAdapter", "tcp -p 10000");
 
-            // Register the Chatbot servant with the adapter.
-            adapter.add(new Chatbot(), new Identity("greeter", ""));
+            // Create a target proxy template, with a dummy identity.
+            ObjectPrx targetTemplate = ObjectPrx.createProxy(communicator, "dummy:tcp -h localhost -p 4061");
+
+            // Register the Forwarder servant as a default servant with the object adapter. The empty category means
+            // this default servant receives requests to all Ice objects.
+            adapter.addDefaultServant(new Forwarder(targetTemplate), "");
 
             // Start dispatching requests.
             adapter.activate();
-            System.out.println("Listening on port 4061...");
+            System.out.println("Listening on port 10000...");
 
             // Register a shutdown hook that calls communicator.shutdown() when the user shuts down the server with
             // Ctrl+C or similar. The shutdown hook thread also waits until the main thread completes its cleanup.

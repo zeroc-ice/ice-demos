@@ -16,7 +16,7 @@ class Client {
             // "stringified proxy" with the address of the target object.
             // If you run the server on a different computer, replace localhost in the string below with the server's
             // hostname or IP address.
-            GreeterPrx greeter = GreeterPrx.createProxy(communicator, "greeter:tcp -h localhost -p 4061");
+            var greeter = GreeterPrx.createProxy(communicator, "greeter:tcp -h localhost -p 4061");
 
             // Send a request to the remote object and get the response.
             String greeting = greeter.greet(System.getProperty("user.name"));

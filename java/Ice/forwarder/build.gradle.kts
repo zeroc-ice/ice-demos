@@ -3,7 +3,7 @@
 plugins {
     // Register the Slice tools plugin without applying it here.
     // The plugin will be applied to all subprojects in the `subprojects` block below.
-    id("com.zeroc.ice.slice-tools") version "3.8.+" apply false
+    id("com.zeroc.ice.slice-tools") version "3.8.0-+" apply false
 }
 
 subprojects {
@@ -17,5 +17,9 @@ subprojects {
         // This demo uses the latest Ice nightly build published in ZeroC's maven-nightly repository.
         maven("https://download.zeroc.com/nexus/repository/maven-nightly/")
         mavenCentral()
+    }
+
+    tasks.withType<JavaCompile>().configureEach {
+        options.compilerArgs.add("-Xlint:all")
     }
 }

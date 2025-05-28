@@ -25,8 +25,8 @@ internal class Forwarder : Ice.Object
         }
 
         // Make the invocation asynchronously. If ice_invokeAsync throws an Ice.LocalException that cannot be
-        // marshaled (such as Ice.ConnectionRefusedException), the object adapter that calls dispatchAsync converts it
-        // into an Ice.UnknownLocalException.
+        // marshaled (such as Ice.ConnectionRefusedException), the object adapter that calls dispatchAsync converts
+        // this exception into an Ice.UnknownLocalException.
         (bool ok, byte[] encapsulation) = await target.ice_invokeAsync(
             request.current.operation,
             request.current.mode,
