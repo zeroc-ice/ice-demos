@@ -4,7 +4,7 @@ import Foundation
 import PackageDescription
 
 let package = Package(
-    name: "greeter",
+    name: "forwarder",
     platforms: [
         .macOS(.v14)
     ],
@@ -24,7 +24,7 @@ let package = Package(
         ),
         .executableTarget(
             name: "ForwardingServer",
-            dependencies: [.product(name: "Ice", package: "ice-swift")],
+            dependencies: [.product(name: "Ice", package: "ice-swift")]
         ),
     ]
 )
