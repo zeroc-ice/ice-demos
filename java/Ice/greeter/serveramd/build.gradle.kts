@@ -2,7 +2,7 @@
 
 dependencies {
     // Add the Ice library as an implementation dependency.
-    implementation("com.zeroc:ice:3.8.0-+")
+    implementation("com.zeroc:ice:3.8.+")
 }
 
 sourceSets {
