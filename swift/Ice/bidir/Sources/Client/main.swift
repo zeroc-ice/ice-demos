@@ -33,7 +33,6 @@ let wakeUpService = try makeProxy(
 // connection are handled by the communicator's default object adapter.
 let wakeUpTime = Date().addingTimeInterval(5)
 try await wakeUpService.wakeMeUp(wakeUpTime.timeStamp)
-
 print("Wake-up call scheduled, falling asleep...")
 
 // Wait until the "stop" button is pressed on the mock alarm clock.
