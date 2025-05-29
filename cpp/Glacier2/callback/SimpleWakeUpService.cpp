@@ -33,7 +33,7 @@ Server::SimpleWakeUpService::wakeMeUp(optional<AlarmClockPrx> alarmClock, int64_
     chrono::system_clock::time_point timePoint = Time::toTimePoint(timeStamp);
 
     cout << "Dispatching wakeMeUp request { alarmClock = '" << alarmClock << "', timeStamp = '"
-        << Time::formatTime(timePoint) << "' }" << endl;
+         << Time::formatTime(timePoint) << "' }" << endl;
 
     // Schedule a wake-up call in a background task.
     _tasks.emplace_back(std::async(
