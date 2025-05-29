@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "config",
+    name: "customError",
     platforms: [
         .macOS(.v14)
     ],
