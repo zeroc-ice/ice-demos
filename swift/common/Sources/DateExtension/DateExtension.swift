@@ -2,7 +2,7 @@
 
 import Foundation
 
-// Helper methods to convert between Date and time stamps.
+// Helper methods to convert between dates and time stamps.
 extension Date {
     // January 1, 0001 00:00:00 UTC as a Date.
     private static let origin = Date(timeIntervalSince1970: -719162.0 * 24 * 3600)
