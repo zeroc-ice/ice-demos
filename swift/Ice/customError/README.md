@@ -1,9 +1,9 @@
-# Greeter
+# Ice Custom Error
 
-The Greeter demo illustrates how to send a request and wait for the response.
+The Custom error demo shows how to define an exception in Slice, and how to throw and catch this exception.
 
-It provides two implementations for the server: a synchronous dispatch implementation (in Server), and an asynchronous
-dispatch implementation (in ServerAMD). The same client works with both.
+A Slice-defined exception should be seen as a custom error carried by the response instead of the expected return
+value--there is naturally no throwing across the network.
 
 You can build the client and server applications with:
 
@@ -15,12 +15,6 @@ First start the Server program:
 
 ```shell
 swift run Server
-```
-
-or
-
-```shell
-swift run ServerAMD
 ```
 
 In a separate terminal, start the Client program:
