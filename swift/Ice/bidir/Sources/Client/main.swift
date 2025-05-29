@@ -1,9 +1,11 @@
 // Copyright (c) ZeroC, Inc.
 
+import DateExtension
 import Foundation
 import Ice
 
-// Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
+// Create an Ice communicator. We'll use this communicator to create proxies, manage outgoing connections, and to
+// create a "bidir" object adapter.
 var args = CommandLine.arguments
 let communicator = try Ice.initialize(&args)
 
