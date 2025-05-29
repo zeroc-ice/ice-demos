@@ -23,9 +23,10 @@ Server::BidirWakeUpService::~BidirWakeUpService()
 void
 Server::BidirWakeUpService::wakeMeUp(int64_t timeStamp, const Ice::Current& current)
 {
-    cout << "Dispatching wakeMeUp request { timeStamp = " << timeStamp << " ticks }" << endl;
-
+    // Convert the time stamp to a time point.
     chrono::system_clock::time_point timePoint = Time::toTimePoint(timeStamp);
+
+    cout << "Dispatching wakeMeUp request { timeStamp = '" << Time::formatTime(timePoint) << "' }" << endl;
 
     Ice::ConnectionPtr connection = current.con; // The connection from the client to the server.
     if (!connection)
