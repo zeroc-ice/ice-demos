@@ -24,7 +24,7 @@ jobs:
       matrix:
         include:
           - os: ubuntu-24.04
-          - os: macos-14
+          - os: macos-15
           - os: windows-2022
 
     runs-on: ${{ matrix.os }}
@@ -131,7 +131,7 @@ jobs:
 
             npm run build
             if ($LASTEXITCODE -ne 0) { throw "npm build failed in $($_.DirectoryName)" }
-            
+
             Pop-Location
           }
 
