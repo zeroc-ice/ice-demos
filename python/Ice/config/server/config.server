@@ -19,6 +19,10 @@ Ice.Default.Protocol=ssl
 Ice.Trace.Network=1
 Ice.Trace.Dispatch=1
 
+#
+# IceSSL configuration
+#
+
 # The directory where the application finds certificates and other files.
 IceSSL.DefaultDir=../../../../certs
 
