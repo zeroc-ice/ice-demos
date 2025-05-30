@@ -1,8 +1,8 @@
 // Copyright (c) ZeroC, Inc.
 
 import Foundation
-import Ice
 import Glacier2
+import Ice
 
 // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
 var args = CommandLine.arguments
