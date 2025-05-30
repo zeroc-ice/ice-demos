@@ -38,6 +38,6 @@ print(greeting)
 // One more time, this time with an implicit context set on the communicator.
 // TODO: getImplicitContext() should returned an optional Ice.ImplicitContext. It should also mark its return value
 // with @discardableResult.
-communicator.getImplicitContext().put(key: "language", value: "de")
+communicator.getImplicitContext()?.put(key: "language", value: "de")
 greeting = try await greeter.greet("bob")
 print(greeting)
