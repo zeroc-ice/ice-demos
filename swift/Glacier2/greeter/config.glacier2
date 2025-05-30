@@ -1,0 +1,12 @@
+# Config file for glacier2router
+
+# The client-visible endpoint of the Glacier2 router.
+Glacier2.Client.Endpoints=tcp -p 4063
+
+# This Glacier router accepts any username/password combination.
+Glacier2.PermissionsVerifier=Glacier2/NullPermissionsVerifier
+
+# Turn on tracing.
+Glacier2.Client.Trace.Request=1
+Glacier2.Trace.Session=1
+Glacier2.Trace.RoutingTable=1
