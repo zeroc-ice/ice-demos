@@ -17,7 +17,7 @@ defer {
 // Create an object adapter that listens for incoming requests and dispatches them to servants.
 // Since we don't specify a port, the OS will choose an ephemeral port. This allows multiple client applications to
 // run concurrently on the same host.
-let adapter = try communicator.createObjectAdapterWithEndpoints(name: "AlarmClockAdapter", endpoints: "tcp");
+let adapter = try communicator.createObjectAdapterWithEndpoints(name: "AlarmClockAdapter", endpoints: "tcp")
 
 // Register the MockAlarmClock servant with the adapter, and get an alarm clock proxy.
 let mockAlarmClock = MockAlarmClock()

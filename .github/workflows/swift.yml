@@ -1,0 +1,36 @@
+name: Swift
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: ["main"]
+
+jobs:
+  swift-format:
+    name: Swift format and lint
+    runs-on: ubuntu-24.04
+    container:
+      image: swift
+      volumes:
+        - ${{ github.workspace }}:${{ github.workspace }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # https://github.com/actions/runner/issues/2033
+      - name: Set safe directory
+        run: |
+          git config --global --add safe.directory /__w/ice-demos/ice-demos
+
+      - name: swift-format Format
+        working-directory: swift
+        run: |
+          swift format . --recursive --in-place --configuration .swift-format.json
+          git diff --exit-code
+
+      - name: swift-format Lint
+        working-directory: swift
+        run: swift format lint . --recursive --strict --configuration .swift-format.json
