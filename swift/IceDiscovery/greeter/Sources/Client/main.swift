@@ -2,15 +2,17 @@
 
 import Foundation
 import Ice
-import IceDiscovery
 
 // Configure the communicator to load the IceDiscovery plugin during initialization. This plugin installs a default
 // locator on the communicator.
 var args = CommandLine.arguments
 let properties = try Ice.createProperties(&args)
+
+// Configure the IceDiscovery plugin
+properties.setProperty(key: "Ice.Plugin.IceDiscovery", value: "1")
+
 var initData = Ice.InitializationData()
 initData.properties = properties
-initData.pluginFactories = [IceDiscovery.discoveryPluginFactory()]
 
 // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
 let communicator = try Ice.initialize(initData)

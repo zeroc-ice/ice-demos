@@ -1,7 +1,10 @@
 // Copyright (c) ZeroC, Inc.
 
 import Ice
-import IceDiscovery
+
+// CtrlCHandler is a helper class that handles Ctrl+C and similar signals. It must be constructed at the beginning
+// of the program, before creating an Ice communicator or starting any thread.
+let ctrlCHandler = CtrlCHandler()
 
 // Configure the communicator to load the IceDiscovery plugin during initialization. This plugin installs a default
 // locator on the communicator.
@@ -16,13 +19,11 @@ properties.setProperty(key: "GreeterAdapter.AdapterId", value: "greeterAdapterId
 // discover this object adapter.
 properties.setProperty(key: "GreeterAdapter.Endpoints", value: "tcp")
 
+// Configure the IceDiscovery plugin
+properties.setProperty(key: "Ice.Plugin.IceDiscovery", value: "1")
+
 var initData = Ice.InitializationData()
 initData.properties = properties
-initData.pluginFactories = [IceDiscovery.discoveryPluginFactory()]
-
-// CtrlCHandler is a helper class that handles Ctrl+C and similar signals. It must be constructed at the beginning
-// of the program, before creating an Ice communicator or starting any thread.
-let ctrlCHandler = CtrlCHandler()
 
 // Create an Ice communicator. We'll use this communicator to create an object adapter.
 let communicator = try Ice.initialize(initData)

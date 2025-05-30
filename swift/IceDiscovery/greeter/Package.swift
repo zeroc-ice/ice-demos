@@ -12,8 +12,7 @@ let package = Package(
         .executableTarget(
             name: "Client",
             dependencies: [
-                .product(name: "Ice", package: "ice-swift"),
-                .product(name: "IceDiscovery", package: "ice-swift")
+                .product(name: "Ice", package: "ice-swift")
             ],
             exclude: ["slice-plugin.json"],
             plugins: [.plugin(name: "CompileSlice", package: "ice-swift")]
@@ -21,8 +20,7 @@ let package = Package(
         .executableTarget(
             name: "Server",
             dependencies: [
-                .product(name: "Ice", package: "ice-swift"),
-                .product(name: "IceDiscovery", package: "ice-swift")
+                .product(name: "Ice", package: "ice-swift")
             ],
             exclude: ["slice-plugin.json"],
             plugins: [.plugin(name: "CompileSlice", package: "ice-swift")]
