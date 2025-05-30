@@ -32,14 +32,6 @@ Follow these steps to build and run the demo:
 
 3. Start the IceGrid node in its own terminal:
 
-   First, add the server build directory to the PATH environment variable:
-
-   ```shell
-   export PATH=$PWD/.build/debug:$PATH
-   ```
-
-   Then, start the IceGrid node:
-
    ```shell
    icegridnode --Ice.Config=config.node
    ```
@@ -65,7 +57,3 @@ Follow these steps to build and run the demo:
    ```shell
    swift run Client
    ```
-
-## Platform Support
-
-This demo is only available for macOS because the ice-swift dependency is only available for macOS. It does not build on Linux.

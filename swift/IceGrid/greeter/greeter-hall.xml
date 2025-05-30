@@ -8,9 +8,7 @@
 
       <!-- Describes the server deployed on node1. IceGrid starts this server when a client looks up an object adapter
       or a well-known object in this server. -->
-      <server id="GreetServer" exe="swift" activation="on-demand">
-        <option>run</option>
-        <option>Server</option>
+      <server id="GreetServer" exe="./.build/arm64-apple-macosx/debug/Server" activation="on-demand">
 
         <!-- The object adapter created by this server. It listens on an OS-assigned tcp port, on all interfaces.
         It also defines a well-known object with identity "greeter". IceGrid generates property Greeter.Identity with

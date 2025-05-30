@@ -3,28 +3,38 @@
   more nodes) can host several applications. -->
   <application name="GreeterHall">
 
-    <!-- Describes the servers deployed on the IceGrid node named 'node1'. -->
-    <node name="node1">
+    <!-- A server template allows us to instantiate several similar servers. -->
+    <server-template id="GreetServer">
+      <!-- This template has a single parameter, index. Its value can be any string. -->
+      <parameter name="index"/>
 
-      <!-- Describes the server deployed on node1. IceGrid starts this server when a client looks up an object adapter
-      or a well-known object in this server. -->
-      <server id="GreetServer-${index}" exe="swift" activation="on-demand">
-        <option>run</option>
-        <option>Server</option>
+      <!-- An instance of this template is a server with ID GreetServer-${index}. IceGrid starts this server when a
+      client looks up an object adapter or a well-known object in this server or in a replica group it references. -->
+      <server id="GreetServer-${index}" exe="./.build/arm64-apple-macosx/debug/Server" activation="on-demand">
 
         <!-- The object adapter created by this server. It listens on an OS-assigned tcp port, on all interfaces.
-        It also defines a well-known object with identity "greeter". IceGrid generates property Greeter.Identity with
-        value "greeter" in the config file for server GreeterServer. -->
-        <adapter name="GreeterAdapter" endpoints="tcp" replica-group="GreeterReplicaGroup">
-          <object identity="greeter" property="Greeter.Identity"/>
-        </adapter>
-      </server>
-    </node>
+        It also belongs to replica group GreeterPool, defined later. -->
+        <adapter name="GreeterAdapter" endpoints="tcp" replica-group="GreeterPool"/>
 
-    <!-- Define a replica group for load balancing -->
-    <replica-group id="GreeterReplicaGroup">
-      <load-balancing type="round-robin" n-replicas="3"/>
-      <object identity="greeter" type="::VisitorCenter::Greeter"/>
+        <!-- Generates an additional property in the server config file. -->
+        <property name="Greeter.Identity" value="greeter"/>
+      </server>
+    </server-template>
+
+    <!-- Represents a set of replicated object adapters. -->
+    <replica-group id="GreeterPool">
+      <!-- Specifies in which order IceGrid returns the object adapters in the pool.-->
+      <load-balancing type="round-robin"/>
+
+      <!-- Defines the well-known object "greeter", implemented by all replicas. -->
+      <object identity="greeter"/>
     </replica-group>
+
+    <!-- Describes the servers deployed on node1. Here, we deploy 3 separate instances of the GreetServer. -->
+    <node name="node1">
+      <server-instance template="GreetServer" index="1"/>
+      <server-instance template="GreetServer" index="2"/>
+      <server-instance template="GreetServer" index="3"/>
+    </node>
   </application>
 </icegrid>
