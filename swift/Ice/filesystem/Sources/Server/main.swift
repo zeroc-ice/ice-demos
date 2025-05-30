@@ -42,7 +42,7 @@ kublaKhan.writeDirect(text: [
     "A stately pleasure-dome decree:",
     "Where Alph, the sacred river, ran",
     "Through caverns measureless to man",
-    "Down to a sunless sea."
+    "Down to a sunless sea.",
 ])
 try coleridge.addChild(uncheckedCast(prx: adapter.addWithUUID(kublaKhan), type: FilePrx.self))
 

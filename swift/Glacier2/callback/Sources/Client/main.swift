@@ -2,8 +2,8 @@
 
 import DateExtension
 import Foundation
-import Ice
 import Glacier2
+import Ice
 
 // Create an Ice communicator. We'll use this communicator to create proxies, manage outgoing connections, and to
 // create an object adapter.

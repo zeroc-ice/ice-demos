@@ -8,7 +8,7 @@ class Chatbot: Greeter {
     // This version uses the Asynchronous Method Dispatch (AMD) variant. It uses the same Slice file as synchronous
     // version (see Server).
     func greet(name: String, current _: Ice.Current) async throws -> String {
-        try await Task.sleep(for: .seconds(1)) // Simulate a delay
+        try await Task.sleep(for: .seconds(1))  // Simulate a delay
 
         print("Dispatching greet request { name = '\(name)' }")
         return "Hello, \(name)!"

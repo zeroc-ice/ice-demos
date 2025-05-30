@@ -21,9 +21,10 @@ let adapter = try communicator.createObjectAdapterWithEndpoints(
     name: "ForwarderAdapter", endpoints: "tcp -p 10000")
 
 // Create a target proxy template, with a dummy identity.
-let targetTemplate = try makeProxy(communicator: communicator,
-                                   proxyString: "dummy:tcp -h localhost -p 4061",
-                                   type: Ice.ObjectPrx.self)
+let targetTemplate = try makeProxy(
+    communicator: communicator,
+    proxyString: "dummy:tcp -h localhost -p 4061",
+    type: Ice.ObjectPrx.self)
 
 // Register the Forwarder servant as default servant with the object adapter. The empty category means this default
 // servant receives requests to all Ice objects.

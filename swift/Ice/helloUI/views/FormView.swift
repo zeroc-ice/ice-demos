@@ -17,17 +17,21 @@ struct FormView: View {
         ZStack {
             Form {
                 // Proxy Settings
-                ProxySettingsView(connection: $client.proxySettings.connection,
-                                  delay: $client.proxySettings.delay,
-                                  timeout: $client.proxySettings.timeout,
-                                  methodIndex: $client.proxySettings.methodIndex).environmentObject(client)
+                ProxySettingsView(
+                    connection: $client.proxySettings.connection,
+                    delay: $client.proxySettings.delay,
+                    timeout: $client.proxySettings.timeout,
+                    methodIndex: $client.proxySettings.methodIndex
+                ).environmentObject(client)
 
                 // Buttons
                 Section("Actions") {
-                    ButtonView(helloEnabled: $client.helloEnabled,
-                               flushEnabled: $client.flushEnabled,
-                               shutdownEnabled: $client.shutdownEnabled)
-                        .environmentObject(client)
+                    ButtonView(
+                        helloEnabled: $client.helloEnabled,
+                        flushEnabled: $client.flushEnabled,
+                        shutdownEnabled: $client.shutdownEnabled
+                    )
+                    .environmentObject(client)
                 }
 
                 Section("Status message") {
@@ -38,9 +42,10 @@ struct FormView: View {
         }
         // Displaying Alerts
         .alert(isPresented: $client.showingError) {
-            Alert(title: Text("Error"),
-                  message: Text(client.error?.localizedDescription ?? ""),
-                  dismissButton: .default(Text("Got it!")))
+            Alert(
+                title: Text("Error"),
+                message: Text(client.error?.localizedDescription ?? ""),
+                dismissButton: .default(Text("Got it!")))
         }
     }
 }

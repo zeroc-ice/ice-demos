@@ -171,9 +171,9 @@ class Client: ObservableObject {
         let isHostEmpty = proxySettings.connection == ""
         let hostname = isHostEmpty ? "localhost" : proxySettings.connection
 
-        let s = "hello:tcp -h \"\(hostname)\" -p 10000:" +
-            "ssl -h \"\(hostname)\" -p 10001:" +
-            "udp -h \"\(hostname)\" -p 10000"
+        let s =
+            "hello:tcp -h \"\(hostname)\" -p 10000:" + "ssl -h \"\(hostname)\" -p 10001:"
+            + "udp -h \"\(hostname)\" -p 10000"
 
         helloPrx = uncheckedCast(prx: try communicator.stringToProxy(s)!, type: HelloPrx.self)
 
