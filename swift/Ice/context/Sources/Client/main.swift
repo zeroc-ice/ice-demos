@@ -6,12 +6,12 @@ import Ice
 // Set the Ice.ImplicitContext property to "Shared" before creating the communicator.
 // This is only necessary for the implicit context API (see below).
 var args = CommandLine.arguments
-let initData = Ice.InitializationData()
-initData.properties = Ice.createProperties()
-initData.properties.setProperty(key: "Ice.ImplicitContext", value: "Shared")
+var initData = Ice.InitializationData()
+initData.properties = Ice.createProperties(args: &args)
+initData.properties?.setProperty(key: "Ice.ImplicitContext", value: "Shared")
 
 // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
-let communicator = try Ice.initialize(&args, initData)
+let communicator = try Ice.initialize(initData: initData)
 
 // Destroy the communicator when the program exits.
 defer {
