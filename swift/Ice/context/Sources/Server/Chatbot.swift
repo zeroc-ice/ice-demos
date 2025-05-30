@@ -8,20 +8,15 @@ class Chatbot: Greeter {
     func greet(name: String, current: Ice.Current) -> String {
         // We retrieve the value for the language entry in the context.
         let language = current.ctx["language"] ?? ""
-        
+
         print("Dispatching greet request { name = '\(name)', language = '\(language)' }")
-        
+
         // Return a greeting in the requested language.
-        switch language {
-        case "de":
-            return "Hallo \(name), wie geht's?"
-        case "es":
-            return "¡Hola \(name)!"
-        case "fr":
-            return "Bonjour \(name), comment vas-tu ?"
-        default:
-            return "Hello, \(name)!"
+        return switch language {
+        case "de": "Hallo \(name), wie geht's?"
+        case "es": "¡Hola \(name)!"
+        case "fr": "Bonjour \(name), comment vas-tu ?"
+        default: "Hello, \(name)!"
         }
     }
 }
-

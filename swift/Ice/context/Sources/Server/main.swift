@@ -34,4 +34,3 @@ ctrlCHandler.setCallback { signal in
 
 // Wait until the communicator is shut down. Here, this occurs when the user presses Ctrl+C.
 await communicator.shutdownCompleted()
-
