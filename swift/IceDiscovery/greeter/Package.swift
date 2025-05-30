@@ -11,17 +11,13 @@ let package = Package(
     targets: [
         .executableTarget(
             name: "Client",
-            dependencies: [
-                .product(name: "Ice", package: "ice-swift")
-            ],
+            dependencies: [.product(name: "Ice", package: "ice-swift")],
             exclude: ["slice-plugin.json"],
             plugins: [.plugin(name: "CompileSlice", package: "ice-swift")]
         ),
         .executableTarget(
             name: "Server",
-            dependencies: [
-                .product(name: "Ice", package: "ice-swift")
-            ],
+            dependencies: [.product(name: "Ice", package: "ice-swift")],
             exclude: ["slice-plugin.json"],
             plugins: [.plugin(name: "CompileSlice", package: "ice-swift")]
         ),

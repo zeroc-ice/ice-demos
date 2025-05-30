@@ -3,12 +3,10 @@
 import Foundation
 import Ice
 
-// Configure the communicator to load the IceDiscovery plugin during initialization. This plugin installs a default
+// Configure the communicator to load the IceDiscovery plug-in during initialization. This plug-in installs a default
 // locator on the communicator.
 var args = CommandLine.arguments
 let properties = try Ice.createProperties(&args)
-
-// Configure the IceDiscovery plugin
 properties.setProperty(key: "Ice.Plugin.IceDiscovery", value: "1")
 
 var initData = Ice.InitializationData()

@@ -6,10 +6,11 @@ import Ice
 // of the program, before creating an Ice communicator or starting any thread.
 let ctrlCHandler = CtrlCHandler()
 
-// Configure the communicator to load the IceDiscovery plugin during initialization. This plugin installs a default
+// Configure the communicator to load the IceDiscovery plug-in during initialization. This plug-in installs a default
 // locator on the communicator.
 var args = CommandLine.arguments
 let properties = try Ice.createProperties(&args)
+properties.setProperty(key: "Ice.Plugin.IceDiscovery", value: "1")
 
 // Configure the object adapter GreeterAdapter. It must be an indirect object adapter (i.e., with an AdapterId
 // property); otherwise, the IceDiscovery plugin can't make it discoverable by IceDiscovery clients.
@@ -18,9 +19,6 @@ properties.setProperty(key: "GreeterAdapter.AdapterId", value: "greeterAdapterId
 // Configure the GreeterAdapter to listen on TCP with an OS-assigned port. We don't need a fixed port since the clients
 // discover this object adapter.
 properties.setProperty(key: "GreeterAdapter.Endpoints", value: "tcp")
-
-// Configure the IceDiscovery plugin
-properties.setProperty(key: "Ice.Plugin.IceDiscovery", value: "1")
 
 var initData = Ice.InitializationData()
 initData.properties = properties
