@@ -22,7 +22,7 @@ internal class Chatbot : GreeterDisp_
                 // ObjectNotExistException is a dispatch exception with a reply status of 'ObjectNotExist'.
                 throw new Ice.ObjectNotExistException(),
             "alice" =>
-                // / Simulate an authentication error by throwing a dispatch exception with the Unauthorized error code.
+                // Simulate an authentication error by throwing a dispatch exception with the Unauthorized error code.
                 // Note: This is a demo; no real authentication logic is implemented.
                 throw new Ice.DispatchException(
                     Ice.ReplyStatus.Unauthorized,
