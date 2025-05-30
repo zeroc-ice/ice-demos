@@ -4,7 +4,7 @@
 using EarlyRiser;
 using System.Diagnostics;
 
-// Create an Ice communicator. We'll use this communicator to create proxies, manage outgoing connections, and create
+// Create an Ice communicator. We'll use this communicator to create proxies, manage outgoing connections, and to create
 // an object adapter.
 await using Ice.Communicator communicator = Ice.Util.initialize(ref args);
 
