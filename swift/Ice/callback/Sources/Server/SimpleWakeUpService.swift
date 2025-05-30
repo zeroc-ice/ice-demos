@@ -17,7 +17,7 @@ class SimpleWakeUpService: WakeUpService {
         let wakeUpTime = Date(timeStamp: timeStamp)
         let formattedTime = wakeUpTime.formatted(date: .omitted, time: .complete)
 
-        print("Dispatching wakeMeUp request { alarmClock = '\(alarmClock)', timeStamp = '\(formattedTime))' }")
+        print("Dispatching wakeMeUp request { alarmClock = '\(alarmClock)', timeStamp = '\(formattedTime)' }")
 
         // Schedule a wake-up call in a background task.
         Task {
