@@ -26,17 +26,11 @@ let greeter = try makeProxy(
 
 // Send a request to the remote object and get the response. We request a French greeting by setting the context
 // parameter.
-var greeting = try await greeter.greet(
-    NSUserName(),
-    context: ["language": "fr"])
-
+var greeting = try await greeter.greet(NSUserName(), context: ["language": "fr"])
 print(greeting)
 
 // Do it again, this time by setting the context on the proxy.
-let greeterEs = uncheckedCast(
-    prx: greeter.ice_context(["language": "es"]),
-    type: GreeterPrx.self)
-
+let greeterEs = greeter.ice_context(["language": "es"])
 greeting = try await greeterEs.greet("alice")
 print(greeting)
 

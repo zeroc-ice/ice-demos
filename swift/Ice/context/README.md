@@ -1,4 +1,4 @@
-# Context
+# Ice Context
 
 The Context demo shows the 3 different ways to set a request context in a client.
 
