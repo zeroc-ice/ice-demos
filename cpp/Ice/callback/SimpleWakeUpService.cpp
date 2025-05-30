@@ -29,10 +29,11 @@ Server::SimpleWakeUpService::wakeMeUp(optional<AlarmClockPrx> alarmClock, int64_
         throw std::invalid_argument{"alarmClock is null"};
     }
 
-    cout << "Dispatching wakeMeUp request { alarmClock = '" << alarmClock << "', timeStamp = " << timeStamp
-         << " ticks }" << endl;
-
+    // Convert the time stamp to a time point.
     chrono::system_clock::time_point timePoint = Time::toTimePoint(timeStamp);
+
+    cout << "Dispatching wakeMeUp request { alarmClock = '" << alarmClock << "', timeStamp = '"
+         << Time::formatTime(timePoint) << "' }" << endl;
 
     // Schedule a wake-up call in a background task.
     _tasks.emplace_back(std::async(
