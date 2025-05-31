@@ -1,7 +1,7 @@
 # IceGrid LocatorDiscovery
 
 The LocatorDiscovery demo shows how to write a client application that configures its locator using the
-LocatorDiscovery plugin.
+LocatorDiscovery plug-in.
 
 This demo provides a client application that works with the IceGrid/greeter demo and reuses its server components and
 IceGrid configuration.

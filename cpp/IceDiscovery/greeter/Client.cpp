@@ -13,7 +13,7 @@ using namespace std;
 int
 main(int argc, char* argv[])
 {
-    // Register the IceDiscovery plugin. The plugin will be loaded during communicator initialization and will
+    // Register the IceDiscovery plug-in. The plug-in will be loaded during communicator initialization and will
     // install a default locator on the communicator.
     Ice::InitializationData initData;
     initData.properties = Ice::createProperties(argc, argv);
@@ -27,7 +27,7 @@ main(int argc, char* argv[])
 
     // Create a proxy to the Greeter object hosted by the server. "greeter" is a stringified proxy with no addressing
     // information, also known as a well-known proxy. It's resolved by the default locator installed by the IceDiscovery
-    // plugin.
+    // plug-in.
     VisitorCenter::GreeterPrx greeter{communicator, "greeter"};
 
     // Send a request to the remote object and wait synchronously for the response.

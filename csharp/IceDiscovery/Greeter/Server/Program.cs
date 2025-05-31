@@ -1,6 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
-// Configure the communicator to load the IceDiscovery plugin during initialization. This plugin installs a default
+// Configure the communicator to load the IceDiscovery plug-in during initialization. This plug-in installs a default
 // locator on the communicator.
 var initData = new Ice.InitializationData
 {
@@ -9,7 +9,7 @@ var initData = new Ice.InitializationData
 };
 
 // Configure the object adapter GreeterAdapter. It must be an indirect object adapter (i.e., with an AdapterId
-// property); otherwise, the IceDiscovery plugin can't make it discoverable by IceDiscovery clients.
+// property); otherwise, the IceDiscovery plug-in can't make it discoverable by IceDiscovery clients.
 initData.properties.setProperty("GreeterAdapter.AdapterId", "greeterAdapterId");
 
 // Configure the GreeterAdapter to listen on TCP with an OS-assigned port. We don't need a fixed port since the clients
@@ -26,7 +26,7 @@ Ice.ObjectAdapter adapter = communicator.createObjectAdapter("GreeterAdapter");
 // Register the Chatbot servant with the adapter.
 adapter.add(new Server.Chatbot(), new Ice.Identity { name = "greeter" });
 
-// Start dispatching requests. This method also registers the object adapter with the IceDiscovery plugin.
+// Start dispatching requests. This method also registers the object adapter with the IceDiscovery plug-in.
 adapter.activate();
 Console.WriteLine("Listening...");
 

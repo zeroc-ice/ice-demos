@@ -1,6 +1,6 @@
 # IceDiscovery Greeter
 
-This demo illustrates how to use the IceDiscovery plugin. The IceDiscovery plugin allows a client application
+This demo illustrates how to use the IceDiscovery plug-in. The IceDiscovery plug-in allows a client application
 to discover Ice objects without hardcoding any addressing information.
 
 To build the demo, run:
