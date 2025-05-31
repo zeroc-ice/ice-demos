@@ -3,7 +3,7 @@
 import Foundation
 import Ice
 
-// Configure the communicator to load the IceLocatorDiscovery plugin during initialization. This plugin will discover
+// Configure the communicator to load the IceLocatorDiscovery plug-in during initialization. This plug-in will discover
 // the locator (IceGrid registry in this demo) to use. As a result, we don't need to configure the default locator on
 // this communicator.
 var args = CommandLine.arguments

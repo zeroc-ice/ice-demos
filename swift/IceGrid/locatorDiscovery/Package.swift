@@ -1,6 +1,5 @@
 // swift-tools-version: 5.9
 
-import Foundation
 import PackageDescription
 
 let package = Package(
@@ -15,6 +14,6 @@ let package = Package(
             dependencies: [.product(name: "Ice", package: "ice-swift")],
             exclude: ["slice-plugin.json"],
             plugins: [.plugin(name: "CompileSlice", package: "ice-swift")]
-        ),
+        )
     ]
 )
