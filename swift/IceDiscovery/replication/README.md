@@ -4,7 +4,7 @@ This demo illustrates how to use the IceDiscovery plugin with replicated servers
 
 You can build the client and server applications with:
 
-``` shell
+```shell
 swift build
 ```
 

@@ -4,7 +4,7 @@ This demo illustrates how to use the IceDiscovery plug-in with replicated server
 
 You can build the client and server applications with:
 
-``` shell
+```shell
 dotnet build
 ```
 

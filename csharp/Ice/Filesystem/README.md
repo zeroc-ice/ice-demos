@@ -4,7 +4,7 @@ This demo implements the filesystem application shown at the end of C# mapping c
 
 You can build the client and server applications with:
 
-``` shell
+```shell
 dotnet build
 ```
 

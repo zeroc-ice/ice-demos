@@ -15,7 +15,7 @@ flowchart LR
 
 You can build the weather sensor and weather station applications with:
 
-``` shell
+```shell
 dotnet build
 ```
 

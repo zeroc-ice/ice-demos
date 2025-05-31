@@ -17,7 +17,7 @@ Follow these steps to build and run the demo:
 
 1. Build the client and server applications:
 
-   ``` shell
+   ```shell
    dotnet build
    ```
 
