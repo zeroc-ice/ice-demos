@@ -1,6 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
-// Configure the communicator to load the IceDiscovery plugin during initialization. This plugin installs a default
+// Configure the communicator to load the IceDiscovery plug-in during initialization. This plug-in installs a default
 // locator on the communicator.
 var initData = new Ice.InitializationData
 {
@@ -12,7 +12,7 @@ var initData = new Ice.InitializationData
 string uuid = Guid.NewGuid().ToString();
 
 // Configure the object adapter GreeterAdapter. It must be an indirect object adapter (i.e., with an AdapterId
-// property); otherwise, the IceDiscovery plugin can't make it discoverable by IceDiscovery clients.
+// property); otherwise, the IceDiscovery plug-in can't make it discoverable by IceDiscovery clients.
 // We also set the ReplicaGroupId property to "greeterPool" to enable replication.
 initData.properties.setProperty("GreeterAdapter.AdapterId", $"greeter-{uuid}");
 initData.properties.setProperty("GreeterAdapter.ReplicaGroupId", "greeterPool");
@@ -32,7 +32,7 @@ Ice.ObjectAdapter adapter = communicator.createObjectAdapter("GreeterAdapter");
 // instances.
 adapter.add(new Server.Chatbot(greeterName: uuid[^4..]), new Ice.Identity { name = "greeter" });
 
-// Start dispatching requests. This method also registers the object adapter with the IceDiscovery plugin.
+// Start dispatching requests. This method also registers the object adapter with the IceDiscovery plug-in.
 adapter.activate();
 Console.WriteLine("Listening...");
 

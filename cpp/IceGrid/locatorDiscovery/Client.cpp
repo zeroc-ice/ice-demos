@@ -12,8 +12,8 @@ using namespace std;
 int
 main(int argc, char* argv[])
 {
-    // Configure the communicator to load the IceLocatorDiscovery plugin during initialization.
-    // This plugin will discover the locator (IceGrid registry in this demo) to use. As a result, we don't need to
+    // Configure the communicator to load the IceLocatorDiscovery plug-in during initialization.
+    // This plug-in will discover the locator (IceGrid registry in this demo) to use. As a result, we don't need to
     // configure the default locator on this communicator.
     Ice::InitializationData initData;
     initData.properties = Ice::createProperties(argc, argv);

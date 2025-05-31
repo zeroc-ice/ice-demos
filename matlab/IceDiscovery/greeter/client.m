@@ -10,7 +10,7 @@ function client(args)
         loadlibrary('ice', @iceproto);
     end
 
-    % Configure the communicator to load the IceDiscovery plugin during initialization. This plugin installs a default
+    % Configure the communicator to load the IceDiscovery plug-in during initialization. This plug-in installs a default
     % locator on the communicator.
     initData = Ice.InitializationData();
     initData.properties_ = Ice.createProperties(args);
@@ -24,7 +24,7 @@ function client(args)
 
     % Create a proxy to the Greeter object hosted by the server(s). 'greeter' is a stringified proxy with no addressing
     % information, also known as a well-known proxy. It's resolved by the default locator installed by the IceDiscovery
-    % plugin.
+    % plug-in.
     greeter = visitorcenter.GreeterPrx(communicator, 'greeter');
 
     % Send a request to the remote object and wait for the response.

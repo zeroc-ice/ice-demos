@@ -11,7 +11,7 @@ using namespace std;
 int
 main(int argc, char* argv[])
 {
-    // Register the IceDiscovery plugin. The plugin will be loaded during communicator initialization.
+    // Register the IceDiscovery plug-in. The plug-in will be loaded during communicator initialization.
     Ice::InitializationData initData;
     initData.properties = Ice::createProperties(argc, argv);
     initData.pluginFactories = {IceDiscovery::discoveryPluginFactory()};
@@ -33,7 +33,7 @@ main(int argc, char* argv[])
     string uuid = Ice::generateUUID();
 
     // Configure the object adapter GreeterAdapter. It must be an indirect object adapter (i.e., with an AdapterId
-    // property); otherwise, the IceDiscovery plugin can't make it discoverable by IceDiscovery clients.
+    // property); otherwise, the IceDiscovery plug-in can't make it discoverable by IceDiscovery clients.
     // We also set the ReplicaGroupId property to "greeterPool" to enable replication.
     properties->setProperty("GreeterAdapter.AdapterId", "greeter-" + uuid);
     properties->setProperty("GreeterAdapter.ReplicaGroupId", "greeterPool");

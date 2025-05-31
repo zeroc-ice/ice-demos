@@ -11,7 +11,7 @@ import VisitorCenter
 
 async def main():
 
-    # Configure the communicator to load the IceDiscovery plugin during initialization. This plugin installs a default
+    # Configure the communicator to load the IceDiscovery plug-in during initialization. This plug-in installs a default
     # locator on the communicator.
     initData = Ice.InitializationData()
     initData.properties = Ice.createProperties(sys.argv)
@@ -25,7 +25,7 @@ async def main():
 
         # Create a proxy to the Greeter object hosted by the server. "greeter" is a stringified proxy with no
         # addressing information, also known as a well-known proxy. It's resolved by the default locator installed by
-        # the IceDiscovery plugin.
+        # the IceDiscovery plug-in.
         greeter = VisitorCenter.GreeterPrx(communicator, "greeter")
 
         # Send a request to the remote object and get the response.
