@@ -12,7 +12,7 @@ IceGrid.Registry.Server.Endpoints=tcp
 # The endpoints of this registry's internal object adapter. This object adapter receives requests from the IceGrid
 # nodes.
 # We configure this object adapter to listen on an OS-assigned tcp port, on the loopback interface since the IceGrid
-# node runs on the the same host in this deployment.
+# node runs on the same host in this deployment.
 IceGrid.Registry.Internal.Endpoints=tcp -h 127.0.0.1
 
 # The directory when the registry stores its LMDB database. This directory must exist and be writable by the registry.
