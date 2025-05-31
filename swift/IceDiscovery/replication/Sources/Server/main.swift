@@ -7,14 +7,14 @@ import Ice
 // of the program, before creating an Ice communicator or starting any thread.
 let ctrlCHandler = CtrlCHandler()
 
-// Generate a unique name for the adapter ID and the greeter name.
-let uuid = UUID().uuidString
-
 // Configure the communicator to load the IceDiscovery plug-in during initialization. This plug-in installs a default
 // locator on the communicator.
 var args = CommandLine.arguments
 let properties = try Ice.createProperties(&args)
 properties.setProperty(key: "Ice.Plugin.IceDiscovery", value: "1")
+
+// Generate a unique name for the adapter ID and the greeter name.
+let uuid = UUID().uuidString
 
 // Configure the object adapter GreeterAdapter. It must be an indirect object adapter (i.e., with an AdapterId
 // property); otherwise, the IceDiscovery plugin can't make it discoverable by IceDiscovery clients.

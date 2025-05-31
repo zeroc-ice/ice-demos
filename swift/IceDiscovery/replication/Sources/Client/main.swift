@@ -22,7 +22,7 @@ defer {
 
 // Create a proxy to the Greeter object hosted by the server. "greeter" is a stringified proxy with no addressing
 // information, also known as a well-known proxy. It's resolved by the default locator installed by the IceDiscovery
-// plugin.
+// plug-in.
 let greeter = try makeProxy(
     communicator: communicator, proxyString: "greeter",
     type: GreeterPrx.self)
