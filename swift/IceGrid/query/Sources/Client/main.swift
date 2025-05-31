@@ -27,7 +27,7 @@ let query = try makeProxy(
     type: IceGrid.QueryPrx.self)
 
 // Look up an object with type ::VisitorCenter::Greeter.
-let greeterTypeId = GreeterTraits.staticId // ::VisitorCenter::Greeter
+let greeterTypeId = GreeterTraits.staticId  // ::VisitorCenter::Greeter
 guard let proxy = try await query.findObjectByType(greeterTypeId) else {
     print("The IceGrid registry doesn't know any object with type '\(greeterTypeId)'.")
     exit(1)

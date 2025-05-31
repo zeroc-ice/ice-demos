@@ -14,7 +14,7 @@ let package = Package(
             name: "Client",
             dependencies: [
                 .product(name: "Ice", package: "ice-swift"),
-                .product(name: "IceGrid", package: "ice-swift")
+                .product(name: "IceGrid", package: "ice-swift"),
             ],
             exclude: ["slice-plugin.json"],
             plugins: [.plugin(name: "CompileSlice", package: "ice-swift")]
