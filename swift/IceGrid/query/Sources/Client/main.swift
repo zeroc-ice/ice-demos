@@ -27,21 +27,20 @@ let query = try makeProxy(
     type: IceGrid.QueryPrx.self)
 
 // Look up an object with type ::VisitorCenter::Greeter.
-let greeterTypeId = GreeterPrx.ice_staticId() // ::VisitorCenter::Greeter
-let proxy = try await query.findObjectByType(greeterTypeId)
-
-if proxy == nil {
+let greeterTypeId = GreeterTraits.staticId // ::VisitorCenter::Greeter
+guard let proxy = try await query.findObjectByType(greeterTypeId) else {
     print("The IceGrid registry doesn't know any object with type '\(greeterTypeId)'.")
-} else {
-    // Cast the object proxy to a Greeter proxy.
-    let greeter = try makeProxy(proxy: proxy!, type: GreeterPrx.self)
-
-    // Send a request to the remote object and get the response.
-    let greeting = try await greeter.greet(NSUserName())
-    print(greeting)
-
-    // Send another request to the remote object. With the default configuration we use for this client, this request
-    // reuses the connection and reaches the same server.
-    let secondGreeting = try await greeter.greet("alice")
-    print(secondGreeting)
+    exit(1)
 }
+
+// Cast the object proxy to a Greeter proxy.
+let greeter = uncheckedCast(prx: proxy, type: GreeterPrx.self)
+
+// Send a request to the remote object and get the response.
+var greeting = try await greeter.greet(NSUserName())
+print(greeting)
+
+// Send another request to the remote object. With the default configuration we use for this client, this request
+// reuses the connection and reaches the same server.
+greeting = try await greeter.greet("alice")
+print(greeting)
