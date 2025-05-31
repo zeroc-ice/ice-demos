@@ -7,7 +7,7 @@ value--there is naturally no throwing across the network.
 
 You can build the client and server applications with:
 
-``` shell
+```shell
 dotnet build
 ```
 

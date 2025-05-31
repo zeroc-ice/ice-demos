@@ -15,7 +15,7 @@ This is particularly useful when the client application is behind a firewall tha
 
 You can build the client and server applications with:
 
-``` shell
+```shell
 dotnet build
 ```
 

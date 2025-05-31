@@ -4,7 +4,7 @@ This demo shows how to create an [IceBox][1] service in C#.
 
 You can build the client application and IceBox service with:
 
-``` shell
+```shell
 dotnet build
 ```
 

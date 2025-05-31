@@ -10,7 +10,7 @@ is free to set any entry in this dictionary.
 
 You can build the client and server applications with:
 
-``` shell
+```shell
 dotnet build
 ```
 

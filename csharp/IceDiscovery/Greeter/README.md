@@ -5,7 +5,7 @@ to discover Ice objects without hardcoding any addressing information.
 
 You can build the client and server applications with:
 
-``` shell
+```shell
 dotnet build
 ```
 

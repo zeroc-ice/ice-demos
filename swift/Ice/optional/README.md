@@ -24,7 +24,7 @@ class AtmosphericConditions
 
 You can build all the client and server applications with:
 
-``` shell
+```shell
 swift build
 ```
 
