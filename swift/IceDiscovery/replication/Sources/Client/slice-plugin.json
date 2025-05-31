@@ -1,5 +1,3 @@
 {
-    "slice-files": [
-        "../../slice/Greeter.ice"
-    ]
+    "sources": ["../../slice/Greeter.ice"]
 }
