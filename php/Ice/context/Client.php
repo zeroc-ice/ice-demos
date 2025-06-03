@@ -19,7 +19,7 @@ $context = ["language" => "fr"];
 $greeting = $greeter->greet(get_current_user(), $context);
 echo "$greeting\n";
 
-// Do it again, this time by setting the context on the proxy.
+// Do it again, this time creating a new proxy containing a context.
 $context = ["language" => "es"];
 $greeterEs = $greeter->ice_context($context);
 $greeting = $greeterEs->greet("alice");
