@@ -19,3 +19,5 @@ dependencyResolutionManagement {
 rootProject.name = "middleware"
 include("client")
 include("server")
+
+includeBuild("../../config/build-config")
