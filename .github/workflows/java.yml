@@ -21,8 +21,21 @@ jobs:
           java-version: "17"
 
       - name: Run checkstyle formatter
+        timeout-minutes: 20
         working-directory: java
-        run: ./gradlew check
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          Get-ChildItem -Recurse -Depth 2 -Filter gradlew | ForEach-Object {
+            Push-Location $_.DirectoryName
+            Write-Host "Building in $($_.DirectoryName)..."
+            $gradlew = if ($IsWindows) { "./gradlew.bat" } else { "./gradlew" }
+            & $gradlew check
+            if ($LASTEXITCODE -ne 0) {
+              throw "Build failed in $($_.DirectoryName)"
+            }
+            Pop-Location
+          }
 
   rewrite:
     runs-on: ubuntu-24.04
@@ -37,5 +50,18 @@ jobs:
           java-version: "17"
 
       - name: Run rewrite linter
+        timeout-minutes: 20
         working-directory: java
-        run: ./gradlew rewriteDryRun
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          Get-ChildItem -Recurse -Depth 2 -Filter gradlew | ForEach-Object {
+            Push-Location $_.DirectoryName
+            Write-Host "Building in $($_.DirectoryName)..."
+            $gradlew = if ($IsWindows) { "./gradlew.bat" } else { "./gradlew" }
+            & $gradlew rewriteDryRun
+            if ($LASTEXITCODE -ne 0) {
+              throw "Build failed in $($_.DirectoryName)"
+            }
+            Pop-Location
+          }
