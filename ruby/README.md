@@ -8,8 +8,8 @@ demonstrates a specific feature or programming technique.
 The demos in the main branch require the latest Ice for Ruby nightly build. To install it, run:
 
 ```shell
-gem install zeroc-ice --source https://download.zeroc.com/nexus/repository/rubygems-nightly --user --pre \
-    --version '>= 3.8.0.pre' -- MAKEFLAGS=-j12
+MAKEFLAGS=-j12 gem install zeroc-ice --source https://download.zeroc.com/nexus/repository/rubygems-nightly --user \
+    --pre --version '>= 3.8.0.pre'
 ```
 
 ## Ruby Demos
