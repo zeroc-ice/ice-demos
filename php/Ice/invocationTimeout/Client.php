@@ -17,7 +17,7 @@ $greeter = VisitorCenter\GreeterPrxHelper::createProxy($communicator, 'greeter:t
 // Create a proxy to the slow greeter with an invocation timeout of 4 seconds (the default invocation timeout is
 // infinite).
 $slowGreeter = VisitorCenter\GreeterPrxHelper::createProxy(
-    $communicator, 
+    $communicator,
     "slowGreeter:tcp -h localhost -p 4061")->ice_invocationTimeout(4000);
 
 # Send a request to the regular greeter and get the response.
