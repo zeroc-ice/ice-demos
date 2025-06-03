@@ -37,9 +37,9 @@ rewrite {
 
     exclusion(
         // Don't check the generated code.
-        "**/build/generated/**/*"
+        "**/build/generated/**/*",
         // Prevent 'rewrite' from trying (and failing) to format our Kotlin code with Java rules.
-        "*.kts"
+        "*.kts",
     )
 }
 
