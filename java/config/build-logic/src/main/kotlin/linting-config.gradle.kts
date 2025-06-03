@@ -31,22 +31,8 @@ checkstyle {
 }
 
 rewrite {
-    activeRecipe(
-        "org.openrewrite.staticanalysis.CodeCleanup",
-        "org.openrewrite.staticanalysis.DefaultComesLast",
-        "org.openrewrite.staticanalysis.RemoveCallsToObjectFinalize",
-        "org.openrewrite.java.OrderImports",
-        "org.openrewrite.java.RemoveUnusedImports",
-        "org.openrewrite.java.format.BlankLines",
-        "org.openrewrite.java.format.NormalizeFormat",
-        "org.openrewrite.java.format.NormalizeLineBreaks",
-        "org.openrewrite.java.format.NormalizeTabsOrSpaces",
-        "org.openrewrite.java.format.RemoveTrailingWhitespace",
-        "org.openrewrite.java.format.Spaces",
-        "org.openrewrite.java.format.TabsAndIndents",
-    )
-
-    activeStyle("com.zeroc.IceRewriteRules")
+    activeRecipe("com.zeroc.IceRewriteRecipes")
+    activeStyle("com.zeroc.IceRewriteStyle")
     configFile = file("$rootDir/../../config/rewrite.yml")
 
     exclusion(
