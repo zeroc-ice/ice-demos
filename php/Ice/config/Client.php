@@ -8,9 +8,9 @@ require_once 'Greeter.php';
 // communicator gets its configuration properties from file config.client in the client's current working directory.
 // The communicator initialization also parses args to find and set additional properties.
 $initData = new Ice\InitializationData();
-$initData->properties = Ice\createProperties($argv);
+$initData->properties = Ice\createProperties();
 $initData->properties->load("config.client");
-$communicator = Ice\initialize($initData);
+$communicator = Ice\initialize($argv, $initData);
 
 // We create a Greeter proxy using the value of the Greeter.Proxy property in config.client.
 // It's null if the property is not set.
