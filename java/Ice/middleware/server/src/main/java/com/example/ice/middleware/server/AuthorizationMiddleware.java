@@ -7,6 +7,7 @@ import com.zeroc.Ice.IncomingRequest;
 import com.zeroc.Ice.OutgoingResponse;
 import com.zeroc.Ice.ReplyStatus;
 import com.zeroc.Ice.UserException;
+
 import java.util.concurrent.CompletionStage;
 
 /**
@@ -26,7 +27,7 @@ class AuthorizationMiddleware implements com.zeroc.Ice.Object {
         }
 
         System.out.println("Accepting request with token '" + token + "'");
-        
+
         // Continue the dispatch pipeline.
         return _next.dispatch(request);
     }
