@@ -10,6 +10,13 @@ plugins {
     id("org.openrewrite.rewrite")
 }
 
+dependencies {
+    // The 'rewrite' uses a modular plug-in system for linting. We pull in the recipes we want to use.
+    rewrite(
+        "org.openrewrite.recipe:rewrite-static-analysis:2.5.1"
+    )
+}
+
 // Configure the checkstyle plugin.
 checkstyle {
     toolVersion = "10.21.4"
@@ -21,6 +28,31 @@ checkstyle {
     if (runningInCi) {
         maxWarnings = 0
     }
+}
+
+rewrite {
+    activeRecipe(
+        "org.openrewrite.staticanalysis.CodeCleanup",
+        "org.openrewrite.staticanalysis.DefaultComesLast",
+        "org.openrewrite.staticanalysis.RemoveCallsToObjectFinalize",
+        "org.openrewrite.java.OrderImports",
+        "org.openrewrite.java.RemoveUnusedImports",
+        "org.openrewrite.java.format.BlankLines",
+        "org.openrewrite.java.format.NormalizeFormat",
+        "org.openrewrite.java.format.NormalizeLineBreaks",
+        "org.openrewrite.java.format.NormalizeTabsOrSpaces",
+        "org.openrewrite.java.format.RemoveTrailingWhitespace",
+        "org.openrewrite.java.format.Spaces",
+        "org.openrewrite.java.format.TabsAndIndents",
+    )
+
+    activeStyle("com.zeroc.IceRewriteRules")
+    configFile = file("$rootDir/../../config/rewrite.yml")
+
+    exclusion(
+        // Don't check the generated code.
+        "**/build/generated/**/*"
+    )
 }
 
 // Set whether or not 'rewriteDryRun' should be considered 'failed' when it would make changes.
