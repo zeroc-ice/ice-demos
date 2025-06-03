@@ -22,7 +22,7 @@ Ice.Default.Protocol=ssl
 IceSSL.DefaultDir=../../../../certs
 
 # The certificate authority file.
-IceSSL.CAs=cacert.pem
+IceSSL.CAs=ca_cert.pem
 
 # The client's certificate file.
 IceSSL.CertFile=client.p12

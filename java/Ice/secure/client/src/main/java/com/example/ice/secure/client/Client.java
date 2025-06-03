@@ -54,7 +54,7 @@ class Client {
         try {
             SSLContext sslContext = SSLContext.getInstance("TLS");
             KeyStore keyStore = KeyStore.getInstance("PKCS12");
-            String keyStorePath = "../../../../certs/cacert.p12";
+            String keyStorePath = "../../../../certs/ca.p12";
 
             // The password for the PKCS12 keystore, hard-coded for simplicity.
             // In a production environment, use a secure method to store and retrieve this password.

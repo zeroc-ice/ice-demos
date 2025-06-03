@@ -25,7 +25,7 @@ IceSSL.DefaultDir=../../../../certs
 IceSSL.Keystore=client.jks
 
 # The keystore the server uses to identify trusted peers.
-IceSSL.Truststore=cacert.jks
+IceSSL.Truststore=ca.jks
 
 # JKS keystores require passwords.
 IceSSL.Password=password
