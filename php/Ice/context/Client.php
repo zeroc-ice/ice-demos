@@ -14,7 +14,14 @@ $communicator = Ice\initialize($argv);
 // or IP address.
 $greeter = VisitorCenter\GreeterPrxHelper::createProxy($communicator, 'greeter:tcp -h localhost -p 4061');
 
-// Send a request to the remote object and get the response.
-$greeting = $greeter->greet(get_current_user());
+// Send a request to the remote object and get the response. We request a French greeting by setting 'language' in
+// the context parameter.
+$context = ["language" => "fr"];
+$greeting = $greeter->greet(get_current_user(), $context);
+echo "$greeting\n";
 
+// Do it again, this time creating a new proxy containing a context.
+$context = ["language" => "es"];
+$greeterEs = $greeter->ice_context($context);
+$greeting = $greeterEs->greet("alice");
 echo "$greeting\n";
