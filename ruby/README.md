@@ -5,13 +5,14 @@ demonstrates a specific feature or programming technique.
 
 ## Building Requirements
 
-You'll need to install Ice for Ruby in order to use any of the sample programs.
+The demos in the main branch require the latest Ice for Ruby nightly build. To install it, run:
 
 ```shell
-gem install zeroc-ice --source https://download.zeroc.com/nexus/repository/rubygems-nightly --user --pre  --version '>= 3.8.0.pre' -- MAKEFLAGS=-j12
+gem install zeroc-ice --source https://download.zeroc.com/nexus/repository/rubygems-nightly --user --pre \
+    --version '>= 3.8.0.pre' -- MAKEFLAGS=-j12
 ```
 
-# Ruby Demos
+## Ruby Demos
 
 |                                                    |                                                                                                       |
 |----------------------------------------------------|-------------------------------------------------------------------------------------------------------|
