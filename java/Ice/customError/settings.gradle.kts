@@ -20,4 +20,4 @@ rootProject.name = "customError"
 include("client")
 include("server")
 
-includeBuild("../../config/build-config")
+includeBuild("../../config/build-logic")

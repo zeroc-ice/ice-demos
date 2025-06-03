@@ -21,4 +21,4 @@ include("client")
 include("server")
 include("serveramd")
 
-includeBuild("../../config/build-config")
+includeBuild("../../config/build-logic")

@@ -20,4 +20,4 @@ rootProject.name = "context"
 include("client")
 include("server")
 
-includeBuild("../../config/build-config")
+includeBuild("../../config/build-logic")
