@@ -43,8 +43,8 @@ class Client {
 
     /**
      * Creates and initializes an SSLContext for use with the ssl transport.
-     * <p>
-     * The SSLContext is configured with the demo CA certificate loaded from a PKCS12 keystore,
+     *
+     * <p>The SSLContext is configured with the demo CA certificate loaded from a PKCS12 keystore,
      * which is used as the trust store to validate server certificates.
      *
      * @return the initialized SSLContext

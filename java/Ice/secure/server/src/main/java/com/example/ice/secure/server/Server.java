@@ -59,8 +59,8 @@ final class Server {
 
     /**
      * Creates and initializes an SSLContext for use with the SSL transport.
-     * <p/>
-     * The SSLContext is configured with the server's certificate and private key, loaded from a PKCS12 keystore
+     *
+     * <p>The SSLContext is configured with the server's certificate and private key, loaded from a PKCS12 keystore
      * used as the key store to provide the server credentials.
      *
      * @return the initialized SSLContext
