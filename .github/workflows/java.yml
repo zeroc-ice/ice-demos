@@ -20,9 +20,6 @@ jobs:
           distribution: "oracle"
           java-version: "17"
 
-      - name: Build slice2java
-        run: make -C cpp slice2java
-
       - name: Run checkstyle formatter
         working-directory: java
         run: ./gradlew check
@@ -38,9 +35,6 @@ jobs:
         with:
           distribution: "oracle"
           java-version: "17"
-
-      - name: Build slice2java
-        run: make -C cpp slice2java
 
       - name: Run rewrite linter
         working-directory: java

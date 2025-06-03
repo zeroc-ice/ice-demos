@@ -42,8 +42,7 @@ class Chatbot implements Greeter {
                 throw new UnknownException("greet dispatch canceled.");
             } catch (TimeoutException e) {
                 // Expected, proceed.
-            }
-            catch (InterruptedException | ExecutionException e) {
+            } catch (InterruptedException | ExecutionException e) {
                 // Unexpected, wrap and rethrow.
                 throw new RuntimeException("Unexpected exception while waiting on cancelDispatch", e);
             }
