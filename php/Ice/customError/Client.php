@@ -14,8 +14,20 @@ $communicator = Ice\initialize($argv);
 // or IP address.
 $greeter = VisitorCenter\GreeterPrxHelper::createProxy($communicator, 'greeter:tcp -h localhost -p 4061');
 
-// Send a request to the remote object and get the response.
-$greeting = $greeter->greet(get_current_user());
+$names = [get_current_user(), '', 'alice', 'bob', 'carol', 'dave', 'billy bob'];
 
-echo "$greeting\n";
+foreach ($names as $name) {
+    try {
+        // Send a request to the remote object and get the response.
+        $greeting = $greeter->greet($name);
+        echo "$greeting\n";
+    } catch (Ice\DispatchException $ex) {
+        echo "Failed to create a greeting for '" . $name . "': DispatchException { message = '" . $ex->getMessage() .
+            "', replyStatus = " . $ex->replyStatus . " }\n";
+    } catch (VisitorCenter\GreeterException $ex) {
+        echo "Failed to create a greeting for '" . $name . "': GreeterException { message = '" . $ex->getMessage() .
+            "', error = " . $ex->error . " }\n";
+    }
+}
+
 ?>
