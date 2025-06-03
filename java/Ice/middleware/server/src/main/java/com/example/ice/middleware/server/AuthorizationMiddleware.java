@@ -26,7 +26,7 @@ class AuthorizationMiddleware implements com.zeroc.Ice.Object {
         }
 
         System.out.println("Accepting request with token '" + token + "'");
-        
+
         // Continue the dispatch pipeline.
         return _next.dispatch(request);
     }

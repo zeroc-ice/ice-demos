@@ -27,7 +27,7 @@ Ice::initialize(initData) do |communicator|
     # Send a request to the remote object and get the response.
     greeting = greeter.greet(Etc.getlogin)
     puts greeting
-    
+
     # Send another request to the remote object. With the default configuration we use for this client, this request
     # reuses the connection and reaches the same server, even when we have multiple replicated servers.
     greeting = greeter.greet("alice")

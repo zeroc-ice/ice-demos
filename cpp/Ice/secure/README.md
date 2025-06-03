@@ -24,7 +24,7 @@ source file to keep the code organized and modular:
 | `UtilSchannel.cpp`          | Schannel helper functions.                              |
 | `UtilSecureTransport.cpp`   | Secure Transport helper functions.                      |
 
-The types `ClientAuthenticationOptions` and `ServerAuthenticationOptions` used in this demo are aliases that expand to 
+The types `ClientAuthenticationOptions` and `ServerAuthenticationOptions` used in this demo are aliases that expand to
 platform-specific classes:
 
 - On **Linux**, they resolve to [`OpenSSLClientAuthenticationOptions`] and [`OpenSSLServerAuthenticationOptions`].

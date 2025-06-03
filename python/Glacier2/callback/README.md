@@ -56,7 +56,6 @@ Navigate to the `server` directory, to run the server program.
    > You can also start the Glacier2 router before the server. The order does not matter: the server is identical to the
    > server provided in the [Ice Callback][1] demo and does not depend on Glacier2.
 
-
 ## Running the client
 
 In a separate terminal, navigate to the `client` directory to run the client program.

@@ -6,7 +6,7 @@ These certificates are intended for testing purposes and **must not** be used in
 The certificates are copied from the main Ice repository.
 
 These certificates include `localhost` and `127.0.0.1` as Subject Alternative Names (DNS and IP),
-which match the default endpoint configuration used by the demos.  
+which match the default endpoint configuration used by the demos.
 
 If you run the SSL demos with a different host or network configuration, you must regenerate the certificates to match
 your setup.
