@@ -25,5 +25,3 @@ $context = ["language" => "es"];
 $greeterEs = $greeter->ice_context($context);
 $greeting = $greeterEs->greet("alice");
 echo "$greeting\n";
-
-?>

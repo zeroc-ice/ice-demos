@@ -18,4 +18,3 @@ $greeter = VisitorCenter\GreeterPrxHelper::createProxy($communicator, 'greeter:t
 $greeting = $greeter->greet(get_current_user());
 
 echo "$greeting\n";
-?>

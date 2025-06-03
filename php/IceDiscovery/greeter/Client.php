@@ -23,4 +23,3 @@ $greeter = VisitorCenter\GreeterPrxHelper::createProxy($communicator, 'greeter')
 $greeting = $greeter->greet(get_current_user());
 
 echo "$greeting\n";
-?>

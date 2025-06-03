@@ -35,5 +35,3 @@ try {
 # Verify the regular greeter still works.
 $greeting = $greeter->greet("carol");
 echo $greeting . "\n";
-
-?>

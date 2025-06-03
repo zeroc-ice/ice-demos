@@ -6,7 +6,7 @@ A request context is a `dictionary<string, string>` carried by all requests. It 
 is free to set any entry in this dictionary.
 
 The Ice for PHP extension doesn't support `Ice.ImplicitContext` which is a third way to set the Ice.Context supported
-in other language mappings.
+in other languages.
 
 > [!NOTE]
 > The Ice protocol does not support response contexts, only request contexts.

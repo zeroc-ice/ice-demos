@@ -29,5 +29,3 @@ foreach ($names as $name) {
             "', error = " . $ex->error . " }\n";
     }
 }
-
-?>

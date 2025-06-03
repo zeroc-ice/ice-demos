@@ -23,4 +23,3 @@ $reading = new ClearSky\AtmosphericConditions($temperature, $humidity);
 $weatherStation->report('sensor-1', $reading);
 
 echo "sensor v1: sent reading to weather station\n";
-?>

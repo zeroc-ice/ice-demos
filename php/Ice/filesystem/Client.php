@@ -46,5 +46,3 @@ function listRecursive($dir, $depth) {
         }
     }
 }
-
-?>
