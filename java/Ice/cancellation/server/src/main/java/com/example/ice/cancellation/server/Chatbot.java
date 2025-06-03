@@ -5,10 +5,11 @@ package com.example.ice.cancellation.server;
 import com.example.visitorcenter.Greeter;
 import com.zeroc.Ice.Current;
 import com.zeroc.Ice.UnknownException;
+
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeoutException;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 /**
  * Chatbot is an Ice servant that implements Slice interface Greeter.

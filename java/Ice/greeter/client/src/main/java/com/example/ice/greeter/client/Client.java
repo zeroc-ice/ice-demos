@@ -5,6 +5,7 @@ package com.example.ice.greeter.client;
 import com.example.visitorcenter.GreeterPrx;
 import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.Util;
+
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 

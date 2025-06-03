@@ -8,8 +8,10 @@ import com.example.visitorcenter.GreeterException;
 import com.zeroc.Ice.Current;
 import com.zeroc.Ice.DispatchException;
 import com.zeroc.Ice.ObjectNotExistException;
-import static com.zeroc.Ice.ReplyStatus.Unauthorized;
+
 import java.time.LocalDateTime;
+
+import static com.zeroc.Ice.ReplyStatus.Unauthorized;
 
 /**
  * Chatbot is an Ice servant that implements Slice interface Greeter.
@@ -35,11 +37,11 @@ class Chatbot implements Greeter
                     Unauthorized.value(),
                     "Invalid credentials. The administrator has been notified.");
             case "bob" ->
-                throw new GreeterException("Away until " 
+                throw new GreeterException("Away until "
                     + LocalDateTime.now().plusMinutes(5L) + ".", GreeterError.Away);
             case "carol" ->
                 throw new GreeterException("I am already greeting someone else.", GreeterError.GreetingOtherVisitor);
-            default -> 
+            default ->
             {
                 if (name.length() > MaxLength) {
                     throw new GreeterException("Name is longer than maximum!", GreeterError.NameTooLong);

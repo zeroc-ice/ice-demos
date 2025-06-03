@@ -86,13 +86,13 @@ final class Server {
             return sslContext;
         } catch (
             CertificateException
-            | IOException
-            | KeyManagementException
-            | KeyStoreException
-            | NoSuchAlgorithmException
-            | UnrecoverableKeyException ex) {
-                // Should never happen in this demo.
-                throw new RuntimeException("SSL initialization error.", ex);
+                | IOException
+                | KeyManagementException
+                | KeyStoreException
+                | NoSuchAlgorithmException
+                | UnrecoverableKeyException ex) {
+            // Should never happen in this demo.
+            throw new RuntimeException("SSL initialization error.", ex);
         }
     }
 
