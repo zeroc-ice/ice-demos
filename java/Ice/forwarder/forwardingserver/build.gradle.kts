@@ -3,9 +3,6 @@
 plugins {
     // Apply the application plugin to tell gradle this is a runnable Java application.
     id("application")
-
-    // Apply the Slice-tools plugin to enable Slice compilation.
-    id("com.zeroc.ice.slice-tools") version "3.8.+"
 }
 
 dependencies {
