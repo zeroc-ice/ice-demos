@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.21)
 
-project(middleware CXX)
+project(Ice_secure CXX)
 
 include(../../cmake/common.cmake)
 
