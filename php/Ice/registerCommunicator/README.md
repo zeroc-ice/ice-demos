@@ -3,8 +3,8 @@
 This demo shows how to use registered communicators with Ice for PHP.
 
 Registered communicators allow reusing a communicator instance across PHP requests. This avoids the overhead of creating
-and destroying a communicator for each request. In addition, it allows socket connections established by the Ice runtime
-to remain open and be reused across requests.
+and destroying a communicator for each request. In addition, it allows connections established by the communicator to
+remain open and be reused across requests.
 
 This technique is especially useful when PHP is running behind a web server such as Nginx with PHP-FPM (FastCGI Process
 Manager), where multiple requests are handled by long-lived worker processes.
@@ -15,7 +15,7 @@ This demo consists of a PHP-based web application that acts as a client to a rem
 
 The web application is served by Nginx and uses PHP-FPM to handle requests. It demonstrates how to use Ice’s registered
 communicator feature in a typical PHP web deployment. This feature allows the PHP client (the web app itself) to reuse
-the communicator and its underlying network connections across multiple requests.
+the communicator and its network connections across multiple requests.
 
 ## Running the demo
 
