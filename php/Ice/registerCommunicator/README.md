@@ -43,5 +43,5 @@ Then, in a separate window:
   Navigate to: http://localhost:8080
 
 > [!NOTE]
-> The `--Ice.Trace.Network` command-line option turns on Network tracing. For this demo, it shows you that the client
-> reuses the connection for different requests, which will not be possible without registering the communicator.
+> Passing `--Ice.Trace.Network` command-line option to the server turns on Network tracing. For this demo, it shows you
+> that the client reuses the connection for different request, which means the same communicator is used for these requests.
