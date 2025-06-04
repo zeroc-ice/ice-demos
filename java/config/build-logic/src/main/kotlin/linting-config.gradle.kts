@@ -11,13 +11,12 @@ plugins {
 }
 
 dependencies {
-    // The 'rewrite' uses a modular plug-in system for linting. We pull in the recipes we want to use.
+    // 'rewrite' uses a modular plug-in system for linting. We pull in the recipes we want to use.
     rewrite(
         "org.openrewrite.recipe:rewrite-static-analysis:2.5.1"
     )
 }
 
-// Configure the checkstyle plugin.
 checkstyle {
     toolVersion = "10.21.4"
 
