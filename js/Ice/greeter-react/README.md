@@ -63,13 +63,15 @@ npm run preview
 
 ## Prerequisites
 
-Make sure you have a Greeter server running before using the React application. The application expects the server to be available at `localhost:4061`.
+Make sure you have a Greeter server running before using the React application. The application expects the server to be available at `localhost:4061` using the WebSocket protocol.
 
-You can start a server from any of these demos:
-- `python/Ice/greeter/` 
-- `java/Ice/greeter/`
-- `csharp/Ice/Greeter/`
-- Or any other Greeter server implementation
+You can start a server from the Ice/config demo:
+```shell
+cd ../config
+<start the server with> --Ice.Default.Protocol=ws
+```
+
+Alternatively, you can use other Greeter server implementations, but make sure they are configured to use the WebSocket protocol.
 
 ## Usage
 

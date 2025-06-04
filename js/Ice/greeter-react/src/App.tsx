@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { Ice } from '@zeroc/ice';
 import { VisitorCenter } from '../Greeter.js';
 
@@ -17,29 +17,48 @@ function App(): JSX.Element {
     error: ''
   });
 
+  // Refs to hold the communicator and greeter proxy
+  const communicatorRef = useRef<Ice.Communicator | null>(null);
+  const greeterRef = useRef<VisitorCenter.GreeterPrx | null>(null);
+
+  // Initialize communicator and greeter proxy when component mounts
+  useEffect(() => {
+    try {
+      // Create an Ice communicator
+      const communicator = Ice.initialize([]);
+      communicatorRef.current = communicator;
+      
+      // Create a proxy to the Greeter object
+      // If you run the server on a different computer, replace localhost with the server's hostname or IP address
+      const greeter = new VisitorCenter.GreeterPrx(communicator, 'greeter:ws -h localhost -p 4061');
+      greeterRef.current = greeter;
+    } catch (error) {
+      console.error('Error initializing Ice:', error);
+      setState(prev => ({ 
+        ...prev, 
+        error: `Failed to initialize Ice: ${error instanceof Error ? error.message : 'Unknown error'}`
+      }));
+    }
+  }, []);
+
   const sendGreeting = useCallback(async () => {
     if (!state.name.trim()) {
       setState(prev => ({ ...prev, error: 'Please enter a name' }));
       return;
     }
 
+    if (!greeterRef.current) {
+      setState(prev => ({ ...prev, error: 'Ice connection not initialized' }));
+      return;
+    }
+
     setState(prev => ({ ...prev, loading: true, error: '', greeting: '' }));
 
     try {
-      // Create an Ice communicator
-      const communicator = Ice.initialize([]);
-      
-      // Create a proxy to the Greeter object
-      // If you run the server on a different computer, replace localhost with the server's hostname or IP address
-      const greeter = new VisitorCenter.GreeterPrx(communicator, 'greeter:tcp -h localhost -p 4061');
-      
-      // Send the greeting request
-      const greeting = await greeter.greet(state.name.trim());
+      // Send the greeting request using the existing greeter proxy
+      const greeting = await greeterRef.current.greet(state.name.trim());
       
       setState(prev => ({ ...prev, greeting, loading: false }));
-      
-      // Clean up the communicator
-      communicator.destroy();
     } catch (error) {
       console.error('Error sending greeting:', error);
       setState(prev => ({ 
