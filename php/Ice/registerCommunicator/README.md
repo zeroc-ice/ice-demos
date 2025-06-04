@@ -36,7 +36,7 @@ Then, in a separate window:
 - Run the web server using Docker Composer
 
   ```shell
-  docker composer up
+  docker-compose up
   ```
 
 - Open your Web Browser
