@@ -108,8 +108,7 @@ jobs:
           Get-ChildItem -Recurse -Depth 2 -Filter gradlew | ForEach-Object {
             Push-Location $_.DirectoryName
             Write-Host "Building in $($_.DirectoryName)..."
-            $gradlew = if ($IsWindows) { "./gradlew.bat" } else { "./gradlew" }
-            & $gradlew build
+            & ./gradlew build
             if ($LASTEXITCODE -ne 0) {
               throw "Build failed in $($_.DirectoryName)"
             }
