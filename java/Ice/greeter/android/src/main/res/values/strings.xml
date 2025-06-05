@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) ZeroC, Inc. -->
+<resources>
+    <string name="app_name">Ice Greeter</string>
+    <string name="ip_address_hint">IP Address</string>
+    <string name="name_hint">Name</string>
+    <string name="greet_button">Send Greeting</string>
+    <string name="greeting_response">Response will appear here</string>
+    <string name="error_connection">Failed to connect to server</string>
+    <string name="error_request">Failed to send greeting request</string>
+</resources>
