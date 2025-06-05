@@ -1,9 +1,9 @@
 # Dependencies
 node_modules/
 
-# Generated files
-/Greeter.js
-/Greeter.d.ts
+# slice2js Generated files
+/src/Greeter.js
+/src/Greeter.d.ts
 
 # Build output
 dist/

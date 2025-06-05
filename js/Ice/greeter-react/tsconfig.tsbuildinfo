@@ -1,1 +1,1 @@
-{"root":["./src/App.tsx","./src/main.tsx"],"version":"5.8.3"}
+{"root":["./src/app.tsx","./src/greeter.d.ts","./src/main.tsx"],"version":"5.8.3"}

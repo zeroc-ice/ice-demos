@@ -7,10 +7,10 @@
     "license": "GPL-2.0-only",
     "description": "Ice greeter React demo",
     "scripts": {
-        "dev": "vite",
-        "build": "npm run slice && tsc -b && vite build",
-        "preview": "vite preview",
-        "slice": "slice2js --typescript Greeter.ice"
+        "slice2js": "slice2js --typescript src/Greeter.ice --output-dir src",
+        "dev": "npm run slice2js && vite",
+        "build": "npm run slice2js && tsc -b && vite build",
+        "preview": "vite preview"
     },
     "dependencies": {
         "@zeroc/ice": "^3.8.0-nightly.0.0",
@@ -27,6 +27,7 @@
         "stream-browserify": "^3.0.0",
         "typescript": "^5.5.3",
         "util": "^0.12.5",
-        "vite": "^5.3.4"
+        "vite": "^5.3.4",
+        "vite-plugin-node-polyfills": "^0.23.0"
     }
 }
