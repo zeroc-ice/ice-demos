@@ -61,3 +61,6 @@ jspm_packages/
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# TypeScript incremental compilation
+tsconfig.tsbuildinfo
