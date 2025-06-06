@@ -3,7 +3,7 @@
 import Ice
 
 /// Chatbot is an Ice servant that implements Slice interface Greeter.
-struct ChatBot: Greeter {
+struct Chatbot: Greeter {
     private let greeterName: String
 
     init(greeterName: String) {
