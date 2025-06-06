@@ -10,15 +10,17 @@ struct ProxySettingsView: View {
     @Binding var timeout: Double
     @Binding var methodIndex: Int
 
-    let deliveryMethodOptions = ["Twoway", "Twoway Secure", "Oneway", "Oneway Batch",
-                                 "Oneway Secure", "Oneway Secure Batch", "Datagram", "Datagram Batch"]
+    let deliveryMethodOptions = [
+        "Twoway", "Twoway Secure", "Oneway", "Oneway Batch",
+        "Oneway Secure", "Oneway Secure Batch", "Datagram", "Datagram Batch",
+    ]
     var body: some View {
         Section {
             TextField("localhost", text: $connection)
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
             Picker(selection: $methodIndex, label: Text("Delivery Method")) {
-                ForEach(0 ..< deliveryMethodOptions.count) {
+                ForEach(0..<deliveryMethodOptions.count) {
                     Text(self.deliveryMethodOptions[$0])
                 }
             }
@@ -26,9 +28,11 @@ struct ProxySettingsView: View {
                 Text("Delay")
                     .frame(width: 80, alignment: .leading)
                 Spacer()
-                Slider(value: $delay,
-                       in: 0 ... 10000,
-                       step: 1000) {
+                Slider(
+                    value: $delay,
+                    in: 0...10000,
+                    step: 1000
+                ) {
                     Text("Delay")
                 } minimumValueLabel: {
                     Text("0 s")
@@ -40,9 +44,11 @@ struct ProxySettingsView: View {
                 Text("Timeout")
                     .frame(width: 80, alignment: .leading)
                 Spacer()
-                Slider(value: $timeout,
-                       in: 0 ... 10000,
-                       step: 1000) {
+                Slider(
+                    value: $timeout,
+                    in: 0...10000,
+                    step: 1000
+                ) {
                     Text("Timeout")
                 } minimumValueLabel: {
                     Text("0 s")
@@ -56,7 +62,7 @@ struct ProxySettingsView: View {
             Text("*The proxy settings are explained in the README.md")
         }
         #if os(macOS)
-        .padding()
+            .padding()
         #endif
     }
 }

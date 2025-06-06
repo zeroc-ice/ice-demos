@@ -1,7 +1,7 @@
 # IceGrid Locator Discovery
 
 The LocatorDiscovery demo shows how to write a client application that configures its locator using the
-LocatorDiscovery plugin.
+LocatorDiscovery plug-in.
 
 Ice for MATLAB supports only client-side applications. As a result, you first need to deploy the IceGrid
 Greeter server implemented in a language with server-side support, such as Python, Java, or C#.

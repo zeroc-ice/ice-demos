@@ -3,10 +3,16 @@
 pluginManagement {
     repositories {
         mavenLocal()
-        maven {
-            url = uri("https://download.zeroc.com/nexus/repository/maven-nightly/")
-        }
+        maven("https://download.zeroc.com/nexus/repository/maven-nightly/")
         gradlePluginPortal() // Keep this to allow fetching other plugins
+    }
+}
+
+dependencyResolutionManagement {
+    repositories {
+        // This demo uses the latest Ice nightly build published in ZeroC's maven-nightly repository.
+        maven("https://download.zeroc.com/nexus/repository/maven-nightly/")
+        mavenCentral()
     }
 }
 

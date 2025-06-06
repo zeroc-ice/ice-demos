@@ -1,8 +1,13 @@
 // Copyright (c) ZeroC, Inc.
 
+plugins {
+    // Apply the application plugin to tell gradle this is a runnable Java application.
+    id("application")
+}
+
 dependencies {
     // Add the Ice library as an implementation dependency.
-    implementation("com.zeroc:ice:3.8.0-+")
+    implementation("com.zeroc:ice:3.8.+")
 }
 
 application {

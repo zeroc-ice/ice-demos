@@ -19,7 +19,7 @@ does not use any Slice generated code.
 
 You can build the demo with:
 
-``` shell
+```shell
 dotnet build
 ```
 

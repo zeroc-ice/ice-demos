@@ -7,7 +7,7 @@ dispatch implementation (in ServerAMD). The same client works with both.
 
 You can build the client and server applications with:
 
-``` shell
+```shell
 dotnet build
 ```
 

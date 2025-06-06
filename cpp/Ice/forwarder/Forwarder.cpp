@@ -12,7 +12,7 @@ ForwardingServer::Forwarder::dispatch(Ice::IncomingRequest& request, function<vo
     // Make a copy of the current object carried by the request.
     const Ice::Current current{request.current()};
 
-    // Create a proxy with the the desired identity and facet.
+    // Create a proxy with the desired identity and facet.
     Ice::ObjectPrx target = _targetTemplate.ice_identity(current.id).ice_facet(current.facet);
 
     if (current.requestId == 0)

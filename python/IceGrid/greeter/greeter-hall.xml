@@ -11,7 +11,7 @@
       <server id="GreetServer" exe="server/main.py" activation="on-demand">
         <!-- The object adapter created by this server. It listens on an OS-assigned tcp port, on all interfaces.
         It also defines a well-known object with identity "greeter". IceGrid generates property Greeter.Identity with
-        value "greeter" in the config file for server GreeterServer. -->
+        value "greeter" in the config file for server GreetServer. -->
         <adapter name="GreeterAdapter" endpoints="tcp">
           <object identity="greeter" property="Greeter.Identity"/>
         </adapter>

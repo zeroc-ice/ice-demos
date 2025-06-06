@@ -8,7 +8,7 @@ class Forwarder: Ice.Dispatcher {
     let targetTemplate: Ice.ObjectPrx
 
     init(_ targetTemplate: Ice.ObjectPrx) {
-        self.targetTemplate = targetTemplate.ice_twoway() // ensure the targetTemplate field is two-way.
+        self.targetTemplate = targetTemplate.ice_twoway()  // ensure the targetTemplate field is two-way.
     }
 
     // Dispatches an incoming request by forwarding it to the target Ice object.

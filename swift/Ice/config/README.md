@@ -4,7 +4,7 @@ This demo shows how to configure client and server applications using Ice config
 
 To build the demo run:
 
-``` shell
+```shell
 swift build
 ```
 

@@ -1,21 +1,56 @@
-This demo illustrates the use of [optional class members][1] and
-[parameters][2].
+# Ice Optional
 
-First, compile all the demo Slice files (see [php/README.md](../../README.md)),
-or compile just this demo's Slice file with `slice2php`:
+This demo shows how to use the `optional` keyword to change Slice definitions without breaking "on-the-wire"
+interoperability.
+
+The application is very simple: a weather station (hosted by our server) receives readings from sensors (the clients).
+
+In the first version of this application and its Slice definitions, the atmospheric conditions we report include only
+temperature and humidity. In the second version, we add a third reading, the pressure, as an optional field:
+
+```ice
+class AtmosphericConditions
+{
+    /// The temperature in degrees Celsius.
+    double temperature;
+
+    /// The humidity in percent.
+    double humidity;
+
+    /// The pressure in millibars (new in version 2 of the Slice definitions).
+    optional(1) double pressure;
+}
 ```
-slice2php *.ice
+
+Ice for PHP supports only client-side applications. As a result, you first need to start a Greeter server implemented
+in a language with server-side support, such as Python, Java, or C#.
+
+You can start either version 1 or version 2 of the server.
+
+Then, in a separate window:
+
+- Go to the Ice/optional/client1 or client2 directory
+
+```shell
+cd php/Ice/optional/client1
 ```
 
-Then, start the optional demo server, using any of the supported
-language mappings, on this host. If you want to get started quickly,
-we recommend using the Python server.
+or
 
-Finally, run the PHP client:
-
+```shell
+cd php/Ice/optional/client2
 ```
+
+- Compile the WeatherStation.ice file with the Slice compiler for PHP
+
+```shell
+slice2php WeatherStation.ice
+```
+
+- Run the client application
+
+```shell
 php Client.php
 ```
 
-[1]: https://doc.zeroc.com/ice/3.7/the-slice-language/optional-data-members
-[2]: https://doc.zeroc.com/ice/3.7/language-mappings/php-mapping/client-side-slice-to-php-mapping/php-mapping-for-operations
+Thanks to `optional`, version 1 and version 2 of the clients and servers interoperate seamlessly.

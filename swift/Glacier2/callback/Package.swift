@@ -15,7 +15,8 @@ let package = Package(
         .executableTarget(
             name: "Client",
             dependencies: [
-                .product(name: "Ice", package: "ice-swift"), .product(name: "Glacier2", package: "ice-swift"), .product(name: "DateExtension", package: "common"),
+                .product(name: "Ice", package: "ice-swift"), .product(name: "Glacier2", package: "ice-swift"),
+                .product(name: "DateExtension", package: "common"),
             ],
             exclude: ["slice-plugin.json"],
             plugins: [.plugin(name: "CompileSlice", package: "ice-swift")]

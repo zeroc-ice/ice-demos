@@ -108,9 +108,9 @@ build the demos. The NuGet packages are cached the [cmake](./cmake) directory.
 | [Ice Multicast](./Ice/multicast/)                       | Shows how to use UDP multicast.                                                                           |
 | [Ice Optional](./Ice/optional/)                         | Shows how to add a field to a Slice class without breaking interop with existing clients and servers.     |
 | [IceBox Greeter](./IceBox/greeter/)                     | Shows how to create an IceBox service.                                                                    |
-| [IceDiscovery Greeter](./IceDiscovery/greeter)          | Shows how to use the IceDiscovery plugin.                                                                 |
-| [IceDiscovery Replication](./IceDiscovery/replication/) | Shows how to use the IceDiscovery plugin with replicated servers.                                         |
+| [IceDiscovery Greeter](./IceDiscovery/greeter)          | Shows how to use the IceDiscovery plug-in.                                                                |
+| [IceDiscovery Replication](./IceDiscovery/replication/) | Shows how to use the IceDiscovery plug-in with replicated servers.                                        |
 | [IceGrid Greeter](./IceGrid/greeter/)                   | Shows how to create a simple IceGrid deployment.                                                          |
-| [IceGrid LocatorDiscovery](./IceGrid/locatorDiscovery/) | Shows how to write a client application that configures its locator using the IceLocatorDiscovery plugin. |
+| [IceGrid LocatorDiscovery](./IceGrid/locatorDiscovery/) | Shows how to write a client application that configures its locator using the IceLocatorDiscovery plug-in.|
 | [IceGrid Query](./IceGrid/query/)                       | Shows how use the Query object provided by the IceGrid registry to lookup a well-known object by type.    |
 | [IceStorm Weather](./IceStorm/weather/)                 | Shows how to use IceStorm to create a simple pub-sub application.                                         |

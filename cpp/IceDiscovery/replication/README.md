@@ -1,6 +1,6 @@
 # IceDiscovery Replication
 
-This demo illustrates how to use the IceDiscovery plugin with replicated servers.
+This demo illustrates how to use the IceDiscovery plug-in with replicated servers.
 
 To build the client and server applications, run:
 
@@ -38,4 +38,4 @@ build\Release\client --Ice.Trace.Locator
 
 >[!NOTE]
 > The `--Ice.Trace.Locator` command-line option is optional: it turns on tracing (logging) for locator resolution and
-> helps you understand the locator logic implemented by the IceDiscovery plugin.
+> helps you understand the locator logic implemented by the IceDiscovery plug-in.

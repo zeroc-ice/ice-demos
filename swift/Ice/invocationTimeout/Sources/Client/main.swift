@@ -31,7 +31,7 @@ print(greeting)
 
 // Create another slow greeter proxy with an invocation timeout of 4 seconds (the default invocation timeout is
 // infinite).
-let slowGreeter4s = slowGreeter.ice_invocationTimeout(4_000) // in milliseconds
+let slowGreeter4s = slowGreeter.ice_invocationTimeout(4_000)  // in milliseconds
 
 // Send a request to the slow greeter with the 4-second invocation timeout.
 do {

@@ -1,49 +1,16 @@
-# Demo Certificates
+# Ice SSL Test Certificates
 
-This directory contains certificates used by the clients and servers in our
-sample programs. These certificates are for testing purposes only and should
-**never** be used in a production environment.
+The example applications in this repository use the SSL certificates found in this directory.
+These certificates are intended for testing purposes and **must not** be used in a production environment.
 
-As provided, the server certificates use `127.0.0.1` for the Common Name,  the
-IP address and DNS name. This works fine when you run the client and server on
-the same host. However, if you want to run them on separate hosts, you may need
-to regenerate the certificates. (This is especially true for the JavaScript
-examples.)
+The certificates are copied from the main Ice repository.
 
-We've included the Python script `makedemocerts.py` to simplify this task.
+These certificates include `localhost` and `127.0.0.1` as Subject Alternative Names (DNS and IP),
+which match the default endpoint configuration used by the demos.
 
-## Prerequisites
+If you run the SSL demos with a different host or network configuration, you must regenerate the certificates to match
+your setup.
 
-You'll need Python to run the script. The script also depends on a utility
-package from a separate [ZeroC repository][1]. You can install this package as
-follows:
+Refer to the [certs/README.md] file in the main Ice repository for instructions on how to recreate the certificates.
 
-```
-pip install "zeroc-icecertutils >= 1.0.4"
-```
-
-## Usage
-
-Running the script with `-h` displays the following usage information:
-
-```
-Usage: certs/makedemocerts.py [options]
-
-Options:
--h               Show this message.
--d | --debug     Debugging output.
---ip <ip>        The IP address for the server certificate.
---dns <dns>      The DNS name for the server certificate.
---use-dns        Use the DNS name for the server certificate common
-                 name (default is to use the IP address).
-```
-
-The `--ip`, `--dns`, and `--use-dns` options affect the generation of the server
-certificate. Without any arguments, the script prompts for the value of the IP
-address and DNS name.
-
-You can specify an alternate IP address using `--ip` and an alternate DNS name
-using `--dns`. The `--use-dns` flag forces the script to use the DNS name as
-the server's Common Name instead of the IP address.
-
-[1]: https://github.com/zeroc-ice/icecertutils
+[certs/README.md]: https://github.com/zeroc-ice/ice/tree/main/certs

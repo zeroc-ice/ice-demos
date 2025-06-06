@@ -20,6 +20,6 @@ let package = Package(
             dependencies: [.product(name: "Ice", package: "ice-swift")],
             exclude: ["slice-plugin.json"],
             plugins: [.plugin(name: "CompileSlice", package: "ice-swift")]
-        )
+        ),
     ]
 )

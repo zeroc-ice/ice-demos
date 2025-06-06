@@ -10,9 +10,9 @@ function client(args)
         loadlibrary('ice', @iceproto);
     end
 
-    % Configure the communicator to load the IceLocatorDiscovery plugin during initialization. This plugin will discover
-    % the locator (IceGrid registry in this demo) to use. As a result, we don't need to configure the default locator on
-    % this communicator.
+    % Configure the communicator to load the IceLocatorDiscovery plug-in during initialization. This plug-in will
+    % discover the locator (IceGrid registry in this demo) to use. As a result, we don't need to configure the default
+    % locator on this communicator.
     initData = Ice.InitializationData();
     initData.properties_ = Ice.createProperties(args);
     initData.properties_.setProperty('Ice.Plugin.IceLocatorDiscovery', '1');

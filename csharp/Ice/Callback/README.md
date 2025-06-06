@@ -13,7 +13,7 @@ flowchart LR
 
 You can build the client and server applications with:
 
-``` shell
+```shell
 dotnet build
 ```
 

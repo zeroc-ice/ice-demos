@@ -1,11 +1,11 @@
 # IceDiscovery Greeter
 
-This demo illustrates how to configure the IceDiscovery plugin. The IceDiscovery plugin allows a client application
+This demo illustrates how to configure the IceDiscovery plug-in. The IceDiscovery plug-in allows a client application
 to discover Ice objects without hardcoding any addressing information.
 
 You can build the client and server applications with:
 
-``` shell
+```shell
 dotnet build
 ```
 
@@ -25,4 +25,4 @@ dotnet run --Ice.Trace.Locator
 
 >[!NOTE]
 > The `--Ice.Trace.Locator` command-line option is optional: it turns on tracing (logging) for locator resolution and
-> helps you understand the locator logic implemented by the IceDiscovery plugin.
+> helps you understand the locator logic implemented by the IceDiscovery plug-in.

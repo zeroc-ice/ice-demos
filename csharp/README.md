@@ -41,10 +41,10 @@ dotnet build -p:IceVersion="3.8.0-alpha0"
 | [Ice Middleware](./Ice/Middleware/)                     | Shows how to write a simple middleware and how to add this middleware to an object adapter.               |
 | [Ice Optional](./Ice/Optional/)                         | Shows how to add a field to a Slice class without breaking interop with existing clients and servers.     |
 | [IceBox Greeter](./IceBox/Greeter/)                     | Shows how to create an IceBox service.                                                                    |
-| [IceDiscovery Greeter](./IceDiscovery/Greeter/)         | Shows how to configure the IceDiscovery plugin.                                                           |
-| [IceDiscovery Replication](./IceDiscovery/Replication/) | Shows how to use the IceDiscovery plugin with replicated servers.                                         |
+| [IceDiscovery Greeter](./IceDiscovery/Greeter/)         | Shows how to configure the IceDiscovery plug-in.                                                          |
+| [IceDiscovery Replication](./IceDiscovery/Replication/) | Shows how to use the IceDiscovery plug-in with replicated servers.                                        |
 | [IceGrid Greeter](./IceGrid/Greeter)                    | Shows how to create a simple IceGrid deployment.                                                          |
 | [IceGrid IceBox](./IceGrid/IceBox/)                     | Shows how to deploy an IceBox server with IceGrid.                                                        |
-| [IceGrid LocatorDiscovery](./IceGrid/LocatorDiscovery/) | Shows how to write a client application that configures its locator using the IceLocatorDiscovery plugin. |
+| [IceGrid LocatorDiscovery](./IceGrid/LocatorDiscovery/) | Shows how to write a client application that configures its locator using the IceLocatorDiscovery plug-in.|
 | [IceGrid Query](./IceGrid/Query/)                       | Shows how use the Query object provided by the IceGrid registry to lookup a well-known object by type.    |
 | [IceStorm Weather](./IceStorm/Weather/)                 | Shows how to use IceStorm to create a simple pub-sub application.                                         |
