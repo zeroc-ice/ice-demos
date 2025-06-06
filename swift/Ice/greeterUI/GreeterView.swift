@@ -12,17 +12,12 @@ struct GreeterView: View {
                     .autocapitalization(.none)
                     .disableAutocorrection(true)
                 
-                TextField("Port", text: $client.serverPort)
-                    .keyboardType(.numberPad)
-                    .autocapitalization(.none)
-                    .disableAutocorrection(true)
-                
                 TextField("Your Name", text: $client.userName)
                     .autocapitalization(.words)
             } header: {
                 Text("Connection Settings")
             } footer: {
-                Text("Enter the server address and port for the Greeter service")
+                Text("Enter the server address and port (e.g., localhost:4061) for the Greeter service")
             }
             
             Section {
@@ -58,12 +53,12 @@ struct GreeterView: View {
             Text(client.errorMessage)
         }
         .onAppear {
-            // Set default name based on current user
+            // Set default name based on current user if empty
             if client.userName.isEmpty {
                 #if os(macOS)
                 client.userName = NSUserName()
                 #else
-                client.userName = "iOS User"
+                client.userName = "Swift User"
                 #endif
             }
         }

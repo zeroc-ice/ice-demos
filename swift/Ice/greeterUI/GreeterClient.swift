@@ -7,8 +7,7 @@ import SwiftUI
 class GreeterClient: ObservableObject {
     // MARK: - Published Properties
     
-    @Published var serverAddress = "localhost"
-    @Published var serverPort = "4061"
+    @Published var serverAddress = "localhost:4061"
     @Published var userName = ""
     @Published var greetingResponse = ""
     @Published var isLoading = false
@@ -48,7 +47,12 @@ class GreeterClient: ObservableObject {
         
         Task {
             do {
-                let proxyString = "greeter:tcp -h \(serverAddress) -p \(serverPort)"
+                // Parse server address to extract host and port
+                let components = serverAddress.split(separator: ":")
+                let host = components.first.map(String.init) ?? "localhost"
+                let port = components.count > 1 ? String(components[1]) : "4061"
+                
+                let proxyString = "greeter:tcp -h \(host) -p \(port)"
                 let greeter = try makeProxy(
                     communicator: communicator,
                     proxyString: proxyString,
