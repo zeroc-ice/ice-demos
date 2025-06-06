@@ -26,10 +26,81 @@ cd ../greeter
 swift run Server
 ```
 
-Then, open this greeterUI project in Xcode and run it on either iOS Simulator, macOS, or a physical iOS device.
+## Building the App
+
+### Prerequisites
+
+- Xcode 15.0 or later
+- iOS 17.0+ / macOS 14.0+ deployment targets
+- Ice for Swift library (automatically managed by Swift Package Manager)
+
+### For iOS
+
+1. **Create a new iOS App project in Xcode:**
+   - Open Xcode and select "Create a new Xcode project"
+   - Choose "iOS" → "App"
+   - Set Product Name to "Greeter"
+   - Select "SwiftUI" for Interface
+   - Choose a Bundle Identifier (e.g., `com.yourname.greeter`)
+   - Select Swift as the language
+
+2. **Add the Ice for Swift package dependency:**
+   - In Xcode, go to File → Add Package Dependencies
+   - Enter the URL: `https://download.zeroc.com/nexus/repository/nightly/ice-swift.git`
+   - Select "Up to Next Major Version" and click "Add Package"
+   - Select the "Ice" library and click "Add Package"
+
+3. **Replace the default files with the demo files:**
+   - Delete the default `ContentView.swift` and `GreeterApp.swift` files from the project
+   - Add all files from this directory to your Xcode project:
+     - `GreeterApp.swift`
+     - `GreeterView.swift`
+     - `GreeterClient.swift`
+     - `Greeter.ice`
+     - `Info.plist` (replace the generated one)
+     - `Images.xcassets` (replace the generated one)
+
+4. **Configure the project:**
+   - In the project settings, set the minimum iOS deployment target to 17.0
+   - Ensure the Bundle Identifier matches what you set during project creation
+
+5. **Build and run:**
+   - Select an iOS Simulator or connected iOS device
+   - Press Cmd+R to build and run the app
+
+### For macOS
+
+1. **Create a new macOS App project in Xcode:**
+   - Open Xcode and select "Create a new Xcode project"
+   - Choose "macOS" → "App"
+   - Set Product Name to "Greeter"
+   - Select "SwiftUI" for Interface
+   - Choose a Bundle Identifier (e.g., `com.yourname.greeter-macos`)
+   - Select Swift as the language
+
+2. **Add the Ice for Swift package dependency:**
+   - Follow the same steps as for iOS (steps 2 above)
+
+3. **Replace the default files with the demo files:**
+   - Follow the same steps as for iOS (step 3 above)
+
+4. **Configure the project:**
+   - In the project settings, set the minimum macOS deployment target to 14.0
+
+5. **Build and run:**
+   - Select "My Mac" as the destination
+   - Press Cmd+R to build and run the app
+
+### For Universal (iOS + macOS) App
+
+1. **Create a multiplatform app:**
+   - Open Xcode and select "Create a new Xcode project"
+   - Choose "Multiplatform" → "App"
+   - Follow the same configuration steps as above
+   - The app will automatically build for both iOS and macOS targets
 
 > [!NOTE]
-> The default server address `localhost` works when running the iOS Simulator on the same machine as the server.
+> The default server address `localhost` works when running the iOS Simulator or macOS app on the same machine as the server.
 > If your Greeter server is running on a different host, update the server address in the app accordingly.
 
 ## Interface Comparison
