@@ -4,7 +4,7 @@ import Ice
 
 /// Forwarder is an Ice dispatcher that implements dispatch by forwarding all requests it receives to a remote
 /// Ice object.
-class Forwarder: Ice.Dispatcher {
+struct Forwarder: Ice.Dispatcher {
     let targetTemplate: Ice.ObjectPrx
 
     init(_ targetTemplate: Ice.ObjectPrx) {
