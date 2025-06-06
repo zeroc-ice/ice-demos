@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.iceandroidgreeter"
+    namespace = "com.example.ice.androidgreeter"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.iceandroidgreeter"
+        applicationId = "com.example.ice.androidgreeter"
         minSdk = 34
         targetSdk = 35
         versionCode = 1
