@@ -2,7 +2,7 @@
 
 import Ice
 
-// CtrlCHandler is a helper class that handles Ctrl+C and similar signals. It must be constructed at the beginning
+// CtrlCHandler is a helper struct that handles Ctrl+C and similar signals. It must be constructed at the beginning
 // of the program, before creating an Ice communicator or starting any thread.
 let ctrlCHandler = CtrlCHandler()
 

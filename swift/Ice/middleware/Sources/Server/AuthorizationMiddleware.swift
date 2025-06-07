@@ -3,7 +3,7 @@
 import Ice
 
 /// The AuthorizationMiddleware intercepts incoming requests and checks the token entry in their contexts.
-final class AuthorizationMiddleware: Ice.Dispatcher {
+struct AuthorizationMiddleware: Ice.Dispatcher {
     private let next: Dispatcher
     private let validToken: String
 
