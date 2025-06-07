@@ -3,24 +3,27 @@
 import Ice
 
 /// Provides an in-memory implementation of the Slice interface Directory.
-// This class reuses the implementation of Node provided by MNode.
-final class MDirectory: MNode, Directory {
+/// We use an actor since this servant has mutable state (contents).
+actor MDirectory: Directory {
+    private let node: MNode // reuse the MNode implementation
     private var contents: [NodePrx] = []
+
+    init(name: String) {
+        self.node = MNode(name: name)
+    }
+
+    // Implements Node.name by forwarding to node.
+    func name(current: Ice.Current) -> String {
+        node.name(current: current)
+    }
 
     // Implements Directory.list.
     func list(current _: Ice.Current) -> [NodePrx?] {
-        return contents
+        contents
     }
 
-    // Adds a non-nill node proxy to this directory.
+    // Adds a non-nil node proxy to this directory.
     func addChild(_ child: NodePrx) {
         contents.append(child)
-    }
-
-    // Since we define a `dispatch` method in MNode, we need to override it here. Otherwise, we'd use the base class
-    // `dispatch`, not the one provided by generated Directory protocol extension.
-    override func dispatch(_ request: sending Ice.IncomingRequest) async throws -> Ice.OutgoingResponse {
-        // We implement dispatch by reusing the implementation provided by the generated Directory protocol extension.
-        try await Self.dispatch(self, request: request)
     }
 }

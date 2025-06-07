@@ -3,13 +3,23 @@
 import Ice
 
 /// Provides an in-memory implementation of the Slice interface File.
-// This class reuses the implementation of Node provided by MNode.
-final class MFile: MNode, File {
+/// We use an actor since this servant has mutable state (the file contents).
+actor MFile: File {
+    private let node: MNode // reuse the MNode implementation
     private var lines: [String] = []
+
+    init(name: String) {
+        self.node = MNode(name: name)
+    }
+
+    // Implements Node.name by forwarding to node.
+    func name(current: Ice.Current) -> String {
+        node.name(current: current)
+    }
 
     // Implements File.read.
     func read(current _: Ice.Current) -> [String] {
-        return lines
+        lines
     }
 
     // Implements File.write.
@@ -20,12 +30,5 @@ final class MFile: MNode, File {
     // Writes directly to this file, without going through an Ice operation.
     func writeDirect(text: [String]) {
         lines = text
-    }
-
-    // Since we define a `dispatch` method in MNode, we need to override it here. Otherwise, we'd use the base class
-    // `dispatch`, not the one provided by the generated File protocol extension.
-    override func dispatch(_ request: sending Ice.IncomingRequest) async throws -> Ice.OutgoingResponse {
-        // We implement dispatch by reusing the implementation provided by the generated File protocol extension.
-        try await Self.dispatch(self, request: request)
     }
 }
