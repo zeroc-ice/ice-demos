@@ -19,7 +19,7 @@ final class MDirectory: MNode, Directory {
 
     // Since we define a `dispatch` method in MNode, we need to override it here. Otherwise, we'd use the base class
     // `dispatch`, not the one provided by generated Directory protocol extension.
-    override func dispatch(_ request: Ice.IncomingRequest) async throws -> Ice.OutgoingResponse {
+    override func dispatch(_ request: sending Ice.IncomingRequest) async throws -> Ice.OutgoingResponse {
         // We implement dispatch by reusing the implementation provided by the generated Directory protocol extension.
         try await Self.dispatch(self, request: request)
     }

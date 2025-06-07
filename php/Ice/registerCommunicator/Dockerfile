@@ -8,9 +8,9 @@ RUN apt-get update && apt-get install -y \
 RUN curl -fsSL https://download.zeroc.com/GPG-KEY-zeroc-nightly | gpg --dearmor -o /etc/apt/keyrings/zeroc-nightly.gpg && \
     echo "deb [signed-by=/etc/apt/keyrings/zeroc-nightly.gpg] https://download.zeroc.com/nexus/repository/debian12-nightly nightly main" > /etc/apt/sources.list.d/zeroc-nightly.list
 
-# Install Ice runtime
+# Install Ice for PHP, PHP-FPM, and Nginx
 RUN apt-get update && apt-get install -y \
-    zeroc-ice-all-runtime php-fpm nginx-full \
+    php-zeroc-ice php-fpm nginx-full \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 COPY entrypoint.sh /entrypoint.sh

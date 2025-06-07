@@ -12,7 +12,7 @@ struct Forwarder: Ice.Dispatcher {
     }
 
     // Dispatches an incoming request by forwarding it to the target Ice object.
-    func dispatch(_ request: Ice.IncomingRequest) async throws -> Ice.OutgoingResponse {
+    func dispatch(_ request: sending Ice.IncomingRequest) async throws -> Ice.OutgoingResponse {
         // Create a proxy with the desired identity and facet.
         var target = targetTemplate.ice_identity(request.current.id).ice_facet(request.current.facet)
 
