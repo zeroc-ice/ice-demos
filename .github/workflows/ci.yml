@@ -29,6 +29,10 @@ jobs:
 
     runs-on: ${{ matrix.os }}
     steps:
+      - name: Setup Xcode
+        if: runner.os == 'macOS'
+        uses: ./.github/actions/setup-xcode
+
       - name: Checkout repository
         uses: actions/checkout@v4
 
