@@ -26,25 +26,25 @@ try adapter.add(servant: root, id: Ice.Identity(name: "RootDir"))
 // Create a file called "README", add this servant to the adapter, and add the corresponding proxy to the root
 // directory.
 let readme = MFile(name: "README")
-readme.writeDirect(text: ["This file system contains a collection of poetry."])
-try root.addChild(uncheckedCast(prx: adapter.addWithUUID(readme), type: FilePrx.self))
+await readme.writeDirect(text: ["This file system contains a collection of poetry."])
+try await root.addChild(uncheckedCast(prx: adapter.addWithUUID(readme), type: FilePrx.self))
 
 // Create a directory called "Coleridge", add this servant to the adapter, and add the corresponding proxy to the
 // root directory.
 let coleridge = MDirectory(name: "Coleridge")
-try root.addChild(uncheckedCast(prx: adapter.addWithUUID(coleridge), type: DirectoryPrx.self))
+try await root.addChild(uncheckedCast(prx: adapter.addWithUUID(coleridge), type: DirectoryPrx.self))
 
 // Create a file called "Kubla_Khan", add this servant to the adapter, and add the corresponding proxy to the
 // Coleridge directory.
 let kublaKhan = MFile(name: "Kubla_Khan")
-kublaKhan.writeDirect(text: [
+await kublaKhan.writeDirect(text: [
     "In Xanadu did Kubla Khan",
     "A stately pleasure-dome decree:",
     "Where Alph, the sacred river, ran",
     "Through caverns measureless to man",
     "Down to a sunless sea.",
 ])
-try coleridge.addChild(uncheckedCast(prx: adapter.addWithUUID(kublaKhan), type: FilePrx.self))
+try await coleridge.addChild(uncheckedCast(prx: adapter.addWithUUID(kublaKhan), type: FilePrx.self))
 
 // Start dispatching requests after registering all servants.
 try adapter.activate()
