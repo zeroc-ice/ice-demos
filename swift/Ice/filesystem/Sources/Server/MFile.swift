@@ -5,7 +5,7 @@ import Ice
 /// Provides an in-memory implementation of the Slice interface File.
 /// We use an actor since this servant has mutable state (the file contents).
 actor MFile: File {
-    private let node: MNode // reuse the MNode implementation
+    private let node: MNode  // reuse the MNode implementation
     private var lines: [String] = []
 
     init(name: String) {

@@ -5,7 +5,7 @@ import Ice
 /// Provides an in-memory implementation of the Slice interface Directory.
 /// We use an actor since this servant has mutable state (contents).
 actor MDirectory: Directory {
-    private let node: MNode // reuse the MNode implementation
+    private let node: MNode  // reuse the MNode implementation
     private var contents: [NodePrx] = []
 
     init(name: String) {
