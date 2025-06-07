@@ -48,6 +48,11 @@ jobs:
           distribution: "oracle"
           java-version: "17"
 
+      # https://github.com/actions/runner-images/blob/main/images/macos/macos-15-arm64-Readme.md
+      - name: Use Xcode 16.4
+        if: runner.os == 'macOS'
+        run: sudo xcode-select --switch /Applications/Xcode_16.4.app/Contents/Developer
+
       - name: Install Nightly Ice Builds
         uses: ./.github/actions/install-nightly-ice
 
