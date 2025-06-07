@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "glacier2-greeter",
     platforms: [
-        .macOS(.v14)
+        .macOS(.v15)
     ],
     dependencies: [
         .package(url: "https://download.zeroc.com/nexus/repository/nightly/ice-swift.git", branch: "main")
