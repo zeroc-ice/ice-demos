@@ -17,7 +17,7 @@ final class AuthorizationMiddleware: Ice.Dispatcher {
     }
 
     /// Dispatches the incoming request, checking for a valid token.
-    func dispatch(_ request: IncomingRequest) async throws -> OutgoingResponse {
+    func dispatch(_ request: sending IncomingRequest) async throws -> OutgoingResponse {
         let token = request.current.ctx["token"] ?? ""
 
         guard token == validToken else {
