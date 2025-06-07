@@ -6,8 +6,9 @@ import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.Identity;
 import com.zeroc.Ice.InitializationData;
 import com.zeroc.Ice.ObjectAdapter;
-import com.zeroc.Ice.Util;
 import com.zeroc.Ice.Properties;
+import com.zeroc.Ice.Util;
+
 import java.util.concurrent.CompletableFuture;
 
 class Server {

@@ -1,0 +1,65 @@
+name: Java
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: ["main"]
+
+jobs:
+  checkstyle:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "oracle"
+          java-version: "17"
+
+      - name: Run checkstyle formatter
+        timeout-minutes: 20
+        working-directory: java
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          Get-ChildItem -Recurse -Depth 2 -Filter gradlew | ForEach-Object {
+            Push-Location $_.DirectoryName
+            Write-Host "Building in $($_.DirectoryName)..."
+            & ./gradlew check
+            if ($LASTEXITCODE -ne 0) {
+              throw "Build failed in $($_.DirectoryName)"
+            }
+            Pop-Location
+          }
+
+  rewrite:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "oracle"
+          java-version: "17"
+
+      - name: Run rewrite linter
+        timeout-minutes: 20
+        working-directory: java
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          Get-ChildItem -Recurse -Depth 2 -Filter gradlew | ForEach-Object {
+            Push-Location $_.DirectoryName
+            Write-Host "Building in $($_.DirectoryName)..."
+            & ./gradlew rewriteDryRun
+            if ($LASTEXITCODE -ne 0) {
+              throw "Build failed in $($_.DirectoryName)"
+            }
+            Pop-Location
+          }

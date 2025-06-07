@@ -17,7 +17,7 @@ class Chatbot implements Greeter
         System.out.println("Dispatching greet request { name = '" + name + "', language = '" + language + "' }");
 
         // Return a greeting in the requested language.
-        return switch(language)
+        return switch (language)
         {
             case "de" -> "Hallo " + name + ", wie geht's?";
             case "es" -> "¡Hola " + name + "!";

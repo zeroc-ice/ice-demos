@@ -7,6 +7,7 @@ import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.DispatchException;
 import com.zeroc.Ice.ReplyStatus;
 import com.zeroc.Ice.Util;
+
 import java.util.Map;
 
 class Client {
@@ -23,19 +24,13 @@ class Client {
             // secure source.
             String validToken = "iced tea";
 
-            try
-            {
-                String unexpected =
-                    greeter.greet(System.getProperty("user.name"), Map.of("token", "pineapple"));
-
+            try {
+                String unexpected = greeter.greet(System.getProperty("user.name"), Map.of("token", "pineapple"));
                 System.out.println("Received unexpected greeting: '" + unexpected + "'");
-            }
-            catch (DispatchException dispatchException)
-            {
+            } catch (DispatchException dispatchException) {
                 if (ReplyStatus.valueOf(dispatchException.replyStatus) == ReplyStatus.Unauthorized) {
                     // Expected with an invalid (or missing) token. See AuthorizationMiddleware.
-                }
-                else {
+                } else {
                     throw dispatchException;
                 }
             }

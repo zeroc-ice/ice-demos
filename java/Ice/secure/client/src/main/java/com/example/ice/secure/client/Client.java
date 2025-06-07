@@ -9,7 +9,6 @@ import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
-
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManagerFactory;
 
@@ -44,7 +43,7 @@ class Client {
     /**
      * Creates and initializes an SSLContext for use with the ssl transport.
      *
-     * The SSLContext is configured with the demo CA certificate loaded from a PKCS12 keystore,
+     * <p>The SSLContext is configured with the demo CA certificate loaded from a PKCS12 keystore,
      * which is used as the trust store to validate server certificates.
      *
      * @return the initialized SSLContext
@@ -69,13 +68,13 @@ class Client {
             sslContext.init(null, trustManagerFactory.getTrustManagers(), null);
             return sslContext;
         } catch (
-            CertificateException|
-            IOException|
-            KeyManagementException|
-            KeyStoreException|
-            NoSuchAlgorithmException ex) {
-                // Should never happen in this demo.
-                throw new RuntimeException("SSL initialization error.", ex);
+            CertificateException
+                | IOException
+                | KeyManagementException
+                | KeyStoreException
+                | NoSuchAlgorithmException ex) {
+            // Should never happen in this demo.
+            throw new RuntimeException("SSL initialization error.", ex);
         }
     }
 }

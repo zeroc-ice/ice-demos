@@ -8,8 +8,10 @@ import com.example.visitorcenter.GreeterException;
 import com.zeroc.Ice.Current;
 import com.zeroc.Ice.DispatchException;
 import com.zeroc.Ice.ObjectNotExistException;
-import static com.zeroc.Ice.ReplyStatus.Unauthorized;
+
 import java.time.LocalDateTime;
+
+import static com.zeroc.Ice.ReplyStatus.Unauthorized;
 
 /**
  * Chatbot is an Ice servant that implements Slice interface Greeter.

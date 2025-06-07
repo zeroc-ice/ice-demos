@@ -5,10 +5,11 @@ package com.example.ice.cancellation.server;
 import com.example.visitorcenter.Greeter;
 import com.zeroc.Ice.Current;
 import com.zeroc.Ice.UnknownException;
+
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeoutException;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 /**
  * Chatbot is an Ice servant that implements Slice interface Greeter.
@@ -42,8 +43,7 @@ class Chatbot implements Greeter {
                 throw new UnknownException("greet dispatch canceled.");
             } catch (TimeoutException e) {
                 // Expected, proceed.
-            }
-            catch (InterruptedException | ExecutionException e) {
+            } catch (InterruptedException | ExecutionException e) {
                 // Unexpected, wrap and rethrow.
                 throw new RuntimeException("Unexpected exception while waiting on cancelDispatch", e);
             }
