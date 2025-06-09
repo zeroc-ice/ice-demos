@@ -21,4 +21,4 @@ include("client")
 include("server")
 include("forwardingserver")
 
-includeBuild("../../config/build-logic")
+includeBuild("../../build-logic")

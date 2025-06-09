@@ -20,4 +20,4 @@ rootProject.name = "cancellation"
 include("client")
 include("server")
 
-includeBuild("../../config/build-logic")
+includeBuild("../../build-logic")
