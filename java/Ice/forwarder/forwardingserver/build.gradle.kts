@@ -5,7 +5,7 @@ plugins {
     id("application")
 
     // Pull in our local 'convention plugin' to enable linting.
-    id("linting-config")
+    id("zeroc-linting")
 }
 
 dependencies {

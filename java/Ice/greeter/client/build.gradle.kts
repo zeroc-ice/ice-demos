@@ -8,7 +8,7 @@ plugins {
     id("com.zeroc.ice.slice-tools") version "3.8.+"
 
     // Pull in our local 'convention plugin' to enable linting.
-    id("linting-config")
+    id("zeroc-linting")
 }
 
 dependencies {
