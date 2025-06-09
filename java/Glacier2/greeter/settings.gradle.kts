@@ -19,3 +19,5 @@ dependencyResolutionManagement {
 rootProject.name = "greeter"
 include("client")
 include("server")
+
+includeBuild("../../build-logic")

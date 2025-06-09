@@ -60,7 +60,7 @@ final class Server {
     /**
      * Creates and initializes an SSLContext for use with the SSL transport.
      *
-     * The SSLContext is configured with the server's certificate and private key, loaded from a PKCS12 keystore
+     * <p>The SSLContext is configured with the server's certificate and private key, loaded from a PKCS12 keystore
      * used as the key store to provide the server credentials.
      *
      * @return the initialized SSLContext
@@ -84,15 +84,15 @@ final class Server {
             keyManagerFactory.init(keyStore, password);
             sslContext.init(keyManagerFactory.getKeyManagers(), null, null);
             return sslContext;
-        }  catch (
-            CertificateException|
-            IOException|
-            KeyManagementException|
-            KeyStoreException|
-            NoSuchAlgorithmException|
-            UnrecoverableKeyException ex) {
-                // Should never happen in this demo.
-                throw new RuntimeException("SSL initialization error.", ex);
+        } catch (
+            CertificateException
+                | IOException
+                | KeyManagementException
+                | KeyStoreException
+                | NoSuchAlgorithmException
+                | UnrecoverableKeyException ex) {
+            // Should never happen in this demo.
+            throw new RuntimeException("SSL initialization error.", ex);
         }
     }
 

@@ -3,6 +3,9 @@
 plugins {
     // Apply the application plugin to tell gradle this is a runnable Java application.
     id("application")
+
+    // Pull in our local 'convention plugin' to enable linting.
+    id("zeroc-linting")
 }
 
 dependencies {
@@ -13,5 +16,4 @@ dependencies {
 application {
     // Specify the main entry point for the application.
     mainClass.set("com.example.ice.forwarder.forwardingserver.Server")
-    applicationDefaultJvmArgs = listOf("-ea") // Enables assertions
 }

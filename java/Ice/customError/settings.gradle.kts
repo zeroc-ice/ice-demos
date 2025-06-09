@@ -19,3 +19,5 @@ dependencyResolutionManagement {
 rootProject.name = "customError"
 include("client")
 include("server")
+
+includeBuild("../../build-logic")

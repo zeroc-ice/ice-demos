@@ -4,10 +4,10 @@ package com.example.ice.customerror.client;
 
 import com.example.visitorcenter.GreeterException;
 import com.example.visitorcenter.GreeterPrx;
+import com.zeroc.Ice.ClassSliceLoader;
 import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.DispatchException;
 import com.zeroc.Ice.InitializationData;
-import com.zeroc.Ice.ClassSliceLoader;
 import com.zeroc.Ice.Util;
 
 
@@ -35,21 +35,16 @@ class Client {
                 // - a greeting (success)
                 // - a dispatch exception (the base class for marshallable system exceptions), or
                 // - a GreeterException (the custom exception we've defined in the Slice definitions)
-                try 
-                {
+                try {
                     String greeting = greeter.greet(name);
                     System.out.println(greeting);
-                } 
-                catch (DispatchException exception) 
-                {
+                } catch (DispatchException exception) {
                     System.out.println(String.format("Failed to create a greeting for '%s': '%s' '%s'",
                         name, exception.getMessage(), exception.replyStatus));
-                } 
-                catch (GreeterException exception) 
-                {
+                } catch (GreeterException exception) {
                     System.out.println(String.format(
                         "Failed to create a greeting for '%s': GreeterException {{ errorMessage = '%s', error = '%s' }}",
-                            name, exception.errorMessage, exception.error
+                        name, exception.errorMessage, exception.error
                     ));
                 }
             }

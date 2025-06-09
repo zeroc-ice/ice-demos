@@ -3,12 +3,12 @@
 package com.example.glacier2.greeter.client;
 
 import com.example.visitorcenter.GreeterPrx;
-import com.zeroc.Ice.Communicator;
-import com.zeroc.Ice.Util;
+import com.zeroc.Glacier2.CannotCreateSessionException;
+import com.zeroc.Glacier2.PermissionDeniedException;
 import com.zeroc.Glacier2.RouterPrx;
 import com.zeroc.Glacier2.SessionPrx;
-import com.zeroc.Glacier2.PermissionDeniedException;
-import com.zeroc.Glacier2.CannotCreateSessionException;
+import com.zeroc.Ice.Communicator;
+import com.zeroc.Ice.Util;
 
 class Client {
     public static void main(String[] args) {
