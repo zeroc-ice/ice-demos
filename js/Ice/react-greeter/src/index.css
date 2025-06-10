@@ -57,7 +57,7 @@ button:disabled {
 }
 
 .response {
-    padding: 1rem;
+    padding: 0.75rem 1rem;
     border-radius: 4px;
 }
 

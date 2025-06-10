@@ -59,7 +59,7 @@ function App(): JSX.Element {
 
     const sendGreeting = useCallback(async () => {
         if (!state.name.trim()) {
-            setState((prev) => ({ ...prev, error: "Please enter a name" }));
+            setState((prev) => ({ ...prev, error: "Please enter a name", greeting: "" }));
             return;
         }
 
