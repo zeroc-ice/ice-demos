@@ -24,3 +24,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "Ice Android Greeter"
 include(":app")
+
+includeBuild("../../build-logic")
