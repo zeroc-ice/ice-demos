@@ -2,6 +2,8 @@ import React, { useState, useCallback, useEffect, useRef } from "react";
 import { Ice } from "@zeroc/ice";
 import { VisitorCenter } from "./Greeter.js";
 
+import StatusMessage from "./StatusMessage";
+
 interface AppState {
     name: string;
     greeting: string;
@@ -96,8 +98,8 @@ function App(): JSX.Element {
         <div className="container">
             <h1>Ice Greeter React Demo</h1>
             <p>
-            This demo shows how to use Ice for JavaScript in a React application. Make sure you have an Ice Config server running on 
-            <code>localhost:4061</code> with the <code>ws</code> transport enabled.
+                This demo shows how to use Ice for JavaScript in a React application. Make sure you have an Ice Config
+                server running on <code>localhost:4061</code> with the <code>ws</code> transport enabled.
             </p>
 
             <form className="greeting-form" onSubmit={handleSubmit}>
@@ -117,16 +119,7 @@ function App(): JSX.Element {
                     {state.loading ? "Sending..." : "Send Greeting"}
                 </button>
             </form>
-
-            {state.loading && <div className="response loading">Sending greeting request...</div>}
-
-            {state.error && <div className="response error">{state.error}</div>}
-
-            {state.greeting && (
-                <div className="response success">
-                    <strong>Server Response:</strong> {state.greeting}
-                </div>
-            )}
+            <StatusMessage loading={state.loading} error={state.error} greeting={state.greeting} />
         </div>
     );
 }

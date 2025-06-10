@@ -17,7 +17,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 }
 
 .form-group {
@@ -57,10 +57,8 @@ button:disabled {
 }
 
 .response {
-    margin-top: 1rem;
     padding: 1rem;
     border-radius: 4px;
-    min-height: 2rem;
 }
 
 .response.success {

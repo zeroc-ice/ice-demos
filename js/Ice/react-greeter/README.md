@@ -1,4 +1,4 @@
-# Ice Greeter React
+# Ice React Greeter
 
 This demo shows how to send a request and wait for a response using Ice for JavaScript. It includes a React client
 application that runs in the browser.
@@ -16,7 +16,7 @@ Then, in a separate terminal:
 - Navigate to the demo directory:
 
   ```shell
-  cd js/Ice/greeter
+  cd js/Ice/react-greeter
   ```
 
 - Install JavaScript dependencies:
@@ -33,24 +33,6 @@ To run the client in development mode:
 
   ```shell
   npm run dev
-  ```
-
-- Open a web browser and navigate to http://localhost:5173 (or the URL shown in the terminal).
-
-## Production Build
-
-To build and run the production version:
-
-- Build the client application:
-
-  ```shell
-  npm run build
-  ```
-
-- Start the preview server:
-
-  ```shell
-  npm run preview
   ```
 
 - Open a web browser and navigate to http://localhost:5173 (or the URL shown in the terminal).
