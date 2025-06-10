@@ -9,7 +9,7 @@ module VisitorCenter
     {
         /// Creates a personalized greeting.
         /// @param name: The name of the person to greet.
-        /// @returns: The greeting.
+        /// @return The greeting.
         string greet(string name);
     }
 }
