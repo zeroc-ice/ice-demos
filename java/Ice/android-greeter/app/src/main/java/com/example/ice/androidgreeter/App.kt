@@ -29,8 +29,8 @@ class App : Application() {
     /**
      * Returns the initialized [Communicator].
      *
-     * @return the Ice communicator instance
-     * @throws IllegalStateException if the communicator is unexpectedly null
+     * @return the Ice communicator instance.
+     * @throws IllegalStateException if the communicator is unexpectedly null.
      */
     fun getCommunicator(): Communicator {
         return communicator ?: throw IllegalStateException("Communicator not initialized")
