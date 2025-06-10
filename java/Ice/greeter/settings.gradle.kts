@@ -20,3 +20,5 @@ rootProject.name = "greeter"
 include("client")
 include("server")
 include("serveramd")
+
+includeBuild("../../build-logic")

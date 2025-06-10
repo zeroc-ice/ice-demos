@@ -19,3 +19,5 @@ dependencyResolutionManagement {
 rootProject.name = "secure"
 include("client")
 include("server")
+
+includeBuild("../../build-logic")

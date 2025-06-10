@@ -2,6 +2,7 @@
 build
 
 .gradle
+.kotlin
 
 # Ignore all JARs except the Gradle wrapper
 *.jar

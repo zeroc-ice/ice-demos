@@ -6,8 +6,9 @@ import com.example.visitorcenter.GreeterPrx;
 import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.InvocationTimeoutException;
 import com.zeroc.Ice.OperationInterruptedException;
-import com.zeroc.Ice.Util;
 import com.zeroc.Ice.UnknownException;
+import com.zeroc.Ice.Util;
+
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
