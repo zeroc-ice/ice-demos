@@ -39,6 +39,8 @@ rewrite {
         "**/build/generated/**/*",
         // Prevent 'rewrite' from trying (and failing) to format our Kotlin code with Java rules.
         "**/*.kts",
+        // Skip kotlin files, since we don't have any Kotlin rewrite recipes.
+        "**/*.kt",
     )
 }
 
