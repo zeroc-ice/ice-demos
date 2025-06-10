@@ -27,7 +27,7 @@ Ice.Trace.Dispatch=1
 IceSSL.DefaultDir=../../../certs
 
 # The certificate authority file.
-IceSSL.CAs=cacert.pem
+IceSSL.CAs=ca_cert.pem
 
 # The server's certificate file.
 IceSSL.CertFile=server.p12
