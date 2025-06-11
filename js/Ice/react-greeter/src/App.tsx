@@ -43,17 +43,14 @@ function App(): JSX.Element {
         }
 
         return () => {
-            const cleanup = async () => {
-                try {
-                    if (communicatorRef.current) {
-                        await communicatorRef.current.destroy();
-                    }
-                } catch (err) {
-                    console.warn("Failed to destroy communicator:", err);
-                }
-            };
-            // Kick off the async cleanup, but don't return the promise
-            cleanup();
+            const communicator = communicatorRef.current;
+            communicatorRef.current = null;
+            // Clean up the communicator when the component unmounts
+            if (communicator) {
+                communicator.destroy().catch((err) => {
+                    console.error("Error destroying Ice communicator:", err);
+                });
+            }
         };
     }, []);
 
