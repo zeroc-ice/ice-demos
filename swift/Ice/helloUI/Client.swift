@@ -128,7 +128,7 @@ class Client: ObservableObject {
         properties.setProperty(key: "Ice.Plugin.IceSSL", value: "1")
         properties.setProperty(key: "IceSSL.CheckCertName", value: "0")
         properties.setProperty(key: "IceSSL.DefaultDir", value: "certs")
-        properties.setProperty(key: "IceSSL.CAs", value: "cacert.der")
+        properties.setProperty(key: "IceSSL.CAs", value: "ca_cert.der")
         properties.setProperty(key: "IceSSL.CertFile", value: "client.p12")
         properties.setProperty(key: "IceSSL.Password", value: "password")
         initData.properties = properties

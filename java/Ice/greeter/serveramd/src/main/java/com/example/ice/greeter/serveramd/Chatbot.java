@@ -4,6 +4,7 @@ package com.example.ice.greeter.serveramd;
 
 import com.example.visitorcenter.Greeter;
 import com.zeroc.Ice.Current;
+
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.TimeUnit;

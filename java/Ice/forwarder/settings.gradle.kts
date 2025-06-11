@@ -20,3 +20,5 @@ rootProject.name = "forwarder"
 include("client")
 include("server")
 include("forwardingserver")
+
+includeBuild("../../build-logic")

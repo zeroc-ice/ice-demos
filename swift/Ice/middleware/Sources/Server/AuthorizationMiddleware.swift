@@ -3,7 +3,7 @@
 import Ice
 
 /// The AuthorizationMiddleware intercepts incoming requests and checks the token entry in their contexts.
-final class AuthorizationMiddleware: Ice.Dispatcher {
+struct AuthorizationMiddleware: Ice.Dispatcher {
     private let next: Dispatcher
     private let validToken: String
 
@@ -17,7 +17,7 @@ final class AuthorizationMiddleware: Ice.Dispatcher {
     }
 
     /// Dispatches the incoming request, checking for a valid token.
-    func dispatch(_ request: IncomingRequest) async throws -> OutgoingResponse {
+    func dispatch(_ request: sending IncomingRequest) async throws -> OutgoingResponse {
         let token = request.current.ctx["token"] ?? ""
 
         guard token == validToken else {
