@@ -8,26 +8,25 @@ let package = Package(
         .macOS(.v15)
     ],
     dependencies: [
-        .package(url: "https://download.zeroc.com/nexus/repository/nightly/ice-swift.git", branch: "main"),
+        .package(url: "https://github.com/zeroc-ice/ice-swift-nightly.git", branch: "main"),
         .package(name: "common", path: "../../common"),
     ],
     targets: [
         .executableTarget(
             name: "Client",
             dependencies: [
-                .product(name: "Ice", package: "ice-swift"), .product(name: "Glacier2", package: "ice-swift"),
+                .product(name: "Ice", package: "ice-swift-nightly"),
+                .product(name: "Glacier2", package: "ice-swift-nightly"),
                 .product(name: "DateExtension", package: "common"),
             ],
-            exclude: ["slice-plugin.json"],
-            plugins: [.plugin(name: "CompileSlice", package: "ice-swift")]
+            plugins: [.plugin(name: "CompileSlice", package: "ice-swift-nightly")]
         ),
         .executableTarget(
             name: "Server",
             dependencies: [
-                .product(name: "Ice", package: "ice-swift"), .product(name: "DateExtension", package: "common"),
+                .product(name: "Ice", package: "ice-swift-nightly"), .product(name: "DateExtension", package: "common"),
             ],
-            exclude: ["slice-plugin.json"],
-            plugins: [.plugin(name: "CompileSlice", package: "ice-swift")]
+            plugins: [.plugin(name: "CompileSlice", package: "ice-swift-nightly")]
         ),
     ]
 )

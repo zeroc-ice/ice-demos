@@ -29,7 +29,6 @@ Refer to the README.md file in each demo directory for usage instructions.
 Install the nightly build of Ice:
 
 ```shell
-brew tap zeroc-ice/nightly  https://download.zeroc.com/nexus/repository/nightly/homebrew-nightly.git
 brew install zeroc-ice/nightly/ice
 ```
 
