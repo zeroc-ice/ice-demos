@@ -12,14 +12,16 @@ let package = Package(
         .executableTarget(
             name: "Sensor",
             dependencies: [
-                .product(name: "Ice", package: "ice-swift-nightly"), .product(name: "IceStorm", package: "ice-swift-nightly"),
+                .product(name: "Ice", package: "ice-swift-nightly"),
+                .product(name: "IceStorm", package: "ice-swift-nightly"),
             ],
             plugins: [.plugin(name: "CompileSlice", package: "ice-swift-nightly")]
         ),
         .executableTarget(
             name: "Station",
             dependencies: [
-                .product(name: "Ice", package: "ice-swift-nightly"), .product(name: "IceStorm", package: "ice-swift-nightly"),
+                .product(name: "Ice", package: "ice-swift-nightly"),
+                .product(name: "IceStorm", package: "ice-swift-nightly"),
             ],
             plugins: [.plugin(name: "CompileSlice", package: "ice-swift-nightly")]
         ),

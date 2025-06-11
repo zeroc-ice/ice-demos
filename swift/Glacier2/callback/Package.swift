@@ -15,7 +15,8 @@ let package = Package(
         .executableTarget(
             name: "Client",
             dependencies: [
-                .product(name: "Ice", package: "ice-swift-nightly"), .product(name: "Glacier2", package: "ice-swift-nightly"),
+                .product(name: "Ice", package: "ice-swift-nightly"),
+                .product(name: "Glacier2", package: "ice-swift-nightly"),
                 .product(name: "DateExtension", package: "common"),
             ],
             plugins: [.plugin(name: "CompileSlice", package: "ice-swift-nightly")]
