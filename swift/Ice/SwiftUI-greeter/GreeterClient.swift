@@ -3,8 +3,8 @@
 import Ice
 import SwiftUI
 
-class GreeterClient : ObservableObject {
-    
+class GreeterClient: ObservableObject {
+
     private let communicator: Communicator
 
     init() {
@@ -28,7 +28,7 @@ class GreeterClient : ObservableObject {
             communicator: communicator,
             proxyString: "greeter:tcp -h \(host) -p 4061",
             type: GreeterPrx.self)
-        
+
         // Send a request to the remote object
         return try await greeter.greet(user)
     }

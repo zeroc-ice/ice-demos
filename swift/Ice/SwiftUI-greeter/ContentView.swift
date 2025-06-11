@@ -30,7 +30,7 @@ struct ContentView: View {
             } header: {
                 Text("Connection Settings")
             }
-            
+
             Section {
                 HStack {
                     Spacer()
@@ -52,7 +52,7 @@ struct ContentView: View {
                                 }
                             }
                         }.disabled(isLoading)
-                        
+
                         if isLoading {
                             ProgressView()
                                 .progressViewStyle(CircularProgressViewStyle())
@@ -62,7 +62,7 @@ struct ContentView: View {
                     Spacer()
                 }
             }
-            
+
             if !greeting.isEmpty || error != nil {
                 Section("Result") {
                     if let error = error {
@@ -77,11 +77,11 @@ struct ContentView: View {
                 }
             }
         }
-    #if os(macOS)
-   .formStyle(.grouped) // or .columns (macOS 14+)
-   .padding()
-   .frame(minWidth: 600, idealWidth: 600, maxWidth: 600)
-   #endif
+        #if os(macOS)
+            .formStyle(.grouped)  // or .columns (macOS 14+)
+            .padding()
+            .frame(minWidth: 600, idealWidth: 600, maxWidth: 600)
+        #endif
     }
 }
 
