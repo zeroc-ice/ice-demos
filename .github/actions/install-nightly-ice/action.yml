@@ -7,7 +7,7 @@ runs:
       if: runner.os == 'macOS'
       shell: bash
       run: |
-        brew tap zeroc-ice/nightly  https://download.zeroc.com/nexus/repository/nightly/homebrew-nightly.git
+        brew tap zeroc-ice/nightly  https://github.com/zeroc-ice/homebrew-nightly.git
         brew install zeroc-ice/nightly/ice
 
     - name: Install Ice APT Repository

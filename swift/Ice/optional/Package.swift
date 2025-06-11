@@ -7,31 +7,27 @@ let package = Package(
     platforms: [
         .macOS(.v15)
     ],
-    dependencies: [.package(url: "https://download.zeroc.com/nexus/repository/nightly/ice-swift.git", branch: "main")],
+    dependencies: [.package(url: "https://github.com/zeroc-ice/ice-swift-nightly.git", branch: "main")],
     targets: [
         .executableTarget(
             name: "Client1",
-            dependencies: [.product(name: "Ice", package: "ice-swift")],
-            exclude: ["slice-plugin.json"],
-            plugins: [.plugin(name: "CompileSlice", package: "ice-swift")]
+            dependencies: [.product(name: "Ice", package: "ice-swift-nightly")],
+            plugins: [.plugin(name: "CompileSlice", package: "ice-swift-nightly")]
         ),
         .executableTarget(
             name: "Client2",
-            dependencies: [.product(name: "Ice", package: "ice-swift")],
-            exclude: ["slice-plugin.json"],
-            plugins: [.plugin(name: "CompileSlice", package: "ice-swift")]
+            dependencies: [.product(name: "Ice", package: "ice-swift-nightly")],
+            plugins: [.plugin(name: "CompileSlice", package: "ice-swift-nightly")]
         ),
         .executableTarget(
             name: "Server1",
-            dependencies: [.product(name: "Ice", package: "ice-swift")],
-            exclude: ["slice-plugin.json"],
-            plugins: [.plugin(name: "CompileSlice", package: "ice-swift")]
+            dependencies: [.product(name: "Ice", package: "ice-swift-nightly")],
+            plugins: [.plugin(name: "CompileSlice", package: "ice-swift-nightly")]
         ),
         .executableTarget(
             name: "Server2",
-            dependencies: [.product(name: "Ice", package: "ice-swift")],
-            exclude: ["slice-plugin.json"],
-            plugins: [.plugin(name: "CompileSlice", package: "ice-swift")]
+            dependencies: [.product(name: "Ice", package: "ice-swift-nightly")],
+            plugins: [.plugin(name: "CompileSlice", package: "ice-swift-nightly")]
         ),
     ]
 )
