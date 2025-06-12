@@ -15,15 +15,15 @@ Then, in a separate terminal:
 
 - Navigate to the demo directory:
 
-  ```shell
-  cd js/Ice/react-greeter
-  ```
+    ```shell
+    cd js/Ice/react-greeter
+    ```
 
 - Install JavaScript dependencies:
 
-  ```shell
-  npm install
-  ```
+    ```shell
+    npm install
+    ```
 
 ## Development Build
 
@@ -31,9 +31,9 @@ To run the client in development mode:
 
 - Start the development server:
 
-  ```shell
-  npm run dev
-  ```
+    ```shell
+    npm run dev
+    ```
 
 - Open a web browser and navigate to http://localhost:5173 (or the URL shown in the terminal).
 
