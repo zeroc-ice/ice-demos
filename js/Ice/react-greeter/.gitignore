@@ -1,0 +1,6 @@
+node_modules/
+Greeter.js
+Greeter.d.ts
+package-lock.json
+dist/
+tsconfig.tsbuildinfo
