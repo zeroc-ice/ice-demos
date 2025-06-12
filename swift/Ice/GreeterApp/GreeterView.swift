@@ -14,9 +14,9 @@ struct GreeterView: View {
 
     // The user name defaults to "Alice" on iOS and the current user's name on macOS.
     #if os(macOS)
-    @State private var user = NSUserName()
+        @State private var user = NSUserName()
     #else
-    @State private var user = "Alice"
+        @State private var user = "Alice"
     #endif
 
     // The greeting message, if one has been received; empty otherwise.
@@ -30,28 +30,28 @@ struct GreeterView: View {
         Form {
             // The Settings section lets the user enter the host and their name.
             // On iOS, we add explicit labels for accessibility; on macOS, we rely on default field labels.
-            Section ("Settings") {
+            Section("Settings") {
                 HStack {
-#if os(iOS)
-                    Text("Host:")
-#endif
+                    #if os(iOS)
+                        Text("Host:")
+                    #endif
                     TextField("Host:", text: $host, prompt: Text("e.g. localhost"))
                         .textContentType(.URL)
                         .disableAutocorrection(true)
                         .disabled(isLoading)
                 }
-                
+
                 HStack {
-#if os(iOS)
-                    Text("Name:")
-#endif
+                    #if os(iOS)
+                        Text("Name:")
+                    #endif
                     TextField("Name:", text: $user, prompt: Text("e.g. Alice"))
                         .textContentType(.name)
                         .disabled(isLoading)
                 }
             }
-            
-            Section{
+
+            Section {
                 HStack {
                     Spacer()
                     // We use a ZStack to overlay a ProgressView on top of the Greet button when loading.
@@ -106,8 +106,9 @@ struct GreeterView: View {
         // Sets the padding and frame size to improve appearance on macOS.
         #if os(macOS)
             .padding()
-            .frame(minWidth: 600, idealWidth: 600, maxWidth: 600,
-                   minHeight: 500, idealHeight: 500, maxHeight: 500)
+            .frame(
+                minWidth: 600, idealWidth: 600, maxWidth: 600,
+                minHeight: 500, idealHeight: 500, maxHeight: 500)
         #endif
     }
 }
