@@ -1,33 +1,31 @@
-# Context
+# Ice Context
 
 This demo illustrates how to use Ice [request contexts][2].
 
-Ice for JavaScript has limited server-side support ([see documentation][1]). As a result, you need to start a Greeter
-server implemented in a language that fully supports server-side functionality, such as Python, Java, or C#.
+Follow these steps to build and run the demo:
 
-## Installation
+1. Install the dependencies:
 
-Before building the client, install the dependencies:
+    ```shell
+    npm install
+    ```
 
-```shell
-npm install
-```
+2. Build the client application:
 
-## Building the Client
+    ```shell
+    npm run build
+    ```
 
-Once the dependencies are installed, build the client application with:
+3. Run the server application:
 
-```shell
-npm run build
-```
+    Ice for JavaScript has limited server-side support ([see documentation][1]). As a result, you need to start a
+    Context server implemented in a language that fully supports server-side functionality, such as Python, Java, or C#.
 
-## Running the Client
+4. Run the client application:
 
-After building, run the client application with:
-
-```shell
-node client.js
-```
+    ```shell
+    node client.js
+    ```
 
 [1]: https://doc.zeroc.com/ice/3.7/language-mappings/javascript-mapping
 [2]: https://doc.zeroc.com/ice/3.7/client-side-features/request-contexts

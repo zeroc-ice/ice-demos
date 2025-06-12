@@ -13,34 +13,30 @@ flowchart LR
     icestorm --report--> s3[Station #3]
 ```
 
-Ice for JavaScript has limited [server-side support][1], and as a result, we can only implement the sensors in
-JavaScript.
+Follow these steps to build and run the demo:
 
-You first need to start IceStorm and the weather station(s) from a demo written in a language with full server-side
-support, such as C++, Python, Java or C#.
+1. Install the dependencies:
 
-## Installation
+    ```shell
+    npm install
+    ```
 
-Before building the sensor, install the dependencies:
+2. Build the sensor application:
 
-```shell
-npm install
-```
+    ```shell
+    npm run build
+    ```
 
-## Building the Sensor
+3. Run the server applications:
 
-Once the dependencies are installed, build the client application with:
+    Ice for JavaScript has limited [server-side support][1], and as a result, we can only implement the sensors in
+    JavaScript. You need to start IceStorm and the weather station(s) from a demo written in a language with full 
+    server-side support, such as C++, Python, Java or C#.
 
-```shell
-npm run build
-```
+4. Run the sensor application:
 
-## Running the Sensor
-
-After building, run the sensor application with:
-
-```shell
-node sensor.js
-```
+    ```shell
+    node sensor.js
+    ```
 
 [1]: https://doc.zeroc.com/ice/3.7/language-mappings/javascript-mapping

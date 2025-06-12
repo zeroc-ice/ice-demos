@@ -3,33 +3,29 @@
 This demo shows how to send a request and wait for a response using Ice for JavaScript. It includes a Node.js client
 application.
 
-Ice for JavaScript has limited server-side support ([see documentation][1]). As a result, you first need to start a
-Greeter server implemented in a language that fully supports server-side functionality, such as Python, Java, or C#.
+Follow these steps to build and run the demo:
 
-Then, in a separate terminal:
+1. Install the dependencies:
 
-- Navigate to the demo directory:
+    ```shell
+    npm install
+    ```
 
-  ```shell
-  cd js/Ice/greeter
-  ```
+2. Build the client application:
 
-- Install JavaScript dependencies:
+    ```shell
+    npm run build
+    ```
 
-  ```shell
-  npm install
-  ```
+3. Run the server application:
 
-- Build the client application:
+    Ice for JavaScript has limited server-side support ([see documentation][1]). As a result, you need to start a
+    Greeter server implemented in a language that fully supports server-side functionality, such as Python, Java, or C#.
 
-  ```shell
-  npm run build
-  ```
+4. Run the client application:
 
-- Run the client application:
-
-  ```shell
-  node client.js
-  ```
+    ```shell
+    node client.js
+    ```
 
 [1]: https://doc.zeroc.com/ice/3.7/language-mappings/javascript-mapping
