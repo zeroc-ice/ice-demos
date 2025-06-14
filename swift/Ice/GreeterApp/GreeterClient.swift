@@ -3,7 +3,7 @@
 import Ice
 import SwiftUI
 
-/// Manages the Ice communicator and provides a method to send a greeting request to the Greeter service.
+/// Manages the Ice communicator and provides a method to send a greet request to the Greeter service.
 class GreeterClient: ObservableObject {
 
     private let communicator: Communicator
