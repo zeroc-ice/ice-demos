@@ -9,6 +9,7 @@ module Filesystem
     exception WriteException
     {
         /// The reason for the write failure.
+        ["matlab:identifier:Reason"]
         string reason;
     }
 

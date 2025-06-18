@@ -1,8 +1,8 @@
 % Copyright (c) ZeroC, Inc.
 
 function client(args)
-    if nargin == 0
-        args = {};
+    arguments (Repeating)
+        args (1, :) char
     end
 
     % Load the Ice library if it is not already loaded.
@@ -13,12 +13,11 @@ function client(args)
     % Configure the communicator to load the IceLocatorDiscovery plug-in during initialization. This plug-in will
     % discover the locator (IceGrid registry in this demo) to use. As a result, we don't need to configure the default
     % locator on this communicator.
-    initData = Ice.InitializationData();
-    initData.properties_ = Ice.createProperties(args);
-    initData.properties_.setProperty('Ice.Plugin.IceLocatorDiscovery', '1');
+    properties = Ice.createProperties(args);
+    properties.setProperty('Ice.Plugin.IceLocatorDiscovery', '1');
 
     % Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
-    communicator = Ice.initialize(initData);
+    communicator = Ice.initialize(Ice.InitializationData(Properties = properties));
 
     % Destroy the communicator when the function exits.
     cleanup = onCleanup(@() communicator.destroy());

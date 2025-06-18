@@ -30,7 +30,7 @@ client
 You can also turn on logging for locator resolution by running:
 
 ```shell
-client({'--Ice.Trace.Locator', '--Ice.LogFile=client.log'})
+client --Ice.Trace.Locator --Ice.LogFile=client.log
 ```
 
 This call creates a log file named `client.log` in your current directory.

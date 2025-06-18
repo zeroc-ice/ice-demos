@@ -1,8 +1,8 @@
 % Copyright (c) ZeroC, Inc.
 
 function sensor(args)
-    if nargin == 0
-        args = {};
+    arguments (Repeating)
+        args (1, :) char
     end
 
     % Load the Ice library if it is not already loaded.
