@@ -1,8 +1,8 @@
 % Copyright (c) ZeroC, Inc.
 
 function client(args)
-    if nargin == 0
-        args = {};
+    arguments (Repeating)
+        args (1, :) char
     end
 
     % Load the Ice library if it is not already loaded.
@@ -12,12 +12,11 @@ function client(args)
 
     % Set the Ice.ImplicitContext property to 'Shared' before calling Ice.initialize.
     % This is only necessary for the implicit context API (see below).
-    initData = Ice.InitializationData();
-    initData.properties_ = Ice.createProperties(args);
-    initData.properties_.setProperty('Ice.ImplicitContext', 'Shared');
+    properties = Ice.createProperties(args);
+    properties.setProperty('Ice.ImplicitContext', 'Shared');
 
     % Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
-    communicator = Ice.initialize(initData);
+    communicator = Ice.initialize(Ice.InitializationData(Properties = properties));
 
     % Destroy the communicator when the function exits.
     cleanup = onCleanup(@() communicator.destroy());
@@ -29,7 +28,7 @@ function client(args)
     greeter = visitorcenter.GreeterPrx(communicator, 'greeter:tcp -h localhost -p 4061');
 
     % Create a request context.
-    context = containers.Map('KeyType', 'char', 'ValueType', 'char');
+    context = configureDictionary('string', 'string');
 
     % Send a request to the remote object and get the response. We request a French greeting by setting 'language' in
     % the context parameter.

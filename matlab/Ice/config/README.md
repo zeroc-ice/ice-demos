@@ -33,5 +33,6 @@ You can pass `--Ice` arguments to set additional properties or override the prop
 For example:
 
 ```shell
-client({'--Ice.Trace.Network=2', '--Ice.LogFile=verbose.log'})
+client --Ice.Trace.Network=2 --Ice.LogFile=verbose.log
+type verbose.log
 ```

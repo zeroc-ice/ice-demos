@@ -13,10 +13,11 @@ module VisitorCenter
     exception GreeterException
     {
         /// Describes the exception in a human-readable way.
-        ["matlab:identifier:errorMessage"] // We can't use message as it conflicts with MException.message.
+        ["matlab:identifier:Message"] // We prefer Pascal case for MATLAB properties.
         string message;
 
         /// Provides an error code that can be used to handle this exception programmatically.
+        ["matlab:identifier:Error"]
         GreeterError error;
     }
 

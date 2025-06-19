@@ -9,9 +9,11 @@ module ClearSky
     class AtmosphericConditions
     {
         /// The temperature in degrees Celsius.
+        ["matlab:identifier:Temperature"]
         double temperature;
 
         /// The humidity in percent.
+        ["matlab:identifier:Humidity"]
         double humidity;
     }
 

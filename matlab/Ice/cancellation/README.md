@@ -23,7 +23,7 @@ slice2matlab Greeter.ice
 - Run the client application
 
 ```shell
-client({'--Ice.Trace.Network', '--Ice.LogFile=client.log'})
+client --Ice.Trace.Network --Ice.LogFile=client.log
 ```
 
 > [!NOTE]
