@@ -10,10 +10,18 @@ function client(args)
         loadlibrary('ice', @iceproto);
     end
 
-    % Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections. The
-    % communicator gets its configuration properties from file config.client in the client's current working directory.
-    % The communicator initialization also parses args to find and set additional properties.
-    communicator = Ice.initialize(args, 'config.client');
+    % Create Ice properties from the contents of the config.client file in the current working directory.
+    properties = Ice.Properties();
+    properties.load('config.client');
+
+    % Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
+    % The communicator gets its properties from the Properties arguments; Ice.* properties set in args override these
+    % properties.
+    communicator = Ice.Communicator(args, Properties = properties);
+
+    % Display the communicator's properties.
+    fprintf('Communicator properties:\n');
+    disp(communicator.getProperties());
 
     % Destroy the communicator when the function exits.
     cleanup = onCleanup(@() communicator.destroy());
