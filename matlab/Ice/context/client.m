@@ -10,13 +10,12 @@ function client(args)
         loadlibrary('ice', @iceproto);
     end
 
-    % Set the Ice.ImplicitContext property to 'Shared' before calling Ice.initialize.
-    % This is only necessary for the implicit context API (see below).
-    properties = Ice.createProperties(args);
+    % Set the Ice.ImplicitContext property to 'Shared'. This is only necessary for the implicit context API (see below).
+    properties = Ice.Properties(args);
     properties.setProperty('Ice.ImplicitContext', 'Shared');
 
     % Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
-    communicator = Ice.initialize(Ice.InitializationData(Properties = properties));
+    communicator = Ice.Communicator(Properties = properties);
 
     % Destroy the communicator when the function exits.
     cleanup = onCleanup(@() communicator.destroy());

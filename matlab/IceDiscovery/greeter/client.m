@@ -12,11 +12,11 @@ function client(args)
 
     % Configure the communicator to load the IceDiscovery plug-in during initialization. This plug-in installs a default
     % locator on the communicator.
-    properties = Ice.createProperties(args);
+    properties = Ice.Properties(args);
     properties.setProperty('Ice.Plugin.IceDiscovery', '1');
 
     % Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
-    communicator = Ice.initialize(Ice.InitializationData(Properties = properties));
+    communicator = Ice.Communicator(Properties = properties);
 
     % Destroy the communicator when the function exits.
     cleanup = onCleanup(@() communicator.destroy());

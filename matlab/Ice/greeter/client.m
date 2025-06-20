@@ -11,7 +11,7 @@ function client(args)
     end
 
     % Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
-    communicator = Ice.initialize(args);
+    communicator = Ice.Communicator(args);
 
     % Destroy the communicator when the function exits.
     cleanup = onCleanup(@() communicator.destroy());
