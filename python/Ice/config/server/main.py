@@ -6,10 +6,16 @@ import chatbot
 import sys
 
 def main():
-    # Create an Ice communicator. We'll use this communicator to create an object adapter. The communicator gets its
-    # configuration properties from file config.server, in the server's current working directory. The communicator
-    # initialization also parses the command-line options to find and set additional properties.
-    with Ice.initialize(sys.argv, configFile="config.server") as communicator:
+
+    # Create Ice properties from the contents of the config.server file in the current working directory.
+    initData = Ice.InitializationData()
+    initData.properties = Ice.createProperties()
+    initData.properties.load("config.server")
+
+    # Create an Ice communicator. We'll use this communicator to create an object adapter.
+    # The communicator gets its properties from initData.properties; Ice.* properties and other reserved properties set
+    # in sys.argv override these properties.
+    with Ice.initialize(sys.argv, initData=initData) as communicator:
         # Create an object adapter that listens for incoming requests and dispatches them to servants.
         adapter = communicator.createObjectAdapter("GreeterAdapter")
 
