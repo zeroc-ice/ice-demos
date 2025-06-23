@@ -10,13 +10,11 @@ function client(args)
         loadlibrary('ice', @iceproto);
     end
 
-    % Configures the communicator to use a Slice loader that loads exception GreeterException. This is necessary in
+    % Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
+    % We configure the communicator to use a Slice loader that loads exception GreeterException. This is necessary in
     % MATLAB applications that unmarshal classes or exceptions, when the classes/exceptions or their enclosing module(s)
     % are remapped using matlab:identifier, like in this demo.
-    sliceLoader = Ice.ClassSliceLoader(?visitorcenter.GreeterException);
-
-    % Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
-    communicator = Ice.initialize(args, Ice.InitializationData(SliceLoader = sliceLoader));
+    communicator = Ice.Communicator(args, SliceLoader = Ice.ClassSliceLoader(?visitorcenter.GreeterException));
 
     % Destroy the communicator when the function exits.
     cleanup = onCleanup(@() communicator.destroy());
