@@ -22,15 +22,17 @@ Ice.Default.Protocol=ssl
 IceSSL.DefaultDir=../../../certs
 
 # The certificate authority file.
-IceSSL.CAs=ca.pem
+IceSSL.CAs=ca_cert.pem
 
 # The client's certificate file.
 IceSSL.CertFile=client.p12
 
+# The name of the keychain in which to import the client's certificate (SecureTransport only).
+IceSSL.Keychain=client.keychain
+
 # TODO: switch to password-less certificates
 IceSSL.Password=password
+IceSSL.KeychainPassword=password
 
 # Turn on security logging/tracing.
 # IceSSL.Trace.Security=1
-
-Ice.Trace.Protocol=1

@@ -6,11 +6,18 @@ import Ice
 // of the program, before creating an Ice communicator or starting any thread.
 let ctrlCHandler = CtrlCHandler()
 
-// Create an Ice communicator. We'll use this communicator to create an object adapter. The communicator gets its
-// configuration properties from file config.server, in the server's current working directory. The communicator
-// initialization also parses the command-line options to find and set additional properties.
+// Create Ice properties from the contents of the config.server file in the current working directory.
+let properties = Ice.createProperties()
+try properties.load("config.server")
+
+var initData = Ice.InitializationData()
+initData.properties = properties
+
+// Create an Ice communicator. We'll use this communicator to create an object adapter.
+// The communicator gets its properties from initData.properties; Ice.* properties and other reserved properties set
+// in args override these properties.
 var args = CommandLine.arguments
-let communicator = try Ice.initialize(args: &args, configFile: "config.server")
+let communicator = try Ice.initialize(&args, initData: initData)
 
 // Destroy the communicator when the program exits.
 defer {

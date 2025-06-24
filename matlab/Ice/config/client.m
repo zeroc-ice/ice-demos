@@ -15,7 +15,7 @@ function client(args)
     properties.load('config.client');
 
     % Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
-    % The communicator gets its properties from the Properties arguments; Ice.* properties and other reserved properties
+    % The communicator gets its properties from the Properties argument; Ice.* properties and other reserved properties
     % set in args override these properties.
     communicator = Ice.Communicator(args, Properties = properties);
 

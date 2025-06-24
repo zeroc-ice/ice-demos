@@ -15,10 +15,15 @@ main(int argc, char* argv[])
     // initialization also parses the command-line options to find and set additional properties.
     Ice::CtrlCHandler ctrlCHandler;
 
-    // Create an Ice communicator to initialize the Ice runtime. The communicator gets its configuration properties from
-    // file config.server, in the server's current working directory. The communicator initialization also parses the
-    // command-line options to find and set additional properties.
-    Ice::CommunicatorPtr communicator = Ice::initialize(argc, argv, "config.server");
+    // Create Ice properties from the contents of the config.server file in the current working directory.
+    Ice::InitializationData initData;
+    initData.properties = Ice::createProperties();
+    initData.properties->load("config.server");
+
+    // Create an Ice communicator. We'll use this communicator to create an object adapter.
+    // The communicator gets its properties from initData.properties; Ice.* properties and other reserved properties
+    // set in argc/argv override these properties.
+    Ice::CommunicatorPtr communicator = Ice::initialize(argc, argv, initData);
 
     // Make sure the communicator is destroyed at the end of this scope.
     Ice::CommunicatorHolder communicatorHolder{communicator};

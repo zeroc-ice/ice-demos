@@ -10,10 +10,15 @@ using namespace std;
 int
 main(int argc, char* argv[])
 {
-    // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections. The
-    // communicator gets its configuration properties from file config.client in the client's current working directory.
-    // The communicator initialization also parses the command-line options to find and set additional properties.
-    Ice::CommunicatorPtr communicator = Ice::initialize(argc, argv, "config.client");
+    // Create Ice properties from the contents of the config.client file in the current working directory.
+    Ice::InitializationData initData;
+    initData.properties = Ice::createProperties();
+    initData.properties->load("config.client");
+
+    // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
+    // The communicator gets its properties from initData.properties; Ice.* properties and other reserved properties
+    // set in argc/argv override these properties.
+    Ice::CommunicatorPtr communicator = Ice::initialize(argc, argv, initData);
 
     // Make sure the communicator is destroyed at the end of this scope.
     Ice::CommunicatorHolder communicatorHolder{communicator};
