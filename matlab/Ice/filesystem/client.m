@@ -1,6 +1,8 @@
-% Copyright (c) ZeroC, Inc.
-
 function client(args)
+    %CLIENT An Ice client that recursively lists directory contents from a remote filesystem server.
+
+    % Copyright (c) ZeroC, Inc.
+
     arguments (Repeating)
         args (1, :) char
     end

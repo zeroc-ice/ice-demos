@@ -1,6 +1,8 @@
-% Copyright (c) ZeroC, Inc.
-
 function sensor(args)
+    %SENSOR A weather sensor client that publishes atmospheric readings to weather stations via IceStorm.
+
+    % Copyright (c) ZeroC, Inc.
+
     arguments (Repeating)
         args (1, :) char
     end

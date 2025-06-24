@@ -1,6 +1,8 @@
-% Copyright (c) ZeroC, Inc.
-
 function client(args)
+    %CLIENT An Ice client that demonstrates Ice properties and configuration.
+
+    % Copyright (c) ZeroC, Inc.
+
     arguments (Repeating)
         args (1, :) char
     end

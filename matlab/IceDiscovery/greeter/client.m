@@ -1,6 +1,8 @@
-% Copyright (c) ZeroC, Inc.
-
 function client(args)
+    %CLIENT An Ice client that connects to a Greeter server using IceDiscovery.
+
+    % Copyright (c) ZeroC, Inc.
+
     arguments (Repeating)
         args (1, :) char
     end
