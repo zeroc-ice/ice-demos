@@ -3,8 +3,7 @@
 - [C++ Demos](#c-demos)
   - [Overview](#overview)
   - [macOS Prerequisites](#macos-prerequisites)
-  - [Ubuntu Prerequisites](#ubuntu-prerequisites)
-  - [RedHat Prerequisites](#redhat-prerequisites)
+  - [Linux Prerequisites](#linux-prerequisites)
   - [Windows Prerequisites](#windows-prerequisites)
   - [C++ Demos](#c-demos-1)
 
@@ -24,61 +23,20 @@ Refer to the README.md file in each demo directory for usage instructions.
 - Xcode
 - [Homebrew](https://brew.sh)
 - CMake
-- Nightly build of Ice
+- [Nightly build of Ice](https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#macos)
 
-Install the nightly build of Ice:
+## Linux Prerequisites
 
-```shell
-brew install zeroc-ice/nightly/ice
-```
-
-## Ubuntu Prerequisites
-
-- Ubuntu 24.04
+- A supported Linux Distribution (RHEL 9/10, Amazon Linux 2023, Debian 12, Ubuntu 24.04)
 - GCC C++ Toolchain
 - CMake
-- Nightly build of Ice
-
-Install the nightly build of Ice:
-
-```shell
-sudo mkdir -p /etc/apt/keyrings
-sudo curl -fsSL https://download.zeroc.com/GPG-KEY-zeroc-nightly \
-  | sudo gpg --dearmor -o /etc/apt/keyrings/zeroc-nightly.gpg
-
-echo "deb [signed-by=/etc/apt/keyrings/zeroc-nightly.gpg] https://download.zeroc.com/nexus/repository/ubuntu24.04-nightly nightly main" \
-  | sudo tee /etc/apt/sources.list.d/zeroc-nightly.list
-
-sudo apt-get update
-sudo apt-get install -y zeroc-ice-all-dev
-```
-
-## RedHat Prerequisites
-
-- RedHat 9
-- GCC C++ Toolchain
-- CMake
-- Nightly build of Ice
-
-Install the nightly build of Ice:
-
-```shell
-sudo tee /etc/yum.repos.d/ice-nightly.repo <<EOF
-[ice-nightly]
-name=Ice Nightly Repository
-baseurl=https://download.zeroc.com/nexus/repository/rhel9-nightly
-enabled=1
-gpgcheck=0
-EOF
-
-sudo dnf install -y ice-all-devel
-```
+- [Nightly build of Ice](https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#linux)
 
 ## Windows Prerequisites
 
 - Visual Studio 2022
 - CMake (installed via Visual Studio installer)
-- Nightly build of Ice
+- [Nightly build of Ice](https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#windows)
 
 The CMake script will automatically download the required NuGet packages when you
 build the demos. The NuGet packages are cached the [cmake](./cmake) directory.
