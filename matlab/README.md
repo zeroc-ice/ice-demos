@@ -12,6 +12,10 @@ Java, and Python demos.
 2. **Ice for MATLAB nightly toolbox**
    [Ice for MATLAB nightly builds](https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#matlab)
 
+## Building the demos
+
+Follow the instructions provided in each demo’s README.md file.
+
 ## MATLAB Demos
 
 |                                                         |                                                                                                            |
