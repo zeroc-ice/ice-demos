@@ -15,13 +15,8 @@ demonstrates a specific feature or programming technique.
 
 ## Building the Demos
 
-The top-level [Directory.Build.props](./Directory.Build.props) file sets `IceVersion` to
-`3.8.0-nightly.*` by default to pull the latest nightly build of Ice.
-You can override this on the command line:
-
-```shell
-dotnet build -p:IceVersion="3.8.0-alpha0"
-```
+The top-level [Directory.Build.props](./Directory.Build.props) file sets `IceVersion` to `3.8.0-nightly.*` by default to
+pull the latest nightly build of Ice.
 
 ## C# Demos
 
