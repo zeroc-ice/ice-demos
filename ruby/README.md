@@ -3,6 +3,8 @@
 This folder contains example Ice applications written in Ruby. Each example is a simple client application that
 demonstrates a specific feature or programming technique.
 
+> Ice for Ruby is supported on Linux and macOS platforms.
+
 ## Building Requirements
 
 The demos in the main branch require the latest Ice for Ruby nightly build. To install it, run:

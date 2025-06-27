@@ -5,6 +5,7 @@
   - [macOS Prerequisites](#macos-prerequisites)
   - [Linux Prerequisites](#linux-prerequisites)
   - [Windows Prerequisites](#windows-prerequisites)
+  - [Building the Demos](#building-the-demos)
   - [C++ Demos](#c-demos-1)
 
 ## Overview
@@ -40,6 +41,10 @@ Refer to the README.md file in each demo directory for usage instructions.
 
 The CMake script will automatically download the required NuGet packages when you
 build the demos. The NuGet packages are cached the [cmake](./cmake) directory.
+
+## Building the demos
+
+Follow the instructions provided in each demo’s README.md file.
 
 ## C++ Demos
 
