@@ -28,7 +28,7 @@ Follow the instructions provided in each demo’s README.md file.
 | [Ice Filesystem](./Ice/filesystem/)                     | Shows the power of interface inheritance in Slice.                                                         |
 | [Ice Forwarder](./Ice/forwarder/)                       | Shows how to write a servant that forwards all requests it receives to another remote Ice object.          |
 | [Ice Greeter](./Ice/greeter/)                           | Shows how to call and implement a canonical Greeter application with Ice. **Start with this demo!**        |
-| [Ice GreeterApp](./Ice/GreeterApp/)                     | Shows how to implement an Ice for SWift iOS application that uses SwiftUI                                  |
+| [Ice GreeterApp](./Ice/GreeterApp/)                     | Shows how to implement an Ice for Swift iOS application that uses SwiftUI                                  |
 | [Ice Invocation Timeout](./Ice/invocationTimeout/)      | Shows how to use invocation timeouts.                                                                      |
 | [Ice Middleware](./Ice/niddleware/)                     | Shows how to write a simple middleware and how to add this middleware to an object adapter.                |
 | [Ice Optional](./Ice/Optional/)                         | Shows how to add a field to a Slice class without breaking interop with existing clients and servers.      |
