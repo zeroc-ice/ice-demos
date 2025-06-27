@@ -28,7 +28,7 @@ Follow the instructions provided in each demo’s README.md file.
 | [Ice Context](./Ice/context/)                        | Shows how to set and retrieve request contexts.                                                       |
 | [Ice Filesystem](./Ice/filesystem/)                  | Shows the power of interface inheritance in Slice.                                                    |
 | [Ice Greeter](./Ice/greeter/)                        | Shows how to call and implement a canonical Greeter application with Ice. **Start with this demo!**   |
-| [Ice Invocation Timeout](./Ice/invocation_timeuout/) | Shows how to use invocation timeouts                                                                  |
+| [Ice Invocation Timeout](./Ice/invocation_timeout/) | Shows how to use invocation timeouts                                                                  |
 | [Ice Optional](./Ice/optional/)                      | Shows how to add a field to a Slice class without breaking interop with existing clients and servers. |
 | [IceBox Greeter](./IceBox/Greeter/)                  | Shows how to create an IceBox service.                                                                |
 | [IceDiscovery Greeter](./IceDiscovery/greeter/)      | Shows how to configure the IceDiscovery plug-in.                                                      |
