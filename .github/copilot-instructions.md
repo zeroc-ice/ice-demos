@@ -7,4 +7,4 @@ All CMake source directory entries in the VS Code settings file (`.vscode/settin
 directories with CMakeLists.txt files. All demo directories with CMakeLists.txt files should appear in the
 VS Code CMake settings.
 
-Each CMakeLists.txt should have a contain a unique project name.
+Each CMakeLists.txt should contain a unique project name.
