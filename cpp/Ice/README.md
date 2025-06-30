@@ -51,7 +51,7 @@ Demos in this directory:
 
 - [multicast](./multicast)
 
-  This demo illistrates the use of UDP multicast.
+  This demo illustrates the use of UDP multicast.
 
 - [nested](./nested)
 

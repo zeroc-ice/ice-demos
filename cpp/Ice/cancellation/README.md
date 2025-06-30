@@ -2,8 +2,6 @@
 
 The Cancellation demo shows how to cancel an invocation in C++. It also shows a related feature: invocation timeouts.
 
-You can build the client and server applications with:
-
 To build the demo, run:
 
 ```shell
