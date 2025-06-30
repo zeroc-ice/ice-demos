@@ -15,7 +15,7 @@ pluginManagement {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
-        // This demo uses the latest Ice nightly build published in ZeroC's maven-nightly repository.
+        // This demo uses the latest Ice nightly build published to the maven central snapshots repository.
         maven("https://central.sonatype.com/repository/maven-snapshots/")
         google()
         mavenCentral()
