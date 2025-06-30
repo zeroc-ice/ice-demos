@@ -10,6 +10,7 @@
         "${workspaceFolder}/cpp/DataStorm/stock",
 
         "${workspaceFolder}/cpp/Glacier2/callback",
+        "${workspaceFolder}/cpp/Glacier2/greeter",
 
         "${workspaceFolder}/cpp/Ice/bidir",
         "${workspaceFolder}/cpp/Ice/callback",
@@ -21,23 +22,20 @@
         "${workspaceFolder}/cpp/Ice/forwarder",
         "${workspaceFolder}/cpp/Ice/greeter",
         "${workspaceFolder}/cpp/Ice/middleware",
-        "${workspaceFolder}/cpp/Ice/mtalk",
         "${workspaceFolder}/cpp/Ice/multicast",
         "${workspaceFolder}/cpp/Ice/optional",
+        "${workspaceFolder}/cpp/Ice/secure",
 
         "${workspaceFolder}/cpp/IceBox/greeter",
 
         "${workspaceFolder}/cpp/IceDiscovery/greeter",
+        "${workspaceFolder}/cpp/IceDiscovery/replication",
 
-        "${workspaceFolder}/cpp/IceGrid/customLocator",
         "${workspaceFolder}/cpp/IceGrid/greeter",
         "${workspaceFolder}/cpp/IceGrid/icebox",
         "${workspaceFolder}/cpp/IceGrid/locatorDiscovery",
         "${workspaceFolder}/cpp/IceGrid/query",
 
-        "${workspaceFolder}/cpp/IceStorm/counter",
-        "${workspaceFolder}/cpp/IceStorm/replicated",
-        "${workspaceFolder}/cpp/IceStorm/replicated2",
         "${workspaceFolder}/cpp/IceStorm/weather",
     ]
 }
