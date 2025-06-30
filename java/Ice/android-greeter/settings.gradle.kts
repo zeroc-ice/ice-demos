@@ -7,7 +7,7 @@ pluginManagement {
                 includeGroupByRegex("androidx.*")
             }
         }
-        maven("https://download.zeroc.com/nexus/repository/maven-nightly/")
+        maven("https://central.sonatype.com/repository/maven-snapshots/")
         mavenCentral()
         gradlePluginPortal()
     }
@@ -16,7 +16,7 @@ dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         // This demo uses the latest Ice nightly build published in ZeroC's maven-nightly repository.
-        maven("https://download.zeroc.com/nexus/repository/maven-nightly/")
+        maven("https://central.sonatype.com/repository/maven-snapshots/")
         google()
         mavenCentral()
     }
