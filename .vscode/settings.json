@@ -29,15 +29,11 @@
 
         "${workspaceFolder}/cpp/IceDiscovery/greeter",
 
-        "${workspaceFolder}/cpp/IceGrid/customLocator",
         "${workspaceFolder}/cpp/IceGrid/greeter",
         "${workspaceFolder}/cpp/IceGrid/icebox",
         "${workspaceFolder}/cpp/IceGrid/locatorDiscovery",
         "${workspaceFolder}/cpp/IceGrid/query",
 
-        "${workspaceFolder}/cpp/IceStorm/counter",
-        "${workspaceFolder}/cpp/IceStorm/replicated",
-        "${workspaceFolder}/cpp/IceStorm/replicated2",
         "${workspaceFolder}/cpp/IceStorm/weather",
     ]
 }
