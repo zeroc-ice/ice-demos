@@ -42,7 +42,7 @@ Refer to the README.md file in each demo directory for usage instructions.
 The CMake script will automatically download the required NuGet packages when you
 build the demos. The NuGet packages are cached the [cmake](./cmake) directory.
 
-## Building the demos
+## Building the Demos
 
 Follow the instructions provided in each demo’s README.md file.
 

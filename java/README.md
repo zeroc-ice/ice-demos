@@ -6,7 +6,7 @@ demonstrates a specific feature or programming technique.
 ## Building Requirements
 
 1. **Java JDK**
-   JDK 17 or later, you can download the Oracle JDK from [oracle.com](https://www.oracle.com/java/technologies/downloads/).
+   JDK 17 or later. You can download the Oracle JDK from [oracle.com](https://www.oracle.com/java/technologies/downloads/).
 
 2. **ZeroC Nightly Repository**
    The included Gradle projects are setup to use the ZeroC nightly maven repository.

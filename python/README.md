@@ -6,10 +6,10 @@ demonstrates a specific feature or programming technique.
 ## Building Requirements
 
 1. **Python**
-   Python 3.12 or later, you can download Python from [python.org](https://www.python.org/downloads/)
+   Python 3.12 or later. You can download Python from [python.org](https://www.python.org/downloads/)
 
 2. **ZeroC Nightly Pypi Respository**
-   The projects are setup to use Ice for Python nightly builds from ZeroC nightly PYPI repository.
+   The projects are setup to use Ice for Python nightly builds from the ZeroC nightly PYPI repository.
    See [Installing Nightly Builds](https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#python) for setup instructions.
 
 ## Building the demos
