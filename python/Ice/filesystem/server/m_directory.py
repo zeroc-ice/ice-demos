@@ -9,19 +9,19 @@ class MDirectory(Directory, MNode):
     Provides an in-memory implementation of the Slice interface Directory.
     """
 
-    def __init__(self, name):
+    def __init__(self, name: str):
         """
-        Initializes a MFile with the given name.
+        Initializes a MDirectory with the given name.
 
         Parameters
         ----------
         name : str
-            The name of the file.
+            The name of the directory.
         """
         super().__init__(name)
         self._contents = []
 
-    def list(self, current: Ice.Current) -> [NodePrx]:
+    def list(self, _: Ice.Current) -> list[NodePrx]:
         return self._contents
 
     def addChild(self, child: NodePrx) -> None:
