@@ -11,12 +11,12 @@ class MDirectory(Directory, MNode):
 
     def __init__(self, name: str):
         """
-        Initializes a MFile with the given name.
+        Initializes a MDirectory with the given name.
 
         Parameters
         ----------
         name : str
-            The name of the file.
+            The name of the directory.
         """
         super().__init__(name)
         self._contents = []
