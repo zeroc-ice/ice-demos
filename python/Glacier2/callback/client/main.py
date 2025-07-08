@@ -1,22 +1,23 @@
 #!/usr/bin/env python
 # Copyright (c) ZeroC, Inc.
 
-import Ice
-import Glacier2
 import asyncio
 import getpass
 import sys
+from datetime import datetime, timedelta
+
+import Glacier2
+import Ice
+from common.time import toTimestamp
 from EarlyRiser import AlarmClockPrx, WakeUpServicePrx
 from mock_alarm_clock import MockAlarmClock
-from common.time import toTimestamp
-from datetime import datetime, timedelta
+
 
 async def main():
     loop = asyncio.get_running_loop()
     # Create an Ice communicator. We'll use this communicator to create proxies, manage outgoing connections, and
     # create an object adapter. We enable asyncio support by passing the current event loop to initialize.
     async with Ice.initialize(sys.argv, eventLoop=loop) as communicator:
-
         # Create a proxy to the Glacier2 router. The addressing information (transport, host and port number) is
         # derived from the value of Glacier2.Client.Endpoints in the glacier2 router configuration file.
         router = Glacier2.RouterPrx(communicator, "Glacier2/router:tcp -h localhost -p 4063")
@@ -43,7 +44,8 @@ async def main():
         # verify the Ring callback is never delivered if you provide a different category.
         mockAlarmClock = MockAlarmClock(loop)
         alarmClock = AlarmClockPrx.uncheckedCast(
-            adapter.add(mockAlarmClock, Ice.Identity(name="alarmClock", category=clientCategory)))
+            adapter.add(mockAlarmClock, Ice.Identity(name="alarmClock", category=clientCategory))
+        )
 
         # Create a proxy to the wake-up service.
         wakeUpService = WakeUpServicePrx(communicator, "wakeUpService:tcp -h localhost -p 4061")
@@ -58,6 +60,7 @@ async def main():
         # Wait until the "stop" button is pressed on the mock alarm clock.
         await mockAlarmClock.waitForStopPressed()
         print("Stop button pressed, exiting...")
+
 
 if __name__ == "__main__":
     asyncio.run(main())

@@ -1,7 +1,8 @@
 # Copyright (c) ZeroC, Inc.
 
-from Filesystem import Node
 import Ice
+from Filesystem import Node
+
 
 class MNode(Node):
     """
@@ -18,7 +19,6 @@ class MNode(Node):
             The name of the file.
         """
         self._name = name
-
 
     def name(self, current: Ice.Current) -> str:
         return self._name

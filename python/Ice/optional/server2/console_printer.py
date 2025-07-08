@@ -1,8 +1,8 @@
 # Copyright (c) ZeroC, Inc.
 
 import Ice
+from ClearSky import AtmosphericConditions, WeatherStation
 
-from ClearSky import WeatherStation, AtmosphericConditions
 
 class ConsolePrinter(WeatherStation):
     """

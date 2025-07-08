@@ -1,19 +1,20 @@
 #!/usr/bin/env python
 # Copyright (c) ZeroC, Inc.
 
-import Ice
 import asyncio
 import getpass
 import sys
 
+import Ice
+
 # Slice module VisitorCenter in Greeter.ice maps to Python module VisitorCenter.
 import VisitorCenter
+
 
 async def main():
     # Create an Ice communicator. We'll use this communicator to create proxies, and manage outgoing connections. We
     # enable asyncio support by passing the current event loop to initialize.
     async with Ice.initialize(sys.argv, eventLoop=asyncio.get_running_loop()) as communicator:
-
         # Set the default locator of the new communicator. It's the address of the Locator hosted by our IceGrid
         # registry. You can also set this proxy with the Ice.Default.Locator property.
         communicator.setDefaultLocator(Ice.LocatorPrx(communicator, "IceGrid/Locator:tcp -h localhost -p 4061"))
@@ -27,6 +28,7 @@ async def main():
         # Send a request to the remote object and get the response.
         greeting = await greeter.greetAsync(getpass.getuser())
         print(greeting)
+
 
 if __name__ == "__main__":
     asyncio.run(main())

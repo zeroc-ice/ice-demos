@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 # Copyright (c) ZeroC, Inc.
 
-import Ice
-import chatbot
 import sys
 
-def main():
+import chatbot
+import Ice
 
+
+def main():
     # Create Ice properties from the contents of the config.server file in the current working directory.
     initData = Ice.InitializationData()
     initData.properties = Ice.createProperties()
@@ -32,6 +33,7 @@ def main():
             communicator.waitForShutdown()
         except KeyboardInterrupt:
             print("Caught Ctrl+C, exiting...")
+
 
 if __name__ == "__main__":
     main()

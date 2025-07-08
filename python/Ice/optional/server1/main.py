@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 # Copyright (c) ZeroC, Inc.
 
+import sys
+
 import Ice
 from console_printer import ConsolePrinter
-import sys
+
 
 def main():
     # Create an Ice communicator. We'll use this communicator to create an object adapter.
@@ -23,6 +25,7 @@ def main():
             communicator.waitForShutdown()
         except KeyboardInterrupt:
             print("Caught Ctrl+C, exiting...")
+
 
 if __name__ == "__main__":
     main()

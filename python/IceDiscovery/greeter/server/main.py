@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 # Copyright (c) ZeroC, Inc.
 
-import Ice
-import chatbot
 import sys
+
+import chatbot
+import Ice
+
 
 def main():
     # Configure the communicator to load the IceDiscovery plug-in during initialization. This plug-in installs a default
@@ -37,6 +39,7 @@ def main():
             communicator.waitForShutdown()
         except KeyboardInterrupt:
             print("Caught Ctrl+C, exiting...")
+
 
 if __name__ == "__main__":
     main()
