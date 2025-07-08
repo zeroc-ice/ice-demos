@@ -3,10 +3,12 @@
 
 import asyncio
 import time
-import Ice
-from EarlyRiser import ButtonPressed, WakeUpService, AlarmClockPrx
 from datetime import datetime
+
+import Ice
 from common.time import toDatetime
+from EarlyRiser import AlarmClockPrx, ButtonPressed, WakeUpService
+
 
 async def callRing(alarmClock: AlarmClockPrx, wakeUpDatetime: datetime):
     """

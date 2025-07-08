@@ -1,8 +1,9 @@
 # Copyright (c) ZeroC, Inc.
 
+import Ice
 from Filesystem import Directory, NodePrx
 from m_node import MNode
-import Ice
+
 
 class MDirectory(Directory, MNode):
     """

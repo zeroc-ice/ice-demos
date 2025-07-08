@@ -1,10 +1,12 @@
 # Copyright (c) ZeroC, Inc.
 
 import asyncio
+
 import Ice
 
 # Slice module VisitorCenter in Greeter.ice maps to Python module VisitorCenter.
 import VisitorCenter
+
 
 class Chatbot(VisitorCenter.Greeter):
     """

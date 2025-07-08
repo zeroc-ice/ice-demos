@@ -1,8 +1,10 @@
 # Copyright (c) ZeroC, Inc.
 
-from EarlyRiser import AlarmClock, ButtonPressed
-import Ice
 import asyncio
+
+import Ice
+from EarlyRiser import AlarmClock, ButtonPressed
+
 
 class MockAlarmClock(AlarmClock):
     """
@@ -36,7 +38,7 @@ class MockAlarmClock(AlarmClock):
         print(f"Dispatching ring request {{ message = '{message}' }}")
         if self._needMoreTime:
             print(f"Returning {ButtonPressed.Snooze} to request more time.")
-            self._needMoreTime = False # we only snooze one time
+            self._needMoreTime = False  # we only snooze one time
             return ButtonPressed.Snooze
         else:
             if not self._stopPressed.done():

@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 # Copyright (c) ZeroC, Inc.
 
-import Ice
-import chatbot
 import sys
+
+import chatbot
+import Ice
 
 
 def main():
@@ -18,9 +19,7 @@ def main():
         # Retrieve the greeter name and greeter identity from the IceGrid-generated config file.
         properties = communicator.getProperties()
         greeterName = properties.getProperty("Ice.ProgramName")
-        greeterIdentity = Ice.stringToIdentity(
-            properties.getProperty("Greeter.Identity")
-        )
+        greeterIdentity = Ice.stringToIdentity(properties.getProperty("Greeter.Identity"))
 
         # Register the Chatbot servant with the adapter.
         adapter.add(chatbot.Chatbot(greeterName), greeterIdentity)

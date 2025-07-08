@@ -5,6 +5,7 @@ import Ice
 # Slice module VisitorCenter in Greeter.ice maps to Python module VisitorCenter.
 import VisitorCenter
 
+
 class Chatbot(VisitorCenter.Greeter):
     """
     Chatbot is an Ice servant that implements Slice interface Greeter.

@@ -1,17 +1,20 @@
 #!/usr/bin/env python
 # Copyright (c) ZeroC, Inc.
 
+import asyncio
+import signal
+import sys
+
 import Ice
 import IceStorm
-import asyncio
-from console_printer import ConsolePrinter
-import sys
-import signal
+
 # Slice module ClearSky in WeatherStation.ice maps to Python module ClearSky.
 from ClearSky import WeatherStationPrx
+from console_printer import ConsolePrinter
+
 
 async def main():
-    loop=asyncio.get_running_loop()
+    loop = asyncio.get_running_loop()
 
     # Create an Ice communicator. We'll use this communicator to create proxies, manage outgoing connections, and
     # create an object adapter. We enable asyncio support by passing the current event loop to initialize.
@@ -59,6 +62,7 @@ async def main():
         # functionalities remain available until the communicator is disposed.
         await topic.unsubscribeAsync(weatherStation)
         print(f"Unsubscribed weather station from topic '{topicName}', exiting...")
+
 
 if __name__ == "__main__":
     asyncio.run(main())

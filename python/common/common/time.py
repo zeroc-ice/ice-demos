@@ -9,6 +9,7 @@ from datetime import datetime, timezone
 SECONDS_BEFORE_EPOCH = 62135596800
 TICKS_PER_SECOND = 10_000_000
 
+
 def toTimestamp(value: datetime) -> int:
     """
     Converts a datetime to a timestamp.
@@ -25,6 +26,7 @@ def toTimestamp(value: datetime) -> int:
         Each tick is 100 nanoseconds.
     """
     return int((value.timestamp() + SECONDS_BEFORE_EPOCH) * TICKS_PER_SECOND)
+
 
 def toDatetime(timestamp: int) -> datetime:
     """

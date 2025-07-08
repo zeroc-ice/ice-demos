@@ -1,20 +1,21 @@
 #!/usr/bin/env python
 # Copyright (c) ZeroC, Inc.
 
-import Ice
-import Glacier2
 import asyncio
 import getpass
 import sys
 
+import Glacier2
+import Ice
+
 # Slice module VisitorCenter in Greeter.ice maps to Python module VisitorCenter.
 import VisitorCenter
+
 
 async def main():
     # Create an Ice communicator. We'll use this communicator to create proxies, and manage outgoing connections. We
     # enable asyncio support by passing the current event loop to initialize.
     async with Ice.initialize(sys.argv, eventLoop=asyncio.get_running_loop()) as communicator:
-
         # Create a proxy to the Glacier2 router. The addressing information (transport, host and port number) is
         # derived from the value of Glacier2.Client.Endpoints in the glacier2 router configuration file.
         router = Glacier2.RouterPrx(communicator, "Glacier2/router:tcp -h localhost -p 4063")
@@ -42,6 +43,7 @@ async def main():
         # Send a second request to observe the effect in the Glacier2 router log.
         greeting = await greeter.greetAsync("alice")
         print(greeting)
+
 
 if __name__ == "__main__":
     asyncio.run(main())
