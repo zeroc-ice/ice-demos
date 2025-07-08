@@ -9,7 +9,7 @@ class MNode(Node):
     Provides an in-memory implementation of the Slice interface Node.
     """
 
-    def __init__(self, name):
+    def __init__(self, name: str):
         """
         Initializes a MNode with the given name.
 
@@ -20,5 +20,5 @@ class MNode(Node):
         """
         self._name = name
 
-    def name(self, current: Ice.Current) -> str:
+    def name(self, _: Ice.Current) -> str:
         return self._name

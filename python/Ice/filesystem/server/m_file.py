@@ -10,7 +10,7 @@ class MFile(File, MNode):
     Provides an in-memory implementation of the Slice interface File.
     """
 
-    def __init__(self, name):
+    def __init__(self, name: str):
         """
         Initializes a MFile with the given name.
 
@@ -22,13 +22,13 @@ class MFile(File, MNode):
         super().__init__(name)
         self._lines = []
 
-    def read(self, current: Ice.Current) -> [str]:
+    def read(self, _: Ice.Current) -> list[str]:
         return self._lines
 
-    def write(self, text: [str], current: Ice.Current) -> None:
+    def write(self, text: list[str], _: Ice.Current) -> None:
         self.writeDirect(text)
 
-    def writeDirect(self, text: [str]) -> None:
+    def writeDirect(self, text: list[str]) -> None:
         """
         Writes directly to this file, without going through an Ice operation.
 
