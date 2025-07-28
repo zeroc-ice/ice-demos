@@ -1,5 +1,4 @@
+# Gradle generated build files
 bin
 build
 .gradle
-
-.DS_Store
