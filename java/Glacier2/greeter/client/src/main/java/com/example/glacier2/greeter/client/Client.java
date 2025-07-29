@@ -15,12 +15,12 @@ class Client {
         // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
         try (Communicator communicator = Util.initialize(args)) {
 
-            // Create a proxy to the Glacier2 router. The addressing information (transport, host and port number) is 
+            // Create a proxy to the Glacier2 router. The addressing information (transport, host and port number) is
             // derived from the value of Glacier2.Client.Endpoints in the glacier2 router configuration file.
             RouterPrx router = RouterPrx.createProxy(communicator, "Glacier2/router:tcp -h localhost -p 4063");
 
             // Create a session with the Glacier2 router. In this demo, the Glacier2 router is configured to accept any
-            // username/password combination. This call establishes a network connection to the Glacier2 router; the 
+            // username/password combination. This call establishes a network connection to the Glacier2 router; the
             // lifetime of the session is the same as the lifetime of the connection.
             SessionPrx session;
             try {
