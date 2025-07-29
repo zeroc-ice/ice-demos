@@ -39,8 +39,7 @@ class Chatbot implements Greeter {
                     + LocalDateTime.now().plusMinutes(5L) + ".", GreeterError.Away);
             case "carol" ->
                 throw new GreeterException("I am already greeting someone else.", GreeterError.GreetingOtherVisitor);
-            default ->
-            {
+            default -> {
                 if (name.length() > MAX_LENGTH) {
                     throw new GreeterException("Name is longer than maximum!", GreeterError.NameTooLong);
                 } else {
