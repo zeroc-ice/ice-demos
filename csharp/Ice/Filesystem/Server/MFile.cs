@@ -9,7 +9,7 @@ internal class MFile : Filesystem.FileDisp_
     private string[] _lines = [];
 
     /// <inheritdoc/>
-    // Implements Node.Name by forwarding to node.
+    // Implements Node.Name by forwarding to _node.
     public override string Name(Ice.Current current) => _node.Name(current);
 
     /// <inheritdoc/>

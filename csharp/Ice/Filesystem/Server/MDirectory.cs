@@ -9,7 +9,7 @@ internal class MDirectory : Filesystem.DirectoryDisp_
     private readonly List<Filesystem.NodePrx> _contents = [];
 
     /// <inheritdoc/>
-    // Implements Node.Name by forwarding to node.
+    // Implements Node.Name by forwarding to _node.
     public override string Name(Ice.Current current) => _node.Name(current);
 
     /// <inheritdoc/>
