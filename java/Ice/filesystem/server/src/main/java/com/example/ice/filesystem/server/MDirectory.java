@@ -18,25 +18,24 @@ public class MDirectory extends MNode implements Directory {
 
     /**
      * Constructs an {@code MDirectory}.
+     *
      * @param name the name of this directory
      */
-    MDirectory(String name)
-    {
+    MDirectory(String name) {
         super(name);
     }
 
     @Override
-    public List<NodePrx> list(Current current)
-    {
-        return _contents;
+    public NodePrx[] list(Current current) {
+        return _contents.toArray(new NodePrx[0]);
     }
 
     /**
-     * Adds a node to this directory.
+     * Adds a node to this directory
+     *
      * @param child the node proxy to add
      */
-    void addChild(NodePrx child)
-    {
+    void addChild(NodePrx child) {
         _contents.add(child);
     }
 }

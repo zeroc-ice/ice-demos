@@ -19,6 +19,5 @@ dependencyResolutionManagement {
 rootProject.name = "filesystem"
 include("client")
 include("server")
-include("serveramd")
 
 includeBuild("../../build-logic")

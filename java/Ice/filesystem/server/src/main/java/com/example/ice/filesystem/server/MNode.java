@@ -14,10 +14,10 @@ public class MNode implements Node {
 
     /**
      * Constructs an {@code MNode}.
+     *
      * @param name the name of this node
      */
-    MNode(String name)
-    {
+    MNode(String name) {
         _name = name;
     }
 

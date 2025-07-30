@@ -15,31 +15,29 @@ public class MFile extends MNode implements File {
 
     /**
      * Constructs an {@code MFile}.
+     *
      * @param name the name of this file
      */
-    MFile(String name)
-    {
+    MFile(String name) {
         super(name);
     }
 
     @Override
-    public String[] read(Current current)
-    {
+    public String[] read(Current current) {
         return _lines;
     }
 
     @Override
-    public void write(String[] text, Current current) throws WriteException
-    {
+    public void write(String[] text, Current current) throws WriteException {
         writeDirect(text);
     }
 
     /**
      * Writes directly to this file, without going through an Ice operation.
+     *
      * @param text the text to write
      */
-    void writeDirect(String[] text)
-    {
+    void writeDirect(String[] text) {
         _lines = text;
     }
 }
