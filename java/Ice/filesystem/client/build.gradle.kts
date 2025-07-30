@@ -18,7 +18,7 @@ dependencies {
 
 sourceSets {
     main {
-        // Add the Greeter.ice file from the parent slice directory to the main source set.
+        // Add the Filesystem.ice file from the parent slice directory to the main source set.
         slice {
             srcDirs("../slice")
         }
