@@ -5,11 +5,12 @@ namespace Server;
 /// <summary>Provides an in-memory implementation of the Slice interface File.</summary>
 internal class MFile : Filesystem.FileDisp_
 {
-    private readonly string _name;
+    private readonly MNode _node; // reuse the MNode implementation
     private string[] _lines = [];
 
     /// <inheritdoc/>
-    public override string Name(Ice.Current current) => _name;
+    // Implements Node.Name by forwarding to _node.
+    public override string Name(Ice.Current current) => _node.Name(current);
 
     /// <inheritdoc/>
     public override string[] Read(Ice.Current current) => _lines;
@@ -19,7 +20,7 @@ internal class MFile : Filesystem.FileDisp_
 
     /// <summary>Constructs a MFile.</summary>
     /// <param name="name">The name of this file.</param>
-    internal MFile(string name) => _name = name;
+    internal MFile(string name) => _node = new MNode(name);
 
     /// <summary>Writes directly to this file, without going through an Ice operation.</summary>
     /// <param name="text">The text to write.</param>
