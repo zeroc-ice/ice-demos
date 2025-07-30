@@ -2,6 +2,8 @@
 
 package com.example.ice.filesystem.server;
 
+import com.example.filesystem.Node;
+
 import com.zeroc.Ice.Current;
 
 /**

@@ -2,6 +2,9 @@
 
 package com.example.ice.filesystem.server;
 
+import com.example.filesystem.DirectoryPrx;
+import com.example.filesystem.FilePrx;
+
 import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.ObjectAdapter;
 import com.zeroc.Ice.Util;

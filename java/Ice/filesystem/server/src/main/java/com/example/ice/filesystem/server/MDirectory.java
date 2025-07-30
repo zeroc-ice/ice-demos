@@ -2,6 +2,9 @@
 
 package com.example.ice.filesystem.server;
 
+import com.example.filesystem.Directory;
+import com.example.filesystem.NodePrx;
+
 import com.zeroc.Ice.Current;
 
 import java.util.ArrayList;
@@ -10,7 +13,7 @@ import java.util.List;
 /**
  * Provides an in-memory implementation of the Slice interface Directory.
  */
-public class MDirectory extends Node implements Directory {
+public class MDirectory extends MNode implements Directory {
     private ArrayList<NodePrx> _contents = new ArrayList<>();
 
     /**

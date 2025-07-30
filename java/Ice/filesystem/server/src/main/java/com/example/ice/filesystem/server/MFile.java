@@ -2,12 +2,15 @@
 
 package com.example.ice.filesystem.server;
 
+import com.example.filesystem.File;
+import com.example.filesystem.WriteException;
+
 import com.zeroc.Ice.Current;
 
 /**
  * Provides an in-memory implementation of the Slice interface File.
  */
-public class MFile extends Node implements File {
+public class MFile extends MNode implements File {
     private String[] _lines = {};
 
     /**

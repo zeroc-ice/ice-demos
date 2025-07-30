@@ -2,6 +2,7 @@
 
 #pragma once
 
+["java:identifier:com.example.filesystem"]
 module Filesystem
 {
     /// Represents a write failure.
