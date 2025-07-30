@@ -1,4 +1,4 @@
-# Greeter
+# Filesystem
 
 This demo implements the filesystem application shown at the end of Java mapping chapter in the Ice manual.
 
