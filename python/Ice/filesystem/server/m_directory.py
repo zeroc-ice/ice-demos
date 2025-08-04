@@ -12,7 +12,7 @@ class MDirectory(Directory, MNode):
 
     def __init__(self, name: str):
         """
-        Initializes a MDirectory with the given name.
+        Initializes an MDirectory with the given name.
 
         Parameters
         ----------

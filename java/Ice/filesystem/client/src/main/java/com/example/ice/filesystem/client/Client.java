@@ -14,14 +14,8 @@ import com.zeroc.Ice.Util;
 
 class Client {
     public static void main(String[] args) {
-        // Configures the communicator to use a Slice loader that loads exception WriteException. This is necessary in
-        // Java applications that unmarshal classes or exceptions, when the classes/exceptions or their enclosing
-        // module(s) are remapped using java:identifier, like in this demo.
-        var initData = new InitializationData();
-        initData.sliceLoader = new ClassSliceLoader(WriteException.class);
-
         // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
-        try (Communicator communicator = Util.initialize(args, initData)) {
+        try (Communicator communicator = Util.initialize(args)) {
 
             // Create a proxy for the root directory.
             DirectoryPrx rootDir = DirectoryPrx.createProxy(communicator, "RootDir:tcp -h localhost -p 4061");

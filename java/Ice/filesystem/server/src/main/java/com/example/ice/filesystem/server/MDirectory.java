@@ -8,12 +8,11 @@ import com.example.filesystem.NodePrx;
 import com.zeroc.Ice.Current;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Provides an in-memory implementation of the Slice interface Directory.
  */
-public class MDirectory extends MNode implements Directory {
+class MDirectory extends MNode implements Directory {
     private ArrayList<NodePrx> _contents = new ArrayList<>();
 
     /**

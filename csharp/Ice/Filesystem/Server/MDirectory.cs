@@ -15,7 +15,7 @@ internal class MDirectory : Filesystem.DirectoryDisp_
     /// <inheritdoc/>
     public override Filesystem.NodePrx[] List(Ice.Current current) => _contents.ToArray();
 
-    /// <summary>Constructs a MDirectory.</summary>
+    /// <summary>Constructs an MDirectory.</summary>
     /// <param name="name">The name of this directory.</param>
     internal MDirectory(string name) => _node = new MNode(name);
 

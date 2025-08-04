@@ -10,7 +10,7 @@ import com.zeroc.Ice.Current;
 /**
  * Provides an in-memory implementation of the Slice interface File.
  */
-public class MFile extends MNode implements File {
+class MFile extends MNode implements File {
     private String[] _lines = {};
 
     /**

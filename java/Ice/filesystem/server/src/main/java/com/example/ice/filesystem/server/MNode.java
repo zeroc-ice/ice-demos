@@ -9,7 +9,7 @@ import com.zeroc.Ice.Current;
 /**
  * Provides an in-memory implementation of the Slice interface Node.
  */
-public class MNode implements Node {
+class MNode implements Node {
     private final String _name;
 
     /**
