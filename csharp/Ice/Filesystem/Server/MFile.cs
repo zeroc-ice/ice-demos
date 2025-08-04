@@ -18,7 +18,7 @@ internal class MFile : Filesystem.FileDisp_
     /// <inheritdoc/>
     public override void Write(string[] text, Ice.Current current) => WriteDirect(text);
 
-    /// <summary>Constructs a MFile.</summary>
+    /// <summary>Constructs an MFile.</summary>
     /// <param name="name">The name of this file.</param>
     internal MFile(string name) => _node = new MNode(name);
 

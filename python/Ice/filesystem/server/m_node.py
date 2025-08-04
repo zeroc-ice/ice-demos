@@ -11,7 +11,7 @@ class MNode(Node):
 
     def __init__(self, name: str):
         """
-        Initializes a MNode with the given name.
+        Initializes an MNode with the given name.
 
         Parameters
         ----------

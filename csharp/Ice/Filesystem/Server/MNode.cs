@@ -10,7 +10,7 @@ internal class MNode : Filesystem.NodeDisp_
     /// <inheritdoc/>
     public override string Name(Ice.Current current) => _name;
 
-    /// <summary>Constructs a MNode.</summary>
+    /// <summary>Constructs an MNode.</summary>
     /// <param name="name">The name of this node.</param>
     internal MNode(string name) => _name = name;
 }

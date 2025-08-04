@@ -1,6 +1,6 @@
 # Filesystem
 
-This demo implements the filesystem application shown at the end of Ruby mapping chapter in the Ice manual.
+The Filesystem demo shows how to write a simple filesystem application using interface inheritance.
 
 Ice for Ruby supports only client-side applications. As a result, you first need to start a Filesystem server
 implemented in a language with server-side support, such as Python, Java, or C#.

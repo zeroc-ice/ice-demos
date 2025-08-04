@@ -1,6 +1,6 @@
 # Ice Filesystem
 
-This demo implements the filesystem application shown at the end of JavaScript mapping chapter in the Ice manual.
+The Filesystem demo shows how to write a simple filesystem application using interface inheritance.
 
 Follow these steps to build and run the demo:
 

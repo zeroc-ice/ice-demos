@@ -12,7 +12,7 @@ class MFile(File, MNode):
 
     def __init__(self, name: str):
         """
-        Initializes a MFile with the given name.
+        Initializes an MFile with the given name.
 
         Parameters
         ----------
