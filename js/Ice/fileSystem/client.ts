@@ -26,17 +26,15 @@ async function listRecursive(dir: Filesystem.DirectoryPrx, depth: number = 0) {
     const contents = await dir.list();
 
     for (const node of contents) {
-        console.assert(node != null); // The node proxies returned by list() are never null.
-
-        const subdir = await Filesystem.DirectoryPrx.checkedCast(node);
+        const subdir = await Filesystem.DirectoryPrx.checkedCast(node!);
         const kind = subdir != null ? "directory" : "file";
-        const name = await node.name();
+        const name = await node!.name();
         console.log(`${indent}${name} ${kind}:`);
 
         if (subdir != null) {
             await listRecursive(subdir, depth);
         } else {
-            const file: Filesystem.FilePrx = Filesystem.FilePrx.uncheckedCast(node);
+            const file: Filesystem.FilePrx = Filesystem.FilePrx.uncheckedCast(node!);
             const lines = await file.read();
             for (const line of lines) {
                 console.log(`${indent}\t${line}`);

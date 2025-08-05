@@ -28,9 +28,9 @@ try {
 console.assert(topic !== null);
 
 // Create a WeatherStation proxy using the publisher proxy of the topic.
-const publisher = await topic.getPublisher();
+const publisher = await topic!.getPublisher();
 console.assert(publisher != null); // The proxy returned by getPublisher is never null.
-const weatherStation = ClearSky.WeatherStationPrx.uncheckedCast(publisher);
+const weatherStation = ClearSky.WeatherStationPrx.uncheckedCast(publisher!);
 
 // The proxy returned by IceStorm is a two-way proxy. We can convert it into a oneway proxy if we don't need
 // acknowledgments from IceStorm.
