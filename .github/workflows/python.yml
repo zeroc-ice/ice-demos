@@ -11,7 +11,7 @@ on:
 jobs:
   ruff:
     name: Ruff
-    runs-on: ubuntu-24.04
+    runs-on: macos-15
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
