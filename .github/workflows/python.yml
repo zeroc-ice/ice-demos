@@ -24,3 +24,48 @@ jobs:
 
       - name: Ruff format
         run: ruff format . --check --diff
+
+      - name: Install pyright
+        run: npm install -g pyright
+
+      - name: Run pyright on each demo
+        run: |
+          set -euo pipefail
+
+          any_failed=0
+          find . -name requirements.txt | while read -r reqfile; do
+            dir=$(dirname "$reqfile")
+            echo "===> Processing $dir"
+
+            # Create venv in the same directory
+            python3 -m venv "$dir/venv"
+            source "$dir/venv/bin/activate"
+
+            # Upgrade pip, install requirements
+            pip install --upgrade pip
+            pip install -r "$reqfile"
+
+            # Compile Slice files if they exist
+            slice_dir="$dir/../slice"
+            if [ -d "$slice_dir" ]; then
+              echo "===> Running slice2py in $dir"
+              (cd "$dir" && slice2py "$slice_dir"/*.ice)
+            fi
+
+            # Run pyright
+            echo "===> Running pyright in $dir"
+            if ! pyright "$dir"; then
+              echo "❌ pyright failed in $dir"
+              any_failed=1
+            else
+              echo "✅ pyright succeeded in $dir"
+            fi
+
+            # Deactivate
+            deactivate
+          done
+
+          if [ "$any_failed" -eq 1 ]; then
+            echo "One or more pyright checks failed."
+            exit 1
+          fi

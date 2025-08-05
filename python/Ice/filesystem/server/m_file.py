@@ -22,10 +22,10 @@ class MFile(File, MNode):
         super().__init__(name)
         self._lines = []
 
-    def read(self, _: Ice.Current) -> list[str]:
+    def read(self, current: Ice.Current) -> list[str]:
         return self._lines
 
-    def write(self, text: list[str], _: Ice.Current) -> None:
+    def write(self, text: list[str], current: Ice.Current) -> None:
         self.writeDirect(text)
 
     def writeDirect(self, text: list[str]) -> None:
