@@ -32,8 +32,11 @@ try {
     greeting = await slowGreeter4s.greet("alice");
     console.log(`Received unexpected greeting: ${greeting}`);
 } catch (exception) {
-    console.assert(exception instanceof Ice.InvocationTimeoutException, exception);
-    console.log(`Caught InvocationTimeoutException, as expected: ${exception.message}`);
+    if (exception instanceof Ice.InvocationTimeoutException) {
+        console.log(`Caught InvocationTimeoutException, as expected: ${exception.message}`);
+    } else {
+        throw exception;
+    }
 }
 
 // Send a request to the slow greeter, and cancel this request after 4 seconds.
@@ -43,8 +46,11 @@ try {
     greeting = await greetingResult;
     console.log(`Received unexpected greeting: ${greeting}`);
 } catch (exception) {
-    console.assert(exception instanceof Ice.InvocationCanceledException, exception);
-    console.log(`Caught InvocationCanceledException, as expected: ${exception.message}`);
+    if (exception instanceof Ice.InvocationTimeoutException) {
+        console.log(`Caught InvocationTimeoutException, as expected: ${exception.message}`);
+    } else {
+        throw exception;
+    }
 }
 
 // Verify the regular greeter still works.
