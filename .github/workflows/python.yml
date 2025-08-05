@@ -11,7 +11,7 @@ on:
 jobs:
   ruff:
     name: Ruff
-    runs-on: ubuntu-24.04
+    runs-on: macos-15
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -24,3 +24,49 @@ jobs:
 
       - name: Ruff format
         run: ruff format . --check --diff
+
+      - name: Install pyright
+        run: npm install -g pyright
+
+      - name: Run pyright on each demo
+        run: |
+          set -euo pipefail
+
+          any_failed=0
+          while read -r reqfile; do
+            demo_dir=$(dirname "$reqfile")
+            echo "===> Processing $demo_dir"
+
+            pushd "$demo_dir" > /dev/null
+
+            # Create and activate virtualenv
+            python3 -m venv venv
+            source venv/bin/activate
+
+            # Install requirements
+            pip install --upgrade pip
+            pip install -r requirements.txt
+
+            # Run slice2py if ../slice exists
+            if [ -d ../slice ]; then
+              echo "===> Running slice2py in $demo_dir"
+              slice2py ../slice/*.ice
+            fi
+
+            # Run pyright
+            echo "===> Running pyright in $demo_dir"
+            if ! pyright .; then
+              echo "❌ pyright failed in $demo_dir"
+              any_failed=1
+            else
+              echo "✅ pyright passed in $demo_dir"
+            fi
+
+            deactivate
+            popd > /dev/null
+          done < <(find . -name requirements.txt)
+
+          if [ "$any_failed" -eq 1 ]; then
+            echo "One or more pyright checks failed."
+            exit 1
+          fi

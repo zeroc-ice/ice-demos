@@ -20,5 +20,5 @@ class MNode(Node):
         """
         self._name = name
 
-    def name(self, _: Ice.Current) -> str:
+    def name(self, current: Ice.Current) -> str:
         return self._name

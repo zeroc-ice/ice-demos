@@ -42,7 +42,8 @@ async def main():
 
         # Register the MockAlarmClock servant with the adapter. It uses the category retrieved from the router. You can
         # verify the Ring callback is never delivered if you provide a different category.
-        mockAlarmClock = MockAlarmClock(loop)
+        stopPressed = loop.create_future()
+        mockAlarmClock = MockAlarmClock(stopPressed)
         alarmClock = AlarmClockPrx.uncheckedCast(
             adapter.add(mockAlarmClock, Ice.Identity(name="alarmClock", category=clientCategory))
         )
@@ -58,7 +59,7 @@ async def main():
         print("Wake-up call scheduled, falling asleep...")
 
         # Wait until the "stop" button is pressed on the mock alarm clock.
-        await mockAlarmClock.waitForStopPressed()
+        await stopPressed
         print("Stop button pressed, exiting...")
 
 

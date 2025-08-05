@@ -22,7 +22,7 @@ class MDirectory(Directory, MNode):
         super().__init__(name)
         self._contents = []
 
-    def list(self, _: Ice.Current) -> list[NodePrx]:
+    def list(self, current: Ice.Current) -> list[NodePrx]:
         return self._contents
 
     def addChild(self, child: NodePrx) -> None:
