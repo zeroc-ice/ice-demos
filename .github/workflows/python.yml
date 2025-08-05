@@ -33,7 +33,7 @@ jobs:
           set -euo pipefail
 
           any_failed=0
-          find . -name requirements.txt | while read -r reqfile; do
+          while read -r reqfile; do
             demo_dir=$(dirname "$reqfile")
             echo "===> Processing $demo_dir"
 
@@ -64,7 +64,7 @@ jobs:
 
             deactivate
             popd > /dev/null
-          done
+          done < <(find . -name requirements.txt)
 
           if [ "$any_failed" -eq 1 ]; then
             echo "One or more pyright checks failed."
