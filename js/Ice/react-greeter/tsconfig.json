@@ -16,9 +16,12 @@
 
         /* Linting */
         "strict": true,
+        "noImplicitAny": true,
+        "noImplicitOverride": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitReturns": true,
         "noUnusedLocals": true,
-        "noUnusedParameters": true,
-        "noFallthroughCasesInSwitch": true
+        "noUnusedParameters": true
     },
     "include": ["src"]
 }
