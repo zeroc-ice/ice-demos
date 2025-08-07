@@ -39,7 +39,9 @@ async def main():
         print(greeting)
 
         # One more time, this time with an implicit context set on the communicator.
-        communicator.getImplicitContext().put("language", "de")
+        implicitContext = communicator.getImplicitContext()
+        assert implicitContext is not None
+        implicitContext.put("language", "de")
         greeting = await greeter.greetAsync("bob")
         print(greeting)
 

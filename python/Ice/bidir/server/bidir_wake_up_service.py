@@ -61,6 +61,7 @@ class BidirWakeUpService(WakeUpService):
         print(f"Dispatching wakeMeUp request {{ timeStamp = '{wakeUpDatetime.astimezone()}' }}")
 
         # Create a proxy to the client's alarm clock. This connection-bound proxy is called a "fixed proxy".
+        assert current.con is not None
         alarmClock = AlarmClockPrx.uncheckedCast(current.con.createProxy(Ice.Identity(name="alarmClock")))
 
         # Schedule the callRing coroutine in the current event loop. Ice dispatches async methods using the configured
