@@ -17,7 +17,7 @@ const adapter = await communicator.createObjectAdapter("");
 communicator.setDefaultObjectAdapter(adapter);
 
 // Register the MockAlarmClock servant with the adapter. The wake up service knows we use identity "alarmClock".
-var mockAlarmClock = new MockAlarmClock();
+const mockAlarmClock = new MockAlarmClock();
 adapter.add(mockAlarmClock, Ice.stringToIdentity("alarmClock"));
 
 // Create a proxy to the wake-up service.

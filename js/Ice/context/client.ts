@@ -6,7 +6,7 @@ import process from "node:process";
 
 // Set the Ice.ImplicitContext property to "Shared" before calling Ice.initialize.
 // This is only necessary for the implicit context API (see below).
-var initData = new Ice.InitializationData();
+const initData = new Ice.InitializationData();
 initData.properties = Ice.createProperties(process.argv);
 initData.properties.setProperty("Ice.ImplicitContext", "Shared");
 

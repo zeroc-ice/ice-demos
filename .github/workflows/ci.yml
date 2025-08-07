@@ -135,6 +135,9 @@ jobs:
             npm run build
             if ($LASTEXITCODE -ne 0) { throw "npm build failed in $($_.DirectoryName)" }
 
+            npx eslint .
+            if ($LASTEXITCODE -ne 0) { throw "ESLint failed in $($_.DirectoryName)" }
+
             Pop-Location
           }
 

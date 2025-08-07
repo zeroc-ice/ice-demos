@@ -21,7 +21,7 @@ await listRecursive(rootDir);
  * @param depth The current nesting level (for indentation).
  **/
 async function listRecursive(dir: Filesystem.DirectoryPrx, depth: number = 0) {
-    var indent = "\t".repeat(++depth);
+    const indent = "\t".repeat(++depth);
 
     const contents = await dir.list();
 
