@@ -48,6 +48,7 @@ main(int argc, char* argv[])
     std::optional<Ice::ObjectPrx> publisher = topic->getPublisher();
     // The publisher proxy is never null.
     assert(publisher);
+
     // Create a WeatherStation proxy from the publisher proxy.
     auto weatherStation = Ice::uncheckedCast<WeatherStationPrx>(*publisher);
 

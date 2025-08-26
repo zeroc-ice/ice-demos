@@ -67,7 +67,6 @@ Follow the instructions provided in each demo’s README.md file.
 | [Ice Forwarder](./Ice/forwarder/)                       | Shows how to write a servant that forwards all requests it receives to another remote Ice object.          |
 | [Ice Greeter](./Ice/greeter/)                           | Shows how to call and implement a canonical Greeter application with Ice. **Start with this demo!**        |
 | [Ice Middleware](./Ice/middleware/)                     | Shows how to write a simple middleware and how to add this middleware to an object adapter.                |
-| [Ice Multicast](./Ice/multicast/)                       | Shows how to use UDP multicast.                                                                            |
 | [Ice Optional](./Ice/optional/)                         | Shows how to add a field to a Slice class without breaking interop with existing clients and servers.      |
 | [IceBox Greeter](./IceBox/greeter/)                     | Shows how to create an IceBox service.                                                                     |
 | [IceDiscovery Greeter](./IceDiscovery/greeter)          | Shows how to use the IceDiscovery plug-in.                                                                 |
