@@ -4,6 +4,7 @@
 
 #include <Ice/Ice.h>
 #include <Latency.h>
+#include <chrono>
 
 using namespace std;
 using namespace Demo;
