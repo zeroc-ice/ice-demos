@@ -39,7 +39,7 @@ class Client {
             GreeterPrx greeter = GreeterPrx.createProxy(communicator, "greeter:tcp -h localhost -p 4061");
 
             // Configure the proxy to route requests using the Glacier2 router.
-            greeter = GreeterPrx.uncheckedCast(greeter.ice_router(router));
+            greeter = greeter.ice_router(router);
 
             // Send a request to the remote object and get the response with greet.
             String greeting = greeter.greet(System.getProperty("user.name"));
