@@ -4,7 +4,6 @@
 import asyncio
 import time
 from datetime import datetime
-from typing import override
 
 import Ice
 from common.time import toDatetime
