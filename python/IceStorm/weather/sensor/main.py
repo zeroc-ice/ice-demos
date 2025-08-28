@@ -35,6 +35,7 @@ async def main():
         # Create a Weather station proxy using the publisher proxy of the topic. The proxy returned by getPublisher is
         # never null.
         publisher = await topic.getPublisherAsync()
+        assert publisher is not None
         weatherStation = WeatherStationPrx.uncheckedCast(publisher)
 
         # The proxy returned by IceStorm is a two-way proxy. We can convert it into a oneway proxy if we don't need
