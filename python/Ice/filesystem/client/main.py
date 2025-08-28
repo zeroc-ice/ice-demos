@@ -6,7 +6,7 @@ import sys
 
 import Ice
 
-# Slice module Filesystem in Filesystem.ice maps to C# namespace Filesystem.
+# Slice module Filesystem in Filesystem.ice maps to Python module Filesystem.
 from Filesystem import DirectoryPrx, FilePrx
 
 
@@ -27,10 +27,14 @@ async def list_recursive(directory, depth=0):
     contents = await directory.listAsync()
 
     for node in contents:
-        assert node is not None  # The node proxies returned by list() are never null.
+        # The node proxies returned by list() are never null.
+        assert node is not None
 
+        # Check if this node is a directory by asking the remote object.
         subdir = await DirectoryPrx.checkedCastAsync(node)
-        kind = "directory" if subdir is not None else "file"
+
+        # We assume it's a file if it's not a directory.
+        kind = "(directory)" if subdir is not None else "(file)"
         nodeName = await node.nameAsync()
 
         print(f"{indent}{nodeName} {kind}:")
@@ -38,6 +42,7 @@ async def list_recursive(directory, depth=0):
         if subdir is not None:
             await list_recursive(subdir, depth)
         else:
+            # Read and print the contents of the file.
             file = FilePrx.uncheckedCast(node)
             lines = await file.readAsync()
             for line in lines:
@@ -45,8 +50,8 @@ async def list_recursive(directory, depth=0):
 
 
 async def main():
-    # Create an Ice communicator. We'll use this communicator to create proxies, and manage outgoing connections. We
-    # enable asyncio support by passing the current event loop to initialize.
+    # Create an Ice communicator. We'll use this communicator to create proxies, and manage outgoing connections.
+    # We enable asyncio support by passing the current event loop to initialize.
     async with Ice.initialize(sys.argv, eventLoop=asyncio.get_running_loop()) as communicator:
         # Create a proxy for the root directory.
         rootDir = DirectoryPrx(communicator, "RootDir:tcp -h localhost -p 4061")

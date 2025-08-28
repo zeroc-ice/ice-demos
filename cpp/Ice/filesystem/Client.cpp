@@ -8,7 +8,8 @@
 using namespace std;
 using namespace Filesystem;
 
-/// Recursively print the contents of a directory in tree fashion. For files, show the contents of each file.
+/// Recursively print the contents of a directory in tree fashion.
+/// For files, show the contents of each file.
 /// @param dir The directory to list.
 /// @param depth The current nesting level (for indentation).
 static void
@@ -22,7 +23,10 @@ listRecursive(const DirectoryPrx& dir, size_t depth = 0)
     for (const optional<NodePrx>& node : contents)
     {
         auto subdir = Ice::checkedCast<DirectoryPrx>(node);
+
+        // We assume it's a file if it's not a directory.
         cout << indent << node->name() << (subdir ? " (directory):" : " (file):") << endl;
+
         if (subdir)
         {
             listRecursive(*subdir, depth);

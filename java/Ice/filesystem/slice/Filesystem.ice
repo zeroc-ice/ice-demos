@@ -5,7 +5,7 @@
 ["java:identifier:com.example.filesystem"]
 module Filesystem
 {
-    /// Represents a write failure.
+    /// Represents a {@link File::write} failure.
     exception WriteException
     {
         /// The reason for the write failure.
@@ -43,7 +43,7 @@ module Filesystem
     interface Directory extends Node
     {
         /// Gets the contents of the directory.
-        /// @return The contents of the directory, as a list of non-null node proxies.
+        /// @return The contents of the directory, as a list of node proxies.
         idempotent NodeSeq list();
     }
 }

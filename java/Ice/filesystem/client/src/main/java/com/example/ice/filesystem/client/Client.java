@@ -5,11 +5,8 @@ package com.example.ice.filesystem.client;
 import com.example.filesystem.DirectoryPrx;
 import com.example.filesystem.FilePrx;
 import com.example.filesystem.NodePrx;
-import com.example.filesystem.WriteException;
 
-import com.zeroc.Ice.ClassSliceLoader;
 import com.zeroc.Ice.Communicator;
-import com.zeroc.Ice.InitializationData;
 import com.zeroc.Ice.Util;
 
 class Client {
@@ -27,7 +24,8 @@ class Client {
     }
 
     /**
-     * Recursively prints the contents of a directory in tree fashion. For files, show the contents of each file.
+     * Recursively prints the contents of a directory in tree fashion.
+     * For files, show the contents of each file.
      *
      * @param dir the directory to list
      * @param depth the current nesting level (for indentation)
@@ -35,10 +33,12 @@ class Client {
     private static void listRecursive(DirectoryPrx dir, int depth) {
         String indent = "\t".repeat(++depth);
 
-        // The node proxies returned by list() are never null.
         NodePrx[] contents = dir.list();
 
         for (NodePrx node : contents) {
+            // The node proxies returned by list() are never null.
+            java.util.Objects.requireNonNull(node);
+
             // Check if this node is a directory by asking the remote object.
             DirectoryPrx subdir = DirectoryPrx.checkedCast(node);
 

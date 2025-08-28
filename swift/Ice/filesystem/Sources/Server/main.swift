@@ -2,8 +2,9 @@
 
 import Ice
 
-// CtrlCHandler is a helper struct that handles Ctrl+C and similar signals. It must be constructed at the beginning
-// of the program, before creating an Ice communicator or starting any thread.
+// CtrlCHandler is a helper struct that handles Ctrl+C and similar signals.
+// It must be constructed at the beginning of the program,
+// before creating an Ice communicator or starting any thread.
 let ctrlCHandler = CtrlCHandler()
 
 // Create an Ice communicator. We'll use this communicator to create an object adapter.
@@ -23,19 +24,19 @@ let adapter = try communicator.createObjectAdapterWithEndpoints(
 let root = MDirectory(name: "/")
 try adapter.add(servant: root, id: Ice.Identity(name: "RootDir"))
 
-// Create a file called "README", add this servant to the adapter, and add the corresponding proxy to the root
-// directory.
+// Create a file called "README", add this servant to the adapter,
+// and add the corresponding proxy to the root directory.
 let readme = MFile(name: "README")
 await readme.writeDirect(text: ["This file system contains a collection of poetry."])
 try await root.addChild(uncheckedCast(prx: adapter.addWithUUID(readme), type: FilePrx.self))
 
-// Create a directory called "Coleridge", add this servant to the adapter, and add the corresponding proxy to the
-// root directory.
+// Create a directory called "Coleridge", add this servant to the adapter,
+// and add the corresponding proxy to the root directory.
 let coleridge = MDirectory(name: "Coleridge")
 try await root.addChild(uncheckedCast(prx: adapter.addWithUUID(coleridge), type: DirectoryPrx.self))
 
-// Create a file called "Kubla_Khan", add this servant to the adapter, and add the corresponding proxy to the
-// Coleridge directory.
+// Create a file called "Kubla_Khan", add this servant to the adapter,
+// and add the corresponding proxy to the Coleridge directory.
 let kublaKhan = MFile(name: "Kubla_Khan")
 await kublaKhan.writeDirect(text: [
     "In Xanadu did Kubla Khan",
@@ -56,5 +57,6 @@ ctrlCHandler.setCallback { signal in
     communicator.shutdown()
 }
 
-// Wait until the communicator is shut down. Here, this occurs when the user presses Ctrl+C.
+// Wait until the communicator is shut down.
+// Here, this occurs when the user presses Ctrl+C.
 await communicator.shutdownCompleted()

@@ -14,8 +14,8 @@ DirectoryPrx rootDir = DirectoryPrxHelper.createProxy(communicator, "RootDir:tcp
 Console.WriteLine("Contents of root directory:");
 await ListRecursiveAsync(rootDir);
 
-/// <summary>Recursively prints the contents of a directory in tree fashion. For files, show the contents of each file.
-/// </summary>
+/// <summary>Recursively prints the contents of a directory in tree fashion.
+/// For files, show the contents of each file.</summary>
 /// <param name="dir">The directory to list./<param>
 /// <param name="depth">The current nesting level (for indentation).</param>
 async Task ListRecursiveAsync(DirectoryPrx dir, int depth = 0)
@@ -26,7 +26,8 @@ async Task ListRecursiveAsync(DirectoryPrx dir, int depth = 0)
 
     foreach (NodePrx? node in contents)
     {
-        Debug.Assert(node is not null); // The node proxies returned by list() are never null.
+        // The node proxies returned by list() are never null.
+        Debug.Assert(node is not null);
 
         // Check if this node is a directory by asking the remote object.
         DirectoryPrx? subdir = await DirectoryPrxHelper.checkedCastAsync(node);
