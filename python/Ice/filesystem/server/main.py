@@ -22,18 +22,18 @@ def main():
         # Create a file called "README", add this servant to the adapter,
         # and add the corresponding proxy to the root directory.
         file = MFile("README")
-        file.writeDirect(["This file system contains a collection of poetry."])
-        root.addChild(FilePrx.uncheckedCast(adapter.addWithUUID(file)))
+        file.write_direct(["This file system contains a collection of poetry."])
+        root.add_child(FilePrx.uncheckedCast(adapter.addWithUUID(file)))
 
         # Create a directory called "Coleridge", add this servant to the adapter,
         # and add the corresponding proxy to the root directory.
         coleridge = MDirectory("Coleridge")
-        root.addChild(DirectoryPrx.uncheckedCast(adapter.addWithUUID(coleridge)))
+        root.add_child(DirectoryPrx.uncheckedCast(adapter.addWithUUID(coleridge)))
 
         # Create a file called "Kubla_Khan", add this servant to the adapter,
         # and add the corresponding proxy to the Coleridge directory.
         file = MFile("Kubla_Khan")
-        file.writeDirect(
+        file.write_direct(
             [
                 "In Xanadu did Kubla Khan",
                 "A stately pleasure-dome decree:",
@@ -42,7 +42,7 @@ def main():
                 "Down to a sunless sea.",
             ]
         )
-        coleridge.addChild(FilePrx.uncheckedCast(adapter.addWithUUID(file)))
+        coleridge.add_child(FilePrx.uncheckedCast(adapter.addWithUUID(file)))
 
         # Start dispatching requests.
         adapter.activate()
