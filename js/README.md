@@ -27,6 +27,6 @@ implemented in a language that fully supports server-side functionality, such as
 | [Ice Filesystem](./Ice/filesystem/)       | Shows the power of interface inheritance in Slice.                                                  |
 | [Ice Greeter](./Ice/greeter/)             | Shows how to call and implement a canonical Greeter application with Ice. **Start with this demo!** |
 | [Ice React Greeter](./Ice/react-greeter/) | Shows how to use Ice in a modern React application with a web UI.                                   |
-| [IceStorm Weather](./IceStorm/Weather/)   | Shows how to use IceStorm to create a simple pub-sub application.                                   |
+| [IceStorm Weather](./IceStorm/weather/)   | Shows how to use IceStorm to create a simple pub-sub application.                                   |
 
 [1]: https://doc.zeroc.com/ice/3.7/language-mappings/javascript-mapping

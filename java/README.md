@@ -30,3 +30,4 @@ Follow the instructions provided in each demo’s README.md file.
 | [Ice Forwarder](./Ice/forwarder/)             | Shows how to write a servant that forwards all requests it receives to another remote Ice object.   |
 | [Ice Greeter](./Ice/greeter/)                 | Shows how to call and implement a canonical Greeter application with Ice. **Start with this demo!** |
 | [Ice Middleware](./Ice/middleware/)           | Shows how to write a simple middleware and how to add this middleware to an object adapter.         |
+| [Ice Secure](./Ice/secure/)                   | Shows how to use the Ice-SSL APIs to configure the ssl transport.                                   |

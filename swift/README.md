@@ -31,7 +31,7 @@ Follow the instructions provided in each demo’s README.md file.
 | [Ice GreeterApp](./Ice/GreeterApp/)                     | Shows how to implement an Ice for Swift iOS application that uses SwiftUI                                  |
 | [Ice Invocation Timeout](./Ice/invocationTimeout/)      | Shows how to use invocation timeouts.                                                                      |
 | [Ice Middleware](./Ice/niddleware/)                     | Shows how to write a simple middleware and how to add this middleware to an object adapter.                |
-| [Ice Optional](./Ice/Optional/)                         | Shows how to add a field to a Slice class without breaking interop with existing clients and servers.      |
+| [Ice Optional](./Ice/optional/)                         | Shows how to add a field to a Slice class without breaking interop with existing clients and servers.      |
 | [IceDiscovery Greeter](./IceDiscovery/greeter/)         | Shows how to configure the IceDiscovery plug-in.                                                           |
 | [IceDiscovery Replication](./IceDiscovery/replication/) | Shows how to use the IceDiscovery plug-in with replicated servers.                                         |
 | [IceGrid Greeter](./IceGrid/greeter)                    | Shows how to create a simple IceGrid deployment.                                                           |
