@@ -142,7 +142,7 @@ jobs:
           }
 
       - name: Build Swift Demos
-        timeout-minutes: 20
+        timeout-minutes: 60
         working-directory: swift
         run: |
           set -o pipefail
