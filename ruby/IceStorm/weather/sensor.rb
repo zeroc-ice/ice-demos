@@ -2,7 +2,6 @@
 # Copyright (c) ZeroC, Inc.
 
 require 'date'
-require 'etc'
 require 'Ice'
 require 'IceStorm'
 

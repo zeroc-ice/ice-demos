@@ -10,8 +10,9 @@ using namespace std;
 int
 main(int argc, char* argv[])
 {
-    // CtrlCHandler is a helper class that handles Ctrl+C and similar signals. It must be constructed at the beginning
-    // of the program, before creating an Ice communicator or starting any thread.
+    // CtrlCHandler is a helper class that handles Ctrl+C and similar signals.
+    // It must be constructed at the beginning of the program,
+    // before creating an Ice communicator or starting any thread.
     Ice::CtrlCHandler ctrlCHandler;
 
     // Create an Ice communicator. We'll use this communicator to create an object adapter.
@@ -27,19 +28,19 @@ main(int argc, char* argv[])
     auto root = make_shared<Server::MDirectory>("/");
     adapter->add(root, Ice::Identity{"RootDir"});
 
-    // Create a file called "README", add this servant to the adapter, and add the corresponding proxy to the root
-    // directory.
+    // Create a file called "README", add this servant to the adapter,
+    // and add the corresponding proxy to the root directory.
     auto file = make_shared<Server::MFile>("README");
     file->writeDirect({"This file system contains a collection of poetry."});
     root->addChild(adapter->addWithUUID<Filesystem::FilePrx>(file));
 
-    // Create a directory called "Coleridge", add this servant to the adapter, and add the corresponding proxy to the
-    // root directory.
+    // Create a directory called "Coleridge", add this servant to the adapter,
+    // and add the corresponding proxy to the root directory.
     auto coleridge = make_shared<Server::MDirectory>("Coleridge");
     root->addChild(adapter->addWithUUID<Filesystem::DirectoryPrx>(coleridge));
 
-    // Create a file called "Kubla_Khan", add this servant to the adapter, and add the corresponding proxy to the
-    // Coleridge directory.
+    // Create a file called "Kubla_Khan", add this servant to the adapter,
+    // and add the corresponding proxy to the Coleridge directory.
     file = make_shared<Server::MFile>("Kubla_Khan");
     file->writeDirect(
         {"In Xanadu did Kubla Khan",
@@ -61,7 +62,8 @@ main(int argc, char* argv[])
             communicator->shutdown();
         });
 
-    // Wait until the communicator is shut down. Here, this occurs when the user presses Ctrl+C.
+    // Wait until the communicator is shut down.
+    // Here, this occurs when the user presses Ctrl+C.
     communicator->waitForShutdown();
 
     return 0;

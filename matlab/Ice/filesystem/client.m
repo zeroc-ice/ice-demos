@@ -27,7 +27,8 @@ function client(args)
 end
 
 % Recursively print the contents of directory "dir" in tree fashion.
-% For files, show the contents of each file. The "depth" parameter is the current nesting level (for indentation).
+% For files, show the contents of each file.
+% The "depth" parameter is the current nesting level (for indentation).
 function listRecursive(dir, depth)
     depth = depth + 1;
     % char(9) is the encoding of a tab character.
@@ -38,7 +39,8 @@ function listRecursive(dir, depth)
     for i = contents
         node = i{1};
 
-        assert(~isempty(node), 'Node is empty!'); % The node proxies returned by list() are never null.
+        % The node proxies returned by list() are never null.
+        assert(~isempty(node), 'Node is empty!');
 
         % Check if this node is a directory by asking the remote object.
         subdir = filesystem.DirectoryPrx.checkedCast(node);

@@ -26,9 +26,9 @@ class MFile(File, MNode):
         return self._lines
 
     def write(self, text: list[str], current: Ice.Current) -> None:
-        self.writeDirect(text)
+        self.write_direct(text)
 
-    def writeDirect(self, text: list[str]) -> None:
+    def write_direct(self, text: list[str]) -> None:
         """
         Writes directly to this file, without going through an Ice operation.
 

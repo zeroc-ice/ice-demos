@@ -16,7 +16,8 @@ echo "Contents of root directory:\n";
 listRecursive($rootDir, 0);
 
 // Recursively print the contents of directory "dir" in tree fashion.
-// For files, show the contents of each file. The "depth" parameter is the current nesting level (for indentation).
+// For files, show the contents of each file.
+// The "depth" parameter is the current nesting level (for indentation).
 function listRecursive($dir, $depth) {
     $depth += 1;
     $indent = str_repeat(" ", $depth);
@@ -31,7 +32,6 @@ function listRecursive($dir, $depth) {
         $subdir = Filesystem\DirectoryPrxHelper::checkedCast($node);
 
         $kind = $subdir !== null ? "(directory)" : "(file)";
-
         echo $indent . $node->name() . " " . $kind . ":\n";
 
         if ($subdir !== null) {

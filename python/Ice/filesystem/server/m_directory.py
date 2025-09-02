@@ -25,7 +25,7 @@ class MDirectory(Directory, MNode):
     def list(self, current: Ice.Current) -> list[NodePrx]:
         return self._contents
 
-    def addChild(self, child: NodePrx) -> None:
+    def add_child(self, child: NodePrx) -> None:
         """
         Adds a node to this directory.
 
