@@ -17,7 +17,7 @@ This will compile each project.
 First, start the server application:
 
 ```shell
-./gradlew :server:run --quiet --args "--Ice.Trace.Network"
+./gradlew :server:run --quiet --args="--Ice.Trace.Network"
 ```
 
 ## Running the Client
@@ -25,11 +25,11 @@ First, start the server application:
 Then, in a separate terminal, start the client application:
 
 ```shell
-./gradlew :client:run --quiet --args "--Ice.Trace.Network"
+./gradlew :client:run --quiet --args="--Ice.Trace.Network"
 ```
 
 [Application plugin]: https://docs.gradle.org/current/userguide/application_plugin.html
 
 > [!NOTE]
-> The `--args "--Ice.Trace.Network"` command-line option turns on Network tracing. For this demo, it shows you that the
+> The `--args="--Ice.Trace.Network"` command-line option turns on Network tracing. For this demo, it shows you that the
 > requests are sent using the `ssl` secure transport.
