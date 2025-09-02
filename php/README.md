@@ -28,8 +28,8 @@ Follow the instructions provided in each demo’s README.md file.
 | [Ice Config](./Ice/config/)                              | Shows how to configure a client application using an Ice configuration file.                               |
 | [Ice Context](./Ice/context/)                            | Shows different ways to set request contexts.                                                              |
 | [Ice Custom Error](./Ice/customError/)                   | Shows how to define a new exception in Slice and handle this exception in a client application.            |
-| [Ice Filesystem](./Ice/filesystem/)                      | Shows the power of interface inheritance in Slice.                                                         |
 | [Ice Greeter](./Ice/greeter/)                            | Shows how to call a remote Greeter object with Ice. **Start with this demo!**                              |
+| [Ice Inheritance](./Ice/inheritance/)                    | Shows the power of interface inheritance in Slice.                                                         |
 | [Ice Invocation Timeout](./Ice/invocationTimeout/)       | Shows how to configure invocation timeouts.                                                                |
 | [Ice Optional](./Ice/optional/)                          | Shows how to add a field to a Slice class without breaking interop with existing clients and servers.      |
 | [Ice Register Communicator](./Ice/registerCommunicator/) | Shows how to register a communicator.                                                                      |

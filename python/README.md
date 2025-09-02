@@ -26,8 +26,8 @@ Follow the instructions provided in each demo’s README.md file.
 | [Ice Callback](./Ice/callback/)                     | Shows how to implement callbacks in a client application.                                             |
 | [Ice Config](./Ice/config/)                         | Shows how to configure client and server applications using Ice configuration files.                  |
 | [Ice Context](./Ice/context/)                       | Shows how to set and retrieve request contexts.                                                       |
-| [Ice Filesystem](./Ice/filesystem/)                 | Shows the power of interface inheritance in Slice.                                                    |
 | [Ice Greeter](./Ice/greeter/)                       | Shows how to call and implement a canonical Greeter application with Ice. **Start with this demo!**   |
+| [Ice Inheritance](./Ice/inheritance/)               | Shows the power of interface inheritance in Slice.                                                    |
 | [Ice Invocation Timeout](./Ice/invocation_timeout/) | Shows how to use invocation timeouts                                                                  |
 | [Ice Optional](./Ice/optional/)                     | Shows how to add a field to a Slice class without breaking interop with existing clients and servers. |
 | [IceDiscovery Greeter](./IceDiscovery/greeter/)     | Shows how to configure the IceDiscovery plug-in.                                                      |
