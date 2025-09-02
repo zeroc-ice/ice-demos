@@ -35,6 +35,7 @@ pull the latest nightly build of Ice.
 | [Ice Greeter](./Ice/Greeter/)                           | Shows how to call and implement a canonical Greeter application with Ice. **Start with this demo!**       |
 | [Ice Middleware](./Ice/Middleware/)                     | Shows how to write a simple middleware and how to add this middleware to an object adapter.               |
 | [Ice Optional](./Ice/Optional/)                         | Shows how to add a field to a Slice class without breaking interop with existing clients and servers.     |
+| [Ice Secure](./Ice/secure/)                             | Shows how to use the Ice.SSL APIs to configure the ssl transport.                                         |
 | [IceBox Greeter](./IceBox/Greeter/)                     | Shows how to create an IceBox service.                                                                    |
 | [IceDiscovery Greeter](./IceDiscovery/Greeter/)         | Shows how to configure the IceDiscovery plug-in.                                                          |
 | [IceDiscovery Replication](./IceDiscovery/Replication/) | Shows how to use the IceDiscovery plug-in with replicated servers.                                        |
