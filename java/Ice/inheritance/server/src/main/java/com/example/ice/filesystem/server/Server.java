@@ -6,6 +6,7 @@ import com.example.inheritance.DirectoryPrx;
 import com.example.inheritance.FilePrx;
 
 import com.zeroc.Ice.Communicator;
+import com.zeroc.Ice.Identity;
 import com.zeroc.Ice.ObjectAdapter;
 import com.zeroc.Ice.Util;
 
@@ -24,7 +25,7 @@ class Server {
 
             // Create the root directory servant (with name "/"), and add this servant to the adapter.
             var root = new MDirectory("/");
-            adapter.add(root, Util.stringToIdentity("RootDir"));
+            adapter.add(root, new Identity("RootDir", ""));
 
             // Create a file called "README", add this servant to the adapter,
             // and add the corresponding proxy to the root directory.
