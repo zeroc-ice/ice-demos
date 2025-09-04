@@ -7,7 +7,7 @@ implemented in a language with server-side support, such as Python, Java, or C#.
 
 Then, in the MATLAB console:
 
-- Go to the Ice/greeter directory
+- Go to the Ice/filesystem directory
 
 ```shell
 cd matlab/Ice/filesystem
