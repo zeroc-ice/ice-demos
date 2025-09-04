@@ -1,6 +1,6 @@
 #  IceBox Greeter
 
-This demo shows how to create an [IceBox][1] service in C#.
+This demo shows how to create an IceBox service in C#.
 
 You can build the client application and IceBox service with:
 
@@ -28,5 +28,3 @@ Finally, start the Client program:
 cd Client
 dotnet run
 ```
-
-[1]: https://doc.zeroc.com/ice/3.7/icebox

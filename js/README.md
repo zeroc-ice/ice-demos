@@ -3,8 +3,8 @@
 This folder contains example Ice applications written in JavaScript. Each example is a simple client-server application
 that demonstrates a specific feature or programming technique.
 
-Ice for JavaScript has limited server-side support ([see documentation][1]). As a result, you need to run the servers
-implemented in a language that fully supports server-side functionality, such as Python, Java, or C#.
+Ice for JavaScript has limited server-side support. As a result, you need to run the servers implemented in a language
+that fully supports server-side functionality, such as Python, Java, or C#.
 
 ## Building Requirements
 
@@ -28,5 +28,3 @@ implemented in a language that fully supports server-side functionality, such as
 | [Ice Inheritance](./Ice/inheritance/)     | Shows the power of interface inheritance in Slice.                                                  |
 | [Ice React Greeter](./Ice/react-greeter/) | Shows how to use Ice in a modern React application with a web UI.                                   |
 | [IceStorm Weather](./IceStorm/weather/)   | Shows how to use IceStorm to create a simple pub-sub application.                                   |
-
-[1]: https://doc.zeroc.com/ice/3.7/language-mappings/javascript-mapping

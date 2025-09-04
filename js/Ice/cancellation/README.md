@@ -19,9 +19,8 @@ Follow these steps to build and run the demo:
 
 3. Run the server application:
 
-    Ice for JavaScript has limited server-side support ([see documentation][1]). As a result, you need to start a
-    Glacier2 Callback server implemented in a language that fully supports server-side functionality, such as Python,
-    Java, or C#.
+    Ice for JavaScript has limited server-side support. As a result, you need to start an Ice Cancellation server
+    implemented in a language that fully supports server-side functionality, such as Python, Java, or C#.
 
     ```shell
     cd Server
@@ -37,5 +36,3 @@ Follow these steps to build and run the demo:
     > [!NOTE]
     > The `--Ice.Trace.Network` command-line option turns on Network tracing. For this demo, it shows you that the
     > `InvocationCanceledException` and `InvocationTimeoutException` do not close the connection.
-
-[1]: https://doc.zeroc.com/ice/3.7/language-mappings/javascript-mapping

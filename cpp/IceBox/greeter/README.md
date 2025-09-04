@@ -1,6 +1,6 @@
 # IceBox Greeter
 
-This demo shows how to create an [IceBox][1] service in C++.
+This demo shows how to create an IceBox service in C++.
 
 You can build the client application and IceBox service with:
 
@@ -47,5 +47,3 @@ build\Release\client
 ## Linux 32-bit
 
 If you are using 32-bit binaries on a Linux 64-bit host, use `icebox32` instead of `icebox` to start the IceBox server.
-
-[1]: https://doc.zeroc.com/ice/3.7/icebox
