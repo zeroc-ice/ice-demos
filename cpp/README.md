@@ -64,9 +64,9 @@ Follow the instructions provided in each demo’s README.md file.
 | [Ice Config](./Ice/config/)                             | Shows how to configure client and server applications using Ice configuration files.                       |
 | [Ice Context](./Ice/context/)                           | Shows how to set and retrieve request contexts.                                                            |
 | [Ice Custom Error](./Ice/customError/)                  | Shows how to define a new exception in Slice and return this exception from a Slice operation.             |
+| [Ice Filesystem](./Ice/filesystem/)                     | Shows the power of interface inheritance in Slice.                                                         |
 | [Ice Forwarder](./Ice/forwarder/)                       | Shows how to write a servant that forwards all requests it receives to another remote Ice object.          |
 | [Ice Greeter](./Ice/greeter/)                           | Shows how to call and implement a canonical Greeter application with Ice. **Start with this demo!**        |
-| [Ice Inheritance](./Ice/inheritance/)                   | Shows the power of interface inheritance in Slice.                                                         |
 | [Ice Middleware](./Ice/middleware/)                     | Shows how to write a simple middleware and how to add this middleware to an object adapter.                |
 | [Ice Optional](./Ice/optional/)                         | Shows how to add a field to a Slice class without breaking interop with existing clients and servers.      |
 | [Ice Secure](./Ice/secure/)                             | Shows how to use the Ice::SSL APIs to configure the ssl transport.                                         |
