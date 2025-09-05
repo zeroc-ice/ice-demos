@@ -16,7 +16,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "filesystem"
+rootProject.name = "inheritance"
 include("client")
 include("server")
 

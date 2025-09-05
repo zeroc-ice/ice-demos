@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.21)
 
-project(filesystem CXX)
+project(inheritance CXX)
 
 include(../../cmake/common.cmake)
 

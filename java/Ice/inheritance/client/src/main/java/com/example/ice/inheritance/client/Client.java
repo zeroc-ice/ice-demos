@@ -1,6 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
-package com.example.ice.filesystem.client;
+package com.example.ice.inheritance.client;
 
 import com.example.filesystem.DirectoryPrx;
 import com.example.filesystem.FilePrx;

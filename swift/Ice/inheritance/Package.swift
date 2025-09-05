@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "filesystem",
+    name: "inheritance",
     platforms: [
         .macOS(.v15)
     ],

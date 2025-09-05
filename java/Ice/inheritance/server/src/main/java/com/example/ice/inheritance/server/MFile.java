@@ -1,6 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
-package com.example.ice.filesystem.server;
+package com.example.ice.inheritance.server;
 
 import com.example.filesystem.File;
 import com.example.filesystem.WriteException;
