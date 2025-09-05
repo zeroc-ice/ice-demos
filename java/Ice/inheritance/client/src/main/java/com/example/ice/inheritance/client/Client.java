@@ -43,7 +43,7 @@ class Client {
             DirectoryPrx subdir = DirectoryPrx.checkedCast(node);
 
             // We assume it's a file if it's not a directory.
-            String kind = (subdir != null ? "(directory)" : "(file)");
+            String kind = subdir != null ? "(directory)" : "(file)";
             String name = node.name();
 
             System.out.println(indent + name + " " + kind);
