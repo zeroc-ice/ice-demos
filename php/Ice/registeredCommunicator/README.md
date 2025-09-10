@@ -1,4 +1,4 @@
-# Ice Register Communicator
+# Ice Registered Communicator
 
 This demo shows how to use registered communicators with Ice for PHP.
 
