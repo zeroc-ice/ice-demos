@@ -9,9 +9,8 @@ on:
     branches: ["main"]
 
 jobs:
-  python:
-    name: Ruff
-    runs-on: macos-15
+  ruff:
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -24,6 +23,12 @@ jobs:
 
       - name: Ruff format
         run: ruff format . --check --diff
+
+  pyright:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Install pyright
         run: npm install -g pyright
