@@ -22,6 +22,7 @@ Follow the instructions provided in each demo’s README.md file.
 |-----------------------------------------------|-----------------------------------------------------------------------------------------------------|
 | [Glacier2 Greeter](./Glacier2/greeter/)       | Shows how to write a basic Glacier2 client.                                                         |
 | [Ice Android Greeter](./Ice/android-greeter/) | Shows how to create an Ice for Java Android application.                                            |
+| [Ice Bidir](./Ice/bidir/)                     | Shows how to send requests "the other way around", from the server to the client.                   |
 | [Ice Cancellation](./Ice/cancellation/)       | Shows how to cancel a request and how to configure invocation timeouts.                             |
 | [Ice Config](./Ice/config/)                   | Shows how to configure client and server applications using Ice configuration files.                |
 | [Ice Context](./Ice/context/)                 | Shows how to set and retrieve request contexts.                                                     |
