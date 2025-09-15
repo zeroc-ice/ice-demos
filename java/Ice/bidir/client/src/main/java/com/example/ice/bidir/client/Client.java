@@ -2,17 +2,16 @@
 
 package com.example.ice.bidir.client;
 
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.util.concurrent.ExecutionException;
+
 import com.example.earlyriser.WakeUpServicePrx;
+import com.example.ice.bidir.util.Time;
 import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.Identity;
 import com.zeroc.Ice.ObjectAdapter;
 import com.zeroc.Ice.Util;
-
-import java.io.Console;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 class Client {
     public static void main(String[] args) {
@@ -38,16 +37,7 @@ class Client {
 
             // Schedule a wake-up call in 5 seconds. This call establishes the connection to the server; incoming
             // requests over this connection are handled by the communicator's default object adapter.
-            long millis = ZonedDateTime.now(ZoneOffset.UTC)
-                           .plusSeconds(10)
-                           .toInstant()
-                           .toEpochMilli();
-
-            long millisecondsBeforeEpoch = 719162 * 24 * 60 * 60 * 1000; // daysBeforeEpoch converted to milliseconds
-            long ticksPerMillisecond = 10_000; // number of ticks per millisecond
-            long ticks = millis * ticksPerMillisecond + millisecondsBeforeEpoch;
-
-            wakeUpService.wakeMeUp(ticks);
+            wakeUpService.wakeMeUp(Time.toTimeStamp(ZonedDateTime.now(ZoneOffset.UTC).plusSeconds(5)));
             System.out.println("Wake-up call scheduled, falling asleep...");
             try {
                 // Wait until the user presses the stop button on the alarm clock.

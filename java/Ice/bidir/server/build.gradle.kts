@@ -14,6 +14,7 @@ plugins {
 dependencies {
     // Add the Ice library as an implementation dependency.
     implementation("com.zeroc:ice:3.8.+")
+    implementation(project(":util"))
 }
 
 sourceSets {
