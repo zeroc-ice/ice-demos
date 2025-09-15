@@ -29,6 +29,7 @@ async def main():
         # If you run the server on a different computer, replace localhost in the string below with the server's hostname
         # or IP address.
         greeter = VisitorCenter.GreeterPrx.uncheckedCast(communicator.propertyToProxy("Greeter.Proxy"))
+        assert greeter is not None
 
         # Send a request to the remote object and get the response.
         greeting = await greeter.greetAsync(getpass.getuser())
