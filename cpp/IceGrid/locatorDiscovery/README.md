@@ -10,24 +10,24 @@ Follow these steps to build and run the demo:
 
 1. Build the [IceGrid/greeter](../greeter) demo.
 
-2. Run `icegridregistry`, `icegridnode`, and configure IceGrid using `icegridadmin` as per the IceGrid greeter demo
-   instructions.
+2\. Run `icegridregistry`, `icegridnode`, and configure IceGrid using `icegridadmin` as per the IceGrid greeter demo
+instructions.
 
-3. Build and run the client application in this directory:
+3\. Build and run the client application in this directory:
 
-   ```shell
-   cmake -B build
-   cmake --build build --config Release
-   ```
+```shell
+cmake -B build
+cmake --build build --config Release
+```
 
-    **Linux/macOS:**
+**Linux/macOS:**
 
-    ```shell
-    ./build/client
-    ```
+```shell
+./build/client
+```
 
-    **Windows:**
+**Windows:**
 
-    ```shell
-    build\Release\client
-    ```
+```shell
+build\Release\client
+```

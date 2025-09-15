@@ -3,8 +3,8 @@
 This demo illustrates how to configure the IceDiscovery plug-in. The IceDiscovery plug-in allows a client application
 to discover Ice objects without hardcoding any addressing information.
 
-We recommend running each program in a separate Python virtual environment. If you are new to Python virtual environments,
-see [Python Virtual Environments].
+We recommend running each program in a separate Python virtual environment. If you are new to Python virtual
+environments, see [Python Virtual Environments].
 
 ## Running the server
 

@@ -15,45 +15,45 @@ flowchart LR
 
 Follow these steps to build and run the demo:
 
-1. Build the sensor and station applications:
+1\. Build the sensor and station applications:
 
-   ```shell
-   cmake -B build
-   cmake --build build --config Release
-   ```
+```shell
+cmake -B build
+cmake --build build --config Release
+```
 
-2. Start the IceStorm service in its own terminal:
+2\. Start the IceStorm service in its own terminal:
 
-   ```shell
-   icebox --IceBox.Service.IceStorm="IceStormService,38a0:createIceStorm --Ice.Config=config.icestorm"
-   ```
+```shell
+icebox --IceBox.Service.IceStorm="IceStormService,38a0:createIceStorm --Ice.Config=config.icestorm"
+```
 
-3. Run one or more sensors and weather stations, each in its own terminal. You can start them in any order.
+3\. Run one or more sensors and weather stations, each in its own terminal. You can start them in any order.
 
-   To start a weather station:
+To start a weather station:
 
-    **Linux/macOS:**
+**Linux/macOS:**
 
-    ```shell
-    ./build/station
-    ```
+```shell
+./build/station
+```
 
-    **Windows:**
+**Windows:**
 
-    ```shell
-    build\Release\station
-    ```
+```shell
+build\Release\station
+```
 
-    To start a weather sensor:
+To start a weather sensor:
 
-    **Linux/macOS:**
+**Linux/macOS:**
 
-    ```shell
-    ./build/sensor
-    ```
+```shell
+./build/sensor
+```
 
-    **Windows:**
+**Windows:**
 
-    ```shell
-    build\Release\sensor
-    ```
+```shell
+build\Release\sensor
+```

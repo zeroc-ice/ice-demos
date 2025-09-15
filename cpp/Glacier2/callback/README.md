@@ -15,50 +15,50 @@ flowchart LR
 
 Follow these steps to build and run the demo:
 
-1. Build the client and server applications:
+1\. Build the client and server applications:
 
-   ```shell
-   cmake -B build
-   cmake --build build --config Release
-   ```
+```shell
+cmake -B build
+cmake --build build --config Release
+```
 
-2. Start the Server program in its own terminal:
+2\. Start the Server program in its own terminal:
 
-   **Linux/macOS:**
+**Linux/macOS:**
 
-   ```shell
-   ./build/server
-   ```
+```shell
+./build/server
+```
 
-   **Windows:**
+**Windows:**
 
-   ```shell
-   build\Release\server
-   ```
+```shell
+build\Release\server
+```
 
-3. Start the Glacier2 router in its own terminal:
+3\. Start the Glacier2 router in its own terminal:
 
-   ```shell
-   glacier2router --Ice.Config=config.glacier2
-   ```
+```shell
+glacier2router --Ice.Config=config.glacier2
+```
 
-   > [!TIP]
-   > You can also start the Glacier2 router before the server. The order does not matter: the server is identical to the
-   > server provided in the [Ice Callback][1] demo and does not depend on Glacier2.
+> [!TIP]
+> You can also start the Glacier2 router before the server. The order does not matter: the server is identical to the
+> server provided in the [Ice Callback][1] demo and does not depend on Glacier2.
 
-4. Run the client application:
+4\. Run the client application:
 
-   **Linux/macOS:**
+**Linux/macOS:**
 
-   ```shell
-   ./build/client
-   ```
+```shell
+./build/client
+```
 
-   **Windows:**
+**Windows:**
 
-   ```shell
-   build\Release\client
-    ```
+```shell
+build\Release\client
+```
 
 [1]: ../../Ice/callback
 [2]: ../../Ice/bidir

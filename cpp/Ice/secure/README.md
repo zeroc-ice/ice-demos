@@ -29,7 +29,8 @@ platform-specific classes:
 
 - On **Linux**, they resolve to [`OpenSSLClientAuthenticationOptions`] and [`OpenSSLServerAuthenticationOptions`].
 - On **Windows**, they resolve to [`SchannelClientAuthenticationOptions`] and [`SchannelServerAuthenticationOptions`].
-- On **macOS**, they resolve to [`SecureTransportClientAuthenticationOptions`] and [`SecureTransportServerAuthenticationOptions`].
+- On **macOS**, they resolve to [`SecureTransportClientAuthenticationOptions`] and
+  [`SecureTransportServerAuthenticationOptions`].
 
 This allows you to use a consistent interface across platforms while still taking advantage of native SSL capabilities.
 

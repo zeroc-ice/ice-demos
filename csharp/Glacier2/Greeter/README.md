@@ -12,34 +12,34 @@ a connection to the server, because the server is on a separate network.
 
 Follow these steps to build and run the demo:
 
-1. Build the client and server applications:
+1\. Build the client and server applications:
 
-   ```shell
-   dotnet build
-   ```
+```shell
+dotnet build
+```
 
-2. Start the Server program in its own terminal:
+2\. Start the Server program in its own terminal:
 
-   ```shell
-   cd Server
-   dotnet run
-   ```
+```shell
+cd Server
+dotnet run
+```
 
-3. Start the Glacier2 router in its own terminal:
+3\. Start the Glacier2 router in its own terminal:
 
-   ```shell
-   glacier2router --Ice.Config=config.glacier2
-   ```
+```shell
+glacier2router --Ice.Config=config.glacier2
+```
 
-   > [!TIP]
-   > You can also start the Glacier2 router before the server. The order does not matter: the server is identical to the
-   > server provided in the [Ice Greeter][1] demo and does not depend on Glacier2.
+> [!TIP]
+> You can also start the Glacier2 router before the server. The order does not matter: the server is identical to the
+> server provided in the [Ice Greeter][1] demo and does not depend on Glacier2.
 
-4. Run the client application:
+4\. Run the client application:
 
-   ```shell
-   cd Client
-   dotnet run
-   ```
+```shell
+cd Client
+dotnet run
+```
 
 [1]: ../../Ice/Greeter

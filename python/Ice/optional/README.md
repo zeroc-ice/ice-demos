@@ -22,8 +22,8 @@ class AtmosphericConditions
 }
 ```
 
-We recommend running each program in a separate Python virtual environment. If you are new to Python virtual environments,
-see [Python Virtual Environments].
+We recommend running each program in a separate Python virtual environment. If you are new to Python virtual
+environments, see [Python Virtual Environments].
 
 ## Running the server
 

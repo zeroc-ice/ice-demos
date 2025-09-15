@@ -10,14 +10,14 @@ Follow these steps to build and run the demo:
 
 1. Build the [IceGrid/greeter](../greeter) demo.
 
-2. Run `icegridregistry`, `icegridnode`, and configure IceGrid using `icegridadmin` as per the IceGrid greeter demo
+2\. Run `icegridregistry`, `icegridnode`, and configure IceGrid using `icegridadmin` as per the IceGrid greeter demo
 instructions.
 
-3. Build and run the client application:
+3\. Build and run the client application:
 
-   ```shell
-   swift run Client
-   ```
+```shell
+swift run Client
+```
 
 > [!NOTE]
 > The `Ice.Plugin.IceLocatorDiscovery=1` property in the client enables automatic discovery of the IceGrid registry's
