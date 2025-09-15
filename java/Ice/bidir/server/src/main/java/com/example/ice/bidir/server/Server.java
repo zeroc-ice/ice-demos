@@ -15,7 +15,7 @@ class Server {
             // Create an object adapter that listens for incoming requests and dispatches them to servants.
             ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints("WakeUpAdapter", "tcp -p 4061");
 
-            // Register the Chatbot servant with the adapter.
+            // Register the BidirWakeUpService servant with the adapter.
             adapter.add(new BidirWakeUpService(), new Identity("wakeUpService", ""));
 
             // Start dispatching requests.
