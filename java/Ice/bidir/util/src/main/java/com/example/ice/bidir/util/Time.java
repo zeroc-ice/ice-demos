@@ -29,4 +29,7 @@ public class Time {
         long epochMilli = (timeStamp - MILLIS_BEFORE_EPOCH) / TICKS_PER_MILLISECOND;
         return java.time.Instant.ofEpochMilli(epochMilli).atZone(java.time.ZoneOffset.UTC);
     }
+
+    private Time() {
+    }
 }
