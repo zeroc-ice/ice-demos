@@ -19,13 +19,13 @@ asynchronous server.
     python -m venv venv
     ```
 
-    On macOS and Linux
+    **On macOS and Linux**
 
     ```shell
     source venv/bin/activate
     ```
 
-    On Windows
+    **On Windows**
 
     ```powershell
     venv\Scripts\activate
@@ -59,13 +59,13 @@ In a separate terminal, navigate to the `client` directory to run the client pro
     python -m venv venv
     ```
 
-    On macOS and Linux
+    **On macOS and Linux**
 
     ```shell
     source venv/bin/activate
     ```
 
-    On Windows
+    **On Windows**
 
     ```powershell
     venv\Scripts\activate
