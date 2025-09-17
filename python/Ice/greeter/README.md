@@ -15,19 +15,17 @@ asynchronous server.
 
 - Create and activate a Python virtual environment:
 
-    ```shell
-    python -m venv venv
-    ```
-
     **On macOS and Linux**
 
     ```shell
+    python3 -m venv venv
     source venv/bin/activate
     ```
 
     **On Windows**
 
     ```powershell
+    python -m venv venv
     venv\Scripts\activate
     ```
 
@@ -55,19 +53,17 @@ In a separate terminal, navigate to the `client` directory to run the client pro
 
 - Create and activate a Python virtual environment:
 
-    ```shell
-    python -m venv venv
-    ```
-
     **On macOS and Linux**
 
     ```shell
+    python3 -m venv venv
     source venv/bin/activate
     ```
 
     **On Windows**
 
     ```powershell
+    python -m venv venv
     venv\Scripts\activate
     ```
 
