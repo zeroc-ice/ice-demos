@@ -6,8 +6,8 @@ subscribe and receive samples for keys matching the regular expression provided 
 To build the demo run:
 
 ```shell
-cmake -B build -S .
-cmake --build build --config Release
+cmake -B build -S . -G Ninja
+cmake --build build
 ```
 
 To run the demo, start the writer:
@@ -21,7 +21,7 @@ To run the demo, start the writer:
 **Windows:**
 
 ```shell
-build\Release\writer
+build\writer
 ```
 
 In a separate window, start the reader:
@@ -35,5 +35,5 @@ In a separate window, start the reader:
 **Windows:**
 
 ```shell
-build\Release\reader
+build\reader
 ```

@@ -5,8 +5,8 @@ This demo illustrates how to use the IceDiscovery plug-in with replicated server
 To build the client and server applications, run:
 
 ```shell
-cmake -B build
-cmake --build build --config Release
+cmake -B build -S . -G Ninja
+cmake --build build
 ```
 
 Then, start two ore more server programs, each in its own terminal:
@@ -14,13 +14,13 @@ Then, start two ore more server programs, each in its own terminal:
 **Linux/macOS:**
 
 ```shell
-./build/client --Ice.Trace.Locator
+./build/server
 ```
 
 **Windows:**
 
 ```shell
-build\Release\client --Ice.Trace.Locator
+build\server
 ```
 
 Finally, start the client program:
@@ -33,7 +33,7 @@ Finally, start the client program:
 **Windows:**
 
 ```shell
-build\Release\client --Ice.Trace.Locator
+build\client --Ice.Trace.Locator
 ```
 
 >[!NOTE]

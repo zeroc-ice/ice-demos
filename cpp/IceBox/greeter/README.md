@@ -5,29 +5,22 @@ This demo shows how to create an IceBox service in C++.
 You can build the client application and IceBox service with:
 
 ```shell
-cmake -B build
-cmake --build build --config Release
+cmake -B build -S . -G Ninja -DCMAKE_BUILD_TYPE=Release
+cmake --build build
 ```
 
 To run this demo, open two terminal windows. In the first window:
 
-**Linux:**
+**Linux/macOS:**
 
 ```shell
-LD_LIBRARY_PATH=./build icebox --IceBox.Service.Greeter="GreeterService:create --Ice.Trace.Dispatch"
-```
-
-**macOS:**
-
-```shell
-DYLD_LIBRARY_PATH=./build icebox --IceBox.Service.Greeter="GreeterService:create --Ice.Trace.Dispatch"
+icebox --IceBox.Service.Greeter="./build/GreeterService:create --Ice.Trace.Dispatch"
 ```
 
 **Windows:**
 
 ```shell
-set PATH=%PATH%;build\Release
-icebox --IceBox.Service.Hello="GreeterService:create --Ice.Trace.Dispatch"
+icebox --IceBox.Service.Hello="build\GreeterService:create --Ice.Trace.Dispatch"
 ```
 
 In the second window, run the client:
@@ -41,7 +34,7 @@ In the second window, run the client:
 **Windows:**
 
 ```shell
-build\Release\client
+build\client
 ```
 
 ## Linux 32-bit

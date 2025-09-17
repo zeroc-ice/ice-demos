@@ -10,7 +10,7 @@
       or a well-known object in this server. Here, we deploy a single IceBox server named "IceBox". -->
       <icebox id="IceBox" activation="on-demand" exe="icebox">
         <!-- A service descriptor describes an IceBox service -->
-        <service name="GreeterService" entry="GreeterService:create">
+        <service name="GreeterService" entry="./build/GreeterService:create">
           <description>Hosts a greeter that produces greetings.</description>
 
           <!-- The object adapter created by this service. It listens on an OS-assigned tcp port, on all interfaces.

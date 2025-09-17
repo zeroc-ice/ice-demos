@@ -5,8 +5,8 @@ The Inheritance demo shows how to write a simple filesystem application using in
 To build the demo run:
 
 ```shell
-cmake -B build
-cmake --build build --config Release
+cmake -B build -S . -G Ninja
+cmake --build build
 ```
 
 To run the demo, first start the server:
@@ -20,7 +20,7 @@ To run the demo, first start the server:
 **Windows:**
 
 ```shell
-build\Release\server
+build\server
 ```
 
 In a separate window, start the client:
@@ -34,5 +34,5 @@ In a separate window, start the client:
 **Windows:**
 
 ```shell
-build\Release\client
+build\client
 ```

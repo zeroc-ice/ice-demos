@@ -18,8 +18,8 @@ Follow these steps to build and run the demo:
 1. Build the sensor and station applications:
 
    ```shell
-   cmake -B build
-   cmake --build build --config Release
+   cmake -B build -S . -G Ninja
+   cmake --build build
    ```
 
 2. Start the IceStorm service in its own terminal:
@@ -41,7 +41,7 @@ Follow these steps to build and run the demo:
     **Windows:**
 
     ```shell
-    build\Release\station
+    build\station
     ```
 
     To start a weather sensor:
@@ -55,5 +55,5 @@ Follow these steps to build and run the demo:
     **Windows:**
 
     ```shell
-    build\Release\sensor
+    build\sensor
     ```

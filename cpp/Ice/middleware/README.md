@@ -16,6 +16,13 @@ flowchart LR
 > [!NOTE]
 > Other middleware is just an example, and is not provided by this demo.
 
+To build the demo run:
+
+```shell
+cmake -B build -S . -G Ninja
+cmake --build build
+```
+
 To run the demo, first start the server:
 
 **Linux/macOS:**
@@ -27,7 +34,7 @@ To run the demo, first start the server:
 **Windows:**
 
 ```shell
-build\Release\server
+build\server
 ```
 
 In a separate window, start the client:
@@ -41,5 +48,5 @@ In a separate window, start the client:
 **Windows:**
 
 ```shell
-build\Release\client
+build\client
 ```

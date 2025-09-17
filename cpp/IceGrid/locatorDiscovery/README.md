@@ -16,8 +16,8 @@ Follow these steps to build and run the demo:
 3. Build and run the client application in this directory:
 
    ```shell
-   cmake -B build
-   cmake --build build --config Release
+   cmake -B build -S . -G Ninja
+   cmake --build build
    ```
 
     **Linux/macOS:**
@@ -29,5 +29,5 @@ Follow these steps to build and run the demo:
     **Windows:**
 
     ```shell
-    build\Release\client
+    build\client
     ```
