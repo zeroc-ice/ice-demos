@@ -17,8 +17,18 @@ asynchronous server.
 
     ```shell
     python -m venv venv
-    source venv/bin/activate  # On macOS/Linux
-    venv\Scripts\activate     # On Windows
+    ```
+
+    On macOS and Linux
+
+    ```shell
+    source venv/bin/activate
+    ```
+
+    On Windows
+
+    ```powershell
+    venv\Scripts\activate
     ```
 
 - Install the program dependencies:
@@ -47,8 +57,18 @@ In a separate terminal, navigate to the `client` directory to run the client pro
 
     ```shell
     python -m venv venv
-    source venv/bin/activate  # On macOS/Linux
-    venv\Scripts\activate     # On Windows
+    ```
+
+    On macOS and Linux
+
+    ```shell
+    source venv/bin/activate
+    ```
+
+    On Windows
+
+    ```powershell
+    venv\Scripts\activate
     ```
 
 - Install the program dependencies:
