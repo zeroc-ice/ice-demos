@@ -1,17 +1,15 @@
-# Ice Bidir
+# Ice Callback
 
-The Bidir demo illustrates how to send requests "the other way around", from a server to a client, by reusing the
-connection established by the client to the server.
+The Callback demo illustrates how to implement callbacks in a client application.
 
-This demo is very similar to the [callback][1] demo: with the callback demo, the server opens a connection to the
-client, while with this demo, there is only one connection, from the client to the server:
+In this demo, the client hosts an alarm clock (an Ice object), and asks the server's wake up service to call this
+object at a later time. The server opens a TCP connection to the client when making this call.
 
 ```mermaid
 flowchart LR
-    c[Client<br>hosts AlarmClock] --bidir connection--> s[Server:4061<br>hosts WakeUpService]
+    c[Client<br>hosts AlarmClock] --connection1--> s[Server:4061<br>hosts WakeUpService]
+    s --connection2--> c
 ```
-
-This is particularly useful when the client application is behind a firewall that does not allow incoming connections.
 
 ## Building the Project
 
@@ -40,5 +38,3 @@ Then, in a separate terminal, start the client application:
 ```
 
 [Application plugin]: https://docs.gradle.org/current/userguide/application_plugin.html
-
-[1]: ../callback
