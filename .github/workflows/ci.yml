@@ -71,6 +71,15 @@ jobs:
           arch: x64
         if: runner.os == 'Windows'
 
+      - name: Find MSVC compiler
+        shell: pwsh
+        id: msvc
+        run: |
+          $vsPath = vswhere -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath
+          $clPath = Get-ChildItem -Path "$vsPath\VC\Tools\MSVC\*\bin\Hostx64\x64\cl.exe" | Select-Object -First 1
+          echo "cl_path=$($clPath.FullName)" >> $env:GITHUB_OUTPUT
+          echo "vs_path=$vsPath" >> $env:GITHUB_OUTPUT
+
       - name: Build C++ Demos
         timeout-minutes: 20
         working-directory: cpp
@@ -81,11 +90,9 @@ jobs:
               Write-Output "Processing: $_"
               $dir = $_.DirectoryName
 
-              where cl.exe
-
-              # Run cmake configure step. Specify cl.exe otherwise cmake tries to use gC:\mingw64\bin\c++.exe for
+              # Run cmake configure step. Specify cl.exe otherwise cmake tries to use C:\mingw64\bin\c++.exe for
               # some reason.
-              cmake -B "$dir/build" -S "$dir" -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_COMPILE_WARNING_AS_ERROR=ON -DCMAKE_C_COMPILER="cl.exe" -DCMAKE_CXX_COMPILER="cl.exe"
+              cmake -B "$dir/build" -S "$dir" -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_COMPILE_WARNING_AS_ERROR=ON -DCMAKE_C_COMPILER="${{ steps.msvc.outputs.cl_path }}" -DCMAKE_CXX_COMPILER="${{ steps.msvc.outputs.cl_path }}"
               if ($LASTEXITCODE -ne 0) { throw "CMake configuration failed" }
 
               # Run cmake build step
