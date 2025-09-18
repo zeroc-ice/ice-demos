@@ -74,11 +74,13 @@ jobs:
               Write-Output "Processing: $_"
               $dir = $_.DirectoryName
 
+              where cl.exe
+
               # Run cmake configure step. Specify cl.exe otherwise cmake tries to use gC:\mingw64\bin\c++.exe for
               # some reason.
               cmake -B "$dir/build" -S "$dir" -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_COMPILE_WARNING_AS_ERROR=ON `
-                -DCMAKE_C_COMPILER=cl `
-                -DCMAKE_CXX_COMPILER=cl
+                -DCMAKE_C_COMPILER=cl.exe `
+                -DCMAKE_CXX_COMPILER=cl.exe
               if ($LASTEXITCODE -ne 0) { throw "CMake configuration failed" }
 
               # Run cmake build step
