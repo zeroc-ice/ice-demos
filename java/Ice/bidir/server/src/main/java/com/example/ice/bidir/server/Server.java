@@ -22,8 +22,8 @@ class Server {
             adapter.activate();
             System.out.println("Listening on port 4061...");
 
-            // Register a shutdown hook that calls communicator.shutdown() when the user shuts down the server with
-            // Ctrl+C or similar. The shutdown hook thread also waits until the main thread completes its cleanup.
+            // Register a shutdown hook that calls `communicator.shutdown()` when the user presses 'Ctrl+C' or similar.
+            // The shutdown hook thread waits until the main thread completes its cleanup.
             shutdownCommunicatorOnCtrlC(communicator, Thread.currentThread());
 
             // Wait until the communicator is shut down. Here, this occurs when the user presses Ctrl+C.
@@ -39,10 +39,7 @@ class Server {
             // Wait until the main thread completes.
             try {
                 mainThread.join();
-            } catch (InterruptedException e) {
-                // No code interrupts the shutdown hook thread in this program.
-                assert false;
-            }
+            } catch (InterruptedException ignored) {}
         }));
     }
 }
