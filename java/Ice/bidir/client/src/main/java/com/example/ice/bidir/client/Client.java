@@ -7,7 +7,7 @@ import java.time.ZonedDateTime;
 import java.util.concurrent.ExecutionException;
 
 import com.example.earlyriser.WakeUpServicePrx;
-import com.example.ice.bidir.util.Time;
+import com.example.util.Time;
 import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.Identity;
 import com.zeroc.Ice.ObjectAdapter;
