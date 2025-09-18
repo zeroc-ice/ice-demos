@@ -1,7 +1,5 @@
 // Copyright (c) ZeroC, Inc.
 
-#pragma once
-
 ["matlab:identifier:clearsky"]
 module ClearSky
 {

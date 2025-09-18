@@ -1,7 +1,5 @@
 // Copyright (c) ZeroC, Inc.
 
-#pragma once
-
 // Version 1 of the WeatherStation Slice definitions.
 
 ["matlab:identifier:clearsky"]

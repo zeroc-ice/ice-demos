@@ -1,7 +1,5 @@
 // Copyright (c) ZeroC, Inc.
 
-#pragma once
-
 module Filesystem
 {
     /// Represents a {@link File::write} failure.
