@@ -1,9 +1,9 @@
 # Glacier2 Callback
 
-This demo shows how to write a client that establishes a session with a Glacier2 router. It also shows how to implement
-callbacks in this client.
+This demo shows how to write a client that establishes a session with a Glacier2 router.  
+It also shows how to implement callbacks in this client.
 
-This demo is similar to the [Ice Callback][1] demo, except all communications go through the Glacier router.
+This demo is similar to the [Ice Callback][1] demo, except all communications go through the Glacier2 router.
 
 The connection between the client and the Glacier2 router is a "bidir" connection, like in the [Ice Bidir][2] demo:
 
@@ -13,96 +13,102 @@ flowchart LR
     g --connection1--> s[Server:4061<br>hosts WakeUpService] --connection2--> g
 ```
 
-We recommend running each program in a separate Python virtual environment. If you are new to Python virtual
-environments, see [Python Virtual Environments].
+We recommend running each program in a separate Python virtual environment.  
+If you are new to Python virtual environments, see [Python Virtual Environments].
 
 ## Running the server
 
-Navigate to the `server` directory, to run the server program.
+Navigate to the `server` directory.
 
-- Create and activate a Python virtual environment:
+### 1. Create and activate a Python virtual environment
 
-    **On macOS and Linux**
+#### macOS and Linux
 
-    ```shell
-    python3 -m venv venv
-    source venv/bin/activate
-    ```
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
 
-    **On Windows**
+#### Windows (PowerShell)
 
-    ```powershell
-    python -m venv venv
-    venv\Scripts\activate
-    ```
+```powershell
+python -m venv venv
+venv\Scripts\activate
+```
 
-- Install the program dependencies:
+### 2. Install program dependencies
 
-    ```shell
-    pip install -r requirements.txt
-    ```
+```bash
+pip install -r requirements.txt
+```
 
-- Compile the AlarmClock.ice file with the Slice compiler for Python:
+### 3. Compile the Slice definitions
 
-    ```shell
-    slice2py ../slice/AlarmClock.ice
-    ```
+Use the Slice-to-Python compiler to generate Python code from the `AlarmClock.ice` file:
 
-- Run the server program:
+```bash
+slice2py ../slice/AlarmClock.ice
+```
 
-    ```shell
-    python main.py
-    ```
+### 4. Run the server
 
-- Start the Glacier2 router in its own terminal:
+```bash
+python main.py
+```
 
-   ```shell
-   glacier2router --Ice.Config=config.glacier2
-   ```
+### 5. Start the Glacier2 router
 
-   > [!TIP]
-   > You can also start the Glacier2 router before the server. The order does not matter: the server is identical to the
-   > server provided in the [Ice Callback][1] demo and does not depend on Glacier2.
+In a separate terminal, run:
+
+```bash
+glacier2router --Ice.Config=config.glacier2
+```
+
+> [!TIP]  
+> You can start the Glacier2 router before or after the server.  
+> The server is identical to the one in the [Ice Callback][1] demo and does not depend on Glacier2.
 
 ## Running the client
 
-In a separate terminal, navigate to the `client` directory to run the client program.
+In a separate terminal, navigate to the `client` directory.
 
-- Create and activate a Python virtual environment:
+### 1. Create and activate a Python virtual environment
 
-    **On macOS and Linux**
+#### macOS and Linux
 
-    ```shell
-    python3 -m venv venv
-    source venv/bin/activate
-    ```
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
 
-    **On Windows**
+#### Windows (PowerShell)
 
-    ```powershell
-    python -m venv venv
-    venv\Scripts\activate
-    ```
+```powershell
+python -m venv venv
+venv\Scripts\activate
+```
 
-- Install the program dependencies:
+### 2. Install program dependencies
 
-    ```shell
-    pip install -r requirements.txt
-    ```
+```bash
+pip install -r requirements.txt
+```
 
-- Compile the AlarmClock.ice file with the Slice compiler for Python:
+### 3. Compile the Slice definitions
 
-    ```shell
-    slice2py ../slice/AlarmClock.ice
-    ```
+Use the Slice-to-Python compiler to generate Python code from the `AlarmClock.ice` file:
 
-- Run the client program:
+```bash
+slice2py ../slice/AlarmClock.ice
+```
 
-    ```shell
-    python main.py
-    ```
+### 4. Run the client
 
-[Python Virtual Environments]: https://docs.python.org/3/tutorial/venv.html
+```bash
+python main.py
+```
 
-[1]: ../../Ice/Callback
-[2]: ../../Ice/Bidir
+[Python Virtual Environments]: https://docs.python.org/3/tutorial/venv.html  
+
+[1]: ../../Ice/callback  
+[2]: ../../Ice/bidir
