@@ -12,14 +12,17 @@ function client(args)
         loadlibrary('ice', @iceproto);
     end
 
-    % Create Ice properties from the contents of the config.client file in the current working directory.
-    properties = Ice.Properties();
-    properties.load('config.client');
+    % Load the contents of the config.client file into a Properties object.
+    configFileProperties = Ice.Properties();
+    configFileProperties.load('config.client');
+
+    % Create a Properties object from the command line arguments and the config file properties; Ice.* properties and
+    % other reserved properties set in args augment or override the config file properties.
+    properties = Ice.Properties(args, configFileProperties);
 
     % Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
-    % The communicator gets its properties from the Properties argument; Ice.* properties and other reserved properties
-    % set in args override these properties.
-    communicator = Ice.Communicator(args, Properties = properties);
+    % The communicator gets its properties from the properties object.
+    communicator = Ice.Communicator(Properties = properties);
 
     % Destroy the communicator when the function exits.
     cleanup = onCleanup(@() communicator.destroy());
