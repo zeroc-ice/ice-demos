@@ -19,10 +19,18 @@ Navigate to the `server` directory to run the server program.
 
 - Create and activate a Python virtual environment:
 
+    **On macOS and Linux**
+
     ```shell
+    python3 -m venv venv
+    source venv/bin/activate
+    ```
+
+    **On Windows**
+
+    ```powershell
     python -m venv venv
-    source venv/bin/activate  # On macOS/Linux
-    venv\Scripts\activate     # On Windows
+    venv\Scripts\activate
     ```
 
 - Install the program dependencies:
@@ -59,10 +67,18 @@ In a separate terminal, navigate to the `client` directory to run the client pro
 
 - Create and activate a Python virtual environment:
 
+    **On macOS and Linux**
+
     ```shell
+    python3 -m venv venv
+    source venv/bin/activate
+    ```
+
+    **On Windows**
+
+    ```powershell
     python -m venv venv
-    source venv/bin/activate  # On macOS/Linux
-    venv\Scripts\activate     # On Windows
+    venv\Scripts\activate
     ```
 
 - Install the program dependencies:
