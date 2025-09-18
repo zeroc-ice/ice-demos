@@ -5,11 +5,6 @@ demonstrates a specific feature or programming technique.
 
 > Ice for Swift is only supported on macOS and iOS platforms.
 
-## macOS Prerequisites
-
-- macOS Sequoia
-- Xcode
-
 ## Building the Demos
 
 Follow the instructions provided in each demo’s README.md file.
