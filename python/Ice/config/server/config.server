@@ -32,6 +32,9 @@ IceSSL.CAs=ca_cert.pem
 # The server's certificate file.
 IceSSL.CertFile=server.p12
 
+# The name of the keychain in which to import the client's certificate (SecureTransport only).
+IceSSL.Keychain=server.keychain
+
 # TODO: switch to password-less certificates
 IceSSL.Password=password
 
