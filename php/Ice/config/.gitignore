@@ -1,1 +1,6 @@
 Greeter.php
+
+# MacOS keychain files
+*.keychain
+*.fl*
+

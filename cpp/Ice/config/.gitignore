@@ -1,3 +1,6 @@
 # Default cmake build directory
 build
+
+# MacOS keychain files
 *.keychain
+*.fl*
