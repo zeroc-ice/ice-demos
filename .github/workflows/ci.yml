@@ -24,17 +24,13 @@ jobs:
       matrix:
         include:
           - os: ubuntu-24.04
-          - os: macos-15
+          - os: macos-26
           - os: windows-2022
 
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Setup Xcode
-        if: runner.os == 'macOS'
-        uses: ./.github/actions/setup-xcode
 
       - name: Setup .NET 8
         uses: actions/setup-dotnet@v4
