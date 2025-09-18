@@ -6,7 +6,7 @@ import Ice
 // of the program, before creating an Ice communicator or starting any thread.
 let ctrlCHandler = CtrlCHandler()
 
-// Load the contents of the config.client file into a Properties object.
+// Load the contents of the config.server file into a Properties object.
 let configFileProperties = Ice.createProperties()
 try configFileProperties.load("config.server")
 
