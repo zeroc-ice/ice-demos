@@ -21,10 +21,6 @@ function client(args)
     % set in args override these properties.
     communicator = Ice.Communicator(args, Properties = properties);
 
-    % Display the communicator's properties.
-    fprintf('Communicator properties:\n');
-    disp(communicator.getProperties());
-
     % Destroy the communicator when the function exits.
     cleanup = onCleanup(@() communicator.destroy());
 
