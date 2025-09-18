@@ -65,8 +65,10 @@ jobs:
         if: runner.os != 'Windows'
 
       # NOTE: this is necessary to correctly find and use cl.exe
-      - name: Setup devcmd
-        uses: ilammy/msvc-dev-cmd@v1.3.0
+      - name: Setup Developer Command Prompt
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
         if: runner.os == 'Windows'
 
       - name: Build C++ Demos
