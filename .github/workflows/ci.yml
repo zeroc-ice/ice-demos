@@ -64,6 +64,11 @@ jobs:
           done
         if: runner.os != 'Windows'
 
+      # NOTE: this is necessary to correctly find and use cl.exe
+      - name: Setup devcmd
+        uses: ilammy/msvc-dev-cmd@v1.3.0
+        if: runner.os == 'Windows'
+
       - name: Build C++ Demos
         timeout-minutes: 20
         working-directory: cpp
