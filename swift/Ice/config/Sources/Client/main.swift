@@ -3,18 +3,20 @@
 import Foundation
 import Ice
 
-// Create Ice properties from the contents of the config.client file in the current working directory.
-let properties = Ice.createProperties()
-try properties.load("config.client")
+// Load the contents of the config.client file into a Properties object.
+let configFileProperties = Ice.createProperties()
+try configFileProperties.load("config.client")
 
-var initData = Ice.InitializationData()
-initData.properties = properties
+// Create a Properties object from the command line arguments and the config file properties; Ice.* properties and
+// other reserved properties set in args augment or override the config file properties.
+var args = CommandLine.arguments
+let properties = try Ice.createProperties(&args, defaults: configFileProperties)
 
 // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
-// The communicator gets its properties from initData.properties; Ice.* properties and other reserved properties set
-// in args override these properties.
-var args = CommandLine.arguments
-let communicator = try Ice.initialize(&args, initData: initData)
+// The communicator gets its properties from the properties object.
+var initData = Ice.InitializationData()
+initData.properties = properties
+let communicator = try Ice.initialize(initData)
 
 // Destroy the communicator when the program exits.
 defer {

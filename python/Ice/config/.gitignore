@@ -1,2 +1,6 @@
 *_ice.py
 VisitorCenter
+
+# macOS keychain files
+*.keychain
+*.fl*

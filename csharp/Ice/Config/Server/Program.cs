@@ -9,7 +9,7 @@ configFileProperties.load("config.server");
 var properties = new Ice.Properties(ref args, defaults: configFileProperties);
 
 // Create an Ice communicator. We'll use this communicator to create an object adapter.
-// The communicator gets its properties from initData.properties.
+// The communicator gets its properties from the properties object.
 await using Ice.Communicator communicator = Ice.Util.initialize(new Ice.InitializationData { properties = properties });
 
 // Create an object adapter that listens for incoming requests and dispatches them to servants.
