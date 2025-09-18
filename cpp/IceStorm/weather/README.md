@@ -13,22 +13,29 @@ flowchart LR
     icestorm --report--> s3[Station #3]
 ```
 
-Follow these steps to build and run the demo:
+## Ice prerequisites
 
-1. Build the sensor and station applications:
+- Install the C++ dev kit. See [Ice for C++ installation]. There is nothing to do on Windows.
+- Install the IceBox and IceStorm services. See [Ice service installation].
 
-   ```shell
-   cmake -B build
-   cmake --build build --config Release
-   ```
+## Building the demo
 
-2. Start the IceStorm service in its own terminal:
+You can build the weather sensor and weather station applications with:
+
+```shell
+cmake -B build
+cmake --build build --config Release
+```
+
+## Running the demo
+
+1. Start the IceStorm service in its own terminal:
 
    ```shell
    icebox --IceBox.Service.IceStorm="IceStormService,38a0:createIceStorm --Ice.Config=config.icestorm"
    ```
 
-3. Run one or more sensors and weather stations, each in its own terminal. You can start them in any order.
+2. Run one or more sensors and weather stations, each in its own terminal. You can start them in any order.
 
    To start a weather station:
 
@@ -57,3 +64,6 @@ Follow these steps to build and run the demo:
     ```shell
     build\Release\sensor
     ```
+
+[Ice for C++ installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-c
+[Ice service installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-services
