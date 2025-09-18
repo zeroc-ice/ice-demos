@@ -28,8 +28,9 @@ class SimpleWakeUpService implements WakeUpService {
         CompletableFuture.runAsync(() -> {
             try {
                 // Wait until the specified time.
-                if (ZonedDateTime.now(ZoneOffset.UTC).isAfter(timeStampDateTime)) {
-                    Thread.sleep(Duration.between(ZonedDateTime.now(ZoneOffset.UTC), timeStampDateTime).toMillis());
+                var now = ZonedDateTime.now(ZoneOffset.UTC);
+                if (now.isBefore(timeStampDateTime)) {
+                    Thread.sleep(Duration.between(now, timeStampDateTime).toMillis());
                 }
 
                 // First ring. This invocation reuses the connection established by the client.

@@ -2,7 +2,6 @@
 
 package com.example.ice.callback.server;
 
-import com.example.ice.callback.server.SimpleWakeUpService;
 import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.Identity;
 import com.zeroc.Ice.ObjectAdapter;
