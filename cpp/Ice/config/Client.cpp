@@ -10,15 +10,19 @@ using namespace std;
 int
 main(int argc, char* argv[])
 {
-    // Create Ice properties from the contents of the config.client file in the current working directory.
-    Ice::InitializationData initData;
-    initData.properties = Ice::createProperties();
-    initData.properties->load("config.client");
+    // Load the contents of the config.client file into a Properties object.
+    auto configFileProperties = Ice::createProperties();
+    configFileProperties->load("config.client");
+
+    // Create a Properties object from the command line arguments and the config file properties; Ice.* properties and
+    // other reserved properties set in argc/argv augment or override the config file properties.
+    auto properties = Ice::createProperties(argc, argv, configFileProperties);
 
     // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
-    // The communicator gets its properties from initData.properties; Ice.* properties and other reserved properties
-    // set in argc/argv override these properties.
-    Ice::CommunicatorPtr communicator = Ice::initialize(argc, argv, initData);
+    // The communicator gets its properties from initData.properties.
+    Ice::InitializationData initData;
+    initData.properties = properties;
+    Ice::CommunicatorPtr communicator = Ice::initialize(initData);
 
     // Make sure the communicator is destroyed at the end of this scope.
     Ice::CommunicatorHolder communicatorHolder{communicator};
