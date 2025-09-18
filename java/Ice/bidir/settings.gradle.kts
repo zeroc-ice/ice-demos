@@ -17,7 +17,7 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "bidir"
-include("../../util")
+include("util")
 include("client")
 include("server")
 
