@@ -14,13 +14,13 @@ Then, start two ore more server programs, each in its own terminal:
 **Linux/macOS:**
 
 ```shell
-./build/server
+./build/server --Ice.Trace.Locator
 ```
 
 **Windows:**
 
 ```shell
-build\server
+build\server --Ice.Trace.Locator
 ```
 
 Finally, start the client program:
