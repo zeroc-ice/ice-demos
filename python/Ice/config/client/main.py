@@ -21,8 +21,8 @@ async def main():
     properties = Ice.createProperties(sys.argv, configFileProperties)
 
     # Configure the communicator to use these properties and asyncio.
-    initData = Ice.InitializationData(properties=properties,
-                                      eventLoopAdapter=Ice.asyncio.EventLoopAdapter(asyncio.get_running_loop()))
+    initData = Ice.InitializationData(
+        properties=properties, eventLoopAdapter=Ice.asyncio.EventLoopAdapter(asyncio.get_running_loop()))
 
     # Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
     async with Ice.initialize(initData=initData) as communicator:

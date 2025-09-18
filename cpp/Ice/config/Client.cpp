@@ -19,7 +19,7 @@ main(int argc, char* argv[])
     auto properties = Ice::createProperties(argc, argv, configFileProperties);
 
     // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
-    // The communicator gets its properties from initData.properties.
+    // The communicator gets its properties from the properties object.
     Ice::InitializationData initData;
     initData.properties = properties;
     Ice::CommunicatorPtr communicator = Ice::initialize(initData);
