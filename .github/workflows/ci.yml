@@ -95,6 +95,11 @@ jobs:
 
         if: runner.os == 'Windows'
 
+      - name: Unset PLATFORM variable
+        if: runner.os == 'Windows'
+        run: |
+          echo "PLATFORM=$null" >> $GITHUB_ENV
+
       - name: Build C# Demos
         timeout-minutes: 20
         working-directory: csharp
