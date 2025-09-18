@@ -3,7 +3,7 @@
 pluginManagement {
     repositories {
         mavenLocal()
-        maven("https://central.sonatype.com/repository/maven-snapshots/")
+        maven("https://download.zeroc.com/nexus/repository/maven-nightly/")
         gradlePluginPortal() // Keep this to allow fetching other plugins
     }
 }
@@ -11,13 +11,13 @@ pluginManagement {
 dependencyResolutionManagement {
     repositories {
         // This demo uses the latest Ice nightly build published to the maven central snapshots repository.
-        maven("https://central.sonatype.com/repository/maven-snapshots/")
+        maven("https://download.zeroc.com/nexus/repository/maven-nightly/")
         mavenCentral()
     }
 }
 
 rootProject.name = "bidir"
-include("util")
+include("../../util")
 include("client")
 include("server")
 
