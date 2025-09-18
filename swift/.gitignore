@@ -2,6 +2,6 @@
 .build
 Package.resolved
 
-# macOS keychain files files
+# macOS keychain files
 *.keychain
 *.fl*
