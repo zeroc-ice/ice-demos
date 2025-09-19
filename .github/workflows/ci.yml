@@ -77,14 +77,25 @@ jobs:
         id: msvc
         run: |
           $vsPath = vswhere -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath
-          $clPath = Get-ChildItem -Path "$vsPath\VC\Tools\MSVC\*\bin\Hostx64\x64\cl.exe" | Select-Object -First 1
-          echo "cl_path=$($clPath.FullName)" >> $env:GITHUB_OUTPUT
-          echo "vs_path=$vsPath" >> $env:GITHUB_OUTPUT
+          $vcvarsPath = "$vsPath\VC\Auxiliary\Build\vcvars64.bat"
 
       - name: Build C++ Demos
         timeout-minutes: 20
         working-directory: cpp
+        shell: pwsh
         run: |
+          # Find Visual Studio installation using vswhere
+          $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
+          $vsPath = & $vswhere -latest -property installationPath
+          $vcvarsall = "$vsPath\VC\Auxiliary\Build\vcvarsall.bat"
+
+          # Load MSVC environment
+          cmd /c "`"$vcvarsall`" x64 && set" | ForEach-Object {
+              if ($_ -match '^([^=]+)=(.*)$') {
+                  [Environment]::SetEnvironmentVariable($matches[1], $matches[2], "Process")
+              }
+          }
+
           $ErrorActionPreference = "Stop"
 
           Get-ChildItem -Recurse -Filter CMakeLists.txt | ForEach-Object {
