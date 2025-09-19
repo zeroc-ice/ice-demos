@@ -64,12 +64,12 @@ jobs:
           done
         if: runner.os != 'Windows'
 
-      # NOTE: this is necessary to correctly find and use cl.exe
-      - name: Setup Developer Command Prompt
-        uses: ilammy/msvc-dev-cmd@v1
-        with:
-          arch: x64
-        if: runner.os == 'Windows'
+      # # NOTE: this is necessary to correctly find and use cl.exe
+      # - name: Setup Developer Command Prompt
+      #   uses: ilammy/msvc-dev-cmd@v1
+      #   with:
+      #     arch: x64
+      #   if: runner.os == 'Windows'
 
       - name: Find MSVC compiler
         shell: pwsh
@@ -92,7 +92,7 @@ jobs:
 
               # Run cmake configure step. Specify cl.exe otherwise cmake tries to use C:\mingw64\bin\c++.exe for
               # some reason.
-              cmake -B "$dir/build" -S "$dir" -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_COMPILE_WARNING_AS_ERROR=ON -DCMAKE_C_COMPILER="${{ steps.msvc.outputs.cl_path }}" -DCMAKE_CXX_COMPILER="${{ steps.msvc.outputs.cl_path }}"
+              cmake -B "$dir/build" -S "$dir" -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_COMPILE_WARNING_AS_ERROR=ON -DCMAKE_CXX_COMPILER="${{ steps.msvc.outputs.cl_path }}"
               if ($LASTEXITCODE -ne 0) { throw "CMake configuration failed" }
 
               # Run cmake build step
