@@ -10,13 +10,13 @@ pluginManagement {
 
 dependencyResolutionManagement {
     repositories {
-        // This demo uses the latest Ice nightly build published to the maven central snapshots repository.
+        // This demo uses the latest Ice nightly build published to the ZeroC maven-nightly repository.
         maven("https://download.zeroc.com/nexus/repository/maven-nightly/")
         mavenCentral()
     }
 }
 
-rootProject.name = "bidir"
+rootProject.name = "callback"
 include("util")
 project(":util").projectDir = file("../../util")
 

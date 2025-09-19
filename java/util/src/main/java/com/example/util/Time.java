@@ -1,6 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
-package com.example.ice.bidir.util;
+package com.example.util;
 
 public class Time {
     // daysBeforeEpoch converted to milliseconds
