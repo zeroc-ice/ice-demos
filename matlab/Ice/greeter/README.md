@@ -2,7 +2,16 @@
 
 The Greeter demo illustrates how to write a client application with Ice for MATLAB.
 
-In the MATLAB console:
+## Ice prerequisites
+
+- Install the MATLAB dev kit. See [Ice for MATLAB installation].
+
+## Building and running the demo
+
+Ice for MATLAB supports only client-side applications. As a result, you first need to start a Greeter server
+implemented in a language with server-side support, such as Python, Java, or C#.
+
+Then, in the MATLAB console:
 
 - Go to the Ice/greeter directory
 
@@ -22,6 +31,4 @@ slice2matlab Greeter.ice
 client
 ```
 
-> [!NOTE]
-> Ice for MATLAB supports only client-side applications. In this demo, we connect to a Greeter server implemented in a
-> language with server-side support, such as C++, C#, Java, Python, or Swift.
+[Ice for MATLAB installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-matlab
