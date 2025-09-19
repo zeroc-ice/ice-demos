@@ -25,8 +25,8 @@ class AtmosphericConditions
 You can build all the client and server applications with:
 
 ```shell
-cmake -B build
-cmake --build build --config Release
+cmake -B build -S . -G Ninja
+cmake --build build
 ```
 
 Then, start either version 1 or version 2 of the server in its own terminal:
@@ -42,9 +42,9 @@ Then, start either version 1 or version 2 of the server in its own terminal:
 **Windows:**
 
 ```shell
-build\Release\server1
+build\server1
 # or
-build\Release\server2
+build\server2
 ```
 
 In a separate terminal, run version 1 and then version 2 of the Client:
@@ -58,7 +58,7 @@ In a separate terminal, run version 1 and then version 2 of the Client:
 **Windows:**
 
 ```shell
-build\Release\client1
+build\client1
 ```
 
 and
@@ -72,7 +72,7 @@ and
 **Windows:**
 
 ```shell
-build\Release\client2
+build\client2
 ```
 
 Thanks to `optional`, version 1 and version 2 of the clients and servers interoperate seamlessly.

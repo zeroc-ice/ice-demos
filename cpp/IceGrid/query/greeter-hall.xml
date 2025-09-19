@@ -11,7 +11,7 @@
 
       <!-- An instance of this template is a server with ID GreetServer-${index}. IceGrid starts
       this server when a client looks up an object adapter or a well-known object in this server. -->
-      <server id="GreetServer-${index}" exe="server" activation="on-demand">
+      <server id="GreetServer-${index}" exe="./build/server" activation="on-demand">
         <!-- The object adapter created by this server. It listens on an OS-assigned tcp port, on
         all interfaces. -->
         <adapter name="GreeterAdapter" endpoints="tcp">

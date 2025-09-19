@@ -25,8 +25,8 @@ flowchart LR
 You can build the weather sensor and weather station applications with:
 
 ```shell
-cmake -B build
-cmake --build build --config Release
+cmake -B build -S . -G Ninja
+cmake --build build
 ```
 
 ## Running the demo
@@ -50,7 +50,7 @@ cmake --build build --config Release
     **Windows:**
 
     ```shell
-    build\Release\station
+    build\station
     ```
 
     To start a weather sensor:
@@ -64,7 +64,7 @@ cmake --build build --config Release
     **Windows:**
 
     ```shell
-    build\Release\sensor
+    build\sensor
     ```
 
 [Ice for C++ installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-c

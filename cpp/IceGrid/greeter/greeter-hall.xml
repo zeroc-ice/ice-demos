@@ -10,7 +10,7 @@
       <!-- Describes the server deployed on node1. IceGrid starts this server when a client looks up
       an object adapter
       or a well-known object in this server. -->
-      <server id="GreetServer" exe="server" activation="on-demand">
+      <server id="GreetServer" exe="./build/server" activation="on-demand">
 
         <!-- The object adapter created by this server. It listens on an OS-assigned tcp port, on
         all interfaces.

@@ -20,8 +20,8 @@ does not use any Slice generated code.
 To build the demo, run:
 
 ```shell
-cmake -B build
-cmake --build build --config Release
+cmake -B build -S . -G Ninja
+cmake --build build
 ```
 
 The build produces 3 executables: client, server, and forwardingserver.
@@ -41,11 +41,11 @@ To run the demo, first start the server and the forwarding server in separate te
 **Windows:**
 
 ```shell
-build\Release\server --Ice.Trace.Dispatch
+build\server --Ice.Trace.Dispatch
 ```
 
 ```shell
-build\Release\forwardingserver --Ice.Trace.Dispatch
+build\forwardingserver --Ice.Trace.Dispatch
 ```
 
 In a third terminal, start the client:
@@ -59,7 +59,7 @@ In a third terminal, start the client:
 **Windows:**
 
 ```shell
-build\Release\client --Ice.Trace.Network
+build\client --Ice.Trace.Network
 ```
 
 > [!NOTE]

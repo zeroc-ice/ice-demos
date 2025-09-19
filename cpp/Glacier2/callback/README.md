@@ -18,8 +18,8 @@ Follow these steps to build and run the demo:
 1. Build the client and server applications:
 
    ```shell
-   cmake -B build
-   cmake --build build --config Release
+   cmake -B build -S . -G Ninja
+   cmake --build build
    ```
 
 2. Start the Server program in its own terminal:
@@ -33,7 +33,7 @@ Follow these steps to build and run the demo:
    **Windows:**
 
    ```shell
-   build\Release\server
+   build\server
    ```
 
 3. Start the Glacier2 router in its own terminal:
@@ -57,7 +57,7 @@ Follow these steps to build and run the demo:
    **Windows:**
 
    ```shell
-   build\Release\client
+   build\client
     ```
 
 [1]: ../../Ice/callback

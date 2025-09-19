@@ -7,8 +7,8 @@ Follow these steps to build and run the demo:
 1. Build the client and server applications:
 
    ```shell
-   cmake -B build
-   cmake --build build --config Release
+   cmake -B build -S . -G Ninja
+   cmake --build build
    ```
 
 2. Start the IceGrid registry in its own terminal:
@@ -18,22 +18,6 @@ Follow these steps to build and run the demo:
    ```
 
 3. Start the IceGrid node in its own terminal:
-
-   First, add the server build directory to the PATH environment variable:
-
-   **Linux/macOS:**
-
-   ```shell
-   export PATH=$PWD/build:$PATH
-   ```
-
-   **Windows:**
-
-   ```shell
-   set PATH=%CD%\\build\\Release;%PATH%
-   ```
-
-   Then, start the IceGrid node:
 
    ```shell
    icegridnode --Ice.Config=config.node
@@ -66,5 +50,5 @@ Follow these steps to build and run the demo:
     **Windows:**
 
     ```shell
-    build\Release\client
+    build\client
     ```
