@@ -1,7 +1,5 @@
 // Copyright (c) ZeroC, Inc.
 
-#pragma once
-
 ["java:identifier:com.example.earlyriser"]
 module EarlyRiser
 {
