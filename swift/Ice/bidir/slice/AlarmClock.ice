@@ -1,7 +1,5 @@
 // Copyright (c) ZeroC, Inc.
 
-#pragma once
-
 module EarlyRiser
 {
     /// Indicates the button pressed when the alarm rang.

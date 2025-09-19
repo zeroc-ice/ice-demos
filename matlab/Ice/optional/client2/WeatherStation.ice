@@ -1,7 +1,5 @@
 // Copyright (c) ZeroC, Inc.
 
-#pragma once
-
 // Version 2 of the WeatherStation Slice definitions: we added a new optional pressure to AtmosphericConditions.
 
 ["matlab:identifier:clearsky"]

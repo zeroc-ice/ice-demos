@@ -18,6 +18,8 @@ dependencyResolutionManagement {
 
 rootProject.name = "bidir"
 include("util")
+project(":util").projectDir = file("../../util")
+
 include("client")
 include("server")
 

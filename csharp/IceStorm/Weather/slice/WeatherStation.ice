@@ -1,7 +1,5 @@
 // Copyright (c) ZeroC, Inc.
 
-#pragma once
-
 module ClearSky
 {
     /// Represents the atmospheric conditions measured by a sensor.

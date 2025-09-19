@@ -13,13 +13,21 @@ flowchart LR
     icestorm --report--> s3[Station #3]
 ```
 
+## Ice prerequisites
+
+- Install the IceBox and IceStorm services. See [Ice service installation].
+
+## Building the demo
+
 You can build the weather sensor and weather station applications with:
 
 ```shell
 dotnet build
 ```
 
-Next, run the IceStorm service in its own terminal:
+## Running the demo
+
+First, run the IceStorm service in its own terminal:
 
 ```shell
 icebox --IceBox.Service.IceStorm="IceStormService,38a0:createIceStorm --Ice.Config=config.icestorm"
@@ -36,3 +44,5 @@ dotnet run
 cd Station
 dotnet run
 ```
+
+[Ice service installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-services

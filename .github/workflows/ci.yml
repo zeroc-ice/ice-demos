@@ -69,6 +69,8 @@ jobs:
         working-directory: cpp
         shell: pwsh
         run: |
+          $ErrorActionPreference = "Stop"
+
           # Find Visual Studio installation using vswhere
           $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
           $vsPath = & $vswhere -latest -property installationPath
@@ -81,14 +83,10 @@ jobs:
               }
           }
 
-          $ErrorActionPreference = "Stop"
-
           Get-ChildItem -Recurse -Filter CMakeLists.txt | ForEach-Object {
               Write-Output "Processing: $_"
               $dir = $_.DirectoryName
 
-              # Run cmake configure step. Specify cl.exe otherwise cmake tries to use C:\mingw64\bin\c++.exe for
-              # some reason.
               cmake -B "$dir/build" -S "$dir" -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_COMPILE_WARNING_AS_ERROR=ON"
               if ($LASTEXITCODE -ne 0) { throw "CMake configuration failed" }
 
