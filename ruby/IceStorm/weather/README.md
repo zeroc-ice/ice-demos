@@ -13,6 +13,13 @@ flowchart LR
     icestorm --report--> s3[Station #3]
 ```
 
+## Ice prerequisites
+
+- Install the Ruby dev kit. See [Ice for Ruby installation].
+- Install the IceStorm service. See [Ice service installation].
+
+## Building and running the demo
+
 Ice for Ruby supports only client-side applications, and as a result, we can only implement the sensors in Ruby.
 
 You first need to start IceStorm and the weather station(s) from a demo written in a language with full server-side
@@ -31,3 +38,6 @@ slice2rb WeatherStation.ice
 ```shell
 ruby sensor.rb
 ```
+
+[Ice for Ruby installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-ruby
+[Ice service installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-services

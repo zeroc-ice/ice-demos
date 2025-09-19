@@ -7,6 +7,13 @@ flowchart LR
     c[Client] --tcp--> g[Glacier2 router:4063] --tcp--> s[Server:4061<br>hosts Greeter]
 ```
 
+## Ice prerequisites
+
+- Install the Ruby dev kit. See [Ice for Ruby installation].
+- Install the Glacier2 service. See [Ice service installation].
+
+## Building and running the demo
+
 Ice for Ruby supports only client-side applications. As a result, you first need to start the Glacier2 router and a
 Greeter server implemented in a language with server-side support, such as Python, Java, or C#.
 
@@ -23,3 +30,6 @@ slice2rb Greeter.ice
 ```shell
 ruby client.rb
 ```
+
+[Ice for Ruby installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-ruby
+[Ice service installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-services
