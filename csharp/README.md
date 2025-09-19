@@ -3,22 +3,8 @@
 This folder contains example Ice applications written in C#. Each example is a simple client-server application that
 demonstrates a specific feature or programming technique.
 
-## Building Requirements
-
-1. **.NET SDK 8.0**
-   Download and install the .NET 8.0 SDK from
-   [dotnet.microsoft.com](https://dotnet.microsoft.com/en-us/download/dotnet).
-
-2. **ZeroC NuGet Feed**
-   The included [nuget.config](./nuget.config) file already adds the ZeroC NuGet feed to make
-   the ZeroC nightly builds available.
-
-## Building the Demos
-
-The top-level [Directory.Build.props](./Directory.Build.props) file sets `IceVersion` to `3.8.0-nightly.*` by default to
-pull the latest nightly build of Ice.
-
-## C# Demos
+The MSBuild projects download and install the Ice for C# NuGet packages as needed. See [Ice for C# installation] for
+details.
 
 |                                                         |                                                                                                           |
 | ------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
@@ -44,3 +30,5 @@ pull the latest nightly build of Ice.
 | [IceGrid LocatorDiscovery](./IceGrid/LocatorDiscovery/) | Shows how to write a client application that configures its locator using the IceLocatorDiscovery plug-in.|
 | [IceGrid Query](./IceGrid/Query/)                       | Shows how use the Query object provided by the IceGrid registry to lookup a well-known object by type.    |
 | [IceStorm Weather](./IceStorm/Weather/)                 | Shows how to use IceStorm to create a simple pub-sub application.                                         |
+
+[Ice for C# installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-c-1

@@ -1,22 +1,7 @@
 # Ice for MATLAB Demos
 
-This directory contains example Ice applications written in MATLAB. Each example is a simple client application
-that demonstrates a specific feature or programming technique. The corresponding server is provided by the C++, C#,
-Java, and Python demos.
-
-## Building Requirements
-
-1. **MATLAB R2024a**
-   [MATLAB](https://www.mathworks.com/products/matlab.html).
-
-2. **Ice for MATLAB nightly toolbox**
-   [Ice for MATLAB nightly builds](https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#matlab)
-
-## Building the demos
-
-Follow the instructions provided in each demo’s README.md file.
-
-## MATLAB Demos
+This folder contains example Ice applications written in MATLAB. Each example is a simple client application that
+demonstrates a specific feature or programming technique.
 
 |                                                         |                                                                                                            |
 |---------------------------------------------------------|------------------------------------------------------------------------------------------------------------|

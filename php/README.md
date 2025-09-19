@@ -1,26 +1,7 @@
 # Ice for PHP Demos
 
-This directory contains example Ice applications written in PHP. Each example is a simple client application
-that demonstrates a specific feature or programming technique. The corresponding server is provided by the C++, C#,
-Java, and Python demos.
-
-> Ice for PHP is only supported on Linux and macOS platforms.
-
-## Linux Prerequisites
-
-- A supported Linux Distribution (RHEL 9/10, Amazon Linux 2023, Debian 12, Ubuntu 24.04)
-- [Nightly build of Ice](https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#linux)
-
-## macOS Prerequisites
-
-- macOS Sequoia
-- Ice for PHP source build, see [building Ice for PHP](https://github.com/zeroc-ice/ice/blob/main/php/BUILDING.md)
-
-## Building the demos
-
-Follow the instructions provided in each demo’s README.md file.
-
-## PHP Demos
+This folder contains example Ice applications written in PHP. Each example is a simple client application that
+demonstrates a specific feature or programming technique.
 
 |                                                              |                                                                                                            |
 |--------------------------------------------------------------|------------------------------------------------------------------------------------------------------------|
