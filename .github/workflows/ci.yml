@@ -69,9 +69,10 @@ jobs:
       #   uses: ilammy/msvc-dev-cmd@v1
       #   with:
       #     arch: x64
-      #   if: runner.os == 'Windows'
+      # if: runner.os == 'Windows'
 
       - name: Find MSVC compiler
+        if: runner.os == 'Windows'
         shell: pwsh
         id: msvc
         run: |
@@ -99,7 +100,6 @@ jobs:
               cmake --build "$dir/build" --verbose
               if ($LASTEXITCODE -ne 0) { throw "CMake build failed" }
           }
-
         if: runner.os == 'Windows'
 
       - name: Unset PLATFORM variable
