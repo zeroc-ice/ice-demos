@@ -64,21 +64,6 @@ jobs:
           done
         if: runner.os != 'Windows'
 
-      # # NOTE: this is necessary to correctly find and use cl.exe
-      # - name: Setup Developer Command Prompt
-      #   uses: ilammy/msvc-dev-cmd@v1
-      #   with:
-      #     arch: x64
-      # if: runner.os == 'Windows'
-
-      - name: Find MSVC compiler
-        if: runner.os == 'Windows'
-        shell: pwsh
-        id: msvc
-        run: |
-          $vsPath = vswhere -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath
-          $vcvarsPath = "$vsPath\VC\Auxiliary\Build\vcvars64.bat"
-
       - name: Build C++ Demos
         timeout-minutes: 20
         working-directory: cpp
