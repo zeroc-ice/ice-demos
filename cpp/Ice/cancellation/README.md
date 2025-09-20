@@ -2,12 +2,22 @@
 
 The Cancellation demo shows how to cancel an invocation in C++. It also shows a related feature: invocation timeouts.
 
+## Ice prerequisites
+
+- Install the C++ dev kit.
+  - Linux and macOS: see [Ice for C++ installation].
+  - Windows: the cmake build downloads and installs the C++ dev kit automatically.
+
+## Building the demo
+
 To build the demo, run:
 
 ```shell
 cmake -B build
 cmake --build build --config Release
 ```
+
+## Running the demo
 
 To run the demo, first start the server:
 
@@ -40,3 +50,5 @@ build\Release\client --Ice.Trace.Network
 > [!NOTE]
 > The `--Ice.Trace.Network` command-line option turns on Network tracing. For this demo, it shows you that the
 > `InvocationCanceledException` and `InvocationTimeoutException` do not close the connection.
+
+[Ice for C++ installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-c

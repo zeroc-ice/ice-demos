@@ -10,16 +10,25 @@ flowchart LR
 In a typical Glacier2 deployment, the client can establish a connection to the Glacier2 router but cannot establish
 a connection to the server, because the server is on a separate network.
 
-Follow these steps to build and run the demo:
+## Ice prerequisites
 
-1. Build the client and server applications:
+- Install the C++ dev kit.
+  - Linux and macOS: see [Ice for C++ installation].
+  - Windows: the cmake build downloads and installs the C++ dev kit automatically.
+- Install Glacier2. See [Ice service installation].
 
-   ```shell
-   cmake -B build
-   cmake --build build --config Release
-   ```
+## Building the demo
 
-2. Start the server in its own terminal:
+To build the demo, run:
+
+```shell
+cmake -B build
+cmake --build build --config Release
+```
+
+## Running the demo
+
+1. Start the server in its own terminal:
 
    **Linux/macOS:**
 
@@ -33,7 +42,7 @@ Follow these steps to build and run the demo:
    build\Release\server
    ```
 
-3. Start the Glacier2 router in its own terminal:
+2. Start the Glacier2 router in its own terminal:
 
    ```shell
    glacier2router --Ice.Config=config.glacier2
@@ -43,7 +52,9 @@ Follow these steps to build and run the demo:
    > You can also start the Glacier2 router before the server. The order does not matter: the server is identical to the
    > server provided in the [Ice Greeter][1] demo and does not depend on Glacier2.
 
-4. Start the client in its own terminal:
+   ```
+
+3. Start the client in its own terminal:
 
     **Linux/macOS:**
 
@@ -58,3 +69,5 @@ Follow these steps to build and run the demo:
     ```
 
 [1]: ../../Ice/Greeter
+[Ice for C++ installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-c
+[Ice service installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-services
