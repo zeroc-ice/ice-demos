@@ -55,9 +55,19 @@ cmake --build build --config Release
    > You can also start the Glacier2 router before the server. The order does not matter: the server is identical to the
    > server provided in the [Ice Callback][1] demo and does not depend on Glacier2.
 
+3. Start the client in its own terminal:
+
+   **Linux/macOS:**
+
+   ```shell
+   ./build/client
    ```
 
-3. Run the client application.
+   **Windows:**
+
+   ```shell
+   build\Release\client
+   ```
 
 [1]: ../../Ice/callback
 [2]: ../../Ice/bidir

@@ -52,8 +52,6 @@ cmake --build build --config Release
    > You can also start the Glacier2 router before the server. The order does not matter: the server is identical to the
    > server provided in the [Ice Greeter][1] demo and does not depend on Glacier2.
 
-   ```
-
 3. Start the client in its own terminal:
 
     **Linux/macOS:**
