@@ -3,19 +3,6 @@
 This folder contains example Ice applications written in Ruby. Each example is a simple client application that
 demonstrates a specific feature or programming technique.
 
-> Ice for Ruby is supported on Linux and macOS platforms.
-
-## Building Requirements
-
-The demos in the main branch require the latest Ice for Ruby nightly build. To install it, run:
-
-```shell
-MAKEFLAGS=-j12 gem install zeroc-ice --source https://download.zeroc.com/nexus/repository/rubygems-nightly --user \
-    --pre --version '>= 3.8.0.pre'
-```
-
-## Ruby Demos
-
 |                                                         |                                                                                                            |
 |---------------------------------------------------------|------------------------------------------------------------------------------------------------------------|
 | [Glacier2 greeter](./Glacier2/greeter/)                 | Shows how to write a basic Glacier2 client.                                                                |

@@ -1,15 +1,16 @@
 // Copyright (c) ZeroC, Inc.
 
-// Create Ice properties from the contents of the config.server file in the current working directory.
-var properties = new Ice.Properties();
-properties.load("config.server");
+// Load the contents of the config.server file into a Properties object.
+var configFileProperties = new Ice.Properties();
+configFileProperties.load("config.server");
+
+// Create a Properties object from the command line arguments and the config file properties; Ice.* properties and other
+// reserved properties set in args augment or override the config file properties.
+var properties = new Ice.Properties(ref args, defaults: configFileProperties);
 
 // Create an Ice communicator. We'll use this communicator to create an object adapter.
-// The communicator gets its properties from initData.properties; Ice.* properties and other reserved properties set in
-// args override these properties.
-await using Ice.Communicator communicator = Ice.Util.initialize(
-    ref args,
-    new Ice.InitializationData { properties = properties });
+// The communicator gets its properties from the properties object.
+await using Ice.Communicator communicator = Ice.Util.initialize(new Ice.InitializationData { properties = properties });
 
 // Create an object adapter that listens for incoming requests and dispatches them to servants.
 // This adapter is configured through the GreeterAdapter.* properties in config.server.

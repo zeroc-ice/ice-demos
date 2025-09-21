@@ -10,7 +10,7 @@ import java.util.concurrent.CompletableFuture;
 import com.example.earlyriser.AlarmClockPrx;
 import com.example.earlyriser.ButtonPressed;
 import com.example.earlyriser.WakeUpService;
-import com.example.ice.bidir.util.Time;
+import com.example.util.Time;
 import com.zeroc.Ice.Connection;
 import com.zeroc.Ice.Current;
 import com.zeroc.Ice.FeatureNotSupportedException;
@@ -41,8 +41,9 @@ class BidirWakeUpService implements WakeUpService {
         CompletableFuture.runAsync(() -> {
             try {
                 // Wait until the specified time.
-                if (ZonedDateTime.now(ZoneOffset.UTC).isAfter(timeStampDateTime)) {
-                    Thread.sleep(Duration.between(ZonedDateTime.now(ZoneOffset.UTC), timeStampDateTime).toMillis());
+                var now = ZonedDateTime.now(ZoneOffset.UTC);
+                if (now.isBefore(timeStampDateTime)) {
+                    Thread.sleep(Duration.between(now, timeStampDateTime).toMillis());
                 }
 
                 // First ring. This invocation reuses the connection established by the client.

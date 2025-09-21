@@ -3,19 +3,6 @@
 This folder contains example Ice applications written in Swift. Each example is a simple client-server application that
 demonstrates a specific feature or programming technique.
 
-> Ice for Swift is only supported on macOS and iOS platforms.
-
-## macOS Prerequisites
-
-- macOS Sequoia
-- Xcode
-
-## Building the Demos
-
-Follow the instructions provided in each demo’s README.md file.
-
-## Swift Demos
-
 |                                                         |                                                                                                            |
 |---------------------------------------------------------|------------------------------------------------------------------------------------------------------------|
 | [Glacier2 Callback](./Glacier2/callback/)               | Shows how to write a Glacier2 client and implement callbacks in this client.                               |

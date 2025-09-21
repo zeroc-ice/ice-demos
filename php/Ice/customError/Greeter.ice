@@ -1,7 +1,5 @@
 // Copyright (c) ZeroC, Inc.
 
-#pragma once
-
 module VisitorCenter
 {
     /// Represents the error code carried by GreeterException.

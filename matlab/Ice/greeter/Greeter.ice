@@ -1,7 +1,5 @@
 // Copyright (c) ZeroC, Inc.
 
-#pragma once
-
 // We use matlab:identifier to get a lowercase namespace in MATLAB; without this metadata directive, the mapped
 // namespace would be VisitorCenter.
 ["matlab:identifier:visitorcenter"]

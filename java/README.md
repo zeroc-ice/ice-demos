@@ -3,26 +3,15 @@
 This folder contains example Ice applications written in Java. Each example is a simple client-server application that
 demonstrates a specific feature or programming technique.
 
-## Building Requirements
-
-1. **Java JDK**
-   JDK 17 or later. You can download the Oracle JDK from [oracle.com](https://www.oracle.com/java/technologies/downloads/).
-
-2. **ZeroC Nightly Repository**
-   The included Gradle projects are setup to use the ZeroC nightly maven repository.
-   See [Installing Nightly builds](https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#java) for setup instructions.
-
-## Building the demos
-
-Follow the instructions provided in each demo’s README.md file.
-
-## Java Demos
+The Gradle projects download and install the Ice for Java packages as needed. See [Ice for Java installation] for
+details.
 
 |                                               |                                                                                                     |
 |-----------------------------------------------|-----------------------------------------------------------------------------------------------------|
 | [Glacier2 Greeter](./Glacier2/greeter/)       | Shows how to write a basic Glacier2 client.                                                         |
 | [Ice Android Greeter](./Ice/android-greeter/) | Shows how to create an Ice for Java Android application.                                            |
 | [Ice Bidir](./Ice/bidir/)                     | Shows how to send requests "the other way around", from the server to the client.                   |
+| [Ice Callback](./Ice/callback/)               | Shows how to implement callbacks in a client application.                                           |
 | [Ice Cancellation](./Ice/cancellation/)       | Shows how to cancel a request and how to configure invocation timeouts.                             |
 | [Ice Config](./Ice/config/)                   | Shows how to configure client and server applications using Ice configuration files.                |
 | [Ice Context](./Ice/context/)                 | Shows how to set and retrieve request contexts.                                                     |
@@ -32,3 +21,5 @@ Follow the instructions provided in each demo’s README.md file.
 | [Ice Inheritance](./Ice/inheritance/)         | Shows the power of interface inheritance in Slice.                                                  |
 | [Ice Middleware](./Ice/middleware/)           | Shows how to write a simple middleware and how to add this middleware to an object adapter.         |
 | [Ice Secure](./Ice/secure/)                   | Shows how to use com.zeroc.Ice.SSL APIs to configure the ssl transport.                             |
+
+[Ice for Java installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-java
