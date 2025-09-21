@@ -4,6 +4,7 @@ The Bidir demo illustrates how to send requests "the other way around", from a s
 connection established by the client to the server.
 
 This demo is very similar to the [Callback][1] demo: with the Callback demo, the server opens a connection to the
+
 client, while with this demo, there is only one connection, from the client to the server:
 
 ```mermaid
@@ -13,68 +14,88 @@ flowchart LR
 
 This is particularly useful when the client application is behind a firewall that does not allow incoming connections.
 
-We recommend running each program in a separate Python virtual environment. If you are new to Python virtual
-environments, see [Python Virtual Environments].
+We recommend running each program in a separate Python virtual environment.  
+If you are new to Python virtual environments, see [Python Virtual Environments].
 
 ## Running the server
 
-Navigate to the `server` directory, to run the server program.
+Navigate to the `server` directory.
 
-- Create and activate a Python virtual environment:
+### 1. Create and activate a Python virtual environment
 
-    ```shell
-    python -m venv venv
-    source venv/bin/activate  # On macOS/Linux
-    venv\Scripts\activate     # On Windows
-    ```
+#### macOS and Linux
 
-- Install the program dependencies:
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
 
-    ```shell
-    pip install -r requirements.txt
-    ```
+#### Windows (PowerShell)
 
-- Compile the AlarmClock.ice file with the Slice compiler for Python:
+```powershell
+python -m venv venv
+venv\Scripts\activate
+```
 
-    ```shell
-    slice2py ../slice/AlarmClock.ice
-    ```
+### 2. Install program dependencies
 
-- Run the server program:
+```bash
+pip install -r requirements.txt
+```
 
-    ```shell
-    python main.py
-    ```
+### 3. Compile the Slice definitions
+
+Use the Slice-to-Python compiler to generate Python code from the `AlarmClock.ice` file:
+
+```bash
+slice2py ../slice/AlarmClock.ice
+```
+
+### 4. Run the server
+
+```bash
+python main.py
+```
 
 ## Running the client
 
-In a separate terminal, navigate to the `client` directory to run the client program.
+In a separate terminal, navigate to the `client` directory.
 
-- Create and activate a Python virtual environment:
+### 1. Create and activate a Python virtual environment
 
-    ```shell
-    python -m venv venv
-    source venv/bin/activate  # On macOS/Linux
-    venv\Scripts\activate     # On Windows
-    ```
+#### macOS and Linux
 
-- Install the program dependencies:
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
 
-    ```shell
-    pip install -r requirements.txt
-    ```
+#### Windows (PowerShell)
 
-- Compile the AlarmClock.ice file with the Slice compiler for Python:
+```powershell
+python -m venv venv
+venv\Scripts\activate
+```
 
-    ```shell
-    slice2py ../slice/AlarmClock.ice
-    ```
+### 2. Install program dependencies
 
-- Run the client program:
+```bash
+pip install -r requirements.txt
+```
 
-    ```shell
-    python main.py
-    ```
+### 3. Compile the Slice definitions
 
-[Python Virtual Environments]: https://docs.python.org/3/tutorial/venv.html
+Use the Slice-to-Python compiler to generate Python code from the `AlarmClock.ice` file:
+
+```bash
+slice2py ../slice/AlarmClock.ice
+```
+
+### 4. Run the client
+
+```bash
+python main.py
+```
+
+[Python Virtual Environments]: https://docs.python.org/3/tutorial/venv.html  
 [1]: ../callback/
