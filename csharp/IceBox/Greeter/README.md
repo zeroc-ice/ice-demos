@@ -2,13 +2,17 @@
 
 This demo shows how to create an IceBox service in C#.
 
-You can build the client application and IceBox service with:
+## Building the demo
+
+To build the demo, run:
 
 ```shell
 dotnet build
 ```
 
-To run this demo, you first need to install the `iceboxnet` tool. The following command performs a local installation:
+## Running the demo
+
+First, you need to install the `iceboxnet` tool. The following command performs a local installation:
 
 ```shell
 dotnet tool install iceboxnet --prerelease --create-manifest-if-needed

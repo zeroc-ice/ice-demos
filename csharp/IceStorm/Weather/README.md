@@ -19,7 +19,7 @@ flowchart LR
 
 ## Building the demo
 
-You can build the weather sensor and weather station applications with:
+To build the demo, run:
 
 ```shell
 dotnet build

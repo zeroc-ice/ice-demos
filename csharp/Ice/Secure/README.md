@@ -2,20 +2,24 @@
 
 This demo illustrates how to programmatically configure client and server applications to use SSL secure connections.
 
-You can build the client and server applications with:
+## Building the demo
+
+To build the demo, run:
 
 ```shell
 dotnet build
 ```
 
-First start the Server program:
+## Running the demo
+
+First, start the Server program:
 
 ```shell
 cd Server
 dotnet run --Ice.Trace.Network
 ```
 
-In a separate terminal, start the Client program:
+Then, in a separate terminal, start the Client program:
 
 ```shell
 cd Client

@@ -2,13 +2,17 @@
 
 This demo shows how to configure client and server applications using Ice configuration files.
 
-To build the demo run:
+## Building the demo
+
+To build the demo, run:
 
 ```shell
 dotnet build
 ```
 
-First start the Server program:
+## Running the demo
+
+First, start the Server program:
 
 ```shell
 cd Server

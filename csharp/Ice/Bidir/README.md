@@ -13,20 +13,24 @@ flowchart LR
 
 This is particularly useful when the client application is behind a firewall that does not allow incoming connections.
 
-You can build the client and server applications with:
+## Building the demo
+
+To build the demo, run:
 
 ```shell
 dotnet build
 ```
 
-First start the Server program:
+## Running the demo
+
+First, start the Server program:
 
 ```shell
 cd Server
 dotnet run
 ```
 
-In a separate terminal, start the Client program:
+Then, in a separate terminal, start the Client program:
 
 ```shell
 cd Client
