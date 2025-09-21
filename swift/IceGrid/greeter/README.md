@@ -16,44 +16,52 @@ flowchart LR
     Client ==> |greet request| Server
 ```
 
-Follow these steps to build and run the demo:
+## Ice prerequisites
 
-1. Build the client and server applications:
+- Install IceGrid. See [Ice service installation].
 
-   ```shell
-   swift build
-   ```
+## Building the demo
 
-2. Start the IceGrid registry in its own terminal:
+To build the demo, run:
 
-   ```shell
-   icegridregistry --Ice.Config=config.registry
-   ```
+```shell
+swift build
+```
 
-3. Start the IceGrid node in its own terminal:
+## Running the demo
 
-   ```shell
-   icegridnode --Ice.Config=config.node
-   ```
+First, start the IceGrid registry in its own terminal:
 
-4. Deploy the "GreeterHall" application in this IceGrid deployment:
+```shell
+icegridregistry --Ice.Config=config.registry
+```
 
-   ```shell
-   icegridadmin --Ice.Config=config.admin -e "application add greeter-hall.xml"
-   ```
+Then, start the IceGrid node in its own terminal:
 
-   `greeter-hall.xml` configures a single Greeter server. As an alternative, you can deploy 3 replicated Greeter servers
-   with:
+```shell
+icegridnode --Ice.Config=config.node
+```
 
-   ```shell
-   icegridadmin --Ice.Config=config.admin -e "application add greeter-hall-with-replication.xml"
-   ```
+Next, deploy the "GreeterHall" application in this IceGrid deployment:
 
-   > [!TIP]
-   > Use `update` instead of `add` to update an existing application.
+```shell
+icegridadmin --Ice.Config=config.admin -e "application add greeter-hall.xml"
+```
 
-5. Run the client application:
+`greeter-hall.xml` configures a single Greeter server. As an alternative, you can deploy 3 replicated Greeter servers
+with:
 
-   ```shell
-   swift run Client
-   ```
+```shell
+icegridadmin --Ice.Config=config.admin -e "application add greeter-hall-with-replication.xml"
+```
+
+> [!TIP]
+> Use `update` instead of `add` to update an existing application.
+
+Finally, run the client application:
+
+```shell
+swift run Client
+```
+
+[Ice service installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-services
