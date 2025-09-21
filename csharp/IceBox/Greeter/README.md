@@ -1,4 +1,4 @@
-#  IceBox Greeter
+# IceBox Greeter
 
 This demo shows how to create an IceBox service in C#.
 

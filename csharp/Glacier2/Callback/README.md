@@ -15,7 +15,7 @@ flowchart LR
 
 ## Ice prerequisites
 
-- Install the Glacier2 router. See [Ice service installation].
+- Install Glacier2. See [Ice service installation].
 
 ## Building the demo
 

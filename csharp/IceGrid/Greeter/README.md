@@ -18,7 +18,7 @@ flowchart LR
 
 ## Ice prerequisites
 
-- Install the IceGrid registry and node. See [Ice service installation].
+- Install IceGrid. See [Ice service installation].
 
 ## Building the demo
 

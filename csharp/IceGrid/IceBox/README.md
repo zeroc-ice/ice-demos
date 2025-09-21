@@ -4,7 +4,7 @@ The IceGrid IceBox demo illustrates how to deploy an IceBox server with IceGrid.
 
 ## Ice prerequisites
 
-- Install the IceGrid registry and node. See [Ice service installation].
+- Install IceGrid. See [Ice service installation].
 
 ## Building the demo
 

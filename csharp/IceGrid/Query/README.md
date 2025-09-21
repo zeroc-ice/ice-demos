@@ -4,7 +4,7 @@ This demo shows how to use the Query object provided by the IceGrid registry to 
 
 ## Ice prerequisites
 
-- Install the IceGrid registry and node. See [Ice service installation].
+- Install IceGrid. See [Ice service installation].
 
 ## Building the demo
 

@@ -15,7 +15,7 @@ flowchart LR
 
 ## Ice prerequisites
 
-- Install the IceBox and IceStorm services. See [Ice service installation].
+- Install IceStorm. See [Ice service installation].
 
 ## Building the demo
 
