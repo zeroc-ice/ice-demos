@@ -8,7 +8,7 @@ asynchronous dispatch implementation (in `server_asyncio`). The same client work
 We recommend running each program in a separate Python virtual environment. If you are new to Python virtual environments,
 see [Python Virtual Environments].
 
-## Running the Server
+## Running the server
 
 Navigate to the `server` or `server_asyncio` directory, depending on whether you want to run the synchronous or
 asynchronous version of the server.
@@ -49,7 +49,7 @@ slice2py ../slice/Greeter.ice
 python main.py
 ```
 
-## Running the Client
+## Running the client
 
 In a separate terminal, navigate to the `client` directory.
 
