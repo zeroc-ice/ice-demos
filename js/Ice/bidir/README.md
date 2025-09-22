@@ -5,7 +5,7 @@ connection established by the client to the server.
 
 ## Building the demo
 
-First instal npm dependencies:
+First install npm dependencies:
 
 ```shell
 npm install

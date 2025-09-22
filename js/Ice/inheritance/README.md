@@ -4,7 +4,7 @@ The Inheritance demo shows how to write a simple filesystem application using in
 
 ## Building the demo
 
-First instal npm dependencies:
+First install npm dependencies:
 
 ```shell
 npm install

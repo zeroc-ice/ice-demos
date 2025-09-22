@@ -5,7 +5,7 @@ feature: invocation timeouts.
 
 ## Building the demo
 
-First instal npm dependencies:
+First install npm dependencies:
 
 ```shell
 npm install

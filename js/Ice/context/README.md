@@ -4,7 +4,7 @@ This demo illustrates how to use Ice request contexts.
 
 ## Building the demo
 
-First instal npm dependencies:
+First install npm dependencies:
 
 ```shell
 npm install

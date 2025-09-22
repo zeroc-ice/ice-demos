@@ -19,7 +19,7 @@ Install IceStorm. See [Ice service installation].
 
 ## Building the demo
 
-First instal npm dependencies:
+First install npm dependencies:
 
 ```shell
 npm install

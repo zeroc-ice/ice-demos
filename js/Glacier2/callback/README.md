@@ -17,13 +17,13 @@ Install Glacier2. See [Ice service installation].
 
 ## Building the demo
 
-First instal npm dependencies:
+First install npm dependencies:
 
 ```shell
 npm install
 ```
 
-Then, to build the sensor application, run:
+Then, to build the client application, run:
 
 ```shell
 npm run build
