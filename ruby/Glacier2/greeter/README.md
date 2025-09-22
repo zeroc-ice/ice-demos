@@ -10,7 +10,6 @@ flowchart LR
 ## Ice prerequisites
 
 - Install the Ruby dev kit. See [Ice for Ruby installation].
-- Install the Glacier2 service. See [Ice service installation].
 
 ## Building and running the demo
 
@@ -32,4 +31,3 @@ ruby client.rb
 ```
 
 [Ice for Ruby installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-ruby
-[Ice service installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-services

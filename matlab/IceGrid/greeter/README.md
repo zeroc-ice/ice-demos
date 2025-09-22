@@ -19,7 +19,6 @@ flowchart LR
 ## Ice prerequisites
 
 - Install the MATLAB dev kit. See [Ice for MATLAB installation].
-- Install the IceGrid service. See [Ice service installation].
 
 ## Building and running the demo
 
@@ -47,4 +46,3 @@ client
 ```
 
 [Ice for MATLAB installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-matlab
-[Ice service installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-services
