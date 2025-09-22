@@ -33,7 +33,7 @@ icebox --IceBox.Service.Greeter="./build/GreeterService:create --Ice.Trace.Dispa
 **Windows:**
 
 ```shell
-icebox --IceBox.Service.Greeter="build\GreeterService:create --Ice.Trace.Dispatch"
+build\icebox --IceBox.Service.Greeter="build\GreeterService:create --Ice.Trace.Dispatch"
 ```
 
 In the second window, run the client:
