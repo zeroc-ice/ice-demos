@@ -22,7 +22,7 @@ npm run build
 First, start the server application.
 
 Ice for JavaScript has limited server-side support. As a result, you need to start a Bidir server implemented in a
-language that fully supports server-side functionality, such as Python, Java, or C#.
+language that fully supports server-side functionality, such as C++, C#, Java, Python, or Swift.
 
 In a separate terminal, start the client application:
 

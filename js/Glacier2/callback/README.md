@@ -27,12 +27,10 @@ npm run build
 
 ## Running the demo
 
-Run the server application:
-
-Ice for JavaScript has limited server-side support, and as a result, we can only implement the client in JavaScript.
+Ice for JavaScript has limited server-side support, and as a result, we can only implement the sensors in JavaScript.
 
 You first need to start Glacier2 and the Callback server from a demo written in a language with full server-side
-support, such as C++, Python, Java or C#.
+support, such as C++, C#, Java, Python, or Swift.
 
 In a separate terminal, start the client application:
 

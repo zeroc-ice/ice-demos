@@ -19,10 +19,10 @@ npm run build
 
 ## Running the demo
 
-Run the server application.
+First, start the server application.
 
-Ice for JavaScript has limited server-side support. As a result, you need to start a Cancellation server
-implemented in a language that fully supports server-side functionality, such as Python, Java, or C#.
+Ice for JavaScript has limited server-side support. As a result, you need to start a Cancellation server implemented in
+a language that fully supports server-side functionality, such as C++, C#, Java, Python, or Swift.
 
 In a separate terminal, start the client application:
 
