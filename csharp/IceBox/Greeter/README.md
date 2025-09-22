@@ -2,6 +2,15 @@
 
 This demo shows how to create an IceBox service in C#.
 
+## Ice prerequisites
+
+- Install the `iceboxnet` tool.
+  The following command performs a local installation:
+
+  ```shell
+  dotnet tool install iceboxnet --prerelease --create-manifest-if-needed
+  ```
+
 ## Building the demo
 
 To build the demo, run:
@@ -12,13 +21,7 @@ dotnet build
 
 ## Running the demo
 
-First, you need to install the `iceboxnet` tool. The following command performs a local installation:
-
-```shell
-dotnet tool install iceboxnet --prerelease --create-manifest-if-needed
-```
-
-Then, open a new terminal to run your iceboxnet server:
+First, start the iceboxnet server:
 
 ```shell
 dotnet iceboxnet --IceBox.Service.Greeter="Service/bin/Debug/net8.0/GreeterService.dll:Service.GreeterService --Ice.Trace.Dispatch"
@@ -26,7 +29,7 @@ dotnet iceboxnet --IceBox.Service.Greeter="Service/bin/Debug/net8.0/GreeterServi
 
 The command above configures iceboxnet to load the Greeter service from the GreeterService assembly.
 
-Finally, start the Client program:
+In a separate terminal, start the Client program:
 
 ```shell
 cd Client

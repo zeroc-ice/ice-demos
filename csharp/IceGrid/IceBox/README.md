@@ -5,6 +5,12 @@ The IceGrid IceBox demo illustrates how to deploy an IceBox server with IceGrid.
 ## Ice prerequisites
 
 - Install IceGrid. See [Ice service installation].
+- Install the `iceboxnet` tool.
+  The following command performs a local installation:
+
+  ```shell
+  dotnet tool install iceboxnet --prerelease --create-manifest-if-needed
+  ```
 
 ## Building the demo
 
@@ -16,13 +22,7 @@ dotnet build
 
 ## Running the demo
 
-First, install the `iceboxnet` tool:
-
-```shell
-dotnet tool install iceboxnet --prerelease --create-manifest-if-needed
-```
-
-Then, start the IceGrid registry in its own terminal:
+Start the IceGrid registry in its own terminal:
 
 ```shell
 icegridregistry --Ice.Config=config.registry
