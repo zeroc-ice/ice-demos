@@ -13,10 +13,6 @@ flowchart LR
     icestorm --report--> s3[Station #3]
 ```
 
-## Ice prerequisites
-
-Install IceStorm. See [Ice service installation].
-
 ## Building the demo
 
 First install npm dependencies:

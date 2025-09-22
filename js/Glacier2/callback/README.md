@@ -11,10 +11,6 @@ flowchart LR
     g --connection1--> s[Server:4061<br>hosts WakeUpService] --connection2--> g
 ```
 
-## Ice prerequisites
-
-Install Glacier2. See [Ice service installation].
-
 ## Building the demo
 
 First install npm dependencies:
@@ -33,19 +29,12 @@ npm run build
 
 Run the server application:
 
-Ice for JavaScript has limited server-side support. As a result, you need to start a Callback server implemented in a
-language that fully supports server-side functionality, such as Python, Java, or C#.
+Ice for JavaScript has limited server-side support, and as a result, we can only implement the client in JavaScript.
 
-Then, start the Glacier2 router in its own terminal:
+You first need to start Glacier2 and the Callback server from a demo written in a language with full server-side
+support, such as C++, Python, Java or C#.
 
-```shell
-glacier2router --Ice.Config=config.glacier2
-```
-
-> [!TIP]
-> You can also start the Glacier2 router before the server. The order does not matter.
-
-Finally, run the client application:
+In a separate terminal, start the client application:
 
 ```shell
 node client.js
