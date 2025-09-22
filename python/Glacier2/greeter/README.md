@@ -13,6 +13,10 @@ directly to the server, because the server is on a separate network.
 We recommend running each program in a separate Python virtual environment.  
 If you are new to Python virtual environments, see [Python Virtual Environments].
 
+## Ice prerequisites
+
+- Install Glacier2. See [Ice service installation].
+
 ## Running the server
 
 Navigate to the `server` directory.
@@ -105,5 +109,6 @@ slice2py ../slice/Greeter.ice
 python main.py
 ```
 
-[Python Virtual Environments]: https://docs.python.org/3/tutorial/venv.html  
+[Python Virtual Environments]: https://docs.python.org/3/tutorial/venv.html
 [Ice Greeter]: ../../Ice/greeter
+[Ice service installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-services
