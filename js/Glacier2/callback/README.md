@@ -33,7 +33,7 @@ npm run build
 
 Run the server application:
 
-Ice for JavaScript has limited server-side support. As a result, you need to start a Config server implemented in a
+Ice for JavaScript has limited server-side support. As a result, you need to start a Callback server implemented in a
 language that fully supports server-side functionality, such as Python, Java, or C#.
 
 Then, start the Glacier2 router in its own terminal:

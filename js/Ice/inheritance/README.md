@@ -20,7 +20,7 @@ npm run build
 
 Run the server application.
 
-Ice for JavaScript has limited server-side support. As a result, you need to start an Ice Cancellation server
+Ice for JavaScript has limited server-side support. As a result, you need to start a Inheritance server
 implemented in a language that fully supports server-side functionality, such as Python, Java, or C#.
 
 In a separate terminal, start the client application:
