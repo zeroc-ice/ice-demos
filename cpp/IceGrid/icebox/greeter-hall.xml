@@ -2,13 +2,16 @@
   <!-- An application describes nodes and servers deployed on these nodes. An IceGrid deployment (a registry plus one or
   more nodes) can host several applications. -->
   <application name="GreeterHall">
+    <!-- Define a variable named 'icebox', which refers to the `icebox` executable. This can be used to 
+    change the executable path during deployment. -->
+    <variable name="icebox" value="icebox"/>
 
     <!-- Describes the servers deployed on the IceGrid node named 'node1'. -->
     <node name="node1">
 
       <!-- Describes the servers deployed on node1. IceGrid starts this server when a client looks up an object adapter
       or a well-known object in this server. Here, we deploy a single IceBox server named "IceBox". -->
-      <icebox id="IceBox" activation="on-demand" exe="icebox">
+      <icebox id="IceBox" activation="on-demand" exe="${icebox}">
         <!-- A service descriptor describes an IceBox service -->
         <service name="GreeterService" entry="./build/GreeterService:create">
           <description>Hosts a greeter that produces greetings.</description>

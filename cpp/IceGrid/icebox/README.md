@@ -34,6 +34,14 @@ cmake --build build
 
 3. Deploy the "GreeterHall" application in this IceGrid deployment:
 
+   **Linux/macOS:**
+
+   ```shell
+   icegridadmin --Ice.Config=config.admin -e "application add greeter-hall.xml"
+   ```
+
+   **Windows:**
+
    ```shell
    icegridadmin --Ice.Config=config.admin -e "application add greeter-hall.xml"
    ```
