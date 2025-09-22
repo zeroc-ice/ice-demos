@@ -11,7 +11,7 @@ First install npm dependencies:
 npm install
 ```
 
-Then, to build the sensor application, run:
+Then, to build the client application, run:
 
 ```shell
 npm run build

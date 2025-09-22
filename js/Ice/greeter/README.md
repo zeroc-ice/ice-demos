@@ -19,7 +19,7 @@ npm run build
 
 ## Running the demo
 
-start the client application:
+Start the client application:
 
 ```shell
 node client.js
