@@ -7,18 +7,29 @@ pluginManagement {
                 includeGroupByRegex("androidx.*")
             }
         }
-        maven("https://download.zeroc.com/nexus/repository/maven-nightly/")
         mavenCentral()
         gradlePluginPortal()
+        // This demo uses the nightly build of the Slice Tools plugin, published to the ZeroC Maven Nightly repository.
+        maven {
+            url = uri("https://download.zeroc.com/nexus/repository/maven-nightly/")
+            content {
+                includeGroupByRegex("com\\.zeroc.*")
+            }
+        }
     }
 }
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
-        // This demo uses the latest Ice nightly build published to the maven central snapshots repository.
-        maven("https://download.zeroc.com/nexus/repository/maven-nightly/")
         google()
         mavenCentral()
+        // This demo uses the nightly build of Ice, published to the ZeroC Maven Nightly repository.
+        maven {
+            url = uri("https://download.zeroc.com/nexus/repository/maven-nightly/")
+            content {
+                includeGroupByRegex("com\\.zeroc.*")
+            }
+        }
     }
 }
 
