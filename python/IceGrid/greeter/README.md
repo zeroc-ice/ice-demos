@@ -19,6 +19,10 @@ flowchart LR
 We recommend running each program in a separate Python virtual environment.  
 If you are new to Python virtual environments, see [Python Virtual Environments].
 
+## Ice prerequisites
+
+- Install IceGrid. See [Ice service installation].
+
 ## Running the server with IceGrid
 
 ### 1. Create and activate a Python virtual environment
@@ -81,7 +85,7 @@ icegridnode --Ice.Config=config.node
 
 > [!NOTE]  
 > We need to start `icegridnode` from an active Python virtual environment in order for it to find the server program
-dependencies installed in that environment.
+> dependencies installed in that environment.
 
 ### 6. Deploy the Greeter application
 
@@ -139,3 +143,4 @@ python main.py
 ```
 
 [Python Virtual Environments]: https://docs.python.org/3/tutorial/venv.html
+[Ice service installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-services
