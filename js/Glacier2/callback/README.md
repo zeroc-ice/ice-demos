@@ -41,4 +41,3 @@ node client.js
 ```
 
 [1]: ../../Ice/bidir/
-[Ice service installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-services

@@ -39,5 +39,3 @@ In a separate terminal, start the sensor application:
 ```shell
 node sensor.js
 ```
-
-[Ice service installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-services
