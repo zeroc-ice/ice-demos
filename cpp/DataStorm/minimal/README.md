@@ -2,12 +2,22 @@
 
 This demo is the minimal DataStorm "hello world" application.
 
-To build the demo run:
+## Ice prerequisites
+
+- Install the C++ dev kit.
+  - Linux and macOS: see [Ice for C++ installation].
+  - Windows: the cmake build downloads and installs the C++ dev kit automatically.
+
+## Building the demo
+
+To build the demo, run:
 
 ```shell
 cmake -B build -S .
 cmake --build build --config Release
 ```
+
+## Running the demo
 
 To run the demo, start the writer:
 
@@ -36,3 +46,5 @@ In a separate window, start the reader:
 ```shell
 build\Release\reader
 ```
+
+[Ice for C++ installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-c
