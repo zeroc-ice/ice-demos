@@ -32,5 +32,4 @@ if(WIN32)
   endfunction()
 
   add_ice_executable(icebox)
-  add_ice_executable(iceboxadmin)
 endif()
