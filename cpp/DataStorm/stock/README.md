@@ -6,12 +6,22 @@ prints out the stock information and partial updates.
 
 The demo uses Slice to define the `Demo::Stock` class in the `Stock.ice` file.
 
-To build the demo run:
+## Ice prerequisites
+
+- Install the C++ dev kit.
+  - Linux and macOS: see [Ice for C++ installation].
+  - Windows: the cmake build downloads and installs the C++ dev kit automatically.
+
+## Building the demo
+
+To build the demo, run:
 
 ```shell
 cmake -B build -S .
 cmake --build build --config Release
 ```
+
+## Running the demo
 
 To run the demo, start the writer:
 
@@ -43,3 +53,5 @@ build\Release\reader
 
 You can start multiple writers and readers to publish or follow different
 stocks.
+
+[Ice for C++ installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-c
