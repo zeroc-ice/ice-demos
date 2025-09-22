@@ -43,7 +43,7 @@ cmake --build build
    **Windows:**
 
    ```shell
-   icegridadmin --Ice.Config=config.admin -e "application add greeter-hall.xml"
+   icegridadmin --Ice.Config=config.admin -e "application add greeter-hall.xml icebox=build\icebox.exe"
    ```
 
 4. Start the client in its own terminal:
