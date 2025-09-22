@@ -2,6 +2,12 @@
 
 This demo illustrates how to use the IceDiscovery plug-in with Ice for MATLAB.
 
+## Ice prerequisites
+
+- Install the MATLAB dev kit. See [Ice for MATLAB installation].
+
+## Building and running the demo
+
 Ice for MATLAB supports only client-side applications. As a result, you first need to start a server implemented in a
 language with server-side support, such as Python, Java, or C#.
 
@@ -34,3 +40,5 @@ client --Ice.Trace.Locator --Ice.LogFile=client.log
 ```
 
 This call creates a log file named `client.log` in your current directory.
+
+[Ice for MATLAB installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-matlab

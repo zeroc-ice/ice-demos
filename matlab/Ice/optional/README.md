@@ -22,12 +22,18 @@ class AtmosphericConditions
 }
 ```
 
+## Ice prerequisites
+
+- Install the MATLAB dev kit. See [Ice for MATLAB installation].
+
+## Building and running the demo
+
 Ice for MATLAB supports only client-side applications. As a result, you first need to start an Ice Optional server
 implemented in a language with server-side support, such as Python, Java, or C#.
 
 You can start either version 1 or version 2 of the server.
 
-In the MATLAB console:
+Then, in the MATLAB console:
 
 - Go to the Ice/optional/client1 or client2 directory
 
@@ -54,3 +60,5 @@ client
 ```
 
 Thanks to `optional`, version 1 and version 2 of the clients and servers interoperate seamlessly.
+
+[Ice for MATLAB installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-matlab
