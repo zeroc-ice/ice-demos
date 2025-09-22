@@ -16,7 +16,7 @@ This demo shows how to create an IceBox service in C++.
 You can build the client application and IceBox service with:
 
 ```shell
-cmake -B build -S . -G Ninja -DCMAKE_BUILD_TYPE=Release
+cmake -B build -S . -G Ninja
 cmake --build build
 ```
 
