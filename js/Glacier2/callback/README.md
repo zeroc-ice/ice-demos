@@ -11,38 +11,45 @@ flowchart LR
     g --connection1--> s[Server:4061<br>hosts WakeUpService] --connection2--> g
 ```
 
-Follow these steps to build and run the demo:
+## Ice prerequisites
 
-1. Install the dependencies:
+Install Glacier2. See [Ice service installation].
 
-    ```shell
-    npm install
-    ```
+## Building the demo
 
-2. Build the client application:
+First instal npm dependencies:
 
-    ```shell
-    npm run build
-    ```
+```shell
+npm install
+```
 
-3. Run the server application:
+Then, to build the sensor application, run:
 
-    Ice for JavaScript has limited server-side support. As a result, you need to start a Glacier2 Callback server
-    implemented in a language that fully supports server-side functionality, such as Python, Java, or C#.
+```shell
+npm run build
+```
 
-4. Start the Glacier2 router in its own terminal:
+## Running the demo
 
-   ```shell
-   glacier2router --Ice.Config=config.glacier2
-   ```
+Run the server application:
 
-   > [!TIP]
-   > You can also start the Glacier2 router before the server.
+Ice for JavaScript has limited server-side support. As a result, you need to start a Config server implemented in a
+language that fully supports server-side functionality, such as Python, Java, or C#.
 
-5. Run the client application:
+Then, start the Glacier2 router in its own terminal:
 
-    ```shell
-    node client.js
-    ```
+```shell
+glacier2router --Ice.Config=config.glacier2
+```
+
+> [!TIP]
+> You can also start the Glacier2 router before the server. The order does not matter.
+
+Finally, run the client application:
+
+```shell
+node client.js
+```
 
 [1]: ../../Ice/bidir/
+[Ice service installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-services
