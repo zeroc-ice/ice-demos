@@ -7,7 +7,7 @@ dispatch implementation (in ServerAMD). The same client works with both.
 
 ## Building the demo
 
-You can build the client and server applications with:
+To build the demo, run:
 
 ```shell
 dotnet build
@@ -15,7 +15,7 @@ dotnet build
 
 ## Running the demo
 
-First start the Server program:
+First, start the Server program:
 
 ```shell
 cd Server

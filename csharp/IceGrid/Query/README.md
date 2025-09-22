@@ -2,35 +2,43 @@
 
 This demo shows how to use the Query object provided by the IceGrid registry to lookup a well-known object by type.
 
-Follow these steps to build and run the demo:
+## Ice prerequisites
 
-1. Build the client and server applications:
+- Install IceGrid. See [Ice service installation].
 
-   ```shell
-   dotnet build
-   ```
+## Building the demo
 
-2. Start the IceGrid registry in its own terminal:
+To build the demo, run:
 
-   ```shell
-   icegridregistry --Ice.Config=config.registry
-   ```
+```shell
+dotnet build
+```
 
-3. Start the IceGrid node in its own terminal:
+## Running the demo
 
-   ```shell
-   icegridnode --Ice.Config=config.node
-   ```
+First, start the IceGrid registry in its own terminal:
 
-4. Deploy the "GreeterHall" application in this IceGrid deployment:
+```shell
+icegridregistry --Ice.Config=config.registry
+```
 
-   ```shell
-   icegridadmin --Ice.Config=config.admin -e "application add greeter-hall.xml"
-   ```
+Then, start the IceGrid node in its own terminal:
 
-5. Run the client application:
+```shell
+icegridnode --Ice.Config=config.node
+```
 
-   ```shell
-   cd Client
-   dotnet run
-   ```
+Next, deploy the "GreeterHall" application in this IceGrid deployment:
+
+```shell
+icegridadmin --Ice.Config=config.admin -e "application add greeter-hall.xml"
+```
+
+Finally, run the client application:
+
+```shell
+cd Client
+dotnet run
+```
+
+[Ice service installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-services

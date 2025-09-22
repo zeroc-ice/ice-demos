@@ -1,4 +1,4 @@
-# Greeter
+# Ice Greeter
 
 The Greeter demo illustrates how to send a request and wait for the response.
 

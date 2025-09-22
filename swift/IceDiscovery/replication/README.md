@@ -2,19 +2,23 @@
 
 This demo illustrates how to use the IceDiscovery plugin with replicated servers.
 
-You can build the client and server applications with:
+## Building the demo
+
+To build the demo, run:
 
 ```shell
 swift build
 ```
 
-Then, start two or more Server programs, each in its own terminal:
+## Running the demo
+
+First, start two or more Server programs, each in its own terminal:
 
 ```shell
 swift run Server --Ice.Trace.Locator
 ```
 
-Finally, start the Client program:
+Then, start the Client program:
 
 ```shell
 swift run Client --Ice.Trace.Locator

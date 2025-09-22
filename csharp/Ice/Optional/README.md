@@ -25,13 +25,17 @@ class AtmosphericConditions
 }
 ```
 
-You can build all the client and server applications with:
+## Building the demo
+
+To build the demo, run:
 
 ```shell
 dotnet build
 ```
 
-Then, start either version 1 or version 2 of the server in its own terminal:
+## Running the demo
+
+First, start either version 1 or version 2 of the server in its own terminal:
 
 ```shell
 cd Server1
@@ -45,7 +49,7 @@ cd Server2
 dotnet run
 ```
 
-In a separate terminal, run version 1 and then version 2 of the Client:
+Then, in a separate terminal, run version 1 and then version 2 of the Client:
 
 ```shell
 cd Client1

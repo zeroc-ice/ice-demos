@@ -10,34 +10,42 @@ flowchart LR
 In a typical Glacier2 deployment, the client can establish a connection to the Glacier2 router but cannot establish
 a connection to the server, because the server is on a separate network.
 
-Follow these steps to build and run the demo:
+## Ice prerequisites
 
-1. Build the client and server applications:
+- Install Glacier2. See [Ice service installation].
 
-   ```shell
-   swift build
-   ```
+## Building the demo
 
-2. Start the Server program in its own terminal:
+To build the demo, run:
 
-   ```shell
-   swift run Server
-   ```
+```shell
+swift build
+```
 
-3. Start the Glacier2 router in its own terminal:
+## Running the demo
 
-   ```shell
-   glacier2router --Ice.Config=config.glacier2
-   ```
+First, start the Server program in its own terminal:
 
-   > [!TIP]
-   > You can also start the Glacier2 router before the server. The order does not matter: the server is identical to the
-   > server provided in the [Ice Greeter][1] demo and does not depend on Glacier2.
+```shell
+swift run Server
+```
 
-4. Run the client application:
+Then, start the Glacier2 router in its own terminal:
 
-   ```shell
-   swift run Client
-   ```
+```shell
+glacier2router --Ice.Config=config.glacier2
+```
+
+> [!TIP]
+> You can also start the Glacier2 router before the server. The order does not matter: the server is identical to the
+> server provided in the [Ice Greeter][1] demo and does not depend on Glacier2.
+
+Finally, run the client application:
+
+```shell
+swift run Client
+```
+
+[Ice service installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-services
 
 [1]: ../../Ice/greeter

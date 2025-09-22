@@ -13,13 +13,21 @@ flowchart LR
     icestorm --report--> s3[Station #3]
 ```
 
-You can build the weather sensor and weather station applications with:
+## Ice prerequisites
+
+- Install IceStorm. See [Ice service installation].
+
+## Building the demo
+
+To build the demo, run:
 
 ```shell
 swift build
 ```
 
-Next, run the IceStorm service in its own terminal:
+## Running the demo
+
+First, run the IceStorm service in its own terminal:
 
 ```shell
 icebox --IceBox.Service.IceStorm="IceStormService,38a0:createIceStorm --Ice.Config=config.icestorm"
@@ -34,3 +42,5 @@ swift run Sensor
 ```shell
 swift run Station
 ```
+
+[Ice service installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-services

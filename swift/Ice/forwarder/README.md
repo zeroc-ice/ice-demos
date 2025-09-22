@@ -17,13 +17,17 @@ flowchart LR
 The Forwarding server is generic and can be inserted between any client and server. In particular, the Forwarding server
 does not use any Slice generated code.
 
-You can build the demo with:
+## Building the demo
+
+To build the demo, run:
 
 ```shell
 swift build
 ```
 
-Then, start the Forwarding server and Greeter server in separate terminals:
+## Running the demo
+
+First, start the Forwarding server and Greeter server in separate terminals:
 
 ```shell
 swift run Server --Ice.Trace.Dispatch
@@ -33,7 +37,7 @@ swift run Server --Ice.Trace.Dispatch
 swift run ForwardingServer --Ice.Trace.Dispatch
 ```
 
-In a third terminal, start the Client program:
+Then, in a third terminal, start the Client program:
 
 ```shell
 swift run Client --Ice.Trace.Network

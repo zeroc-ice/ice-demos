@@ -2,41 +2,49 @@
 
 The IceGrid IceBox demo illustrates how to deploy an IceBox server with IceGrid.
 
-Follow these steps to build and run the demo:
+## Ice prerequisites
 
-1. Build the client and server applications:
+- Install IceGrid. See [Ice service installation].
+- Install the `iceboxnet` tool.
+  The following command performs a local installation:
 
-   ```shell
-   dotnet build
-   ```
+  ```shell
+  dotnet tool install iceboxnet --prerelease --create-manifest-if-needed
+  ```
 
-2. Install the `iceboxnet` tool:
+## Building the demo
 
-   ```shell
-   dotnet tool install iceboxnet --prerelease --create-manifest-if-needed
-   ```
+To build the demo, run:
 
-3. Start the IceGrid registry in its own terminal:
+```shell
+dotnet build
+```
 
-   ```shell
-   icegridregistry --Ice.Config=config.registry
-   ```
+## Running the demo
 
-4. Start the IceGrid node in its own terminal:
+Start the IceGrid registry in its own terminal:
 
-   ```shell
-   icegridnode --Ice.Config=config.node
-   ```
+```shell
+icegridregistry --Ice.Config=config.registry
+```
 
-5. Deploy the "GreeterHall" application in this IceGrid deployment:
+Next, start the IceGrid node in its own terminal:
 
-   ```shell
-   icegridadmin --Ice.Config=config.admin -e "application add greeter-hall.xml"
-   ```
+```shell
+icegridnode --Ice.Config=config.node
+```
 
-6. Run the client application:
+Deploy the "GreeterHall" application in this IceGrid deployment:
 
-   ```shell
-   cd Client
-   dotnet run
-   ```
+```shell
+icegridadmin --Ice.Config=config.admin -e "application add greeter-hall.xml"
+```
+
+Finally, run the client application:
+
+```shell
+cd Client
+dotnet run
+```
+
+[Ice service installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-services

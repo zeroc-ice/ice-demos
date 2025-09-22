@@ -22,13 +22,17 @@ class AtmosphericConditions
 }
 ```
 
-You can build all the client and server applications with:
+## Building the demo
+
+To build the demo, run:
 
 ```shell
 swift build
 ```
 
-Then, start either version 1 or version 2 of the server in its own terminal:
+## Running the demo
+
+Start either version 1 or version 2 of the server in its own terminal:
 
 ```shell
 swift run Server1
