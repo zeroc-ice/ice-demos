@@ -13,28 +13,29 @@ flowchart LR
     icestorm --report--> s3[Station #3]
 ```
 
-Follow these steps to build and run the demo:
+## Building the demo
 
-1. Install the dependencies:
+First install npm dependencies:
 
-    ```shell
-    npm install
-    ```
+```shell
+npm install
+```
 
-2. Build the sensor application:
+Then, to build the sensor application, run:
 
-    ```shell
-    npm run build
-    ```
+```shell
+npm run build
+```
 
-3. Run the server applications:
+## Running the demo
 
-    Ice for JavaScript has limited, and as a result, we can only implement the sensors in JavaScript. You need to start
-    IceStorm and the weather station(s) from a demo written in a language with full server-side support, such as C++,
-    Python, Java or C#.
+Ice for JavaScript has limited server-side support, and as a result, we can only implement the sensors in JavaScript.
 
-4. Run the sensor application:
+You first need to start IceStorm and the weather station(s) from a demo written in a language with full server-side
+support, such as C++, C#, Java, Python, or Swift.
 
-    ```shell
-    node sensor.js
-    ```
+In a separate terminal, start the sensor application:
+
+```shell
+node sensor.js
+```

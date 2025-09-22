@@ -11,38 +11,31 @@ flowchart LR
     g --connection1--> s[Server:4061<br>hosts WakeUpService] --connection2--> g
 ```
 
-Follow these steps to build and run the demo:
+## Building the demo
 
-1. Install the dependencies:
+First install npm dependencies:
 
-    ```shell
-    npm install
-    ```
+```shell
+npm install
+```
 
-2. Build the client application:
+Then, to build the client application, run:
 
-    ```shell
-    npm run build
-    ```
+```shell
+npm run build
+```
 
-3. Run the server application:
+## Running the demo
 
-    Ice for JavaScript has limited server-side support. As a result, you need to start a Glacier2 Callback server
-    implemented in a language that fully supports server-side functionality, such as Python, Java, or C#.
+Ice for JavaScript has limited server-side support, and as a result, we can only implement the sensors in JavaScript.
 
-4. Start the Glacier2 router in its own terminal:
+You first need to start Glacier2 and the Callback server from a demo written in a language with full server-side
+support, such as C++, C#, Java, Python, or Swift.
 
-   ```shell
-   glacier2router --Ice.Config=config.glacier2
-   ```
+In a separate terminal, start the client application:
 
-   > [!TIP]
-   > You can also start the Glacier2 router before the server.
-
-5. Run the client application:
-
-    ```shell
-    node client.js
-    ```
+```shell
+node client.js
+```
 
 [1]: ../../Ice/bidir/
