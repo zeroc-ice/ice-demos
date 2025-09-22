@@ -2,12 +2,22 @@
 
 This demo shows how to configure your client and server applications using Ice configuration files.
 
-To build the demo run:
+## Ice prerequisites
+
+- Install the C++ dev kit.
+  - Linux and macOS: see [Ice for C++ installation].
+  - Windows: the cmake build downloads and installs the C++ dev kit automatically.
+
+## Building the demo
+
+To build the demo, run:
 
 ```shell
 cmake -B build -S . -G Ninja
 cmake --build build
 ```
+
+## Running the demo
 
 To run the demo, first start the server:
 
@@ -61,3 +71,5 @@ build\server --Ice.Default.Protocol=ws
 ```shell
 build\client --Ice.Default.Protocol=ws --Ice.Trace.Network=2
 ```
+
+[Ice for C++ installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-c

@@ -1,52 +1,7 @@
-# C++ Demos
+# Ice for C++ Demos
 
-- [C++ Demos](#c-demos)
-  - [Overview](#overview)
-  - [macOS Prerequisites](#macos-prerequisites)
-  - [Linux Prerequisites](#linux-prerequisites)
-  - [Windows Prerequisites](#windows-prerequisites)
-  - [Building the Demos](#building-the-demos)
-  - [C++ Demos](#c-demos-1)
-
-## Overview
-
-This directory contains C++ sample programs for various Ice components. These examples
-are provided to get you started on using a particular Ice feature or coding technique.
-
-The subdirectories here correspond directly to Ice components, such as
-[IceGrid](./IceGrid) and [Glacier2](./Glacier2).
-
-Refer to the README.md file in each demo directory for usage instructions.
-
-## macOS Prerequisites
-
-- macOS Sequoia
-- Xcode
-- [Homebrew](https://brew.sh)
-- CMake
-- [Nightly build of Ice](https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#macos)
-
-## Linux Prerequisites
-
-- A supported Linux Distribution (RHEL 9/10, Amazon Linux 2023, Debian 12/13, Ubuntu 24.04)
-- GCC C++ Toolchain
-- CMake
-- [Nightly build of Ice](https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#linux)
-
-## Windows Prerequisites
-
-- Visual Studio 2022
-- CMake (installed via Visual Studio installer)
-- [Nightly build of Ice](https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#windows)
-
-The CMake script will automatically download the required NuGet packages when you
-build the demos. The NuGet packages are cached in the [cmake](./cmake) directory.
-
-## Building the Demos
-
-Follow the instructions provided in each demo’s README.md file.
-
-## C++ Demos
+This folder contains example Ice applications written in C++. Each example is a simple client-server application that
+demonstrates a specific feature or programming technique.
 
 |                                                         |                                                                                                            |
 | ------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |

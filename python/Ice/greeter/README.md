@@ -11,62 +11,82 @@ see [Python Virtual Environments].
 ## Running the server
 
 Navigate to the `server` or `server_asyncio` directory, depending on whether you want to run the synchronous or
-asynchronous server.
+asynchronous version of the server.
 
-- Create and activate a Python virtual environment:
+### 1. Create and activate a Python virtual environment
 
-    ```shell
-    python -m venv venv
-    source venv/bin/activate  # On macOS/Linux
-    venv\Scripts\activate     # On Windows
-    ```
+#### macOS and Linux
 
-- Install the program dependencies:
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
 
-    ```shell
-    pip install -r requirements.txt
-    ```
+#### Windows (PowerShell)
 
-- Compile the Greeter.ice file with the Slice compiler for Python:
+```powershell
+python -m venv venv
+venv\Scripts\activate
+```
 
-    ```shell
-    slice2py ../slice/Greeter.ice
-    ```
+### 2. Install program dependencies
 
-- Run the server program:
+```bash
+pip install -r requirements.txt
+```
 
-    ```shell
-    python main.py
-    ```
+### 3. Compile the Slice definitions
+
+Use the Slice-to-Python compiler to generate Python code from the `Greeter.ice` file:
+
+```bash
+slice2py ../slice/Greeter.ice
+```
+
+### 4. Run the server
+
+```bash
+python main.py
+```
 
 ## Running the client
 
-In a separate terminal, navigate to the `client` directory to run the client program.
+In a separate terminal, navigate to the `client` directory.
 
-- Create and activate a Python virtual environment:
+### 1. Create and activate a Python virtual environment
 
-    ```shell
-    python -m venv venv
-    source venv/bin/activate  # On macOS/Linux
-    venv\Scripts\activate     # On Windows
-    ```
+#### macOS and Linux
 
-- Install the program dependencies:
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
 
-    ```shell
-    pip install -r requirements.txt
-    ```
+#### Windows (PowerShell)
 
-- Compile the Greeter.ice file with the Slice compiler for Python:
+```powershell
+python -m venv venv
+venv\Scripts\activate
+```
 
-    ```shell
-    slice2py ../slice/Greeter.ice
-    ```
+### 2. Install program dependencies
 
-- Run the client program:
+```bash
+pip install -r requirements.txt
+```
 
-    ```shell
-    python main.py
-    ```
+### 3. Compile the Slice definitions
+
+Use the Slice-to-Python compiler to generate Python code from the `Greeter.ice` file:
+
+```bash
+slice2py ../slice/Greeter.ice
+```
+
+### 4. Run the client
+
+```bash
+python main.py
+```
 
 [Python Virtual Environments]: https://docs.python.org/3/tutorial/venv.html

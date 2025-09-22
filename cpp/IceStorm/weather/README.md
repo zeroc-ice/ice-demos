@@ -18,7 +18,7 @@ flowchart LR
 - Install the C++ dev kit.
   - Linux and macOS: see [Ice for C++ installation].
   - Windows: the cmake build downloads and installs the C++ dev kit automatically.
-- Install the IceBox and IceStorm services. See [Ice service installation].
+- Install IceStorm. See [Ice service installation].
 
 ## Building the demo
 

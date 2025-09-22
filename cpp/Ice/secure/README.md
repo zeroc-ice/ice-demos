@@ -33,12 +33,22 @@ platform-specific classes:
 
 This allows you to use a consistent interface across platforms while still taking advantage of native SSL capabilities.
 
+## Ice prerequisites
+
+- Install the C++ dev kit.
+  - Linux and macOS: see [Ice for C++ installation].
+  - Windows: the cmake build downloads and installs the C++ dev kit automatically.
+
+## Building the demo
+
 To build the demo, run:
 
 ```shell
 cmake -B build -S . -G Ninja
 cmake --build build
 ```
+
+## Running the demo
 
 The instructions for running the client and server applications vary slightly depending on the platform.
 Refer to the appropriate section below for your target platform:
@@ -135,3 +145,4 @@ build\client --Ice.Trace.Network --IceSSL.Trace.Security
 [`SchannelServerAuthenticationOptions`]: https://code.zeroc.com/ice/main/api/cpp/structIce_1_1SSL_1_1SchannelServerAuthenticationOptions.html
 [`SecureTransportClientAuthenticationOptions`]: https://code.zeroc.com/ice/main/api/cpp/structIce_1_1SSL_1_1SecureTransportClientAuthenticationOptions.html
 [`SecureTransportServerAuthenticationOptions`]: https://code.zeroc.com/ice/main/api/cpp/structIce_1_1SSL_1_1SecureTransportServerAuthenticationOptions.html
+[Ice for C++ installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-c

@@ -11,19 +11,23 @@ flowchart LR
     s --connection2--> c
 ```
 
-You can build the client and server applications with:
+## Building the demo
+
+To build the demo, run:
 
 ```shell
 swift build
 ```
 
-First start the Server program:
+## Running the demo
+
+First, start the Server program:
 
 ```shell
 swift run Server
 ```
 
-In a separate terminal, start the Client program:
+Then, in a separate terminal, start the Client program:
 
 ```shell
 swift run Client

@@ -17,6 +17,14 @@ flowchart LR
 The Forwarding server is generic and can be inserted between any client and server. In particular, the Forwarding server
 does not use any Slice generated code.
 
+## Ice prerequisites
+
+- Install the C++ dev kit.
+  - Linux and macOS: see [Ice for C++ installation].
+  - Windows: the cmake build downloads and installs the C++ dev kit automatically.
+
+## Building the demo
+
 To build the demo, run:
 
 ```shell
@@ -25,6 +33,8 @@ cmake --build build
 ```
 
 The build produces 3 executables: client, server, and forwardingserver.
+
+## Running the demo
 
 To run the demo, first start the server and the forwarding server in separate terminals:
 
@@ -66,3 +76,5 @@ build\client --Ice.Trace.Network
 > The `--Ice.Trace` command-line options are optional: they turn-on tracing (logging) for request dispatches
 > (`--Ice.Trace.Dispatch`) and connection establishment/closure (`--Ice.Trace.Network`) and help you follow the call
 > flow.
+
+[Ice for C++ installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-c

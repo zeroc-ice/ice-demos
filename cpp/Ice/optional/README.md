@@ -22,12 +22,22 @@ class AtmosphericConditions
 }
 ```
 
+## Ice prerequisites
+
+- Install the C++ dev kit.
+  - Linux and macOS: see [Ice for C++ installation].
+  - Windows: the cmake build downloads and installs the C++ dev kit automatically.
+
+## Building the demo
+
 You can build all the client and server applications with:
 
 ```shell
 cmake -B build -S . -G Ninja
 cmake --build build
 ```
+
+## Running the demo
 
 Then, start either version 1 or version 2 of the server in its own terminal:
 
@@ -76,3 +86,5 @@ build\client2
 ```
 
 Thanks to `optional`, version 1 and version 2 of the clients and servers interoperate seamlessly.
+
+[Ice for C++ installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-c

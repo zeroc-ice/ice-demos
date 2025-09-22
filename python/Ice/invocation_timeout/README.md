@@ -9,60 +9,80 @@ environments, see [Python Virtual Environments].
 
 Navigate to the `server` directory to run the server program.
 
-- Create and activate a Python virtual environment:
+### 1. Create and activate a Python virtual environment
 
-```shell
-python -m venv venv
-source venv/bin/activate  # On macOS/Linux
-venv\Scripts\activate     # On Windows
+#### macOS and Linux
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
 ```
 
-- Install the program dependencies:
+#### Windows (PowerShell)
 
-```shell
+```powershell
+python -m venv venv
+venv\Scripts\activate
+```
+
+### 2. Install program dependencies
+
+```bash
 pip install -r requirements.txt
 ```
 
-- Compile the Greeter.ice file with the Slice compiler for Python:
+### 3. Compile the Slice definitions
 
-```shell
+Use the Slice-to-Python compiler to generate Python code from the `Greeter.ice` file:
+
+```bash
 slice2py ../slice/Greeter.ice
 ```
 
-- Run the server program:
+### 4. Run the server
 
-```shell
+```bash
 python main.py
 ```
 
 ## Running the client
 
-In a separate terminal, navigate to the `client` directory to run the client program.
+In a separate terminal, navigate to the `client` directory.
 
-- Create and activate a Python virtual environment:
+### 1. Create and activate a Python virtual environment
 
-```shell
-python -m venv venv
-source venv/bin/activate  # On macOS/Linux
-venv\Scripts\activate     # On Windows
+#### macOS and Linux
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
 ```
 
-- Install the program dependencies:
+#### Windows (PowerShell)
 
-```shell
+```powershell
+python -m venv venv
+venv\Scripts\activate
+```
+
+### 2. Install program dependencies
+
+```bash
 pip install -r requirements.txt
 ```
 
-- Compile the Greeter.ice file with the Slice compiler for Python:
+### 3. Compile the Slice definitions
 
-```shell
+Use the Slice-to-Python compiler to generate Python code from the `Greeter.ice` file:
+
+```bash
 slice2py ../slice/Greeter.ice
 ```
 
-- Run the client program:
+### 4. Run the client
 
-```shell
-python main.py --Ice.Trace.Network
+```bash
+python main.py
 ```
 
 > [!NOTE]

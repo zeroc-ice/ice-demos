@@ -6,18 +6,32 @@ LocatorDiscovery plug-in.
 This demo provides a client application that works with the IceGrid/greeter demo and reuses its server components and
 IceGrid configuration.
 
-Follow these steps to build and run the demo:
+## Ice prerequisites
 
-1. Build the [IceGrid/greeter](../greeter) demo.
+- Install IceGrid. See [Ice service installation].
 
-2. Run `icegridregistry`, `icegridnode`, and configure IceGrid using `icegridadmin` as per the IceGrid greeter demo
+## Building the demo
+
+To build the demo, run:
+
+```shell
+swift build
+```
+
+## Running the demo
+
+First, build the [IceGrid/greeter](../greeter) demo.
+
+Then, run `icegridregistry`, `icegridnode`, and configure IceGrid using `icegridadmin` as per the IceGrid greeter demo
 instructions.
 
-3. Build and run the client application:
+Finally, run the client application:
 
-   ```shell
-   swift run Client
-   ```
+```shell
+swift run Client
+```
+
+[Ice service installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-services
 
 > [!NOTE]
 > The `Ice.Plugin.IceLocatorDiscovery=1` property in the client enables automatic discovery of the IceGrid registry's

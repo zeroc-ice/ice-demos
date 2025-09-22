@@ -15,11 +15,11 @@ flowchart LR
 
 ## Ice prerequisites
 
-- Install the IceBox and IceStorm services. See [Ice service installation].
+- Install IceStorm. See [Ice service installation].
 
 ## Building the demo
 
-You can build the weather sensor and weather station applications with:
+To build the demo, run:
 
 ```shell
 dotnet build

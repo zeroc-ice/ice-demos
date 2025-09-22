@@ -3,20 +3,24 @@
 The Cancellation demo shows how to cancel an invocation using the C# cancellation token. It also shows a related
 feature: invocation timeouts.
 
-You can build the client and server applications with:
+## Building the demo
+
+To build the demo, run:
 
 ```shell
 dotnet build
 ```
 
-First start the Server program:
+## Running the demo
+
+First, start the Server program:
 
 ```shell
 cd Server
 dotnet run
 ```
 
-In a separate terminal, start the Client program:
+Then, in a separate terminal, start the Client program:
 
 ```shell
 cd Client

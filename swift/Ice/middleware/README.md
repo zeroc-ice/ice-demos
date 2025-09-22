@@ -16,11 +16,15 @@ flowchart LR
 > [!NOTE]
 > Other middleware is just an example, and is not provided by this demo.
 
-You can build the client and server applications with:
+## Building the demo
+
+To build the demo, run:
 
 ```shell
 swift build
 ```
+
+## Running the demo
 
 First start the Server program:
 

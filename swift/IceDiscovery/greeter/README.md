@@ -3,19 +3,23 @@
 This demo illustrates how to configure the IceDiscovery plug-in. The IceDiscovery plug-in allows a client application
 to discover Ice objects without hardcoding any addressing information.
 
-You can build the client and server applications with:
+## Building the demo
+
+To build the demo, run:
 
 ```shell
 swift build
 ```
 
-Then, start the Server program:
+## Running the demo
+
+First, start the Server program:
 
 ```shell
 swift run Server --Ice.Trace.Locator
 ```
 
-Finally, a separate terminal, start the Client program:
+Then, in a separate terminal, start the Client program:
 
 ```shell
 swift run Client --Ice.Trace.Locator

@@ -6,19 +6,30 @@ LocatorDiscovery plug-in.
 This demo provides a client application that works with the IceGrid/greeter demo and reuses its server components and
 IceGrid configuration.
 
-Follow these steps to build and run the demo:
+## Ice prerequisites
 
-1. Build the [IceGrid/greeter](../greeter) demo.
+- Install the C++ dev kit.
+  - Linux and macOS: see [Ice for C++ installation].
+  - Windows: the cmake build downloads and installs the C++ dev kit automatically.
+- Install IceGrid. See [Ice service installation].
 
-2. Run `icegridregistry`, `icegridnode`, and configure IceGrid using `icegridadmin` as per the IceGrid greeter demo
+## Building the demo
+
+Build the [IceGrid/greeter](../greeter) demo.
+
+Build the client application in this directory:
+
+```shell
+cmake -B build -S . -G Ninja
+cmake --build build
+```
+
+## Running the demo
+
+1. Run `icegridregistry`, `icegridnode`, and configure IceGrid using `icegridadmin` as per the IceGrid greeter demo
    instructions.
 
-3. Build and run the client application in this directory:
-
-   ```shell
-   cmake -B build -S . -G Ninja
-   cmake --build build
-   ```
+2. Run the client application in this directory:
 
     **Linux/macOS:**
 
@@ -31,3 +42,6 @@ Follow these steps to build and run the demo:
     ```shell
     build\client
     ```
+
+[Ice for C++ installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-c
+[Ice service installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-services

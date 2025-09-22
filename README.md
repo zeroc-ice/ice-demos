@@ -10,18 +10,16 @@
 The ice-demos repository provides sample programs for [Ice](https://github.com/zeroc-ice/ice).
 
 > [!IMPORTANT]
-> This branch targets the next major release of Ice.
+> Please use the branch that corresponds to the Ice version you are using:
 >
-> Please use the branch corresponding to the Ice version you are using:
->
-> - [3.7](https://github.com/zeroc-ice/ice-demos/tree/3.7) (latest release)
+> - [main](https://github.com/zeroc-ice/ice/tree/main) (Ice 3.8 Preview)
+> - [3.7](https://github.com/zeroc-ice/ice-demos/tree/3.7)
 > - [3.6](https://github.com/zeroc-ice/ice-demos/tree/3.6)
 > - [3.5](https://github.com/zeroc-ice/ice-demos/tree/3.5)
-> - [3.4](https://github.com/zeroc-ice/ice-demos/tree/3.4)
 
 ## Layout
 
-The sample programs are grouped by Slice language mapping:
+The sample programs are grouped by programming language:
 
 - [C++](./cpp)
 - [C#](./csharp)
@@ -33,11 +31,7 @@ The sample programs are grouped by Slice language mapping:
 - [Ruby](./ruby)
 - [Swift](./swift)
 
-For example, the [cpp](./cpp) folder contains all the sample programs written
-in C++ that demonstrate the Slice to C++ language mapping.
-
-The [certs](./certs) folder contains X.509 certificates shared by some of these
-sample programs.
+For example, the [cpp](./cpp) folder contains Ice demos written in C++.
 
 [gitter]: https://gitter.im/zeroc-ice/ice?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
 [GPLv2]: https://github.com/zeroc-ice/ice/blob/3.7/LICENSE

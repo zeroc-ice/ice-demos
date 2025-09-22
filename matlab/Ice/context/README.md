@@ -8,6 +8,12 @@ is free to set any entry in this dictionary.
 > [!NOTE]
 > The Ice protocol does not support response contexts, only request contexts.
 
+## Ice prerequisites
+
+- Install the MATLAB dev kit. See [Ice for MATLAB installation].
+
+## Building and running the demo
+
 Ice for MATLAB supports only client-side applications. As a result, you first need to start a Context server implemented
 in a language with server-side support, such as Python, Java, or C#.
 
@@ -30,3 +36,5 @@ slice2matlab Greeter.ice
 ```shell
 client
 ```
+
+[Ice for MATLAB installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-matlab

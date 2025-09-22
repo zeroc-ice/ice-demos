@@ -10,86 +10,132 @@ flowchart LR
         Locator[locator:4061]
     end
     Node[IceGrid Node]
-    Server(Server<br/>hosts Chatbot)
+    Server(Server<br/>hosts Greeter)
     Registry <--> Node --> | activate | Server
     Locator -.-> |return greeter endpoints | Client
     Client ==> |greet request| Server
 ```
 
-Follow these steps to build and run the demo:
+We recommend running each program in a separate Python virtual environment.  
+If you are new to Python virtual environments, see [Python Virtual Environments].
 
-1. Navigate to the server directory and create a Python virtual environment for running the server.
+## Running the server with IceGrid
 
-    ```shell
-    python -m venv venv
-    source venv/bin/activate  # On macOS/Linux
-    venv\Scripts\activate     # On Windows
-    ```
+### 1. Create and activate a Python virtual environment
 
-2. Install the server program dependencies:
+Navigate to the `server` directory and set up a virtual environment:
 
-    ```shell
-    pip install -r requirements.txt
-    ```
+#### macOS and Linux
 
-3. Compile the Greeter.ice file with the Slice compiler for Python:
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
 
-    ```shell
-    slice2py ../slice/Greeter.ice
-    ```
+#### Windows (PowerShell)
 
-4. Start the IceGrid registry in its own terminal:
+```powershell
+python -m venv venv
+venv\Scripts\activate
+```
 
-    ```shell
-    icegridregistry --Ice.Config=config.registry
-    ```
+### 2. Install program dependencies
 
-5. Start the IceGrid node in its own terminal:
+```bash
+pip install -r requirements.txt
+```
 
-    ```shell
-    source server/venv/bin/activate  # On macOS/Linux
-    server\venv\Scripts\activate     # On Windows
-    icegridnode --Ice.Config=config.node
-    ```
+### 3. Compile the Slice definitions
 
-    We need to start icegridnode from an active Python virtual environment in order for it to find the server
-    program dependencies installed in the virtual environment.
+Use the Slice-to-Python compiler to generate Python code from the `Greeter.ice` file:
 
-6. Deploy the "GreeterHall" application in this IceGrid deployment:
+```bash
+slice2py ../slice/Greeter.ice
+```
 
-    ```shell
-    icegridadmin --Ice.Config=config.admin -e "application add greeter-hall.xml"
-    ```
+### 4. Start the IceGrid registry
 
-    `greeter-hall.xml` configures a single Greeter server. As an alternative, you can deploy 3 replicated Greeter
-    servers with:
+In a separate terminal, run:
 
-    ```shell
-    icegridadmin --Ice.Config=config.admin -e "application add greeter-hall-with-replication.xml"
-    ```
+```bash
+icegridregistry --Ice.Config=config.registry
+```
 
-7. Using a separate terminal create a Python virtual environment for running the client.
+### 5. Start the IceGrid node
 
-    ```shell
-    python -m venv venv
-    source venv/bin/activate  # On macOS/Linux
-    venv\Scripts\activate     # On Windows
-    ```
+In another terminal, first activate the virtual environment, then start the node:
 
-8. Install the client program dependencies:
+#### macOS and Linux
 
-    ```shell
-    pip install -r requirements.txt
-    ```
+```bash
+source server/venv/bin/activate
+icegridnode --Ice.Config=config.node
+```
 
-9. Compile the Greeter.ice file with the Slice compiler for Python:
+#### Windows (PowerShell)
 
-    ```shell
-    slice2py ../slice/Greeter.ice
-    ```
+```powershell
+server\venv\Scripts\activate
+icegridnode --Ice.Config=config.node
+```
 
-10. Run the client program:
+> [!NOTE]  
+> We need to start `icegridnode` from an active Python virtual environment in order for it to find the server program
+dependencies installed in that environment.
 
-    ```shell
-    python main.py
-    ```
+### 6. Deploy the Greeter application
+
+Use the IceGrid admin tool to deploy the configuration:
+
+```bash
+icegridadmin --Ice.Config=config.admin -e "application add greeter-hall.xml"
+```
+
+`greeter-hall.xml` configures a single Greeter server.  
+As an alternative, you can deploy 3 replicated Greeter servers with:
+
+```bash
+icegridadmin --Ice.Config=config.admin -e "application add greeter-hall-with-replication.xml"
+```
+
+## Running the client
+
+### 1. Create and activate a Python virtual environment
+
+Navigate to the `client` directory and set up a virtual environment:
+
+#### macOS and Linux
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+#### Windows (PowerShell)
+
+```powershell
+python -m venv venv
+venv\Scripts\activate
+```
+
+### 2. Install program dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 3. Compile the Slice definitions
+
+Use the Slice-to-Python compiler to generate Python code from the `Greeter.ice` file:
+
+```bash
+slice2py ../slice/Greeter.ice
+```
+
+### 4. Run the client
+
+```bash
+python main.py
+```
+
+[Python Virtual Environments]: https://docs.python.org/3/tutorial/venv.html
