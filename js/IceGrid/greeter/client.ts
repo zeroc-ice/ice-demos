@@ -9,7 +9,7 @@ await using communicator = Ice.initialize(process.argv);
 
 // Set the default locator of the new communicator. It's the address of the Locator hosted by our IceGrid registry.
 // You can also set this proxy with the Ice.Default.Locator property.
-communicator.setDefaultLocator(new Ice.LocatorPrx(communicator, 'IceGrid/Locator:tcp -h localhost -p 4061'));
+communicator.setDefaultLocator(new Ice.LocatorPrx(communicator, "IceGrid/Locator:tcp -h localhost -p 4061"));
 
 // Create a proxy to the Greeter object hosted by the server. 'greeter' is a stringified proxy with no addressing
 // information, also known as a well-known proxy. It's specified by the <object> element in the IceGrid XML file.
@@ -26,5 +26,5 @@ console.log(greeting);
 
 // Send another request to the remote object. With the default configuration we use for this client, this request
 // reuses the connection and reaches the same server, even when we have multiple replicated servers.
-greeting = await greeter.greet('alice');
+greeting = await greeter.greet("alice");
 console.log(greeting);
