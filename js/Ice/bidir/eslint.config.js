@@ -10,11 +10,11 @@ export default tseslint.config(
             reportUnusedDisableDirectives: "off",
         },
         languageOptions: {
-            globals: { ...globals.node},
+            globals: { ...globals.node },
         },
     },
     {
-        ignores: ["*.js"]
+        ignores: ["*.js"],
     },
     {
         files: ["**/*.d.ts"],
