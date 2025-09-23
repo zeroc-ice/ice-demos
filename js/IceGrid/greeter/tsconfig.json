@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "lib": ["dom", "es2020"],
+        "target": "es2020",
+        "module": "es2022", // "es2022" required for top-level 'await using' statements
+        "moduleResolution": "bundler",
+        "preserveConstEnums": true,
+        "sourceMap": true,
+        "strict": true,
+        "noImplicitAny": true,
+        "noImplicitOverride": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitReturns": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+    },
+    "files": ["client.ts"]
+}
