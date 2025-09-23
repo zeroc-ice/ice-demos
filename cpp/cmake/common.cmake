@@ -19,6 +19,8 @@ if(WIN32)
       set(NUGET_URL "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" CACHE STRING "NuGet command line tool URL")
       message(STATUS "Downloading NuGet command line tool: ${NUGET_URL}")
       file(DOWNLOAD ${NUGET_URL} ${CMAKE_CURRENT_LIST_DIR}/packages/nuget.exe)
+      # Clear the failed find_program result and set the downloaded path
+      unset(NUGET_EXE CACHE)
       set(NUGET_EXE "${CMAKE_CURRENT_LIST_DIR}/packages/nuget.exe" CACHE FILEPATH "Path to downloaded nuget.exe")
     endif()
 

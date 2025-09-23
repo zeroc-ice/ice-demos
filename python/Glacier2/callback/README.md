@@ -16,6 +16,10 @@ flowchart LR
 We recommend running each program in a separate Python virtual environment.  
 If you are new to Python virtual environments, see [Python Virtual Environments].
 
+## Ice prerequisites
+
+- Install Glacier2. See [Ice service installation].
+
 ## Running the server
 
 Navigate to the `server` directory.
@@ -108,7 +112,8 @@ slice2py ../slice/AlarmClock.ice
 python main.py
 ```
 
-[Python Virtual Environments]: https://docs.python.org/3/tutorial/venv.html  
+[Python Virtual Environments]: https://docs.python.org/3/tutorial/venv.html
+[Ice service installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-services
 
-[1]: ../../Ice/callback  
+[1]: ../../Ice/callback
 [2]: ../../Ice/bidir

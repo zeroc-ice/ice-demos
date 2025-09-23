@@ -17,7 +17,11 @@ The web application is served by Nginx and uses PHP-FPM to handle requests. It d
 communicator feature in a typical PHP web deployment. This feature allows the PHP client (the web app itself) to reuse
 the communicator and its network connections across multiple requests.
 
-## Running the demo
+## Ice prerequisites
+
+- Install the PHP dev kit. See [Ice for PHP installation].
+
+## Building and running the demo
 
 A working **Docker** installation is required for running this demo.
 
@@ -45,3 +49,5 @@ Then, in a separate window:
 > [!NOTE]
 > Passing `--Ice.Trace.Network` command-line option to the server turns on Network tracing. For this demo, it shows you
 > that the client reuses the connection for different request, which means the same communicator is used for these requests.
+
+[Ice for PHP installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-php

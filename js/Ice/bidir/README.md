@@ -3,27 +3,29 @@
 The Bidir demo illustrates how to send requests "the other way around", from a server to a client, by reusing the
 connection established by the client to the server.
 
-Follow these steps to build and run the demo:
+## Building the demo
 
-1. Install the dependencies:
+First install npm dependencies:
 
-    ```shell
-    npm install
-    ```
+```shell
+npm install
+```
 
-2. Build the client application:
+Then, to build the client application, run:
 
-    ```shell
-    npm run build
-    ```
+```shell
+npm run build
+```
 
-3. Run the server application:
+## Running the demo
 
-    Ice for JavaScript has limited server-side support. As a result, you need to start a Bidir server implemented in a
-    language that fully supports server-side functionality, such as Python, Java, or C#.
+First, start the server application.
 
-4. Run the client application:
+Ice for JavaScript has limited server-side support. As a result, you need to start a Bidir server implemented in a
+language that fully supports server-side functionality, such as C++, C#, Java, Python, or Swift.
 
-    ```shell
-    node client.js
-    ```
+In a separate terminal, start the client application:
+
+```shell
+node client.js
+```

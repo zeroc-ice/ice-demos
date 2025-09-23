@@ -3,28 +3,36 @@
 This demo shows how to send a request and wait for a response using Ice for JavaScript. It includes a React client
 application that runs in the browser.
 
-Follow these steps to build and run the demo:
+## Building the demo
 
-1. Install the dependencies:
+First install npm dependencies:
 
-    ```shell
-    npm install
-    ```
+```shell
+npm install
+```
 
-2. Run the server application:
+Then, to build the client application, run:
 
-    Ice for JavaScript has limited server-side support. As a result, you need to start a Config server implemented in a
-    language that fully supports server-side functionality, such as Python, Java, or C#.
+```shell
+npm run build
+```
 
-    > [!IMPORTANT]
-    > Pass `--Ice.Default.Protocol=ws` to the server to instruct it to use the `ws` protocol required for communication
-    > with the browser client. We use the Ice **Config server** instead of the plain Ice **Greeter server** because it
-    > allows us to specify `ws` via command-line arguments without modifying the code.
+## Running the demo
 
-3. Run the client application in development mode:
+First, start the server application.
 
-    ```shell
-    npm run dev
-    ```
+Ice for JavaScript has limited server-side support. As a result, you need to start a Config server implemented in a
+language that fully supports server-side functionality, such as C++, C#, Java, Python, or Swift.
 
-    Open a web browser and navigate to http://localhost:5173 (or the URL shown in the terminal).
+> [!IMPORTANT]
+> Pass `--Ice.Default.Protocol=ws` to the server to instruct it to use the `ws` protocol required for communication
+> with the browser client. We use the Ice **Config server** instead of the plain Ice **Greeter server** because it
+> allows us to specify `ws` via command-line arguments without modifying the code.
+
+In a separate terminal, start the client application:
+
+```shell
+npm run dev
+```
+
+Open a web browser and navigate to http://localhost:5173 (or the URL shown in the terminal).
