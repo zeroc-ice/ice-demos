@@ -22,8 +22,8 @@ a connection to the server, because the server is on a separate network.
 To build the demo, run:
 
 ```shell
-cmake -B build
-cmake --build build --config Release
+cmake -B build -S . -G Ninja
+cmake --build build
 ```
 
 ## Running the demo
@@ -39,7 +39,7 @@ cmake --build build --config Release
    **Windows:**
 
    ```shell
-   build\Release\server
+   build\server
    ```
 
 2. Start the Glacier2 router in its own terminal:
@@ -63,7 +63,7 @@ cmake --build build --config Release
     **Windows:**
 
     ```shell
-    build\Release\client
+    build\client
     ```
 
 [1]: ../../Ice/Greeter

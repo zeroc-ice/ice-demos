@@ -17,8 +17,8 @@ of both the writers and readers are disabled.
 To build the demo, run:
 
 ```shell
-cmake -B build -S .
-cmake --build build --config Release
+cmake -B build -S . -G Ninja
+cmake --build build
 ```
 
 ## Running the demo
@@ -40,7 +40,7 @@ In a separate window, start the writer:
 **Windows:**
 
 ```shell
-build\Release\writer
+build\writer
 ```
 
 In a separate window, start the reader:
@@ -54,7 +54,7 @@ In a separate window, start the reader:
 **Windows:**
 
 ```shell
-build\Release\reader
+build\reader
 ```
 
 You can start multiple readers and writers. The readers print the time sent by the writers. Stopping the DataStorm node

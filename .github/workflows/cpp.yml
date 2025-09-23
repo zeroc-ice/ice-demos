@@ -58,6 +58,6 @@ jobs:
           set -o pipefail
           find . -name CMakeLists.txt -type f | while IFS= read -r file; do
             dir=$(dirname "$file");
-            cmake -B "$dir/build" -S "$dir" -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_CLANG_TIDY="clang-tidy-19"
+            cmake -B "$dir/build" -S "$dir" -DCMAKE_CXX_CLANG_TIDY="clang-tidy-19"
             cmake --build "$dir/build"
           done

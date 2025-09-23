@@ -17,8 +17,8 @@ The demo uses Slice to define the `Demo::Stock` class in the `Stock.ice` file.
 To build the demo, run:
 
 ```shell
-cmake -B build -S .
-cmake --build build --config Release
+cmake -B build -S . -G Ninja
+cmake --build build
 ```
 
 ## Running the demo
@@ -34,7 +34,7 @@ To run the demo, start the writer:
 **Windows:**
 
 ```shell
-build\Release\writer
+build\writer
 ```
 
 In a separate window, start the reader:
@@ -48,7 +48,7 @@ In a separate window, start the reader:
 **Windows:**
 
 ```shell
-build\Release\reader
+build\reader
 ```
 
 You can start multiple writers and readers to publish or follow different

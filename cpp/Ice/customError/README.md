@@ -16,8 +16,8 @@ value--there is naturally no throwing across the network.
 To build the demo, run:
 
 ```shell
-cmake -B build
-cmake --build build --config Release
+cmake -B build -S . -G Ninja
+cmake --build build
 ```
 
 ## Running the demo
@@ -33,7 +33,7 @@ To run the demo, first start the server:
 **Windows:**
 
 ```shell
-build\Release\server
+build\server
 ```
 
 In a separate window, start the client:
@@ -47,7 +47,7 @@ In a separate window, start the client:
 **Windows:**
 
 ```shell
-build\Release\client
+build\client
 ```
 
 [Ice for C++ installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-c

@@ -44,8 +44,8 @@ This allows you to use a consistent interface across platforms while still takin
 To build the demo, run:
 
 ```shell
-cmake -B build
-cmake --build build --config Release
+cmake -B build -S . -G Ninja
+cmake --build build
 ```
 
 ## Running the demo
@@ -122,13 +122,13 @@ Subsequent uses of the server certificate will not require any further manual in
 First, start the server:
 
 ```shell
-build\Release\server --Ice.Trace.Network --IceSSL.Trace.Security
+build\server --Ice.Trace.Network --IceSSL.Trace.Security
 ```
 
 In a separate window, start the client:
 
 ```shell
-build\Release\client --Ice.Trace.Network --IceSSL.Trace.Security
+build\client --Ice.Trace.Network --IceSSL.Trace.Security
 ```
 
 > The `--Ice.Trace.Network` and `--IceSSL.Trace.Security` command-line arguments are optional.

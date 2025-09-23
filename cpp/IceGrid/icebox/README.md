@@ -14,8 +14,8 @@ The IceGrid IceBox demo illustrates how to deploy an IceBox server with IceGrid.
 To build the demo, run:
 
 ```shell
-cmake -B build
-cmake --build build --config Release
+cmake -B build -S . -G Ninja
+cmake --build build
 ```
 
 ## Running the demo
@@ -28,36 +28,22 @@ cmake --build build --config Release
 
 2. Start the IceGrid node in its own terminal:
 
-   First, add the build directory to the environment:
-
-   **Linux:**
-
-   ```shell
-   export LD_LIBRARY_PATH=$PWD/build:$LD_LIBRARY_PATH
-   ```
-
-   **macOS:**
-
-   ```shell
-   export DYLD_LIBRARY_PATH=$PWD/build:$DYLD_LIBRARY_PATH
-   ```
-
-   **Windows:**
-
-   ```shell
-   set PATH=%CD%\\build\\Release;%PATH%
-   ```
-
-   Then, start the IceGrid node:
-
    ```shell
    icegridnode --Ice.Config=config.node
    ```
 
 3. Deploy the "GreeterHall" application in this IceGrid deployment:
 
+   **Linux/macOS:**
+
    ```shell
    icegridadmin --Ice.Config=config.admin -e "application add greeter-hall.xml"
+   ```
+
+   **Windows:**
+
+   ```shell
+   icegridadmin --Ice.Config=config.admin -e "application add greeter-hall.xml icebox=build\icebox.exe"
    ```
 
 4. Start the client in its own terminal:
@@ -71,7 +57,7 @@ cmake --build build --config Release
    **Windows:**
 
    ```shell
-   build\Release\client
+   build\client
    ```
 
 [Ice for C++ installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-c

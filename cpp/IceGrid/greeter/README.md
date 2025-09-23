@@ -28,8 +28,8 @@ flowchart LR
 To build the demo, run:
 
 ```shell
-cmake -B build
-cmake --build build --config Release
+cmake -B build -S . -G Ninja
+cmake --build build
 ```
 
 ## Running the demo
@@ -41,22 +41,6 @@ cmake --build build --config Release
    ```
 
 2. Start the IceGrid node in its own terminal:
-
-   First, add the server build directory to the PATH environment variable:
-
-   **Linux/macOS:**
-
-   ```shell
-   export PATH=$PWD/build:$PATH
-   ```
-
-   **Windows:**
-
-   ```shell
-   set PATH=%CD%\\build\\Release;%PATH%
-   ```
-
-   Then, start the IceGrid node:
 
    ```shell
    icegridnode --Ice.Config=config.node
@@ -89,7 +73,7 @@ cmake --build build --config Release
     **Windows:**
 
     ```shell
-    build\Release\client
+    build\client
     ```
 
 [Ice for C++ installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-c

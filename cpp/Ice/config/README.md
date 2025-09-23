@@ -13,8 +13,8 @@ This demo shows how to configure your client and server applications using Ice c
 To build the demo, run:
 
 ```shell
-cmake -B build
-cmake --build build --config Release
+cmake -B build -S . -G Ninja
+cmake --build build
 ```
 
 ## Running the demo
@@ -30,7 +30,7 @@ To run the demo, first start the server:
 **Windows:**
 
 ```shell
-build\Release\server
+build\server
 ```
 
 In a separate window, start the client:
@@ -44,7 +44,7 @@ In a separate window, start the client:
 **Windows:**
 
 ```shell
-build\Release\client
+build\client
 ```
 
 You can pass `--Ice` command-line options to set additional properties or override the properties set in the
@@ -65,11 +65,11 @@ For example:
 **Windows:**
 
 ```shell
-build\Release\server --Ice.Default.Protocol=ws
+build\server --Ice.Default.Protocol=ws
 ```
 
 ```shell
-build\Release\client --Ice.Default.Protocol=ws --Ice.Trace.Network=2
+build\client --Ice.Default.Protocol=ws --Ice.Trace.Network=2
 ```
 
 [Ice for C++ installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-c

@@ -20,8 +20,8 @@ Build the [IceGrid/greeter](../greeter) demo.
 Build the client application in this directory:
 
 ```shell
-cmake -B build
-cmake --build build --config Release
+cmake -B build -S . -G Ninja
+cmake --build build
 ```
 
 ## Running the demo
@@ -40,7 +40,7 @@ cmake --build build --config Release
     **Windows:**
 
     ```shell
-    build\Release\client
+    build\client
     ```
 
 [Ice for C++ installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-c
