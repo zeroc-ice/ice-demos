@@ -26,6 +26,7 @@ class Sensor {
     private static final SecureRandom random = new SecureRandom();
 
     public static void main(String[] args) {
+        // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
         try (Communicator communicator = Util.initialize(args)) {
             // Create a proxy to the IceStorm topic manager.
             TopicManagerPrx topicManager = TopicManagerPrx.createProxy(

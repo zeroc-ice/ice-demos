@@ -19,7 +19,7 @@ flowchart LR
 
 ## Building the Project
 
-This project uses Gradle and the [Application plugin]. To build the client and server applications, run:
+This project uses Gradle and the [Application plugin]. To build the sensor and station applications, run:
 
 ```shell
 ./gradlew build
