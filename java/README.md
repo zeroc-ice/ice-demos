@@ -21,5 +21,6 @@ details.
 | [Ice Inheritance](./Ice/inheritance/)         | Shows the power of interface inheritance in Slice.                                                  |
 | [Ice Middleware](./Ice/middleware/)           | Shows how to write a simple middleware and how to add this middleware to an object adapter.         |
 | [Ice Secure](./Ice/secure/)                   | Shows how to use com.zeroc.Ice.SSL APIs to configure the ssl transport.                             |
+| [IceStorm Weather](./IceStorm/weather/)       | Shows how to use IceStorm to create a simple pub-sub application.                                   |
 
 [Ice for Java installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-java
