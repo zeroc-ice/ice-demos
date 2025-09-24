@@ -94,7 +94,7 @@ main(int argc, char* argv[])
         // Report this reading to the weather station.
         weatherStation->report(sensorId, timeStamp, reading);
 
-        // Wait for second or for the shutdown signal.
+        // Wait for one second or for the shutdown signal.
         if (shutdownFuture.wait_for(std::chrono::seconds(1)) == std::future_status::timeout)
         {
             break;
