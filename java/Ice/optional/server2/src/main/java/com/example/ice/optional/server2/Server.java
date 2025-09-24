@@ -2,15 +2,20 @@
 
 package com.example.ice.optional.server2;
 
+import com.example.clearsky.AtmosphericConditions;
+import com.zeroc.Ice.ClassSliceLoader;
 import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.Identity;
+import com.zeroc.Ice.InitializationData;
 import com.zeroc.Ice.ObjectAdapter;
 import com.zeroc.Ice.Util;
 
 class Server {
     public static void main(String[] args) {
         // Create an Ice communicator. We'll use this communicator to create an object adapter.
-        try (Communicator communicator = Util.initialize(args)) {
+        var initData = new InitializationData();
+        initData.sliceLoader = new ClassSliceLoader(AtmosphericConditions.class);
+        try (Communicator communicator = Util.initialize(args, initData)) {
 
             // Create an object adapter that listens for incoming requests and dispatches them to servants.
             ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints("StationAdapter", "tcp -p 4061");

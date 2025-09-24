@@ -8,8 +8,6 @@ import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.Util;
 
 import java.security.SecureRandom;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 class Client {
     private static final SecureRandom random = new SecureRandom();
