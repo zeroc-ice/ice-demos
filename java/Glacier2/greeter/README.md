@@ -22,8 +22,6 @@ This project uses Gradle and the [Application plugin]. To build the client and s
 ./gradlew build
 ```
 
-This will compile each project and install the distributions in the `build/install` subdirectory of each project.
-
 ## Running the Server
 
 Start the Server program in its own terminal:

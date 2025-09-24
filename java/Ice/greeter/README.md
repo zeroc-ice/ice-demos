@@ -3,6 +3,7 @@
 The Greeter demo illustrates how to send a request and wait for the response.
 
 This demo provides two implementations for the server:
+
 - `server`: A synchronous dispatch implementation
 - `serveramd`: An asynchronous dispatch implementation using Ice's Asynchronous Method Dispatch (AMD)
 
@@ -15,8 +16,6 @@ This project uses Gradle and the [Application plugin]. To build the client and s
 ```shell
 ./gradlew build
 ```
-
-This will compile each project and install the distributions in the `build/install` subdirectory of each project.
 
 ## Running the Server
 

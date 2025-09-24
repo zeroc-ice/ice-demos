@@ -25,8 +25,6 @@ This project uses Gradle and the [Application plugin]. To build the client and s
 ./gradlew build
 ```
 
-This will compile each project.
-
 ## Running the Server
 
 First, start the Forwarding server and Greeter server in separate terminals:
