@@ -27,9 +27,9 @@ class Client {
             AtmosphericConditions reading = new AtmosphericConditions(temperature, humidity, pressure);
 
             // Report this reading to the weather station.
-            weatherStation.report("sensor v1", reading);
+            weatherStation.report("sensor v2", reading);
 
-            System.out.println("sensor v1: sent reading to weather station");
+            System.out.println("sensor v2: sent reading to weather station");
         }
     }
 }
