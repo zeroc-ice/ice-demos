@@ -15,7 +15,7 @@ main(int argc, char* argv[])
     try
     {
         // Instantiates DataStorm node.
-        DataStorm::Node node(argc, argv, "config.reader");
+        DataStorm::Node node(argc, argv);
 
         // Instantiates the "hello" topic. The topic uses strings for keys and values.
         DataStorm::Topic<string, string> topic(node, "hello");

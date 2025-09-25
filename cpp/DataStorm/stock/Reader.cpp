@@ -19,7 +19,7 @@ main(int argc, char* argv[])
         Ice::CtrlCHandler ctrlCHandler;
 
         // Instantiates node.
-        DataStorm::Node node(argc, argv, "config.reader");
+        DataStorm::Node node(argc, argv);
 
         // Shutdown the node on Ctrl-C.
         ctrlCHandler.setCallback([&node](int) { node.shutdown(); });
