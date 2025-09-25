@@ -27,7 +27,7 @@ RUN  dnf install -y https://download.zeroc.com/ice/nightly/el9/ice-repo-nightly-
     icegridgui \
     libice-c++-devel \
     libice3.8-c++ \
-    libicestorm3.8 \
+    icestorm \
     php-ice \
     python3-ice \
     && dnf clean all
