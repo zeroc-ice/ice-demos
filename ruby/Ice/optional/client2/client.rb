@@ -7,7 +7,7 @@ require 'Ice'
 require_relative 'WeatherStation.rb'
 
 # Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
-Ice::initialize(ARGV) do |communicator|
+Ice.initialize(ARGV) do |communicator|
     # Create a proxy to the weather station.
     weatherStation = ClearSky::WeatherStationPrx.new(communicator, "weatherStation:tcp -h localhost -p 4061")
 

@@ -41,7 +41,7 @@ def listRecursive(dir, depth)
 end
 
 # Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
-Ice::initialize(ARGV) do |communicator|
+Ice.initialize(ARGV) do |communicator|
     # Create a proxy for the root directory.
     rootDir = Filesystem::DirectoryPrx.new(communicator, "RootDir:tcp -h localhost -p 4061")
 

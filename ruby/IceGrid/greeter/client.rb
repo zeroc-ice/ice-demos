@@ -9,7 +9,7 @@ require 'Ice'
 require_relative 'Greeter.rb'
 
 # Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
-Ice::initialize(ARGV) do |communicator|
+Ice.initialize(ARGV) do |communicator|
 
     # Set the default locator of the new communicator. It's the address of the Locator hosted by our IceGrid registry.
     # You can also set this proxy with the Ice.Default.Locator property.

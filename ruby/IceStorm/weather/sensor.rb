@@ -9,7 +9,7 @@ require 'IceStorm'
 require_relative 'WeatherStation.rb'
 
 # Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
-Ice::initialize(ARGV) do |communicator|
+Ice.initialize(ARGV) do |communicator|
 
     # Create a proxy to the IceStorm topic manager.
     topicManager = IceStorm::TopicManagerPrx.new(communicator, "ClearSky/TopicManager:tcp -p 4061 -h localhost")

@@ -19,7 +19,7 @@ properties = Ice.createProperties(ARGV, configFileProperties)
 # Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
 # The communicator gets its properties from the properties object.
 
-Ice::initialize(Ice::InitializationData.new(properties)) do |communicator|
+Ice.initialize(Ice::InitializationData.new(properties)) do |communicator|
     # We create a Greeter proxy using the value of the Greeter.Proxy property in config.client.
     greeter = VisitorCenter::GreeterPrx.uncheckedCast(communicator.propertyToProxy("Greeter.Proxy"))
 
