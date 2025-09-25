@@ -58,7 +58,7 @@ main(int argc, char* argv[])
         getline(cin, city);
 
         // Instantiates the "time" topic.
-        DataStorm::Topic<string, chrono::system_clock::time_point> topic(node, "time");
+        DataStorm::Topic<string, chrono::system_clock::time_point> topic{node, "time"};
 
         // Instantiate a writer to write the time from the given city.
         auto writer = DataStorm::makeSingleKeyWriter(topic, city);

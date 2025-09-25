@@ -42,7 +42,7 @@ main(int argc, char* argv[])
         ctrlCHandler.setCallback([&node](int) { node.shutdown(); });
 
         // Instantiates the "time" topic.
-        DataStorm::Topic<int, string> topic(node, "time");
+        DataStorm::Topic<int, string> topic{node, "time"};
 
         // Setup a random generator to generate an identifier for the writer.
         random_device rd;

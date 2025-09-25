@@ -39,7 +39,7 @@ main(int argc, char* argv[])
         ctrlCHandler.setCallback([&node](int) { node.shutdown(); });
 
         // Instantiates the "time" topic.
-        DataStorm::Topic<int, string> topic(node, "time");
+        DataStorm::Topic<int, string> topic{node, "time"};
 
         // Instantiate a reader to read the time from all the topic writers.
         auto reader = DataStorm::makeAnyKeyReader(topic);

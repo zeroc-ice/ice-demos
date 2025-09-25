@@ -52,7 +52,7 @@ main(int argc, char* argv[])
         ctrlCHandler.setCallback([&node](int) { node.shutdown(); });
 
         // Instantiates the "time" topic.
-        DataStorm::Topic<string, chrono::system_clock::time_point> topic(node, "time");
+        DataStorm::Topic<string, chrono::system_clock::time_point> topic{node, "time"};
 
         // Instantiate a reader to read the time from all the topic cities.
         auto reader = DataStorm::makeAnyKeyReader(topic);

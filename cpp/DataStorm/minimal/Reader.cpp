@@ -15,7 +15,7 @@ main(int argc, char* argv[])
         DataStorm::Node node{argc, argv};
 
         // Instantiates the "hello" topic. The topic uses strings for keys and values.
-        DataStorm::Topic<string, string> topic(node, "hello");
+        DataStorm::Topic<string, string> topic{node, "hello"};
 
         // Instantiate a reader with the key "foo".
         auto reader = DataStorm::makeSingleKeyReader(topic, "foo");

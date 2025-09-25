@@ -25,7 +25,7 @@ main(int argc, char* argv[])
         ctrlCHandler.setCallback([&node](int) { node.shutdown(); });
 
         // Instantiates the "stocks" topic.
-        DataStorm::Topic<string, Demo::Stock> topic(node, "stocks");
+        DataStorm::Topic<string, Demo::Stock> topic{node, "stocks"};
 
         // Setup partial update updaters. The updater is responsible for updating the element value when a partial
         // update is received. Updaters must be set on the topic from both the reader and writer.
