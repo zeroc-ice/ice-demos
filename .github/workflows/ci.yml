@@ -17,36 +17,162 @@ env:
   CMAKE_BUILD_PARALLEL_LEVEL: 4
 
 jobs:
-  ci:
-    name: ${{ matrix.os }}
+  # ci:
+  #   name: ${{ matrix.os }}
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       include:
+  #         - os: ubuntu-24.04
+  #         - os: macos-26
+  #         - os: windows-2022
+
+  #   runs-on: ${{ matrix.os }}
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v4
+
+  #     - name: Setup .NET 8
+  #       uses: actions/setup-dotnet@v4
+  #       with:
+  #         dotnet-version: 8.x
+
+  #     - name: Setup Node.js
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: "20"
+
+  #     - name: Setup Java
+  #       uses: actions/setup-java@v4
+  #       with:
+  #         distribution: "oracle"
+  #         java-version: "17"
+
+  #     - name: Install Nightly Ice Builds
+  #       uses: ./.github/actions/install-nightly-ice
+
+  #     - name: Build C++ Demos
+  #       timeout-minutes: 20
+  #       working-directory: cpp
+  #       run: |
+  #         set -o pipefail
+
+  #         find . -name CMakeLists.txt -type f | while IFS= read -r file; do
+  #           dir=$(dirname "$file");
+  #           cmake -B "$dir/build" -S "$dir" -G Ninja -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
+  #           cmake --build "$dir/build" --verbose
+  #         done
+  #       if: runner.os != 'Windows'
+
+  #     - name: Build C++ Demos
+  #       timeout-minutes: 20
+  #       working-directory: cpp
+  #       shell: pwsh
+  #       run: |
+  #         $ErrorActionPreference = "Stop"
+
+  #         # Find Visual Studio installation using vswhere
+  #         $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
+  #         $vsPath = & $vswhere -latest -property installationPath
+  #         $vcvarsall = "$vsPath\VC\Auxiliary\Build\vcvarsall.bat"
+
+  #         # Load MSVC environment
+  #         cmd /c "`"$vcvarsall`" x64 && set" | ForEach-Object {
+  #             if ($_ -match '^([^=]+)=(.*)$') {
+  #                 [Environment]::SetEnvironmentVariable($matches[1], $matches[2], "Process")
+  #             }
+  #         }
+
+  #         Get-ChildItem -Recurse -Filter CMakeLists.txt | ForEach-Object {
+  #             Write-Output "Processing: $_"
+  #             $dir = $_.DirectoryName
+
+  #             cmake -B "$dir/build" -S "$dir" -G Ninja -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
+  #             if ($LASTEXITCODE -ne 0) { throw "CMake configuration failed" }
+
+  #             # Run cmake build step
+  #             cmake --build "$dir/build" --verbose
+  #             if ($LASTEXITCODE -ne 0) { throw "CMake build failed" }
+  #         }
+  #       if: runner.os == 'Windows'
+
+  #     - name: Build C# Demos
+  #       timeout-minutes: 20
+  #       working-directory: csharp
+  #       shell: pwsh
+  #       run: |
+  #         $ErrorActionPreference = "Stop"
+  #         Get-ChildItem -Recurse -Filter *.sln | ForEach-Object {
+  #           Write-Host "Building solution: $($_.FullName)"
+  #           dotnet build $_.FullName
+  #           if ($LASTEXITCODE -ne 0) {
+  #             throw "dotnet build failed for $($_.FullName)"
+  #           }
+  #         }
+
+  #     - name: Build Java Demos
+  #       timeout-minutes: 20
+  #       working-directory: java
+  #       shell: pwsh
+  #       run: |
+  #         $ErrorActionPreference = "Stop"
+  #         Get-ChildItem -Recurse -Depth 2 -Filter gradlew | ForEach-Object {
+  #           Push-Location $_.DirectoryName
+  #           Write-Host "Building in $($_.DirectoryName)..."
+  #           & ./gradlew build
+  #           if ($LASTEXITCODE -ne 0) {
+  #             throw "Build failed in $($_.DirectoryName)"
+  #           }
+  #           Pop-Location
+  #         }
+
+  #     - name: Build JavaScript Demos
+  #       timeout-minutes: 20
+  #       working-directory: js
+  #       shell: pwsh
+  #       run: |
+  #         $ErrorActionPreference = "Stop"
+  #         Get-ChildItem -Recurse -Depth 2 -Filter package.json | ForEach-Object {
+  #           Push-Location $_.DirectoryName
+  #           Write-Host "Installing and building in $($_.DirectoryName)..."
+
+  #           npm install
+  #           if ($LASTEXITCODE -ne 0) { throw "npm install failed in $($_.DirectoryName)" }
+
+  #           npm run build
+  #           if ($LASTEXITCODE -ne 0) { throw "npm build failed in $($_.DirectoryName)" }
+
+  #           npx eslint .
+  #           if ($LASTEXITCODE -ne 0) { throw "ESLint failed in $($_.DirectoryName)" }
+
+  #           Pop-Location
+  #         }
+
+  #     - name: Build Swift Demos
+  #       timeout-minutes: 60
+  #       working-directory: swift
+  #       run: |
+  #         set -o pipefail
+  #         find . -name Package.swift -type f | while IFS= read -r file; do
+  #             swift build --package-path "$(dirname "$file")"
+  #         done
+  #       if: runner.os == 'macOS'
+
+  ci-containers:
+    name: ${{ matrix.image }}
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-24.04
-          - os: macos-26
-          - os: windows-2022
-
-    runs-on: ${{ matrix.os }}
+          - image: redhat/ubi9
+    container:
+      image: redhat/ubi9:latest
+      volumes:
+        - ${{ github.workspace }}:${{ github.workspace }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Setup .NET 8
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: 8.x
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-
-      - name: Setup Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: "oracle"
-          java-version: "17"
 
       - name: Install Nightly Ice Builds
         uses: ./.github/actions/install-nightly-ice
@@ -62,98 +188,3 @@ jobs:
             cmake -B "$dir/build" -S "$dir" -G Ninja -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
             cmake --build "$dir/build" --verbose
           done
-        if: runner.os != 'Windows'
-
-      - name: Build C++ Demos
-        timeout-minutes: 20
-        working-directory: cpp
-        shell: pwsh
-        run: |
-          $ErrorActionPreference = "Stop"
-
-          # Find Visual Studio installation using vswhere
-          $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
-          $vsPath = & $vswhere -latest -property installationPath
-          $vcvarsall = "$vsPath\VC\Auxiliary\Build\vcvarsall.bat"
-
-          # Load MSVC environment
-          cmd /c "`"$vcvarsall`" x64 && set" | ForEach-Object {
-              if ($_ -match '^([^=]+)=(.*)$') {
-                  [Environment]::SetEnvironmentVariable($matches[1], $matches[2], "Process")
-              }
-          }
-
-          Get-ChildItem -Recurse -Filter CMakeLists.txt | ForEach-Object {
-              Write-Output "Processing: $_"
-              $dir = $_.DirectoryName
-
-              cmake -B "$dir/build" -S "$dir" -G Ninja -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
-              if ($LASTEXITCODE -ne 0) { throw "CMake configuration failed" }
-
-              # Run cmake build step
-              cmake --build "$dir/build" --verbose
-              if ($LASTEXITCODE -ne 0) { throw "CMake build failed" }
-          }
-        if: runner.os == 'Windows'
-
-      - name: Build C# Demos
-        timeout-minutes: 20
-        working-directory: csharp
-        shell: pwsh
-        run: |
-          $ErrorActionPreference = "Stop"
-          Get-ChildItem -Recurse -Filter *.sln | ForEach-Object {
-            Write-Host "Building solution: $($_.FullName)"
-            dotnet build $_.FullName
-            if ($LASTEXITCODE -ne 0) {
-              throw "dotnet build failed for $($_.FullName)"
-            }
-          }
-
-      - name: Build Java Demos
-        timeout-minutes: 20
-        working-directory: java
-        shell: pwsh
-        run: |
-          $ErrorActionPreference = "Stop"
-          Get-ChildItem -Recurse -Depth 2 -Filter gradlew | ForEach-Object {
-            Push-Location $_.DirectoryName
-            Write-Host "Building in $($_.DirectoryName)..."
-            & ./gradlew build
-            if ($LASTEXITCODE -ne 0) {
-              throw "Build failed in $($_.DirectoryName)"
-            }
-            Pop-Location
-          }
-
-      - name: Build JavaScript Demos
-        timeout-minutes: 20
-        working-directory: js
-        shell: pwsh
-        run: |
-          $ErrorActionPreference = "Stop"
-          Get-ChildItem -Recurse -Depth 2 -Filter package.json | ForEach-Object {
-            Push-Location $_.DirectoryName
-            Write-Host "Installing and building in $($_.DirectoryName)..."
-
-            npm install
-            if ($LASTEXITCODE -ne 0) { throw "npm install failed in $($_.DirectoryName)" }
-
-            npm run build
-            if ($LASTEXITCODE -ne 0) { throw "npm build failed in $($_.DirectoryName)" }
-
-            npx eslint .
-            if ($LASTEXITCODE -ne 0) { throw "ESLint failed in $($_.DirectoryName)" }
-
-            Pop-Location
-          }
-
-      - name: Build Swift Demos
-        timeout-minutes: 60
-        working-directory: swift
-        run: |
-          set -o pipefail
-          find . -name Package.swift -type f | while IFS= read -r file; do
-              swift build --package-path "$(dirname "$file")"
-          done
-        if: runner.os == 'macOS'
