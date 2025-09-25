@@ -19,7 +19,6 @@ endif()
 add_executable(server Server.cpp BidirWakeUpService.h BidirWakeUpService.cpp AlarmClock.ice)
 slice2cpp_generate(server)
 target_link_libraries(server PRIVATE Ice::Ice)
-
 if(WIN32)
   add_custom_command(TARGET server POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy -t $<TARGET_FILE_DIR:server>
