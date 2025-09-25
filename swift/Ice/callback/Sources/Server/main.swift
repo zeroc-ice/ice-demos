@@ -8,8 +8,7 @@ let ctrlCHandler = CtrlCHandler()
 
 // Create an Ice communicator. We'll use this communicator to create an object adapter, and to create proxies and
 // manage outgoing connections.
-var args = CommandLine.arguments
-let communicator = try Ice.initialize(&args)
+let communicator = try Ice.initialize(CommandLine.arguments)
 
 // Destroy the communicator when the program exits.
 defer {

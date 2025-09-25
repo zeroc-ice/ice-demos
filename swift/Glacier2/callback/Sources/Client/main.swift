@@ -7,8 +7,7 @@ import Ice
 
 // Create an Ice communicator. We'll use this communicator to create proxies, manage outgoing connections, and to
 // create an object adapter.
-var args = CommandLine.arguments
-let communicator = try Ice.initialize(&args)
+let communicator = try Ice.initialize(CommandLine.arguments)
 
 // Destroy the communicator when the program exits.
 defer {
