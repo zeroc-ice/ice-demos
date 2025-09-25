@@ -165,7 +165,11 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - image: redhat/ubi9
+          - name: amznlinux-2023
+            image: public.ecr.aws/amazonlinux/amazonlinux:2023
+          - name: el-10
+            image: rockylinux/rockylinux:10
+
     container:
       image: redhat/ubi9:latest
       volumes:
@@ -177,10 +181,29 @@ jobs:
       - name: Install Dependencies
         shell: bash
         run: |
-          dnf install -y cmake ninja-build gcc-c++ wget
+          if [ -f /etc/os-release ]; then
+            . /etc/os-release
+            case "$ID" in
+              amzn)
+                yum install -y gcc gcc-c++ cmake make ninja-build wget
+                dnf install https://download.zeroc.com/ice/nightly/amzn2023/ice-repo-nightly-1.0.0-1.amzn2023.noarch.rpm
+                dnf install libice-c++-devel
 
-      - name: Install Nightly Ice Builds
-        uses: ./.github/actions/install-nightly-ice
+                ;;
+              rocky)
+                dnf install -y gcc gcc-c++ cmake make ninja-build wget
+                dnf install https://download.zeroc.com/ice/nightly/el10/ice-repo-nightly-1.0.0-1.el10.noarch.rpm
+                dnf install libice-c++-devel
+                ;;
+              *)
+                echo "Unsupported OS: $ID"
+                exit 1
+                ;;
+            esac
+          else
+            echo "OS release information not found."
+            exit 1
+          fi
 
       - name: Build C++ Demos
         timeout-minutes: 20
