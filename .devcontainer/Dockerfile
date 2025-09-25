@@ -24,10 +24,24 @@ RUN set -eux \
 # Install Nightly Ice
 RUN set -eux \
     && sudo mkdir -p /etc/apt/keyrings \
-    && curl -fsSL https://download.zeroc.com/GPG-KEY-zeroc-nightly | sudo gpg --dearmor -o /etc/apt/keyrings/zeroc-nightly.gpg \
-    && echo "deb [signed-by=/etc/apt/keyrings/zeroc-nightly.gpg] https://download.zeroc.com/nexus/repository/ubuntu24.04-nightly nightly main" | sudo tee /etc/apt/sources.list.d/zeroc-nightly.list \
+    && curl -fsSL https://download.zeroc.com/ice/nightly/ubuntu24.04/ice-repo-nightly_1.0_all.deb -o ice-repo-nightly.deb \
+    && sudo dpkg -i ice-repo-nightly.deb \
+    && rm ice-repo-nightly.deb \
     && sudo apt-get update \
-    && sudo apt-get install -y zeroc-ice-all-dev
+    && sudo apt-get install -y \
+    libzeroc-ice-dev \
+    libzeroc-ice3.8 \
+    php-zeroc-ice \
+    python3-zeroc-ice \
+    zeroc-dsnode \
+    zeroc-glacier2 \
+    zeroc-ice-ice2slice \
+    zeroc-ice-slice \
+    zeroc-ice-utils \
+    zeroc-icebox \
+    zeroc-icebridge \
+    zeroc-icegrid \
+    zeroc-icestorm
 
 # Install nightly Ice for Ruby
 RUN sudo apt-get install -y ruby ruby-dev \
