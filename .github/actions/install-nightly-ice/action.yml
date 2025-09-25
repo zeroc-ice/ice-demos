@@ -16,8 +16,8 @@ runs:
 
         # Check for Red Hat based systems. We assume RHEL9 for now.
         if [ -f /etc/redhat-release ]; then
-          sudo dnf install https://download.zeroc.com/ice/nightly/el9/ice-repo-nightly-1.0.0-1.el9.noarch.rpm
-          sudo dnf install libice-c++-devel
+          dnf install https://download.zeroc.com/ice/nightly/el9/ice-repo-nightly-1.0.0-1.el9.noarch.rpm
+          dnf install libice-c++-devel
         else
             wget https://download.zeroc.com/ice/nightly/ubuntu24.04/ice-repo-nightly_1.0_all.deb -O ice-repo-nightly.deb
             sudo dpkg -i ice-repo-nightly.deb
