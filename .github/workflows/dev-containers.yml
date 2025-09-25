@@ -18,5 +18,6 @@ jobs:
       - name: Build dev containers
         run: |
           find .devcontainer -name 'devcontainer.json' -type f | while IFS= read -r file; do
-            npx @devcontainers/cli@latest build --workspace-folder "$(dirname "$file")"
+            echo "Building devcontainer for workspace folder: $(dirname "$file")"
+            npx @devcontainers/cli@latest build --workspace-folder "$(dirname "$file")" --config "$file"
           done

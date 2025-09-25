@@ -1,12 +1,6 @@
 FROM registry.access.redhat.com/ubi9
 
-RUN tee /etc/yum.repos.d/ice-nightly.repo <<EOF
-[ice-nightly]
-name=Ice Nightly Repository
-baseurl=https://download.zeroc.com/nexus/repository/rhel9-nightly
-enabled=1
-gpgcheck=0
-EOF
+RUN dnf install -y https://download.zeroc.com/ice/nightly/el9/ice-repo-nightly-1.0.0-1.el9.noarch.rpm
 
 # Install required build tools and dependencies
 RUN dnf install -y \
