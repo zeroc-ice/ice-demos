@@ -171,7 +171,7 @@ jobs:
             image: rockylinux/rockylinux:10
 
     container:
-      image: redhat/ubi9:latest
+      image: ${{ matrix.image }}
       volumes:
         - ${{ github.workspace }}:${{ github.workspace }}
     steps:
