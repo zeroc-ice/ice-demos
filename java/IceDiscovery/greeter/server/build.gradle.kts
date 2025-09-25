@@ -12,7 +12,7 @@ plugins {
 }
 
 dependencies {
-    // Add the Ice and IceDiscovery libraries as an implementation dependencies.
+    // Add the Ice and IceDiscovery libraries as implementation dependencies.
     implementation("com.zeroc:ice:3.8.+")
     implementation("com.zeroc:icediscovery:3.8.+")
 }

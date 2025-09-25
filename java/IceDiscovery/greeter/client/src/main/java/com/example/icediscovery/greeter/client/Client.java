@@ -8,10 +8,7 @@ import com.zeroc.Ice.InitializationData;
 import com.zeroc.Ice.Properties;
 import com.zeroc.Ice.Util;
 import com.zeroc.IceDiscovery.PluginFactory;
-
 import java.util.Collections;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 class Client {
     public static void main(String[] args) {
