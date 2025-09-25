@@ -8,12 +8,12 @@ require_once 'Greeter.php';
 // discover the locator (IceGrid registry in this demo) to use. As a result, we don't need to configure the default
 // locator on this communicator.
 $initData = new Ice\InitializationData();
-$initData->properties = Ice\createProperties();
+$initData->properties = Ice\createProperties($argv);
 $initData->properties->setProperty('Ice.Plugin.IceLocatorDiscovery', '1');
 
 // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
 // This communicator is destroyed automatically at the end of the script.
-$communicator = Ice\initialize($argv, $initData);
+$communicator = Ice\initialize($initData);
 
 // Create a proxy to the Greeter object hosted by the server. 'greeter' is a stringified proxy with no addressing
 // information, also known as a well-known proxy. It's specified by the <object> element in the IceGrid XML file.
