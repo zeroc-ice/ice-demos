@@ -165,19 +165,14 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: amznlinux-2023
-            image: public.ecr.aws/amazonlinux/amazonlinux:2023
-          - name: el-10
-            image: rockylinux/rockylinux:10
+          - image: public.ecr.aws/amazonlinux/amazonlinux:2023
+          - image: rockylinux/rockylinux:10
 
     container:
       image: ${{ matrix.image }}
       volumes:
         - ${{ github.workspace }}:${{ github.workspace }}
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
       - name: Install Dependencies
         shell: bash
         run: |
@@ -206,6 +201,9 @@ jobs:
             echo "OS release information not found."
             exit 1
           fi
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Build C++ Demos
         timeout-minutes: 20
