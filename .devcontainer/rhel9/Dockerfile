@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi9
+FROM rockylinux/rockylinux:9
 
 
 # Install required build tools and dependencies
@@ -29,7 +29,6 @@ RUN  dnf install -y https://download.zeroc.com/ice/nightly/el9/ice-repo-nightly-
     libice3.8-c++ \
     libicestorm3.8 \
     php-ice \
-    php8.4-ice \
     python3-ice \
     && dnf clean all
 
