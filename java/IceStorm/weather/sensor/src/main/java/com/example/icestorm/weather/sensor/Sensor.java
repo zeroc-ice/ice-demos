@@ -2,16 +2,6 @@
 
 package com.example.icestorm.weather.sensor;
 
-import com.example.clearsky.AtmosphericConditions;
-import com.example.clearsky.WeatherStationPrx;
-import com.zeroc.Ice.Communicator;
-import com.zeroc.Ice.ObjectPrx;
-import com.zeroc.Ice.Util;
-import com.zeroc.IceStorm.NoSuchTopic;
-import com.zeroc.IceStorm.TopicExists;
-import com.zeroc.IceStorm.TopicManagerPrx;
-import com.zeroc.IceStorm.TopicPrx;
-
 import java.security.SecureRandom;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -21,6 +11,16 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+
+import com.example.clearsky.AtmosphericConditions;
+import com.example.clearsky.WeatherStationPrx;
+import com.zeroc.Ice.Communicator;
+import com.zeroc.Ice.ObjectPrx;
+import com.zeroc.Ice.Util;
+import com.zeroc.IceStorm.NoSuchTopic;
+import com.zeroc.IceStorm.TopicExists;
+import com.zeroc.IceStorm.TopicManagerPrx;
+import com.zeroc.IceStorm.TopicPrx;
 
 class Sensor {
     private static final SecureRandom random = new SecureRandom();
@@ -38,10 +38,10 @@ class Sensor {
             String topicName = "weather";
             try {
                 topic = topicManager.create(topicName);
-            } catch (TopicExists ex) {
+            } catch (TopicExists topicExists) {
                 try {
                     topic = topicManager.retrieve(topicName);
-                } catch (NoSuchTopic e) {
+                } catch (NoSuchTopic noSuchTopic) {
                     assert false : "failed to retrieve existing topic";
                     return;
                 }
@@ -68,15 +68,13 @@ class Sensor {
                 .ofLocalizedTime(FormatStyle.MEDIUM)
                 .withLocale(Locale.getDefault());
 
-            var shutdownFuture = new CompletableFuture<Void>();
-            // Register a shutdown hook that completes the shutdown future when the user shuts down the sensor
-            // with Ctrl+C or similar. The shutdown hook thread also waits until the main thread completes its cleanup.
-            shutdownCommunicatorOnCtrlC(shutdownFuture, Thread.currentThread());
+            var stopFuture = new CompletableFuture<Void>();
+            // Complete the stop future when the user presses Ctrl+C to terminate the program.
+            completeFutureOnCtrlC(stopFuture, Thread.currentThread());
 
             // Send a reading every second to the weather station(s) via IceStorm. We keep sending until the user
             // presses Ctrl+C.
             while (true) {
-
                 double temperature = random.nextInt(250, 350) / 10.0;
                 double humidity = random.nextInt(450, 550) / 10.0;
                 AtmosphericConditions reading = new AtmosphericConditions(temperature, humidity);
@@ -87,7 +85,7 @@ class Sensor {
 
                 try {
                     // Wait for one second or until the shutdown future is completed when the user presses Ctrl+C.
-                    shutdownFuture.get(1, TimeUnit.SECONDS);
+                    stopFuture.get(1, TimeUnit.SECONDS);
                     break; // shutdown future was set
                 } catch (TimeoutException ex) {
                     // The wait timed out, so send the next reading.
@@ -98,15 +96,13 @@ class Sensor {
                     assert false;
                 }
             }
-
-            System.out.println("Exiting...");
         }
     }
 
-    private static void shutdownCommunicatorOnCtrlC(CompletableFuture<Void> shutdownFuture, Thread mainThread) {
+    private static void completeFutureOnCtrlC(CompletableFuture<Void> stopFuture, Thread mainThread) {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            System.out.println("Caught Ctrl+C, shutting down...");
-            shutdownFuture.complete(null);
+            System.out.println("Caught Ctrl+C, stopping...");
+            stopFuture.complete(null);
             // Wait until the main thread completes.
             try {
                 mainThread.join();
