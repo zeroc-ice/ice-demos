@@ -180,7 +180,7 @@ jobs:
             . /etc/os-release
             case "$ID" in
               amzn)
-                dnf install -y tar gcc gcc-c++ cmake make ninja-build wget
+                dnf install -y tar gzip gcc gcc-c++ cmake make ninja-build wget
                 dnf install -y https://download.zeroc.com/ice/nightly/amzn2023/ice-repo-nightly-1.0.0-1.amzn2023.noarch.rpm
                 dnf install -y libice-c++-devel
                 ;;
