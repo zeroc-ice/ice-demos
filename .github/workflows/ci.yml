@@ -186,16 +186,16 @@ jobs:
             case "$ID" in
               amzn)
                 yum install -y gcc gcc-c++ cmake make ninja-build wget
-                dnf install https://download.zeroc.com/ice/nightly/amzn2023/ice-repo-nightly-1.0.0-1.amzn2023.noarch.rpm
-                dnf install libice-c++-devel
+                dnf install -y https://download.zeroc.com/ice/nightly/amzn2023/ice-repo-nightly-1.0.0-1.amzn2023.noarch.rpm
+                dnf install -y libice-c++-devel
 
                 ;;
               rocky)
                 dnf install -y dnf-utils
                 dnf config-manager --enable crb
                 dnf install -y gcc gcc-c++ cmake make ninja-build wget
-                dnf install https://download.zeroc.com/ice/nightly/el10/ice-repo-nightly-1.0.0-1.el10.noarch.rpm
-                dnf install libice-c++-devel
+                dnf install -y https://download.zeroc.com/ice/nightly/el10/ice-repo-nightly-1.0.0-1.el10.noarch.rpm
+                dnf install -y libice-c++-devel
                 ;;
               *)
                 echo "Unsupported OS: $ID"
