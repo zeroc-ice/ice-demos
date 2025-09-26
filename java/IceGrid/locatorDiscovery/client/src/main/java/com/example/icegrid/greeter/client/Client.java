@@ -4,11 +4,12 @@ package com.example.icegrid.greeter.client;
 
 import com.example.visitorcenter.GreeterPrx;
 import com.zeroc.Ice.Communicator;
-import com.zeroc.Ice.LocatorPrx;
-import com.zeroc.Ice.Util;
-import com.zeroc.Ice.Properties;
 import com.zeroc.Ice.InitializationData;
+import com.zeroc.Ice.Properties;
+import com.zeroc.Ice.Util;
 import com.zeroc.IceLocatorDiscovery.PluginFactory;
+
+import java.util.Collections;
 
 class Client {
     public static void main(String[] args) {
@@ -21,7 +22,7 @@ class Client {
         initData.properties = new Properties(args);
 
         // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
-        try (Communicator communicator = Util.initialize(args)) {
+        try (Communicator communicator = Util.initialize(initData)) {
             // Create a proxy to the Greeter object hosted by the server. "greeter" is a stringified proxy with no
             // addressing information, also known as a well-known proxy. It's specified by the <object> element in the
             // IceGrid XML file. The IceGrid registry resolves this well-known proxy and returns the actual address
