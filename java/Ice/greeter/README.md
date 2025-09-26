@@ -11,7 +11,7 @@ The same client works with both.
 
 ## Building the demo
 
-The demo has three Gradle projects, **client**, **server**, and **serveramd**, both using the [application plugin].
+The demo has three Gradle projects, **client**, **server**, and **serveramd**, all using the [application plugin].
 
 To build the demo, run:
 
