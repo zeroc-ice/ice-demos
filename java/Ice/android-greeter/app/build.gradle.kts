@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     // Apply the Slice-tools plugin to enable Slice compilation.
-    id("com.zeroc.ice.slice-tools") version "3.8.+"
+    id("com.zeroc.slice-tools") version "3.8.+"
      // Pull in our local 'convention plugin' to enable linting.Add commentMore actions
     id("zeroc-linting")
 }
