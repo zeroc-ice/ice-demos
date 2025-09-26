@@ -14,10 +14,10 @@ main(int argc, char* argv[])
     try
     {
         // Instantiates DataStorm node.
-        DataStorm::Node node(argc, argv);
+        DataStorm::Node node{argc, argv};
 
         // Instantiates the "hello" topic. The topic uses strings for keys and values.
-        DataStorm::Topic<string, string> topic(node, "hello");
+        DataStorm::Topic<string, string> topic{node, "hello"};
 
         // Instantiate writers.
         auto writera = DataStorm::makeSingleKeyWriter(topic, "fooa");

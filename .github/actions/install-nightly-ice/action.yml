@@ -9,7 +9,7 @@ runs:
       run: |
         brew install zeroc-ice/nightly/ice
 
-    - name: Install Ice APT Repository
+    - name: Install Ice Linux Repository
       if: runner.os == 'Linux'
       shell: bash
       run: |
