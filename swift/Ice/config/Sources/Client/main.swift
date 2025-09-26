@@ -9,8 +9,7 @@ try configFileProperties.load("config.client")
 
 // Create a Properties object from the command line arguments and the config file properties; Ice.* properties and
 // other reserved properties set in args augment or override the config file properties.
-var args = CommandLine.arguments
-let properties = try Ice.createProperties(&args, defaults: configFileProperties)
+let properties = try Ice.createProperties(CommandLine.arguments, defaults: configFileProperties)
 
 // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
 // The communicator gets its properties from the properties object.

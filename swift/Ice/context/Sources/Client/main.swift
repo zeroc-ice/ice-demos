@@ -5,8 +5,7 @@ import Ice
 
 // Set the Ice.ImplicitContext property to "Shared" before creating the communicator.
 // This is only necessary for the implicit context API (see below).
-var args = CommandLine.arguments
-let properties = try Ice.createProperties(&args)
+let properties = try Ice.createProperties(CommandLine.arguments)
 properties.setProperty(key: "Ice.ImplicitContext", value: "Shared")
 var initData = Ice.InitializationData()
 initData.properties = properties

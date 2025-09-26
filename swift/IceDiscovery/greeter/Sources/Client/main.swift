@@ -5,8 +5,7 @@ import Ice
 
 // Configure the communicator to load the IceDiscovery plug-in during initialization. This plug-in installs a default
 // locator on the communicator.
-var args = CommandLine.arguments
-let properties = try Ice.createProperties(&args)
+let properties = try Ice.createProperties(CommandLine.arguments)
 properties.setProperty(key: "Ice.Plugin.IceDiscovery", value: "1")
 
 var initData = Ice.InitializationData()
