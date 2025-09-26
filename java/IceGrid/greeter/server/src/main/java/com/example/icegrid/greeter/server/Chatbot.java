@@ -9,7 +9,6 @@ import com.zeroc.Ice.Current;
  * Chatbot is an Ice servant that implements Slice interface Greeter.
  */
 class Chatbot implements Greeter {
-
     private final String _greeterName;
 
     Chatbot(String greeterName) {

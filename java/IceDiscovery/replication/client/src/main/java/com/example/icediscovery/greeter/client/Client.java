@@ -16,8 +16,10 @@ class Client {
         // Configure the communicator to load the IceDiscovery plug-in during initialization. This plug-in installs a
         // default locator on the communicator.
         var initData = new InitializationData();
-        initData.properties = new Properties(args);
         initData.pluginFactories = Collections.singletonList(new PluginFactory());
+
+        // Parse command-line arguments into properties.
+        initData.properties = new Properties(args);
 
         // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
         try (Communicator communicator = Util.initialize(initData)) {
