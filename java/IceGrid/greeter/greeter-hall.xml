@@ -9,8 +9,16 @@
       <!-- Describes the server deployed on node1. IceGrid starts this server when a client looks up an object adapter
       or a well-known object in this server. -->
       <server id="GreetServer" exe="java" activation="on-demand">
+        <!-- Add the server's runtime dependencies to the class path: the app's JAR and the Ice JAR.
+        The Gradle Application plugin's installDist task copies all required JARs into:
+
+        - server/build/install/server/lib/
+
+        The JVM expands the wildcard below (lib/*) at launch. -->
         <option>--class-path</option>
         <option>server/build/install/server/lib/*</option>
+
+        <!-- Main entry point of the server application. -->
         <option>com.example.icegrid.greeter.server.Server</option>
 
         <!-- The object adapter created by this server. It listens on an OS-assigned tcp port, on all interfaces.
