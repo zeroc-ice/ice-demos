@@ -14,10 +14,12 @@ import java.util.Collections;
 
 class Server {
     public static void main(String[] args) {
-        // Configure the communicator to load the IceDiscovery plug-in during initialization. This plug-in installs a
-        // default locator on the communicator.
         var initData = new InitializationData();
         initData.properties = new Properties(args);
+
+        // Configure the communicator to load the IceDiscovery plug-in during initialization. This plug-in installs a
+        // default locator on the communicator.
+        initData.pluginFactories = Collections.singletonList(new PluginFactory());
 
         // Configure the object adapter GreeterAdapter. It must be an indirect object adapter (i.e., with an AdapterId
         // property); otherwise, the IceDiscovery plug-in can't make it discoverable by IceDiscovery clients.
@@ -26,7 +28,6 @@ class Server {
         // Configure the GreeterAdapter to listen on TCP with an OS-assigned port. We don't need a fixed port since the
         // clients discover this object adapter.
         initData.properties.setProperty("GreeterAdapter.Endpoints", "tcp");
-        initData.pluginFactories = Collections.singletonList(new PluginFactory());
 
         // Create an Ice communicator. We'll use this communicator to create an object adapter.
         try (Communicator communicator = Util.initialize(initData)) {
