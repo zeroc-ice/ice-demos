@@ -17,15 +17,17 @@ flowchart LR
 
 - Install Glacier2. See [Ice service installation].
 
-## Building the Project
+## Building the demo
 
-This project uses Gradle and the [Application plugin]. To build the client and server applications, run:
+The demo has two Gradle projects, **client** and **server**, both using the [application plugin].
+
+To build the demo, run:
 
 ```shell
 ./gradlew build
 ```
 
-## Running the Server
+## Running the demo
 
 Start the Server program in its own terminal:
 
@@ -43,13 +45,13 @@ glacier2router --Ice.Config=config.glacier2
 > You can also start the Glacier2 router before the server. The order does not matter: the server is identical to the
 > server provided in the [Ice Greeter][1] demo and does not depend on Glacier2.
 
-## Running the Client
-
-Then, in a separate terminal, start the client application:
+Finally, in a separate terminal, start the client application:
 
 ```shell
 ./gradlew :client:run --quiet
 ```
 
 [Application plugin]: https://docs.gradle.org/current/userguide/application_plugin.html
-[Ice service installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-services
+
+[1]: ../callback
+[2]: ../bidir
