@@ -17,9 +17,11 @@ flowchart LR
 
 - Install IceStorm. See [Ice service installation].
 
-## Building the Project
+## Building the demo
 
-This project uses Gradle and the [Application plugin]. To build the sensor and station applications, run:
+The demo has two Gradle projects, **sensor** and **station**, both using the [application plugin].
+
+To build the demo, run:
 
 ```shell
 ./gradlew build

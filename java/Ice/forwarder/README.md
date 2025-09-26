@@ -17,29 +17,31 @@ flowchart LR
 The Forwarding server is generic and can be inserted between any client and server. In particular, the Forwarding server
 does not use any Slice generated code.
 
-## Building the Project
+## Building the demo
 
-This project uses Gradle and the [Application plugin]. To build the client and server applications, run:
+The demo has three Gradle projects, **client**, **forwardingserver** and **server**, all using the [application plugin].
+
+To build the demo, run:
 
 ```shell
 ./gradlew build
 ```
 
-## Running the Server
+## Running the demo
 
-First, start the Forwarding server and Greeter server in separate terminals:
+First, start the server application:
 
 ```shell
 ./gradlew :server:run --quiet --args="--Ice.Trace.Dispatch"
 ```
 
+Next, in a separate terminal, start the forwarding server application:
+
 ```shell
 ./gradlew :forwardingserver:run --quiet --args="--Ice.Trace.Dispatch"
 ```
 
-## Running the Client
-
-Then, in a separate terminal, start the client application:
+Finally, in a separate terminal, start the client application:
 
 ```shell
 ./gradlew :client:run --quiet --args="--Ice.Trace.Network"

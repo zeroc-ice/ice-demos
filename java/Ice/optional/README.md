@@ -22,15 +22,22 @@ class AtmosphericConditions
 }
 ```
 
-## Building the Project
+## Building the demo
 
-This project uses Gradle and the [Application plugin]. To build the client and server applications, run:
+The demo has four Gradle projects, all using the [application plugin].
+
+- **client1** A client application using version 1 of the Slice definitions.
+- **client2** A client application using version 2 of the Slice definitions.
+- **server1** A server application using version 1 of the Slice definitions.
+- **server2** A server application using version 2 of the Slice definitions.
+
+To build the demo, run:
 
 ```shell
 ./gradlew build
 ```
 
-## Running the Server
+## Running the demo
 
 First, start either version 1 or version 2 of the server in its own terminal:
 
@@ -43,8 +50,6 @@ or
 ```shell
 ./gradlew :server2:run --quiet
 ```
-
-## Running the Client
 
 Then, in a separate terminal, run version 1 and then version 2 of the Client:
 
