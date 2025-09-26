@@ -10,6 +10,9 @@ The demo consists of three Gradle projects:
 - service — the Greeter service implementation (uses the [java-library plugin]).
 - iceboxserver — the IceBox launcher (uses the Gradle [application plugin]).
 
+> The iceboxserver project is a small Java application that launches the IceBox server (com.zeroc.IceBox.Server).
+> At runtime, its classpath includes both the Ice/IceBox libraries and the Greeter service JAR.
+
 ```shell
 ./gradlew build
 ```

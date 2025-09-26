@@ -6,9 +6,6 @@ import com.example.visitorcenter.GreeterPrx;
 import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.Util;
 
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-
 class Client {
     public static void main(String[] args) {
         // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
