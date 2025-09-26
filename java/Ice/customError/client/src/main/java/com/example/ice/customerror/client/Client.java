@@ -10,7 +10,6 @@ import com.zeroc.Ice.DispatchException;
 import com.zeroc.Ice.InitializationData;
 import com.zeroc.Ice.Util;
 
-
 class Client {
     public static void main(String[] args) {
         // Configures the communicator to use a Slice loader that loads exception GreeterException. This is necessary in
