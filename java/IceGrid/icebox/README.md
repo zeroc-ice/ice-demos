@@ -1,20 +1,6 @@
-# IceGrid Greeter
+# IceGrid IceBox
 
-The IceGrid Greeter demo illustrates how to create a very simple IceGrid deployment that manages a Greeter server.
-
-```mermaid
-flowchart LR
-    Client(Client) --> | locate greeter | Locator
-    subgraph Registry[IceGrid Registry]
-        direction LR
-        Locator[locator:4061]
-    end
-    Node[IceGrid Node]
-    Server(Server<br/>hosts Chatbot)
-    Registry <--> Node --> | activate | Server
-    Locator -.-> |return greeter endpoints | Client
-    Client ==> |greet request| Server
-```
+The IceGrid IceBox demo illustrates how to deploy an IceBox server with IceGrid.
 
 ## Ice prerequisites
 

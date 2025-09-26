@@ -13,7 +13,6 @@ import com.zeroc.IceBox.Service;
  * An IceBox service that provides an implementation of the Greeter interface.
  */
 public class GreeterService implements Service {
-
     // The object adapter created by this service.
     private ObjectAdapter _adapter;
 
