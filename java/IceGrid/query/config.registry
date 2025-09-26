@@ -1,0 +1,22 @@
+# Config file for icegridregistry
+
+# The endpoints of this registry's client object adapter. This object adapter receives requests from the clients.
+# We configure it to listen on tcp port 4061, on all interfaces.
+IceGrid.Registry.Client.Endpoints=tcp -p 4061
+
+# The endpoints of this registry's server object adapter. This object adapter receives requests from the servers when
+# they register/unregister themselves or their endpoints with the registry.
+# We configure this object adapter to listen on an OS-assigned tcp port, on all interfaces.
+IceGrid.Registry.Server.Endpoints=tcp
+
+# The endpoints of this registry's internal object adapter. This object adapter receives requests from the IceGrid
+# nodes.
+# We configure this object adapter to listen on an OS-assigned tcp port, on the loopback interface since the IceGrid
+# node runs on the same host in this deployment.
+IceGrid.Registry.Internal.Endpoints=tcp -h 127.0.0.1
+
+# The directory when the registry stores its LMDB database. This directory must exist and be writable by the registry.
+IceGrid.Registry.LMDB.Path=db/registry
+
+# The admin interface of the registry accepts any username/password combination.
+IceGrid.Registry.AdminPermissionsVerifier=IceGrid/NullPermissionsVerifier
