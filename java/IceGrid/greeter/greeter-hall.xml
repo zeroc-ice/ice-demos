@@ -12,7 +12,7 @@
         <!-- Add the server's runtime dependencies to the class path: the app's JAR and the Ice JAR.
         The Gradle Application plugin's installDist task copies all required JARs into:
 
-        - server/build/install/server/lib/
+          server/build/install/server/lib/
 
         The JVM expands the wildcard below (lib/*) at launch. -->
         <option>--class-path</option>
