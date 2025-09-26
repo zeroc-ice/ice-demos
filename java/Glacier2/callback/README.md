@@ -43,7 +43,7 @@ glacier2router --Ice.Config=config.glacier2
 
 > [!TIP]
 > You can also start the Glacier2 router before the server. The order does not matter: the server is identical to the
-> server provided in the [Ice Greeter][1] demo and does not depend on Glacier2.
+> server provided in the [Ice Callback][1] demo and does not depend on Glacier2.
 
 Finally, in a separate terminal, start the client application:
 
