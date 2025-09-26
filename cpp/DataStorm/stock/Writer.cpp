@@ -51,13 +51,13 @@ main(int argc, char* argv[])
         Ice::CtrlCHandler ctrlCHandler;
 
         // Instantiates node.
-        DataStorm::Node node(argc, argv);
+        DataStorm::Node node{argc, argv};
 
         // Shutdown the node on Ctrl-C.
         ctrlCHandler.setCallback([&node](int) { node.shutdown(); });
 
         // Instantiates the "stock" topic.
-        DataStorm::Topic<string, Stock> topic(node, "stocks");
+        DataStorm::Topic<string, Stock> topic{node, "stocks"};
 
         // Setup partial update updaters. The updater is responsible for updating the element value when a partial
         // update is received. Updaters must be set on both the topic reader and writer.
