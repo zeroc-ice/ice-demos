@@ -6,8 +6,7 @@ import Ice
 // Configure the communicator to load the IceLocatorDiscovery plug-in during initialization. This plug-in will discover
 // the locator (IceGrid registry in this demo) to use. As a result, we don't need to configure the default locator on
 // this communicator.
-var args = CommandLine.arguments
-let properties = try Ice.createProperties(&args)
+let properties = try Ice.createProperties(CommandLine.arguments)
 properties.setProperty(key: "Ice.Plugin.IceLocatorDiscovery", value: "1")
 
 var initData = Ice.InitializationData()

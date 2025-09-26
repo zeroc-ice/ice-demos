@@ -3,23 +3,23 @@
 The Cancellation demo shows how to cancel an invocation by interrupting the thread waiting for a response, or by
 cancelling the future returned by an async invocation. It also shows a related feature: invocation timeouts.
 
-## Building the Project
+## Building the demo
 
-This project uses Gradle and the [Application plugin]. To build the client and server applications, run:
+The demo has two Gradle projects, **client** and **server**, both using the [application plugin].
+
+To build the demo, run:
 
 ```shell
 ./gradlew build
 ```
 
-## Running the Server
+## Running the demo
 
 First, start the server application:
 
 ```shell
 ./gradlew :server:run --quiet
 ```
-
-## Running the Client
 
 Then, in a separate terminal, start the client application:
 

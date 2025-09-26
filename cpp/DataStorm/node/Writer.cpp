@@ -33,16 +33,16 @@ main(int argc, char* argv[])
         Ice::CommunicatorPtr communicator = Ice::initialize(initData);
 
         // Make sure the communicator is destroyed at the end of this scope.
-        Ice::CommunicatorHolder ich{communicator};
+        Ice::CommunicatorHolder communicatorHolder{communicator};
 
         // Instantiates node.
-        DataStorm::Node node(ich.communicator());
+        DataStorm::Node node{communicator};
 
         // Shutdown the node on Ctrl-C.
         ctrlCHandler.setCallback([&node](int) { node.shutdown(); });
 
         // Instantiates the "time" topic.
-        DataStorm::Topic<int, string> topic(node, "time");
+        DataStorm::Topic<int, string> topic{node, "time"};
 
         // Setup a random generator to generate an identifier for the writer.
         random_device rd;

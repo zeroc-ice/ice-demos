@@ -15,10 +15,10 @@ main(int argc, char* argv[])
     try
     {
         // Instantiates DataStorm node.
-        DataStorm::Node node(argc, argv);
+        DataStorm::Node node{argc, argv};
 
         // Instantiates the "hello" topic. The topic uses strings for keys and values.
-        DataStorm::Topic<string, string> topic(node, "hello");
+        DataStorm::Topic<string, string> topic{node, "hello"};
 
         // Configure writers to not clear the history. We want the readers to receive all the writer samples.
         topic.setWriterDefaultConfig({std::nullopt, std::nullopt, DataStorm::ClearHistoryPolicy::Never});

@@ -9,15 +9,17 @@ This demo provides two implementations for the server:
 
 The same client works with both.
 
-## Building the Project
+## Building the demo
 
-This project uses Gradle and the [Application plugin]. To build the client and server applications, run:
+The demo has three Gradle projects, **client**, **server**, and **serveramd**, all using the [application plugin].
+
+To build the demo, run:
 
 ```shell
 ./gradlew build
 ```
 
-## Running the Server
+## Running the demo
 
 First, start one of the server applications:
 
@@ -31,12 +33,9 @@ or
 ./gradlew :serveramd:run --quiet
 ```
 
-## Running the Client
-
 Then, in a separate terminal, start the client application:
 
 ```shell
 ./gradlew :client:run --quiet
 ```
-
 [Application plugin]: https://docs.gradle.org/current/userguide/application_plugin.html

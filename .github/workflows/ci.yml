@@ -157,3 +157,61 @@ jobs:
               swift build --package-path "$(dirname "$file")"
           done
         if: runner.os == 'macOS'
+
+  ci-containers:
+    name: ${{ matrix.image }}
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - image: public.ecr.aws/amazonlinux/amazonlinux:2023
+          - image: rockylinux/rockylinux:10
+
+    container:
+      image: ${{ matrix.image }}
+      volumes:
+        - ${{ github.workspace }}:${{ github.workspace }}
+    steps:
+      - name: Install Dependencies
+        shell: bash
+        run: |
+          if [ -f /etc/os-release ]; then
+            . /etc/os-release
+            case "$ID" in
+              amzn)
+                dnf install -y tar gzip git gcc gcc-c++ cmake make ninja-build wget
+                dnf install -y https://download.zeroc.com/ice/nightly/amzn2023/ice-repo-nightly-1.0.0-1.amzn2023.noarch.rpm
+                dnf install -y libice-c++-devel
+                ;;
+              rocky)
+                dnf install -y dnf-utils
+                dnf config-manager --enable crb
+                dnf install -y gcc gcc-c++ cmake make ninja-build wget
+                dnf install -y https://download.zeroc.com/ice/nightly/el10/ice-repo-nightly-1.0.0-1.el10.noarch.rpm
+                dnf install -y libice-c++-devel
+                ;;
+              *)
+                echo "Unsupported OS: $ID"
+                exit 1
+                ;;
+            esac
+          else
+            echo "OS release information not found."
+            exit 1
+          fi
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build C++ Demos
+        timeout-minutes: 20
+        working-directory: cpp
+        run: |
+          set -o pipefail
+
+          find . -name CMakeLists.txt -type f | while IFS= read -r file; do
+            dir=$(dirname "$file");
+            cmake -B "$dir/build" -S "$dir" -G Ninja -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
+            cmake --build "$dir/build" --verbose
+          done
