@@ -18,8 +18,10 @@ class Client {
         // Java applications that unmarshal classes or exceptions, when the classes/exceptions or their enclosing
         // module(s) are remapped using java:identifier, like in this demo.
         var initData = new InitializationData();
-        initData.properties = new Properties(args);
         initData.sliceLoader = new ClassSliceLoader(GreeterException.class);
+
+        // Parse command-line arguments into properties.
+        initData.properties = new Properties(args);
 
         // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
         try (Communicator communicator = Util.initialize(initData)) {
