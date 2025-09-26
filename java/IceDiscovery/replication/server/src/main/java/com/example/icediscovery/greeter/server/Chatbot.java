@@ -1,6 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
-package com.example.icegrid.greeter.server;
+package com.example.icediscovery.replication.server;
 
 import com.example.visitorcenter.Greeter;
 import com.zeroc.Ice.Current;
