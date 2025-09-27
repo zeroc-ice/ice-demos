@@ -1,20 +1,6 @@
-# IceGrid Greeter
+# IceGrid IceBox
 
-The IceGrid Greeter demo illustrates how to create a very simple IceGrid deployment that manages a Greeter server.
-
-```mermaid
-flowchart LR
-    Client(Client) --> | locate greeter | Locator
-    subgraph Registry[IceGrid Registry]
-        direction LR
-        Locator[locator:4061]
-    end
-    Node[IceGrid Node]
-    Server(Server<br/>hosts Chatbot)
-    Registry <--> Node --> | activate | Server
-    Locator -.-> |return greeter endpoints | Client
-    Client ==> |greet request| Server
-```
+The IceGrid IceBox demo illustrates how to deploy an IceBox server with IceGrid.
 
 ## Ice prerequisites
 
@@ -22,7 +8,14 @@ flowchart LR
 
 ## Building the demo
 
-The demo has two Gradle projects, **client** and **server**, both using the [application plugin].
+The demo consists of three Gradle projects:
+
+- **client** — the client application (uses the Gradle [application plugin]).
+- **service** — the Greeter service implementation (uses the [java-library plugin]).
+- **iceboxserver** — a launcher for the IceBox server (uses the Gradle [application plugin]).
+
+> The `iceboxserver` project is a small Java application that starts the IceBox server (`com.zeroc.IceBox.Server`).
+> At runtime, its classpath includes the Ice and IceBox libraries as well as the Greeter service JAR.
 
 To build the demo, run:
 
@@ -58,16 +51,6 @@ Next, deploy the "GreeterHall" application in this IceGrid deployment:
 ```shell
 icegridadmin --Ice.Config=config.admin -e "application add greeter-hall.xml"
 ```
-
-`greeter-hall.xml` configures a single Greeter server. As an alternative, you can deploy 3 replicated Greeter servers
-with:
-
-```shell
-icegridadmin --Ice.Config=config.admin -e "application add greeter-hall-with-replication.xml"
-```
-
-> [!TIP]
-> Use `update` instead of `add` to update an existing application.
 
 Finally, run the client application:
 
