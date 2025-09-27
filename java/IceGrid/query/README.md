@@ -6,9 +6,11 @@ This demo shows how to use the Query object provided by the IceGrid registry to 
 
 - Install IceGrid. See [Ice service installation].
 
-## Building the Project
+## Building the demo
 
-This project uses Gradle and the [Application plugin]. To build the client and server applications, run:
+The demo has two Gradle projects, **client** and **server**, both using the [application plugin].
+
+To build the demo, run:
 
 ```shell
 ./gradlew installDist
