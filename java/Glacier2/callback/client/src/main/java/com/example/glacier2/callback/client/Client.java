@@ -77,7 +77,6 @@ class Client {
             } catch (InterruptedException | ExecutionException ex) {
                 System.err.println(ex);
             }
-
         }
     }
 }
