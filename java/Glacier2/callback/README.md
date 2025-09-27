@@ -1,14 +1,17 @@
-# Glacier2 Greeter
+# Glacier2 Callback
 
-This demo shows how to write a client that calls an Ice object hosted in a server "behind" a Glacier2 router:
+This demo shows how to write a client that establishes a session with a Glacier2 router. It also shows how to implement
+callbacks in this client.
+
+This demo is similar to the [Ice Callback][1] demo, except all communications go through the Glacier router.
+
+The connection between the client and the Glacier2 router is a "bidir" connection, like in the [Ice Bidir][2] demo:
 
 ```mermaid
 flowchart LR
-    c[Client] --tcp--> g[Glacier2 router:4063] --tcp--> s[Server:4061<br>hosts Greeter]
+    c[Client<br>hosts AlarmClock] --bidir connection--> g[Glacier2 router:4063]
+    g --connection1--> s[Server:4061<br>hosts WakeUpService] --connection2--> g
 ```
-
-In a typical Glacier2 deployment, the client can establish a connection to the Glacier2 router but cannot establish
-a connection to the server, because the server is on a separate network.
 
 ## Ice prerequisites
 
@@ -40,7 +43,7 @@ glacier2router --Ice.Config=config.glacier2
 
 > [!TIP]
 > You can also start the Glacier2 router before the server. The order does not matter: the server is identical to the
-> server provided in the [Ice Greeter][1] demo and does not depend on Glacier2.
+> server provided in the [Ice Callback][1] demo and does not depend on Glacier2.
 
 Finally, in a separate terminal, start the client application:
 
@@ -49,5 +52,6 @@ Finally, in a separate terminal, start the client application:
 ```
 
 [Application plugin]: https://docs.gradle.org/current/userguide/application_plugin.html
-[Ice service installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-services
-[1]: ../../Ice/greeter/
+
+[1]: ../callback
+[2]: ../bidir
