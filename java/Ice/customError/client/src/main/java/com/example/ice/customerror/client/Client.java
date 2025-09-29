@@ -8,8 +8,8 @@ import com.zeroc.Ice.ClassSliceLoader;
 import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.DispatchException;
 import com.zeroc.Ice.InitializationData;
-import com.zeroc.Ice.Util;
 import com.zeroc.Ice.Properties;
+import com.zeroc.Ice.Util;
 
 class Client {
     public static void main(String[] args) {
