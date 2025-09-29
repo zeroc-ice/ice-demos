@@ -2,11 +2,13 @@ name: Dev Containers
 
 on:
   workflow_dispatch:
-  push:
-    branches: ["main"]
   pull_request:
-    # The branches below must be a subset of the branches above
     branches: ["main"]
+    paths:
+      - ".devcontainer/**"
+      - ".github/workflows/devcontainer.yml"
+  schedule:
+    - cron: "0 0 * * 0" # Run weekly on Sunday at midnight UTC
 
 jobs:
   build:
