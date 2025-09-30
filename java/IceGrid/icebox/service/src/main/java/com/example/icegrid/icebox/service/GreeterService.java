@@ -5,8 +5,8 @@ package com.example.icegrid.icebox.service;
 import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.Identity;
 import com.zeroc.Ice.ObjectAdapter;
-import com.zeroc.Ice.Util;
 import com.zeroc.Ice.Properties;
+import com.zeroc.Ice.Util;
 import com.zeroc.IceBox.Service;
 
 /**
