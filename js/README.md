@@ -9,6 +9,7 @@ demonstrates a specific feature or programming technique.
 | [Ice Bidir](./Ice/bidir/)                 | Shows how to send requests "the other way around", from the server to the client.                   |
 | [Ice Cancellation](./Ice/cancellation/)   | Shows how to cancel a request and how to configure invocation timeouts.                             |
 | [Ice Context](./Ice/context/)             | Shows how to set and retrieve request contexts.                                                     |
+| [Ice Custom Error](./Ice/customError/)    | Shows how to define a new exception in Slice and return this exception from a Slice operation.      |
 | [Ice Greeter](./Ice/greeter/)             | Shows how to call and implement a canonical Greeter application with Ice. **Start with this demo!** |
 | [Ice Inheritance](./Ice/inheritance/)     | Shows the power of interface inheritance in Slice.                                                  |
 | [Ice React Greeter](./Ice/react-greeter/) | Shows how to use Ice in a modern React application with a web UI.                                   |
