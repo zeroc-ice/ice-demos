@@ -1,0 +1,6 @@
+node_modules/
+client.js
+client.js.map
+WeatherStation2.js
+WeatherStation2.d.ts
+package-lock.json
