@@ -28,14 +28,12 @@ for (const name of names) {
         console.log(greeting);
     } catch (exception) {
         if (exception instanceof Ice.DispatchException) {
-            const dispatchException = exception as Ice.DispatchException;
             console.log(
-                `Failed to create a greeting for '${name}': DispatchException { message = '${dispatchException.message}', replyStatus = ${dispatchException.replyStatus} }`,
+                `Failed to create a greeting for '${name}': DispatchException { message = '${exception.message}', replyStatus = ${exception.replyStatus} }`,
             );
         } else if (exception instanceof VisitorCenter.GreeterException) {
-            const greeterException = exception as VisitorCenter.GreeterException;
             console.log(
-                `Failed to create a greeting for '${name}': GreeterException { message = '${greeterException.errorMessage}', error = ${greeterException.error} }`,
+                `Failed to create a greeting for '${name}': GreeterException { message = '${exception.errorMessage}', error = ${exception.error} }`,
             );
         } else {
             throw exception;
