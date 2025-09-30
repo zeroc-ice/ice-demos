@@ -55,7 +55,7 @@ Then navigate to the client1 directory and run version 1 of the client:
 node client.js
 ```
 
-and then navigate to the client2 and run the version 1 of the client:
+Next, navigate to the client2 directory and run version 2 of the client:
 
 ```shell
 node client.js
