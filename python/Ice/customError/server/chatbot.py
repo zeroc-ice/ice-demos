@@ -31,7 +31,7 @@ class Chatbot(VisitorCenter.Greeter):
                 # Simulate an authentication error by throwing a dispatch exception with the Unauthorized error code.
                 # Note: This is a demo; no real authentication logic is implemented.
                 raise Ice.DispatchException(
-                    Ice.ReplyStatus.Unauthorized, "Invalid credentials. The administrator has been notified."
+                    Ice.ReplyStatus.Unauthorized.value, "Invalid credentials. The administrator has been notified."
                 )
             case "bob":
                 raise VisitorCenter.GreeterException(
