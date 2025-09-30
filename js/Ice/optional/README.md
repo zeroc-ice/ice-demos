@@ -12,15 +12,12 @@ temperature and humidity. In the second version, we add a third reading, the pre
 class AtmosphericConditions
 {
     /// The temperature in degrees Celsius.
-    ["cs:identifier:Temperature"]
     double temperature;
 
     /// The humidity in percent.
-    ["cs:identifier:Humidity"]
     double humidity;
 
     /// The pressure in millibars (new in version 2 of the Slice definitions).
-    ["cs:identifier:Pressure"]
     optional(1) double pressure;
 }
 ```
