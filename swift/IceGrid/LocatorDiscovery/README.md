@@ -20,7 +20,7 @@ swift build
 
 ## Running the demo
 
-First, build the [IceGrid/greeter](../greeter) demo.
+First, build the [IceGrid/Greeter](../Greeter) demo.
 
 Then, run `icegridregistry`, `icegridnode`, and configure IceGrid using `icegridadmin` as per the IceGrid greeter demo
 instructions.

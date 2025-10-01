@@ -48,4 +48,4 @@ swift run Client
 
 [Ice service installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-services
 
-[1]: ../../Ice/greeter
+[1]: ../../Ice/Greeter
