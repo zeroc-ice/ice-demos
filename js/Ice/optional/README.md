@@ -43,7 +43,7 @@ npm run build
 
 First, start the server application.
 
-Ice for JavaScript has limited server-side support. As a result, you need to start an Option server implemented in a
+Ice for JavaScript has limited server-side support. As a result, you need to start an Optional server implemented in a
 language that fully supports server-side functionality, such as C++, C#, Java, Python, or Swift.
 
 You can start either version 1 or version 2 of the server.
