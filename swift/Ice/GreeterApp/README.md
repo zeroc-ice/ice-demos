@@ -7,7 +7,7 @@ The client is implemented using SwiftUI and can be run on **macOS**, the **iOS S
 
 ## Getting Started
 
-1. Start the [Greeter server](../Greeter) from the `greeter` directory.
+1. Start the [Greeter server](../Greeter) from the `Greeter` directory.
 2. Open the `GreeterApp` project in Xcode.
 3. Build and run the application on your platform of choice (macOS, iOS device, or iOS simulator).
 
