@@ -3,15 +3,16 @@
 This folder contains example Ice applications written in TypeScript. Each example is a simple client application that
 demonstrates a specific feature or programming technique.
 
-|                                           |                                                                                                     |
-|-------------------------------------------|-----------------------------------------------------------------------------------------------------|
-| [Glacier2 Callback](./Glacier2/callback/) | Shows how to write a Glacier2 client and implement callbacks in this client.                        |
-| [Ice Bidir](./Ice/bidir/)                 | Shows how to send requests "the other way around", from the server to the client.                   |
-| [Ice Cancellation](./Ice/cancellation/)   | Shows how to cancel a request and how to configure invocation timeouts.                             |
-| [Ice Context](./Ice/context/)             | Shows how to set and retrieve request contexts.                                                     |
-| [Ice Custom Error](./Ice/customError/)    | Shows how to define a new exception in Slice and return this exception from a Slice operation.      |
-| [Ice Greeter](./Ice/greeter/)             | Shows how to call and implement a canonical Greeter application with Ice. **Start with this demo!** |
-| [Ice Inheritance](./Ice/inheritance/)     | Shows the power of interface inheritance in Slice.                                                  |
-| [Ice React Greeter](./Ice/react-greeter/) | Shows how to use Ice in a modern React application with a web UI.                                   |
-| [IceGrid Greeter](./IceGrid/greeter/)     | Shows how to create a simple IceGrid deployment.                                                    |
-| [IceStorm Weather](./IceStorm/weather/)   | Shows how to use IceStorm to create a simple pub-sub application.                                   |
+|                                           |                                                                                                       |
+|-------------------------------------------|-------------------------------------------------------------------------------------------------------|
+| [Glacier2 Callback](./Glacier2/callback/) | Shows how to write a Glacier2 client and implement callbacks in this client.                          |
+| [Ice Bidir](./Ice/bidir/)                 | Shows how to send requests "the other way around", from the server to the client.                     |
+| [Ice Cancellation](./Ice/cancellation/)   | Shows how to cancel a request and how to configure invocation timeouts.                               |
+| [Ice Context](./Ice/context/)             | Shows how to set and retrieve request contexts.                                                       |
+| [Ice Custom Error](./Ice/customError/)    | Shows how to define a new exception in Slice and return this exception from a Slice operation.        |
+| [Ice Greeter](./Ice/greeter/)             | Shows how to call and implement a canonical Greeter application with Ice. **Start with this demo!**   |
+| [Ice Inheritance](./Ice/inheritance/)     | Shows the power of interface inheritance in Slice.                                                    |
+| [Ice Optional](./Ice/optional/)           | Shows how to add a field to a Slice class without breaking interop with existing clients and servers. |
+| [Ice React Greeter](./Ice/react-greeter/) | Shows how to use Ice in a modern React application with a web UI.                                     |
+| [IceGrid Greeter](./IceGrid/greeter/)     | Shows how to create a simple IceGrid deployment.                                                      |
+| [IceStorm Weather](./IceStorm/weather/)   | Shows how to use IceStorm to create a simple pub-sub application.                                     |
