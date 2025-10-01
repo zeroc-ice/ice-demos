@@ -51,5 +51,5 @@ swift run client
 
 [Ice service installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-services
 
-[1]: ../../Ice/callback
-[2]: ../../Ice/bidir
+[1]: ../../Ice/Callback
+[2]: ../../Ice/Bidir

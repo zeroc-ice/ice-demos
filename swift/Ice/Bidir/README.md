@@ -35,4 +35,4 @@ Then, in a separate terminal, start the Client program:
 swift run Client
 ```
 
-[1]: ../callback
+[1]: ../Callback
