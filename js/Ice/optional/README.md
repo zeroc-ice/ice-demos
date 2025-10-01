@@ -24,7 +24,7 @@ class AtmosphericConditions
 
 ## Building the demo
 
-navigate to the `client1` or `client2` directory, depending on whether you want to build version 1 or version 2 of the
+Navigate to the `client1` or `client2` directory, depending on whether you want to build version 1 or version 2 of the
 client.
 
 First install npm dependencies:
