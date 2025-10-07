@@ -14,11 +14,9 @@ import VisitorCenter
 async def main():
     initData = Ice.InitializationData()
     initData.properties = Ice.createProperties(sys.argv)
-
     # Configure the communicator to load the IceDiscovery plug-in during initialization. This plug-in installs a default
     # locator on the communicator.
     initData.properties.setProperty("Ice.Plugin.IceDiscovery", "1")
-
     # Configure the communicator to use asyncio.
     initData.eventLoopAdapter = Ice.asyncio.EventLoopAdapter(asyncio.get_running_loop())
 
