@@ -11,8 +11,7 @@ def main():
     # Create an Ice communicator. We'll use this communicator to create an object adapter.
     with Ice.initialize(sys.argv) as communicator:
         # Create an object adapter that listens for incoming requests and dispatches them to servants.
-        communicator.getProperties().setProperty("GreeterAdapter.AdapterId", "IceDiscovery/Locator:tcp -h localhost -p 4061")
-        adapter = communicator.createObjectAdapterWithEndpoints("GreeterAdapter", None)
+        adapter = communicator.createObjectAdapterWithEndpoints("GreeterAdapter", "tcp -p 4061")
 
         # Register the Chatbot servant with the adapter.
         adapter.add(chatbot.Chatbot(), Ice.Identity(name="greeter"))
