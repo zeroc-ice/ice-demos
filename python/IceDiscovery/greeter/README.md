@@ -8,7 +8,7 @@ If you are new to Python virtual environments, see [Python Virtual Environments]
 
 ## Running the server
 
-Navigate to the `server` or `server_asyncio` directory, depending on whether you want to run the synchronous or asynchronous server.
+Navigate to the `server` directory.
 
 ### 1. Create and activate a Python virtual environment
 
