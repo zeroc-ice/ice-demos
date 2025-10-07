@@ -8,9 +8,10 @@ import Ice
 
 
 def main():
+    initData = Ice.InitializationData()
+
     # Configure the communicator to load the IceDiscovery plug-in during initialization. This plug-in installs a default
     # locator on the communicator.
-    initData = Ice.InitializationData()
     initData.properties = Ice.createProperties(sys.argv)
     initData.properties.setProperty("Ice.Plugin.IceDiscovery", "1")
 
