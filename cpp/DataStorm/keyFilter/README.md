@@ -4,7 +4,7 @@ This demo illustrates the use of **key filters** in DataStorm.
 The reader application creates two readers:
 
 - The first reader uses the custom `startsWith` key filter to read samples whose keys start with `"floor1/"`.
-- The second reader uses the built-in `_regexp` key filter to read samples whose keys match a given regular expression.
+- The second reader uses the built-in `_regex` key filter to read samples whose keys match a given regular expression.
 
 ## Ice prerequisites
 
