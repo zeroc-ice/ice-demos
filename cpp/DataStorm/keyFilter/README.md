@@ -1,7 +1,10 @@
-# DataStorm keyFilter
+# DataStorm KeyFilter
 
-This demo illustrates the use of key filters. The reader uses the `_regex` predefined key filter. The reader will only
-subscribe and receive samples for keys matching the regular expression provided on construction of the reader object.
+This demo illustrates the use of **key filters** in DataStorm.
+The reader application creates two readers:
+
+- The first reader uses the custom `startsWith` key filter to read samples whose keys start with `"floor1/"`.
+- The second reader uses the built-in `_regexp` key filter to read samples whose keys match a given regular expression.
 
 ## Ice prerequisites
 

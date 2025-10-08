@@ -1,7 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
 #include <DataStorm/DataStorm.h>
-#include <Ice/Ice.h>
 
 #include <iostream>
 #include <string>
@@ -16,25 +15,22 @@ main(int argc, char* argv[])
         // Instantiates DataStorm node.
         DataStorm::Node node{argc, argv};
 
-        // Instantiates the "hello" topic. The topic uses strings for keys and values.
-        DataStorm::Topic<string, string> topic{node, "hello"};
+        // Instantiates the "temperature" topic. The topic uses strings for keys and values.
+        DataStorm::Topic<string, float> topic{node, "temperature"};
 
-        // Instantiate writers.
-        auto writera = DataStorm::makeSingleKeyWriter(topic, "fooa");
-        auto writerb = DataStorm::makeSingleKeyWriter(topic, "foob");
-        auto writerc = DataStorm::makeSingleKeyWriter(topic, "fooc");
-        auto writerd = DataStorm::makeSingleKeyWriter(topic, "food");
-        auto writere = DataStorm::makeSingleKeyWriter(topic, "fooe");
+        // Instantiate a any key writer.
+        auto writer = DataStorm::makeAnyKeyWriter(topic, "temperature-writer");
 
         // Wait for a reader to connect
         topic.waitForReaders();
 
-        // Publish a sample on each writer.
-        writera.update("hello");
-        writerb.update("hello");
-        writerc.update("hello");
-        writerd.update("hello");
-        writere.update("hello");
+        // Publish temperature samples for various rooms in the house.
+        writer.update("floor1/main-bedroom", 21.5f);
+        writer.update("floor1/secondary-bedroom", 22.0f);
+        writer.update("floor1/studio", 21.8f);
+        writer.update("floor2/main-bedroom", 23.3f);
+        writer.update("floor2/secondary-bedroom", 23.1f);
+        writer.update("floor2/studio", 22.9f);
 
         // Wait for readers to disconnect.
         topic.waitForNoReaders();
