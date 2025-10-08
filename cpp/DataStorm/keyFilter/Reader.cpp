@@ -33,7 +33,7 @@ main(int argc, char* argv[])
         // floor 1.
         auto reader1 = DataStorm::makeFilteredKeyReader(topic, DataStorm::Filter<string>("startsWith", "floor1/"));
 
-        // Create a second filtered reader that use the built-in _regex filter to monitor the temperature in the
+        // Create a second filtered reader that uses the built-in _regex filter to monitor the temperature in the
         // main bedrooms.
         auto reader2 = DataStorm::makeFilteredKeyReader(topic, DataStorm::Filter<string>("_regex", ".*/main-bedroom"));
 
