@@ -9,7 +9,7 @@
     <CopyDebugSymbolFilesFromPackages>true</CopyDebugSymbolFilesFromPackages>
   </PropertyGroup>
   <ItemGroup>
-    <SliceCompile Include="../slice/PokePen.ice" />
+    <SliceCompile Include="../slice/PokeBox.ice" />
     <PackageReference Include="ZeroC.Ice" Version="$(IceVersion)" />
     <PackageReference Include="ZeroC.Glacier2" Version="$(IceVersion)" />
     <PackageReference Include="ZeroC.Ice.Slice.Tools" Version="$(IceVersion)">
