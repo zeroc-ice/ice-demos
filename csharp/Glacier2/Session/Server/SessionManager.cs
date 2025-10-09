@@ -2,9 +2,12 @@
 
 namespace Server;
 
-internal class SessionManager : Glacier2.SessionManagerDisp_
+/// <summary>SessionManager is an Ice servant that implements Slice interface Glacier2::SessionManager. It creates
+/// sessions and resolves user IDs from session tokens.</summary>
+internal class SessionManager : Glacier2.SessionManagerDisp_, IUserIdResolver
 {
-    private readonly IPokeStore _pokeStore;
+    private readonly Ice.ObjectAdapter _sessionAdapter;
+    private readonly Dictionary<string, string> _tokenToUserId = [];
 
     /// <inheritdoc />
     public override Glacier2.SessionPrx? create(
@@ -12,19 +15,29 @@ internal class SessionManager : Glacier2.SessionManagerDisp_
         Glacier2.SessionControlPrx? sessionControl,
         Ice.Current current)
     {
-        Console.WriteLine($"Creating session for user '{userId}'");
+        if (sessionControl is null)
+        {
+            Console.WriteLine("Error: set Glacier2.Server.Endpoints in the Glacier2 router configuration.");
+            return null;
+        }
 
-        // Create a PokePen servant for this user.
-        PokePen pokePen = new(userId, _pokeStore);
+        Ice.ObjectPrx proxy = _sessionAdapter.addWithUUID(
+            new DefaultPokeSession(current.adapter, sessionControl, this));
+        string sessionToken = proxy.ice_getIdentity().name;
+        _tokenToUserId[sessionToken] = userId;
 
-        // Add the PokePen servant to the adapter with a UUID identity and return a proxy to the caller.
-        return Glacier2.SessionPrxHelper.uncheckedCast(current.adapter.addWithUUID(pokePen));
+        Console.WriteLine($"Creating session #{sessionToken} for user '{userId}'");
+        return Glacier2.SessionPrxHelper.uncheckedCast(proxy);
     }
+
+    /// <inheritdoc />
+    public string? GetUserId(string token) => _tokenToUserId.TryGetValue(token, out string? userId) ? userId : null;
+
+    /// <inheritdoc />
+    public void RemoveToken(string token) => _tokenToUserId.Remove(token);
 
     /// <summary>Constructs a SessionManager servant.</summary>
-    /// <param name="pokeStore">The poke store.</param>
-    internal SessionManager(IPokeStore pokeStore)
-    {
-        _pokeStore = pokeStore;
-    }
+    /// <param name="adapter">The object adapter that hosts the session servants.</param>
+    internal SessionManager(Ice.ObjectAdapter adapter) =>
+        _sessionAdapter = adapter;
 }

@@ -6,33 +6,39 @@ namespace Server;
 
 /// <summary>SharedPokePen is an Ice servant that implements Slice interface PokePen. The same shared servant
 /// implements all PokePen objects.</summary>
-internal class SharedPokePen : PokeCorralDisp_
+internal class SharedPokePen : PokePenDisp_
 {
     private readonly IUserIdResolver _userIdResolver;
     private readonly IPokeStore _pokeStore;
 
     /// <inheritdoc />
-    public override string[] GetInventory(Ice.Current current)
-    {
-        string userId = _userIdResolver.GetUserId(current.id.name) ??
-            throw new Ice.DispatchException(Ice.ReplyStatus.Unauthorized, "Invalid session token");
+    public override string[] GetInventory(Ice.Current current) =>
+        _pokeStore.RetrieveCollection(GetUserId(current)) is ICollection<string> collection ? [.. collection] : [];
 
-        return _pokeStore.RetrieveCollection(userId) is ICollection<string> collection ? [.. collection] : [];
+    /// <inheritdoc />
+    public override void Caught(string[] pokemons, Ice.Current current)
+    {
+        string userId = GetUserId(current);
+        SortedSet<string> savedPokemons =
+            _pokeStore.RetrieveCollection(userId) is ICollection<string> collection ? new(collection) : [];
+        savedPokemons.UnionWith(pokemons);
+        _pokeStore.SaveCollection(userId, savedPokemons);
     }
 
     /// <inheritdoc />
-    public override void Caught(string[] pokemons, Ice.Current current) => _contents.UnionWith(pokemons);
+    public override void ReleaseAll(Ice.Current current) =>
+        _pokeStore.SaveCollection(GetUserId(current), []);
 
-    /// <inheritdoc />
-    public override void ReleaseAll(Ice.Current current) => _contents.Clear();
-
-    /// <summary>Constructs a PokePen servant.</summary>
-    /// <param name="userId">The user ID.</param>
+    /// <summary>Constructs a SharedPokePen servant.</summary>
     /// <param name="pokeStore">The poke store.</param>
-    internal SharedPokePen(IPokeStore pokeStore, IUserIdResolver)
+    /// <param name="userIdResolver">The user ID resolver.</param>
+    internal SharedPokePen(IPokeStore pokeStore, IUserIdResolver userIdResolver)
     {
-        _userId = userId;
         _pokeStore = pokeStore;
-        _contents = _pokeStore.RetrieveCollection(userId) is ICollection<string> collection ? new(collection) : new();
+        _userIdResolver = userIdResolver;
     }
+
+    private string GetUserId(Ice.Current current) =>
+        _userIdResolver.GetUserId(current.id.name) ??
+        throw new Ice.DispatchException(Ice.ReplyStatus.Unauthorized, "Invalid session token");
 }

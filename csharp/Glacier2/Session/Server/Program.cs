@@ -4,10 +4,15 @@
 await using Ice.Communicator communicator = Ice.Util.initialize(ref args);
 
 // Create an object adapter that listens for incoming requests and dispatches them to servants.
-Ice.ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints("GreeterAdapter", "tcp -p 4061");
+Ice.ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints("PokeAdapter", "tcp -p 4061");
 
-// Register the Chatbot servant with the adapter.
-adapter.add(new Server.Chatbot(), new Ice.Identity { name = "greeter" });
+// Register the SessionManager servant with the adapter.
+var sessionManager = new Server.SessionManager(adapter);
+adapter.add(sessionManager, new Ice.Identity { name = "SessionManager" });
+
+// Register the SharedPokePen servant with the adapter as a default servant for category "pen".
+var sharedPokePen = new Server.SharedPokePen(new Server.MPokeStore(), sessionManager);
+adapter.addDefaultServant(sharedPokePen, "pen");
 
 // Start dispatching requests.
 adapter.activate();

@@ -15,6 +15,9 @@ string[] AllPokemons =
     "Venomoth", "Diglett", "Dugtrio", "Meowth", "Persian", "Psyduck", "Golduck", "Mankey", "Primeape",
 ];
 
+// Retrieve the user ID for this run.
+string userId = args.Length > 0 ? args[0] : Environment.UserName;
+
 // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
 await using Ice.Communicator communicator = Ice.Util.initialize(ref args);
 
@@ -40,13 +43,13 @@ PokePenPrx? pokePen = await pokeSession.GetPokePenAsync();
 Debug.Assert(pokePen is not null);
 
 int count = (await pokePen.GetInventoryAsync()).Length;
-Console.WriteLine($"Your PokePen contains {count} Pokémons.");
+Console.WriteLine($"{userId}'s PokePen contains {count} Pokémons.");
 
 // Catch a few random Pokémons.
-int count = RandomNumberGenerator.GetInt32(2, 6);
-Console.WriteLine($"Catching {count} Pokémons...");
+int newCount = RandomNumberGenerator.GetInt32(2, 6);
+Console.Write($"Catching {newCount} Pokémons... ");
 var newPokemons = new List<string>();
-for (int i = 0; i < count; ++i)
+for (int i = 0; i < newCount; ++i)
 {
     newPokemons.Add(AllPokemons[RandomNumberGenerator.GetInt32(AllPokemons.Length)]);
 }
@@ -54,7 +57,7 @@ await pokePen.CaughtAsync(newPokemons.ToArray());
 
 // Display the contents of the PokePen.
 string[] currentPokemons = await pokePen.GetInventoryAsync();
-Console.WriteLine($"Your PokePen now holds {currentPokemons.Length} Pokémons:");
+Console.WriteLine($"{userId}'s PokePen now holds {currentPokemons.Length} Pokémons:");
 foreach (string pokemon in currentPokemons)
 {
     Console.WriteLine($"\t{pokemon}");
@@ -65,6 +68,8 @@ if (currentPokemons.Length > 10)
     Console.WriteLine("Oh no! All the Pokémons escaped!");
     await pokePen.ReleaseAllAsync();
 }
+
+await pokeSession.destroyAsync();
 
 // Exiting, closing the connection, or calling destroyAsync on the session terminates both PokeSession and the session
 // state maintained by the Glacier router.
