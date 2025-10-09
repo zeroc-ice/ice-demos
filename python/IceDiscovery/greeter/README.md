@@ -1,9 +1,9 @@
 # IceDiscovery Greeter
 
-This demo illustrates how to configure the IceDiscovery plug-in.  
+This demo illustrates how to configure the IceDiscovery plug-in.
 The IceDiscovery plug-in allows a client application to discover Ice objects without hardcoding any addressing information.
 
-We recommend running each program in a separate Python virtual environment.  
+We recommend running each program in a separate Python virtual environment.
 If you are new to Python virtual environments, see [Python Virtual Environments].
 
 ## Running the server
@@ -86,8 +86,8 @@ slice2py ../slice/Greeter.ice
 python main.py --Ice.Trace.Locator
 ```
 
-> [!NOTE]  
-> The `--Ice.Trace.Locator` command-line option is optional: it enables tracing (logging) for locator resolution and  
+> [!NOTE]
+> The `--Ice.Trace.Locator` command-line option is optional: it enables tracing (logging) for locator resolution and
 > helps you understand the locator logic implemented by the IceDiscovery plug-in.
 
 [Python Virtual Environments]: https://docs.python.org/3/tutorial/venv.html

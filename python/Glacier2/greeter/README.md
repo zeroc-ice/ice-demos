@@ -10,7 +10,7 @@ flowchart LR
 In a typical Glacier2 deployment, the client can establish a connection to the Glacier2 router but cannot connect
 directly to the server, because the server is on a separate network.
 
-We recommend running each program in a separate Python virtual environment.  
+We recommend running each program in a separate Python virtual environment.
 If you are new to Python virtual environments, see [Python Virtual Environments].
 
 ## Ice prerequisites
@@ -65,8 +65,8 @@ In a separate terminal, run:
 glacier2router --Ice.Config=config.glacier2
 ```
 
-> [!TIP]  
-> You can start the Glacier2 router before or after the server.  
+> [!TIP]
+> You can start the Glacier2 router before or after the server.
 > The server is identical to the one in the [Ice Greeter] demo and does not depend on Glacier2.
 
 ## Running the client

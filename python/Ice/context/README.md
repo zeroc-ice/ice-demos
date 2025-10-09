@@ -5,10 +5,10 @@ The Context demo shows the three different ways to set a request context in a cl
 A request context is a `dictionary<string, string>` carried by all requests. It is empty by default, and the
 application is free to set any entry in this dictionary.
 
-> [!NOTE]  
+> [!NOTE]
 > The Ice protocol does not support response contexts, only request contexts.
 
-We recommend running each program in a separate Python virtual environment.  
+We recommend running each program in a separate Python virtual environment.
 If you are new to Python virtual environments, see [Python Virtual Environments].
 
 ## Running the server

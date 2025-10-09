@@ -13,7 +13,7 @@ flowchart LR
     g --connection1--> s[Server:4061<br>hosts WakeUpService] --connection2--> g
 ```
 
-We recommend running each program in a separate Python virtual environment.  
+We recommend running each program in a separate Python virtual environment.
 If you are new to Python virtual environments, see [Python Virtual Environments].
 
 ## Ice prerequisites
@@ -68,8 +68,8 @@ In a separate terminal, run:
 glacier2router --Ice.Config=config.glacier2
 ```
 
-> [!TIP]  
-> You can start the Glacier2 router before or after the server.  
+> [!TIP]
+> You can start the Glacier2 router before or after the server.
 > The server is identical to the one in the [Ice Callback][1] demo and does not depend on Glacier2.
 
 ## Running the client

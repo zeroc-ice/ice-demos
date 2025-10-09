@@ -14,7 +14,7 @@ flowchart LR
 
 This is particularly useful when the client application is behind a firewall that does not allow incoming connections.
 
-We recommend running each program in a separate Python virtual environment.  
+We recommend running each program in a separate Python virtual environment.
 If you are new to Python virtual environments, see [Python Virtual Environments].
 
 ## Running the server
@@ -97,5 +97,5 @@ slice2py ../slice/AlarmClock.ice
 python main.py
 ```
 
-[Python Virtual Environments]: https://docs.python.org/3/tutorial/venv.html  
+[Python Virtual Environments]: https://docs.python.org/3/tutorial/venv.html
 [1]: ../callback/

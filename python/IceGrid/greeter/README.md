@@ -16,7 +16,7 @@ flowchart LR
     Client ==> |greet request| Server
 ```
 
-We recommend running each program in a separate Python virtual environment.  
+We recommend running each program in a separate Python virtual environment.
 If you are new to Python virtual environments, see [Python Virtual Environments].
 
 ## Ice prerequisites
@@ -83,7 +83,7 @@ server\venv\Scripts\activate
 icegridnode --Ice.Config=config.node
 ```
 
-> [!NOTE]  
+> [!NOTE]
 > We need to start `icegridnode` from an active Python virtual environment in order for it to find the server program
 > dependencies installed in that environment.
 
@@ -95,7 +95,7 @@ Use the IceGrid admin tool to deploy the configuration:
 icegridadmin --Ice.Config=config.admin -e "application add greeter-hall.xml"
 ```
 
-`greeter-hall.xml` configures a single Greeter server.  
+`greeter-hall.xml` configures a single Greeter server.
 As an alternative, you can deploy 3 replicated Greeter servers with:
 
 ```bash

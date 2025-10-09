@@ -1,6 +1,5 @@
 FROM rockylinux/rockylinux:9
 
-
 # Install required build tools and dependencies
 RUN dnf install -y \
     sudo \
