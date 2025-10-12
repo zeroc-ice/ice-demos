@@ -10,7 +10,7 @@ details.
 | ------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
 | [Glacier2 Callback](./Glacier2/Callback/)               | Shows how to write a Glacier2 client and implement callbacks in this client.                                |
 | [Glacier2 Greeter](./Glacier2/Greeter/)                 | Shows how to write a basic Glacier2 client.                                                                 |
-| [Glacier2 Session](./Glacier/Session)                   | Shows how to implement and configure a custom Glacier2 Session Manager. Also demonstrates default servants. |
+| [Glacier2 Session](./Glacier2/Session)                  | Shows how to implement and configure a custom Glacier2 Session Manager. Also demonstrates default servants. |
 | [Ice Bidir](./Ice/Bidir/)                               | Shows how to send requests "the other way around", from the server to the client.                           |
 | [Ice Callback](./Ice/Callback/)                         | Shows how to implement callbacks in a client application.                                                   |
 | [Ice Cancellation](./Ice/Cancellation/)                 | Shows how to cancel a request and how to configure invocation timeouts.                                     |
