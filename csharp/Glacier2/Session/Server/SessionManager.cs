@@ -6,8 +6,8 @@ namespace Server;
 
 /// <summary>SessionManager is an Ice servant that implements Slice interface Glacier2::SessionManager. It creates
 /// sessions and resolves user IDs from session tokens.</summary>
-/// <remarks>This implementation is not thread-safe. This is not a concern for this demo since there is only one
-/// thread in the Ice server thread pool. However, a real implementation should support concurrent calls.</remarks>
+/// <remarks>This demo implementation is not thread-safe. A real implementation should support concurrent calls.
+/// </remarks>
 internal class SessionManager : Glacier2.SessionManagerDisp_, IUserIdResolver
 {
     private readonly Ice.ObjectAdapter _sessionAdapter;
@@ -26,11 +26,12 @@ internal class SessionManager : Glacier2.SessionManagerDisp_, IUserIdResolver
         // Create a new session servant and add it to the adapter with a UUID identity. The name component of the
         // identity is the session token.
         Ice.ObjectPrx proxy = _sessionAdapter.addWithUUID(
-            new DefaultPokeSession(current.adapter, sessionControl, this));
+            new DefaultPokeSession(_sessionAdapter, sessionControl, this));
+
         string sessionToken = proxy.ice_getIdentity().name;
         _tokenToUserId[sessionToken] = userId;
 
-        Console.WriteLine($"Creating session #{sessionToken} for user '{userId}'");
+        Console.WriteLine($"Created session #{sessionToken} for user '{userId}'");
         return Glacier2.SessionPrxHelper.uncheckedCast(proxy);
     }
 

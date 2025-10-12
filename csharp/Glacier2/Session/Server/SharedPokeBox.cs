@@ -23,7 +23,7 @@ internal class SharedPokeBox : PokeBoxDisp_
         string userId = GetUserId(current);
 
         List<string> savedPokemon =
-            _pokeStore.RetrieveCollection(userId) is ICollection<string> collection ? new(collection) : [];
+            _pokeStore.RetrieveCollection(userId) is ICollection<string> collection ? [.. collection] : [];
 
         savedPokemon.AddRange(pokemon);
 

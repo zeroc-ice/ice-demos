@@ -8,11 +8,11 @@ internal interface IPokeStore
     /// <summary>Saves the Pokémon collection for a specific user.</summary>
     /// <param name="userId">The user ID.</param>
     /// <param name="pokemon">The Pokémon collection to save.</param>
-    public void SaveCollection(string userId, ICollection<string> pokemon);
+    void SaveCollection(string userId, IReadOnlyCollection<string> pokemon);
 
     /// <summary>Retrieves the Pokémon collection for a specific user.</summary>
     /// <param name="userId">The user ID.</param>
     /// <returns>The saved Pokémon collection, or null if no collection was saved for <paramref name="userId"/>.
     /// </returns>
-    public ICollection<string>? RetrieveCollection(string userId);
+    IReadOnlyCollection<string>? RetrieveCollection(string userId);
 }

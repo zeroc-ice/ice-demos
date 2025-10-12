@@ -21,7 +21,7 @@ string userId = args.Length > 0 ? args[0] : Environment.UserName;
 // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
 await using Ice.Communicator communicator = Ice.Util.initialize(ref args);
 
-// Create a proxy to the Glacier2 router. The addressing information (transport, host and port number) is derived from
+// Create a proxy to the Glacier2 router. The addressing information (transport, host, and port number) is derived from
 // the value of Glacier2.Client.Endpoints in the glacier2 router configuration file.
 Glacier2.RouterPrx router =
     Glacier2.RouterPrxHelper.createProxy(communicator, "Glacier2/router:tcp -h localhost -p 4063");
@@ -87,7 +87,7 @@ catch (Ice.ConnectionLostException)
     Console.WriteLine("The PokeBox proxy is no longer valid, as expected.");
 }
 
-// Create a new session. This allows us to reach to the PokeBox object again.
+// Create a new session. This allows us to reach the PokeBox object again.
 Console.WriteLine("Creating a new session...");
 session = await router.createSessionAsync(userId, "password");
 

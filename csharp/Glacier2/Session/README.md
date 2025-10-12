@@ -49,9 +49,9 @@ Finally, run the client application several times:
 
 ```shell
 cd Client
-dotnet run freddie
-dotnet run freddie
-dotnet run freddie
+dotnet run ash
+dotnet run ash
+dotnet run ash
 ```
 
 If you don't specify a name, the client uses the current username.

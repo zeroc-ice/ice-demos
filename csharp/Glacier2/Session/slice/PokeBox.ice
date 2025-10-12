@@ -1,5 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
+// Include the Glacier/Session.ice file included in the Glacier2 NuGet package.
 #include <Glacier2/Session.ice>
 
 module CatchThemAll
@@ -25,6 +26,7 @@ module CatchThemAll
         void releaseAll();
     }
 
+    /// Represents a specialized session for our Pokémon application.
     interface PokeSession : Glacier2::Session
     {
         /// Retrieves the PokeBox proxy associated with this session.
