@@ -8,10 +8,12 @@
         "visitorcenter",
         "zeroc"
     ],
+    "import": ["@cspell/dict-pokemon/cspell-ext.json"],
     "dictionaries": [
         "csharp",
         "softwareTerms",
-        "en_US"
+        "en_US",
+        "pokemon"
     ],
     "enableFiletypes": [
         "ice"
