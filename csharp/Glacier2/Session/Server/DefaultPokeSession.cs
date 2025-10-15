@@ -23,8 +23,8 @@ internal class DefaultPokeSession : AsyncPokeSessionDisp_
     {
         // The session token is the name component of the session identity; we use it for the identity of the PokeBox
         // object as well.
-        Ice.ObjectPrx proxy = _adapter.createProxy(new Ice.Identity(name: current.id.name, category: "box"));
-        return Task.FromResult(PokeBoxPrxHelper.uncheckedCast(proxy));
+        Ice.ObjectPrx proxy = _adapter.createProxy(new Ice.Identity(name: current.id.name, category: "PokeBox"));
+        return Task.FromResult<PokeBoxPrx?>(PokeBoxPrxHelper.uncheckedCast(proxy));
     }
 
     /// <inheritdoc />
