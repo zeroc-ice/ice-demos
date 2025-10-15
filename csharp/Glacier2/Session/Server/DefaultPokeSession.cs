@@ -23,7 +23,7 @@ internal class DefaultPokeSession : PokeSessionDisp_
     {
         // The session token is the name component of the session identity; we use it for the identity of the PokeBox
         // object as well.
-        Ice.ObjectPrx proxy = _adapter.createProxy(new Ice.Identity(name: current.id.name, category: "box"));
+        Ice.ObjectPrx proxy = _adapter.createProxy(new Ice.Identity(name: current.id.name, category: "PokeBox"));
         return PokeBoxPrxHelper.uncheckedCast(proxy);
     }
 

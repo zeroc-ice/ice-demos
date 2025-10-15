@@ -93,6 +93,7 @@ session = await router.createSessionAsync(userId, "password");
 
 try
 {
+    // The pokeBox proxy no longer works as it was created with the token of an old session.
     _ = await pokeBox.GetInventoryAsync();
     Console.WriteLine("Error: the PokeBox proxy should not work with a new session!");
 }

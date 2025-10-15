@@ -10,10 +10,10 @@ Ice.ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints("PokeA
 var sessionManager = new Server.SessionManager(adapter);
 adapter.add(sessionManager, new Ice.Identity { name = "SessionManager" });
 
-// Register the SharedPokeBox servant with the adapter as a default servant for category "box". This servant implements
-// all PokeBox objects.
+// Register the SharedPokeBox servant with the adapter as a default servant for category "PokeBox". This servant
+// implements all PokeBox objects.
 var sharedPokeBox = new Server.SharedPokeBox(new Server.InMemoryPokeStore(), sessionManager);
-adapter.addDefaultServant(sharedPokeBox, "box");
+adapter.addDefaultServant(sharedPokeBox, "PokeBox");
 
 // Start dispatching requests.
 adapter.activate();
