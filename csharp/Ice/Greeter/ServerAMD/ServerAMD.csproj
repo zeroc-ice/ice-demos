@@ -9,7 +9,7 @@
     <CopyDebugSymbolFilesFromPackages>true</CopyDebugSymbolFilesFromPackages>
   </PropertyGroup>
   <ItemGroup>
-    <SliceCompile Include="../slice/GreeterAMD.ice" />
+    <SliceCompile Include="../slice/Greeter.ice" />
     <PackageReference Include="ZeroC.Ice" Version="$(IceVersion)" />
     <PackageReference Include="ZeroC.Ice.Slice.Tools" Version="$(IceVersion)">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
