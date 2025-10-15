@@ -72,7 +72,7 @@ if (inventory.Length > 10)
 // Exiting, closing the connection, or calling destroyAsync on the session terminates both PokeSession and the
 // internal session state maintained by the Glacier router.
 Console.WriteLine("Destroying the session...");
-await pokeSession.ice_getCachedConnection()!.closeAsync();
+await pokeSession.destroyAsync();
 
 // Verify the proxy no longer works.
 try

@@ -5,7 +5,7 @@ using VisitorCenter;
 namespace Server;
 
 /// <summary>Chatbot is an Ice servant that implements Slice interface Greeter.</summary>
-internal class Chatbot : GreeterDisp_
+internal class Chatbot : AsyncGreeterDisp_
 {
     private readonly TimeSpan _delay;
     private readonly CancellationToken _cancellationToken;

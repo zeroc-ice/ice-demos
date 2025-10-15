@@ -6,7 +6,7 @@ namespace Server;
 
 /// <summary>DefaultPokeSession is an Ice servant that implements Slice interface PokeSession. We create a
 /// DefaultPokeSession for each PokeSession object.</summary>
-internal class DefaultPokeSession : PokeSessionDisp_
+internal class DefaultPokeSession : AsyncPokeSessionDisp_
 {
     // The object adapter that hosts this servant and the PokeBox objects.
     private readonly Ice.ObjectAdapter _adapter;
@@ -19,16 +19,16 @@ internal class DefaultPokeSession : PokeSessionDisp_
     private readonly IUserIdResolver _userIdResolver;
 
     /// <inheritdoc />
-    public override PokeBoxPrx? GetPokeBox(Ice.Current current)
+    public override Task<PokeBoxPrx?> GetPokeBoxAsync(Ice.Current current)
     {
         // The session token is the name component of the session identity; we use it for the identity of the PokeBox
         // object as well.
         Ice.ObjectPrx proxy = _adapter.createProxy(new Ice.Identity(name: current.id.name, category: "box"));
-        return PokeBoxPrxHelper.uncheckedCast(proxy);
+        return Task.FromResult(PokeBoxPrxHelper.uncheckedCast(proxy));
     }
 
     /// <inheritdoc />
-    public override void destroy(Ice.Current current)
+    public override async Task destroyAsync(Ice.Current current)
     {
         Console.WriteLine($"Destroying session #{current.id.name}");
 
@@ -40,7 +40,7 @@ internal class DefaultPokeSession : PokeSessionDisp_
         _adapter.remove(current.id);
 
         // Destroy the session in the Glacier2 router.
-        _ = _sessionControl.destroyAsync();
+        await _sessionControl.destroyAsync();
     }
 
     /// <summary>Constructs a DefaultPokeSession servant.</summary>
