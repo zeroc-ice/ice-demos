@@ -1,31 +1,35 @@
 #!/usr/bin/env python
 # Copyright (c) ZeroC, Inc.
 
+import asyncio
+import signal
 import sys
 
 import Ice
 from console_printer import ConsolePrinter
 
 
-def main():
-    # Create an Ice communicator. We'll use this communicator to create an object adapter.
-    with Ice.initialize(sys.argv) as communicator:
+async def main():
+    loop = asyncio.get_running_loop()
+    # Create an Ice communicator. We'll use this communicator to create an object adapter. We enable asyncio
+    # support by passing the current event loop to initialize.
+    with Ice.initialize(sys.argv, eventLoop=loop) as communicator:
+        # Shutdown the communicator when the user presses Ctrl+C.
+        loop.add_signal_handler(signal.SIGINT, communicator.shutdown)
+
         # Create an object adapter that listens for incoming requests and dispatches them to servants.
         adapter = communicator.createObjectAdapterWithEndpoints("GreeterAdapter", "tcp -p 4061")
 
-        # Register the Chatbot servant with the adapter.
+        # Register the ConsolePrinter servant with the adapter.
         adapter.add(ConsolePrinter(), Ice.Identity(name="weatherStation"))
 
         # Start dispatching requests.
         adapter.activate()
         print("Listening on port 4061...")
 
-        try:
-            # Wait until communicator.shutdown() is called, which never occurs in this demo.
-            communicator.waitForShutdown()
-        except KeyboardInterrupt:
-            print("Caught Ctrl+C, exiting...")
+        # Wait until the communicator is shut down. Here, this occurs when the user presses Ctrl+C.
+        await communicator.shutdownCompleted()
 
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
