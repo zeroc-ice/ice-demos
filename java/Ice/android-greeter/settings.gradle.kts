@@ -9,9 +9,9 @@ pluginManagement {
         }
         mavenCentral()
         gradlePluginPortal()
-        // Use the nightly build of the Slice Tools plugin from the Maven Central snapshots repository.
+        // Use the nightly build of the Slice Tools plugin from the ZeroC maven-nightly repository.
         maven {
-            url = uri("https://central.sonatype.com/repository/maven-snapshots")
+            url = uri("https://download.zeroc.com/nexus/repository/maven-nightly/")
             content {
                 includeGroupByRegex("com\\.zeroc.*")
             }
@@ -23,9 +23,9 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        // Use the nightly build of Ice from the Maven Central snapshots repository.
+        // Use the nightly build of Ice from the ZeroC maven-nightly repository.
         maven {
-            url = uri("https://central.sonatype.com/repository/maven-snapshots")
+            url = uri("https://download.zeroc.com/nexus/repository/maven-nightly/")
             content {
                 includeGroupByRegex("com\\.zeroc.*")
             }
