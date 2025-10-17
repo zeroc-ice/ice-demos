@@ -43,7 +43,7 @@ class SharedPokeBox(CatchThemAll.PokeBox):
         """
         userId = self.getUserId(current)
 
-        # Retrieve the exiting collection for the user and add the new Pokémon.
+        # Retrieve the existing collection for the user and add the new Pokémon.
         savedPokemon = list(self._pokeStore.retrieveCollection(userId) or [])
         savedPokemon.extend(pokemon)
 

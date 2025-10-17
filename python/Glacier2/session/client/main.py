@@ -72,7 +72,7 @@ allPokemon = [
 ]
 
 # Retrieve the user ID for this run.
-userId = sys.argv[0] if len(sys.argv) > 0 else getpass.getuser()
+userId = sys.argv[1] if len(sys.argv) > 1 else getpass.getuser()
 
 
 async def main():

@@ -50,10 +50,10 @@ pip install -r requirements.txt
 
 ### 3. Compile the Slice definitions
 
-Use the Slice-to-Python compiler to generate Python code from the `Greeter.ice` file:
+Use the Slice-to-Python compiler to generate Python code from the `PokeBox.ice` file:
 
 ```bash
-slice2py ../slice/Greeter.ice
+slice2py ../slice/PokeBox.ice
 ```
 
 ### 4. Run the server
@@ -72,7 +72,6 @@ glacier2router --Ice.Config=config.glacier2
 
 > [!TIP]
 > You can start the Glacier2 router before or after the server.
-> The server is identical to the one in the [Ice Greeter] demo and does not depend on Glacier2.
 
 ## Running the client
 
@@ -102,10 +101,10 @@ pip install -r requirements.txt
 
 ### 3. Compile the Slice definitions
 
-Use the Slice-to-Python compiler to generate Python code from the `Greeter.ice` file:
+Use the Slice-to-Python compiler to generate Python code from the `PokeBox.ice` file:
 
 ```bash
-slice2py ../slice/Greeter.ice
+slice2py ../slice/PokeBox.ice
 ```
 
 ### 4. Run the client
