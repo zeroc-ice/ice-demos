@@ -44,7 +44,7 @@ class SharedPokeBox implements PokeBox {
         String userId = getUserId(current);
 
         List<String> newPokemon = new ArrayList<>(Arrays.asList(pokemon));
-        List<String> savedPokemon = _pokeStore.retrieveCollection(getUserId(current));
+        List<String> savedPokemon = _pokeStore.retrieveCollection(userId);
         if (savedPokemon != null) {
             newPokemon.addAll(savedPokemon);
         }
