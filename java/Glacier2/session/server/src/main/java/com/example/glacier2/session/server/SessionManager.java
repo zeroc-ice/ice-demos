@@ -19,8 +19,7 @@ import java.util.Map;
  */
 class SessionManager implements com.zeroc.Glacier2.SessionManager, UserIdResolver {
     private final ObjectAdapter _sessionAdapter;
-
-    private final Map<String, String> _tokenToUserId = new HashMap<>();
+    private final Map<String, String> _tokenToUserId;
 
     /**
      * Constructs a SessionManager servant.
@@ -29,11 +28,12 @@ class SessionManager implements com.zeroc.Glacier2.SessionManager, UserIdResolve
      */
     SessionManager(ObjectAdapter adapter) {
         _sessionAdapter = adapter;
+        _tokenToUserId = new HashMap<>();
     }
 
     @Override
     public SessionPrx create(String userId, SessionControlPrx sessionControl, Current current) {
-        // sessionControl is not null because we configured Glacier2.Server.Endpoints
+        // sessionControl is not null because we configured 'Glacier2.Server.Endpoints'
         // in the Glacier2 router configuration file.
         assert sessionControl != null;
 
