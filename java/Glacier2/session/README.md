@@ -49,9 +49,9 @@ glacier2router --Ice.Config=config.glacier2
 Finally, in a separate terminal, run the client application several times:
 
 ```shell
-./gradlew :client:run --quiet ash
-./gradlew :client:run --quiet ash
-./gradlew :client:run --quiet ash
+./gradlew :client:run --quiet --args="ash"
+./gradlew :client:run --quiet --args="ash"
+./gradlew :client:run --quiet --args="ash"
 ```
 
 If you don't specify a name, the client uses the current username.

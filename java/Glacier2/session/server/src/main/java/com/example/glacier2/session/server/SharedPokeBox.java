@@ -5,6 +5,7 @@ package com.example.glacier2.session.server;
 import com.example.catchthemall.PokeBox;
 import com.zeroc.Ice.Current;
 import com.zeroc.Ice.DispatchException;
+import com.zeroc.Ice.ReplyStatus;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,9 +22,9 @@ class SharedPokeBox implements PokeBox {
 
     /**
      * Constructs a {@code SharedPokeBox} servant.
+     *
      * @param pokeStore the Poke-store
      * @param userIdResolver the user ID resolver
-     * @return
      */
     SharedPokeBox(PokeStore pokeStore, UserIdResolver userIdResolver) {
         _pokeStore = pokeStore;
@@ -55,18 +56,20 @@ class SharedPokeBox implements PokeBox {
 
     @Override
     public void releaseAll(Current current) {
-        _pokeStore.saveCollection(GetUserId(current), Collections.emptyList());
+        _pokeStore.saveCollection(getUserId(current), Collections.emptyList());
     }
 
     /**
      * Retrieves the user ID associated with the current session.
+     *
      * @param current information about the incoming request being dispatched
      * @return the user ID associated with the current session.
      */
     private String getUserId(Current current) {
         String userId = _userIdResolver.getUserId(current.id.name);
         if (userId == null) {
-            throw new DispatchException(com.zeroc.Ice.ReplyStatus.Unauthorized, "Invalid session token");
+            throw new DispatchException(ReplyStatus.Unauthorized.value(), "Invalid session token");
         }
+        return userId;
     }
 }

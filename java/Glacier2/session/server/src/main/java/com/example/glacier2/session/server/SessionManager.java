@@ -6,7 +6,6 @@ import com.zeroc.Ice.Current;
 import com.zeroc.Ice.ObjectAdapter;
 import com.zeroc.Ice.ObjectPrx;
 import com.zeroc.Glacier2.SessionControlPrx;
-import com.zeroc.Glacier2.SessionManager;
 import com.zeroc.Glacier2.SessionPrx;
 
 import java.util.HashMap;
@@ -16,15 +15,16 @@ import java.util.Map;
  * {@code SessionManager} is an Ice servant that implements Slice interface 'Glacier2::SessionManager'.
  * It creates sessions and resolves user IDs from session tokens.
  *
- * This demo implementation is not thread-safe. A real implementation should support concurrent calls.
+ * <p>This demo implementation is not thread-safe. A real implementation should support concurrent calls.
  */
-class SessionManager implements Glacier2.SessionManager, UserIdResolver {
+class SessionManager implements com.zeroc.Glacier2.SessionManager, UserIdResolver {
     private final ObjectAdapter _sessionAdapter;
 
     private final Map<String, String> _tokenToUserId = new HashMap<>();
 
     /**
      * Constructs a SessionManager servant.
+     *
      * @param adapter the object adapter that hosts the session servants
      */
     SessionManager(ObjectAdapter adapter) {
@@ -49,12 +49,12 @@ class SessionManager implements Glacier2.SessionManager, UserIdResolver {
     }
 
     @Override
-    public String GetUserId(String token) {
+    public String getUserId(String token) {
         return _tokenToUserId.get(token);
     }
 
     @Override
-    public void RemoveToken(String token) {
+    public void removeToken(String token) {
         _tokenToUserId.remove(token);
     }
 }

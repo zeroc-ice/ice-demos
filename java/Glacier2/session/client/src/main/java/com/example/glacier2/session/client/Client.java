@@ -3,7 +3,7 @@
 package com.example.glacier2.session.client;
 
 import com.example.catchthemall.PokeBoxPrx;
-import com.example.catchthemall.PokeSession;
+import com.example.catchthemall.PokeSessionPrx;
 
 import com.zeroc.Glacier2.CannotCreateSessionException;
 import com.zeroc.Glacier2.PermissionDeniedException;
@@ -52,7 +52,7 @@ class Client {
                 return;
             }
 
-            // We configured a SessionManager on the Glacier2 router, so session is a non-null PokeSession.
+            // We configured a SessionManager on the Glacier2 router, so 'session' is a non-null 'PokeSession'.
             PokeSessionPrx pokeSession = PokeSessionPrx.uncheckedCast(session);
             assert pokeSession != null;
 
@@ -74,7 +74,7 @@ class Client {
 
             // Display the contents of the PokeBox.
             String[] inventory = pokeBox.getInventory();
-            System.out.println(userId+ "'s PokeBox now holds " + inventory.length + " Pokémon:");
+            System.out.println(userId + "'s PokeBox now holds " + inventory.length + " Pokémon:");
             for (String pokemon : inventory) {
                 System.out.println("\t" + pokemon);
             }
@@ -85,7 +85,7 @@ class Client {
             }
 
             // Exiting, closing the connection, or calling 'destroy' on the session terminates both
-            // PokeSession and the internal session state maintained by the Glacier router.
+            // PokeSession and the internal session state maintained by the Glacier2 router.
             System.out.println("Destroying the session...");
             pokeSession.destroy();
 
@@ -113,7 +113,7 @@ class Client {
                 pokeBox.getInventory();
                 System.out.println("Error: the PokeBox proxy should not work with a new session!");
             } catch (DispatchException ex) {
-                if (dispatchException.replyStatus != com.zeroc.Ice.ReplyStatus.Unauthorized) {
+                if (ex.replyStatus != com.zeroc.Ice.ReplyStatus.Unauthorized.value()) {
                     throw ex;
                 }
 

@@ -2,8 +2,8 @@
 
 package com.example.glacier2.session.server;
 
+import com.example.catchthemall.AsyncPokeSession;
 import com.example.catchthemall.PokeBoxPrx;
-import com.example.catchthemall.PokeSession;
 import com.zeroc.Ice.Current;
 import com.zeroc.Ice.Identity;
 import com.zeroc.Ice.ObjectAdapter;
@@ -28,6 +28,7 @@ class DefaultPokeSession implements AsyncPokeSession {
 
     /**
      * Constructs a {@code DefaultPokeSession} servant.
+     *
      * @param adapter the object adapter that hosts this servant and the PokeBox objects
      * @param sessionControl the session control proxy
      * @param userIdResolver the user ID resolver

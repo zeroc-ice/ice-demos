@@ -7,6 +7,7 @@ import java.util.List;
 interface PokeStore {
     /**
      * Saves the Pokémon collection of a specific user.
+     *
      * @param userId the user's ID
      * @param pokemon the Pokémon collection to save
      */
@@ -14,6 +15,7 @@ interface PokeStore {
 
     /**
      * Retrieves the Pokémon collection of a specific user.
+     *
      * @param userId the user's ID
      * @return the saved Pokémon collection, or {@code null} if no collection was saved for {@code userId}.
      *     The returned list is immutable. Attempting to modify it will throw an UnsupportedOperationException.
