@@ -1,24 +1,35 @@
 #!/usr/bin/env python
 # Copyright (c) ZeroC, Inc.
 
+import asyncio
+import signal
 import sys
 
 import chatbot
 import Ice
 
 
-def main():
+async def main():
     # Load the contents of the config.server file into a Properties object.
     configFileProperties = Ice.createProperties()
     configFileProperties.load("config.server")
 
+    initData = Ice.InitializationData()
+
     # Create a Properties object from the command line arguments and the config file properties; Ice.* properties and
-    # other reserved properties set in sys.argv augment or override the config file properties.
-    properties = Ice.createProperties(sys.argv, configFileProperties)
+    # other reserved properties set in the sys.argv command-line arguments override the config file properties.
+    initData.properties = Ice.createProperties(sys.argv, configFileProperties)
+
+    # Configure the communicator to use asyncio.
+    loop = asyncio.get_running_loop()
+    initData.eventLoopAdapter = Ice.asyncio.EventLoopAdapter(loop)
 
     # Create an Ice communicator. We'll use this communicator to create an object adapter.
     # The communicator gets its properties from the properties object.
-    with Ice.initialize(initData=Ice.InitializationData(properties=properties)) as communicator:
+    with Ice.initialize(initData=initData) as communicator:
+        # Shutdown the communicator when the user presses Ctrl+C.
+        loop.add_signal_handler(signal.SIGINT, communicator.shutdown)
+
         # Create an object adapter that listens for incoming requests and dispatches them to servants.
         adapter = communicator.createObjectAdapter("GreeterAdapter")
 
@@ -28,14 +39,9 @@ def main():
         # Start dispatching requests.
         adapter.activate()
 
-        # Ice.Trace.Network=1 or greater shows on which interface(s) and port(s) the server is listening.
-
-        try:
-            # Wait until communicator.shutdown() is called, which never occurs in this demo.
-            communicator.waitForShutdown()
-        except KeyboardInterrupt:
-            print("Caught Ctrl+C, exiting...")
+        # Wait until the communicator is shut down. Here, this occurs when the user presses Ctrl+C.
+        await communicator.shutdownCompleted()
 
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
