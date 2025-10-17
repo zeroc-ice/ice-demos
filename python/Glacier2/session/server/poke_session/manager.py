@@ -28,7 +28,7 @@ class SessionManager(Glacier2.SessionManager, UserIdResolver):
     def create(
         self, userId: str, sessionControl: Glacier2.SessionControlPrx | None, current: Ice.Current
     ) -> Glacier2.SessionPrx:
-        # sessionControl is not null because we configured Glacier2.Server.Endpoints in the Glacier2 router
+        # sessionControl is not None because we configured Glacier2.Server.Endpoints in the Glacier2 router
         # configuration file.
         assert sessionControl is not None
 
