@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * {@code SharedPokeBox} is an Ice servant that implements Slice interface 'PokeBox'. The same shared servant
- * implements all PokeBox objects; this is doable because all the state is stored in the {@link IPokeStore}.
+ * implements all PokeBox objects; this is doable because all the state is stored in the {@link PokeStore}.
  */
 class SharedPokeBox implements PokeBox {
     private final PokeStore _pokeStore;
