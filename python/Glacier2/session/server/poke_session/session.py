@@ -28,7 +28,7 @@ class DefaultPokeSession(CatchThemAll.PokeSession):
             The object adapter that hosts this servant and the PokeBox objects.
         sessionControl : Glacier2.SessionControlPrx
             The session control proxy.
-        userIdResolver : IUserIdResolver
+        userIdResolver : UserIdResolver
             The user ID resolver.
         """
         self._adapter = adapter

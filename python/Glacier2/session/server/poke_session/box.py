@@ -5,14 +5,14 @@ from typing import Sequence, override
 import CatchThemAll
 import Ice
 
-from .user_id_resolver import UserIdResolver
 from .store import PokeStore
+from .user_id_resolver import UserIdResolver
 
 
 class SharedPokeBox(CatchThemAll.PokeBox):
     """
     SharedPokeBox is an Ice servant that implements Slice interface PokeBox. The same shared servant
-    implements all PokeBox objects; this is doable because all the state is stored in the IPokeStore.
+    implements all PokeBox objects; this is doable because all the state is stored in the PokeStore.
     """
 
     def __init__(self, pokeStore: PokeStore, userIdResolver: UserIdResolver):
@@ -43,7 +43,7 @@ class SharedPokeBox(CatchThemAll.PokeBox):
         """
         Add new Pokémon to the Pokémon collection for the user associated with the current session.
         """
-        userId = self.getUserId(current)
+        userId = self.getUserId(current.id.name)
 
         # Retrieve the existing collection for the user and add the new Pokémon.
         savedPokemon = list(self._pokeStore.retrieveCollection(userId) or [])
@@ -57,9 +57,8 @@ class SharedPokeBox(CatchThemAll.PokeBox):
     def releaseAll(self, current: Ice.Current) -> None:
         self._pokeStore.saveCollection(self.getUserId(current), [])
 
-    @override
-    def getUserId(self, current: Ice.Current) -> str:
-        userId = self._userIdResolver.getUserId(current.id.name)
+    def getUserId(self, token: str) -> str:
+        userId = self._userIdResolver.getUserId(token)
         if userId is None:
             raise Ice.DispatchException(Ice.ReplyStatus.Unauthorized.value, "Invalid session token")
         return userId
