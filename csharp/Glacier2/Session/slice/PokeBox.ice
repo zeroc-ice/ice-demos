@@ -1,6 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
-// Include the Glacier/Session.ice file included in the Glacier2 NuGet package.
+// Include the Glacier2/Session.ice file included in the Glacier2 NuGet package.
 #include <Glacier2/Session.ice>
 
 module CatchThemAll
