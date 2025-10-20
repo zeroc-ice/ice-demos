@@ -1,10 +1,12 @@
 # Copyright (c) ZeroC, Inc.
 
+from typing import override
+
 import Glacier2
 import Ice
 
-from .identity import UserIdResolver
 from .session import DefaultPokeSession
+from .user_id_resolver import UserIdResolver
 
 
 class SessionManager(Glacier2.SessionManager, UserIdResolver):
@@ -25,6 +27,7 @@ class SessionManager(Glacier2.SessionManager, UserIdResolver):
         self._sessionAdapter = adapter
         self._tokenToUserId = {}
 
+    @override
     def create(
         self, userId: str, sessionControl: Glacier2.SessionControlPrx | None, current: Ice.Current
     ) -> Glacier2.SessionPrx:
@@ -42,9 +45,11 @@ class SessionManager(Glacier2.SessionManager, UserIdResolver):
         print(f"Created session #{sessionToken} for user '{userId}'")
         return Glacier2.SessionPrx.uncheckedCast(proxy)
 
+    @override
     def getUserId(self, token: str):
         return self._tokenToUserId.get(token, None)
 
+    @override
     def removeToken(self, token: str):
         if token in self._tokenToUserId:
             del self._tokenToUserId[token]

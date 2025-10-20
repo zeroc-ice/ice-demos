@@ -1,11 +1,11 @@
 # Copyright (c) ZeroC, Inc.
 
-from typing import Sequence
+from typing import Sequence, override
 
 import CatchThemAll
 import Ice
 
-from .identity import UserIdResolver
+from .user_id_resolver import UserIdResolver
 from .store import PokeStore
 
 
@@ -29,6 +29,7 @@ class SharedPokeBox(CatchThemAll.PokeBox):
         self._pokeStore = pokeStore
         self._userIdResolver = userIdResolver
 
+    @override
     def getInventory(self, current: Ice.Current) -> Sequence[str]:
         """
         Retrieve the Pokémon collection for the user associated with the current session.
@@ -37,6 +38,7 @@ class SharedPokeBox(CatchThemAll.PokeBox):
         print(f"User '{self.getUserId(current)}' retrieved their collection: {collection}")
         return collection if collection is not None else []
 
+    @override
     def caught(self, pokemon: list[str], current: Ice.Current) -> None:
         """
         Add new Pokémon to the Pokémon collection for the user associated with the current session.
@@ -51,9 +53,11 @@ class SharedPokeBox(CatchThemAll.PokeBox):
         savedPokemon.sort()
         self._pokeStore.saveCollection(userId, savedPokemon)
 
+    @override
     def releaseAll(self, current: Ice.Current) -> None:
         self._pokeStore.saveCollection(self.getUserId(current), [])
 
+    @override
     def getUserId(self, current: Ice.Current) -> str:
         userId = self._userIdResolver.getUserId(current.id.name)
         if userId is None:

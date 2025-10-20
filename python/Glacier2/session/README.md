@@ -113,7 +113,6 @@ slice2py ../slice/PokeBox.ice
 python main.py ash
 python main.py ash
 python main.py ash
-python main.py ash
 ```
 
 If you don't specify a name, the client uses the current username.

@@ -1,6 +1,6 @@
 # Copyright (c) ZeroC, Inc.
 
-from typing import Protocol, Sequence, runtime_checkable
+from typing import Protocol, Sequence, override, runtime_checkable
 
 
 @runtime_checkable
@@ -39,13 +39,15 @@ class PokeStore(Protocol):
         ...
 
 
-class InMemoryPokeStore:
+class InMemoryPokeStore(PokeStore):
     def __init__(self):
         self._store = {}
 
+    @override
     def retrieveCollection(self, user_id):
         return self._store.get(user_id, None)
 
+    @override
     def saveCollection(self, user_id, pokemon):
         if len(pokemon) == 0:
             if user_id in self._store:
