@@ -34,7 +34,7 @@ class SharedPokeBox(CatchThemAll.PokeBox):
         """
         Retrieve the Pokémon collection for the user associated with the current session.
         """
-        collection = self._pokeStore.retrieveCollection(self.getUserId(current))
+        collection = self._pokeStore.retrieveCollection(self.getUserId(current.id.name))
         print(f"User '{self.getUserId(current.id.name)}' retrieved their collection: {collection}")
         return collection if collection is not None else []
 
