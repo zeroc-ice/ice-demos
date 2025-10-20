@@ -9,6 +9,7 @@ import java.util.Map;
 class InMemoryPokeStore implements PokeStore {
     private final Map<String, List<String>> _store = new HashMap<>();
 
+    @Override
     public void saveCollection(String userId, List<String> pokemon) {
         if (pokemon.isEmpty()) {
             _store.remove(userId);
@@ -17,6 +18,7 @@ class InMemoryPokeStore implements PokeStore {
         }
     }
 
+    @Override
     public List<String> retrieveCollection(String userId) {
         return _store.getOrDefault(userId, null);
     }
