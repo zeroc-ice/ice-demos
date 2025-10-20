@@ -55,7 +55,7 @@ class SharedPokeBox(CatchThemAll.PokeBox):
 
     @override
     def releaseAll(self, current: Ice.Current) -> None:
-        self._pokeStore.saveCollection(self.getUserId(current), [])
+        self._pokeStore.saveCollection(self.getUserId(current.id.name), [])
 
     def getUserId(self, token: str) -> str:
         userId = self._userIdResolver.getUserId(token)
