@@ -16,7 +16,7 @@ main(int argc, char* argv[])
     // Register the IceDiscovery plug-in. The plug-in will be loaded during communicator initialization and will
     // install a default locator on the communicator.
     Ice::InitializationData initData;
-    initData.properties = Ice::createProperties(argc, argv);
+    initData.properties = make_shared<Ice::Properties>(argc, argv);
     initData.pluginFactories = {IceDiscovery::discoveryPluginFactory()};
 
     // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.

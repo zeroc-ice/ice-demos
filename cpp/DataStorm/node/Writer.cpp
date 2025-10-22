@@ -19,16 +19,15 @@ main(int argc, char* argv[])
         // beginning of the program, before creating a DataStorm node or starting any thread.
         Ice::CtrlCHandler ctrlCHandler;
 
-        // Default properties.  Communicators used by DataStorm must have a property set that can use the "DataStorm"
-        // opt-in prefix.
-        auto defaultProperties = make_shared<Ice::Properties>(vector<string>{"DataStorm"});
+        // Default properties.
+        auto defaultProperties = make_shared<Ice::Properties>();
         // Connect to the DataStorm node running on localhost port 10000
         defaultProperties->setProperty("DataStorm.Node.ConnectTo", "tcp -h localhost -p 10000");
         // Disable the multicast endpoint
         defaultProperties->setProperty("DataStorm.Node.Multicast.Enabled", "0");
 
         Ice::InitializationData initData;
-        initData.properties = Ice::createProperties(argc, argv, defaultProperties);
+        initData.properties = make_shared<Ice::Properties>(argc, argv, defaultProperties);
 
         // Create an Ice communicator. We'll use this communicator to instantiate the DataStorm node.
         Ice::CommunicatorPtr communicator = Ice::initialize(initData);
