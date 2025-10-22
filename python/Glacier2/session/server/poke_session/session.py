@@ -36,14 +36,14 @@ class DefaultPokeSession(CatchThemAll.PokeSession):
         self._userIdResolver = userIdResolver
 
     @override
-    def getPokeBox(self, current: Ice.Current) -> CatchThemAll.PokeBoxPrx | None:
+    def getPokeBox(self, current: Ice.Current) -> CatchThemAll.PokeBoxPrx:
         # The session token is the name component of the session identity; we use it for the identity of the PokeBox
         # object as well.
         proxy = self._adapter.createProxy(Ice.Identity(name=current.id.name, category="PokeBox"))
         return CatchThemAll.PokeBoxPrx.uncheckedCast(proxy)
 
     @override
-    async def destroy(self, current: Ice.Current) -> Awaitable[None]:
+    async def destroy(self, current: Ice.Current) -> None:
         print(f"Destroying session #{current.id.name}")
 
         # Remove the token from the user ID resolver, since the token is no longer valid.
