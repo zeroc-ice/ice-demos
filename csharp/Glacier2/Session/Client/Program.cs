@@ -70,7 +70,7 @@ if (inventory.Length > 10)
 }
 
 // Exiting, closing the connection, or calling destroyAsync on the session terminates both PokeSession and the
-// internal session state maintained by the Glacier router.
+// internal session state maintained by the Glacier2 router.
 Console.WriteLine("Destroying the session...");
 await pokeSession.destroyAsync();
 
