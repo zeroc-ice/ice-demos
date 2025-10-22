@@ -20,7 +20,7 @@ class DefaultPokeSession implements AsyncPokeSession {
     /**
      * A proxy to the SessionControl object hosted by the Glacier2 router.
      * This proxy allows us to control the Glacier2 session, in particular to destroy it.
-     * In this demo, that's the only per-session state maintained by {@code DefaultPokeSession}.
+     * In this demo, that's the only per-session state maintained by this class.
      */
     private final SessionControlPrx _sessionControl;
 

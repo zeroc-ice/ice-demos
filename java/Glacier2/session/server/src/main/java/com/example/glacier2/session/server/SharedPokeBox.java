@@ -8,7 +8,6 @@ import com.zeroc.Ice.DispatchException;
 import com.zeroc.Ice.ReplyStatus;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -33,17 +32,16 @@ class SharedPokeBox implements PokeBox {
 
     // Retrieve the Pokémon collection for the user associated with the current session.
     @Override
-    public String[] getInventory(Current current) {
-        List<String> collection = _pokeStore.retrieveCollection(getUserId(current));
-        return collection != null ? collection.toArray(new String[0]) : new String[0];
+    public List<String> getInventory(Current current) {
+        return _pokeStore.retrieveCollection(getUserId(current));
     }
 
     // Add new Pokémon to the Pokémon collection for the user associated with the current session.
     @Override
-    public void caught(String[] pokemon, Current current) {
+    public void caught(List<String> pokemon, Current current) {
         String userId = getUserId(current);
 
-        List<String> newPokemon = new ArrayList<>(Arrays.asList(pokemon));
+        List<String> newPokemon = new ArrayList<>(pokemon);
         List<String> savedPokemon = _pokeStore.retrieveCollection(userId);
         if (savedPokemon != null) {
             newPokemon.addAll(savedPokemon);

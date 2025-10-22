@@ -14,8 +14,10 @@ import com.zeroc.Ice.ConnectionLostException;
 import com.zeroc.Ice.DispatchException;
 import com.zeroc.Ice.Util;
 
+import java.util.List;
+
 class Client {
-    /** All the Pokemon we know about. */
+    /** All the Pokémon we know about. */
     static final String[] ALL_POKEMON = {
         "Bulbasaur", "Ivysaur", "Venusaur", "Charmander", "Charmeleon", "Charizard", "Squirtle", "Wartortle",
         "Blastoise", "Caterpie", "Metapod", "Butterfree", "Weedle", "Kakuna", "Beedrill", "Pidgey", "Pidgeotto",
@@ -60,27 +62,27 @@ class Client {
             PokeBoxPrx pokeBox = pokeSession.getPokeBox();
             assert pokeBox != null;
 
-            int currentCount = pokeBox.getInventory().length;
-            System.out.println(userId + "'s PokeBox contains " + currentCount + " Pokémon.");
+            int currentCount = pokeBox.getInventory().size();
+            System.out.println(userId + "'s PokeBox contains " + currentCount + " Pokemon.");
 
             // Catch a few Pokémon.
             var randomSource = new java.util.Random();
             int addCount = randomSource.nextInt(6) + 1;
-            System.out.println("Catching " + addCount + " Pokémon... ");
-            String[] newPokemon = randomSource.ints(addCount, 0, ALL_POKEMON.length)
+            System.out.println("Catching " + addCount + " Pokemon... ");
+            List<String> newPokemon = randomSource.ints(addCount, 0, ALL_POKEMON.length)
                 .mapToObj(i -> ALL_POKEMON[i])
-                .toArray(String[]::new);
+                .toList();
             pokeBox.caught(newPokemon);
 
             // Display the contents of the PokeBox.
-            String[] inventory = pokeBox.getInventory();
-            System.out.println(userId + "'s PokeBox now holds " + inventory.length + " Pokémon:");
+            List<String> inventory = pokeBox.getInventory();
+            System.out.println(userId + "'s PokeBox now holds " + inventory.size() + " Pokemon:");
             for (String pokemon : inventory) {
                 System.out.println("\t" + pokemon);
             }
 
-            if (inventory.length > 10) {
-                System.out.println("Oh no! All the Pokémon escaped!");
+            if (inventory.size() > 10) {
+                System.out.println("Oh no! All the Pokemon escaped!");
                 pokeBox.releaseAll();
             }
 

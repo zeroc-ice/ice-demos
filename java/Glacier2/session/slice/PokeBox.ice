@@ -7,7 +7,7 @@
 module CatchThemAll
 {
     /// Represents a list of Pokémon.
-    sequence<string> PokemonList;
+    ["java:type:java.util.ArrayList<String>"] sequence<string> PokemonList;
 
     /// Represents the Pokémon collected by a user.
     interface PokeBox
