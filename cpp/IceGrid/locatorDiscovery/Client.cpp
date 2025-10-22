@@ -16,7 +16,7 @@ main(int argc, char* argv[])
     // This plug-in will discover the locator (IceGrid registry in this demo) to use. As a result, we don't need to
     // configure the default locator on this communicator.
     Ice::InitializationData initData;
-    initData.properties = Ice::createProperties(argc, argv);
+    initData.properties = make_shared<Ice::Properties>(argc, argv);
     initData.pluginFactories = {IceLocatorDiscovery::locatorDiscoveryPluginFactory()};
 
     // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.

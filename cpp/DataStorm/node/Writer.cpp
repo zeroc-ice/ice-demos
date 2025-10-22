@@ -27,7 +27,7 @@ main(int argc, char* argv[])
         defaultProperties->setProperty("DataStorm.Node.Multicast.Enabled", "0");
 
         Ice::InitializationData initData;
-        initData.properties = Ice::createProperties(argc, argv, defaultProperties);
+        initData.properties = make_shared<Ice::Properties>(argc, argv, defaultProperties);
 
         // Create an Ice communicator. We'll use this communicator to instantiate the DataStorm node.
         Ice::CommunicatorPtr communicator = Ice::initialize(initData);

@@ -12,7 +12,7 @@ Client::run(int argc, char* argv[], Ice::SSL::ClientAuthenticationOptions client
 {
     // Create the initialization data using the given command-line arguments and the client authentication options.
     Ice::InitializationData initData;
-    initData.properties = Ice::createProperties(argc, argv);
+    initData.properties = make_shared<Ice::Properties>(argc, argv);
     initData.clientAuthenticationOptions = std::move(clientAuthenticationOptions);
 
     // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
