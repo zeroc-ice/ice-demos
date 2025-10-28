@@ -15,7 +15,7 @@ async def main():
     initData = Ice.InitializationData()
     initData.properties = Ice.Properties(sys.argv)
 
-    # Set the Ice.ImplicitContext property to "Shared" before initialing the communicator.
+    # Set the Ice.ImplicitContext property to "Shared" before initializing the communicator.
     # This is only necessary for the implicit context API (see below).
     initData.properties.setProperty("Ice.ImplicitContext", "Shared")
 
