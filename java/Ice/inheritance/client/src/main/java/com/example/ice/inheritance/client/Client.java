@@ -7,12 +7,10 @@ import com.example.filesystem.FilePrx;
 import com.example.filesystem.NodePrx;
 
 import com.zeroc.Ice.Communicator;
-import com.zeroc.Ice.Util;
-
 class Client {
     public static void main(String[] args) {
         // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
-        try (Communicator communicator = Util.initialize(args)) {
+        try (Communicator communicator = new Communicator(args)) {
 
             // Create a proxy for the root directory.
             DirectoryPrx rootDir = DirectoryPrx.createProxy(communicator, "RootDir:tcp -h localhost -p 4061");

@@ -8,12 +8,11 @@ import com.example.filesystem.FilePrx;
 import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.Identity;
 import com.zeroc.Ice.ObjectAdapter;
-import com.zeroc.Ice.Util;
 
 class Server {
     public static void main(String[] args) {
         // Create an Ice communicator. We'll use this communicator to create an object adapter.
-        try (Communicator communicator = Util.initialize(args)) {
+        try (Communicator communicator = new Communicator(args)) {
 
             // Register a shutdown hook that calls communicator.shutdown()
             // when the user shuts down the server with Ctrl+C or similar.

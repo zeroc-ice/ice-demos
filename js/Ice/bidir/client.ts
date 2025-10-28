@@ -8,7 +8,7 @@ import process from "node:process";
 
 // Create an Ice communicator. We'll use this communicator to create proxies, manage outgoing connections, and create
 // an object adapter.
-await using communicator = Ice.initialize(process.argv);
+await using communicator = new Ice.Communicator(process.argv);
 
 // Create an object adapter with no name and no configuration. This object adapter does not need to be activated.
 const adapter = await communicator.createObjectAdapter("");

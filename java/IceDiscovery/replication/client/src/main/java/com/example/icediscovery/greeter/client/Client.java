@@ -6,7 +6,6 @@ import com.example.visitorcenter.GreeterPrx;
 import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.InitializationData;
 import com.zeroc.Ice.Properties;
-import com.zeroc.Ice.Util;
 import com.zeroc.IceDiscovery.PluginFactory;
 
 import java.util.Collections;
@@ -22,7 +21,7 @@ class Client {
         initData.properties = new Properties(args);
 
         // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
-        try (Communicator communicator = Util.initialize(initData)) {
+        try (Communicator communicator = new Communicator(initData)) {
             // Create a proxy to the Greeter object hosted by the server. "greeter" is a stringified proxy with no
             // addressing information, also known as a well-known proxy. It's resolved by the default locator installed
             // by the IceDiscovery plug-in.

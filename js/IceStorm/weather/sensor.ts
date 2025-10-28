@@ -5,7 +5,7 @@ import { ClearSky } from "./WeatherStation.js";
 import process from "node:process";
 
 // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
-await using communicator = Ice.initialize(process.argv);
+await using communicator = new Ice.Communicator(process.argv);
 
 // Create a proxy to the IceStorm topic manager.
 const topicManager = new IceStorm.TopicManagerPrx(communicator, "ClearSky/TopicManager:tcp -p 4061 -h localhost");

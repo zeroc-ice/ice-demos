@@ -13,7 +13,7 @@ import VisitorCenter
 
 async def main():
     initData = Ice.InitializationData()
-    initData.properties = Ice.createProperties(sys.argv)
+    initData.properties = Ice.Properties(sys.argv)
 
     # Configure the communicator to load the IceDiscovery plug-in during initialization. This plug-in installs a default
     # locator on the communicator.
@@ -23,7 +23,7 @@ async def main():
     initData.eventLoopAdapter = Ice.asyncio.EventLoopAdapter(asyncio.get_running_loop())
 
     # Create an Ice communicator. We'll use this communicator to create proxies, and manage outgoing connections.
-    async with Ice.initialize(initData=initData) as communicator:
+    async with Ice.Communicator(initData=initData) as communicator:
         # Create a proxy to the Greeter object hosted by the server. "greeter" is a stringified proxy with no
         # addressing information, also known as a well-known proxy. It's resolved by the default locator installed by
         # the IceDiscovery plug-in.

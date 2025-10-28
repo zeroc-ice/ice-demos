@@ -23,7 +23,7 @@ class App : Application() {
      */
     override fun onCreate() {
         super.onCreate()
-        communicator = Util.initialize()
+        communicator = new Ice.Communicator()
     }
 
     /**

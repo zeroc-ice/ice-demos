@@ -78,7 +78,7 @@ userId = sys.argv[1] if len(sys.argv) > 1 else getpass.getuser()
 async def main():
     # Create an Ice communicator. We'll use this communicator to create proxies, and manage outgoing connections. We
     # enable asyncio support by passing the current event loop to initialize.
-    async with Ice.initialize(sys.argv, eventLoop=asyncio.get_running_loop()) as communicator:
+    async with Ice.Communicator(sys.argv, eventLoop=asyncio.get_running_loop()) as communicator:
         # Create a proxy to the Glacier2 router. The addressing information (transport, host, and port number) is
         # derived from the value of Glacier2.Client.Endpoints in the glacier2 router configuration file.
         router = Glacier2.RouterPrx(communicator, "Glacier2/router:tcp -h localhost -p 4063")

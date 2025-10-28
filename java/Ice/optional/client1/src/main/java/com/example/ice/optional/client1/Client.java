@@ -5,7 +5,6 @@ package com.example.ice.optional.client1;
 import com.example.clearsky.AtmosphericConditions;
 import com.example.clearsky.WeatherStationPrx;
 import com.zeroc.Ice.Communicator;
-import com.zeroc.Ice.Util;
 
 import java.security.SecureRandom;
 
@@ -14,7 +13,7 @@ class Client {
 
     public static void main(String[] args) {
         // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
-        try (Communicator communicator = Util.initialize(args)) {
+        try (Communicator communicator = new Communicator(args)) {
             // Create a proxy to the weather station.
             var weatherStation = WeatherStationPrx.createProxy(communicator, "weatherStation:tcp -h localhost -p 4061");
 

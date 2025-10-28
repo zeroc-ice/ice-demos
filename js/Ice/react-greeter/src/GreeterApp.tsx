@@ -37,7 +37,7 @@ function GreeterApp(): JSX.Element {
     useEffect(() => {
         try {
             // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
-            communicatorRef.current = Ice.initialize();
+            communicatorRef.current = new Ice.Communicator();
 
             // Create a proxy to the Greeter object. If you run the server on a different computer, replace localhost
             // with the server's hostname or IP address

@@ -7,7 +7,6 @@ import com.zeroc.Ice.Identity;
 import com.zeroc.Ice.InitializationData;
 import com.zeroc.Ice.ObjectAdapter;
 import com.zeroc.Ice.Properties;
-import com.zeroc.Ice.Util;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -19,7 +18,7 @@ class Server {
         initData.properties.setProperty("Ice.ThreadPool.Server.SizeMax", "4");
 
         // Create an Ice communicator. We'll use this communicator to create an object adapter.
-        try (Communicator communicator = Util.initialize(initData)) {
+        try (Communicator communicator = new Communicator(args)) {
             // Create an object adapter that listens for incoming requests and dispatches them to servants.
             ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints("GreeterAdapter", "tcp -p 4061");
 

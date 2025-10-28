@@ -6,13 +6,12 @@ import com.example.visitorcenter.GreeterPrx;
 import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.LocatorPrx;
 import com.zeroc.Ice.ObjectPrx;
-import com.zeroc.Ice.Util;
 import com.zeroc.IceGrid.QueryPrx;
 
 class Client {
     public static void main(String[] args) {
         // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
-        try (Communicator communicator = Util.initialize(args)) {
+        try (Communicator communicator = new Communicator(args)) {
 
             // Set the default locator of the new communicator. It's the address of the Locator hosted by our IceGrid
             // registry. You can also set this proxy with the Ice.Default.Locator property.

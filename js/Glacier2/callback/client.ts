@@ -11,7 +11,7 @@ const name = process.env.USER || process.env.USERNAME || "masked user";
 
 // Create an Ice communicator. We'll use this communicator to create proxies, manage outgoing connections, and create
 // an object adapter.
-await using communicator = Ice.initialize(process.argv);
+await using communicator = new Ice.Communicator(process.argv);
 
 // Create a proxy to the Glacier2 router. The addressing information (transport, host and port number) is derived from
 // the value of Glacier2.Client.Endpoints in the glacier2 router configuration file.

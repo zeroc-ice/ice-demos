@@ -5,7 +5,7 @@ using System.Diagnostics;
 using VisitorCenter;
 
 // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
-await using Ice.Communicator communicator = Ice.Util.initialize(ref args);
+await using var communicator = new Ice.Communicator(ref args);
 
 // Create a proxy to the Glacier2 router. The addressing information (transport, host and port number) is derived from
 // the value of Glacier2.Client.Endpoints in the glacier2 router configuration file.

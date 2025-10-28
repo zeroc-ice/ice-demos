@@ -1,7 +1,7 @@
 // Copyright (c) ZeroC, Inc.
 
 // Create an Ice communicator. We'll use this communicator to create an object adapter.
-await using Ice.Communicator communicator = Ice.Util.initialize(ref args);
+await using var communicator = new Ice.Communicator(ref args);
 
 // Create an object adapter that listens for incoming requests and dispatches them to servants.
 Ice.ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints("StationAdapter", "tcp -p 4061");

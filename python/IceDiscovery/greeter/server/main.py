@@ -18,7 +18,7 @@ async def main():
 
     # Configure the communicator to load the IceDiscovery plug-in during initialization. This plug-in installs a default
     # locator on the communicator.
-    initData.properties = Ice.createProperties(sys.argv)
+    initData.properties = Ice.Properties(sys.argv)
     initData.properties.setProperty("Ice.Plugin.IceDiscovery", "1")
 
     # Configure the object adapter GreeterAdapter. It must be an indirect object adapter (i.e., with an AdapterId
@@ -30,7 +30,7 @@ async def main():
     initData.properties.setProperty("GreeterAdapter.Endpoints", "tcp")
 
     # Create an Ice communicator. We'll use this communicator to create an object adapter.
-    with Ice.initialize(initData=initData) as communicator:
+    with Ice.Communicator(initData=initData) as communicator:
         # Shutdown the communicator when the user presses Ctrl+C.
         loop.add_signal_handler(signal.SIGINT, communicator.shutdown)
 
