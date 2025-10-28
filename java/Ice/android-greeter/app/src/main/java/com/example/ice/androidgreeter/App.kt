@@ -4,7 +4,6 @@ package com.example.ice.androidgreeter
 
 import android.app.Application
 import com.zeroc.Ice.Communicator
-import com.zeroc.Ice.Util
 
 /**
  * A custom [Application] class that initializes and owns the Ice [Communicator].
@@ -23,7 +22,7 @@ class App : Application() {
      */
     override fun onCreate() {
         super.onCreate()
-        communicator = Ice.Communicator()
+        communicator = Communicator()
     }
 
     /**
