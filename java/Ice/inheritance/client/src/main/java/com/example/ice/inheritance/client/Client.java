@@ -7,6 +7,7 @@ import com.example.filesystem.FilePrx;
 import com.example.filesystem.NodePrx;
 
 import com.zeroc.Ice.Communicator;
+
 class Client {
     public static void main(String[] args) {
         // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
