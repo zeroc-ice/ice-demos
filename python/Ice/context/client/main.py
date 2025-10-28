@@ -13,9 +13,9 @@ from VisitorCenter import GreeterPrx
 
 async def main():
     initData = Ice.InitializationData()
-    initData.properties = Ice.createProperties(sys.argv)
+    initData.properties = Ice.Properties(sys.argv)
 
-    # Set the Ice.ImplicitContext property to "Shared" before calling Ice.initialize.
+    # Set the Ice.ImplicitContext property to "Shared" before initialing the communicator.
     # This is only necessary for the implicit context API (see below).
     initData.properties.setProperty("Ice.ImplicitContext", "Shared")
 

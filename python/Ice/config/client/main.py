@@ -13,12 +13,12 @@ import VisitorCenter
 
 async def main():
     # Load the contents of the config.client file into a Properties object.
-    configFileProperties = Ice.createProperties()
+    configFileProperties = Ice.Properties()
     configFileProperties.load("config.client")
 
     # Create a Properties object from the command line arguments and the config file properties; Ice.* properties and
     # other reserved properties set in the sys.argv command-line arguments override the config file properties.
-    properties = Ice.createProperties(sys.argv, configFileProperties)
+    properties = Ice.Properties(sys.argv, configFileProperties)
 
     # Configure the communicator to use these properties and asyncio.
     initData = Ice.InitializationData(

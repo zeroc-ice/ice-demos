@@ -14,7 +14,8 @@ from mock_alarm_clock import MockAlarmClock
 async def main():
     loop = asyncio.get_running_loop()
     # Create an Ice communicator. We'll use this communicator to create proxies, manage outgoing connections, and
-    # create an object adapter. We enable asyncio support by passing the current event loop to initialize.
+    # create an object adapter. We enable asyncio support by passing the current event loop to the communicator
+    # constructor.
     async with Ice.Communicator(sys.argv, eventLoop=loop) as communicator:
         # Create an object adapter that listens for incoming requests and dispatches them to servants.
         # Since we don't specify a port, the OS will choose an ephemeral port. This allows multiple client applications

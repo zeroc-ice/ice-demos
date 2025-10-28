@@ -14,7 +14,7 @@ import VisitorCenter
 
 async def main():
     # Create an Ice communicator. We'll use this communicator to create proxies, and manage outgoing connections. We
-    # enable asyncio support by passing the current event loop to initialize.
+    # enable asyncio support by passing the current event loop to the communicator constructor.
     async with Ice.Communicator(sys.argv, eventLoop=asyncio.get_running_loop()) as communicator:
         # Create a proxy to the Glacier2 router. The addressing information (transport, host and port number) is
         # derived from the value of Glacier2.Client.Endpoints in the glacier2 router configuration file.
