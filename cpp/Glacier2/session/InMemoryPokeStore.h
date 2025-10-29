@@ -7,7 +7,6 @@
 
 namespace Server
 {
-
     /// An in-memory implementation of IPokeStore.
     /// @remark This mock implementation is not thread-safe. A real implementation should support concurrent calls.
     class InMemoryPokeStore : public IPokeStore
@@ -19,5 +18,4 @@ namespace Server
     private:
         std::map<std::string, CatchThemAll::PokemonList> _store;
     };
-
 }

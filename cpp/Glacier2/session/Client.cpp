@@ -13,15 +13,15 @@ using namespace std;
 using namespace CatchThemAll;
 
 // All the Pokemon we know about.
-std::array allPokemon = {"Bulbasaur", "Ivysaur",   "Venusaur",  "Charmander", "Charmeleon", "Charizard", "Squirtle",
-                         "Wartortle", "Blastoise", "Caterpie",  "Metapod",    "Butterfree", "Weedle",    "Kakuna",
-                         "Beedrill",  "Pidgey",    "Pidgeotto", "Pidgeot",    "Rattata",    "Raticate",  "Spearow",
-                         "Fearow",    "Ekans",     "Arbok",     "Pikachu",    "Raichu",     "Sandshrew", "Sandslash",
-                         "Nidoran♀",  "Nidorina",  "Nidoqueen", "Nidoran♂",   "Nidorino",   "Nidoking",  "Clefairy",
-                         "Clefable",  "Vulpix",    "Ninetales", "Jigglypuff", "Wigglytuff", "Zubat",     "Golbat",
-                         "Oddish",    "Gloom",     "Vileplume", "Paras",      "Parasect",   "Venonat",   "Venomoth",
-                         "Diglett",   "Dugtrio",   "Meowth",    "Persian",    "Psyduck",    "Golduck",   "Mankey",
-                         "Primeape"};
+std::array<const char*, 57> allPokemon = {
+    "Bulbasaur", "Ivysaur",  "Venusaur",  "Charmander", "Charmeleon", "Charizard", "Squirtle",   "Wartortle",
+    "Blastoise", "Caterpie", "Metapod",   "Butterfree", "Weedle",     "Kakuna",    "Beedrill",   "Pidgey",
+    "Pidgeotto", "Pidgeot",  "Rattata",   "Raticate",   "Spearow",    "Fearow",    "Ekans",      "Arbok",
+    "Pikachu",   "Raichu",   "Sandshrew", "Sandslash",  "Nidoran♀",   "Nidorina",  "Nidoqueen",  "Nidoran♂",
+    "Nidorino",  "Nidoking", "Clefairy",  "Clefable",   "Vulpix",     "Ninetales", "Jigglypuff", "Wigglytuff",
+    "Zubat",     "Golbat",   "Oddish",    "Gloom",      "Vileplume",  "Paras",     "Parasect",   "Venonat",
+    "Venomoth",  "Diglett",  "Dugtrio",   "Meowth",     "Persian",    "Psyduck",   "Golduck",    "Mankey",
+    "Primeape"};
 
 int
 main(int argc, char* argv[])
@@ -55,7 +55,7 @@ main(int argc, char* argv[])
     optional<PokeBoxPrx> pokeBox = pokeSession->getPokeBox();
     assert(pokeBox);
 
-    int currentCount = pokeBox->getInventory().size();
+    size_t currentCount = pokeBox->getInventory().size();
     cout << userId << "'s PokeBox contains " << currentCount << " Pokémon." << endl;
 
     // Catch a few Pokémon.

@@ -6,7 +6,6 @@
 
 namespace Server
 {
-
     /// SessionManager is an Ice servant that implements Slice interface Glacier2::SessionManager. It creates sessions
     /// and resolves user IDs from session tokens.
     /// @remark This demo implementation is not thread-safe. A real implementation should support concurrent calls.
@@ -32,5 +31,4 @@ namespace Server
         Ice::ObjectAdapterPtr _sessionAdapter;
         std::map<std::string, std::string> _tokenToUserId;
     };
-
 }

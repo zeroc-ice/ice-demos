@@ -9,7 +9,6 @@
 
 namespace Server
 {
-
     /// SharedPokeBox is an Ice servant that implements Slice interface PokeBox. The same shared servant
     /// implements all PokeBox objects; this is doable because all the state is stored in the IPokeStore.
     class SharedPokeBox : public CatchThemAll::PokeBox
@@ -34,8 +33,7 @@ namespace Server
         /// @param current Information about the incoming request being dispatched.
         std::string getUserId(const Ice::Current& current) const;
 
-        const IUserIdResolverPtr _userIdResolver;
         const IPokeStorePtr _pokeStore;
+        const IUserIdResolverPtr _userIdResolver;
     };
-
 }
