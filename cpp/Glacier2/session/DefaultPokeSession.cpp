@@ -38,6 +38,5 @@ DefaultPokeSession::getPokeBox(const Ice::Current& current)
 {
     // The session token is the name component of the session identity; we use it for the identity of the PokeBox
     // object as well.
-    optional<Ice::ObjectPrx> proxy = _adapter->createProxy(Ice::Identity{current.id.name, "PokeBox"});
-    return Ice::uncheckedCast<CatchThemAll::PokeBoxPrx>(proxy);
+    return _adapter->createProxy<CatchThemAll::PokeBoxPrx>(Ice::Identity{current.id.name, "PokeBox"});
 }

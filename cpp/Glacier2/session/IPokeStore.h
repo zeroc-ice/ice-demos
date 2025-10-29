@@ -10,7 +10,6 @@
 
 namespace Server
 {
-
     /// Represents a Pokémon storage system.
     class IPokeStore
     {

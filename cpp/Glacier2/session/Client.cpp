@@ -66,6 +66,7 @@ main(int argc, char* argv[])
     int addCount = addDist(gen);
     cout << "Catching " << addCount << " Pokémon... " << endl;
     vector<string> newPokemon;
+    newPokemon.reserve(addCount);
     for (int i = 0; i < addCount; ++i)
     {
         newPokemon.push_back(allPokemon[pokeDist(gen)]);
@@ -118,7 +119,7 @@ main(int argc, char* argv[])
     {
         if (dispatchException.replyStatus() == Ice::ReplyStatus::Unauthorized)
         {
-            // See code in SharedPokeBox.GetUserId.
+            // See code in SharedPokeBox::getUserId.
             cout << "The PokeBox proxy remains unusable, as expected." << endl;
         }
         else

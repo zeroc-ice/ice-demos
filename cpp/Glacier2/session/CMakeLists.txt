@@ -17,7 +17,6 @@ if(WIN32)
   )
 endif()
 
-
 add_executable(
   server
   DefaultPokeSession.cpp

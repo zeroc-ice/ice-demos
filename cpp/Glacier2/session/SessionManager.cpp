@@ -22,14 +22,14 @@ SessionManager::create(
 
     // Create a new session servant and add it to the adapter with a UUID identity. The name component of the
     // identity is the session token.
-    Ice::ObjectPrx proxy = _sessionAdapter->addWithUUID(
+    auto proxy = _sessionAdapter->addWithUUID<Glacier2::SessionPrx>(
         make_shared<DefaultPokeSession>(_sessionAdapter, *sessionControl, shared_from_this()));
 
     string sessionToken = proxy.ice_getIdentity().name;
     _tokenToUserId[sessionToken] = userId;
 
     cout << "Created session #" << sessionToken << " for user '" << userId << "'" << endl;
-    return Ice::uncheckedCast<Glacier2::SessionPrx>(proxy);
+    return proxy;
 }
 
 std::optional<std::string>

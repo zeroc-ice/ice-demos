@@ -15,25 +15,23 @@ namespace Server
     class SharedPokeBox : public CatchThemAll::PokeBox
     {
     public:
-        /// <inheritdoc />
+        /// Constructs a SharedPokeBox servant.
+        /// @param pokeStore The Poke store.
+        /// @param userIdResolver The user ID resolver.
+        SharedPokeBox(IPokeStorePtr pokeStore, IUserIdResolverPtr userIdResolver);
+
         // Retrieve the Pokémon collection for the user associated with the current session.
         CatchThemAll::PokemonList getInventory(const Ice::Current& current) final;
 
-        /// <inheritdoc />
         // Add new Pokémon to the Pokémon collection for the user associated with the current session.
         void caught(CatchThemAll::PokemonList pokemon, const Ice::Current& current) final;
 
-        /// <inheritdoc />
+        // Release all Pokémon from the Pokémon collection for the user associated with the current session.
         void releaseAll(const Ice::Current& current) final;
 
-        /// <summary>Constructs a SharedPokeBox servant.</summary>
-        /// <param name="pokeStore">The Poke store.</param>
-        /// <param name="userIdResolver">The user ID resolver.</param>
-        SharedPokeBox(IPokeStorePtr pokeStore, IUserIdResolverPtr userIdResolver);
-
     private:
-        /// <summary>Retrieves the user ID associated with the current session.</summary>
-        /// <param name="current">Information about the incoming request being dispatched.</param>
+        /// Retrieves the user ID associated with the current session.
+        /// @param current Information about the incoming request being dispatched.
         std::string getUserId(const Ice::Current& current) const;
 
         const IUserIdResolverPtr _userIdResolver;
