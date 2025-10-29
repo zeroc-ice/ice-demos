@@ -14,7 +14,7 @@ std::optional<Glacier2::SessionPrx>
 SessionManager::create(
     std::string userId,
     std::optional<Glacier2::SessionControlPrx> sessionControl,
-    const Ice::Current& current)
+    const Ice::Current&)
 {
     // sessionControl is not null because we configured Glacier2.Server.Endpoints in the Glacier2 router
     // configuration file.

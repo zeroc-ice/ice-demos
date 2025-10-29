@@ -5,6 +5,7 @@
 
 #include <Glacier2/Glacier2.h>
 #include <Ice/Ice.h>
+#include <array>
 #include <cassert>
 #include <iostream>
 #include <random>
@@ -48,8 +49,9 @@ main(int argc, char* argv[])
     optional<Glacier2::SessionPrx> session = router->createSession(userId, "password");
 
     // We configured a SessionManager on the Glacier2 router, so session is a non-null PokeSession.
-    optional<PokeSessionPrx> pokeSession = Ice::uncheckedCast<PokeSessionPrx>(session);
-    assert(pokeSession);
+    assert(session);
+
+    PokeSessionPrx pokeSession = Ice::uncheckedCast<PokeSessionPrx>(*session);
 
     // Retrieve the PokeBox proxy from the session.
     optional<PokeBoxPrx> pokeBox = pokeSession->getPokeBox();
@@ -87,7 +89,7 @@ main(int argc, char* argv[])
         pokeBox->releaseAll();
     }
 
-    // Exiting, closing the connection, or calling destroyAsync on the session terminates both PokeSession and the
+    // Exiting, closing the connection, or calling `destroy(Async)` on the session terminates both PokeSession and the
     // internal session state maintained by the Glacier2 router.
     cout << "Destroying the session..." << endl;
     pokeSession->destroy();
