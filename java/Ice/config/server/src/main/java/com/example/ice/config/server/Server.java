@@ -7,7 +7,6 @@ import com.zeroc.Ice.Identity;
 import com.zeroc.Ice.InitializationData;
 import com.zeroc.Ice.ObjectAdapter;
 import com.zeroc.Ice.Properties;
-import com.zeroc.Ice.Util;
 
 class Server {
     public static void main(String[] args) {
@@ -23,7 +22,7 @@ class Server {
         // The communicator gets its properties from the properties object.
         var initData = new InitializationData();
         initData.properties = properties;
-        try (Communicator communicator = Util.initialize(initData)) {
+        try (Communicator communicator = new Communicator(initData)) {
 
             // Register a shutdown hook that calls communicator.shutdown() when the user shuts down the server with
             // Ctrl+C or similar. The shutdown hook thread also waits until the main thread completes its cleanup.

@@ -9,7 +9,6 @@ import com.zeroc.Ice.Identity;
 import com.zeroc.Ice.InitializationData;
 import com.zeroc.Ice.ObjectAdapter;
 import com.zeroc.Ice.Properties;
-import com.zeroc.Ice.Util;
 
 class Server {
     public static void main(String[] args) {
@@ -20,7 +19,7 @@ class Server {
         initData.sliceLoader = new ClassSliceLoader(AtmosphericConditions.class);
 
         // Create a communicator with initData. We'll use this communicator to create an object adapter.
-        try (Communicator communicator = Util.initialize(initData)) {
+        try (Communicator communicator = new Communicator(initData)) {
 
             // Create an object adapter that listens for incoming requests and dispatches them to servants.
             ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints("StationAdapter", "tcp -p 4061");

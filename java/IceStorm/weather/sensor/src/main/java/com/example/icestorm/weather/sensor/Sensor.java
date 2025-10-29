@@ -16,7 +16,6 @@ import com.example.clearsky.AtmosphericConditions;
 import com.example.clearsky.WeatherStationPrx;
 import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.ObjectPrx;
-import com.zeroc.Ice.Util;
 import com.zeroc.IceStorm.NoSuchTopic;
 import com.zeroc.IceStorm.TopicExists;
 import com.zeroc.IceStorm.TopicManagerPrx;
@@ -27,7 +26,7 @@ class Sensor {
 
     public static void main(String[] args) {
         // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
-        try (Communicator communicator = Util.initialize(args)) {
+        try (Communicator communicator = new Communicator(args)) {
             // Create a proxy to the IceStorm topic manager.
             TopicManagerPrx topicManager = TopicManagerPrx.createProxy(
                 communicator, "ClearSky/TopicManager:tcp -p 4061 -h localhost");

@@ -6,7 +6,6 @@ import com.example.visitorcenter.GreeterPrx;
 import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.InitializationData;
 import com.zeroc.Ice.Properties;
-import com.zeroc.Ice.Util;
 
 class Client {
     public static void main(String[] args) {
@@ -22,7 +21,7 @@ class Client {
         // The communicator gets its properties from the properties object.
         var initData = new InitializationData();
         initData.properties = properties;
-        try (Communicator communicator = Util.initialize(initData)) {
+        try (Communicator communicator = new Communicator(initData)) {
             // We create a Greeter proxy using the value of the Greeter.Proxy property in config.client.
             GreeterPrx greeter = GreeterPrx.uncheckedCast(communicator.propertyToProxy("Greeter.Proxy"));
 

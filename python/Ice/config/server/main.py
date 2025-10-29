@@ -11,14 +11,14 @@ import Ice
 
 async def main():
     # Load the contents of the config.server file into a Properties object.
-    configFileProperties = Ice.createProperties()
+    configFileProperties = Ice.Properties()
     configFileProperties.load("config.server")
 
     initData = Ice.InitializationData()
 
     # Create a Properties object from the command line arguments and the config file properties; Ice.* properties and
     # other reserved properties set in the sys.argv command-line arguments override the config file properties.
-    initData.properties = Ice.createProperties(sys.argv, configFileProperties)
+    initData.properties = Ice.Properties(sys.argv, configFileProperties)
 
     # Configure the communicator to use asyncio.
     loop = asyncio.get_running_loop()
@@ -26,7 +26,7 @@ async def main():
 
     # Create an Ice communicator. We'll use this communicator to create an object adapter.
     # The communicator gets its properties from the properties object.
-    with Ice.initialize(initData=initData) as communicator:
+    with Ice.Communicator(initData=initData) as communicator:
         # Shutdown the communicator when the user presses Ctrl+C.
         loop.add_signal_handler(signal.SIGINT, communicator.shutdown)
 

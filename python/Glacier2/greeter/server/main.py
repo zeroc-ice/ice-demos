@@ -9,7 +9,7 @@ import Ice
 
 def main():
     # Create an Ice communicator. We'll use this communicator to create an object adapter.
-    with Ice.initialize(sys.argv) as communicator:
+    with Ice.Communicator(sys.argv) as communicator:
         # Create an object adapter that listens for incoming requests and dispatches them to servants.
         adapter = communicator.createObjectAdapterWithEndpoints("GreeterAdapter", "tcp -p 4061")
 

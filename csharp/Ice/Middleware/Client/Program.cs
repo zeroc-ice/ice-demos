@@ -4,7 +4,7 @@
 using VisitorCenter;
 
 // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
-await using Ice.Communicator communicator = Ice.Util.initialize(ref args);
+await using var communicator = new Ice.Communicator(ref args);
 
 // Create a Greeter proxy. If you run the server on a different computer, replace localhost in the string below with
 // the server's hostname or IP address.

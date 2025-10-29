@@ -15,7 +15,7 @@ var properties = new Ice.Properties(ref args, defaults: configFileProperties);
 
 // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
 // The communicator gets its properties from the properties object.
-await using Ice.Communicator communicator = Ice.Util.initialize(new Ice.InitializationData { properties = properties });
+await using var communicator = new Ice.Communicator(new Ice.InitializationData { properties = properties });
 
 // We create a Greeter proxy using the value of the Greeter.Proxy property in config.client.
 // It's null if the property is not set.

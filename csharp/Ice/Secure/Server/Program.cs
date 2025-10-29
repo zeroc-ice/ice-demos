@@ -4,7 +4,7 @@ using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 
 // Create an Ice communicator. We'll use this communicator to create an object adapter.
-await using Ice.Communicator communicator = Ice.Util.initialize(ref args);
+await using var communicator = new Ice.Communicator(ref args);
 
 // Create the authentication options using the test server certificate included with the demos.
 var sslAuthenticationOptions = new SslServerAuthenticationOptions

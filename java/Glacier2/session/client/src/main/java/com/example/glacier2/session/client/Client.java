@@ -12,7 +12,6 @@ import com.zeroc.Glacier2.SessionPrx;
 import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.ConnectionLostException;
 import com.zeroc.Ice.DispatchException;
-import com.zeroc.Ice.Util;
 
 import java.util.List;
 
@@ -34,7 +33,7 @@ class Client {
         final String userId = args.length > 0 ? args[0] : System.getProperty("user.name");
 
         // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
-        try (Communicator communicator = Util.initialize(args)) {
+        try (Communicator communicator = new Communicator(args)) {
 
             // Create a proxy to the Glacier2 router. The addressing information (transport, host, and port number) is
             // derived from the value of Glacier2.Client.Endpoints in the glacier2 router configuration file.

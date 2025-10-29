@@ -5,12 +5,11 @@ package com.example.glacier2.session.server;
 import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.Identity;
 import com.zeroc.Ice.ObjectAdapter;
-import com.zeroc.Ice.Util;
 
 class Server {
     public static void main(String[] args) {
         // Create an Ice communicator. We'll use this communicator to create an object adapter.
-        try (Communicator communicator = Util.initialize(args)) {
+        try (Communicator communicator = new Communicator(args)) {
 
             // Create an object adapter that listens for incoming requests and dispatches them to servants.
             ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints("PokeAdapter", "tcp -p 4061");

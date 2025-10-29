@@ -11,8 +11,8 @@ from ClearSky import AtmosphericConditions, WeatherStationPrx
 
 async def main():
     # Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections. We
-    # enable asyncio support by passing the current event loop to initialize.
-    async with Ice.initialize(sys.argv, eventLoop=asyncio.get_running_loop()) as communicator:
+    # enable asyncio support by passing the current event loop to the communicator constructor.
+    async with Ice.Communicator(sys.argv, eventLoop=asyncio.get_running_loop()) as communicator:
         # Create a proxy to the Weather station.
         weatherStation = WeatherStationPrx(communicator, "weatherStation:tcp -p 4061")
 

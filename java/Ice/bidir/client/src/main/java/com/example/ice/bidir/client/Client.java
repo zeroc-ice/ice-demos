@@ -11,13 +11,12 @@ import com.example.util.Time;
 import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.Identity;
 import com.zeroc.Ice.ObjectAdapter;
-import com.zeroc.Ice.Util;
 
 class Client {
     public static void main(String[] args) {
         // Create an Ice communicator. We'll use this communicator to create proxies, manage outgoing connections, and
         // create an object adapter.
-        try (Communicator communicator = Util.initialize(args)) {
+        try (Communicator communicator = new Communicator(args)) {
             // Create an object adapter with no name and no configuration. This object adapter does not need to be
             // activated.
             ObjectAdapter adapter = communicator.createObjectAdapter("");

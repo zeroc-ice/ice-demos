@@ -9,7 +9,6 @@ import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.InitializationData;
 import com.zeroc.Ice.ObjectAdapter;
 import com.zeroc.Ice.Properties;
-import com.zeroc.Ice.Util;
 import com.zeroc.IceStorm.AlreadySubscribed;
 import com.zeroc.IceStorm.BadQoS;
 import com.zeroc.IceStorm.NoSuchTopic;
@@ -26,7 +25,7 @@ class Station {
         var initData = new InitializationData();
         initData.properties = new Properties(args);
         initData.sliceLoader = new ClassSliceLoader(AtmosphericConditions.class);
-        try (Communicator communicator = Util.initialize(initData)) {
+        try (Communicator communicator = new Communicator(initData)) {
 
             // Create an object adapter that listens for incoming requests and dispatches them to servants. This object
             // adapter listens on an OS-assigned TCP port, on all interfaces.

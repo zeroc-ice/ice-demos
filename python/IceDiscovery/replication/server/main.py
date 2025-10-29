@@ -17,7 +17,7 @@ async def main():
     loop = asyncio.get_running_loop()
     initData.eventLoopAdapter = Ice.asyncio.EventLoopAdapter(loop)
 
-    initData.properties = Ice.createProperties(sys.argv)
+    initData.properties = Ice.Properties(sys.argv)
 
     # Configure the communicator to load the IceDiscovery plug-in during initialization. This plug-in installs a default
     # locator on the communicator.
@@ -35,7 +35,7 @@ async def main():
     initData.properties.setProperty("GreeterAdapter.Endpoints", "tcp")
 
     # Create an Ice communicator. We'll use this communicator to create an object adapter.
-    with Ice.initialize(initData=initData) as communicator:
+    with Ice.Communicator(initData=initData) as communicator:
         # Shutdown the communicator when the user presses Ctrl+C.
         loop.add_signal_handler(signal.SIGINT, communicator.shutdown)
 
