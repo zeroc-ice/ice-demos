@@ -75,7 +75,7 @@ cmake --build build
     build\client ash
     ```
 
-    If you don't specify a name, the client uses the current username.s
+    If you don't specify a name, the client uses the current username.
 
 [1]: ../../Ice/Greeter
 [Ice for C++ installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-c
