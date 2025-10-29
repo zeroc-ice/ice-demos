@@ -1,7 +1,8 @@
 // Copyright (c) ZeroC, Inc.
 
-#include "Chatbot.h"
-
+#include "InMemoryPokeStore.h"
+#include "SessionManager.h"
+#include "SharedPokeBox.h"
 #include <Ice/Ice.h>
 #include <iostream>
 
@@ -21,10 +22,16 @@ main(int argc, char* argv[])
     Ice::CommunicatorHolder communicatorHolder{communicator};
 
     // Create an object adapter that listens for incoming requests and dispatches them to servants.
-    auto adapter = communicator->createObjectAdapterWithEndpoints("GreeterAdapter", "tcp -p 4061");
+    Ice::ObjectAdapterPtr adapter = communicator->createObjectAdapterWithEndpoints("PokeAdapter", "tcp -p 4061");
 
-    // Register the Chatbot servant with the adapter.
-    adapter->add(make_shared<Server::Chatbot>(), Ice::Identity{"greeter"});
+    // Register the SessionManager servant with the adapter.
+    auto sessionManager = make_shared<Server::SessionManager>(adapter);
+    adapter->add(sessionManager, Ice::Identity{"SessionManager"});
+
+    // Register the SharedPokeBox servant with the adapter as a default servant for category "PokeBox". This servant
+    // implements all PokeBox objects.
+    auto sharedPokeBox = make_shared<Server::SharedPokeBox>(make_shared<Server::InMemoryPokeStore>(), sessionManager);
+    adapter->addDefaultServant(sharedPokeBox, "PokeBox");
 
     // Start dispatching requests.
     adapter->activate();

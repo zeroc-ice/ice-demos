@@ -3,8 +3,14 @@
 # The client-visible endpoint of the Glacier2 router.
 Glacier2.Client.Endpoints=tcp -p 4063
 
+# Configure the Server endpoints to get SessionControl proxies.
+Glacier2.Server.Endpoints=tcp
+
 # This Glacier router accepts any username/password combination.
 Glacier2.PermissionsVerifier=Glacier2/NullPermissionsVerifier
+
+# Configure the SessionManager proxy.
+Glacier2.SessionManager=SessionManager:tcp -h localhost -p 4061
 
 # Turn on tracing.
 Glacier2.Client.Trace.Request=1
