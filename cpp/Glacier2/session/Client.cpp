@@ -50,8 +50,7 @@ main(int argc, char* argv[])
 
     // We configured a SessionManager on the Glacier2 router, so session is a non-null PokeSession.
     assert(session);
-
-    PokeSessionPrx pokeSession = Ice::uncheckedCast<PokeSessionPrx>(*session);
+    auto pokeSession = Ice::uncheckedCast<PokeSessionPrx>(*session);
 
     // Retrieve the PokeBox proxy from the session.
     optional<PokeBoxPrx> pokeBox = pokeSession->getPokeBox();
@@ -71,7 +70,7 @@ main(int argc, char* argv[])
     newPokemon.reserve(addCount);
     for (size_t i = 0; i < addCount; ++i)
     {
-        newPokemon.push_back(allPokemon[pokeDist(gen)]);
+        newPokemon.emplace_back(allPokemon[pokeDist(gen)]);
     }
     pokeBox->caught(newPokemon);
 

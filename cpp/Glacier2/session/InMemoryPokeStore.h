@@ -12,7 +12,7 @@ namespace Server
     class InMemoryPokeStore : public IPokeStore
     {
     public:
-        void saveCollection(const std::string& userId, CatchThemAll::PokemonList pokemon);
+        void saveCollection(const std::string& userId, CatchThemAll::PokemonList pokemon) final;
         CatchThemAll::PokemonList retrieveCollection(const std::string& userId) const final;
 
     private:
