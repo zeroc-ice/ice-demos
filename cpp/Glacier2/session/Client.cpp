@@ -63,13 +63,13 @@ main(int argc, char* argv[])
     // Catch a few Pokémon.
     // Initialize random number generators.
     std::mt19937 gen{std::random_device{}()};
-    std::uniform_int_distribution<> addDist{1, 6};
-    std::uniform_int_distribution<> pokeDist{0, allPokemon.size() - 1};
-    int addCount = addDist(gen);
+    std::uniform_int_distribution<size_t> addDist{1, 6};
+    std::uniform_int_distribution<size_t> pokeDist{0, allPokemon.size() - 1};
+    size_t addCount = addDist(gen);
     cout << "Catching " << addCount << " Pokémon... " << endl;
     vector<string> newPokemon;
     newPokemon.reserve(addCount);
-    for (int i = 0; i < addCount; ++i)
+    for (size_t i = 0; i < addCount; ++i)
     {
         newPokemon.push_back(allPokemon[pokeDist(gen)]);
     }
