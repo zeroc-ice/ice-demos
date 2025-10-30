@@ -4,40 +4,55 @@
 #include <Ice/Ice.h>
 
 #include <iostream>
-#include <optional>
 #include <string>
 
+#include "TemperatureRange.h"
+
 using namespace std;
+
+void printSample(const DataStorm::Sample<string, float>& sample)
+{
+    cout << "sample: key=" << sample.getKey() << ", value=" << sample.getValue() << std::endl;
+}
+
+void printSamples(const vector<DataStorm::Sample<string, float>>& samples)
+{
+    for (const auto& sample : samples)
+    {
+        printSample(sample);
+    }
+}
 
 int
 main(int argc, char* argv[])
 {
-    try
-    {
-        // Instantiates DataStorm node.
-        DataStorm::Node node{argc, argv};
+    // CtrlCHandler must be created before the communicator is created or any other threads are started.
+    Ice::CtrlCHandler ctrlCHandler;
 
-        // Instantiates the "hello" topic. The topic uses strings for keys and values.
-        DataStorm::Topic<string, string> topic{node, "hello"};
+    // Instantiates DataStorm node.
+    DataStorm::Node node{argc, argv};
 
-        // Configure readers to never clear the history. We want to receive all the samples written by the writers.
-        topic.setReaderDefaultConfig({std::nullopt, std::nullopt, DataStorm::ClearHistoryPolicy::Never});
+    ctrlCHandler.setCallback(
+        [&ctrlCHandler, &node](int)
+        {
+            std::cout << "Shutting down..." << std::endl;
+            node.shutdown();
+            // Reset the callback to nullptr to avoid calling it again.
+            ctrlCHandler.setCallback(nullptr);
+        });
 
-        // Instantiate the reader for the key "foo". The reader uses the predefined _regex sample filter and the
-        // "good.*" regular expression as the criteria.
-        auto reader = DataStorm::makeSingleKeyReader(topic, "foo", DataStorm::Filter<string>("_regex", "good.*"));
+    // Instantiates the "temperature" topic. The topic uses strings for the keys and float for the values.
+    DataStorm::Topic<string, float> topic{node, "temperature"};
 
-        // Get the 2 samples starting with good published by the writer.
-        auto sample = reader.getNextUnread();
-        cout << sample.getKey() << " says " << sample.getValue() << "!" << endl;
+    // Create a any key reader with a sample filter that only receives temperatures outside of the given range.
+    // The filter criteria TemperatureRange is defined in TemperatureRange.ice Slice file.
+    auto reader = DataStorm::makeAnyKeyReader(
+        topic,
+        DataStorm::Filter<ClearSky::TemperatureRange>("not-in-range-filter", ClearSky::TemperatureRange{21.0f, 19.0f}),
+        "temperature-reader");
 
-        sample = reader.getNextUnread();
-        cout << sample.getKey() << " says " << sample.getValue() << "!" << endl;
-    }
-    catch (const std::exception& ex)
-    {
-        cerr << ex.what() << endl;
-        return 1;
-    }
+    reader.onSamples(printSamples, printSample);
+
+    node.waitForShutdown();
     return 0;
 }
