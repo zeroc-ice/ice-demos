@@ -1,6 +1,6 @@
 # DataStorm partialUpdate
 
-This demo illustrates the use of **patial updates** in DataStorm.
+This demo illustrates the use of **partial updates** in DataStorm.
 
 The writer publishes atmospheric conditions changes, when both temperature and humidity changes it publishes
 a full updated, when only on field changes it publishes a partial update for the given field.
