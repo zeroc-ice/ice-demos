@@ -18,7 +18,7 @@
         "${workspaceFolder}/cpp/Ice/config",
         "${workspaceFolder}/cpp/Ice/context",
         "${workspaceFolder}/cpp/Ice/customError",
-        "${workspaceFolder}/cpp/Ice/filesystem",
+        "${workspaceFolder}/cpp/Ice/inheritance",
         "${workspaceFolder}/cpp/Ice/forwarder",
         "${workspaceFolder}/cpp/Ice/greeter",
         "${workspaceFolder}/cpp/Ice/middleware",
