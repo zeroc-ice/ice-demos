@@ -26,7 +26,7 @@ SharedPokeBox::caught(CatchThemAll::PokemonList pokemon, const Ice::Current& cur
 
     // Sort the collection to make it easier to see the Pokémon that have been caught.
     std::sort(savedPokemon.begin(), savedPokemon.end());
-    _pokeStore->saveCollection(std::move(userId), std::move(savedPokemon));
+    _pokeStore->saveCollection(userId, std::move(savedPokemon));
 }
 
 void

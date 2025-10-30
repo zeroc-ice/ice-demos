@@ -32,7 +32,7 @@ namespace Server
         /// Retrieves the user ID associated with the current session.
         /// @param current Information about the incoming request being dispatched.
         /// @returns The user ID associated with the current session.
-        std::string getUserId(const Ice::Current& current) const;
+        [[nodiscard]] std::string getUserId(const Ice::Current& current) const;
 
         const PokeStorePtr _pokeStore;
         const UserIdResolverPtr _userIdResolver;
