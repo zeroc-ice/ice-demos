@@ -3,7 +3,7 @@
 This demo illustrates the use of **partial updates** in DataStorm.
 
 The writer publishes atmospheric conditions changes, when both temperature and humidity changes it publishes
-a full updated, when only on field changes it publishes a partial update for the given field.
+a full update, when only one field changes it publishes a partial update for the given field.
 
 The reader and writer register updaters with the topic to process partial update samples.
 
