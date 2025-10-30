@@ -10,12 +10,14 @@
 
 using namespace std;
 
-void printSample(const DataStorm::Sample<string, float>& sample)
+void
+printSample(const DataStorm::Sample<string, float>& sample)
 {
     cout << "sample: key=" << sample.getKey() << ", value=" << sample.getValue() << std::endl;
 }
 
-void printSamples(const vector<DataStorm::Sample<string, float>>& samples)
+void
+printSamples(const vector<DataStorm::Sample<string, float>>& samples)
 {
     for (const auto& sample : samples)
     {
