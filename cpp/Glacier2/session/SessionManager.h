@@ -17,18 +17,18 @@ namespace Server
                            public std::enable_shared_from_this<SessionManager>
     {
     public:
+        /// Constructs a SessionManager servant.
+        /// @param adapter The object adapter that hosts the session servants.
+        SessionManager(Ice::ObjectAdapterPtr adapter);
+
         std::optional<Glacier2::SessionPrx> create(
             std::string userId,
             std::optional<Glacier2::SessionControlPrx> sessionControl,
             const Ice::Current& current) final;
 
-        std::optional<std::string> getUserId(const std::string& token) const final;
+        [[nodiscard]] std::optional<std::string> getUserId(const std::string& token) const final;
 
         void removeToken(const std::string& token) final;
-
-        /// Constructs a SessionManager servant.
-        /// @param adapter The object adapter that hosts the session servants.
-        SessionManager(Ice::ObjectAdapterPtr adapter);
 
     private:
         Ice::ObjectAdapterPtr _sessionAdapter;

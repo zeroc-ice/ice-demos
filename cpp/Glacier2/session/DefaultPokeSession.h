@@ -3,8 +3,8 @@
 #ifndef DEFAULT_POKE_SESSION_H
 #define DEFAULT_POKE_SESSION_H
 
-#include "UserIdResolver.h"
 #include "PokeBox.h"
+#include "UserIdResolver.h"
 
 namespace Server
 {

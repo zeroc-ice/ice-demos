@@ -16,7 +16,7 @@ namespace Server
         /// Gets the user ID associated with the specified session token.
         /// @param token The session token.
         /// @returns The user ID associated with the specified session token, or nullopt if not found.
-        virtual std::optional<std::string> getUserId(const std::string& token) const = 0;
+        [[nodiscard]] virtual std::optional<std::string> getUserId(const std::string& token) const = 0;
 
         /// Removes the specified session token.
         /// @param token The session token.

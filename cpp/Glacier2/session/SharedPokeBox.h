@@ -3,9 +3,9 @@
 #ifndef SHARED_POKE_BOX_H
 #define SHARED_POKE_BOX_H
 
+#include "PokeBox.h"
 #include "PokeStore.h"
 #include "UserIdResolver.h"
-#include "PokeBox.h"
 
 namespace Server
 {
