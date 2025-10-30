@@ -1,6 +1,6 @@
 # DataStorm sampleFilter
 
-This demo illustrates the use of sample filters. The reader a custom sample filter `not-in-range-filter`. The reader
+This demo illustrates the use of sample filters. The reader uses a custom sample filter `not-in-range-filter`. The reader
 will only receive samples for temperatures outside the provided temperature range. Note that the filtering of the
 samples is performed on the writer to minimize the number of events sent over the wire.
 
