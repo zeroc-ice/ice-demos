@@ -8,9 +8,9 @@ details.
 
 |                                                         |                                                                                                             |
 |---------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
-| [Glacier2 Callback](./Glacier2/Callback/)               | Shows how to write a Glacier2 client and implement callbacks in this client.                                |
+| [Glacier2 Callback](./Glacier2/callback/)               | Shows how to write a Glacier2 client and implement callbacks in this client.                                |
 | [Glacier2 Greeter](./Glacier2/greeter/)                 | Shows how to write a basic Glacier2 client.                                                                 |
-| [Glacier2 Session](./Glacier2/Session)                  | Shows how to implement and configure a custom Glacier2 Session Manager. Also demonstrates default servants. |
+| [Glacier2 Session](./Glacier2/session)                  | Shows how to implement and configure a custom Glacier2 Session Manager. Also demonstrates default servants. |
 | [Ice Android Greeter](./Ice/android-greeter/)           | Shows how to create an Ice for Java Android application.                                                    |
 | [Ice Bidir](./Ice/bidir/)                               | Shows how to send requests "the other way around", from the server to the client.                           |
 | [Ice Callback](./Ice/callback/)                         | Shows how to implement callbacks in a client application.                                                   |
