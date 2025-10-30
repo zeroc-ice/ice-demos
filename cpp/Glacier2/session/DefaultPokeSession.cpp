@@ -10,7 +10,7 @@ using namespace std;
 DefaultPokeSession::DefaultPokeSession(
     Ice::ObjectAdapterPtr adapter,
     Glacier2::SessionControlPrx sessionControl,
-    IUserIdResolverPtr userIdResolver)
+    UserIdResolverPtr userIdResolver)
     : _adapter(std::move(adapter)),
       _sessionControl(std::move(sessionControl)),
       _userIdResolver(std::move(userIdResolver))
@@ -20,7 +20,7 @@ DefaultPokeSession::DefaultPokeSession(
 void
 DefaultPokeSession::destroy(const Ice::Current& current)
 {
-    std::cout << "Destroying session #" << current.id.name << std::endl;
+    cout << "Destroying session #" << current.id.name << endl;
 
     // Remove the token from the user ID resolver, since the token is no longer valid.
     _userIdResolver->removeToken(current.id.name);

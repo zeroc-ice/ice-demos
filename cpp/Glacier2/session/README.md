@@ -54,8 +54,7 @@ cmake --build build
    ```
 
    > [!TIP]
-   > You can also start the Glacier2 router before the server. The order does not matter: the server is identical to the
-   > server provided in the [Ice Greeter][1] demo and does not depend on Glacier2.
+   > You can also start the Glacier2 router before the server. The order does not matter.
 
 3. Finally, run the client application several times:
 
@@ -77,6 +76,5 @@ cmake --build build
 
     If you don't specify a name, the client uses the current username.
 
-[1]: ../../Ice/Greeter
 [Ice for C++ installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-c
 [Ice service installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-services

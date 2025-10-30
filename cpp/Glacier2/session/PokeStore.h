@@ -1,20 +1,17 @@
 // Copyright (c) ZeroC, Inc.
 
-#ifndef IPOKE_STORE_H
-#define IPOKE_STORE_H
+#ifndef POKE_STORE_H
+#define POKE_STORE_H
 
 #include "PokeBox.h"
-#include <list>
-#include <memory>
-#include <string>
 
 namespace Server
 {
     /// Represents a Pokémon storage system.
-    class IPokeStore
+    class PokeStore
     {
     public:
-        virtual ~IPokeStore() = default;
+        virtual ~PokeStore() = default;
 
         /// Saves the Pokémon collection for a specific user.
         /// @param userId The user ID.
@@ -24,9 +21,10 @@ namespace Server
         /// Retrieves the Pokémon collection for a specific user.
         /// @param userId The user ID.
         /// @returns The saved Pokémon collection, or an empty list if no collection was saved for @p userId.
-        virtual CatchThemAll::PokemonList retrieveCollection(const std::string& userId) const = 0;
+        [[nodiscard]] virtual CatchThemAll::PokemonList retrieveCollection(const std::string& userId) const = 0;
     };
 
-    using IPokeStorePtr = std::shared_ptr<IPokeStore>;
+    using PokeStorePtr = std::shared_ptr<PokeStore>;
 }
+
 #endif

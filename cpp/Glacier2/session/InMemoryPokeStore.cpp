@@ -7,7 +7,14 @@ using namespace std;
 void
 InMemoryPokeStore::saveCollection(const string& userId, CatchThemAll::PokemonList pokemon)
 {
-    _store[userId] = std::move(pokemon);
+    if (pokemon.empty())
+    {
+        _store.erase(userId);
+    }
+    else
+    {
+        _store[userId] = std::move(pokemon);
+    }
 }
 
 CatchThemAll::PokemonList

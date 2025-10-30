@@ -4,7 +4,7 @@
 using namespace Server;
 using namespace std;
 
-SharedPokeBox::SharedPokeBox(IPokeStorePtr pokeStore, IUserIdResolverPtr userIdResolver)
+SharedPokeBox::SharedPokeBox(PokeStorePtr pokeStore, UserIdResolverPtr userIdResolver)
     : _pokeStore(std::move(pokeStore)),
       _userIdResolver(std::move(userIdResolver))
 {

@@ -3,7 +3,7 @@
 #ifndef DEFAULT_POKE_SESSION_H
 #define DEFAULT_POKE_SESSION_H
 
-#include "IUserIdResolver.h"
+#include "UserIdResolver.h"
 #include "PokeBox.h"
 
 namespace Server
@@ -20,7 +20,7 @@ namespace Server
         DefaultPokeSession(
             Ice::ObjectAdapterPtr adapter,
             Glacier2::SessionControlPrx sessionControl,
-            IUserIdResolverPtr userIdResolver);
+            UserIdResolverPtr userIdResolver);
 
         void destroy(const Ice::Current& current) final;
 
@@ -37,7 +37,7 @@ namespace Server
         // DefaultPokeSession.
         Glacier2::SessionControlPrx _sessionControl;
 
-        IUserIdResolverPtr _userIdResolver;
+        UserIdResolverPtr _userIdResolver;
     };
 }
 

@@ -23,14 +23,14 @@ add_executable(
   DefaultPokeSession.h
   InMemoryPokeStore.cpp
   InMemoryPokeStore.h
-  IPokeStore.h
-  IUserIdResolver.h
   PokeBox.ice
+  PokeStore.h
   Server.cpp
   SessionManager.cpp
   SessionManager.h
   SharedPokeBox.cpp
-  SharedPokeBox.h)
+  SharedPokeBox.h
+  UserIdResolver.h)
 
 slice2cpp_generate(server)
 target_link_libraries(server PRIVATE Ice::Ice Ice::Glacier2)

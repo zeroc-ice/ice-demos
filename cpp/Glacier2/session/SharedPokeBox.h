@@ -1,23 +1,23 @@
 // Copyright (c) ZeroC, Inc.
 
-#include "IPokeStore.h"
-#include "IUserIdResolver.h"
-#include "PokeBox.h"
+#ifndef SHARED_POKE_BOX_H
+#define SHARED_POKE_BOX_H
 
-#include <string>
-#include <vector>
+#include "PokeStore.h"
+#include "UserIdResolver.h"
+#include "PokeBox.h"
 
 namespace Server
 {
     /// SharedPokeBox is an Ice servant that implements Slice interface PokeBox. The same shared servant
-    /// implements all PokeBox objects; this is doable because all the state is stored in the IPokeStore.
+    /// implements all PokeBox objects; this is doable because all the state is stored in the PokeStore.
     class SharedPokeBox : public CatchThemAll::PokeBox
     {
     public:
         /// Constructs a SharedPokeBox servant.
         /// @param pokeStore The Poke store.
         /// @param userIdResolver The user ID resolver.
-        SharedPokeBox(IPokeStorePtr pokeStore, IUserIdResolverPtr userIdResolver);
+        SharedPokeBox(PokeStorePtr pokeStore, UserIdResolverPtr userIdResolver);
 
         // Retrieve the Pokémon collection for the user associated with the current session.
         CatchThemAll::PokemonList getInventory(const Ice::Current& current) final;
@@ -31,9 +31,12 @@ namespace Server
     private:
         /// Retrieves the user ID associated with the current session.
         /// @param current Information about the incoming request being dispatched.
+        /// @returns The user ID associated with the current session.
         std::string getUserId(const Ice::Current& current) const;
 
-        const IPokeStorePtr _pokeStore;
-        const IUserIdResolverPtr _userIdResolver;
+        const PokeStorePtr _pokeStore;
+        const UserIdResolverPtr _userIdResolver;
     };
 }
+
+#endif

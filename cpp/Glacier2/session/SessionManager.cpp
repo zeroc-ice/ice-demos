@@ -33,7 +33,7 @@ SessionManager::create(
 }
 
 std::optional<std::string>
-SessionManager::getUserId(const std::string& token)
+SessionManager::getUserId(const std::string& token) const
 {
     const auto& it = _tokenToUserId.find(token);
     return it == _tokenToUserId.end() ? std::nullopt : std::optional<std::string>{it->second};
