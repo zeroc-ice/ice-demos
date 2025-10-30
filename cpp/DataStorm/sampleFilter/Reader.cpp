@@ -44,7 +44,7 @@ main(int argc, char* argv[])
     // Instantiates the "temperature" topic. The topic uses strings for the keys and float for the values.
     DataStorm::Topic<string, float> topic{node, "temperature"};
 
-    // Create a any key reader with a sample filter that only receives temperatures outside of the given range.
+    // Create an any key reader with a sample filter that only receives temperatures outside of the given range.
     // The filter criteria TemperatureRange is defined in TemperatureRange.ice Slice file.
     auto reader = DataStorm::makeAnyKeyReader(
         topic,
