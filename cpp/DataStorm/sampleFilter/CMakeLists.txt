@@ -4,7 +4,8 @@ project(datastorm_sampleFilter CXX)
 
 include(../../cmake/common.cmake)
 
-add_executable(reader Reader.cpp)
+add_executable(reader Reader.cpp TemperatureRange.ice)
+slice2cpp_generate(reader)
 target_link_libraries(reader PRIVATE Ice::Ice Ice::DataStorm)
 if(WIN32)
   add_custom_command(TARGET reader POST_BUILD
@@ -15,7 +16,8 @@ if(WIN32)
   )
 endif()
 
-add_executable(writer Writer.cpp)
+add_executable(writer Writer.cpp TemperatureRange.ice)
+slice2cpp_generate(writer)
 target_link_libraries(writer PRIVATE Ice::Ice Ice::DataStorm)
 if(WIN32)
   add_custom_command(TARGET writer POST_BUILD
