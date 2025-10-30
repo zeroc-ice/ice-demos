@@ -35,7 +35,7 @@ main(int argc, char* argv[])
             };
         });
 
-    // Instantiate a any key writer.
+    // Instantiate an any key writer.
     auto writer = DataStorm::makeAnyKeyWriter(topic, "temperature-writer");
 
     // Wait for a reader to connect
