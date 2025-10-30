@@ -19,7 +19,7 @@ main(int argc, char* argv[])
     // Instantiates DataStorm node.
     DataStorm::Node node{argc, argv};
 
-    // Instantiates the "temperature" topic. The topic uses strings for keys and values.
+    // Instantiates the "temperature" topic. The topic uses strings for keys and floats for values.
     DataStorm::Topic<string, float> topic{node, "temperature"};
 
     // Create a sample filter that only reports temperatures outside of the given temperature range.
