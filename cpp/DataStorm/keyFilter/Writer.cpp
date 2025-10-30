@@ -16,7 +16,7 @@ main(int argc, char* argv[])
     // Instantiates the "temperature" topic. The topic uses strings for the keys and float for the values.
     DataStorm::Topic<string, float> topic{node, "temperature"};
 
-    // Instantiate a any key writer.
+    // Instantiate an any key writer.
     auto writer = DataStorm::makeAnyKeyWriter(topic, "temperature-writer");
 
     // Wait for a reader to connect
