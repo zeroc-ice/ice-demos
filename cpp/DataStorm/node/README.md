@@ -1,9 +1,9 @@
 # DataStorm Node
 
-This demo illustrates the use of a DataStorm node to discover writers and readers without using UDP multicast.
+This demo illustrates how to use a DataStorm node to discover writers and readers without relying on UDP multicast.
 
-It also demonstrates how readers and writers can exchange data through the DataStorm node when the server endpoints
-of both the writers and readers are disabled.
+It also shows how readers and writers can exchange data through the node even when their own server endpoints are
+disabled.
 
 ## Ice prerequisites
 
@@ -57,16 +57,29 @@ In a separate window, start the reader:
 build\reader
 ```
 
-You can start multiple readers and writers. The readers print the time sent by the writers. Stopping the DataStorm node
-prevents communications between readers and writers and the discovery of new readers and writers. Restarting the node
-resumes data exchange and discovery.
+You can start multiple readers and writers.
+The readers print the timestamps sent by the writers.
 
-You can enable the reader or the writer's server endpoints by editing the `config.writer` or `config.reader` file. When
-server endpoints are enabled (either for the reader or the writer), a direct connection is established between the
-reader and the writer during the discovery process. The connection is from the reader or writer without server endpoints
-to the reader or writer with server endpoints. Stopping the DataStorm node at this point does not impede communications
-between readers and writers (since they are directly connected to one another); it does however prevent discovery of new
-readers and writers.
+Stopping the DataStorm node:
+
+- prevents communication between existing readers and writers, and
+- stops discovery of new readers and writers.
+
+Restarting the node resumes both data exchange and discovery.
+
+## Enabling direct connections
+
+You can enable a reader or writer’s server endpoints by passing:
+
+```shell
+--DataStorm.Node.Server.Enabled=1
+```
+
+When server endpoints are enabled (for either the reader or the writer), a direct connection is established between
+them during discovery. The connection is made from the peer without server endpoints to the one with server endpoints.
+
+Once a direct connection is established, stopping the DataStorm node no longer affects data exchange between these
+peers—it only prevents the discovery of new readers and writers.
 
 [Ice for C++ installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-c
 [Ice service installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-services
