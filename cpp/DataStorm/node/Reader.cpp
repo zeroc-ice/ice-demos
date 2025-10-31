@@ -18,6 +18,10 @@ main(int argc, char* argv[])
     auto defaultProperties = make_shared<Ice::Properties>();
     // Connect to the DataStorm node running on localhost port 4061.
     defaultProperties->setProperty("DataStorm.Node.ConnectTo", "tcp -h localhost -p 4061");
+
+    // Disable the server endpoint
+    defaultProperties->setProperty("DataStorm.Node.Server.Enabled", "0");
+
     // Disable the multicast endpoint
     defaultProperties->setProperty("DataStorm.Node.Multicast.Enabled", "0");
 
