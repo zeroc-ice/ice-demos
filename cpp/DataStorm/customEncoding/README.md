@@ -1,7 +1,10 @@
-# DataStorm Clock
+# DataStorm Custom Encoding
 
-This demo illustrates how to implement a custom encoder and decoder for the topic value type
-`chrono::system_clock::time_point`.
+This demo illustrates how to implement a custom encoder and decoder for a topic value of type
+`std::chrono::system_clock::time_point`.
+
+The TimePoint.h header, included by both the reader and writer applications, defines the `DataStorm::Encoder` and
+`DataStorm::Decoder` specializations required to encode and decode time_point values.
 
 ## Ice prerequisites
 
