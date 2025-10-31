@@ -78,10 +78,6 @@ main(int argc, char* argv[])
 
         if (tempChanged)
         {
-            tempIncreasing =
-                (tempIncreasing && (conditions.temperature < maxTemp) ||
-                 (!tempIncreasing && (conditions.temperature <= minTemp)));
-
             if (tempIncreasing)
             {
                 conditions.temperature += 0.5f;
@@ -90,14 +86,13 @@ main(int argc, char* argv[])
             {
                 conditions.temperature -= 0.5f;
             }
+
+            tempIncreasing = (tempIncreasing && conditions.temperature < maxTemp) ||
+                             (!tempIncreasing && conditions.temperature <= minTemp);
         }
 
         if (humidityChanged)
         {
-            humidityIncreasing =
-                (humidityIncreasing && (conditions.humidity < maxHumidity) ||
-                 (!humidityIncreasing && (conditions.humidity <= minHumidity)));
-
             if (humidityIncreasing)
             {
                 conditions.humidity += 1.0f;
@@ -106,6 +101,9 @@ main(int argc, char* argv[])
             {
                 conditions.humidity -= 1.0f;
             }
+
+            humidityIncreasing = (humidityIncreasing && conditions.humidity < maxHumidity) ||
+                                 (!humidityIncreasing && conditions.humidity <= minHumidity);
         }
 
         // If both temperature and humidity changed, publish a full update. Otherwise, publish a partial update for the
