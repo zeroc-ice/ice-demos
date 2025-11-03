@@ -46,7 +46,7 @@ main(int argc, char* argv[])
     auto shutdownPromise = std::promise<void>();
     auto shutdownFuture = shutdownPromise.get_future();
     ctrlCHandler.setCallback(
-        [&ctrlCHandler, &shutdownPromise](int)
+        [&shutdownPromise](int)
         {
             std::cout << "Shutting down..." << std::endl;
             shutdownPromise.set_value();
