@@ -3,8 +3,9 @@
 #include <DataStorm/DataStorm.h>
 #include <Ice/Ice.h>
 
+#include "TemperatureRange.h"
+
 #include <iostream>
-#include <optional>
 #include <string>
 
 using namespace std;
@@ -12,35 +13,74 @@ using namespace std;
 int
 main(int argc, char* argv[])
 {
-    try
+    // CtrlCHandler is a helper class that handles Ctrl+C and similar signals. It must be constructed at the beginning
+    // of the program, before creating a DataStorm node or starting any thread.
+    Ice::CtrlCHandler ctrlCHandler;
+
+    // Instantiates DataStorm node.
+    DataStorm::Node node{argc, argv};
+
+    // Instantiates the "temperature" topic. The topic uses strings for keys and float for values.
+    DataStorm::Topic<string, float> topic{node, "temperature"};
+
+    // Create a sample filter that only reports temperatures outside of the given temperature range.
+    // The filter criteria `TemperatureRange` is generated from the TemperatureRange.ice Slice file.
+    topic.setSampleFilter<ClearSky::TemperatureRange>(
+        "not-in-range-filter",
+        [](ClearSky::TemperatureRange range)
+        {
+            return [range](const DataStorm::Sample<string, float>& sample)
+            {
+                float value = sample.getValue();
+                return value < range.min || value > range.max;
+            };
+        });
+
+    // Instantiate an any key writer.
+    auto writer = DataStorm::makeAnyKeyWriter(topic, "temperature-writer");
+
+    // Wait for a reader to connect
+    topic.waitForReaders();
+
+    // Shutdown the writer on Ctrl-C.
+    auto shutdownPromise = std::promise<void>();
+    auto shutdownFuture = shutdownPromise.get_future();
+    ctrlCHandler.setCallback(
+        [&shutdownPromise](int)
+        {
+            std::cout << "Shutting down..." << std::endl;
+            shutdownPromise.set_value();
+        });
+
+    // Publish temperature readings.
+    float temp = 20.0f;
+    bool increasing = true;
+    while (true)
     {
-        // Instantiates DataStorm node.
-        DataStorm::Node node{argc, argv};
+        cout << "Publishing temperature reading... " << temp << "°C" << endl;
+        writer.update("room1", temp);
 
-        // Instantiates the "hello" topic. The topic uses strings for keys and values.
-        DataStorm::Topic<string, string> topic{node, "hello"};
+        if (increasing)
+        {
+            temp += 0.5f;
+            if (temp >= 22.0f)
+            {
+                increasing = false;
+            }
+        }
+        else
+        {
+            temp -= 0.5f;
+            if (temp <= 18.0f)
+            {
+                increasing = true;
+            }
+        }
 
-        // Configure writers to not clear the history. We want the readers to receive all the writer samples.
-        topic.setWriterDefaultConfig({std::nullopt, std::nullopt, DataStorm::ClearHistoryPolicy::Never});
-
-        // Instantiate the foo writer and wait for a reader to connect.
-        auto writer = DataStorm::makeSingleKeyWriter(topic, "foo");
-        topic.waitForReaders();
-
-        // Publish samples
-        writer.update("hi");
-        writer.update("greetings");
-        writer.update("good morning");
-        writer.update("hello");
-        writer.update("good afternoon");
-
-        // Wait for readers to disconnect.
-        topic.waitForNoReaders();
+        // Wait for one second or for the shutdown signal.
+        if (shutdownFuture.wait_for(std::chrono::seconds(1)) != std::future_status::timeout)
+        {
+            break;
+        }
     }
-    catch (const std::exception& ex)
-    {
-        cerr << ex.what() << endl;
-        return 1;
-    }
-    return 0;
 }
