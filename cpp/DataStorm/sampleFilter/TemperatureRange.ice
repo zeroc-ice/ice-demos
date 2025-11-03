@@ -2,7 +2,7 @@
 
 module ClearSky
 {
-    /// Represents the temperature range.
+    /// Represents a temperature range.
     struct TemperatureRange
     {
         /// The maximum temperature in degrees Celsius.

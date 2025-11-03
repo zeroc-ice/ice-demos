@@ -13,17 +13,18 @@ using namespace std;
 int
 main(int argc, char* argv[])
 {
-    // CtrlCHandler must be created before the communicator is created or any other threads are started.
+    // CtrlCHandler is a helper class that handles Ctrl+C and similar signals. It must be constructed at the beginning
+    // of the program, before creating a DataStorm node or starting any thread.
     Ice::CtrlCHandler ctrlCHandler;
 
     // Instantiates DataStorm node.
     DataStorm::Node node{argc, argv};
 
-    // Instantiates the "temperature" topic. The topic uses strings for keys and floats for values.
+    // Instantiates the "temperature" topic. The topic uses strings for keys and float for values.
     DataStorm::Topic<string, float> topic{node, "temperature"};
 
     // Create a sample filter that only reports temperatures outside of the given temperature range.
-    // The filter criteria TemperatureRange is defined in TemperatureRange.ice Slice file.
+    // The filter criteria `TemperatureRange` is generated from the TemperatureRange.ice Slice file.
     topic.setSampleFilter<ClearSky::TemperatureRange>(
         "not-in-range-filter",
         [](ClearSky::TemperatureRange range)
@@ -49,8 +50,6 @@ main(int argc, char* argv[])
         {
             std::cout << "Shutting down..." << std::endl;
             shutdownPromise.set_value();
-            // Reset the callback to nullptr to avoid calling it again.
-            ctrlCHandler.setCallback(nullptr);
         });
 
     // Publish temperature readings.
