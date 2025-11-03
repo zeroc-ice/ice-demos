@@ -7,7 +7,7 @@ demonstrates a specific feature or programming technique.
 |----------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
 | [DataStorm Custom Encoding](./DataStorm/customEncoding/) | Shows how to implement a custom encoder and decoder.                                                        |
 | [DataStorm KeyFilter](./DataStorm/keyFilter/)            | Shows how to use a key filters.                                                                             |
-| [DataStorm Minimal](./DataStorm/minimal/)                | Shows how to create a minimal DataStorm publisher and subscriber.                                           |
+| [DataStorm Greeter](./DataStorm/greeter/)                | Shows how to create a DataStorm application.                                                                |
 | [DataStorm Node](./DataStorm/node/)                      | Shows the uses of a DataStorm node.                                                                         |
 | [DataStorm SampleFilter](./DataStorm/sampleFilter/)      | Shows how to use sample filters.                                                                            |
 | [DataStorm Stock](./DataStorm/stock/)                    | Shows how to use partial updates.                                                                           |
