@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.21)
 
-project(datastorm_minimal CXX)
+project(datastorm_clock CXX)
 
 include(../../cmake/common.cmake)
 
-add_executable(reader Reader.cpp)
+add_executable(reader Reader.cpp TimePoint.h)
 target_link_libraries(reader PRIVATE Ice::Ice Ice::DataStorm)
 if(WIN32)
   add_custom_command(TARGET reader POST_BUILD
@@ -15,7 +15,7 @@ if(WIN32)
   )
 endif()
 
-add_executable(writer Writer.cpp)
+add_executable(writer Writer.cpp TimePoint.h)
 target_link_libraries(writer PRIVATE Ice::Ice Ice::DataStorm)
 if(WIN32)
   add_custom_command(TARGET writer POST_BUILD
