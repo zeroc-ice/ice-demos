@@ -36,7 +36,7 @@ main(int argc, char* argv[])
     DataStorm::Node node{argc, argv};
 
     ctrlCHandler.setCallback(
-        [&ctrlCHandler, &node](int)
+        [&node](int)
         {
             std::cout << "Shutting down..." << std::endl;
             node.shutdown();
