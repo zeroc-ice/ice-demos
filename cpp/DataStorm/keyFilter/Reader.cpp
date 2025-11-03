@@ -13,12 +13,13 @@ main(int argc, char* argv[])
     // Instantiates DataStorm node.
     DataStorm::Node node{argc, argv};
 
-    // Instantiates the "temperature" topic. The topic uses strings for the keys and float for the values.
+    // Instantiates the "temperature" topic. The topic uses strings for keys and float for values.
     DataStorm::Topic<string, float> topic{node, "temperature"};
 
     // Configure readers to never clear the history. We want to receive all the samples written by the writers.
     topic.setReaderDefaultConfig({std::nullopt, std::nullopt, DataStorm::ClearHistoryPolicy::Never});
 
+    // Define a custom key filter named "startsWith" that matches keys starting with a specified prefix.
     topic.setKeyFilter<string>(
         "startsWith",
         [](string prefix)
@@ -27,7 +28,7 @@ main(int argc, char* argv[])
             { return key.size() >= prefix.size() && key.compare(0, prefix.size(), prefix) == 0; };
         });
 
-    // Instantiate a filtered reader for keys starting with the "floor1-" prefix. To monitor the temperature on
+    // Instantiate a filtered reader for keys starting with the "floor1/" prefix. To monitor the temperature on
     // floor 1.
     auto reader1 = DataStorm::makeFilteredKeyReader(topic, DataStorm::Filter<string>("startsWith", "floor1/"));
 
