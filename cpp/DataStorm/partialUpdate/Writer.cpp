@@ -14,7 +14,8 @@ using namespace std;
 int
 main(int argc, char* argv[])
 {
-    // CtrlCHandler must be created before the node is created or any other threads are started.
+    // CtrlCHandler is a helper class that handles Ctrl+C and similar signals. It must be constructed at the beginning
+    // of the program, before creating a DataStorm node or starting any thread.
     Ice::CtrlCHandler ctrlCHandler;
 
     // Instantiates DataStorm node.

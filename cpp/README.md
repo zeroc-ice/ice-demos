@@ -10,7 +10,7 @@ demonstrates a specific feature or programming technique.
 | [DataStorm Greeter](./DataStorm/greeter/)                | Shows how to create a DataStorm application.                                                                |
 | [DataStorm Node](./DataStorm/node/)                      | Shows the uses of a DataStorm node.                                                                         |
 | [DataStorm SampleFilter](./DataStorm/sampleFilter/)      | Shows how to use sample filters.                                                                            |
-| [DataStorm Stock](./DataStorm/stock/)                    | Shows how to use partial updates.                                                                           |
+| [DataStorm Stock](./DataStorm/partialUpdate/)            | Shows how to use partial updates.                                                                           |
 | [Glacier2 Callback](./Glacier2/callback/)                | Shows how to write a Glacier2 client and implement callbacks in this client.                                |
 | [Glacier2 Greeter](./Glacier2/greeter/)                  | Shows how to write a basic Glacier2 client.                                                                 |
 | [Glacier2 Session](./Glacier2/session)                   | Shows how to implement and configure a custom Glacier2 Session Manager. Also demonstrates default servants. |
