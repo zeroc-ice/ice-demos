@@ -86,8 +86,8 @@ jobs:
 
           # For each directory with a CMakeLists.txt file, ensure it is listed in cmake.sourceDirectory
           find . -name CMakeLists.txt -type f | while read -r file; do
-              dir=$(dirname "$file" | sed 's#^\./##')
-              if ! jq -r '.["cmake.sourceDirectory"][]' .vscode/settings.json | sed 's#\${workspaceFolder}/##' | grep -qx "$dir"; then
+              dir=$(dirname "$file" | sed 's#^\./#\${workspaceFolder}/#')
+              if ! jq -r '.["cmake.sourceDirectory"][]' .vscode/settings.json | grep -qx "$dir"; then
                   echo "The directory '$dir' with CMakeLists.txt is missing in .vscode/settings.json cmake.sourceDirectory"
                   exit 1
               fi
