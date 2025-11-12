@@ -89,5 +89,6 @@ jobs:
               dir=$(dirname "$file" | sed 's#^\./##')
               if ! jq -r '.["cmake.sourceDirectory"][]' .vscode/settings.json | sed 's#\${workspaceFolder}/##' | grep -qx "$dir"; then
                   echo "The directory '$dir' with CMakeLists.txt is missing in .vscode/settings.json cmake.sourceDirectory"
+                  exit 1
               fi
           done
