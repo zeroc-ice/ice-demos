@@ -8,34 +8,27 @@
         "${workspaceFolder}/cpp/DataStorm/node",
         "${workspaceFolder}/cpp/DataStorm/sampleFilter",
         "${workspaceFolder}/cpp/DataStorm/stock",
-
         "${workspaceFolder}/cpp/Glacier2/callback",
         "${workspaceFolder}/cpp/Glacier2/greeter",
-
         "${workspaceFolder}/cpp/Ice/bidir",
         "${workspaceFolder}/cpp/Ice/callback",
         "${workspaceFolder}/cpp/Ice/cancellation",
         "${workspaceFolder}/cpp/Ice/config",
         "${workspaceFolder}/cpp/Ice/context",
         "${workspaceFolder}/cpp/Ice/customError",
-        "${workspaceFolder}/cpp/Ice/filesystem",
         "${workspaceFolder}/cpp/Ice/forwarder",
         "${workspaceFolder}/cpp/Ice/greeter",
         "${workspaceFolder}/cpp/Ice/middleware",
-        "${workspaceFolder}/cpp/Ice/multicast",
         "${workspaceFolder}/cpp/Ice/optional",
         "${workspaceFolder}/cpp/Ice/secure",
-
         "${workspaceFolder}/cpp/IceBox/greeter",
-
         "${workspaceFolder}/cpp/IceDiscovery/greeter",
         "${workspaceFolder}/cpp/IceDiscovery/replication",
-
         "${workspaceFolder}/cpp/IceGrid/greeter",
         "${workspaceFolder}/cpp/IceGrid/icebox",
         "${workspaceFolder}/cpp/IceGrid/locatorDiscovery",
         "${workspaceFolder}/cpp/IceGrid/query",
-
-        "${workspaceFolder}/cpp/IceStorm/weather",
+        "${workspaceFolder}/cpp/Ice/inheritance",
+        "${workspaceFolder}/cpp/IceStorm/weather"
     ]
 }

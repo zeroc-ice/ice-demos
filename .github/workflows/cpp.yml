@@ -61,3 +61,33 @@ jobs:
             cmake -B "$dir/build" -S "$dir" -DCMAKE_CXX_CLANG_TIDY="clang-tidy-19"
             cmake --build "$dir/build"
           done
+
+  vscode-cmake:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Read .vscode/settings.json. Ensure each entry in cmake.sourceDirectory is valid.
+      - name: Check .vscode/settings.json cmake.sourceDirectory entries
+        run: |
+          set -e
+          set -o pipefail
+
+          # For each directory listed in cmake.sourceDirectory, ensure it contains a CMakeLists.txt file
+          for dir in $(jq -r '.["cmake.sourceDirectory"][]' .vscode/settings.json); do
+              # strip ${workspaceFolder}/ prefix
+              dir="${dir/#\$\{workspaceFolder\}\//}"
+              if [ ! -f "$dir/CMakeLists.txt" ]; then
+                  echo "Directory '$dir' listed in .vscode/settings.json does not exist"
+                  exit 1
+              fi
+          done
+
+          # For each directory with a CMakeLists.txt file, ensure it is listed in cmake.sourceDirectory
+          find . -name CMakeLists.txt -type f | while read -r file; do
+              dir=$(dirname "$file" | sed 's#^\./##')
+              if ! jq -r '.["cmake.sourceDirectory"][]' .vscode/settings.json | sed 's#\${workspaceFolder}/##' | grep -qx "$dir"; then
+                  echo "The directory '$dir' with CMakeLists.txt is missing in .vscode/settings.json cmake.sourceDirectory"
+              fi
+          done
