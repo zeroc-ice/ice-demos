@@ -12,13 +12,12 @@ import com.example.util.Time;
 import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.Identity;
 import com.zeroc.Ice.ObjectAdapter;
-import com.zeroc.Ice.Util;
 
 class Client {
     public static void main(String[] args) {
         // Create an Ice communicator. We'll use this communicator to create proxies, manage outgoing connections, and
         // create an object adapter.
-        try (Communicator communicator = Util.initialize(args)) {
+        try (Communicator communicator = new Communicator(args)) {
             // Create an object adapter that listens for incoming requests and dispatches them to servants.
             // Since we don't specify a port, the OS will choose an ephemeral port. This allows multiple client
             // applications to run concurrently on the same host.

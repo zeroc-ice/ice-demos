@@ -7,7 +7,6 @@ import com.zeroc.Ice.Identity;
 import com.zeroc.Ice.InitializationData;
 import com.zeroc.Ice.ObjectAdapter;
 import com.zeroc.Ice.Properties;
-import com.zeroc.Ice.Util;
 import com.zeroc.IceDiscovery.PluginFactory;
 
 import java.util.Collections;
@@ -30,7 +29,7 @@ class Server {
         initData.properties.setProperty("GreeterAdapter.Endpoints", "tcp");
 
         // Create an Ice communicator. We'll use this communicator to create an object adapter.
-        try (Communicator communicator = Util.initialize(initData)) {
+        try (Communicator communicator = new Communicator(initData)) {
 
             // Create an object adapter that listens for incoming requests and dispatches them to servants.
             // "GreeterAdapter" is a key into the configuration properties set above.

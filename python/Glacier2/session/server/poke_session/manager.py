@@ -29,15 +29,15 @@ class SessionManager(Glacier2.SessionManager, UserIdResolver):
 
     @override
     def create(
-        self, userId: str, sessionControl: Glacier2.SessionControlPrx | None, current: Ice.Current
+        self, userId: str, control: Glacier2.SessionControlPrx | None, current: Ice.Current
     ) -> Glacier2.SessionPrx:
-        # sessionControl is not None because we configured Glacier2.Server.Endpoints in the Glacier2 router
+        # control is not None because we configured Glacier2.Server.Endpoints in the Glacier2 router
         # configuration file.
-        assert sessionControl is not None
+        assert control is not None
 
         # Create a new session servant and add it to the adapter with a UUID identity. The name component of the
         # identity is the session token.
-        proxy = self._sessionAdapter.addWithUUID(DefaultPokeSession(self._sessionAdapter, sessionControl, self))
+        proxy = self._sessionAdapter.addWithUUID(DefaultPokeSession(self._sessionAdapter, control, self))
 
         sessionToken = proxy.ice_getIdentity().name
         self._tokenToUserId[sessionToken] = userId

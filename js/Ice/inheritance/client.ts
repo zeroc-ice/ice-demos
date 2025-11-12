@@ -5,7 +5,7 @@ import { Filesystem } from "./Filesystem.js";
 import process from "node:process";
 
 // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
-await using communicator = Ice.initialize(process.argv);
+await using communicator = new Ice.Communicator(process.argv);
 
 // Create a proxy for the root directory.
 const rootDir = new Filesystem.DirectoryPrx(communicator, "RootDir:tcp -h localhost -p 4061");

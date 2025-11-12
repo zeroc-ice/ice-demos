@@ -44,9 +44,26 @@ rewrite {
     )
 }
 
-// Set whether or not 'rewriteDryRun' should be considered 'failed' when it would make changes.
-tasks.named("rewriteDryRun").configure {
-    rewrite.failOnDryRunResults = runningInCi
+// Fail the build when 'rewriteDryRun' wants to make changes to the code,
+// and print those required changes in the build output for clarity.
+tasks.withType<org.openrewrite.gradle.RewriteDryRunTask>().configureEach {
+    doFirst {
+        // Delete the old report file if present
+        val reportFile = file(reportPath)
+        if (reportFile.exists()) {
+            reportFile.delete()
+        }
+    }
+
+    doLast {
+        if (file(reportPath).exists()) {
+            print("\n\n" + java.nio.file.Files.readString(reportPath))
+
+            if (runningInCi) {
+                throw RuntimeException("Applying recipes would make changes. See logs for more details.")
+            }
+        }
+    }
 }
 
 // We always want to pass "-Xlint:all" when running 'javac'. This enables all its built-in lint checking.

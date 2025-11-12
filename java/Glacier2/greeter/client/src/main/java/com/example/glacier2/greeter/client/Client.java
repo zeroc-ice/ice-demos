@@ -8,12 +8,11 @@ import com.zeroc.Glacier2.PermissionDeniedException;
 import com.zeroc.Glacier2.RouterPrx;
 import com.zeroc.Glacier2.SessionPrx;
 import com.zeroc.Ice.Communicator;
-import com.zeroc.Ice.Util;
 
 class Client {
     public static void main(String[] args) {
         // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
-        try (Communicator communicator = Util.initialize(args)) {
+        try (Communicator communicator = new Communicator(args)) {
 
             // Create a proxy to the Glacier2 router. The addressing information (transport, host and port number) is
             // derived from the value of Glacier2.Client.Endpoints in the glacier2 router configuration file.

@@ -3,7 +3,7 @@
 // Slice module VisitorCenter in Greeter.ice maps to C# namespace VisitorCenter.
 using VisitorCenter;
 
-// Set the Ice.ImplicitContext property to "Shared" before calling Ice.Util.initialize.
+// Set the Ice.ImplicitContext property to "Shared" before calling Ice.Communicator constructor.
 // This is only necessary for the implicit context API (see below).
 var initData = new Ice.InitializationData
 {
@@ -12,7 +12,7 @@ var initData = new Ice.InitializationData
 initData.properties.setProperty("Ice.ImplicitContext", "Shared");
 
 // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
-await using Ice.Communicator communicator = Ice.Util.initialize(initData);
+await using var communicator = new Ice.Communicator(initData);
 
 // Create a Greeter proxy. If you run the server on a different computer, replace localhost in the string below with
 // the server's hostname or IP address.

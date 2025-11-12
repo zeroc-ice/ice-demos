@@ -5,7 +5,7 @@ import { VisitorCenter } from "./Greeter.js";
 import process from "node:process";
 
 // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
-await using communicator = Ice.initialize(process.argv);
+await using communicator = new Ice.Communicator(process.argv);
 
 // Set the default locator of the new communicator. It's the address of the Locator hosted by our IceGrid registry.
 // You can also set this proxy with the Ice.Default.Locator property.

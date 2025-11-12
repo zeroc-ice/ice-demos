@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.21)
 
-project(datastorm_clock CXX)
+project(datastorm_greeter CXX)
 
 include(../../cmake/common.cmake)
 

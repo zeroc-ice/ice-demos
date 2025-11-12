@@ -14,7 +14,7 @@ main(int argc, char* argv[])
     // Set the Ice.ImplicitContext property to "Shared" before creating the communicator.
     // This is only necessary for the implicit context API (see below).
     Ice::InitializationData initData;
-    initData.properties = Ice::createProperties(argc, argv);
+    initData.properties = make_shared<Ice::Properties>(argc, argv);
     initData.properties->setProperty("Ice.ImplicitContext", "Shared");
 
     // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.

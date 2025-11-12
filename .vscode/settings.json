@@ -2,14 +2,15 @@
     "C_Cpp.autoAddFileAssociations": false,
     "C_Cpp.default.cppStandard": "c++17",
     "cmake.sourceDirectory":[
-        "${workspaceFolder}/cpp/DataStorm/clock",
+        "${workspaceFolder}/cpp/DataStorm/customEncoding",
+        "${workspaceFolder}/cpp/DataStorm/greeter",
         "${workspaceFolder}/cpp/DataStorm/keyFilter",
-        "${workspaceFolder}/cpp/DataStorm/minimal",
         "${workspaceFolder}/cpp/DataStorm/node",
         "${workspaceFolder}/cpp/DataStorm/sampleFilter",
         "${workspaceFolder}/cpp/DataStorm/stock",
         "${workspaceFolder}/cpp/Glacier2/callback",
         "${workspaceFolder}/cpp/Glacier2/greeter",
+        "${workspaceFolder}/cpp/Glacier2/session",
         "${workspaceFolder}/cpp/Ice/bidir",
         "${workspaceFolder}/cpp/Ice/callback",
         "${workspaceFolder}/cpp/Ice/cancellation",
@@ -18,6 +19,8 @@
         "${workspaceFolder}/cpp/Ice/customError",
         "${workspaceFolder}/cpp/Ice/forwarder",
         "${workspaceFolder}/cpp/Ice/greeter",
+        "${workspaceFolder}/cpp/Ice/inheritance",
+        "${workspaceFolder}/cpp/Ice/inheritance",
         "${workspaceFolder}/cpp/Ice/middleware",
         "${workspaceFolder}/cpp/Ice/optional",
         "${workspaceFolder}/cpp/Ice/secure",
@@ -28,7 +31,6 @@
         "${workspaceFolder}/cpp/IceGrid/icebox",
         "${workspaceFolder}/cpp/IceGrid/locatorDiscovery",
         "${workspaceFolder}/cpp/IceGrid/query",
-        "${workspaceFolder}/cpp/Ice/inheritance",
         "${workspaceFolder}/cpp/IceStorm/weather"
     ]
 }

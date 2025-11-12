@@ -13,7 +13,7 @@ main(int argc, char* argv[])
 {
     // Register the IceDiscovery plug-in. The plug-in will be loaded during communicator initialization.
     Ice::InitializationData initData;
-    initData.properties = Ice::createProperties(argc, argv);
+    initData.properties = make_shared<Ice::Properties>(argc, argv);
     initData.pluginFactories = {IceDiscovery::discoveryPluginFactory()};
 
     // CtrlCHandler is a helper class that handles Ctrl+C and similar signals. It must be constructed at the beginning

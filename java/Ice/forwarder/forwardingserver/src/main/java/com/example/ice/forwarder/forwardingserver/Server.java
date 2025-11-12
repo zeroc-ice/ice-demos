@@ -5,13 +5,12 @@ package com.example.ice.forwarder.forwardingserver;
 import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.ObjectAdapter;
 import com.zeroc.Ice.ObjectPrx;
-import com.zeroc.Ice.Util;
 
 class Server {
     public static void main(String[] args) {
         // Create an Ice communicator. We'll use this communicator to create an object adapter, and to create proxies
         // and manage outgoing connections.
-        try (Communicator communicator = Util.initialize(args)) {
+        try (Communicator communicator = new Communicator(args)) {
 
             // Create an object adapter that listens for incoming requests and dispatches them to servants.
             ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints("ForwarderAdapter", "tcp -p 10000");

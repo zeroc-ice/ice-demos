@@ -13,9 +13,9 @@ from VisitorCenter import GreeterPrx
 
 async def main():
     initData = Ice.InitializationData()
-    initData.properties = Ice.createProperties(sys.argv)
+    initData.properties = Ice.Properties(sys.argv)
 
-    # Set the Ice.ImplicitContext property to "Shared" before calling Ice.initialize.
+    # Set the Ice.ImplicitContext property to "Shared" before initializing the communicator.
     # This is only necessary for the implicit context API (see below).
     initData.properties.setProperty("Ice.ImplicitContext", "Shared")
 
@@ -23,7 +23,7 @@ async def main():
     initData.eventLoopAdapter = Ice.asyncio.EventLoopAdapter(asyncio.get_running_loop())
 
     # Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
-    async with Ice.initialize(initData=initData) as communicator:
+    async with Ice.Communicator(initData=initData) as communicator:
         # Create a Greeter proxy. If you run the server on a different computer, replace localhost in the string below
         # with the server's hostname or IP address.
         greeter = GreeterPrx(communicator, "greeter:tcp -h localhost -p 4061")

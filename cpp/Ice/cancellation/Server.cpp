@@ -17,7 +17,7 @@ main(int argc, char* argv[])
 
     // Set the maximum number of threads in the server thread pool to 3, since Chatbot::greet waits synchronously.
     Ice::InitializationData initData;
-    initData.properties = Ice::createProperties(argc, argv);
+    initData.properties = make_shared<Ice::Properties>(argc, argv);
     initData.properties->setProperty("Ice.ThreadPool.Server.SizeMax", "3");
 
     // Create an Ice communicator. We'll use this communicator to create an object adapter.

@@ -4,14 +4,14 @@ import { Ice } from "@zeroc/ice";
 import { VisitorCenter } from "./Greeter.js";
 import process from "node:process";
 
-// Set the Ice.ImplicitContext property to "Shared" before calling Ice.initialize.
+// Set the Ice.ImplicitContext property to "Shared" before calling Ice.Communicator constructor.
 // This is only necessary for the implicit context API (see below).
 const initData = new Ice.InitializationData();
-initData.properties = Ice.createProperties(process.argv);
+initData.properties = new Ice.Properties(process.argv);
 initData.properties.setProperty("Ice.ImplicitContext", "Shared");
 
 // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
-await using communicator = Ice.initialize(initData);
+await using communicator = new Ice.Communicator(initData);
 
 // Create a Greeter proxy. If you run the server on a different computer, replace localhost in the string below with
 // the server's hostname or IP address.
