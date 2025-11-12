@@ -1,14 +1,10 @@
 cmake_minimum_required(VERSION 3.21)
 
-project(datastorm_stock CXX)
+project(datastorm_sampleFilter CXX)
 
 include(../../cmake/common.cmake)
 
-# This demo requires C++20
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-add_executable(reader Reader.cpp Stock.ice)
+add_executable(reader Reader.cpp AtmosphericConditions.ice)
 slice2cpp_generate(reader)
 target_link_libraries(reader PRIVATE Ice::Ice Ice::DataStorm)
 if(WIN32)
@@ -20,7 +16,7 @@ if(WIN32)
   )
 endif()
 
-add_executable(writer Writer.cpp Stock.ice)
+add_executable(writer Writer.cpp AtmosphericConditions.ice)
 slice2cpp_generate(writer)
 target_link_libraries(writer PRIVATE Ice::Ice Ice::DataStorm)
 if(WIN32)

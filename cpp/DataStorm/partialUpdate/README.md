@@ -1,10 +1,11 @@
-# DataStorm Stock
+# DataStorm partialUpdate
 
-This demo illustrates the use of partial updates. The writer adds stocks to the
-topic and sends partial updates to update the stock price or volume. The reader
-prints out the stock information and partial updates.
+This demo illustrates the use of **partial updates** in DataStorm.
 
-The demo uses Slice to define the `Demo::Stock` class in the `Stock.ice` file.
+The writer publishes atmospheric conditions changes, when both temperature and humidity changes it publishes
+a full update, when only one field changes it publishes a partial update for the given field.
+
+The reader and writer register updaters with the topic to process partial update samples.
 
 ## Ice prerequisites
 
@@ -50,8 +51,5 @@ In a separate window, start the reader:
 ```shell
 build\reader
 ```
-
-You can start multiple writers and readers to publish or follow different
-stocks.
 
 [Ice for C++ installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-c
