@@ -79,7 +79,7 @@ jobs:
               # strip ${workspaceFolder}/ prefix
               dir="${dir/#\$\{workspaceFolder\}\//}"
               if [ ! -f "$dir/CMakeLists.txt" ]; then
-                  echo "Directory '$dir' listed in .vscode/settings.json does not exist"
+                  echo "Directory '$dir' listed in .vscode/settings.json does not exist or is missing CMakeLists.txt"
                   exit 1
               fi
           done
