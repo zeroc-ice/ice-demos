@@ -20,7 +20,6 @@
         "${workspaceFolder}/cpp/Ice/forwarder",
         "${workspaceFolder}/cpp/Ice/greeter",
         "${workspaceFolder}/cpp/Ice/inheritance",
-        "${workspaceFolder}/cpp/Ice/inheritance",
         "${workspaceFolder}/cpp/Ice/middleware",
         "${workspaceFolder}/cpp/Ice/optional",
         "${workspaceFolder}/cpp/Ice/secure",
