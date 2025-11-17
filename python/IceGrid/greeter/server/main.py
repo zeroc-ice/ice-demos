@@ -17,7 +17,11 @@ async def main():
     # communicator constructor.
     with Ice.Communicator(sys.argv, eventLoop=loop) as communicator:
         # Shutdown the communicator when the user presses Ctrl+C.
-        loop.add_signal_handler(signal.SIGINT, communicator.shutdown)
+        try:
+            loop.add_signal_handler(signal.SIGINT, communicator.shutdown)
+        except NotImplementedError:
+            # asyncio signal handlers are not implemented on Windows.
+            signal.signal(signal.SIGINT, lambda signum, frame: communicator.shutdown())
 
         # Create an object adapter. It's configured by the GreeterAdapter.* properties in the IceGrid-generated config
         # file.
