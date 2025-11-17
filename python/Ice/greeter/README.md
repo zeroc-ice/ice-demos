@@ -5,7 +5,7 @@ The Greeter demo illustrates how to send a request and wait for the response.
 This demo provides two implementations for the server: a synchronous dispatch implementation (in `server`), and an
 asynchronous dispatch implementation (in `server_asyncio`). The same client works with both.
 
-We recommend running [uv] for building and running the demos.
+We recommend using [uv] for building and running the demos.
 
 ## Running the server
 
