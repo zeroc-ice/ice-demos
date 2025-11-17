@@ -2,7 +2,6 @@
 name = "server-asyncio"
 version = "0.1.0"
 description = "Ice Greeter Asynchronous Server using asyncio"
-readme = "README.md"
 requires-python = ">=3.12"
 dependencies = ["zeroc-ice"]
 
