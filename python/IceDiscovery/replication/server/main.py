@@ -35,9 +35,9 @@ async def main():
     initData.properties.setProperty("GreeterAdapter.Endpoints", "tcp")
 
     # Create an Ice communicator. We'll use this communicator to create an object adapter.
-    with Ice.Communicator(initData=initData) as communicator:
+    async with Ice.Communicator(initData=initData) as communicator:
         # Shutdown the communicator when the user presses Ctrl+C.
-        loop.add_signal_handler(signal.SIGINT, communicator.shutdown)
+        signal.signal(signal.SIGINT, lambda signum, frame: communicator.shutdown())
 
         # Create an object adapter that listens for incoming requests and dispatches them to servants.
         adapter = communicator.createObjectAdapter("GreeterAdapter")

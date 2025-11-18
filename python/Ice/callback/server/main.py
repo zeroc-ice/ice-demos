@@ -17,7 +17,7 @@ async def main():
     # constructor.
     async with Ice.Communicator(sys.argv, eventLoop=loop) as communicator:
         # Shutdown the communicator when the user presses Ctrl+C.
-        loop.add_signal_handler(signal.SIGINT, communicator.shutdown)
+        signal.signal(signal.SIGINT, lambda signum, frame: communicator.shutdown())
 
         # Create an object adapter that listens for incoming requests and dispatches them to servants.
         adapter = communicator.createObjectAdapterWithEndpoints("WakeUpAdapter", "tcp -p 4061")
