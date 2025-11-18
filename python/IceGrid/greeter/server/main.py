@@ -16,6 +16,7 @@ async def main():
     # this communicator with sys.argv args. We enable asyncio support by passing the current event loop to the
     # communicator constructor.
     async with Ice.Communicator(sys.argv, eventLoop=loop) as communicator:
+        # Shutdown the communicator when the user presses Ctrl+C.
         signal.signal(signal.SIGINT, lambda signum, frame: communicator.shutdown())
 
         # Create an object adapter. It's configured by the GreeterAdapter.* properties in the IceGrid-generated config
