@@ -1,2 +1,4 @@
 *.pyc
 EarlyRiser
+# Not committed to pick latest preview
+uv.lock

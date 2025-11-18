@@ -4,3 +4,6 @@ VisitorCenter
 # macOS keychain files
 *.keychain
 *.fl*
+
+# Not committed to pick latest preview
+uv.lock

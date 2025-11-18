@@ -74,7 +74,7 @@ icegridadmin --Ice.Config=config.admin -e "application add greeter-hall-with-rep
 Use the Slice-to-Python compiler to generate Python code from the `Greeter.ice` file:
 
 ```bash
-slice2py ../slice/Greeter.ice
+uv run slice2py ../slice/Greeter.ice
 ```
 
 ### 2. Run the client

@@ -1,2 +1,5 @@
 *.pyc
 **/ClearSky
+
+# Not committed to pick latest preview
+uv.lock
