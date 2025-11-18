@@ -2,3 +2,9 @@
 name = "common"
 description = "Helper functions for Ice demos"
 dependencies = []
+
+[dependency-groups]
+lint = [
+    "pyright>=1.1.407",
+    "ruff>=0.14.5",
+]

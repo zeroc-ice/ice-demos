@@ -1,4 +1,6 @@
 [project]
+name = "glacier2-session-server"
+version = "0.1.0"
 description = "Glacier2 session demo server application"
 requires-python = ">=3.12"
 dependencies = ["zeroc-ice"]

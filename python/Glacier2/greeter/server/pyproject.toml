@@ -1,4 +1,6 @@
 [project]
+name = "glacier2-greeter-server"
+version = "0.1.0"
 description = "Glacier2 greeter demo server application"
 requires-python = ">=3.12"
 dependencies = ["zeroc-ice"]
