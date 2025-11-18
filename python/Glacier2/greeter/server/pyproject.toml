@@ -1,5 +1,5 @@
 [project]
-description = "Ice greeter demo async dispatcher server application"
+description = "Glacier2 greeter demo server application"
 requires-python = ">=3.12"
 dependencies = ["zeroc-ice"]
 
@@ -11,3 +11,9 @@ prerelease = "allow"
 # Configure the ZeroC nightly index as an additional index, searched *before* the default PyPI index.
 name = "zeroc-nightly"
 url = "https://download.zeroc.com/nexus/repository/pypi-nightly/simple/"
+
+[dependency-groups]
+lint = [
+    "pyright>=1.1.407",
+    "ruff>=0.14.5",
+]

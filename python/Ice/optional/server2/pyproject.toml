@@ -1,5 +1,5 @@
 [project]
-description = "Ice greeter demo async dispatcher server application"
+description = "Ice optional demo server application v2"
 requires-python = ">=3.12"
 dependencies = ["zeroc-ice"]
 
