@@ -32,11 +32,7 @@ async def main():
     # Create an Ice communicator. We'll use this communicator to create an object adapter.
     async with Ice.Communicator(initData=initData) as communicator:
         # Shutdown the communicator when the user presses Ctrl+C.
-        try:
-            loop.add_signal_handler(signal.SIGINT, communicator.shutdown)
-        except NotImplementedError:
-            # asyncio signal handlers are not implemented on Windows.
-            signal.signal(signal.SIGINT, lambda signum, frame: communicator.shutdown())
+        signal.signal(signal.SIGINT, lambda signum, frame: communicator.shutdown())
 
         # Create an object adapter that listens for incoming requests and dispatches them to servants.
         adapter = communicator.createObjectAdapter("GreeterAdapter")

@@ -20,12 +20,7 @@ async def main():
     # create an object adapter. We enable asyncio support by passing the current event loop to the communicator
     # constructor.
     async with Ice.Communicator(sys.argv, eventLoop=loop) as communicator:
-        # Shutdown the communicator when the user presses Ctrl+C.
-        try:
-            loop.add_signal_handler(signal.SIGINT, communicator.shutdown)
-        except NotImplementedError:
-            # asyncio signal handlers are not implemented on Windows.
-            signal.signal(signal.SIGINT, lambda signum, frame: communicator.shutdown())
+        signal.signal(signal.SIGINT, lambda signum, frame: communicator.shutdown())
 
         # Create an object adapter that listens for incoming requests and dispatches them to servants. This object
         # adapter listens on an OS-assigned TCP port, on all interfaces.
