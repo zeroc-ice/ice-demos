@@ -1,5 +1,6 @@
 [project]
 name = "common"
+version = "0.1.0"
 description = "Helper functions for Ice demos"
 dependencies = []
 

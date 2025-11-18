@@ -26,9 +26,10 @@ We recommend using [uv] for building and running the demos.
 
 ### 1. Compile the Slice definitions
 
-Use the Slice-to-Python compiler to generate Python code from the `Greeter.ice` file:
+Navigate to the `server` directory and use the `slice2py` compiler to generate Python code from the `Greeter.ice` file:
 
 ```bash
+cd server
 uv run slice2py ../slice/Greeter.ice
 ```
 
@@ -40,19 +41,29 @@ In a separate terminal, run:
 icegridregistry --Ice.Config=config.registry
 ```
 
-### 5. Start the IceGrid node
+### 3. Start the IceGrid node
 
-In another terminal start the node:
+In another terminal, first activate the virtual environment, then start the node:
+
+#### macOS and Linux
 
 ```bash
-uv run icegridnode --Ice.Config=config.node
+source server/.venv/bin/activate
+icegridnode --Ice.Config=config.node
+```
+
+#### Windows (PowerShell)
+
+```powershell
+server\.venv\Scripts\activate
+icegridnode --Ice.Config=config.node
 ```
 
 > [!NOTE]
-> Using uv run ensures that icegridnode is launched inside the active Python virtual environment, allowing it to locate
-> the server’s Python dependencies installed in that environment.
+> We need to start `icegridnode` from an active Python virtual environment in order for it to find the server program
+> dependencies installed in that environment.
 
-### 6. Deploy the Greeter application
+### 4. Deploy the Greeter application
 
 Use the IceGrid admin tool to deploy the configuration:
 
@@ -71,7 +82,7 @@ icegridadmin --Ice.Config=config.admin -e "application add greeter-hall-with-rep
 
 ### 1. Compile the Slice definitions
 
-Use the Slice-to-Python compiler to generate Python code from the `Greeter.ice` file:
+Navigate to the `client` directory and use the `slice2py` compiler to generate Python code from the `Greeter.ice` file:
 
 ```bash
 uv run slice2py ../slice/Greeter.ice

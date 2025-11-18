@@ -1,5 +1,5 @@
 [project]
-name = "ice_grid-greeter-client"
+name = "icegrid-greeter-client"
 version = "0.1.0"
 description = "IceGrid greeter demo client application"
 requires-python = ">=3.12"

@@ -1,2 +1,5 @@
 *.pyc
 Filesystem/
+
+# Not committed to pick latest preview
+uv.lock
