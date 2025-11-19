@@ -14,7 +14,9 @@ flowchart LR
 
 This is particularly useful when the client application is behind a firewall that does not allow incoming connections.
 
-We recommend using [uv] for building and running the demos.
+## Prerequisites
+
+- [uv] Python package and project manager.
 
 ## Running the server
 

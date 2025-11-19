@@ -11,7 +11,9 @@ flowchart LR
     s --connection2--> c
 ```
 
-We recommend using [uv] for building and running the demos.
+## Prerequisites
+
+- [uv] Python package and project manager.
 
 ## Running the server
 

@@ -30,6 +30,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Install pyright
+        run: npm install -g pyright
+
       - name: Install the latest version of uv
         uses: astral-sh/setup-uv@v7
 
