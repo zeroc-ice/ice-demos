@@ -3,13 +3,15 @@
 The Greeter demo illustrates how to send a request and wait for the response.
 
 This demo provides two implementations for the server: a synchronous dispatch implementation (in `server`), and an
-asynchronous dispatch implementation (in `server_asyncio`). The same client works with both.
+asynchronous dispatch implementation (in `server_amd`). The same client works with both.
 
-We recommend using [uv] for building and running the demos.
+## Prerequisites
+
+- [uv] Python package and project manager.
 
 ## Running the server
 
-Navigate to the `server` or `server_asyncio` directory, depending on whether you want to run the synchronous or
+Navigate to the `server` or `server_amd` directory, depending on whether you want to run the synchronous or
 asynchronous version of the server.
 
 ### 1. Compile the Slice definitions

@@ -1,0 +1,24 @@
+[project]
+name = "glacier2-callback-server"
+version = "0.1.0"
+description = "Glacier2 callback demo server application"
+requires-python = ">=3.12"
+dependencies = ["zeroc-ice", "common"]
+
+[tool.uv]
+# Allow pre-releases globally (so the nightly zeroc-ice can be selected)
+prerelease = "allow"
+
+[tool.uv.sources]
+common = { path = "../../../common" }
+
+[[tool.uv.index]]
+# Configure the ZeroC nightly index as an additional index, searched *before* the default PyPI index.
+name = "zeroc-nightly"
+url = "https://download.zeroc.com/nexus/repository/pypi-nightly/simple/"
+
+[dependency-groups]
+lint = [
+    "pyright>=1.1.407",
+    "ruff>=0.14.5",
+]

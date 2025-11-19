@@ -4,3 +4,12 @@ VisitorCenter
 # macOS keychain files
 *.keychain
 *.fl*
+
+# Not committed to pick latest preview
+uv.lock
+
+# build artifacts
+__pycache__/
+build/*
+dist/*
+*.egg-info
