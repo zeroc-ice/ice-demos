@@ -26,8 +26,6 @@ First, start two or more Server programs, each in its own terminal:
 uv run main.py --Ice.Trace.Locator
 ```
 
-> The command must be run from an active venv.
-
 ## Running the client
 
 In a separate terminal, navigate to the `client` directory.
