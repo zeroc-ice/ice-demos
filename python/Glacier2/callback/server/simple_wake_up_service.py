@@ -34,6 +34,7 @@ async def callRing(alarmClock: AlarmClockPrx, wakeUpDatetime: datetime):
     while buttonPressed is ButtonPressed.Snooze:
         await asyncio.sleep(10)
         buttonPressed = await alarmClock.ringAsync("No more snoozing!")
+    print("Client pressed Stop on alarm clock.")
 
 
 class SimpleWakeUpService(WakeUpService):
@@ -62,4 +63,3 @@ class SimpleWakeUpService(WakeUpService):
         # configured event loop, we can use asyncio.get_running_loop to retrieve it.
         assert alarmClock is not None
         asyncio.get_running_loop().create_task(callRing(alarmClock, wakeUpDatetime))
-        print("Client pressed Stop on alarm clock.")
