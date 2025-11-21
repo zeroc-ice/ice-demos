@@ -36,19 +36,19 @@ Use the Slice-to-Python compiler to generate Python code from the appropriate Sl
 
 - For **server1**:
 
-  ```bash
+  ```shell
   uv run slice2py ../slice/WeatherStation1.ice
   ```
 
 - For **server2**:
 
-  ```bash
+  ```shell
   uv run slice2py ../slice/WeatherStation2.ice
   ```
 
 ### 2. Run the server
 
-```bash
+```shell
 uv run main.py
 ```
 
@@ -63,19 +63,19 @@ Use the Slice-to-Python compiler to generate Python code from the appropriate Sl
 
 - For **client1**:
 
-  ```bash
+  ```shell
   uv run slice2py ../slice/WeatherStation1.ice
   ```
 
 - For **client2**:
 
-  ```bash
+  ```shell
   uv run slice2py ../slice/WeatherStation2.ice
   ```
 
 ### 2. Run the client
 
-```bash
+```shell
 uv run main.py
 ```
 

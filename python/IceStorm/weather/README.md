@@ -34,13 +34,13 @@ Navigate to the `sensor` directory, to run the sensor program.
 
 Use the Slice-to-Python compiler to generate Python code from the `WeatherStation.ice` file:
 
-```bash
+```shell
 uv run slice2py ../slice/WeatherStation.ice
 ```
 
 ### 2. Run the sensor
 
-```bash
+```shell
 uv run main.py
 ```
 
@@ -55,13 +55,13 @@ In a separate terminal, navigate to the `station` directory to run the station p
 
 Use the Slice-to-Python compiler to generate Python code from the `WeatherStation.ice` file:
 
-```bash
+```shell
 uv run slice2py ../slice/WeatherStation.ice
 ```
 
 ### 2. Run the station
 
-```bash
+```shell
 uv run main.py
 ```
 

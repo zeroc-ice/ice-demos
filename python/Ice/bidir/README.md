@@ -26,13 +26,13 @@ Navigate to the `server` directory.
 
 Use the Slice-to-Python compiler to generate Python code from the `AlarmClock.ice` file:
 
-```bash
+```shell
 uv run slice2py ../slice/AlarmClock.ice
 ```
 
 ### 2. Run the server
 
-```bash
+```shell
 uv run main.py
 ```
 
@@ -44,13 +44,13 @@ In a separate terminal, navigate to the `client` directory.
 
 Use the Slice-to-Python compiler to generate Python code from the `AlarmClock.ice` file:
 
-```bash
+```shell
 uv run slice2py ../slice/AlarmClock.ice
 ```
 
 ### 2. Run the client
 
-```bash
+```shell
 uv run main.py
 ```
 

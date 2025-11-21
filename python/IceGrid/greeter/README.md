@@ -28,7 +28,7 @@ flowchart LR
 Navigate to the `server` directory and use the Slice-to-Python compiler to generate Python code from the `Greeter.ice`
 file:
 
-```bash
+```shell
 uv run slice2py ../slice/Greeter.ice
 ```
 
@@ -36,7 +36,7 @@ uv run slice2py ../slice/Greeter.ice
 
 In a separate terminal, run:
 
-```bash
+```shell
 icegridregistry --Ice.Config=config.registry
 ```
 
@@ -46,7 +46,7 @@ In another terminal, first activate the virtual environment, then start the node
 
 #### macOS and Linux
 
-```bash
+```shell
 source server/.venv/bin/activate
 icegridnode --Ice.Config=config.node
 ```
@@ -66,14 +66,14 @@ icegridnode --Ice.Config=config.node
 
 Use the IceGrid admin tool to deploy the configuration:
 
-```bash
+```shell
 icegridadmin --Ice.Config=config.admin -e "application add greeter-hall.xml"
 ```
 
 `greeter-hall.xml` configures a single Greeter server.
 As an alternative, you can deploy 3 replicated Greeter servers with:
 
-```bash
+```shell
 icegridadmin --Ice.Config=config.admin -e "application add greeter-hall-with-replication.xml"
 ```
 
@@ -85,13 +85,13 @@ In a separate terminal, navigate to the `client` directory.
 
 Use the Slice-to-Python compiler to generate Python code from the `Greeter.ice` file:
 
-```bash
+```shell
 uv run slice2py ../slice/Greeter.ice
 ```
 
 ### 2. Run the client
 
-```bash
+```shell
 uv run main.py
 ```
 
