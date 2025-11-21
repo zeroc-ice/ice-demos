@@ -24,7 +24,7 @@ class AtmosphericConditions
 
 ## Prerequisites
 
-- [uv] Python package and project manager.
+- Install uv. See [Installing uv].
 
 ## Running the server
 
@@ -81,4 +81,4 @@ uv run main.py
 
 Thanks to the `optional` keyword, version 1 and version 2 of the clients and servers interoperate seamlessly.
 
-[uv]: https://docs.astral.sh/uv/
+[Installing uv]: https://docs.astral.sh/uv/getting-started/installation/

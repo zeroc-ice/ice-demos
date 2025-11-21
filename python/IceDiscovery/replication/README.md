@@ -4,7 +4,7 @@ This demo illustrates how to use the IceDiscovery plug-in with replicated server
 
 ## Prerequisites
 
-- [uv] Python package and project manager.
+- Install uv. See [Installing uv].
 
 ## Running the server
 
@@ -48,4 +48,4 @@ uv run main.py --Ice.Trace.Locator
 > The `--Ice.Trace.Locator` command-line option is optional: it enables tracing (logging) for locator resolution and
 > helps you understand the locator logic implemented by the IceDiscovery plug-in.
 
-[uv]: https://docs.astral.sh/uv/
+[Installing uv]: https://docs.astral.sh/uv/getting-started/installation/

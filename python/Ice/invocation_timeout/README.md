@@ -4,7 +4,7 @@ The Invocation Timeout demo shows how to use invocation timeouts.
 
 ## Prerequisites
 
-- [uv] Python package and project manager.
+- Install uv. See [Installing uv].
 
 ## Running the server
 
@@ -46,4 +46,4 @@ uv run main.py --Ice.Trace.Network
 > The `--Ice.Trace.Network` command-line option turns on Network tracing. For this demo, it shows you that the
 > `InvocationTimeoutException` does not close the connection.
 
-[uv]: https://docs.astral.sh/uv/
+[Installing uv]: https://docs.astral.sh/uv/getting-started/installation/

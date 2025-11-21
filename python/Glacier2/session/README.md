@@ -17,7 +17,7 @@ a connection to the server, because the server is on a separate network.
 
 ## Prerequisites
 
-- [uv] Python package and project manager.
+- Install uv. See [Installing uv].
 - Install Glacier2. See [Ice service installation].
 
 ## Running the server
@@ -71,5 +71,5 @@ uv run main.py ash
 
 If you don't specify a name, the client uses the current username.
 
-[uv]: https://docs.astral.sh/uv/
+[Installing uv]: https://docs.astral.sh/uv/getting-started/installation/
 [Ice service installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-services

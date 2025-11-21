@@ -16,7 +16,7 @@ This is particularly useful when the client application is behind a firewall tha
 
 ## Prerequisites
 
-- [uv] Python package and project manager.
+- Install uv. See [Installing uv].
 
 ## Running the server
 
@@ -54,5 +54,5 @@ uv run slice2py ../slice/AlarmClock.ice
 uv run main.py
 ```
 
-[uv]: https://docs.astral.sh/uv/
+[Installing uv]: https://docs.astral.sh/uv/getting-started/installation/
 [1]: ../callback/

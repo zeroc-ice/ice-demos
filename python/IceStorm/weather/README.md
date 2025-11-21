@@ -15,7 +15,7 @@ flowchart LR
 
 ## Prerequisites
 
-- [uv] Python package and project manager.
+- Install uv. See [Installing uv].
 - Install IceStorm. See [Ice service installation].
 
 ## Start IceStorm service
@@ -68,5 +68,5 @@ uv run main.py
 > [!NOTE]
 > You can run multiple station programs, each in its own terminal.
 
-[uv]: https://docs.astral.sh/uv/
+[Installing uv]: https://docs.astral.sh/uv/getting-started/installation/
 [Ice service installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-services

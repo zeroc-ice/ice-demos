@@ -10,7 +10,7 @@ application is free to set any entry in this dictionary.
 
 ## Prerequisites
 
-- [uv] Python package and project manager.
+- Install uv. See [Installing uv].
 
 ## Running the server
 
@@ -48,4 +48,4 @@ uv run slice2py ../slice/Greeter.ice
 uv run main.py
 ```
 
-[uv]: https://docs.astral.sh/uv/
+[Installing uv]: https://docs.astral.sh/uv/getting-started/installation/
