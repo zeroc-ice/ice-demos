@@ -15,7 +15,9 @@ actor SessionManager: Glacier2.SessionManager, UserIdResolver {
         self.adapter = adapter
     }
 
-    func create(userId: String, control: Glacier2.SessionControlPrx?, current: Ice.Current) throws -> Glacier2.SessionPrx? {
+    func create(userId: String, control: Glacier2.SessionControlPrx?, current: Ice.Current) throws -> Glacier2
+        .SessionPrx?
+    {
         // control is not nil because we configured Glacier2.Server.Endpoints in the Glacier2 router
         // configuration file.
         guard let sessionControl = control else {
