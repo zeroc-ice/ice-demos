@@ -88,7 +88,7 @@ do {
 
 // Create a new session. This allows us to reach the PokeBox object again.
 print("Creating a new session...")
-guard let session = try await router.createSession(userId: userId, password: "password") else {
+guard try await router.createSession(userId: userId, password: "password") != nil else {
     fatalError("createSession returned nil")
 }
 
