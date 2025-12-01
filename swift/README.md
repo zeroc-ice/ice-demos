@@ -7,6 +7,7 @@ demonstrates a specific feature or programming technique.
 | ------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
 | [Glacier2 Callback](./Glacier2/Callback/)               | Shows how to write a Glacier2 client and implement callbacks in this client.                               |
 | [Glacier2 Greeter](./Glacier2/Greeter/)                 | Shows how to write a basic Glacier2 client.                                                                |
+| [Glacier2 Session](./Glacier2/Session/)                 | Shows how to implement and configure a Session Manager with Glacier2.                                      |
 | [Ice Bidir](./Ice/Bidir/)                               | Shows how to send requests "the other way around", from the server to the client.                          |
 | [Ice Callback](./Ice/Callback/)                         | Shows how to implement callbacks in a client application.                                                  |
 | [Ice Config](./Ice/Config/)                             | Shows how to configure client and server applications using Ice configuration files.                       |
