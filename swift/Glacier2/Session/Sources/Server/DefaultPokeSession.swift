@@ -1,12 +1,11 @@
 // Copyright (c) ZeroC, Inc.
 
-import Foundation
 import Glacier2
 import Ice
 
-/// DefaultPokeSession is an Ice servant that implements Slice interface PokeSession. We create a
-/// DefaultPokeSession for each PokeSession object.
-class DefaultPokeSession: CatchThemAll.PokeSession {
+/// DefaultPokeSession is an Ice servant that implements Slice interface PokeSession. We create a DefaultPokeSession
+/// for each PokeSession object.
+struct DefaultPokeSession: PokeSession {
     private let adapter: Ice.ObjectAdapter
     private let sessionControl: Glacier2.SessionControlPrx
     private let userIdResolver: UserIdResolver
@@ -30,22 +29,21 @@ class DefaultPokeSession: CatchThemAll.PokeSession {
         print("Destroying session #\(current.id.name)")
 
         // Remove the token from the user ID resolver, since the token is no longer valid.
-        userIdResolver.removeToken(current.id.name)
+        await userIdResolver.removeToken(current.id.name)
 
         // Remove this servant from the object adapter. A new call to this session object will fail with
         // ObjectNotExistException.
-        try adapter.remove(id: current.id)
+        try adapter.remove(current.id)
 
         // Destroy the session in the Glacier2 router.
         try await sessionControl.destroy()
     }
 
-    func getPokeBox(current: Ice.Current) async throws -> CatchThemAll.PokeBoxPrx? {
+    func getPokeBox(current: Ice.Current) throws -> PokeBoxPrx? {
         // The session token is the name component of the session identity; we use it for the identity of the PokeBox
         // object as well.
-        return try adapter.createProxy(
-            id: Ice.Identity(name: current.id.name, category: "PokeBox"),
-            type: CatchThemAll.PokeBoxPrx.self
-        )
+        try uncheckedCast(
+            prx: adapter.createProxy(Ice.Identity(name: current.id.name, category: "PokeBox")),
+            type: PokeBoxPrx.self)
     }
 }

@@ -1,13 +1,11 @@
 // Copyright (c) ZeroC, Inc.
 
-import Foundation
 import Glacier2
 import Ice
 
 /// SessionManager is an Ice servant that implements Slice interface Glacier2::SessionManager. It creates sessions
 /// and resolves user IDs from session tokens.
-/// Note: This demo implementation is not thread-safe. A real implementation should support concurrent calls.
-class SessionManager: Glacier2.SessionManager, UserIdResolver {
+actor SessionManager: Glacier2.SessionManager, UserIdResolver {
     private let adapter: Ice.ObjectAdapter
     private var tokenToUserId: [String: String] = [:]
 
@@ -17,15 +15,11 @@ class SessionManager: Glacier2.SessionManager, UserIdResolver {
         self.adapter = adapter
     }
 
-    func create(
-        userId: String,
-        control: Glacier2.SessionControlPrx?,
-        current: Ice.Current
-    ) async throws -> Glacier2.SessionPrx? {
+    func create(userId: String, control: Glacier2.SessionControlPrx?, current: Ice.Current) throws -> Glacier2.SessionPrx? {
         // control is not nil because we configured Glacier2.Server.Endpoints in the Glacier2 router
         // configuration file.
         guard let sessionControl = control else {
-            fatalError("SessionControl is nil")
+            fatalError("the SessionControl proxy is nil")
         }
 
         // Create a new session servant and add it to the adapter with a UUID identity. The name component of the
@@ -36,7 +30,7 @@ class SessionManager: Glacier2.SessionManager, UserIdResolver {
             userIdResolver: self
         )
 
-        let proxy = try adapter.addWithUUID(servant: Ice.Disp(sessionServant)) as CatchThemAll.PokeSessionPrx
+        let proxy = try uncheckedCast(prx: adapter.addWithUUID(sessionServant), type: PokeSessionPrx.self)
 
         let sessionToken = proxy.ice_getIdentity().name
         tokenToUserId[sessionToken] = userId
@@ -46,7 +40,7 @@ class SessionManager: Glacier2.SessionManager, UserIdResolver {
     }
 
     func getUserId(_ token: String) -> String? {
-        return tokenToUserId[token]
+        tokenToUserId[token]
     }
 
     func removeToken(_ token: String) {

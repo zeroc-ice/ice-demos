@@ -1,10 +1,7 @@
 // Copyright (c) ZeroC, Inc.
 
-import Foundation
-import Ice
-
 /// Represents a Pokémon storage system.
-protocol PokeStore {
+protocol PokeStore: Actor {
     /// Saves the Pokémon collection for a specific user.
     /// - Parameters:
     ///   - userId: The user ID.
