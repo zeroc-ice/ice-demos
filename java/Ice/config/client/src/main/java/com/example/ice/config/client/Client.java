@@ -1,6 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
-package com.example.ice.client.conf;
+package com.example.ice.config.client;
 
 import com.example.visitorcenter.GreeterPrx;
 import com.zeroc.Ice.Communicator;

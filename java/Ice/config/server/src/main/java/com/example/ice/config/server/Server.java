@@ -1,6 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
-package com.example.ice.server.conf;
+package com.example.ice.config.server;
 
 import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.Identity;
