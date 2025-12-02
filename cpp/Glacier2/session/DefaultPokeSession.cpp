@@ -30,7 +30,14 @@ DefaultPokeSession::destroy(const Ice::Current& current)
     _adapter->remove(current.id);
 
     // Destroy the session in the Glacier2 router.
-    _sessionControl->destroy();
+    try
+    {
+       _sessionControl->destroy();
+    }
+    catch (const Ice::ObjectNotExistException&)
+    {
+        // The session in the Glacier2 router was already destroyed.
+    }
 }
 
 optional<CatchThemAll::PokeBoxPrx>

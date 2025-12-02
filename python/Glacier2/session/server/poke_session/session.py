@@ -54,4 +54,8 @@ class DefaultPokeSession(CatchThemAll.PokeSession):
         self._adapter.remove(current.id)
 
         # Destroy the session in the Glacier2 router.
-        await self._sessionControl.destroyAsync()
+        try:
+            await self._sessionControl.destroyAsync()
+        except Ice.ObjectNotExistException:
+            # The session in the Glacier2 router was already destroyed.
+            pass
