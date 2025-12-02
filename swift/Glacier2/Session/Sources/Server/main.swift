@@ -32,5 +32,11 @@ try adapter.addDefaultServant(servant: sharedPokeBox, category: "PokeBox")
 try adapter.activate()
 print("Listening on port 4061...")
 
+// Shutdown the communicator when the user presses Ctrl+C.
+ctrlCHandler.setCallback { signal in
+    print("Caught signal \(signal), shutting down...")
+    communicator.shutdown()
+}
+
 // Wait until the communicator is shut down. Here, this occurs when the user presses Ctrl+C.
 await communicator.shutdownCompleted()

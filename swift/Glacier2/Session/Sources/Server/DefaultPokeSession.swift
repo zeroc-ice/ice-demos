@@ -36,7 +36,11 @@ struct DefaultPokeSession: PokeSession {
         try adapter.remove(current.id)
 
         // Destroy the session in the Glacier2 router.
-        try await sessionControl.destroy()
+        do {
+            try await sessionControl.destroy()
+        } catch is ObjectNotExistException {
+            // The session was already destroyed, ignore.
+        }
     }
 
     func getPokeBox(current: Ice.Current) throws -> PokeBoxPrx? {
