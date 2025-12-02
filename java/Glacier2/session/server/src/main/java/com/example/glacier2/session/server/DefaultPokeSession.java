@@ -4,13 +4,15 @@ package com.example.glacier2.session.server;
 
 import com.example.catchthemall.AsyncPokeSession;
 import com.example.catchthemall.PokeBoxPrx;
+import com.zeroc.Glacier2.SessionControlPrx;
 import com.zeroc.Ice.Current;
 import com.zeroc.Ice.Identity;
 import com.zeroc.Ice.ObjectAdapter;
+import com.zeroc.Ice.ObjectNotExistException;
 import com.zeroc.Ice.ObjectPrx;
-import com.zeroc.Glacier2.SessionControlPrx;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
 import java.util.concurrent.CompletionStage;
 
 class DefaultPokeSession implements AsyncPokeSession {
@@ -59,6 +61,13 @@ class DefaultPokeSession implements AsyncPokeSession {
         _adapter.remove(current.id);
 
         // Destroy the session in the Glacier2 router.
-        return _sessionControl.destroyAsync();
+        return _sessionControl.destroyAsync().exceptionally(e -> {
+            if (e instanceof ObjectNotExistException) {
+                // The session in the Glacier2 router was already destroyed.
+                return null;
+            } else {
+                throw new CompletionException(e);
+            }
+        });
     }
 }

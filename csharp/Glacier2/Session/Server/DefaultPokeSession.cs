@@ -40,7 +40,14 @@ internal class DefaultPokeSession : AsyncPokeSessionDisp_
         _adapter.remove(current.id);
 
         // Destroy the session in the Glacier2 router.
-        await _sessionControl.destroyAsync();
+        try
+        {
+            await _sessionControl.destroyAsync();
+        }
+        catch (Ice.ObjectNotExistException)
+        {
+            // The session in the Glacier2 router was already destroyed.
+        }
     }
 
     /// <summary>Constructs a DefaultPokeSession servant.</summary>

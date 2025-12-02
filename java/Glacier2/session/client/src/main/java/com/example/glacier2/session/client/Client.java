@@ -5,6 +5,8 @@ package com.example.glacier2.session.client;
 import com.example.catchthemall.PokeBoxPrx;
 import com.example.catchthemall.PokeSessionPrx;
 
+import java.util.List;
+
 import com.zeroc.Glacier2.CannotCreateSessionException;
 import com.zeroc.Glacier2.PermissionDeniedException;
 import com.zeroc.Glacier2.RouterPrx;
@@ -12,8 +14,6 @@ import com.zeroc.Glacier2.SessionPrx;
 import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.ConnectionLostException;
 import com.zeroc.Ice.DispatchException;
-
-import java.util.List;
 
 class Client {
     /** All the Pokémon we know about. */
