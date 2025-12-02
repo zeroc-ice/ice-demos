@@ -1,5 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
+// The common Slice files (such as Glacier2/Session.ice) are provided by the Ice SPM package.
 #include <Glacier2/Session.ice>
 
 module CatchThemAll
