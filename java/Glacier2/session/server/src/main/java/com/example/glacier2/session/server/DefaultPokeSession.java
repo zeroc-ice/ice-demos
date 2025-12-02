@@ -7,6 +7,7 @@ import com.example.catchthemall.PokeBoxPrx;
 import com.zeroc.Ice.Current;
 import com.zeroc.Ice.Identity;
 import com.zeroc.Ice.ObjectAdapter;
+import com.zeroc.Ice.ObjectNotExistException;
 import com.zeroc.Ice.ObjectPrx;
 import com.zeroc.Glacier2.SessionControlPrx;
 
@@ -61,7 +62,7 @@ class DefaultPokeSession implements AsyncPokeSession {
 
         // Destroy the session in the Glacier2 router.
         return _sessionControl.destroyAsync().exceptionally(e -> {
-            if (e instanceof com.zeroc.Ice.ObjectNotExistException) {
+            if (e instanceof ObjectNotExistException) {
                 // The session in the Glacier2 router was already destroyed.
                 return null;
             } else {
