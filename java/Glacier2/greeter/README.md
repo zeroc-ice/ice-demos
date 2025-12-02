@@ -35,7 +35,7 @@ Start the Server program in its own terminal:
 Next, start the Glacier2 router in its own terminal:
 
 ```shell
-glacier2router --Ice.Config=config.glacier2
+glacier2router --Ice.Config=glacier2.conf
 ```
 
 > [!TIP]

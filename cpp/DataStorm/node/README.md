@@ -26,7 +26,7 @@ cmake --build build
 To run the demo, start a DataStorm node:
 
 ```shell
-dsnode --Ice.Config=config.node
+dsnode --Ice.Config=node.conf
 ```
 
 In a separate window, start the writer:

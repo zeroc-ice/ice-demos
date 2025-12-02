@@ -6,9 +6,9 @@ import Ice
 // of the program, before creating an Ice communicator or starting any thread.
 let ctrlCHandler = CtrlCHandler()
 
-// Load the contents of the config.server file into a Properties object.
+// Load the contents of the server.conf file into a Properties object.
 let configFileProperties = Ice.createProperties()
-try configFileProperties.load("config.server")
+try configFileProperties.load("server.conf")
 
 // Create a Properties object from the command line arguments and the config file properties; Ice.* properties and
 // other reserved properties set in args augment or override the config file properties.
@@ -26,7 +26,7 @@ defer {
 }
 
 // Create an object adapter that listens for incoming requests and dispatches them to servants.
-// This adapter is configured through the GreeterAdapter.* properties in config.server.
+// This adapter is configured through the GreeterAdapter.* properties in server.conf.
 let adapter = try communicator.createObjectAdapter("GreeterAdapter")
 
 // Register the Chatbot servant with the adapter.

@@ -1,6 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
-package com.example.ice.config.server;
+package com.example.ice.server.conf;
 
 import com.zeroc.Ice.Communicator;
 import com.zeroc.Ice.Identity;
@@ -10,9 +10,9 @@ import com.zeroc.Ice.Properties;
 
 class Server {
     public static void main(String[] args) {
-        // Load the contents of the config.server file into a Properties object.
+        // Load the contents of the server.conf file into a Properties object.
         var configFileProperties = new Properties();
-        configFileProperties.load("config.server");
+        configFileProperties.load("server.conf");
 
         // Create a Properties object from the command line arguments and the config file properties; Ice.* properties
         // and other reserved properties set in args augment or override the config file properties.

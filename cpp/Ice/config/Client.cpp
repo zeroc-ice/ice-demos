@@ -10,9 +10,9 @@ using namespace std;
 int
 main(int argc, char* argv[])
 {
-    // Load the contents of the config.client file into a Properties object.
+    // Load the contents of the client.conf file into a Properties object.
     auto configFileProperties = make_shared<Ice::Properties>();
-    configFileProperties->load("config.client");
+    configFileProperties->load("client.conf");
 
     // Create a Properties object from the command line arguments and the config file properties; Ice.* properties and
     // other reserved properties set in argc/argv augment or override the config file properties.
@@ -27,7 +27,7 @@ main(int argc, char* argv[])
     // Make sure the communicator is destroyed at the end of this scope.
     Ice::CommunicatorHolder communicatorHolder{communicator};
 
-    // We create a Greeter proxy using the value of the Greeter.Proxy property in config.client.
+    // We create a Greeter proxy using the value of the Greeter.Proxy property in client.conf.
     // It's nullopt if the property is not set.
     std::optional<VisitorCenter::GreeterPrx> greeter =
         communicator->propertyToProxy<VisitorCenter::GreeterPrx>("Greeter.Proxy");

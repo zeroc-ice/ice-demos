@@ -10,9 +10,9 @@ import Ice
 
 
 async def main():
-    # Load the contents of the config.server file into a Properties object.
+    # Load the contents of the server.conf file into a Properties object.
     configFileProperties = Ice.Properties()
-    configFileProperties.load("config.server")
+    configFileProperties.load("server.conf")
 
     initData = Ice.InitializationData()
 

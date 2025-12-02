@@ -1,6 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
-package com.example.ice.config.client;
+package com.example.ice.client.conf;
 
 import com.example.visitorcenter.GreeterPrx;
 import com.zeroc.Ice.Communicator;
@@ -9,9 +9,9 @@ import com.zeroc.Ice.Properties;
 
 class Client {
     public static void main(String[] args) {
-        // Load the contents of the config.client file into a Properties object.
+        // Load the contents of the client.conf file into a Properties object.
         var configFileProperties = new Properties();
-        configFileProperties.load("config.client");
+        configFileProperties.load("client.conf");
 
         // Create a Properties object from the command line arguments and the config file properties; Ice.* properties
         // and other reserved properties set in args augment or override the config file properties.
@@ -22,7 +22,7 @@ class Client {
         var initData = new InitializationData();
         initData.properties = properties;
         try (Communicator communicator = new Communicator(initData)) {
-            // We create a Greeter proxy using the value of the Greeter.Proxy property in config.client.
+            // We create a Greeter proxy using the value of the Greeter.Proxy property in client.conf.
             GreeterPrx greeter = GreeterPrx.uncheckedCast(communicator.propertyToProxy("Greeter.Proxy"));
 
             // Send a request to the remote object and get the response.

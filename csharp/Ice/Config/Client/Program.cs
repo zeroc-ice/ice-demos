@@ -5,9 +5,9 @@ using System.Diagnostics;
 // Slice module VisitorCenter in Greeter.ice maps to C# namespace VisitorCenter.
 using VisitorCenter;
 
-// Load the contents of the config.client file into a Properties object.
+// Load the contents of the client.conf file into a Properties object.
 var configFileProperties = new Ice.Properties();
-configFileProperties.load("config.client");
+configFileProperties.load("client.conf");
 
 // Create a Properties object from the command line arguments and the config file properties; Ice.* properties and other
 // reserved properties set in args augment or override the config file properties.
@@ -17,7 +17,7 @@ var properties = new Ice.Properties(ref args, defaults: configFileProperties);
 // The communicator gets its properties from the properties object.
 await using var communicator = new Ice.Communicator(new Ice.InitializationData { properties = properties });
 
-// We create a Greeter proxy using the value of the Greeter.Proxy property in config.client.
+// We create a Greeter proxy using the value of the Greeter.Proxy property in client.conf.
 // It's null if the property is not set.
 GreeterPrx? greeter = GreeterPrxHelper.uncheckedCast(communicator.propertyToProxy("Greeter.Proxy"));
 Debug.Assert(greeter is not null);

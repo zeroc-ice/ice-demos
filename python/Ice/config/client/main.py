@@ -12,9 +12,9 @@ import VisitorCenter
 
 
 async def main():
-    # Load the contents of the config.client file into a Properties object.
+    # Load the contents of the client.conf file into a Properties object.
     configFileProperties = Ice.Properties()
-    configFileProperties.load("config.client")
+    configFileProperties.load("client.conf")
 
     # Create a Properties object from the command line arguments and the config file properties; Ice.* properties and
     # other reserved properties set in the sys.argv command-line arguments override the config file properties.

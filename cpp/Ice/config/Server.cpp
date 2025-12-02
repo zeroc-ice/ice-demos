@@ -11,13 +11,13 @@ int
 main(int argc, char* argv[])
 {
     // Create an Ice communicator. We'll use this communicator to create an object adapter. The communicator gets its
-    // configuration properties from file config.server, in the server's current working directory. The communicator
+    // configuration properties from file server.conf, in the server's current working directory. The communicator
     // initialization also parses the command-line options to find and set additional properties.
     Ice::CtrlCHandler ctrlCHandler;
 
-    // Create Ice properties from the contents of the config.server file in the current working directory.
+    // Create Ice properties from the contents of the server.conf file in the current working directory.
     auto configFileProperties = make_shared<Ice::Properties>();
-    configFileProperties->load("config.server");
+    configFileProperties->load("server.conf");
 
     // Create a Properties object from the command line arguments and the config file properties; Ice.* properties and
     // other reserved properties set in argc/argv override the config file properties.
@@ -33,7 +33,7 @@ main(int argc, char* argv[])
     Ice::CommunicatorHolder communicatorHolder{communicator};
 
     // Create an object adapter that listens for incoming requests and dispatches them to servants.
-    // This adapter is configured through the GreeterAdapter.* properties in config.server.
+    // This adapter is configured through the GreeterAdapter.* properties in server.conf.
     auto adapter = communicator->createObjectAdapter("GreeterAdapter");
 
     // Register the Chatbot servant with the adapter.

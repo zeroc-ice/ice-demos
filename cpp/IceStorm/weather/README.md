@@ -34,7 +34,7 @@ cmake --build build
 1. Start the IceStorm service in its own terminal:
 
    ```shell
-   icebox --IceBox.Service.IceStorm="IceStormService,38a0:createIceStorm --Ice.Config=config.icestorm"
+   icebox --IceBox.Service.IceStorm="IceStormService,38a0:createIceStorm --Ice.Config=icestorm.conf"
    ```
 
 2. Run one or more sensors and weather stations, each in its own terminal. You can start them in any order.

@@ -1,8 +1,8 @@
 // Copyright (c) ZeroC, Inc.
 
-// Load the contents of the config.server file into a Properties object.
+// Load the contents of the server.conf file into a Properties object.
 var configFileProperties = new Ice.Properties();
-configFileProperties.load("config.server");
+configFileProperties.load("server.conf");
 
 // Create a Properties object from the command line arguments and the config file properties; Ice.* properties and other
 // reserved properties set in args augment or override the config file properties.
@@ -13,7 +13,7 @@ var properties = new Ice.Properties(ref args, defaults: configFileProperties);
 await using var communicator = new Ice.Communicator(new Ice.InitializationData { properties = properties });
 
 // Create an object adapter that listens for incoming requests and dispatches them to servants.
-// This adapter is configured through the GreeterAdapter.* properties in config.server.
+// This adapter is configured through the GreeterAdapter.* properties in server.conf.
 Ice.ObjectAdapter adapter = communicator.createObjectAdapter("GreeterAdapter");
 
 // Register the Chatbot servant with the adapter.

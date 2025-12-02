@@ -36,7 +36,7 @@ a connection to the server, because the server is on a separate network.
 3. Start the Glacier2 router in its own terminal:
 
    ```shell
-   glacier2router --Ice.Config=config.glacier2
+   glacier2router --Ice.Config=glacier2.conf
    ```
 
    > [!TIP]
