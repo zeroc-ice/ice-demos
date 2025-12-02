@@ -2,11 +2,11 @@
 
 package com.example.glacier2.session.server;
 
+import com.zeroc.Glacier2.SessionControlPrx;
+import com.zeroc.Glacier2.SessionPrx;
 import com.zeroc.Ice.Current;
 import com.zeroc.Ice.ObjectAdapter;
 import com.zeroc.Ice.ObjectPrx;
-import com.zeroc.Glacier2.SessionControlPrx;
-import com.zeroc.Glacier2.SessionPrx;
 
 import java.util.HashMap;
 import java.util.Map;
