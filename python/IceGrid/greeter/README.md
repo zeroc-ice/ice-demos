@@ -37,7 +37,7 @@ uv run slice2py ../slice/Greeter.ice
 In a separate terminal, run:
 
 ```shell
-icegridregistry --Ice.Config=config.registry
+icegridregistry --Ice.Config=registry.conf
 ```
 
 ### 3. Start the IceGrid node
@@ -48,14 +48,14 @@ In another terminal, first activate the virtual environment, then start the node
 
 ```shell
 source server/.venv/bin/activate
-icegridnode --Ice.Config=config.node
+icegridnode --Ice.Config=node.conf
 ```
 
 #### Windows (PowerShell)
 
 ```powershell
 server\.venv\Scripts\activate
-icegridnode --Ice.Config=config.node
+icegridnode --Ice.Config=node.conf
 ```
 
 > [!NOTE]
@@ -67,14 +67,14 @@ icegridnode --Ice.Config=config.node
 Use the IceGrid admin tool to deploy the configuration:
 
 ```shell
-icegridadmin --Ice.Config=config.admin -e "application add greeter-hall.xml"
+icegridadmin --Ice.Config=admin.conf -e "application add greeter-hall.xml"
 ```
 
 `greeter-hall.xml` configures a single Greeter server.
 As an alternative, you can deploy 3 replicated Greeter servers with:
 
 ```shell
-icegridadmin --Ice.Config=config.admin -e "application add greeter-hall-with-replication.xml"
+icegridadmin --Ice.Config=admin.conf -e "application add greeter-hall-with-replication.xml"
 ```
 
 ## Running the client

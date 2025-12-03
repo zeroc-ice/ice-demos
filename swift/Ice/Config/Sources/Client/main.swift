@@ -3,9 +3,9 @@
 import Foundation
 import Ice
 
-// Load the contents of the config.client file into a Properties object.
+// Load the contents of the client.conf file into a Properties object.
 let configFileProperties = Ice.createProperties()
-try configFileProperties.load("config.client")
+try configFileProperties.load("client.conf")
 
 // Create a Properties object from the command line arguments and the config file properties; Ice.* properties and
 // other reserved properties set in args augment or override the config file properties.
@@ -22,10 +22,10 @@ defer {
     communicator.destroy()
 }
 
-// We create a Greeter proxy using the value of the Greeter.Proxy property in config.client.
+// We create a Greeter proxy using the value of the Greeter.Proxy property in client.conf.
 // It's nil if the property is not set.
 guard let objectPrx = try communicator.propertyToProxy("Greeter.Proxy") else {
-    fatalError("Greeter.Proxy property is not set in config.client")
+    fatalError("Greeter.Proxy property is not set in client.conf")
 }
 
 let greeter = uncheckedCast(prx: objectPrx, type: GreeterPrx.self)

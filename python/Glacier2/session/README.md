@@ -43,7 +43,7 @@ uv run main.py
 In a separate terminal, run:
 
 ```shell
-glacier2router --Ice.Config=config.glacier2
+glacier2router --Ice.Config=glacier2.conf
 ```
 
 > [!TIP]

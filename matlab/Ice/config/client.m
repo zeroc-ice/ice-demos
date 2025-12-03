@@ -12,9 +12,9 @@ function client(args)
         loadlibrary('ice', @iceproto);
     end
 
-    % Load the contents of the config.client file into a Properties object.
+    % Load the contents of the client.conf file into a Properties object.
     configFileProperties = Ice.Properties();
-    configFileProperties.load('config.client');
+    configFileProperties.load('client.conf');
 
     % Create a Properties object from the command line arguments and the config file properties; Ice.* properties and
     % other reserved properties set in args augment or override the config file properties.
@@ -27,7 +27,7 @@ function client(args)
     % Destroy the communicator when the function exits.
     cleanup = onCleanup(@() communicator.destroy());
 
-    % We create a Greeter proxy using the value of the Greeter.Proxy property in config.client.
+    % We create a Greeter proxy using the value of the Greeter.Proxy property in client.conf.
     % It's null if the property is not set.
     greeter = visitorcenter.GreeterPrx.uncheckedCast(communicator.propertyToProxy('Greeter.Proxy'));
 

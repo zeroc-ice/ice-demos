@@ -19,19 +19,19 @@ swift build
 First, start the IceGrid registry in its own terminal:
 
 ```shell
-icegridregistry --Ice.Config=config.registry
+icegridregistry --Ice.Config=registry.conf
 ```
 
 Then, start the IceGrid node in its own terminal:
 
 ```shell
-icegridnode --Ice.Config=config.node
+icegridnode --Ice.Config=node.conf
 ```
 
 Next, deploy the "GreeterHall" application in this IceGrid deployment:
 
 ```shell
-icegridadmin --Ice.Config=config.admin -e "application add greeter-hall.xml"
+icegridadmin --Ice.Config=admin.conf -e "application add greeter-hall.xml"
 ```
 
 Finally, run the client application:

@@ -37,26 +37,26 @@ cmake --build build
 1. Start the IceGrid registry in its own terminal:
 
    ```shell
-   icegridregistry --Ice.Config=config.registry
+   icegridregistry --Ice.Config=registry.conf
    ```
 
 2. Start the IceGrid node in its own terminal:
 
    ```shell
-   icegridnode --Ice.Config=config.node
+   icegridnode --Ice.Config=node.conf
    ```
 
 3. Deploy the "GreeterHall" application in this IceGrid deployment:
 
    ```shell
-   icegridadmin --Ice.Config=config.admin -e "application add greeter-hall.xml"
+   icegridadmin --Ice.Config=admin.conf -e "application add greeter-hall.xml"
    ```
 
    `greeter-hall.xml` configures a single Greeter server. As an alternative, you can deploy 3 replicated Greeter servers
    with:
 
    ```shell
-   icegridadmin --Ice.Config=config.admin -e "application add greeter-hall-with-replication.xml"
+   icegridadmin --Ice.Config=admin.conf -e "application add greeter-hall-with-replication.xml"
    ```
 
    > [!TIP]

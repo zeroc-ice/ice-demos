@@ -8,9 +8,9 @@ require 'Ice'
 # name.
 require_relative 'Greeter.rb'
 
-# Load the contents of the config.client file into a Properties object.
+# Load the contents of the client.conf file into a Properties object.
 configFileProperties = Ice.createProperties()
-configFileProperties.load("config.client")
+configFileProperties.load("client.conf")
 
 # Create a Properties object from the command line arguments and the config file properties; Ice.* properties and
 # other reserved properties set in ARGV override the config file properties.
@@ -20,7 +20,7 @@ properties = Ice.createProperties(ARGV, configFileProperties)
 # The communicator gets its properties from the properties object.
 
 Ice.initialize(Ice::InitializationData.new(properties)) do |communicator|
-    # We create a Greeter proxy using the value of the Greeter.Proxy property in config.client.
+    # We create a Greeter proxy using the value of the Greeter.Proxy property in client.conf.
     greeter = VisitorCenter::GreeterPrx.uncheckedCast(communicator.propertyToProxy("Greeter.Proxy"))
 
     # Send a request to the remote object and get the response.
