@@ -1,0 +1,7 @@
+.swiftpm
+.build
+Package.resolved
+
+# macOS keychain files
+*.keychain
+*.fl*
