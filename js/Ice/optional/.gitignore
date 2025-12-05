@@ -1,5 +1,6 @@
 node_modules/
-*.js
-*.js.map
-*.d.ts
+WeatherStation1.js
+WeatherStation1.d.ts
+WeatherStation2.js
+WeatherStation2.d.ts
 package-lock.json
