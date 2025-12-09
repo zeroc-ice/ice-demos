@@ -11,8 +11,6 @@ import com.zeroc.Ice.ObjectAdapter;
 import com.zeroc.Ice.Properties;
 import com.zeroc.IceStorm.AlreadySubscribed;
 import com.zeroc.IceStorm.BadQoS;
-import com.zeroc.IceStorm.NoSuchTopic;
-import com.zeroc.IceStorm.TopicExists;
 import com.zeroc.IceStorm.TopicManagerPrx;
 import com.zeroc.IceStorm.TopicPrx;
 
@@ -43,22 +41,10 @@ class Station {
             TopicManagerPrx topicManager = TopicManagerPrx.createProxy(
                 communicator, "ClearSky/TopicManager:tcp -p 4061");
 
-            // Retrieve a proxy to the "weather" topic: we first create a topic with the given name (in case we are the
-            // first), and then retrieve the proxy if the topic was already created.
-            TopicPrx topic;
-            String topicName = "weather";
-            try {
-                topic = topicManager.create(topicName);
-            } catch (TopicExists topicExists) {
-                try {
-                    topic = topicManager.retrieve(topicName);
-                } catch (NoSuchTopic noSuchTopic) {
-                    assert false;
-                    return;
-                }
-            }
+            // Ask the topic manager to create or retrieve the "weather" topic and return the corresponding proxy.
+            TopicPrx topic = topicManager.createOrRetrieve("weather");
 
-            // The proxy returned by create and retrieve is never null.
+            // The proxy returned by createOrRetrieve is never null.
             assert topic != null;
 
             // Start dispatching requests.

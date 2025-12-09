@@ -24,20 +24,10 @@ IceStorm.TopicManagerPrx topicManager = IceStorm.TopicManagerPrxHelper.createPro
     communicator,
     "ClearSky/TopicManager:tcp -p 4061");
 
-// Retrieve a proxy to the "weather" topic: we first create a topic with the given name (in case we are the first),
-// and then retrieve the proxy if the topic was already created.
-IceStorm.TopicPrx? topic;
-string topicName = "weather";
-try
-{
-    topic = await topicManager.createAsync(topicName);
-}
-catch (IceStorm.TopicExists)
-{
-    topic = await topicManager.retrieveAsync(topicName);
-}
+// Ask the topic manager to create or retrieve the "weather" topic and return the corresponding proxy.
+IceStorm.TopicPrx? topic = await topicManager.createOrRetrieveAsync("weather");
 
-// The proxy returned by createAsync and retrieveAsync is never null.
+// The proxy returned by createOrRetrieveAsync is never null.
 Debug.Assert(topic is not null);
 
 // Start dispatching requests.

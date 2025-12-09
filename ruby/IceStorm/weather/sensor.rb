@@ -14,14 +14,8 @@ Ice.initialize(ARGV) do |communicator|
     # Create a proxy to the IceStorm topic manager.
     topicManager = IceStorm::TopicManagerPrx.new(communicator, "ClearSky/TopicManager:tcp -p 4061 -h localhost")
 
-    # Retrieve a proxy to the 'weather' topic: we first create a topic with the given name (in case we are the first),
-    # and then retrieve the proxy if the topic was already created.
-    topicName = 'weather'
-    begin
-        topic = topicManager.create(topicName)
-    rescue IceStorm::TopicExists => ex
-        topic = topicManager.retrieve(topicName)
-    end
+    # Ask the topic manager to create or retrieve the "weather" topic and return the corresponding proxy.
+    topic = topicManager.createOrRetrieve('weather')
 
     # Create a WeatherStation proxy using the publisher proxy of the topic. The proxy returned by getPublisher is
     # never nil.

@@ -35,20 +35,10 @@ main(int argc, char* argv[])
     // Create a proxy to the IceStorm topic manager.
     IceStorm::TopicManagerPrx topicManager{communicator, "ClearSky/TopicManager:tcp -p 4061 -h localhost"};
 
-    // Retrieve a proxy to the "weather" topic: we first create a topic with the given name (in case we are the first),
-    // and then retrieve the proxy if the topic was already created.
-    std::optional<IceStorm::TopicPrx> topic;
-    const std::string topicName = "weather";
-    try
-    {
-        topic = topicManager->create(topicName);
-    }
-    catch (const IceStorm::TopicExists&)
-    {
-        topic = topicManager->retrieve(topicName);
-    }
+    // Ask the topic manager to create or retrieve the "weather" topic and return the corresponding proxy.
+    std::optional<IceStorm::TopicPrx> topic = topicManager->createOrRetrieve("weather");
 
-    // The proxy returned by create and retrieve is never null.
+    // The proxy returned by createOrRetrieve is never null.
     assert(topic);
 
     // Start dispatching requests.

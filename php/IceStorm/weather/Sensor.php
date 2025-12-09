@@ -14,18 +14,10 @@ $topicManager = IceStorm\TopicManagerPrxHelper::createProxy(
     $communicator,
     'ClearSky/TopicManager:tcp -p 4061 -h localhost');
 
-// Retrieve a proxy to the 'weather' topic: we first create a topic with the given name (in case we are the first),
-// and then retrieve the proxy if the topic was already created.
-$topicName = 'weather';
+// Ask the topic manager to create or retrieve the "weather" topic and return the corresponding proxy.
+$topic = $topicManager->createOrRetrieve('weather');
 
-try {
-    $topic = $topicManager->create($topicName);
-}
-catch (IceStorm\TopicExists $ex) {
-    $topic = $topicManager->retrieve($topicName);
-}
-
-// The proxy returned by create and retrieve is never null.
+// The proxy returned by createOrRetrieve is never null.
 assert($topic !== null);
 
 // Create a WeatherStation proxy using the publisher proxy of the topic. The proxy returned by getPublisher is never

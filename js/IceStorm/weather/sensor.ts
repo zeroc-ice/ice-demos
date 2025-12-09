@@ -10,21 +10,10 @@ await using communicator = new Ice.Communicator(process.argv);
 // Create a proxy to the IceStorm topic manager.
 const topicManager = new IceStorm.TopicManagerPrx(communicator, "ClearSky/TopicManager:tcp -p 4061 -h localhost");
 
-// Retrieve a proxy to the "weather" topic: we first create a topic with the given name (in case we are the first),
-// and then retrieve the proxy if the topic was already created.
-let topic;
-const topicName = "weather";
-try {
-    topic = await topicManager.create(topicName);
-} catch (e) {
-    if (e instanceof IceStorm.TopicExists) {
-        topic = await topicManager.retrieve(topicName);
-    } else {
-        throw e;
-    }
-}
+// Ask the topic manager to create or retrieve the "weather" topic and return the corresponding proxy.
+const topic = await topicManager.createOrRetrieve("weather");
 
-// The proxy returned by createAsync and retrieveAsync is never null.
+// The proxy returned by createOrRetrieve is never null.
 console.assert(topic !== null);
 
 // Create a WeatherStation proxy using the publisher proxy of the topic.
