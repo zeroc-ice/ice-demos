@@ -24,10 +24,6 @@ class Server {
         initData.properties = properties;
         try (Communicator communicator = new Communicator(initData)) {
 
-            // Register a shutdown hook that calls communicator.shutdown() when the user shuts down the server with
-            // Ctrl+C or similar. The shutdown hook thread also waits until the main thread completes its cleanup.
-            shutdownCommunicatorOnCtrlC(communicator, Thread.currentThread());
-
             // Create an object adapter that listens for incoming requests and dispatches them to servants.
             ObjectAdapter adapter = communicator.createObjectAdapter("GreeterAdapter");
 
@@ -37,6 +33,10 @@ class Server {
             // Start dispatching requests.
             adapter.activate();
             System.out.println("Listening on port 4061...");
+
+            // Register a shutdown hook that calls communicator.shutdown() when the user shuts down the server with
+            // Ctrl+C or similar. The shutdown hook thread also waits until the main thread completes its cleanup.
+            shutdownCommunicatorOnCtrlC(communicator, Thread.currentThread());
 
             // Wait until the communicator is shut down. Here, this occurs when the user presses Ctrl+C.
             communicator.waitForShutdown();
