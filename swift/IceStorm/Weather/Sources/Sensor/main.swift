@@ -21,17 +21,9 @@ let topicManager = try makeProxy(
     communicator: communicator, proxyString: "ClearSky/TopicManager:tcp -h localhost -p 4061",
     type: IceStorm.TopicManagerPrx.self)
 
-var topic: IceStorm.TopicPrx
-let topicName = "weather"
-
-// Retrieve a proxy to the "weather" topic: we first create a topic with the given name (in case we are the first),
-// and then retrieve the proxy if the topic was already created.
-// The proxy returned by create and retrieve is never nil.
-do {
-    topic = try await topicManager.create(topicName)!
-} catch is IceStorm.TopicExists {
-    topic = try await topicManager.retrieve(topicName)!
-}
+// Ask the topic manager to create or retrieve the "weather" topic and return the corresponding proxy.
+// The proxy returned by createOrRetrieve is never nil.
+let topic = try await topicManager.createOrRetrieve("weather")!
 
 // Create a WeatherStation proxy using the publisher proxy of the topic.
 let publisher = try await topic.getPublisher()
