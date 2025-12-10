@@ -20,9 +20,6 @@ async def main():
     # create an object adapter. We enable asyncio support by passing the current event loop to the communicator
     # constructor.
     async with Ice.Communicator(sys.argv, eventLoop=loop) as communicator:
-        # Shutdown the communicator when the user presses Ctrl+C.
-        signal.signal(signal.SIGINT, lambda signum, frame: communicator.shutdown())
-
         # Create an object adapter that listens for incoming requests and dispatches them to servants. This object
         # adapter listens on an OS-assigned TCP port, on all interfaces.
         adapter = communicator.createObjectAdapterWithEndpoints("StationAdapter", "tcp")
@@ -51,6 +48,9 @@ async def main():
         # Register our weather station with the topic.
         # subscribeAndGetPublisherAsync returns a publisher proxy that we don't need here.
         await topic.subscribeAndGetPublisherAsync(theQoS={}, subscriber=weatherStation)
+
+        # Shutdown the communicator when the user presses Ctrl+C.
+        signal.signal(signal.SIGINT, lambda _signum, _frame: communicator.shutdown())
 
         # Wait until the communicator is shut down. Here, this occurs when the user presses Ctrl+C.
         await communicator.shutdownCompleted()
