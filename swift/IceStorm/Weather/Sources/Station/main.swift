@@ -33,7 +33,8 @@ let topicManager = try makeProxy(
 
 // Ask the topic manager to create or retrieve the "weather" topic and return the corresponding proxy.
 // The proxy returned by createOrRetrieve is never nil.
-let topic = try await topicManager.createOrRetrieve("weather")!
+let topicName = "weather"
+let topic = try await topicManager.createOrRetrieve(topicName)!
 
 // Start dispatching requests.
 try adapter.activate()

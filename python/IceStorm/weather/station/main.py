@@ -38,7 +38,8 @@ async def main():
         topicManager = IceStorm.TopicManagerPrx(communicator, "ClearSky/TopicManager:tcp -p 4061")
 
         # Ask the topic manager to create or retrieve the "weather" topic and return the corresponding proxy.
-        topic = await topicManager.createOrRetrieveAsync("weather")
+        topicName = "weather"
+        topic = await topicManager.createOrRetrieveAsync(topicName)
 
         # The proxy returned by createOrRetrieveAsync is never null.
         assert topic is not None

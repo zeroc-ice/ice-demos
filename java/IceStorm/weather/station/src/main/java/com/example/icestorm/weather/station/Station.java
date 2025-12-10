@@ -42,7 +42,8 @@ class Station {
                 communicator, "ClearSky/TopicManager:tcp -p 4061");
 
             // Ask the topic manager to create or retrieve the "weather" topic and return the corresponding proxy.
-            TopicPrx topic = topicManager.createOrRetrieve("weather");
+            String topicName = "weather";
+            TopicPrx topic = topicManager.createOrRetrieve(topicName);
 
             // The proxy returned by createOrRetrieve is never null.
             assert topic != null;
