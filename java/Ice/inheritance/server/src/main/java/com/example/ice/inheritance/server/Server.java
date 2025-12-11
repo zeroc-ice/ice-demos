@@ -14,11 +14,6 @@ class Server {
         // Create an Ice communicator. We'll use this communicator to create an object adapter.
         try (Communicator communicator = new Communicator(args)) {
 
-            // Register a shutdown hook that calls communicator.shutdown()
-            // when the user shuts down the server with Ctrl+C or similar.
-            // The shutdown hook thread also waits until the main thread completes its cleanup.
-            shutdownCommunicatorOnCtrlC(communicator, Thread.currentThread());
-
             // Create an object adapter that listens for incoming requests and dispatches them to servants.
             ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints("Filesystem", "tcp -p 4061");
 
@@ -52,6 +47,11 @@ class Server {
             // Start dispatching requests after registering all servants.
             adapter.activate();
             System.out.println("Listening on port 4061...");
+
+            // Register a shutdown hook that calls communicator.shutdown()
+            // when the user shuts down the server with Ctrl+C or similar.
+            // The shutdown hook thread also waits until the main thread completes its cleanup.
+            shutdownCommunicatorOnCtrlC(communicator, Thread.currentThread());
 
             // Wait until the communicator is shut down.
             // Here, this occurs when the user presses Ctrl+C.
