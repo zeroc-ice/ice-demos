@@ -2,7 +2,6 @@
 # Copyright (c) ZeroC, Inc.
 
 import asyncio
-import signal
 import sys
 
 import Ice
@@ -49,11 +48,11 @@ async def main():
         # subscribeAndGetPublisherAsync returns a publisher proxy that we don't need here.
         await topic.subscribeAndGetPublisherAsync(theQoS={}, subscriber=weatherStation)
 
-        # Shutdown the communicator when the user presses Ctrl+C.
-        signal.signal(signal.SIGINT, lambda _signum, _frame: communicator.shutdown())
-
-        # Wait until the communicator is shut down. Here, this occurs when the user presses Ctrl+C.
-        await communicator.shutdownCompleted()
+        # Wait until the communicator is shut down (never happens here) or the user presses Ctrl+C.
+        try:
+            await communicator.shutdownCompleted()
+        except asyncio.CancelledError:
+            print("Caught Ctrl+C, shutting down...")
 
         # Unsubscribe from the topic. The shutdown above only shuts down the object adapter. All client-side
         # functionalities remain available until the communicator is disposed.
