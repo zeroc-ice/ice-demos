@@ -31,7 +31,7 @@ async def main():
         adapter.activate()
         print(f"{greeterName} is listening...")
 
-        # Wait until the communicator is shut down by IceGrid.
+        # Wait until the communicator is shut down. IceGrid shuts down this communicator via its Ice.Admin object.
         await communicator.shutdownCompleted()
 
 
