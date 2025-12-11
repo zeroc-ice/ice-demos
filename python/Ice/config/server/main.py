@@ -27,9 +27,6 @@ async def main():
     # Create an Ice communicator. We'll use this communicator to create an object adapter.
     # The communicator gets its properties from the properties object.
     async with Ice.Communicator(initData=initData) as communicator:
-        # Shutdown the communicator when the user presses Ctrl+C.
-        signal.signal(signal.SIGINT, lambda signum, frame: communicator.shutdown())
-
         # Create an object adapter that listens for incoming requests and dispatches them to servants.
         adapter = communicator.createObjectAdapter("GreeterAdapter")
 
@@ -38,6 +35,9 @@ async def main():
 
         # Start dispatching requests.
         adapter.activate()
+
+        # Shutdown the communicator when the user presses Ctrl+C.
+        signal.signal(signal.SIGINT, lambda _signum, _frame: communicator.shutdown())
 
         # Wait until the communicator is shut down. Here, this occurs when the user presses Ctrl+C.
         await communicator.shutdownCompleted()
