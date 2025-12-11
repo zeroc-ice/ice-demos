@@ -2,7 +2,6 @@
 # Copyright (c) ZeroC, Inc.
 
 import asyncio
-import signal
 import sys
 
 import Ice
@@ -28,11 +27,11 @@ async def main():
         adapter.activate()
         print("Listening on port 4061...")
 
-        # Shutdown the communicator when the user presses Ctrl+C.
-        signal.signal(signal.SIGINT, lambda _signum, _frame: communicator.shutdown())
-
-        # Wait until the communicator is shut down. Here, this occurs when the user presses Ctrl+C.
-        await communicator.shutdownCompleted()
+        # Wait until the communicator is shut down (never happens here) or the user presses Ctrl+C.
+        try:
+            await communicator.shutdownCompleted()
+        except asyncio.CancelledError:
+            print("Caught Ctrl+C, shutting down...")
 
 
 if __name__ == "__main__":

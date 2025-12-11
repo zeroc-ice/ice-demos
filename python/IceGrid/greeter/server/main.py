@@ -2,7 +2,6 @@
 # Copyright (c) ZeroC, Inc.
 
 import asyncio
-import signal
 import sys
 
 import chatbot
@@ -32,10 +31,7 @@ async def main():
         adapter.activate()
         print(f"{greeterName} is listening...")
 
-        # Shutdown the communicator when the user presses Ctrl+C.
-        signal.signal(signal.SIGINT, lambda _signum, _frame: communicator.shutdown())
-
-        # Wait until the communicator is shut down.
+        # Wait until the communicator is shut down. IceGrid shuts down this communicator via its Ice.Admin object.
         await communicator.shutdownCompleted()
 
 
