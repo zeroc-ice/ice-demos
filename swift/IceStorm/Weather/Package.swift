@@ -7,23 +7,23 @@ let package = Package(
     platforms: [
         .macOS(.v15)
     ],
-    dependencies: [.package(url: "https://github.com/zeroc-ice/ice-swift-nightly.git", branch: "main")],
+    dependencies: [.package(url: "https://github.com/zeroc-ice/ice.git", from: "3.8.0")],
     targets: [
         .executableTarget(
             name: "Sensor",
             dependencies: [
-                .product(name: "Ice", package: "ice-swift-nightly"),
-                .product(name: "IceStorm", package: "ice-swift-nightly"),
+                .product(name: "Ice", package: "ice"),
+                .product(name: "IceStorm", package: "ice"),
             ],
-            plugins: [.plugin(name: "CompileSlice", package: "ice-swift-nightly")]
+            plugins: [.plugin(name: "CompileSlice", package: "ice")]
         ),
         .executableTarget(
             name: "Station",
             dependencies: [
-                .product(name: "Ice", package: "ice-swift-nightly"),
-                .product(name: "IceStorm", package: "ice-swift-nightly"),
+                .product(name: "Ice", package: "ice"),
+                .product(name: "IceStorm", package: "ice"),
             ],
-            plugins: [.plugin(name: "CompileSlice", package: "ice-swift-nightly")]
+            plugins: [.plugin(name: "CompileSlice", package: "ice")]
         ),
     ]
 )

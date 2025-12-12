@@ -10,7 +10,7 @@
         "build": "npx slice2js --typescript Greeter.ice && npx tsc"
     },
     "dependencies": {
-        "@zeroc/ice": "^3.8.0-nightly.0.0"
+        "@zeroc/ice": "^3.8.0"
     },
     "devDependencies": {
         "@eslint/js": "^9.32.0",

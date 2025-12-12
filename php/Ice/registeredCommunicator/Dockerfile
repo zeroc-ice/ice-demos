@@ -4,9 +4,9 @@ FROM debian:bookworm
 RUN apt-get update && apt-get install -y \
     ca-certificates curl gnupg
 
-# Add ZeroC nightly repository for Debian 12 (bookworm)
-RUN curl -fsSL https://download.zeroc.com/GPG-KEY-zeroc-nightly | gpg --dearmor -o /etc/apt/keyrings/zeroc-nightly.gpg && \
-    echo "deb [signed-by=/etc/apt/keyrings/zeroc-nightly.gpg] https://download.zeroc.com/nexus/repository/debian12-nightly nightly main" > /etc/apt/sources.list.d/zeroc-nightly.list
+# Add ZeroC 3.8 repository for Debian 12 (bookworm)
+RUN curl -fsSL https://download.zeroc.com/ice/3.8/RPM-GPG-KEY-zeroc-release | gpg --dearmor -o /etc/apt/keyrings/zeroc-3.8.gpg && \
+    echo "deb [signed-by=/etc/apt/keyrings/zeroc-3.8.gpg] https://download.zeroc.com/ice/3.8/debian12 stable main" > /etc/apt/sources.list.d/zeroc-3.8.list
 
 # Install Ice for PHP, PHP-FPM, and Nginx
 RUN apt-get update && apt-get install -y \
