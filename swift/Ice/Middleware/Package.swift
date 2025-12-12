@@ -7,17 +7,17 @@ let package = Package(
     platforms: [
         .macOS(.v15)
     ],
-    dependencies: [.package(url: "https://github.com/zeroc-ice/ice-swift-nightly.git", branch: "main")],
+    dependencies: [.package(url: "https://github.com/zeroc-ice/ice.git", from: "3.8.0")],
     targets: [
         .executableTarget(
             name: "Client",
-            dependencies: [.product(name: "Ice", package: "ice-swift-nightly")],
-            plugins: [.plugin(name: "CompileSlice", package: "ice-swift-nightly")]
+            dependencies: [.product(name: "Ice", package: "ice")],
+            plugins: [.plugin(name: "CompileSlice", package: "ice")]
         ),
         .executableTarget(
             name: "Server",
-            dependencies: [.product(name: "Ice", package: "ice-swift-nightly")],
-            plugins: [.plugin(name: "CompileSlice", package: "ice-swift-nightly")]
+            dependencies: [.product(name: "Ice", package: "ice")],
+            plugins: [.plugin(name: "CompileSlice", package: "ice")]
         ),
     ]
 )

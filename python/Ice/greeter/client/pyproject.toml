@@ -5,15 +5,6 @@ description = "Ice greeter demo client application"
 requires-python = ">=3.12"
 dependencies = ["zeroc-ice"]
 
-[tool.uv]
-# Allow pre-releases globally (so the nightly zeroc-ice can be selected)
-prerelease = "allow"
-
-[[tool.uv.index]]
-# Configure the ZeroC nightly index as an additional index, searched *before* the default PyPI index.
-name = "zeroc-nightly"
-url = "https://download.zeroc.com/nexus/repository/pypi-nightly/simple/"
-
 [dependency-groups]
 lint = [
     "pyright>=1.1.407",
