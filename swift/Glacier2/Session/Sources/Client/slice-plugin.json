@@ -1,4 +1,4 @@
 {
     "sources": ["../../slice/PokeBox.ice"],
-    "search_paths": ["../../.build/checkouts/ice-swift-nightly/slice"]
+    "search_paths": ["../../.build/checkouts/ice/slice"]
 }
