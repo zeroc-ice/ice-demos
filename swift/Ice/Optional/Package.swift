@@ -7,7 +7,7 @@ let package = Package(
     platforms: [
         .macOS(.v15)
     ],
-    dependencies: [.package(url: "https://github.com/zeroc-ice/ice.git", from: "3.8.0")],
+    dependencies: [.package(url: "https://github.com/zeroc-ice/ice.git", .upToNextMinor(from: "3.8.0"))],
     targets: [
         .executableTarget(
             name: "Client1",
