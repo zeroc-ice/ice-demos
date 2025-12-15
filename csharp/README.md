@@ -32,4 +32,4 @@ details.
 | [IceGrid Query](./IceGrid/Query/)                       | Shows how use the Query object provided by the IceGrid registry to lookup a well-known object by type.      |
 | [IceStorm Weather](./IceStorm/Weather/)                 | Shows how to use IceStorm to create a simple pub-sub application.                                           |
 
-[Ice for C# installation]: https://zeroc.com/ice/downloads/3.8/cpp-1
+[Ice for C# installation]: https://zeroc.com/ice/downloads/3.8/csharp
