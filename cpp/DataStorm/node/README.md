@@ -81,5 +81,5 @@ them during discovery. The connection is made from the peer without server endpo
 Once a direct connection is established, stopping the DataStorm node no longer affects data exchange between these
 peers—it only prevents the discovery of new readers and writers.
 
-[Ice for C++ installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-c
+[Ice for C++ installation]: https://zeroc.com/ice/downloads/3.8/cpp
 [Ice service installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-services

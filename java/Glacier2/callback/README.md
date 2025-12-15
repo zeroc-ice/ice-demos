@@ -15,7 +15,7 @@ flowchart LR
 
 ## Ice prerequisites
 
-- Install Glacier2. See [Ice service installation].
+- Install Glacier2. See [Glacier2 installation].
 
 ## Building the demo
 

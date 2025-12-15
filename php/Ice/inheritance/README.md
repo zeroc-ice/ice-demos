@@ -25,4 +25,4 @@ slice2php Filesystem.ice
 php Client.php
 ```
 
-[Ice for PHP installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-php
+[Ice for PHP installation]: https://zeroc.com/ice/downloads/3.8/php

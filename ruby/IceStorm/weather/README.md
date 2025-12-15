@@ -38,4 +38,4 @@ slice2rb WeatherStation.ice
 ruby sensor.rb
 ```
 
-[Ice for Ruby installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-ruby
+[Ice for Ruby installation]: https://zeroc.com/ice/downloads/3.8/ruby

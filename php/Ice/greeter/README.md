@@ -24,4 +24,4 @@ php Client.php
 > Ice for PHP supports only client-side applications. In this demo, we connect to a Greeter server implemented in a
 > language with server-side support, such as C++, C#, Java, Python, or Swift.
 
-[Ice for PHP installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-php
+[Ice for PHP installation]: https://zeroc.com/ice/downloads/3.8/php

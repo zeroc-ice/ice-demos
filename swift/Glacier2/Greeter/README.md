@@ -12,7 +12,7 @@ a connection to the server, because the server is on a separate network.
 
 ## Ice prerequisites
 
-- Install Glacier2. See [Ice service installation].
+- Install Glacier2. See [Glacier2 installation].
 
 ## Building the demo
 
@@ -46,6 +46,6 @@ Finally, run the client application:
 swift run Client
 ```
 
-[Ice service installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-services
+[Glacier2 installation]: https://zeroc.com/ice/downloads/3.8/glacier2
 
 [1]: ../../Ice/Greeter

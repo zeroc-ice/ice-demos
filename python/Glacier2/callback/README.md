@@ -16,7 +16,7 @@ flowchart LR
 ## Prerequisites
 
 - Install uv. See [Installing uv].
-- Install Glacier2. See [Ice service installation].
+- Install Glacier2. See [Glacier2 installation].
 
 ## Running the server
 
@@ -67,6 +67,6 @@ uv run main.py
 ```
 
 [Installing uv]: https://docs.astral.sh/uv/getting-started/installation/
-[Ice service installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-services
+[Glacier2 installation]: https://zeroc.com/ice/downloads/3.8/glacier2
 [1]: ../../Ice/callback
 [2]: ../../Ice/bidir
