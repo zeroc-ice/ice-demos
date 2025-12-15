@@ -4,7 +4,7 @@ This demo shows how to use the Query object provided by the IceGrid registry to 
 
 ## Ice prerequisites
 
-- Install IceGrid. See [Ice service installation].
+- Install IceGrid. See [IceGrid installation].
 
 ## Building the demo
 
@@ -41,4 +41,4 @@ cd Client
 dotnet run
 ```
 
-[Ice service installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-services
+[IceGrid installation]: https://zeroc.com/ice/downloads/3.8/icegrid

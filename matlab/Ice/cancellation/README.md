@@ -36,4 +36,4 @@ client --Ice.Trace.Network --Ice.LogFile=client.log
 > The `--Ice.Trace.Network` argument turns on Network tracing. For this demo, it shows you that
 > `InvocationTimeoutException` and `InvocationCanceledException` do not close the connection.
 
-[Ice for MATLAB installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-matlab
+[Ice for MATLAB installation]: https://zeroc.com/ice/downloads/3.8/matlab

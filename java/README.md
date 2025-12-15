@@ -33,4 +33,4 @@ details.
 | [IceGrid Query](./IceGrid/query/)                       | Shows how use the Query object provided by the IceGrid registry to lookup a well-known object by type.      |
 | [IceStorm Weather](./IceStorm/weather/)                 | Shows how to use IceStorm to create a simple pub-sub application.                                           |
 
-[Ice for Java installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-java
+[Ice for Java installation]: https://zeroc.com/ice/downloads/3.8/java

@@ -16,14 +16,14 @@ flowchart LR
 ## Prerequisites
 
 - Install uv. See [Installing uv].
-- Install IceStorm. See [Ice service installation].
+- Install IceStorm. See [IceStorm installation].
 
 ## Start IceStorm service
 
 Run the IceStorm service in its own terminal:
 
 ```shell
-icebox --IceBox.Service.IceStorm="IceStormService,38a0:createIceStorm --Ice.Config=icestorm.conf"
+icebox --IceBox.Service.IceStorm="IceStormService,38:createIceStorm --Ice.Config=icestorm.conf"
 ```
 
 ## Running the sensor
@@ -69,4 +69,4 @@ uv run main.py
 > You can run multiple station programs, each in its own terminal.
 
 [Installing uv]: https://docs.astral.sh/uv/getting-started/installation/
-[Ice service installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-services
+[IceStorm installation]: https://zeroc.com/ice/downloads/3.8/icestorm

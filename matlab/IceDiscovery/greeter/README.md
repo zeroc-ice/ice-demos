@@ -41,4 +41,4 @@ client --Ice.Trace.Locator --Ice.LogFile=client.log
 
 This call creates a log file named `client.log` in your current directory.
 
-[Ice for MATLAB installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-matlab
+[Ice for MATLAB installation]: https://zeroc.com/ice/downloads/3.8/matlab

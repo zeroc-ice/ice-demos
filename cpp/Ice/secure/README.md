@@ -145,4 +145,4 @@ build\client --Ice.Trace.Network --IceSSL.Trace.Security
 [`SchannelServerAuthenticationOptions`]: https://code.zeroc.com/ice/main/api/cpp/structIce_1_1SSL_1_1SchannelServerAuthenticationOptions.html
 [`SecureTransportClientAuthenticationOptions`]: https://code.zeroc.com/ice/main/api/cpp/structIce_1_1SSL_1_1SecureTransportClientAuthenticationOptions.html
 [`SecureTransportServerAuthenticationOptions`]: https://code.zeroc.com/ice/main/api/cpp/structIce_1_1SSL_1_1SecureTransportServerAuthenticationOptions.html
-[Ice for C++ installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-c
+[Ice for C++ installation]: https://zeroc.com/ice/downloads/3.8/cpp
