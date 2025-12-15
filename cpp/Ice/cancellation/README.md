@@ -51,4 +51,4 @@ build\client --Ice.Trace.Network
 > The `--Ice.Trace.Network` command-line option turns on Network tracing. For this demo, it shows you that the
 > `InvocationCanceledException` and `InvocationTimeoutException` do not close the connection.
 
-[Ice for C++ installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-c
+[Ice for C++ installation]: https://zeroc.com/ice/downloads/3.8/cpp

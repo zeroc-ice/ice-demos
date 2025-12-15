@@ -18,7 +18,7 @@ flowchart LR
 - Install the C++ dev kit.
   - Linux and macOS: see [Ice for C++ installation].
   - Windows: the cmake build downloads and installs the C++ dev kit automatically.
-- Install Glacier2. See [Ice service installation].
+- Install Glacier2. See [Glacier2 installation].
 
 ## Building the demo
 
@@ -71,5 +71,5 @@ cmake --build build
 
 [1]: ../../Ice/callback
 [2]: ../../Ice/bidir
-[Ice for C++ installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-c
-[Ice service installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-services
+[Ice for C++ installation]: https://zeroc.com/ice/downloads/3.8/cpp
+[Glacier2 installation]: https://zeroc.com/ice/downloads/3.8/glacier2

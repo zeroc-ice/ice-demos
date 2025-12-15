@@ -50,4 +50,4 @@ build\client --Ice.Trace.Locator
 > The `--Ice.Trace.Locator` command-line option is optional: it turns on tracing (logging) for locator resolution and
 > helps you understand the locator logic implemented by the IceDiscovery plug-in.
 
-[Ice for C++ installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-c
+[Ice for C++ installation]: https://zeroc.com/ice/downloads/3.8/cpp

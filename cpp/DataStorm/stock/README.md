@@ -54,4 +54,4 @@ build\reader
 You can start multiple writers and readers to publish or follow different
 stocks.
 
-[Ice for C++ installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-c
+[Ice for C++ installation]: https://zeroc.com/ice/downloads/3.8/cpp

@@ -43,4 +43,4 @@ client --Ice.Trace.Network=2 --Ice.LogFile=verbose.log
 type verbose.log
 ```
 
-[Ice for MATLAB installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-matlab
+[Ice for MATLAB installation]: https://zeroc.com/ice/downloads/3.8/matlab

@@ -72,4 +72,4 @@ build\server --Ice.Default.Protocol=ws
 build\client --Ice.Default.Protocol=ws --Ice.Trace.Network=2
 ```
 
-[Ice for C++ installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-c
+[Ice for C++ installation]: https://zeroc.com/ice/downloads/3.8/cpp

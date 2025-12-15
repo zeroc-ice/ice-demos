@@ -53,4 +53,4 @@ build\reader
 
 The reader will print the time sent by the writer. You can start multiple writers and readers.
 
-[Ice for C++ installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-c
+[Ice for C++ installation]: https://zeroc.com/ice/downloads/3.8/cpp

@@ -15,7 +15,7 @@ flowchart LR
 
 ## Ice prerequisites
 
-- Install IceStorm. See [Ice service installation].
+- Install IceStorm. See [IceStorm installation].
 
 ## Building the demo
 
@@ -30,7 +30,7 @@ swift build
 First, run the IceStorm service in its own terminal:
 
 ```shell
-icebox --IceBox.Service.IceStorm="IceStormService,38a0:createIceStorm --Ice.Config=icestorm.conf"
+icebox --IceBox.Service.IceStorm="IceStormService,38:createIceStorm --Ice.Config=icestorm.conf"
 ```
 
 Then, run one or more sensors and weather stations, each in its own terminal. You can start them in any order.
@@ -43,4 +43,4 @@ swift run Sensor
 swift run Station
 ```
 
-[Ice service installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-services
+[IceStorm installation]: https://zeroc.com/ice/downloads/3.8/icestorm
