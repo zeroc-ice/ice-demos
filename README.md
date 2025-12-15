@@ -22,4 +22,4 @@ The sample programs are grouped by programming language:
 - [Ruby](./ruby)
 - [Swift](./swift)
 
-[GPLv2]: https://github.com/zeroc-ice/ice/blob/3.8/LICENSE
+[GPLv2]: LICENSE
