@@ -2,7 +2,6 @@
   <img src="https://raw.githubusercontent.com/zeroc-ice/ice-demos/3.7/.github/assets/ice-banner.svg" height="150" width="150" />
 </p>
 
-[![Join the chat at https://gitter.im/zeroc-ice/ice](https://badges.gitter.im/zeroc-ice/ice.svg)][gitter]
 [![GPLv2](https://img.shields.io/github/license/zeroc-ice/ice?color=red)][GPLv2]
 
 # Ice demos
@@ -33,5 +32,4 @@ in C++ that demonstrate the Slice to C++11 language mapping.
 The [certs](./certs) folder contains X.509 certificates shared by some of these
 sample programs.
 
-[gitter]: https://gitter.im/zeroc-ice/ice?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
 [GPLv2]: https://github.com/zeroc-ice/ice/blob/3.7/LICENSE
