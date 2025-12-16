@@ -108,7 +108,7 @@
 			mainGroup = 8215374F2DF99E1C0044C0F5;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				821537672DF99E4F0044C0F5 /* XCRemoteSwiftPackageReference "ice-swift-nightly" */,
+				821537672DF99E4F0044C0F5 /* XCRemoteSwiftPackageReference "ice" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 821537592DF99E1C0044C0F5 /* Products */;
@@ -368,12 +368,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		821537672DF99E4F0044C0F5 /* XCRemoteSwiftPackageReference "ice-swift-nightly" */ = {
+		821537672DF99E4F0044C0F5 /* XCRemoteSwiftPackageReference "ice" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/zeroc-ice/ice-swift-nightly.git";
+			repositoryURL = "https://github.com/zeroc-ice/ice.git";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = upToNextMinorVersion;
+				minimumVersion = 3.8.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -381,12 +381,12 @@
 /* Begin XCSwiftPackageProductDependency section */
 		821537682DF99E4F0044C0F5 /* Ice */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 821537672DF99E4F0044C0F5 /* XCRemoteSwiftPackageReference "ice-swift-nightly" */;
+			package = 821537672DF99E4F0044C0F5 /* XCRemoteSwiftPackageReference "ice" */;
 			productName = Ice;
 		};
 		8215376C2DF99EB20044C0F5 /* CompileSlice */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 821537672DF99E4F0044C0F5 /* XCRemoteSwiftPackageReference "ice-swift-nightly" */;
+			package = 821537672DF99E4F0044C0F5 /* XCRemoteSwiftPackageReference "ice" */;
 			productName = "plugin:CompileSlice";
 		};
 /* End XCSwiftPackageProductDependency section */
