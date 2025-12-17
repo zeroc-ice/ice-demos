@@ -2,7 +2,8 @@
   <img src="https://raw.githubusercontent.com/zeroc-ice/ice-demos/main/.github/assets/ice-banner.svg" height="150" width="150" />
 </p>
 
-[![GPLv2](https://img.shields.io/github/license/zeroc-ice/ice?color=red)][GPLv2]
+[![CI](https://github.com/zeroc-ice/ice-demos/actions/workflows/ci.yml/badge.svg)][ci-home]
+[![GPLv2](https://img.shields.io/github/license/zeroc-ice/ice-demos?color=red)][GPLv2]
 
 # Ice demos
 
@@ -22,4 +23,5 @@ The sample programs are grouped by programming language:
 - [Ruby](./ruby)
 - [Swift](./swift)
 
+[ci-home]: https://github.com/zeroc-ice/ice-demos/actions/workflows/ci.yml
 [GPLv2]: LICENSE
