@@ -102,7 +102,7 @@ jobs:
         shell: pwsh
         run: |
           $ErrorActionPreference = "Stop"
-          Get-ChildItem -Recurse -Filter *.sln | ForEach-Object {
+          Get-ChildItem -Recurse -Filter *.slnx | ForEach-Object {
             Write-Host "Building solution: $($_.FullName)"
             dotnet build $_.FullName
             if ($LASTEXITCODE -ne 0) {

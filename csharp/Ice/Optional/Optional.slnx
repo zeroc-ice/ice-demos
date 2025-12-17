@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="Client1/Client1.csproj" />
+  <Project Path="Client2/Client2.csproj" />
+  <Project Path="Server1/Server1.csproj" />
+  <Project Path="Server2/Server2.csproj" />
+</Solution>
