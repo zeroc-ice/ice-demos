@@ -1,7 +1,7 @@
 // Copyright (c) ZeroC, Inc.
 
-#include "../../common/Terminate.h"
 #include "../../common/Env.h"
+#include "../../common/Terminate.h"
 #include "PokeBox.h"
 
 #include <Glacier2/Glacier2.h>
