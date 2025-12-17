@@ -11,8 +11,8 @@
 namespace Terminate
 {
     /// Custom terminate handler that prints unhandled exceptions to std::cerr.
-    /// This function is primarily useful on Windows where the default terminate handler does not provide any
-    /// useful information.
+    /// This custom handler is primarily useful on Windows where the default terminate handler aborts the application
+    /// without providing any information.
     inline void customTerminateHandler()
     {
         try
@@ -40,7 +40,10 @@ namespace Terminate
         {
             std::cerr << "Unknown exception caught" << std::endl;
         }
-        std::abort();
+
+        // std::exit does not call destructors to stack objects such as CommunicatorHolder.
+        // If the communicator is not destroyed at exit, we get a warning message on the console.
+        std::exit(EXIT_FAILURE);
     }
 }
 
