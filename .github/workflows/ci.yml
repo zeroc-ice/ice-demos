@@ -3,10 +3,10 @@ name: CI
 on:
   workflow_dispatch:
   push:
-    branches: ["main"]
+    branches: ["3.8"]
   pull_request:
     # The branches below must be a subset of the branches above
-    branches: ["main"]
+    branches: ["3.8"]
 
 # See https://docs.github.com/en/actions/using-jobs/using-concurrency#example-using-a-fallback-value
 concurrency:
@@ -48,8 +48,8 @@ jobs:
           distribution: "oracle"
           java-version: "17"
 
-      - name: Install Nightly Ice Builds
-        uses: ./.github/actions/install-nightly-ice
+      - name: Install 3.8 Ice Builds
+        uses: ./.github/actions/install-3.8-ice
 
       - name: Build C++ Demos
         timeout-minutes: 20
@@ -181,14 +181,14 @@ jobs:
             case "$ID" in
               amzn)
                 dnf install -y tar gzip git gcc gcc-c++ cmake make ninja-build wget
-                dnf install -y https://download.zeroc.com/ice/nightly/amzn2023/ice-repo-nightly-1.0.0-1.amzn2023.noarch.rpm
+                dnf install -y https://download.zeroc.com/ice/3.8/amzn2023/ice-repo-3.8-1.0.0-1.amzn2023.noarch.rpm
                 dnf install -y libice-c++-devel
                 ;;
               rocky)
                 dnf install -y dnf-utils
                 dnf config-manager --enable crb
                 dnf install -y gcc gcc-c++ cmake make ninja-build wget
-                dnf install -y https://download.zeroc.com/ice/nightly/el10/ice-repo-nightly-1.0.0-1.el10.noarch.rpm
+                dnf install -y https://download.zeroc.com/ice/3.8/el10/ice-repo-3.8-1.0.0-1.el10.noarch.rpm
                 dnf install -y libice-c++-devel
                 ;;
               *)
