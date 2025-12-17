@@ -12,7 +12,7 @@ int
 main(int argc, char* argv[])
 {
     // Set a custom terminate handler to print unhandled exceptions to cerr.
-    std::set_terminate(Terminate::customTerminateHandler);
+    std::set_terminate(Terminate::printCurrentException);
 
     // CtrlCHandler is a helper class that handles Ctrl+C and similar signals. It must be constructed at the beginning
     // of the program, before creating an Ice communicator or starting any thread.

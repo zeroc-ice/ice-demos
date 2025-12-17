@@ -14,7 +14,7 @@ int
 main(int argc, char* argv[])
 {
     // Set a custom terminate handler to print unhandled exceptions to cerr.
-    std::set_terminate(Terminate::customTerminateHandler);
+    std::set_terminate(Terminate::printCurrentException);
 
     // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
     Ice::CommunicatorPtr communicator = Ice::initialize(argc, argv);
