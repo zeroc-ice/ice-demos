@@ -1,5 +1,7 @@
 // Copyright (c) ZeroC, Inc.
 
+#include "../../common/Terminate.h"
+
 #include <DataStorm/DataStorm.h>
 #include <Ice/Ice.h>
 
@@ -47,6 +49,9 @@ main(int argc, char* argv[])
 {
     try
     {
+        // Set a custom terminate handler to print unhandled exceptions to cerr.
+        std::set_terminate(Terminate::printCurrentException);
+
         // CtrlCHandler is a helper class that handles Ctrl+C and similar signals. It must be constructed at the
         // beginning of the program, before creating a DataStorm node or starting any thread.
         Ice::CtrlCHandler ctrlCHandler;

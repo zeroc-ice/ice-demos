@@ -1,5 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
+#include "../../common/Terminate.h"
 #include "../../common/Time.h"
 #include "WeatherStation.h"
 
@@ -16,6 +17,9 @@ using namespace std;
 int
 main(int argc, char* argv[])
 {
+    // Set a custom terminate handler to print unhandled exceptions to cerr.
+    std::set_terminate(Terminate::printCurrentException);
+
     // CtrlCHandler must be created before the communicator is created or any other threads are started.
     Ice::CtrlCHandler ctrlCHandler;
 

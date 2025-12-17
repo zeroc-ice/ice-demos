@@ -1,3 +1,4 @@
+#include "../../common/Terminate.h"
 #include "ClientRun.h"
 #include "UtilSecureTransport.h"
 #include <Ice/Ice.h>
@@ -6,6 +7,9 @@
 int
 main(int argc, char* argv[])
 {
+    // Set a custom terminate handler to print unhandled exceptions to cerr.
+    std::set_terminate(Terminate::printCurrentException);
+
     // Load the trusted root CA certificate from a file using the loadCertificateFromFile helper
     // function defined in UtilSecureTransport.h. The returned CFArrayRef contains a single SecCertificateRef.
     CFArrayRef trustedRootCertificates = Util::loadCertificateFromFile("../../../certs/ca_cert.der");

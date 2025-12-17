@@ -1,5 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
+#include "../../common/Terminate.h"
 #include "ClientRun.h"
 #include <Ice/Ice.h>
 
@@ -9,6 +10,9 @@ using namespace std;
 int
 main(int argc, char* argv[])
 {
+    // Set a custom terminate handler to print unhandled exceptions to cerr.
+    std::set_terminate(Terminate::printCurrentException);
+
     // Create an OpenSSL SSL_CTX object to configure client-side TLS settings.
     SSL_CTX* clientSSLContext = SSL_CTX_new(TLS_method());
     if (!clientSSLContext)

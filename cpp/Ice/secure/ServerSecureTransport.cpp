@@ -1,5 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
+#include "../../common/Terminate.h"
 #include "ServerRun.h"
 #include "UtilSecureTransport.h"
 #include <Ice/Ice.h>
@@ -10,6 +11,9 @@ using namespace std;
 int
 main(int argc, char* argv[])
 {
+    // Set a custom terminate handler to print unhandled exceptions to cerr.
+    std::set_terminate(Terminate::printCurrentException);
+
     // Load the server's identity (certificate and private key) from the keychain.
     // The identity must have been previously imported, as explained in the README.md file.
     //

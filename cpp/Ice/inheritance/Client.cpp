@@ -1,5 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
+#include "../../common/Terminate.h"
 #include "Filesystem.h"
 
 #include <Ice/Ice.h>
@@ -46,6 +47,9 @@ listRecursive(const DirectoryPrx& dir, size_t depth = 0)
 int
 main(int argc, char* argv[])
 {
+    // Set a custom terminate handler to print unhandled exceptions to cerr.
+    std::set_terminate(Terminate::printCurrentException);
+
     // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
     Ice::CommunicatorPtr communicator = Ice::initialize(argc, argv);
 
