@@ -18,6 +18,6 @@ jobs:
       - name: Run .NET format
         working-directory: csharp
         run: |
-          find . -name '*.sln' -type f | while IFS= read -r file; do
+          find . -name '*.slnx' -type f | while IFS= read -r file; do
             dotnet format --verify-no-changes "$file"
           done
