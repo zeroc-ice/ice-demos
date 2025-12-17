@@ -28,7 +28,7 @@ if(WIN32)
   )
 endif()
 
-add_executable(serveramd ServerAMD.cpp ChatbotAMD.cpp ChatbotAMD.h GreeterAMD.ice)
+add_executable(serveramd ServerAMD.cpp ChatbotAMD.cpp ChatbotAMD.h Greeter.ice)
 slice2cpp_generate(serveramd)
 target_link_libraries(serveramd PRIVATE Ice::Ice)
 if(WIN32)
