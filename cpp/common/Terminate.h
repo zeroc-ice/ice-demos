@@ -41,7 +41,7 @@ namespace Terminate
             std::cerr << "Unknown exception caught" << std::endl;
         }
 
-        // std::exit does not call destructors to stack objects such as CommunicatorHolder.
+        // std::exit does not call destructors of stack objects such as CommunicatorHolder.
         // If the communicator is not destroyed at exit, we get a warning message on the console.
         std::exit(EXIT_FAILURE);
     }
