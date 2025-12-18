@@ -1,3 +1,5 @@
+// Copyright (c) ZeroC, Inc.
+
 #include "../../common/Terminate.h"
 #include "ClientRun.h"
 #include "UtilSecureTransport.h"
