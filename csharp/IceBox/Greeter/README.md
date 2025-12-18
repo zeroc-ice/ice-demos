@@ -8,7 +8,7 @@ This demo shows how to create an IceBox service in C#.
   The following command performs a local installation:
 
   ```shell
-  dotnet tool install iceboxnet --prerelease --create-manifest-if-needed
+  dotnet tool install iceboxnet --create-manifest-if-needed
   ```
 
 ## Building the demo

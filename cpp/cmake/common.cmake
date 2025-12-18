@@ -28,7 +28,7 @@ if(WIN32)
     message(STATUS "Downloading Ice NuGet package: ${Ice_NUGET_NAME}")
     set(ICE_NUGET_SOURCE "https://api.nuget.org/v3/index.json" CACHE STRING "Ice NuGet package source")
     execute_process(
-      COMMAND ${NUGET_EXE} install -Source ${ICE_NUGET_SOURCE} -OutputDirectory ${CMAKE_CURRENT_LIST_DIR}/packages ${Ice_NUGET_NAME} -Prerelease -ExcludeVersion
+      COMMAND ${NUGET_EXE} install -Source ${ICE_NUGET_SOURCE} -OutputDirectory ${CMAKE_CURRENT_LIST_DIR}/packages ${Ice_NUGET_NAME} -ExcludeVersion
       RESULT_VARIABLE nuget_result
       OUTPUT_VARIABLE nuget_output
       ERROR_VARIABLE nuget_error)
