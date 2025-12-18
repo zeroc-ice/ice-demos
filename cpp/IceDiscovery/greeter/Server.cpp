@@ -1,5 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
+#include "../../common/Terminate.h"
 #include "Chatbot.h"
 
 #include <Ice/Ice.h>
@@ -11,6 +12,9 @@ using namespace std;
 int
 main(int argc, char* argv[])
 {
+    // Set a custom terminate handler to print unhandled exceptions to cerr.
+    std::set_terminate(Terminate::printCurrentException);
+
     // Register the IceDiscovery plug-in. The plug-in will be loaded during communicator initialization.
     Ice::InitializationData initData;
     initData.properties = make_shared<Ice::Properties>(argc, argv);

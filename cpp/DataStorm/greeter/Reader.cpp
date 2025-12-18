@@ -1,5 +1,7 @@
 // Copyright (c) ZeroC, Inc.
 
+#include "../../common/Terminate.h"
+
 #include <DataStorm/DataStorm.h>
 
 #include <iostream>
@@ -9,6 +11,9 @@ using namespace std;
 int
 main(int argc, char* argv[])
 {
+    // Set a custom terminate handler to print unhandled exceptions to cerr.
+    std::set_terminate(Terminate::printCurrentException);
+
     // Create a DataStorm node using the provided command-line arguments.
     DataStorm::Node node{argc, argv};
 

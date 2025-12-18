@@ -1,6 +1,7 @@
 // Copyright (c) ZeroC, Inc.
 
 #include "../../common/Env.h"
+#include "../../common/Terminate.h"
 #include "Greeter.h"
 
 #include <iostream>
@@ -10,6 +11,9 @@ using namespace std;
 int
 main(int argc, char* argv[])
 {
+    // Set a custom terminate handler to print unhandled exceptions to cerr.
+    std::set_terminate(Terminate::printCurrentException);
+
     // Load the contents of the client.conf file into a Properties object.
     auto configFileProperties = make_shared<Ice::Properties>();
     configFileProperties->load("client.conf");

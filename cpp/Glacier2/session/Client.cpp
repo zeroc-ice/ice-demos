@@ -1,6 +1,7 @@
 // Copyright (c) ZeroC, Inc.
 
 #include "../../common/Env.h"
+#include "../../common/Terminate.h"
 #include "PokeBox.h"
 
 #include <Glacier2/Glacier2.h>
@@ -27,6 +28,9 @@ std::array<const char*, 57> allPokemon = {
 int
 main(int argc, char* argv[])
 {
+    // Set a custom terminate handler to print unhandled exceptions to cerr.
+    std::set_terminate(Terminate::printCurrentException);
+
     // Retrieve the user ID for this run.
     string userId = argc > 1 ? argv[1] : Env::getUsername();
 

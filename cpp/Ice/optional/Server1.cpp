@@ -1,5 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
+#include "../../common/Terminate.h"
 #include "ConsolePrinter1.h"
 
 #include <Ice/Ice.h>
@@ -12,6 +13,9 @@ using namespace std;
 int
 main(int argc, char* argv[])
 {
+    // Set a custom terminate handler to print unhandled exceptions to cerr.
+    std::set_terminate(Terminate::printCurrentException);
+
     // CtrlCHandler is a helper class that handles Ctrl+C and similar signals.
     Ice::CtrlCHandler ctrlCHandler;
 

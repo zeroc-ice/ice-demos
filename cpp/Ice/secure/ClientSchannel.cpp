@@ -1,5 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
+#include "../../common/Terminate.h"
 #include "ClientRun.h"
 #include "UtilSchannel.h"
 #include <Ice/Ice.h>
@@ -8,6 +9,9 @@
 int
 main(int argc, char* argv[])
 {
+    // Set a custom terminate handler to print unhandled exceptions to cerr.
+    std::set_terminate(Terminate::printCurrentException);
+
     // Load the trusted root CA certificate from a file using the loadCertificateStore helper function
     // defined in UtilSchannel.h. This certificate will be used to validate the server's certificate chain.
     HCERTSTORE trustedRootCertificates = Util::loadCertificateStore("../../../certs/ca_cert.der");

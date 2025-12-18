@@ -1,5 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
+#include "../../common/Terminate.h"
 #include "../../common/Time.h"
 #include "MockAlarmClock.h"
 
@@ -12,6 +13,9 @@ using namespace std;
 int
 main(int argc, char* argv[])
 {
+    // Set a custom terminate handler to print unhandled exceptions to cerr.
+    std::set_terminate(Terminate::printCurrentException);
+
     // Create an Ice communicator. We'll use this communicator to create proxies, manage outgoing connections, and
     // create an object adapter.
     Ice::CommunicatorPtr communicator = Ice::initialize(argc, argv);

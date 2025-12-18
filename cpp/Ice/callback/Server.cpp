@@ -1,5 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
+#include "../../common/Terminate.h"
 #include "SimpleWakeUpService.h"
 
 #include <Ice/Ice.h>
@@ -10,6 +11,9 @@ using namespace std;
 int
 main(int argc, char* argv[])
 {
+    // Set a custom terminate handler to print unhandled exceptions to cerr.
+    std::set_terminate(Terminate::printCurrentException);
+
     // Create an Ice communicator. We'll use this communicator to manage outgoing connections, and create an object
     // adapter.
     Ice::CtrlCHandler ctrlCHandler;

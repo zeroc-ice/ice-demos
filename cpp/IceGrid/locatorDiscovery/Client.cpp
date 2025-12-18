@@ -1,6 +1,7 @@
 // Copyright (c) ZeroC, Inc.
 
 #include "../../common/Env.h"
+#include "../../common/Terminate.h"
 #include "Greeter.h"
 
 #include <Ice/Ice.h>
@@ -12,6 +13,9 @@ using namespace std;
 int
 main(int argc, char* argv[])
 {
+    // Set a custom terminate handler to print unhandled exceptions to cerr.
+    std::set_terminate(Terminate::printCurrentException);
+
     // Configure the communicator to load the IceLocatorDiscovery plug-in during initialization.
     // This plug-in will discover the locator (IceGrid registry in this demo) to use. As a result, we don't need to
     // configure the default locator on this communicator.
