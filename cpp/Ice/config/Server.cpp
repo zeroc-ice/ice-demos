@@ -1,5 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
+#include "../../common/Terminate.h"
 #include "Chatbot.h"
 
 #include <Ice/Ice.h>
@@ -10,6 +11,9 @@ using namespace std;
 int
 main(int argc, char* argv[])
 {
+    // Set a custom terminate handler to print unhandled exceptions to cerr.
+    std::set_terminate(Terminate::printCurrentException);
+
     // Create an Ice communicator. We'll use this communicator to create an object adapter. The communicator gets its
     // configuration properties from file server.conf, in the server's current working directory. The communicator
     // initialization also parses the command-line options to find and set additional properties.

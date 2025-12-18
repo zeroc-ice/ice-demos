@@ -1,6 +1,7 @@
 // Copyright (c) ZeroC, Inc.
 
 #include "../../common/Env.h"
+#include "../../common/Terminate.h"
 #include "Greeter.h"
 
 #include <Ice/Ice.h>
@@ -11,6 +12,9 @@ using namespace std;
 int
 main(int argc, char* argv[])
 {
+    // Set a custom terminate handler to print unhandled exceptions to cerr.
+    std::set_terminate(Terminate::printCurrentException);
+
     // Set the Ice.ImplicitContext property to "Shared" before creating the communicator.
     // This is only necessary for the implicit context API (see below).
     Ice::InitializationData initData;

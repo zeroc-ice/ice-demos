@@ -1,5 +1,6 @@
 // Copyright (c) ZeroC, Inc.
 
+#include "../../common/Terminate.h"
 #include "ServerRun.h"
 #include "UtilSchannel.h"
 #include <Ice/Ice.h>
@@ -10,6 +11,9 @@ using namespace std;
 int
 main(int argc, char* argv[])
 {
+    // Set a custom terminate handler to print unhandled exceptions to cerr.
+    std::set_terminate(Terminate::printCurrentException);
+
     // Load the server's certificate and private key from a PKCS#12 file using the helper function
     // defined in UtilSchannel.h. The returned context includes both the certificate and its associated key.
     PCCERT_CONTEXT serverCertificate = Util::certificateContextFromPKCS12File("../../../certs/server.p12", L"password");
