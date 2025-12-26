@@ -5,7 +5,7 @@ plugins {
     id("application")
 
     // Apply the Slice-tools plugin to enable Slice compilation.
-    id("com.zeroc.slice-tools") version "3.8.+"
+    id("com.zeroc.slice-tools") version "3.9.+"
 
     // Pull in our local 'convention plugin' to enable linting.
     id("zeroc-linting")
@@ -13,7 +13,7 @@ plugins {
 
 dependencies {
     // Add the Ice library as an implementation dependency.
-    implementation("com.zeroc:ice:3.8.+")
+    implementation("com.zeroc:ice:3.9.+")
 }
 
 sourceSets {

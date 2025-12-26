@@ -7,8 +7,8 @@ plugins {
 
 dependencies {
     // Include the Ice and IceBox libraries on the runtime classpath.
-    runtimeOnly("com.zeroc:ice:3.8.+")
-    runtimeOnly("com.zeroc:icebox:3.8.+")
+    runtimeOnly("com.zeroc:ice:3.9.+")
+    runtimeOnly("com.zeroc:icebox:3.9.+")
 
     // Include the service project so its GreeterService class is available at runtime.
     runtimeOnly(project(":service"))

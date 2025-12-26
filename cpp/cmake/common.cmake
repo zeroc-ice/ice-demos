@@ -26,7 +26,7 @@ if(WIN32)
 
     # Download the Ice NuGet package using the nuget command line tool.
     message(STATUS "Downloading Ice NuGet package: ${Ice_NUGET_NAME}")
-    set(ICE_NUGET_SOURCE "https://download.zeroc.com/nexus/repository/nuget-nightly/" CACHE STRING "Ice NuGet package source")
+    set(ICE_NUGET_SOURCE "https://download.zeroc.com/nexus/repository/nuget-3.9-nightly/" CACHE STRING "Ice NuGet package source")
     execute_process(
       COMMAND ${NUGET_EXE} install -Source ${ICE_NUGET_SOURCE} -OutputDirectory ${CMAKE_CURRENT_LIST_DIR}/packages ${Ice_NUGET_NAME} -Prerelease -ExcludeVersion
       RESULT_VARIABLE nuget_result
