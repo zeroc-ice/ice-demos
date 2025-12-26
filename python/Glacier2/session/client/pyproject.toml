@@ -12,7 +12,7 @@ prerelease = "allow"
 [[tool.uv.index]]
 # Configure the ZeroC nightly index as an additional index, searched *before* the default PyPI index.
 name = "zeroc-nightly"
-url = "https://download.zeroc.com/nexus/repository/pypi-nightly/simple/"
+url = "https://download.zeroc.com/nexus/repository/pypi-3.9-nightly/simple/"
 
 [dependency-groups]
 lint = [
