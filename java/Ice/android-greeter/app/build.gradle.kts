@@ -4,7 +4,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     // Apply the Slice-tools plugin to enable Slice compilation.
-    id("com.zeroc.slice-tools") version "3.8.+"
+    id("com.zeroc.slice-tools") version "3.9.+"
     // Pull in our local 'convention plugin' to enable linting.
     id("zeroc-linting")
 }
@@ -46,7 +46,7 @@ kotlin {
 
 dependencies {
     // Add the Ice library as an implementation dependency.
-    implementation("com.zeroc:ice:3.8.+")
+    implementation("com.zeroc:ice:3.9.+")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
