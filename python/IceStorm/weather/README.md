@@ -23,7 +23,7 @@ flowchart LR
 Run the IceStorm service in its own terminal:
 
 ```shell
-icebox --IceBox.Service.IceStorm="IceStormService,38a0:createIceStorm --Ice.Config=icestorm.conf"
+icebox --IceBox.Service.IceStorm="IceStormService,39a0:createIceStorm --Ice.Config=icestorm.conf"
 ```
 
 ## Running the sensor
