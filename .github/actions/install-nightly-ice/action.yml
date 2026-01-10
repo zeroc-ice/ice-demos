@@ -1,4 +1,5 @@
 name: Instal Nightly Ice
+description: Install the latest nightly build of Ice
 
 runs:
   using: "composite"
@@ -7,13 +8,13 @@ runs:
       if: runner.os == 'macOS'
       shell: bash
       run: |
-        brew install zeroc-ice/nightly/ice
+        brew install zeroc-ice/nightly/ice@3.9
 
     - name: Install Ice Linux Repository
       if: runner.os == 'Linux'
       shell: bash
       run: |
-        wget https://download.zeroc.com/ice/nightly/ubuntu24.04/ice-repo-nightly_1.0_all.deb -O ice-repo-nightly.deb
+        wget https://download.zeroc.com/ice/nightly/3.9/ubuntu24.04/ice-repo-3.9-nightly_1.0.0_all.deb -O ice-repo-nightly.deb
         sudo dpkg -i ice-repo-nightly.deb
         rm ice-repo-nightly.deb
 

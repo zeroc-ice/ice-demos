@@ -24,13 +24,13 @@ RUN set -eux \
 # Install Nightly Ice
 RUN set -eux \
     && sudo mkdir -p /etc/apt/keyrings \
-    && curl -fsSL https://download.zeroc.com/ice/nightly/ubuntu24.04/ice-repo-nightly_1.0_all.deb -o ice-repo-nightly.deb \
+    && curl -fsSL https://download.zeroc.com/ice/nightly/3.9/ubuntu24.04/ice-repo-3.9-nightly_1.0.0_all.deb -o ice-repo-nightly.deb \
     && sudo dpkg -i ice-repo-nightly.deb \
     && rm ice-repo-nightly.deb \
     && sudo apt-get update \
     && sudo apt-get install -y \
     libzeroc-ice-dev \
-    libzeroc-ice3.8 \
+    libzeroc-ice3.9 \
     php-zeroc-ice \
     python3-zeroc-ice \
     zeroc-dsnode \
@@ -47,7 +47,7 @@ RUN set -eux \
 RUN sudo apt-get install -y ruby ruby-dev \
     && sudo rm -rf /var/lib/apt/lists/* \
     && sudo apt-get clean \
-    && sudo gem install zeroc-ice --source https://download.zeroc.com/nexus/repository/rubygems-nightly --pre
+    && sudo gem install zeroc-ice --source https://download.zeroc.com/nexus/repository/rubygems-3.9-nightly --pre
 
 # Set environment variables
 ENV DOTNET_ROOT=/home/vscode/.dotnet
