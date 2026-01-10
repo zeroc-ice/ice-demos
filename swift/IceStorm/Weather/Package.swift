@@ -7,7 +7,7 @@ let package = Package(
     platforms: [
         .macOS(.v15)
     ],
-    dependencies: [.package(url: "https://github.com/zeroc-ice/ice-swift-nightly.git", branch: "main")],
+    dependencies: [.package(url: "https://github.com/zeroc-ice/ice-swift-nightly.git", branch: "3.9")],
     targets: [
         .executableTarget(
             name: "Sensor",

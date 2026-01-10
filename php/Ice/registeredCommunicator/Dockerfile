@@ -1,12 +1,10 @@
-FROM debian:bookworm
+FROM debian:trixie
 
-# Install required tools for setting up APT repositories
-RUN apt-get update && apt-get install -y \
-    ca-certificates curl gnupg
-
-# Add ZeroC nightly repository for Debian 12 (bookworm)
-RUN curl -fsSL https://download.zeroc.com/GPG-KEY-zeroc-nightly | gpg --dearmor -o /etc/apt/keyrings/zeroc-nightly.gpg && \
-    echo "deb [signed-by=/etc/apt/keyrings/zeroc-nightly.gpg] https://download.zeroc.com/nexus/repository/debian12-nightly nightly main" > /etc/apt/sources.list.d/zeroc-nightly.list
+# Add ZeroC nightly repository for Debian 13 (trixie)
+RUN apt-get update && apt-get install -y wget && \
+    wget "https://download.zeroc.com/ice/nightly/3.9/debian13/ice-repo-3.9-nightly_1.0.0_all.deb" -O ice-repo-3.9-nightly.deb && \
+    dpkg -i ice-repo-3.9-nightly.deb && \
+    rm ice-repo-3.9-nightly.deb
 
 # Install Ice for PHP, PHP-FPM, and Nginx
 RUN apt-get update && apt-get install -y \
