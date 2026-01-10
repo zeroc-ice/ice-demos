@@ -13,8 +13,8 @@ RUN dnf install -y \
     && dnf clean all
 
 # Install Ice repository and packages
- \
-RUN dnf install -y https://download.zeroc.com/ice/nightly/3.9/el9/RUN dnf install -y https://download.zeroc.com/ice/nightly/el9/ice-repo-3.9-nightly-1.0.0-1.el9.noarch.rpm \
+
+RUN dnf install -y https://download.zeroc.com/ice/nightly/3.9/el9/ice-repo-3.9-nightly-1.0.0-1.el9.noarch.rpm \
     && dnf install -y \
     dsnode  \
     glacier2 \
