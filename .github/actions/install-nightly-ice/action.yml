@@ -1,4 +1,4 @@
-name: Instal Nightly Ice
+name: Install Nightly Ice
 description: Install the latest nightly build of Ice
 
 runs:
