@@ -117,6 +117,11 @@ jobs:
         run: |
           $ErrorActionPreference = "Stop"
           Get-ChildItem -Recurse -Depth 2 -Filter gradlew | ForEach-Object {
+            # Skip Android demos (built separately)
+            if ($_.DirectoryName -match "android") {
+              Write-Host "Skipping Android demo: $($_.DirectoryName)"
+              return
+            }
             Push-Location $_.DirectoryName
             Write-Host "Building in $($_.DirectoryName)..."
             & ./gradlew build
@@ -214,4 +219,34 @@ jobs:
             dir=$(dirname "$file");
             cmake -B "$dir/build" -S "$dir" -G Ninja -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
             cmake --build "$dir/build" --verbose
+          done
+
+  ci-android:
+    name: Android
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "oracle"
+          java-version: "17"
+
+      - name: Install Nightly Ice Builds
+        uses: ./.github/actions/install-nightly-ice
+
+      - name: Build Android Demos
+        timeout-minutes: 20
+        working-directory: java
+        run: |
+          set -o pipefail
+          find . -path "*/android*" -name gradlew -type f | while IFS= read -r file; do
+            dir=$(dirname "$file")
+            echo "Building Android demo in $dir..."
+            cd "$dir"
+            ./gradlew build
+            cd - > /dev/null
           done
