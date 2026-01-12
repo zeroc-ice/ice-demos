@@ -26,9 +26,22 @@ if(WIN32)
 
     # Download the Ice NuGet package using the nuget command line tool.
     message(STATUS "Downloading Ice NuGet package: ${Ice_NUGET_NAME}")
-    set(ICE_NUGET_SOURCE "https://api.nuget.org/v3/index.json" CACHE STRING "Ice NuGet package source")
+
+    # Check for ICE_NUGET_SOURCE environment variable (set by nightly builds), otherwise use default
+    if(DEFINED ENV{ICE_NUGET_SOURCE})
+      set(ICE_NUGET_SOURCE "$ENV{ICE_NUGET_SOURCE}" CACHE STRING "Ice NuGet package source")
+    else()
+      set(ICE_NUGET_SOURCE "https://api.nuget.org/v3/index.json" CACHE STRING "Ice NuGet package source")
+    endif()
+
+    # Check for ICE_NUGET_PRERELEASE environment variable (set by nightly builds)
+    set(ICE_NUGET_PRERELEASE_FLAG "")
+    if(DEFINED ENV{ICE_NUGET_PRERELEASE})
+      set(ICE_NUGET_PRERELEASE_FLAG "-Prerelease")
+    endif()
+
     execute_process(
-      COMMAND ${NUGET_EXE} install -Source ${ICE_NUGET_SOURCE} -OutputDirectory ${CMAKE_CURRENT_LIST_DIR}/packages ${Ice_NUGET_NAME} -ExcludeVersion
+      COMMAND ${NUGET_EXE} install -Source ${ICE_NUGET_SOURCE} -OutputDirectory ${CMAKE_CURRENT_LIST_DIR}/packages ${Ice_NUGET_NAME} -ExcludeVersion ${ICE_NUGET_PRERELEASE_FLAG}
       RESULT_VARIABLE nuget_result
       OUTPUT_VARIABLE nuget_output
       ERROR_VARIABLE nuget_error)

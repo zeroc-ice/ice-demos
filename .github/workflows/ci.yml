@@ -14,18 +14,17 @@ concurrency:
   cancel-in-progress: true
 
 env:
+  CHANNEL: "3.8"
   CMAKE_BUILD_PARALLEL_LEVEL: 4
 
 jobs:
   ci:
-    name: ${{ matrix.os }}
+    name: ${{ matrix.os }} (${{ matrix.quality }})
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - os: ubuntu-24.04
-          - os: macos-26
-          - os: windows-2022
+        quality: [stable, nightly]
+        os: [ubuntu-24.04, macos-26, windows-2022]
 
     runs-on: ${{ matrix.os }}
     steps:
@@ -40,7 +39,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
 
       - name: Setup Java
         uses: actions/setup-java@v4
@@ -48,8 +47,18 @@ jobs:
           distribution: "oracle"
           java-version: "17"
 
-      - name: Install 3.8 Ice Builds
-        uses: ./.github/actions/install-3.8-ice
+      - name: Install Ice
+        uses: ./.github/actions/install-ice
+        with:
+          channel: ${{ env.CHANNEL }}
+          quality: ${{ matrix.quality }}
+
+      - name: Configure Nightly Feeds
+        if: matrix.quality == 'nightly'
+        shell: bash
+        run: |
+          python scripts/setup-nightly.py --github-env "$GITHUB_ENV"
+
 
       - name: Build C++ Demos
         timeout-minutes: 20
@@ -117,6 +126,11 @@ jobs:
         run: |
           $ErrorActionPreference = "Stop"
           Get-ChildItem -Recurse -Depth 2 -Filter gradlew | ForEach-Object {
+            # Skip Android demos (built separately)
+            if ($_.DirectoryName -match "android") {
+              Write-Host "Skipping Android demo: $($_.DirectoryName)"
+              return
+            }
             Push-Location $_.DirectoryName
             Write-Host "Building in $($_.DirectoryName)..."
             & ./gradlew build
@@ -159,14 +173,15 @@ jobs:
         if: runner.os == 'macOS'
 
   ci-containers:
-    name: ${{ matrix.image }}
+    name: ${{ matrix.image }} (${{ matrix.quality }})
     runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - image: public.ecr.aws/amazonlinux/amazonlinux:2023
-          - image: rockylinux/rockylinux:10
+        quality: [stable, nightly]
+        image:
+          - public.ecr.aws/amazonlinux/amazonlinux:2023
+          - rockylinux/rockylinux:10
 
     container:
       image: ${{ matrix.image }}
@@ -181,14 +196,22 @@ jobs:
             case "$ID" in
               amzn)
                 dnf install -y tar gzip git gcc gcc-c++ cmake make ninja-build wget
-                dnf install -y https://download.zeroc.com/ice/3.8/amzn2023/ice-repo-3.8-1.0.0-1.amzn2023.noarch.rpm
+                if [ "${{ matrix.quality }}" = "nightly" ]; then
+                  dnf install -y https://download.zeroc.com/ice/nightly/${{ env.CHANNEL }}/amzn2023/ice-repo-${{ env.CHANNEL }}-nightly-1.0.0-1.amzn2023.noarch.rpm
+                else
+                  dnf install -y https://download.zeroc.com/ice/${{ env.CHANNEL }}/amzn2023/ice-repo-${{ env.CHANNEL }}-1.0.0-1.amzn2023.noarch.rpm
+                fi
                 dnf install -y libice-c++-devel
                 ;;
               rocky)
                 dnf install -y dnf-utils
                 dnf config-manager --enable crb
                 dnf install -y gcc gcc-c++ cmake make ninja-build wget
-                dnf install -y https://download.zeroc.com/ice/3.8/el10/ice-repo-3.8-1.0.0-1.el10.noarch.rpm
+                if [ "${{ matrix.quality }}" = "nightly" ]; then
+                  dnf install -y https://download.zeroc.com/ice/nightly/${{ env.CHANNEL }}/el10/ice-repo-${{ env.CHANNEL }}-nightly-1.0.0-1.el10.noarch.rpm
+                else
+                  dnf install -y https://download.zeroc.com/ice/${{ env.CHANNEL }}/el10/ice-repo-${{ env.CHANNEL }}-1.0.0-1.el10.noarch.rpm
+                fi
                 dnf install -y libice-c++-devel
                 ;;
               *)
@@ -214,4 +237,41 @@ jobs:
             dir=$(dirname "$file");
             cmake -B "$dir/build" -S "$dir" -G Ninja -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
             cmake --build "$dir/build" --verbose
+          done
+
+  ci-android:
+    name: Android (${{ matrix.quality }})
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        quality: [stable, nightly]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "oracle"
+          java-version: "17"
+
+      - name: Configure Nightly Feeds
+        if: matrix.quality == 'nightly'
+        shell: bash
+        run: |
+          python scripts/setup-nightly.py --github-env "$GITHUB_ENV"
+
+      - name: Build Android Demos
+        timeout-minutes: 20
+        working-directory: java
+        run: |
+          set -o pipefail
+          find . -path "*/android*" -name gradlew -type f | while IFS= read -r file; do
+            dir=$(dirname "$file")
+            echo "Building Android demo in $dir..."
+            cd "$dir"
+            ./gradlew build
+            cd - > /dev/null
           done
