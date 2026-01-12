@@ -1,0 +1,28 @@
+name: Install Ice
+description: "Install Ice stable version"
+
+inputs:
+  channel:
+    description: "Ice version channel (e.g., 3.8, 3.7)"
+    required: false
+    default: "3.8"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install Ice Brew Formula
+      if: runner.os == 'macOS'
+      shell: bash
+      run: |
+        brew install zeroc-ice/tap/ice@${{ inputs.channel }}
+
+    - name: Install Ice Linux Repository
+      if: runner.os == 'Linux'
+      shell: bash
+      run: |
+        wget https://download.zeroc.com/ice/${{ inputs.channel }}/ubuntu24.04/ice-repo-${{ inputs.channel }}_1.0_all.deb -O ice-repo.deb
+        sudo dpkg -i ice-repo.deb
+        rm ice-repo.deb
+
+        sudo apt-get update
+        sudo apt-get install -y libzeroc-ice-dev
