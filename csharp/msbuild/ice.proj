@@ -11,12 +11,12 @@
         </When>
         <Otherwise>
             <PropertyGroup>
-                <BuildProperties>Configuration=$(Configuration);Platform=Any CPU;IceToolsPath=$(IceHome)/cpp/bin</BuildProperties>
+                <BuildProperties>Configuration=$(Configuration);Platform=Any CPU;IceToolsPath=$(IceHome)/bin</BuildProperties>
             </PropertyGroup>
         </Otherwise>
     </Choose>
 
-    <Target Name="Build" DependsOnTargets="NuGetRestore">
+    <Target Name="Build">
         <MSBuild Projects="$(MSBuildThisFileDirectory)..\C# NET demos.sln"
                  Targets="Restore"
                  Properties="Configuration=$(Configuration);Platform=Any CPU"/>
