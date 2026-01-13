@@ -6,6 +6,7 @@
     - [Build Requirements](#build-requirements)
     - [Building the demos](#building-the-demos)
     - [Running the Demos](#running-the-demos)
+    - [Using nightly builds](#using-nightly-builds)
 
 ## Overview
 
@@ -40,7 +41,6 @@ cd csharp
 To build the sample programs run:
 
 ```shell
-dotnet restore "C# NET demos.sln"
 dotnet msbuild "C# NET demos.sln"
 ```
 
@@ -59,3 +59,51 @@ bin directory to your PATH. Please refer to the [Release Notes] for additional i
 [Ice manual]: https://doc.zeroc.com/ice/3.7/introduction
 [.NET SDK]: https://download/dotnet/8.0
 [Release Notes]: https://doc.zeroc.com/rel/ice-releases/ice-3-7/ice-3-7-10-release-notes
+
+### Using nightly builds
+
+To use nightly builds, add a `NuGet.Config` file in `csharp` with the nightly feed and source mappings:
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <!-- Define the package sources, nuget.org and zeroc.com. -->
+  <!-- `clear` ensures no additional sources are inherited from another config file. -->
+  <packageSources>
+    <clear />
+    <add key="nuget.org" value="https://api.nuget.org/v3/index.json" />
+    <add key="zeroc.com" value="https://download.zeroc.com/nexus/repository/nuget-3.7-nightly/" />
+  </packageSources>
+
+  <!-- Define mappings by adding package patterns beneath the target source. -->
+  <!-- zeroc.* packages will be restored from zeroc.com, everything else from nuget.org. -->
+  <packageSourceMapping>
+    <packageSource key="nuget.org">
+      <package pattern="*" />
+    </packageSource>
+    <packageSource key="zeroc.com">
+      <package pattern="zeroc.*" />
+    </packageSource>
+  </packageSourceMapping>
+</configuration>
+```
+
+Then set `IceVersion` and `IceHome` for your platform when invoking MSBuild. For example:
+
+macOS (with Homebrew nightly install):
+
+```shell
+dotnet msbuild /p:IceHome=/opt/homebrew /p:IceVersion="3.7.11-nightly.*" msbuild/ice.proj
+```
+
+Linux (with nightly packages):
+
+```shell
+dotnet msbuild /p:IceHome=/usr /p:IceVersion="3.7.11-nightly.*" msbuild/ice.proj
+```
+
+Windows (with slice2cs from the C# NuGet nightly):
+
+```shell
+dotnet msbuild /p:IceVersion="3.7.11-nightly.*" msbuild/ice.proj
+```
