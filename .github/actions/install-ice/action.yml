@@ -28,7 +28,7 @@ runs:
       if: runner.os == 'Linux'
       shell: bash
       run: |
-        base_url="https://download.zeroc.com/ice/"
+        base_url="https://download.zeroc.com/ice"
         if [ "${{ inputs.quality }}" = "nightly" ]; then
           repo_url=${base_url}/${{ inputs.quality }}/${{ inputs.channel }}/ubuntu24.04/ice-repo-${{ inputs.channel }}-${{ inputs.quality }}_1.0.0_all.deb
         else
