@@ -148,17 +148,6 @@ def configure_js(channel: str) -> None:
             pkg_path.write_text(json.dumps(pkg_data, indent=4) + "\n", encoding="utf-8")
 
         count += 1
-
-    # Set global npm config for @zeroc scope (more reliable than per-directory .npmrc)
-    # Use shell=True for Windows compatibility (npm is a batch script on Windows)
-    npm_cmd = f'npm config set @zeroc:registry {urls["npm"]}'
-    print(f"Running: {npm_cmd}")
-    result = subprocess.run(npm_cmd, shell=True, capture_output=True, text=True)
-    if result.returncode != 0:
-        print(f"npm config set failed: {result.stderr}")
-        raise RuntimeError(f"npm config set failed: {result.stderr}")
-    print(f"npm config set output: {result.stdout}")
-
     print(f"Updated {count} JS demos with nightly config")
 
 
@@ -281,17 +270,6 @@ def reset_nightly() -> None:
             continue
         npmrc.unlink()
         removed.append(npmrc.relative_to(REPO_ROOT))
-
-    # Remove global npm config for @zeroc scope (if set)
-    # Use shell=True for Windows compatibility (npm is a batch script on Windows)
-    result = subprocess.run(
-        "npm config delete @zeroc:registry",
-        capture_output=True,
-        text=True,
-        shell=True,
-    )
-    if result.returncode == 0:
-        print("Removed npm global config for @zeroc:registry")
 
     # Remove NuGet.Config file (C# only - C++ uses ICE_NUGET_SOURCE env var)
     for nuget_dir in ["csharp"]:
