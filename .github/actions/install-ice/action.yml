@@ -1,0 +1,40 @@
+name: Install Ice
+description: "Install Ice for C++ development"
+
+inputs:
+  channel:
+    description: "Ice version channel (e.g., 3.8, 3.7)"
+    required: false
+    default: "3.7"
+  quality:
+    description: "Package quality: stable or nightly"
+    required: false
+    default: "stable"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install Ice Brew Formula
+      if: runner.os == 'macOS'
+      shell: bash
+      run: |
+        if [ "${{ inputs.quality }}" = "nightly" ]; then
+          brew install zeroc-ice/nightly/ice@${{ inputs.channel }}
+        else
+          brew install zeroc-ice/tap/ice@${{ inputs.channel }}
+        fi
+
+    - name: Install Ice Linux Repository
+      if: runner.os == 'Linux'
+      shell: bash
+      run: |
+        if [ "${{ inputs.quality }}" = "nightly" ]; then
+          wget https://download.zeroc.com/ice/nightly/${{ inputs.channel }}/ubuntu24.04/ice-repo-${{ inputs.channel }}-nightly_1.0.0_all.deb -O ice-repo.deb
+        else
+          wget https://download.zeroc.com/ice/${{ inputs.channel }}/ubuntu24.04/ice-repo-${{ inputs.channel }}_1.0_all.deb -O ice-repo.deb
+        fi
+        sudo dpkg -i ice-repo.deb
+        rm ice-repo.deb
+
+        sudo apt-get update
+        sudo apt-get install -y libzeroc-ice-dev

@@ -1,0 +1,65 @@
+name: CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["3.7"]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: ["3.7"]
+
+# See https://docs.github.com/en/actions/using-jobs/using-concurrency#example-using-a-fallback-value
+concurrency:
+  group: ${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+env:
+  CHANNEL: "3.7"
+
+jobs:
+  ci:
+    name: ${{ matrix.os }} (${{ matrix.quality }})
+    strategy:
+      fail-fast: false
+      matrix:
+        quality: [stable]
+        os: [ubuntu-24.04, macos-26, windows-2022]
+
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.x
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "oracle"
+          java-version: "17"
+
+      - name: Install Ice
+        uses: ./.github/actions/install-ice
+        with:
+          channel: ${{ env.CHANNEL }}
+          quality: ${{ matrix.quality }}
+
+      - name: Configure Nightly Feeds
+        if: matrix.quality == 'nightly'
+        shell: bash
+        run: |
+          python scripts/setup-nightly.py --github-env "$GITHUB_ENV"
+
+      - name: Build C# Demos
+        timeout-minutes: 20
+        working-directory: csharp
+        run: |
+          dotnet build
