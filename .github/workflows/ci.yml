@@ -22,7 +22,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        quality: [stable]
+        # TODO add stable once 3.7.11 packages are released
+        quality: [nightly]
         os: [ubuntu-24.04, macos-26, windows-2022]
 
     runs-on: ${{ matrix.os }}

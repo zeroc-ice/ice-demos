@@ -28,11 +28,13 @@ runs:
       if: runner.os == 'Linux'
       shell: bash
       run: |
+        base_url="https://download.zeroc.com/ice/"
         if [ "${{ inputs.quality }}" = "nightly" ]; then
-          wget https://download.zeroc.com/ice/nightly/${{ inputs.channel }}/ubuntu24.04/ice-repo-${{ inputs.channel }}-nightly_1.0.0_all.deb -O ice-repo.deb
+          repo_url=${base_url}/${{ inputs.quality }}/${{ inputs.channel }}/ubuntu24.04/ice-repo-${{ inputs.channel }}-${{ inputs.quality }}_1.0.0_all.deb
         else
-          wget https://download.zeroc.com/ice/${{ inputs.channel }}/ubuntu24.04/ice-repo-${{ inputs.channel }}_1.0_all.deb -O ice-repo.deb
+          repo_url=${base_url}/${{ inputs.channel }}/ubuntu24.04/ice-repo-${{ inputs.channel }}_1.0.0_all.deb
         fi
+        wget ${repo_url} -O ice-repo.deb
         sudo dpkg -i ice-repo.deb
         rm ice-repo.deb
 
