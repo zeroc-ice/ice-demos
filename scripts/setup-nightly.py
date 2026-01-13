@@ -67,14 +67,15 @@ NUGET_CONFIG_TEMPLATE = """\
   </packageSources>
 
   <!-- Define mappings by adding package patterns beneath the target source. -->
-  <!-- zeroc.* packages will be restored from zeroc.com, everything else from nuget.org. -->
+  <!-- ZeroC C++ and .NET packages will be restored from zeroc.com, everything else from nuget.org. -->
   <packageSourceMapping>
     <packageSource key="nuget.org">
       <package pattern="*" />
     </packageSource>
     <packageSource key="zeroc.com">
-      <package pattern="zeroc.*" />
-      <package pattern="iceboxnet" />
+      <package pattern="zeroc.ice.v142" />
+      <package pattern="zeroc.ice.v143" />
+      <package pattern="zeroc.ice.net" />
     </packageSource>
   </packageSourceMapping>
 </configuration>

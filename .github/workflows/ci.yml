@@ -57,7 +57,7 @@ jobs:
         if: matrix.quality == 'nightly'
         shell: bash
         run: |
-          python scripts/setup-nightly.py --github-env "$GITHUB_ENV"
+          python scripts/setup-nightly.py --github-env "$GITHUB_ENV" --channel "${CHANNEL}"
 
       - name: Build C# Demos
         timeout-minutes: 20
