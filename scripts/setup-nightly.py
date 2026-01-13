@@ -174,6 +174,21 @@ def configure_swift(channel: str) -> None:
 
     print(f"Updated {count} Swift Package.swift files with nightly repository")
 
+    # Update slice-plugin.json files to use ice-swift-nightly checkout path
+    plugin_count = 0
+    for plugin_path in REPO_ROOT.glob("swift/**/slice-plugin.json"):
+        # Skip files in .build directories (these are generated)
+        if ".build" in plugin_path.parts:
+            continue
+
+        content = plugin_path.read_text(encoding="utf-8")
+        if "checkouts/ice/slice" in content:
+            new_content = content.replace("checkouts/ice/slice", "checkouts/ice-swift-nightly/slice")
+            plugin_path.write_text(new_content, encoding="utf-8")
+            plugin_count += 1
+
+    print(f"Updated {plugin_count} slice-plugin.json files with nightly checkout path")
+
 
 def configure_env(channel: str, github_env: pathlib.Path | None, gradle_home: pathlib.Path) -> None:
     """Configure environment variables for nightly builds."""
@@ -314,6 +329,18 @@ def reset_nightly() -> None:
         print("Restored swift/**/Package.swift via git checkout")
     elif "error" in result.stderr.lower():
         print(f"Note: Could not restore Package.swift files: {result.stderr.strip()}")
+
+    # Reset Swift slice-plugin.json files using git
+    result = subprocess.run(
+        ["git", "checkout", "--", "swift/**/slice-plugin.json"],
+        cwd=REPO_ROOT,
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode == 0:
+        print("Restored swift/**/slice-plugin.json via git checkout")
+    elif "error" in result.stderr.lower():
+        print(f"Note: Could not restore slice-plugin.json files: {result.stderr.strip()}")
 
     if removed:
         print(f"Removed: {', '.join(str(p) for p in removed)}")
