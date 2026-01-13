@@ -88,21 +88,7 @@ To use nightly builds, add a `NuGet.Config` file in `csharp` with the nightly fe
 </configuration>
 ```
 
-Then set `IceVersion` and `IceHome` for your platform when invoking MSBuild. For example:
-
-macOS (with Homebrew nightly install):
-
-```shell
-dotnet msbuild /p:IceHome=/opt/homebrew /p:IceVersion="3.7.11-nightly.*" msbuild/ice.proj
-```
-
-Linux (with nightly packages):
-
-```shell
-dotnet msbuild /p:IceHome=/usr /p:IceVersion="3.7.11-nightly.*" msbuild/ice.proj
-```
-
-Windows (with slice2cs from the C# NuGet nightly):
+Then set `IceVersion`. For example:
 
 ```shell
 dotnet msbuild /p:IceVersion="3.7.11-nightly.*" msbuild/ice.proj
