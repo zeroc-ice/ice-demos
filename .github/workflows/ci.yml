@@ -1,0 +1,123 @@
+name: CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["3.7"]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: ["3.7"]
+
+# See https://docs.github.com/en/actions/using-jobs/using-concurrency#example-using-a-fallback-value
+concurrency:
+  group: ${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+env:
+  CHANNEL: "3.7"
+  ICE_VERSION: "3.7.11"
+  MAVEN_REPO: "https://download.zeroc.com/nexus/repository/maven-3.7-nightly"
+
+jobs:
+  ci:
+    name: ${{ matrix.os }} (${{ matrix.quality }})
+    strategy:
+      fail-fast: false
+      matrix:
+        # TODO add stable once 3.7.11 packages are released
+        quality: [nightly]
+        os: [ubuntu-24.04, macos-26, windows-2022]
+
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.x
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "oracle"
+          java-version: "17"
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+        if: runner.os == 'Windows'
+        with:
+          msbuild-architecture: x64
+
+      - name: Install Ice
+        uses: ./.github/actions/install-ice
+        with:
+          channel: ${{ env.CHANNEL }}
+          quality: ${{ matrix.quality }}
+
+      - name: Configure Nightly Feeds
+        if: matrix.quality == 'nightly'
+        shell: bash
+        run: |
+          python scripts/setup-nightly.py --github-env "$GITHUB_ENV" --channel "${CHANNEL}"
+
+      - name: Set ICE_HOME and MAKEFLAGS
+        shell: bash
+        run: |
+          if [[ "$RUNNER_OS" == "Linux" ]]; then
+            echo "ICE_HOME=/usr" >> "$GITHUB_ENV"
+            echo "MAKEFLAGS=-j $(nproc)" >> "$GITHUB_ENV"
+          elif [[ "$RUNNER_OS" == "macOS" ]]; then
+            echo "ICE_HOME=/opt/homebrew" >> "$GITHUB_ENV"
+            echo "MAKEFLAGS=-j $(sysctl -n hw.ncpu)" >> "$GITHUB_ENV"
+          elif [[ "$RUNNER_OS" == "Windows" ]]; then
+            echo "ICE_HOME=C:\Program Files\ZeroC\Ice-${ICE_VERSION}" >> "$GITHUB_ENV"
+          fi
+
+      - name: Build C++ Demos
+        if: runner.os != 'Windows'
+        timeout-minutes: 40
+        run: |
+          make V=1 -C cpp98
+          make V=1 -C cpp11
+
+      - name: Build C++ Demos
+        if: runner.os == 'Windows'
+        timeout-minutes: 40
+        run: |
+          nuget restore "cpp98\C++98 demos.sln"
+          msbuild "cpp98\C++98 demos.sln" /m /p:Configuration=Release /p:Platform=x64
+          nuget restore "cpp11\C++11 demos.sln"
+          msbuild "cpp11\C++11 demos.sln" /m /p:Configuration=Release /p:Platform=x64
+
+      - name: Build Objective-C Demos
+        if: runner.os == 'macOS'
+        timeout-minutes: 20
+        run: |
+          make V=1 -C objective-c
+
+      - name: Build C# Demos
+        timeout-minutes: 20
+        working-directory: csharp
+        run: |
+          dotnet build
+
+      - name: Build Java Demos
+        timeout-minutes: 20
+        working-directory: java
+        shell: bash
+        run: |
+          ./gradlew build -PdevRepo="${MAVEN_REPO}" -PiceHome="${ICE_HOME}" -PiceArtifactVersion="${ICE_VERSION}+"
+
+      - name: Build Java Compat Demos
+        timeout-minutes: 20
+        working-directory: java-compat
+        shell: bash
+        run: |
+          ./gradlew build -PdevRepo="${MAVEN_REPO}" -PiceHome="${ICE_HOME}" -PiceArtifactVersion="${ICE_VERSION}+"

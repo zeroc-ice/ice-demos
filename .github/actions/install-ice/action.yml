@@ -1,0 +1,59 @@
+name: Install Ice
+description: "Install Ice for C++ development"
+
+inputs:
+  channel:
+    description: "Ice version channel (e.g., 3.8, 3.7)"
+    required: false
+    default: "3.7"
+  quality:
+    description: "Package quality: stable or nightly"
+    required: false
+    default: "stable"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install Ice Brew Formula
+      if: runner.os == 'macOS'
+      shell: bash
+      run: |
+        if [ "${{ inputs.quality }}" = "nightly" ]; then
+          brew install zeroc-ice/nightly/ice@${{ inputs.channel }}
+        else
+          brew install zeroc-ice/tap/ice@${{ inputs.channel }}
+        fi
+
+    - name: Install Ice Linux Repository
+      if: runner.os == 'Linux'
+      shell: bash
+      run: |
+        base_url="https://download.zeroc.com/ice"
+        if [ "${{ inputs.quality }}" = "nightly" ]; then
+          repo_url=${base_url}/${{ inputs.quality }}/${{ inputs.channel }}/ubuntu24.04/ice-repo-${{ inputs.channel }}-${{ inputs.quality }}_1.0.0_all.deb
+        else
+          repo_url=${base_url}/${{ inputs.channel }}/ubuntu24.04/ice-repo-${{ inputs.channel }}_1.0.0_all.deb
+        fi
+        wget ${repo_url} -O ice-repo.deb
+        sudo dpkg -i ice-repo.deb
+        rm ice-repo.deb
+
+        sudo apt-get update
+        sudo apt-get install -y libzeroc-ice-dev
+
+    - name: Install Ice Windows MSI
+      if: runner.os == 'Windows'
+      shell: pwsh
+      run: |
+        $baseUrl = "https://download.zeroc.com/ice"
+        if ("${{ inputs.quality }}" -eq "nightly") {
+          $msiUrl = "${baseUrl}/${{ inputs.quality }}/${{ inputs.channel }}/Ice-${{ inputs.quality }}.msi"
+        } else {
+          $msiUrl = "${baseUrl}/${{ inputs.channel }}/Ice.msi"
+        }
+        Write-Host "Downloading Ice MSI from: $msiUrl"
+        Invoke-WebRequest -Uri $msiUrl -OutFile "$env:TEMP\Ice.msi"
+        Write-Host "Installing Ice MSI..."
+        Start-Process msiexec.exe -ArgumentList "/i", "$env:TEMP\Ice.msi", "/qn", "/norestart" -Wait -NoNewWindow
+        Remove-Item "$env:TEMP\Ice.msi"
+        Write-Host "Ice installation complete"

@@ -25,8 +25,9 @@ slice {
 //
 // slice.iceVersion returns the version of slice2java used by Ice Builder.
 // This is usually (but not always) the version of the Ice Jar files we want to use.
+// Use -PiceArtifactVersion to override the version of the Ice artifacts.
 //
-project.ext.iceArtifactVersion = slice.iceVersion
+project.ext.iceArtifactVersion = project.findProperty('iceArtifactVersion') ?: slice.iceVersion
 project.version = project.iceArtifactVersion
 project.ext.srcDist = new File([project.slice.iceHome, "java", "src"].join(File.separator)).exists()
 
