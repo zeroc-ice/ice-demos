@@ -67,13 +67,15 @@ jobs:
         run: |
           python scripts/setup-nightly.py --github-env "$GITHUB_ENV" --channel "${CHANNEL}"
 
-      - name: Set ICE_HOME
+      - name: Set ICE_HOME and MAKEFLAGS
         shell: bash
         run: |
           if [[ "$RUNNER_OS" == "Linux" ]]; then
             echo "ICE_HOME=/usr" >> "$GITHUB_ENV"
+            echo "MAKEFLAGS=-j $(nproc)" >> "$GITHUB_ENV"
           elif [[ "$RUNNER_OS" == "macOS" ]]; then
             echo "ICE_HOME=/opt/homebrew" >> "$GITHUB_ENV"
+            echo "MAKEFLAGS=-j $(sysctl -n hw.ncpu)" >> "$GITHUB_ENV"
           elif [[ "$RUNNER_OS" == "Windows" ]]; then
             echo "ICE_HOME=C:\Program Files\ZeroC\Ice-${ICE_VERSION}" >> "$GITHUB_ENV"
           fi
@@ -82,8 +84,8 @@ jobs:
         if: runner.os != 'Windows'
         timeout-minutes: 40
         run: |
-          make V=1 -j $(nproc) -C cpp98
-          make V=1 -j $(nproc) -C cpp11
+          make V=1 -C cpp98
+          make V=1 -C cpp11
 
       - name: Build C++ Demos
         if: runner.os == 'Windows'
@@ -93,6 +95,12 @@ jobs:
           msbuild "cpp98\C++98 demos.sln" /m /p:Configuration=Release /p:Platform=x64
           nuget restore "cpp11\C++11 demos.sln"
           msbuild "cpp11\C++11 demos.sln" /m /p:Configuration=Release /p:Platform=x64
+
+      - name: Build Objective-C Demos
+        if: runner.os == 'macOS'
+        timeout-minutes: 20
+        run: |
+          make V=1 -C objective-c
 
       - name: Build C# Demos
         timeout-minutes: 20
