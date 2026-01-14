@@ -15,6 +15,8 @@ concurrency:
 
 env:
   CHANNEL: "3.7"
+  ICE_VERSION: "3.7.11"
+  MAVEN_REPO: "https://download.zeroc.com/nexus/repository/maven-3.7-nightly"
 
 jobs:
   ci:
@@ -65,16 +67,27 @@ jobs:
         run: |
           python scripts/setup-nightly.py --github-env "$GITHUB_ENV" --channel "${CHANNEL}"
 
+      - name: Set ICE_HOME
+        shell: bash
+        run: |
+          if [[ "$RUNNER_OS" == "Linux" ]]; then
+            echo "ICE_HOME=/usr" >> "$GITHUB_ENV"
+          elif [[ "$RUNNER_OS" == "macOS" ]]; then
+            echo "ICE_HOME=/opt/homebrew" >> "$GITHUB_ENV"
+          elif [[ "$RUNNER_OS" == "Windows" ]]; then
+            echo "ICE_HOME=C:\Program Files\ZeroC\Ice-${ICE_VERSION}" >> "$GITHUB_ENV"
+          fi
+
       - name: Build C++ Demos
         if: runner.os != 'Windows'
-        timeout-minutes: 20
+        timeout-minutes: 40
         run: |
           make V=1 -j $(nproc) -C cpp98
           make V=1 -j $(nproc) -C cpp11
 
       - name: Build C++ Demos
         if: runner.os == 'Windows'
-        timeout-minutes: 20
+        timeout-minutes: 40
         run: |
           nuget restore "cpp98\C++98 demos.sln"
           msbuild "cpp98\C++98 demos.sln" /m /p:Configuration=Release /p:Platform=x64
@@ -86,3 +99,17 @@ jobs:
         working-directory: csharp
         run: |
           dotnet build
+
+      - name: Build Java Demos
+        timeout-minutes: 20
+        working-directory: java
+        shell: bash
+        run: |
+          ./gradlew build -PdevRepo="${MAVEN_REPO}" -PiceHome="${ICE_HOME}" -PiceArtifactVersion="${ICE_VERSION}+"
+
+      - name: Build Java Compat Demos
+        timeout-minutes: 20
+        working-directory: java-compat
+        shell: bash
+        run: |
+          ./gradlew build -PdevRepo="${MAVEN_REPO}" -PiceHome="${ICE_HOME}" -PiceArtifactVersion="${ICE_VERSION}+"
