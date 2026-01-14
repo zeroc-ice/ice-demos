@@ -4,6 +4,7 @@
 
 #include <Ice/Ice.h>
 #include <Throughput.h>
+#include <chrono>
 #include <iomanip>
 
 using namespace std;
