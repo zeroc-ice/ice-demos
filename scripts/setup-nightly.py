@@ -140,9 +140,12 @@ def configure_java(channel: str) -> pathlib.Path:
 
 
 def configure_js(channel: str) -> None:
-    """Configure npm to use nightly registry and prerelease versions for @zeroc packages."""
+    """Configure npm to use nightly registry and prerelease versions for Ice packages."""
     urls = get_urls(channel)
     npmrc_content = NPMRC_TEMPLATE.format(npm_url=urls["npm"])
+
+    # Ice packages to update (non-scoped packages used in 3.7)
+    ice_packages = {"ice", "slice2js"}
 
     count = 0
     for pkg_path in REPO_ROOT.glob("js/**/package.json"):
@@ -154,19 +157,20 @@ def configure_js(channel: str) -> None:
         npmrc_dest = pkg_path.parent / ".npmrc"
         write_file(npmrc_dest, npmrc_content)
 
-        # Update package.json to use * for @zeroc packages (allows prerelease versions)
+        # Update package.json to use * for Ice packages (allows prerelease versions)
         pkg_data = json.loads(pkg_path.read_text(encoding="utf-8"))
         modified = False
 
         for dep_type in ["dependencies", "devDependencies"]:
             if dep_type in pkg_data:
                 for dep_name in pkg_data[dep_type]:
-                    if dep_name.startswith("@zeroc/"):
+                    # Handle both scoped (@zeroc/) and non-scoped (ice, slice2js) packages
+                    if dep_name.startswith("@zeroc/") or dep_name in ice_packages:
                         pkg_data[dep_type][dep_name] = "*"
                         modified = True
 
         if modified:
-            pkg_path.write_text(json.dumps(pkg_data, indent=4) + "\n", encoding="utf-8")
+            pkg_path.write_text(json.dumps(pkg_data, indent=2) + "\n", encoding="utf-8")
 
         count += 1
 
@@ -180,7 +184,7 @@ def configure_js(channel: str) -> None:
         raise RuntimeError(f"npm config set failed: {result.stderr}")
     print(f"npm config set output: {result.stdout}")
 
-    print(f"Updated {count} JS demos with nightly config")
+    print(f"Updated {count} JS package.json files with nightly config")
 
 
 def configure_swift(channel: str) -> None:

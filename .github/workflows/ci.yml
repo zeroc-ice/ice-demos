@@ -82,14 +82,14 @@ jobs:
 
       - name: Build C++ Demos
         if: runner.os != 'Windows'
-        timeout-minutes: 40
+        timeout-minutes: 20
         run: |
           make V=1 -C cpp98
           make V=1 -C cpp11
 
       - name: Build C++ Demos
         if: runner.os == 'Windows'
-        timeout-minutes: 40
+        timeout-minutes: 20
         run: |
           nuget restore "cpp98\C++98 demos.sln"
           msbuild "cpp98\C++98 demos.sln" /m /p:Configuration=Release /p:Platform=x64
@@ -121,3 +121,10 @@ jobs:
         shell: bash
         run: |
           ./gradlew build -PdevRepo="${MAVEN_REPO}" -PiceHome="${ICE_HOME}" -PiceArtifactVersion="${ICE_VERSION}+"
+
+      - name: Build JavaScript Demos
+        timeout-minutes: 20
+        working-directory: js
+        run: |
+          npm install
+          npx gulp build

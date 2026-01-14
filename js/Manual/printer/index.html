@@ -82,24 +82,19 @@
             script <code>Client.min.js</code> that includes:
             </p>
             <ul>
-                <li><code>node_modules/ice/lib/es5/Ice.js</code> (The Ice run-time library)</li>
-                <li><code>node_modules/ice/lib/es5/generated/Printer.js</code> (The generated code for this demo)</li>
-                <li><code>node_modules/ice/lib/es5/browser/Client.js</code> (The demo source)</li>
+                <li><code>node_modules/ice/lib/Ice.js</code> (The Ice run-time library)</li>
+                <li><code>generated/Printer.js</code> (The generated code for this demo)</li>
+                <li><code>browser/Client.js</code> (The demo source)</li>
             </ul>
             <p>To use the minified version you should edit the <code>js/Manual/printer/index.html</code>
                 file and comment out the non-optimized scripts:</p>
             <pre>
-                &lt;!--
-                Scripts used during development, for optimized builds comment
-                the following scripts and uncomment es5/browser/Client.min.js
-                below
-                --&gt;
                 &lt;!-- Ice.js (Ice run-time library) --&gt;
-                &lt;script type="text/javascript" src="../../../node_modules/ice/lib/es5/Ice.js"&gt;&lt;/script&gt;
+                &lt;script type="text/javascript" src="../../../node_modules/ice/lib/Ice.js"&gt;&lt;/script&gt;
                 &lt;!-- Printer.js (Demo generated code) --&gt;
-                &lt;script type="text/javascript" src="es5/generated/Printer.js"&gt;&lt;/script&gt;
+                &lt;script type="text/javascript" src="generated/Printer.js"&gt;&lt;/script&gt;
                 &lt;!-- Client.js (Printer Demo Application) --&gt;
-                &lt;script type="text/javascript" src="es5/browser/Client.js"&gt;&lt;/script&gt;
+                &lt;script type="text/javascript" src="browser/Client.js"&gt;&lt;/script&gt;
             </pre>
             <p>Then uncomment the script tag for the minified version</p>
             <pre>
@@ -108,7 +103,7 @@
                 scripts that includes: the Ice run-time library, the generated
                 code and the demo application.
                 --&gt;
-                &lt;!--&lt;script src="es5/browser/Client.min.js"&gt;&lt;/script&gt;--&gt;
+                &lt;!--&lt;script src="browser/Client.min.js"&gt;&lt;/script&gt;--&gt;
             </pre>
         </div>
         <a class="close-reveal-modal">&#215;</a>
@@ -150,33 +145,25 @@
     {{#jsDeps}}
     <script src="{{.}}"></script>
     {{/jsDeps}}
-    <script type="text/javascript" src="../../../assets/es5/common.js"></script>
-    <!-- Babel dependencies -->
-    <script type="text/javascript" src="../../../node_modules/core-js-bundle/minified.js"></script>
-    <script type="text/javascript" src="../../../node_modules/regenerator-runtime/runtime.js "></script>
-    <!--
-      Scripts used during development, for optimized builds comment
-      the following scripts and uncomment es5/browser/Client.min.js
-      below
-    -->
+    <script type="text/javascript" src="../../../assets/common.js"></script>
     <!-- Ice.js (Ice run-time library) -->
-    <script type="text/javascript" src="../../../node_modules/ice/lib/es5/Ice.js"></script>
+    <script type="text/javascript" src="../../../node_modules/ice/lib/Ice.js"></script>
     <!-- Printer.js (Demo generated code) -->
-    <script type="text/javascript" src="es5/generated/Printer.js"></script>
+    <script type="text/javascript" src="generated/Printer.js"></script>
     <!-- Client.js (Printer Demo Application) -->
-    <script type="text/javascript" src="es5/browser/Client.js"></script>
+    <script type="text/javascript" src="browser/Client.js"></script>
     <!--
       Uncomment the following script to use a minified version of the
       scripts that includes: the Ice run-time library, the generated
       code and the demo application.
     -->
-    <!--<script type="text/javascript" src="es5/browser/Client.min.js"></script>-->
+    <!--<script type="text/javascript" src="browser/Client.min.js"></script>-->
     <script type="text/javascript">
         /* jshint browser:true, jquery:true */
         /* global checkGenerated: false */
         if(["http:", "https:"].indexOf(document.location.protocol) !== -1)
         {
-            checkGenerated(["es5/generated/Printer.js"]);
+            checkGenerated(["generated/Printer.js"]);
         }
     </script>
   </body>

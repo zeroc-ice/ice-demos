@@ -150,19 +150,14 @@
         <p>To use the minified version you should edit the <code>js/Glacier2/simpleChat/index.html</code>
         file and comment out the non-optimized scripts:</p>
         <pre>
-    &lt;!--
-      Scripts used during development, for optimized builds comment
-      the following scripts and uncomment es5/browser/Client.min.js
-      below
-    --&gt;
     &lt;!-- Ice.js (Ice run-time library) --&gt;
-    &lt;script type="text/javascript" src="../../../node_modules/ice/lib/es5/Ice.js"&gt;&lt;/script&gt;
+    &lt;script type="text/javascript" src="../../../node_modules/ice/lib/Ice.js"&gt;&lt;/script&gt;
     &lt;!-- Glacier2.js (Glacier2 run-time library) --&gt;
-    &lt;script type="text/javascript" src="../../../node_modules/ice/lib/es5/Glacier2.js"&gt;&lt;/script&gt;
+    &lt;script type="text/javascript" src="../../../node_modules/ice/lib/Glacier2.js"&gt;&lt;/script&gt;
     &lt;!-- Chat.js (Demo generated code) --&gt;
-    &lt;script type="text/javascript" src="es5/generated/Chat.js"&gt;&lt;/script&gt;
+    &lt;script type="text/javascript" src="generated/Chat.js"&gt;&lt;/script&gt;
     &lt;!-- Client.js (Chat Demo Application) --&gt;
-    &lt;script type="text/javascript" src="es5/browser/Client.js"&gt;&lt;/script&gt;
+    &lt;script type="text/javascript" src="browser/Client.js"&gt;&lt;/script&gt;
         </pre>
         <p>Then uncomment the script tag for the minified version</p>
         <pre>
@@ -171,7 +166,7 @@
       scripts that includes: the Ice run-time library, the generated
       code and the demo application.
     --&gt;
-    &lt;!--&lt;script src="es5/browser/Client.min.js"&gt;&lt;/script&gt;--&gt;
+    &lt;!--&lt;script src="browser/Client.min.js"&gt;&lt;/script&gt;--&gt;
         </pre>
         <a class="close-reveal-modal">&#215;</a>
     </div>
@@ -212,35 +207,27 @@
     {{#jsDeps}}
     <script src="{{.}}"></script>
     {{/jsDeps}}
-    <script type="text/javascript" src="../../../assets/es5/common.js"></script>
-    <!-- Babel dependencies -->
-    <script type="text/javascript" src="../../../node_modules/core-js-bundle/minified.js"></script>
-    <script type="text/javascript" src="../../../node_modules/regenerator-runtime/runtime.js "></script>
-    <!--
-      Scripts used during development, for optimized builds comment
-      the following scripts and uncomment es5/browser/Client.min.js
-      below
-    -->
+    <script type="text/javascript" src="../../../assets/common.js"></script>
     <!-- Ice.js (Ice run-time library) -->
-    <script type="text/javascript" src="../../../node_modules/ice/lib/es5/Ice.js"></script>
+    <script type="text/javascript" src="../../../node_modules/ice/lib/Ice.js"></script>
     <!-- Glacier2.js (Glacier2 client run-time library) -->
-    <script type="text/javascript" src="../../../node_modules/ice/lib/es5/Glacier2.js"></script>
+    <script type="text/javascript" src="../../../node_modules/ice/lib/Glacier2.js"></script>
     <!-- Chat.js (Demo generated code) -->
-    <script type="text/javascript" src="es5/generated/Chat.js"></script>
+    <script type="text/javascript" src="generated/Chat.js"></script>
     <!-- browser/Client.js (Chat Demo Application) -->
-    <script type="text/javascript" src="es5/browser/Client.js"></script>
+    <script type="text/javascript" src="browser/Client.js"></script>
     <!--
       Uncomment the following script to use a minified version of the
       scripts that includes: the Ice and Glacier2 run-time libraries,
       the generated code and the demo application.
     -->
-    <!--<script type="text/javascript" src="es5/browser/Client.min.js"></script>-->
+    <!--<script type="text/javascript" src="browser/Client.min.js"></script>-->
     <script type="text/javascript">
         /* jshint browser:true, jquery:true */
         /* global checkGenerated: false */
         if(["http:", "https:"].indexOf(document.location.protocol) !== -1)
         {
-            checkGenerated(["es5/generated/Chat.js"]);
+            checkGenerated(["generated/Chat.js"]);
         }
     </script>
   </body>
