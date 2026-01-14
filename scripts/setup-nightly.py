@@ -119,11 +119,11 @@ def write_file(path: pathlib.Path, content: str) -> None:
     path.write_text(content, encoding="utf-8")
 
 
-def configure_csharp(channel: str) -> None:
-    """Configure NuGet to use nightly feed."""
+def configure_nuget(channel: str) -> None:
+    """Configure NuGet to use nightly feed (for both C++ and C#)."""
     urls = get_urls(channel)
     content = NUGET_CONFIG_TEMPLATE.format(nuget_url=urls["nuget"])
-    dest = REPO_ROOT / "csharp" / "NuGet.Config"
+    dest = REPO_ROOT / "NuGet.Config"
     write_file(dest, content)
     print(f"Created {dest.relative_to(REPO_ROOT)}")
 
@@ -366,12 +366,11 @@ def reset_nightly() -> None:
     if result.returncode == 0:
         print("Removed npm global config for @zeroc:registry")
 
-    # Remove NuGet.Config file (C# only - C++ uses ICE_NUGET_SOURCE env var)
-    for nuget_dir in ["csharp"]:
-        nuget_config = REPO_ROOT / nuget_dir / "NuGet.Config"
-        if nuget_config.exists():
-            nuget_config.unlink()
-            removed.append(nuget_config.relative_to(REPO_ROOT))
+    # Remove NuGet.Config file (used by both C++ and C#)
+    nuget_config = REPO_ROOT / "NuGet.Config"
+    if nuget_config.exists():
+        nuget_config.unlink()
+        removed.append(nuget_config.relative_to(REPO_ROOT))
 
     # Remove .gradle-nightly directory
     gradle_dir = REPO_ROOT / ".gradle-nightly"
@@ -448,7 +447,7 @@ def main() -> int:
 
     print(f"Configuring nightly feeds for channel {args.channel}...")
 
-    configure_csharp(args.channel)
+    configure_nuget(args.channel)
     gradle_home = configure_java(args.channel)
     configure_js(args.channel)
     configure_swift(args.channel)
