@@ -47,6 +47,12 @@ jobs:
           distribution: "oracle"
           java-version: "17"
 
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+        if: runner.os == 'Windows'
+        with:
+          msbuild-architecture: x64
+
       - name: Install Ice
         uses: ./.github/actions/install-ice
         with:
@@ -58,6 +64,22 @@ jobs:
         shell: bash
         run: |
           python scripts/setup-nightly.py --github-env "$GITHUB_ENV" --channel "${CHANNEL}"
+
+      - name: Build C++ Demos
+        if: runner.os != 'Windows'
+        timeout-minutes: 20
+        run: |
+          make V=1 -j $(nproc) -C cpp98
+          make V=1 -j $(nproc) -C cpp11
+
+      - name: Build C++ Demos
+        if: runner.os == 'Windows'
+        timeout-minutes: 20
+        run: |
+          nuget restore "cpp98\C++98 demos.sln"
+          msbuild "cpp98\C++98 demos.sln" /m /p:Configuration=Release /p:Platform=x64
+          nuget restore "cpp11\C++11 demos.sln"
+          msbuild "cpp11\C++11 demos.sln" /m /p:Configuration=Release /p:Platform=x64
 
       - name: Build C# Demos
         timeout-minutes: 20
