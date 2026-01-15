@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0"
-  xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import
-    Project="..\..\..\..\packages\zeroc.icebuilder.msbuild.5.0.9\build\zeroc.icebuilder.msbuild.props"
-    Condition="Exists('..\..\..\..\packages\zeroc.icebuilder.msbuild.5.0.9\build\zeroc.icebuilder.msbuild.props')" />
-  <Import Project="..\..\..\..\packages\zeroc.ice.v143.3.7.10\build\native\zeroc.ice.v143.props"
-    Condition="Exists('..\..\..\..\packages\zeroc.ice.v143.3.7.10\build\native\zeroc.ice.v143.props')" />
-  <Import Project="..\..\..\..\packages\zeroc.ice.v142.3.7.10\build\native\zeroc.ice.v142.props"
-    Condition="Exists('..\..\..\..\packages\zeroc.ice.v142.3.7.10\build\native\zeroc.ice.v142.props')" />
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\..\..\packages\zeroc.icebuilder.msbuild.5.0.9\build\zeroc.icebuilder.msbuild.props" Condition="Exists('..\..\..\..\packages\zeroc.icebuilder.msbuild.5.0.9\build\zeroc.icebuilder.msbuild.props')" />
+  <Import Project="..\..\..\..\packages\zeroc.ice.v143.3.7.10\build\native\zeroc.ice.v143.props" Condition="Exists('..\..\..\..\packages\zeroc.ice.v143.3.7.10\build\native\zeroc.ice.v143.props')" />
+  <Import Project="..\..\..\..\packages\zeroc.ice.v142.3.7.10\build\native\zeroc.ice.v142.props" Condition="Exists('..\..\..\..\packages\zeroc.ice.v142.3.7.10\build\native\zeroc.ice.v142.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -56,36 +51,23 @@
     <UseDebugLibraries>true</UseDebugLibraries>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <Import Project="$(MSBuildThisFileDirectory)\..\..\..\..\msbuild\common.props"
-    Condition="Exists('$(MSBuildThisFileDirectory)\..\..\..\..\msbuild\common.props')" />
+  <Import Project="$(MSBuildThisFileDirectory)\..\..\..\..\msbuild\common.props" Condition="Exists('$(MSBuildThisFileDirectory)\..\..\..\..\msbuild\common.props')" />
   <ImportGroup Label="ExtensionSettings">
-    <Import Project="..\..\..\..\packages\zeroc.ice.v142.3.7.10\build\native\zeroc.ice.v142.targets"
-      Condition="Exists('..\..\..\..\packages\zeroc.ice.v142.3.7.10\build\native\zeroc.ice.v142.targets')" />
-    <Import Project="..\..\..\..\packages\zeroc.ice.v143.3.7.10\build\native\zeroc.ice.v143.targets"
-      Condition="Exists('..\..\..\..\packages\zeroc.ice.v143.3.7.10\build\native\zeroc.ice.v143.targets')" />
-    <Import
-      Project="..\..\..\..\packages\zeroc.icebuilder.msbuild.5.0.9\build\zeroc.icebuilder.msbuild.targets"
-      Condition="Exists('..\..\..\..\packages\zeroc.icebuilder.msbuild.5.0.9\build\zeroc.icebuilder.msbuild.targets')" />
+    <Import Project="..\..\..\..\packages\zeroc.ice.v142.3.7.10\build\native\zeroc.ice.v142.targets" Condition="Exists('..\..\..\..\packages\zeroc.ice.v142.3.7.10\build\native\zeroc.ice.v142.targets')" />
+    <Import Project="..\..\..\..\packages\zeroc.ice.v143.3.7.10\build\native\zeroc.ice.v143.targets" Condition="Exists('..\..\..\..\packages\zeroc.ice.v143.3.7.10\build\native\zeroc.ice.v143.targets')" />
+    <Import Project="..\..\..\..\packages\zeroc.icebuilder.msbuild.5.0.9\build\zeroc.icebuilder.msbuild.targets" Condition="Exists('..\..\..\..\packages\zeroc.icebuilder.msbuild.5.0.9\build\zeroc.icebuilder.msbuild.targets')" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props"
-      Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')"
-      Label="LocalAppDataPlatform" />
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props"
-      Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')"
-      Label="LocalAppDataPlatform" />
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props"
-      Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')"
-      Label="LocalAppDataPlatform" />
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props"
-      Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')"
-      Label="LocalAppDataPlatform" />
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -95,8 +77,7 @@
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\..\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\</IntDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      $(Platform)\$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Platform)\$(Configuration)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\..\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\</IntDir>
@@ -107,13 +88,11 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>
-        ICE_CPP11_MAPPING;_CONSOLE;_DEBUG;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>ICE_CPP11_MAPPING;_CONSOLE;_DEBUG;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level4</WarningLevel>
-      <AdditionalIncludeDirectories>
-        $(Platform)\$(Configuration);..\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(Platform)\$(Configuration);..\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -130,13 +109,11 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PreprocessorDefinitions>
-        ICE_CPP11_MAPPING;_CONSOLE;_DEBUG;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>ICE_CPP11_MAPPING;_CONSOLE;_DEBUG;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level4</WarningLevel>
-      <AdditionalIncludeDirectories>
-        $(Platform)\$(Configuration);..\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(Platform)\$(Configuration);..\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -154,14 +131,12 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <PreprocessorDefinitions>
-        ICE_CPP11_MAPPING;_CONSOLE;NDEBUG;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>ICE_CPP11_MAPPING;_CONSOLE;NDEBUG;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <WarningLevel>Level4</WarningLevel>
-      <AdditionalIncludeDirectories>
-        $(Platform)\$(Configuration);..\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(Platform)\$(Configuration);..\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -179,14 +154,12 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <PreprocessorDefinitions>
-        ICE_CPP11_MAPPING;_CONSOLE;NDEBUG;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>ICE_CPP11_MAPPING;_CONSOLE;NDEBUG;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <WarningLevel>Level4</WarningLevel>
-      <AdditionalIncludeDirectories>
-        $(Platform)\$(Configuration);..\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(Platform)\$(Configuration);..\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -271,27 +244,13 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use
-        NuGet Package Restore to download them. For more information, see
-        http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error
-      Condition="!Exists('..\..\..\..\packages\zeroc.ice.v142.3.7.10\build\native\zeroc.ice.v142.props')"
-      Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.v142.3.7.10\build\native\zeroc.ice.v142.props'))" />
-    <Error
-      Condition="!Exists('..\..\..\..\packages\zeroc.ice.v142.3.7.10\build\native\zeroc.ice.v142.targets')"
-      Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.v142.3.7.10\build\native\zeroc.ice.v142.targets'))" />
-    <Error
-      Condition="!Exists('..\..\..\..\packages\zeroc.ice.v143.3.7.10\build\native\zeroc.ice.v143.props')"
-      Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.v143.3.7.10\build\native\zeroc.ice.v143.props'))" />
-    <Error
-      Condition="!Exists('..\..\..\..\packages\zeroc.ice.v143.3.7.10\build\native\zeroc.ice.v143.targets')"
-      Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.v143.3.7.10\build\native\zeroc.ice.v143.targets'))" />
-    <Error
-      Condition="!Exists('..\..\..\..\packages\zeroc.icebuilder.msbuild.5.0.9\build\zeroc.icebuilder.msbuild.props')"
-      Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.icebuilder.msbuild.5.0.9\build\zeroc.icebuilder.msbuild.props'))" />
-    <Error
-      Condition="!Exists('..\..\..\..\packages\zeroc.icebuilder.msbuild.5.0.9\build\zeroc.icebuilder.msbuild.targets')"
-      Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.icebuilder.msbuild.5.0.9\build\zeroc.icebuilder.msbuild.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\packages\zeroc.ice.v142.3.7.10\build\native\zeroc.ice.v142.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.v142.3.7.10\build\native\zeroc.ice.v142.props'))" />
+    <Error Condition="!Exists('..\..\..\..\packages\zeroc.ice.v142.3.7.10\build\native\zeroc.ice.v142.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.v142.3.7.10\build\native\zeroc.ice.v142.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\packages\zeroc.ice.v143.3.7.10\build\native\zeroc.ice.v143.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.v143.3.7.10\build\native\zeroc.ice.v143.props'))" />
+    <Error Condition="!Exists('..\..\..\..\packages\zeroc.ice.v143.3.7.10\build\native\zeroc.ice.v143.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.ice.v143.3.7.10\build\native\zeroc.ice.v143.targets'))" />
+    <Error Condition="!Exists('..\..\..\..\packages\zeroc.icebuilder.msbuild.5.0.9\build\zeroc.icebuilder.msbuild.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.icebuilder.msbuild.5.0.9\build\zeroc.icebuilder.msbuild.props'))" />
+    <Error Condition="!Exists('..\..\..\..\packages\zeroc.icebuilder.msbuild.5.0.9\build\zeroc.icebuilder.msbuild.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\packages\zeroc.icebuilder.msbuild.5.0.9\build\zeroc.icebuilder.msbuild.targets'))" />
   </Target>
 </Project>
