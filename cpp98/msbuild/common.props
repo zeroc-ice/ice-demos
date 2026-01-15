@@ -6,22 +6,6 @@
     </ClCompile>
   </ItemDefinitionGroup>
 
-  <!--
-      The correct value for GenerateDebugInformation depends on the compiler:
-  -->
-  <ItemDefinitionGroup>
-    <Link>
-      <GenerateDebugInformation>Yes</GenerateDebugInformation>
-    </Link>
-  </ItemDefinitionGroup>
-
-  <ItemDefinitionGroup Condition="'$(DefaultPlatformToolset)'=='v140' or '$(DefaultPlatformToolset)'=='v141' or '$(DefaultPlatformToolset)'=='v142' or '$(DefaultPlatformToolset)'=='v143'">
-    <Link>
-      <FullProgramDatabaseFile>false</FullProgramDatabaseFile>
-      <GenerateDebugInformation>DebugFastLink</GenerateDebugInformation>
-    </Link>
-  </ItemDefinitionGroup>
-
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
     <Link>
       <OptimizeReferences>true</OptimizeReferences>

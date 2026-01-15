@@ -6,14 +6,6 @@
     </ClCompile>
   </ItemDefinitionGroup>
 
-  <!-- Switch on DEBUG:fastlink -->
-  <ItemDefinitionGroup>
-    <Link>
-      <FullProgramDatabaseFile>false</FullProgramDatabaseFile>
-      <GenerateDebugInformation>DebugFastLink</GenerateDebugInformation>
-    </Link>
-  </ItemDefinitionGroup>
-
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
     <Link>
       <OptimizeReferences>true</OptimizeReferences>
