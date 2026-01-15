@@ -3,7 +3,6 @@
     xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
         <IceVersion Condition="'$(IceVersion)' == ''">3.9.0-nightly.*</IceVersion>
-        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
         <AnalysisMode>All</AnalysisMode>
     </PropertyGroup>
 </Project>

@@ -104,7 +104,7 @@ jobs:
           $ErrorActionPreference = "Stop"
           Get-ChildItem -Recurse -Filter *.slnx | ForEach-Object {
             Write-Host "Building solution: $($_.FullName)"
-            dotnet build $_.FullName
+            dotnet build /p:TreatWarningsAsErrors=true $_.FullName
             if ($LASTEXITCODE -ne 0) {
               throw "dotnet build failed for $($_.FullName)"
             }
