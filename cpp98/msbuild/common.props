@@ -12,4 +12,11 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
     </Link>
   </ItemDefinitionGroup>
+
+  <!-- Enable warnings as errors -->
+  <ItemDefinitionGroup Condition="'$(WARNINGS_AS_ERRORS)' == 'yes'">
+    <ClCompile>
+      <TreatWarningAsError>true</TreatWarningAsError>
+    </ClCompile>
+  </ItemDefinitionGroup>
 </Project>
