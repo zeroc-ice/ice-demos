@@ -83,6 +83,8 @@ jobs:
       - name: Build C++ Demos
         if: runner.os != 'Windows'
         timeout-minutes: 40
+        env:
+          WARNINGS_AS_ERRORS: "yes"
         run: |
           make V=1 -C cpp98
           make V=1 -C cpp11
@@ -90,6 +92,8 @@ jobs:
       - name: Build C++ Demos
         if: runner.os == 'Windows'
         timeout-minutes: 40
+        env:
+          WARNINGS_AS_ERRORS: "yes"
         run: |
           nuget restore "cpp98\C++98 demos.sln"
           msbuild "cpp98\C++98 demos.sln" /m /p:Configuration=Release /p:Platform=x64
@@ -106,7 +110,7 @@ jobs:
         timeout-minutes: 20
         working-directory: csharp
         run: |
-          dotnet build
+          dotnet build /p:TreatWarningsAsErrors=true
 
       - name: Build Java Demos
         timeout-minutes: 20
