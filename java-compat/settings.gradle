@@ -6,7 +6,7 @@
 def demos = [
     'Ice' : ['async', 'bidir', 'callback', 'hello', 'invoke',
     'interrupt', 'latency', 'minimal', 'multicast', 'nested',
-    'plugin', 'properties', 'serialize','session', 'swing',
+    'plugin', 'properties', 'serialize','session',
     'throughput', 'value', 'optional','context'],
     'IceDiscovery' : ['hello', 'replication'],
     'IceBox' : ['hello'],
@@ -32,6 +32,3 @@ demos.each {
         project("${projectName}").projectDir = new File("${dir}/${it}")
     }
 }
-
-include ":demoChat"
-project(":demoChat").projectDir = new File("Chat")

@@ -18,8 +18,8 @@ sourceSets {
 }
 
 dependencies {
-    implementation localDependency("ice-compat")
-    implementation localDependency("icestorm-compat")
+    implementation "com.zeroc:ice-compat:${project.iceArtifactVersion}"
+    implementation "com.zeroc:icestorm-compat:${project.iceArtifactVersion}"
     runtimeOnly "org.apache.commons:commons-compress:1.14"
 }
 

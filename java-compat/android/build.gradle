@@ -21,7 +21,13 @@ subprojects {
 
 allprojects {
     repositories {
+        if(project.devRepo) {
+            maven {
+                url project.devRepo
+            }
+        }
         google()
+        mavenCentral()
         maven {
             url "https://plugins.gradle.org/m2/"
         }
@@ -35,7 +41,7 @@ allprojects {
 }
 
 ext {
-    compileSdkVersion = 33
+    compileSdkVersion = 36
     minSdkVersion = 31
-    targetSdkVersion = 33
+    targetSdkVersion = 36
 }
