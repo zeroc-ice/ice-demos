@@ -128,3 +128,17 @@ jobs:
         run: |
           npm install
           npx gulp build
+
+      - name: Build TypeScript Browser Demos
+        timeout-minutes: 20
+        working-directory: typescript/browser
+        run: |
+          npm install
+          npx gulp build
+
+      - name: Build TypeScript Node.js Demos
+        timeout-minutes: 20
+        working-directory: typescript/nodejs
+        run: |
+          npm install
+          npx gulp build

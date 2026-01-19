@@ -1,6 +1,6 @@
 {
   "name": "ice-demos",
-  "version": "3.7.10",
+  "version": "3.7.11",
   "description": "Sample programs for Ice (Internet Communications Engine)",
   "author": "ZeroC, Inc.",
   "homepage": "https://zeroc.com",
@@ -13,13 +13,13 @@
     "run": "gulp run"
   },
   "dependencies": {
-    "ice": "^3.7.100",
-    "slice2js": "^3.7.10"
+    "ice": "*",
+    "slice2js": "*"
   },
   "devDependencies": {
     "@types/jquery": "^3.5.16",
     "del": "^5.1.0",
-    "gulp": "^4.0.2",
+    "gulp": "^5.0.0",
     "gulp-ext-replace": "^0.3.0",
     "gulp-ice-builder": "^3.0.4",
     "gulp-newer": "^1.4.0",
@@ -28,6 +28,7 @@
     "gulp-typescript": "^5.0.1",
     "hogan.js": "^3.0.2",
     "http-proxy": "^1.18.1",
+    "open": "^10.1.0",
     "pump": "^3.0.0",
     "rollup": "^1.32.1",
     "rollup-plugin-node-resolve": "^5.2.0",

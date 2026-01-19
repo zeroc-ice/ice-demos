@@ -13,7 +13,7 @@ import path from "path";
 import pump from "pump";
 import terser from "gulp-terser";
 import { fileURLToPath } from "url";
-import httpServer from "./bin/HttpServer.js";
+import httpServer from "./bin/HttpServer.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const fsp = fs.promises;
@@ -32,16 +32,6 @@ function slice2js(options)
 
 const demos =
 {
-    "Chat":
-    {
-        srcs: [
-            "node_modules/ice/lib/Ice.min.js",
-            "node_modules/ice/lib/Glacier2.min.js",
-            "Chat/generated/Chat.js",
-            "Chat/generated/ChatSession.js",
-            "Chat/Client.js"],
-        dest: "Chat"
-    },
     "Glacier2/simpleChat":
     {
         srcs: [

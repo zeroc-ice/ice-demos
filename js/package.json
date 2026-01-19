@@ -1,7 +1,6 @@
 {
   "name": "ice-demos",
   "version": "3.7.11",
-  "type": "module",
   "description": "Sample programs for Ice (Internet Communications Engine)",
   "author": "ZeroC, Inc.",
   "homepage": "https://zeroc.com",
