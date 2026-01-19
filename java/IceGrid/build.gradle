@@ -20,10 +20,10 @@ def demoIceGridProject(name) {
         }
 
         dependencies {
-            implementation localDependency("ice")
-            runtimeOnly localDependency("icessl")
-            implementation localDependency("icegrid")
-            runtimeOnly localDependency("icelocatordiscovery")
+            implementation "com.zeroc:ice:${project.iceArtifactVersion}"
+            runtimeOnly "com.zeroc:icessl:${project.iceArtifactVersion}"
+            implementation "com.zeroc:icegrid:${project.iceArtifactVersion}"
+            runtimeOnly "com.zeroc:icelocatordiscovery:${project.iceArtifactVersion}"
             runtimeOnly "org.apache.commons:commons-compress:1.14"
         }
 
@@ -54,8 +54,8 @@ project(":demoIceGridSimple") {
 
 project(":demoIceGridIcebox") {
     dependencies {
-        runtimeOnly localDependency("icessl")
-        implementation localDependency("icebox")
+        runtimeOnly "com.zeroc:icessl:${project.iceArtifactVersion}"
+        implementation "com.zeroc:icebox:${project.iceArtifactVersion}"
     }
     demoJar("client")
     demoJar("service")

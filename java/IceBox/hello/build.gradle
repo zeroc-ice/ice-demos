@@ -18,9 +18,9 @@ sourceSets {
 }
 
 dependencies {
-    implementation localDependency("ice")
-    runtimeOnly localDependency("icessl")
-    implementation localDependency("icebox")
+    implementation "com.zeroc:ice:${project.iceArtifactVersion}"
+    runtimeOnly "com.zeroc:icessl:${project.iceArtifactVersion}"
+    implementation "com.zeroc:icebox:${project.iceArtifactVersion}"
     runtimeOnly "org.apache.commons:commons-compress:1.14"
 }
 

@@ -18,13 +18,6 @@ android {
         applicationId "com.zeroc.hello"
     }
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
-        }
-    }
-
     lintOptions {
         disable 'UnusedAttribute' // autofillHints is only used with API level 26 and older
     }
@@ -42,9 +35,9 @@ clean {
 }
 
 dependencies {
-    implementation localDependency("ice")
-    implementation localDependency("icessl")
-    runtimeOnly localDependency("icediscovery")
+    implementation "com.zeroc:ice:${project.iceArtifactVersion}"
+    implementation "com.zeroc:icessl:${project.iceArtifactVersion}"
+    runtimeOnly "com.zeroc:icediscovery:${project.iceArtifactVersion}"
     implementation "androidx.fragment:fragment:1.5.5"
     implementation "androidx.appcompat:appcompat:1.6.1"
 }

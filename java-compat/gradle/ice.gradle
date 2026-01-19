@@ -31,31 +31,8 @@ slice {
 //
 project.ext.iceArtifactVersion = project.findProperty('iceArtifactVersion') ?: slice.iceVersion
 project.version = project.iceArtifactVersion
-project.ext.srcDist = new File([project.slice.iceHome, "java-compat", "src"].join(File.separator)).exists()
 
 buildscript {
-    //
-    // If iceBuilderHome is set add its lib directory it to the local maven repositories
-    // so we can build using a local plugin version
-    //
-    if(iceBuilderHome) {
-        def builder  = new File([iceBuilderHome, "build", "libs"].join(File.separator))
-
-        if(builder.exists()) {
-            repositories {
-                flatDir dirs: "file://${builder.getCanonicalPath()}"
-            }
-        }
-    }
-
-    if(new File("/usr/share/maven-repo").exists()){
-        repositories {
-            maven {
-                url "file:///usr/share/maven-repo"
-            }
-        }
-    }
-
     repositories {
         maven {
             url "https://plugins.gradle.org/m2/"
@@ -63,25 +40,11 @@ buildscript {
     }
 
     dependencies {
-        classpath group: "${iceBuilderClassPath}", name: 'slice', version: "${iceBuilderVersion}"
+        classpath group: "gradle.plugin.com.zeroc.gradle.ice-builder", name: 'slice', version: "1.5.2"
     }
 }
 
 repositories {
-    if(project.ext.srcDist) {
-        repositories {
-            flatDir dirs: "file://${project.slice.iceHome}/java-compat/lib"
-        }
-    }
-
-    if(new File("/usr/share/maven-repo").exists()){
-        repositories {
-            maven {
-                url "file:///usr/share/maven-repo"
-            }
-        }
-    }
-
     if(project.devRepo) {
         maven {
             url project.devRepo
@@ -121,17 +84,8 @@ def demoJar(name, mainClass = name.capitalize()) {
     }
 }
 
-def localDependency(artifactId) {
-    if(project.ext.srcDist) {
-        return files("${project.slice.iceHome}/java-compat/lib/${artifactId}-${project.iceArtifactVersion}.jar")
-    } else {
-        return "com.zeroc:${artifactId}:${project.iceArtifactVersion}"
-    }
-}
-
 ext {
     demoJar = this.&demoJar
-    localDependency = this.&localDependency
 }
 
 def demoIceBoxServer() {
@@ -140,8 +94,8 @@ def demoIceBoxServer() {
     }
 
     dependencies {
-        iceboxserver localDependency("ice-compat")
-        iceboxserver localDependency("icebox-compat")
+        iceboxserver "com.zeroc:ice-compat:${project.iceArtifactVersion}"
+        iceboxserver "com.zeroc:icebox-compat:${project.iceArtifactVersion}"
         iceboxserver "org.apache.commons:commons-compress:1.14"
     }
 

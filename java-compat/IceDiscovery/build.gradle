@@ -21,8 +21,8 @@
         }
 
         dependencies {
-            implementation localDependency("ice-compat")
-            runtimeOnly localDependency("icediscovery-compat")
+            implementation "com.zeroc:ice-compat:${project.iceArtifactVersion}"
+            runtimeOnly "com.zeroc:icediscovery-compat:${project.iceArtifactVersion}"
             runtimeOnly "org.apache.commons:commons-compress:1.14"
         }
 
