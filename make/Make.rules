@@ -19,9 +19,9 @@
 # Define PLATFORMS to the list of platforms to build. This defaults
 # to the first supported platform for this system.
 #
-# Run `make print V=supported-platforms' to see the list of supported
+# Run `make print V=supported-platforms` to see the list of supported
 # platforms on this system. For example, set PLATFORMS to x86 to build
-# for the x86 platform (assuming it's among the supported plaftorms
+# for the x86 platform (assuming it's among the supported platforms
 # on this system).
 #
 PLATFORMS               ?= $(firstword $(supported-platforms))

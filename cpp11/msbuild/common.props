@@ -6,18 +6,17 @@
     </ClCompile>
   </ItemDefinitionGroup>
 
-  <!-- Switch on DEBUG:fastlink -->
-  <ItemDefinitionGroup>
-    <Link>
-      <FullProgramDatabaseFile>false</FullProgramDatabaseFile>
-      <GenerateDebugInformation>DebugFastLink</GenerateDebugInformation>
-    </Link>
-  </ItemDefinitionGroup>
-
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
     <Link>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
     </Link>
+  </ItemDefinitionGroup>
+
+  <!-- Enable warnings as errors -->
+  <ItemDefinitionGroup Condition="'$(WARNINGS_AS_ERRORS)' == 'yes'">
+    <ClCompile>
+      <TreatWarningAsError>true</TreatWarningAsError>
+    </ClCompile>
   </ItemDefinitionGroup>
 </Project>

@@ -80,11 +80,6 @@ Demos in this directory:
   This demo shows how to use sessions to clean up client-specific
   resources in a server after the client shuts down or crashes.
 
-- [swing](./swing)
-
-  A swing application that shows how to use Asynchronous Method
-  Invocation (AMI) in a graphical client.
-
 - [throughput](./throughput)
 
   A simple throughput demo that allows you to send sequences of

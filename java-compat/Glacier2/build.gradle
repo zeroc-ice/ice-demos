@@ -21,8 +21,8 @@
         }
 
         dependencies {
-            implementation localDependency("ice-compat")
-            implementation localDependency("glacier2-compat")
+            implementation "com.zeroc:ice-compat:${project.iceArtifactVersion}"
+            implementation "com.zeroc:glacier2-compat:${project.iceArtifactVersion}"
             runtimeOnly "org.apache.commons:commons-compress:1.14"
         }
 

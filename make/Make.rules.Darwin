@@ -5,7 +5,7 @@
 supported-platforms             = macosx iphoneos iphonesimulator
 
 macosx_ar                       = libtool
-macosx_cppflags                 = -mmacosx-version-min=10.14
+macosx_cppflags                 = -mmacosx-version-min=14.0
 macosx_ldflags                  = $(macosx_cppflags)
 macosx_targetdir                = $(if $(filter %/build,$5),/macosx)
 
@@ -34,8 +34,9 @@ endif
 shared_cppflags = $(if $(filter-out program,$($1_target)),-fPIC) -fvisibility=hidden
 
 cppflags        = -Wall -Wextra -Wshadow -Wshadow-all -Wredundant-decls -Wno-shadow-field \
-                  -Wno-shadow-uncaptured-local  -Wdeprecated -Wstrict-prototypes -Wconversion \
-                  -Wdocumentation -pthread \
+                  -Wno-shadow-uncaptured-local  -Wdeprecated -Wstrict-prototypes -Wconversion -Wdocumentation \
+                  $(if $(filter yes,$(WARNINGS_AS_ERRORS)),-Werror,) \
+                  -pthread \
                   $(if $(filter yes,$(OPTIMIZE)),-O2 -DNDEBUG,-g)
 
 ifeq ($(MAXWARN),yes)

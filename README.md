@@ -26,10 +26,9 @@ The sample programs are grouped by Slice language mapping:
 - [Swift](./swift)
 - [TypeScript](./typescript)
 
-For example, the [cpp11](./cpp11) folder contains all the sample programs written
-in C++ that demonstrate the Slice to C++11 language mapping.
+For example, the [cpp11](./cpp11) folder contains all the sample programs written in C++ that demonstrate the Slice to
+C++11 language mapping.
 
-The [certs](./certs) folder contains X.509 certificates shared by some of these
-sample programs.
+The [certs](./certs) folder contains X.509 certificates shared by some of these sample programs.
 
 [GPLv2]: https://github.com/zeroc-ice/ice/blob/3.7/LICENSE
