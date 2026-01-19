@@ -8,14 +8,12 @@ or coding technique.
 
 The following subdirectories contain sample programs:
 
-- [Chat](./Chat) is a JavaScript client for the ZeroC [Chat Demo][1].
-
 - [Glacier2](./Glacier2) is a simpler chat client that uses the Glacier2 service.
 
 - [Ice](./Ice) has several examples that illustrate fundamental Ice concepts.
 
 - [Manual](./Manual) contains complete examples for some of the code snippets
-in the [Ice manual][2].
+in the [Ice manual][1].
 
 Refer to the [C++11 demos](../../cpp11) for more examples that use Ice services
 such as IceGrid and IceStorm.
@@ -24,7 +22,7 @@ such as IceGrid and IceStorm.
 
 ### Prerequisites
 
-The TypeScript sample programs require an installation of [Node.js][3].
+The TypeScript sample programs require an installation of [Node.js][2].
 
 ### Building the Demos
 
@@ -174,6 +172,5 @@ Download the certificate (`cacert.pem`) to the device from an email client.
 Next go to _Settings -> Security -> Install from storage_, and choose
 `cacert.pem`. Enter a name and press OK.
 
-[1]: https://doc.zeroc.com/technical-articles/general-topics/chat-demo
-[2]: https://doc.zeroc.com/ice/3.7/introduction
-[3]: http://nodejs.org
+[1]: https://doc.zeroc.com/ice/3.7/introduction
+[2]: http://nodejs.org
