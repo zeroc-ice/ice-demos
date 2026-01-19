@@ -2,9 +2,8 @@
 
 ## Overview
 
-This directory contains TypeScript sample programs for various Ice components.
-These examples are provided to get you started on using a particular Ice feature
-or coding technique.
+This directory contains TypeScript sample programs for various Ice components. These examples are provided to get you
+started on using a particular Ice feature or coding technique.
 
 The following subdirectories contain sample programs:
 
@@ -12,91 +11,75 @@ The following subdirectories contain sample programs:
 
 - [Ice](./Ice) has several examples that illustrate fundamental Ice concepts.
 
-- [Manual](./Manual) contains complete examples for some of the code snippets
-in the [Ice manual][1].
+- [Manual](./Manual) contains complete examples for some of the code snippets in the [Ice manual][1].
 
-Refer to the [C++11 demos](../../cpp11) for more examples that use Ice services
-such as IceGrid and IceStorm.
+Refer to the [C++11 demos](../../cpp11) for more examples that use Ice services such as IceGrid and IceStorm.
 
 ## Build Instructions
 
 ### Prerequisites
 
-The JavaScript sample programs require an installation of [Node.js][3].
+The TypeScript sample programs require an installation of [Node.js][2].
 
 ### Building the Demos
 
 #### Building the demos with the NPM packages
 
-With Node.js in your PATH, go to the typescript/nodejs directory
-and run the following command to install several dependencies:
+With Node.js in your PATH, go to the typescript/nodejs directory and run the following command to install several
+dependencies:
 
-```
+```shell
 npm install
 ```
 
-This command builds the Slice-to-JavaScript compiler (`slice2js`) from
-source and requires a C++ compiler such as Visual Studio 2015.
+This command builds the Slice-to-JavaScript compiler (`slice2js`) from source and requires a C++ compiler such as
+Visual Studio 2015.
 
 Now use gulp to build the demos:
 
-```
+```shell
 npm run build
 ```
 
-#### Building the demos with the Ice source distribution
+#### Building the demos with nightly packages
 
-If you want to build the demos using the Ice source distribution, you must set
-the `ICE_HOME` environment variable with the path name of the Ice source
-directory and pass the `--only=dev` argument to `npm install`:
+You can build the demos using the latest Ice nightly packages from the ZeroC nightly repository. First, run the setup
+script from the repository root:
 
-```
-export ICE_HOME=~/ice
-npm install --only=dev
+```shell
+python scripts/setup-nightly.py --channel 3.7
 ```
 
-Now use gulp to build the demos:
+Then install dependencies and build:
 
-```
+```shell
+npm install
 npm run build
 ```
 
-On Windows you need to set the platform and configuration in order to locate
-slice2js. For example, if you have built C++ x64 Release mode, you can use the
-following command to build:
+To reset back to the release packages:
 
-```
-npm run build -- --cppPlatform x64 --cppConfiguration Release
-```
-
-Alternatively, you can use the CPP_PLATFORM and CPP_CONFIGURATION environment
-variables:
-
-```
-set CPP_PLATFORM=x64
-set CPP_CONFIGURATION=Debug
-npm run build
+```shell
+python scripts/setup-nightly.py --reset
 ```
 
 ## Running the TypeScript Demos
 
-Ice provides only client demos in TypeScript since Ice for JavaScript does not
-support full server-side activities. In order to run a sample client, you must
-first start its corresponding server from another Ice language mapping. If you
-want to get started quickly, we recommend using the Python server. For example,
-start the Python "hello" server:
+Ice provides only client demos in TypeScript since Ice for JavaScript does not support full server-side activities. In
+order to run a sample client, you must first start its corresponding server from another Ice language mapping. If you
+want to get started quickly, we recommend using the Python server. For example, start the Python "hello" server:
 
-```
+```shell
 cd python/Ice/hello
 python Server.py
 ```
 
-To run the client, open another terminal window, change to the corresponding
-TypeScript demo directory, and run:
+To run the client, open another terminal window, change to the corresponding TypeScript demo directory, and run:
 
-```
+```shell
 cd typescript/nodejs/Ice/hello
 node Client
 ```
 
 [1]: https://doc.zeroc.com/ice/3.7/introduction
+[2]: http://nodejs.org
