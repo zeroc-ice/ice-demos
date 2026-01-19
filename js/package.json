@@ -1,45 +1,30 @@
 {
   "name": "ice-demos",
-  "version": "3.7.10",
+  "version": "3.7.11",
   "description": "Sample programs for Ice (Internet Communications Engine)",
   "author": "ZeroC, Inc.",
   "homepage": "https://zeroc.com",
   "repository": "https://github.com/zeroc-ice/ice-demos.git",
   "license": "GPL-2.0",
-  "browserslist": "> 0.25%, not dead",
   "scripts": {
     "build": "gulp build",
     "clean": "gulp clean",
     "run": "gulp run"
   },
   "dependencies": {
-    "ice": "^3.7.100",
-    "slice2js": "^3.7.10"
+    "ice": "*",
+    "slice2js": "*"
   },
   "devDependencies": {
-    "@babel/cli": "^7.21.0",
-    "@babel/core": "^7.21.3",
-    "@babel/plugin-transform-async-to-generator": "^7.20.7",
-    "@babel/preset-env": "^7.20.2",
-    "babel-plugin-transform-builtin-extend": "^1.1.2",
-    "babel-preset-es2015-script": "^1.1.0",
-    "core-js": "^3.29.1",
-    "core-js-bundle": "^3.29.1",
-    "del": "^5.1.0",
-    "gulp": "^4.0.2",
-    "gulp-babel": "^8.0.0",
+    "gulp": "^5.0.0",
     "gulp-concat": "^2.6.1",
-    "gulp-ext-replace": "^0.3.0",
     "gulp-gzip": "1.4.2",
     "gulp-ice-builder": "^3.0.4",
     "gulp-newer": "^1.4.0",
-    "gulp-open": "^3.0.1",
     "gulp-terser": "^1.4.1",
-    "gulp-uglifyes": "^0.2.1",
     "hogan.js": "^3.0.2",
     "http-proxy": "^1.18.1",
-    "pump": "^3.0.0",
-    "regenerator-runtime": "^0.13.11",
-    "vinyl-paths": "^3.0.1"
+    "open": "^10.1.0",
+    "pump": "^3.0.0"
   }
 }

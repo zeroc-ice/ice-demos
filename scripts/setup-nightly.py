@@ -53,8 +53,6 @@ beforeSettings {{ settings ->
 }}
 """
 
-NPMRC_TEMPLATE = "@zeroc:registry={npm_url}\n"
-
 NUGET_CONFIG_TEMPLATE = """\
 <?xml version="1.0" encoding="utf-8"?>
 <configuration>
@@ -140,47 +138,54 @@ def configure_java(channel: str) -> pathlib.Path:
 
 
 def configure_js(channel: str) -> None:
-    """Configure npm to use nightly registry and prerelease versions for @zeroc packages."""
+    """Configure npm to use nightly registry and prerelease versions for Ice packages."""
     urls = get_urls(channel)
-    npmrc_content = NPMRC_TEMPLATE.format(npm_url=urls["npm"])
 
-    count = 0
-    for pkg_path in REPO_ROOT.glob("js/**/package.json"):
-        # Skip node_modules directories
-        if "node_modules" in pkg_path.parts:
-            continue
-
-        # Create .npmrc pointing to nightly registry
-        npmrc_dest = pkg_path.parent / ".npmrc"
-        write_file(npmrc_dest, npmrc_content)
-
-        # Update package.json to use * for @zeroc packages (allows prerelease versions)
-        pkg_data = json.loads(pkg_path.read_text(encoding="utf-8"))
-        modified = False
-
-        for dep_type in ["dependencies", "devDependencies"]:
-            if dep_type in pkg_data:
-                for dep_name in pkg_data[dep_type]:
-                    if dep_name.startswith("@zeroc/"):
-                        pkg_data[dep_type][dep_name] = "*"
-                        modified = True
-
-        if modified:
-            pkg_path.write_text(json.dumps(pkg_data, indent=4) + "\n", encoding="utf-8")
-
-        count += 1
-
-    # Set global npm config for @zeroc scope (more reliable than per-directory .npmrc)
+    # Set global npm registry to nightly feed
     # Use shell=True for Windows compatibility (npm is a batch script on Windows)
-    npm_cmd = f'npm config set @zeroc:registry {urls["npm"]}'
+    npm_cmd = f'npm config set registry {urls["npm"]}'
     print(f"Running: {npm_cmd}")
     result = subprocess.run(npm_cmd, shell=True, capture_output=True, text=True)
     if result.returncode != 0:
         print(f"npm config set failed: {result.stderr}")
         raise RuntimeError(f"npm config set failed: {result.stderr}")
-    print(f"npm config set output: {result.stdout}")
 
-    print(f"Updated {count} JS demos with nightly config")
+    # Ice packages to update (non-scoped packages used in 3.7)
+    ice_packages = {"ice", "slice2js"}
+
+    # Glob patterns for JavaScript and TypeScript demo package.json files
+    patterns = ["js/**/package.json", "typescript/**/package.json"]
+
+    count = 0
+    for pattern in patterns:
+        for pkg_path in REPO_ROOT.glob(pattern):
+            # Skip node_modules directories
+            if "node_modules" in pkg_path.parts:
+                continue
+
+            # Update package.json to use * for Ice packages (allows prerelease versions)
+            pkg_data = json.loads(pkg_path.read_text(encoding="utf-8"))
+            modified = False
+
+            for dep_type in ["dependencies", "devDependencies"]:
+                if dep_type in pkg_data:
+                    for dep_name in pkg_data[dep_type]:
+                        if dep_name in ice_packages:
+                            pkg_data[dep_type][dep_name] = "*"
+                            modified = True
+
+            if modified:
+                pkg_path.write_text(json.dumps(pkg_data, indent=2) + "\n", encoding="utf-8")
+                count += 1
+
+                # Remove package-lock.json so npm install picks up new versions
+                lock_path = pkg_path.parent / "package-lock.json"
+                if lock_path.exists():
+                    lock_path.unlink()
+                    print(f"Removed {lock_path.relative_to(REPO_ROOT)}")
+
+    print(f"Configured npm registry: {urls['npm']}")
+    print(f"Updated {count} JS/TypeScript package.json files with nightly config")
 
 
 def configure_swift(channel: str) -> None:
@@ -264,7 +269,6 @@ def configure_env(channel: str, github_env: pathlib.Path | None, gradle_home: pa
         "UV_EXTRA_INDEX_URL": urls["pypi"],
         "PIP_EXTRA_INDEX_URL": urls["pypi"],
         "GRADLE_USER_HOME": str(gradle_home),
-        "npm_config_@zeroc:registry": urls["npm"],  # npm registry for @zeroc packages
     }
 
     if github_env:
@@ -348,23 +352,16 @@ def reset_nightly() -> None:
     """Reset all nightly configuration changes."""
     removed = []
 
-    # Remove generated .npmrc files (skip node_modules)
-    for npmrc in REPO_ROOT.glob("js/**/.npmrc"):
-        if "node_modules" in npmrc.parts:
-            continue
-        npmrc.unlink()
-        removed.append(npmrc.relative_to(REPO_ROOT))
-
-    # Remove global npm config for @zeroc scope (if set)
+    # Reset npm registry to default
     # Use shell=True for Windows compatibility (npm is a batch script on Windows)
     result = subprocess.run(
-        "npm config delete @zeroc:registry",
+        "npm config delete registry",
         capture_output=True,
         text=True,
         shell=True,
     )
     if result.returncode == 0:
-        print("Removed npm global config for @zeroc:registry")
+        print("Reset npm registry to default")
 
     # Remove NuGet.Config file (used by both C++ and C#)
     nuget_config = REPO_ROOT / "NuGet.Config"
@@ -385,15 +382,16 @@ def reset_nightly() -> None:
             path.unlink()
             removed.append(path.relative_to(REPO_ROOT))
 
-    # Reset package.json files using git (only package.json, not entire js/ directory)
+    # Reset package.json and package-lock.json files using git
     result = subprocess.run(
-        ["git", "checkout", "--", "js/**/package.json"],
+        ["git", "checkout", "--", "js/**/package.json", "js/**/package-lock.json",
+         "typescript/**/package.json", "typescript/**/package-lock.json"],
         cwd=REPO_ROOT,
         capture_output=True,
         text=True,
     )
     if result.returncode == 0:
-        print("Restored js/**/package.json via git checkout")
+        print("Restored js/**/package*.json and typescript/**/package*.json via git checkout")
     elif "error" in result.stderr.lower():
         print(f"Note: Could not restore package.json files: {result.stderr.strip()}")
 
