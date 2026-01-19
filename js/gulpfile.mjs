@@ -8,12 +8,10 @@ import gulp from "gulp";
 import gzip from "gulp-gzip";
 import iceBuilder from "gulp-ice-builder";
 import newer from "gulp-newer";
-import open from "open";
 import path from "path";
 import pump from "pump";
 import terser from "gulp-terser";
 import { fileURLToPath } from "url";
-import httpServer from "./bin/HttpServer.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const fsp = fs.promises;
@@ -154,6 +152,8 @@ gulp.task("clean", gulp.parallel(Object.keys(demos).map(demoCleanTask)));
 gulp.task("run", gulp.series("build",
                              async () =>
                              {
+                                 const open = (await import("open")).default;
+                                 const httpServer = (await import("./bin/HttpServer.mjs")).default;
                                  httpServer();
                                  await open("http://localhost:8080/index.html");
                              }));

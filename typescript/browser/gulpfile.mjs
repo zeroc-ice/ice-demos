@@ -3,17 +3,14 @@
 //
 
 import del from "del";
-import fs from "fs";
 import gulp from "gulp";
 import iceBuilder from "gulp-ice-builder";
-import open from "open";
 import path from "path";
 import paths from "vinyl-paths";
 import pump from "pump";
 import rollup from "rollup";
 import tsc from "gulp-typescript";
 import { fileURLToPath } from "url";
-import httpServer from "./bin/HttpServer.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = __dirname;
@@ -119,6 +116,8 @@ gulp.task("default", gulp.series("build"));
 gulp.task("run",
           async () =>
           {
+              const open = (await import("open")).default;
+              const httpServer = (await import("./bin/HttpServer.mjs")).default;
               httpServer();
               await open("http://localhost:8080/index.html");
           });
