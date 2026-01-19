@@ -16,7 +16,6 @@ concurrency:
 env:
   CHANNEL: "3.7"
   ICE_VERSION: "3.7.11"
-  MAVEN_REPO: "https://download.zeroc.com/nexus/repository/maven-3.7-nightly"
 
 jobs:
   ci:

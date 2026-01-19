@@ -269,6 +269,7 @@ def configure_env(channel: str, github_env: pathlib.Path | None, gradle_home: pa
         "UV_EXTRA_INDEX_URL": urls["pypi"],
         "PIP_EXTRA_INDEX_URL": urls["pypi"],
         "GRADLE_USER_HOME": str(gradle_home),
+        "MAVEN_REPO": urls["maven"],  # Maven repository for Java
     }
 
     if github_env:
