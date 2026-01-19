@@ -269,7 +269,6 @@ def configure_env(channel: str, github_env: pathlib.Path | None, gradle_home: pa
         "UV_EXTRA_INDEX_URL": urls["pypi"],
         "PIP_EXTRA_INDEX_URL": urls["pypi"],
         "GRADLE_USER_HOME": str(gradle_home),
-        "npm_config_@zeroc:registry": urls["npm"],  # npm registry for @zeroc packages
     }
 
     if github_env:
@@ -298,12 +297,7 @@ def write_local_env_scripts(env_vars: dict[str, str]) -> None:
     # PowerShell script
     ps1_path = scripts_dir / "nightly-env.ps1"
     ps1_lines = ["# PowerShell environment for nightly"]
-    for key, value in env_vars.items():
-        # Use [Environment]::SetEnvironmentVariable for names with special characters
-        if any(c in key for c in "@:"):
-            ps1_lines.append(f'[Environment]::SetEnvironmentVariable("{key}", "{value}", "Process")')
-        else:
-            ps1_lines.append(f'$env:{key}="{value}"')
+    ps1_lines.extend(f'$env:{key}="{value}"' for key, value in env_vars.items())
     write_file(ps1_path, "\n".join(ps1_lines) + "\n")
 
     # Print path relative to current directory so user can copy-paste
