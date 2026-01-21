@@ -11,7 +11,6 @@ Docker image for testing Ice 3.7 nightly packages on Amazon Linux 2023.
   - [Interactive Shell Access](#interactive-shell-access)
   - [Ice Packages Installed](#ice-packages-installed)
 
-
 ## Included Tools
 
 | Tool           | Version        |
