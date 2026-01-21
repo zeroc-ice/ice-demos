@@ -145,3 +145,27 @@ jobs:
         run: |
           npm install
           npx gulp build
+
+  docker-ci:
+    name: ${{ matrix.distro }} (docker)
+    strategy:
+      fail-fast: false
+      matrix:
+        distro: [ubuntu22.04, ubuntu24.04, debian12, debian13, rocky9, rocky10, amzn2023]
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: |
+          docker build -f docker/${{ matrix.distro }}/Dockerfile -t ice-demos-${{ matrix.distro }}:test docker
+
+      - name: Build C++ Demos
+        timeout-minutes: 30
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/ice-demos \
+            -w /ice-demos \
+            ice-demos-${{ matrix.distro }}:test \
+            bash -l -c "make -C cpp98 && make -C cpp11"

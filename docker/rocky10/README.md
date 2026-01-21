@@ -1,0 +1,70 @@
+
+# Rocky Linux 10
+
+Docker image for testing Ice 3.7 nightly packages on Rocky Linux 10 using ZeroC RHEL 10 packages.
+
+- [Rocky Linux 10](#rocky-linux-10)
+  - [Included Tools](#included-tools)
+  - [Build the Docker Image](#build-the-docker-image)
+  - [Run the Container](#run-the-container)
+  - [Build the C++ Demos](#build-the-c-demos)
+  - [Interactive Shell Access](#interactive-shell-access)
+  - [Ice Packages Installed](#ice-packages-installed)
+
+## Included Tools
+
+| Tool           | Version        |
+|----------------|----------------|
+| Node.js        | 22.x LTS       |
+| npm            | 10.x           |
+| .NET SDK       | 10.0           |
+| .NET Runtime   | 8.0, 10.0      |
+| Java (OpenJDK) | 21             |
+| Python         | 3.12           |
+| Ruby           | 3.3            |
+| PHP            | 8.3            |
+| Ice            | 3.7.11 nightly |
+
+## Build the Docker Image
+
+From the docker directory:
+
+```shell
+docker build -f rocky10/Dockerfile -t ice-demos-rocky10:3.7-nightly .
+```
+
+## Run the Container
+
+From the ice-demos directory:
+
+```shell
+docker run -d --name ice-demos-rocky10-test \
+  -v $(pwd):/ice-demos \
+  ice-demos-rocky10:3.7-nightly \
+  tail -f /dev/null
+```
+
+## Build the C++ Demos
+
+Build C++98 demos:
+
+```shell
+docker exec ice-demos-rocky10-test make -j8 -C cpp98
+```
+
+Build C++11 demos:
+
+```shell
+docker exec ice-demos-rocky10-test make -j8 -C cpp11
+```
+
+## Interactive Shell Access
+
+```shell
+docker exec -it ice-demos-rocky10-test bash
+```
+
+## Ice Packages Installed
+
+- `ice-all-runtime` - All Ice runtime components
+- `ice-all-devel` - All Ice development components
