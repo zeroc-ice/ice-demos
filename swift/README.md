@@ -11,7 +11,7 @@ Refer to the [C++11 demos] for more examples that use the Ice services (Glacier2
 ## Build Requirements
 
 - Swift 5.10 or later
-- Ice 3.7 (`brew install ice@3.7`)
+- Ice 3.7 (`brew install zeroc-ice/tap/ice@3.7`)
 
 [C++11 demos]: ../cpp11
 [Glacier2]: ./Glacier2
