@@ -1,15 +1,25 @@
-A simple throughput demo that allows you to send sequences of various
-types between client and server and to measure the maximum bandwidth
-that can be achieved using serialized synchronous requests.
+# Ice throughput
 
-To run the demo, first start the server:
+A simple throughput demo that allows you to send sequences of various types between client and server and to measure the
+maximum bandwidth that can be achieved using serialized synchronous requests.
 
+## Building the Demo
+
+```shell
+make slice
+swift build
 ```
-./Build/server
+
+## Running the Demo
+
+First start the server:
+
+```shell
+.build/debug/Server
 ```
 
 In a separate window, start the client:
 
-```
-./Build/client
+```shell
+.build/debug/Client
 ```

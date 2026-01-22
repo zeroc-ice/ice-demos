@@ -1,9 +1,12 @@
 Demos in this directory:
 
-- [hello](./hello)
+- [hello]
 
   The Ice hello world demo configured to use IceDiscovery
 
-- [replication](./replication)
+- [replication]
 
   A demo to illustrate how replication is setup with IceDiscovery
+
+[hello]: ./hello
+[replication]: ./replication

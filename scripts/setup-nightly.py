@@ -189,19 +189,23 @@ def configure_js(channel: str) -> None:
 
 
 def configure_swift(channel: str) -> None:
-    """Configure Swift Package.swift files to use nightly repository."""
-    # Pattern to match the ice.git URL in dependencies
+    """Configure Swift Package.swift and Xcode project files to use nightly repository."""
+    # Pattern to match the ice-spm package dependency (stable release)
+    # Matches: .package(url: "https://github.com/zeroc-ice/ice-spm.git", from: "3.7.10")
     url_pattern = re.compile(
-        r'\.package\(url:\s*"https://github\.com/zeroc-ice/ice\.git"'
+        r'\.package\(url:\s*"https://github\.com/zeroc-ice/ice-spm\.git",\s*from:\s*"[^"]+"\)'
     )
-    url_replacement = '.package(url: "https://github.com/zeroc-ice/ice-swift-nightly"'
+    url_replacement = f'.package(url: "https://github.com/zeroc-ice/ice-swift-nightly.git", branch: "{channel}")'
 
-    # Pattern to match package: "ice" references (the package name changes with the repo)
-    pkg_pattern = re.compile(r'package:\s*"ice"')
+    # Pattern to match package: "ice-spm" references (the package name changes with the repo)
+    pkg_pattern = re.compile(r'package:\s*"ice-spm"')
     pkg_replacement = 'package: "ice-swift-nightly"'
 
     count = 0
     for pkg_path in REPO_ROOT.glob("swift/**/Package.swift"):
+        # Skip .build directory (SPM checkouts)
+        if ".build" in pkg_path.parts:
+            continue
         content = pkg_path.read_text(encoding="utf-8")
         if url_pattern.search(content):
             new_content = url_pattern.sub(url_replacement, content)
@@ -210,6 +214,67 @@ def configure_swift(channel: str) -> None:
             count += 1
 
     print(f"Updated {count} Swift Package.swift files with nightly repository")
+
+    # Also update Xcode project files that use SPM packages
+    configure_swift_xcode(channel)
+
+
+def configure_swift_xcode(channel: str) -> None:
+    """Configure Xcode project.pbxproj files to use nightly Ice SPM repository.
+
+    Only modifies the Ice package reference, leaving other packages (like PromiseKit) unchanged.
+    """
+    count = 0
+    for pbxproj in REPO_ROOT.glob("swift/**/*.xcodeproj/project.pbxproj"):
+        # Skip .build directory (SPM checkouts)
+        if ".build" in pbxproj.parts:
+            continue
+
+        content = pbxproj.read_text(encoding="utf-8")
+        if "ice-spm" not in content:
+            continue
+
+        lines = content.splitlines(keepends=True)
+        new_lines = []
+        in_ice_package = False
+        modified = False
+
+        for line in lines:
+            # Track when we enter the ice-spm package reference block
+            if 'XCRemoteSwiftPackageReference "ice-spm"' in line:
+                in_ice_package = True
+                # Replace the comment reference
+                line = line.replace(
+                    'XCRemoteSwiftPackageReference "ice-spm"',
+                    'XCRemoteSwiftPackageReference "ice-swift-nightly"'
+                )
+                modified = True
+
+            # Only modify lines within the ice-spm package block
+            if in_ice_package:
+                if "ice-spm.git" in line:
+                    line = line.replace("ice-spm.git", "ice-swift-nightly.git")
+                    modified = True
+                elif "kind = upToNextMajorVersion" in line:
+                    line = line.replace("kind = upToNextMajorVersion", "kind = branch")
+                    modified = True
+                elif "minimumVersion" in line and "=" in line:
+                    # Replace minimumVersion with branch
+                    indent = line[:len(line) - len(line.lstrip())]
+                    line = f'{indent}branch = "{channel}";\n'
+                    modified = True
+
+            # Detect end of the ice package block (closing brace at the right level)
+            if in_ice_package and line.strip() == "};":
+                in_ice_package = False
+
+            new_lines.append(line)
+
+        if modified:
+            pbxproj.write_text("".join(new_lines), encoding="utf-8")
+            count += 1
+
+    print(f"Updated {count} Xcode project files with nightly Ice repository")
 
 
 def configure_cpp(channel: str, cpp_version: str | None = None) -> None:
@@ -384,53 +449,102 @@ def reset_nightly() -> None:
             removed.append(path.relative_to(REPO_ROOT))
 
     # Reset package.json and package-lock.json files using git
-    result = subprocess.run(
-        ["git", "checkout", "--", "js/**/package.json", "js/**/package-lock.json",
-         "typescript/**/package.json", "typescript/**/package-lock.json"],
-        cwd=REPO_ROOT,
-        capture_output=True,
-        text=True,
-    )
-    if result.returncode == 0:
-        print("Restored js/**/package*.json and typescript/**/package*.json via git checkout")
-    elif "error" in result.stderr.lower():
-        print(f"Note: Could not restore package.json files: {result.stderr.strip()}")
+    # Note: git doesn't expand ** globs, so we find files first then restore them
+    js_files_to_restore = []
+    for pattern in ["js/**/package.json", "js/**/package-lock.json",
+                    "typescript/**/package.json", "typescript/**/package-lock.json"]:
+        for pkg_path in REPO_ROOT.glob(pattern):
+            # Skip node_modules directories
+            if "node_modules" not in pkg_path.parts:
+                js_files_to_restore.append(str(pkg_path.relative_to(REPO_ROOT)))
 
-    # Reset Swift Package.swift files using git (only Package.swift, not entire swift/ directory)
-    result = subprocess.run(
-        ["git", "checkout", "--", "swift/**/Package.swift"],
-        cwd=REPO_ROOT,
-        capture_output=True,
-        text=True,
-    )
-    if result.returncode == 0:
-        print("Restored swift/**/Package.swift via git checkout")
-    elif "error" in result.stderr.lower():
-        print(f"Note: Could not restore Package.swift files: {result.stderr.strip()}")
+    if js_files_to_restore:
+        result = subprocess.run(
+            ["git", "checkout", "--"] + js_files_to_restore,
+            cwd=REPO_ROOT,
+            capture_output=True,
+            text=True,
+        )
+        if result.returncode == 0:
+            print(f"Restored {len(js_files_to_restore)} JS/TypeScript package file(s) via git checkout")
+        elif "error" in result.stderr.lower():
+            print(f"Note: Could not restore package.json files: {result.stderr.strip()}")
+
+    # Reset Swift Package.swift files using git
+    # Note: git doesn't expand ** globs, so we find files first then restore them
+    swift_files_to_restore = []
+    for pkg_path in REPO_ROOT.glob("swift/**/Package.swift"):
+        if ".build" not in pkg_path.parts:
+            swift_files_to_restore.append(str(pkg_path.relative_to(REPO_ROOT)))
+
+    if swift_files_to_restore:
+        result = subprocess.run(
+            ["git", "checkout", "--"] + swift_files_to_restore,
+            cwd=REPO_ROOT,
+            capture_output=True,
+            text=True,
+        )
+        if result.returncode == 0:
+            print(f"Restored {len(swift_files_to_restore)} Package.swift file(s) via git checkout")
+        elif "error" in result.stderr.lower():
+            print(f"Note: Could not restore Package.swift files: {result.stderr.strip()}")
+
+    # Reset Xcode project.pbxproj files that have SPM dependencies
+    pbxproj_files = []
+    for pbxproj in REPO_ROOT.glob("swift/**/*.xcodeproj/project.pbxproj"):
+        # Skip .build directory (SPM checkouts)
+        if ".build" in pbxproj.parts:
+            continue
+        pbxproj_files.append(str(pbxproj.relative_to(REPO_ROOT)))
+
+    if pbxproj_files:
+        result = subprocess.run(
+            ["git", "checkout", "--"] + pbxproj_files,
+            cwd=REPO_ROOT,
+            capture_output=True,
+            text=True,
+        )
+        if result.returncode == 0:
+            print(f"Restored {len(pbxproj_files)} Xcode project file(s) via git checkout")
+        elif "error" in result.stderr.lower():
+            print(f"Note: Could not restore Xcode project files: {result.stderr.strip()}")
 
     # Reset vcxproj files using git
-    result = subprocess.run(
-        ["git", "checkout", "--", "cpp11/**/*.vcxproj", "cpp98/**/*.vcxproj"],
-        cwd=REPO_ROOT,
-        capture_output=True,
-        text=True,
-    )
-    if result.returncode == 0:
-        print("Restored cpp*/**/*.vcxproj via git checkout")
-    elif "error" in result.stderr.lower():
-        print(f"Note: Could not restore vcxproj files: {result.stderr.strip()}")
+    # Note: git doesn't expand ** globs, so we find files first then restore them
+    vcxproj_files = []
+    for pattern in ["cpp11/**/*.vcxproj", "cpp98/**/*.vcxproj"]:
+        for vcxproj in REPO_ROOT.glob(pattern):
+            vcxproj_files.append(str(vcxproj.relative_to(REPO_ROOT)))
+
+    if vcxproj_files:
+        result = subprocess.run(
+            ["git", "checkout", "--"] + vcxproj_files,
+            cwd=REPO_ROOT,
+            capture_output=True,
+            text=True,
+        )
+        if result.returncode == 0:
+            print(f"Restored {len(vcxproj_files)} vcxproj file(s) via git checkout")
+        elif "error" in result.stderr.lower():
+            print(f"Note: Could not restore vcxproj files: {result.stderr.strip()}")
 
     # Reset packages.config files using git
-    result = subprocess.run(
-        ["git", "checkout", "--", "cpp11/**/packages.config", "cpp98/**/packages.config"],
-        cwd=REPO_ROOT,
-        capture_output=True,
-        text=True,
-    )
-    if result.returncode == 0:
-        print("Restored cpp*/**/packages.config via git checkout")
-    elif "error" in result.stderr.lower():
-        print(f"Note: Could not restore packages.config files: {result.stderr.strip()}")
+    config_files = []
+    for pattern in ["cpp11/**/packages.config", "cpp98/**/packages.config"]:
+        for config in REPO_ROOT.glob(pattern):
+            config_files.append(str(config.relative_to(REPO_ROOT)))
+
+    if config_files:
+        result = subprocess.run(
+            ["git", "checkout", "--"] + config_files,
+            cwd=REPO_ROOT,
+            capture_output=True,
+            text=True,
+        )
+        if result.returncode == 0:
+            print(f"Restored {len(config_files)} packages.config file(s) via git checkout")
+        elif "error" in result.stderr.lower():
+            print(f"Note: Could not restore packages.config files: {result.stderr.strip()}")
 
     if removed:
         print(f"Removed: {', '.join(str(p) for p in removed)}")

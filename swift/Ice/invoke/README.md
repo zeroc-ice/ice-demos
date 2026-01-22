@@ -1,15 +1,26 @@
-This demo illustrates the use of the Ice [streaming API][1].
+# Ice invoke
 
-To run the demo, first start the server:
+This demo illustrates the use of the Ice [streaming API].
 
+## Building the Demo
+
+```shell
+make slice
+swift build
 ```
-./Build/server
+
+## Running the Demo
+
+First start the server:
+
+```shell
+.build/debug/Server
 ```
 
 In a separate window, start the client:
 
-```
-./Build/client
+```shell
+.build/debug/Client
 ```
 
-[1]: https://doc.zeroc.com/ice/3.7/client-server-features/dynamic-ice/streaming-interfaces
+[streaming API]: https://doc.zeroc.com/ice/3.7/client-server-features/dynamic-ice/streaming-interfaces

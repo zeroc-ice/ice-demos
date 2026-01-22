@@ -1,13 +1,24 @@
+# Manual printer
+
 This demo implements the printer example in the Ice Manual.
 
-To run it, start the server in a window:
+## Building the Demo
 
+```shell
+make slice
+swift build
 ```
-./Build/server
+
+## Running the Demo
+
+Start the server in a window:
+
+```shell
+.build/debug/Server
 ```
 
 In a separate window, run the client:
 
-```
-./Build/client
+```shell
+.build/debug/Client
 ```

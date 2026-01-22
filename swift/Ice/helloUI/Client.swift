@@ -3,6 +3,7 @@
 //
 
 import Combine
+import Foundation
 import Ice
 import PromiseKit
 

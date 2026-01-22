@@ -1,19 +1,29 @@
-This demo is the Ice hello world demo configured to use [IceDiscovery][1].
+# IceDiscovery hello
 
-To run the demo, first start the server:
+This demo is the Ice hello world demo configured to use [IceDiscovery].
 
+## Building the Demo
+
+```shell
+make slice
+swift build
 ```
-./Build/server
+
+## Running the Demo
+
+First start the server:
+
+```shell
+.build/debug/Server
 ```
 
 In a separate window, start the client:
 
-```
-./Build/client
+```shell
+.build/debug/Client
 ```
 
-The client and server use IceDiscovery to enable the location of the
-Ice hello object. See the config.server and config.client files for
-details on the IceDiscovery configuration.
+The client and server use IceDiscovery to enable the location of the Ice hello object. See the config.server and
+config.client files for details on the IceDiscovery configuration.
 
-[1]: https://doc.zeroc.com/ice/3.7/ice-plugins/icediscovery
+[IceDiscovery]: https://doc.zeroc.com/ice/3.7/ice-plugins/icediscovery
