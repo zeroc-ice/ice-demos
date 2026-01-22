@@ -9,4 +9,4 @@ call to `evict` via the cookie argument.
 
 For more details on this evictor, see [Servant Evictors][1].
 
-[1]: https://doc.zeroc.com/ice/3.7/best-practices/servant-evictors
+[1]: https://archive.zeroc.com/ice/3.7/best-practices/servant-evictors

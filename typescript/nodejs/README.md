@@ -81,5 +81,5 @@ cd typescript/nodejs/Ice/hello
 node Client
 ```
 
-[1]: https://doc.zeroc.com/ice/3.7/introduction
+[1]: https://archive.zeroc.com/ice/3.7/introduction
 [2]: http://nodejs.org

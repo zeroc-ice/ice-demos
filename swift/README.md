@@ -13,8 +13,6 @@ the following additional sub-directories:
 - [Manual](./Manual) contains complete examples for some of the code snippets
 in the [Ice manual][1].
 
-- [Chat](./Chat) contains a SwiftUI client for the ZeroC [Chat Demo][2]
-
 Refer to the [C++11 demos](../cpp11) for more examples that use the Ice services
 (Glacier2, IceGrid, IceStorm).
 
@@ -95,7 +93,6 @@ Swift Package Manager puts the executables in the build output directory. Refer
 to the printer's [README.md](./Manual/spm/printer/README.md) for more
 information.
 
-[1]: https://doc.zeroc.com/ice/3.7/introduction
-[2]: https://doc.zeroc.com/technical-articles/general-topics/chat-demo
+[1]: https://archive.zeroc.com/ice/3.7/introduction
 [3]: https://github.com/Carthage/Carthage
-[4]: https://doc.zeroc.com/ice/3.7/release-notes/using-the-macos-binary-distribution
+[4]: https://archive.zeroc.com/ice/3.7/release-notes/using-the-macos-binary-distribution

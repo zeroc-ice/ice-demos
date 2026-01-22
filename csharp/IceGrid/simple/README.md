@@ -57,6 +57,6 @@ following command to deploy a new server:
 icegridadmin --Ice.Config=config.grid -e "server template instantiate Simple node1 SimpleServer index=4"
 ```
 
-[1]: https://doc.zeroc.com/ice/3.7/ice-services/icegrid
-[2]: https://doc.zeroc.com/ice/3.7/ice-services/icegrid/icegrid-templates
-[3]: https://doc.zeroc.com/ice/3.7/ice-services/icegrid/object-adapter-replication
+[1]: https://archive.zeroc.com/ice/3.7/ice-services/icegrid
+[2]: https://archive.zeroc.com/ice/3.7/ice-services/icegrid/icegrid-templates
+[3]: https://archive.zeroc.com/ice/3.7/ice-services/icegrid/object-adapter-replication

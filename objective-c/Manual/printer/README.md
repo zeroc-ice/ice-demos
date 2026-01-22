@@ -12,4 +12,4 @@ In a separate window, run the client:
 client
 ```
 
-[1]: https://doc.zeroc.com/ice/3.7/hello-world-application/writing-an-ice-application-with-objective-c
+[1]: https://archive.zeroc.com/ice/3.7/hello-world-application/writing-an-ice-application-with-objective-c

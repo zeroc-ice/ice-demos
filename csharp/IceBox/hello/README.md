@@ -24,4 +24,4 @@ The demo build system copies the `iceboxnet` app to the demo's folder. With the
 | .NET 6.0            | `tools\net6.0\iceboxnet.dll`       |
 | .NET Framework 4.5  | `tools\net45\iceboxnet.exe`        |
 
-[1]: https://doc.zeroc.com/ice/3.7/icebox
+[1]: https://archive.zeroc.com/ice/3.7/icebox

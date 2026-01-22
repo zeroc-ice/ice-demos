@@ -57,9 +57,9 @@ device is on the same network as the server.
 See the README file of the IceDiscovery hello demo for more information on
 how to start the server.
 
-[1]: https://doc.zeroc.com/ice/3.7/client-side-features/oneway-invocations
-[2]: https://doc.zeroc.com/ice/3.7/client-side-features/datagram-invocations
-[3]: https://doc.zeroc.com/ice/3.7/ice-plugins/icessl
-[4]: https://doc.zeroc.com/ice/3.7/client-side-features/batched-invocations
-[5]: https://doc.zeroc.com/ice/3.7/client-side-features/invocation-timeouts
-[6]: https://doc.zeroc.com/ice/3.7/ice-plugins/icediscovery
+[1]: https://archive.zeroc.com/ice/3.7/client-side-features/oneway-invocations
+[2]: https://archive.zeroc.com/ice/3.7/client-side-features/datagram-invocations
+[3]: https://archive.zeroc.com/ice/3.7/ice-plugins/icessl
+[4]: https://archive.zeroc.com/ice/3.7/client-side-features/batched-invocations
+[5]: https://archive.zeroc.com/ice/3.7/client-side-features/invocation-timeouts
+[6]: https://archive.zeroc.com/ice/3.7/ice-plugins/icediscovery

@@ -15,4 +15,4 @@ client
 
 Type "help" at the client prompt to see a list of commands.
 
-[1]: https://doc.zeroc.com/ice/3.7/best-practices/object-life-cycle/object-life-cycle-for-the-file-system-application
+[1]: https://archive.zeroc.com/ice/3.7/best-practices/object-life-cycle/object-life-cycle-for-the-file-system-application

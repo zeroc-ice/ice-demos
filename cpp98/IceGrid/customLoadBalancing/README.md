@@ -34,5 +34,5 @@ that supports its preferred currency.
 You can edit `config.client` to change or comment out the client's
 preferred currency.
 
-[1]: https://doc.zeroc.com/ice/3.7/ice-services/icegrid/load-balancing
-[2]: https://doc.zeroc.com/ice/3.7/release-notes/using-the-windows-binary-distributions
+[1]: https://archive.zeroc.com/ice/3.7/ice-services/icegrid/load-balancing
+[2]: https://archive.zeroc.com/ice/3.7/release-notes/using-the-windows-binary-distributions

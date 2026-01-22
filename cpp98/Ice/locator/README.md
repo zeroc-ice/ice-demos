@@ -18,4 +18,4 @@ In a separate window, start the client:
 client
 ```
 
-[1]: https://doc.zeroc.com/ice/3.7/client-server-features/locators
+[1]: https://archive.zeroc.com/ice/3.7/client-server-features/locators

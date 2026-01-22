@@ -133,4 +133,4 @@ Follow these steps to open the project in Android Studio:
 
 Refer to the README.md file in each demo directory for usage instructions.
 
-[Ice manual]: https://doc.zeroc.com/ice/3.7/introduction
+[Ice manual]: https://archive.zeroc.com/ice/3.7/introduction

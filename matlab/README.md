@@ -43,4 +43,4 @@ Add the following directories to your MATLAB search path:
 - `<IceHome>\matlab\lib\generated`
 - `<IceHome>\matlab\lib\x64\Release`
 
-[1]: https://doc.zeroc.com/ice/3.7/introduction
+[1]: https://archive.zeroc.com/ice/3.7/introduction

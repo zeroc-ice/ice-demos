@@ -13,5 +13,5 @@ In a separate window, start the client:
 client
 ```
 
-[1]: https://doc.zeroc.com/ice/3.7/language-mappings/objective-c-mapping/client-side-slice-to-objective-c-mapping/objective-c-mapping-for-optional-data-members
-[2]: https://doc.zeroc.com/ice/3.7/language-mappings/objective-c-mapping/client-side-slice-to-objective-c-mapping/objective-c-mapping-for-operations
+[1]: https://archive.zeroc.com/ice/3.7/language-mappings/objective-c-mapping/client-side-slice-to-objective-c-mapping/objective-c-mapping-for-optional-data-members
+[2]: https://archive.zeroc.com/ice/3.7/language-mappings/objective-c-mapping/client-side-slice-to-objective-c-mapping/objective-c-mapping-for-operations

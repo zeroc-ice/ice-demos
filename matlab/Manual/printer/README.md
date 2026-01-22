@@ -10,4 +10,4 @@ After starting the server, run the MATLAB client:
 client
 ```
 
-[1]: https://doc.zeroc.com/ice/3.7/hello-world-application/writing-an-ice-application-with-matlab
+[1]: https://archive.zeroc.com/ice/3.7/hello-world-application/writing-an-ice-application-with-matlab
