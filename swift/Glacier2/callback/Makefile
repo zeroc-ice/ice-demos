@@ -4,7 +4,7 @@
 
 # Use the slice2swift compiler to generate Swift code from the Slice files of this demo.
 
-SLICE2SWIFT ?= $(or $(shell command -v slice2swift 2>/dev/null),$(ICE_HOME)/bin/slice2swift)
+SLICE2SWIFT ?= $(or $(and $(ICE_HOME),$(ICE_HOME)/bin/slice2swift),$(shell command -v slice2swift 2>/dev/null))
 
 ICE_FILES := $(wildcard Sources/*.ice)
 SLICE_NAME := $(basename $(notdir $(ICE_FILES)))
