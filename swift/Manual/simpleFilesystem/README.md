@@ -1,14 +1,15 @@
-This demo implements the simple filesystem application shown at the
-end of the client and server Swift mapping chapters.
+# Manual simpleFilesystem
+
+This demo implements the simple filesystem application shown at the end of the client and server Swift mapping chapters.
 
 To run it, start the server in a window:
 
-```
-./Build/server
+```shell
+.build/debug/Server
 ```
 
 Then run the client in a separate window:
 
-```
-./Build/client
+```shell
+.build/debug/Client
 ```

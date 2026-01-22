@@ -1,15 +1,17 @@
-This demo illustrates how to use [request contexts][1].
+# Ice context
+
+This demo illustrates how to use [request contexts].
 
 To run the demo, first start the server:
 
-```
-./Build/server
+```shell
+.build/debug/Server
 ```
 
 In a separate window, start the client:
 
-```
-./Build/client
+```shell
+.build/debug/Client
 ```
 
-[1]: https://doc.zeroc.com/ice/3.7/client-side-features/request-contexts
+[request contexts]: https://doc.zeroc.com/ice/3.7/client-side-features/request-contexts
