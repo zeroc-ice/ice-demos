@@ -65,6 +65,7 @@ jobs:
         shell: bash
         run: |
           python scripts/setup-nightly.py --github-env "$GITHUB_ENV" --channel "${CHANNEL}"
+
       - name: Set ICE_HOME and MAKEFLAGS
         shell: bash
         run: |
