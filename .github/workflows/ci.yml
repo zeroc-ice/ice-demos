@@ -65,7 +65,6 @@ jobs:
         shell: bash
         run: |
           python scripts/setup-nightly.py --github-env "$GITHUB_ENV" --channel "${CHANNEL}"
-
       - name: Set ICE_HOME and MAKEFLAGS
         shell: bash
         run: |
@@ -104,6 +103,24 @@ jobs:
         timeout-minutes: 20
         run: |
           make V=1 -C objective-c
+
+      - name: Build Swift Demos
+        if: runner.os == 'macOS'
+        timeout-minutes: 20
+        run: |
+          SHARED_BUILD_DIR="${PWD}/swift/.build"
+          find swift -name Package.swift -exec dirname {} \; | sort | while read -r demo; do
+            echo "Building $demo..."
+            make -C "$demo" slice
+            (cd "$demo" && swift build -c release --scratch-path "$SHARED_BUILD_DIR")
+          done
+
+      - name: Build SwiftUI Demos
+        if: runner.os == 'macOS'
+        timeout-minutes: 20
+        run: |
+          xcodebuild -project swift/Ice/helloUI/helloUI.xcodeproj -scheme helloUI -destination 'generic/platform=iOS Simulator' build
+          xcodebuild -project swift/IceDiscovery/helloUI/helloUI.xcodeproj -scheme helloUI -destination 'generic/platform=iOS Simulator' build
 
       - name: Build C# Demos
         timeout-minutes: 20

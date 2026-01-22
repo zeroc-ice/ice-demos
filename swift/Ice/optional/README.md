@@ -1,17 +1,18 @@
-This demo illustrates the use of [optional class members][1] and
-[parameters][2].
+# Ice optional
+
+This demo illustrates the use of [optional class members] and [parameters].
 
 To run the demo, first start the server:
 
-```
-./Build/server
+```shell
+.build/debug/Server
 ```
 
 In a separate window, start the client:
 
-```
-./Build/client
+```shell
+.build/debug/Client
 ```
 
-[1]: https://doc.zeroc.com/ice/3.7/the-slice-language/optional-data-members
-[2]: https://doc.zeroc.com/ice/3.7/the-slice-language/interfaces-operations-and-exceptions/operations
+[optional class members]: https://doc.zeroc.com/ice/3.7/the-slice-language/optional-data-members
+[parameters]: https://doc.zeroc.com/ice/3.7/the-slice-language/interfaces-operations-and-exceptions/operations

@@ -1,13 +1,15 @@
+# Ice latency
+
 A simple latency test that measures the basic call dispatch delay of Ice.
 
 To run the demo, first start the server:
 
-```
-./Build/server
+```shell
+.build/debug/Server
 ```
 
 In a separate window, start the client:
 
-```
-./Build/client
+```shell
+.build/debug/Client
 ```

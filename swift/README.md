@@ -1,101 +1,74 @@
 # Swift Demos
 
+- [Swift Demos](#swift-demos)
+  - [Overview](#overview)
+  - [Building and Running the Demos](#building-and-running-the-demos)
+    - [Build Requirements](#build-requirements)
+    - [Building the Demos](#building-the-demos)
+    - [Running the Demos](#running-the-demos)
+  - [Ice Services](#ice-services)
+  - [iOS Demos](#ios-demos)
+
 ## Overview
 
-This directory contains Swift sample programs for various Ice components. These
-examples are provided to get you started on using a particular Ice feature or
-coding technique.
+This directory contains Swift sample programs for various Ice components. These examples are provided to get you started
+on using a particular Ice feature or coding technique.
 
-Most of the subdirectories here correspond directly to Ice components, such as
-[Glacier2](./Glacier2), [IceStorm](./IceStorm), and so on. We've also included
-the following additional sub-directories:
+Most of the subdirectories here correspond directly to Ice components, such as [Glacier2],
+[IceStorm], and so on. We've also included the following additional sub-directories:
 
-- [Manual](./Manual) contains complete examples for some of the code snippets
-in the [Ice manual][1].
+- [Manual] contains complete examples for some of the code snippets in the [Ice manual].
 
-- [Chat](./Chat) contains a SwiftUI client for the ZeroC [Chat Demo][2]
+Refer to the [C++11 demos] for more examples that use the Ice services (Glacier2, IceGrid, IceStorm).
 
-Refer to the [C++11 demos](../cpp11) for more examples that use the Ice services
-(Glacier2, IceGrid, IceStorm).
-
-## Building and running the demos with Xcode and Carthage
+## Building and Running the Demos
 
 ### Build Requirements
 
-In order to build these Ice for Swift sample programs, you need:
+- Xcode with Swift 5.5+
+- Slice to Swift compiler (`slice2swift`)
+- [Ice for C++] installed via Homebrew or from source
 
-- Xcode
-- Slice to Swift and Slice to C++ compilers
-- [Carthage][3]
-
-### Install required dependencies using Carthage
+Install Ice using Homebrew:
 
 ```shell
-carthage bootstrap --cache-builds --use-xcframeworks
+brew install ice
 ```
 
-This command will build the `Ice` and `PromiseKit` frameworks required by the
-sample programs and install them in the `Carthage/Build/` directory.
+### Building the Demos
 
-Note: building `Ice macOS` and `Ice iOS` from source during `carthage bootstrap`
-takes some time, please be patient.
+To build a demo, navigate to the demo directory and use Make to generate the Slice files, then build with Swift
+Package Manager:
 
-If you want to use the `slice2swift` and `slice2cpp` compilers from a source
-distribution, set the `ICE_HOME` environment variable before running
-`carthage bootstrap`.
-
-### Building the demos
-
-Open the project file `demos.xcodeproj` to build the sample programs.
-
-The demos are configured to use the `Ice` and `PromiseKit` frameworks from the
-Carthage builds and the `slice2swift` compiler from the binary distribution.
-
-If you want to build the sample programs using `slice2swift` compiler from a
-source distribution, set the `ICE_HOME` environment variable before starting
-Xcode.
-
-Building the demo applications to deploy to an iOS device requires
-signing the applications with a developer certificate. You need to update the Xcode projects
-to use your Apple development certificates by setting `DEVELOPMENT_TEAM` environment
-variable to the Id of your development team and regenerate the projects with `rake`.
-
-```
-export DEVELOPMENT_TEAM=U4TBVKNQ7F
-rake
+```shell
+cd Ice/hello
+make slice
+swift build
 ```
 
 ### Running the Demos
 
-For most demos, you can simply run `./Build/server` and `./Build/client` in separate
-terminals. Refer to the README.md file in each demo directory for the exact usage
-instructions.
+Refer to the README.md file in each demo directory for specific usage instructions.
 
-Some demos require Ice services such as IceGrid and IceStorm that are not
-included in the Ice for Swift distribution. To run these demos, the simplest
-is to first install the Ice Homebrew packages. Please refer to
-[Using the macOS Binary Distributions][4] for additional information.
+## Ice Services
 
-## Building and running the demos with Swift Package Manager (SPM)
-
-*There is currently a single demo with SPM support, printer.*
-
-### Building the demos
-
-Run `swift build` from the demo directory.
+Some demos require Ice services such as IceGrid and IceStorm that must be running before you can run the demo. The
+simplest approach is to install the Ice Homebrew packages:
 
 ```shell
-cd Manual/spm/printer
-swift build
+brew install ice
 ```
 
-### Running the demos
+Please refer to [Using the macOS Binary Distributions] for additional information.
 
-Swift Package Manager puts the executables in the build output directory. Refer
-to the printer's [README.md](./Manual/spm/printer/README.md) for more
-information.
+## iOS Demos
 
-[1]: https://doc.zeroc.com/ice/3.7/introduction
-[2]: https://doc.zeroc.com/technical-articles/general-topics/chat-demo
-[3]: https://github.com/Carthage/Carthage
-[4]: https://doc.zeroc.com/ice/3.7/release-notes/using-the-macos-binary-distribution
+The iOS demos (`Ice/helloUI` and `IceDiscovery/helloUI`) can be built using Xcode.
+
+[C++11 demos]: ../cpp11
+[Glacier2]: ./Glacier2
+[IceStorm]: ./IceStorm
+[Manual]: ./Manual
+[Ice manual]: https://doc.zeroc.com/ice/3.7/introduction
+[Ice for C++]: https://zeroc.com/downloads/ice
+[Using the macOS Binary Distributions]: https://doc.zeroc.com/ice/3.7/release-notes/using-the-macos-binary-distribution
