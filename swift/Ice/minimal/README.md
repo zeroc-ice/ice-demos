@@ -3,7 +3,16 @@
 This demo is a minimal Ice "hello world" application. Each time the client is run a "sayHello" invocation is sent to
 the server.
 
-To run the demo, first start the server:
+## Building the Demo
+
+```shell
+make slice
+swift build
+```
+
+## Running the Demo
+
+First start the server:
 ```shell
 .build/debug/Server
 ```

@@ -3,7 +3,16 @@
 This demo illustrates how to invoke ordinary (twoway) operations, as well as how to make [oneway], [datagram],
 [secure], and [batched] invocations.
 
-To run the demo, first start the server:
+## Building the Demo
+
+```shell
+make slice
+swift build
+```
+
+## Running the Demo
+
+First start the server:
 
 ```shell
 .build/debug/Server

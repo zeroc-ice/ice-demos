@@ -1,11 +1,17 @@
 # IceStorm clock
 
-Overview
-========
-
 This demo shows how to use [IceStorm].
 
-To run the demo, start the IceStorm service:
+## Building the Demo
+
+```shell
+make slice
+swift build
+```
+
+## Running the Demo
+
+Start the IceStorm service:
 
 ```shell
 icebox --Ice.Config=config.icebox

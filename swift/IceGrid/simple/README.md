@@ -3,7 +3,16 @@
 This demo illustrates the basics of using [IceGrid], including the use of [templates] and [object adapter
 replication].
 
-To run the demo, first start the IceGrid service:
+## Building the Demo
+
+```shell
+make slice
+swift build
+```
+
+## Running the Demo
+
+First start the IceGrid service:
 
 ```shell
 icegridnode --Ice.Config=config.grid

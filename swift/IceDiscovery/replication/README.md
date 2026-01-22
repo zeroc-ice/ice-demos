@@ -2,7 +2,16 @@
 
 This demo shows how to use replication with [IceDiscovery].
 
-To run the demo, start the 3 servers:
+## Building the Demo
+
+```shell
+make slice
+swift build
+```
+
+## Running the Demo
+
+Start the 3 servers:
 
 ```shell
 .build/debug/Server --Ice.Config=config.server1

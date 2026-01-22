@@ -2,7 +2,16 @@
 
 This example demonstrates the use of several Glacier2 features, including [callbacks] and [request contexts].
 
-To run the demo, first start the server:
+## Building the Demo
+
+```shell
+make slice
+swift build
+```
+
+## Running the Demo
+
+First start the server:
 
 ```shell
 .build/debug/Server
