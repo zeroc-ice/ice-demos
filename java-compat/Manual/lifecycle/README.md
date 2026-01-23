@@ -13,5 +13,3 @@ java -jar build/libs/client.jar
 ```
 
 Type "help" at the client prompt to see a list of commands.
-
-[1]: https://archive.zeroc.com/ice/3.7/best-practices/object-life-cycle/object-life-cycle-for-the-file-system-application/implementing-object-life-cycle-in-java
