@@ -121,6 +121,10 @@ x86/
 build/
 bld/
 [Bb]in/
+!js/bin/
+!js/bin/HttpServer.mjs
+!typescript/browser/bin/
+!typescript/browser/bin/HttpServer.mjs
 [Oo]bj/
 
 [Bb]uild[Ll]og.*
