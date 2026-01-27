@@ -17,9 +17,6 @@ following additional subdirectories:
 - [Manual](./Manual) contains complete examples for some of the code snippets
 in the [Ice manual][1].
 
-- [Chat](./Chat) contains the C++ server, and two command-line clients
-for the ZeroC [Chat Demo][2].
-
 ## Building and Running the Demos on Linux and macOS
 
 ### Prerequisites
@@ -154,5 +151,4 @@ set PATH=%USERPROFILE%\ice-demos\cpp11\packages\zeroc.ice.v143.3.7.10\build\nati
 
 Then refer to the README.md file in each demo directory for usage instructions.
 
-[1]: https://doc.zeroc.com/ice/3.7/introduction
-[2]: https://doc.zeroc.com/technical-articles/general-topics/chat-demo
+[1]: https://archive.zeroc.com/ice/3.7/introduction

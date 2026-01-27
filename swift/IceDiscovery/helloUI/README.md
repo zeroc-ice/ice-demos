@@ -61,9 +61,9 @@ See the README file of the IceDiscovery hello demo for more information on how t
 
 [hello discovery server]: ../hello
 [Swift server]: ../hello
-[oneway]: https://doc.zeroc.com/ice/3.7/client-side-features/oneway-invocations
-[datagram]: https://doc.zeroc.com/ice/3.7/client-side-features/datagram-invocations
-[batched]: https://doc.zeroc.com/ice/3.7/client-side-features/batched-invocations
-[secure]: https://doc.zeroc.com/ice/3.7/ice-plugins/icessl
-[timeouts]: https://doc.zeroc.com/ice/3.7/client-side-features/invocation-timeouts
-[IceDiscovery]: https://doc.zeroc.com/ice/3.7/ice-plugins/icediscovery
+[oneway]: https://archive.zeroc.com/ice/3.7/client-side-features/oneway-invocations
+[datagram]: https://archive.zeroc.com/ice/3.7/client-side-features/datagram-invocations
+[batched]: https://archive.zeroc.com/ice/3.7/client-side-features/batched-invocations
+[secure]: https://archive.zeroc.com/ice/3.7/ice-plugins/icessl
+[timeouts]: https://archive.zeroc.com/ice/3.7/client-side-features/invocation-timeouts
+[IceDiscovery]: https://archive.zeroc.com/ice/3.7/ice-plugins/icediscovery

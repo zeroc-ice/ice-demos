@@ -23,4 +23,4 @@ In a separate window, start the client:
 .build/debug/Client
 ```
 
-[request contexts]: https://doc.zeroc.com/ice/3.7/client-side-features/request-contexts
+[request contexts]: https://archive.zeroc.com/ice/3.7/client-side-features/request-contexts

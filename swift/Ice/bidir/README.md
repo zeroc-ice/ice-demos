@@ -25,4 +25,4 @@ In a separate window, start the client:
 .build/debug/Client
 ```
 
-[bidirectional connections]: https://doc.zeroc.com/ice/3.7/client-server-features/connection-management/bidirectional-connections
+[bidirectional connections]: https://archive.zeroc.com/ice/3.7/client-server-features/connection-management/bidirectional-connections

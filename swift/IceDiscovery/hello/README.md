@@ -26,4 +26,4 @@ In a separate window, start the client:
 The client and server use IceDiscovery to enable the location of the Ice hello object. See the config.server and
 config.client files for details on the IceDiscovery configuration.
 
-[IceDiscovery]: https://doc.zeroc.com/ice/3.7/ice-plugins/icediscovery
+[IceDiscovery]: https://archive.zeroc.com/ice/3.7/ice-plugins/icediscovery

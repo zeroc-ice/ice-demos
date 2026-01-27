@@ -42,4 +42,4 @@ java -jar build/libs/client.jar
 The client allows you to toggle between sending a real class instance
 and sending a null value, to show that passing null is supported.
 
-[1]: https://doc.zeroc.com/ice/3.7/language-mappings/java-mapping/client-side-slice-to-java-mapping/serializable-objects-in-java+Compat
+[1]: https://archive.zeroc.com/ice/3.7/language-mappings/java-compat-mapping/client-side-slice-to-java-compat-mapping/serializable-objects-in-java-compat

@@ -13,4 +13,4 @@ In a separate window, start the client:
 client
 ```
 
-[1]: https://doc.zeroc.com/ice/3.7/client-server-features/the-ice-threading-model/nested-invocations
+[1]: https://archive.zeroc.com/ice/3.7/client-server-features/the-ice-threading-model/nested-invocations

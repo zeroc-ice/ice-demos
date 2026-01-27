@@ -13,5 +13,5 @@ Then run the client in a separate window:
 python client.py
 ```
 
-[1]: https://doc.zeroc.com/ice/3.7/language-mappings/python-mapping/client-side-slice-to-python-mapping/example-of-a-file-system-client-in-python
-[2]: https://doc.zeroc.com/ice/3.7/language-mappings/python-mapping/server-side-slice-to-python-mapping/example-of-a-file-system-server-in-python
+[1]: https://archive.zeroc.com/ice/3.7/language-mappings/python-mapping/client-side-slice-to-python-mapping/example-of-a-file-system-client-in-python
+[2]: https://archive.zeroc.com/ice/3.7/language-mappings/python-mapping/server-side-slice-to-python-mapping/example-of-a-file-system-server-in-python

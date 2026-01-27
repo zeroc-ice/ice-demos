@@ -151,4 +151,4 @@ set PATH=%USERPROFILE%\ice-demos\cpp98\packages\zeroc.ice.v143.3.7.10\build\nati
 
 Then refer to the README.md file in each demo directory for usage instructions.
 
-[1]: https://doc.zeroc.com/ice/3.7/introduction
+[1]: https://archive.zeroc.com/ice/3.7/introduction

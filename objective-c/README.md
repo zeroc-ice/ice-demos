@@ -86,4 +86,4 @@ make Ice/hello_distclean
 
 Refer to the README.md file in each demo directory for usage instructions.
 
-[1]: https://doc.zeroc.com/ice/3.7/introduction
+[1]: https://archive.zeroc.com/ice/3.7/introduction

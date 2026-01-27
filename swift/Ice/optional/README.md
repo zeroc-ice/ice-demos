@@ -23,5 +23,5 @@ In a separate window, start the client:
 .build/debug/Client
 ```
 
-[optional class members]: https://doc.zeroc.com/ice/3.7/the-slice-language/optional-data-members
-[parameters]: https://doc.zeroc.com/ice/3.7/the-slice-language/interfaces-operations-and-exceptions/operations
+[optional class members]: https://archive.zeroc.com/ice/3.7/the-slice-language/optional-data-members
+[parameters]: https://archive.zeroc.com/ice/3.7/the-slice-language/interfaces-operations-and-exceptions/operations
