@@ -3,6 +3,7 @@
 //
 
 import Dispatch
+import Foundation
 import Ice
 import PromiseKit
 

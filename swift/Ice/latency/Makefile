@@ -1,0 +1,28 @@
+#
+# Copyright (c) ZeroC, Inc. All rights reserved.
+#
+
+# Use the slice2swift compiler to generate Swift code from the Slice files of this demo.
+
+.PHONY: all slice clean
+
+SLICE2SWIFT ?= $(or $(and $(ICE_HOME),$(ICE_HOME)/bin/slice2swift),$(shell command -v slice2swift 2>/dev/null))
+
+ICE_FILES := $(wildcard Sources/*.ice)
+SLICE_NAME := $(basename $(notdir $(ICE_FILES)))
+
+GENERATED_SWIFT := Sources/Client/$(SLICE_NAME).swift Sources/Server/$(SLICE_NAME).swift
+
+all: slice
+
+slice: $(GENERATED_SWIFT)
+
+Sources/Client/%.swift: Sources/%.ice
+	$(SLICE2SWIFT) --output-dir $(dir $@) $<
+
+Sources/Server/%.swift: Sources/%.ice
+	$(SLICE2SWIFT) --output-dir $(dir $@) $<
+
+clean:
+	rm -f $(GENERATED_SWIFT)
+	-rm -rf .build
