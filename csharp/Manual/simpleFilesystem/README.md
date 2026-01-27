@@ -13,5 +13,5 @@ cd Client
 client
 ```
 
-[1]: https://doc.zeroc.com/ice/3.7/language-mappings/c-sharp-mapping/client-side-slice-to-c-sharp-mapping/example-of-a-file-system-client-in-c-sharp
-[2]: https://doc.zeroc.com/ice/3.7/language-mappings/c-sharp-mapping/server-side-slice-to-c-sharp-mapping/example-of-a-file-system-server-in-c-sharp
+[1]: https://archive.zeroc.com/ice/3.7/language-mappings/c-sharp-mapping/client-side-slice-to-c-sharp-mapping/example-of-a-file-system-client-in-c-sharp
+[2]: https://archive.zeroc.com/ice/3.7/language-mappings/c-sharp-mapping/server-side-slice-to-c-sharp-mapping/example-of-a-file-system-server-in-c-sharp

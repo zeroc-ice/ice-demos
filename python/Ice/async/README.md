@@ -20,5 +20,5 @@ significant amount of time to complete. The client uses AMI for requests to
 not block the asyncio event loop and the server uses AMD to process the long
 running request.
 
-[1]: https://doc.zeroc.com/ice/3.7/language-mappings/python-mapping/client-side-slice-to-python-mapping/asynchronous-method-invocation-ami-in-python
-[2]: https://doc.zeroc.com/ice/3.7/language-mappings/python-mapping/server-side-slice-to-python-mapping/asynchronous-method-dispatch-amd-in-python
+[1]: https://archive.zeroc.com/ice/3.7/language-mappings/python-mapping/client-side-slice-to-python-mapping/asynchronous-method-invocation-ami-in-python
+[2]: https://archive.zeroc.com/ice/3.7/language-mappings/python-mapping/server-side-slice-to-python-mapping/asynchronous-method-dispatch-amd-in-python

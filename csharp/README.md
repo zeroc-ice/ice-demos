@@ -56,9 +56,9 @@ Some demos require Ice services such as IceGrid and IceStorm that are not includ
 To run these demos, the simplest approach is to install the Ice binary distribution for your platform and add its
 bin directory to your PATH. Please refer to the [Release Notes] for additional information.
 
-[Ice manual]: https://doc.zeroc.com/ice/3.7/introduction
-[.NET SDK]: https://download/dotnet/8.0
-[Release Notes]: https://doc.zeroc.com/rel/ice-releases/ice-3-7/ice-3-7-10-release-notes
+[Ice manual]: https://archive.zeroc.com/ice/3.7/introduction
+[.NET SDK]: https://dotnet.microsoft.com/download/dotnet/8.0
+[Release Notes]: https://archive.zeroc.com/rel/ice-releases/ice-3-7/ice-3-7-10-release-notes
 
 ### Using nightly builds
 

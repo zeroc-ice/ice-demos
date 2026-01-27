@@ -37,5 +37,5 @@ Internally, the server keeps a list of valid access tokens, and uses a [Dispatch
 requests to the thermostat object. The interceptor ensures the request has a valid access token before letting it invoke
 any secured operations.
 
-[Dispatch Interceptors]: https://doc.zeroc.com/ice/3.7/server-side-features/dispatch-interceptors
-[Request Context]: https://doc.zeroc.com/ice/3.7/client-side-features/request-contexts
+[Dispatch Interceptors]: https://archive.zeroc.com/ice/3.7/server-side-features/dispatch-interceptors
+[Request Context]: https://archive.zeroc.com/ice/3.7/client-side-features/request-contexts

@@ -13,4 +13,4 @@ After starting the server, run the MATLAB client:
 client
 ```
 
-[1]: https://doc.zeroc.com/ice/3.7/administration-and-diagnostics/administrative-facility/the-properties-facet
+[1]: https://archive.zeroc.com/ice/3.7/administration-and-diagnostics/administrative-facility/the-properties-facet

@@ -48,8 +48,8 @@ To test [timeouts] you can use the timeout slider to set an invocation timeout i
 to set a delayed response in the server to cause a timeout.
 
 [Swift server]: ../hello
-[oneway]: https://doc.zeroc.com/ice/3.7/client-side-features/oneway-invocations
-[datagram]: https://doc.zeroc.com/ice/3.7/client-side-features/datagram-invocations
-[batched]: https://doc.zeroc.com/ice/3.7/client-side-features/batched-invocations
-[secure]: https://doc.zeroc.com/ice/3.7/ice-plugins/icessl
-[timeouts]: https://doc.zeroc.com/ice/3.7/client-side-features/invocation-timeouts
+[oneway]: https://archive.zeroc.com/ice/3.7/client-side-features/oneway-invocations
+[datagram]: https://archive.zeroc.com/ice/3.7/client-side-features/datagram-invocations
+[batched]: https://archive.zeroc.com/ice/3.7/client-side-features/batched-invocations
+[secure]: https://archive.zeroc.com/ice/3.7/ice-plugins/icessl
+[timeouts]: https://archive.zeroc.com/ice/3.7/client-side-features/invocation-timeouts

@@ -10,4 +10,4 @@ In a separate window, run the client:
 ruby client.rb
 ```
 
-[1]: https://doc.zeroc.com/ice/3.7/hello-world-application/writing-an-ice-application-with-ruby
+[1]: https://archive.zeroc.com/ice/3.7/hello-world-application/writing-an-ice-application-with-ruby

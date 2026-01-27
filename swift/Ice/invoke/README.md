@@ -23,4 +23,4 @@ In a separate window, start the client:
 .build/debug/Client
 ```
 
-[streaming API]: https://doc.zeroc.com/ice/3.7/client-server-features/dynamic-ice/streaming-interfaces
+[streaming API]: https://archive.zeroc.com/ice/3.7/client-server-features/dynamic-ice/streaming-interfaces

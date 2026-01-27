@@ -34,5 +34,5 @@ You need to change the `Glacier2.Client.Endpoints` property in `config.glacier2`
 in `config.client`. In all cases you must set the host parameter of the `-h host` endpoint option to the actual address
 of the machine on which glacier2router is running.
 
-[callbacks]: https://doc.zeroc.com/ice/3.7/ice-services/glacier2/callbacks-through-glacier2
-[request contexts]: https://doc.zeroc.com/ice/3.7/ice-services/glacier2/how-glacier2-uses-request-contexts
+[callbacks]: https://archive.zeroc.com/ice/3.7/ice-services/glacier2/callbacks-through-glacier2
+[request contexts]: https://archive.zeroc.com/ice/3.7/ice-services/glacier2/how-glacier2-uses-request-contexts

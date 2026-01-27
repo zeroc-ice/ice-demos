@@ -19,4 +19,4 @@ client
 > dotnet client.dll
 > ```
 
-[1]: https://doc.zeroc.com/ice/3.7/client-server-features/the-ice-threading-model/nested-invocations
+[1]: https://archive.zeroc.com/ice/3.7/client-server-features/the-ice-threading-model/nested-invocations

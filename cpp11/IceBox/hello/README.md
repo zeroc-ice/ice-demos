@@ -22,4 +22,4 @@ Linux 32-bit
 If you are using 32-bit binaries on a Linux 64-bit host, use
 `icebox32++11` instead of `icebox++11` to start the IceBox server.
 
-[1]: https://doc.zeroc.com/ice/3.7/icebox
+[1]: https://archive.zeroc.com/ice/3.7/icebox

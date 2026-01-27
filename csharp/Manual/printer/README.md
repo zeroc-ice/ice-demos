@@ -12,4 +12,4 @@ cd Client
 client
 ```
 
-[1]: https://doc.zeroc.com/ice/3.7/hello-world-application/writing-an-ice-application-with-c-sharp
+[1]: https://archive.zeroc.com/ice/3.7/hello-world-application/writing-an-ice-application-with-c-sharp

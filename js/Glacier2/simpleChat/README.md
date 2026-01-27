@@ -18,4 +18,4 @@ property in `config.glacier2` and the `Ice.Default.Router` property in
 `-h host` endpoint option to the actual external address of the machine
 on which glacier2router is running.
 
-[1]: https://doc.zeroc.com/ice/3.7/ice-services/glacier2/getting-started-with-glacier2
+[1]: https://archive.zeroc.com/ice/3.7/ice-services/glacier2/getting-started-with-glacier2

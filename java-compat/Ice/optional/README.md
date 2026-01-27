@@ -13,5 +13,5 @@ In a separate window, start the client:
 java -jar build/libs/client.jar
 ```
 
-[1]: https://doc.zeroc.com/ice/3.7/language-mappings/java-compat-mapping/client-side-slice-to-java-compat-mapping/java-compat-mapping-for-optional-data-members
-[2]: https://doc.zeroc.com/ice/3.7/language-mappings/java-compat-mapping/client-side-slice-to-java-compat-mapping/java-compat-mapping-for-operations
+[1]: https://archive.zeroc.com/ice/3.7/language-mappings/java-compat-mapping/client-side-slice-to-java-compat-mapping/java-compat-mapping-for-optional-data-members
+[2]: https://archive.zeroc.com/ice/3.7/language-mappings/java-compat-mapping/client-side-slice-to-java-compat-mapping/java-compat-mapping-for-operations

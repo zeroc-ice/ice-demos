@@ -29,4 +29,4 @@ If you want to await an Ice future in an asyncio event loop, you need
 to first convert it into an asyncio future with `Ice.wrap_future` (not
 shown in this demo).
 
-[1]: https://doc.zeroc.com/ice/3.7/language-mappings/python-mapping/server-side-slice-to-python-mapping/asynchronous-m
+[1]: https://archive.zeroc.com/ice/3.7/language-mappings/python-mapping/server-side-slice-to-python-mapping/asynchronous-method-dispatch-amd-in-python#id-.AsynchronousMethodDispatch(AMD)inPythonv3.7-UsingCoroutinesinPython

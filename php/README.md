@@ -33,4 +33,4 @@ before executing `build.php`.
 
 Refer to the README.md file in each demo directory for usage instructions.
 
-[1]: https://doc.zeroc.com/ice/3.7/the-slice-language
+[1]: https://archive.zeroc.com/ice/3.7/the-slice-language

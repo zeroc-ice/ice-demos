@@ -17,4 +17,4 @@ Refer to the [C++11 demos] for more examples that use the Ice services (Glacier2
 [Glacier2]: ./Glacier2
 [IceStorm]: ./IceStorm
 [Manual]: ./Manual
-[Ice manual]: https://doc.zeroc.com/ice/3.7/introduction
+[Ice manual]: https://archive.zeroc.com/ice/3.7/introduction

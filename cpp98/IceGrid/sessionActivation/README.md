@@ -20,4 +20,4 @@ This will deploy the application described in the file
 
 Messages will be displayed in the IceGrid service window.
 
-[1]: https://doc.zeroc.com/ice/3.7/ice-services/icegrid/resource-allocation-using-icegrid-sessions
+[1]: https://archive.zeroc.com/ice/3.7/ice-services/icegrid/resource-allocation-using-icegrid-sessions

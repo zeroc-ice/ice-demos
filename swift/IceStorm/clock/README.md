@@ -156,4 +156,4 @@ If you experience any network delays or errors, edit all of the configuration fi
 property. Running the processes with this property enabled displays a log of Ice's network activity and may help you to
 identify the problem more quickly.
 
-[IceStorm]: https://doc.zeroc.com/ice/3.7/ice-services/icestorm
+[IceStorm]: https://archive.zeroc.com/ice/3.7/ice-services/icestorm

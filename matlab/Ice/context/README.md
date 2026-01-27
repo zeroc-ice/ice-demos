@@ -10,4 +10,4 @@ After starting the server, run the MATLAB client:
 client
 ```
 
-[1]: https://doc.zeroc.com/ice/3.7/client-side-features/request-contexts
+[1]: https://archive.zeroc.com/ice/3.7/client-side-features/request-contexts
