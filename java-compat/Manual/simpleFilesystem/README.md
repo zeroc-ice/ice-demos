@@ -13,5 +13,5 @@ Then run the client in a separate window:
 java -jar build/libs/client.jar
 ```
 
-[1]: https://archive.zeroc.com/ice/3.7/language-mappings/java-mapping/client-side-slice-to-java-mapping/example-of-a-file-system-client-in-java+Compat
+[1]: https://archive.zeroc.com/ice/3.7/language-mappings/java-compat-mapping/client-side-slice-to-java-compat-mapping/example-of-a-file-system-client-in-java-compat
 [2]: https://archive.zeroc.com/ice/3.7/language-mappings/java-compat-mapping/server-side-slice-to-java-compat-mapping/asynchronous-method-dispatch-amd-in-java-compat
