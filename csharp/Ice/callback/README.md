@@ -1,23 +1,16 @@
-A simple callback demo that illustrates how a client can pass a proxy
-to a server, invoke an operation in the server, and the [server call
-back][1] into an object provided by the client as part of that invocation.
+A simple callback demo that illustrates how a client can pass a proxy to a server, invoke an operation in the server,
+and the [server calls back] into an object provided by the client as part of that invocation.
 
 To run the demo, first start the server:
+
+```shell
+dotnet server.dll
 ```
-server
-```
+
 In a separate window, start the client:
-```
-client
+
+```shell
+dotnet client.dll
 ```
 
-> With .NET 6, use instead:
-> ```
-> dotnet server.dll
-> ```
-> and
-> ```
-> dotnet client.dll
-> ```
-
-[1]: https://doc.zeroc.com/ice/3.7/client-server-features/the-ice-threading-model/nested-invocations
+[server calls back]: https://archive.zeroc.com/ice/3.7/client-server-features/the-ice-threading-model/nested-invocations

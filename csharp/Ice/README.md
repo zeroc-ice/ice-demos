@@ -2,27 +2,22 @@ Demos in this directory:
 
 - [async](./async)
 
-  This demo illustrates the use of Asynchronous Method Invocation
-  (AMI) and Asynchronous Method Dispatch (AMD).
+  This demo illustrates the use of Asynchronous Method Invocation (AMI) and Asynchronous Method Dispatch (AMD).
 
 - [asyncInvocation](./asyncInvocation)
 
-  This demo illustrates the use of Asynchronous Method Invocation
-  (AMI).
+  This demo illustrates the use of Asynchronous Method Invocation (AMI).
 
 - [bidir](./bidir)
 
-  This demo shows how to use bidirectional connections for callbacks.
-  This is typically used if the server cannot open a connection to the
-  client to send callbacks, for example, because firewalls block
-  incoming connections to the client.
+  This demo shows how to use bidirectional connections for callbacks. This is typically used if the server cannot open
+  a connection to the client to send callbacks, for example, because firewalls block incoming connections to the
+  client.
 
 - [callback](./callback)
 
-  A simple callback demo that illustrates how a client can pass a
-  proxy to a server, invoke an operation in the server, and the server
-  call back into an object provided by the client as part of that
-  invocation.
+  A simple callback demo that illustrates how a client can pass a proxy to a server, invoke an operation in the server,
+  and the server call back into an object provided by the client as part of that invocation.
 
 - [context](./context)
 
@@ -30,15 +25,13 @@ Demos in this directory:
 
 - [hello](./hello)
 
-  This demo illustrates how to invoke ordinary (twoway) operations, as
-  well as how to invoke oneway operations, use datagrams, secure
-  invocations, and how to use batched invocations.
+  This demo illustrates how to invoke ordinary (twoway) operations, as well as how to invoke oneway operations, use
+  datagrams, secure invocations, and how to use batched invocations.
 
 - [interceptor](./interceptor)
 
-  This demo shows how to use dispatch interceptors to secure operations
-  with a token based authentication system, in addition to the use of
-  implicit contexts.
+  This demo shows how to use dispatch interceptors to secure operations with a token based authentication system, in
+  addition to the use of implicit contexts.
 
 - [invoke](./invoke)
 
@@ -46,8 +39,7 @@ Demos in this directory:
 
 - [latency](./latency)
 
-  A simple latency test that measures the basic call dispatch delay of
-  Ice.
+  A simple latency test that measures the basic call dispatch delay of Ice.
 
 - [minimal](./minimal)
 
@@ -59,8 +51,8 @@ Demos in this directory:
 
 - [nested](./nested)
 
-  A demo to illustrate how nested callbacks work, and how the size of
-  the thread pool affects the maximum nesting depth.
+  A demo to illustrate how nested callbacks work, and how the size of the thread pool affects the maximum nesting
+  depth.
 
 - [optional](./optional)
 
@@ -68,8 +60,8 @@ Demos in this directory:
 
 - [partial](./partial)
 
-  This demo illustrates how to use partial classes and protected data members
-  together to extend the generated code classes.
+  This demo illustrates how to use partial classes and protected data members together to extend the generated code
+  classes.
 
 - [plugin](./plugin)
 
@@ -77,28 +69,24 @@ Demos in this directory:
 
 - [properties](./properties)
 
-  Shows how to access a server's PropertiesAdmin facet in order to
-  retrieve and modify its configuration properties, and how the server
-  can receive notifications whenever its properties are changed.
+  Shows how to access a server's PropertiesAdmin facet in order to retrieve and modify its configuration properties,
+  and how the server can receive notifications whenever its properties are changed.
 
 - [serialize](./serialize)
 
-  This demo illistrates how to transfer serializable .NET objects
-  with Ice.
+  This demo illustrates how to transfer serializable .NET objects with Ice.
 
 - [session](./session)
 
-  This demo shows how to use sessions to clean up client-specific
-  resources in a server after the client shuts down or crashes.
+  This demo shows how to use sessions to clean up client-specific resources in a server after the client shuts down or
+  crashes.
 
 - [throughput](./throughput)
 
-  A simple throughput demo that allows you to send sequences of
-  various types between client and server and to measure the maximum
-  bandwidth that can be achieved using serialized synchronous
-  requests.
+  A simple throughput demo that allows you to send sequences of various types between client and server and to measure
+  the maximum bandwidth that can be achieved using serialized synchronous requests.
 
 - [wpf](./wpf)
 
-  A Windows Presentation Foundation (WPF) application that shows how
-  to use Asynchronous Method Invocation (AMI) in a graphical client.
+  A Windows Presentation Foundation (WPF) application that shows how to use Asynchronous Method Invocation (AMI) in a
+  graphical client.

@@ -1,21 +1,15 @@
-This demo illustrates how to use [request contexts][1].
+This demo illustrates how to use [request contexts].
 
 To run the demo, first start the server:
+
+```shell
+dotnet server.dll
 ```
-server
-```
+
 In a separate window, start the client:
-```
-client
+
+```shell
+dotnet client.dll
 ```
 
-> With .NET 6, use instead:
-> ```
-> dotnet server.dll
-> ```
-> and
-> ```
-> dotnet client.dll
-> ```
-
-[1]: https://doc.zeroc.com/ice/3.7/client-side-features/request-contexts
+[request contexts]: https://archive.zeroc.com/ice/3.7/client-side-features/request-contexts

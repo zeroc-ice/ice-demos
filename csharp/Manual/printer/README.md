@@ -1,15 +1,17 @@
-This demo implements the [printer][1] example in the Ice Manual.
+This demo implements the [printer] example in the Ice Manual.
 
-To run the demo, first start the server:
-```
+To run the demo, first change to the Server directory and start the server:
+
+```shell
 cd Server
-server
+dotnet server.dll
 ```
 
-In a separate window, start the client:
-```
+In a separate window, change to the Client directory and start the client:
+
+```shell
 cd Client
-client
+dotnet client.dll
 ```
 
-[1]: https://doc.zeroc.com/ice/3.7/hello-world-application/writing-an-ice-application-with-c-sharp
+[printer]: https://archive.zeroc.com/ice/3.7/hello-world-application/writing-an-ice-application-with-c-sharp
