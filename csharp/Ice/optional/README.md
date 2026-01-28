@@ -1,23 +1,16 @@
-This demo illustrates the use of [optional class members][1] and
-[parameters][2].
+This demo illustrates the use of [optional class members] and [parameters].
 
 To run the demo, first start the server:
+
+```shell
+dotnet server.dll
 ```
-server
-```
+
 In a separate window, start the client:
-```
-client
+
+```shell
+dotnet client.dll
 ```
 
-> With .NET 6, use instead:
-> ```
-> dotnet server.dll
-> ```
-> and
-> ```
-> dotnet client.dll
-> ```
-
-[1]: https://archive.zeroc.com/ice/3.7/language-mappings/c-sharp-mapping/client-side-slice-to-c-sharp-mapping/c-sharp-mapping-for-optional-values
-[2]: https://archive.zeroc.com/ice/3.7/language-mappings/c-sharp-mapping/client-side-slice-to-c-sharp-mapping/c-sharp-mapping-for-operations
+[optional class members]: https://archive.zeroc.com/ice/3.7/language-mappings/c-sharp-mapping/client-side-slice-to-c-sharp-mapping/c-sharp-mapping-for-optional-values
+[parameters]: https://archive.zeroc.com/ice/3.7/language-mappings/c-sharp-mapping/client-side-slice-to-c-sharp-mapping/c-sharp-mapping-for-operations

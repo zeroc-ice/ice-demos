@@ -49,16 +49,16 @@ during the build.
 
 ### Running the Demos
 
-For most demos, you can run `server` and `client` in separate command prompt windows. Refer to the README.md file in
-each demo directory for the exact usage instructions.
+For most demos, you can run `dotnet server.dll` and `dotnet client.dll` in separate command prompt windows. Refer to
+the README.md file in each demo directory for the exact usage instructions.
 
 Some demos require Ice services such as IceGrid and IceStorm that are not included in the `zeroc.ice.net` NuGet package.
 To run these demos, the simplest approach is to install the Ice binary distribution for your platform and add its
 bin directory to your PATH. Please refer to the [Release Notes] for additional information.
 
 [Ice manual]: https://archive.zeroc.com/ice/3.7/introduction
-[.NET SDK]: https://dotnet.microsoft.com/download/dotnet/8.0
-[Release Notes]: https://archive.zeroc.com/rel/ice-releases/ice-3-7/ice-3-7-10-release-notes
+[.NET SDK]: https://dotnet.microsoft.com/en-us/download/dotnet/8.0
+[Release Notes]: https://archive.zeroc.com/rel/ice-releases/ice-3-7/ice-3-7-11-release-notes
 
 ### Using nightly builds
 
@@ -76,13 +76,13 @@ To use nightly builds, add a `NuGet.Config` file in `csharp` with the nightly fe
   </packageSources>
 
   <!-- Define mappings by adding package patterns beneath the target source. -->
-  <!-- zeroc.* packages will be restored from zeroc.com, everything else from nuget.org. -->
+  <!-- zeroc.ice.net packages will be restored from zeroc.com, everything else from nuget.org. -->
   <packageSourceMapping>
     <packageSource key="nuget.org">
       <package pattern="*" />
     </packageSource>
     <packageSource key="zeroc.com">
-      <package pattern="zeroc.*" />
+      <package pattern="zeroc.ice.net" />
     </packageSource>
   </packageSourceMapping>
 </configuration>
