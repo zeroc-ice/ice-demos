@@ -172,7 +172,7 @@ UpgradeLog*.htm
 *.exe.manifest
 
 csharp/**/*.xml
-visualBasic/**/*.xml
+!csharp/IceGrid/**/application*.xml
 
 Thumbs.db
 
