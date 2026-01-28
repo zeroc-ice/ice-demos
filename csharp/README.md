@@ -57,7 +57,7 @@ To run these demos, the simplest approach is to install the Ice binary distribut
 bin directory to your PATH. Please refer to the [Release Notes] for additional information.
 
 [Ice manual]: https://archive.zeroc.com/ice/3.7/introduction
-[.NET SDK]: https://download/dotnet/8.0
+[.NET SDK]: https://dotnet.microsoft.com/en-us/download/dotnet/8.0
 [Release Notes]: https://archive.zeroc.com/rel/ice-releases/ice-3-7/ice-3-7-11-release-notes
 
 ### Using nightly builds
