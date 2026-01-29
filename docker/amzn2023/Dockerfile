@@ -24,8 +24,8 @@ RUN dnf install -y \
     python3-pip \
     java-17-amazon-corretto-devel \
     ruby-devel \
-    php-devel \
-    php-cli \
+    php8.4-devel \
+    php8.4-cli \
     libicu-devel \
     && dnf clean all
 
