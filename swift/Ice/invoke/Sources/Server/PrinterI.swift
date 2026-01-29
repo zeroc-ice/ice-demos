@@ -5,13 +5,13 @@
 import Foundation
 import Ice
 
-extension Structure: CustomStringConvertible {
+extension Structure: @retroactive CustomStringConvertible {
     public var description: String {
         return "name=\(name), value=\(value)"
     }
 }
 
-extension C: CustomStringConvertible {
+extension C: @retroactive CustomStringConvertible {
     public var description: String {
         return "s.name=\(s.name), s.value=\(s.value)"
     }
