@@ -20,8 +20,8 @@ struct ProxySettingsView: View {
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
             Picker(selection: $methodIndex, label: Text("Delivery Method")) {
-                ForEach(0 ..< deliveryMethodOptions.count) {
-                    Text(self.deliveryMethodOptions[$0])
+                ForEach(deliveryMethodOptions.indices, id: \.self) { index in
+                    Text(deliveryMethodOptions[index])
                 }
             }
             HStack {
