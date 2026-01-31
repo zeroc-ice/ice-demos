@@ -5,7 +5,7 @@
   - [Prerequisites](#prerequisites)
   - [Building the demos on Linux and macOS](#building-the-demos-on-linux-and-macos)
   - [Running the demos on Linux and macOS](#running-the-demos-on-linux-and-macos)
-- [Building and running the Demos on Windows](#building-and-running-the-demos-on-windows)
+- [Building and running the demos on Windows](#building-and-running-the-demos-on-windows)
   - [Building the demos using NuGet packages](#building-the-demos-using-nuget-packages)
   - [Building the demos with Ice source distribution](#building-the-demos-with-ice-source-distribution)
   - [Running the demos on Windows](#running-the-demos-on-windows)
