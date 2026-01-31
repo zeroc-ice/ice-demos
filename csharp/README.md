@@ -2,7 +2,7 @@
 
 - [Overview](#overview)
 - [Building the demos](#building-the-demos)
-- [Running the Demos](#running-the-demos)
+- [Running the demos](#running-the-demos)
 - [Using nightly builds](#using-nightly-builds)
 
 ## Overview
@@ -33,7 +33,7 @@ dotnet build
 The demos are configured to use the Ice NuGet packages. These packages are automatically downloaded from nuget.org
 during the build.
 
-## Running the Demos
+## Running the demos
 
 For most demos, you can run `dotnet server.dll` and `dotnet client.dll` in separate command prompt windows. Refer to
 the README.md file in each demo directory for the exact usage instructions.

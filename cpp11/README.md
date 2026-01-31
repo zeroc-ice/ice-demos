@@ -1,14 +1,14 @@
 # C++11 Demos <!-- omit in toc -->
 
 - [Overview](#overview)
-- [Building and Running the Demos on Linux and macOS](#building-and-running-the-demos-on-linux-and-macos)
+- [Building and running the demos on Linux and macOS](#building-and-running-the-demos-on-linux-and-macos)
   - [Prerequisites](#prerequisites)
-  - [Building the Demos on Linux and macOS](#building-the-demos-on-linux-and-macos)
-  - [Running the Demos on Linux and macOS](#running-the-demos-on-linux-and-macos)
-- [Building and Running the Demos on Windows](#building-and-running-the-demos-on-windows)
+  - [Building the demos on Linux and macOS](#building-the-demos-on-linux-and-macos)
+  - [Running the demos on Linux and macOS](#running-the-demos-on-linux-and-macos)
+- [Building and running the Demos on Windows](#building-and-running-the-demos-on-windows)
   - [Building the demos using NuGet packages](#building-the-demos-using-nuget-packages)
   - [Building the demos with Ice source distribution](#building-the-demos-with-ice-source-distribution)
-  - [Running the Demos on Windows](#running-the-demos-on-windows)
+  - [Running the demos on Windows](#running-the-demos-on-windows)
 
 ## Overview
 
@@ -23,7 +23,7 @@ following additional subdirectories:
 - [Manual](./Manual) contains complete examples for some of the code snippets
 in the [Ice manual][1].
 
-## Building and Running the Demos on Linux and macOS
+## Building and running the demos on Linux and macOS
 
 ### Prerequisites
 
@@ -39,7 +39,7 @@ environment variable to the installation directory, for example:
 export ICE_HOME=~/testing/ice
 ```
 
-### Building the Demos on Linux and macOS
+### Building the demos on Linux and macOS
 
 Review the settings in `../make/Make.rules`. For example, set `OPTIMIZE=yes`
 to build with optimization.
@@ -67,11 +67,11 @@ make V=1 Ice/hello
 make Ice/hello_distclean
 ```
 
-### Running the Demos on Linux and macOS
+### Running the demos on Linux and macOS
 
 Refer to the README.md file in each demo directory for usage instructions.
 
-## Building and Running the Demos on Windows
+## Building and running the Demos on Windows
 
 ### Building the demos using NuGet packages
 
@@ -116,7 +116,7 @@ select `Build`.
     configuration (Debug or Release) and platform (Win32 or x64). Right click on the
     desired demo in the Solution Explorer window and select `Build`.
 
-### Running the Demos on Windows
+### Running the demos on Windows
 
 You need to add the Ice `bin` directory to your PATH before running the demos.
 
