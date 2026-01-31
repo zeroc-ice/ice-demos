@@ -1,8 +1,14 @@
-# C++11 Demos
+# C++11 Demos <!-- omit in toc -->
 
 - [Overview](#overview)
 - [Building and Running the Demos on Linux and macOS](#building-and-running-the-demos-on-linux-and-macos)
+  - [Prerequisites](#prerequisites)
+  - [Building the Demos on Linux and macOS](#building-the-demos-on-linux-and-macos)
+  - [Running the Demos on Linux and macOS](#running-the-demos-on-linux-and-macos)
 - [Building and Running the Demos on Windows](#building-and-running-the-demos-on-windows)
+  - [Building the demos using NuGet packages](#building-the-demos-using-nuget-packages)
+  - [Building the demos with Ice source distribution](#building-the-demos-with-ice-source-distribution)
+  - [Running the Demos on Windows](#running-the-demos-on-windows)
 
 ## Overview
 
@@ -33,7 +39,7 @@ environment variable to the installation directory, for example:
 export ICE_HOME=~/testing/ice
 ```
 
-### Building the Demos
+### Building the Demos on Linux and macOS
 
 Review the settings in `../make/Make.rules`. For example, set `OPTIMIZE=yes`
 to build with optimization.
@@ -61,31 +67,13 @@ make V=1 Ice/hello
 make Ice/hello_distclean
 ```
 
-### Running the Demos
+### Running the Demos on Linux and macOS
 
 Refer to the README.md file in each demo directory for usage instructions.
 
 ## Building and Running the Demos on Windows
 
-### Prerequisites
-
-If you are using Visual Studio 2017, you need to either:
-
-- install the following optional component of the `Desktop development with C++` workload:
-   `Windows 8.1 SDK and UCRT SDK`
-- or retarget the solution to a version of the Windows 10 SDK already installed
-   (using `Project > Retarget solution`)
-
-Failure to perform this step results in error MSB8036 when building any project:
-
-```shell
-The Windows SDK version 8.1 was not found. Install the required version of Windows SDK
-or change the SDK version in the project property pages or by right-clicking the solution and selecting "Retarget solution".
-```
-
-### Building the Demos
-
-#### Building the demos using NuGet packages:
+### Building the demos using NuGet packages
 
 Open the solution file `C++11 demos.sln` to build the sample programs.
 
@@ -100,7 +88,7 @@ Then select your target configuration (Debug or Release) and platform (Win32
 or x64). Right click on the desired demo in the Solution Explorer window and
 select `Build`.
 
-#### Building the demos with Ice source distribution:
+### Building the demos with Ice source distribution
 
 - Build from command line:
   - Open a Visual Studio command prompt:
@@ -128,7 +116,7 @@ select `Build`.
     configuration (Debug or Release) and platform (Win32 or x64). Right click on the
     desired demo in the Solution Explorer window and select `Build`.
 
-### Running the Demos
+### Running the Demos on Windows
 
 You need to add the Ice `bin` directory to your PATH before running the demos.
 
