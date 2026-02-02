@@ -25,4 +25,4 @@ Follow these steps to install the demo:
    `Client.php` and set the `have_ssl` variable to `true`.
 
 [1]: https://archive.zeroc.com/ice/3.7/ice-plugins/icediscovery
-[2]: https://archive.zeroc.com/rel/ice-releases/ice-3-7/ice-3-7-10-release-notes
+[2]: https://archive.zeroc.com/rel/ice-releases/ice-3-7/ice-3-7-11-release-notes

@@ -191,7 +191,7 @@ def configure_js(channel: str) -> None:
 def configure_swift(channel: str) -> None:
     """Configure Swift Package.swift and Xcode project files to use nightly repository."""
     # Pattern to match the ice-spm package dependency (stable release)
-    # Matches: .package(url: "https://github.com/zeroc-ice/ice-spm.git", from: "3.7.10")
+    # Matches: .package(url: "https://github.com/zeroc-ice/ice-spm.git", from: "3.7.11")
     url_pattern = re.compile(
         r'\.package\(url:\s*"https://github\.com/zeroc-ice/ice-spm\.git",\s*from:\s*"[^"]+"\)'
     )

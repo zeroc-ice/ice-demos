@@ -12,8 +12,8 @@
     "run": "gulp run"
   },
   "dependencies": {
-    "ice": "*",
-    "slice2js": "*"
+    "ice": "3.7.110",
+    "slice2js": "3.7.110"
   },
   "devDependencies": {
     "gulp": "^5.0.0",

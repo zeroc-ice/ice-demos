@@ -52,4 +52,4 @@ Web server, you will need to modify the router's endpoint in
 host, modify the endpoint in `Session.php`.
 
 [1]: https://archive.zeroc.com/ice/3.7/language-mappings/php-mapping/client-side-slice-to-php-mapping/application-notes-for-php
-[2]: https://archive.zeroc.com/rel/ice-releases/ice-3-7/ice-3-7-10-release-notes
+[2]: https://archive.zeroc.com/rel/ice-releases/ice-3-7/ice-3-7-11-release-notes
