@@ -47,7 +47,7 @@ ENV PATH="${PATH}:/usr/share/dotnet"
 RUN if [ "$QUALITY" = "nightly" ]; then \
         ICE_REPO_URL="https://download.zeroc.com/ice/nightly/3.7/el10/ice-repo-3.7-nightly-1.0.0-1.el10.noarch.rpm"; \
     else \
-        ICE_REPO_URL="https://download.zeroc.com/ice/3.7/el10/ice-repo-3.7-1.0.0-1.el10.noarch.rpm"; \
+        ICE_REPO_URL="https://download.zeroc.com/ice/3.7/el10/ice-repo-3.7.el10.noarch.rpm"; \
     fi && \
     dnf install -y "$ICE_REPO_URL" \
     && dnf install -y ice-all-runtime ice-all-devel \
