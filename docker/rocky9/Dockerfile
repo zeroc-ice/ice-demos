@@ -1,6 +1,9 @@
-# Dockerfile for testing Ice 3.7 nightly packages on Rocky Linux 9
-# Uses ZeroC RHEL 9 nightly packages
+# Dockerfile for testing Ice 3.7 packages on Rocky Linux 9
+# Uses ZeroC RHEL 9 packages
 FROM rockylinux:9
+
+# Build argument to select package quality: stable or nightly
+ARG QUALITY=stable
 
 # Install base dependencies (--allowerasing to replace curl-minimal with curl)
 RUN dnf install -y --allowerasing \
@@ -40,15 +43,23 @@ RUN curl -fsSL https://dot.net/v1/dotnet-install.sh -o /tmp/dotnet-install.sh \
 ENV DOTNET_ROOT=/usr/share/dotnet
 ENV PATH="${PATH}:/usr/share/dotnet"
 
-# Install Ice 3.7 nightly repository (RHEL 9 packages)
-RUN dnf install -y https://download.zeroc.com/ice/nightly/3.7/el9/ice-repo-3.7-nightly-1.0.0-1.el9.noarch.rpm \
+# Install Ice 3.7 repository (stable or nightly based on QUALITY arg)
+RUN if [ "$QUALITY" = "nightly" ]; then \
+        ICE_REPO_URL="https://download.zeroc.com/ice/nightly/3.7/el9/ice-repo-3.7-nightly-1.0.0-1.el9.noarch.rpm"; \
+    else \
+        ICE_REPO_URL="https://download.zeroc.com/ice/3.7/el9/ice-repo-3.7.el9.noarch.rpm"; \
+    fi && \
+    dnf install -y "$ICE_REPO_URL" \
     && dnf install -y ice-all-runtime ice-all-devel \
     && dnf clean all
 
 # Set ICE_HOME for the build
 ENV ICE_HOME=/usr
 
-# Add script to setup nightly environment on bash startup
+# Persist QUALITY for runtime scripts
+ENV QUALITY=$QUALITY
+
+# Add script to setup environment on bash startup
 COPY scripts/ice-nightly.sh /etc/profile.d/ice-nightly.sh
 
 # Set working directory

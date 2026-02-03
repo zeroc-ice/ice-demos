@@ -8,7 +8,7 @@ import iceBuilder from "gulp-ice-builder";
 import path from "path";
 import paths from "vinyl-paths";
 import pump from "pump";
-import rollup from "rollup";
+import * as rollup from "rollup";
 import tsc from "gulp-typescript";
 import { fileURLToPath } from "url";
 

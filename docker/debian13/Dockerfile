@@ -1,5 +1,8 @@
-# Dockerfile for testing Ice 3.7 nightly packages on Debian 13 (trixie)
+# Dockerfile for testing Ice 3.7 packages on Debian 13 (trixie)
 FROM debian:13
+
+# Build argument to select package quality: stable or nightly
+ARG QUALITY=stable
 
 # Avoid interactive prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive
@@ -42,8 +45,13 @@ RUN curl -fsSL https://dot.net/v1/dotnet-install.sh -o /tmp/dotnet-install.sh \
 ENV DOTNET_ROOT=/usr/share/dotnet
 ENV PATH="${PATH}:/usr/share/dotnet"
 
-# Install Ice 3.7 nightly repository and packages
-RUN wget "https://download.zeroc.com/ice/nightly/3.7/debian13/ice-repo-3.7-nightly_1.0.0_all.deb" -O /tmp/ice-repo.deb \
+# Install Ice 3.7 repository and packages (stable or nightly based on QUALITY arg)
+RUN if [ "$QUALITY" = "nightly" ]; then \
+        ICE_REPO_URL="https://download.zeroc.com/ice/nightly/3.7/debian13/ice-repo-3.7-nightly_1.0.0_all.deb"; \
+    else \
+        ICE_REPO_URL="https://download.zeroc.com/ice/3.7/debian13/ice-repo-3.7_1.0.0_all.deb"; \
+    fi && \
+    wget "$ICE_REPO_URL" -O /tmp/ice-repo.deb \
     && dpkg -i /tmp/ice-repo.deb \
     && rm /tmp/ice-repo.deb \
     && apt-get update \
@@ -53,7 +61,10 @@ RUN wget "https://download.zeroc.com/ice/nightly/3.7/debian13/ice-repo-3.7-night
 # Set ICE_HOME for the build
 ENV ICE_HOME=/usr
 
-# Add script to setup nightly environment on bash startup
+# Persist QUALITY for runtime scripts
+ENV QUALITY=$QUALITY
+
+# Add script to setup environment on bash startup
 COPY scripts/ice-nightly.sh /etc/profile.d/ice-nightly.sh
 
 # Set working directory

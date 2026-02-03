@@ -10,6 +10,10 @@ inputs:
     description: "Package quality: stable or nightly"
     required: false
     default: "stable"
+  version:
+    description: "Specific Ice version to install (e.g., 3.7.11)"
+    required: false
+    default: ""
 
 runs:
   using: "composite"
@@ -49,7 +53,7 @@ runs:
         if ("${{ inputs.quality }}" -eq "nightly") {
           $msiUrl = "${baseUrl}/${{ inputs.quality }}/${{ inputs.channel }}/Ice-${{ inputs.quality }}.msi"
         } else {
-          $msiUrl = "${baseUrl}/${{ inputs.channel }}/Ice.msi"
+          $msiUrl = "${baseUrl}/${{ inputs.channel }}/Ice-${{ inputs.version }}.msi"
         }
         Write-Host "Downloading Ice MSI from: $msiUrl"
         Invoke-WebRequest -Uri $msiUrl -OutFile "$env:TEMP\Ice.msi"

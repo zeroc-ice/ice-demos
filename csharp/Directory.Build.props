@@ -2,6 +2,6 @@
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
         <AppTargetFramework Condition="'$(AppTargetFramework)' == ''">net8.0</AppTargetFramework>
-        <IceVersion Condition="'$(IceVersion)' == ''">3.7.10</IceVersion>
+        <IceVersion Condition="'$(IceVersion)' == ''">3.7.11</IceVersion>
     </PropertyGroup>
 </Project>

@@ -13,8 +13,8 @@ let package = Package(
         .executable(name: "Server", targets: ["Server"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/zeroc-ice/ice-spm.git", from: "3.7.10"),
-        .package(url: "https://github.com/mxcl/PromiseKit.git", from: "6.8.10"),
+        .package(url: "https://github.com/zeroc-ice/ice-spm.git", from: "3.7.11"),
+        .package(url: "https://github.com/mxcl/PromiseKit.git", from: "6.22.1"),
     ],
     targets: [
         .executableTarget(
