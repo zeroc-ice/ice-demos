@@ -11,8 +11,8 @@
     "clean": "gulp clean"
   },
   "dependencies": {
-    "ice": "*",
-    "slice2js": "*"
+    "ice": "3.7.110",
+    "slice2js": "3.7.110"
   },
   "devDependencies": {
     "@types/node": "^18.15.3",
