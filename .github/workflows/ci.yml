@@ -58,6 +58,7 @@ jobs:
         with:
           channel: ${{ env.CHANNEL }}
           quality: ${{ matrix.quality }}
+          version: ${{ env.ICE_VERSION }}
 
       - name: Configure Nightly Feeds
         if: matrix.quality == 'nightly'
@@ -164,10 +165,11 @@ jobs:
           npx gulp build
 
   docker-ci:
-    name: ${{ matrix.distro }} (docker)
+    name: ${{ matrix.distro }} (${{ matrix.quality }}) docker
     strategy:
       fail-fast: false
       matrix:
+        quality: [nightly, stable]
         distro: [ubuntu22.04, ubuntu24.04, debian12, debian13, rocky9, rocky10, amzn2023]
     runs-on: ubuntu-24.04
     steps:
@@ -176,7 +178,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -f docker/${{ matrix.distro }}/Dockerfile -t ice-demos-${{ matrix.distro }}:test docker
+          docker build --build-arg QUALITY=${{ matrix.quality }} -f docker/${{ matrix.distro }}/Dockerfile -t ice-demos-${{ matrix.distro }}:test docker
 
       - name: Build C++ Demos
         timeout-minutes: 30

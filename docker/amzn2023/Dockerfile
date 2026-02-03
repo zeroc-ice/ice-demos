@@ -1,5 +1,8 @@
-# Dockerfile for testing Ice 3.7 nightly packages on Amazon Linux 2023
+# Dockerfile for testing Ice 3.7 packages on Amazon Linux 2023
 FROM public.ecr.aws/amazonlinux/amazonlinux:2023
+
+# Build argument to select package quality: stable or nightly
+ARG QUALITY=stable
 
 # Install base dependencies (--allowerasing to replace curl-minimal and gnupg2-minimal)
 RUN dnf install -y --allowerasing \
@@ -41,15 +44,23 @@ RUN curl -fsSL https://dot.net/v1/dotnet-install.sh -o /tmp/dotnet-install.sh \
 ENV DOTNET_ROOT=/usr/share/dotnet
 ENV PATH="${PATH}:/usr/share/dotnet"
 
-# Install Ice 3.7 nightly repository (Amazon Linux 2023 packages)
-RUN dnf install -y https://download.zeroc.com/ice/nightly/3.7/amzn2023/ice-repo-3.7-nightly-1.0.0-1.amzn2023.noarch.rpm \
+# Install Ice 3.7 repository (stable or nightly based on QUALITY arg)
+RUN if [ "$QUALITY" = "nightly" ]; then \
+        ICE_REPO_URL="https://download.zeroc.com/ice/nightly/3.7/amzn2023/ice-repo-3.7-nightly-1.0.0-1.amzn2023.noarch.rpm"; \
+    else \
+        ICE_REPO_URL="https://download.zeroc.com/ice/3.7/amzn2023/ice-repo-3.7.amzn2023.noarch.rpm"; \
+    fi && \
+    dnf install -y "$ICE_REPO_URL" \
     && dnf install -y ice-all-runtime ice-all-devel \
     && dnf clean all
 
 # Set ICE_HOME for the build
 ENV ICE_HOME=/usr
 
-# Add script to setup nightly environment on bash startup
+# Persist QUALITY for runtime scripts
+ENV QUALITY=$QUALITY
+
+# Add script to setup environment on bash startup
 COPY scripts/ice-nightly.sh /etc/profile.d/ice-nightly.sh
 
 # Set working directory
