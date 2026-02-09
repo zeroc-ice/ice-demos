@@ -32,4 +32,5 @@ C++11 language mapping.
 
 The [certs](./certs) folder contains X.509 certificates shared by some of these sample programs.
 
+[ci-home]: https://github.com/zeroc-ice/ice-demos/blob/3.7/.github/workflows/ci.yml
 [GPLv2]: https://github.com/zeroc-ice/ice/blob/3.7/LICENSE
