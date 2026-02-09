@@ -2,6 +2,7 @@
   <img src="https://raw.githubusercontent.com/zeroc-ice/ice-demos/3.7/.github/assets/ice-banner.svg" height="150" width="150" />
 </p>
 
+[![CI](https://github.com/zeroc-ice/ice-demos/actions/workflows/ci.yml/badge.svg?branch=3.7)][ci-home]
 [![GPLv2](https://img.shields.io/github/license/zeroc-ice/ice?color=red)][GPLv2]
 
 # Ice demos
