@@ -2,6 +2,7 @@
   <img src="https://raw.githubusercontent.com/zeroc-ice/ice-demos/3.7/.github/assets/ice-banner.svg" height="150" width="150" />
 </p>
 
+[![CI](https://github.com/zeroc-ice/ice-demos/actions/workflows/ci.yml/badge.svg?branch=3.7)][ci-home]
 [![GPLv2](https://img.shields.io/github/license/zeroc-ice/ice?color=red)][GPLv2]
 
 # Ice demos
@@ -31,4 +32,5 @@ C++11 language mapping.
 
 The [certs](./certs) folder contains X.509 certificates shared by some of these sample programs.
 
+[ci-home]: https://github.com/zeroc-ice/ice-demos/actions?query=branch%3A3.7
 [GPLv2]: https://github.com/zeroc-ice/ice/blob/3.7/LICENSE
