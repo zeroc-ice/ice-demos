@@ -1,6 +1,6 @@
 node_modules/
-client.js
-client.js.map
-Filesystem.js
-Filesystem.d.ts
+*.js
+*.js.map
+*.d.ts
+!eslint.config.js
 package-lock.json

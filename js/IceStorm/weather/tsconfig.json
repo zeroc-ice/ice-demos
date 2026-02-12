@@ -1,11 +1,10 @@
 {
     "compilerOptions": {
-        "lib": ["dom", "es2020"],
+        "lib": ["es2020"],
         "target": "es2020",
         "module": "es2022", // "es2022" required for top-level 'await using' statements
         "moduleResolution": "bundler",
-        "preserveConstEnums": true,
-        "sourceMap": true,
+        "noEmit": true,
         "strict": true,
         "noImplicitAny": true,
         "noImplicitOverride": true,
@@ -14,5 +13,5 @@
         "noUnusedLocals": true,
         "noUnusedParameters": true
     },
-    "files": ["sensor.ts"]
+    "include": ["*.ts"]
 }

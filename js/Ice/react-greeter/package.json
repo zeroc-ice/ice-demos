@@ -7,9 +7,8 @@
     "license": "GPL-2.0-only",
     "description": "Ice greeter React demo",
     "scripts": {
-        "slice2js": "slice2js --typescript src/Greeter.ice --output-dir src",
-        "dev": "npm run slice2js && vite",
-        "build": "npm run slice2js && tsc -b && vite build",
+        "dev": "vite",
+        "build": "vite build",
         "preview": "vite preview"
     },
     "dependencies": {
@@ -19,6 +18,7 @@
     },
     "devDependencies": {
         "@eslint/js": "^9.32.0",
+        "@zeroc/slice2js": "^3.9.0-nightly.0.0",
         "@types/react": "^18.3.3",
         "@types/react-dom": "^18.3.0",
         "@vitejs/plugin-react": "^4.3.1",
