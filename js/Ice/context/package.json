@@ -5,9 +5,12 @@
     "type": "module",
     "author": "ZeroC, Inc.",
     "license": "GPL-2.0-only",
+    "engines": {
+        "node": ">=22.18.0"
+    },
     "description": "Ice context demo",
     "scripts": {
-        "build": "node build.mjs",
+        "build": "node build.ts",
         "typecheck": "tsc --noEmit",
         "lint": "eslint .",
         "format": "prettier --write ."
