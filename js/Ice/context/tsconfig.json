@@ -4,6 +4,7 @@
         "target": "es2020",
         "module": "es2022", // "es2022" required for top-level 'await using' statements
         "moduleResolution": "bundler",
+        "skipLibCheck": true,
         "noEmit": true,
         "strict": true,
         "noImplicitAny": true,
