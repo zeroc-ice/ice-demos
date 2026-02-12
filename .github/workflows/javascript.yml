@@ -25,6 +25,12 @@ jobs:
           find . -name 'package.json' -not -path '*/node_modules/*' | while IFS= read -r file; do
             dir=$(dirname "$file")
             echo "::group::$dir"
-            (cd "$dir" && npm install && npx prettier --check . && npm run lint)
+            pushd "$dir"
+            npm install
+            npx prettier --check .
+            npm run lint
+            npm run build
+            npm run typecheck
+            popd
             echo "::endgroup::"
           done

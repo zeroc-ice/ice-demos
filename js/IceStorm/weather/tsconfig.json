@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "lib": ["es2020"],
+        "lib": ["esnext"],
         "target": "es2020",
         "module": "es2022", // "es2022" required for top-level 'await using' statements
         "moduleResolution": "bundler",

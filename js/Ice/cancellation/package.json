@@ -8,6 +8,7 @@
     "description": "Ice cancellation demo",
     "scripts": {
         "build": "node build.mjs",
+        "typecheck": "tsc --noEmit",
         "lint": "eslint .",
         "format": "prettier --write ."
     },
@@ -16,10 +17,12 @@
     },
     "devDependencies": {
         "@eslint/js": "^9.32.0",
+        "@types/node": "^22.0.0",
         "@zeroc/slice2js": "^3.9.0-nightly.0.0",
         "esbuild": "^0.25.0",
         "eslint": "^9.32.0",
         "prettier": "^3.5.3",
+        "typescript": "^5.9.2",
         "typescript-eslint": "^8.39.0"
     }
 }

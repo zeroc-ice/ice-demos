@@ -9,6 +9,7 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build",
+        "typecheck": "tsc --noEmit",
         "preview": "vite preview",
         "lint": "eslint .",
         "format": "prettier --write ."
