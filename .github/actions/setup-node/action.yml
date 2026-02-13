@@ -1,0 +1,10 @@
+name: Setup Node.js
+description: Setup Node.js 22.x for Ice demos
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: "22.x"

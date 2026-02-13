@@ -5,12 +5,17 @@
     "type": "module",
     "author": "ZeroC, Inc.",
     "license": "GPL-2.0-only",
+    "engines": {
+        "node": ">=22.18.0"
+    },
     "description": "Ice greeter React demo",
     "scripts": {
-        "slice2js": "slice2js --typescript src/Greeter.ice --output-dir src",
-        "dev": "npm run slice2js && vite",
-        "build": "npm run slice2js && tsc -b && vite build",
-        "preview": "vite preview"
+        "dev": "vite",
+        "build": "vite build",
+        "typecheck": "tsc --noEmit",
+        "preview": "vite preview",
+        "lint": "eslint .",
+        "format": "prettier --write ."
     },
     "dependencies": {
         "@zeroc/ice": "^3.9.0-nightly.0.0",
@@ -22,9 +27,11 @@
         "@types/react": "^18.3.3",
         "@types/react-dom": "^18.3.0",
         "@vitejs/plugin-react": "^4.3.1",
+        "@zeroc/slice2js": "^3.9.0-nightly.0.0",
         "buffer": "^6.0.3",
         "crypto-browserify": "^3.12.0",
         "eslint": "^9.32.0",
+        "prettier": "^3.5.3",
         "process": "^0.11.10",
         "stream-browserify": "^3.0.0",
         "typescript": "^5.9.2",

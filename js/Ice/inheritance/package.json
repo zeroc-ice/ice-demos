@@ -5,17 +5,26 @@
     "type": "module",
     "author": "ZeroC, Inc.",
     "license": "GPL-2.0-only",
+    "engines": {
+        "node": ">=22.18.0"
+    },
     "description": "Ice inheritance demo",
     "scripts": {
-        "build": "npx slice2js --typescript Filesystem.ice && npx tsc"
+        "build": "node build.ts",
+        "typecheck": "tsc --noEmit",
+        "lint": "eslint .",
+        "format": "prettier --write ."
     },
     "dependencies": {
         "@zeroc/ice": "^3.9.0-nightly.0.0"
     },
     "devDependencies": {
         "@eslint/js": "^9.32.0",
-        "@types/node": "^20.14.5",
+        "@types/node": "^22.0.0",
+        "@zeroc/slice2js": "^3.9.0-nightly.0.0",
+        "esbuild": "^0.25.0",
         "eslint": "^9.32.0",
+        "prettier": "^3.5.3",
         "typescript": "^5.9.2",
         "typescript-eslint": "^8.39.0"
     }
