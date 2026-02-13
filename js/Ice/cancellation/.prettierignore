@@ -1,5 +1,1 @@
-
-**/*.ice
-**/*.md
-assets/*
-package-lock.json
+*.ice
