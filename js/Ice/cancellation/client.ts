@@ -46,8 +46,8 @@ try {
     greeting = await greetingResult;
     console.log(`Received unexpected greeting: ${greeting}`);
 } catch (exception) {
-    if (exception instanceof Ice.InvocationTimeoutException) {
-        console.log(`Caught InvocationTimeoutException, as expected: ${exception.message}`);
+    if (exception instanceof Ice.InvocationCanceledException) {
+        console.log(`Caught InvocationCanceledException, as expected: ${exception.message}`);
     } else {
         throw exception;
     }

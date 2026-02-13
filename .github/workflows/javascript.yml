@@ -8,17 +8,27 @@ on:
     branches: ["main"]
 
 jobs:
-  prettier:
+  lint-and-format:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "latest"
+      - name: Setup Node.js
+        uses: ./.github/actions/setup-node
 
-      - name: Run JavaScript prettier
-        run: npx prettier --check .
+      - name: Run eslint and prettier
         working-directory: js
+        run: |
+          find . -name 'package.json' -not -path '*/node_modules/*' | while IFS= read -r file; do
+            dir=$(dirname "$file")
+            echo "::group::$dir"
+            pushd "$dir"
+            npm install
+            npx prettier --check .
+            npm run lint
+            npm run build
+            npm run typecheck
+            popd
+            echo "::endgroup::"
+          done

@@ -1,6 +1,6 @@
 node_modules/
-client.js
-client.js.map
-WeatherStation1.js
-WeatherStation1.d.ts
+*.js
+*.js.map
+*.d.ts
+!eslint.config.js
 package-lock.json
