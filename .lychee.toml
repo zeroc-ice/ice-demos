@@ -5,10 +5,10 @@
 max_concurrency = 32
 
 # Minimum interval between requests to the same host
-host_request_interval = "50ms"
+host_request_interval = "150ms"
 
 # Timeout for each request in seconds
-timeout = 30
+timeout = 60
 
 # Number of retries for failed requests
 max_retries = 3
