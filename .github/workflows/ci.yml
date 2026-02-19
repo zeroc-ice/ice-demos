@@ -175,8 +175,8 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -f docker/${{ matrix.distro }}/Dockerfile \
-            -t ice-demos-${{ matrix.distro }}:test docker/${{ matrix.distro }}
+          docker build -f .github/docker/${{ matrix.distro }}/Dockerfile \
+            -t ice-demos-${{ matrix.distro }}:test .github/docker/${{ matrix.distro }}
 
       - name: Build C++ Demos
         timeout-minutes: 20
