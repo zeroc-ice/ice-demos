@@ -168,7 +168,7 @@ jobs:
       fail-fast: false
       matrix:
         distro:
-          [ubuntu22.04, ubuntu24.04, debian12, debian13, rocky9, rocky10, amzn2023]
+          [ubuntu24.04, debian12, debian13, rocky9, rocky10, amzn2023]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
