@@ -155,7 +155,7 @@ def configure_swift(channel: str) -> None:
     """Configure Swift Package.swift files to use nightly repository."""
     # Pattern to match the full .package(...) dependency on ice.git
     url_pattern = re.compile(
-        r'\.package\(url:\s*"https://github\.com/zeroc-ice/ice\.git",[^)]+\)'
+        r'\.package\(url:\s*"https://github\.com/zeroc-ice/ice\.git",\s*[^()]*(?:\([^)]*\))?\)'
     )
     url_replacement = f'.package(url: "https://github.com/zeroc-ice/ice-swift-nightly", branch: "{channel}")'
 
