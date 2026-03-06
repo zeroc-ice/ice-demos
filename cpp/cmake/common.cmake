@@ -80,7 +80,6 @@ function(ice_copy_pdbs target)
         -DTARGET_DIR="$<TARGET_FILE_DIR:${target}>"
         "-DRUNTIME_DLLS=$<TARGET_RUNTIME_DLLS:${target}>;$<GENEX_EVAL:$<TARGET_PROPERTY:Ice::Ice,ICE_RUNTIME_DLLS>>"
         -P "${CMAKE_CURRENT_FUNCTION_LIST_DIR}/copy-ice-pdbs.cmake"
-      COMMAND_EXPAND_LISTS
     )
   endif()
 endfunction()
