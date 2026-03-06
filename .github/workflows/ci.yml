@@ -85,7 +85,7 @@ jobs:
               Write-Output "Processing: $_"
               $dir = $_.DirectoryName
 
-              cmake -B "$dir/build" -S "$dir" -G Ninja -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
+              cmake -B "$dir/build" -S "$dir" -G Ninja -DCMAKE_COMPILE_WARNING_AS_ERROR=ON -DICE_USE_PDB=ON
               if ($LASTEXITCODE -ne 0) { throw "CMake configuration failed" }
 
               # Run cmake build step
