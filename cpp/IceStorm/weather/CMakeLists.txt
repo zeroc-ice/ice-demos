@@ -14,6 +14,7 @@ if(WIN32)
       $<GENEX_EVAL:$<TARGET_PROPERTY:Ice::Ice,ICE_RUNTIME_DLLS>>
     COMMAND_EXPAND_LISTS
   )
+  ice_copy_pdbs(sensor)
 endif()
 
 add_executable(station Station.cpp AtmosphericConditions.cpp ConsolePrinter.cpp ConsolePrinter.h WeatherStation.ice)
@@ -26,4 +27,5 @@ if(WIN32)
       $<GENEX_EVAL:$<TARGET_PROPERTY:Ice::Ice,ICE_RUNTIME_DLLS>>
     COMMAND_EXPAND_LISTS
   )
+  ice_copy_pdbs(station)
 endif()

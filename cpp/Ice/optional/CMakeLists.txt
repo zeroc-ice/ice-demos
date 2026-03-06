@@ -14,6 +14,7 @@ if(WIN32)
       $<GENEX_EVAL:$<TARGET_PROPERTY:Ice::Ice,ICE_RUNTIME_DLLS>>
     COMMAND_EXPAND_LISTS
   )
+  ice_copy_pdbs(client1)
 endif()
 
 add_executable(client2 Client2.cpp WeatherStation2.ice)
@@ -26,6 +27,7 @@ if(WIN32)
       $<GENEX_EVAL:$<TARGET_PROPERTY:Ice::Ice,ICE_RUNTIME_DLLS>>
     COMMAND_EXPAND_LISTS
   )
+  ice_copy_pdbs(client2)
 endif()
 
 add_executable(server1 Server1.cpp ConsolePrinter1.cpp ConsolePrinter1.h WeatherStation1.ice)
@@ -38,6 +40,7 @@ if(WIN32)
       $<GENEX_EVAL:$<TARGET_PROPERTY:Ice::Ice,ICE_RUNTIME_DLLS>>
     COMMAND_EXPAND_LISTS
   )
+  ice_copy_pdbs(server1)
 endif()
 
 add_executable(server2 Server2.cpp ConsolePrinter2.cpp ConsolePrinter2.h WeatherStation2.ice)
@@ -50,4 +53,5 @@ if(WIN32)
       $<GENEX_EVAL:$<TARGET_PROPERTY:Ice::Ice,ICE_RUNTIME_DLLS>>
     COMMAND_EXPAND_LISTS
   )
+  ice_copy_pdbs(server2)
 endif()

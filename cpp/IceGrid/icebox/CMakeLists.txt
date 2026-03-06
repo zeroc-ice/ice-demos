@@ -14,6 +14,7 @@ if(WIN32)
       $<GENEX_EVAL:$<TARGET_PROPERTY:Ice::Ice,ICE_RUNTIME_DLLS>>
     COMMAND_EXPAND_LISTS
   )
+  ice_copy_pdbs(client)
 endif()
 
 add_library(GreeterService SHARED Chatbot.h Chatbot.cpp GreeterService.h GreeterService.cpp Greeter.ice)
@@ -31,4 +32,5 @@ if(WIN32)
     COMMAND ${CMAKE_COMMAND} -E copy -t $<TARGET_FILE_DIR:GreeterService>
       $<TARGET_FILE:Ice::icebox_EXE>
   )
+  ice_copy_pdbs(GreeterService)
 endif()
