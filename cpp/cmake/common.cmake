@@ -52,7 +52,8 @@ if(WIN32)
   get_filename_component(_ice_nuget_dir_name "${Ice_NUGET_DIR}" NAME)
   string(LENGTH "${Ice_NUGET_NAME}." _ice_nuget_prefix_len)
   string(SUBSTRING "${_ice_nuget_dir_name}" ${_ice_nuget_prefix_len} -1 Ice_NUGET_VERSION)
-  set(Ice_NUGET_VERSION "${Ice_NUGET_VERSION}" CACHE STRING "Resolved Ice NuGet package version")
+  # Not cached: always derived from the resolved directory so it can't go stale.
+  set(Ice_NUGET_VERSION "${Ice_NUGET_VERSION}")
 
   # Set Ice_Root to the Ice NuGet package path. This is a special variable
   # that is used by CMake to find the Ice CMake config.
@@ -77,7 +78,7 @@ function(ice_copy_pdbs target)
       COMMAND "${CMAKE_COMMAND}"
         -DICE_PDB_SOURCE_DIR="${ICE_PDB_DIR}/${Ice_WIN32_PLATFORM}/$<IF:$<CONFIG:Debug>,Debug,Release>"
         -DTARGET_DIR="$<TARGET_FILE_DIR:${target}>"
-        "-DRUNTIME_DLLS=$<TARGET_RUNTIME_DLLS:${target}>"
+        "-DRUNTIME_DLLS=$<TARGET_RUNTIME_DLLS:${target}>;$<GENEX_EVAL:$<TARGET_PROPERTY:Ice::Ice,ICE_RUNTIME_DLLS>>"
         -P "${CMAKE_CURRENT_FUNCTION_LIST_DIR}/copy-ice-pdbs.cmake"
       COMMAND_EXPAND_LISTS
     )

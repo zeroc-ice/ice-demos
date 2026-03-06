@@ -21,6 +21,8 @@ if(NOT DEFINED ICE_PDB_DIR OR ICE_PDB_DIR STREQUAL "")
   message(FATAL_ERROR "ICE_PDB_DIR must be set")
 endif()
 
+file(MAKE_DIRECTORY "${ICE_PDB_DIR}")
+
 set(ICE_PDB_ZIP "${ICE_PDB_DIR}/ice-pdbs.zip")
 
 message(STATUS "Downloading Ice PDB archive from ${ICE_PDB_URL}")
