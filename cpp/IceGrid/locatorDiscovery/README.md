@@ -24,6 +24,10 @@ cmake -B build -S . -G Ninja
 cmake --build build
 ```
 
+> [!NOTE]
+> On Windows, you can add `-DICE_USE_PDB=ON` to the first cmake command to enable the download and copy the Ice PDB files to
+> the build output directory.
+
 ## Running the demo
 
 1. Run `icegridregistry`, `icegridnode`, and configure IceGrid using `icegridadmin` as per the IceGrid greeter demo

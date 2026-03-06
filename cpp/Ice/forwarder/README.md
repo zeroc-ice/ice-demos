@@ -32,6 +32,10 @@ cmake -B build -S . -G Ninja
 cmake --build build
 ```
 
+> [!NOTE]
+> On Windows, you can add `-DICE_USE_PDB=ON` to the first cmake command to enable the download and copy the Ice PDB files to
+> the build output directory.
+
 The build produces 3 executables: client, server, and forwardingserver.
 
 ## Running the demo
