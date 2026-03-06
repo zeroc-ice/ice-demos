@@ -27,7 +27,7 @@ cmake --build build
 ```
 
 > [!NOTE]
-> On Windows, you can add `-DICE_USE_PDB=ON` to the first cmake command to enable the download and copy the Ice PDB files to
+> On Windows, you can add `-DICE_USE_PDB=ON` to the first cmake command to enable the downloading and copying the Ice PDB files to
 > the build output directory.
 
 ## Running the demo
