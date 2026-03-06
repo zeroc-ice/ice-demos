@@ -9,13 +9,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 if(WIN32)
   set(Ice_NUGET_NAME "ZeroC.Ice.Cpp")
   file(GLOB _ice_nuget_dirs "${CMAKE_CURRENT_LIST_DIR}/packages/${Ice_NUGET_NAME}.*")
-  set(Ice_NUGET_DIR "")
-  if(_ice_nuget_dirs)
-    list(SORT _ice_nuget_dirs COMPARE NATURAL ORDER DESCENDING)
-    list(GET _ice_nuget_dirs 0 Ice_NUGET_DIR)
-  endif()
 
-  if(NOT Ice_NUGET_DIR)
+  if(NOT _ice_nuget_dirs)
 
     # Check if the nuget command line tool is available (either in the PATH or previously downloaded).
     # If not download it.
@@ -45,9 +40,10 @@ if(WIN32)
     if(NOT _ice_nuget_dirs)
       message(FATAL_ERROR "NuGet install succeeded but no ${Ice_NUGET_NAME}.<version> directory was found")
     endif()
-    list(SORT _ice_nuget_dirs COMPARE NATURAL ORDER DESCENDING)
-    list(GET _ice_nuget_dirs 0 Ice_NUGET_DIR)
   endif()
+
+  list(SORT _ice_nuget_dirs COMPARE NATURAL ORDER DESCENDING)
+  list(GET _ice_nuget_dirs 0 Ice_NUGET_DIR)
 
   get_filename_component(_ice_nuget_dir_name "${Ice_NUGET_DIR}" NAME)
   string(LENGTH "${Ice_NUGET_NAME}." _ice_nuget_prefix_len)
