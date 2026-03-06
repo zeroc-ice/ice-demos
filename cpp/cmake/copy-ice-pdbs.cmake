@@ -10,13 +10,14 @@
 cmake_minimum_required(VERSION 3.21)
 
 if(NOT EXISTS "${ICE_PDB_SOURCE_DIR}")
-  return()
+  message(FATAL_ERROR "ICE_PDB_SOURCE_DIR does not exist: ${ICE_PDB_SOURCE_DIR}")
 endif()
 
 foreach(_dll_path IN LISTS RUNTIME_DLLS)
   if(NOT _dll_path)
     continue()
   endif()
+
   get_filename_component(_dll_name "${_dll_path}" NAME_WE)
   set(_pdb_file "${ICE_PDB_SOURCE_DIR}/${_dll_name}.pdb")
   if(EXISTS "${_pdb_file}")
