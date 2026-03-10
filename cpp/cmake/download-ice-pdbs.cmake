@@ -1,7 +1,7 @@
 # Copyright (c) ZeroC, Inc.
 
 # Download and extract the Ice PDB archive.
-# This script is included by common.cmake when ICE_USE_PDB is ON.
+# This script is included by common.cmake when ICE_COPY_PDB is ON.
 #
 # Required variables:
 #   ICE_PDB_URL - URL to the Ice PDB ZIP archive

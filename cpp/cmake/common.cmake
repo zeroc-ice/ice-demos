@@ -55,10 +55,10 @@ if(WIN32)
   # that is used by CMake to find the Ice CMake config.
   set(Ice_ROOT "${Ice_NUGET_DIR}" CACHE PATH "Path to Ice installation directory")
 
-  option(ICE_USE_PDB "Download and copy Ice PDB files alongside DLLs" OFF)
-  if(ICE_USE_PDB)
+  option(ICE_COPY_PDB "Download and copy Ice PDB files alongside DLLs" OFF)
+  if(ICE_COPY_PDB)
     set(ICE_PDB_DIR "${CMAKE_CURRENT_LIST_DIR}/pdb" CACHE PATH "Directory where Ice PDB files are extracted")
-    set(ICE_PDB_URL "https://download.zeroc.com/ice/nightly/3.9/windows-symbols-sources-${Ice_NUGET_VERSION}.zip" CACHE STRING "URL to download Ice PDB ZIP archive")
+    set(ICE_PDB_URL "https://download.zeroc.com/ice/nightly/3.9/windows-indexed-pdbs-${Ice_NUGET_VERSION}.zip" CACHE STRING "URL to download Ice PDB ZIP archive")
     if(NOT EXISTS "${ICE_PDB_DIR}")
       include("${CMAKE_CURRENT_LIST_DIR}/download-ice-pdbs.cmake")
     endif()
@@ -67,9 +67,9 @@ endif()
 
 # Copy Ice PDB files that match the DLLs in the target's output directory.
 # PDBs are selected based on architecture and Debug/Release configuration.
-# This is a no-op when ICE_USE_PDB is OFF or on non-Windows platforms.
+# This is a no-op when ICE_COPY_PDB is OFF or on non-Windows platforms.
 function(ice_copy_pdbs target)
-  if(WIN32 AND ICE_USE_PDB AND ICE_PDB_DIR)
+  if(WIN32 AND ICE_COPY_PDB AND ICE_PDB_DIR)
     add_custom_command(TARGET ${target} POST_BUILD
       COMMAND "${CMAKE_COMMAND}"
         -DICE_PDB_SOURCE_DIR="${ICE_PDB_DIR}/${Ice_WIN32_PLATFORM}/$<IF:$<CONFIG:Debug>,Debug,Release>"
