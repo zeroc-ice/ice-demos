@@ -32,6 +32,10 @@ cmake -B build -S . -G Ninja
 cmake --build build
 ```
 
+> [!NOTE]
+> On Windows, you can add `-DICE_COPY_PDB=ON` to the first cmake command to enable the downloading and copying the Ice PDB files to
+> the build output directory.
+
 ## Running the demo
 
 1. Start the IceGrid registry in its own terminal:
