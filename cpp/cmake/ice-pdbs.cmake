@@ -12,6 +12,7 @@ if(ICE_COPY_PDB)
   if(NOT EXISTS "${ICE_PDB_DIR}")
     # Download and extract into a temp directory so ICE_PDB_DIR only exists after successful completion.
     set(_ice_pdb_temp_dir "${CMAKE_CURRENT_LIST_DIR}/.pdb-temp")
+    file(REMOVE_RECURSE "${_ice_pdb_temp_dir}")
     file(MAKE_DIRECTORY "${_ice_pdb_temp_dir}")
 
     set(_ice_pdb_zip "${_ice_pdb_temp_dir}/ice-pdbs.zip")
