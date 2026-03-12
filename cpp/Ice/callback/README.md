@@ -19,16 +19,24 @@ flowchart LR
 
 ## Building the demo
 
-To build the demo, run:
+Configure the build:
 
 ```shell
 cmake -B build -S . -G Ninja
-cmake --build build
 ```
 
-> [!NOTE]
-> On Windows, you can add `-DICE_COPY_PDB=ON` to the first cmake command to enable the downloading and copying the Ice PDB files to
-> the build output directory.
+On Windows, to download and copy the Ice PDB files to the build output directory, use the following configure command
+instead:
+
+```shell
+cmake -B build -S . -G Ninja -DICE_COPY_PDB=ON
+```
+
+Build the demo:
+
+```shell
+cmake --build build
+```
 
 ## Running the demo
 
