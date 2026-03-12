@@ -25,8 +25,8 @@ Configure the build:
 cmake -B build -S . -G Ninja
 ```
 
-On Windows, to download and copy the Ice PDB files to the build output directory, use the following configure command
-instead:
+On Windows, to get stack traces at runtime, you can download and copy the Ice PDB files to the build output directory
+with the following configure command instead:
 
 ```shell
 cmake -B build -S . -G Ninja -DICE_COPY_PDB=ON
