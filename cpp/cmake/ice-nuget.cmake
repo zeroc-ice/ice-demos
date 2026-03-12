@@ -23,7 +23,7 @@ if(NOT _ice_nuget_dirs)
   message(STATUS "Downloading Ice NuGet package: ${Ice_NUGET_NAME}")
   set(ICE_NUGET_SOURCE "https://download.zeroc.com/nexus/repository/nuget-3.9-nightly/" CACHE STRING "Ice NuGet package source")
   execute_process(
-    COMMAND ${NUGET_EXE} install -Source ${ICE_NUGET_SOURCE} -OutputDirectory ${CMAKE_CURRENT_LIST_DIR}/packages ${Ice_NUGET_NAME} -Prerelease
+    COMMAND "${NUGET_EXE}" install -Source "${ICE_NUGET_SOURCE}" -OutputDirectory "${CMAKE_CURRENT_LIST_DIR}/packages" "${Ice_NUGET_NAME}" -Prerelease
     RESULT_VARIABLE nuget_result
     OUTPUT_VARIABLE nuget_output
     ERROR_VARIABLE nuget_error)
