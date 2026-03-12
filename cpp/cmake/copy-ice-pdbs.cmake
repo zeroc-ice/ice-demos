@@ -18,7 +18,7 @@ foreach(_dll_path IN LISTS RUNTIME_DLLS)
     continue()
   endif()
 
-  get_filename_component(_dll_name "${_dll_path}" NAME_WE)
+  cmake_path(GET _dll_path STEM _dll_name)
   set(_pdb_file "${ICE_PDB_SOURCE_DIR}/${_dll_name}.pdb")
   if(EXISTS "${_pdb_file}")
     message(STATUS "Copying ${_dll_name}.pdb to ${TARGET_DIR}")
