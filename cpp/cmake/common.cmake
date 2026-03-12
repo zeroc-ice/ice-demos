@@ -8,6 +8,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 if(WIN32)
   # Ice for C++ on Windows is shipped as a NuGet package.
   include("${CMAKE_CURRENT_LIST_DIR}/ice-nuget.cmake")
+
+  # Ice PDB files (which are not included in the NuGet package) are required for getting stack traces at runtime.
+  # If ICE_COPY_PDB is enabled, we download the PDB files at configure time and copy them to the target's output
+  # directory at build time.
   include("${CMAKE_CURRENT_LIST_DIR}/ice-pdbs.cmake")
 endif()
 
