@@ -1,11 +1,14 @@
 # Copyright (c) ZeroC, Inc.
 
-# Nightly version of ice-nuget.cmake. The setup-nightly.py script copies this file over ice-nuget.cmake.
+# Nightly version of ice-nuget.cmake.
 # Downloads the latest prerelease Ice NuGet package from the 3.8 nightly feed.
 # Sets Ice_ROOT and Ice_NUGET_VERSION for use by other scripts.
 
 set(Ice_NUGET_NAME "ZeroC.Ice.Cpp")
 file(GLOB _ice_nuget_dirs "${CMAKE_CURRENT_LIST_DIR}/packages/${Ice_NUGET_NAME}.*")
+
+# Set URL for the PDB files that matches the nightly NuGet package.
+set(ICE_PDB_URL "https://download.zeroc.com/ice/nightly/3.8/windows-indexed-pdbs-${Ice_NUGET_VERSION}.zip" CACHE STRING "URL to download Ice PDB ZIP archive")
 
 if(NOT _ice_nuget_dirs)
   # Check if the nuget command line tool is available (either in the PATH or previously downloaded).
