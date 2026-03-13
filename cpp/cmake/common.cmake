@@ -37,5 +37,4 @@ if(ICE_DEMO_WARNINGS)
   endif()
 endif()
 
-
 find_package(Ice REQUIRED CONFIG)
