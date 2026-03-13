@@ -40,7 +40,7 @@ if(NOT _ice_nuget_dirs)
 
   file(GLOB _ice_nuget_dirs "${CMAKE_CURRENT_LIST_DIR}/packages/${Ice_NUGET_NAME}.*")
   if(NOT _ice_nuget_dirs)
-    message(FATAL_ERROR "NuGet install succeeded but no ${Ice_NUGET_NAME}.<version> directory was found")x
+    message(FATAL_ERROR "NuGet install succeeded but no ${Ice_NUGET_NAME}.<version> directory was found")
   endif()
 endif()
 
