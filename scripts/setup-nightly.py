@@ -296,17 +296,13 @@ def reset_nightly() -> None:
         npmrc.unlink()
         removed.append(npmrc.relative_to(REPO_ROOT))
 
-    # Restore C++ common.cmake from git
-    result = subprocess.run(
-        ["git", "checkout", "--", "cpp/cmake/common.cmake"],
-        cwd=REPO_ROOT,
-        capture_output=True,
-        text=True,
-    )
-    if result.returncode == 0:
-        print("Restored cpp/cmake/common.cmake via git checkout")
-    elif "error" in result.stderr.lower():
-        print(f"Note: Could not restore common.cmake: {result.stderr.strip()}")
+    # Restore C++ common.cmake to use ice-nuget.cmake
+    common_cmake = REPO_ROOT / "cpp" / "cmake" / "common.cmake"
+    content = common_cmake.read_text(encoding="utf-8")
+    new_content = content.replace("ice-nuget-nightly.cmake", "ice-nuget.cmake")
+    if new_content != content:
+        common_cmake.write_text(new_content, encoding="utf-8")
+        print("Restored cpp/cmake/common.cmake to use ice-nuget.cmake")
 
     # Remove NuGet.Config file
     for nuget_dir in ["csharp"]:
