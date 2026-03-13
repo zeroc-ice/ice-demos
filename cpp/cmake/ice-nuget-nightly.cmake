@@ -7,9 +7,6 @@
 set(Ice_NUGET_NAME "ZeroC.Ice.Cpp")
 file(GLOB _ice_nuget_dirs "${CMAKE_CURRENT_LIST_DIR}/packages/${Ice_NUGET_NAME}.*")
 
-# Set URL for the PDB files that matches the nightly NuGet package.
-set(ICE_PDB_URL "https://download.zeroc.com/ice/nightly/3.8/windows-indexed-pdbs-${Ice_NUGET_VERSION}.zip" CACHE STRING "URL to download Ice PDB ZIP archive")
-
 if(NOT _ice_nuget_dirs)
   # Check if the nuget command line tool is available (either in the PATH or previously downloaded).
   # If not download it.
@@ -48,6 +45,9 @@ list(GET _ice_nuget_dirs 0 Ice_NUGET_DIR)
 get_filename_component(_ice_nuget_dir_name "${Ice_NUGET_DIR}" NAME)
 string(LENGTH "${Ice_NUGET_NAME}." _ice_nuget_prefix_len)
 string(SUBSTRING "${_ice_nuget_dir_name}" ${_ice_nuget_prefix_len} -1 Ice_NUGET_VERSION)
+
+# Set URL for the PDB files that matches the nightly NuGet package.
+set(ICE_PDB_URL "https://download.zeroc.com/ice/nightly/3.8/windows-indexed-pdbs-${Ice_NUGET_VERSION}.zip" CACHE STRING "URL to download Ice PDB ZIP archive")
 
 # Set Ice_Root to the Ice NuGet package path. This is a special variable
 # that is used by CMake to find the Ice CMake config.
