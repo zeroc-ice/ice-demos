@@ -1,8 +1,14 @@
 # Copyright (c) ZeroC, Inc.
 
 # Nightly version of ice-nuget.cmake.
-# Downloads the latest prerelease Ice NuGet package from the 3.8 nightly feed.
+# Downloads the latest prerelease Ice NuGet package from the nightly feed.
 # Sets Ice_ROOT and Ice_NUGET_VERSION for use by other scripts.
+
+if(DEFINED ENV{CHANNEL})
+  set(ICE_NIGHTLY_CHANNEL "$ENV{CHANNEL}" CACHE STRING "Ice nightly channel")
+else()
+  set(ICE_NIGHTLY_CHANNEL "3.8" CACHE STRING "Ice nightly channel")
+endif()
 
 set(Ice_NUGET_NAME "ZeroC.Ice.Cpp")
 file(GLOB _ice_nuget_dirs "${CMAKE_CURRENT_LIST_DIR}/packages/${Ice_NUGET_NAME}.*")
@@ -22,7 +28,7 @@ if(NOT _ice_nuget_dirs)
 
   # Download the Ice NuGet package using the nuget command line tool.
   message(STATUS "Downloading Ice NuGet package: ${Ice_NUGET_NAME} (nightly)")
-  set(ICE_NUGET_SOURCE "https://download.zeroc.com/nexus/repository/nuget-3.8-nightly/" CACHE STRING "Ice NuGet package source")
+  set(ICE_NUGET_SOURCE "https://download.zeroc.com/nexus/repository/nuget-${ICE_NIGHTLY_CHANNEL}-nightly/" CACHE STRING "Ice NuGet package source")
   execute_process(
     COMMAND "${NUGET_EXE}" install -Source "${ICE_NUGET_SOURCE}" -OutputDirectory "${CMAKE_CURRENT_LIST_DIR}/packages" "${Ice_NUGET_NAME}" -Prerelease
     RESULT_VARIABLE nuget_result
@@ -34,7 +40,7 @@ if(NOT _ice_nuget_dirs)
 
   file(GLOB _ice_nuget_dirs "${CMAKE_CURRENT_LIST_DIR}/packages/${Ice_NUGET_NAME}.*")
   if(NOT _ice_nuget_dirs)
-    message(FATAL_ERROR "NuGet install succeeded but no ${Ice_NUGET_NAME}.<version> directory was found")
+    message(FATAL_ERROR "NuGet install succeeded but no ${Ice_NUGET_NAME}.<version> directory was found")x
   endif()
 endif()
 
@@ -47,7 +53,7 @@ string(LENGTH "${Ice_NUGET_NAME}." _ice_nuget_prefix_len)
 string(SUBSTRING "${_ice_nuget_dir_name}" ${_ice_nuget_prefix_len} -1 Ice_NUGET_VERSION)
 
 # Set URL for the PDB files that matches the nightly NuGet package.
-set(ICE_PDB_URL "https://download.zeroc.com/ice/nightly/3.8/windows-indexed-pdbs-${Ice_NUGET_VERSION}.zip" CACHE STRING "URL to download Ice PDB ZIP archive")
+set(ICE_PDB_URL "https://download.zeroc.com/ice/nightly/${ICE_NIGHTLY_CHANNEL}/windows-indexed-pdbs-${Ice_NUGET_VERSION}.zip" CACHE STRING "URL to download Ice PDB ZIP archive")
 
 # Set Ice_Root to the Ice NuGet package path. This is a special variable
 # that is used by CMake to find the Ice CMake config.
