@@ -14,6 +14,7 @@ if(WIN32)
     $<GENEX_EVAL:$<TARGET_PROPERTY:Ice::Ice,ICE_RUNTIME_DLLS>>
     COMMAND_EXPAND_LISTS
   )
+  ice_copy_pdbs(client)
 endif()
 
 add_executable(server Server.cpp Chatbot.cpp Chatbot.h Greeter.ice)
@@ -26,6 +27,7 @@ if(WIN32)
     $<GENEX_EVAL:$<TARGET_PROPERTY:Ice::Ice,ICE_RUNTIME_DLLS>>
     COMMAND_EXPAND_LISTS
   )
+  ice_copy_pdbs(server)
 endif()
 
 add_executable(forwardingserver Forwarder.cpp Forwarder.h ForwardingServer.cpp)
@@ -37,4 +39,5 @@ if(WIN32)
       $<GENEX_EVAL:$<TARGET_PROPERTY:Ice::Ice,ICE_RUNTIME_DLLS>>
     COMMAND_EXPAND_LISTS
   )
+  ice_copy_pdbs(forwardingserver)
 endif()

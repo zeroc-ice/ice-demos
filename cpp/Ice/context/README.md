@@ -13,10 +13,22 @@ application is free to set any entry in this dictionary.
 
 ## Building the demo
 
-To build the demo, run:
+Configure the build:
 
 ```shell
 cmake -B build -S . -G Ninja
+```
+
+On Windows, to get stack traces at runtime, you can download and copy the Ice PDB files to the build output directory
+with the following configure command instead:
+
+```shell
+cmake -B build -S . -G Ninja -DICE_COPY_PDB=ON
+```
+
+Build the demo:
+
+```shell
 cmake --build build
 ```
 

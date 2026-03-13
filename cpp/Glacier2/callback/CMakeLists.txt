@@ -14,6 +14,7 @@ if(WIN32)
       $<GENEX_EVAL:$<TARGET_PROPERTY:Ice::Ice,ICE_RUNTIME_DLLS>>
     COMMAND_EXPAND_LISTS
   )
+  ice_copy_pdbs(client)
 endif()
 
 add_executable(server Server.cpp SimpleWakeUpService.cpp SimpleWakeUpService.h AlarmClock.ice)
@@ -26,4 +27,5 @@ if(WIN32)
       $<GENEX_EVAL:$<TARGET_PROPERTY:Ice::Ice,ICE_RUNTIME_DLLS>>
     COMMAND_EXPAND_LISTS
   )
+  ice_copy_pdbs(server)
 endif()
