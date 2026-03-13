@@ -24,16 +24,24 @@ a connection to the server, because the server is on a separate network.
 
 ## Building the demo
 
-To build the demo, run:
+Configure the build:
 
 ```shell
 cmake -B build -S . -G Ninja
-cmake --build build
 ```
 
-> [!NOTE]
-> On Windows, you can add `-DICE_COPY_PDB=ON` to the first cmake command to enable the downloading and copying the Ice PDB files to
-> the build output directory.
+On Windows, to get stack traces at runtime, you can download and copy the Ice PDB files to the build output directory
+with the following configure command instead:
+
+```shell
+cmake -B build -S . -G Ninja -DICE_COPY_PDB=ON
+```
+
+Build the demo:
+
+```shell
+cmake --build build
+```
 
 ## Running the demo
 
