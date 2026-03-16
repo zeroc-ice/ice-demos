@@ -98,6 +98,18 @@ def write_file(path: pathlib.Path, content: str) -> None:
     path.write_text(content, encoding="utf-8")
 
 
+def configure_cpp(channel: str) -> None:
+    """Configure C++ CMake to use nightly NuGet feed."""
+    common_cmake = REPO_ROOT / "cpp" / "cmake" / "common.cmake"
+    content = common_cmake.read_text(encoding="utf-8")
+    new_content = content.replace("ice-nuget.cmake", "ice-nuget-nightly.cmake")
+    if new_content == content:
+        print("cpp/cmake/common.cmake already configured for nightly")
+        return
+    common_cmake.write_text(new_content, encoding="utf-8")
+    print("Updated cpp/cmake/common.cmake to use ice-nuget-nightly.cmake")
+
+
 def configure_csharp(channel: str) -> None:
     """Configure NuGet to use nightly feed."""
     urls = get_urls(channel)
@@ -195,8 +207,6 @@ def configure_env(channel: str, github_env: pathlib.Path | None, gradle_home: pa
     urls = get_urls(channel)
     env_vars = {
         "CHANNEL": channel,
-        "ICE_NUGET_SOURCE": urls["nuget"],  # NuGet source for C++ on Windows
-        "ICE_NUGET_PRERELEASE": "1",  # Enable -Prerelease flag for C++ NuGet
         "IceVersion": f"{channel}.*-*",  # NuGet prerelease version pattern for C#
         "UV_EXTRA_INDEX_URL": urls["pypi"],
         "PIP_EXTRA_INDEX_URL": urls["pypi"],
@@ -286,7 +296,15 @@ def reset_nightly() -> None:
         npmrc.unlink()
         removed.append(npmrc.relative_to(REPO_ROOT))
 
-    # Remove NuGet.Config file (C# only - C++ uses ICE_NUGET_SOURCE env var)
+    # Restore C++ common.cmake to use ice-nuget.cmake
+    common_cmake = REPO_ROOT / "cpp" / "cmake" / "common.cmake"
+    content = common_cmake.read_text(encoding="utf-8")
+    new_content = content.replace("ice-nuget-nightly.cmake", "ice-nuget.cmake")
+    if new_content != content:
+        common_cmake.write_text(new_content, encoding="utf-8")
+        print("Restored cpp/cmake/common.cmake to use ice-nuget.cmake")
+
+    # Remove NuGet.Config file
     for nuget_dir in ["csharp"]:
         nuget_config = REPO_ROOT / nuget_dir / "NuGet.Config"
         if nuget_config.exists():
@@ -356,6 +374,7 @@ def main() -> int:
 
     print(f"Configuring nightly feeds for channel {args.channel}...")
 
+    configure_cpp(args.channel)
     configure_csharp(args.channel)
     gradle_home = configure_java(args.channel)
     configure_js(args.channel)

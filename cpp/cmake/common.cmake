@@ -7,52 +7,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Ice for C++ on Windows is shipped as a NuGet package.
 if(WIN32)
-  set(Ice_NUGET_NAME "ZeroC.Ice.Cpp")
-  set(Ice_NUGET_DIR "${CMAKE_CURRENT_LIST_DIR}/packages/${Ice_NUGET_NAME}")
+  include("${CMAKE_CURRENT_LIST_DIR}/ice-nuget.cmake")
 
-  if(NOT EXISTS ${Ice_NUGET_DIR})
-
-    # Check if the nuget command line tool is available (either in the PATH or previously downloaded).
-    # If not download it.
-    find_program(NUGET_EXE nuget HINTS "${CMAKE_CURRENT_LIST_DIR}/packages" DOC "Path to nuget.exe")
-    if(NOT NUGET_EXE)
-      set(NUGET_URL "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" CACHE STRING "NuGet command line tool URL")
-      message(STATUS "Downloading NuGet command line tool: ${NUGET_URL}")
-      file(DOWNLOAD ${NUGET_URL} ${CMAKE_CURRENT_LIST_DIR}/packages/nuget.exe)
-      # Clear the failed find_program result and set the downloaded path
-      unset(NUGET_EXE CACHE)
-      set(NUGET_EXE "${CMAKE_CURRENT_LIST_DIR}/packages/nuget.exe" CACHE FILEPATH "Path to downloaded nuget.exe")
-    endif()
-
-    # Download the Ice NuGet package using the nuget command line tool.
-    message(STATUS "Downloading Ice NuGet package: ${Ice_NUGET_NAME}")
-
-    # Check for ICE_NUGET_SOURCE environment variable (set by nightly builds), otherwise use default
-    if(DEFINED ENV{ICE_NUGET_SOURCE})
-      set(ICE_NUGET_SOURCE "$ENV{ICE_NUGET_SOURCE}" CACHE STRING "Ice NuGet package source")
-    else()
-      set(ICE_NUGET_SOURCE "https://api.nuget.org/v3/index.json" CACHE STRING "Ice NuGet package source")
-    endif()
-
-    # Check for ICE_NUGET_PRERELEASE environment variable (set by nightly builds)
-    set(ICE_NUGET_PRERELEASE_FLAG "")
-    if(DEFINED ENV{ICE_NUGET_PRERELEASE})
-      set(ICE_NUGET_PRERELEASE_FLAG "-Prerelease")
-    endif()
-
-    execute_process(
-      COMMAND ${NUGET_EXE} install -Source ${ICE_NUGET_SOURCE} -OutputDirectory ${CMAKE_CURRENT_LIST_DIR}/packages ${Ice_NUGET_NAME} -ExcludeVersion ${ICE_NUGET_PRERELEASE_FLAG}
-      RESULT_VARIABLE nuget_result
-      OUTPUT_VARIABLE nuget_output
-      ERROR_VARIABLE nuget_error)
-    if(nuget_result)
-      message(FATAL_ERROR "Failed to download Ice NuGet package: ${nuget_error}")
-    endif()
-  endif()
-
-  # Set Ice_Root to the Ice NuGet package path. This is a special variable
-  # that is used by CMake to find the Ice CMake config.
-  set(Ice_ROOT "${Ice_NUGET_DIR}" CACHE PATH "Path to Ice installation directory")
+  # Ice PDB files (which are not included in the NuGet package) are required for getting stack traces at runtime.
+  # If ICE_COPY_PDB is enabled, we download the PDB files at configure time and copy them to the target's output
+  # directory at build time.
+  include("${CMAKE_CURRENT_LIST_DIR}/ice-pdbs.cmake")
 endif()
 
 # We use these flags over presets to avoid having to create a CMakePreset.json file in every project.

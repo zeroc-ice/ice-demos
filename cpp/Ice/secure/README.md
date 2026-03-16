@@ -12,7 +12,7 @@ Because each platform provides a different SSL API, we implement the configurati
 source file to keep the code organized and modular:
 
 | File                        | Description                                             |
-|-----------------------------|---------------------------------------------------------|
+| --------------------------- | ------------------------------------------------------- |
 | `ClientRun.cpp`             | Shared client-side logic used by all platform variants. |
 | `ClientOpenSSL.cpp`         | OpenSSL client configuration for Linux.                 |
 | `ClientSchannel.cpp`        | Schannel client configuration for Windows.              |
@@ -41,10 +41,22 @@ This allows you to use a consistent interface across platforms while still takin
 
 ## Building the demo
 
-To build the demo, run:
+Configure the build:
 
 ```shell
 cmake -B build -S . -G Ninja
+```
+
+On Windows, to get stack traces at runtime, you can download and copy the Ice PDB files to the build output directory
+with the following configure command instead:
+
+```shell
+cmake -B build -S . -G Ninja -DICE_COPY_PDB=ON
+```
+
+Build the demo:
+
+```shell
 cmake --build build
 ```
 
