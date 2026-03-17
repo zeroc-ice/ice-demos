@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Install Clang Format
         run: |
@@ -44,7 +44,7 @@ jobs:
           clang-tidy-19 --version
 
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Install Nightly Ice Builds
         uses: ./.github/actions/install-nightly-ice
@@ -66,7 +66,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       # Read .vscode/settings.json. Ensure each entry in cmake.sourceDirectory is valid.
       - name: Check .vscode/settings.json cmake.sourceDirectory entries
