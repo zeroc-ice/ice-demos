@@ -35,7 +35,6 @@ RUN set -eux \
     python3-zeroc-ice \
     zeroc-dsnode \
     zeroc-glacier2 \
-    zeroc-ice-ice2slice \
     zeroc-ice-slice \
     zeroc-ice-utils \
     zeroc-icebox \
