@@ -4,7 +4,7 @@
 # Sets Ice_ROOT and Ice_NUGET_VERSION for use by other scripts.
 
 set(Ice_NUGET_NAME "ZeroC.Ice.Cpp")
-set(Ice_NUGET_VERSION "3.8.1")
+set(Ice_NUGET_VERSION "3.8.2")
 set(Ice_NUGET_DIR "${CMAKE_CURRENT_LIST_DIR}/packages/${Ice_NUGET_NAME}.${Ice_NUGET_VERSION}")
 
 if(NOT EXISTS "${Ice_NUGET_DIR}")
