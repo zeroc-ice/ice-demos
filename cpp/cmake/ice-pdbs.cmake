@@ -37,7 +37,7 @@ if(ICE_COPY_PDB)
     message(STATUS "Extracting Ice PDB archive")
     file(ARCHIVE_EXTRACT INPUT "${_ice_pdb_zip}" DESTINATION "${_ice_pdb_temp_dir}" PATTERNS "*/pdbs/*")
 
-    # Find the version directory (e.g. .pdb-temp/windows-symbols-sources/pdbs/3.8.0).
+    # Find the version directory (e.g. .pdb-temp/windows-symbols-sources/pdbs/3.8.2).
     file(GLOB _ice_pdb_version_dirs "${_ice_pdb_temp_dir}/*/pdbs/*")
     list(LENGTH _ice_pdb_version_dirs _ice_pdb_count)
     if(_ice_pdb_count EQUAL 0)
