@@ -30,10 +30,10 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.2
 
       - name: Setup .NET 8
-        uses: actions/setup-dotnet@v5.2.0
+        uses: actions/setup-dotnet@v5.3.0
         with:
           dotnet-version: 8.x
 
@@ -170,7 +170,7 @@ jobs:
         distro: [ubuntu24.04, ubuntu26.04, debian12, debian13, rocky9, rocky10, amzn2023]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.2
 
       - name: Build Docker image
         run: |
@@ -199,7 +199,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.2
 
       - name: Setup Java
         uses: actions/setup-java@v5
