@@ -23,7 +23,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        quality: [stable, nightly]
+        quality: [stable]
         os: [ubuntu-24.04, macos-26, windows-2022]
 
     runs-on: ${{ matrix.os }}
@@ -32,7 +32,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Setup .NET 8
-        uses: actions/setup-dotnet@v5.2.0
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: 8.x
 
@@ -56,7 +56,6 @@ jobs:
         shell: bash
         run: |
           python scripts/setup-nightly.py --github-env "$GITHUB_ENV"
-
 
       - name: Build C++ Demos
         timeout-minutes: 20
@@ -171,71 +170,36 @@ jobs:
         if: runner.os == 'macOS'
 
   ci-containers:
-    name: ${{ matrix.image }} (${{ matrix.quality }})
+    name: ${{ matrix.distro }}
     runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
-        quality: [stable, nightly]
-        image:
-          - public.ecr.aws/amazonlinux/amazonlinux:2023
-          - rockylinux/rockylinux:10
-
-    container:
-      image: ${{ matrix.image }}
-      volumes:
-        - ${{ github.workspace }}:${{ github.workspace }}
+        distro: [ubuntu24.04, ubuntu26.04, debian12, debian13, rocky9, rocky10, amzn2023]
     steps:
-      - name: Install Dependencies
-        shell: bash
-        run: |
-          if [ -f /etc/os-release ]; then
-            . /etc/os-release
-            case "$ID" in
-              amzn)
-                dnf install -y tar gzip git gcc gcc-c++ cmake make ninja-build wget
-                if [ "${{ matrix.quality }}" = "nightly" ]; then
-                  dnf install -y https://download.zeroc.com/ice/nightly/${{ env.CHANNEL }}/amzn2023/ice-repo-${{ env.CHANNEL }}-nightly-1.0.0-1.amzn2023.noarch.rpm
-                else
-                  dnf install -y https://download.zeroc.com/ice/${{ env.CHANNEL }}/amzn2023/ice-repo-${{ env.CHANNEL }}-1.0.0-1.amzn2023.noarch.rpm
-                fi
-                dnf install -y libice-c++-devel
-                ;;
-              rocky)
-                dnf install -y dnf-utils
-                dnf config-manager --enable crb
-                dnf install -y gcc gcc-c++ cmake make ninja-build wget
-                if [ "${{ matrix.quality }}" = "nightly" ]; then
-                  dnf install -y https://download.zeroc.com/ice/nightly/${{ env.CHANNEL }}/el10/ice-repo-${{ env.CHANNEL }}-nightly-1.0.0-1.el10.noarch.rpm
-                else
-                  dnf install -y https://download.zeroc.com/ice/${{ env.CHANNEL }}/el10/ice-repo-${{ env.CHANNEL }}-1.0.0-1.el10.noarch.rpm
-                fi
-                dnf install -y libice-c++-devel
-                ;;
-              *)
-                echo "Unsupported OS: $ID"
-                exit 1
-                ;;
-            esac
-          else
-            echo "OS release information not found."
-            exit 1
-          fi
-
       - name: Checkout repository
         uses: actions/checkout@v6
 
+      - name: Build Docker image
+        run: |
+          docker build -f .github/docker/${{ matrix.distro }}/Dockerfile \
+            -t ice-demos-${{ matrix.distro }}:test .github/docker/${{ matrix.distro }}
+
       - name: Build C++ Demos
         timeout-minutes: 20
-        working-directory: cpp
         run: |
-          set -o pipefail
-
-          find . -name CMakeLists.txt -type f | while IFS= read -r file; do
-            dir=$(dirname "$file");
-            cmake -B "$dir/build" -S "$dir" -G Ninja -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
-            cmake --build "$dir/build" --verbose
-          done
+          docker run --rm \
+            -v ${{ github.workspace }}:/ice-demos \
+            -w /ice-demos/cpp \
+            ice-demos-${{ matrix.distro }}:test \
+            bash -c '
+              set -o pipefail
+              find . -name CMakeLists.txt -type f | while IFS= read -r file; do
+                dir=$(dirname "$file");
+                cmake -B "$dir/build" -S "$dir" -G Ninja -DCMAKE_COMPILE_WARNING_AS_ERROR=ON
+                cmake --build "$dir/build" --verbose
+              done
+            '
 
   ci-android:
     name: Android (${{ matrix.quality }})
@@ -243,7 +207,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        quality: [stable, nightly]
+        quality: [stable]
 
     steps:
       - name: Checkout repository
@@ -254,6 +218,12 @@ jobs:
         with:
           distribution: "oracle"
           java-version: "17"
+
+      - name: Install Ice
+        uses: ./.github/actions/install-ice
+        with:
+          channel: ${{ env.CHANNEL }}
+          quality: ${{ matrix.quality }}
 
       - name: Configure Nightly Feeds
         if: matrix.quality == 'nightly'

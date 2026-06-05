@@ -3,7 +3,7 @@ name: Dev Containers
 on:
   workflow_dispatch:
   pull_request:
-    branches: ["main"]
+    branches: ["3.8"]
     paths:
       - ".devcontainer/**"
       - ".github/workflows/devcontainer.yml"
