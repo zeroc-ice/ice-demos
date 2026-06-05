@@ -46,8 +46,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
 
-      - name: Install Nightly Ice Builds
-        uses: ./.github/actions/install
+      - name: Install Ice
+        uses: ./.github/actions/install-ice
 
       - name: Run Clang Tidy
         timeout-minutes: 30
