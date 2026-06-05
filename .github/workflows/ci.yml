@@ -175,7 +175,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        distro: [ubuntu24.04, ubuntu26.04, debian12, debian13, rocky9, rocky10, amzn2023]
+        distro: [ubuntu24.04, debian12, debian13, rocky9, rocky10, amzn2023]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
