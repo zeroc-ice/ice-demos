@@ -21,12 +21,12 @@ RUN set -eux \
     && chmod +x dotnet-install.sh \
     && ./dotnet-install.sh -v latest -c 8.0
 
-# Install Nightly Ice
+# Install Ice 3.8 release
 RUN set -eux \
     && sudo mkdir -p /etc/apt/keyrings \
-    && curl -fsSL https://download.zeroc.com/ice/nightly/ubuntu24.04/ice-repo-nightly_1.0_all.deb -o ice-repo-nightly.deb \
-    && sudo dpkg -i ice-repo-nightly.deb \
-    && rm ice-repo-nightly.deb \
+    && curl -fsSL https://download.zeroc.com/ice/3.8/ubuntu24.04/ice-repo-3.8_1.0.0_all.deb -o ice-repo-3.8.deb \
+    && sudo dpkg -i ice-repo-3.8.deb \
+    && rm ice-repo-3.8.deb \
     && sudo apt-get update \
     && sudo apt-get install -y \
     libzeroc-ice-dev \

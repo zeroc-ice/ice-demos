@@ -3,10 +3,10 @@ name: C++
 on:
   workflow_dispatch:
   push:
-    branches: ["main"]
+    branches: ["3.8"]
   pull_request:
     # The branches below must be a subset of the branches above
-    branches: ["main"]
+    branches: ["3.8"]
 
 jobs:
   clang-format:
@@ -46,8 +46,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
 
-      - name: Install Nightly Ice Builds
-        uses: ./.github/actions/install-nightly-ice
+      - name: Install Ice
+        uses: ./.github/actions/install-ice
 
       - name: Run Clang Tidy
         timeout-minutes: 30
