@@ -17,7 +17,7 @@ updates:
     directories:
       - "/js/**"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     open-pull-requests-limit: 5
     cooldown:
       default-days: 7
@@ -34,7 +34,7 @@ updates:
     directories:
       - "/python/**"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     open-pull-requests-limit: 3
     cooldown:
       default-days: 7
@@ -51,7 +51,7 @@ updates:
     directories:
       - "/java/**"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     open-pull-requests-limit: 5
     cooldown:
       default-days: 7
@@ -68,7 +68,7 @@ updates:
     directories:
       - "/csharp/**"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     open-pull-requests-limit: 5
     cooldown:
       default-days: 7
@@ -85,7 +85,7 @@ updates:
     directories:
       - "/swift/**"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     open-pull-requests-limit: 3
     cooldown:
       default-days: 7
@@ -121,7 +121,7 @@ updates:
       - "/js/**"
     target-branch: "3.8"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     open-pull-requests-limit: 5
     cooldown:
       default-days: 7
@@ -139,7 +139,7 @@ updates:
       - "/python/**"
     target-branch: "3.8"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     open-pull-requests-limit: 3
     cooldown:
       default-days: 7
@@ -157,7 +157,7 @@ updates:
       - "/java/**"
     target-branch: "3.8"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     open-pull-requests-limit: 5
     cooldown:
       default-days: 7
@@ -175,7 +175,7 @@ updates:
       - "/csharp/**"
     target-branch: "3.8"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     open-pull-requests-limit: 5
     cooldown:
       default-days: 7
@@ -193,7 +193,7 @@ updates:
       - "/swift/**"
     target-branch: "3.8"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     open-pull-requests-limit: 3
     cooldown:
       default-days: 7
