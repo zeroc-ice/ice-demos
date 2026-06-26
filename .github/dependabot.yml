@@ -97,9 +97,6 @@ updates:
       interval: monthly
     cooldown:
       default-days: 7
-    ignore:
-      - dependency-name: "*"
-        update-types: ["version-update:semver-major"]
     groups:
       github-actions:
         patterns:
