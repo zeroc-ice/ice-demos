@@ -21,6 +21,13 @@ runs:
         if [ "${{ inputs.quality }}" = "nightly" ]; then
           brew install zeroc-ice/nightly/ice@${{ inputs.channel }}
         else
+          # `ice@3.8` is an alias to the unversioned `ice` formula in zeroc-ice/tap, and
+          # Homebrew only auto-trusts a fully-qualified install target that names a real
+          # formula file. Installing via the alias therefore hits the new tap-trust check
+          # and fails with "Refusing to load formula zeroc-ice/tap/ice from untrusted tap",
+          # so we trust our own tap first. See zeroc-ice/homebrew-tap#16.
+          brew tap zeroc-ice/tap
+          brew trust --tap zeroc-ice/tap
           brew install zeroc-ice/tap/ice@${{ inputs.channel }}
         fi
 
