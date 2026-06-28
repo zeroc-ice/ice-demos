@@ -425,7 +425,7 @@ run(const Ice::CommunicatorPtr& communicator)
                         break;
                     }
                 }
-                double mbit = repetitions * seqSize * wireSize * 8.0 / tm.toMicroSeconds();
+                double mbit = repetitions * seqSize * wireSize * 8.0 / static_cast<double>(tm.toMicroSeconds());
                 if(c == 'e')
                 {
                     mbit *= 2;
