@@ -24,10 +24,8 @@ updates:
     cooldown:
       default-days: 7
     groups:
-      js-minor-and-patch:
-        update-types: ["minor", "patch"]
-      js-major:
-        update-types: ["major"]
+      js:
+        patterns: ["*"]
 
   - package-ecosystem: "pip"
     directories:
@@ -37,10 +35,8 @@ updates:
     cooldown:
       default-days: 7
     groups:
-      python-minor-and-patch:
-        update-types: ["minor", "patch"]
-      python-major:
-        update-types: ["major"]
+      python:
+        patterns: ["*"]
 
   - package-ecosystem: "gradle"
     directories:
@@ -50,10 +46,8 @@ updates:
     cooldown:
       default-days: 7
     groups:
-      java-minor-and-patch:
-        update-types: ["minor", "patch"]
-      java-major:
-        update-types: ["major"]
+      java:
+        patterns: ["*"]
 
   - package-ecosystem: "nuget"
     directories:
@@ -63,10 +57,8 @@ updates:
     cooldown:
       default-days: 7
     groups:
-      dotnet-minor-and-patch:
-        update-types: ["minor", "patch"]
-      dotnet-major:
-        update-types: ["major"]
+      dotnet:
+        patterns: ["*"]
 
   - package-ecosystem: "swift"
     directories:
@@ -76,10 +68,8 @@ updates:
     cooldown:
       default-days: 7
     groups:
-      swift-minor-and-patch:
-        update-types: ["minor", "patch"]
-      swift-major:
-        update-types: ["major"]
+      swift:
+        patterns: ["*"]
 
   # The blocks below mirror the ones above with target-branch: "3.8". 3.8 is a
   # stable release branch, so major version updates are ignored there. Dependabot
@@ -114,8 +104,8 @@ updates:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]
     groups:
-      js-minor-and-patch:
-        update-types: ["minor", "patch"]
+      js:
+        patterns: ["*"]
 
   - package-ecosystem: "pip"
     directories:
@@ -129,8 +119,8 @@ updates:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]
     groups:
-      python-minor-and-patch:
-        update-types: ["minor", "patch"]
+      python:
+        patterns: ["*"]
 
   - package-ecosystem: "gradle"
     directories:
@@ -144,8 +134,8 @@ updates:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]
     groups:
-      java-minor-and-patch:
-        update-types: ["minor", "patch"]
+      java:
+        patterns: ["*"]
 
   - package-ecosystem: "nuget"
     directories:
@@ -159,8 +149,8 @@ updates:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]
     groups:
-      dotnet-minor-and-patch:
-        update-types: ["minor", "patch"]
+      dotnet:
+        patterns: ["*"]
 
   - package-ecosystem: "swift"
     directories:
@@ -174,8 +164,8 @@ updates:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]
     groups:
-      swift-minor-and-patch:
-        update-types: ["minor", "patch"]
+      swift:
+        patterns: ["*"]
 
   # 3.7 is in maintenance, so only its GitHub Actions are kept up to date.
   - package-ecosystem: "github-actions"
