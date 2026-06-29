@@ -32,11 +32,11 @@ class Chatbot implements Greeter {
                 // / Simulate an authentication error by throwing a dispatch exception with the Unauthorized error code.
                 // Note: This is a demo; no real authentication logic is implemented.
                 throw new DispatchException(
-                    Unauthorized.value(),
-                    "Invalid credentials. The administrator has been notified.");
+                        Unauthorized.value(),
+                        "Invalid credentials. The administrator has been notified.");
             case "bob" ->
                 throw new GreeterException("Away until "
-                    + LocalDateTime.now().plusMinutes(5L) + ".", GreeterError.Away);
+                        + LocalDateTime.now().plusMinutes(5L) + ".", GreeterError.Away);
             case "carol" ->
                 throw new GreeterException("I am already greeting someone else.", GreeterError.GreetingOtherVisitor);
             default -> {
