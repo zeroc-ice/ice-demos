@@ -42,11 +42,11 @@ class Client {
                     System.out.println(greeting);
                 } catch (DispatchException exception) {
                     System.out.println(String.format("Failed to create a greeting for '%s': '%s' '%s'",
-                        name, exception.getMessage(), exception.replyStatus));
+                            name, exception.getMessage(), exception.replyStatus));
                 } catch (GreeterException exception) {
                     System.out.println(String.format(
-                        "Failed to create a greeting for '%s': GreeterException {{ errorMessage = '%s', error = '%s' }}",
-                        name, exception.errorMessage, exception.error
+                            "Failed to create a greeting for '%s': GreeterException {{ errorMessage = '%s', error = '%s' }}",
+                            name, exception.errorMessage, exception.error
                     ));
                 }
             }
