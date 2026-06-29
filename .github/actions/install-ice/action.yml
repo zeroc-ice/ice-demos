@@ -21,6 +21,9 @@ runs:
         if [ "${{ inputs.quality }}" = "nightly" ]; then
           brew install zeroc-ice/nightly/ice@${{ inputs.channel }}
         else
+          # ice@3.8 is an alias, so brew install won't auto-trust it; trust the tap first.
+          brew tap zeroc-ice/tap
+          brew trust zeroc-ice/tap
           brew install zeroc-ice/tap/ice@${{ inputs.channel }}
         fi
 
