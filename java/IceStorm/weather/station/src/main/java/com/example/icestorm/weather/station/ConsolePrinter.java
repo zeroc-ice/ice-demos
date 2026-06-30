@@ -15,7 +15,7 @@ class ConsolePrinter implements WeatherStation {
     public void report(String sensorId, String timeStamp, AtmosphericConditions conditions, Current current) {
         System.out.println(
             String.format("%s measured { Temperature = %.1f°C, Humidity = %.1f%% } at %s",
-                sensorId, conditions.temperature, conditions.humidity, timeStamp)
+                    sensorId, conditions.temperature, conditions.humidity, timeStamp)
         );
     }
 }

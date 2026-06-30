@@ -36,11 +36,11 @@ class Server {
             // and add the corresponding proxy to the Coleridge directory.
             file = new MFile("Kubla_Khan");
             file.writeDirect(new String[]{
-                "In Xanadu did Kubla Khan",
-                "A stately pleasure-dome decree:",
-                "Where Alph, the sacred river, ran",
-                "Through caverns measureless to man",
-                "Down to a sunless sea."
+                    "In Xanadu did Kubla Khan",
+                    "A stately pleasure-dome decree:",
+                    "Where Alph, the sacred river, ran",
+                    "Through caverns measureless to man",
+                    "Down to a sunless sea."
             });
             coleridge.addChild(FilePrx.uncheckedCast(adapter.addWithUUID(file)));
 
