@@ -27,11 +27,10 @@ class Client {
                 String unexpected = greeter.greet(System.getProperty("user.name"), Map.of("token", "pineapple"));
                 System.out.println("Received unexpected greeting: '" + unexpected + "'");
             } catch (DispatchException dispatchException) {
-                if (ReplyStatus.valueOf(dispatchException.replyStatus) == ReplyStatus.Unauthorized) {
-                    // Expected with an invalid (or missing) token. See AuthorizationMiddleware.
-                } else {
+                if (ReplyStatus.valueOf(dispatchException.replyStatus) != ReplyStatus.Unauthorized) {
                     throw dispatchException;
                 }
+                // Expected with an invalid (or missing) token. See AuthorizationMiddleware.
             }
 
             // Send a request with the correct token in the request context.
