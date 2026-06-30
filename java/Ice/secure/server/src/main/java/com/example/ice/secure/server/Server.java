@@ -36,9 +36,9 @@ final class Server {
 
             // Create an object adapter that listens for incoming requests and dispatches them to servants.
             ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints(
-                "GreeterAdapter",
-                "ssl -p 4061",
-                sslEngineFactory);
+                    "GreeterAdapter",
+                    "ssl -p 4061",
+                    sslEngineFactory);
 
             // Register the Chatbot servant with the adapter.
             adapter.add(new Chatbot(), new Identity("greeter", ""));
@@ -84,7 +84,7 @@ final class Server {
             sslContext.init(keyManagerFactory.getKeyManagers(), null, null);
             return sslContext;
         } catch (
-            CertificateException
+                CertificateException
                 | IOException
                 | KeyManagementException
                 | KeyStoreException

@@ -31,16 +31,16 @@ class Forwarder implements com.zeroc.Ice.Object {
 
         // Make the invocation asynchronously.
         CompletableFuture<com.zeroc.Ice.Object.Ice_invokeResult> future = target.ice_invokeAsync(
-            request.current.operation,
-            request.current.mode,
-            request.inputStream.readEncapsulation(null), // the in-parameters encapsulation
-            request.current.ctx);
+                request.current.operation,
+                request.current.mode,
+                request.inputStream.readEncapsulation(null), // the in-parameters encapsulation
+                request.current.ctx);
 
         // Upon success, create an OutgoingResponse from the invokeResult. If the invocation fails with an exception,
         // the object adapter calling this method will convert the exception into an UnknownLocalException or
         // UnknownException.
         return future.thenApply(
-            invokeResult -> request.current.createOutgoingResponse(invokeResult.returnValue, invokeResult.outParams));
+                invokeResult -> request.current.createOutgoingResponse(invokeResult.returnValue, invokeResult.outParams));
     }
 
     // Constructs a forwarder.

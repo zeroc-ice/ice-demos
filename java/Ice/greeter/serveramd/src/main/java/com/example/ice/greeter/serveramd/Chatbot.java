@@ -19,8 +19,8 @@ class Chatbot implements AsyncGreeter {
         System.out.println("Dispatching greet request { name = '" + name + "' }");
 
         return CompletableFuture.supplyAsync(
-            () -> "Hello, " + name + "!",
-            CompletableFuture.delayedExecutor(1, TimeUnit.SECONDS)
+                () -> "Hello, " + name + "!",
+                CompletableFuture.delayedExecutor(1, TimeUnit.SECONDS)
         );
     }
 }

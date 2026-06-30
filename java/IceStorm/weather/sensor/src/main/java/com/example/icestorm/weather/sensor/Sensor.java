@@ -27,7 +27,7 @@ class Sensor {
         try (Communicator communicator = new Communicator(args)) {
             // Create a proxy to the IceStorm topic manager.
             TopicManagerPrx topicManager = TopicManagerPrx.createProxy(
-                communicator, "ClearSky/TopicManager:tcp -p 4061 -h localhost");
+                    communicator, "ClearSky/TopicManager:tcp -p 4061 -h localhost");
 
             // Ask the topic manager to create or retrieve the "weather" topic and return the corresponding proxy.
             TopicPrx topic = topicManager.createOrRetrieve("weather");

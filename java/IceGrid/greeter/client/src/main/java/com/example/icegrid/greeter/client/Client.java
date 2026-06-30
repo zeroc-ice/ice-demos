@@ -14,7 +14,7 @@ class Client {
             // Set the default locator of the new communicator. It's the address of the Locator hosted by our IceGrid
             // registry. You can also set this proxy with the Ice.Default.Locator property.
             communicator.setDefaultLocator(
-                LocatorPrx.createProxy(communicator, "IceGrid/Locator:tcp -h localhost -p 4061"));
+                    LocatorPrx.createProxy(communicator, "IceGrid/Locator:tcp -h localhost -p 4061"));
 
             // Create a proxy to the Greeter object hosted by the server. "greeter" is a stringified proxy with no
             // addressing information, also known as a well-known proxy. It's specified by the <object> element in the

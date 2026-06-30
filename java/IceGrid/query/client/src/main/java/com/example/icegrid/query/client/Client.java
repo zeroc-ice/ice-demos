@@ -16,7 +16,7 @@ class Client {
             // Set the default locator of the new communicator. It's the address of the Locator hosted by our IceGrid
             // registry. You can also set this proxy with the Ice.Default.Locator property.
             communicator.setDefaultLocator(
-                LocatorPrx.createProxy(communicator, "IceGrid/Locator:tcp -h localhost -p 4061"));
+                    LocatorPrx.createProxy(communicator, "IceGrid/Locator:tcp -h localhost -p 4061"));
 
             // Create a proxy to the Query object hosted by the IceGrid registry. "IceGrid/Query" a well-known proxy,
             // without addressing information.
@@ -28,7 +28,7 @@ class Client {
 
             if (proxy == null) {
                 System.out.println(
-                    String.format("The IceGrid registry doesn't know any object with type '%s'.", greeterTypeId));
+                        String.format("The IceGrid registry doesn't know any object with type '%s'.", greeterTypeId));
             } else {
                 // Cast the object proxy to a Greeter proxy.
                 GreeterPrx greeter = GreeterPrx.uncheckedCast(proxy);

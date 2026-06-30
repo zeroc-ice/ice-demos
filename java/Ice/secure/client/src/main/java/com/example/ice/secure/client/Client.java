@@ -67,7 +67,7 @@ class Client {
             sslContext.init(null, trustManagerFactory.getTrustManagers(), null);
             return sslContext;
         } catch (
-            CertificateException
+                CertificateException
                 | IOException
                 | KeyManagementException
                 | KeyStoreException

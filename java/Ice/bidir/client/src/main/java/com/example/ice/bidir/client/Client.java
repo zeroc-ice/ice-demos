@@ -31,8 +31,8 @@ class Client {
 
             // Create a proxy to the wake-up service.
             WakeUpServicePrx wakeUpService = WakeUpServicePrx.createProxy(
-                communicator,
-                "wakeUpService:tcp -h localhost -p 4061");
+                    communicator,
+                    "wakeUpService:tcp -h localhost -p 4061");
 
             // Schedule a wake-up call in 5 seconds. This call establishes the connection to the server; incoming
             // requests over this connection are handled by the communicator's default object adapter.

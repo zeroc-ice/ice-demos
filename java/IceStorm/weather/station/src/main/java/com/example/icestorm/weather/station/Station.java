@@ -35,11 +35,11 @@ class Station {
             // weather station as opposed to re-incarnating the old one.
             // See also the Retry Count QoS section in the IceStorm documentation.
             WeatherStationPrx weatherStation = WeatherStationPrx.uncheckedCast(
-                adapter.addWithUUID(new ConsolePrinter()));
+                    adapter.addWithUUID(new ConsolePrinter()));
 
             // Create a proxy to the IceStorm topic manager.
             TopicManagerPrx topicManager = TopicManagerPrx.createProxy(
-                communicator, "ClearSky/TopicManager:tcp -p 4061");
+                    communicator, "ClearSky/TopicManager:tcp -p 4061");
 
             // Ask the topic manager to create or retrieve the "weather" topic and return the corresponding proxy.
             String topicName = "weather";

@@ -15,8 +15,8 @@ class ConsolePrinter implements WeatherStation {
     public void report(String sensorId, AtmosphericConditions conditions, Current current) {
         String pressureMb = conditions.hasPressure() ? String.format("%.1f mb", conditions.getPressure()) : "unknown";
         System.out.println(
-            String.format("%s reported { Temperature = %.1f°C, Humidity = %.1f%%, Pressure = %s } to station v2",
-                    sensorId, conditions.temperature, conditions.humidity, pressureMb)
+                String.format("%s reported { Temperature = %.1f°C, Humidity = %.1f%%, Pressure = %s } to station v2",
+                        sensorId, conditions.temperature, conditions.humidity, pressureMb)
         );
     }
 }

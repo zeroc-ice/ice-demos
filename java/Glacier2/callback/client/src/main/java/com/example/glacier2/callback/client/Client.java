@@ -54,13 +54,13 @@ class Client {
             // You can verify the Ring callback is never delivered if you provide a different category.
             var mockAlarmClock = new MockAlarmClock();
             AlarmClockPrx alarmClock = AlarmClockPrx.uncheckedCast(
-                adapter.add(mockAlarmClock, new Identity("alarmClock", clientCategory)));
+                    adapter.add(mockAlarmClock, new Identity("alarmClock", clientCategory)));
 
             // Create a proxy to the wake-up service behind the Glacier2 router. Typically, the client cannot connect
             // directly to this server because it's on an unreachable network.
             WakeUpServicePrx wakeUpService = WakeUpServicePrx.createProxy(
-                communicator,
-                "wakeUpService:tcp -h localhost -p 4061");
+                    communicator,
+                    "wakeUpService:tcp -h localhost -p 4061");
 
             // Configure the proxy to route requests using the Glacier2 router.
             wakeUpService = WakeUpServicePrx.uncheckedCast(wakeUpService.ice_router(router));
