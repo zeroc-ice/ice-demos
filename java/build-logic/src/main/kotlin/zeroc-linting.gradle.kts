@@ -38,7 +38,6 @@ tasks.withType<Checkstyle>().configureEach {
 
 rewrite {
     activeRecipe("com.zeroc.IceRewriteRecipes")
-    activeStyle("com.zeroc.IceRewriteStyle")
     configFile = file("$rootDir/../../config/rewrite.yml")
 
     exclusion(

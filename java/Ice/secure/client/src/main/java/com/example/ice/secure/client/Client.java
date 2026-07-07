@@ -66,12 +66,8 @@ class Client {
             trustManagerFactory.init(keyStore);
             sslContext.init(null, trustManagerFactory.getTrustManagers(), null);
             return sslContext;
-        } catch (
-            CertificateException
-                | IOException
-                | KeyManagementException
-                | KeyStoreException
-                | NoSuchAlgorithmException ex) {
+        } catch (CertificateException | IOException | KeyManagementException | KeyStoreException
+            | NoSuchAlgorithmException ex) {
             // Should never happen in this demo.
             throw new RuntimeException("SSL initialization error.", ex);
         }
