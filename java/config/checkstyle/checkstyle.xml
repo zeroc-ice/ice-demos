@@ -84,6 +84,13 @@
   <!-- 'TreeWalker' is what Checkstyle uses to traverse the source code's AST. -->
   <!-- Any checks that require some language awareness must be in this module. -->
   <module name="TreeWalker">
+    <!-- Keep in sync with the TabsAndIndentsStyle in ../rewrite.yml. In addition to being enforced
+         by Checkstyle, OpenRewrite derives its indentation style from this module; without it,
+         OpenRewrite falls back to an 8-space continuation indent and reformats the code. -->
+    <module name="Indentation">
+      <property name="basicOffset" value="4"/>
+      <property name="lineWrappingIndentation" value="4"/>
+    </module>
     <module name="OuterTypeFilename"/>
     <module name="IllegalTokenText">
       <property name="tokens" value="STRING_LITERAL, CHAR_LITERAL"/>

@@ -41,11 +41,6 @@ rewrite {
     activeStyle("com.zeroc.IceRewriteStyle")
     configFile = file("$rootDir/../../config/rewrite.yml")
 
-    // 'rewrite' derives a style from the Checkstyle config. Without an explicit file it falls back
-    // to an 8-space continuation indent that overrides 'com.zeroc.IceRewriteStyle'. Point it at a
-    // config with a 4-space 'Indentation' module so it keeps our style. See the file for details.
-    setCheckstyleConfigFile(file("$rootDir/../../config/checkstyle/rewrite-checkstyle.xml"))
-
     exclusion(
         // Don't check the generated code.
         "**/build/generated/**/*",
