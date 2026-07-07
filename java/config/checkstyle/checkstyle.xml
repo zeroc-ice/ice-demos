@@ -84,10 +84,6 @@
   <!-- 'TreeWalker' is what Checkstyle uses to traverse the source code's AST. -->
   <!-- Any checks that require some language awareness must be in this module. -->
   <module name="TreeWalker">
-    <!-- This file is the source of truth for our formatting spec: in addition to being enforced
-         by Checkstyle, OpenRewrite derives its code style from these modules (this one and the
-         'OperatorWrap' module below). Without an 'Indentation' module, OpenRewrite falls back to
-         an 8-space continuation indent and reformats the code. -->
     <module name="Indentation">
       <property name="basicOffset" value="4"/>
       <property name="lineWrappingIndentation" value="4"/>

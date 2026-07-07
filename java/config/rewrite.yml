@@ -1,3 +1,4 @@
+# OpenRewrite derives its code style from our Checkstyle config (checkstyle/checkstyle.xml).
 type: specs.openrewrite.org/v1beta/recipe
 name: com.zeroc.IceRewriteRecipes
 displayName: "ZeroC Java Lints"
