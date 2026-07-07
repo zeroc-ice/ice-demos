@@ -1,3 +1,4 @@
+# OpenRewrite derives its code style from our Checkstyle config (checkstyle/checkstyle.xml).
 type: specs.openrewrite.org/v1beta/recipe
 name: com.zeroc.IceRewriteRecipes
 displayName: "ZeroC Java Lints"
@@ -32,16 +33,3 @@ recipeList:
   - org.openrewrite.java.format.RemoveTrailingWhitespace
   - org.openrewrite.java.format.Spaces
   - org.openrewrite.java.format.TabsAndIndents
-
----
-
-type: specs.openrewrite.org/v1beta/style
-name: com.zeroc.IceRewriteStyle
-displayName: "ZeroC Java Style"
-styleConfigs:
-  - org.openrewrite.java.style.TabsAndIndentsStyle:
-      indentSize: 4
-      continuationIndent: 4
-      tabSize: 4
-  - org.openrewrite.java.style.OperatorWrapStyle:
-      wrapOption: NL
