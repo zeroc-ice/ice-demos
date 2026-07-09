@@ -6,7 +6,7 @@ demonstrates a specific feature or programming technique.
 |                                                          |                                                                                                             |
 |----------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
 | [DataStorm Custom Encoding](./DataStorm/customEncoding/) | Shows how to implement a custom encoder and decoder.                                                        |
-| [DataStorm KeyFilter](./DataStorm/keyFilter/)            | Shows how to use a key filters.                                                                             |
+| [DataStorm KeyFilter](./DataStorm/keyFilter/)            | Shows how to use key filters.                                                                             |
 | [DataStorm Greeter](./DataStorm/greeter/)                | Shows how to create a DataStorm application.                                                                |
 | [DataStorm Node](./DataStorm/node/)                      | Shows the uses of a DataStorm node.                                                                         |
 | [DataStorm SampleFilter](./DataStorm/sampleFilter/)      | Shows how to use sample filters.                                                                            |
@@ -32,5 +32,5 @@ demonstrates a specific feature or programming technique.
 | [IceGrid Greeter](./IceGrid/greeter/)                    | Shows how to create a simple IceGrid deployment.                                                            |
 | [IceGrid IceBox](./IceGrid/icebox/)                      | Shows how to deploy an IceBox server with IceGrid.                                                          |
 | [IceGrid LocatorDiscovery](./IceGrid/locatorDiscovery/)  | Shows how to write a client application that configures its locator using the IceLocatorDiscovery plug-in.  |
-| [IceGrid Query](./IceGrid/query/)                        | Shows how use the Query object provided by the IceGrid registry to lookup a well-known object by type.      |
+| [IceGrid Query](./IceGrid/query/)                        | Shows how to use the Query object provided by the IceGrid registry to look up a well-known object by type.      |
 | [IceStorm Weather](./IceStorm/weather/)                  | Shows how to use IceStorm to create a simple pub-sub application.                                           |

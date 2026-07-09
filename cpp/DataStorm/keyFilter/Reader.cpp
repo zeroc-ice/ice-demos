@@ -41,7 +41,7 @@ main(int argc, char* argv[])
     // main bedrooms.
     auto reader2 = DataStorm::makeFilteredKeyReader(topic, DataStorm::Filter<string>("_regex", ".*/main-bedroom"));
 
-    // Get the samples published by the writer matching the "floor1-" prefix.
+    // Get the samples published by the writer matching the "floor1/" prefix.
     auto sample = reader1.getNextUnread();
     cout << "Reader 1 received " << sample.getKey() << " temperature is " << sample.getValue() << "°C" << endl;
 

@@ -126,7 +126,7 @@ main(int argc, char* argv[])
     cout << "Please enter the stock to publish (default = all):\n";
     getline(cin, stockName);
 
-    // Instantiate writers for the choosen stocks.
+    // Instantiate writers for the chosen stocks.
     vector<DataStorm::SingleKeyWriter<string, Stock>> writers;
     if (stockName.empty() || stockName == "all")
     {

@@ -34,7 +34,7 @@ uv run slice2py ../slice/Greeter.ice
 
 ### 2. Start the IceGrid registry
 
-In a separate terminal, run:
+In a separate terminal, navigate to the demo directory (`python/IceGrid/greeter`) and run:
 
 ```shell
 icegridregistry --Ice.Config=registry.conf
@@ -42,7 +42,8 @@ icegridregistry --Ice.Config=registry.conf
 
 ### 3. Start the IceGrid node
 
-In another terminal, first activate the virtual environment, then start the node:
+In another terminal, navigate to the demo directory (`python/IceGrid/greeter`), then activate the virtual environment
+and start the node:
 
 #### macOS and Linux
 
@@ -64,7 +65,8 @@ icegridnode --Ice.Config=node.conf
 
 ### 4. Deploy the Greeter application
 
-Use the IceGrid admin tool to deploy the configuration:
+In a separate terminal, navigate to the demo directory (`python/IceGrid/greeter`) and use the IceGrid admin tool to
+deploy the configuration:
 
 ```shell
 icegridadmin --Ice.Config=admin.conf -e "application add greeter-hall.xml"

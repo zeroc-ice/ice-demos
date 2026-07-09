@@ -15,11 +15,24 @@ main(int argc, char* argv[])
 
     // Create an OpenSSL SSL_CTX object to configure server-side TLS settings.
     SSL_CTX* serverSSLContext = SSL_CTX_new(TLS_method());
+    if (!serverSSLContext)
+    {
+        throw runtime_error("Unable to create SSL context");
+    }
 
     // Load the server's certificate chain and private key into the SSL context.
     // The certificate chain file should include the server certificate followed by any intermediate CAs.
-    SSL_CTX_use_certificate_chain_file(serverSSLContext, "../../../certs/server_cert.pem");
-    SSL_CTX_use_PrivateKey_file(serverSSLContext, "../../../certs/server_key.pem", SSL_FILETYPE_PEM);
+    if (!SSL_CTX_use_certificate_chain_file(serverSSLContext, "../../../certs/server_cert.pem"))
+    {
+        SSL_CTX_free(serverSSLContext);
+        throw runtime_error("Unable to load server certificate chain file");
+    }
+
+    if (!SSL_CTX_use_PrivateKey_file(serverSSLContext, "../../../certs/server_key.pem", SSL_FILETYPE_PEM))
+    {
+        SSL_CTX_free(serverSSLContext);
+        throw runtime_error("Unable to load server private key file");
+    }
 
     // Create server authentication options using the configured SSL_CTX.
     Ice::SSL::ServerAuthenticationOptions serverAuthenticationOptions{

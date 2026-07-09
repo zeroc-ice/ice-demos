@@ -10,7 +10,7 @@ from datetime import datetime, timezone
 import Ice
 import IceStorm
 
-# Slice module ClearSky in WeatherStation.ice maps to C# namespace ClearSky.
+# Slice module ClearSky in WeatherStation.ice maps to Python module ClearSky.
 from ClearSky import AtmosphericConditions, WeatherStationPrx
 
 
