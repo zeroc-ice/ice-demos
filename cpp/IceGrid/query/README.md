@@ -1,6 +1,6 @@
 # IceGrid Query
 
-This demo shows how to use the Query object provided by the IceGrid registry to lookup a well-known object by type.
+This demo shows how to use the Query object provided by the IceGrid registry to look up a well-known object by type.
 
 ## Ice prerequisites
 
@@ -50,12 +50,8 @@ cmake --build build
    icegridadmin --Ice.Config=admin.conf -e "application add greeter-hall.xml"
    ```
 
-   `greeter-hall.xml` configures a single Greeter server. As an alternative, you can deploy 3 replicated Greeter servers
-   with:
-
-   ```shell
-   icegridadmin --Ice.Config=admin.conf -e "application add greeter-hall-with-replication.xml"
-   ```
+   `greeter-hall.xml` deploys three Greeter server instances, each hosting a well-known object of type
+   `::VisitorCenter::Greeter`. The client uses the IceGrid `Query` object to look up these objects by type.
 
    > [!TIP]
    > Use `update` instead of `add` to update an existing application.

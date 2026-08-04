@@ -78,6 +78,6 @@ cmake --build build
     build\client
     ```
 
-[1]: ../../Ice/Greeter
+[1]: ../../Ice/greeter
 [Ice for C++ installation]: https://zeroc.com/ice/downloads/3.8/cpp
 [Glacier2 installation]: https://zeroc.com/ice/downloads/3.8/glacier2

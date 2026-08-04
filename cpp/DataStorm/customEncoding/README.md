@@ -35,7 +35,7 @@ cmake --build build
 
 ## Running the demo
 
-To run the demo, start the writer and specify the name of a city:
+To run the demo, start the writer and enter a city name when prompted:
 
 **Linux/macOS:**
 

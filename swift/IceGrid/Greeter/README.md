@@ -12,7 +12,7 @@ flowchart LR
     Node[IceGrid Node]
     Server(Server<br/>hosts Chatbot)
     Registry <--> Node --> | activate | Server
-    Locator -.- |return greeter endpoints | Client
+    Locator -.-> |return greeter endpoints | Client
     Client ==> |greet request| Server
 ```
 

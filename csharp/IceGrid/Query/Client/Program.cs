@@ -11,7 +11,7 @@ await using var communicator = new Ice.Communicator(ref args);
 communicator.setDefaultLocator(
     Ice.LocatorPrxHelper.createProxy(communicator, "IceGrid/Locator:tcp -h localhost -p 4061"));
 
-// Create a proxy to the Query object hosted by the IceGrid registry. "IceGrid/Query" a well-known proxy, without
+// Create a proxy to the Query object hosted by the IceGrid registry. "IceGrid/Query" is a well-known proxy, without
 // addressing information.
 IceGrid.QueryPrx query = IceGrid.QueryPrxHelper.createProxy(communicator, "IceGrid/Query");
 

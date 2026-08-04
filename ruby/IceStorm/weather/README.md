@@ -26,7 +26,7 @@ support, such as C++, Python, Java or C#.
 
 Then, in a separate window:
 
-- Compile Greeter.ice with the Slice to Ruby compiler into Greeter.rb
+- Compile WeatherStation.ice with the Slice to Ruby compiler into WeatherStation.rb
 
 ```shell
 slice2rb WeatherStation.ice
