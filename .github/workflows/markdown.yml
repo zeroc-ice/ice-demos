@@ -8,6 +8,9 @@ on:
     # The branches below must be a subset of the branches above
     branches: ["main"]
 
+permissions:
+  contents: read
+
 jobs:
   markdownlint:
     runs-on: ubuntu-24.04
@@ -21,7 +24,7 @@ jobs:
           node-version: "lts/*"
 
       - name: Install markdownlint-cli
-        run: npm install -g markdownlint-cli
+        run: npm install -g --ignore-scripts markdownlint-cli
 
       - name: Lint Markdown files
         run: markdownlint --config .markdownlint.json **/*.md
