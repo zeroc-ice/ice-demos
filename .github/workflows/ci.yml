@@ -17,6 +17,9 @@ env:
   CHANNEL: "3.8"
   CMAKE_BUILD_PARALLEL_LEVEL: 4
 
+permissions:
+  contents: read
+
 jobs:
   ci:
     name: ${{ matrix.os }} (${{ matrix.quality }})
