@@ -30,7 +30,7 @@ details.
 | [IceGrid Greeter](./IceGrid/greeter)                    | Shows how to create a simple IceGrid deployment.                                                            |
 | [IceGrid IceBox](./IceGrid/icebox/)                     | Shows how to deploy an IceBox server with IceGrid.                                                          |
 | [IceGrid LocatorDiscovery](./IceGrid/locatorDiscovery/) | Shows how to write a client application that configures its locator using the IceLocatorDiscovery plug-in.  |
-| [IceGrid Query](./IceGrid/query/)                       | Shows how to use the Query object provided by the IceGrid registry to look up a well-known object by type.      |
+| [IceGrid Query](./IceGrid/query/)                       | Shows how to use the Query object provided by the IceGrid registry to look up a well-known object by type.  |
 | [IceStorm Weather](./IceStorm/weather/)                 | Shows how to use IceStorm to create a simple pub-sub application.                                           |
 
 [Ice for Java installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-java

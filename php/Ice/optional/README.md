@@ -29,7 +29,7 @@ class AtmosphericConditions
 ## Building and running the demo
 
 Ice for PHP supports only client-side applications. As a result, you first need to start an Optional server implemented
-in a language with server-side support, such as `java/Ice/optional`, `python/Ice/optional`, or `csharp/Ice/Optional`.
+in a language with server-side support, such as `python/Ice/optional`, `java/Ice/optional`, or `csharp/Ice/Optional`.
 
 You can start either version 1 or version 2 of the server.
 

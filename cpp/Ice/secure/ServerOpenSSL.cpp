@@ -34,6 +34,14 @@ main(int argc, char* argv[])
         throw runtime_error("Unable to load server private key file");
     }
 
+    // Verify the private key matches the certificate, so that a mismatched pair fails here instead of later during the
+    // TLS handshake.
+    if (!SSL_CTX_check_private_key(serverSSLContext))
+    {
+        SSL_CTX_free(serverSSLContext);
+        throw runtime_error("Server private key does not match the server certificate");
+    }
+
     // Create server authentication options using the configured SSL_CTX.
     Ice::SSL::ServerAuthenticationOptions serverAuthenticationOptions{
         .serverSSLContextSelectionCallback = [serverSSLContext](const string&)

@@ -1,5 +1,5 @@
 {
-    "name": "weather-sensor",
+    "name": "weather",
     "version": "1.0.0",
     "main": "sensor.js",
     "type": "module",

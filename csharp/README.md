@@ -29,7 +29,7 @@ details.
 | [IceGrid Greeter](./IceGrid/Greeter)                    | Shows how to create a simple IceGrid deployment.                                                            |
 | [IceGrid IceBox](./IceGrid/IceBox/)                     | Shows how to deploy an IceBox server with IceGrid.                                                          |
 | [IceGrid LocatorDiscovery](./IceGrid/LocatorDiscovery/) | Shows how to write a client application that configures its locator using the IceLocatorDiscovery plug-in.  |
-| [IceGrid Query](./IceGrid/Query/)                       | Shows how to use the Query object provided by the IceGrid registry to look up a well-known object by type.      |
+| [IceGrid Query](./IceGrid/Query/)                       | Shows how to use the Query object provided by the IceGrid registry to look up a well-known object by type.  |
 | [IceStorm Weather](./IceStorm/Weather/)                 | Shows how to use IceStorm to create a simple pub-sub application.                                           |
 
 [Ice for C# installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-c-1
