@@ -9,7 +9,7 @@ Ice.ObjectAdapter adapter = communicator.createObjectAdapterWithEndpoints("Greet
 // Create a CancellationTokenSource to cancel outstanding dispatches after the user presses Ctrl+C.
 using var dispatchCts = new CancellationTokenSource();
 
-// Register two instances of Chatbot - a regular greater and a slow greeter.
+// Register two instances of Chatbot - a regular greeter and a slow greeter.
 adapter.add(new Server.Chatbot(TimeSpan.Zero, CancellationToken.None), new Ice.Identity { name = "greeter" });
 adapter.add(new Server.Chatbot(TimeSpan.FromSeconds(60), dispatchCts.Token), new Ice.Identity { name = "slowGreeter" });
 

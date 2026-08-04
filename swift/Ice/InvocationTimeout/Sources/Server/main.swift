@@ -18,7 +18,7 @@ defer {
 let adapter = try communicator.createObjectAdapterWithEndpoints(
     name: "GreeterAdapter", endpoints: "tcp -p 4061")
 
-// Register two instances of Chatbot - a regular greater and a slow greeter.
+// Register two instances of Chatbot - a regular greeter and a slow greeter.
 try adapter.add(servant: Chatbot(), id: Ice.Identity(name: "greeter"))
 let slowGreeter = Chatbot(delay: .seconds(60))
 try adapter.add(servant: slowGreeter, id: Ice.Identity(name: "slowGreeter"))

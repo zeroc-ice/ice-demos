@@ -37,7 +37,7 @@ Then, in a separate window:
   slice2php Greeter.ice --output-dir web
   ```
 
-- Run the web server using Docker Composer
+- Run the web server using Docker Compose
 
   ```shell
   docker-compose up
@@ -48,6 +48,6 @@ Then, in a separate window:
 
 > [!NOTE]
 > Passing `--Ice.Trace.Network` command-line option to the server turns on Network tracing. For this demo, it shows you
-> that the client reuses the connection for different request, which means the same communicator is used for these requests.
+> that the client reuses the connection for different requests, which means the same communicator is used for these requests.
 
 [Ice for PHP installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-php

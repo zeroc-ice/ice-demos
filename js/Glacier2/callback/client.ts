@@ -48,8 +48,9 @@ let wakeUpService = new EarlyRiser.WakeUpServicePrx(communicator, "wakeUpService
 // Configure the proxy to route requests using the Glacier2 router.
 wakeUpService = wakeUpService.ice_router(router);
 
-// Schedule a wake-up call in 5 seconds. This call establishes the connection to the server; incoming requests over this
-// connection are handled by the communicator's default object adapter.
+// Schedule a wake-up call in 5 seconds. This call establishes the connection to the server through the Glacier2 router.
+// The ring callback is delivered by the router to the alarm-clock servant registered with our router-associated object
+// adapter, using the Glacier2 client category.
 await wakeUpService.wakeMeUp(alarmClock, toTicks(Date.now() + 5000));
 console.log("Wake-up call scheduled, falling asleep...");
 

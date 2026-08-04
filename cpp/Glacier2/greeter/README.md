@@ -78,6 +78,6 @@ cmake --build build
     build\client
     ```
 
-[1]: ../../Ice/Greeter
+[1]: ../../Ice/greeter
 [Ice for C++ installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-c
 [Ice service installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-services

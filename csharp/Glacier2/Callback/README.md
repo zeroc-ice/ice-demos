@@ -3,7 +3,7 @@
 This demo shows how to write a client that establishes a session with a Glacier2 router. It also shows how to implement
 callbacks in this client.
 
-This demo is similar to the [Ice Callback][1] demo, except all communications go through the Glacier router.
+This demo is similar to the [Ice Callback][1] demo, except all communications go through the Glacier2 router.
 
 The connection between the client and the Glacier2 router is a "bidir" connection, like in the [Ice Bidir][2] demo:
 

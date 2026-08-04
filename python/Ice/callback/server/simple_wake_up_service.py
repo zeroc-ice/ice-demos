@@ -27,7 +27,8 @@ async def callRing(alarmClock: AlarmClockPrx, wakeUpDatetime: datetime):
     if delay > 0:
         await asyncio.sleep(delay)
 
-    # First ring. This invocation reuses the connection established by the client.
+    # First ring. This invocation establishes a new connection from the server back to the client; it does not reuse
+    # the client's incoming connection.
     buttonPressed = await alarmClock.ringAsync("It's time to wake up!")
 
     # Keep ringing every 10 seconds until the user presses the stop button.

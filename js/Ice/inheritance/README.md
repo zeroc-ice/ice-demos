@@ -20,7 +20,7 @@ npm run build
 
 First, start the server application.
 
-Ice for JavaScript has limited server-side support. As a result, you need to start a Inheritance server implemented in
+Ice for JavaScript has limited server-side support. As a result, you need to start an Inheritance server implemented in
 a language that fully supports server-side functionality, such as C++, C#, Java, Python, or Swift.
 
 In a separate terminal, start the client application:
