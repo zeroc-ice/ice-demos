@@ -33,6 +33,7 @@ greeting = await greeterEs.greet("alice");
 console.log(greeting);
 
 // One more time, this time with an implicit context set on the communicator.
-communicator.getImplicitContext().put("language", "de");
+// getImplicitContext returns null unless the Ice.ImplicitContext property is set, which we do above.
+communicator.getImplicitContext()?.put("language", "de");
 greeting = await greeter.greet("bob");
 console.log(greeting);
