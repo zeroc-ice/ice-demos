@@ -8,6 +8,9 @@ on:
     # The branches below must be a subset of the branches above
     branches: ["main"]
 
+permissions:
+  contents: read
+
 jobs:
   ruff:
     runs-on: ubuntu-24.04
@@ -31,7 +34,7 @@ jobs:
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
       - name: Install pyright
-        run: npm install -g pyright
+        run: npm install -g --ignore-scripts pyright
 
       - name: Install the latest version of uv
         uses: astral-sh/setup-uv@fac544c07dec837d0ccb6301d7b5580bf5edae39 # v8.2.0

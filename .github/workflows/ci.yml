@@ -16,6 +16,9 @@ concurrency:
 env:
   CMAKE_BUILD_PARALLEL_LEVEL: 4
 
+permissions:
+  contents: read
+
 jobs:
   ci:
     name: ${{ matrix.os }}
