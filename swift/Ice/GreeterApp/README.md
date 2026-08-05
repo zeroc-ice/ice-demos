@@ -11,7 +11,7 @@ The client is implemented using SwiftUI and can be run on **macOS**, the **iOS S
 2. Open the `GreeterApp` project in Xcode.
 3. Build and run the application on your platform of choice (macOS, iOS device, or iOS simulator).
 
->![IMPORTANT]
+> [!IMPORTANT]
 > On the first build attempt, you may see the message:
 > _"Plugin “CompileSlice” from package “ice” must be enabled before it can be used."_
 > Click on the message in Xcode to enable the plugin.
