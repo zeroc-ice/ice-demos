@@ -41,7 +41,7 @@ function client(args)
     greeter = greeter.ice_router(router);
 
     % Send a request to the remote object and get the response.
-    greeting = greeter.greet(userName);
+    greeting = greeter.greet(username);
     fprintf('%s\n', greeting);
 
     % Send a second request to observe the effect in the Glacier2 router log.
