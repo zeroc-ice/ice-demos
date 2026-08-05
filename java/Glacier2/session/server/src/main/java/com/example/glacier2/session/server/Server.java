@@ -44,7 +44,7 @@ class Server {
             // Wait until the main thread completes.
             try {
                 mainThread.join();
-            } catch (InterruptedException e) {
+            } catch (InterruptedException ignored) {
                 // No code interrupts the shutdown hook thread in this program.
                 assert false;
             }
