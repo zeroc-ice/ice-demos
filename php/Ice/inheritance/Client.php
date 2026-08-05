@@ -20,7 +20,7 @@ listRecursive($rootDir, 0);
 // The "depth" parameter is the current nesting level (for indentation).
 function listRecursive($dir, $depth) {
     $depth += 1;
-    $indent = str_repeat(" ", $depth);
+    $indent = str_repeat("\t", $depth);
 
     $contents = $dir->list();
 

@@ -14,7 +14,7 @@ $communicator = Ice\initialize($argv);
 $router = Glacier2\RouterPrxHelper::createProxy($communicator, 'Glacier2/router:tcp -h localhost -p 4063');
 
 // Retrieve my username.
-$username = get_current_user();
+$username = getenv('USER') ?: getenv('USERNAME') ?: 'guest';
 
 // Create a session with the Glacier2 router. In this demo, the Glacier2 router is configured to accept any
 // username/password combination. This call establishes a network connection to the Glacier2 router; the lifetime of
