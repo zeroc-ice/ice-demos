@@ -61,7 +61,7 @@ class Sensor {
             // Send a reading every second to the weather station(s) via IceStorm. We keep sending until the user
             // presses Ctrl+C.
             while (true) {
-                double temperature = random.nextInt(250, 350) / 10.0;
+                double temperature = random.nextInt(190, 230) / 10.0;
                 double humidity = random.nextInt(450, 550) / 10.0;
                 AtmosphericConditions reading = new AtmosphericConditions(temperature, humidity);
 

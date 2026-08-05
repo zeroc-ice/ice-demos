@@ -32,7 +32,8 @@ class Server {
 
             // Start dispatching requests.
             adapter.activate();
-            System.out.println("Listening on port 4061...");
+
+            // Ice.Trace.Network=1 or greater shows on which interface(s) and port(s) the server is listening.
 
             // Register a shutdown hook that calls communicator.shutdown() when the user shuts down the server with
             // Ctrl+C or similar. The shutdown hook thread also waits until the main thread completes its cleanup.
