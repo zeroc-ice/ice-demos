@@ -8,6 +8,7 @@ import com.zeroc.Ice.InvocationTimeoutException;
 import com.zeroc.Ice.OperationInterruptedException;
 import com.zeroc.Ice.UnknownException;
 
+import java.time.Duration;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -67,7 +68,7 @@ class Client {
 
             // Create another slow greeter proxy with an invocation timeout of 4 seconds (the default invocation timeout
             // is infinite).
-            GreeterPrx slowGreeter4s = slowGreeter.ice_invocationTimeout(4);
+            GreeterPrx slowGreeter4s = slowGreeter.ice_invocationTimeout(Duration.ofSeconds(4));
 
             // Send a request to the slow greeter with the 4-second invocation timeout.
             try {
