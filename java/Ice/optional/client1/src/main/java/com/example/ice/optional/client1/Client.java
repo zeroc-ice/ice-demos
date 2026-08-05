@@ -18,7 +18,7 @@ class Client {
             var weatherStation = WeatherStationPrx.createProxy(communicator, "weatherStation:tcp -h localhost -p 4061");
 
             // Create an AtmosphericConditions object with random values.
-            double temperature = (random.nextInt(350 - 250) + 250) / 10.0;
+            double temperature = (random.nextInt(230 - 190) + 190) / 10.0;
             double humidity = (random.nextInt(550 - 450) + 450) / 10.0;
             AtmosphericConditions reading = new AtmosphericConditions(temperature, humidity);
 

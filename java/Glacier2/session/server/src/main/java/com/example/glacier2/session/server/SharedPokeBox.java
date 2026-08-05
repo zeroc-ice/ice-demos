@@ -33,7 +33,8 @@ class SharedPokeBox implements PokeBox {
     // Retrieve the Pokémon collection for the user associated with the current session.
     @Override
     public List<String> getInventory(Current current) {
-        return _pokeStore.retrieveCollection(getUserId(current));
+        List<String> collection = _pokeStore.retrieveCollection(getUserId(current));
+        return collection != null ? collection : Collections.emptyList();
     }
 
     // Add new Pokémon to the Pokémon collection for the user associated with the current session.
