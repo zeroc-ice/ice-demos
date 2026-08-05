@@ -24,7 +24,7 @@ public class GreeterService implements Service {
 
         // Retrieve the greeter name and greeter identity from the IceGrid-generated config file.
         Properties properties = communicator.getProperties();
-        String greeterName = properties.getProperty("Ice.ProgramName");
+        String greeterName = properties.getProperty("Greeter.Name");
         Identity greeterIdentity = Util.stringToIdentity(properties.getProperty("Greeter.Identity"));
 
         // Register the Chatbot servant with the adapter.
