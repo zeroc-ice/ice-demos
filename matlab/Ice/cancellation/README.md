@@ -9,8 +9,9 @@ timeouts.
 
 ## Building and running the demo
 
-Ice for MATLAB supports only client-side applications. As a result, you first need to start a server implemented
-in a language with server-side support, such as Python, Java, or C#.
+Ice for MATLAB supports only client-side applications. As a result, you first need to start a Cancellation server
+implemented in a language with server-side support (C++, C#, Java, or Swift), for example the [Java Cancellation
+server](../../../java/Ice/cancellation): follow the instructions in its README to start this server.
 
 Then, in the MATLAB console:
 

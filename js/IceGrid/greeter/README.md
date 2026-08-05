@@ -34,8 +34,9 @@ npm run build
 
 Ice for JavaScript has limited server-side support, and as a result, we can only implement the client in JavaScript.
 
-You first need to deploy an IceGrid Greeter server from a demo written in a language with full server-side
-support, such as C++, C#, Java, Python, or Swift.
+You first need to deploy an IceGrid Greeter server from a demo written in a language with full server-side support (C++,
+C#, Java, Python, or Swift), for example the [Python IceGrid Greeter demo](../../../python/IceGrid/greeter): follow the
+instructions in its README to deploy this server.
 
 In a separate terminal, start the client application:
 

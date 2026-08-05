@@ -29,8 +29,9 @@ npm run build
 
 Ice for JavaScript has limited server-side support, and as a result, we can only implement the client in JavaScript.
 
-You first need to start Glacier2 and the Callback server from a demo written in a language with full server-side
-support, such as C++, C#, Java, Python, or Swift.
+You first need to start Glacier2 and the Callback server from a demo written in a language with full server-side support
+(C++, C#, Java, Python, or Swift), for example the [Python Glacier2 Callback demo](../../../python/Glacier2/callback):
+follow the instructions in its README to start the router and the server.
 
 In a separate terminal, start the client application:
 

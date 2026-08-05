@@ -14,7 +14,9 @@ flowchart LR
 ## Building and running the demo
 
 Ice for MATLAB supports only client-side applications. As a result, you first need to start the Glacier2 router and a
-Greeter server implemented in a language with server-side support, such as Python, Java, or C#.
+Greeter server implemented in a language with server-side support (C++, C#, Java, Python, or Swift), for example the
+[Python Glacier2 Greeter demo](../../../python/Glacier2/greeter): follow the instructions in its README to start the
+router and the server.
 
 Then, in the MATLAB console:
 
