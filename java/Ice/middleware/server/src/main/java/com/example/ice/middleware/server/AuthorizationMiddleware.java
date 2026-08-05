@@ -22,7 +22,7 @@ class AuthorizationMiddleware implements com.zeroc.Ice.Object {
 
         // Check if the request has a valid token in its context.
         if (token == null || !token.equals(_validToken)) {
-            System.out.println("Rejecting request with invalid token " + token + "'");
+            System.out.println("Rejecting request with invalid token '" + token + "'");
             throw new DispatchException(ReplyStatus.Unauthorized.value(), "Invalid token '" + token + "'");
         }
 

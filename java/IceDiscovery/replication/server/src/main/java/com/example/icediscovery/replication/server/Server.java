@@ -42,7 +42,7 @@ class Server {
             ObjectAdapter adapter = communicator.createObjectAdapter("GreeterAdapter");
 
             // Register the Chatbot servant with the adapter.
-            adapter.add(new Chatbot(uuid.substring(0, 4)), new Identity("greeter", ""));
+            adapter.add(new Chatbot(uuid.substring(uuid.length() - 4)), new Identity("greeter", ""));
 
             // Start dispatching requests. This method also registers the object adapter with the IceDiscovery plug-in.
             adapter.activate();

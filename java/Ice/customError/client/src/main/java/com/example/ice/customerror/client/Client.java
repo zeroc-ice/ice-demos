@@ -45,7 +45,7 @@ class Client {
                         name, exception.getMessage(), exception.replyStatus));
                 } catch (GreeterException exception) {
                     System.out.println(String.format(
-                        "Failed to create a greeting for '%s': GreeterException {{ errorMessage = '%s', error = '%s' }}",
+                        "Failed to create a greeting for '%s': GreeterException { errorMessage = '%s', error = '%s' }",
                         name, exception.errorMessage, exception.error
                     ));
                 }
