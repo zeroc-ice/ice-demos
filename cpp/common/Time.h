@@ -43,7 +43,7 @@ namespace Time
     /// @return The time stamp.
     inline std::int64_t toTimeStamp(const std::chrono::system_clock::time_point& timePoint)
     {
-        const int daysBeforeEpoch = 719162;
+        const int daysBeforeEpoch = 719'162;
 
         std::int64_t timeStampMicro = std::chrono::duration_cast<std::chrono::microseconds>(
                                           timePoint.time_since_epoch() + daysBeforeEpoch * std::chrono::hours{24})
@@ -56,9 +56,9 @@ namespace Time
     /// Converts a time stamp to a time point.
     /// @param timeStamp The time stamp.
     /// @return The time point.
-    std::chrono::system_clock::time_point toTimePoint(std::int64_t timeStamp)
+    inline std::chrono::system_clock::time_point toTimePoint(std::int64_t timeStamp)
     {
-        const int daysBeforeEpoch = 719162;
+        const int daysBeforeEpoch = 719'162;
 
         std::chrono::microseconds timePointMicro{timeStamp / 10}; // timeStamp is in ticks (100 nanoseconds)
         return std::chrono::system_clock::time_point{timePointMicro - daysBeforeEpoch * std::chrono::hours{24}};
