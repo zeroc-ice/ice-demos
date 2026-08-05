@@ -12,8 +12,8 @@ Ice.initialize(ARGV) do |communicator|
     weatherStation = ClearSky::WeatherStationPrx.new(communicator, "weatherStation:tcp -h localhost -p 4061")
 
     # Generate random temperature and humidity values.
-    temperature = (190.0 + rand(40)) / 10.0 # Temperature in degrees Celsius (19.0 to 23.0).
-    humidity = (450.0 + rand(100)) / 10.0   # Humidity in percentage (45.0 to 55.0).
+    temperature = rand(190..230) / 10.0 # Temperature in degrees Celsius (19.0 to 23.0).
+    humidity = rand(450..550) / 10.0   # Humidity in percentage (45.0 to 55.0).
 
     # Create an AtmosphericConditions object with random values.
     reading = ClearSky::AtmosphericConditions.new(temperature, humidity)
