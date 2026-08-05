@@ -144,6 +144,8 @@ async def main():
             if dispatchException.replyStatus == Ice.ReplyStatus.Unauthorized.value:
                 # See code in server.poke_session.box.SharedPokeBox.getUserId.
                 print("The PokeBox proxy remains unusable, as expected.")
+            else:
+                raise
 
 
 if __name__ == "__main__":
