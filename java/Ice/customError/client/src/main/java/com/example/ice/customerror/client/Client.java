@@ -41,7 +41,8 @@ class Client {
                     String greeting = greeter.greet(name);
                     System.out.println(greeting);
                 } catch (DispatchException exception) {
-                    System.out.println(String.format("Failed to create a greeting for '%s': '%s' '%s'",
+                    System.out.println(String.format(
+                        "Failed to create a greeting for '%s': DispatchException { message = '%s', replyStatus = %s }",
                         name, exception.getMessage(), exception.replyStatus));
                 } catch (GreeterException exception) {
                     System.out.println(String.format(
