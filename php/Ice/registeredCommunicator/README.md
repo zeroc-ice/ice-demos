@@ -41,11 +41,11 @@ Then, in a separate window:
 - Run the web server using Docker Compose
 
   ```shell
-  docker-compose up
+  docker compose up
   ```
 
 - Open your Web Browser
-  Navigate to: http://localhost:8080
+  Navigate to: <http://localhost:8080>
 
 > [!NOTE]
 > Passing `--Ice.Trace.Network` command-line option to the server turns on Network tracing. For this demo, it shows you

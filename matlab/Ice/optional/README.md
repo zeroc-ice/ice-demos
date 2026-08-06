@@ -36,7 +36,7 @@ You can start either version 1 or version 2 of the server.
 
 Then, in the MATLAB console:
 
-- Go to the Ice/optional/client1 or client2 directory
+- Go to the matlab/Ice/optional/client1 or client2 directory
 
 ```shell
 cd matlab/Ice/optional/client1

@@ -12,11 +12,9 @@ Ice for MATLAB supports only client-side applications. As a result, you first ne
 language with server-side support (C++, C#, Java, Python, or Swift), for example the [Python IceDiscovery Greeter
 server](../../../python/IceDiscovery/greeter): follow the instructions in its README to start this server.
 
-You can start either the IceDiscovery Greeter server, or two or more IceDiscovery Replication servers.
-
 Then, in the MATLAB console:
 
-- Go to the IceDiscovery/greeter directory
+- Go to the matlab/IceDiscovery/greeter directory
 
 ```shell
 cd matlab/IceDiscovery/greeter

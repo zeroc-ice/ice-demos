@@ -20,7 +20,7 @@ router and the server.
 
 Then, in the MATLAB console:
 
-- Go to the Glacier2/greeter directory
+- Go to the matlab/Glacier2/greeter directory
 
 ```shell
 cd matlab/Glacier2/greeter

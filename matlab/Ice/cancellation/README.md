@@ -15,7 +15,7 @@ server](../../../java/Ice/cancellation): follow the instructions in its README t
 
 Then, in the MATLAB console:
 
-- Go to the Ice/cancellation directory
+- Go to the matlab/Ice/cancellation directory
 
 ```shell
 cd matlab/Ice/cancellation

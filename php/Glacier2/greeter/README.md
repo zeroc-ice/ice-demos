@@ -20,12 +20,6 @@ router and the server.
 
 Then, in a separate window:
 
-- Go to the Glacier2/greeter directory
-
-```shell
-cd php/Glacier2/greeter
-```
-
 - Compile the Greeter.ice file with the Slice compiler for PHP
 
 ```shell
