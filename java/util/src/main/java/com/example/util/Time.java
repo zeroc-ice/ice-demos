@@ -26,7 +26,7 @@ public class Time {
      * @return The zoned date time.
      */
     public static java.time.ZonedDateTime toZonedDateTime(long timeStamp) {
-        long epochMilli = timeStamp / TICKS_PER_MILLISECOND - MILLIS_BEFORE_EPOCH;
+        long epochMilli = (timeStamp / TICKS_PER_MILLISECOND) - MILLIS_BEFORE_EPOCH;
         return java.time.Instant.ofEpochMilli(epochMilli).atZone(java.time.ZoneOffset.UTC);
     }
 
