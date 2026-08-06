@@ -15,6 +15,6 @@ $communicator = Ice\initialize($argv);
 $greeter = VisitorCenter\GreeterPrxHelper::createProxy($communicator, 'greeter:tcp -h hello.zeroc.com -p 4061');
 
 // Send a request to the remote object and get the response.
-$greeting = $greeter->greet(get_current_user());
+$greeting = $greeter->greet(getenv('USER') ?: getenv('USERNAME') ?: 'guest');
 
 echo "$greeting\n";

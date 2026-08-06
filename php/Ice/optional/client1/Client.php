@@ -20,6 +20,6 @@ $humidity = mt_rand(450, 550) / 10.0; // Humidity in percentage (45.0 to 55.0).
 $reading = new ClearSky\AtmosphericConditions($temperature, $humidity);
 
 // Report this reading to the weather station.
-$weatherStation->report('sensor-1', $reading);
+$weatherStation->report('sensor v1', $reading);
 
 echo "sensor v1: sent reading to weather station\n";

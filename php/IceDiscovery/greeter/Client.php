@@ -20,6 +20,6 @@ $communicator = Ice\initialize($initData);
 $greeter = VisitorCenter\GreeterPrxHelper::createProxy($communicator, 'greeter');
 
 // Send a request to the remote object and get the response.
-$greeting = $greeter->greet(get_current_user());
+$greeting = $greeter->greet(getenv('USER') ?: getenv('USERNAME') ?: 'guest');
 
 echo "$greeting\n";

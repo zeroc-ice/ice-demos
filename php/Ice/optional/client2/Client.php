@@ -2,7 +2,7 @@
 // Copyright (c) ZeroC, Inc.
 
 require_once 'Ice.php';
-require_once 'WeatherStation2.php';
+require_once 'WeatherStation.php';
 
 // Create an Ice communicator. We'll use this communicator to create proxies and manage outgoing connections.
 // This communicator is destroyed automatically at the end of the script.
@@ -21,6 +21,6 @@ $pressure = mt_rand(10000, 10500) / 10.0; // Pressure in millibars (1,000.0 to 1
 $reading = new ClearSky\AtmosphericConditions($temperature, $humidity, $pressure);
 
 // Report this reading to the weather station.
-$weatherStation->report('sensor-2', $reading);
+$weatherStation->report('sensor v2', $reading);
 
 echo "sensor v2: sent reading to weather station\n";

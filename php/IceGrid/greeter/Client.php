@@ -20,7 +20,7 @@ $communicator->setDefaultLocator(
 $greeter = VisitorCenter\GreeterPrxHelper::createProxy($communicator, 'greeter');
 
 // Send a request to the remote object and get the response.
-$greeting = $greeter->greet(get_current_user());
+$greeting = $greeter->greet(getenv('USER') ?: getenv('USERNAME') ?: 'guest');
 echo "$greeting\n";
 
 // Send another request to the remote object. With the default configuration we use for this client, this request

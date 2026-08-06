@@ -14,7 +14,7 @@ $communicator = Ice\initialize($argv);
 // or IP address.
 $greeter = VisitorCenter\GreeterPrxHelper::createProxy($communicator, 'greeter:tcp -h localhost -p 4061');
 
-$names = [get_current_user(), '', 'alice', 'bob', 'carol', 'dave', 'billy bob'];
+$names = [getenv('USER') ?: getenv('USERNAME') ?: 'guest', '', 'alice', 'bob', 'carol', 'dave', 'billy bob'];
 
 foreach ($names as $name) {
     try {
