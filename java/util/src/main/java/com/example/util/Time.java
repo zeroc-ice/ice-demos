@@ -3,10 +3,10 @@
 package com.example.util;
 
 public class Time {
-    // daysBeforeEpoch converted to milliseconds
-    private static final long MILLIS_BEFORE_EPOCH = 719162 * 24 * 60 * 60 * 1000;
+    // Days before epoch converted to milliseconds.
+    private static final long MILLIS_BEFORE_EPOCH = 719_162L * 24 * 60 * 60 * 1000;
 
-    // number of ticks per millisecond
+    // Number of ticks per millisecond.
     private static final long TICKS_PER_MILLISECOND = 10_000;
 
     /**
@@ -16,7 +16,7 @@ public class Time {
      * @return The time stamp.
      */
     public static long toTimeStamp(java.time.ZonedDateTime dateTime) {
-        return dateTime.toInstant().toEpochMilli() * TICKS_PER_MILLISECOND + MILLIS_BEFORE_EPOCH;
+        return (dateTime.toInstant().toEpochMilli() + MILLIS_BEFORE_EPOCH) * TICKS_PER_MILLISECOND;
     }
 
     /**
@@ -26,7 +26,7 @@ public class Time {
      * @return The zoned date time.
      */
     public static java.time.ZonedDateTime toZonedDateTime(long timeStamp) {
-        long epochMilli = (timeStamp - MILLIS_BEFORE_EPOCH) / TICKS_PER_MILLISECOND;
+        long epochMilli = (timeStamp / TICKS_PER_MILLISECOND) - MILLIS_BEFORE_EPOCH;
         return java.time.Instant.ofEpochMilli(epochMilli).atZone(java.time.ZoneOffset.UTC);
     }
 
