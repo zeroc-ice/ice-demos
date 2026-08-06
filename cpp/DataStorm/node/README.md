@@ -35,7 +35,7 @@ cmake --build build
 
 ## Running the demo
 
-To run the demo, start a DataStorm node:
+To run the demo, start a DataStorm node from this demo's directory:
 
 ```shell
 dsnode --Ice.Config=node.conf

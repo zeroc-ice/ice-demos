@@ -29,7 +29,7 @@ To build the demo, run:
 
 ## Running the demo
 
-First, run the IceStorm service in its own terminal:
+First, run the IceStorm service in its own terminal, from this demo's directory:
 
 ```shell
 icebox --IceBox.Service.IceStorm="IceStormService,39a0:createIceStorm --Ice.Config=icestorm.conf"

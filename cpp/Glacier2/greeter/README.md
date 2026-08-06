@@ -54,7 +54,7 @@ cmake --build build
    build\server
    ```
 
-2. Start the Glacier2 router in its own terminal:
+2. Start the Glacier2 router in its own terminal, from this demo's directory:
 
    ```shell
    glacier2router --Ice.Config=glacier2.conf

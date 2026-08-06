@@ -43,7 +43,7 @@ cmake --build build
 
 ## Running the demo
 
-1. Start the IceStorm service in its own terminal:
+1. Start the IceStorm service in its own terminal, from this demo's directory:
 
    ```shell
    icebox --IceBox.Service.IceStorm="IceStormService,39a0:createIceStorm --Ice.Config=icestorm.conf"

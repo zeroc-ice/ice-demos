@@ -34,7 +34,7 @@ cd Server
 dotnet run
 ```
 
-Then, start the Glacier2 router in its own terminal:
+Then, start the Glacier2 router in its own terminal, from this demo's directory:
 
 ```shell
 glacier2router --Ice.Config=glacier2.conf

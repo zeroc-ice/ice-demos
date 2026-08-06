@@ -22,19 +22,19 @@ dotnet build
 
 ## Running the demo
 
-Start the IceGrid registry in its own terminal:
+Start the IceGrid registry in its own terminal, from this demo's directory:
 
 ```shell
 icegridregistry --Ice.Config=registry.conf
 ```
 
-Next, start the IceGrid node in its own terminal:
+Next, start the IceGrid node in its own terminal, from this demo's directory:
 
 ```shell
 icegridnode --Ice.Config=node.conf
 ```
 
-Deploy the "GreeterHall" application in this IceGrid deployment:
+From this demo's directory, deploy the "GreeterHall" application in this IceGrid deployment:
 
 ```shell
 icegridadmin --Ice.Config=admin.conf -e "application add greeter-hall.xml"
