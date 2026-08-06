@@ -1,2 +1,5 @@
 # MacOS Finder index
 .DS_STORE
+
+# Auto-generated VS Code launch configurations
+.vscode/launch.json
