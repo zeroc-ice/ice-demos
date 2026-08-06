@@ -29,7 +29,8 @@ class AtmosphericConditions
 ## Building and running the demo
 
 Ice for Ruby supports only client-side applications. As a result, you first need to start an Ice Optional server
-implemented in a language with server-side support, such as Python, Java, or C#.
+implemented in a language with server-side support (C++, C#, Java, Python, or Swift), for example the [Python Optional
+server](../../../python/Ice/optional): follow the instructions in its README to start this server.
 
 You can start either version 1 or version 2 of the server from the corresponding language directory (e.g.,
 `cpp/Ice/optional`, `python/Ice/optional`, etc.).

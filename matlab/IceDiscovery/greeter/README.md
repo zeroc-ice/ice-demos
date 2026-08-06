@@ -9,7 +9,8 @@ This demo illustrates how to use the IceDiscovery plug-in with Ice for MATLAB.
 ## Building and running the demo
 
 Ice for MATLAB supports only client-side applications. As a result, you first need to start a server implemented in a
-language with server-side support, such as Python, Java, or C#.
+language with server-side support (C++, C#, Java, Python, or Swift), for example the [Python IceDiscovery Greeter
+server](../../../python/IceDiscovery/greeter): follow the instructions in its README to start this server.
 
 You can start either the IceDiscovery Greeter server, or two or more IceDiscovery Replication servers.
 

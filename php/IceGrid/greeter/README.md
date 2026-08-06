@@ -22,8 +22,9 @@ flowchart LR
 
 ## Building and running the demo
 
-Ice for PHP supports only client-side applications. As a result, you first need to deploy the IceGrid Greeter
-server implemented in a language with server-side support, such as Python, Java, or C#.
+Ice for PHP supports only client-side applications. As a result, you first need to deploy the IceGrid Greeter server
+implemented in a language with server-side support (C++, C#, Java, Python, or Swift), for example the [Python IceGrid
+Greeter demo](../../../python/IceGrid/greeter): follow the instructions in its README to deploy this server.
 
 Then, in a new window:
 

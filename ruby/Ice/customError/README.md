@@ -11,8 +11,9 @@ value--there is naturally no throwing across the network.
 
 ## Building and running the demo
 
-Ice for Ruby supports only client-side applications. As a result, you first need to start a Greeter server implemented
-in a language with server-side support, such as Python, Java, or C#.
+Ice for Ruby supports only client-side applications. As a result, you first need to start a Custom Error server
+implemented in a language with server-side support (C++, C#, Java, Python, or Swift), for example the [Python Custom
+Error server](../../../python/Ice/customError): follow the instructions in its README to start this server.
 
 Then, in a separate window:
 

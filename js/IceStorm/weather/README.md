@@ -32,7 +32,8 @@ npm run build
 Ice for JavaScript has limited server-side support, and as a result, we can only implement the sensors in JavaScript.
 
 You first need to start IceStorm and the weather station(s) from a demo written in a language with full server-side
-support, such as C++, C#, Java, Python, or Swift.
+support (C++, C#, Java, Python, or Swift), for example the [Python Weather demo](../../../python/IceStorm/weather):
+follow the instructions in its README to start IceStorm and a weather station.
 
 In a separate terminal, start the sensor application:
 

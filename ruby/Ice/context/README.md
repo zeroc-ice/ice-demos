@@ -15,7 +15,8 @@ is free to set any entry in this dictionary.
 ## Building and running the demo
 
 Ice for Ruby supports only client-side applications. As a result, you first need to start a Context server implemented
-in a language with server-side support, such as Python, Java, or C#.
+in a language with server-side support (C++, C#, Java, Python, or Swift), for example the [Python Context
+server](../../../python/Ice/context): follow the instructions in its README to start this server.
 
 Then, in a separate window:
 

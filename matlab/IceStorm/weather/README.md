@@ -22,7 +22,8 @@ flowchart LR
 Ice for MATLAB supports only client-side applications, and as a result, we can only implement the sensors in MATLAB.
 
 You first need to start IceStorm and the weather station(s) from a demo written in a language with full server-side
-support, such as C++, Python, Java or C#.
+support (C++, C#, Java, Python, or Swift), for example the [Python Weather demo](../../../python/IceStorm/weather):
+follow the instructions in its README to start IceStorm and a weather station.
 
 Then, in the MATLAB console:
 

@@ -6,7 +6,8 @@ The demo provides a simple Android client that can be used with any of the Greet
 
 ## Getting Started
 
-First, start a Greeter server implemented in one of languages with server-side support, such as Python, Java, or C#.
+First, start a Greeter server implemented in a language with server-side support (C++, C#, Java, Python, or Swift), for
+example the [Java Greeter server](../greeter): follow the instructions in its README to start this server.
 
 Then, open Android Studio and import the `java/Ice/android-greeter` project.
 You can run the application on either an Android emulator or a physical Android device.
