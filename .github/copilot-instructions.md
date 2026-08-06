@@ -1,3 +1,5 @@
+# Copilot instructions
+
 This repository contains demo applications for the Ice framework. Each supported language has a corresponding top-level
 directory containing its demos. For example, the C++ demos are located in the `cpp` directory. Each of these
 directories contains a `README.md` file. Each README.md should contain a table of contents with links to the demos in the

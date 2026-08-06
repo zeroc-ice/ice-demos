@@ -38,4 +38,5 @@ Then, in a separate terminal, start the client application:
 ```shell
 ./gradlew :client:run --quiet
 ```
+
 [Application plugin]: https://docs.gradle.org/current/userguide/application_plugin.html

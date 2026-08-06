@@ -1,6 +1,9 @@
+<!-- The centered banner needs inline HTML, which also puts the first heading below it. -->
+<!-- markdownlint-disable MD033 MD041 -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/zeroc-ice/ice-demos/main/.github/assets/ice-banner.svg" height="150" width="150" />
+  <img src="https://raw.githubusercontent.com/zeroc-ice/ice-demos/main/.github/assets/ice-banner.svg" height="150" width="150" alt="Ice banner" />
 </p>
+<!-- markdownlint-enable MD033 MD041 -->
 
 [![CI](https://github.com/zeroc-ice/ice-demos/actions/workflows/ci.yml/badge.svg)][ci-home]
 [![GPLv2](https://img.shields.io/github/license/zeroc-ice/ice-demos?color=red)][GPLv2]
