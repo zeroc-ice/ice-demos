@@ -22,7 +22,8 @@ npm run build
 First, start the server application.
 
 Ice for JavaScript has limited server-side support. As a result, you need to start a Config server implemented in a
-language that fully supports server-side functionality, such as C++, C#, Java, Python, or Swift.
+language that fully supports server-side functionality (C++, C#, Java, Python, or Swift), for example the [Python
+Config server](../../../python/Ice/config): follow the instructions in its README to start this server.
 
 > [!IMPORTANT]
 > Pass `--Ice.Default.Protocol=ws` to the server to instruct it to use the `ws` protocol required for communication

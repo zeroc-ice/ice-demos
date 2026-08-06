@@ -21,7 +21,8 @@ npm run build
 First, start the server application.
 
 Ice for JavaScript has limited server-side support. As a result, you need to start a Context server implemented in a
-language that fully supports server-side functionality, such as C++, C#, Java, Python, or Swift.
+language that fully supports server-side functionality (C++, C#, Java, Python, or Swift), for example the [Python
+Context server](../../../python/Ice/context): follow the instructions in its README to start this server.
 
 In a separate terminal, start the client application:
 

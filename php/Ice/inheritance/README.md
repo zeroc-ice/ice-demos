@@ -8,8 +8,9 @@ The Inheritance demo shows how to write a simple filesystem application using in
 
 ## Building and running the demo
 
-Ice for PHP supports only client-side applications. As a result, you first need to start a Inheritance server
-implemented in a language with server-side support, such as Python, Java, or C#.
+Ice for PHP supports only client-side applications. As a result, you first need to start an Inheritance server
+implemented in a language with server-side support (C++, C#, Java, Python, or Swift), for example the [Python
+Inheritance server](../../../python/Ice/inheritance): follow the instructions in its README to start this server.
 
 Then, in a separate window:
 
