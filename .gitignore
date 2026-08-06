@@ -7,3 +7,6 @@ csharp/NuGet.Config
 .gradle-nightly/
 scripts/nightly-env.sh
 scripts/nightly-env.ps1
+
+# Auto-generated VS Code launch configurations
+.vscode/launch.json
