@@ -21,7 +21,7 @@ $slowGreeter = VisitorCenter\GreeterPrxHelper::createProxy(
     "slowGreeter:tcp -h localhost -p 4061")->ice_invocationTimeout(4000);
 
 # Send a request to the regular greeter and get the response.
-$greeting = $greeter->greet(get_current_user());
+$greeting = $greeter->greet(getenv('USER') ?: getenv('USERNAME') ?: 'guest');
 echo $greeting . "\n";
 
 # Send a request to the slow greeter with the 4-second invocation timeout.
@@ -29,7 +29,7 @@ try {
     $greeting = $slowGreeter->greet("alice");
     echo "Received unexpected greeting: $greeting\n";
 } catch (Ice\InvocationTimeoutException $exception) {
-    echo "Caught InvocationTimeoutException, as expected: $exception->getMessage()\n";
+    echo "Caught InvocationTimeoutException, as expected: " . $exception->getMessage() . "\n";
 }
 
 # Verify the regular greeter still works.
