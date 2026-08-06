@@ -27,12 +27,6 @@ follow the instructions in its README to start IceStorm and a weather station.
 
 Then, in a separate window:
 
-- Go to the IceStorm/weather directory
-
-```shell
-cd php/IceStorm/weather
-```
-
 - Compile the WeatherStation.ice file with the Slice compiler for PHP
 
 ```shell

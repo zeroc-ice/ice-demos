@@ -14,7 +14,7 @@ server](../../../python/Ice/config): follow the instructions in its README to st
 
 Then, in the MATLAB console:
 
-- Go to the Ice/config directory
+- Go to the matlab/Ice/config directory
 
 ```shell
 cd matlab/Ice/config

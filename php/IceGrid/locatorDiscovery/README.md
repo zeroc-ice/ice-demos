@@ -15,12 +15,6 @@ Greeter demo](../../../python/IceGrid/greeter): follow the instructions in its R
 
 Then, in a new window:
 
-- Go to the IceGrid/locatorDiscovery directory
-
-```shell
-cd php/IceGrid/locatorDiscovery
-```
-
 - Compile the Greeter.ice file with the Slice compiler for PHP
 
 ```shell

@@ -36,4 +36,4 @@ In a separate terminal, start the client application:
 npm run dev
 ```
 
-Open a web browser and navigate to http://localhost:5173 (or the URL shown in the terminal).
+Open a web browser and navigate to <http://localhost:5173> (or the URL shown in the terminal).

@@ -15,7 +15,7 @@ Greeter demo](../../../python/IceGrid/greeter): follow the instructions in its R
 
 Then, in the MATLAB console:
 
-- Go to the IceGrid/locatorDiscovery directory
+- Go to the matlab/IceGrid/locatorDiscovery directory
 
 ```shell
 cd matlab/IceGrid/locatorDiscovery
