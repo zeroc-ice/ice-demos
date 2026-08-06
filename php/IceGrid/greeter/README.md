@@ -28,12 +28,6 @@ Greeter demo](../../../python/IceGrid/greeter): follow the instructions in its R
 
 Then, in a new window:
 
-- Go to the IceGrid/greeter directory
-
-```shell
-cd php/IceGrid/greeter
-```
-
 - Compile the Greeter.ice file with the Slice compiler for PHP
 
 ```shell

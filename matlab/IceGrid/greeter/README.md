@@ -28,7 +28,7 @@ Greeter demo](../../../python/IceGrid/greeter): follow the instructions in its R
 
 Then, in the MATLAB console:
 
-- Go to the IceGrid/greeter directory
+- Go to the matlab/IceGrid/greeter directory
 
 ```shell
 cd matlab/IceGrid/greeter

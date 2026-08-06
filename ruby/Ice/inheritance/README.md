@@ -1,4 +1,4 @@
-# Inheritance
+# Ice Inheritance
 
 The Inheritance demo shows how to write a simple filesystem application using interface inheritance.
 

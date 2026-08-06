@@ -17,7 +17,7 @@ Error server](../../../python/Ice/customError): follow the instructions in its R
 
 Then, in the MATLAB console:
 
-- Go to the Ice/customError directory
+- Go to the matlab/Ice/customError directory
 
 ```shell
 cd matlab/Ice/customError

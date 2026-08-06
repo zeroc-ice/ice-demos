@@ -14,7 +14,7 @@ Inheritance server](../../../python/Ice/inheritance): follow the instructions in
 
 Then, in the MATLAB console:
 
-- Go to the Ice/inheritance directory
+- Go to the matlab/Ice/inheritance directory
 
 ```shell
 cd matlab/Ice/inheritance

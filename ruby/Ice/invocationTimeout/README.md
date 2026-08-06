@@ -1,4 +1,4 @@
-# InvocationTimeout
+# Ice Invocation Timeout
 
 This demo demonstrates how to set a timeout period for a client as well as how to catch a timeout exception.
 

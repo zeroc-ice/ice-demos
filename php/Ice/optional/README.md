@@ -36,16 +36,16 @@ You can start either version 1 or version 2 of the server.
 
 Then, in a separate window:
 
-- Go to the Ice/optional/client1 or client2 directory
+- Go to the client1 or client2 directory
 
 ```shell
-cd php/Ice/optional/client1
+cd client1
 ```
 
 or
 
 ```shell
-cd php/Ice/optional/client2
+cd client2
 ```
 
 - Compile the WeatherStation.ice file with the Slice compiler for PHP

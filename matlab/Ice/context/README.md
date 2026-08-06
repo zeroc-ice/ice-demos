@@ -20,7 +20,7 @@ server](../../../python/Ice/context): follow the instructions in its README to s
 
 Then, in the MATLAB console:
 
-- Go to the Ice/context directory
+- Go to the matlab/Ice/context directory
 
 ```shell
 cd matlab/Ice/context
