@@ -23,10 +23,10 @@ def listRecursive(dir, depth)
         subdir = Filesystem::DirectoryPrx::checkedCast(node)
         print indent + node.name()
         if subdir
-            puts "(directory):"
+            puts " (directory):"
             listRecursive(subdir, depth)
         else
-            puts "(file):"
+            puts " (file):"
 
             # We assume it's a file if it's not a directory.
             file = Filesystem::FilePrx::uncheckedCast(node)

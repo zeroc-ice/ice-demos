@@ -26,7 +26,7 @@ Ice.initialize(ARGV) do |communicator|
             greeting = greeter.greet(name)
             puts greeting
         rescue Ice::DispatchException => exception
-            # Converts exception.replyStatus to an Ice.ReplyStatus enumerator. This fails when
+            # Converts exception.replyStatus to an Ice.ReplyStatus enumerator. from_int returns nil when
             # exception.replyStatus does not correspond to a known enumerator.
             replyStatus = Ice::ReplyStatus.from_int(exception.replyStatus)
             puts "Failed to create a greeting for '#{name}': DispatchException { message = '#{exception.message}', "\
