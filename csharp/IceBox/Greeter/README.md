@@ -27,7 +27,9 @@ First, start the iceboxnet server:
 dotnet iceboxnet --IceBox.Service.Greeter="Service/bin/Debug/net8.0/GreeterService.dll:Service.GreeterService --Ice.Trace.Dispatch"
 ```
 
-The command above configures iceboxnet to load the Greeter service from the GreeterService assembly.
+The command above configures iceboxnet to load the Greeter service from the GreeterService assembly. The path
+corresponds to the default Debug configuration; if you build the demo with `dotnet build -c Release`, replace `Debug`
+with `Release` in the path.
 
 In a separate terminal, start the Client program:
 
