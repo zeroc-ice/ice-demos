@@ -96,11 +96,9 @@ do {
     // The pokeBox proxy no longer works as it was created with the token of an old session.
     _ = try await pokeBox.getInventory()
     print("Error: the PokeBox proxy should not work with a new session!")
-} catch let error as Ice.DispatchException {
-    if error.replyStatus == ReplyStatus.unauthorized.rawValue {
-        // See code in SharedPokeBox.getUserId.
-        print("The PokeBox proxy remains unusable, as expected.")
-    } else {
-        throw error
-    }
+} catch let error as Ice.DispatchException
+    where error.replyStatus == ReplyStatus.unauthorized.rawValue
+{
+    // See code in SharedPokeBox.getUserId.
+    print("The PokeBox proxy remains unusable, as expected.")
 }

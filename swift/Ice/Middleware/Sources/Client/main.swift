@@ -24,12 +24,11 @@ let validToken = "iced tea"
 do {
     let unexpected = try await greeter.greet(NSUserName(), context: ["token": "pineapple"])
     print("Received unexpected greeting: \(unexpected)")
-} catch let error as DispatchException {
-    // An Unauthorized error is expected with an invalid (or missing) token; rethrow anything else.
+} catch let error as DispatchException
+    where error.replyStatus == ReplyStatus.unauthorized.rawValue
+{
+    // An Unauthorized error is expected with an invalid (or missing) token; any other error propagates to the caller.
     // See AuthorizationMiddleware.
-    if error.replyStatus != ReplyStatus.unauthorized.rawValue {
-        throw error
-    }
 }
 
 // Send a request with the correct token in the request context.
