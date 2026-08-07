@@ -119,7 +119,7 @@ async def main():
             await pokeBox.releaseAllAsync()
 
         # Exiting, closing the connection, or calling destroyAsync on the session terminates both PokeSession and the
-        # internal session state maintained by the Glacier router.
+        # internal session state maintained by the Glacier2 router.
         print("Destroying the session...")
         await pokeSession.destroyAsync()
 
@@ -135,6 +135,7 @@ async def main():
         # Create a new session. This allows us to reach the PokeBox object again.
         print("Creating a new session...")
         session = await router.createSessionAsync(userId, "password")
+        assert session is not None
 
         try:
             # The pokeBox proxy no longer works as it was created with the token of an old session.
