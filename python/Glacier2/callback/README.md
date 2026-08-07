@@ -38,7 +38,7 @@ uv run main.py
 
 ### 3. Start the Glacier2 router
 
-In a separate terminal, navigate to the demo directory (`python/Glacier2/callback`) and run:
+Start a new terminal, navigate to the demo directory (`python/Glacier2/callback`), and run:
 
 ```shell
 glacier2router --Ice.Config=glacier2.conf

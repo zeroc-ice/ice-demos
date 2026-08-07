@@ -21,7 +21,7 @@ dotnet build
 
 ## Running the demo
 
-First, start the iceboxnet server:
+First, start the iceboxnet server from this demo's directory:
 
 ```shell
 dotnet iceboxnet --IceBox.Service.Greeter="Service/bin/Debug/net8.0/GreeterService.dll:Service.GreeterService --Ice.Trace.Dispatch"
