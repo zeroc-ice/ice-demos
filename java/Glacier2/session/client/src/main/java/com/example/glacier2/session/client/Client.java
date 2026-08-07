@@ -27,7 +27,7 @@ class Client {
         "Primeape"
     };
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws PermissionDeniedException, CannotCreateSessionException {
 
         // Retrieve the user ID for this run.
         final String userId = args.length > 0 ? args[0] : System.getProperty("user.name");
@@ -45,13 +45,7 @@ class Client {
             // Create a session with the Glacier2 router. In this demo, the Glacier2 router is configured to accept any
             // username/password combination. This call establishes a network connection to the Glacier2 router; the
             // lifetime of the session is the same as the lifetime of the connection.
-            SessionPrx session;
-            try {
-                session = router.createSession(userId, "password");
-            } catch (PermissionDeniedException | CannotCreateSessionException e) {
-                System.out.println("Could not create session: " + e.getMessage());
-                return;
-            }
+            SessionPrx session = router.createSession(userId, "password");
 
             // We configured a SessionManager on the Glacier2 router, so 'session' is a non-null 'PokeSession'.
             PokeSessionPrx pokeSession = PokeSessionPrx.uncheckedCast(session);
@@ -62,12 +56,12 @@ class Client {
             assert pokeBox != null;
 
             int currentCount = pokeBox.getInventory().size();
-            System.out.println(userId + "'s PokeBox contains " + currentCount + " Pokemon.");
+            System.out.println(userId + "'s PokeBox contains " + currentCount + " Pokémon.");
 
             // Catch a few Pokémon.
             var randomSource = new java.util.Random();
             int addCount = randomSource.nextInt(6) + 1;
-            System.out.println("Catching " + addCount + " Pokemon... ");
+            System.out.println("Catching " + addCount + " Pokémon... ");
             List<String> newPokemon = randomSource.ints(addCount, 0, ALL_POKEMON.length)
                 .mapToObj(i -> ALL_POKEMON[i])
                 .toList();
@@ -75,13 +69,13 @@ class Client {
 
             // Display the contents of the PokeBox.
             List<String> inventory = pokeBox.getInventory();
-            System.out.println(userId + "'s PokeBox now holds " + inventory.size() + " Pokemon:");
+            System.out.println(userId + "'s PokeBox now holds " + inventory.size() + " Pokémon:");
             for (String pokemon : inventory) {
                 System.out.println("\t" + pokemon);
             }
 
             if (inventory.size() > 10) {
-                System.out.println("Oh no! All the Pokemon escaped!");
+                System.out.println("Oh no! All the Pokémon escaped!");
                 pokeBox.releaseAll();
             }
 
@@ -102,12 +96,8 @@ class Client {
 
             // Create a new session. This allows us to reach the PokeBox object again.
             System.out.println("Creating a new session...");
-            try {
-                session = router.createSession(userId, "password");
-            } catch (PermissionDeniedException | CannotCreateSessionException e) {
-                System.out.println("Could not create new session: " + e.getMessage());
-                return;
-            }
+            session = router.createSession(userId, "password");
+            assert session != null;
 
             try {
                 // The pokeBox proxy no longer works as it was created with the token of an old session.
