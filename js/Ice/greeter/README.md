@@ -29,4 +29,5 @@ node client.js
 > Ice for JavaScript has limited server-side support. By default, the client connects to a Greeter server hosted by
 > ZeroC at `hello.zeroc.com`; as a result, you don't need to start a Greeter server to run this demo. If you want to
 > use your own Greeter server (implemented in a language with full server-side support, such as C++, C#, Java, Python,
-> or Swift), replace `hello.zeroc.com` with `localhost` in the proxy string in `client.ts`.
+> or Swift), edit the proxy string in `client.ts`: replace `hello.zeroc.com` with `localhost` for a server running on
+> the same computer, or with the server's hostname or IP address for a server running on another computer.
