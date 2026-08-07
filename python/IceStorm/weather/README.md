@@ -20,7 +20,7 @@ flowchart LR
 
 ## Start IceStorm service
 
-Run the IceStorm service in its own terminal:
+Start a new terminal, navigate to the demo directory (`python/IceStorm/weather`), and run the IceStorm service:
 
 ```shell
 icebox --IceBox.Service.IceStorm="IceStormService,39a0:createIceStorm --Ice.Config=icestorm.conf"

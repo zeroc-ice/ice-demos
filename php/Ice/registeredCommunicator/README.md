@@ -41,7 +41,7 @@ Then, in a separate window:
 - Run the web server using Docker Compose
 
   ```shell
-  docker-compose up
+  docker compose up
   ```
 
 - Open your Web Browser

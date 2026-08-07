@@ -36,16 +36,16 @@ You can start either version 1 or version 2 of the server.
 
 Then, in a separate window:
 
-- Go to the Ice/optional/client1 or client2 directory
+- Go to the client1 or client2 directory
 
 ```shell
-cd php/Ice/optional/client1
+cd client1
 ```
 
 or
 
 ```shell
-cd php/Ice/optional/client2
+cd client2
 ```
 
 - Compile the WeatherStation.ice file with the Slice compiler for PHP
@@ -60,6 +60,11 @@ slice2php WeatherStation.ice
 php Client.php
 ```
 
-Thanks to `optional`, version 1 and version 2 of the clients and servers interoperate seamlessly.
+Thanks to `optional`, version 1 and version 2 of the clients and servers interoperate seamlessly:
+
+|               | Server v1                                            | Server v2                          |
+|---------------|------------------------------------------------------|------------------------------------|
+| **Client v1** | The reading has no pressure field.                   | The reading's pressure is not set. |
+| **Client v2** | The server ignores the pressure sent by the client.  | The reading includes the pressure. |
 
 [Ice for PHP installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-php

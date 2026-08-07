@@ -36,7 +36,7 @@ You can start either version 1 or version 2 of the server.
 
 Then, in the MATLAB console:
 
-- Go to the Ice/optional/client1 or client2 directory
+- Go to the matlab/Ice/optional/client1 or client2 directory
 
 ```shell
 cd matlab/Ice/optional/client1
@@ -60,6 +60,11 @@ slice2matlab WeatherStation.ice
 client
 ```
 
-Thanks to `optional`, version 1 and version 2 of the clients and servers interoperate seamlessly.
+Thanks to `optional`, version 1 and version 2 of the clients and servers interoperate seamlessly:
+
+|               | Server v1                                            | Server v2                          |
+|---------------|------------------------------------------------------|------------------------------------|
+| **Client v1** | The reading has no pressure field.                   | The reading's pressure is not set. |
+| **Client v2** | The server ignores the pressure sent by the client.  | The reading includes the pressure. |
 
 [Ice for MATLAB installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-matlab

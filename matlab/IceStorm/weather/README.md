@@ -27,7 +27,7 @@ follow the instructions in its README to start IceStorm and a weather station.
 
 Then, in the MATLAB console:
 
-- Go to the IceStorm/weather directory
+- Go to the matlab/IceStorm/weather directory
 
 ```shell
 cd matlab/IceStorm/weather

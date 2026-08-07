@@ -32,21 +32,20 @@ Ice for Ruby supports only client-side applications. As a result, you first need
 implemented in a language with server-side support (C++, C#, Java, Python, or Swift), for example the [Python Optional
 server](../../../python/Ice/optional): follow the instructions in its README to start this server.
 
-You can start either version 1 or version 2 of the server from the corresponding language directory (e.g.,
-`cpp/Ice/optional`, `python/Ice/optional`, etc.).
+You can start either version 1 or version 2 of the server.
 
-Once you have a server running, you can run the Ruby clients:
+Then, in a separate window:
 
 - Go to the client1 or client2 directory:
 
 ```shell
-cd ruby/Ice/optional/client1
+cd client1
 ```
 
 or
 
 ```shell
-cd ruby/Ice/optional/client2
+cd client2
 ```
 
 - Compile the WeatherStation.ice file with the Slice compiler for Ruby:
@@ -61,6 +60,11 @@ slice2rb WeatherStation.ice
 ruby client.rb
 ```
 
-Thanks to `optional`, version 1 and version 2 of the clients and servers interoperate seamlessly.
+Thanks to `optional`, version 1 and version 2 of the clients and servers interoperate seamlessly:
+
+|               | Server v1                                            | Server v2                          |
+|---------------|------------------------------------------------------|------------------------------------|
+| **Client v1** | The reading has no pressure field.                   | The reading's pressure is not set. |
+| **Client v2** | The server ignores the pressure sent by the client.  | The reading includes the pressure. |
 
 [Ice for Ruby installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-ruby
