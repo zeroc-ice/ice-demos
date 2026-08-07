@@ -40,6 +40,10 @@ From this demo's directory, deploy the "GreeterHall" application in this IceGrid
 icegridadmin --Ice.Config=admin.conf -e "application add greeter-hall.xml"
 ```
 
+`greeter-hall.xml` configures the IceBox server to load the Greeter service from
+`Service/bin/Debug/net8.0/GreeterService.dll`, the assembly produced by `dotnet build` with the default Debug
+configuration; if you build the demo with `dotnet build -c Release`, update the `entry` path in this file.
+
 Finally, run the client application:
 
 ```shell
