@@ -34,7 +34,7 @@ cmake --build build
 
 ## Running the demo
 
-To run this demo, open two terminal windows. In the first window:
+To run this demo, open two terminal windows in this demo's directory. In the first window:
 
 **Linux/macOS:**
 

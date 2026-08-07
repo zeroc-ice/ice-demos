@@ -46,19 +46,19 @@ cmake --build build
 
 ## Running the demo
 
-1. Start the IceGrid registry in its own terminal:
+1. Start the IceGrid registry in its own terminal, from this demo's directory:
 
    ```shell
    icegridregistry --Ice.Config=registry.conf
    ```
 
-2. Start the IceGrid node in its own terminal:
+2. Start the IceGrid node in its own terminal, from this demo's directory:
 
    ```shell
    icegridnode --Ice.Config=node.conf
    ```
 
-3. Deploy the "GreeterHall" application in this IceGrid deployment:
+3. From this demo's directory, deploy the "GreeterHall" application in this IceGrid deployment:
 
    ```shell
    icegridadmin --Ice.Config=admin.conf -e "application add greeter-hall.xml"

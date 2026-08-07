@@ -37,7 +37,7 @@ Start the Server program in its own terminal:
 ./gradlew :server:run --quiet
 ```
 
-Next, start the Glacier2 router in its own terminal:
+Next, start the Glacier2 router in its own terminal, from this demo's directory:
 
 ```shell
 glacier2router --Ice.Config=glacier2.conf

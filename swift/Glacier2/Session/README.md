@@ -33,7 +33,7 @@ a connection to the server, because the server is on a separate network.
    swift run Server
    ```
 
-3. Start the Glacier2 router in its own terminal:
+3. Start the Glacier2 router in its own terminal, from this demo's directory:
 
    ```shell
    glacier2router --Ice.Config=glacier2.conf
