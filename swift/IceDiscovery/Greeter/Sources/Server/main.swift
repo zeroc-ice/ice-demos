@@ -12,7 +12,7 @@ let properties = try Ice.createProperties(CommandLine.arguments)
 properties.setProperty(key: "Ice.Plugin.IceDiscovery", value: "1")
 
 // Configure the object adapter GreeterAdapter. It must be an indirect object adapter (i.e., with an AdapterId
-// property); otherwise, the IceDiscovery plugin can't make it discoverable by IceDiscovery clients.
+// property); otherwise, the IceDiscovery plug-in can't make it discoverable by IceDiscovery clients.
 properties.setProperty(key: "GreeterAdapter.AdapterId", value: "greeterAdapterId")
 
 // Configure the GreeterAdapter to listen on TCP with an OS-assigned port. We don't need a fixed port since the clients
@@ -37,7 +37,7 @@ let adapter = try communicator.createObjectAdapter("GreeterAdapter")
 // Register the Chatbot servant with the adapter.
 try adapter.add(servant: Chatbot(), id: Ice.Identity(name: "greeter"))
 
-// Start dispatching requests. This method also registers the object adapter with the IceDiscovery plugin.
+// Start dispatching requests. This method also registers the object adapter with the IceDiscovery plug-in.
 try adapter.activate()
 print("Listening...")
 

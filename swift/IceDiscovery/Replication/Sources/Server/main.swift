@@ -16,7 +16,7 @@ properties.setProperty(key: "Ice.Plugin.IceDiscovery", value: "1")
 let uuid = UUID().uuidString
 
 // Configure the object adapter GreeterAdapter. It must be an indirect object adapter (i.e., with an AdapterId
-// property); otherwise, the IceDiscovery plugin can't make it discoverable by IceDiscovery clients.
+// property); otherwise, the IceDiscovery plug-in can't make it discoverable by IceDiscovery clients.
 // We also set the ReplicaGroupId property to "greeterPool" to enable replication.
 properties.setProperty(key: "GreeterAdapter.AdapterId", value: "greeter-\(uuid)")
 properties.setProperty(key: "GreeterAdapter.ReplicaGroupId", value: "greeterPool")
@@ -45,7 +45,7 @@ let adapter = try communicator.createObjectAdapter("GreeterAdapter")
 let greeterName = String(uuid.suffix(4))
 try adapter.add(servant: Chatbot(greeterName: greeterName), id: Ice.Identity(name: "greeter"))
 
-// Start dispatching requests. This method also registers the object adapter with the IceDiscovery plugin.
+// Start dispatching requests. This method also registers the object adapter with the IceDiscovery plug-in.
 try adapter.activate()
 print("Listening...")
 
