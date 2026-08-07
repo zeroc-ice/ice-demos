@@ -8,7 +8,7 @@ require 'Ice'
 # name.
 require_relative 'Greeter.rb'
 
-# Configure the communicator to load the IceDiscovery plugin during initialization. This plugin installs a default
+# Configure the communicator to load the IceDiscovery plug-in during initialization. This plug-in installs a default
 # locator on the communicator.
 initData = Ice::InitializationData.new()
 initData.properties = Ice.createProperties(ARGV)
@@ -18,7 +18,7 @@ initData.properties.setProperty("Ice.Plugin.IceDiscovery", "1")
 Ice.initialize(initData) do |communicator|
     # Create a proxy to the Greeter object hosted by the server(s). 'greeter' is a stringified proxy with no addressing
     # information, also known as a well-known proxy. It's resolved by the default locator installed by the IceDiscovery
-    # plugin.
+    # plug-in.
     greeter = VisitorCenter::GreeterPrx.new(communicator, "greeter")
 
     # Send a request to the remote object and get the response.
