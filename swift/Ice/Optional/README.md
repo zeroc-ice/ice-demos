@@ -56,4 +56,9 @@ and
 swift run Client2
 ```
 
-Thanks to `optional`, version 1 and version 2 of the clients and servers interoperate seamlessly.
+Thanks to `optional`, version 1 and version 2 of the clients and servers interoperate seamlessly:
+
+|               | Server v1                                            | Server v2                          |
+|---------------|------------------------------------------------------|------------------------------------|
+| **Client v1** | The reading has no pressure field.                   | The reading's pressure is not set. |
+| **Client v2** | The server ignores the pressure sent by the client.  | The reading includes the pressure. |
