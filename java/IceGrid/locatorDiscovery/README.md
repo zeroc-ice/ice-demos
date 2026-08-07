@@ -22,7 +22,7 @@ To build the demo, run:
 
 ## Running the demo
 
-First, build the [IceGrid/Greeter](../greeter) demo.
+First, build the [IceGrid/greeter](../greeter) demo.
 
 Then, run `icegridregistry`, `icegridnode`, and configure IceGrid using `icegridadmin` as per the IceGrid Greeter demo
 instructions.
