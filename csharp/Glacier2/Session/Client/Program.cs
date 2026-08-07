@@ -46,8 +46,8 @@ int currentCount = (await pokeBox.GetInventoryAsync()).Length;
 Console.WriteLine($"{userId}'s PokeBox contains {currentCount} Pokémon.");
 
 // Catch a few Pokémon.
-int addCount = RandomNumberGenerator.GetInt32(1, 6);
-Console.Write($"Catching {addCount} Pokémon... ");
+int addCount = RandomNumberGenerator.GetInt32(1, 7);
+Console.WriteLine($"Catching {addCount} Pokémon... ");
 var newPokemon = new List<string>();
 for (int i = 0; i < addCount; ++i)
 {
@@ -90,6 +90,7 @@ catch (Ice.ConnectionLostException)
 // Create a new session. This allows us to reach the PokeBox object again.
 Console.WriteLine("Creating a new session...");
 session = await router.createSessionAsync(userId, "password");
+Debug.Assert(session is not null);
 
 try
 {

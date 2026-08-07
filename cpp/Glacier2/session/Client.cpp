@@ -113,6 +113,7 @@ main(int argc, char* argv[])
     // Create a new session. This allows us to reach the PokeBox object again.
     cout << "Creating a new session..." << endl;
     session = router->createSession(userId, "password");
+    assert(session);
 
     try
     {
