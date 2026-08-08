@@ -27,4 +27,4 @@ jobs:
         run: npm install -g --ignore-scripts markdownlint-cli
 
       - name: Lint Markdown files
-        run: markdownlint --config .markdownlint.json **/*.md
+        run: markdownlint --config .markdownlint.json "**/*.md" ".github/**/*.md"
