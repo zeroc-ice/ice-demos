@@ -9,6 +9,9 @@ This demo provides two implementations for the server:
 
 The same client works with both.
 
+> [!NOTE]
+> On Windows, run all the commands below in Git Bash or PowerShell; they don't work in the cmd.exe Command Prompt.
+
 ## Building the demo
 
 The demo has three Gradle projects, **client**, **server**, and **serveramd**, all using the [application plugin].
@@ -16,27 +19,30 @@ The demo has three Gradle projects, **client**, **server**, and **serveramd**, a
 To build the demo, run:
 
 ```shell
-./gradlew build
+./gradlew installDist
 ```
+
+This creates a self-contained distribution under build/install/ for each application, with launcher scripts in its
+bin/ directory.
 
 ## Running the demo
 
 First, start one of the server applications:
 
 ```shell
-./gradlew :server:run --quiet
+./server/build/install/server/bin/server
 ```
 
 or
 
 ```shell
-./gradlew :serveramd:run --quiet
+./serveramd/build/install/serveramd/bin/serveramd
 ```
 
 Then, in a separate terminal, start the client application:
 
 ```shell
-./gradlew :client:run --quiet
+./client/build/install/client/bin/client
 ```
 
 [Application plugin]: https://docs.gradle.org/current/userguide/application_plugin.html
