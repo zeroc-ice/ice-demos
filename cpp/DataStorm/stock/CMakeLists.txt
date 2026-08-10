@@ -13,9 +13,10 @@ slice2cpp_generate(reader)
 target_link_libraries(reader PRIVATE Ice::Ice Ice::DataStorm)
 if(WIN32)
   add_custom_command(TARGET reader POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy -t $<TARGET_FILE_DIR:reader>
+    COMMAND ${CMAKE_COMMAND} -E copy
       $<TARGET_RUNTIME_DLLS:reader>
       $<GENEX_EVAL:$<TARGET_PROPERTY:Ice::Ice,ICE_RUNTIME_DLLS>>
+      $<TARGET_FILE_DIR:reader>
     COMMAND_EXPAND_LISTS
   )
   ice_copy_pdbs(reader)
@@ -26,9 +27,10 @@ slice2cpp_generate(writer)
 target_link_libraries(writer PRIVATE Ice::Ice Ice::DataStorm)
 if(WIN32)
   add_custom_command(TARGET writer POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy -t $<TARGET_FILE_DIR:writer>
+    COMMAND ${CMAKE_COMMAND} -E copy
       $<TARGET_RUNTIME_DLLS:writer>
       $<GENEX_EVAL:$<TARGET_PROPERTY:Ice::Ice,ICE_RUNTIME_DLLS>>
+      $<TARGET_FILE_DIR:writer>
     COMMAND_EXPAND_LISTS
   )
   ice_copy_pdbs(writer)

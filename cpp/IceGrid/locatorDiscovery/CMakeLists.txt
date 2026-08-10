@@ -9,9 +9,10 @@ slice2cpp_generate(client)
 target_link_libraries(client PRIVATE Ice::Ice Ice::IceLocatorDiscovery)
 if(WIN32)
   add_custom_command(TARGET client POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy -t $<TARGET_FILE_DIR:client>
+    COMMAND ${CMAKE_COMMAND} -E copy
       $<TARGET_RUNTIME_DLLS:client>
       $<GENEX_EVAL:$<TARGET_PROPERTY:Ice::Ice,ICE_RUNTIME_DLLS>>
+      $<TARGET_FILE_DIR:client>
     COMMAND_EXPAND_LISTS
   )
   ice_copy_pdbs(client)
