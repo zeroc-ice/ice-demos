@@ -1,0 +1,55 @@
+name: Certificates
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "certs/**"
+      - ".github/workflows/certs.yml"
+  schedule:
+    - cron: "0 6 * * 1" # Run weekly on Monday at 6am UTC
+
+permissions:
+  contents: read
+
+env:
+  # Fail this many days before a certificate actually expires, so there is time to sync the
+  # refreshed certificates from the ice repository.
+  EXPIRY_WARNING_DAYS: 30
+
+jobs:
+  expiry:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+
+      - name: Check test certificate expiry
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+
+          # The .der and .p12 files hold the same three certificates as the .pem files, so
+          # checking the PEMs covers the whole directory.
+          certs=(certs/*_cert.pem)
+          if [ ${#certs[@]} -eq 0 ]; then
+            echo "::error::no certificates found in certs/ - did the layout change?"
+            exit 1
+          fi
+
+          status=0
+          for cert in "${certs[@]}"; do
+            expiry=$(openssl x509 -enddate -noout -in "$cert" | cut -d= -f2)
+            if openssl x509 -checkend $((EXPIRY_WARNING_DAYS * 86400)) -noout -in "$cert" > /dev/null; then
+              echo "ok: $cert expires $expiry"
+            else
+              echo "::error file=$cert::expires $expiry, within $EXPIRY_WARNING_DAYS days"
+              status=1
+            fi
+          done
+
+          if [ $status -ne 0 ]; then
+            echo "::notice::refresh certs/ by copying certs/common/ca from the ice repository (see certs/README.md)"
+          fi
+          exit $status
