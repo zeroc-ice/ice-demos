@@ -16,6 +16,10 @@ flowchart LR
     Client ==> |greet request| Server
 ```
 
+> [!NOTE]
+> On Windows, run all the commands below in Git Bash or PowerShell; not all of them work in the cmd.exe Command
+> Prompt.
+
 ## Ice prerequisites
 
 - Install IceGrid. See [IceGrid installation].
@@ -72,7 +76,7 @@ icegridadmin --Ice.Config=admin.conf -e "application add greeter-hall-with-repli
 Finally, run the client application:
 
 ```shell
-./gradlew :client:run --quiet
+./client/build/install/client/bin/client
 ```
 
 [Application plugin]: https://docs.gradle.org/current/userguide/application_plugin.html
