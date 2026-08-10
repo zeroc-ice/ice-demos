@@ -17,6 +17,9 @@ flowchart LR
 The Forwarding server is generic and can be inserted between any client and server. In particular, the Forwarding server
 does not use any Slice generated code.
 
+> [!NOTE]
+> On Windows, run all the commands below in Git Bash or PowerShell; they don't work in the cmd.exe Command Prompt.
+
 ## Building the demo
 
 The demo has three Gradle projects, **client**, **forwardingserver** and **server**, all using the [application plugin].
@@ -24,27 +27,30 @@ The demo has three Gradle projects, **client**, **forwardingserver** and **serve
 To build the demo, run:
 
 ```shell
-./gradlew build
+./gradlew installDist
 ```
+
+This creates a self-contained distribution under build/install/ for each application, with launcher scripts in its
+bin/ directory.
 
 ## Running the demo
 
 First, start the server application:
 
 ```shell
-./gradlew :server:run --quiet --args="--Ice.Trace.Dispatch"
+./server/build/install/server/bin/server --Ice.Trace.Dispatch
 ```
 
 Next, in a separate terminal, start the forwarding server application:
 
 ```shell
-./gradlew :forwardingserver:run --quiet --args="--Ice.Trace.Dispatch"
+./forwardingserver/build/install/forwardingserver/bin/forwardingserver --Ice.Trace.Dispatch
 ```
 
 Finally, in a separate terminal, start the client application:
 
 ```shell
-./gradlew :client:run --quiet --args="--Ice.Trace.Network"
+./client/build/install/client/bin/client --Ice.Trace.Network
 ```
 
 [Application plugin]: https://docs.gradle.org/current/userguide/application_plugin.html

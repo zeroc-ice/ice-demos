@@ -9,7 +9,7 @@
       <!-- Describes the servers deployed on node1. IceGrid starts this server when a client looks up an object adapter
       or a well-known object in this server. Here, we deploy a single IceBox server named "IceBox". -->
       <icebox id="IceBox" activation="on-demand" exe="java">
-        <!-- Add the IceBox server's, and the Greeter service runtime dependencies to the class path.
+        <!-- Add the IceBox server's, and the Greeter service runtime dependencies to the classpath.
 
         The Gradle Application plugin's installDist task copies all required JARs into:
 
