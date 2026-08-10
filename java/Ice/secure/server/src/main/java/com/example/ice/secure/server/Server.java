@@ -2,7 +2,6 @@
 
 package com.example.ice.secure.server;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.KeyStore;
@@ -60,7 +59,7 @@ final class Server {
      * Creates and initializes an SSLContext for use with the SSL transport.
      *
      * <p>The SSLContext is configured with the server's certificate and private key, loaded from a PKCS12 keystore
-     * used as the key store to provide the server credentials.
+     * bundled with the application and used as the key store to provide the server credentials.
      *
      * @return the initialized SSLContext
      * @throws RuntimeException if an error occurs during SSL initialization
@@ -69,14 +68,14 @@ final class Server {
         try {
             SSLContext sslContext = SSLContext.getInstance("TLS");
             KeyStore keyStore = KeyStore.getInstance("PKCS12");
-            String keyStorePath = "../../../../certs/server.p12";
 
             // The password for the PKCS12 keystore, hard-coded for simplicity.
             // In a production environment, use a secure method to store and retrieve this password.
             char[] password = "password".toCharArray();
 
-            try (var input = new FileInputStream(keyStorePath)) {
-                keyStore.load(input, password);
+            // The build bundles server.p12 (from the top-level certs directory) into the application JAR.
+            try (var serverCred = Server.class.getResourceAsStream("/server.p12")) {
+                keyStore.load(serverCred, password);
             }
             KeyManagerFactory keyManagerFactory =
                 KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());

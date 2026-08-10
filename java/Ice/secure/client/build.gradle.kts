@@ -22,6 +22,12 @@ sourceSets {
         slice {
             srcDirs("../slice")
         }
+
+        // Package the CA certificate keystore from the top-level certs directory into the application JAR.
+        resources {
+            srcDir("../../../../certs")
+            include("ca.p12")
+        }
     }
 }
 
