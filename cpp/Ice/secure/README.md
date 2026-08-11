@@ -1,14 +1,15 @@
 # Ice Secure
 
-This demo shows how to programmatically configure the ssl transport in Ice C++ client and server applications.
+This demo illustrates how to set up secure connections programmatically: the client and server call the platform's
+native SSL API directly and rely on the test certificates from the shared `certs` directory.
 
-It demonstrates how the ssl transport can be configured using the platform's native SSL API:
+| Platform | Native SSL API   |
+| -------- | ---------------- |
+| Linux    | OpenSSL          |
+| Windows  | Schannel         |
+| macOS    | Secure Transport |
 
-- **OpenSSL** on Linux
-- **Schannel** on Windows
-- **Secure Transport** on macOS
-
-Because each platform provides a different SSL API, we implement the configuration logic for each one in a separate C++
+Because each platform provides a different SSL API, we implement the SSL setup code for each one in a separate C++
 source file to keep the code organized and modular:
 
 | File                        | Description                                             |

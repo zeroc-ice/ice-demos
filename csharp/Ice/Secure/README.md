@@ -1,6 +1,7 @@
 # Ice Secure
 
-This demo illustrates how to programmatically configure client and server applications to use SSL secure connections.
+This demo illustrates how to set up secure connections programmatically: the client and server call the .NET SSL API
+directly and rely on the test certificates from the shared `certs` directory.
 
 ## Building the demo
 

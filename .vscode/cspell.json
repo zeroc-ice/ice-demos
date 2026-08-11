@@ -5,6 +5,7 @@
         "Blobject",
         "icegrid",
         "pyright",
+        "Schannel",
         "signum",
         "visitorcenter",
         "zeroc"
