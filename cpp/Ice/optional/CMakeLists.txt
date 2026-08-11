@@ -9,9 +9,10 @@ slice2cpp_generate(client1)
 target_link_libraries(client1 PRIVATE Ice::Ice)
 if(WIN32)
   add_custom_command(TARGET client1 POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy -t $<TARGET_FILE_DIR:client1>
+    COMMAND ${CMAKE_COMMAND} -E copy
       $<TARGET_RUNTIME_DLLS:client1>
       $<GENEX_EVAL:$<TARGET_PROPERTY:Ice::Ice,ICE_RUNTIME_DLLS>>
+      $<TARGET_FILE_DIR:client1>
     COMMAND_EXPAND_LISTS
   )
   ice_copy_pdbs(client1)
@@ -22,9 +23,10 @@ slice2cpp_generate(client2)
 target_link_libraries(client2 PRIVATE Ice::Ice)
 if(WIN32)
   add_custom_command(TARGET client2 POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy -t $<TARGET_FILE_DIR:client2>
+    COMMAND ${CMAKE_COMMAND} -E copy
       $<TARGET_RUNTIME_DLLS:client2>
       $<GENEX_EVAL:$<TARGET_PROPERTY:Ice::Ice,ICE_RUNTIME_DLLS>>
+      $<TARGET_FILE_DIR:client2>
     COMMAND_EXPAND_LISTS
   )
   ice_copy_pdbs(client2)
@@ -35,9 +37,10 @@ slice2cpp_generate(server1)
 target_link_libraries(server1 PRIVATE Ice::Ice)
 if(WIN32)
   add_custom_command(TARGET server1 POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy -t $<TARGET_FILE_DIR:server1>
+    COMMAND ${CMAKE_COMMAND} -E copy
       $<TARGET_RUNTIME_DLLS:server1>
       $<GENEX_EVAL:$<TARGET_PROPERTY:Ice::Ice,ICE_RUNTIME_DLLS>>
+      $<TARGET_FILE_DIR:server1>
     COMMAND_EXPAND_LISTS
   )
   ice_copy_pdbs(server1)
@@ -48,9 +51,10 @@ slice2cpp_generate(server2)
 target_link_libraries(server2 PRIVATE Ice::Ice)
 if(WIN32)
   add_custom_command(TARGET server2 POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy -t $<TARGET_FILE_DIR:server2>
+    COMMAND ${CMAKE_COMMAND} -E copy
       $<TARGET_RUNTIME_DLLS:server2>
       $<GENEX_EVAL:$<TARGET_PROPERTY:Ice::Ice,ICE_RUNTIME_DLLS>>
+      $<TARGET_FILE_DIR:server2>
     COMMAND_EXPAND_LISTS
   )
   ice_copy_pdbs(server2)

@@ -9,9 +9,10 @@ slice2cpp_generate(client)
 target_link_libraries(client PRIVATE Ice::Ice)
 if(WIN32)
   add_custom_command(TARGET client POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy -t $<TARGET_FILE_DIR:client>
+    COMMAND ${CMAKE_COMMAND} -E copy
       $<TARGET_RUNTIME_DLLS:client>
       $<GENEX_EVAL:$<TARGET_PROPERTY:Ice::Ice,ICE_RUNTIME_DLLS>>
+      $<TARGET_FILE_DIR:client>
     COMMAND_EXPAND_LISTS
   )
   ice_copy_pdbs(client)
@@ -23,14 +24,16 @@ target_link_libraries(GreeterService PRIVATE Ice::Ice Ice::IceBox)
 if(WIN32)
   set_target_properties(GreeterService PROPERTIES DEBUG_POSTFIX "d")
   add_custom_command(TARGET GreeterService POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy -t $<TARGET_FILE_DIR:GreeterService>
+    COMMAND ${CMAKE_COMMAND} -E copy
       $<TARGET_RUNTIME_DLLS:GreeterService>
       $<GENEX_EVAL:$<TARGET_PROPERTY:Ice::Ice,ICE_RUNTIME_DLLS>>
+      $<TARGET_FILE_DIR:GreeterService>
     COMMAND_EXPAND_LISTS
   )
   add_custom_command(TARGET GreeterService POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy -t $<TARGET_FILE_DIR:GreeterService>
+    COMMAND ${CMAKE_COMMAND} -E copy
       $<TARGET_FILE:Ice::icebox_EXE>
+      $<TARGET_FILE_DIR:GreeterService>
   )
   ice_copy_pdbs(GreeterService)
 endif()
