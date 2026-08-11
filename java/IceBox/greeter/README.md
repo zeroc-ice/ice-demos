@@ -2,6 +2,9 @@
 
 This demo shows how to create an IceBox service in Java.
 
+> [!NOTE]
+> On Windows, run all the commands below in Git Bash or PowerShell; they don't work in the cmd.exe Command Prompt.
+
 ## Building the demo
 
 The demo consists of three Gradle projects:
@@ -16,21 +19,24 @@ The demo consists of three Gradle projects:
 To build the demo, run:
 
 ```shell
-./gradlew build
+./gradlew installDist
 ```
+
+This creates a self-contained distribution under build/install/ for each application, with launcher scripts in its
+bin/ directory.
 
 ## Running the demo
 
 First, start the IceBox server:
 
 ```shell
-./gradlew :iceboxserver:run --quiet --args="--IceBox.Service.Greeter=com.example.icebox.greeter.service.GreeterService --Ice.Trace.Dispatch"
+./iceboxserver/build/install/iceboxserver/bin/iceboxserver --IceBox.Service.Greeter=com.example.icebox.greeter.service.GreeterService --Ice.Trace.Dispatch
 ```
 
 Then, in a separate terminal, start the client application:
 
 ```shell
-./gradlew :client:run --quiet
+./client/build/install/client/bin/client
 ```
 
 [application plugin]: https://docs.gradle.org/current/userguide/application_plugin.html

@@ -13,6 +13,9 @@ flowchart LR
 
 This is particularly useful when the client application is behind a firewall that does not allow incoming connections.
 
+> [!NOTE]
+> On Windows, run all the commands below in Git Bash or PowerShell; they don't work in the cmd.exe Command Prompt.
+
 ## Building the demo
 
 The demo has two Gradle projects, **client** and **server**, both using the [application plugin].
@@ -20,21 +23,24 @@ The demo has two Gradle projects, **client** and **server**, both using the [app
 To build the demo, run:
 
 ```shell
-./gradlew build
+./gradlew installDist
 ```
+
+This creates a self-contained distribution under build/install/ for each application, with launcher scripts in its
+bin/ directory.
 
 ## Running the demo
 
 First, start the server application:
 
 ```shell
-./gradlew :server:run --quiet
+./server/build/install/server/bin/server
 ```
 
 Then, in a separate terminal, start the client application:
 
 ```shell
-./gradlew :client:run --quiet
+./client/build/install/client/bin/client
 ```
 
 [Application plugin]: https://docs.gradle.org/current/userguide/application_plugin.html
