@@ -9,9 +9,10 @@ slice2cpp_generate(sensor)
 target_link_libraries(sensor PRIVATE Ice::Ice Ice::IceStorm)
 if(WIN32)
   add_custom_command(TARGET sensor POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy -t $<TARGET_FILE_DIR:sensor>
+    COMMAND ${CMAKE_COMMAND} -E copy
       $<TARGET_RUNTIME_DLLS:sensor>
       $<GENEX_EVAL:$<TARGET_PROPERTY:Ice::Ice,ICE_RUNTIME_DLLS>>
+      $<TARGET_FILE_DIR:sensor>
     COMMAND_EXPAND_LISTS
   )
   ice_copy_pdbs(sensor)
@@ -22,9 +23,10 @@ slice2cpp_generate(station)
 target_link_libraries(station PRIVATE Ice::Ice Ice::IceStorm)
 if(WIN32)
   add_custom_command(TARGET station POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy -t $<TARGET_FILE_DIR:station>
+    COMMAND ${CMAKE_COMMAND} -E copy
       $<TARGET_RUNTIME_DLLS:station>
       $<GENEX_EVAL:$<TARGET_PROPERTY:Ice::Ice,ICE_RUNTIME_DLLS>>
+      $<TARGET_FILE_DIR:station>
     COMMAND_EXPAND_LISTS
   )
   ice_copy_pdbs(station)
