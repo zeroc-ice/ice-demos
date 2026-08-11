@@ -7,7 +7,8 @@ This demo provides a client application that works with the IceGrid/greeter demo
 IceGrid configuration.
 
 > [!NOTE]
-> On Windows, run all the commands below in Git Bash or PowerShell; they don't work in the cmd.exe Command Prompt.
+> On Windows, run all the commands below in Git Bash or PowerShell; not all of them work in the cmd.exe Command
+> Prompt.
 
 ## Ice prerequisites
 

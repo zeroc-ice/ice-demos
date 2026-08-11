@@ -20,13 +20,13 @@ bin/ directory.
 
 ## Running the demo
 
-First, start the server application:
+First, start the server application from this demo's directory:
 
 ```shell
 ./server/build/install/server/bin/server
 ```
 
-Then, in a separate terminal, start the client application:
+Then, in a separate terminal, start the client application from this demo's directory:
 
 ```shell
 ./client/build/install/client/bin/client

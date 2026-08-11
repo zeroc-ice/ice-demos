@@ -33,7 +33,7 @@ Then, in a separate terminal, start the client application:
 ./client/build/install/client/bin/client --Ice.Trace.Locator
 ```
 
->[!NOTE]
+> [!NOTE]
 > The `--Ice.Trace.Locator` command-line option is optional: it turns on tracing (logging) for locator resolution and
 > helps you understand the locator logic implemented by the IceDiscovery plug-in.
 
