@@ -1,6 +1,8 @@
 # Config
 
-This demo shows how to configure your client and server applications using Ice configuration files.
+This demo shows how to configure your client and server applications using Ice configuration files. The configuration
+we demonstrate sets up SSL: the properties in `client.conf` and `server.conf` select `ssl` as the default transport
+protocol, specify the certificates used by IceSSL, and turn on tracing.
 
 ## Ice prerequisites
 
