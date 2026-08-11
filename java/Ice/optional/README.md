@@ -22,6 +22,9 @@ class AtmosphericConditions
 }
 ```
 
+> [!NOTE]
+> On Windows, run all the commands below in Git Bash or PowerShell; they don't work in the cmd.exe Command Prompt.
+
 ## Building the demo
 
 The demo has four Gradle projects, all using the [application plugin].
@@ -34,33 +37,36 @@ The demo has four Gradle projects, all using the [application plugin].
 To build the demo, run:
 
 ```shell
-./gradlew build
+./gradlew installDist
 ```
+
+This creates a self-contained distribution under build/install/ for each application, with launcher scripts in its
+bin/ directory.
 
 ## Running the demo
 
 First, start either version 1 or version 2 of the server in its own terminal:
 
 ```shell
-./gradlew :server1:run --quiet
+./server1/build/install/server1/bin/server1
 ```
 
 or
 
 ```shell
-./gradlew :server2:run --quiet
+./server2/build/install/server2/bin/server2
 ```
 
 Then, in a separate terminal, run version 1 and then version 2 of the Client:
 
 ```shell
-./gradlew :client1:run --quiet
+./client1/build/install/client1/bin/client1
 ```
 
 and
 
 ```shell
-./gradlew :client2:run --quiet
+./client2/build/install/client2/bin/client2
 ```
 
 Thanks to `optional`, version 1 and version 2 of the clients and servers interoperate seamlessly:

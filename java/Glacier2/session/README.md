@@ -15,6 +15,10 @@ flowchart LR
 In a typical Glacier2 deployment, the client can establish a connection to the Glacier2 router but cannot establish
 a connection to the server, because the server is on a separate network.
 
+> [!NOTE]
+> On Windows, run all the commands below in Git Bash or PowerShell; not all of them work in the cmd.exe Command
+> Prompt.
+
 ## Ice prerequisites
 
 - Install Glacier2. See [Glacier2 installation].
@@ -26,15 +30,18 @@ The demo has two Gradle projects, **client** and **server**, both using the [app
 To build the demo, run:
 
 ```shell
-./gradlew build
+./gradlew installDist
 ```
+
+This creates a self-contained distribution under build/install/ for each application, with launcher scripts in its
+bin/ directory.
 
 ## Running the demo
 
 Start the Server program in its own terminal:
 
 ```shell
-./gradlew :server:run --quiet
+./server/build/install/server/bin/server
 ```
 
 Next, start the Glacier2 router in its own terminal, from this demo's directory:
@@ -49,9 +56,9 @@ glacier2router --Ice.Config=glacier2.conf
 Finally, in a separate terminal, run the client application several times:
 
 ```shell
-./gradlew :client:run --quiet --args="ash"
-./gradlew :client:run --quiet --args="ash"
-./gradlew :client:run --quiet --args="ash"
+./client/build/install/client/bin/client ash
+./client/build/install/client/bin/client ash
+./client/build/install/client/bin/client ash
 ```
 
 If you don't specify a name, the client uses the current username.

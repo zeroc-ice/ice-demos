@@ -2,6 +2,10 @@
 
 The IceGrid IceBox demo illustrates how to deploy an IceBox server with IceGrid.
 
+> [!NOTE]
+> On Windows, run all the commands below in Git Bash or PowerShell; not all of them work in the cmd.exe Command
+> Prompt.
+
 ## Ice prerequisites
 
 - Install IceGrid. See [IceGrid installation].
@@ -29,7 +33,7 @@ Each distribution includes:
 - a bin/ directory with start scripts, and
 - a lib/ directory containing the application JAR and all its runtime dependencies.
 
-In our IceGrid deployment, we call java directly and set the class path to include everything in the distribution’s lib/
+In our IceGrid deployment, we call java directly and set the classpath to include everything in the distribution’s lib/
 directory. This ensures both the server JAR and its dependencies (such as Ice) are available at runtime.
 
 ## Running the demo
@@ -55,8 +59,9 @@ icegridadmin --Ice.Config=admin.conf -e "application add greeter-hall.xml"
 Finally, run the client application:
 
 ```shell
-./gradlew :client:run --quiet
+./client/build/install/client/bin/client
 ```
 
 [Application plugin]: https://docs.gradle.org/current/userguide/application_plugin.html
 [IceGrid installation]: https://zeroc.com/ice/downloads/3.8/icegrid
+[java-library plugin]: https://docs.gradle.org/current/userguide/java_library_plugin.html

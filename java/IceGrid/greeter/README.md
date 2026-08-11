@@ -40,7 +40,7 @@ Each distribution includes:
 - a bin/ directory with start scripts, and
 - a lib/ directory containing the application JAR and all its runtime dependencies.
 
-In our IceGrid deployment, we call java directly and set the class path to include everything in the distribution’s lib/
+In our IceGrid deployment, we call java directly and set the classpath to include everything in the distribution’s lib/
 directory. This ensures both the server JAR and its dependencies (such as Ice) are available at runtime.
 
 ## Running the demo

@@ -2,7 +2,6 @@
 
 package com.example.ice.secure.client;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.KeyStore;
@@ -42,8 +41,8 @@ class Client {
     /**
      * Creates and initializes an SSLContext for use with the ssl transport.
      *
-     * <p>The SSLContext is configured with the demo CA certificate loaded from a PKCS12 keystore,
-     * which is used as the trust store to validate server certificates.
+     * <p>The SSLContext is configured with the demo CA certificate loaded from a PKCS12 keystore bundled with the
+     * application, which is used as the trust store to validate server certificates.
      *
      * @return the initialized SSLContext
      * @throws RuntimeException if an error occurs during SSL initialization
@@ -52,14 +51,14 @@ class Client {
         try {
             SSLContext sslContext = SSLContext.getInstance("TLS");
             KeyStore keyStore = KeyStore.getInstance("PKCS12");
-            String keyStorePath = "../../../../certs/ca.p12";
 
             // The password for the PKCS12 keystore, hard-coded for simplicity.
             // In a production environment, use a secure method to store and retrieve this password.
             char[] password = "password".toCharArray();
 
-            try (var input = new FileInputStream(keyStorePath)) {
-                keyStore.load(input, password);
+            // The build bundles ca.p12 (from the top-level certs directory) into the application JAR.
+            try (var caCert = Client.class.getResourceAsStream("/ca.p12")) {
+                keyStore.load(caCert, password);
             }
             TrustManagerFactory trustManagerFactory =
                 TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());

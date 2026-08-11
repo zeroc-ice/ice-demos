@@ -13,6 +13,10 @@ flowchart LR
     icestorm --report--> s3[Station #3]
 ```
 
+> [!NOTE]
+> On Windows, run all the commands below in Git Bash or PowerShell; not all of them work in the cmd.exe Command
+> Prompt.
+
 ## Ice prerequisites
 
 - Install IceStorm. See [IceStorm installation].
@@ -24,8 +28,11 @@ The demo has two Gradle projects, **sensor** and **station**, both using the [ap
 To build the demo, run:
 
 ```shell
-./gradlew build
+./gradlew installDist
 ```
+
+This creates a self-contained distribution under build/install/ for each application, with launcher scripts in its
+bin/ directory.
 
 ## Running the demo
 
@@ -38,11 +45,11 @@ icebox --IceBox.Service.IceStorm="IceStormService,38:createIceStorm --Ice.Config
 Then, run one or more sensors and weather stations, each in its own terminal. You can start them in any order.
 
 ```shell
-./gradlew :sensor:run
+./sensor/build/install/sensor/bin/sensor
 ```
 
 ```shell
-./gradlew :station:run
+./station/build/install/station/bin/station
 ```
 
 [Application plugin]: https://docs.gradle.org/current/userguide/application_plugin.html
