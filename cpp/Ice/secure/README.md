@@ -1,26 +1,27 @@
 # Ice Secure
 
-This demo shows how to programmatically configure the ssl transport in Ice C++ client and server applications.
+This demo illustrates how to set up secure connections programmatically: the client and server call the platform's
+native SSL API directly and rely on the test certificates from the shared `certs` directory.
 
-It demonstrates how the ssl transport can be configured using the platform's native SSL API:
+| Platform | Native SSL API   |
+| -------- | ---------------- |
+| Linux    | OpenSSL          |
+| Windows  | Schannel         |
+| macOS    | Secure Transport |
 
-- **OpenSSL** on Linux
-- **Schannel** on Windows
-- **Secure Transport** on macOS
-
-Because each platform provides a different SSL API, we implement the configuration logic for each one in a separate C++
+Because each platform provides a different SSL API, we implement the SSL setup code for each one in a separate C++
 source file to keep the code organized and modular:
 
 | File                        | Description                                             |
 | --------------------------- | ------------------------------------------------------- |
 | `ClientRun.cpp`             | Shared client-side logic used by all platform variants. |
-| `ClientOpenSSL.cpp`         | OpenSSL client configuration for Linux.                 |
-| `ClientSchannel.cpp`        | Schannel client configuration for Windows.              |
-| `ClientSecureTransport.cpp` | Secure Transport client configuration for macOS.        |
+| `ClientOpenSSL.cpp`         | OpenSSL client setup for Linux.                         |
+| `ClientSchannel.cpp`        | Schannel client setup for Windows.                      |
+| `ClientSecureTransport.cpp` | Secure Transport client setup for macOS.                |
 | `ServerRun.cpp`             | Shared server-side logic used by all platform variants. |
-| `ServerOpenSSL.cpp`         | OpenSSL server configuration for Linux.                 |
-| `ServerSchannel.cpp`        | Schannel server configuration for Windows.              |
-| `ServerSecureTransport.cpp` | Secure Transport server configuration for macOS.        |
+| `ServerOpenSSL.cpp`         | OpenSSL server setup for Linux.                         |
+| `ServerSchannel.cpp`        | Schannel server setup for Windows.                      |
+| `ServerSecureTransport.cpp` | Secure Transport server setup for macOS.                |
 | `UtilSchannel.cpp`          | Schannel helper functions.                              |
 | `UtilSecureTransport.cpp`   | Secure Transport helper functions.                      |
 
