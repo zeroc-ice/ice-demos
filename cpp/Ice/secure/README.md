@@ -15,13 +15,13 @@ source file to keep the code organized and modular:
 | File                        | Description                                             |
 | --------------------------- | ------------------------------------------------------- |
 | `ClientRun.cpp`             | Shared client-side logic used by all platform variants. |
-| `ClientOpenSSL.cpp`         | OpenSSL client configuration for Linux.                 |
-| `ClientSchannel.cpp`        | Schannel client configuration for Windows.              |
-| `ClientSecureTransport.cpp` | Secure Transport client configuration for macOS.        |
+| `ClientOpenSSL.cpp`         | OpenSSL client setup for Linux.                         |
+| `ClientSchannel.cpp`        | Schannel client setup for Windows.                      |
+| `ClientSecureTransport.cpp` | Secure Transport client setup for macOS.                |
 | `ServerRun.cpp`             | Shared server-side logic used by all platform variants. |
-| `ServerOpenSSL.cpp`         | OpenSSL server configuration for Linux.                 |
-| `ServerSchannel.cpp`        | Schannel server configuration for Windows.              |
-| `ServerSecureTransport.cpp` | Secure Transport server configuration for macOS.        |
+| `ServerOpenSSL.cpp`         | OpenSSL server setup for Linux.                         |
+| `ServerSchannel.cpp`        | Schannel server setup for Windows.                      |
+| `ServerSecureTransport.cpp` | Secure Transport server setup for macOS.                |
 | `UtilSchannel.cpp`          | Schannel helper functions.                              |
 | `UtilSecureTransport.cpp`   | Secure Transport helper functions.                      |
 
