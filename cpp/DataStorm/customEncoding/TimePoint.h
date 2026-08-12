@@ -1,28 +1,29 @@
 #ifndef TIME_POINT_H
 #define TIME_POINT_H
 
+#include "../../common/Time.h"
+
 #include <DataStorm/DataStorm.h>
 #include <Ice/Ice.h>
+
+#include <cstring>
+#include <stdexcept>
 
 namespace DataStorm
 {
     /// DataStorm::Encoder specialization to encode std::chrono::system_clock::time_point values.
     template<> struct Encoder<std::chrono::system_clock::time_point>
     {
-        /// Encodes the given std::chrono::system_clock::time_point value into a byte sequence. The value is encoded
-        /// as the number of seconds since epoch in little-endian format using a variable number of bytes.
+        /// Encodes the given std::chrono::system_clock::time_point value into a byte sequence. The value is first
+        /// converted to a time stamp (see common/Time.h), then encoded as 8 bytes in little-endian order.
         ///
         /// @param time The time_point value to encode.
         /// @return The resulting byte sequence.
         static Ice::ByteSeq encode(const std::chrono::system_clock::time_point& time)
         {
-            Ice::ByteSeq data;
-            auto value = std::chrono::time_point_cast<std::chrono::seconds>(time).time_since_epoch().count();
-            while (value)
-            {
-                data.push_back(static_cast<std::byte>(value & 0xFF));
-                value >>= 8;
-            }
+            std::int64_t value = Time::toTimeStamp(time);
+            Ice::ByteSeq data(sizeof(value));
+            std::memcpy(data.data(), &value, sizeof(value)); // we assume a little-endian system
             return data;
         }
     };
@@ -31,18 +32,20 @@ namespace DataStorm
     template<> struct Decoder<std::chrono::system_clock::time_point>
     {
         /// Decodes the given byte sequence into a std::chrono::system_clock::time_point value. The value is decoded
-        /// from the number of seconds since epoch in little-endian format using a variable number of bytes.
+        /// as an 8-byte little-endian time stamp (see common/Time.h), then converted to a time point.
         ///
         /// @param data The byte sequence to decode.
         /// @return The resulting time_point value.
+        /// @throws std::invalid_argument Thrown when the byte sequence is not 8 bytes long.
         static std::chrono::system_clock::time_point decode(const Ice::ByteSeq& data)
         {
-            int64_t value = 0;
-            for (auto p = data.rbegin(); p != data.rend(); ++p)
+            if (data.size() != sizeof(std::int64_t))
             {
-                value = (value << 8) | std::to_integer<int64_t>(*p);
+                throw std::invalid_argument("cannot decode time point: expected an 8-byte encoded value");
             }
-            return std::chrono::time_point<std::chrono::system_clock>(std::chrono::seconds(value));
+            std::int64_t value;
+            std::memcpy(&value, data.data(), sizeof(value)); // we assume a little-endian system
+            return Time::toTimePoint(value);
         }
     };
 }
