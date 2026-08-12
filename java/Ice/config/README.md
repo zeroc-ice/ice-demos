@@ -1,6 +1,8 @@
 # Ice Config
 
-This demo shows how to configure client and server applications using Ice configuration files.
+This demo shows how to configure client and server applications using Ice configuration files. The configuration we
+demonstrate sets up SSL: the properties in `client.conf` and `server.conf` select `ssl` as the default transport
+protocol and specify the certificates used by IceSSL; `server.conf` also turns on tracing.
 
 > [!NOTE]
 > On Windows, run all the commands below in Git Bash or PowerShell; they don't work in the cmd.exe Command Prompt.
