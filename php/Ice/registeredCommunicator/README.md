@@ -47,7 +47,7 @@ Then, in a separate window:
   The web application connects to the Greeter server at `host.docker.internal:4061`: `host.docker.internal` resolves
   to the host machine from within the container. Docker Desktop (Windows and macOS) provides this hostname
   automatically, while on Linux it is provided by the `extra_hosts` mapping in
-  [docker-compose.yml](docker-compose.yml).
+  [compose.yml](compose.yml).
 
 - Open your Web Browser
   Navigate to: <http://localhost:8080>
