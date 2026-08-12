@@ -33,7 +33,7 @@ async def main():
                 print(greeting)
             except Ice.DispatchException as exception:
                 print(
-                    f"Failed to create a greeting for '{name}': DispatchException {{ message = '{exception.args}', replyStatus = {exception.replyStatus} }}"
+                    f"Failed to create a greeting for '{name}': DispatchException {{ message = '{exception}', replyStatus = {exception.replyStatus} }}"
                 )
             except VisitorCenter.GreeterException as exception:
                 print(
