@@ -8,9 +8,10 @@ RUN apt-get update && apt-get install -y \
 RUN curl -fsSL https://download.zeroc.com/ice/3.8/RPM-GPG-KEY-zeroc-release | gpg --dearmor -o /etc/apt/keyrings/zeroc-3.8.gpg && \
     echo "deb [signed-by=/etc/apt/keyrings/zeroc-3.8.gpg] https://download.zeroc.com/ice/3.8/debian12 stable main" > /etc/apt/sources.list.d/zeroc-3.8.list
 
-# Install Ice for PHP, PHP-FPM, and Nginx
+# Install Ice for PHP, PHP-FPM, and Nginx. We install php8.4-fpm explicitly because entrypoint.sh and nginx.conf
+# are configured for this version.
 RUN apt-get update && apt-get install -y \
-    php-zeroc-ice php-fpm nginx-full \
+    php-zeroc-ice php8.4-fpm nginx-full \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 COPY entrypoint.sh /entrypoint.sh

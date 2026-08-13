@@ -1,0 +1,10 @@
+services:
+  php-nginx:
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - ./web:/var/www/html
+    # Make host.docker.internal resolve to the host on native Linux Docker; Docker Desktop provides it automatically.
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
