@@ -32,8 +32,13 @@ async def main():
                 greeting = await greeter.greetAsync(name)
                 print(greeting)
             except Ice.DispatchException as exception:
+                try:
+                    replyStatus = Ice.ReplyStatus(exception.replyStatus).name
+                except ValueError:
+                    # A custom reply status outside the ReplyStatus enum; keep the int value.
+                    replyStatus = exception.replyStatus
                 print(
-                    f"Failed to create a greeting for '{name}': DispatchException {{ message = '{exception}', replyStatus = {exception.replyStatus} }}"
+                    f"Failed to create a greeting for '{name}': DispatchException {{ message = '{exception}', replyStatus = {replyStatus} }}"
                 )
             except VisitorCenter.GreeterException as exception:
                 print(

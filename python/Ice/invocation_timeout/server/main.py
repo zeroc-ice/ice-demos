@@ -18,8 +18,8 @@ async def main():
         # Create an object adapter that listens for incoming requests and dispatches them to servants.
         adapter = communicator.createObjectAdapterWithEndpoints("GreeterAdapter", "tcp -p 4061")
 
-        # Register two instances of Chatbot - a regular greater and a slow greeter.
-        adapter.add(chatbot.Chatbot(0.0), Ice.Identity(name="greeter"))
+        # Register two instances of Chatbot - a regular greeter and a slow greeter.
+        adapter.add(chatbot.Chatbot(), Ice.Identity(name="greeter"))
         slowGreeter = chatbot.Chatbot(60.0)
         adapter.add(slowGreeter, Ice.Identity(name="slowGreeter"))
 

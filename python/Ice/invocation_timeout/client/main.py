@@ -21,24 +21,35 @@ async def main():
         # or IP address.
         greeter = GreeterPrx(communicator, "greeter:tcp -h localhost -p 4061")
 
-        # Create a proxy to the slow greeter with an invocation timeout of 4 seconds (the default invocation timeout is
-        # infinite).
-        slowGreeter = GreeterPrx(communicator, "slowGreeter:tcp -h localhost -p 4061").ice_invocationTimeout(4000)
+        # Create a proxy to the slow greeter. It uses the same connection as the regular greeter.
+        slowGreeter = GreeterPrx(communicator, "slowGreeter:tcp -h localhost -p 4061")
 
         # Send a request to the regular greeter and get the response.
         greeting = await greeter.greetAsync(getpass.getuser())
         print(greeting)
 
+        # Create another slow greeter proxy with an invocation timeout of 4 seconds (the default invocation timeout is
+        # infinite).
+        slowGreeter4s = slowGreeter.ice_invocationTimeout(4000)  # in milliseconds
+
         # Send a request to the slow greeter with the 4-second invocation timeout.
         try:
-            greeting = await slowGreeter.greetAsync("alice")
+            greeting = await slowGreeter4s.greetAsync("alice")
             print(f"Received unexpected greeting: {greeting}")
         except Ice.InvocationTimeoutException as exception:
             print(f"Caught InvocationTimeoutException, as expected: {exception}")
 
         # Verify the regular greeter still works.
-        greeting = await greeter.greetAsync("carol")
+        greeting = await greeter.greetAsync("bob")
         print(greeting)
+
+        # Send a request to the slow greeter, and wait forever for the response.
+        print("Please press Ctrl+C in the server's terminal to cancel the slow greeter dispatch.")
+        try:
+            greeting = await slowGreeter.greetAsync("carol")
+            print(greeting)
+        except Ice.UnknownException as exception:
+            print(f"Caught UnknownException, as expected: {exception}")
 
 
 if __name__ == "__main__":
