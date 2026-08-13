@@ -1,7 +1,0 @@
-services:
-  php-nginx:
-    build: .
-    ports:
-      - "8080:80"
-    volumes:
-      - ./web:/var/www/html

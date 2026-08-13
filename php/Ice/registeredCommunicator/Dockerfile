@@ -6,9 +6,10 @@ RUN apt-get update && apt-get install -y wget && \
     dpkg -i ice-repo-3.9-nightly.deb && \
     rm ice-repo-3.9-nightly.deb
 
-# Install Ice for PHP, PHP-FPM, and Nginx
+# Install Ice for PHP, PHP-FPM, and Nginx. We install php8.4-fpm explicitly because entrypoint.sh and nginx.conf
+# are configured for this version.
 RUN apt-get update && apt-get install -y \
-    php-zeroc-ice php-fpm nginx-full \
+    php-zeroc-ice php8.4-fpm nginx-full \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 COPY entrypoint.sh /entrypoint.sh

@@ -2,7 +2,7 @@
 set -e
 
 # Start PHP-FPM in the background
-php-fpm8.2 -D
+php-fpm8.4 -D
 
 # Start Nginx in the foreground
 exec nginx -g 'daemon off;'
