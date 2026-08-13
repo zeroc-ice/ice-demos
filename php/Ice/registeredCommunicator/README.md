@@ -41,19 +41,18 @@ Then, in a separate window:
 - Run the web server using Docker Compose
 
   ```shell
-  docker compose up
+  docker compose up --build
   ```
 
   The web application connects to the Greeter server at `host.docker.internal:4061`: `host.docker.internal` resolves
-  to the host machine from within the container. Docker Desktop (Windows and macOS) provides this hostname
-  automatically, while on Linux it is provided by the `extra_hosts` mapping in
-  [compose.yml](compose.yml).
+  to the host machine from within the container. Docker Desktop provides this hostname automatically; on native Linux
+  Docker Engine it is provided by the `extra_hosts` mapping in [compose.yml](compose.yml).
 
 - Open your Web Browser
   Navigate to: <http://localhost:8080>
 
 > [!NOTE]
-> Passing `--Ice.Trace.Network` command-line option to the server turns on Network tracing. For this demo, it shows you
-> that the client reuses the connection for different requests, which means the same communicator is used for these requests.
+> Passing `--Ice.Trace.Network` command-line option to the server turns on Network tracing. Each FPM worker creates its
+> own registered communicator and connection; requests handled by the same worker reuse that worker's connection.
 
 [Ice for PHP installation]: https://github.com/zeroc-ice/ice/blob/main/NIGHTLY.md#ice-for-php
