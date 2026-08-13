@@ -18,9 +18,16 @@ The client is implemented using SwiftUI and can be run on **macOS**, the **iOS S
 
 ## Running on a physical iOS device
 
-On a physical iOS device, `localhost` refers to the device itself. In the Host field, enter the LAN address of the
-computer running the Greeter server (for example, `192.168.1.10`); the device and this computer must be on the same
-network.
+Before running on a physical device, connect it to your Mac, unlock it, and trust the Mac if prompted. Then add your
+Apple Account in **Xcode > Settings > Accounts** and select your team in the GreeterApp target's **Signing &
+Capabilities** tab — a free Personal Team is sufficient; Apple Developer Program membership is not required. If Xcode
+reports that `com.example.ice.GreeterApp` is not available, change the bundle identifier to a unique value.
+
+The device must run iOS 18.5 or later and have **Developer Mode** enabled (Settings > Privacy & Security > Developer
+Mode; enabling it restarts the device).
+
+On a physical iOS device, `localhost` refers to the device itself. In the Host field, enter the IP address of the
+computer running the Greeter server; the device and this computer must be on the same network.
 
 The first time the app connects, iOS asks for permission to find and connect to devices on your local network. Allow
 this request so the app can reach the Greeter server.
