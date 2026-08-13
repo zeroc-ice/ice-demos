@@ -4,6 +4,7 @@
 #define TIME_H
 
 #include <chrono>
+#include <cstdint>
 #include <ctime>
 #include <stdexcept>
 #include <string>
@@ -45,9 +46,10 @@ namespace Time
     {
         const int daysBeforeEpoch = 719'162;
 
-        std::int64_t timeStampMicro = std::chrono::duration_cast<std::chrono::microseconds>(
-                                          timePoint.time_since_epoch() + daysBeforeEpoch * std::chrono::hours{24})
-                                          .count();
+        std::int64_t timeStampMicro =
+            (std::chrono::duration_cast<std::chrono::microseconds>(timePoint.time_since_epoch()) +
+             daysBeforeEpoch * std::chrono::hours{24})
+                .count();
 
         // The time stamp is in ticks, where each tick is 100 nanoseconds = 0.1 microsecond.
         return timeStampMicro * 10;
