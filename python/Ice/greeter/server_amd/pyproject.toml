@@ -1,5 +1,5 @@
 [project]
-name = "client"
+name = "ice-greeter-server-amd"
 version = "0.1.0"
 description = "Ice greeter demo async dispatcher server application"
 requires-python = ">=3.12"

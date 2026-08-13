@@ -1,6 +1,7 @@
 # Ice Invocation Timeout
 
-The Invocation Timeout demo shows how to use invocation timeouts.
+The Invocation Timeout demo shows how to configure invocation timeouts on proxies. It also shows how to cancel
+dispatches.
 
 ## Prerequisites
 

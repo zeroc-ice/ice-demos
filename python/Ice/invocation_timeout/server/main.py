@@ -18,9 +18,10 @@ async def main():
         # Create an object adapter that listens for incoming requests and dispatches them to servants.
         adapter = communicator.createObjectAdapterWithEndpoints("GreeterAdapter", "tcp -p 4061")
 
-        # Register two instances of Chatbot - a regular greater and a slow greeter.
-        adapter.add(chatbot.Chatbot(0.0), Ice.Identity(name="greeter"))
-        adapter.add(chatbot.Chatbot(60.0), Ice.Identity(name="slowGreeter"))
+        # Register two instances of Chatbot - a regular greeter and a slow greeter.
+        adapter.add(chatbot.Chatbot(), Ice.Identity(name="greeter"))
+        slowGreeter = chatbot.Chatbot(60.0)
+        adapter.add(slowGreeter, Ice.Identity(name="slowGreeter"))
 
         # Start dispatching requests.
         adapter.activate()
@@ -31,6 +32,9 @@ async def main():
             await communicator.shutdownCompleted()
         except asyncio.CancelledError:
             print("Caught Ctrl+C, shutting down...")
+
+            # Cancel outstanding tasks in the slow greeter.
+            slowGreeter.cancelOutstandingTasks()
 
 
 if __name__ == "__main__":

@@ -5,7 +5,7 @@ import asyncio
 import random
 import string
 import sys
-from datetime import datetime, timezone
+from datetime import datetime
 
 import Ice
 import IceStorm
@@ -50,7 +50,7 @@ async def main():
             )
 
             # Send the reading to the weather station(s).
-            timeStamp = datetime.now(tz=timezone.utc).strftime("%T")
+            timeStamp = datetime.now().strftime("%T")
             await weatherStation.reportAsync(sensorId, timeStamp, reading)
 
             # Wait for one second before sending the next reading.
