@@ -19,6 +19,5 @@ You can run the application on either an Android emulator or a physical Android 
 
 > [!NOTE]
 > The Server IP Address field defaults to `10.0.2.2`, the address the Android emulator uses to reach the computer it
-> runs on. This address only works in the emulator: on a physical Android device, enter the LAN address of the
-> computer running the Greeter server (for example, `192.168.1.10`); the device and this computer must be on the same
-> network.
+> runs on. This address only works in the emulator: on a physical Android device, enter the IP address of the
+> computer running the Greeter server; the device and this computer must be on the same network.
