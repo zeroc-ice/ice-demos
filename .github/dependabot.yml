@@ -17,8 +17,10 @@ updates:
           - "*"
 
   - package-ecosystem: "npm"
+    # Demo manifests sit two and three levels down. A trailing "**" matches a
+    # single level, so the glob has to end in "**/*" to reach them.
     directories:
-      - "/js/**"
+      - "/js/**/*"
     schedule:
       interval: monthly
     cooldown:
@@ -29,7 +31,7 @@ updates:
 
   - package-ecosystem: "pip"
     directories:
-      - "/python/**"
+      - "/python/**/*"
     schedule:
       interval: monthly
     cooldown:
@@ -40,7 +42,7 @@ updates:
 
   - package-ecosystem: "gradle"
     directories:
-      - "/java/**"
+      - "/java/**/*"
     schedule:
       interval: monthly
     cooldown:
@@ -51,7 +53,7 @@ updates:
 
   - package-ecosystem: "nuget"
     directories:
-      - "/csharp/**"
+      - "/csharp/**/*"
     schedule:
       interval: monthly
     cooldown:
@@ -62,7 +64,7 @@ updates:
 
   - package-ecosystem: "swift"
     directories:
-      - "/swift/**"
+      - "/swift/**/*"
     schedule:
       interval: monthly
     cooldown:
@@ -94,7 +96,7 @@ updates:
 
   - package-ecosystem: "npm"
     directories:
-      - "/js/**"
+      - "/js/**/*"
     target-branch: "3.8"
     schedule:
       interval: monthly
@@ -109,7 +111,7 @@ updates:
 
   - package-ecosystem: "pip"
     directories:
-      - "/python/**"
+      - "/python/**/*"
     target-branch: "3.8"
     schedule:
       interval: monthly
@@ -124,7 +126,7 @@ updates:
 
   - package-ecosystem: "gradle"
     directories:
-      - "/java/**"
+      - "/java/**/*"
     target-branch: "3.8"
     schedule:
       interval: monthly
@@ -139,7 +141,7 @@ updates:
 
   - package-ecosystem: "nuget"
     directories:
-      - "/csharp/**"
+      - "/csharp/**/*"
     target-branch: "3.8"
     schedule:
       interval: monthly
@@ -154,7 +156,7 @@ updates:
 
   - package-ecosystem: "swift"
     directories:
-      - "/swift/**"
+      - "/swift/**/*"
     target-branch: "3.8"
     schedule:
       interval: monthly
