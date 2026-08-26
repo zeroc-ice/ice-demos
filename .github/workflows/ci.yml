@@ -16,6 +16,10 @@ concurrency:
 env:
   CHANNEL: "3.7"
   ICE_VERSION: "3.7.11"
+  # The Windows MSI installs into C:\Program Files\ZeroC\Ice-<suffix>, where the suffix is the
+  # version the MSI carries. The nightly MSI carries the version 3.7 is developing towards.
+  STABLE_MSI_SUFFIX: "3.7.11"
+  NIGHTLY_MSI_SUFFIX: "3.7.12"
 
 jobs:
   ci:
@@ -68,6 +72,8 @@ jobs:
 
       - name: Set ICE_HOME and MAKEFLAGS
         shell: bash
+        env:
+          MSI_SUFFIX: ${{ matrix.quality == 'nightly' && env.NIGHTLY_MSI_SUFFIX || env.STABLE_MSI_SUFFIX }}
         run: |
           if [[ "$RUNNER_OS" == "Linux" ]]; then
             echo "ICE_HOME=/usr" >> "$GITHUB_ENV"
@@ -76,7 +82,7 @@ jobs:
             echo "ICE_HOME=/opt/homebrew" >> "$GITHUB_ENV"
             echo "MAKEFLAGS=-j $(sysctl -n hw.ncpu)" >> "$GITHUB_ENV"
           elif [[ "$RUNNER_OS" == "Windows" ]]; then
-            echo "ICE_HOME=C:\Program Files\ZeroC\Ice-${ICE_VERSION}" >> "$GITHUB_ENV"
+            echo "ICE_HOME=C:\Program Files\ZeroC\Ice-${MSI_SUFFIX}" >> "$GITHUB_ENV"
           fi
 
       - name: Build C++ Demos
