@@ -17,7 +17,7 @@ interface GreeterAppState {
     initializeError?: string | null;
 }
 
-function GreeterApp(): JSX.Element {
+function GreeterApp(): React.JSX.Element {
     // Initialize the state of the GreeterApp component.
     const [state, setState] = useState<GreeterAppState>({
         name: "React",
