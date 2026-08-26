@@ -47,5 +47,5 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     // For the lifecycleScope extension.
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.9.4")
+    implementation(libs.androidx.lifecycle.runtime.ktx)
 }
