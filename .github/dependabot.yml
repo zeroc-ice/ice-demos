@@ -25,6 +25,13 @@ updates:
       interval: monthly
     cooldown:
       default-days: 7
+    ignore:
+      # typescript majors are gated by typescript-eslint's supported compiler
+      # range, and @types/node majors track the Node version in engines and CI.
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
     groups:
       js:
         patterns: ["*"]
