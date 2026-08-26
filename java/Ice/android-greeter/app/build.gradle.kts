@@ -46,6 +46,6 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    // Lifecycle utilities for Compose
-    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.9.4")
+    // For the lifecycleScope extension.
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.9.4")
 }
