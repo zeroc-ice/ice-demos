@@ -54,11 +54,6 @@ updates:
       interval: monthly
     cooldown:
       default-days: 7
-    ignore:
-      # com.android.application majors are gated by the Android demo's
-      # migration to AGP's built-in Kotlin support.
-      - dependency-name: "com.android.application"
-        update-types: ["version-update:semver-major"]
     groups:
       java:
         patterns: ["*"]
