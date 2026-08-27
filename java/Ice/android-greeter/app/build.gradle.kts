@@ -1,8 +1,5 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     // Apply the Slice-tools plugin to enable Slice compilation.
     id("com.zeroc.slice-tools") version "3.8.+"
     // Pull in our local 'convention plugin' to enable linting.
@@ -38,12 +35,6 @@ android {
     }
 }
 
-kotlin {
-    compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_17)
-    }
-}
-
 dependencies {
     // Add the Ice library as an implementation dependency.
     implementation("com.zeroc:ice:3.8.+")
@@ -55,6 +46,6 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    // Lifecycle utilities for Compose
-    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.9.4")
+    // For the lifecycleScope extension.
+    implementation(libs.androidx.lifecycle.runtime.ktx)
 }

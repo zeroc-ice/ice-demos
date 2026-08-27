@@ -6,7 +6,8 @@ The demo provides a simple Android client that can be used with any of the Greet
 
 ## Prerequisites
 
-- Android Studio
+- An Android Studio release that supports AGP 9 (see the
+  [AGP compatibility table](https://developer.android.com/build/releases/gradle-plugin))
 - An Android emulator or physical Android device running Android 14 (API level 34) or later
 
 ## Getting Started
