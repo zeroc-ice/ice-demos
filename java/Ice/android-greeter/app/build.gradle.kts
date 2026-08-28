@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace = "com.example.ice.androidgreeter"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.example.ice.androidgreeter"
