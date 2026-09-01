@@ -7,5 +7,5 @@ dependencies = []
 [dependency-groups]
 lint = [
     "pyright>=1.1.411",
-    "ruff>=0.16.3",
+    "ruff>=0.16.4",
 ]
