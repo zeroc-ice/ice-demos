@@ -6,6 +6,11 @@ The reader application creates two readers:
 - The first reader uses the custom `startsWith` key filter to read samples whose keys start with `"floor1/"`.
 - The second reader uses the built-in `_regex` key filter to read samples whose keys match a given regular expression.
 
+The writer application registers the same `startsWith` key filter and publishes the temperature of six rooms.
+Key filters are evaluated by the writer: it sends a sample only to the readers whose filter matches the sample's key,
+so a temperature no reader asked for never crosses the wire. This is why the writer registers the filter and declares
+its keys.
+
 ## Ice prerequisites
 
 - Install the C++ dev kit.
