@@ -21,8 +21,28 @@ main(int argc, char* argv[])
     // Instantiates the "temperature" topic. The topic uses strings for the keys and float for the values.
     DataStorm::Topic<string, float> topic{node, "temperature"};
 
-    // Instantiate an any key writer.
-    auto writer = DataStorm::makeAnyKeyWriter(topic, "temperature-writer");
+    // Register the same custom key filter as the reader (same name, same implementation). A reader announces its
+    // filter as a name plus criteria; the writer, which evaluates the readers' key filters, runs its own
+    // implementation registered under that name.
+    topic.setKeyFilter<string>(
+        "startsWith",
+        [](string prefix)
+        {
+            return [prefix = std::move(prefix)](const string& key)
+            { return key.size() >= prefix.size() && key.compare(0, prefix.size(), prefix) == 0; };
+        });
+
+    // Instantiate a writer that declares the keys it publishes. The readers' key filters are evaluated against
+    // these declared keys, so a sample for a key no reader asked for is never sent.
+    auto writer = DataStorm::makeMultiKeyWriter(
+        topic,
+        {"floor1/main-bedroom",
+         "floor1/secondary-bedroom",
+         "floor1/studio",
+         "floor2/main-bedroom",
+         "floor2/secondary-bedroom",
+         "floor2/studio"},
+        "temperature-writer");
 
     // Wait for a reader to connect
     topic.waitForReaders();
