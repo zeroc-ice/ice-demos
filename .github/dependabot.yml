@@ -7,11 +7,6 @@ registries:
   zeroc-maven:
     type: maven-repository
     url: https://download.zeroc.com/nexus/repository/maven-3.9-nightly/
-  zeroc-npm:
-    type: npm-registry
-    url: https://download.zeroc.com/nexus/repository/npm-3.9-nightly/
-    # npm-registry requires a credential; an empty one is sent as anonymous.
-    token: ""
   zeroc-nuget:
     type: nuget-feed
     url: https://download.zeroc.com/nexus/repository/nuget-3.9-nightly/
@@ -40,8 +35,6 @@ updates:
     # single level, so the glob has to end in "**/*" to reach them.
     directories:
       - "/js/**/*"
-    registries:
-      - zeroc-npm
     schedule:
       interval: monthly
     cooldown:
