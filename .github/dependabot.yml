@@ -1,4 +1,25 @@
 version: 2
+
+# Dependabot's proxy only lets a job reach hosts on its default allowlist or in a
+# registry the job references, so the ZeroC feeds are declared here even though
+# they allow anonymous access.
+registries:
+  zeroc-maven:
+    type: maven-repository
+    url: https://download.zeroc.com/nexus/repository/maven-3.9-nightly/
+  zeroc-npm:
+    type: npm-registry
+    url: https://download.zeroc.com/nexus/repository/npm-3.9-nightly/
+  zeroc-nuget:
+    type: nuget-feed
+    url: https://download.zeroc.com/nexus/repository/nuget-3.9-nightly/
+  # SwiftPM downloads the Ice binary targets from download.zeroc.com. There is no
+  # registry type for these, and the proxy allows a registry's host whatever its
+  # type, so this entry only serves to allow the host for the swift jobs.
+  zeroc-downloads:
+    type: maven-repository
+    url: https://download.zeroc.com/
+
 updates:
   - package-ecosystem: "github-actions"
     # Two entries are required: "/" is the special value that scans
@@ -21,6 +42,8 @@ updates:
     # single level, so the glob has to end in "**/*" to reach them.
     directories:
       - "/js/**/*"
+    registries:
+      - zeroc-npm
     schedule:
       interval: monthly
     cooldown:
@@ -50,6 +73,8 @@ updates:
   - package-ecosystem: "gradle"
     directories:
       - "/java/**/*"
+    registries:
+      - zeroc-maven
     schedule:
       interval: monthly
     cooldown:
@@ -67,6 +92,8 @@ updates:
   - package-ecosystem: "nuget"
     directories:
       - "/csharp/**/*"
+    registries:
+      - zeroc-nuget
     schedule:
       interval: monthly
     cooldown:
@@ -78,6 +105,8 @@ updates:
   - package-ecosystem: "swift"
     directories:
       - "/swift/**/*"
+    registries:
+      - zeroc-downloads
     schedule:
       interval: monthly
     cooldown:
@@ -173,6 +202,8 @@ updates:
     directories:
       - "/swift/**/*"
     target-branch: "3.8"
+    registries:
+      - zeroc-downloads
     schedule:
       interval: monthly
     cooldown:
