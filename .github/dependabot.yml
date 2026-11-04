@@ -2,16 +2,22 @@ version: 2
 
 # Dependabot's proxy only lets a job reach hosts on its default allowlist or in a
 # registry the job references, so the ZeroC feeds are declared here even though
-# they allow anonymous access. The proxy allows a registry's host whatever its
-# type, so the entries with no usable registry type reference the Maven feed.
+# they allow anonymous access.
 registries:
   zeroc-maven:
     type: maven-repository
     url: https://download.zeroc.com/nexus/repository/maven-3.9-nightly/
+  zeroc-npm:
+    type: npm-registry
+    url: https://download.zeroc.com/nexus/repository/npm-3.9-nightly/
+    # npm-registry requires a credential; an empty one is sent as anonymous.
+    token: ""
   zeroc-nuget:
     type: nuget-feed
     url: https://download.zeroc.com/nexus/repository/nuget-3.9-nightly/
 
+# There is no swift entry: the Swift demos depend only on Ice, which they track by
+# branch on main and which is updated by hand on release branches.
 updates:
   - package-ecosystem: "github-actions"
     # Two entries are required: "/" is the special value that scans
@@ -34,9 +40,8 @@ updates:
     # single level, so the glob has to end in "**/*" to reach them.
     directories:
       - "/js/**/*"
-    # An npm-registry requires credentials, which the anonymous npm feed has none of.
     registries:
-      - zeroc-maven
+      - zeroc-npm
     schedule:
       interval: monthly
     cooldown:
@@ -93,21 +98,6 @@ updates:
       default-days: 7
     groups:
       dotnet:
-        patterns: ["*"]
-
-  - package-ecosystem: "swift"
-    directories:
-      - "/swift/**/*"
-    # SwiftPM downloads the Ice binary targets from download.zeroc.com, and no
-    # registry type covers them.
-    registries:
-      - zeroc-maven
-    schedule:
-      interval: monthly
-    cooldown:
-      default-days: 7
-    groups:
-      swift:
         patterns: ["*"]
 
   # The blocks below mirror the ones above with target-branch: "3.8". 3.8 is a
@@ -191,23 +181,6 @@ updates:
         update-types: ["version-update:semver-major"]
     groups:
       dotnet:
-        patterns: ["*"]
-
-  - package-ecosystem: "swift"
-    directories:
-      - "/swift/**/*"
-    target-branch: "3.8"
-    registries:
-      - zeroc-maven
-    schedule:
-      interval: monthly
-    cooldown:
-      default-days: 7
-    ignore:
-      - dependency-name: "*"
-        update-types: ["version-update:semver-major"]
-    groups:
-      swift:
         patterns: ["*"]
 
   # 3.7 is in maintenance, so only its GitHub Actions are kept up to date.
