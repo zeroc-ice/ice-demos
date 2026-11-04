@@ -54,6 +54,12 @@ updates:
       interval: monthly
     cooldown:
       default-days: 7
+    ignore:
+      # 7.40.0 and 7.41.0 depend on a rewrite-bom 8.91.0 that isn't published to Maven
+      # Central; drop this once the plugin moves past 7.41.0:
+      # https://github.com/openrewrite/rewrite-gradle-plugin/issues/476
+      - dependency-name: "org.openrewrite.rewrite:org.openrewrite.rewrite.gradle.plugin"
+        versions: ["7.40.0", "7.41.0"]
     groups:
       java:
         patterns: ["*"]
@@ -142,6 +148,8 @@ updates:
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]
+      - dependency-name: "org.openrewrite.rewrite:org.openrewrite.rewrite.gradle.plugin"
+        versions: ["7.40.0", "7.41.0"]
     groups:
       java:
         patterns: ["*"]
