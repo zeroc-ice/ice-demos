@@ -2,14 +2,12 @@ version: 2
 
 # Dependabot's proxy only lets a job reach hosts on its default allowlist or in a
 # registry the job references, so the ZeroC feeds are declared here even though
-# they allow anonymous access.
+# they allow anonymous access. The proxy allows a registry's host whatever its
+# type, so the entries with no usable registry type reference the Maven feed.
 registries:
   zeroc-maven:
     type: maven-repository
     url: https://download.zeroc.com/nexus/repository/maven-3.9-nightly/
-  zeroc-npm:
-    type: npm-registry
-    url: https://download.zeroc.com/nexus/repository/npm-3.9-nightly/
   zeroc-nuget:
     type: nuget-feed
     url: https://download.zeroc.com/nexus/repository/nuget-3.9-nightly/
@@ -36,8 +34,9 @@ updates:
     # single level, so the glob has to end in "**/*" to reach them.
     directories:
       - "/js/**/*"
+    # An npm-registry requires credentials, which the anonymous npm feed has none of.
     registries:
-      - zeroc-npm
+      - zeroc-maven
     schedule:
       interval: monthly
     cooldown:
@@ -99,8 +98,8 @@ updates:
   - package-ecosystem: "swift"
     directories:
       - "/swift/**/*"
-    # SwiftPM downloads the Ice binary targets from download.zeroc.com. No registry
-    # type covers these, and the proxy allows a registry's host whatever its type.
+    # SwiftPM downloads the Ice binary targets from download.zeroc.com, and no
+    # registry type covers them.
     registries:
       - zeroc-maven
     schedule:
