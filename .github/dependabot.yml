@@ -1,8 +1,8 @@
 version: 2
 
 # Dependabot's proxy only lets a job reach hosts on its default allowlist or in a
-# registry the job references, so the ZeroC feeds are declared here even though
-# they allow anonymous access.
+# registry the job references, so the ZeroC Maven and NuGet feeds are declared
+# here even though they allow anonymous access.
 registries:
   zeroc-maven:
     type: maven-repository
@@ -35,6 +35,11 @@ updates:
     # single level, so the glob has to end in "**/*" to reach them.
     directories:
       - "/js/**/*"
+    # The npm feed can't be declared: an npm-registry entry needs a credential stored
+    # as a secret, and the feed is anonymous. The proxy allows the host of any
+    # referenced registry, so the Maven feed lets this job reach download.zeroc.com.
+    registries:
+      - zeroc-maven
     schedule:
       interval: monthly
     cooldown:
