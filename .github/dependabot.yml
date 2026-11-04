@@ -13,12 +13,6 @@ registries:
   zeroc-nuget:
     type: nuget-feed
     url: https://download.zeroc.com/nexus/repository/nuget-3.9-nightly/
-  # SwiftPM downloads the Ice binary targets from download.zeroc.com. There is no
-  # registry type for these, and the proxy allows a registry's host whatever its
-  # type, so this entry only serves to allow the host for the swift jobs.
-  zeroc-downloads:
-    type: maven-repository
-    url: https://download.zeroc.com/
 
 updates:
   - package-ecosystem: "github-actions"
@@ -105,8 +99,10 @@ updates:
   - package-ecosystem: "swift"
     directories:
       - "/swift/**/*"
+    # SwiftPM downloads the Ice binary targets from download.zeroc.com. No registry
+    # type covers these, and the proxy allows a registry's host whatever its type.
     registries:
-      - zeroc-downloads
+      - zeroc-maven
     schedule:
       interval: monthly
     cooldown:
@@ -203,7 +199,7 @@ updates:
       - "/swift/**/*"
     target-branch: "3.8"
     registries:
-      - zeroc-downloads
+      - zeroc-maven
     schedule:
       interval: monthly
     cooldown:
