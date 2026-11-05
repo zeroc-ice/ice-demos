@@ -22,19 +22,19 @@ Then, in the MATLAB console:
 
 - Go to the matlab/Glacier2/greeter directory
 
-```shell
+```matlab
 cd matlab/Glacier2/greeter
 ```
 
 - Compile the Greeter.ice file with the Slice compiler for MATLAB
 
-```shell
+```matlab
 slice2matlab Greeter.ice
 ```
 
 - Run the client application
 
-```shell
+```matlab
 client
 ```
 

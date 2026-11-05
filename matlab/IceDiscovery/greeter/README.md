@@ -16,25 +16,25 @@ Then, in the MATLAB console:
 
 - Go to the matlab/IceDiscovery/greeter directory
 
-```shell
+```matlab
 cd matlab/IceDiscovery/greeter
 ```
 
 - Compile the Greeter.ice file with the Slice compiler for MATLAB
 
-```shell
+```matlab
 slice2matlab Greeter.ice
 ```
 
 - Run the client application
 
-```shell
+```matlab
 client
 ```
 
 You can also turn on logging for locator resolution by running:
 
-```shell
+```matlab
 client --Ice.Trace.Locator --Ice.LogFile=client.log
 ```
 

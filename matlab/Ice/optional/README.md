@@ -38,25 +38,25 @@ Then, in the MATLAB console:
 
 - Go to the matlab/Ice/optional/client1 or client2 directory
 
-```shell
+```matlab
 cd matlab/Ice/optional/client1
 ```
 
 or
 
-```shell
+```matlab
 cd matlab/Ice/optional/client2
 ```
 
 - Compile the WeatherStation.ice file with the Slice compiler for MATLAB
 
-```shell
+```matlab
 slice2matlab WeatherStation.ice
 ```
 
 - Run the client application
 
-```shell
+```matlab
 client
 ```
 
