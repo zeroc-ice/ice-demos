@@ -18,19 +18,19 @@ Then, in the MATLAB console:
 
 - Go to the matlab/Ice/config directory
 
-```shell
+```matlab
 cd matlab/Ice/config
 ```
 
 - Compile the Greeter.ice file with the Slice compiler for MATLAB
 
-```shell
+```matlab
 slice2matlab Greeter.ice
 ```
 
 - Run the client application
 
-```shell
+```matlab
 client
 ```
 
@@ -41,7 +41,7 @@ You can pass `--Ice` arguments to set additional properties or override the prop
 
 For example:
 
-```shell
+```matlab
 client --Ice.Trace.Network=2 --Ice.LogFile=verbose.log
 type verbose.log
 ```
