@@ -16,19 +16,19 @@ Then, in the MATLAB console:
 
 - Go to the matlab/Ice/inheritance directory
 
-```shell
+```matlab
 cd matlab/Ice/inheritance
 ```
 
 - Compile the Filesystem.ice file with the Slice compiler for MATLAB
 
-```shell
+```matlab
 slice2matlab Filesystem.ice
 ```
 
 - Run the client application
 
-```shell
+```matlab
 client
 ```
 

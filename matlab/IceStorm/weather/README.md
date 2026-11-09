@@ -29,19 +29,19 @@ Then, in the MATLAB console:
 
 - Go to the matlab/IceStorm/weather directory
 
-```shell
+```matlab
 cd matlab/IceStorm/weather
 ```
 
 - Compile the WeatherStation.ice file with the Slice compiler for MATLAB
 
-```shell
+```matlab
 slice2matlab WeatherStation.ice
 ```
 
 - Run the sensor
 
-```shell
+```matlab
 sensor
 ```
 

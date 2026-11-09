@@ -17,19 +17,19 @@ Then, in the MATLAB console:
 
 - Go to the matlab/Ice/cancellation directory
 
-```shell
+```matlab
 cd matlab/Ice/cancellation
 ```
 
 - Compile the Greeter.ice file with the Slice compiler for MATLAB
 
-```shell
+```matlab
 slice2matlab Greeter.ice
 ```
 
 - Run the client application
 
-```shell
+```matlab
 client --Ice.Trace.Network --Ice.LogFile=client.log
 ```
 
