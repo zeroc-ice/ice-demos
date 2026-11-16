@@ -16,17 +16,17 @@ internal class SessionManager : Glacier2.SessionManagerDisp_, IUserIdResolver
     /// <inheritdoc />
     public override Glacier2.SessionPrx? create(
         string userId,
-        Glacier2.SessionControlPrx? sessionControl,
+        Glacier2.SessionControlPrx? control,
         Ice.Current current)
     {
-        // sessionControl is not null because we configured Glacier2.Server.Endpoints in the Glacier2 router
+        // control is not null because we configured Glacier2.Server.Endpoints in the Glacier2 router
         // configuration file.
-        Debug.Assert(sessionControl is not null);
+        Debug.Assert(control is not null);
 
         // Create a new session servant and add it to the adapter with a UUID identity. The name component of the
         // identity is the session token.
         Ice.ObjectPrx proxy = _sessionAdapter.addWithUUID(
-            new DefaultPokeSession(_sessionAdapter, sessionControl, this));
+            new DefaultPokeSession(_sessionAdapter, control, this));
 
         string sessionToken = proxy.ice_getIdentity().name;
         _tokenToUserId[sessionToken] = userId;
